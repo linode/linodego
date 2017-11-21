@@ -29,9 +29,9 @@ const (
 	distribution = "linode/distributions"
 )
 
+// ListDistributions will list distributions
 func (c *Client) ListDistributions() ([]*LinodeDistribution, error) {
 	req := c.R().SetResult(&LinodeDistributionPagedResponse{})
-
 	resp, err := req.Get(distribution)
 	if err != nil {
 		return nil, err
@@ -39,8 +39,6 @@ func (c *Client) ListDistributions() ([]*LinodeDistribution, error) {
 	if resp.StatusCode() >= 400 {
 		return nil, fmt.Errorf("Got bad status code: %d", resp.StatusCode())
 	}
-
 	list := resp.Result().(*LinodeDistributionPagedResponse)
-
 	return list.Data, nil
 }

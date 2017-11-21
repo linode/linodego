@@ -9,9 +9,9 @@ import (
 )
 
 const (
-	apiHost    = "api.linode.com"
-	apiVersion = "v4"
-	apiProto   = "https"
+	APIHost    = "api.linode.com"
+	APIVersion = "v4"
+	APIProto   = "https"
 	// Version of golinode
 	Version   = "1.0.0"
 	apiEnvVar = "LINODE_API_KEY"
@@ -21,6 +21,13 @@ const (
 type Client struct {
 	apiKey string
 	Resty  *resty.Client
+}
+
+// LinodePagedResponse is an abstraction of the paged response data from the Linode API
+type LinodePagedResponse struct {
+	Page    int
+	Pages   int
+	Results int
 }
 
 // R wraps resty's R method
@@ -44,10 +51,10 @@ func NewClient(apiKey string) (*Client, error) {
 		return nil, errors.New("No API key was provided or LINODE_API_KEY was not set")
 	}
 
-	restyClient := resty.New()
-	restyClient = restyClient.SetHostURL(fmt.Sprintf("%s://%s/%s", apiProto, apiHost, apiVersion))
-	restyClient = restyClient.SetAuthToken(apiKey)
-	restyClient = restyClient.SetHeader("User-Agent", fmt.Sprintf("go-linode %s https://github.com/chiefy/go-linode", Version))
+	restyClient := resty.New().
+		SetHostURL(fmt.Sprintf("%s://%s/%s", APIProto, APIHost, APIVersion)).
+		SetAuthToken(apiKey).
+		SetHeader("User-Agent", fmt.Sprintf("go-linode %s https://github.com/chiefy/go-linode", Version))
 
 	return &Client{
 		apiKey: apiKey,
