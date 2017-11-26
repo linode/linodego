@@ -11,16 +11,6 @@ import (
  * https://developers.linode.com/v4/reference/endpoints/linode/instances
  */
 
-type LinodeLinodesClient interface {
-	ListInstances() ([]*LinodeInstance, error)
-	GetInstance(int) (*LinodeInstance, error)
-	BootInstance(int, int) (bool, error)
-	CloneInstance(int, *LinodeCloneOptions) (bool, error)
-	RebootInstance(int, int) (bool, error)
-	ResizeInstance(int, string) (bool, error)
-	ShutdownInstance(int) (bool, error)
-}
-
 // LinodeSnapshot represents a linode backup snapshot
 type LinodeSnapshot struct {
 	ID       int
@@ -43,6 +33,8 @@ type LinodeDisk struct {
 	Created    string
 	Updated    string
 }
+
+// LinodeBackup represents a linode backup
 type LinodeBackup struct {
 	Enabled      bool
 	Availability string
@@ -54,6 +46,7 @@ type LinodeBackup struct {
 	Disks      []*LinodeDisk
 }
 
+// LinodeAlert represents a metric alert
 type LinodeAlert struct {
 	CPU           int
 	IO            int
@@ -62,6 +55,7 @@ type LinodeAlert struct {
 	TransferQuote int
 }
 
+// LinodeSpec represents a linode spec
 type LinodeSpec struct {
 	Disk     int
 	Memory   int
@@ -91,12 +85,11 @@ type LinodeInstance struct {
 
 // LinodeInstancesPagedResponse represents a linode API response for listing
 type LinodeInstancesPagedResponse struct {
-	Page    int
-	Pages   int
-	Results int
-	Data    []*LinodeInstance
+	Page, Pages, Results int
+	Data                 []*LinodeInstance
 }
 
+// LinodeCloneOptions is an options struct when sending a clone request to the API
 type LinodeCloneOptions struct {
 	Region         string
 	Type           string
@@ -147,15 +140,20 @@ func (c *Client) GetInstance(linodeID int) (*LinodeInstance, error) {
 
 // BootInstance will boot a new linode instance
 func (c *Client) BootInstance(id int, configID int) (bool, error) {
-	var body string
+	bodyStr := ""
 
 	if configID != 0 {
-		body = fmt.Sprintf("{\"config_id\": \"%d\"}", configID)
+		bodyMap := map[string]string{"config_id": string(configID)}
+		bodyJSON, err := json.Marshal(bodyMap)
+		if err != nil {
+			return false, err
+		}
+		bodyStr = string(bodyJSON)
 	}
 
 	resp, err := c.R().
 		SetHeader("Content-Type", "application/json").
-		SetBody(body).
+		SetBody(bodyStr).
 		Post(fmt.Sprintf("%s/%d/boot", instanceEndpoint, id))
 
 	return settleBoolResponseOrError(resp, err)

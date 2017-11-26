@@ -30,6 +30,12 @@ type LinodePagedResponse struct {
 	Results int
 }
 
+type LinodeResponsePager interface {
+	Page() int
+	Pages() int
+	Results() interface{}
+}
+
 // R wraps resty's R method
 func (c *Client) R() *resty.Request {
 	return c.Resty.R()
