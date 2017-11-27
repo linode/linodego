@@ -11,18 +11,6 @@ import (
  * https://developers.linode.com/v4/reference/endpoints/linode/instances
  */
 
-// LinodeSnapshot represents a linode backup snapshot
-type LinodeSnapshot struct {
-	ID       int
-	Label    string
-	Status   string
-	Type     string
-	Created  string
-	Updated  string
-	Finished string
-	Configs  []string
-}
-
 // LinodeDisk represents a linode disk
 type LinodeDisk struct {
 	ID         int
@@ -113,11 +101,6 @@ func (c *Client) ListInstances() ([]*LinodeInstance, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	if resp.StatusCode() >= 400 {
-		return nil, fmt.Errorf("Got bad status code: %d", resp.StatusCode())
-	}
-
 	list := resp.Result().(*LinodeInstancesPagedResponse)
 
 	return list.Data, nil
@@ -130,9 +113,6 @@ func (c *Client) GetInstance(linodeID int) (*LinodeInstance, error) {
 	resp, err := req.Get(fmt.Sprintf("%s/%d", instanceEndpoint, linodeID))
 	if err != nil {
 		return nil, err
-	}
-	if resp.StatusCode() >= 400 {
-		return nil, fmt.Errorf("Got bad status code: %d", resp.StatusCode())
 	}
 
 	return resp.Result().(*LinodeInstance), nil
@@ -180,9 +160,6 @@ func (c *Client) CloneInstance(id int, options *LinodeCloneOptions) (*LinodeInst
 	if err != nil {
 		return nil, err
 	}
-	if resp.StatusCode() >= 400 {
-		return nil, fmt.Errorf("Expected 20x got %d", resp.StatusCode())
-	}
 
 	return resp.Result().(*LinodeInstance), nil
 }
@@ -218,9 +195,6 @@ func (c *Client) ShutdownInstance(id int) (bool, error) {
 func settleBoolResponseOrError(resp *resty.Response, err error) (bool, error) {
 	if err != nil {
 		return false, err
-	}
-	if resp.StatusCode() >= 400 {
-		return false, fmt.Errorf("Expected a 20x, got %d", resp.StatusCode())
 	}
 	return true, nil
 }
