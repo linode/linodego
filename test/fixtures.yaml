@@ -1,0 +1,372 @@
+---
+version: 1
+rwmutex: {}
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Authorization:
+      - Bearer SOMEAPIKEY
+      User-Agent:
+      - go-linode 1.0.0 https://github.com/chiefy/go-linode
+    url: https://api.linode.com/v4/regions
+    method: GET
+  response:
+    body: '{"data": [{"country": "us", "id": "us-south-1a"}, {"country": "us", "id":
+      "us-west-1a"}, {"country": "us", "id": "us-southeast-1a"}, {"country": "us",
+      "id": "us-east-1a"}, {"country": "uk", "id": "eu-west-1a"}, {"country": "sg",
+      "id": "ap-south-1a"}, {"country": "de", "id": "eu-central-1a"}, {"country":
+      "jp", "id": "ap-northeast-1b"}, {"country": "jp", "id": "ap-northeast-1a"}],
+      "pages": 1, "page": 1, "results": 9}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=900
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "418"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 02 Dec 2017 21:35:11 GMT
+      Retry-After:
+      - "0"
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - unknown
+      X-Ratelimit-Limit:
+      - "10"
+      X-Ratelimit-Remaining:
+      - "9"
+      X-Ratelimit-Reset:
+      - "1512250512"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+- request:
+    body: ""
+    form: {}
+    headers:
+      Authorization:
+      - Bearer SOMEAPIKEY
+      User-Agent:
+      - go-linode 1.0.0 https://github.com/chiefy/go-linode
+    url: https://api.linode.com/v4/linode/instances
+    method: GET
+  response:
+    body: '{"data": [{"id": 4090913, "group": "", "distribution": "linode/ubuntu16.04lts",
+      "created": "2017-10-20T00:46:36", "region": "us-east-1a", "ipv4": ["45.79.178.53"],
+      "backups": {"schedule": {"day": null, "window": null}, "enabled": false}, "specs":
+      {"transfer": 1000, "vcpus": 1, "memory": 1024, "disk": 20480}, "alerts": {"cpu":
+      90, "transfer_quota": 80, "network_out": 10, "network_in": 10, "io": 10000},
+      "status": "offline", "label": "secrets", "ipv6": "2600:3c03::f03c:91ff:fe03:28be/64",
+      "type": "g5-nanode-1", "hypervisor": "kvm", "updated": "2017-10-20T00:53:07"}],
+      "results": 1, "pages": 1, "page": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "607"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 02 Dec 2017 21:35:11 GMT
+      Retry-After:
+      - "0"
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - linodes:view
+      X-Content-Type-Options:
+      - nosniff
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - linodes:delete,domains:delete,nodebalancers:delete,images:delete,stackscripts:delete,longview:delete,events:delete,tokens:delete,clients:delete,account:delete,users:delete,tickets:delete,ips:delete,volumes:delete
+      X-Ratelimit-Limit:
+      - "10"
+      X-Ratelimit-Remaining:
+      - "9"
+      X-Ratelimit-Reset:
+      - "1512250512"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+- request:
+    body: ""
+    form: {}
+    headers:
+      Authorization:
+      - Bearer SOMEAPIKEY
+      User-Agent:
+      - go-linode 1.0.0 https://github.com/chiefy/go-linode
+    url: https://api.linode.com/v4/linode/distributions
+    method: GET
+  response:
+    body: '{"results": 19, "data": [{"label": "Slackware 13.37", "disk_minimum": 600,
+      "id": "linode/slackware13.37", "vendor": "Slackware", "updated": "2011-06-05T19:11:59",
+      "architecture": "x86_64", "deprecated": true}, {"label": "Slackware 14.1", "disk_minimum":
+      1000, "id": "linode/slackware14.1", "vendor": "Slackware", "updated": "2013-11-25T16:11:02",
+      "architecture": "x86_64", "deprecated": true}, {"label": "Ubuntu 14.04 LTS",
+      "disk_minimum": 1500, "id": "linode/ubuntu14.04lts", "vendor": "Ubuntu", "updated":
+      "2016-10-13T18:03:50", "architecture": "x86_64", "deprecated": true}, {"label":
+      "CentOS 6.8", "disk_minimum": 1024, "id": "linode/centos6.8", "vendor": "CentOS",
+      "updated": "2014-04-28T19:19:34", "architecture": "x86_64", "deprecated": true},
+      {"label": "CentOS 7", "disk_minimum": 1500, "id": "linode/centos7", "vendor":
+      "CentOS", "updated": "2017-09-22T11:31:05", "architecture": "x86_64", "deprecated":
+      false}, {"label": "Debian 7", "disk_minimum": 600, "id": "linode/debian7", "vendor":
+      "Debian", "updated": "2016-06-22T19:06:56", "architecture": "x86_64", "deprecated":
+      true}, {"label": "Debian 8", "disk_minimum": 1024, "id": "linode/debian8", "vendor":
+      "Debian", "updated": "2017-09-22T11:36:34", "architecture": "x86_64", "deprecated":
+      false}, {"label": "Ubuntu 16.04 LTS", "disk_minimum": 1024, "id": "linode/ubuntu16.04lts",
+      "vendor": "Ubuntu", "updated": "2017-03-21T19:46:29", "architecture": "x86_64",
+      "deprecated": false}, {"label": "Arch 2017.07.01", "disk_minimum": 1800, "id":
+      "linode/arch2017.07.01", "vendor": "Arch", "updated": "2017-07-13T12:49:58",
+      "architecture": "x86_64", "deprecated": false}, {"label": "Slackware 14.2",
+      "disk_minimum": 6000, "id": "linode/slackware14.2", "vendor": "Slackware", "updated":
+      "2016-10-13T13:14:34", "architecture": "x86_64", "deprecated": false}, {"label":
+      "Gentoo 2017-09-07", "disk_minimum": 9000, "id": "linode/Gentoo2017.09.07",
+      "vendor": "Gentoo", "updated": "2017-09-28T19:14:43", "architecture": "x86_64",
+      "deprecated": false}, {"label": "openSUSE Leap 42.2", "disk_minimum": 1700,
+      "id": "linode/opensuseleap42.2", "vendor": "openSUSE", "updated": "2016-11-17T19:52:54",
+      "architecture": "x86_64", "deprecated": true}, {"label": "Fedora 25", "disk_minimum":
+      1500, "id": "linode/fedora25", "vendor": "Fedora", "updated": "2017-02-10T19:53:47",
+      "architecture": "x86_64", "deprecated": true}, {"label": "Ubuntu 17.04", "disk_minimum":
+      1500, "id": "linode/ubuntu17.04", "vendor": "Ubuntu", "updated": "2017-04-13T20:00:37",
+      "architecture": "x86_64", "deprecated": false}, {"label": "CoreOS Container
+      Linux", "disk_minimum": 5000, "id": "linode/containerlinux", "vendor": "CoreOS",
+      "updated": "2017-06-06T20:44:00", "architecture": "x86_64", "deprecated": false},
+      {"label": "Debian 9", "disk_minimum": 1100, "id": "linode/debian9", "vendor":
+      "Debian", "updated": "2017-10-19T20:28:44", "architecture": "x86_64", "deprecated":
+      false}, {"label": "Fedora 26", "disk_minimum": 1500, "id": "linode/fedora26",
+      "vendor": "Fedora", "updated": "2017-10-19T20:08:47", "architecture": "x86_64",
+      "deprecated": false}, {"label": "OpenSUSE Leap 42.3", "disk_minimum": 1900,
+      "id": "linode/opensuse42.3", "vendor": "openSUSE", "updated": "2017-07-27T18:03:05",
+      "architecture": "x86_64", "deprecated": false}, {"label": "Ubuntu 17.10", "disk_minimum":
+      1500, "id": "linode/ubuntu17.10", "vendor": "Ubuntu", "updated": "2017-10-19T20:19:16",
+      "architecture": "x86_64", "deprecated": false}], "pages": 1, "page": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=900
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "3459"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 02 Dec 2017 21:35:11 GMT
+      Retry-After:
+      - "0"
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - unknown
+      X-Ratelimit-Limit:
+      - "10"
+      X-Ratelimit-Remaining:
+      - "9"
+      X-Ratelimit-Reset:
+      - "1512250512"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+- request:
+    body: ""
+    form: {}
+    headers:
+      Authorization:
+      - Bearer SOMEAPIKEY
+      User-Agent:
+      - go-linode 1.0.0 https://github.com/chiefy/go-linode
+    url: https://api.linode.com/v4/linode/instances/1234
+    method: GET
+  response:
+    body: '{"errors": [{"reason": "Not found"}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "37"
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 02 Dec 2017 21:35:12 GMT
+      Retry-After:
+      - "0"
+      Server:
+      - nginx
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - linodes:view
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - linodes:delete,domains:delete,nodebalancers:delete,images:delete,stackscripts:delete,longview:delete,events:delete,tokens:delete,clients:delete,account:delete,users:delete,tickets:delete,ips:delete,volumes:delete
+      X-Ratelimit-Limit:
+      - "10"
+      X-Ratelimit-Remaining:
+      - "9"
+      X-Ratelimit-Reset:
+      - "1512250512"
+    status: 404 NOT FOUND
+    code: 404
+- request:
+    body: ""
+    form: {}
+    headers:
+      Authorization:
+      - Bearer SOMEAPIKEY
+      User-Agent:
+      - go-linode 1.0.0 https://github.com/chiefy/go-linode
+    url: https://api.linode.com/v4/linode/instances/4090913
+    method: GET
+  response:
+    body: '{"hypervisor": "kvm", "group": "", "ipv4": ["45.79.178.53"], "id": 4090913,
+      "specs": {"vcpus": 1, "disk": 20480, "memory": 1024, "transfer": 1000}, "type":
+      "g5-nanode-1", "status": "offline", "ipv6": "2600:3c03::f03c:91ff:fe03:28be/64",
+      "alerts": {"cpu": 90, "io": 10000, "network_in": 10, "transfer_quota": 80, "network_out":
+      10}, "backups": {"schedule": {"day": null, "window": null}, "enabled": false},
+      "label": "secrets", "created": "2017-10-20T00:46:36", "distribution": "linode/ubuntu16.04lts",
+      "updated": "2017-10-20T00:53:07", "region": "us-east-1a"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "558"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 02 Dec 2017 21:35:12 GMT
+      Retry-After:
+      - "0"
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - linodes:view
+      X-Content-Type-Options:
+      - nosniff
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - linodes:delete,domains:delete,nodebalancers:delete,images:delete,stackscripts:delete,longview:delete,events:delete,tokens:delete,clients:delete,account:delete,users:delete,tickets:delete,ips:delete,volumes:delete
+      X-Ratelimit-Limit:
+      - "10"
+      X-Ratelimit-Remaining:
+      - "9"
+      X-Ratelimit-Reset:
+      - "1512250513"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200

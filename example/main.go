@@ -18,17 +18,10 @@ func main() {
 		log.Fatal(err)
 	}
 	linodeClient.SetDebug(true)
-	res, err := linodeClient.ListDistributions()
+	res, err := linodeClient.GetInstance(4090913)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(res[0])
-
-	res2, err := linodeClient.ListRegions()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println(res2[0])
+	fmt.Printf("%v", res)
 
 }

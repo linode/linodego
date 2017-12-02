@@ -101,6 +101,7 @@ func (c *Client) ListInstances() ([]*LinodeInstance, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	list := resp.Result().(*LinodeInstancesPagedResponse)
 
 	return list.Data, nil
@@ -108,9 +109,10 @@ func (c *Client) ListInstances() ([]*LinodeInstance, error) {
 
 // GetInstance gets the instance with the provided ID
 func (c *Client) GetInstance(linodeID int) (*LinodeInstance, error) {
-	req := c.R().SetResult(&LinodeInstance{})
+	resp, err := c.R().
+		SetResult(&LinodeInstance{}).
+		Get(fmt.Sprintf("%s/%d", instanceEndpoint, linodeID))
 
-	resp, err := req.Get(fmt.Sprintf("%s/%d", instanceEndpoint, linodeID))
 	if err != nil {
 		return nil, err
 	}
