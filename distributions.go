@@ -17,15 +17,11 @@ type LinodeDistribution struct {
 	Vendor       string
 }
 
-const (
-	distribution = "linode/distributions"
-)
-
 // ListDistributions will list linode distributions
 func (c *Client) ListDistributions() ([]*LinodeDistribution, error) {
 	resp, err := c.R().
 		SetResult(&LinodeDistributionsPagedResponse{}).
-		Get(distribution)
+		Get(distributionsEndpoint)
 	if err != nil {
 		return nil, err
 	}

@@ -51,5 +51,17 @@ func main() {
 	}
 	log.Println("Succesfully got linode instance ID 4090913")
 
+	_, err = c.ListStackscripts()
+	if err != nil {
+		log.Fatalf("Failed to get linode stackscripts: %s", err)
+	}
+	log.Println("Succesfully got linode public stackscripts (1 page)")
+
+	_, err = c.GetStackscript(1)
+	if err != nil {
+		log.Fatalf("Failed to get linode stackscript ID 1: %s", err)
+	}
+	log.Println("Succesfully got linode stackscript ID 1")
+
 	log.Printf("Successfully retrieved linode requests!")
 }

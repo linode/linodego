@@ -22,18 +22,6 @@ type LinodeDisk struct {
 	Updated    string
 }
 
-// LinodeBackup represents a linode backup
-type LinodeBackup struct {
-	Enabled      bool
-	Availability string
-	Schedule     struct {
-		Day    string
-		Window string
-	}
-	LastBackup *LinodeSnapshot
-	Disks      []*LinodeDisk
-}
-
 // LinodeAlert represents a metric alert
 type LinodeAlert struct {
 	CPU           int
@@ -89,34 +77,25 @@ type LinodeCloneOptions struct {
 	Configs        []string
 }
 
-const (
-	instanceEndpoint = "linode/instances"
-)
-
 // ListInstances lists linode instances
 func (c *Client) ListInstances() ([]*LinodeInstance, error) {
-	req := c.R().SetResult(&LinodeInstancesPagedResponse{})
-
-	resp, err := req.Get(instanceEndpoint)
+	resp, err := c.R().
+		SetResult(&LinodeInstancesPagedResponse{}).
+		Get(instancesEndpoint)
 	if err != nil {
 		return nil, err
 	}
-
-	list := resp.Result().(*LinodeInstancesPagedResponse)
-
-	return list.Data, nil
+	return resp.Result().(*LinodeInstancesPagedResponse).Data, nil
 }
 
 // GetInstance gets the instance with the provided ID
 func (c *Client) GetInstance(linodeID int) (*LinodeInstance, error) {
 	resp, err := c.R().
 		SetResult(&LinodeInstance{}).
-		Get(fmt.Sprintf("%s/%d", instanceEndpoint, linodeID))
-
+		Get(fmt.Sprintf("%s/%d", instancesEndpoint, linodeID))
 	if err != nil {
 		return nil, err
 	}
-
 	return resp.Result().(*LinodeInstance), nil
 }
 
@@ -136,7 +115,7 @@ func (c *Client) BootInstance(id int, configID int) (bool, error) {
 	resp, err := c.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(bodyStr).
-		Post(fmt.Sprintf("%s/%d/boot", instanceEndpoint, id))
+		Post(fmt.Sprintf("%s/%d/boot", instancesEndpoint, id))
 
 	return settleBoolResponseOrError(resp, err)
 }
@@ -146,7 +125,7 @@ func (c *Client) CloneInstance(id int, options *LinodeCloneOptions) (*LinodeInst
 	var body string
 
 	req := c.R().SetResult(&LinodeInstance{})
-	endpoint := fmt.Sprintf("%s/%d/clone", instanceEndpoint, id)
+	endpoint := fmt.Sprintf("%s/%d/clone", instancesEndpoint, id)
 
 	if bodyData, err := json.Marshal(options); err == nil {
 		body = string(bodyData)
@@ -169,7 +148,7 @@ func (c *Client) CloneInstance(id int, options *LinodeCloneOptions) (*LinodeInst
 // RebootInstance - Reboots a Linode instance
 func (c *Client) RebootInstance(id int, configID int) (bool, error) {
 	body := fmt.Sprintf("{\"config_id\":\"%d\"}", configID)
-	endpoint := fmt.Sprintf("%s/%d/reboot", instanceEndpoint, id)
+	endpoint := fmt.Sprintf("%s/%d/reboot", instancesEndpoint, id)
 	resp, err := c.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
@@ -180,7 +159,7 @@ func (c *Client) RebootInstance(id int, configID int) (bool, error) {
 // ResizeInstance - Resize an instance to new Linode type
 func (c *Client) ResizeInstance(id int, linodeType string) (bool, error) {
 	body := fmt.Sprintf("{\"type\":\"%s\"}", linodeType)
-	endpoint := fmt.Sprintf("%s/%d/resize", instanceEndpoint, id)
+	endpoint := fmt.Sprintf("%s/%d/resize", instancesEndpoint, id)
 	resp, err := c.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
@@ -190,7 +169,7 @@ func (c *Client) ResizeInstance(id int, linodeType string) (bool, error) {
 
 // ShutdownInstance - Shutdown an instance
 func (c *Client) ShutdownInstance(id int) (bool, error) {
-	endpoint := fmt.Sprintf("%s/%d/resize", instanceEndpoint, id)
+	endpoint := fmt.Sprintf("%s/%d/resize", instancesEndpoint, id)
 	return settleBoolResponseOrError(c.R().Post(endpoint))
 }
 
