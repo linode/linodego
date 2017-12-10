@@ -7,20 +7,18 @@ import (
 )
 
 const (
+	stackscriptsName  = "stackscripts"
+	distributionsName = "distributions"
+	instancesName     = "instances"
+	regionsName       = "regions"
+	backupsName       = "backups"
+
 	stackscriptsEndpoint  = "linode/stackscripts"
 	distributionsEndpoint = "linode/distributions"
 	instancesEndpoint     = "linode/instances"
 	regionsEndpoint       = "regions"
 	backupsEndpoint       = "linode/instances/{{ .ID }}/backups"
 )
-
-var endpoints = map[string]*Resource{
-	"stackscripts":  NewResource("stackscripts", stackscriptsEndpoint, false),
-	"distributions": NewResource("distributions", distributionsEndpoint, false),
-	"instances":     NewResource("instances", instancesEndpoint, false),
-	"regions":       NewResource("regions", regionsEndpoint, false),
-	"backups":       NewResource("backups", backupsEndpoint, true),
-}
 
 // Resource represents a linode API resource
 type Resource struct {
@@ -52,18 +50,18 @@ func (r Resource) render(data interface{}) (string, error) {
 	return buf.String(), nil
 }
 
-// Endpoint will return the endpoint string for the resource, optionally send data if the endpoint is templated
-func (r Resource) Endpoint(data interface{}) (string, error) {
+// EndpointWithID will return the rendered endpoint string for the resource with provided id
+func (r Resource) EndpointWithID(id int) (string, error) {
 	if !r.isTemplate {
 		return r.endpoint, nil
 	}
-	return r.render(data)
+	return r.render(id)
 }
 
-func (c Client) getResource(resource string) (*Resource, error) {
-	selectedResource, ok := endpoints[resource]
-	if !ok {
-		return nil, fmt.Errorf("Could not find resource %s", resource)
+// Endpoint will return the non-templated endpoint strig for resource
+func (r Resource) Endpoint() (string, error) {
+	if r.isTemplate {
+		return "", fmt.Errorf("Tried to get endpoint for %s without providing data for template", r.name)
 	}
-	return selectedResource, nil
+	return r.endpoint, nil
 }

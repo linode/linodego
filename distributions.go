@@ -19,9 +19,13 @@ type LinodeDistribution struct {
 
 // ListDistributions will list linode distributions
 func (c *Client) ListDistributions() ([]*LinodeDistribution, error) {
+	e, err := c.Distributions.Endpoint()
+	if err != nil {
+		return nil, err
+	}
 	resp, err := c.R().
 		SetResult(&LinodeDistributionsPagedResponse{}).
-		Get(distributionsEndpoint)
+		Get(e)
 	if err != nil {
 		return nil, err
 	}

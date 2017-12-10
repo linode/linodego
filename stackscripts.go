@@ -26,22 +26,36 @@ type LinodeStackscript struct {
 
 // ListStackscripts gets all public stackscripts
 func (c *Client) ListStackscripts() ([]*LinodeStackscript, error) {
-	resp, err := c.R().
-		SetResult(&LinodeStackscriptsPagedResponse{}).
-		Get(stackscriptsEndpoint)
+	e, err := c.StackScripts.Endpoint()
 	if err != nil {
 		return nil, err
 	}
+
+	resp, err := c.R().
+		SetResult(&LinodeStackscriptsPagedResponse{}).
+		Get(e)
+	if err != nil {
+		return nil, err
+	}
+
 	return resp.Result().(*LinodeStackscriptsPagedResponse).Data, nil
 }
 
 // GetStackscript returns a stackscript with specified id
 func (c *Client) GetStackscript(id int) (*LinodeStackscript, error) {
-	resp, err := c.R().
-		SetResult(&LinodeStackscriptsPagedResponse{}).
-		Get(fmt.Sprintf("%s/%d", stackscriptsEndpoint, id))
+	e, err := c.StackScripts.Endpoint()
 	if err != nil {
 		return nil, err
 	}
+	e = fmt.Sprintf("%s/%d", e, id)
+
+	resp, err := c.R().
+		SetResult(&LinodeStackscriptsPagedResponse{}).
+		Get(e)
+
+	if err != nil {
+		return nil, err
+	}
+
 	return resp.Result().(*LinodeStackscriptsPagedResponse).Data[0], nil
 }

@@ -14,9 +14,13 @@ type LinodeRegion struct {
 
 // ListRegions - list all available regions for a Linode instance
 func (c *Client) ListRegions() ([]*LinodeRegion, error) {
+	e, err := c.Regions.Endpoint()
+	if err != nil {
+		return nil, err
+	}
 	resp, err := c.R().
 		SetResult(&LinodeRegionsPagedResponse{}).
-		Get(regionsEndpoint)
+		Get(e)
 
 	if err != nil {
 		return nil, err

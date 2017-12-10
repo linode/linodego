@@ -79,9 +79,13 @@ type LinodeCloneOptions struct {
 
 // ListInstances lists linode instances
 func (c *Client) ListInstances() ([]*LinodeInstance, error) {
+	e, err := c.Instances.Endpoint()
+	if err != nil {
+		return nil, err
+	}
 	resp, err := c.R().
 		SetResult(&LinodeInstancesPagedResponse{}).
-		Get(instancesEndpoint)
+		Get(e)
 	if err != nil {
 		return nil, err
 	}
@@ -90,9 +94,14 @@ func (c *Client) ListInstances() ([]*LinodeInstance, error) {
 
 // GetInstance gets the instance with the provided ID
 func (c *Client) GetInstance(linodeID int) (*LinodeInstance, error) {
+	e, err := c.Instances.Endpoint()
+	if err != nil {
+		return nil, err
+	}
+	e = fmt.Sprintf("%s/%d", e, linodeID)
 	resp, err := c.R().
 		SetResult(&LinodeInstance{}).
-		Get(fmt.Sprintf("%s/%d", instancesEndpoint, linodeID))
+		Get(e)
 	if err != nil {
 		return nil, err
 	}
@@ -112,10 +121,16 @@ func (c *Client) BootInstance(id int, configID int) (bool, error) {
 		bodyStr = string(bodyJSON)
 	}
 
+	e, err := c.Instances.Endpoint()
+	if err != nil {
+		return false, err
+	}
+
+	e = fmt.Sprintf("%s/%d/boot", e, id)
 	resp, err := c.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(bodyStr).
-		Post(fmt.Sprintf("%s/%d/boot", instancesEndpoint, id))
+		Post(e)
 
 	return settleBoolResponseOrError(resp, err)
 }
@@ -123,9 +138,13 @@ func (c *Client) BootInstance(id int, configID int) (bool, error) {
 // CloneInstance - Clones a Linode instance
 func (c *Client) CloneInstance(id int, options *LinodeCloneOptions) (*LinodeInstance, error) {
 	var body string
+	e, err := c.Instances.Endpoint()
+	if err != nil {
+		return nil, err
+	}
+	e = fmt.Sprintf("%s/%d/clone", e, id)
 
 	req := c.R().SetResult(&LinodeInstance{})
-	endpoint := fmt.Sprintf("%s/%d/clone", instancesEndpoint, id)
 
 	if bodyData, err := json.Marshal(options); err == nil {
 		body = string(bodyData)
@@ -136,7 +155,7 @@ func (c *Client) CloneInstance(id int, options *LinodeCloneOptions) (*LinodeInst
 	resp, err := req.
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
-		Post(endpoint)
+		Post(e)
 
 	if err != nil {
 		return nil, err
@@ -148,29 +167,48 @@ func (c *Client) CloneInstance(id int, options *LinodeCloneOptions) (*LinodeInst
 // RebootInstance - Reboots a Linode instance
 func (c *Client) RebootInstance(id int, configID int) (bool, error) {
 	body := fmt.Sprintf("{\"config_id\":\"%d\"}", configID)
-	endpoint := fmt.Sprintf("%s/%d/reboot", instancesEndpoint, id)
+
+	e, err := c.Instances.Endpoint()
+	if err != nil {
+		return false, err
+	}
+
+	e = fmt.Sprintf("%s/%d/reboot", e, id)
+
 	resp, err := c.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
-		Post(endpoint)
+		Post(e)
+
 	return settleBoolResponseOrError(resp, err)
 }
 
 // ResizeInstance - Resize an instance to new Linode type
 func (c *Client) ResizeInstance(id int, linodeType string) (bool, error) {
 	body := fmt.Sprintf("{\"type\":\"%s\"}", linodeType)
-	endpoint := fmt.Sprintf("%s/%d/resize", instancesEndpoint, id)
+
+	e, err := c.Instances.Endpoint()
+	if err != nil {
+		return false, err
+	}
+	e = fmt.Sprintf("%s/%d/resize", e, id)
+
 	resp, err := c.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
-		Post(endpoint)
+		Post(e)
+
 	return settleBoolResponseOrError(resp, err)
 }
 
 // ShutdownInstance - Shutdown an instance
 func (c *Client) ShutdownInstance(id int) (bool, error) {
-	endpoint := fmt.Sprintf("%s/%d/resize", instancesEndpoint, id)
-	return settleBoolResponseOrError(c.R().Post(endpoint))
+	e, err := c.Instances.Endpoint()
+	if err != nil {
+		return false, err
+	}
+	e = fmt.Sprintf("%s/%d/resize", e, id)
+	return settleBoolResponseOrError(c.R().Post(e))
 }
 
 func settleBoolResponseOrError(resp *resty.Response, err error) (bool, error) {
