@@ -70,7 +70,43 @@ Go client for Linode REST v4 API
   - [ ] `POST`
 - `/linode/instances/$id/disks/$id/password`
   - [ ] `POST`
-- `/linode/instances/$id/disks/$id/imagize`
+- `/linode/instances/$id/disks/$id/resize`
   - [ ] `POST` 
 
-  
+## IPs
+- `/linode/instances/$id/ips`
+  - [ ] `GET`
+  - [ ] `POST`
+- `/linode/instances/$id/ips/$ip_address`
+  - [ ] `GET`
+  - [ ] `PUT`
+  - [ ] `DELETE`
+- `/linode/instances/$id/ips/sharing`
+  - [ ] `POST`
+
+## Kernels
+- `/linode/kernels`
+  - [ ] `GET`
+- `/linode/kernels/$id`
+  - [ ] `GET`
+
+## StackScripts
+- `/linode/stackscripts`
+  - [ ] `GET`
+  - [ ] `POST`
+- `/linode/stackscripts/$id`
+  - [ ] `GET`
+  - [ ] `PUT`
+  - [ ] `DELETE`
+
+## Stats
+- `/linode/instances/$id/stats`
+  - [ ] `GET`
+- `/linode/instances/$id/stats/$year/$month`
+  - [ ] `GET`
+
+## Types
+- `/linode/types`
+  - [ ] `GET`
+- `/linode/types/$id`
+  - [ ] `GET`
