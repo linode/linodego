@@ -260,7 +260,7 @@ Go client for Linode REST v4 API
   - [ ] `GET`
   - [ ] `PUT`
 
-## Users
+### Users
 - `/account/users`
   - [ ] `GET`
   - [ ] `POST`
@@ -274,4 +274,26 @@ Go client for Linode REST v4 API
 - `/account/users/$username/password`
   - [ ] `POST`
 
+## Images
+- `/images`
+  - [ ] `GET`
+- `/images/$id`
+  - [ ] `GET`
+  - [ ] `PUT`
+  - [ ] `DELETE`
+
+## Volumes
+- `/volumes`
+  - [ ] `GET`
+  - [ ] `POST`
+- `/volumes/$id`
+  - [ ] `GET`
+  - [ ] `POST`
+  - [ ] `DELETE`
+- `/volumes/$id/attach`
+  - [ ] `POST`
+- `/volumes/$id/clone`
+  - [ ] `POST`
+- `/volumes/$id/detach`
+  - [ ] `POST`
 
