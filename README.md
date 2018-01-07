@@ -47,3 +47,30 @@ Go client for Linode REST v4 API
   - [ ] `POST`
 - `/linode/instances/$id/backups/enable`
   - [ ] `POST`
+  
+## Configs
+- `/linode/instances/$id/configs`
+  - [ ] `GET`
+  - [ ] `POST`
+- `/linode/instances/$id/configs/$id`
+  - [ ] `GET`
+  - [ ] `PUT`
+  - [ ] `DELETE`
+
+## Disks
+- `/linode/instances/$id/disks`
+  - [ ] `GET`
+  - [ ] `POST`
+- `/linode/instances/$id/disks/$id`
+  - [ ] `GET` 
+  - [ ] `PUT` 
+  - [ ] `POST` 
+  - [ ] `DELETE` 
+- `/linode/instances/$id/disks/$id/imagize`
+  - [ ] `POST`
+- `/linode/instances/$id/disks/$id/password`
+  - [ ] `POST`
+- `/linode/instances/$id/disks/$id/imagize`
+  - [ ] `POST` 
+
+  
