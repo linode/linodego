@@ -225,4 +225,53 @@ Go client for Linode REST v4 API
   - [ ] `GET`
 - `/account/invoices/$id/items`
   - [ ] `GET`
- 
+
+### Notifications
+- `/account/notifications`
+  - [ ] `GET`
+
+### OAuth Clients
+- `/account/oauth-clients`
+  - [ ] `GET`
+  - [ ] `POST`
+- `/account/oauth-clients/$id`
+  - [ ] `GET`
+  - [ ] `PUT`
+  - [ ] `DELETE`
+- `/account/oauth-clients/$id/reset_secret`
+  - [ ] `POST`
+- `/account/oauth-clients/$id/thumbnail`
+  - [ ] `GET`
+  - [ ] `PUT`
+
+### Payments
+- `/account/payments`
+  - [ ] `GET`
+  - [ ] `POST`
+- `/account/payments/$id`
+  - [ ] `GET`
+- `/account/payments/paypal`
+  - [ ] `GET`
+- `/account/payments/paypal/execute`
+  - [ ] `POST`
+
+### Settings
+- `/account/settings`
+  - [ ] `GET`
+  - [ ] `PUT`
+
+## Users
+- `/account/users`
+  - [ ] `GET`
+  - [ ] `POST`
+- `/account/users/$username`
+  - [ ] `GET`
+  - [ ] `PUT`
+  - [ ] `DELETE`
+- `/account/users/$username/grants`
+  - [ ] `GET`
+  - [ ] `PUT`
+- `/account/users/$username/password`
+  - [ ] `POST`
+
+
