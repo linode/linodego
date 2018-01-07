@@ -170,3 +170,59 @@ Go client for Linode REST v4 API
 - `/nodebalancers/$id/configs/$id/ssl`
   - [ ] `POST`
 
+## Networking
+- `/networking/ip-assign`
+  - [ ] `POST`
+- `/networking/ipv4`
+  - [ ] `GET`
+  - [ ] `POST`
+- `/networking/ipv4/$address`
+  - [ ] `GET`
+  - [ ] `PUT`
+  - [ ] `DELETE`
+
+### IPv6
+- `/networking/ipv6`
+  - [ ] `GET`
+- `/networking/ipv6/$address`
+  - [ ] `GET`
+  - [ ] `PUT`
+
+## Regions
+- `/regions`
+  - [ ] `GET`
+- `/regions/$id`
+  - [ ] `GET`
+
+## Support
+- `/support/tickets` 
+  - [ ] `GET`
+  - [ ] `POST`
+- `/support/tickets/$id` 
+  - [ ] `GET`
+- `/support/tickets/$id/attachments` 
+  - [ ] `POST`
+- `/support/tickets/$id/replies` 
+  - [ ] `GET`
+  - [ ] `POST`
+
+## Account
+
+### Events
+- `/account/events`
+  - [ ] `GET`
+- `/account/events/$id`
+  - [ ] `GET`
+- `/account/events/$id/read`
+  - [ ] `POST`
+- `/account/events/$id/seen`
+  - [ ] `POST`
+
+### Invoices
+- `/account/invoices/`
+  - [ ] `GET`
+- `/account/invoices/$id`
+  - [ ] `GET`
+- `/account/invoices/$id/items`
+  - [ ] `GET`
+ 
