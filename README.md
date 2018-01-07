@@ -37,7 +37,7 @@ Go client for Linode REST v4 API
 - `/linode/instances/$id/volumes`
   - [ ] `GET`
 
-## Backups
+### Backups
 - `/linode/instances/$id/backups`
   - [ ] `GET`
   - [ ] `POST`
@@ -48,7 +48,7 @@ Go client for Linode REST v4 API
 - `/linode/instances/$id/backups/enable`
   - [ ] `POST`
   
-## Configs
+### Configs
 - `/linode/instances/$id/configs`
   - [ ] `GET`
   - [ ] `POST`
@@ -57,7 +57,7 @@ Go client for Linode REST v4 API
   - [ ] `PUT`
   - [ ] `DELETE`
 
-## Disks
+### Disks
 - `/linode/instances/$id/disks`
   - [ ] `GET`
   - [ ] `POST`
@@ -73,7 +73,7 @@ Go client for Linode REST v4 API
 - `/linode/instances/$id/disks/$id/resize`
   - [ ] `POST` 
 
-## IPs
+### IPs
 - `/linode/instances/$id/ips`
   - [ ] `GET`
   - [ ] `POST`
@@ -84,13 +84,13 @@ Go client for Linode REST v4 API
 - `/linode/instances/$id/ips/sharing`
   - [ ] `POST`
 
-## Kernels
+### Kernels
 - `/linode/kernels`
   - [ ] `GET`
 - `/linode/kernels/$id`
   - [ ] `GET`
 
-## StackScripts
+### StackScripts
 - `/linode/stackscripts`
   - [ ] `GET`
   - [ ] `POST`
@@ -99,14 +99,74 @@ Go client for Linode REST v4 API
   - [ ] `PUT`
   - [ ] `DELETE`
 
-## Stats
+### Stats
 - `/linode/instances/$id/stats`
   - [ ] `GET`
 - `/linode/instances/$id/stats/$year/$month`
   - [ ] `GET`
 
-## Types
+### Types
 - `/linode/types`
   - [ ] `GET`
 - `/linode/types/$id`
   - [ ] `GET`
+
+## Domains
+- `/domains`
+  - [ ] `GET`
+  - [ ] `POST`
+- `/domains/$id`
+  - [ ] `GET`
+  - [ ] `PUT`
+  - [ ] `DELETE`
+- `/domains/$id/clone`
+  - [ ] `POST`
+- `/domains/$id/records`
+  - [ ] `GET`
+  - [ ] `POST`
+- `/domains/$id/records/$id`
+  - [ ] `GET`
+  - [ ] `PUT`
+  - [ ] `DELETE`
+ 
+## Longview
+- `/longview/clients`
+  - [ ] `GET`
+  - [ ] `POST`
+- `/longview/clients/$id`
+  - [ ] `GET`
+  - [ ] `PUT`
+  - [ ] `DELETE`
+
+### Subscriptions
+- `/longview/subscriptions`
+  - [ ] `GET`
+- `/longview/subscriptions/$id`
+  - [ ] `GET`
+
+## NodeBalancers
+- `/nodebalancers`
+  - [ ] `GET`
+  - [ ] `POST`
+- `/nodebalancers/$id`
+  - [ ] `GET`
+  - [ ] `PUT`
+  - [ ] `DELETE`
+
+### Configs
+- `/nodebalancers/$id/configs`
+  - [ ] `GET`
+  - [ ] `POST`
+- `/nodebalancers/$id/configs/$id`
+  - [ ] `GET`
+  - [ ] `DELETE`
+- `/nodebalancers/$id/configs/$id/nodes`
+  - [ ] `GET`
+  - [ ] `POST`
+- `/nodebalancers/$id/configs/$id/nodes/$id`
+  - [ ] `GET`
+  - [ ] `PUT`
+  - [ ] `DELETE`
+- `/nodebalancers/$id/configs/$id/ssl`
+  - [ ] `POST`
+
