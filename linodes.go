@@ -3,6 +3,7 @@ package golinode
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 
 	"github.com/go-resty/resty"
 )
@@ -13,13 +14,22 @@ import (
 
 // LinodeDisk represents a linode disk
 type LinodeDisk struct {
+	CreatedStr string `json:"created"`
+	UpdatedStr string `json:"updated"`
+
 	ID         int
 	Label      string
 	Status     string
 	Size       int
 	Filesystem string
-	Created    string
-	Updated    string
+	Created    *time.Time `json:"-"`
+	Updated    *time.Time `json:"-"`
+}
+
+func (l *LinodeDisk) fixDates() *LinodeDisk {
+	l.Created, _ = parseDates(l.CreatedStr)
+	l.Updated, _ = parseDates(l.UpdatedStr)
+	return l
 }
 
 // LinodeAlert represents a metric alert
@@ -41,9 +51,12 @@ type LinodeSpec struct {
 
 // LinodeInstance represents a linode distribution object
 type LinodeInstance struct {
+	CreatedStr string `json:"created"`
+	UpdatedStr string `json:"updated"`
+
 	ID           int
-	Created      string
-	Updated      string
+	Created      *time.Time `json:"-"`
+	Updated      *time.Time `json:"-"`
 	Region       string
 	Alerts       *LinodeAlert
 	Backups      *LinodeBackup
@@ -57,6 +70,12 @@ type LinodeInstance struct {
 	Status       string
 	Hypervisor   string
 	Specs        *LinodeSpec
+}
+
+func (l *LinodeInstance) fixDates() *LinodeInstance {
+	l.Created, _ = parseDates(l.CreatedStr)
+	l.Updated, _ = parseDates(l.UpdatedStr)
+	return l
 }
 
 // LinodeInstancesPagedResponse represents a linode API response for listing
@@ -105,7 +124,8 @@ func (c *Client) GetInstance(linodeID int) (*LinodeInstance, error) {
 	if err != nil {
 		return nil, err
 	}
-	return resp.Result().(*LinodeInstance), nil
+	instance := resp.Result().(*LinodeInstance).fixDates()
+	return instance, nil
 }
 
 // BootInstance will boot a new linode instance
@@ -135,7 +155,7 @@ func (c *Client) BootInstance(id int, configID int) (bool, error) {
 	return settleBoolResponseOrError(resp, err)
 }
 
-// CloneInstance - Clones a Linode instance
+// CloneInstance clones a Linode instance
 func (c *Client) CloneInstance(id int, options *LinodeCloneOptions) (*LinodeInstance, error) {
 	var body string
 	e, err := c.Instances.Endpoint()
@@ -161,10 +181,10 @@ func (c *Client) CloneInstance(id int, options *LinodeCloneOptions) (*LinodeInst
 		return nil, err
 	}
 
-	return resp.Result().(*LinodeInstance), nil
+	return resp.Result().(*LinodeInstance).fixDates(), nil
 }
 
-// RebootInstance - Reboots a Linode instance
+// RebootInstance reboots a Linode instance
 func (c *Client) RebootInstance(id int, configID int) (bool, error) {
 	body := fmt.Sprintf("{\"config_id\":\"%d\"}", configID)
 
@@ -183,7 +203,7 @@ func (c *Client) RebootInstance(id int, configID int) (bool, error) {
 	return settleBoolResponseOrError(resp, err)
 }
 
-// ResizeInstance - Resize an instance to new Linode type
+// ResizeInstance resizes an instance to new Linode type
 func (c *Client) ResizeInstance(id int, linodeType string) (bool, error) {
 	body := fmt.Sprintf("{\"type\":\"%s\"}", linodeType)
 

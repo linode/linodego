@@ -17,7 +17,7 @@ const (
 	APIVersion = "v4"
 	// APIProto connect to API with http(s)
 	APIProto = "https"
-	// Version version of golinode
+	// Version of golinode
 	Version = "1.0.0"
 	// APIEnvVar environment var to check for API key
 	APIEnvVar = "LINODE_API_KEY"
