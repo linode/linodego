@@ -1,6 +1,7 @@
 package golinode
 
-/*
+import "testing"
+
 func TestListStackscripts(t *testing.T) {
 	client, err := createTestClient(debugAPI)
 	if err != nil {
@@ -14,4 +15,3 @@ func TestListStackscripts(t *testing.T) {
 		t.Errorf("Expected a list of public stackscripts - %v", stackscripts)
 	}
 }
-*/

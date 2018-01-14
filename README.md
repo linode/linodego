@@ -3,8 +3,11 @@ Go client for Linode REST v4 API
 
 **Not yet ready for production usage**
 
+
+
 # API Support
 
+** Note: currently pagination is not supported. The response list will return the first page of responses only **
 ## Linodes
 
 - `/linode/instances`

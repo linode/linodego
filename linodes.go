@@ -108,7 +108,11 @@ func (c *Client) ListInstances() ([]*LinodeInstance, error) {
 	if err != nil {
 		return nil, err
 	}
-	return resp.Result().(*LinodeInstancesPagedResponse).Data, nil
+	l := resp.Result().(*LinodeInstancesPagedResponse).Data
+	for _, el := range l {
+		el.fixDates()
+	}
+	return l, nil
 }
 
 // GetInstance gets the instance with the provided ID
@@ -124,8 +128,8 @@ func (c *Client) GetInstance(linodeID int) (*LinodeInstance, error) {
 	if err != nil {
 		return nil, err
 	}
-	instance := resp.Result().(*LinodeInstance).fixDates()
-	return instance, nil
+	i := resp.Result().(*LinodeInstance).fixDates()
+	return i, nil
 }
 
 // BootInstance will boot a new linode instance
