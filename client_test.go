@@ -10,7 +10,7 @@ const (
 	debugAPI = false
 )
 
-var validTestAPIKey string = "NOTANAPIKEY"
+var validTestAPIKey = "NOTANAPIKEY"
 
 func createTestClient(debug bool) (*Client, error) {
 	r, err := recorder.NewAsMode("test/fixtures", recorder.ModeReplaying, nil)
@@ -54,7 +54,7 @@ func TestClientAliases(t *testing.T) {
 	if err != nil {
 		t.Error("Expected client got error", err)
 	}
-	if client.Distributions == nil {
+	if client.Images == nil {
 		t.Error("Expected alias for Distributions to return a *Resource")
 	}
 	if client.Instances == nil {

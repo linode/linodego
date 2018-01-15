@@ -29,11 +29,11 @@ type Client struct {
 	resty     *resty.Client
 	resources map[string]*Resource
 
-	Distributions *Resource
-	Backups       *Resource
-	Instances     *Resource
-	Regions       *Resource
-	StackScripts  *Resource
+	Images       *Resource
+	Backups      *Resource
+	Instances    *Resource
+	Regions      *Resource
+	StackScripts *Resource
 }
 
 // R wraps resty's R method
@@ -76,11 +76,11 @@ func NewClient(codeAPIKey *string, transport http.RoundTripper) (*Client, error)
 		SetHeader("User-Agent", fmt.Sprintf("go-linode %s https://github.com/chiefy/go-linode", Version))
 
 	resources := map[string]*Resource{
-		stackscriptsName:  NewResource(stackscriptsName, stackscriptsEndpoint, false),
-		distributionsName: NewResource(distributionsName, distributionsEndpoint, false),
-		instancesName:     NewResource(instancesName, instancesEndpoint, false),
-		regionsName:       NewResource(regionsName, regionsEndpoint, false),
-		backupsName:       NewResource(backupsName, backupsEndpoint, true),
+		stackscriptsName: NewResource(stackscriptsName, stackscriptsEndpoint, false),
+		imagesName:       NewResource(imagesName, imagesEndpoint, false),
+		instancesName:    NewResource(instancesName, instancesEndpoint, false),
+		regionsName:      NewResource(regionsName, regionsEndpoint, false),
+		backupsName:      NewResource(backupsName, backupsEndpoint, true),
 	}
 
 	return &Client{
@@ -88,10 +88,10 @@ func NewClient(codeAPIKey *string, transport http.RoundTripper) (*Client, error)
 		resty:     restyClient,
 		resources: resources,
 
-		Distributions: resources[distributionsName],
-		StackScripts:  resources[stackscriptsName],
-		Instances:     resources[instancesName],
-		Regions:       resources[regionsName],
-		Backups:       resources[backupsName],
+		Images:       resources[imagesName],
+		StackScripts: resources[stackscriptsName],
+		Instances:    resources[instancesName],
+		Regions:      resources[regionsName],
+		Backups:      resources[backupsName],
 	}, nil
 }

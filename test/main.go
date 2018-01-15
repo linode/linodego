@@ -33,11 +33,11 @@ func main() {
 	}
 	log.Println("Succesfully got linode instances")
 
-	_, err = c.ListDistributions()
+	_, err = c.ListImages()
 	if err != nil {
-		log.Fatalf("Failed to get linode distributions: %s", err)
+		log.Fatalf("Failed to get linode images: %s", err)
 	}
-	log.Println("Succesfully got linode distributions")
+	log.Println("Succesfully got linode images")
 
 	_, err = c.GetInstance(1234)
 	if err != nil {

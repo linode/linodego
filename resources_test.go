@@ -11,13 +11,13 @@ func TestResourceEndpoint(t *testing.T) {
 	if err != nil {
 		t.Error("Could not create new client in test")
 	}
-	r := client.Resource("distributions")
+	r := client.Resource("images")
 	e, err := r.Endpoint()
 	if err != nil {
 		t.Error("Got error when querying for distributions endpoint")
 	}
-	if e != distributionsEndpoint {
-		t.Errorf("Distributions endpoint did not match '%s'", distributionsEndpoint)
+	if e != imagesEndpoint {
+		t.Errorf("Images endpoint did not match '%s'", imagesEndpoint)
 	}
 }
 func TestResourceTemplatedEndpointWithID(t *testing.T) {

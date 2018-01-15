@@ -1,46 +1,46 @@
 # go-linode
+
 Go client for Linode REST v4 API
 
-**Not yet ready for production usage**
+*Not yet ready for production usage*
+This project is not ready for production usage, use at your own risk.
 
-
-
-# API Support
+## API Support
 
 ** Note: currently pagination is not supported. The response list will return the first page of responses only **
+
 ## Linodes
 
 - `/linode/instances`
-  - [ ] `GET`
+  - [x] `GET`
   - [ ] `POST`
 - `/linode/instances/$id`
-  - [ ] `GET`
+  - [x] `GET`
   - [ ] `PUT`
   - [ ] `DELETE`
 - `/linode/instances/$id/boot`
-  - [ ] `POST`
+  - [x] `POST`
 - `/linode/instances/$id/clone`
-  - [ ] `POST`
+  - [x] `POST`
 - `/linode/instances/$id/kvmify`
   - [ ] `POST`
 - `/linode/instances/$id/mutate`
   - [ ] `POST`
-- `/linode/instances/$id/mutate`
-  - [ ] `POST`
 - `/linode/instances/$id/reboot`
-  - [ ] `POST`
+  - [x] `POST`
 - `/linode/instances/$id/rebuild`
   - [ ] `POST`
 - `/linode/instances/$id/rescue`
   - [ ] `POST`
 - `/linode/instances/$id/resize`
-  - [ ] `POST`
+  - [x] `POST`
 - `/linode/instances/$id/shutdown`
-  - [ ] `POST`
+  - [x] `POST`
 - `/linode/instances/$id/volumes`
   - [ ] `GET`
 
 ### Backups
+
 - `/linode/instances/$id/backups`
   - [ ] `GET`
   - [ ] `POST`
@@ -50,8 +50,9 @@ Go client for Linode REST v4 API
   - [ ] `POST`
 - `/linode/instances/$id/backups/enable`
   - [ ] `POST`
-  
+
 ### Configs
+
 - `/linode/instances/$id/configs`
   - [ ] `GET`
   - [ ] `POST`
@@ -61,22 +62,24 @@ Go client for Linode REST v4 API
   - [ ] `DELETE`
 
 ### Disks
+
 - `/linode/instances/$id/disks`
   - [ ] `GET`
   - [ ] `POST`
 - `/linode/instances/$id/disks/$id`
-  - [ ] `GET` 
-  - [ ] `PUT` 
-  - [ ] `POST` 
-  - [ ] `DELETE` 
+  - [ ] `GET`
+  - [ ] `PUT`
+  - [ ] `POST`
+  - [ ] `DELETE`
 - `/linode/instances/$id/disks/$id/imagize`
   - [ ] `POST`
 - `/linode/instances/$id/disks/$id/password`
   - [ ] `POST`
 - `/linode/instances/$id/disks/$id/resize`
-  - [ ] `POST` 
+  - [ ] `POST`
 
 ### IPs
+
 - `/linode/instances/$id/ips`
   - [ ] `GET`
   - [ ] `POST`
@@ -88,33 +91,38 @@ Go client for Linode REST v4 API
   - [ ] `POST`
 
 ### Kernels
+
 - `/linode/kernels`
   - [ ] `GET`
 - `/linode/kernels/$id`
   - [ ] `GET`
 
 ### StackScripts
+
 - `/linode/stackscripts`
-  - [ ] `GET`
+  - [x] `GET`
   - [ ] `POST`
 - `/linode/stackscripts/$id`
-  - [ ] `GET`
+  - [x] `GET`
   - [ ] `PUT`
   - [ ] `DELETE`
 
 ### Stats
+
 - `/linode/instances/$id/stats`
   - [ ] `GET`
 - `/linode/instances/$id/stats/$year/$month`
   - [ ] `GET`
 
 ### Types
+
 - `/linode/types`
   - [ ] `GET`
 - `/linode/types/$id`
   - [ ] `GET`
 
 ## Domains
+
 - `/domains`
   - [ ] `GET`
   - [ ] `POST`
@@ -131,8 +139,9 @@ Go client for Linode REST v4 API
   - [ ] `GET`
   - [ ] `PUT`
   - [ ] `DELETE`
- 
+
 ## Longview
+
 - `/longview/clients`
   - [ ] `GET`
   - [ ] `POST`
@@ -142,12 +151,14 @@ Go client for Linode REST v4 API
   - [ ] `DELETE`
 
 ### Subscriptions
+
 - `/longview/subscriptions`
   - [ ] `GET`
 - `/longview/subscriptions/$id`
   - [ ] `GET`
 
-## NodeBalancers
+### NodeBalancers
+
 - `/nodebalancers`
   - [ ] `GET`
   - [ ] `POST`
@@ -157,6 +168,7 @@ Go client for Linode REST v4 API
   - [ ] `DELETE`
 
 ### Configs
+
 - `/nodebalancers/$id/configs`
   - [ ] `GET`
   - [ ] `POST`
@@ -174,6 +186,7 @@ Go client for Linode REST v4 API
   - [ ] `POST`
 
 ## Networking
+
 - `/networking/ip-assign`
   - [ ] `POST`
 - `/networking/ipv4`
@@ -185,6 +198,7 @@ Go client for Linode REST v4 API
   - [ ] `DELETE`
 
 ### IPv6
+
 - `/networking/ipv6`
   - [ ] `GET`
 - `/networking/ipv6/$address`
@@ -192,26 +206,29 @@ Go client for Linode REST v4 API
   - [ ] `PUT`
 
 ## Regions
+
 - `/regions`
-  - [ ] `GET`
+  - [x] `GET`
 - `/regions/$id`
-  - [ ] `GET`
+  - [x] `GET`
 
 ## Support
-- `/support/tickets` 
+
+- `/support/tickets`
   - [ ] `GET`
   - [ ] `POST`
-- `/support/tickets/$id` 
+- `/support/tickets/$id`
   - [ ] `GET`
-- `/support/tickets/$id/attachments` 
+- `/support/tickets/$id/attachments`
   - [ ] `POST`
-- `/support/tickets/$id/replies` 
+- `/support/tickets/$id/replies`
   - [ ] `GET`
   - [ ] `POST`
 
 ## Account
 
 ### Events
+
 - `/account/events`
   - [ ] `GET`
 - `/account/events/$id`
@@ -222,6 +239,7 @@ Go client for Linode REST v4 API
   - [ ] `POST`
 
 ### Invoices
+
 - `/account/invoices/`
   - [ ] `GET`
 - `/account/invoices/$id`
@@ -230,10 +248,12 @@ Go client for Linode REST v4 API
   - [ ] `GET`
 
 ### Notifications
+
 - `/account/notifications`
   - [ ] `GET`
 
 ### OAuth Clients
+
 - `/account/oauth-clients`
   - [ ] `GET`
   - [ ] `POST`
@@ -248,6 +268,7 @@ Go client for Linode REST v4 API
   - [ ] `PUT`
 
 ### Payments
+
 - `/account/payments`
   - [ ] `GET`
   - [ ] `POST`
@@ -259,11 +280,13 @@ Go client for Linode REST v4 API
   - [ ] `POST`
 
 ### Settings
+
 - `/account/settings`
   - [ ] `GET`
   - [ ] `PUT`
 
 ### Users
+
 - `/account/users`
   - [ ] `GET`
   - [ ] `POST`
@@ -278,14 +301,16 @@ Go client for Linode REST v4 API
   - [ ] `POST`
 
 ## Images
+
 - `/images`
-  - [ ] `GET`
+  - [x] `GET`
 - `/images/$id`
-  - [ ] `GET`
+  - [x] `GET`
   - [ ] `PUT`
   - [ ] `DELETE`
 
 ## Volumes
+
 - `/volumes`
   - [ ] `GET`
   - [ ] `POST`
@@ -299,4 +324,3 @@ Go client for Linode REST v4 API
   - [ ] `POST`
 - `/volumes/$id/detach`
   - [ ] `POST`
-

@@ -19,9 +19,8 @@ type LinodeStackscript struct {
 	ID                int
 	Username          string
 	Label             string
-	Images            []string
 	Description       string
-	Distributions     []*LinodeDistribution
+	Images            []string
 	DeploymentsTotal  int
 	DeploymentsActive int
 	IsPublic          bool

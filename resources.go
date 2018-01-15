@@ -7,17 +7,17 @@ import (
 )
 
 const (
-	stackscriptsName  = "stackscripts"
-	distributionsName = "distributions"
-	instancesName     = "instances"
-	regionsName       = "regions"
-	backupsName       = "backups"
+	stackscriptsName = "stackscripts"
+	imagesName       = "images"
+	instancesName    = "instances"
+	regionsName      = "regions"
+	backupsName      = "backups"
 
-	stackscriptsEndpoint  = "linode/stackscripts"
-	distributionsEndpoint = "linode/distributions"
-	instancesEndpoint     = "linode/instances"
-	regionsEndpoint       = "regions"
-	backupsEndpoint       = "linode/instances/{{ .ID }}/backups"
+	stackscriptsEndpoint = "linode/stackscripts"
+	imagesEndpoint       = "images"
+	instancesEndpoint    = "linode/instances"
+	regionsEndpoint      = "regions"
+	backupsEndpoint      = "linode/instances/{{ .ID }}/backups"
 )
 
 // Resource represents a linode API resource

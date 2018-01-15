@@ -7,17 +7,17 @@ interactions:
     form: {}
     headers:
       Authorization:
-      - Bearer SDFLKJFSDLKDFJLSDKFJSDLFKIWOFOWEIFJLEFJWLKEFJOWIEFJOWEIFJOWEIFJO
+      - Bearer LKJFLDKEF909DFDF0DFDFLJLSFJFIEJFLIFJLIEJFLEIFJLEIJ
       User-Agent:
       - go-linode 1.0.0 https://github.com/chiefy/go-linode
     url: https://api.linode.com/v4/regions
     method: GET
   response:
-    body: '{"page": 1, "data": [{"id": "us-south-1a", "country": "us"}, {"id": "us-west-1a",
-      "country": "us"}, {"id": "us-southeast-1a", "country": "us"}, {"id": "us-east-1a",
-      "country": "us"}, {"id": "eu-west-1a", "country": "uk"}, {"id": "ap-south-1a",
-      "country": "sg"}, {"id": "eu-central-1a", "country": "de"}, {"id": "ap-northeast-1b",
-      "country": "jp"}, {"id": "ap-northeast-1a", "country": "jp"}], "results": 9,
+    body: '{"page": 1, "results": 9, "data": [{"country": "us", "id": "us-south-1a"},
+      {"country": "us", "id": "us-west-1a"}, {"country": "us", "id": "us-southeast-1a"},
+      {"country": "us", "id": "us-east-1a"}, {"country": "uk", "id": "eu-west-1a"},
+      {"country": "sg", "id": "ap-south-1a"}, {"country": "de", "id": "eu-central-1a"},
+      {"country": "jp", "id": "ap-northeast-1b"}, {"country": "jp", "id": "ap-northeast-1a"}],
       "pages": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -42,7 +42,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 14 Jan 2018 15:06:18 GMT
+      - Mon, 15 Jan 2018 01:35:34 GMT
       Retry-After:
       - "119"
       Server:
@@ -67,7 +67,7 @@ interactions:
       X-Ratelimit-Remaining:
       - "399"
       X-Ratelimit-Reset:
-      - "1515942498"
+      - "1515980254"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -77,20 +77,20 @@ interactions:
     form: {}
     headers:
       Authorization:
-      - Bearer SDFLKJFSDLKDFJLSDKFJSDLFKIWOFOWEIFJLEFJWLKEFJOWIEFJOWEIFJOWEIFJO
+      - Bearer LKJFLDKEF909DFDF0DFDFLJLSFJFIEJFLIFJLIEJFLEIFJLEIJ
       User-Agent:
       - go-linode 1.0.0 https://github.com/chiefy/go-linode
     url: https://api.linode.com/v4/linode/instances
     method: GET
   response:
-    body: '{"page": 1, "results": 1, "data": [{"label": "secrets", "group": "", "specs":
-      {"vcpus": 1, "memory": 1024, "transfer": 1000, "disk": 20480}, "updated": "2017-10-20T00:53:07",
-      "alerts": {"cpu": 90, "io": 10000, "network_in": 10, "network_out": 10, "transfer_quota":
-      80}, "region": "us-east-1a", "status": "offline", "ipv6": "2600:3c03::f03c:91ff:fe03:28be/64",
-      "created": "2017-10-20T00:46:36", "image": "linode/ubuntu16.04lts", "id": 4090913,
-      "hypervisor": "kvm", "type": "g5-nanode-1", "backups": {"schedule": {"window":
-      null, "day": null}, "enabled": false}, "ipv4": ["45.79.178.53"]}], "pages":
-      1}'
+    body: '{"page": 1, "data": [{"ipv6": "2600:3c03::f03c:91ff:fe03:28be/64", "image":
+      "linode/ubuntu16.04lts", "status": "offline", "group": "", "id": 4090913, "created":
+      "2017-10-20T00:46:36", "ipv4": ["45.79.178.53"], "alerts": {"transfer_quota":
+      80, "network_out": 10, "cpu": 90, "io": 10000, "network_in": 10}, "region":
+      "us-east-1a", "hypervisor": "kvm", "label": "secrets", "specs": {"transfer":
+      1000, "memory": 1024, "disk": 20480, "vcpus": 1}, "updated": "2017-10-20T00:53:07",
+      "type": "g5-nanode-1", "backups": {"enabled": false, "schedule": {"window":
+      null, "day": null}}}], "results": 1, "pages": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -114,7 +114,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 14 Jan 2018 15:06:18 GMT
+      - Mon, 15 Jan 2018 01:35:34 GMT
       Retry-After:
       - "119"
       Server:
@@ -139,7 +139,7 @@ interactions:
       X-Ratelimit-Remaining:
       - "399"
       X-Ratelimit-Reset:
-      - "1515942498"
+      - "1515980254"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -149,10 +149,10 @@ interactions:
     form: {}
     headers:
       Authorization:
-      - Bearer SDFLKJFSDLKDFJLSDKFJSDLFKIWOFOWEIFJLEFJWLKEFJOWIEFJOWEIFJOWEIFJO
+      - Bearer LKJFLDKEF909DFDF0DFDFLJLSFJFIEJFLIFJLIEJFLEIFJLEIJ
       User-Agent:
       - go-linode 1.0.0 https://github.com/chiefy/go-linode
-    url: https://api.linode.com/v4/linode/distributions
+    url: https://api.linode.com/v4/images
     method: GET
   response:
     body: '{"data": [{"is_public": true, "type": "manual", "deprecated": true, "label":
@@ -231,7 +231,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 14 Jan 2018 15:06:18 GMT
+      - Mon, 15 Jan 2018 01:35:34 GMT
       Retry-After:
       - "119"
       Server:
@@ -241,11 +241,8 @@ interactions:
       Vary:
       - Authorization, X-Filter
       - Authorization, X-Filter
-      Warning:
-      - 299 linode-api The Distributions endpoint is deprecated. Use Images instead.
-        See changelog for details.
       X-Accepted-Oauth-Scopes:
-      - images:view
+      - '*'
       X-Content-Type-Options:
       - nosniff
       - nosniff
@@ -259,7 +256,7 @@ interactions:
       X-Ratelimit-Remaining:
       - "399"
       X-Ratelimit-Reset:
-      - "1515942498"
+      - "1515980254"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -269,7 +266,7 @@ interactions:
     form: {}
     headers:
       Authorization:
-      - Bearer SDFLKJFSDLKDFJLSDKFJSDLFKIWOFOWEIFJLEFJWLKEFJOWIEFJOWEIFJOWEIFJO
+      - Bearer LKJFLDKEF909DFDF0DFDFLJLSFJFIEJFLIFJLIEJFLEIFJLEIJ
       User-Agent:
       - go-linode 1.0.0 https://github.com/chiefy/go-linode
     url: https://api.linode.com/v4/linode/instances/1234
@@ -292,9 +289,9 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 14 Jan 2018 15:06:18 GMT
+      - Mon, 15 Jan 2018 01:35:35 GMT
       Retry-After:
-      - "119"
+      - "118"
       Server:
       - nginx
       Vary:
@@ -308,9 +305,9 @@ interactions:
       X-Ratelimit-Limit:
       - "400"
       X-Ratelimit-Remaining:
-      - "399"
+      - "398"
       X-Ratelimit-Reset:
-      - "1515942498"
+      - "1515980254"
     status: 404 NOT FOUND
     code: 404
 - request:
@@ -318,19 +315,19 @@ interactions:
     form: {}
     headers:
       Authorization:
-      - Bearer SDFLKJFSDLKDFJLSDKFJSDLFKIWOFOWEIFJLEFJWLKEFJOWIEFJOWEIFJOWEIFJO
+      - Bearer LKJFLDKEF909DFDF0DFDFLJLSFJFIEJFLIFJLIEJFLEIFJLEIJ
       User-Agent:
       - go-linode 1.0.0 https://github.com/chiefy/go-linode
     url: https://api.linode.com/v4/linode/instances/4090913
     method: GET
   response:
-    body: '{"label": "secrets", "group": "", "specs": {"vcpus": 1, "memory": 1024,
-      "transfer": 1000, "disk": 20480}, "updated": "2017-10-20T00:53:07", "alerts":
-      {"cpu": 90, "io": 10000, "network_in": 10, "network_out": 10, "transfer_quota":
-      80}, "region": "us-east-1a", "status": "offline", "ipv6": "2600:3c03::f03c:91ff:fe03:28be/64",
-      "created": "2017-10-20T00:46:36", "image": "linode/ubuntu16.04lts", "id": 4090913,
-      "hypervisor": "kvm", "type": "g5-nanode-1", "backups": {"schedule": {"window":
-      null, "day": null}, "enabled": false}, "ipv4": ["45.79.178.53"]}'
+    body: '{"ipv6": "2600:3c03::f03c:91ff:fe03:28be/64", "image": "linode/ubuntu16.04lts",
+      "status": "offline", "group": "", "id": 4090913, "created": "2017-10-20T00:46:36",
+      "ipv4": ["45.79.178.53"], "alerts": {"transfer_quota": 80, "network_out": 10,
+      "cpu": 90, "io": 10000, "network_in": 10}, "region": "us-east-1a", "hypervisor":
+      "kvm", "label": "secrets", "specs": {"transfer": 1000, "memory": 1024, "disk":
+      20480, "vcpus": 1}, "updated": "2017-10-20T00:53:07", "type": "g5-nanode-1",
+      "backups": {"enabled": false, "schedule": {"window": null, "day": null}}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -354,9 +351,9 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 14 Jan 2018 15:06:19 GMT
+      - Mon, 15 Jan 2018 01:35:35 GMT
       Retry-After:
-      - "40"
+      - "118"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -377,9 +374,9 @@ interactions:
       X-Ratelimit-Limit:
       - "400"
       X-Ratelimit-Remaining:
-      - "397"
+      - "398"
       X-Ratelimit-Reset:
-      - "1515942420"
+      - "1515980254"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -389,7 +386,7 @@ interactions:
     form: {}
     headers:
       Authorization:
-      - Bearer SDFLKJFSDLKDFJLSDKFJSDLFKIWOFOWEIFJLEFJWLKEFJOWIEFJOWEIFJOWEIFJO
+      - Bearer LKJFLDKEF909DFDF0DFDFLJLSFJFIEJFLIFJLIEJFLEIFJLEIJ
       User-Agent:
       - go-linode 1.0.0 https://github.com/chiefy/go-linode
     url: https://api.linode.com/v4/linode/stackscripts
@@ -857,10 +854,10 @@ interactions:
       float(pythonlib.distro[''version'']) < 8.0 :\n\t\thttpd_docroot = \"/var/www\"\n\t\n\tinstall(httpd_docroot)\n\tpythonlib.end()\n\nif
       __name__ == \"__main__\":\n\tsys.exit(main())", "is_public": true, "images":
       ["linode/centos7", "linode/debian7", "linode/debian8", "linode/ubuntu14.04lts"],
-      "id": 12, "deployments_active": 5057, "updated": "2015-09-28T19:06:30", "user_defined_fields":
+      "id": 12, "deployments_active": 5058, "updated": "2015-09-28T19:06:30", "user_defined_fields":
       [{"name": "db_root_password", "label": "MariaDB/MySQL root password"}, {"name":
       "db_name", "default": "wordpress", "label": "Database name for WordPress"}],
-      "deployments_total": 12499, "label": "WordPress", "rev_note": "Initial import
+      "deployments_total": 12501, "label": "WordPress", "rev_note": "Initial import
       of v1.0.0", "description": "A ready-to-rock WordPress install using the latest
       release from WordPress.org.\r\n\r\nInstalls WordPress on a full LAMP stack using
       MySQL for Debian/Ubuntu and MariaDB for CentOS (the new default).", "user_gravatar_id":
@@ -6227,7 +6224,7 @@ interactions:
       "user_defined_fields": [], "deployments_total": 6, "label": "Epel, puppet",
       "rev_note": "Epel, and Puppet", "description": "Enable EPEL, install ruby, rvm,
       and puppet", "user_gravatar_id": "6b36c6ec06eee6cdea239812435e6c9b", "created":
-      "2011-04-22T21:44:17", "username": "elebertus"}], "results": 984, "page": 1,
+      "2011-04-22T21:44:17", "username": "elebertus"}], "results": 985, "page": 1,
       "pages": 10}'
     headers:
       Access-Control-Allow-Credentials:
@@ -6252,7 +6249,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 14 Jan 2018 15:06:21 GMT
+      - Mon, 15 Jan 2018 01:35:37 GMT
       Retry-After:
       - "116"
       Server:
@@ -6277,7 +6274,101 @@ interactions:
       X-Ratelimit-Remaining:
       - "398"
       X-Ratelimit-Reset:
-      - "1515942498"
+      - "1515980254"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+- request:
+    body: ""
+    form: {}
+    headers:
+      Authorization:
+      - Bearer LKJFLDKEF909DFDF0DFDFLJLSFJFIEJFLIFJLIEJFLEIFJLEIJ
+      User-Agent:
+      - go-linode 1.0.0 https://github.com/chiefy/go-linode
+    url: https://api.linode.com/v4/linode/stackscripts/7
+    method: GET
+  response:
+    body: '{"label": "MySQL", "images": ["linode/centos7", "linode/debian7", "linode/debian8",
+      "linode/fedora22", "linode/ubuntu14.04lts"], "deployments_active": 22, "updated":
+      "2015-09-14T20:53:10", "id": 7, "created": "2010-01-12T23:53:50", "rev_note":
+      "Initial import.", "script": "#!/usr/bin/env python\n\n\"\"\"\nMySQL StackScript\n\t\n\tAuthor:
+      Ricardo N Feliciano <rfeliciano@linode.com>\n\tVersion: 1.0.0.0\n\tRequirements:\n\t\t-
+      ss://linode/python-library <ssinclude StackScriptID=\"3\">\n\nThis StackScript
+      both deploys and provides a library for MySQL. The functions \nin this StackScript
+      are designed to be run across the Linode Core Distributions:\n\t- Ubuntu\n\t-
+      CentOS\n\t- Debian\n\t- Fedora\n\nStackScript User Defined Variables:\n\n<UDF
+      name=\"db_root_password\" label=\"MySQL/MariaDB root password\" default=\"\"
+      />\n\"\"\"\n\nimport os\nimport subprocess\nimport sys\n\ntry: # we''ll need
+      to rename included StackScripts before we can import them\n\tos.rename(\"/root/ssinclude-3\",
+      \"/root/pythonlib.py\")\nexcept:\n\tpass\n\nimport pythonlib\n\n\ndef mysql_install(root_pw
+      = False, db_name = False):\n\t\"\"\"Install MySQL or MariaDB\"\"\"\n\t# add
+      logging support\n\n\tpackage = {\n\t\t''debian'': ''mysql'',\n\t\t''redhat'':
+      ''mariadb''\n\t}\n\n\tpythonlib.system_package_install(package[pythonlib.distro[''family'']]
+      +\n\t\"-server\")\n\t\n\tmysql_start()\n\n\t# if provided with a root password,
+      set it\n\tif root_pw :\n\t\tsubprocess.call([''mysqladmin'', ''-u'', ''root'',
+      ''password'', root_pw])\n\t\n\t# if a database name was provided, let''s create
+      it\n\tif db_name :\n\t\tsubprocess.call(''mysql -uroot -p'' + root_pw + '' -e
+      \"create database '' + db_name + ''\"'', shell=True)\n\n\ndef mysql_start():\n\t\"\"\"Start
+      MariaDB on CentOS and Fedora\"\"\"\n\n\tif pythonlib.distro[''family'']  ==
+      \"redhat\":\n\t\tsubprocess.call([''systemctl'', ''start'', ''mariadb.service''])\n\n\ndef
+      main():\n\t\"\"\"Install MySQL or MariaDB\"\"\"\n\t# add logging support\n\t\n\tpythonlib.init()\n\tpythonlib.system_update()\n\n\tif
+      os.environ[''DB_ROOT_PASSWORD''] != \"\":\n\t\tmysql_install(os.environ[''DB_ROOT_PASSWORD''])\n\telse:\n\t\tmysql_install()\n\n\tpythonlib.end()\n\n\nif
+      __name__ == \"__main__\":\n\tsys.exit(main())", "user_defined_fields": [{"label":
+      "MySQL/MariaDB root password", "default": "", "name": "db_root_password"}],
+      "user_gravatar_id": "ead4da00f4fe6a4bd0b4f11a510c031d", "deployments_total":
+      37, "username": "linode", "description": "Install MySQL or MariaDB to a Linode.
+      Can also be used as a library for other StackScripts.", "is_public": true}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2548"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 15 Jan 2018 01:35:38 GMT
+      Retry-After:
+      - "119"
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - unknown
+      X-Ratelimit-Limit:
+      - "400"
+      X-Ratelimit-Remaining:
+      - "399"
+      X-Ratelimit-Reset:
+      - "1515980258"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
