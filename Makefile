@@ -1,11 +1,11 @@
 
 .PHONY: vendor example
 
-$(GOPATH)/bin/govendor:
-	@go get -u github.com/kardianos/govendor
+$(GOPATH)/bin/dep:
+	@go get -u github.com/golang/dep/cmd/dep
 
-vendor: $(GOPATH)/bin/govendor
-	@govendor sync
+vendor: $(GOPATH)/bin/dep
+	@dep ensure
 
 example:
 	@go run example/main.go
