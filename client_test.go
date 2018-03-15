@@ -69,4 +69,7 @@ func TestClientAliases(t *testing.T) {
 	if client.Regions == nil {
 		t.Error("Expected alias for Regions to return a *Resource")
 	}
+	if client.Volumes == nil {
+		t.Error("Expected alias for Volumes to return a *Resource")
+	}
 }
