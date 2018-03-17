@@ -14,7 +14,7 @@ func TestResourceEndpoint(t *testing.T) {
 	r := client.Resource("images")
 	e, err := r.Endpoint()
 	if err != nil {
-		t.Error("Got error when querying for distributions endpoint")
+		t.Error("Got error when querying for images endpoint")
 	}
 	if e != imagesEndpoint {
 		t.Errorf("Images endpoint did not match '%s'", imagesEndpoint)

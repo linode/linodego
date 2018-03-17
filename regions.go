@@ -6,7 +6,7 @@ type LinodeRegionsPagedResponse struct {
 	Data                 []*LinodeRegion
 }
 
-// LinodeRegion represents a linode distribution object
+// LinodeRegion represents a linode region object
 type LinodeRegion struct {
 	ID      string
 	Country string
