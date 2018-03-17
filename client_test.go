@@ -55,7 +55,7 @@ func TestClientAliases(t *testing.T) {
 		t.Error("Expected client got error", err)
 	}
 	if client.Images == nil {
-		t.Error("Expected alias for Distributions to return a *Resource")
+		t.Error("Expected alias for Images to return a *Resource")
 	}
 	if client.Instances == nil {
 		t.Error("Expected alias for Instances to return a *Resource")

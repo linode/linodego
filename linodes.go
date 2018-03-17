@@ -49,27 +49,27 @@ type LinodeSpec struct {
 	Transfer int
 }
 
-// LinodeInstance represents a linode distribution object
+// LinodeInstance represents a linode object
 type LinodeInstance struct {
 	CreatedStr string `json:"created"`
 	UpdatedStr string `json:"updated"`
 
-	ID           int
-	Created      *time.Time `json:"-"`
-	Updated      *time.Time `json:"-"`
-	Region       string
-	Alerts       *LinodeAlert
-	Backups      *LinodeBackup
-	Snapshot     *LinodeBackup
-	Distribution string
-	Group        string
-	IPv4         []string
-	IPv6         string
-	Label        string
-	Type         string
-	Status       string
-	Hypervisor   string
-	Specs        *LinodeSpec
+	ID         int
+	Created    *time.Time `json:"-"`
+	Updated    *time.Time `json:"-"`
+	Region     string
+	Alerts     *LinodeAlert
+	Backups    *LinodeBackup
+	Snapshot   *LinodeBackup
+	Image      string
+	Group      string
+	IPv4       []string
+	IPv6       string
+	Label      string
+	Type       string
+	Status     string
+	Hypervisor string
+	Specs      *LinodeSpec
 }
 
 func (l *LinodeInstance) fixDates() *LinodeInstance {
