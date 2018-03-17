@@ -37,7 +37,7 @@ This project is not ready for production usage, use at your own risk.
 - `/linode/instances/$id/shutdown`
   - [x] `POST`
 - `/linode/instances/$id/volumes`
-  - [ ] `GET`
+  - [X] `GET`
 
 ### Backups
 
@@ -312,15 +312,17 @@ This project is not ready for production usage, use at your own risk.
 ## Volumes
 
 - `/volumes`
-  - [ ] `GET`
+  - [X] `GET`
   - [ ] `POST`
 - `/volumes/$id`
-  - [ ] `GET`
+  - [X] `GET`
   - [ ] `POST`
   - [ ] `DELETE`
 - `/volumes/$id/attach`
-  - [ ] `POST`
+  - [X] `POST`
 - `/volumes/$id/clone`
-  - [ ] `POST`
+  - [X] `POST`
 - `/volumes/$id/detach`
-  - [ ] `POST`
+  - [X] `POST`
+- `/volumes/$id/resize`
+  - [X] `POST`

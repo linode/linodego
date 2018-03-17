@@ -34,6 +34,7 @@ type Client struct {
 	Instances    *Resource
 	Regions      *Resource
 	StackScripts *Resource
+	Volumes      *Resource
 }
 
 // R wraps resty's R method
@@ -81,6 +82,7 @@ func NewClient(codeAPIKey *string, transport http.RoundTripper) (*Client, error)
 		instancesName:    NewResource(instancesName, instancesEndpoint, false),
 		regionsName:      NewResource(regionsName, regionsEndpoint, false),
 		backupsName:      NewResource(backupsName, backupsEndpoint, true),
+		volumesName:      NewResource(volumesName, volumesEndpoint, false),
 	}
 
 	return &Client{
@@ -93,5 +95,6 @@ func NewClient(codeAPIKey *string, transport http.RoundTripper) (*Client, error)
 		Instances:    resources[instancesName],
 		Regions:      resources[regionsName],
 		Backups:      resources[backupsName],
+		Volumes:      resources[volumesName],
 	}, nil
 }
