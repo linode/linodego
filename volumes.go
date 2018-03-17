@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// LinodeImagesPagedResponse represents a linode API response for listing of images
+// LinodeVolumesPagedResponse represents a linode API response for listing of volumes
 type LinodeVolumesPagedResponse struct {
 	Page, Pages, Results int
 	Data                 []*LinodeVolume
@@ -57,7 +57,7 @@ func (c *Client) ListVolumes() ([]*LinodeVolume, error) {
 	return list, nil
 }
 
-// GetInstance gets the instance with the provided ID
+// GetVolume gets the volume with the provided ID
 func (c *Client) GetVolume(volumeID int) (*LinodeVolume, error) {
 	e, err := c.Volumes.Endpoint()
 	if err != nil {
@@ -74,7 +74,7 @@ func (c *Client) GetVolume(volumeID int) (*LinodeVolume, error) {
 	return i, nil
 }
 
-// BootInstance will boot a new linode instance
+// AttachVolume attaches volume to linode instance
 func (c *Client) AttachVolume(id int, options *LinodeVolumeAttachOptions) (bool, error) {
 	body := ""
 	if bodyData, err := json.Marshal(options); err == nil {
@@ -97,9 +97,9 @@ func (c *Client) AttachVolume(id int, options *LinodeVolumeAttachOptions) (bool,
 	return settleBoolResponseOrError(resp, err)
 }
 
-// CloneInstance clones a Linode instance
+// CloneVolume clones a Linode instance
 func (c *Client) CloneVolume(id int, label string) (*LinodeVolume, error) {
-	body := fmt.Sprintf("{\"label\":\"%d\"}", label)
+	body := fmt.Sprintf("{\"label\":\"%s\"}", label)
 
 	e, err := c.Volumes.Endpoint()
 	if err != nil {
@@ -140,7 +140,7 @@ func (c *Client) DetachVolume(id int) (bool, error) {
 	return settleBoolResponseOrError(resp, err)
 }
 
-// ResizeInstance resizes an instance to new Linode type
+// ResizeVolume resizes an instance to new Linode type
 func (c *Client) ResizeVolume(id int, size int) (bool, error) {
 	body := fmt.Sprintf("{\"size\":\"%d\"}", size)
 

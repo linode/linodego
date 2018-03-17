@@ -39,17 +39,11 @@ func main() {
 	}
 	log.Println("Succesfully got linode images")
 
-	_, err = c.GetInstance(1234)
+	_, err = c.GetInstance(6809519)
 	if err != nil {
-		log.Fatalf("Failed to get linode instance ID 1234: %s", err)
+		log.Fatalf("Failed to get linode instance ID 6809519: %s", err)
 	}
-	log.Println("Succesfully got linode instance ID 1234")
-
-	_, err = c.GetInstance(4090913)
-	if err != nil {
-		log.Fatalf("Failed to get linode instance ID 4090913: %s", err)
-	}
-	log.Println("Succesfully got linode instance ID 4090913")
+	log.Println("Succesfully got linode instance ID 6809519")
 
 	_, err = c.ListStackscripts()
 	if err != nil {
@@ -62,6 +56,18 @@ func main() {
 		log.Fatalf("Failed to get linode stackscript ID 7: %s", err)
 	}
 	log.Println("Succesfully got linode stackscript ID 7")
+
+	_, err = c.ListVolumes()
+	if err != nil {
+		log.Fatalf("Failed to get linode volumes: %s", err)
+	}
+	log.Println("Succesfully got linode volumes (1 page)")
+
+	_, err = c.GetVolume(4880)
+	if err != nil {
+		log.Fatalf("Failed to get linode volume ID 4880: %s", err)
+	}
+	log.Println("Succesfully got linode volume ID 4880")
 
 	log.Printf("Successfully retrieved linode requests!")
 }

@@ -24,9 +24,9 @@ func TestGetVolume(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
 	}
-	linode, err := client.GetVolume(4090913)
+	linode, err := client.GetVolume(4880)
 	if err != nil {
-		t.Errorf("Error getting instance 1234, expected *LinodeVolume, got error %v", err)
+		t.Errorf("Error getting volume 4880, expected *LinodeVolume, got error %v", err)
 	}
 	fmt.Printf("%#v \n", linode)
 }

@@ -24,9 +24,9 @@ func TestGetInstance(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
 	}
-	linode, err := client.GetInstance(4090913)
+	linode, err := client.GetInstance(6809519)
 	if err != nil {
-		t.Errorf("Error getting instance 1234, expected *LinodeInstance, got error %v", err)
+		t.Errorf("Error getting instance 6809519, expected *LinodeInstance, got error %v", err)
 	}
 	fmt.Printf("%#v \n", linode)
 }
