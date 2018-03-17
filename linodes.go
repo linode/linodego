@@ -102,13 +102,13 @@ func (c *Client) ListInstances() ([]*LinodeInstance, error) {
 	if err != nil {
 		return nil, err
 	}
-	resp, err := c.R().
+	r, err := c.R().
 		SetResult(&LinodeInstancesPagedResponse{}).
 		Get(e)
 	if err != nil {
 		return nil, err
 	}
-	l := resp.Result().(*LinodeInstancesPagedResponse).Data
+	l := r.Result().(*LinodeInstancesPagedResponse).Data
 	for _, el := range l {
 		el.fixDates()
 	}
@@ -122,14 +122,13 @@ func (c *Client) GetInstance(linodeID int) (*LinodeInstance, error) {
 		return nil, err
 	}
 	e = fmt.Sprintf("%s/%d", e, linodeID)
-	resp, err := c.R().
+	r, err := c.R().
 		SetResult(&LinodeInstance{}).
 		Get(e)
 	if err != nil {
 		return nil, err
 	}
-	i := resp.Result().(*LinodeInstance).fixDates()
-	return i, nil
+	return r.Result().(*LinodeInstance).fixDates(), nil
 }
 
 // BootInstance will boot a new linode instance
@@ -151,12 +150,12 @@ func (c *Client) BootInstance(id int, configID int) (bool, error) {
 	}
 
 	e = fmt.Sprintf("%s/%d/boot", e, id)
-	resp, err := c.R().
+	r, err := c.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(bodyStr).
 		Post(e)
 
-	return settleBoolResponseOrError(resp, err)
+	return settleBoolResponseOrError(r, err)
 }
 
 // CloneInstance clones a Linode instance
@@ -176,7 +175,7 @@ func (c *Client) CloneInstance(id int, options *LinodeCloneOptions) (*LinodeInst
 		return nil, err
 	}
 
-	resp, err := req.
+	r, err := req.
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
 		Post(e)
@@ -185,7 +184,7 @@ func (c *Client) CloneInstance(id int, options *LinodeCloneOptions) (*LinodeInst
 		return nil, err
 	}
 
-	return resp.Result().(*LinodeInstance).fixDates(), nil
+	return r.Result().(*LinodeInstance).fixDates(), nil
 }
 
 // RebootInstance reboots a Linode instance
@@ -199,12 +198,58 @@ func (c *Client) RebootInstance(id int, configID int) (bool, error) {
 
 	e = fmt.Sprintf("%s/%d/reboot", e, id)
 
-	resp, err := c.R().
+	r, err := c.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
 		Post(e)
 
-	return settleBoolResponseOrError(resp, err)
+	return settleBoolResponseOrError(r, err)
+}
+
+// MutateInstance Upgrades a Linode to its next generation.
+func (c *Client) MutateInstance(id int) (bool, error) {
+	e, err := c.Instances.Endpoint()
+	if err != nil {
+		return false, err
+	}
+	e = fmt.Sprintf("%s/%d/mutate", e, id)
+
+	r, err := c.R().Post(e)
+	return settleBoolResponseOrError(r, err)
+}
+
+// RebuildInstanceOptions is a struct representing the options to send to the rebuild linode endpoint
+type RebuildInstanceOptions struct {
+	Image           string
+	RootPass        string
+	AuthorizedKeys  []string
+	StackscriptID   int
+	StackscriptData map[string]string
+	Booted          bool
+}
+
+// RebuildInstance Deletes all Disks and Configs on this Linode,
+// then deploys a new Image to this Linode with the given attributes.
+func (c *Client) RebuildInstance(id int, opts *RebuildInstanceOptions) (*LinodeInstance, error) {
+	o, err := json.Marshal(opts)
+	if err != nil {
+		return nil, err
+	}
+	b := string(o)
+	e, err := c.Instances.Endpoint()
+	if err != nil {
+		return nil, err
+	}
+	e = fmt.Sprintf("%s/%d/rebuild", e, id)
+	r, err := c.R().
+		SetHeader("Content-Type", "application/json").
+		SetBody(b).
+		SetResult(&LinodeInstance{}).
+		Post(e)
+	if err != nil {
+		return nil, err
+	}
+	return r.Result().(*LinodeInstance).fixDates(), nil
 }
 
 // ResizeInstance resizes an instance to new Linode type
@@ -217,12 +262,12 @@ func (c *Client) ResizeInstance(id int, linodeType string) (bool, error) {
 	}
 	e = fmt.Sprintf("%s/%d/resize", e, id)
 
-	resp, err := c.R().
+	r, err := c.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
 		Post(e)
 
-	return settleBoolResponseOrError(resp, err)
+	return settleBoolResponseOrError(r, err)
 }
 
 // ShutdownInstance - Shutdown an instance

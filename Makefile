@@ -1,3 +1,4 @@
+include .env
 
 .PHONY: vendor example
 
