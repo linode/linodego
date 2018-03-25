@@ -216,6 +216,38 @@ func (c *Client) GetInstance(linodeID int) (*LinodeInstance, error) {
 	return r.Result().(*LinodeInstance).fixDates(), nil
 }
 
+// GetKernel gets the kernel with the provided ID
+func (c *Client) GetKernel(kernelID int) (*LinodeKernel, error) {
+	e, err := c.Kernels.Endpoint()
+	if err != nil {
+		return nil, err
+	}
+	e = fmt.Sprintf("%s/%d", e, kernelID)
+	r, err := c.R().
+		SetResult(&LinodeKernel{}).
+		Get(e)
+	if err != nil {
+		return nil, err
+	}
+	return r.Result().(*LinodeKernel), nil
+}
+
+// GetType gets the type with the provided ID
+func (c *Client) GetType(typeID int) (*LinodeType, error) {
+	e, err := c.Types.Endpoint()
+	if err != nil {
+		return nil, err
+	}
+	e = fmt.Sprintf("%s/%d", e, typeID)
+	r, err := c.R().
+		SetResult(&LinodeType{}).
+		Get(e)
+	if err != nil {
+		return nil, err
+	}
+	return r.Result().(*LinodeType), nil
+}
+
 // BootInstance will boot a new linode instance
 func (c *Client) BootInstance(id int, configID int) (bool, error) {
 	bodyStr := ""

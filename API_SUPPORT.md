@@ -86,7 +86,7 @@
 - `/linode/kernels`
   - [X] `GET`
 - `/linode/kernels/$id`
-  - [ ] `GET`
+  - [X] `GET`
 
 ### StackScripts
 
@@ -110,7 +110,7 @@
 - `/linode/types`
   - [X] `GET`
 - `/linode/types/$id`
-  - [ ] `GET`
+  - [X] `GET`
 
 ## Domains
 
