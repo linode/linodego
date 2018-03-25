@@ -78,10 +78,27 @@ func (l *LinodeInstance) fixDates() *LinodeInstance {
 	return l
 }
 
+// LinodeKernel represents a linode kernel object
+type LinodeKernel struct {
+	ID           int
+	Label        string
+	Version      string
+	KVM          bool
+	XEN          bool
+	Architecture string
+	PVOPS        bool
+}
+
 // LinodeInstancesPagedResponse represents a linode API response for listing
 type LinodeInstancesPagedResponse struct {
 	Page, Pages, Results int
 	Data                 []*LinodeInstance
+}
+
+// LinodeKernelsPagedResponse represents a linode kernels API response for listing
+type LinodeKernelsPagedResponse struct {
+	Page, Pages, Results int
+	Data                 []*LinodeKernel
 }
 
 // LinodeCloneOptions is an options struct when sending a clone request to the API
@@ -112,6 +129,22 @@ func (c *Client) ListInstances() ([]*LinodeInstance, error) {
 	for _, el := range l {
 		el.fixDates()
 	}
+	return l, nil
+}
+
+// ListKernels lists linode kernels
+func (c *Client) ListKernels() ([]*LinodeKernel, error) {
+	e, err := c.Kernels.Endpoint()
+	if err != nil {
+		return nil, err
+	}
+	r, err := c.R().
+		SetResult(&LinodeKernelsPagedResponse{}).
+		Get(e)
+	if err != nil {
+		return nil, err
+	}
+	l := r.Result().(*LinodeKernelsPagedResponse).Data
 	return l, nil
 }
 

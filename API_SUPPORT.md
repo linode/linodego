@@ -84,7 +84,7 @@
 ### Kernels
 
 - `/linode/kernels`
-  - [ ] `GET`
+  - [X] `GET`
 - `/linode/kernels/$id`
   - [ ] `GET`
 

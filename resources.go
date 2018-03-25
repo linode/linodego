@@ -13,6 +13,7 @@ const (
 	regionsName      = "regions"
 	backupsName      = "backups"
 	volumesName      = "volumes"
+	kernelsName      = "kernels"
 
 	stackscriptsEndpoint = "linode/stackscripts"
 	imagesEndpoint       = "images"
@@ -20,6 +21,7 @@ const (
 	regionsEndpoint      = "regions"
 	backupsEndpoint      = "linode/instances/{{ .ID }}/backups"
 	volumesEndpoint      = "volumes"
+	kernelsEndpoint      = "linode/kernels"
 )
 
 // Resource represents a linode API resource
