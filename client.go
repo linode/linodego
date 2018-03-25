@@ -30,6 +30,8 @@ type Client struct {
 	resources map[string]*Resource
 
 	Images       *Resource
+	Disks        *Resource
+	Configs      *Resource
 	Backups      *Resource
 	Instances    *Resource
 	Regions      *Resource
@@ -83,6 +85,8 @@ func NewClient(codeAPIKey *string, transport http.RoundTripper) (*Client, error)
 		imagesName:       NewResource(imagesName, imagesEndpoint, false),
 		instancesName:    NewResource(instancesName, instancesEndpoint, false),
 		regionsName:      NewResource(regionsName, regionsEndpoint, false),
+		disksName:        NewResource(disksName, disksEndpoint, true),
+		configsName:      NewResource(configsName, configsEndpoint, true),
 		backupsName:      NewResource(backupsName, backupsEndpoint, true),
 		volumesName:      NewResource(volumesName, volumesEndpoint, false),
 		kernelsName:      NewResource(kernelsName, kernelsEndpoint, false),
@@ -98,6 +102,8 @@ func NewClient(codeAPIKey *string, transport http.RoundTripper) (*Client, error)
 		StackScripts: resources[stackscriptsName],
 		Instances:    resources[instancesName],
 		Regions:      resources[regionsName],
+		Disks:        resources[disksName],
+		Configs:      resources[configsName],
 		Backups:      resources[backupsName],
 		Volumes:      resources[volumesName],
 		Kernels:      resources[kernelsName],

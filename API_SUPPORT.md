@@ -33,7 +33,7 @@
 ### Backups
 
 - `/linode/instances/$id/backups`
-  - [ ] `GET`
+  - [X] `GET`
   - [ ] `POST`
 - `/linode/instances/$id/backups/$id/restore`
   - [ ] `POST`
@@ -45,20 +45,20 @@
 ### Configs
 
 - `/linode/instances/$id/configs`
-  - [ ] `GET`
+  - [X] `GET`
   - [ ] `POST`
 - `/linode/instances/$id/configs/$id`
-  - [ ] `GET`
+  - [X] `GET`
   - [ ] `PUT`
   - [ ] `DELETE`
 
 ### Disks
 
 - `/linode/instances/$id/disks`
-  - [ ] `GET`
+  - [X] `GET`
   - [ ] `POST`
 - `/linode/instances/$id/disks/$id`
-  - [ ] `GET`
+  - [X] `GET`
   - [ ] `PUT`
   - [ ] `POST`
   - [ ] `DELETE`
