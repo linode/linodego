@@ -14,6 +14,7 @@ const (
 	backupsName      = "backups"
 	volumesName      = "volumes"
 	kernelsName      = "kernels"
+	typesName        = "types"
 
 	stackscriptsEndpoint = "linode/stackscripts"
 	imagesEndpoint       = "images"
@@ -22,6 +23,7 @@ const (
 	backupsEndpoint      = "linode/instances/{{ .ID }}/backups"
 	volumesEndpoint      = "volumes"
 	kernelsEndpoint      = "linode/kernels"
+	typesEndpoint        = "linode/types"
 )
 
 // Resource represents a linode API resource

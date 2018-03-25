@@ -108,7 +108,7 @@
 ### Types
 
 - `/linode/types`
-  - [ ] `GET`
+  - [X] `GET`
 - `/linode/types/$id`
   - [ ] `GET`
 
