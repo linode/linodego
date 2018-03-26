@@ -155,7 +155,7 @@ func (c *Client) ListInstanceDisks(linodeID int) ([]*LinodeInstanceDisk, error) 
 	if err != nil {
 		return nil, err
 	}
-	e = fmt.Sprintf("%s/disks", e, linodeID)
+	e = fmt.Sprintf("%s/%d/disks", e, linodeID)
 	r, err := c.R().
 		SetResult(&LinodeInstanceDisksPagedResponse{}).
 		Get(e)
@@ -175,7 +175,7 @@ func (c *Client) ListInstanceConfigs(linodeID int) ([]*LinodeInstanceConfig, err
 	if err != nil {
 		return nil, err
 	}
-	e = fmt.Sprintf("%s/configs", e, linodeID)
+	e = fmt.Sprintf("%s/%d/configs", e, linodeID)
 	r, err := c.R().
 		SetResult(&LinodeInstanceConfigsPagedResponse{}).
 		Get(e)

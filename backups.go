@@ -22,7 +22,7 @@ func (c *Client) GetInstanceBackups(linodeID int) (*LinodeInstanceBackupsRespons
 	if err != nil {
 		return nil, err
 	}
-	e = fmt.Sprintf("%s/backups", e, linodeID)
+	e = fmt.Sprintf("%s/%d/backups", e, linodeID)
 	r, err := c.R().
 		SetResult(&LinodeInstanceBackupsResponse{}).
 		Get(e)
