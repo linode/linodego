@@ -10,7 +10,7 @@ import (
 
 // LinodeKernel represents a linode kernel object
 type LinodeKernel struct {
-	ID           int
+	ID           string
 	Label        string
 	Version      string
 	KVM          bool
@@ -37,7 +37,7 @@ type LinodeAddons struct {
 
 // LinodeType represents a linode type object
 type LinodeType struct {
-	ID         int
+	ID         string
 	Disk       int
 	Class      string // enum: nanode, standard, highmem
 	Price      *LinodePrice
