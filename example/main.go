@@ -23,13 +23,13 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("%v", types)
+	fmt.Printf("%+v", types)
 
 	kernels, err := linodeClient.ListKernels()
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("%v", kernels)
+	fmt.Printf("%+v", kernels)
 
 	linodes, err := linodeClient.ListInstances()
 
@@ -42,28 +42,28 @@ func main() {
 			log.Fatal(err)
 		}
 
-		fmt.Printf("%v", linode)
+		fmt.Printf("%#v", linode)
 
 		configs, err := linodeClient.ListInstanceConfigs(linode.ID)
 		if err != nil {
 			log.Fatal(err)
-		} else {
+		} else if len(configs) > 0 {
 			config, err := linodeClient.GetInstanceConfig(linode.ID, configs[0].ID)
 			if err != nil {
 				log.Fatal(err)
 			}
-			fmt.Printf("First Config: %v", config)
+			fmt.Printf("First Config: %#v", config)
 		}
 
 		disks, err := linodeClient.ListInstanceDisks(linode.ID)
 		if err != nil {
 			log.Fatal(err)
-		} else {
+		} else if len(disks) > 0 {
 			disk, err := linodeClient.GetInstanceDisk(linode.ID, disks[0].ID)
 			if err != nil {
 				log.Fatal(err)
 			}
-			fmt.Printf("First Disk: %v", disk)
+			fmt.Printf("First Disk: %#v", disk)
 		}
 	}
 }
