@@ -1,7 +1,6 @@
 package golinode
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -24,9 +23,8 @@ func TestGetVolume(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
 	}
-	linode, err := client.GetVolume(4880)
+	_, err = client.GetVolume(4880)
 	if err != nil {
 		t.Errorf("Error getting volume 4880, expected *LinodeVolume, got error %v", err)
 	}
-	fmt.Printf("%#v \n", linode)
 }

@@ -4,23 +4,28 @@ import (
 	"time"
 )
 
-// LinodeSnapshotsPagedResponse represents a linode API response for listing
-type LinodeSnapshotsPagedResponse struct {
-	Page, Pages, Results int
-	Data                 []*LinodeSnapshot
-}
-
 // LinodeSnapshot represents a linode backup snapshot
 type LinodeSnapshot struct {
-	CreatedStr string `json:"created"`
-	UpdatedStr string `json:"updated"`
+	CreatedStr  string `json:"created"`
+	UpdatedStr  string `json:"updated"`
+	FinishedStr string `json:"finished"`
 
-	ID       int
-	Label    string
-	Status   string
-	Type     string
-	Created  *time.Time `json:"-"`
-	Updated  *time.Time `json:"-"`
-	Finished string
-	Configs  []string
+	ID           int
+	Label        string
+	Status       string
+	Type         string
+	Region       string
+	Created      *time.Time `json:"-"`
+	Updated      *time.Time `json:"-"`
+	Finished     *time.Time `json:"-"`
+	Configs      []string
+	Disks        []*LinodeInstanceDisk
+	Availability string
+}
+
+func (l *LinodeSnapshot) fixDates() *LinodeSnapshot {
+	l.Created, _ = parseDates(l.CreatedStr)
+	l.Updated, _ = parseDates(l.UpdatedStr)
+	l.Finished, _ = parseDates(l.FinishedStr)
+	return l
 }
