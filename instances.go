@@ -79,6 +79,17 @@ type LinodeInstanceConfigDevice struct {
 	VolumeID int `json:"volume_id"`
 }
 
+type LinodeInstanceConfigDeviceMap struct {
+	SDA *LinodeInstanceConfigDevice
+	SDB *LinodeInstanceConfigDevice
+	SDC *LinodeInstanceConfigDevice
+	SDD *LinodeInstanceConfigDevice
+	SDE *LinodeInstanceConfigDevice
+	SDF *LinodeInstanceConfigDevice
+	SDG *LinodeInstanceConfigDevice
+	SDH *LinodeInstanceConfigDevice
+}
+
 type LinodeInstanceConfigHelpers struct {
 	UpdateDBDisabled  bool `json:"updatedb_disabled"`
 	Distro            bool
@@ -94,7 +105,7 @@ type LinodeInstanceConfig struct {
 	ID          int
 	Label       string
 	Comments    string
-	Devices     []*LinodeInstanceConfigDevice
+	Devices     *LinodeInstanceConfigDeviceMap
 	Helpers     *LinodeInstanceConfigHelpers
 	MemoryLimit int `json:"memory_limit"`
 	Kernel      string
@@ -211,7 +222,7 @@ func (c *Client) GetInstanceDisk(linodeID int, diskID int) (*LinodeInstanceDisk,
 	if err != nil {
 		return nil, err
 	}
-	e = fmt.Sprintf("%s/%d/disk/%d", e, linodeID, diskID)
+	e = fmt.Sprintf("%s/%d/disks/%d", e, linodeID, diskID)
 	r, err := c.R().
 		SetResult(&LinodeInstanceDisk{}).
 		Get(e)
@@ -227,7 +238,7 @@ func (c *Client) GetInstanceConfig(linodeID int, configID int) (*LinodeInstanceC
 	if err != nil {
 		return nil, err
 	}
-	e = fmt.Sprintf("%s/%d/config/%d", e, linodeID, configID)
+	e = fmt.Sprintf("%s/%d/configs/%d", e, linodeID, configID)
 	r, err := c.R().
 		SetResult(&LinodeInstanceConfig{}).
 		Get(e)
