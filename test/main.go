@@ -1,13 +1,30 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"os"
+	"strconv"
 
 	golinode "github.com/chiefy/go-linode"
 	"github.com/dnaeon/go-vcr/recorder"
 )
 
 func main() {
+
+	envErr := fmt.Errorf("env vars LINODE_INSTANCE_ID and LINODE_VOLUME_ID must be set")
+
+	var linodeInstanceID int
+	var linodeVolumeID int
+	var err error
+
+	if linodeInstanceID, err = strconv.Atoi(os.Getenv("LINODE_INSTANCE_ID")); err != nil {
+		log.Fatal(envErr)
+	}
+	if linodeVolumeID, err = strconv.Atoi(os.Getenv("LINODE_VOLUME_ID")); err != nil {
+		log.Fatal(envErr)
+	}
+
 	// Start our recorder
 	r, err := recorder.New("test/fixtures")
 	if err != nil {
@@ -39,11 +56,35 @@ func main() {
 	}
 	log.Println("Succesfully got linode images")
 
-	_, err = c.GetInstance(6809519)
+	_, err = c.GetInstance(linodeInstanceID)
 	if err != nil {
-		log.Fatalf("Failed to get linode instance ID 6809519: %s", err)
+		log.Fatalf("Failed to get linode instance ID %d: %s", linodeInstanceID, err)
 	}
-	log.Println("Succesfully got linode instance ID 6809519")
+	log.Println(fmt.Sprintf("Succesfully got linode instance ID %d", linodeInstanceID))
+
+	_, err = c.GetInstanceBackups(linodeInstanceID)
+	if err != nil {
+		log.Fatalf("Failed to get linode backups for instance ID %d: %s", linodeInstanceID, err)
+	}
+	log.Println(fmt.Sprintf("Succesfully got linode backups for instance ID %d", linodeInstanceID))
+
+	_, err = c.ListInstanceDisks(linodeInstanceID)
+	if err != nil {
+		log.Fatalf("Failed to get linode instance disks: %s", err)
+	}
+	log.Println("Succesfully got linode instance disks")
+
+	_, err = c.ListInstanceConfigs(linodeInstanceID)
+	if err != nil {
+		log.Fatalf("Failed to get linode instance configs: %s", err)
+	}
+	log.Println("Succesfully got linode instance configs")
+
+	_, err = c.ListInstanceVolumes(linodeInstanceID)
+	if err != nil {
+		log.Fatalf("Failed to get linode instance volumes: %s", err)
+	}
+	log.Println("Succesfully got linode instance volumes")
 
 	_, err = c.ListStackscripts()
 	if err != nil {
@@ -63,11 +104,11 @@ func main() {
 	}
 	log.Println("Succesfully got linode volumes (1 page)")
 
-	_, err = c.GetVolume(4880)
+	_, err = c.GetVolume(linodeVolumeID)
 	if err != nil {
-		log.Fatalf("Failed to get linode volume ID 4880: %s", err)
+		log.Fatalf("Failed to get linode volume ID %d: %s", linodeVolumeID, err)
 	}
-	log.Println("Succesfully got linode volume ID 4880")
+	log.Println(fmt.Sprintf("Succesfully got linode volume ID %d", linodeVolumeID))
 
 	log.Printf("Successfully retrieved linode requests!")
 }

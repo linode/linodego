@@ -9,11 +9,11 @@ func TestListInstanceBackups(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
 	}
-	backups, err := client.GetInstanceBackups(6809519)
+	backups, err := client.GetInstanceBackups(TestInstanceID)
 	if err != nil {
 		t.Errorf("Error listing backups, expected struct, got error %v", err)
 	}
-	if len(backups.Automatic) > 0 {
+	if backups.Automatic != nil && len(backups.Automatic) > 0 {
 		t.Errorf("Expected an empty list of automatic backups, but got %v", backups.Automatic)
 	}
 	if backups.Snapshot.Current != nil {

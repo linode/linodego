@@ -38,11 +38,16 @@ type LinodeBackupSnapshotResponse struct {
 }
 
 func (l *LinodeBackupSnapshotResponse) fixDates() *LinodeBackupSnapshotResponse {
-	l.Current.fixDates()
-	l.InProgress.fixDates()
+	if l.Current != nil {
+		l.Current.fixDates()
+	}
+	if l.InProgress != nil {
+		l.InProgress.fixDates()
+	}
 	return l
 }
 
+// LinodeInstanceBackupsResponse response struct for backup snapshot
 type LinodeInstanceBackupsResponse struct {
 	Automatic []*LinodeSnapshot
 	Snapshot  *LinodeBackupSnapshotResponse
@@ -52,6 +57,8 @@ func (l *LinodeInstanceBackupsResponse) fixDates() *LinodeInstanceBackupsRespons
 	for _, el := range l.Automatic {
 		el.fixDates()
 	}
-	l.Snapshot.fixDates()
+	if l.Snapshot != nil {
+		l.Snapshot.fixDates()
+	}
 	return l
 }

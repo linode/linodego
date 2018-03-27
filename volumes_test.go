@@ -4,6 +4,8 @@ import (
 	"testing"
 )
 
+const TestVolumeID = 5029
+
 func TestListVolumes(t *testing.T) {
 	client, err := createTestClient(debugAPI)
 	if err != nil {
@@ -13,7 +15,7 @@ func TestListVolumes(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error listing instances, expected struct, got error %v", err)
 	}
-	if len(volumes) != 1 {
+	if len(volumes) == 0 {
 		t.Errorf("Expected a list of instances, but got %v", volumes)
 	}
 }
@@ -23,8 +25,8 @@ func TestGetVolume(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
 	}
-	_, err = client.GetVolume(4880)
+	_, err = client.GetVolume(TestVolumeID)
 	if err != nil {
-		t.Errorf("Error getting volume 4880, expected *LinodeVolume, got error %v", err)
+		t.Errorf("Error getting volume %d, expected *LinodeVolume, got error %v", TestVolumeID, err)
 	}
 }
