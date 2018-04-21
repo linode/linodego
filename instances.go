@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net"
+	"strconv"
 	"time"
 
 	"github.com/go-resty/resty"
@@ -129,38 +130,58 @@ type LinodeInstancesPagedResponse struct {
 	Data                 []*LinodeInstance
 }
 
-// LinodeDisksPagedResponse represents a linode API response for listing
+// LinodeInstanceDisksPagedResponse represents a linode API response for listing
 type LinodeInstanceDisksPagedResponse struct {
 	Page, Pages, Results int
 	Data                 []*LinodeInstanceDisk
 }
 
-// LinodeConfigsPagedResponse represents a linode API response for listing
+// LinodeInstanceConfigsPagedResponse represents a linode API response for listing
 type LinodeInstanceConfigsPagedResponse struct {
 	Page, Pages, Results int
 	Data                 []*LinodeInstanceConfig
 }
 
 // ListInstances lists linode instances
-func (c *Client) ListInstances() ([]*LinodeInstance, error) {
+func (c *Client) ListInstances(opts *ListOptions) ([]*LinodeInstance, error) {
 	e, err := c.Instances.Endpoint()
 	if err != nil {
 		return nil, err
 	}
-	r, err := c.R().
-		SetResult(&LinodeInstancesPagedResponse{}).
-		Get(e)
+
+	req := c.R().SetResult(&LinodeInstancesPagedResponse{})
+
+	if opts != nil {
+		req.SetQueryParam("page", strconv.Itoa(opts.Page)).
+			SetQueryParam("per_page", strconv.Itoa(opts.PerPage))
+	}
+
+	r, err := req.Get(e)
 	if err != nil {
 		return nil, err
 	}
-	l := r.Result().(*LinodeInstancesPagedResponse).Data
-	for _, el := range l {
+
+	data := r.Result().(*LinodeInstancesPagedResponse).Data
+	pages := r.Result().(*LinodeInstancesPagedResponse).Pages
+	results := r.Result().(*LinodeInstancesPagedResponse).Results
+
+	for _, el := range data {
 		el.fixDates()
 	}
-	return l, nil
+
+	if opts == nil {
+		for page := 2; page <= pages; page = page + 1 {
+			next, _ := c.ListInstances(&ListOptions{Page: page})
+			data = append(data, next...)
+		}
+	} else {
+		opts.Results = results
+	}
+
+	return data, nil
 }
 
-// ListDisks lists linode disks
+// ListInstanceDisks lists linode disks
 func (c *Client) ListInstanceDisks(linodeID int) ([]*LinodeInstanceDisk, error) {
 	e, err := c.Instances.Endpoint()
 	if err != nil {
@@ -180,7 +201,7 @@ func (c *Client) ListInstanceDisks(linodeID int) ([]*LinodeInstanceDisk, error) 
 	return l, nil
 }
 
-// ListConfigs lists linode configs
+// ListInstanceConfigs lists linode configs
 func (c *Client) ListInstanceConfigs(linodeID int) ([]*LinodeInstanceConfig, error) {
 	e, err := c.Instances.Endpoint()
 	if err != nil {
@@ -216,7 +237,7 @@ func (c *Client) GetInstance(linodeID int) (*LinodeInstance, error) {
 	return r.Result().(*LinodeInstance).fixDates(), nil
 }
 
-// GetDisk gets the linode disk with the provided ID
+// GetInstanceDisk gets the linode disk with the provided ID
 func (c *Client) GetInstanceDisk(linodeID int, diskID int) (*LinodeInstanceDisk, error) {
 	e, err := c.Instances.Endpoint()
 	if err != nil {
@@ -232,7 +253,7 @@ func (c *Client) GetInstanceDisk(linodeID int, diskID int) (*LinodeInstanceDisk,
 	return r.Result().(*LinodeInstanceDisk).fixDates(), nil
 }
 
-// GetConfig gets the linode config with the provided ID
+// GetInstanceConfig gets the linode config with the provided ID
 func (c *Client) GetInstanceConfig(linodeID int, configID int) (*LinodeInstanceConfig, error) {
 	e, err := c.Instances.Endpoint()
 	if err != nil {

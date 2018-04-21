@@ -61,6 +61,13 @@ func (c Client) Resource(resourceName string) *Resource {
 	return selectedResource
 }
 
+// ListOptions are the pagination parameters for List endpoints
+type ListOptions struct {
+	Page    int `url:"page,omitempty"`
+	PerPage int `url:"per_page,omitempty"`
+	Results int `url:"results,omitempty"`
+}
+
 // NewClient factory to create new Client struct
 func NewClient(codeAPIKey *string, transport http.RoundTripper) (*Client, error) {
 	linodeAPIKey := ""

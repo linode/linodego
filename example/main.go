@@ -25,13 +25,13 @@ func main() {
 	}
 	fmt.Printf("%+v", types)
 
-	kernels, err := linodeClient.ListKernels()
+	kernels, err := linodeClient.ListKernels(nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Printf("%+v", kernels)
 
-	linodes, err := linodeClient.ListInstances()
+	linodes, err := linodeClient.ListInstances(nil)
 
 	if len(linodes) == 0 {
 		log.Printf("No Linodes to inspect.")
