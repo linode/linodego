@@ -52,14 +52,14 @@ type LinodeType struct {
 
 // LinodeKernelsPagedResponse represents a linode kernels API response for listing
 type LinodeKernelsPagedResponse struct {
-	Page, Pages, Results int
-	Data                 []*LinodeKernel
+	*PageOptions
+	Data []*LinodeKernel
 }
 
 // LinodeTypesPagedResponse represents a linode types API response for listing
 type LinodeTypesPagedResponse struct {
-	Page, Pages, Results int
-	Data                 []*LinodeType
+	*PageOptions
+	Data []*LinodeType
 }
 
 // LinodeCloneOptions is an options struct when sending a clone request to the API
@@ -83,8 +83,7 @@ func (c *Client) ListKernels(opts *ListOptions) ([]*LinodeKernel, error) {
 	req := c.R().SetResult(&LinodeKernelsPagedResponse{})
 
 	if opts != nil {
-		req.SetQueryParam("page", strconv.Itoa(opts.Page)).
-			SetQueryParam("per_page", strconv.Itoa(opts.PerPage))
+		req.SetQueryParam("page", strconv.Itoa(opts.Page))
 	}
 
 	r, err := req.Get(e)
@@ -98,7 +97,7 @@ func (c *Client) ListKernels(opts *ListOptions) ([]*LinodeKernel, error) {
 
 	if opts == nil {
 		for page := 2; page <= pages; page = page + 1 {
-			next, _ := c.ListKernels(&ListOptions{Page: page})
+			next, _ := c.ListKernels(&ListOptions{PageOptions: &PageOptions{Page: page}})
 			data = append(data, next...)
 		}
 	} else {

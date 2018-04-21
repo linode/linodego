@@ -2,8 +2,8 @@ package golinode
 
 // LinodeRegionsPagedResponse represents a linode API response for listing
 type LinodeRegionsPagedResponse struct {
-	Page, Pages, Results int
-	Data                 []*LinodeRegion
+	*PageOptions
+	Data []*LinodeRegion
 }
 
 // LinodeRegion represents a linode region object

@@ -61,11 +61,17 @@ func (c Client) Resource(resourceName string) *Resource {
 	return selectedResource
 }
 
-// ListOptions are the pagination parameters for List endpoints
-type ListOptions struct {
+// PageOptions are the pagination parameters for List endpoints
+type PageOptions struct {
 	Page    int `url:"page,omitempty"`
-	PerPage int `url:"per_page,omitempty"`
+	Pages   int `url:"per_page,omitempty"`
 	Results int `url:"results,omitempty"`
+}
+
+// ListOptions are the pagination and filtering (TODO) parameters for endpoints
+type ListOptions struct {
+	*PageOptions
+	Filter string
 }
 
 // NewClient factory to create new Client struct

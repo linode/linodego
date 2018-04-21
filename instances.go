@@ -126,20 +126,20 @@ func (l *LinodeInstanceConfig) fixDates() *LinodeInstanceConfig {
 
 // LinodeInstancesPagedResponse represents a linode API response for listing
 type LinodeInstancesPagedResponse struct {
-	Page, Pages, Results int
-	Data                 []*LinodeInstance
+	*PageOptions
+	Data []*LinodeInstance
 }
 
 // LinodeInstanceDisksPagedResponse represents a linode API response for listing
 type LinodeInstanceDisksPagedResponse struct {
-	Page, Pages, Results int
-	Data                 []*LinodeInstanceDisk
+	*PageOptions
+	Data []*LinodeInstanceDisk
 }
 
 // LinodeInstanceConfigsPagedResponse represents a linode API response for listing
 type LinodeInstanceConfigsPagedResponse struct {
-	Page, Pages, Results int
-	Data                 []*LinodeInstanceConfig
+	*PageOptions
+	Data []*LinodeInstanceConfig
 }
 
 // ListInstances lists linode instances
@@ -152,8 +152,7 @@ func (c *Client) ListInstances(opts *ListOptions) ([]*LinodeInstance, error) {
 	req := c.R().SetResult(&LinodeInstancesPagedResponse{})
 
 	if opts != nil {
-		req.SetQueryParam("page", strconv.Itoa(opts.Page)).
-			SetQueryParam("per_page", strconv.Itoa(opts.PerPage))
+		req.SetQueryParam("page", strconv.Itoa(opts.Page))
 	}
 
 	r, err := req.Get(e)
@@ -171,7 +170,7 @@ func (c *Client) ListInstances(opts *ListOptions) ([]*LinodeInstance, error) {
 
 	if opts == nil {
 		for page := 2; page <= pages; page = page + 1 {
-			next, _ := c.ListInstances(&ListOptions{Page: page})
+			next, _ := c.ListInstances(&ListOptions{PageOptions: &PageOptions{Page: 1}})
 			data = append(data, next...)
 		}
 	} else {

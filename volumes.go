@@ -8,8 +8,8 @@ import (
 
 // LinodeVolumesPagedResponse represents a linode API response for listing of volumes
 type LinodeVolumesPagedResponse struct {
-	Page, Pages, Results int
-	Data                 []*LinodeVolume
+	*PageOptions
+	Data []*LinodeVolume
 }
 
 func (l *LinodeVolume) fixDates() *LinodeVolume {
