@@ -68,7 +68,7 @@ func (r Resource) EndpointWithID(id int) (string, error) {
 	return r.render(id)
 }
 
-// Endpoint will return the non-templated endpoint strig for resource
+// Endpoint will return the non-templated endpoint string for resource
 func (r Resource) Endpoint() (string, error) {
 	if r.isTemplate {
 		return "", fmt.Errorf("Tried to get endpoint for %s without providing data for template", r.name)

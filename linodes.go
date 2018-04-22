@@ -102,6 +102,7 @@ func (c *Client) ListKernels(opts *ListOptions) ([]*LinodeKernel, error) {
 		}
 	} else {
 		opts.Results = results
+		opts.Pages = pages
 	}
 
 	return data, nil
