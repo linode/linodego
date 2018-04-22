@@ -44,7 +44,7 @@ func main() {
 	}
 	log.Println("Succesfully got linode regions")
 
-	_, err = c.ListInstances()
+	_, err = c.ListInstances(nil)
 	if err != nil {
 		log.Fatalf("Failed to get linode instances: %s", err)
 	}

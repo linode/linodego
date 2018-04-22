@@ -170,7 +170,7 @@ func (c *Client) ListInstances(opts *ListOptions) ([]*LinodeInstance, error) {
 
 	if opts == nil {
 		for page := 2; page <= pages; page = page + 1 {
-			next, _ := c.ListInstances(&ListOptions{PageOptions: &PageOptions{Page: 1}})
+			next, _ := c.ListInstances(&ListOptions{PageOptions: &PageOptions{Page: page}})
 			data = append(data, next...)
 		}
 	} else {
