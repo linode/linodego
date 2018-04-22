@@ -1,6 +1,10 @@
 package golinode
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/go-resty/resty"
+)
 
 // LinodeType represents a linode type object
 type LinodeType struct {
@@ -38,20 +42,27 @@ type LinodeTypesPagedResponse struct {
 	Data []*LinodeType
 }
 
+func (LinodeTypesPagedResponse) Endpoint(c *Client) string {
+	endpoint, err := c.Types.Endpoint()
+	if err != nil {
+		panic(err)
+	}
+	return endpoint
+}
+
+func (resp *LinodeTypesPagedResponse) AppendData(r *LinodeTypesPagedResponse) {
+	(*resp).Data = append(resp.Data, r.Data...)
+}
+
+func (LinodeTypesPagedResponse) SetResult(r *resty.Request) {
+	r.SetResult(LinodeTypesPagedResponse{})
+}
+
 // ListTypes lists linode types
-func (c *Client) ListTypes() ([]*LinodeType, error) {
-	e, err := c.Types.Endpoint()
-	if err != nil {
-		return nil, err
-	}
-	r, err := c.R().
-		SetResult(&LinodeTypesPagedResponse{}).
-		Get(e)
-	if err != nil {
-		return nil, err
-	}
-	l := r.Result().(*LinodeTypesPagedResponse).Data
-	return l, nil
+func (c *Client) ListTypes(opts *ListOptions) ([]*LinodeType, error) {
+	response := LinodeTypesPagedResponse{}
+	err := c.ListHelper(response, opts)
+	return response.Data, err
 }
 
 // GetType gets the type with the provided ID

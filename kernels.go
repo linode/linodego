@@ -2,7 +2,8 @@ package golinode
 
 import (
 	"fmt"
-	"strconv"
+
+	"github.com/go-resty/resty"
 )
 
 // LinodeKernel represents a linode kernel object
@@ -18,42 +19,31 @@ type LinodeKernel struct {
 
 // LinodeKernelsPagedResponse represents a linode kernels API response for listing
 type LinodeKernelsPagedResponse struct {
-	*PageOptions
+	*PagedResponse
 	Data []*LinodeKernel
 }
 
 // ListKernels lists linode kernels
 func (c *Client) ListKernels(opts *ListOptions) ([]*LinodeKernel, error) {
-	e, err := c.Kernels.Endpoint()
+	response := LinodeKernelsPagedResponse{}
+	err := c.ListHelper(response, opts)
+	return response.Data, err
+}
+
+func (LinodeKernelsPagedResponse) Endpoint(c *Client) string {
+	endpoint, err := c.Kernels.Endpoint()
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
-	req := c.R().SetResult(&LinodeKernelsPagedResponse{})
+	return endpoint
+}
 
-	if opts != nil {
-		req.SetQueryParam("page", strconv.Itoa(opts.Page))
-	}
+func (resp *LinodeKernelsPagedResponse) AppendData(r *LinodeKernelsPagedResponse) {
+	(*resp).Data = append(resp.Data, r.Data...)
+}
 
-	r, err := req.Get(e)
-	if err != nil {
-		return nil, err
-	}
-
-	data := r.Result().(*LinodeKernelsPagedResponse).Data
-	pages := r.Result().(*LinodeKernelsPagedResponse).Pages
-	results := r.Result().(*LinodeKernelsPagedResponse).Results
-
-	if opts == nil {
-		for page := 2; page <= pages; page = page + 1 {
-			next, _ := c.ListKernels(&ListOptions{PageOptions: &PageOptions{Page: page}})
-			data = append(data, next...)
-		}
-	} else {
-		opts.Results = results
-		opts.Pages = pages
-	}
-
-	return data, nil
+func (LinodeKernelsPagedResponse) SetResult(r *resty.Request) {
+	r.SetResult(LinodeKernelsPagedResponse{})
 }
 
 // GetKernel gets the kernel with the provided ID

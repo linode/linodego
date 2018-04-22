@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 
 	"github.com/go-resty/resty"
 )
@@ -143,4 +144,71 @@ func NewClient(codeAPIKey *string, transport http.RoundTripper) (*Client, error)
 		Profile:       resources[profileName],
 		Managed:       resources[managedName],
 	}, nil
+}
+
+type PagedResponse struct {
+	ListResponse
+	*PageOptions
+}
+
+type ListResponse interface {
+	Endpoint(*Client) string
+	AppendData(*resty.Response)
+	SetResult(*resty.Request)
+	ListHelper(*resty.Request, *ListOptions) error
+}
+
+// ListHelper abstracts fetching and pagination for GETmany endpoints
+func (c *Client) ListHelper(i interface{}, opts *ListOptions) error {
+	req := c.R()
+	if opts != nil {
+		req.SetQueryParam("page", strconv.Itoa(opts.Page))
+	}
+
+	var (
+		err     error
+		e       string
+		pages   int
+		results int
+		r       *resty.Response
+	)
+
+	switch v := i.(type) {
+	case LinodeKernelsPagedResponse:
+		e = v.Endpoint(c)
+		req.SetResult(v) // Can I just set PagedResponse instead of specific type?
+		r, err = req.Get(e)
+		if err != nil {
+			return err
+		}
+
+		pages = r.Result().(*LinodeKernelsPagedResponse).Pages
+		results = r.Result().(*LinodeKernelsPagedResponse).Results
+		v.AppendData(r.Result().(*LinodeKernelsPagedResponse))
+	case LinodeTypesPagedResponse:
+		e = v.Endpoint(c)
+		req.SetResult(v) // Can I just set PagedResponse instead of specific type?
+		r, err = req.Get(e)
+		if err != nil {
+			return err
+		}
+
+		pages = r.Result().(*LinodeTypesPagedResponse).Pages
+		results = r.Result().(*LinodeTypesPagedResponse).Results
+		v.AppendData(r.Result().(*LinodeTypesPagedResponse))
+
+	default:
+		panic("what")
+	}
+
+	if opts == nil {
+		for page := 2; page <= pages; page = page + 1 {
+			c.ListHelper(i, &ListOptions{PageOptions: &PageOptions{Page: page}})
+		}
+	} else {
+		opts.Results = results
+		opts.Pages = pages
+	}
+
+	return nil
 }
