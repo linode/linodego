@@ -1,7 +1,6 @@
 package golinode
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -83,8 +82,9 @@ func NewClient(codeAPIKey *string, transport http.RoundTripper) (*Client, error)
 	} else if envAPIKey, ok := os.LookupEnv(APIEnvVar); ok {
 		linodeAPIKey = envAPIKey
 	}
+
 	if len(linodeAPIKey) == 0 || linodeAPIKey == "" {
-		return nil, errors.New("No API key was provided or LINODE_API_KEY was not set")
+		log.Print("Could not find LINODE_API_KEY, authenticated endpoints will fail.")
 	}
 
 	restyClient := resty.New().

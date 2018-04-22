@@ -9,11 +9,8 @@ import (
 )
 
 func main() {
-	apiKey, ok := os.LookupEnv("LINODE_API_KEY")
-	if !ok {
-		log.Fatal("Could not find LINODE_API_KEY, please assert it is set.")
-	}
-	linodeClient, err := golinode.NewClient(&apiKey, nil)
+	// Demonstrate endpoints that don't require an account or token
+	linodeClient, err := golinode.NewClient(nil, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -30,6 +27,18 @@ func main() {
 		log.Fatal(err)
 	}
 	fmt.Printf("%+v", kernels)
+
+	apiKey, ok := os.LookupEnv("LINODE_API_KEY")
+	if !ok {
+		log.Fatal("Could not find LINODE_API_KEY, please assert it is set.")
+	}
+
+	// Demonstrate endpoints that require an access token
+	linodeClient, err = golinode.NewClient(&apiKey, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	linodeClient.SetDebug(true)
 
 	linodes, err := linodeClient.ListInstances(nil)
 
