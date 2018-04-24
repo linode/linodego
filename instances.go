@@ -69,6 +69,22 @@ type LinodeInstance struct {
 	Specs      *LinodeSpec
 }
 
+// InstanceCreateOptions require only Region and Type
+type InstanceCreateOptions struct {
+	Region          string            `json:"region,omitempty"`
+	Type            string            `json:"type,omitempty"`
+	Label           string            `json:",omitempty"`
+	Group           string            `json:",omitempty"`
+	RootPass        string            `json:"root_pass,omitempty"`
+	AuthorizedKeys  []string          `json:"authorized_keys,omitempty"`
+	StackScriptID   int               `json:"stackscript_id,omitempty"`
+	StackScriptData map[string]string `json:"stackscript_data,omitempty"`
+	BackupID        int               `json:"backup_id,omitempty"`
+	Image           string            `json:",omitempty"`
+	BackupsEnabled  bool              `json:"backups_enabled,omitempty"`
+	Booted          bool              `json:",omitempty"`
+}
+
 func (l *LinodeInstance) fixDates() *LinodeInstance {
 	l.Created, _ = parseDates(l.CreatedStr)
 	l.Updated, _ = parseDates(l.UpdatedStr)
@@ -266,6 +282,34 @@ func (c *Client) GetInstanceConfig(linodeID int, configID int) (*LinodeInstanceC
 		return nil, err
 	}
 	return r.Result().(*LinodeInstanceConfig).fixDates(), nil
+}
+
+// CreateInstance creates a Linode instance
+func (c *Client) CreateInstance(instance *InstanceCreateOptions) (*LinodeInstance, error) {
+	var body string
+	e, err := c.Instances.Endpoint()
+	if err != nil {
+		return nil, err
+	}
+
+	req := c.R().SetResult(&LinodeInstance{})
+
+	if bodyData, err := json.Marshal(instance); err == nil {
+		body = string(bodyData)
+	} else {
+		return nil, err
+	}
+
+	r, err := req.
+		SetHeader("Content-Type", "application/json").
+		SetBody(body).
+		Post(e)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return r.Result().(*LinodeInstance).fixDates(), nil
 }
 
 // BootInstance will boot a new linode instance
