@@ -71,18 +71,18 @@ type LinodeInstance struct {
 
 // InstanceCreateOptions require only Region and Type
 type InstanceCreateOptions struct {
-	Region          string            `json:"region,omitempty"`
-	Type            string            `json:"type,omitempty"`
-	Label           string            `json:",omitempty"`
-	Group           string            `json:",omitempty"`
+	Region          string            `json:"region"`
+	Type            string            `json:"type"`
+	Label           string            `json:"label,omitempty"`
+	Group           string            `json:"group,omitempty"`
 	RootPass        string            `json:"root_pass,omitempty"`
 	AuthorizedKeys  []string          `json:"authorized_keys,omitempty"`
 	StackScriptID   int               `json:"stackscript_id,omitempty"`
 	StackScriptData map[string]string `json:"stackscript_data,omitempty"`
 	BackupID        int               `json:"backup_id,omitempty"`
-	Image           string            `json:",omitempty"`
+	Image           string            `json:"image,omitempty"`
 	BackupsEnabled  bool              `json:"backups_enabled,omitempty"`
-	Booted          bool              `json:",omitempty"`
+	Booted          bool              `json:"booted,omitempty"`
 }
 
 func (l *LinodeInstance) fixDates() *LinodeInstance {
