@@ -11,7 +11,7 @@ func TestListInstances(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
 	}
-	linodes, err := client.ListInstances()
+	linodes, err := client.ListInstances(nil)
 	if err != nil {
 		t.Errorf("Error listing instances, expected struct, got error %v", err)
 	}

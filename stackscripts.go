@@ -7,8 +7,8 @@ import (
 
 // LinodeStackscriptsPagedResponse represents a linode API response for listing
 type LinodeStackscriptsPagedResponse struct {
-	Page, Pages, Results int
-	Data                 []*LinodeStackscript
+	*PageOptions
+	Data []*LinodeStackscript
 }
 
 // LinodeStackscript represents a linode stack script

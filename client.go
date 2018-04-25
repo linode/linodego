@@ -1,7 +1,6 @@
 package golinode
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"net/http"
@@ -61,6 +60,19 @@ func (c Client) Resource(resourceName string) *Resource {
 	return selectedResource
 }
 
+// PageOptions are the pagination parameters for List endpoints
+type PageOptions struct {
+	Page    int `url:"page,omitempty"`
+	Pages   int `url:"per_page,omitempty"`
+	Results int `url:"results,omitempty"`
+}
+
+// ListOptions are the pagination and filtering (TODO) parameters for endpoints
+type ListOptions struct {
+	*PageOptions
+	Filter string
+}
+
 // NewClient factory to create new Client struct
 func NewClient(codeAPIKey *string, transport http.RoundTripper) (*Client, error) {
 	linodeAPIKey := ""
@@ -70,8 +82,9 @@ func NewClient(codeAPIKey *string, transport http.RoundTripper) (*Client, error)
 	} else if envAPIKey, ok := os.LookupEnv(APIEnvVar); ok {
 		linodeAPIKey = envAPIKey
 	}
+
 	if len(linodeAPIKey) == 0 || linodeAPIKey == "" {
-		return nil, errors.New("No API key was provided or LINODE_API_KEY was not set")
+		log.Print("Could not find LINODE_API_KEY, authenticated endpoints will fail.")
 	}
 
 	restyClient := resty.New().

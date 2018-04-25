@@ -6,8 +6,8 @@ import (
 
 // LinodeImagesPagedResponse represents a linode API response for listing of images
 type LinodeImagesPagedResponse struct {
-	Page, Pages, Results int
-	Data                 []*LinodeImage
+	*PageOptions
+	Data []*LinodeImage
 }
 
 // LinodeImage represents a linode image object

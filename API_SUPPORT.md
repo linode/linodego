@@ -4,7 +4,7 @@
 
 - `/linode/instances`
   - [x] `GET`
-  - [ ] `POST`
+  - [X] `POST`
 - `/linode/instances/$id`
   - [x] `GET`
   - [ ] `PUT`

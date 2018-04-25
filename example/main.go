@@ -9,11 +9,12 @@ import (
 )
 
 func main() {
-	apiKey, ok := os.LookupEnv("LINODE_API_KEY")
-	if !ok {
-		log.Fatal("Could not find LINODE_API_KEY, please assert it is set.")
-	}
-	linodeClient, err := golinode.NewClient(&apiKey, nil)
+	// Trigger endpoints that accrue a balance
+	apiKey, apiOk := os.LookupEnv("LINODE_API_KEY")
+	var SpendMoney = true && apiOk
+
+	// Demonstrate endpoints that don't require an account or token
+	linodeClient, err := golinode.NewClient(nil, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -25,19 +26,41 @@ func main() {
 	}
 	fmt.Printf("%+v", types)
 
-	kernels, err := linodeClient.ListKernels()
+	kernels, err := linodeClient.ListKernels(nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Printf("%+v", kernels)
 
-	linodes, err := linodeClient.ListInstances()
+	if !apiOk || len(apiKey) == 0 {
+		log.Fatal("Could not find LINODE_API_KEY, please assert it is set.")
+		os.Exit(1)
+	}
+
+	// Demonstrate endpoints that require an access token
+	linodeClient, err = golinode.NewClient(&apiKey, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	linodeClient.SetDebug(true)
+
+	var linode *golinode.LinodeInstance
+
+	if SpendMoney {
+		linode, err = linodeClient.CreateInstance(&golinode.InstanceCreateOptions{Region: "us-central", Type: "g5-nanode-1"})
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Printf("%#v", linode)
+	}
+
+	linodes, err := linodeClient.ListInstances(nil)
 
 	if len(linodes) == 0 {
 		log.Printf("No Linodes to inspect.")
 	} else {
 		// This is redundantly used for illustrative purposes
-		linode, err := linodeClient.GetInstance(linodes[0].ID)
+		linode, err = linodeClient.GetInstance(linodes[0].ID)
 		if err != nil {
 			log.Fatal(err)
 		}
