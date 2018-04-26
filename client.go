@@ -28,16 +28,23 @@ type Client struct {
 	resty     *resty.Client
 	resources map[string]*Resource
 
-	Images       *Resource
-	Disks        *Resource
-	Configs      *Resource
-	Backups      *Resource
-	Instances    *Resource
-	Regions      *Resource
-	StackScripts *Resource
-	Volumes      *Resource
-	Kernels      *Resource
-	Types        *Resource
+	Images        *Resource
+	Disks         *Resource
+	Configs       *Resource
+	Backups       *Resource
+	Instances     *Resource
+	Regions       *Resource
+	StackScripts  *Resource
+	Volumes       *Resource
+	Kernels       *Resource
+	Types         *Resource
+	Domains       *Resource
+	Longview      *Resource
+	NodeBalancers *Resource
+	Support       *Resource
+	Account       *Resource
+	Profile       *Resource
+	Managed       *Resource
 }
 
 // R wraps resty's R method
@@ -94,16 +101,23 @@ func NewClient(codeAPIKey *string, transport http.RoundTripper) (*Client, error)
 		SetHeader("User-Agent", fmt.Sprintf("go-linode %s https://github.com/chiefy/go-linode", Version))
 
 	resources := map[string]*Resource{
-		stackscriptsName: NewResource(stackscriptsName, stackscriptsEndpoint, false),
-		imagesName:       NewResource(imagesName, imagesEndpoint, false),
-		instancesName:    NewResource(instancesName, instancesEndpoint, false),
-		regionsName:      NewResource(regionsName, regionsEndpoint, false),
-		disksName:        NewResource(disksName, disksEndpoint, true),
-		configsName:      NewResource(configsName, configsEndpoint, true),
-		backupsName:      NewResource(backupsName, backupsEndpoint, true),
-		volumesName:      NewResource(volumesName, volumesEndpoint, false),
-		kernelsName:      NewResource(kernelsName, kernelsEndpoint, false),
-		typesName:        NewResource(typesName, typesEndpoint, false),
+		stackscriptsName:  NewResource(stackscriptsName, stackscriptsEndpoint, false),
+		imagesName:        NewResource(imagesName, imagesEndpoint, false),
+		instancesName:     NewResource(instancesName, instancesEndpoint, false),
+		regionsName:       NewResource(regionsName, regionsEndpoint, false),
+		disksName:         NewResource(disksName, disksEndpoint, true),
+		configsName:       NewResource(configsName, configsEndpoint, true),
+		backupsName:       NewResource(backupsName, backupsEndpoint, true),
+		volumesName:       NewResource(volumesName, volumesEndpoint, false),
+		kernelsName:       NewResource(kernelsName, kernelsEndpoint, false),
+		typesName:         NewResource(typesName, typesEndpoint, false),
+		domainsName:       NewResource(domainsName, domainsEndpoint, false),
+		longviewName:      NewResource(longviewName, longviewEndpoint, false),
+		nodebalancersName: NewResource(nodebalancersName, nodebalancersEndpoint, false),
+		supportName:       NewResource(supportName, supportEndpoint, false),
+		accountName:       NewResource(accountName, accountEndpoint, false),
+		profileName:       NewResource(profileName, profileEndpoint, false),
+		managedName:       NewResource(managedName, managedEndpoint, false),
 	}
 
 	return &Client{
@@ -111,15 +125,22 @@ func NewClient(codeAPIKey *string, transport http.RoundTripper) (*Client, error)
 		resty:     restyClient,
 		resources: resources,
 
-		Images:       resources[imagesName],
-		StackScripts: resources[stackscriptsName],
-		Instances:    resources[instancesName],
-		Regions:      resources[regionsName],
-		Disks:        resources[disksName],
-		Configs:      resources[configsName],
-		Backups:      resources[backupsName],
-		Volumes:      resources[volumesName],
-		Kernels:      resources[kernelsName],
-		Types:        resources[typesName],
+		Images:        resources[imagesName],
+		StackScripts:  resources[stackscriptsName],
+		Instances:     resources[instancesName],
+		Regions:       resources[regionsName],
+		Disks:         resources[disksName],
+		Configs:       resources[configsName],
+		Backups:       resources[backupsName],
+		Volumes:       resources[volumesName],
+		Kernels:       resources[kernelsName],
+		Types:         resources[typesName],
+		Domains:       resources[domainsName],
+		Longview:      resources[longviewName],
+		NodeBalancers: resources[nodebalancersName],
+		Support:       resources[supportName],
+		Account:       resources[accountName],
+		Profile:       resources[profileName],
+		Managed:       resources[managedName],
 	}, nil
 }
