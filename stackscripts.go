@@ -40,15 +40,15 @@ func (l *LinodeStackscript) fixDates() *LinodeStackscript {
 
 // ListAllStackscripts gets all public stackscripts
 func (c *Client) ListAllStackscripts() ([]*LinodeStackscript, error) {
-	return c.listStackScripts(false)
+	return listStackScripts(c, false)
 }
 
 // ListStackscripts gets all my stackscripts
 func (c *Client) ListStackscripts() ([]*LinodeStackscript, error) {
-	return c.listStackScripts(true)
+	return listStackScripts(c, true)
 }
 
-func (c *Client) listStackScripts(onlymine bool) ([]*LinodeStackscript, error) {
+func listStackScripts(c *Client, onlymine bool) ([]*LinodeStackscript, error) {
 	e, err := c.StackScripts.Endpoint()
 	if err != nil {
 		return nil, err
