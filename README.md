@@ -53,6 +53,10 @@ func main() {
 }
 ```
 
+## Discussion / Help
+
+Join us at `#go-linode` on the [gophers slack](https://gophers.slack.com)
+
 ## License
 
 [MIT License](LICENSE)
