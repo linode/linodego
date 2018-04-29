@@ -37,18 +37,6 @@ func TestNewClient(t *testing.T) {
 	}
 }
 
-func TestNewClientErrors(t *testing.T) {
-	blankAPIKey := ""
-
-	client, err := NewClient(&blankAPIKey, nil)
-	if err == nil {
-		t.Error("Expected error, got nil")
-	}
-	if client != nil {
-		t.Error("Expected error, got", client)
-	}
-}
-
 func TestClientAliases(t *testing.T) {
 	client, err := NewClient(&validTestAPIKey, nil)
 	if err != nil {
