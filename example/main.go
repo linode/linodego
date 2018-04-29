@@ -20,7 +20,7 @@ func main() {
 	}
 	linodeClient.SetDebug(true)
 
-	types, err := linodeClient.ListTypes()
+	types, err := linodeClient.ListTypes(nil)
 	if err != nil {
 		log.Fatal(err)
 	}

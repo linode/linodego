@@ -10,6 +10,10 @@ import (
 	"github.com/go-resty/resty"
 )
 
+/*
+ * https://developers.linode.com/v4/reference/endpoints/linode/instances
+ */
+
 // LinodeSpec represents a linode spec
 type LinodeSpec struct {
 	Disk     int
@@ -83,6 +87,18 @@ type InstanceCreateOptions struct {
 	Image           string            `json:"image,omitempty"`
 	BackupsEnabled  bool              `json:"backups_enabled,omitempty"`
 	Booted          bool              `json:"booted,omitempty"`
+}
+
+// LinodeCloneOptions is an options struct when sending a clone request to the API
+type LinodeCloneOptions struct {
+	Region         string
+	Type           string
+	LinodeID       int
+	Label          string
+	Group          string
+	BackupsEnabled bool
+	Disks          []string
+	Configs        []string
 }
 
 func (l *LinodeInstance) fixDates() *LinodeInstance {
