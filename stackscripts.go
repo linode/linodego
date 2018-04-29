@@ -38,14 +38,28 @@ func (l *LinodeStackscript) fixDates() *LinodeStackscript {
 	return l
 }
 
-// ListStackscripts gets all public stackscripts
+// ListAllStackscripts gets all public stackscripts
+func (c *Client) ListAllStackscripts() ([]*LinodeStackscript, error) {
+	return listStackScripts(c, false)
+}
+
+// ListStackscripts gets all my stackscripts
 func (c *Client) ListStackscripts() ([]*LinodeStackscript, error) {
+	return listStackScripts(c, true)
+}
+
+func listStackScripts(c *Client, onlymine bool) ([]*LinodeStackscript, error) {
 	e, err := c.StackScripts.Endpoint()
 	if err != nil {
 		return nil, err
 	}
 
-	r, err := c.R().
+	req := c.R()
+	if onlymine {
+		req.SetHeader("X-Filter", "{\"mine\":true}")
+	}
+
+	r, err := req.
 		SetResult(&LinodeStackscriptsPagedResponse{}).
 		Get(e)
 	if err != nil {
