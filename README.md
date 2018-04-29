@@ -1,5 +1,7 @@
 # go-linode
 
+[![Build Status](https://travis-ci.org/chiefy/go-linode.svg?branch=master)](https://travis-ci.org/chiefy/go-linode)
+
 Go client for [Linode REST v4 API](https://developers.linode.com/v4/introduction)
 
 ## Installation
