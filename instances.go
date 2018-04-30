@@ -14,45 +14,8 @@ import (
  * https://developers.linode.com/v4/reference/endpoints/linode/instances
  */
 
-// LinodeSpec represents a linode spec
-type LinodeSpec struct {
-	Disk     int
-	Memory   int
-	VCPUs    int
-	Transfer int
-}
-
-// LinodeAlert represents a metric alert
-type LinodeAlert struct {
-	CPU           int
-	IO            int
-	NetworkIn     int
-	NetworkOut    int
-	TransferQuote int
-}
-
-// LinodeInstanceDisk represents a linode disk
-type LinodeInstanceDisk struct {
-	CreatedStr string `json:"created"`
-	UpdatedStr string `json:"updated"`
-
-	ID         int
-	Label      string
-	Status     string
-	Size       int
-	Filesystem string
-	Created    *time.Time `json:"-"`
-	Updated    *time.Time `json:"-"`
-}
-
-func (l *LinodeInstanceDisk) fixDates() *LinodeInstanceDisk {
-	l.Created, _ = parseDates(l.CreatedStr)
-	l.Updated, _ = parseDates(l.UpdatedStr)
-	return l
-}
-
-// LinodeInstance represents a linode object
-type LinodeInstance struct {
+// Instance represents a linode object
+type Instance struct {
 	CreatedStr string `json:"created"`
 	UpdatedStr string `json:"updated"`
 
@@ -60,8 +23,8 @@ type LinodeInstance struct {
 	Created    *time.Time `json:"-"`
 	Updated    *time.Time `json:"-"`
 	Region     string
-	Alerts     *LinodeAlert
-	Backups    *LinodeBackup
+	Alerts     *InstanceAlert
+	Backups    *InstanceBackup
 	Image      string
 	Group      string
 	IPv4       []*net.IP
@@ -70,7 +33,33 @@ type LinodeInstance struct {
 	Type       string
 	Status     string
 	Hypervisor string
-	Specs      *LinodeSpec
+	Specs      *InstanceSpec
+}
+
+// InstanceSpec represents a linode spec
+type InstanceSpec struct {
+	Disk     int
+	Memory   int
+	VCPUs    int
+	Transfer int
+}
+
+// InstanceAlert represents a metric alert
+type InstanceAlert struct {
+	CPU           int
+	IO            int
+	NetworkIn     int
+	NetworkOut    int
+	TransferQuote int
+}
+
+// InstanceBackup represents backup settings for an instance
+type InstanceBackup struct {
+	Enabled  bool
+	Schedule struct {
+		Day    string
+		Window string
+	}
 }
 
 // InstanceCreateOptions require only Region and Type
@@ -89,8 +78,8 @@ type InstanceCreateOptions struct {
 	Booted          bool              `json:"booted,omitempty"`
 }
 
-// LinodeCloneOptions is an options struct when sending a clone request to the API
-type LinodeCloneOptions struct {
+// InstanceCloneOptions is an options struct when sending a clone request to the API
+type InstanceCloneOptions struct {
 	Region         string
 	Type           string
 	LinodeID       int
@@ -101,87 +90,45 @@ type LinodeCloneOptions struct {
 	Configs        []string
 }
 
-func (l *LinodeInstance) fixDates() *LinodeInstance {
+func (l *Instance) fixDates() *Instance {
 	l.Created, _ = parseDates(l.CreatedStr)
 	l.Updated, _ = parseDates(l.UpdatedStr)
 	return l
 }
 
-type LinodeInstanceConfigDevice struct {
-	DiskID   int `json:"disk_id"`
-	VolumeID int `json:"volume_id"`
-}
-
-type LinodeInstanceConfigDeviceMap struct {
-	SDA *LinodeInstanceConfigDevice
-	SDB *LinodeInstanceConfigDevice
-	SDC *LinodeInstanceConfigDevice
-	SDD *LinodeInstanceConfigDevice
-	SDE *LinodeInstanceConfigDevice
-	SDF *LinodeInstanceConfigDevice
-	SDG *LinodeInstanceConfigDevice
-	SDH *LinodeInstanceConfigDevice
-}
-
-type LinodeInstanceConfigHelpers struct {
-	UpdateDBDisabled  bool `json:"updatedb_disabled"`
-	Distro            bool
-	ModulesDep        bool `json:"modules_dep"`
-	Network           bool
-	DevTmpFsAutomount bool `json:"devtmpfs_automount"`
-}
-
-type LinodeInstanceConfig struct {
-	CreatedStr string `json:"created"`
-	UpdatedStr string `json:"updated"`
-
-	ID          int
-	Label       string
-	Comments    string
-	Devices     *LinodeInstanceConfigDeviceMap
-	Helpers     *LinodeInstanceConfigHelpers
-	MemoryLimit int `json:"memory_limit"`
-	Kernel      string
-	InitRD      int
-	RootDevice  string     `json:"root_device"`
-	RunLevel    string     `json:"run_level"`
-	VirtMode    string     `json:"virt_mode"`
-	Created     *time.Time `json:"-"`
-	Updated     *time.Time `json:"-"`
-}
-
-func (l *LinodeInstanceConfig) fixDates() *LinodeInstanceConfig {
-	l.Created, _ = parseDates(l.CreatedStr)
-	l.Updated, _ = parseDates(l.UpdatedStr)
-	return l
-}
-
-// LinodeInstancesPagedResponse represents a linode API response for listing
-type LinodeInstancesPagedResponse struct {
+// InstancesPagedResponse represents a linode API response for listing
+type InstancesPagedResponse struct {
 	*PageOptions
-	Data []*LinodeInstance
+	Data []*Instance
 }
 
-// LinodeInstanceDisksPagedResponse represents a linode API response for listing
-type LinodeInstanceDisksPagedResponse struct {
-	*PageOptions
-	Data []*LinodeInstanceDisk
+// Endpoint gets the endpoint URL for Instance
+func (InstancesPagedResponse) Endpoint(c *Client) string {
+	endpoint, err := c.Instances.Endpoint()
+	if err != nil {
+		panic(err)
+	}
+	return endpoint
 }
 
-// LinodeInstanceConfigsPagedResponse represents a linode API response for listing
-type LinodeInstanceConfigsPagedResponse struct {
-	*PageOptions
-	Data []*LinodeInstanceConfig
+// AppendData appends Instances when processing paginated Instance responses
+func (resp *InstancesPagedResponse) AppendData(r *InstancesPagedResponse) {
+	(*resp).Data = append(resp.Data, r.Data...)
+}
+
+// SetResult sets the Resty response type of Instance
+func (InstancesPagedResponse) SetResult(r *resty.Request) {
+	r.SetResult(InstancesPagedResponse{})
 }
 
 // ListInstances lists linode instances
-func (c *Client) ListInstances(opts *ListOptions) ([]*LinodeInstance, error) {
+func (c *Client) ListInstances(opts *ListOptions) ([]*Instance, error) {
 	e, err := c.Instances.Endpoint()
 	if err != nil {
 		return nil, err
 	}
 
-	req := c.R().SetResult(&LinodeInstancesPagedResponse{})
+	req := c.R().SetResult(&InstancesPagedResponse{})
 
 	if opts != nil {
 		req.SetQueryParam("page", strconv.Itoa(opts.Page))
@@ -192,9 +139,9 @@ func (c *Client) ListInstances(opts *ListOptions) ([]*LinodeInstance, error) {
 		return nil, err
 	}
 
-	data := r.Result().(*LinodeInstancesPagedResponse).Data
-	pages := r.Result().(*LinodeInstancesPagedResponse).Pages
-	results := r.Result().(*LinodeInstancesPagedResponse).Results
+	data := r.Result().(*InstancesPagedResponse).Data
+	pages := r.Result().(*InstancesPagedResponse).Pages
+	results := r.Result().(*InstancesPagedResponse).Results
 
 	for _, el := range data {
 		el.fixDates()
@@ -212,103 +159,31 @@ func (c *Client) ListInstances(opts *ListOptions) ([]*LinodeInstance, error) {
 	return data, nil
 }
 
-// ListInstanceDisks lists linode disks
-func (c *Client) ListInstanceDisks(linodeID int) ([]*LinodeInstanceDisk, error) {
-	e, err := c.Instances.Endpoint()
-	if err != nil {
-		return nil, err
-	}
-	e = fmt.Sprintf("%s/%d/disks", e, linodeID)
-	r, err := c.R().
-		SetResult(&LinodeInstanceDisksPagedResponse{}).
-		Get(e)
-	if err != nil {
-		return nil, err
-	}
-	l := r.Result().(*LinodeInstanceDisksPagedResponse).Data
-	for _, el := range l {
-		el.fixDates()
-	}
-	return l, nil
-}
-
-// ListInstanceConfigs lists linode configs
-func (c *Client) ListInstanceConfigs(linodeID int) ([]*LinodeInstanceConfig, error) {
-	e, err := c.Instances.Endpoint()
-	if err != nil {
-		return nil, err
-	}
-	e = fmt.Sprintf("%s/%d/configs", e, linodeID)
-	r, err := c.R().
-		SetResult(&LinodeInstanceConfigsPagedResponse{}).
-		Get(e)
-	if err != nil {
-		return nil, err
-	}
-	l := r.Result().(*LinodeInstanceConfigsPagedResponse).Data
-	for _, el := range l {
-		el.fixDates()
-	}
-	return l, nil
-}
-
 // GetInstance gets the instance with the provided ID
-func (c *Client) GetInstance(linodeID int) (*LinodeInstance, error) {
+func (c *Client) GetInstance(linodeID int) (*Instance, error) {
 	e, err := c.Instances.Endpoint()
 	if err != nil {
 		return nil, err
 	}
 	e = fmt.Sprintf("%s/%d", e, linodeID)
 	r, err := c.R().
-		SetResult(&LinodeInstance{}).
+		SetResult(&Instance{}).
 		Get(e)
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*LinodeInstance).fixDates(), nil
-}
-
-// GetInstanceDisk gets the linode disk with the provided ID
-func (c *Client) GetInstanceDisk(linodeID int, diskID int) (*LinodeInstanceDisk, error) {
-	e, err := c.Instances.Endpoint()
-	if err != nil {
-		return nil, err
-	}
-	e = fmt.Sprintf("%s/%d/disks/%d", e, linodeID, diskID)
-	r, err := c.R().
-		SetResult(&LinodeInstanceDisk{}).
-		Get(e)
-	if err != nil {
-		return nil, err
-	}
-	return r.Result().(*LinodeInstanceDisk).fixDates(), nil
-}
-
-// GetInstanceConfig gets the linode config with the provided ID
-func (c *Client) GetInstanceConfig(linodeID int, configID int) (*LinodeInstanceConfig, error) {
-	e, err := c.Instances.Endpoint()
-	if err != nil {
-		return nil, err
-	}
-	e = fmt.Sprintf("%s/%d/configs/%d", e, linodeID, configID)
-	r, err := c.R().
-		SetResult(&LinodeInstanceConfig{}).
-		Get(e)
-	if err != nil {
-		return nil, err
-	}
-	return r.Result().(*LinodeInstanceConfig).fixDates(), nil
+	return r.Result().(*Instance).fixDates(), nil
 }
 
 // CreateInstance creates a Linode instance
-func (c *Client) CreateInstance(instance *InstanceCreateOptions) (*LinodeInstance, error) {
+func (c *Client) CreateInstance(instance *InstanceCreateOptions) (*Instance, error) {
 	var body string
 	e, err := c.Instances.Endpoint()
 	if err != nil {
 		return nil, err
 	}
 
-	req := c.R().SetResult(&LinodeInstance{})
+	req := c.R().SetResult(&Instance{})
 
 	if bodyData, err := json.Marshal(instance); err == nil {
 		body = string(bodyData)
@@ -325,7 +200,7 @@ func (c *Client) CreateInstance(instance *InstanceCreateOptions) (*LinodeInstanc
 		return nil, err
 	}
 
-	return r.Result().(*LinodeInstance).fixDates(), nil
+	return r.Result().(*Instance).fixDates(), nil
 }
 
 // BootInstance will boot a new linode instance
@@ -356,7 +231,7 @@ func (c *Client) BootInstance(id int, configID int) (bool, error) {
 }
 
 // CloneInstance clones a Linode instance
-func (c *Client) CloneInstance(id int, options *LinodeCloneOptions) (*LinodeInstance, error) {
+func (c *Client) CloneInstance(id int, options *InstanceCloneOptions) (*Instance, error) {
 	var body string
 	e, err := c.Instances.Endpoint()
 	if err != nil {
@@ -364,7 +239,7 @@ func (c *Client) CloneInstance(id int, options *LinodeCloneOptions) (*LinodeInst
 	}
 	e = fmt.Sprintf("%s/%d/clone", e, id)
 
-	req := c.R().SetResult(&LinodeInstance{})
+	req := c.R().SetResult(&Instance{})
 
 	if bodyData, err := json.Marshal(options); err == nil {
 		body = string(bodyData)
@@ -381,7 +256,7 @@ func (c *Client) CloneInstance(id int, options *LinodeCloneOptions) (*LinodeInst
 		return nil, err
 	}
 
-	return r.Result().(*LinodeInstance).fixDates(), nil
+	return r.Result().(*Instance).fixDates(), nil
 }
 
 // RebootInstance reboots a Linode instance
@@ -427,7 +302,7 @@ type RebuildInstanceOptions struct {
 
 // RebuildInstance Deletes all Disks and Configs on this Linode,
 // then deploys a new Image to this Linode with the given attributes.
-func (c *Client) RebuildInstance(id int, opts *RebuildInstanceOptions) (*LinodeInstance, error) {
+func (c *Client) RebuildInstance(id int, opts *RebuildInstanceOptions) (*Instance, error) {
 	o, err := json.Marshal(opts)
 	if err != nil {
 		return nil, err
@@ -441,12 +316,12 @@ func (c *Client) RebuildInstance(id int, opts *RebuildInstanceOptions) (*LinodeI
 	r, err := c.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(b).
-		SetResult(&LinodeInstance{}).
+		SetResult(&Instance{}).
 		Post(e)
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*LinodeInstance).fixDates(), nil
+	return r.Result().(*Instance).fixDates(), nil
 }
 
 // ResizeInstance resizes an instance to new Linode type
@@ -478,19 +353,19 @@ func (c *Client) ShutdownInstance(id int) (bool, error) {
 }
 
 // ListInstanceVolumes lists volumes attached to a linode instance
-func (c *Client) ListInstanceVolumes(id int) ([]*LinodeVolume, error) {
+func (c *Client) ListInstanceVolumes(id int) ([]*Volume, error) {
 	e, err := c.Instances.Endpoint()
 	e = fmt.Sprintf("%s/%d/volumes", e, id)
 	if err != nil {
 		return nil, err
 	}
 	resp, err := c.R().
-		SetResult(&LinodeVolumesPagedResponse{}).
+		SetResult(&VolumesPagedResponse{}).
 		Get(e)
 	if err != nil {
 		return nil, err
 	}
-	l := resp.Result().(*LinodeVolumesPagedResponse).Data
+	l := resp.Result().(*VolumesPagedResponse).Data
 	for _, el := range l {
 		el.fixDates()
 	}

@@ -4,22 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
+
+	"github.com/go-resty/resty"
 )
 
-// LinodeVolumesPagedResponse represents a linode API response for listing of volumes
-type LinodeVolumesPagedResponse struct {
-	*PageOptions
-	Data []*LinodeVolume
-}
-
-func (l *LinodeVolume) fixDates() *LinodeVolume {
-	l.Created, _ = parseDates(l.CreatedStr)
-	l.Updated, _ = parseDates(l.UpdatedStr)
-	return l
-}
-
-// LinodeVolume represents a linode volume object
-type LinodeVolume struct {
+// Volume represents a linode volume object
+type Volume struct {
 	CreatedStr string `json:"created"`
 	UpdatedStr string `json:"updated"`
 
@@ -33,49 +23,69 @@ type LinodeVolume struct {
 	Updated  *time.Time `json:"-"`
 }
 
-type LinodeVolumeAttachOptions struct {
+type VolumeAttachOptions struct {
 	LinodeID int
 	ConfigID int
 }
 
-// ListVolumes will list linode volumes
-func (c *Client) ListVolumes() ([]*LinodeVolume, error) {
-	e, err := c.Volumes.Endpoint()
-	if err != nil {
-		return nil, err
-	}
-	resp, err := c.R().
-		SetResult(&LinodeVolumesPagedResponse{}).
-		Get(e)
-	if err != nil {
-		return nil, err
-	}
-	list := resp.Result().(*LinodeVolumesPagedResponse).Data
-	for _, el := range list {
-		el.fixDates()
-	}
-	return list, nil
+// LinodeVolumesPagedResponse represents a linode API response for listing of volumes
+type VolumesPagedResponse struct {
+	*PageOptions
+	Data []*Volume
 }
 
-// GetVolume gets the volume with the provided ID
-func (c *Client) GetVolume(volumeID int) (*LinodeVolume, error) {
+// Endpoint gets the endpoint URL for Volume
+func (VolumesPagedResponse) Endpoint(c *Client) string {
+	endpoint, err := c.Volumes.Endpoint()
+	if err != nil {
+		panic(err)
+	}
+	return endpoint
+}
+
+// AppendData appends Volumes when processing paginated Volume responses
+func (resp *VolumesPagedResponse) AppendData(r *VolumesPagedResponse) {
+	(*resp).Data = append(resp.Data, r.Data...)
+}
+
+// SetResult sets the Resty response type of Volume
+func (VolumesPagedResponse) SetResult(r *resty.Request) {
+	r.SetResult(VolumesPagedResponse{})
+}
+
+// ListVolumes lists Volumes
+func (c *Client) ListVolumes(opts *ListOptions) ([]*Volume, error) {
+	response := VolumesPagedResponse{}
+	err := c.ListHelper(response, opts)
+	for _, el := range response.Data {
+		el.fixDates()
+	}
+	return response.Data, err
+}
+
+// fixDates converts JSON timestamps to Go time.Time values
+func (v *Volume) fixDates() *Volume {
+	v.Created, _ = parseDates(v.CreatedStr)
+	v.Updated, _ = parseDates(v.UpdatedStr)
+	return v
+}
+
+// GetVolume gets the template with the provided ID
+func (c *Client) GetVolume(id string) (*Volume, error) {
 	e, err := c.Volumes.Endpoint()
 	if err != nil {
 		return nil, err
 	}
-	e = fmt.Sprintf("%s/%d", e, volumeID)
-	resp, err := c.R().
-		SetResult(&LinodeVolume{}).
-		Get(e)
+	e = fmt.Sprintf("%s/%s", e, id)
+	r, err := c.R().SetResult(&Volume{}).Get(e)
 	if err != nil {
 		return nil, err
 	}
-	i := resp.Result().(*LinodeVolume).fixDates()
-	return i, nil
+	return r.Result().(*Volume).fixDates(), nil
 }
 
 // AttachVolume attaches volume to linode instance
-func (c *Client) AttachVolume(id int, options *LinodeVolumeAttachOptions) (bool, error) {
+func (c *Client) AttachVolume(id int, options *VolumeAttachOptions) (bool, error) {
 	body := ""
 	if bodyData, err := json.Marshal(options); err == nil {
 		body = string(bodyData)
@@ -98,7 +108,7 @@ func (c *Client) AttachVolume(id int, options *LinodeVolumeAttachOptions) (bool,
 }
 
 // CloneVolume clones a Linode instance
-func (c *Client) CloneVolume(id int, label string) (*LinodeVolume, error) {
+func (c *Client) CloneVolume(id int, label string) (*Volume, error) {
 	body := fmt.Sprintf("{\"label\":\"%s\"}", label)
 
 	e, err := c.Volumes.Endpoint()
@@ -107,7 +117,7 @@ func (c *Client) CloneVolume(id int, label string) (*LinodeVolume, error) {
 	}
 	e = fmt.Sprintf("%s/%d/clone", e, id)
 
-	req := c.R().SetResult(&LinodeVolume{})
+	req := c.R().SetResult(&Volume{})
 
 	resp, err := req.
 		SetHeader("Content-Type", "application/json").
@@ -118,7 +128,7 @@ func (c *Client) CloneVolume(id int, label string) (*LinodeVolume, error) {
 		return nil, err
 	}
 
-	return resp.Result().(*LinodeVolume).fixDates(), nil
+	return resp.Result().(*Volume).fixDates(), nil
 }
 
 // DetachVolume detaches a Linode instance
