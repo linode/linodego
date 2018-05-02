@@ -44,7 +44,7 @@ func main() {
 	}
 	linodeClient.SetDebug(true)
 
-	var linode *golinode.LinodeInstance
+	var linode *golinode.Instance
 
 	if SpendMoney {
 		linode, err = linodeClient.CreateInstance(&golinode.InstanceCreateOptions{Region: "us-central", Type: "g5-nanode-1"})
@@ -67,7 +67,7 @@ func main() {
 
 		fmt.Printf("%#v", linode)
 
-		configs, err := linodeClient.ListInstanceConfigs(linode.ID)
+		configs, err := linodeClient.ListInstanceConfigs(linode.ID, nil)
 		if err != nil {
 			log.Fatal(err)
 		} else if len(configs) > 0 {
@@ -78,7 +78,7 @@ func main() {
 			fmt.Printf("First Config: %#v", config)
 		}
 
-		disks, err := linodeClient.ListInstanceDisks(linode.ID)
+		disks, err := linodeClient.ListInstanceDisks(linode.ID, nil)
 		if err != nil {
 			log.Fatal(err)
 		} else if len(disks) > 0 {
