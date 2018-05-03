@@ -34,6 +34,7 @@ type Client struct {
 	InstanceConfigs       *Resource
 	InstanceSnapshots     *Resource
 	InstanceIPs           *Resource
+	InstanceVolumes       *Resource
 	Instances             *Resource
 	IPAddresses           *Resource
 	IPv6Pools             *Resource
@@ -122,6 +123,7 @@ func NewClient(codeAPIKey *string, transport http.RoundTripper) (*Client, error)
 		instanceConfigsName:       NewResource(instanceConfigsName, instanceConfigsEndpoint, true),
 		instanceSnapshotsName:     NewResource(instanceSnapshotsName, instanceSnapshotsEndpoint, true),
 		instanceIPsName:           NewResource(instanceIPsName, instanceIPsEndpoint, true),
+		instanceVolumesName:       NewResource(instanceVolumesName, instanceVolumesEndpoint, true),
 		ipaddressesName:           NewResource(ipaddressesName, ipaddressesEndpoint, false),
 		ipv6poolsName:             NewResource(ipv6poolsName, ipv6poolsEndpoint, false),
 		ipv6rangesName:            NewResource(ipv6rangesName, ipv6rangesEndpoint, false),
@@ -158,6 +160,7 @@ func NewClient(codeAPIKey *string, transport http.RoundTripper) (*Client, error)
 		InstanceConfigs:     resources[instanceConfigsName],
 		InstanceSnapshots:   resources[instanceSnapshotsName],
 		InstanceIPs:         resources[instanceIPsName],
+		InstanceVolumes:     resources[instanceVolumesName],
 		IPAddresses:         resources[ipaddressesName],
 		IPv6Pools:           resources[ipv6poolsName],
 		IPv6Ranges:          resources[ipv6rangesName],
@@ -450,19 +453,19 @@ func (c *Client) ListHelperWithID(i interface{}, id int, opts *ListOptions) erro
 			results = r.Result().(*InstanceDisksPagedResponse).Results
 			v.AppendData(r.Result().(*InstanceDisksPagedResponse))
 		}
-	case VolumesPagedResponse:
-		if r, err = req.SetResult(v).Get(v.Endpoint(c)); err == nil {
-			pages = r.Result().(*VolumesPagedResponse).Pages
-			results = r.Result().(*VolumesPagedResponse).Results
-			v.AppendData(r.Result().(*VolumesPagedResponse))
-		}
-	/**
 	case NodeBalancerConfigsPagedResponse:
-		if r, err = req.SetResult(v).Get(v.Endpoint(c)); err == nil {
+		if r, err = req.SetResult(v).Get(v.EndpointWithID(c, id)); err == nil {
 			pages = r.Result().(*NodeBalancerConfigsPagedResponse).Pages
 			results = r.Result().(*NodeBalancerConfigsPagedResponse).Results
 			v.AppendData(r.Result().(*NodeBalancerConfigsPagedResponse))
 		}
+	case InstanceVolumesPagedResponse:
+		if r, err = req.SetResult(v).Get(v.EndpointWithID(c, id)); err == nil {
+			pages = r.Result().(*InstanceVolumesPagedResponse).Pages
+			results = r.Result().(*InstanceVolumesPagedResponse).Results
+			v.AppendData(r.Result().(*InstanceVolumesPagedResponse))
+		}
+	/**
 	case TicketAttachmentsPagedResponse:
 		if r, err = req.SetResult(v).Get(v.Endpoint(c)); err == nil {
 			pages = r.Result().(*TicketAttachmentsPagedResponse).Pages

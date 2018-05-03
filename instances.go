@@ -352,15 +352,6 @@ func (c *Client) ShutdownInstance(id int) (bool, error) {
 	return settleBoolResponseOrError(c.R().Post(e))
 }
 
-func (c *Client) ListInstanceVolumes(linodeID int, opts *ListOptions) ([]*Volume, error) {
-	response := VolumesPagedResponse{}
-	err := c.ListHelperWithID(response, linodeID, opts)
-	for _, el := range response.Data {
-		el.fixDates()
-	}
-	return response.Data, err
-}
-
 func settleBoolResponseOrError(resp *resty.Response, err error) (bool, error) {
 	if err != nil {
 		return false, err
