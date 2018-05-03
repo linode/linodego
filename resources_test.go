@@ -24,7 +24,7 @@ func TestResourceTemplatedEndpointWithID(t *testing.T) {
 	apiKey := "MYFAKEAPIKEY"
 	client, err := NewClient(&apiKey, nil)
 	backupID := 1234255
-	e, err := client.Backups.EndpointWithID(backupID)
+	e, err := client.InstanceSnapshots.EndpointWithID(backupID)
 	if err != nil {
 		t.Error("Got error when getting endpoint with id for backups")
 	}

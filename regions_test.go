@@ -9,7 +9,7 @@ func TestListRegions(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
 	}
-	regions, err := client.ListRegions()
+	regions, err := client.ListRegions(nil)
 	if err != nil {
 		t.Errorf("Error listing regions, expected struct - error %v", err)
 	}

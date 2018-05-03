@@ -7,7 +7,7 @@ func TestListStackscripts(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
 	}
-	stackscripts, err := client.ListStackscripts()
+	stackscripts, err := client.ListStackscripts(nil)
 	if err != nil {
 		t.Errorf("Error listing stackscripts, expected struct - error %v", err)
 	}

@@ -48,7 +48,7 @@ func TestClientAliases(t *testing.T) {
 	if client.Instances == nil {
 		t.Error("Expected alias for Instances to return a *Resource")
 	}
-	if client.Backups == nil {
+	if client.InstanceSnapshots == nil {
 		t.Error("Expected alias for Backups to return a *Resource")
 	}
 	if client.StackScripts == nil {

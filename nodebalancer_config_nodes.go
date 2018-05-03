@@ -63,7 +63,7 @@ func (c *Client) GetNodeBalancerNode(nodebalancerID int, configID int, nodeID in
 	if err != nil {
 		return nil, err
 	}
-	e = fmt.Sprintf("%s/%s/nodes/%s", e, configID, nodeID)
+	e = fmt.Sprintf("%s/%d/nodes/%d", e, configID, nodeID)
 	r, err := c.R().SetResult(&NodeBalancerNode{}).Get(e)
 	if err != nil {
 		return nil, err

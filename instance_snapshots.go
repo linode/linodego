@@ -78,7 +78,7 @@ func (c *Client) GetInstanceSnapshot(linodeID int, snapshotID int) (*InstanceSna
 	if err != nil {
 		return nil, err
 	}
-	e = fmt.Sprintf("%s/%s", e, snapshotID)
+	e = fmt.Sprintf("%s/%d", e, snapshotID)
 	r, err := c.R().SetResult(&InstanceSnapshot{}).Get(e)
 	if err != nil {
 		return nil, err

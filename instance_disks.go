@@ -68,7 +68,7 @@ func (c *Client) GetInstanceDisk(linodeID int, configID int) (*InstanceDisk, err
 	if err != nil {
 		return nil, err
 	}
-	e = fmt.Sprintf("%s/%s", e, configID)
+	e = fmt.Sprintf("%s/%d", e, configID)
 	r, err := c.R().SetResult(&InstanceDisk{}).Get(e)
 	if err != nil {
 		return nil, err

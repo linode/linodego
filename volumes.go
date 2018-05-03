@@ -71,12 +71,12 @@ func (v *Volume) fixDates() *Volume {
 }
 
 // GetVolume gets the template with the provided ID
-func (c *Client) GetVolume(id string) (*Volume, error) {
+func (c *Client) GetVolume(id int) (*Volume, error) {
 	e, err := c.Volumes.Endpoint()
 	if err != nil {
 		return nil, err
 	}
-	e = fmt.Sprintf("%s/%s", e, id)
+	e = fmt.Sprintf("%s/%d", e, id)
 	r, err := c.R().SetResult(&Volume{}).Get(e)
 	if err != nil {
 		return nil, err

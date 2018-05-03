@@ -352,24 +352,13 @@ func (c *Client) ShutdownInstance(id int) (bool, error) {
 	return settleBoolResponseOrError(c.R().Post(e))
 }
 
-// ListInstanceVolumes lists volumes attached to a linode instance
-func (c *Client) ListInstanceVolumes(id int) ([]*Volume, error) {
-	e, err := c.Instances.Endpoint()
-	e = fmt.Sprintf("%s/%d/volumes", e, id)
-	if err != nil {
-		return nil, err
-	}
-	resp, err := c.R().
-		SetResult(&VolumesPagedResponse{}).
-		Get(e)
-	if err != nil {
-		return nil, err
-	}
-	l := resp.Result().(*VolumesPagedResponse).Data
-	for _, el := range l {
+func (c *Client) ListInstanceVolumes(linodeID int, opts *ListOptions) ([]*Volume, error) {
+	response := VolumesPagedResponse{}
+	err := c.ListHelperWithID(response, linodeID, opts)
+	for _, el := range response.Data {
 		el.fixDates()
 	}
-	return l, nil
+	return response.Data, err
 }
 
 func settleBoolResponseOrError(resp *resty.Response, err error) (bool, error) {

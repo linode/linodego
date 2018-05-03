@@ -39,7 +39,7 @@ func TestListInstanceDisks(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
 	}
-	disks, err := client.ListInstanceDisks(TestInstanceID)
+	disks, err := client.ListInstanceDisks(TestInstanceID, nil)
 	if err != nil {
 		t.Errorf("Error listing instance disks, expected struct, got error %v", err)
 	}
@@ -53,7 +53,7 @@ func TestListInstanceConfigs(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
 	}
-	configs, err := client.ListInstanceConfigs(TestInstanceID)
+	configs, err := client.ListInstanceConfigs(TestInstanceID, nil)
 	if err != nil {
 		t.Errorf("Error listing instance configs, expected struct, got error %v", err)
 	}
@@ -67,7 +67,7 @@ func TestListInstanceVolumes(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
 	}
-	volumes, err := client.ListInstanceVolumes(TestInstanceID)
+	volumes, err := client.ListInstanceVolumes(TestInstanceID, nil)
 	if err != nil {
 		t.Errorf("Error listing instance volumes, expected struct, got error %v", err)
 	}

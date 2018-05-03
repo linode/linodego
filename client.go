@@ -196,7 +196,7 @@ type ListResponse interface {
 // opts.results and opts.pages will be updated from the API response
 func (c *Client) ListHelper(i interface{}, opts *ListOptions) error {
 	req := c.R()
-	if opts != nil {
+	if opts != nil && opts.Page > 0 {
 		req.SetQueryParam("page", strconv.Itoa(opts.Page))
 	}
 
@@ -404,7 +404,7 @@ func (c *Client) ListHelper(i interface{}, opts *ListOptions) error {
 // opts.results and opts.pages will be updated from the API response
 func (c *Client) ListHelperWithID(i interface{}, id int, opts *ListOptions) error {
 	req := c.R()
-	if opts != nil {
+	if opts != nil && opts.Page > 0 {
 		req.SetQueryParam("page", strconv.Itoa(opts.Page))
 	}
 
@@ -415,7 +415,7 @@ func (c *Client) ListHelperWithID(i interface{}, id int, opts *ListOptions) erro
 		r       *resty.Response
 	)
 
-	if len(opts.Filter) > 0 {
+	if opts != nil && len(opts.Filter) > 0 {
 		req.SetHeader("X-Filter", opts.Filter)
 	}
 
@@ -450,13 +450,13 @@ func (c *Client) ListHelperWithID(i interface{}, id int, opts *ListOptions) erro
 			results = r.Result().(*InstanceDisksPagedResponse).Results
 			v.AppendData(r.Result().(*InstanceDisksPagedResponse))
 		}
-	/**
-	case InstancesVolumesPagedResponse:
+	case VolumesPagedResponse:
 		if r, err = req.SetResult(v).Get(v.Endpoint(c)); err == nil {
-			pages = r.Result().(*InstancesVolumesPagedResponse).Pages
-			results = r.Result().(*InstancesVolumesPagedResponse).Results
-			v.AppendData(r.Result().(*InstancesVolumesPagedResponse))
+			pages = r.Result().(*VolumesPagedResponse).Pages
+			results = r.Result().(*VolumesPagedResponse).Results
+			v.AppendData(r.Result().(*VolumesPagedResponse))
 		}
+	/**
 	case NodeBalancerConfigsPagedResponse:
 		if r, err = req.SetResult(v).Get(v.Endpoint(c)); err == nil {
 			pages = r.Result().(*NodeBalancerConfigsPagedResponse).Pages

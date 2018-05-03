@@ -98,7 +98,7 @@ func (c *Client) GetInstanceConfig(linodeID int, configID int) (*InstanceConfig,
 	if err != nil {
 		return nil, err
 	}
-	e = fmt.Sprintf("%s/%s", e, configID)
+	e = fmt.Sprintf("%s/%d", e, configID)
 	r, err := c.R().SetResult(&InstanceConfig{}).Get(e)
 	if err != nil {
 		return nil, err

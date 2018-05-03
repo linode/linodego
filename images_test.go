@@ -9,7 +9,7 @@ func TestListImages(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
 	}
-	i, err := client.ListImages()
+	i, err := client.ListImages(nil)
 	if err != nil {
 		t.Errorf("Error listing images, expected struct, got error %v", err)
 	}

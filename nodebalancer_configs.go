@@ -78,7 +78,7 @@ func (c *Client) GetNodeBalancerConfig(nodebalancerID int, configID int) (*NodeB
 	if err != nil {
 		return nil, err
 	}
-	e = fmt.Sprintf("%s/%s", e, configID)
+	e = fmt.Sprintf("%s/%d", e, configID)
 	r, err := c.R().SetResult(&NodeBalancerConfig{}).Get(e)
 	if err != nil {
 		return nil, err
