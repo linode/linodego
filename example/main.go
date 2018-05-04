@@ -32,6 +32,20 @@ func main() {
 	}
 	fmt.Printf("%+v", kernels)
 
+	filterOpt := golinode.ListOptions{Filter: "{\"label\":\"Recovery - Finnix (kernel)\"}"}
+	kernels, err = linodeClient.ListKernels(&filterOpt)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("%+v", kernels)
+
+	pageOpt := golinode.ListOptions{PageOptions: &golinode.PageOptions{Page: 1}}
+	subscriptions, err := linodeClient.ListLongviewSubscriptions(&pageOpt)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("%+v", subscriptions)
+
 	if !apiOk || len(apiKey) == 0 {
 		log.Fatal("Could not find LINODE_API_KEY, please assert it is set.")
 		os.Exit(1)
@@ -88,5 +102,22 @@ func main() {
 			}
 			fmt.Printf("First Disk: %#v", disk)
 		}
+
+		volumes, err := linodeClient.ListInstanceVolumes(linode.ID, nil)
+		if err != nil {
+			log.Fatal(err)
+		} else if len(volumes) > 0 {
+			volume, err := linodeClient.GetInstanceVolume(linode.ID, volumes[0].ID)
+			if err != nil {
+				log.Fatal(err)
+			}
+			fmt.Printf("First Volume: %#v", volume)
+		}
+
+		stackscripts, err := linodeClient.ListStackscripts(&golinode.ListOptions{Filter: "{\"mine\":true}"})
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Printf("%+v", stackscripts)
 	}
 }

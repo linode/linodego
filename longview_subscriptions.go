@@ -8,7 +8,10 @@ import (
 
 // LongviewSubscription represents a LongviewSubscription object
 type LongviewSubscription struct {
-	ID int
+	ID              string
+	Label           string
+	ClientsIncluded int `json:"clients_included"`
+	Price           *LinodePrice
 	// UpdatedStr string `json:"updated"`
 	// Updated *time.Time `json:"-"`
 }

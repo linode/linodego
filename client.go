@@ -152,31 +152,32 @@ func NewClient(codeAPIKey *string, transport http.RoundTripper) (*Client, error)
 		resty:     restyClient,
 		resources: resources,
 
-		Images:              resources[imagesName],
-		StackScripts:        resources[stackscriptsName],
-		Instances:           resources[instancesName],
-		Regions:             resources[regionsName],
-		InstanceDisks:       resources[instanceDisksName],
-		InstanceConfigs:     resources[instanceConfigsName],
-		InstanceSnapshots:   resources[instanceSnapshotsName],
-		InstanceIPs:         resources[instanceIPsName],
-		InstanceVolumes:     resources[instanceVolumesName],
-		IPAddresses:         resources[ipaddressesName],
-		IPv6Pools:           resources[ipv6poolsName],
-		IPv6Ranges:          resources[ipv6rangesName],
-		Volumes:             resources[volumesName],
-		Kernels:             resources[kernelsName],
-		Types:               resources[typesName],
-		Domains:             resources[domainsName],
-		Longview:            resources[longviewName],
-		NodeBalancers:       resources[nodebalancersName],
-		NodeBalancerConfigs: resources[nodebalancerconfigsName],
-		NodeBalancerNodes:   resources[nodebalancernodesName],
-		Tickets:             resources[ticketsName],
-		Account:             resources[accountName],
-		Invoices:            resources[invoicesName],
-		Profile:             resources[profileName],
-		Managed:             resources[managedName],
+		Images:                resources[imagesName],
+		StackScripts:          resources[stackscriptsName],
+		Instances:             resources[instancesName],
+		Regions:               resources[regionsName],
+		InstanceDisks:         resources[instanceDisksName],
+		InstanceConfigs:       resources[instanceConfigsName],
+		InstanceSnapshots:     resources[instanceSnapshotsName],
+		InstanceIPs:           resources[instanceIPsName],
+		InstanceVolumes:       resources[instanceVolumesName],
+		IPAddresses:           resources[ipaddressesName],
+		IPv6Pools:             resources[ipv6poolsName],
+		IPv6Ranges:            resources[ipv6rangesName],
+		Volumes:               resources[volumesName],
+		Kernels:               resources[kernelsName],
+		Types:                 resources[typesName],
+		Domains:               resources[domainsName],
+		Longview:              resources[longviewName],
+		LongviewSubscriptions: resources[longviewsubscriptionsName],
+		NodeBalancers:         resources[nodebalancersName],
+		NodeBalancerConfigs:   resources[nodebalancerconfigsName],
+		NodeBalancerNodes:     resources[nodebalancernodesName],
+		Tickets:               resources[ticketsName],
+		Account:               resources[accountName],
+		Invoices:              resources[invoicesName],
+		Profile:               resources[profileName],
+		Managed:               resources[managedName],
 	}, nil
 }
 
@@ -199,7 +200,7 @@ type ListResponse interface {
 // opts.results and opts.pages will be updated from the API response
 func (c *Client) ListHelper(i interface{}, opts *ListOptions) error {
 	req := c.R()
-	if opts != nil && opts.Page > 0 {
+	if opts != nil && opts.PageOptions != nil && opts.Page > 0 {
 		req.SetQueryParam("page", strconv.Itoa(opts.Page))
 	}
 
@@ -393,6 +394,9 @@ func (c *Client) ListHelper(i interface{}, opts *ListOptions) error {
 			c.ListHelper(i, &ListOptions{PageOptions: &PageOptions{Page: page}})
 		}
 	} else {
+		if opts.PageOptions == nil {
+			opts.PageOptions = &PageOptions{}
+		}
 		opts.Results = results
 		opts.Pages = pages
 	}
@@ -492,6 +496,9 @@ func (c *Client) ListHelperWithID(i interface{}, id int, opts *ListOptions) erro
 			c.ListHelper(i, &ListOptions{PageOptions: &PageOptions{Page: page}})
 		}
 	} else {
+		if opts.PageOptions == nil {
+			opts.PageOptions = &PageOptions{}
+		}
 		opts.Results = results
 		opts.Pages = pages
 	}
