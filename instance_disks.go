@@ -1,6 +1,7 @@
 package golinode
 
 import (
+	"encoding/json"
 	"fmt"
 	"time"
 
@@ -24,6 +25,21 @@ type InstanceDisk struct {
 type InstanceDisksPagedResponse struct {
 	*PageOptions
 	Data []*InstanceDisk
+}
+
+type InstanceDiskCreateOptions struct {
+	Label string `json:"label"`
+	Size  int    `json:"size"`
+
+	// Image is optional, but requires RootPass if provided
+	Image    string `json:"image,omitempty"`
+	RootPass string `json:"root_pass,omitempty"`
+
+	Filesystem      string            `json:"filesystem,omitempty"`
+	AuthorizedKeys  []string          `json:"authorized_keys,omitempty"`
+	ReadOnly        bool              `json:"read_only,omitempty"`
+	StackscriptID   int               `json:"stackscript_id,omitempty"`
+	StackscriptData map[string]string `json:"stackscript_data,omitempty"`
 }
 
 // Endpoint gets the endpoint URL for InstanceDisk
@@ -74,4 +90,31 @@ func (c *Client) GetInstanceDisk(linodeID int, configID int) (*InstanceDisk, err
 		return nil, err
 	}
 	return r.Result().(*InstanceDisk).fixDates(), nil
+}
+
+func (c *Client) CreateInstanceDisk(linodeID int, createOpts InstanceDiskCreateOptions) (*InstanceDisk, error) {
+	var body string
+	e, err := c.InstanceDisks.EndpointWithID(linodeID)
+	if err != nil {
+		return nil, err
+	}
+
+	req := c.R().SetResult(&InstanceDisk{})
+
+	if bodyData, err := json.Marshal(createOpts); err == nil {
+		body = string(bodyData)
+	} else {
+		return nil, err
+	}
+
+	r, err := req.
+		SetHeader("Content-Type", "application/json").
+		SetBody(body).
+		Post(e)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return r.Result().(*InstanceDisk), nil
 }
