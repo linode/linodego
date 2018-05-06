@@ -39,6 +39,18 @@ func main() {
 	}
 	fmt.Printf("%+v", kernels)
 
+	kernels, err = linodeClient.ListKernels(golinode.NewListOptions(1, ""))
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("%+v", kernels)
+
+	images, err := linodeClient.ListImages(nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("%+v", images)
+
 	pageOpt := golinode.ListOptions{PageOptions: &golinode.PageOptions{Page: 1}}
 	subscriptions, err := linodeClient.ListLongviewSubscriptions(&pageOpt)
 	if err != nil {

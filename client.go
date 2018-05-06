@@ -193,6 +193,13 @@ type ListResponse interface {
 	ListHelper(*resty.Request, *ListOptions) error
 }
 
+// NewListOptions simplified construction of ListOptions using only
+// the two writable properties, Page and Filter
+func NewListOptions(Page int, Filter string) *ListOptions {
+	return &ListOptions{PageOptions: &PageOptions{Page: Page}, Filter: Filter}
+
+}
+
 // ListHelper abstracts fetching and pagination for GET endpoints that
 // do not require any Ids (top level endpoints).
 // When opts (or opts.Page) is nil, all pages will be fetched and
