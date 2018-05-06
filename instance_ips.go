@@ -1,6 +1,7 @@
 package golinode
 
 import (
+	"encoding/json"
 	"fmt"
 )
 
@@ -38,16 +39,62 @@ type IPv6Range struct {
 	Region string
 }
 
-// GetInstanceIPAddress gets the template with the provided ID
-func (c *Client) GetInstanceIPAddress(linodeID int, ipaddress string) (*InstanceIPAddressResponse, error) {
+// GetInstanceIPAddresses gets the IPAddresses for a Linode instance
+func (c *Client) GetInstanceIPAddresses(linodeID int) (*InstanceIPAddressResponse, error) {
 	e, err := c.InstanceIPs.EndpointWithID(linodeID)
 	if err != nil {
 		return nil, err
 	}
-	e = fmt.Sprintf("%s/%s", e, ipaddress)
 	r, err := c.R().SetResult(&InstanceIPAddressResponse{}).Get(e)
 	if err != nil {
 		return nil, err
 	}
 	return r.Result().(*InstanceIPAddressResponse), nil
+}
+
+// GetInstanceIPAddress gets the IPAddress for a Linode instance matching a supplied IP address
+func (c *Client) GetInstanceIPAddress(linodeID int, ipaddress string) (*InstanceIP, error) {
+	e, err := c.InstanceIPs.EndpointWithID(linodeID)
+	if err != nil {
+		return nil, err
+	}
+	e = fmt.Sprintf("%s/%s", e, ipaddress)
+	r, err := c.R().SetResult(&InstanceIP{}).Get(e)
+	if err != nil {
+		return nil, err
+	}
+	return r.Result().(*InstanceIP), nil
+}
+
+// AddInstanceIPAddress adds a public or private IP to a Linode instance
+func (c *Client) AddInstanceIPAddress(linodeID int, public bool) (*InstanceIP, error) {
+	var body string
+	e, err := c.InstanceIPs.EndpointWithID(linodeID)
+	if err != nil {
+		return nil, err
+	}
+
+	req := c.R().SetResult(&InstanceIP{})
+
+	instanceipRequest := struct {
+		Type   string `json:"type"`
+		Public bool   `json:"public"`
+	}{"ipv4", true}
+
+	if bodyData, err := json.Marshal(instanceipRequest); err == nil {
+		body = string(bodyData)
+	} else {
+		return nil, err
+	}
+
+	r, err := req.
+		SetHeader("Content-Type", "application/json").
+		SetBody(body).
+		Post(e)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return r.Result().(*InstanceIP), nil
 }
