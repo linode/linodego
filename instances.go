@@ -46,19 +46,19 @@ type InstanceSpec struct {
 
 // InstanceAlert represents a metric alert
 type InstanceAlert struct {
-	CPU           int
-	IO            int
-	NetworkIn     int
-	NetworkOut    int
-	TransferQuote int
+	CPU           int `json:"cpu"`
+	IO            int `json:"io"`
+	NetworkIn     int `json:"network_in"`
+	NetworkOut    int `json:"network_out"`
+	TransferQuote int `json:"transfer_queue"`
 }
 
 // InstanceBackup represents backup settings for an instance
 type InstanceBackup struct {
-	Enabled  bool
+	Enabled  bool `json:"enabled"`
 	Schedule struct {
-		Day    string
-		Window string
+		Day    string `json:"day,omitempty"`
+		Window string `json:"window,omitempty"`
 	}
 }
 
@@ -76,6 +76,14 @@ type InstanceCreateOptions struct {
 	Image           string            `json:"image,omitempty"`
 	BackupsEnabled  bool              `json:"backups_enabled,omitempty"`
 	Booted          bool              `json:"booted,omitempty"`
+}
+
+// InstanceUpdateOptions is an options struct used when Updating an Instance
+type InstanceUpdateOptions struct {
+	Label   string         `json:"label,omitempty"`
+	Group   string         `json:"group,omitempty"`
+	Backups InstanceBackup `json:"backups,omitempty"`
+	Alerts  InstanceAlert  `json:"alerts,omitempty"`
 }
 
 // InstanceCloneOptions is an options struct when sending a clone request to the API
@@ -201,6 +209,53 @@ func (c *Client) CreateInstance(instance *InstanceCreateOptions) (*Instance, err
 	}
 
 	return r.Result().(*Instance).fixDates(), nil
+}
+
+// UpdateInstance creates a Linode instance
+func (c *Client) UpdateInstance(id int, instance *InstanceUpdateOptions) (*Instance, error) {
+	var body string
+	e, err := c.Instances.Endpoint()
+	if err != nil {
+		return nil, err
+	}
+
+	req := c.R().SetResult(&Instance{})
+
+	if bodyData, err := json.Marshal(instance); err == nil {
+		body = string(bodyData)
+	} else {
+		return nil, err
+	}
+
+	r, err := req.
+		SetHeader("Content-Type", "application/json").
+		SetBody(body).
+		Put(e)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return r.Result().(*Instance).fixDates(), nil
+}
+
+// RenameInstance renames an Instance
+func (c *Client) RenameInstance(linodeID int, label string) (*Instance, error) {
+	return c.UpdateInstance(linodeID, &InstanceUpdateOptions{Label: label})
+}
+
+// DeleteInstance deletes a Linode instance
+func (c *Client) DeleteInstance(id int) error {
+	e, err := c.Instances.EndpointWithID(id)
+	if err != nil {
+		return err
+	}
+
+	if _, err = c.R().Delete(e); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // BootInstance will boot a new linode instance

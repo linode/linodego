@@ -27,6 +27,7 @@ type InstanceDisksPagedResponse struct {
 	Data []*InstanceDisk
 }
 
+// InstanceDiskCreateOptions are InstanceDisk settings that can be used at creation
 type InstanceDiskCreateOptions struct {
 	Label string `json:"label"`
 	Size  int    `json:"size"`
@@ -42,7 +43,13 @@ type InstanceDiskCreateOptions struct {
 	StackscriptData map[string]string `json:"stackscript_data,omitempty"`
 }
 
-// Endpoint gets the endpoint URL for InstanceDisk
+// InstanceDiskUpdateOptions are InstanceDisk settings that can be used in updates
+type InstanceDiskUpdateOptions struct {
+	Label    string `json:"label"`
+	ReadOnly bool   `json:"read_only,omitempty"`
+}
+
+// EndpointWithID gets the endpoint URL for InstanceDisks of a given Instance
 func (InstanceDisksPagedResponse) EndpointWithID(c *Client, id int) string {
 	endpoint, err := c.InstanceDisks.EndpointWithID(id)
 	if err != nil {
@@ -92,6 +99,7 @@ func (c *Client) GetInstanceDisk(linodeID int, configID int) (*InstanceDisk, err
 	return r.Result().(*InstanceDisk).fixDates(), nil
 }
 
+// CreateInstanceDisk creates a new InstanceDisk for the given Instance
 func (c *Client) CreateInstanceDisk(linodeID int, createOpts InstanceDiskCreateOptions) (*InstanceDisk, error) {
 	var body string
 	e, err := c.InstanceDisks.EndpointWithID(linodeID)
@@ -117,4 +125,52 @@ func (c *Client) CreateInstanceDisk(linodeID int, createOpts InstanceDiskCreateO
 	}
 
 	return r.Result().(*InstanceDisk), nil
+}
+
+// UpdateInstanceDisk creates a new InstanceDisk for the given Instance
+func (c *Client) UpdateInstanceDisk(linodeID int, diskID int, updateOpts InstanceDiskUpdateOptions) (*InstanceDisk, error) {
+	var body string
+	e, err := c.InstanceDisks.EndpointWithID(linodeID)
+	if err != nil {
+		return nil, err
+	}
+	e = fmt.Sprintf("%s/%d", e, diskID)
+
+	req := c.R().SetResult(&InstanceDisk{})
+
+	if bodyData, err := json.Marshal(updateOpts); err == nil {
+		body = string(bodyData)
+	} else {
+		return nil, err
+	}
+
+	r, err := req.
+		SetHeader("Content-Type", "application/json").
+		SetBody(body).
+		Put(e)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return r.Result().(*InstanceDisk), nil
+}
+
+// RenameInstanceDisk renames an InstanceDisk
+func (c *Client) RenameInstanceDisk(linodeID int, diskID int, label string) (*InstanceDisk, error) {
+	return c.UpdateInstanceDisk(linodeID, diskID, InstanceDiskUpdateOptions{Label: label})
+}
+
+// DeleteInstanceDisk deletes a Linode InstanceDisk
+func (c *Client) DeleteInstanceDisk(id int) error {
+	e, err := c.InstanceDisks.EndpointWithID(id)
+	if err != nil {
+		return err
+	}
+
+	if _, err = c.R().Delete(e); err != nil {
+		return err
+	}
+
+	return nil
 }
