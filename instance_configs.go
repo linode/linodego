@@ -74,7 +74,7 @@ type InstanceConfigCreateOptions struct {
 // InstanceConfigUpdateOptions are InstanceConfig settings that can be used in updates
 type InstanceConfigUpdateOptions InstanceConfigCreateOptions
 
-func (i InstanceConfig) getCreateOptions() InstanceConfigCreateOptions {
+func (i InstanceConfig) GetCreateOptions() InstanceConfigCreateOptions {
 	return InstanceConfigCreateOptions{
 		Label:       i.Label,
 		Comments:    i.Comments,
@@ -89,7 +89,7 @@ func (i InstanceConfig) getCreateOptions() InstanceConfigCreateOptions {
 	}
 }
 
-func (i InstanceConfig) getUpdateOptions() InstanceConfigUpdateOptions {
+func (i InstanceConfig) GetUpdateOptions() InstanceConfigUpdateOptions {
 	return InstanceConfigUpdateOptions{
 		Label:       i.Label,
 		Comments:    i.Comments,
