@@ -74,6 +74,36 @@ type InstanceConfigCreateOptions struct {
 // InstanceConfigUpdateOptions are InstanceConfig settings that can be used in updates
 type InstanceConfigUpdateOptions InstanceConfigCreateOptions
 
+func (i InstanceConfig) getCreateOptions() InstanceConfigCreateOptions {
+	return InstanceConfigCreateOptions{
+		Label:       i.Label,
+		Comments:    i.Comments,
+		Devices:     i.Devices,
+		Helpers:     i.Helpers,
+		MemoryLimit: i.MemoryLimit,
+		Kernel:      i.Kernel,
+		InitRD:      i.InitRD,
+		RootDevice:  i.RootDevice,
+		RunLevel:    i.RunLevel,
+		VirtMode:    i.VirtMode,
+	}
+}
+
+func (i InstanceConfig) getUpdateOptions() InstanceConfigUpdateOptions {
+	return InstanceConfigUpdateOptions{
+		Label:       i.Label,
+		Comments:    i.Comments,
+		Devices:     i.Devices,
+		Helpers:     i.Helpers,
+		MemoryLimit: i.MemoryLimit,
+		Kernel:      i.Kernel,
+		InitRD:      i.InitRD,
+		RootDevice:  i.RootDevice,
+		RunLevel:    i.RunLevel,
+		VirtMode:    i.VirtMode,
+	}
+}
+
 // EndpointWithID gets the endpoint URL for InstanceConfigs of a given Instance
 func (InstanceConfigsPagedResponse) EndpointWithID(c *Client, id int) string {
 	endpoint, err := c.InstanceConfigs.EndpointWithID(id)
