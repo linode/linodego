@@ -19,13 +19,13 @@ const (
 	APIProto = "https"
 	// Version of golinode
 	Version = "1.0.0"
-	// APIEnvVar environment var to check for API key
-	APIEnvVar = "LINODE_API_KEY"
+	// APIEnvVar environment var to check for API token
+	APIEnvVar = "LINODE_TOKEN"
 )
 
 // Client is a wrapper around the Resty client
 type Client struct {
-	apiKey    string
+	apiToken  string
 	resty     *resty.Client
 	resources map[string]*Resource
 
@@ -96,22 +96,22 @@ type ListOptions struct {
 }
 
 // NewClient factory to create new Client struct
-func NewClient(codeAPIKey *string, transport http.RoundTripper) (*Client, error) {
-	linodeAPIKey := ""
+func NewClient(codeAPIToken *string, transport http.RoundTripper) (*Client, error) {
+	linodeAPIToken := ""
 
-	if codeAPIKey != nil {
-		linodeAPIKey = *codeAPIKey
-	} else if envAPIKey, ok := os.LookupEnv(APIEnvVar); ok {
-		linodeAPIKey = envAPIKey
+	if codeAPIToken != nil {
+		linodeAPIToken = *codeAPIToken
+	} else if envAPIToken, ok := os.LookupEnv(APIEnvVar); ok {
+		linodeAPIToken = envAPIToken
 	}
 
-	if len(linodeAPIKey) == 0 || linodeAPIKey == "" {
-		log.Print("Could not find LINODE_API_KEY, authenticated endpoints will fail.")
+	if len(linodeAPIToken) == 0 || linodeAPIToken == "" {
+		log.Print("Could not find LINODE_TOKEN, authenticated endpoints will fail.")
 	}
 
 	restyClient := resty.New().
 		SetHostURL(fmt.Sprintf("%s://%s/%s", APIProto, APIHost, APIVersion)).
-		SetAuthToken(linodeAPIKey).
+		SetAuthToken(linodeAPIToken).
 		SetTransport(transport).
 		SetHeader("User-Agent", fmt.Sprintf("go-linode %s https://github.com/chiefy/go-linode", Version))
 
@@ -148,7 +148,7 @@ func NewClient(codeAPIKey *string, transport http.RoundTripper) (*Client, error)
 	}
 
 	return &Client{
-		apiKey:    linodeAPIKey,
+		apiToken:  linodeAPIToken,
 		resty:     restyClient,
 		resources: resources,
 

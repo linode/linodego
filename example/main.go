@@ -10,7 +10,7 @@ import (
 
 func main() {
 	// Trigger endpoints that accrue a balance
-	apiKey, apiOk := os.LookupEnv("LINODE_API_KEY")
+	apiToken, apiOk := os.LookupEnv("LINODE_TOKEN")
 	var SpendMoney = true && apiOk
 
 	// Demonstrate endpoints that don't require an account or token
@@ -58,13 +58,13 @@ func main() {
 	}
 	fmt.Printf("%+v", subscriptions)
 
-	if !apiOk || len(apiKey) == 0 {
+	if !apiOk || len(apiToken) == 0 {
 		log.Fatal("Could not find LINODE_API_KEY, please assert it is set.")
 		os.Exit(1)
 	}
 
 	// Demonstrate endpoints that require an access token
-	linodeClient, err = golinode.NewClient(&apiKey, nil)
+	linodeClient, err = golinode.NewClient(&apiToken, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
