@@ -59,7 +59,7 @@ func main() {
 	fmt.Printf("%+v", subscriptions)
 
 	if !apiOk || len(apiToken) == 0 {
-		log.Fatal("Could not find LINODE_API_KEY, please assert it is set.")
+		log.Fatal("Could not find LINODE_TOKEN, please assert it is set.")
 		os.Exit(1)
 	}
 
