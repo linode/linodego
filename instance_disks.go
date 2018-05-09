@@ -161,6 +161,38 @@ func (c *Client) RenameInstanceDisk(linodeID int, diskID int, label string) (*In
 	return c.UpdateInstanceDisk(linodeID, diskID, InstanceDiskUpdateOptions{Label: label})
 }
 
+// ResizeInstanceDisk resizes the size of the Instance disk
+func (c *Client) ResizeInstanceDisk(linodeID int, diskID int, size int) (*InstanceDisk, error) {
+	var body string
+	e, err := c.InstanceDisks.EndpointWithID(linodeID)
+	if err != nil {
+		return nil, err
+	}
+	e = fmt.Sprintf("%s/%d", e, diskID)
+
+	req := c.R().SetResult(&InstanceDisk{})
+	updateOpts := map[string]interface{}{
+		"size": size,
+	}
+
+	if bodyData, err := json.Marshal(updateOpts); err == nil {
+		body = string(bodyData)
+	} else {
+		return nil, err
+	}
+
+	r, err := req.
+		SetHeader("Content-Type", "application/json").
+		SetBody(body).
+		Post(e)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return r.Result().(*InstanceDisk), nil
+}
+
 // DeleteInstanceDisk deletes a Linode InstanceDisk
 func (c *Client) DeleteInstanceDisk(id int) error {
 	e, err := c.InstanceDisks.EndpointWithID(id)
