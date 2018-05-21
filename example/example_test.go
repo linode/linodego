@@ -119,6 +119,44 @@ func ExampleListKernels_page1() {
 	// Kernel Version in ID: true
 }
 
+func ExampleGetKernel_specific() {
+	l32, err := linodeClient.GetKernel("linode/latest-32bit")
+	if err == nil {
+		fmt.Println("Label starts:", l32.Label[0:9])
+	} else {
+		log.Fatalln(err)
+	}
+
+	l64, err := linodeClient.GetKernel("linode/latest-64bit")
+	if err == nil {
+		fmt.Println("Label starts:", l64.Label[0:9])
+	} else {
+		log.Fatalln(err)
+	}
+	// Interference check
+	fmt.Println("First Label still starts:", l32.Label[0:9])
+
+	// Output:
+	// Label starts: Latest 32
+	// Label starts: Latest 64
+	// First Label still starts: Latest 32
+}
+
+func ExampleGetImage_missing() {
+	_, err := linodeClient.GetImage("not-found")
+	if err != nil {
+		if v, ok := err.(*golinode.Error); ok {
+			fmt.Println("Request was:", v.Response.Request.URL)
+			fmt.Println("Response was:", v.Response.Status)
+			fmt.Println("Error was:", v)
+		}
+	}
+
+	// Output:
+	// Request was: https://api.linode.com/v4/images/not-found
+	// Response was: 404 NOT FOUND
+	// Error was: [404] Not found
+}
 func ExampleListImages_all() {
 	filterOpt := golinode.NewListOptions(0, "")
 	images, err := linodeClient.ListImages(filterOpt)
