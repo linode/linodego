@@ -47,8 +47,11 @@ func (NodeBalancersPagedResponse) SetResult(r *resty.Request) {
 // ListNodeBalancers lists NodeBalancers
 func (c *Client) ListNodeBalancers(opts *ListOptions) ([]*NodeBalancer, error) {
 	response := NodeBalancersPagedResponse{}
-	err := c.ListHelper(response, opts)
-	return response.Data, err
+	err := c.ListHelper(&response, opts)
+	if err != nil {
+		return nil, err
+	}
+	return response.Data, nil
 }
 
 // GetNodeBalancer gets the NodeBalancer with the provided ID

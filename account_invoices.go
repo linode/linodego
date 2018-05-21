@@ -58,11 +58,14 @@ func (InvoicesPagedResponse) SetResult(r *resty.Request) {
 // ListInvoices lists Invoices
 func (c *Client) ListInvoices(opts *ListOptions) ([]*Invoice, error) {
 	response := InvoicesPagedResponse{}
-	err := c.ListHelper(response, opts)
+	err := c.ListHelper(&response, opts)
 	for _, el := range response.Data {
 		el.fixDates()
 	}
-	return response.Data, err
+	if err != nil {
+		return nil, err
+	}
+	return response.Data, nil
 }
 
 // fixDates converts JSON timestamps to Go time.Time values
@@ -86,7 +89,7 @@ func (c *Client) GetInvoice(id string) (*Invoice, error) {
 	}
 
 	e = fmt.Sprintf("%s/%s", e, id)
-	r, err := c.R().SetResult(&Invoice{}).Get(e)
+	r, err := coupleAPIErrors(c.R().SetResult(&Invoice{}).Get(e))
 	if err != nil {
 		return nil, err
 	}
@@ -121,9 +124,12 @@ func (InvoiceItemsPagedResponse) SetResult(r *resty.Request) {
 // ListInvoiceItems lists Invoice Items
 func (c *Client) ListInvoiceItems(id int, opts *ListOptions) ([]*InvoiceItem, error) {
 	response := InvoiceItemsPagedResponse{}
-	err := c.ListHelperWithID(response, id, opts)
+	err := c.ListHelperWithID(&response, id, opts)
 	for _, el := range response.Data {
 		el.fixDates()
 	}
-	return response.Data, err
+	if err != nil {
+		return nil, err
+	}
+	return response.Data, nil
 }

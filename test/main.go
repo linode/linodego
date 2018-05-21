@@ -32,7 +32,7 @@ func main() {
 	}
 	defer r.Stop() // Make sure recorder is stopped once done with it
 
-	c, err := golinode.NewClient(nil, r)
+	c := golinode.NewClient(nil, r)
 	if err != nil {
 		log.Fatal(err)
 	}

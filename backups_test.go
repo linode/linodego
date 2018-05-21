@@ -5,6 +5,10 @@ import (
 )
 
 func TestListInstanceBackups(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode.")
+	}
+
 	client, err := createTestClient(debugAPI)
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)

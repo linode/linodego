@@ -32,7 +32,7 @@ func (c *Client) GetAccount() (*Account, error) {
 	if err != nil {
 		return nil, err
 	}
-	r, err := c.R().SetResult(&Account{}).Get(e)
+	r, err := coupleAPIErrors(c.R().SetResult(&Account{}).Get(e))
 	if err != nil {
 		return nil, err
 	}

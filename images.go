@@ -7,7 +7,7 @@ import (
 	"github.com/go-resty/resty"
 )
 
-// LinodeImage represents a linode image object
+// Image represents a deployable Image object for use with Linode Instances
 type Image struct {
 	CreatedStr  string `json:"created"`
 	UpdatedStr  string `json:"updated"`
@@ -56,11 +56,15 @@ func (ImagesPagedResponse) SetResult(r *resty.Request) {
 // ListImages lists Images
 func (c *Client) ListImages(opts *ListOptions) ([]*Image, error) {
 	response := ImagesPagedResponse{}
-	err := c.ListHelper(response, opts)
+	err := c.ListHelper(&response, opts)
 	for _, el := range response.Data {
 		el.fixDates()
 	}
-	return response.Data, err
+	if err != nil {
+		return nil, err
+	}
+	return response.Data, nil
+
 }
 
 // GetImage gets the Image with the provided ID
@@ -70,9 +74,7 @@ func (c *Client) GetImage(id string) (*Image, error) {
 		return nil, err
 	}
 	e = fmt.Sprintf("%s/%s", e, id)
-	r, err := c.R().
-		SetResult(&Image{}).
-		Get(e)
+	r, err := coupleAPIErrors(c.Images.R().Get(e))
 	if err != nil {
 		return nil, err
 	}

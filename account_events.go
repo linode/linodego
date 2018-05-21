@@ -69,11 +69,14 @@ func (EventsPagedResponse) SetResult(r *resty.Request) {
 // ListEvents lists Events
 func (c *Client) ListEvents(opts *ListOptions) ([]*Event, error) {
 	response := EventsPagedResponse{}
-	err := c.ListHelper(response, opts)
+	err := c.ListHelper(&response, opts)
 	for _, el := range response.Data {
 		el.fixDates()
 	}
-	return response.Data, err
+	if err != nil {
+		return nil, err
+	}
+	return response.Data, nil
 }
 
 // fixDates converts JSON timestamps to Go time.Time values

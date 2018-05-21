@@ -63,8 +63,11 @@ func (TicketsPagedResponse) SetResult(r *resty.Request) {
 // ListTypes lists support tickets
 func (c *Client) ListTickets(opts *ListOptions) ([]*Ticket, error) {
 	response := TicketsPagedResponse{}
-	err := c.ListHelper(response, opts)
-	return response.Data, err
+	err := c.ListHelper(&response, opts)
+	if err != nil {
+		return nil, err
+	}
+	return response.Data, nil
 }
 
 // GetType gets the type with the provided ID

@@ -8,71 +8,40 @@ import (
 	golinode "github.com/chiefy/go-linode"
 )
 
+var linodeClient = golinode.NewClient(nil, nil)
+var spendMoney = false
+
 func main() {
 	// Trigger endpoints that accrue a balance
 	apiToken, apiOk := os.LookupEnv("LINODE_TOKEN")
-	var SpendMoney = true && apiOk
+	spendMoney = true && apiOk
 
-	// Demonstrate endpoints that don't require an account or token
-	linodeClient, err := golinode.NewClient(nil, nil)
+	var err error
 	if err != nil {
 		log.Fatal(err)
 	}
-	linodeClient.SetDebug(true)
-
-	types, err := linodeClient.ListTypes(nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Printf("%+v", types)
-
-	kernels, err := linodeClient.ListKernels(nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Printf("%+v", kernels)
-
-	filterOpt := golinode.ListOptions{Filter: "{\"label\":\"Recovery - Finnix (kernel)\"}"}
-	kernels, err = linodeClient.ListKernels(&filterOpt)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Printf("%+v", kernels)
-
-	kernels, err = linodeClient.ListKernels(golinode.NewListOptions(1, ""))
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Printf("%+v", kernels)
-
-	images, err := linodeClient.ListImages(nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Printf("%+v", images)
-
-	pageOpt := golinode.ListOptions{PageOptions: &golinode.PageOptions{Page: 1}}
-	subscriptions, err := linodeClient.ListLongviewSubscriptions(&pageOpt)
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Printf("%+v", subscriptions)
+	linodeClient.SetDebug(false)
 
 	if !apiOk || len(apiToken) == 0 {
 		log.Fatal("Could not find LINODE_TOKEN, please assert it is set.")
-		os.Exit(1)
 	}
 
 	// Demonstrate endpoints that require an access token
-	linodeClient, err = golinode.NewClient(&apiToken, nil)
+	linodeClient = golinode.NewClient(&apiToken, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
-	linodeClient.SetDebug(true)
 
+	moreExamples_authenticated()
+}
+
+func moreExamples_authenticated() {
 	var linode *golinode.Instance
 
-	if SpendMoney {
+	linode, err := linodeClient.GetInstance(1231)
+	fmt.Printf("%#v", linode)
+
+	if spendMoney {
 		linode, err = linodeClient.CreateInstance(&golinode.InstanceCreateOptions{Region: "us-central", Type: "g5-nanode-1"})
 		if err != nil {
 			log.Fatal(err)

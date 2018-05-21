@@ -38,7 +38,10 @@ func (c *Client) ListInstanceVolumes(linodeID int, opts *ListOptions) ([]*Volume
 	for _, el := range response.Data {
 		el.fixDates()
 	}
-	return response.Data, err
+	if err != nil {
+		return nil, err
+	}
+	return response.Data, nil
 }
 
 // GetInstanceVolume gets the snapshot with the provided ID
@@ -48,7 +51,7 @@ func (c *Client) GetInstanceVolume(linodeID int, snapshotID int) (*Volume, error
 		return nil, err
 	}
 	e = fmt.Sprintf("%s/%d", e, snapshotID)
-	r, err := c.R().SetResult(&Volume{}).Get(e)
+	r, err := coupleAPIErrors(c.R().SetResult(&Volume{}).Get(e))
 	if err != nil {
 		return nil, err
 	}

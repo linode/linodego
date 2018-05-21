@@ -69,7 +69,10 @@ func (c *Client) ListInstanceSnapshots(linodeID int, opts *ListOptions) ([]*Inst
 	for _, el := range response.Data {
 		el.fixDates()
 	}
-	return response.Data, err
+	if err != nil {
+		return nil, err
+	}
+	return response.Data, nil
 }
 
 // GetInstanceSnapshot gets the snapshot with the provided ID
@@ -79,7 +82,7 @@ func (c *Client) GetInstanceSnapshot(linodeID int, snapshotID int) (*InstanceSna
 		return nil, err
 	}
 	e = fmt.Sprintf("%s/%d", e, snapshotID)
-	r, err := c.R().SetResult(&InstanceSnapshot{}).Get(e)
+	r, err := coupleAPIErrors(c.R().SetResult(&InstanceSnapshot{}).Get(e))
 	if err != nil {
 		return nil, err
 	}

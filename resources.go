@@ -4,6 +4,8 @@ import (
 	"bytes"
 	"fmt"
 	"text/template"
+
+	"github.com/go-resty/resty"
 )
 
 const (
@@ -78,26 +80,37 @@ type Resource struct {
 	endpoint         string
 	isTemplate       bool
 	endpointTemplate *template.Template
+	R                func() *resty.Request
+	PR               func() *resty.Request
 }
 
 // NewResource is the factory to create a new Resource struct. If it has a template string the useTemplate bool must be set.
-func NewResource(name string, endpoint string, useTemplate bool) *Resource {
+func NewResource(client *Client, name string, endpoint string, useTemplate bool, singleType interface{}, pagedType interface{}) *Resource {
 	var tmpl *template.Template
 
 	if useTemplate {
 		tmpl = template.Must(template.New(name).Parse(endpoint))
 	}
-	return &Resource{name, endpoint, useTemplate, tmpl}
+
+	r := func() *resty.Request {
+		return client.R().SetResult(singleType)
+	}
+
+	pr := func() *resty.Request {
+		return client.R().SetResult(pagedType)
+	}
+
+	return &Resource{name, endpoint, useTemplate, tmpl, r, pr}
 }
 
 func (r Resource) render(data interface{}) (string, error) {
 	if data == nil {
-		return "", fmt.Errorf("Cannot template endpoint with <nil> data")
+		return "", NewError("Cannot template endpoint with <nil> data")
 	}
 	out := ""
 	buf := bytes.NewBufferString(out)
 	if err := r.endpointTemplate.Execute(buf, struct{ ID interface{} }{data}); err != nil {
-		return "", err
+		return "", NewError(err)
 	}
 	return buf.String(), nil
 }
@@ -113,7 +126,7 @@ func (r Resource) EndpointWithID(id int) (string, error) {
 // Endpoint will return the non-templated endpoint string for resource
 func (r Resource) Endpoint() (string, error) {
 	if r.isTemplate {
-		return "", fmt.Errorf("Tried to get endpoint for %s without providing data for template", r.name)
+		return "", NewError(fmt.Sprintf("Tried to get endpoint for %s without providing data for template", r.name))
 	}
 	return r.endpoint, nil
 }

@@ -4,7 +4,7 @@ import (
 	"fmt"
 )
 
-// LinodeInstanceBackupsResponse response struct for backup snapshot
+// InstanceBackupsResponse response struct for backup snapshot
 type InstanceBackupsResponse struct {
 	Automatic []*InstanceSnapshot
 	Snapshot  *InstanceBackupSnapshotResponse
@@ -22,9 +22,9 @@ func (c *Client) GetInstanceBackups(linodeID int) (*InstanceBackupsResponse, err
 		return nil, err
 	}
 	e = fmt.Sprintf("%s/%d/backups", e, linodeID)
-	r, err := c.R().
+	r, err := coupleAPIErrors(c.R().
 		SetResult(&InstanceBackupsResponse{}).
-		Get(e)
+		Get(e))
 	if err != nil {
 		return nil, err
 	}

@@ -26,8 +26,11 @@ type LinodeKernelsPagedResponse struct {
 // ListKernels lists linode kernels
 func (c *Client) ListKernels(opts *ListOptions) ([]*LinodeKernel, error) {
 	response := LinodeKernelsPagedResponse{}
-	err := c.ListHelper(response, opts)
-	return response.Data, err
+	err := c.ListHelper(&response, opts)
+	if err != nil {
+		return nil, err
+	}
+	return response.Data, nil
 }
 
 func (LinodeKernelsPagedResponse) Endpoint(c *Client) string {

@@ -7,6 +7,9 @@ import (
 const TestVolumeID = 5029
 
 func TestListVolumes(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode.")
+	}
 	client, err := createTestClient(debugAPI)
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
@@ -21,6 +24,9 @@ func TestListVolumes(t *testing.T) {
 }
 
 func TestGetVolume(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode.")
+	}
 	client, err := createTestClient(debugAPI)
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)

@@ -61,8 +61,11 @@ func (LinodeTypesPagedResponse) SetResult(r *resty.Request) {
 // ListTypes lists linode types
 func (c *Client) ListTypes(opts *ListOptions) ([]*LinodeType, error) {
 	response := LinodeTypesPagedResponse{}
-	err := c.ListHelper(response, opts)
-	return response.Data, err
+	err := c.ListHelper(&response, opts)
+	if err != nil {
+		return nil, err
+	}
+	return response.Data, nil
 }
 
 // GetType gets the type with the provided ID
@@ -72,9 +75,8 @@ func (c *Client) GetType(typeID string) (*LinodeType, error) {
 		return nil, err
 	}
 	e = fmt.Sprintf("%s/%s", e, typeID)
-	r, err := c.R().
-		SetResult(&LinodeType{}).
-		Get(e)
+
+	r, err := coupleAPIErrors(c.Types.R().Get(e))
 	if err != nil {
 		return nil, err
 	}

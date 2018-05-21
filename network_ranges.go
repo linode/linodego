@@ -34,8 +34,11 @@ func (IPv6RangesPagedResponse) SetResult(r *resty.Request) {
 // ListIPv6Ranges lists IPv6Ranges
 func (c *Client) ListIPv6Ranges(opts *ListOptions) ([]*IPv6Range, error) {
 	response := IPv6RangesPagedResponse{}
-	err := c.ListHelper(response, opts)
-	return response.Data, err
+	err := c.ListHelper(&response, opts)
+	if err != nil {
+		return nil, err
+	}
+	return response.Data, nil
 }
 
 // GetIPv6Range gets the template with the provided ID

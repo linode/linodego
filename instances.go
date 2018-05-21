@@ -174,9 +174,9 @@ func (c *Client) GetInstance(linodeID int) (*Instance, error) {
 		return nil, err
 	}
 	e = fmt.Sprintf("%s/%d", e, linodeID)
-	r, err := c.R().
-		SetResult(&Instance{}).
-		Get(e)
+	r, err := coupleAPIErrors(c.R().
+		SetResult(Instance{}).
+		Get(e))
 	if err != nil {
 		return nil, err
 	}
@@ -196,18 +196,17 @@ func (c *Client) CreateInstance(instance *InstanceCreateOptions) (*Instance, err
 	if bodyData, err := json.Marshal(instance); err == nil {
 		body = string(bodyData)
 	} else {
-		return nil, err
+		return nil, NewError(err)
 	}
 
-	r, err := req.
+	r, err := coupleAPIErrors(req.
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
-		Post(e)
+		Post(e))
 
 	if err != nil {
 		return nil, err
 	}
-
 	return r.Result().(*Instance).fixDates(), nil
 }
 
@@ -224,18 +223,16 @@ func (c *Client) UpdateInstance(id int, instance *InstanceUpdateOptions) (*Insta
 	if bodyData, err := json.Marshal(instance); err == nil {
 		body = string(bodyData)
 	} else {
-		return nil, err
+		return nil, NewError(err)
 	}
 
-	r, err := req.
-		SetHeader("Content-Type", "application/json").
+	r, err := coupleAPIErrors(req.
 		SetBody(body).
-		Put(e)
+		Put(e))
 
 	if err != nil {
 		return nil, err
 	}
-
 	return r.Result().(*Instance).fixDates(), nil
 }
 
@@ -251,7 +248,7 @@ func (c *Client) DeleteInstance(id int) error {
 		return err
 	}
 
-	if _, err = c.R().Delete(e); err != nil {
+	if _, err := coupleAPIErrors(c.R().Delete(e)); err != nil {
 		return err
 	}
 
@@ -266,7 +263,7 @@ func (c *Client) BootInstance(id int, configID int) (bool, error) {
 		bodyMap := map[string]string{"config_id": string(configID)}
 		bodyJSON, err := json.Marshal(bodyMap)
 		if err != nil {
-			return false, err
+			return false, NewError(err)
 		}
 		bodyStr = string(bodyJSON)
 	}
@@ -277,10 +274,10 @@ func (c *Client) BootInstance(id int, configID int) (bool, error) {
 	}
 
 	e = fmt.Sprintf("%s/%d/boot", e, id)
-	r, err := c.R().
+	r, err := coupleAPIErrors(c.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(bodyStr).
-		Post(e)
+		Post(e))
 
 	return settleBoolResponseOrError(r, err)
 }
@@ -299,13 +296,13 @@ func (c *Client) CloneInstance(id int, options *InstanceCloneOptions) (*Instance
 	if bodyData, err := json.Marshal(options); err == nil {
 		body = string(bodyData)
 	} else {
-		return nil, err
+		return nil, NewError(err)
 	}
 
-	r, err := req.
+	r, err := coupleAPIErrors(req.
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
-		Post(e)
+		Post(e))
 
 	if err != nil {
 		return nil, err
@@ -325,10 +322,10 @@ func (c *Client) RebootInstance(id int, configID int) (bool, error) {
 
 	e = fmt.Sprintf("%s/%d/reboot", e, id)
 
-	r, err := c.R().
+	r, err := coupleAPIErrors(c.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
-		Post(e)
+		Post(e))
 
 	return settleBoolResponseOrError(r, err)
 }
@@ -341,7 +338,7 @@ func (c *Client) MutateInstance(id int) (bool, error) {
 	}
 	e = fmt.Sprintf("%s/%d/mutate", e, id)
 
-	r, err := c.R().Post(e)
+	r, err := coupleAPIErrors(c.R().Post(e))
 	return settleBoolResponseOrError(r, err)
 }
 
@@ -360,7 +357,7 @@ type RebuildInstanceOptions struct {
 func (c *Client) RebuildInstance(id int, opts *RebuildInstanceOptions) (*Instance, error) {
 	o, err := json.Marshal(opts)
 	if err != nil {
-		return nil, err
+		return nil, NewError(err)
 	}
 	b := string(o)
 	e, err := c.Instances.Endpoint()
@@ -368,11 +365,11 @@ func (c *Client) RebuildInstance(id int, opts *RebuildInstanceOptions) (*Instanc
 		return nil, err
 	}
 	e = fmt.Sprintf("%s/%d/rebuild", e, id)
-	r, err := c.R().
+	r, err := coupleAPIErrors(c.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(b).
 		SetResult(&Instance{}).
-		Post(e)
+		Post(e))
 	if err != nil {
 		return nil, err
 	}
@@ -389,10 +386,10 @@ func (c *Client) ResizeInstance(id int, linodeType string) (bool, error) {
 	}
 	e = fmt.Sprintf("%s/%d/resize", e, id)
 
-	r, err := c.R().
+	r, err := coupleAPIErrors(c.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
-		Post(e)
+		Post(e))
 
 	return settleBoolResponseOrError(r, err)
 }
@@ -403,8 +400,8 @@ func (c *Client) ShutdownInstance(id int) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	e = fmt.Sprintf("%s/%d/resize", e, id)
-	return settleBoolResponseOrError(c.R().Post(e))
+	e = fmt.Sprintf("%s/%d/shutdown", e, id)
+	return settleBoolResponseOrError(coupleAPIErrors(c.R().Post(e)))
 }
 
 func settleBoolResponseOrError(resp *resty.Response, err error) (bool, error) {

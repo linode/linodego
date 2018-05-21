@@ -130,7 +130,10 @@ func (c *Client) ListInstanceConfigs(linodeID int, opts *ListOptions) ([]*Instan
 	for _, el := range response.Data {
 		el.fixDates()
 	}
-	return response.Data, err
+	if err != nil {
+		return nil, err
+	}
+	return response.Data, nil
 }
 
 // fixDates converts JSON timestamps to Go time.Time values

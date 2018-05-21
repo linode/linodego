@@ -7,6 +7,9 @@ import (
 const TestInstanceID = 7931311
 
 func TestListInstances(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode.")
+	}
 	client, err := createTestClient(debugAPI)
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
@@ -21,6 +24,9 @@ func TestListInstances(t *testing.T) {
 }
 
 func TestGetInstance(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode.")
+	}
 	client, err := createTestClient(debugAPI)
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
@@ -35,6 +41,9 @@ func TestGetInstance(t *testing.T) {
 }
 
 func TestListInstanceDisks(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode.")
+	}
 	client, err := createTestClient(debugAPI)
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
@@ -49,6 +58,9 @@ func TestListInstanceDisks(t *testing.T) {
 }
 
 func TestListInstanceConfigs(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode.")
+	}
 	client, err := createTestClient(debugAPI)
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
@@ -63,6 +75,9 @@ func TestListInstanceConfigs(t *testing.T) {
 }
 
 func TestListInstanceVolumes(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode.")
+	}
 	client, err := createTestClient(debugAPI)
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)

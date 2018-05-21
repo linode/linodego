@@ -75,7 +75,10 @@ func (c *Client) ListInstanceDisks(linodeID int, opts *ListOptions) ([]*Instance
 	for _, el := range response.Data {
 		el.fixDates()
 	}
-	return response.Data, err
+	if err != nil {
+		return nil, err
+	}
+	return response.Data, nil
 }
 
 // fixDates converts JSON timestamps to Go time.Time values
@@ -92,7 +95,7 @@ func (c *Client) GetInstanceDisk(linodeID int, configID int) (*InstanceDisk, err
 		return nil, err
 	}
 	e = fmt.Sprintf("%s/%d", e, configID)
-	r, err := c.R().SetResult(&InstanceDisk{}).Get(e)
+	r, err := coupleAPIErrors(c.R().SetResult(&InstanceDisk{}).Get(e))
 	if err != nil {
 		return nil, err
 	}
@@ -112,13 +115,13 @@ func (c *Client) CreateInstanceDisk(linodeID int, createOpts InstanceDiskCreateO
 	if bodyData, err := json.Marshal(createOpts); err == nil {
 		body = string(bodyData)
 	} else {
-		return nil, err
+		return nil, NewError(err)
 	}
 
-	r, err := req.
+	r, err := coupleAPIErrors(req.
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
-		Post(e)
+		Post(e))
 
 	if err != nil {
 		return nil, err
@@ -141,13 +144,13 @@ func (c *Client) UpdateInstanceDisk(linodeID int, diskID int, updateOpts Instanc
 	if bodyData, err := json.Marshal(updateOpts); err == nil {
 		body = string(bodyData)
 	} else {
-		return nil, err
+		return nil, NewError(err)
 	}
 
-	r, err := req.
+	r, err := coupleAPIErrors(req.
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
-		Put(e)
+		Put(e))
 
 	if err != nil {
 		return nil, err
@@ -178,18 +181,17 @@ func (c *Client) ResizeInstanceDisk(linodeID int, diskID int, size int) (*Instan
 	if bodyData, err := json.Marshal(updateOpts); err == nil {
 		body = string(bodyData)
 	} else {
-		return nil, err
+		return nil, NewError(err)
 	}
 
-	r, err := req.
+	r, err := coupleAPIErrors(req.
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
-		Post(e)
+		Post(e))
 
 	if err != nil {
 		return nil, err
 	}
-
 	return r.Result().(*InstanceDisk), nil
 }
 
@@ -200,9 +202,8 @@ func (c *Client) DeleteInstanceDisk(id int) error {
 		return err
 	}
 
-	if _, err = c.R().Delete(e); err != nil {
+	if _, err := coupleAPIErrors(c.R().Delete(e)); err != nil {
 		return err
 	}
-
 	return nil
 }

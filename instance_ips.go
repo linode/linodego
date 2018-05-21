@@ -45,7 +45,7 @@ func (c *Client) GetInstanceIPAddresses(linodeID int) (*InstanceIPAddressRespons
 	if err != nil {
 		return nil, err
 	}
-	r, err := c.R().SetResult(&InstanceIPAddressResponse{}).Get(e)
+	r, err := coupleAPIErrors(c.R().SetResult(&InstanceIPAddressResponse{}).Get(e))
 	if err != nil {
 		return nil, err
 	}
@@ -59,7 +59,7 @@ func (c *Client) GetInstanceIPAddress(linodeID int, ipaddress string) (*Instance
 		return nil, err
 	}
 	e = fmt.Sprintf("%s/%s", e, ipaddress)
-	r, err := c.R().SetResult(&InstanceIP{}).Get(e)
+	r, err := coupleAPIErrors(c.R().SetResult(&InstanceIP{}).Get(e))
 	if err != nil {
 		return nil, err
 	}
@@ -84,13 +84,13 @@ func (c *Client) AddInstanceIPAddress(linodeID int, public bool) (*InstanceIP, e
 	if bodyData, err := json.Marshal(instanceipRequest); err == nil {
 		body = string(bodyData)
 	} else {
-		return nil, err
+		return nil, NewError(err)
 	}
 
-	r, err := req.
+	r, err := coupleAPIErrors(req.
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
-		Post(e)
+		Post(e))
 
 	if err != nil {
 		return nil, err

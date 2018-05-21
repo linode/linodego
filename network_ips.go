@@ -34,8 +34,11 @@ func (IPAddressesPagedResponse) SetResult(r *resty.Request) {
 // ListIPAddresses lists IPAddresses
 func (c *Client) ListIPAddresses(opts *ListOptions) ([]*InstanceIP, error) {
 	response := IPAddressesPagedResponse{}
-	err := c.ListHelper(response, opts)
-	return response.Data, err
+	err := c.ListHelper(&response, opts)
+	if err != nil {
+		return nil, err
+	}
+	return response.Data, nil
 }
 
 // GetIPAddress gets the template with the provided ID

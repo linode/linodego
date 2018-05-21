@@ -34,8 +34,11 @@ func (IPv6PoolsPagedResponse) SetResult(r *resty.Request) {
 // ListIPv6Pools lists IPv6Pools
 func (c *Client) ListIPv6Pools(opts *ListOptions) ([]*IPv6Range, error) {
 	response := IPv6PoolsPagedResponse{}
-	err := c.ListHelper(response, opts)
-	return response.Data, err
+	err := c.ListHelper(&response, opts)
+	if err != nil {
+		return nil, err
+	}
+	return response.Data, nil
 }
 
 // GetIPv6Pool gets the template with the provided ID

@@ -49,8 +49,11 @@ func (DomainRecordsPagedResponse) SetResult(r *resty.Request) {
 // ListDomainRecords lists DomainRecords
 func (c *Client) ListDomainRecords(opts *ListOptions) ([]*DomainRecord, error) {
 	response := DomainRecordsPagedResponse{}
-	err := c.ListHelper(response, opts)
-	return response.Data, err
+	err := c.ListHelper(&response, opts)
+	if err != nil {
+		return nil, err
+	}
+	return response.Data, nil
 }
 
 // GetDomainRecord gets the template with the provided ID
