@@ -37,6 +37,11 @@ func main() {
 		log.Fatal(err)
 	}
 
+	_, err = c.GetType("g6-standard-1")
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	_, err = c.ListTypes(nil)
 	if err != nil {
 		log.Fatal(err)
@@ -59,6 +64,13 @@ func main() {
 	}
 
 	_, err = c.ListImages(nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	_, _ = c.GetImage("does-not-exist")
+
+	_, err = c.GetImage("linode/ubuntu16.04lts")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -111,7 +123,7 @@ func main() {
 	}
 	log.Println("Succesfully got linode instance volumes")
 
-	_, err = c.ListStackscripts(nil)
+	_, err = c.ListStackscripts(golinode.NewListOptions(1, ""))
 	if err != nil {
 		log.Fatal(err)
 	}
