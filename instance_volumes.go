@@ -34,7 +34,7 @@ func (InstanceVolumesPagedResponse) SetResult(r *resty.Request) {
 // ListInstanceVolumes lists InstanceVolumes
 func (c *Client) ListInstanceVolumes(linodeID int, opts *ListOptions) ([]*Volume, error) {
 	response := InstanceVolumesPagedResponse{}
-	err := c.ListHelperWithID(response, linodeID, opts)
+	err := c.ListHelperWithID(&response, linodeID, opts)
 	for _, el := range response.Data {
 		el.fixDates()
 	}

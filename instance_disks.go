@@ -71,7 +71,7 @@ func (InstanceDisksPagedResponse) SetResult(r *resty.Request) {
 // ListInstanceDisks lists InstanceDisks
 func (c *Client) ListInstanceDisks(linodeID int, opts *ListOptions) ([]*InstanceDisk, error) {
 	response := InstanceDisksPagedResponse{}
-	err := c.ListHelperWithID(response, linodeID, opts)
+	err := c.ListHelperWithID(&response, linodeID, opts)
 	for _, el := range response.Data {
 		el.fixDates()
 	}

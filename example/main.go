@@ -14,7 +14,7 @@ var spendMoney = false
 func main() {
 	// Trigger endpoints that accrue a balance
 	apiToken, apiOk := os.LookupEnv("LINODE_TOKEN")
-	spendMoney = true && apiOk
+	spendMoney = spendMoney && apiOk
 
 	var err error
 	if err != nil {
@@ -39,20 +39,22 @@ func moreExamples_authenticated() {
 	var linode *golinode.Instance
 
 	linode, err := linodeClient.GetInstance(1231)
-	fmt.Printf("%#v", linode)
+	fmt.Println("## Instance request with Invalid ID")
+	fmt.Println("### Linode\n", linode, "\n### Error\n", err)
 
 	if spendMoney {
 		linode, err = linodeClient.CreateInstance(&golinode.InstanceCreateOptions{Region: "us-central", Type: "g5-nanode-1"})
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Printf("%#v", linode)
+		fmt.Println("## Created Instance\n", linode)
 	}
 
 	linodes, err := linodeClient.ListInstances(nil)
+	fmt.Println("## List Instances")
 
 	if len(linodes) == 0 {
-		log.Printf("No Linodes to inspect.")
+		log.Println("No Linodes to inspect.")
 	} else {
 		// This is redundantly used for illustrative purposes
 		linode, err = linodeClient.GetInstance(linodes[0].ID)
@@ -60,7 +62,7 @@ func moreExamples_authenticated() {
 			log.Fatal(err)
 		}
 
-		fmt.Printf("%#v", linode)
+		fmt.Println("## First Linode\n", linode)
 
 		configs, err := linodeClient.ListInstanceConfigs(linode.ID, nil)
 		if err != nil {
@@ -70,7 +72,9 @@ func moreExamples_authenticated() {
 			if err != nil {
 				log.Fatal(err)
 			}
-			fmt.Printf("First Config: %#v", config)
+			fmt.Println("### First Config:\n", config)
+		} else {
+			fmt.Println("### No Configs")
 		}
 
 		disks, err := linodeClient.ListInstanceDisks(linode.ID, nil)
@@ -81,7 +85,9 @@ func moreExamples_authenticated() {
 			if err != nil {
 				log.Fatal(err)
 			}
-			fmt.Printf("First Disk: %#v", disk)
+			fmt.Println("### First Disk\n", disk)
+		} else {
+			fmt.Println("### No Disks")
 		}
 
 		volumes, err := linodeClient.ListInstanceVolumes(linode.ID, nil)
@@ -92,13 +98,15 @@ func moreExamples_authenticated() {
 			if err != nil {
 				log.Fatal(err)
 			}
-			fmt.Printf("First Volume: %#v", volume)
+			fmt.Println("### First Volume\n", volume)
+		} else {
+			fmt.Println("### No Volumes")
 		}
 
 		stackscripts, err := linodeClient.ListStackscripts(&golinode.ListOptions{Filter: "{\"mine\":true}"})
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Printf("%+v", stackscripts)
+		fmt.Println("## Your Stackscripts\n", stackscripts)
 	}
 }

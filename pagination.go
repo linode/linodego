@@ -306,43 +306,43 @@ func (c *Client) ListHelperWithID(i interface{}, id int, opts *ListOptions) erro
 	}
 
 	switch v := i.(type) {
-	case InvoiceItemsPagedResponse:
+	case *InvoiceItemsPagedResponse:
 		if r, err = coupleAPIErrors(req.SetResult(InvoiceItemsPagedResponse{}).Get(v.EndpointWithID(c, id))); err == nil {
 			pages = r.Result().(*InvoiceItemsPagedResponse).Pages
 			results = r.Result().(*InvoiceItemsPagedResponse).Results
 			v.AppendData(r.Result().(*InvoiceItemsPagedResponse))
 		}
-	case DomainRecordsPagedResponse:
+	case *DomainRecordsPagedResponse:
 		if r, err = coupleAPIErrors(req.SetResult(DomainRecordsPagedResponse{}).Get(v.EndpointWithID(c, id))); err == nil {
 			pages = r.Result().(*DomainRecordsPagedResponse).Pages
 			results = r.Result().(*DomainRecordsPagedResponse).Results
 			v.AppendData(r.Result().(*DomainRecordsPagedResponse))
 		}
-	case InstanceSnapshotsPagedResponse:
+	case *InstanceSnapshotsPagedResponse:
 		if r, err = coupleAPIErrors(req.SetResult(InstanceSnapshotsPagedResponse{}).Get(v.EndpointWithID(c, id))); err == nil {
 			pages = r.Result().(*InstanceSnapshotsPagedResponse).Pages
 			results = r.Result().(*InstanceSnapshotsPagedResponse).Results
 			v.AppendData(r.Result().(*InstanceSnapshotsPagedResponse))
 		}
-	case InstanceConfigsPagedResponse:
+	case *InstanceConfigsPagedResponse:
 		if r, err = coupleAPIErrors(req.SetResult(InstanceConfigsPagedResponse{}).Get(v.EndpointWithID(c, id))); err == nil {
 			pages = r.Result().(*InstanceConfigsPagedResponse).Pages
 			results = r.Result().(*InstanceConfigsPagedResponse).Results
 			v.AppendData(r.Result().(*InstanceConfigsPagedResponse))
 		}
-	case InstanceDisksPagedResponse:
+	case *InstanceDisksPagedResponse:
 		if r, err = coupleAPIErrors(req.SetResult(InstanceDisksPagedResponse{}).Get(v.EndpointWithID(c, id))); err == nil {
 			pages = r.Result().(*InstanceDisksPagedResponse).Pages
 			results = r.Result().(*InstanceDisksPagedResponse).Results
 			v.AppendData(r.Result().(*InstanceDisksPagedResponse))
 		}
-	case NodeBalancerConfigsPagedResponse:
+	case *NodeBalancerConfigsPagedResponse:
 		if r, err = coupleAPIErrors(req.SetResult(NodeBalancerConfigsPagedResponse{}).Get(v.EndpointWithID(c, id))); err == nil {
 			pages = r.Result().(*NodeBalancerConfigsPagedResponse).Pages
 			results = r.Result().(*NodeBalancerConfigsPagedResponse).Results
 			v.AppendData(r.Result().(*NodeBalancerConfigsPagedResponse))
 		}
-	case InstanceVolumesPagedResponse:
+	case *InstanceVolumesPagedResponse:
 		if r, err = coupleAPIErrors(req.SetResult(InstanceVolumesPagedResponse{}).Get(v.EndpointWithID(c, id))); err == nil {
 			pages = r.Result().(*InstanceVolumesPagedResponse).Pages
 			results = r.Result().(*InstanceVolumesPagedResponse).Results

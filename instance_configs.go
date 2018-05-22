@@ -126,7 +126,7 @@ func (InstanceConfigsPagedResponse) SetResult(r *resty.Request) {
 // ListInstanceConfigs lists InstanceConfigs
 func (c *Client) ListInstanceConfigs(linodeID int, opts *ListOptions) ([]*InstanceConfig, error) {
 	response := InstanceConfigsPagedResponse{}
-	err := c.ListHelperWithID(response, linodeID, opts)
+	err := c.ListHelperWithID(&response, linodeID, opts)
 	for _, el := range response.Data {
 		el.fixDates()
 	}

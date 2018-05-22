@@ -60,7 +60,7 @@ func (NodeBalancerConfigsPagedResponse) SetResult(r *resty.Request) {
 // ListNodeBalancerConfigs lists NodeBalancerConfigs
 func (c *Client) ListNodeBalancerConfigs(nodebalancerID int, opts *ListOptions) ([]*NodeBalancerConfig, error) {
 	response := NodeBalancerConfigsPagedResponse{}
-	err := c.ListHelperWithID(response, nodebalancerID, opts)
+	err := c.ListHelperWithID(&response, nodebalancerID, opts)
 	for _, el := range response.Data {
 		el.fixDates()
 	}

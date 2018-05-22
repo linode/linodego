@@ -65,7 +65,7 @@ func (InstanceSnapshotsPagedResponse) SetResult(r *resty.Request) {
 // ListInstanceSnapshots lists InstanceSnapshots
 func (c *Client) ListInstanceSnapshots(linodeID int, opts *ListOptions) ([]*InstanceSnapshot, error) {
 	response := InstanceSnapshotsPagedResponse{}
-	err := c.ListHelperWithID(response, linodeID, opts)
+	err := c.ListHelperWithID(&response, linodeID, opts)
 	for _, el := range response.Data {
 		el.fixDates()
 	}
