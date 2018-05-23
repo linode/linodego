@@ -20,9 +20,9 @@ Check [API_SUPPORT.md](API_SUPPORT.md) for current support of the Linode `v4` AP
 
 ## Documentation
 
-See [https://godoc.org/github.com/chiefy/linodego](godoc.org) for a complete reference.
+See [godoc](https://godoc.org/github.com/chiefy/linodego) for a complete reference.
 
-The API generally follows the naming patterns prescribed in the [https://developers.linode.com/api/v4](OpenAPIv3 document for Linode APIv4).
+The API generally follows the naming patterns prescribed in the [OpenAPIv3 document for Linode APIv4](https://developers.linode.com/api/v4).
 
 Deviations in naming have been made to avoid using "Linode" and "Instance" redundantly or inconsistently.
 
