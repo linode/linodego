@@ -90,6 +90,28 @@ func moreExamples_authenticated() {
 			fmt.Println("### No Disks")
 		}
 
+		backups, err := linodeClient.GetInstanceBackups(linode.ID)
+		if err != nil {
+			log.Fatal(err)
+		}
+		if len(backups.Automatic) > 0 {
+			fmt.Println("### First Auto Backup\n", backups.Automatic[0])
+		} else {
+			fmt.Println("### No Auto Backups")
+		}
+		fmt.Println("### Snapshots\n", backups.Snapshot)
+		if backups.Snapshot.Current != nil {
+			// snapshot fetched will be exactly the same as backups.Snapshot.Current
+			// just being redundant for illustrative purposes
+			if snapshot, err := linodeClient.GetInstanceSnapshot(linode.ID, backups.Snapshot.Current.ID); err == nil {
+				fmt.Println("#### Current\n", snapshot)
+			} else {
+				fmt.Println("#### No Current Snapshot\n", err)
+			}
+		} else {
+			fmt.Println("### No Current Snapshot")
+		}
+
 		volumes, err := linodeClient.ListInstanceVolumes(linode.ID, nil)
 		if err != nil {
 			log.Fatal(err)
