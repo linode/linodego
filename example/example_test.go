@@ -35,7 +35,7 @@ func ExampleListTypes_all() {
 func ExampleGetType_missing() {
 	_, err := linodeClient.GetType("missing-type")
 	if err != nil {
-		if v, ok := err.(*golinode.Error); ok {
+		if v, ok := err.(*linodego.Error); ok {
 			fmt.Println("Request was:", v.Response.Request.URL)
 			fmt.Println("Response was:", v.Response.Status)
 			fmt.Println("Error was:", v)
@@ -64,7 +64,7 @@ func ExampleListKernels_all() {
 }
 
 func ExampleListKernels_allWithOpts() {
-	filterOpt := golinode.NewListOptions(0, "")
+	filterOpt := linodego.NewListOptions(0, "")
 	kernels, err := linodeClient.ListKernels(filterOpt)
 	if err != nil {
 		log.Fatal(err)
@@ -83,7 +83,7 @@ func ExampleListKernels_allWithOpts() {
 }
 
 func ExampleListKernels_filtered() {
-	filterOpt := golinode.ListOptions{Filter: "{\"label\":\"Recovery - Finnix (kernel)\"}"}
+	filterOpt := linodego.ListOptions{Filter: "{\"label\":\"Recovery - Finnix (kernel)\"}"}
 	kernels, err := linodeClient.ListKernels(&filterOpt)
 	if err != nil {
 		log.Fatal(err)
@@ -98,7 +98,7 @@ func ExampleListKernels_filtered() {
 }
 
 func ExampleListKernels_page1() {
-	filterOpt := golinode.NewListOptions(1, "")
+	filterOpt := linodego.NewListOptions(1, "")
 	kernels, err := linodeClient.ListKernels(filterOpt)
 	if err != nil {
 		log.Fatal(err)
@@ -145,7 +145,7 @@ func ExampleGetKernel_specific() {
 func ExampleGetImage_missing() {
 	_, err := linodeClient.GetImage("not-found")
 	if err != nil {
-		if v, ok := err.(*golinode.Error); ok {
+		if v, ok := err.(*linodego.Error); ok {
 			fmt.Println("Request was:", v.Response.Request.URL)
 			fmt.Println("Response was:", v.Response.Status)
 			fmt.Println("Error was:", v)
@@ -158,7 +158,7 @@ func ExampleGetImage_missing() {
 	// Error was: [404] Not found
 }
 func ExampleListImages_all() {
-	filterOpt := golinode.NewListOptions(0, "")
+	filterOpt := linodego.NewListOptions(0, "")
 	images, err := linodeClient.ListImages(filterOpt)
 	if err != nil {
 		log.Fatal(err)
@@ -175,7 +175,7 @@ func ExampleListImages_all() {
 // ExampleListImages_notfound demonstrates that an empty slice is returned,
 // not an error, when a filter matches no results.
 func ExampleListImages_notfound() {
-	filterOpt := golinode.ListOptions{Filter: "{\"label\":\"not-found\"}"}
+	filterOpt := linodego.ListOptions{Filter: "{\"label\":\"not-found\"}"}
 	images, err := linodeClient.ListImages(&filterOpt)
 	if err != nil {
 		log.Fatal(err)
@@ -187,9 +187,9 @@ func ExampleListImages_notfound() {
 }
 
 // ExampleListImages_notfound demonstrates that an error is returned by
-// the API and golinode when an invalid filter is provided
+// the API and linodego when an invalid filter is provided
 func ExampleListImages_badfilter() {
-	filterOpt := golinode.ListOptions{Filter: "{\"foo\":\"bar\"}"}
+	filterOpt := linodego.ListOptions{Filter: "{\"foo\":\"bar\"}"}
 	images, err := linodeClient.ListImages(&filterOpt)
 	if err == nil {
 		log.Fatal(err)
@@ -203,7 +203,7 @@ func ExampleListImages_badfilter() {
 }
 
 func ExampleListLongviewSubscriptions_page1() {
-	pageOpt := golinode.ListOptions{PageOptions: &golinode.PageOptions{Page: 1}}
+	pageOpt := linodego.ListOptions{PageOptions: &linodego.PageOptions{Page: 1}}
 	subscriptions, err := linodeClient.ListLongviewSubscriptions(&pageOpt)
 	if err != nil {
 		log.Fatal(err)

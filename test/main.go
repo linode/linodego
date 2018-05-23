@@ -32,7 +32,7 @@ func main() {
 	}
 	defer r.Stop() // Make sure recorder is stopped once done with it
 
-	c := golinode.NewClient(nil, r)
+	c := linodego.NewClient(nil, r)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -54,13 +54,13 @@ func main() {
 		log.Fatal(err)
 	}
 
-	filterOpt := golinode.ListOptions{Filter: "{\"label\":\"Recovery - Finnix (kernel)\"}"}
+	filterOpt := linodego.ListOptions{Filter: "{\"label\":\"Recovery - Finnix (kernel)\"}"}
 	_, err = c.ListKernels(&filterOpt)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	_, err = c.ListKernels(golinode.NewListOptions(1, ""))
+	_, err = c.ListKernels(linodego.NewListOptions(1, ""))
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -77,7 +77,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	pageOpt := golinode.ListOptions{PageOptions: &golinode.PageOptions{Page: 1}}
+	pageOpt := linodego.ListOptions{PageOptions: &linodego.PageOptions{Page: 1}}
 	_, err = c.ListLongviewSubscriptions(&pageOpt)
 	if err != nil {
 		log.Fatal(err)
@@ -125,7 +125,7 @@ func main() {
 	}
 	log.Println("Succesfully got linode instance volumes")
 
-	_, err = c.ListStackscripts(golinode.NewListOptions(1, ""))
+	_, err = c.ListStackscripts(linodego.NewListOptions(1, ""))
 	if err != nil {
 		log.Fatal(err)
 	}

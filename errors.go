@@ -1,4 +1,4 @@
-package golinode
+package linodego
 
 import (
 	"fmt"
@@ -18,7 +18,7 @@ const (
 	ErrorFromStringer = 3
 )
 
-// Error wraps the GoLinode error with the relevant http.Response
+// Error wraps the LinodeGo error with the relevant http.Response
 type Error struct {
 	Response *http.Response
 	Code     int
@@ -71,7 +71,7 @@ func (g Error) Error() string {
 	return fmt.Sprintf("[%03d] %s", g.Code, g.Message)
 }
 
-// NewError creates a golinode.Error with a Code identifying the source err type,
+// NewError creates a linodego.Error with a Code identifying the source err type,
 // - ErrorFromString   (1) from a string
 // - ErrorFromError    (2) for an error
 // - ErrorFromStringer (3) for a Stringer
@@ -103,7 +103,7 @@ func NewError(err interface{}) *Error {
 	case fmt.Stringer:
 		return &Error{Code: ErrorFromStringer, Message: e.String()}
 	default:
-		log.Fatalln("Unsupported type to golinode.NewError")
+		log.Fatalln("Unsupported type to linodego.NewError")
 		panic(err)
 	}
 }

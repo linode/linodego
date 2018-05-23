@@ -1,1 +1,1 @@
-package golinode
+package linodego

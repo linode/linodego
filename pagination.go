@@ -1,4 +1,4 @@
-package golinode
+package linodego
 
 /**
  * Pagination and Filtering types and helpers

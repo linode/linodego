@@ -8,7 +8,7 @@ import (
 	"github.com/chiefy/linodego"
 )
 
-var linodeClient = golinode.NewClient(nil, nil)
+var linodeClient = linodego.NewClient(nil, nil)
 var spendMoney = false
 
 func main() {
@@ -27,7 +27,7 @@ func main() {
 	}
 
 	// Demonstrate endpoints that require an access token
-	linodeClient = golinode.NewClient(&apiToken, nil)
+	linodeClient = linodego.NewClient(&apiToken, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -36,14 +36,14 @@ func main() {
 }
 
 func moreExamples_authenticated() {
-	var linode *golinode.Instance
+	var linode *linodego.Instance
 
 	linode, err := linodeClient.GetInstance(1231)
 	fmt.Println("## Instance request with Invalid ID")
 	fmt.Println("### Linode\n", linode, "\n### Error\n", err)
 
 	if spendMoney {
-		linode, err = linodeClient.CreateInstance(&golinode.InstanceCreateOptions{Region: "us-central", Type: "g5-nanode-1"})
+		linode, err = linodeClient.CreateInstance(&linodego.InstanceCreateOptions{Region: "us-central", Type: "g5-nanode-1"})
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -125,7 +125,7 @@ func moreExamples_authenticated() {
 			fmt.Println("### No Volumes")
 		}
 
-		stackscripts, err := linodeClient.ListStackscripts(&golinode.ListOptions{Filter: "{\"mine\":true}"})
+		stackscripts, err := linodeClient.ListStackscripts(&linodego.ListOptions{Filter: "{\"mine\":true}"})
 		if err != nil {
 			log.Fatal(err)
 		}

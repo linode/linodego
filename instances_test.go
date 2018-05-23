@@ -1,4 +1,4 @@
-package golinode
+package linodego
 
 import (
 	"testing"

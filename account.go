@@ -1,4 +1,4 @@
-package golinode
+package linodego
 
 type Account struct {
 	FirstName  string `json:"first_name"`
