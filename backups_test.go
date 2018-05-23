@@ -17,7 +17,7 @@ func TestListInstanceBackups(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error listing backups, expected struct, got error %v", err)
 	}
-	if backups.Automatic != nil && len(backups.Automatic) > 0 {
+	if backups.Automatic != nil && len(backups.Automatic) != 1 {
 		t.Errorf("Expected an empty list of automatic backups, but got %v", backups.Automatic)
 	}
 	if backups.Snapshot.Current != nil {

@@ -42,7 +42,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	_, _ = c.GetType("missing-type")
+	_, _ = c.GetType("does-not-exist")
 
 	_, err = c.ListTypes(nil)
 	if err != nil {
