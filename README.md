@@ -1,6 +1,7 @@
 # linodego
 
 [![Build Status](https://travis-ci.org/chiefy/linodego.svg?branch=master)](https://travis-ci.org/chiefy/linodego)
+[![GoDoc](https://godoc.org/github.com/chiefy/linodego?status.svg)](https://godoc.org/github.com/chiefy/linodego)
 
 Go client for [Linode REST v4 API](https://developers.linode.com/v4/introduction)
 
@@ -19,7 +20,7 @@ Check [API_SUPPORT.md](API_SUPPORT.md) for current support of the Linode `v4` AP
 
 ## Documentation
 
-See [https://godoc.org/github.com/chiefylinodego](godoc.org) for a complete reference.
+See [https://godoc.org/github.com/chiefy/linodego](godoc.org) for a complete reference.
 
 The API generally follows the naming patterns prescribed in the [https://developers.linode.com/api/v4](OpenAPIv3 document for Linode APIv4).
 
