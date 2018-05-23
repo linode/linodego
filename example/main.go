@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	golinode "github.com/chiefy/go-linode"
+	"github.com/chiefy/linodego"
 )
 
 var linodeClient = golinode.NewClient(nil, nil)

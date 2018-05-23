@@ -22,7 +22,7 @@ const (
 	APIEnvVar = "LINODE_TOKEN"
 )
 
-var userAgent = fmt.Sprintf("go-linode %s https://github.com/chiefy/go-linode", Version)
+var userAgent = fmt.Sprintf("linodego %s https://github.com/chiefy/linodego", Version)
 
 // Client is a wrapper around the Resty client
 type Client struct {

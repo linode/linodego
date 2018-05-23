@@ -23,5 +23,10 @@ test/fixtures.yaml:
 	go run test/main.go
 	@sed -i "s/$(LINODE_TOKEN)/awesometokenawesometokenawesometoken/" $@
 
+.PHONY: test
 test: vendor test/fixtures.yaml
 	@go test
+
+.PHONY: godoc
+godoc:
+	@godoc -http=:6060

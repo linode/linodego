@@ -6,7 +6,7 @@ import (
 	"os"
 	"strconv"
 
-	golinode "github.com/chiefy/go-linode"
+	"github.com/chiefy/linodego"
 	"github.com/dnaeon/go-vcr/recorder"
 )
 

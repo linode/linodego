@@ -12,7 +12,7 @@ import (
 	"log"
 	"strings"
 
-	golinode "github.com/chiefy/go-linode"
+	"github.com/chiefy/linodego"
 )
 
 func ExampleListTypes_all() {
