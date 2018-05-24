@@ -131,7 +131,7 @@ func main() {
 	}
 	log.Println("Succesfully got linode public stackscripts (1 page)")
 
-	_, err = c.GetStackscript("7")
+	_, err = c.GetStackscript(7)
 	if err != nil {
 		log.Fatal(err)
 	}
