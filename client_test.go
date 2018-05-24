@@ -1,4 +1,4 @@
-package golinode
+package linodego
 
 import (
 	"testing"
@@ -6,49 +6,50 @@ import (
 	"github.com/dnaeon/go-vcr/recorder"
 )
 
-const (
-	debugAPI = false
-)
-
+var testingMode = recorder.ModeReplaying
+var debugAPI = false
 var validTestAPIKey = "NOTANAPIKEY"
 
 func createTestClient(debug bool) (*Client, error) {
-	r, err := recorder.NewAsMode("test/fixtures", recorder.ModeReplaying, nil)
+	var (
+		fixturesYaml = "test/fixtures"
+		c            Client
+		apiKey       *string
+	)
+
+	apiKey = &validTestAPIKey
+
+	if testing.Short() {
+		apiKey = nil
+		fixturesYaml = "test/fixtures_short"
+	}
+
+	r, err := recorder.NewAsMode(fixturesYaml, testingMode, nil)
 	if err != nil {
 		return nil, err
 	}
+
+	c = NewClient(apiKey, r)
+
 	defer r.Stop() // Make sure recorder is stopped once done with it
 
-	c, err := NewClient(&validTestAPIKey, r)
 	if err != nil {
 		return nil, err
 	}
 	c.SetDebug(debug)
-	return c, nil
-}
-
-func TestNewClient(t *testing.T) {
-	client, err := NewClient(&validTestAPIKey, nil)
-	if err != nil {
-		t.Error("Expected Client got error", err)
-	}
-	if client == nil {
-		t.Error("Expected Client got nil")
-	}
+	return &c, nil
 }
 
 func TestClientAliases(t *testing.T) {
-	client, err := NewClient(&validTestAPIKey, nil)
-	if err != nil {
-		t.Error("Expected client got error", err)
-	}
+	client := NewClient(&validTestAPIKey, nil)
+
 	if client.Images == nil {
 		t.Error("Expected alias for Images to return a *Resource")
 	}
 	if client.Instances == nil {
 		t.Error("Expected alias for Instances to return a *Resource")
 	}
-	if client.Backups == nil {
+	if client.InstanceSnapshots == nil {
 		t.Error("Expected alias for Backups to return a *Resource")
 	}
 	if client.StackScripts == nil {

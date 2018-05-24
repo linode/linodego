@@ -4,13 +4,13 @@ import (
 	"testing"
 )
 
-func TestGetImage_missing(t *testing.T) {
+func TestGetType_missing(t *testing.T) {
 	client, err := createTestClient(debugAPI)
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
 	}
 
-	i, err := client.GetImage("does-not-exist")
+	i, err := client.GetType("does-not-exist")
 	if err == nil {
 		t.Errorf("should have received an error requesting a missing image, got %v", i)
 	}
@@ -24,25 +24,25 @@ func TestGetImage_missing(t *testing.T) {
 	}
 }
 
-func TestGetImage_found(t *testing.T) {
+func TestGetType_found(t *testing.T) {
 	client, err := createTestClient(debugAPI)
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
 	}
-	i, err := client.GetImage("linode/ubuntu16.04lts")
+	i, err := client.GetType("g6-standard-1")
 	if err != nil {
 		t.Errorf("Error getting image, expected struct, got %v and error %v", i, err)
 	}
-	if i.ID != "linode/ubuntu16.04lts" {
+	if i.ID != "g6-standard-1" {
 		t.Errorf("Expected a specific image, but got a different one %v", i)
 	}
 }
-func TestListImages(t *testing.T) {
+func TestListTypes(t *testing.T) {
 	client, err := createTestClient(debugAPI)
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
 	}
-	i, err := client.ListImages(nil)
+	i, err := client.ListTypes(nil)
 	if err != nil {
 		t.Errorf("Error listing images, expected struct, got error %v", err)
 	}

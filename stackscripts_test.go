@@ -1,4 +1,4 @@
-package golinode
+package linodego
 
 import "testing"
 
@@ -7,7 +7,8 @@ func TestListStackscripts(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
 	}
-	stackscripts, err := client.ListStackscripts()
+	filterOpt := NewListOptions(1, "")
+	stackscripts, err := client.ListStackscripts(filterOpt)
 	if err != nil {
 		t.Errorf("Error listing stackscripts, expected struct - error %v", err)
 	}

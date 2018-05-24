@@ -1,43 +1,37 @@
-package golinode
+package linodego
 
 import (
 	"fmt"
 )
 
-// LinodeBackup represents a linode backup
-type LinodeBackup struct {
-	Enabled      bool
-	Availability string
-	Schedule     struct {
-		Day    string
-		Window string
-	}
-	LastBackup *LinodeSnapshot
-	Disks      []*LinodeInstanceDisk
+// InstanceBackupsResponse response struct for backup snapshot
+type InstanceBackupsResponse struct {
+	Automatic []*InstanceSnapshot
+	Snapshot  *InstanceBackupSnapshotResponse
 }
 
-// GetInstanceBackups gets linode backups
-func (c *Client) GetInstanceBackups(linodeID int) (*LinodeInstanceBackupsResponse, error) {
+type InstanceBackupSnapshotResponse struct {
+	Current    *InstanceSnapshot
+	InProgress *InstanceSnapshot `json:"in_progress"`
+}
+
+// GetInstanceBackups gets the Instance's available Backups
+func (c *Client) GetInstanceBackups(linodeID int) (*InstanceBackupsResponse, error) {
 	e, err := c.Instances.Endpoint()
 	if err != nil {
 		return nil, err
 	}
 	e = fmt.Sprintf("%s/%d/backups", e, linodeID)
-	r, err := c.R().
-		SetResult(&LinodeInstanceBackupsResponse{}).
-		Get(e)
+	r, err := coupleAPIErrors(c.R().
+		SetResult(&InstanceBackupsResponse{}).
+		Get(e))
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*LinodeInstanceBackupsResponse).fixDates(), nil
+	return r.Result().(*InstanceBackupsResponse).fixDates(), nil
 }
 
-type LinodeBackupSnapshotResponse struct {
-	Current    *LinodeSnapshot
-	InProgress *LinodeSnapshot `json:"in_progress"`
-}
-
-func (l *LinodeBackupSnapshotResponse) fixDates() *LinodeBackupSnapshotResponse {
+func (l *InstanceBackupSnapshotResponse) fixDates() *InstanceBackupSnapshotResponse {
 	if l.Current != nil {
 		l.Current.fixDates()
 	}
@@ -47,13 +41,7 @@ func (l *LinodeBackupSnapshotResponse) fixDates() *LinodeBackupSnapshotResponse 
 	return l
 }
 
-// LinodeInstanceBackupsResponse response struct for backup snapshot
-type LinodeInstanceBackupsResponse struct {
-	Automatic []*LinodeSnapshot
-	Snapshot  *LinodeBackupSnapshotResponse
-}
-
-func (l *LinodeInstanceBackupsResponse) fixDates() *LinodeInstanceBackupsResponse {
+func (l *InstanceBackupsResponse) fixDates() *InstanceBackupsResponse {
 	for _, el := range l.Automatic {
 		el.fixDates()
 	}

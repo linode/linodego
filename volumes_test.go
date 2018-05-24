@@ -1,17 +1,20 @@
-package golinode
+package linodego
 
 import (
 	"testing"
 )
 
-const TestVolumeID = 5029
+const TestVolumeID = 7568
 
 func TestListVolumes(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode.")
+	}
 	client, err := createTestClient(debugAPI)
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
 	}
-	volumes, err := client.ListVolumes()
+	volumes, err := client.ListVolumes(nil)
 	if err != nil {
 		t.Errorf("Error listing instances, expected struct, got error %v", err)
 	}
@@ -21,6 +24,9 @@ func TestListVolumes(t *testing.T) {
 }
 
 func TestGetVolume(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode.")
+	}
 	client, err := createTestClient(debugAPI)
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)

@@ -1,4 +1,4 @@
-package golinode
+package linodego
 
 import (
 	"fmt"
@@ -7,10 +7,8 @@ import (
 
 func TestResourceEndpoint(t *testing.T) {
 	apiKey := "MYFAKEAPIKEY"
-	client, err := NewClient(&apiKey, nil)
-	if err != nil {
-		t.Error("Could not create new client in test")
-	}
+	client := NewClient(&apiKey, nil)
+
 	r := client.Resource("images")
 	e, err := r.Endpoint()
 	if err != nil {
@@ -22,9 +20,9 @@ func TestResourceEndpoint(t *testing.T) {
 }
 func TestResourceTemplatedEndpointWithID(t *testing.T) {
 	apiKey := "MYFAKEAPIKEY"
-	client, err := NewClient(&apiKey, nil)
+	client := NewClient(&apiKey, nil)
 	backupID := 1234255
-	e, err := client.Backups.EndpointWithID(backupID)
+	e, err := client.InstanceSnapshots.EndpointWithID(backupID)
 	if err != nil {
 		t.Error("Got error when getting endpoint with id for backups")
 	}

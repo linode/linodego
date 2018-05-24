@@ -17,11 +17,16 @@ clean-fixtures:
 refresh-fixtures: clean-fixtures test/fixtures.yaml
 
 test/fixtures.yaml:
-	@LINODE_API_KEY=$(LINODE_API_KEY) \
+	@LINODE_TOKEN=$(LINODE_TOKEN) \
 	LINODE_INSTANCE_ID=$(LINODE_INSTANCE_ID) \
 	LINODE_VOLUME_ID=$(LINODE_VOLUME_ID) \
 	go run test/main.go
-	@sed -i "s/$(LINODE_API_KEY)/awesometokenawesometokenawesometoken/" $@
+	@sed -i "s/$(LINODE_TOKEN)/awesometokenawesometokenawesometoken/" $@
 
+.PHONY: test
 test: vendor test/fixtures.yaml
 	@go test
+
+.PHONY: godoc
+godoc:
+	@godoc -http=:6060

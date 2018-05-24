@@ -1,12 +1,15 @@
-package golinode
+package linodego
 
 import (
 	"testing"
 )
 
-const TestInstanceID = 7256733
+const TestInstanceID = 8104671
 
 func TestListInstances(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode.")
+	}
 	client, err := createTestClient(debugAPI)
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
@@ -21,6 +24,9 @@ func TestListInstances(t *testing.T) {
 }
 
 func TestGetInstance(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode.")
+	}
 	client, err := createTestClient(debugAPI)
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
@@ -35,11 +41,14 @@ func TestGetInstance(t *testing.T) {
 }
 
 func TestListInstanceDisks(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode.")
+	}
 	client, err := createTestClient(debugAPI)
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
 	}
-	disks, err := client.ListInstanceDisks(TestInstanceID)
+	disks, err := client.ListInstanceDisks(TestInstanceID, nil)
 	if err != nil {
 		t.Errorf("Error listing instance disks, expected struct, got error %v", err)
 	}
@@ -49,11 +58,14 @@ func TestListInstanceDisks(t *testing.T) {
 }
 
 func TestListInstanceConfigs(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode.")
+	}
 	client, err := createTestClient(debugAPI)
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
 	}
-	configs, err := client.ListInstanceConfigs(TestInstanceID)
+	configs, err := client.ListInstanceConfigs(TestInstanceID, nil)
 	if err != nil {
 		t.Errorf("Error listing instance configs, expected struct, got error %v", err)
 	}
@@ -63,11 +75,14 @@ func TestListInstanceConfigs(t *testing.T) {
 }
 
 func TestListInstanceVolumes(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode.")
+	}
 	client, err := createTestClient(debugAPI)
 	if err != nil {
 		t.Errorf("Error creating test client %v", err)
 	}
-	volumes, err := client.ListInstanceVolumes(TestInstanceID)
+	volumes, err := client.ListInstanceVolumes(TestInstanceID, nil)
 	if err != nil {
 		t.Errorf("Error listing instance volumes, expected struct, got error %v", err)
 	}

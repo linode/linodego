@@ -6,7 +6,7 @@ import (
 	"os"
 	"strconv"
 
-	golinode "github.com/chiefy/go-linode"
+	"github.com/chiefy/linodego"
 	"github.com/dnaeon/go-vcr/recorder"
 )
 
@@ -32,81 +32,120 @@ func main() {
 	}
 	defer r.Stop() // Make sure recorder is stopped once done with it
 
-	c, err := golinode.NewClient(nil, r)
+	c := linodego.NewClient(nil, r)
 	if err != nil {
-		log.Fatalf("Failed to create linode client: %s", err)
+		log.Fatal(err)
 	}
-	c.SetDebug(false)
 
-	_, err = c.ListRegions()
+	_, err = c.GetType("g6-standard-1")
 	if err != nil {
-		log.Fatalf("Failed to get linode regions: %s", err)
+		log.Fatal(err)
+	}
+
+	_, _ = c.GetType("does-not-exist")
+
+	_, err = c.ListTypes(nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	_, err = c.ListKernels(nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	filterOpt := linodego.ListOptions{Filter: "{\"label\":\"Recovery - Finnix (kernel)\"}"}
+	_, err = c.ListKernels(&filterOpt)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	_, err = c.ListKernels(linodego.NewListOptions(1, ""))
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	_, err = c.ListImages(nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	_, _ = c.GetImage("does-not-exist")
+
+	_, err = c.GetImage("linode/ubuntu16.04lts")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	pageOpt := linodego.ListOptions{PageOptions: &linodego.PageOptions{Page: 1}}
+	_, err = c.ListLongviewSubscriptions(&pageOpt)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	_, err = c.ListRegions(nil)
+	if err != nil {
+		log.Fatal(err)
 	}
 	log.Println("Succesfully got linode regions")
 
 	_, err = c.ListInstances(nil)
 	if err != nil {
-		log.Fatalf("Failed to get linode instances: %s", err)
+		log.Fatal(err)
 	}
 	log.Println("Succesfully got linode instances")
 
-	_, err = c.ListImages()
-	if err != nil {
-		log.Fatalf("Failed to get linode images: %s", err)
-	}
-	log.Println("Succesfully got linode images")
-
 	_, err = c.GetInstance(linodeInstanceID)
 	if err != nil {
-		log.Fatalf("Failed to get linode instance ID %d: %s", linodeInstanceID, err)
+		log.Fatal(err)
 	}
 	log.Println(fmt.Sprintf("Succesfully got linode instance ID %d", linodeInstanceID))
 
 	_, err = c.GetInstanceBackups(linodeInstanceID)
 	if err != nil {
-		log.Fatalf("Failed to get linode backups for instance ID %d: %s", linodeInstanceID, err)
+		log.Fatal(err)
 	}
 	log.Println(fmt.Sprintf("Succesfully got linode backups for instance ID %d", linodeInstanceID))
 
-	_, err = c.ListInstanceDisks(linodeInstanceID)
+	_, err = c.ListInstanceDisks(linodeInstanceID, nil)
 	if err != nil {
-		log.Fatalf("Failed to get linode instance disks: %s", err)
+		log.Fatal(err)
 	}
 	log.Println("Succesfully got linode instance disks")
 
-	_, err = c.ListInstanceConfigs(linodeInstanceID)
+	_, err = c.ListInstanceConfigs(linodeInstanceID, nil)
 	if err != nil {
-		log.Fatalf("Failed to get linode instance configs: %s", err)
+		log.Fatal(err)
 	}
 	log.Println("Succesfully got linode instance configs")
 
-	_, err = c.ListInstanceVolumes(linodeInstanceID)
+	_, err = c.ListInstanceVolumes(linodeInstanceID, nil)
 	if err != nil {
-		log.Fatalf("Failed to get linode instance volumes: %s", err)
+		log.Fatal(err)
 	}
 	log.Println("Succesfully got linode instance volumes")
 
-	_, err = c.ListStackscripts()
+	_, err = c.ListStackscripts(linodego.NewListOptions(1, ""))
 	if err != nil {
-		log.Fatalf("Failed to get linode stackscripts: %s", err)
+		log.Fatal(err)
 	}
 	log.Println("Succesfully got linode public stackscripts (1 page)")
 
 	_, err = c.GetStackscript(7)
 	if err != nil {
-		log.Fatalf("Failed to get linode stackscript ID 7: %s", err)
+		log.Fatal(err)
 	}
 	log.Println("Succesfully got linode stackscript ID 7")
 
-	_, err = c.ListVolumes()
+	_, err = c.ListVolumes(nil)
 	if err != nil {
-		log.Fatalf("Failed to get linode volumes: %s", err)
+		log.Fatal(err)
 	}
 	log.Println("Succesfully got linode volumes (1 page)")
 
 	_, err = c.GetVolume(linodeVolumeID)
 	if err != nil {
-		log.Fatalf("Failed to get linode volume ID %d: %s", linodeVolumeID, err)
+		log.Fatal(err)
 	}
 	log.Println(fmt.Sprintf("Succesfully got linode volume ID %d", linodeVolumeID))
 
