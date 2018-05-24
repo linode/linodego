@@ -243,10 +243,11 @@ func (c *Client) RenameInstance(linodeID int, label string) (*Instance, error) {
 
 // DeleteInstance deletes a Linode instance
 func (c *Client) DeleteInstance(id int) error {
-	e, err := c.Instances.EndpointWithID(id)
+	e, err := c.Instances.Endpoint()
 	if err != nil {
 		return err
 	}
+	e = fmt.Sprintf("%s/%d", e, id)
 
 	if _, err := coupleAPIErrors(c.R().Delete(e)); err != nil {
 		return err
