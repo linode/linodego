@@ -6,8 +6,6 @@ import (
 	"github.com/go-resty/resty"
 )
 
-// Notifications represent account events across all Linode things the
-// account is privy to (API endpoint /account/events)
 type Notification struct {
 	UntilStr string `json:"until"`
 	WhenStr  string `json:"when"`
@@ -21,6 +19,8 @@ type Notification struct {
 	When     *time.Time `json:"-"`
 }
 
+// NotificationEntity adds detailed information about the Notification.
+// This could refer to the ticket that triggered the notification, for example.
 type NotificationEntity struct {
 	ID    int
 	Label string
@@ -43,15 +43,6 @@ func (NotificationsPagedResponse) Endpoint(c *Client) string {
 	return endpoint
 }
 
-// Endpoint gets the endpoint URL for Notification
-func (NotificationsPagedResponse) EndpointWithID(c *Client, id int) string {
-	endpoint, err := c.Notifications.EndpointWithID(id)
-	if err != nil {
-		panic(err)
-	}
-	return endpoint
-}
-
 // AppendData appends Notifications when processing paginated Notification responses
 func (resp *NotificationsPagedResponse) AppendData(r *NotificationsPagedResponse) {
 	(*resp).Data = append(resp.Data, r.Data...)
@@ -62,7 +53,11 @@ func (NotificationsPagedResponse) SetResult(r *resty.Request) {
 	r.SetResult(NotificationsPagedResponse{})
 }
 
-// ListNotifications lists Notifications
+// ListNotifications gets a collection of Notification objects representing important,
+// often time-sensitive items related to the Account. An account cannot interact directly with
+// Notifications, and a Notification will disappear when the circumstances causing it
+// have been resolved. For example, if the account has an important Ticket open, a response
+// to the Ticket will dismiss the Notification.
 func (c *Client) ListNotifications(opts *ListOptions) ([]*Notification, error) {
 	response := NotificationsPagedResponse{}
 	err := c.ListHelper(&response, opts)

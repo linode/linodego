@@ -7,7 +7,7 @@ import (
 	"github.com/go-resty/resty"
 )
 
-// Invoice represents a Invoice object
+// Invoice structs reflect an invoice for billable activity on the account.
 type Invoice struct {
 	DateStr string `json:"date"`
 
@@ -17,6 +17,7 @@ type Invoice struct {
 	Date  *time.Time `json:"-"`
 }
 
+// InvoiceItem structs reflect an single billable activity associate with an Invoice
 type InvoiceItem struct {
 	FromStr string `json:"from"`
 	ToStr   string `json:"to"`
@@ -55,7 +56,7 @@ func (InvoicesPagedResponse) SetResult(r *resty.Request) {
 	r.SetResult(InvoicesPagedResponse{})
 }
 
-// ListInvoices lists Invoices
+// ListInvoices gets a paginated list of Invoices against the Account
 func (c *Client) ListInvoices(opts *ListOptions) ([]*Invoice, error) {
 	response := InvoicesPagedResponse{}
 	err := c.ListHelper(&response, opts)
@@ -81,14 +82,14 @@ func (v *InvoiceItem) fixDates() *InvoiceItem {
 	return v
 }
 
-// GetInvoice gets the template with the provided ID
-func (c *Client) GetInvoice(id string) (*Invoice, error) {
+// GetInvoice gets the a single Invoice matching the provided ID
+func (c *Client) GetInvoice(id int) (*Invoice, error) {
 	e, err := c.Invoices.Endpoint()
 	if err != nil {
 		return nil, err
 	}
 
-	e = fmt.Sprintf("%s/%s", e, id)
+	e = fmt.Sprintf("%s/%d", e, id)
 	r, err := coupleAPIErrors(c.R().SetResult(&Invoice{}).Get(e))
 	if err != nil {
 		return nil, err
@@ -102,7 +103,7 @@ type InvoiceItemsPagedResponse struct {
 	Data []*InvoiceItem
 }
 
-// Endpoint gets the endpoint URL for InvoiceItems
+// EndpointWithID gets the endpoint URL for InvoiceItems associated with a specific Invoice
 func (InvoiceItemsPagedResponse) EndpointWithID(c *Client, id int) string {
 	endpoint, err := c.InvoiceItems.EndpointWithID(id)
 	if err != nil {
@@ -121,7 +122,7 @@ func (InvoiceItemsPagedResponse) SetResult(r *resty.Request) {
 	r.SetResult(InvoiceItemsPagedResponse{})
 }
 
-// ListInvoiceItems lists Invoice Items
+// ListInvoiceItems gets the invoice items associated with a specific Invoice
 func (c *Client) ListInvoiceItems(id int, opts *ListOptions) ([]*InvoiceItem, error) {
 	response := InvoiceItemsPagedResponse{}
 	err := c.ListHelperWithID(&response, id, opts)

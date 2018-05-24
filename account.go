@@ -1,5 +1,6 @@
 package linodego
 
+// Account associated with the token in use
 type Account struct {
 	FirstName  string `json:"first_name"`
 	LastName   string `json:"last_name"`
@@ -16,6 +17,7 @@ type Account struct {
 	CreditCard *CreditCard `json:"credit_card"`
 }
 
+// CreditCard information associated with the Account.
 type CreditCard struct {
 	LastFour string `json:"last_four"`
 	Expiry   string
@@ -26,7 +28,7 @@ func (v *Account) fixDates() *Account {
 	return v
 }
 
-// GetAccountEvents gets the template with the provided ID
+// GetAccount gets the contact and billing information related to the Account
 func (c *Client) GetAccount() (*Account, error) {
 	e, err := c.Account.Endpoint()
 	if err != nil {

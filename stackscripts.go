@@ -74,12 +74,12 @@ func (v *Stackscript) fixDates() *Stackscript {
 }
 
 // GetStackscript gets the Stackscript with the provided ID
-func (c *Client) GetStackscript(id string) (*Stackscript, error) {
+func (c *Client) GetStackscript(id int) (*Stackscript, error) {
 	e, err := c.StackScripts.Endpoint()
 	if err != nil {
 		return nil, err
 	}
-	e = fmt.Sprintf("%s/%s", e, id)
+	e = fmt.Sprintf("%s/%d", e, id)
 	r, err := c.R().SetResult(&Stackscript{}).Get(e)
 	if err != nil {
 		return nil, err

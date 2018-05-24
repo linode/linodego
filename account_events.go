@@ -6,8 +6,7 @@ import (
 	"github.com/go-resty/resty"
 )
 
-// Events represent account events across all Linode things the
-// account is privy to (API endpoint /account/events)
+// Event represents an action taken on the Account.
 type Event struct {
 	CreatedStr string `json:"created"`
 	UpdatedStr string `json:"updated"`
@@ -25,6 +24,9 @@ type Event struct {
 	Created         *time.Time `json:"-"`
 }
 
+// EventEntity provides detailed information about the Event's
+// associated entity, including ID, Type, Label, and a URL that
+// can be used to access it.
 type EventEntity struct {
 	ID    int
 	Label string
@@ -47,7 +49,7 @@ func (EventsPagedResponse) Endpoint(c *Client) string {
 	return endpoint
 }
 
-// Endpoint gets the endpoint URL for Event
+// EndpointWithID gets the endpoint URL for a specific Event
 func (EventsPagedResponse) EndpointWithID(c *Client, id int) string {
 	endpoint, err := c.Events.EndpointWithID(id)
 	if err != nil {
@@ -66,7 +68,9 @@ func (EventsPagedResponse) SetResult(r *resty.Request) {
 	r.SetResult(EventsPagedResponse{})
 }
 
-// ListEvents lists Events
+// ListEvents gets a collection of Event objects representing actions taken
+// on the Account. The Events returned depend on the token grants and the grants
+// of the associated user.
 func (c *Client) ListEvents(opts *ListOptions) ([]*Event, error) {
 	response := EventsPagedResponse{}
 	err := c.ListHelper(&response, opts)

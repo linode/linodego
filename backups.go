@@ -15,7 +15,7 @@ type InstanceBackupSnapshotResponse struct {
 	InProgress *InstanceSnapshot `json:"in_progress"`
 }
 
-// GetInstanceBackups gets linode backups
+// GetInstanceBackups gets the Instance's available Backups
 func (c *Client) GetInstanceBackups(linodeID int) (*InstanceBackupsResponse, error) {
 	e, err := c.Instances.Endpoint()
 	if err != nil {
