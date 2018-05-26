@@ -21,8 +21,8 @@ type DomainsPagedResponse struct {
 	Data []*Domain
 }
 
-// Endpoint gets the endpoint URL for Domain
-func (DomainsPagedResponse) Endpoint(c *Client) string {
+// endpoint gets the endpoint URL for Domain
+func (DomainsPagedResponse) endpoint(c *Client) string {
 	endpoint, err := c.Domains.Endpoint()
 	if err != nil {
 		panic(err)
@@ -30,20 +30,20 @@ func (DomainsPagedResponse) Endpoint(c *Client) string {
 	return endpoint
 }
 
-// AppendData appends Domains when processing paginated Domain responses
-func (resp *DomainsPagedResponse) AppendData(r *DomainsPagedResponse) {
+// appendData appends Domains when processing paginated Domain responses
+func (resp *DomainsPagedResponse) appendData(r *DomainsPagedResponse) {
 	(*resp).Data = append(resp.Data, r.Data...)
 }
 
-// SetResult sets the Resty response type of Domain
-func (DomainsPagedResponse) SetResult(r *resty.Request) {
+// setResult sets the Resty response type of Domain
+func (DomainsPagedResponse) setResult(r *resty.Request) {
 	r.SetResult(DomainsPagedResponse{})
 }
 
 // ListDomains lists Domains
 func (c *Client) ListDomains(opts *ListOptions) ([]*Domain, error) {
 	response := DomainsPagedResponse{}
-	err := c.ListHelper(&response, opts)
+	err := c.listHelper(&response, opts)
 	for _, el := range response.Data {
 		el.fixDates()
 	}

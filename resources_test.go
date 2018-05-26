@@ -18,11 +18,11 @@ func TestResourceEndpoint(t *testing.T) {
 		t.Errorf("Images endpoint did not match '%s'", imagesEndpoint)
 	}
 }
-func TestResourceTemplatedEndpointWithID(t *testing.T) {
+func TestResourceTemplatedendpointWithID(t *testing.T) {
 	apiKey := "MYFAKEAPIKEY"
 	client := NewClient(&apiKey, nil)
 	backupID := 1234255
-	e, err := client.InstanceSnapshots.EndpointWithID(backupID)
+	e, err := client.InstanceSnapshots.endpointWithID(backupID)
 	if err != nil {
 		t.Error("Got error when getting endpoint with id for backups")
 	}
