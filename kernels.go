@@ -19,7 +19,7 @@ type LinodeKernel struct {
 
 // LinodeKernelsPagedResponse represents a linode kernels API response for listing
 type LinodeKernelsPagedResponse struct {
-	*PagedResponse
+	*PageOptions
 	Data []*LinodeKernel
 }
 

@@ -24,12 +24,12 @@ type ListOptions struct {
 	Filter string
 }
 
-type PagedResponse struct {
-	ListResponse
+type pagedResponse struct {
+	listResponse
 	*PageOptions
 }
 
-type ListResponse interface {
+type listResponse interface {
 	endpoint(*Client) string
 	appendData(*resty.Response)
 	setResult(*resty.Request)

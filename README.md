@@ -7,8 +7,8 @@ Go client for [Linode REST v4 API](https://developers.linode.com/v4/introduction
 
 ## Installation
 
-```
-$ go get -u github.com/chiefy/linodego
+```sh
+go get -u github.com/chiefy/linodego
 ```
 
 ## API Support
@@ -63,6 +63,7 @@ func main() {
 ```
 
 ### Pagination
+
 #### Auto-Pagination Requests
 
 ```go
@@ -89,6 +90,7 @@ stackscripts, err := linodego.ListStackscripts(opts)
 ```
 
 ### Error Handling
+
 #### Getting Single Entities
 
 ```go
