@@ -72,6 +72,7 @@ func (c *Client) SetUserAgent(ua string) *Client {
 // R wraps resty's R method
 func (c *Client) R() *resty.Request {
 	return c.resty.R().
+		SetHeader("Content-Type", "application/json").
 		SetError(APIError{})
 }
 
