@@ -131,7 +131,7 @@ func (c *Client) CreateInstanceDisk(linodeID int, createOpts InstanceDiskCreateO
 		return nil, err
 	}
 
-	return r.Result().(*InstanceDisk), nil
+	return r.Result().(*InstanceDisk).fixDates(), nil
 }
 
 // UpdateInstanceDisk creates a new InstanceDisk for the given Instance
@@ -160,7 +160,7 @@ func (c *Client) UpdateInstanceDisk(linodeID int, diskID int, updateOpts Instanc
 		return nil, err
 	}
 
-	return r.Result().(*InstanceDisk), nil
+	return r.Result().(*InstanceDisk).fixDates(), nil
 }
 
 // RenameInstanceDisk renames an InstanceDisk
@@ -196,7 +196,7 @@ func (c *Client) ResizeInstanceDisk(linodeID int, diskID int, size int) (*Instan
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*InstanceDisk), nil
+	return r.Result().(*InstanceDisk).fixDates(), nil
 }
 
 // DeleteInstanceDisk deletes a Linode InstanceDisk

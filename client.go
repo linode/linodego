@@ -188,21 +188,22 @@ func (c Client) WaitForEventFinished(id interface{}, entityType EntityType, acti
 	start := time.Now()
 	for {
 		filter, err := json.Marshal(map[string]interface{}{
-			// Entity is not really filtered, but is ignored by the API
+			// Entity is not filtered by the API
 			// Perhaps one day they will permit Entity ID/Type filtering.
 			// We'll have to verify these values manually, for now.
-			// "entity": map[string]interface{}{
+			//"entity": map[string]interface{}{
 			//	"id":   fmt.Sprintf("%v", id),
 			//	"type": entityType,
-			// },
+			//},
+
 			// Nor is action
-			// "action": action,
-			// Created is not really filtered, but ignored by the API
-			// Perhaps one day they will permit created filtering.
+			//"action": action,
+
+			// Created is not correctly filtered by the API
 			// We'll have to verify these values manually, for now.
-			"created": map[string]interface{}{
-				"+gte": minStart.Format(time.RFC3339),
-			},
+			//"created": map[string]interface{}{
+			//	"+gte": minStart.Format(time.RFC3339),
+			//},
 			"+order_by": "created",
 			"+order":    "desc",
 		})
@@ -215,6 +216,7 @@ func (c Client) WaitForEventFinished(id interface{}, entityType EntityType, acti
 
 		// If there are events for this instance + action, inspect them
 		for _, event := range events {
+			log.Println("waiting %ds for matching event:", timeoutSeconds, action, entityType, minStart)
 			if event.Action != action || event.Entity.Type != entityType || !event.Created.After(minStart) {
 				// Not the event we were looking for
 				continue
