@@ -9,20 +9,120 @@ import (
 // Event represents an action taken on the Account.
 type Event struct {
 	CreatedStr string `json:"created"`
-	UpdatedStr string `json:"updated"`
 
-	ID              int
-	Status          string
-	Action          string
+	// The unique ID of this Event.
+	ID int
+
+	// Current status of the Event, Enum: "failed" "finished" "notification" "scheduled" "started"
+	Status EventStatus
+
+	// The action that caused this Event. New actions may be added in the future.
+	Action EventAction
+
+	// A percentage estimating the amount of time remaining for an Event. Returns null for notification events.
 	PercentComplete int `json:"percent_complete"`
-	Rate            string
-	Read            bool
-	Seen            bool
-	TimeRemaining   int
-	Username        string
-	Entity          *EventEntity
-	Created         *time.Time `json:"-"`
+
+	// The rate of completion of the Event. Only some Events will return rate; for example, migration and resize Events.
+	Rate string
+
+	// If this Event has been read.
+	Read bool
+
+	// If this Event has been seen.
+	Seen bool
+
+	// The estimated time remaining until the completion of this Event. This value is only returned for in-progress events.
+	TimeRemaining int
+
+	// The username of the User who caused the Event.
+	Username string
+
+	// Detailed information about the Event's entity, including ID, type, label, and URL used to access it.
+	Entity *EventEntity
+
+	// When this Event was created.
+	Created *time.Time `json:"-"`
 }
+
+// EventAction constants start with Action and include all known Linode API Event Actions.
+type EventAction string
+
+const (
+	ActionBackupsEnable            EventAction = "backups_enable"
+	ActionBackupsCancel            EventAction = "backups_cancel"
+	ActionBackupsRestore           EventAction = "backups_restore"
+	ActionCommunityQuestionReply   EventAction = "community_question_reply"
+	ActionCreateCardUpdated        EventAction = "credit_card_updated"
+	ActionDiskCreate               EventAction = "disk_create"
+	ActionDiskDelete               EventAction = "disk_delete"
+	ActionDiskDuplicate            EventAction = "disk_duplicate"
+	ActionDiskImagize              EventAction = "disk_imagize"
+	ActionDiskResize               EventAction = "disk_resize"
+	ActionDNSRecordCreate          EventAction = "dns_record_create"
+	ActionDNSRecordDelete          EventAction = "dns_record_delete"
+	ActionDNSZoneCreate            EventAction = "dns_zone_create"
+	ActionDNSZoneDelete            EventAction = "dns_zone_delete"
+	ActionImageDelete              EventAction = "image_delete"
+	ActionLinodeAddIP              EventAction = "linode_addip"
+	ActionLinodeBoot               EventAction = "linode_boot"
+	ActionLinodeClone              EventAction = "linode_clone"
+	ActionLinodeCreate             EventAction = "linode_create"
+	ActionLinodeDelete             EventAction = "linode_delete"
+	ActionLinodeDeleteIP           EventAction = "linode_deleteip"
+	ActionLinodeMigrate            EventAction = "linode_migrate"
+	ActionLinodeMutate             EventAction = "linode_mutate"
+	ActionLinodeReboot             EventAction = "linode_reboot"
+	ActionLinodeRebuild            EventAction = "linode_rebuild"
+	ActionLinodeResize             EventAction = "linode_resize"
+	ActionLinodeShutdown           EventAction = "linode_shutdown"
+	ActionLinodeSnapshot           EventAction = "linode_snapshot"
+	ActionLongviewClientCreate     EventAction = "longviewclient_create"
+	ActionLongviewClientDelete     EventAction = "longviewclient_delete"
+	ActionManagedDisabled          EventAction = "managed_disabled"
+	ActionManagedEnabled           EventAction = "managed_enabled"
+	ActionManagedServiceCreate     EventAction = "managed_service_create"
+	ActionManagedServiceDelete     EventAction = "managed_service_delete"
+	ActionNodebalancerCreate       EventAction = "nodebalancer_create"
+	ActionNodebalancerDelete       EventAction = "nodebalancer_delete"
+	ActionNodebalancerConfigCreate EventAction = "nodebalancer_config_create"
+	ActionNodebalancerConfigDelete EventAction = "nodebalancer_config_delete"
+	ActionPasswordReset            EventAction = "password_reset"
+	ActionPaymentSubmitted         EventAction = "payment_submitted"
+	ActionStackScriptCreate        EventAction = "stackscript_create"
+	ActionStackScriptDelete        EventAction = "stackscript_delete"
+	ActionStackScriptPublicize     EventAction = "stackscript_publicize"
+	ActionStackScriptRevise        EventAction = "stackscript_revise"
+	ActionTFADisabled              EventAction = "tfa_disabled"
+	ActionTFAEnabled               EventAction = "tfa_enabled"
+	ActionTicketAttachmentUpload   EventAction = "ticket_attachment_upload"
+	ActionTicketCreate             EventAction = "ticket_create"
+	ActionTicketReply              EventAction = "ticket_reply"
+	ActionVolumeAttach             EventAction = "volume_attach"
+	ActionVolumeClone              EventAction = "volume_clone"
+	ActionVolumeCreate             EventAction = "volume_create"
+	ActionVolumeDelte              EventAction = "volume_delete"
+	ActionVolumeDetach             EventAction = "volume_detach"
+	ActionVolumeResize             EventAction = "volume_resize"
+)
+
+// EntityType constants start with Entity and include Linode API Event Entity Types
+type EntityType string
+
+const (
+	EntityLinode EntityType = "linode"
+	EntityDisk   EntityType = "disk"
+)
+
+// EventStatus constants start with Event and include Linode API Event Status values
+type EventStatus string
+
+const (
+	EventFailed       EventStatus = "failed"
+	EventFinished     EventStatus = "finished"
+	EventNotification EventStatus = "notification"
+	EventScheduled    EventStatus = "scheduled"
+	EventStarted      EventStatus = "started"
+)
 
 // EventEntity provides detailed information about the Event's
 // associated entity, including ID, Type, Label, and a URL that
@@ -30,7 +130,7 @@ type Event struct {
 type EventEntity struct {
 	ID    int
 	Label string
-	Type  string
+	Type  EntityType
 	URL   string
 }
 

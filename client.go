@@ -1,10 +1,12 @@
 package linodego
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/go-resty/resty"
 )
@@ -20,6 +22,8 @@ const (
 	Version = "1.0.0"
 	// APIEnvVar environment var to check for API token
 	APIEnvVar = "LINODE_TOKEN"
+	// APIPollInterval how frequently to poll for new Events
+	APIPollsPerSecond = 2
 )
 
 var userAgent = fmt.Sprintf("linodego %s https://github.com/chiefy/linodego", Version)
@@ -137,6 +141,7 @@ func NewClient(codeAPIToken *string, transport http.RoundTripper) (client Client
 		nodebalancernodesName:     NewResource(&client, nodebalancernodesName, nodebalancernodesEndpoint, true, NodeBalancerNode{}, NodeBalancerNodesPagedResponse{}),
 		ticketsName:               NewResource(&client, ticketsName, ticketsEndpoint, false, Ticket{}, TicketsPagedResponse{}),
 		accountName:               NewResource(&client, accountName, accountEndpoint, false, Account{}, nil), // really?
+		eventsName:                NewResource(&client, eventsName, eventsEndpoint, false, Event{}, EventsPagedResponse{}),
 		invoicesName:              NewResource(&client, invoicesName, invoicesEndpoint, false, Invoice{}, InvoicesPagedResponse{}),
 		invoiceItemsName:          NewResource(&client, invoiceItemsName, invoiceItemsEndpoint, true, InvoiceItem{}, InvoiceItemsPagedResponse{}),
 		profileName:               NewResource(&client, profileName, profileEndpoint, false, nil, nil), // really?
@@ -170,8 +175,63 @@ func NewClient(codeAPIToken *string, transport http.RoundTripper) (client Client
 	client.NodeBalancerNodes = resources[nodebalancernodesName]
 	client.Tickets = resources[ticketsName]
 	client.Account = resources[accountName]
+	client.Events = resources[eventsName]
 	client.Invoices = resources[invoicesName]
 	client.Profile = resources[profileName]
 	client.Managed = resources[managedName]
 	return
+}
+
+// WaitForEventFinished waits for an entity action to reach the 'finished' state
+// before returning. It will timeout with an error after timeoutSeconds.
+func (c Client) WaitForEventFinished(id interface{}, entityType EntityType, action EventAction, minStart time.Time, timeoutSeconds int) error {
+	start := time.Now()
+	for {
+		filter, err := json.Marshal(map[string]interface{}{
+			// Entity is not really filtered, but is ignored by the API
+			// Perhaps one day they will permit Entity ID/Type filtering.
+			// We'll have to verify these values manually, for now.
+			// "entity": map[string]interface{}{
+			//	"id":   fmt.Sprintf("%v", id),
+			//	"type": entityType,
+			// },
+			// Nor is action
+			// "action": action,
+			// Created is not really filtered, but ignored by the API
+			// Perhaps one day they will permit created filtering.
+			// We'll have to verify these values manually, for now.
+			"created": map[string]interface{}{
+				"+gte": minStart.Format(time.RFC3339),
+			},
+			"+order_by": "created",
+			"+order":    "desc",
+		})
+
+		listOptions := NewListOptions(0, string(filter))
+		events, err := c.ListEvents(listOptions)
+		if err != nil {
+			return err
+		}
+
+		// If there are events for this instance + action, inspect them
+		for _, event := range events {
+			if event.Action != action || event.Entity.Type != entityType || !event.Created.After(minStart) {
+				// Not the event we were looking for
+				continue
+			}
+
+			if event.Status == EventFailed {
+				return fmt.Errorf("%s %v action %s failed", entityType, id, action)
+			}
+			if event.Status == EventFinished {
+				return nil
+			}
+		}
+
+		// Either pushed out of the event list or hasn't been added to the list yet
+		time.Sleep(time.Second / APIPollsPerSecond)
+		if time.Since(start) > time.Duration(timeoutSeconds)*time.Second {
+			return fmt.Errorf("Did not find '%s' status of %s %v action '%s' within %d seconds", EventFinished, entityType, id, action, timeoutSeconds)
+		}
+	}
 }

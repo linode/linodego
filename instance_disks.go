@@ -17,8 +17,8 @@ type InstanceDisk struct {
 	Status     string
 	Size       int
 	Filesystem string
-	Created    *time.Time `json:"-"`
-	Updated    *time.Time `json:"-"`
+	Created    time.Time `json:"-"`
+	Updated    time.Time `json:"-"`
 }
 
 // InstanceDisksPagedResponse represents a paginated InstanceDisk API response
@@ -83,8 +83,12 @@ func (c *Client) ListInstanceDisks(linodeID int, opts *ListOptions) ([]*Instance
 
 // fixDates converts JSON timestamps to Go time.Time values
 func (v *InstanceDisk) fixDates() *InstanceDisk {
-	v.Created, _ = parseDates(v.CreatedStr)
-	v.Updated, _ = parseDates(v.UpdatedStr)
+	if created, err := parseDates(v.CreatedStr); err == nil {
+		v.Created = *created
+	}
+	if updated, err := parseDates(v.UpdatedStr); err == nil {
+		v.Updated = *updated
+	}
 	return v
 }
 

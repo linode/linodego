@@ -4,12 +4,13 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	"github.com/chiefy/linodego"
 )
 
 var linodeClient = linodego.NewClient(nil, nil)
-var spendMoney = false
+var spendMoney = true
 
 func main() {
 	// Trigger endpoints that accrue a balance
@@ -48,6 +49,25 @@ func moreExamples_authenticated() {
 			log.Fatal(err)
 		}
 		fmt.Println("## Created Instance\n", linode)
+		fmt.Println("### Creating Disk")
+		for i := 0; i < 30; i++ {
+			disk, err := linodeClient.CreateInstanceDisk(linode.ID, linodego.InstanceDiskCreateOptions{Size: 50, Filesystem: "raw", Label: "linodego_disk"})
+			if err != nil {
+				linodeErr, ok := err.(*linodego.Error)
+				if ok && linodeErr.Code >= 400 {
+					log.Printf("Waiting 1s for disk (got %d %s) Pass %d", linodeErr.Code, linodeErr.Error(), i)
+					time.Sleep(time.Second)
+					continue
+				}
+				log.Fatalln("While creating disk:", err)
+			}
+			log.Println(disk)
+			err = linodeClient.WaitForEventFinished(disk.ID, linodego.EntityDisk, linodego.ActionDiskCreate, disk.Created, 5)
+			if err != nil {
+				log.Fatalln("Failed to wait for Linode disk to finish creation:", err)
+			}
+			break
+		}
 	}
 
 	linodes, err := linodeClient.ListInstances(nil)
