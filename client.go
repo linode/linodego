@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strconv"
 	"time"
 
 	"github.com/go-resty/resty"
@@ -22,8 +23,8 @@ const (
 	Version = "1.0.0"
 	// APIEnvVar environment var to check for API token
 	APIEnvVar = "LINODE_TOKEN"
-	// APIPollInterval how frequently to poll for new Events
-	APIPollsPerSecond = 2
+	// APIPollsPerSecond how frequently to poll for new Events
+	APISecondsPerPoll = 10
 )
 
 var userAgent = fmt.Sprintf("linodego %s https://github.com/chiefy/linodego", Version)
@@ -204,34 +205,84 @@ func (c Client) WaitForEventFinished(id interface{}, entityType EntityType, acti
 			//"created": map[string]interface{}{
 			//	"+gte": minStart.Format(time.RFC3339),
 			//},
+
+			// With potentially 1000+ events coming back, we should filter on something
+			"seen": false,
+
+			// Float the latest events to page 1
 			"+order_by": "created",
 			"+order":    "desc",
 		})
 
-		listOptions := NewListOptions(0, string(filter))
+		// Optimistically restrict results to page 1.  We should remove this when more
+		// precise filtering options exist.
+		listOptions := NewListOptions(1, string(filter))
 		events, err := c.ListEvents(listOptions)
 		if err != nil {
 			return err
 		}
 
+		log.Printf("waiting %ds for %s events since %v for %s %v", timeoutSeconds, action, minStart, entityType, id)
+
 		// If there are events for this instance + action, inspect them
 		for _, event := range events {
-			log.Println("waiting %ds for matching event:", timeoutSeconds, action, entityType, minStart)
-			if event.Action != action || event.Entity.Type != entityType || !event.Created.After(minStart) {
-				// Not the event we were looking for
+			if event.Action != action {
 				continue
+			}
+			if event.Entity.Type != entityType {
+				continue
+			}
+
+			var entID string
+
+			switch event.Entity.ID.(type) {
+			case float64, float32:
+				entID = fmt.Sprintf("%.f", event.Entity.ID)
+			case int:
+				entID = strconv.Itoa(event.Entity.ID.(int))
+			default:
+				entID = fmt.Sprintf("%v", event.Entity.ID)
+			}
+
+			var findID string
+			switch id.(type) {
+			case float64, float32:
+				findID = fmt.Sprintf("%.f", id)
+			case int:
+				findID = strconv.Itoa(id.(int))
+			default:
+				findID = fmt.Sprintf("%v", id)
+			}
+
+			if entID != findID {
+				// just noise..
+				// log.Println(entID, "is not", id)
+				continue
+			} else {
+				log.Println("Found event for entity.", entID, "is", id)
+			}
+
+			if *event.Created != minStart && !event.Created.After(minStart) {
+				// Not the event we were looking for
+				log.Println(event.Created, "is not >=", minStart)
+				continue
+
 			}
 
 			if event.Status == EventFailed {
 				return fmt.Errorf("%s %v action %s failed", entityType, id, action)
-			}
-			if event.Status == EventFinished {
+			} else if event.Status == EventScheduled {
+				log.Printf("%s %v action %s is scheduled", entityType, id, action)
+			} else if event.Status == EventFinished {
+				log.Printf("%s %v action %s is finished", entityType, id, action)
 				return nil
+			} else {
+				log.Printf("%s %v action %s is in state %s", entityType, id, action, event.Status)
 			}
 		}
 
 		// Either pushed out of the event list or hasn't been added to the list yet
-		time.Sleep(time.Second / APIPollsPerSecond)
+		time.Sleep(time.Second * APISecondsPerPoll)
 		if time.Since(start) > time.Duration(timeoutSeconds)*time.Second {
 			return fmt.Errorf("Did not find '%s' status of %s %v action '%s' within %d seconds", EventFinished, entityType, id, action, timeoutSeconds)
 		}

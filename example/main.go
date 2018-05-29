@@ -5,7 +5,6 @@ import (
 	"log"
 	"os"
 	"strconv"
-	"time"
 
 	"github.com/chiefy/linodego"
 )
@@ -66,28 +65,29 @@ func moreExamples_authenticated() {
 	if spendMoney {
 		linode, err = linodeClient.CreateInstance(&linodego.InstanceCreateOptions{Region: "us-central", Type: "g5-nanode-1"})
 		if err != nil {
-			log.Fatal(err)
+			log.Fatalln("* While creating instance: ", err)
 		}
+
 		fmt.Println("## Created Instance\n", linode)
-		fmt.Println("### Creating Disk")
-		for i := 0; i < 30; i++ {
-			disk, err := linodeClient.CreateInstanceDisk(linode.ID, linodego.InstanceDiskCreateOptions{Size: 50, Filesystem: "raw", Label: "linodego_disk"})
-			if err != nil {
-				linodeErr, ok := err.(*linodego.Error)
-				if ok && linodeErr.Code >= 400 {
-					log.Printf("- Waiting 1s for disk (got %s) Pass %d", linodeErr.Error(), i)
-					time.Sleep(time.Second)
-					continue
-				}
-				log.Fatalln("* While creating disk:", err)
-			}
-			log.Println(disk)
-			err = linodeClient.WaitForEventFinished(disk.ID, linodego.EntityDisk, linodego.ActionDiskCreate, disk.Created, 5)
-			if err != nil {
-				log.Fatalf("* Failed to wait for Linode disk %d to finish creation: %s", disk.ID, err)
-			}
-			break
+		err = linodeClient.WaitForEventFinished(linode.ID, linodego.EntityLinode, linodego.ActionLinodeCreate, *linode.Created, 240)
+		if err != nil {
+			log.Fatalf("* Failed to wait for Linode %d to finish creation: %s", linode.ID, err)
 		}
+
+		disk, err := linodeClient.CreateInstanceDisk(linode.ID, linodego.InstanceDiskCreateOptions{Size: 50, Filesystem: "raw", Label: "linodego_disk"})
+		if err != nil {
+			log.Fatalln("* While creating disk:", err)
+		}
+
+		fmt.Println("### Created Disk\n", disk)
+		err = linodeClient.WaitForEventFinished(linode.ID, linodego.EntityLinode, linodego.ActionDiskCreate, disk.Created, 240)
+
+		// @TODO it is not sufficient that a disk was created. Which disk was it?
+		// Sounds like we'll need a WaitForEntityStatus function.
+		if err != nil {
+			log.Fatalf("* Failed to wait for Linode disk %d to finish creation: %s", disk.ID, err)
+		}
+
 	}
 
 	linodes, err := linodeClient.ListInstances(nil)

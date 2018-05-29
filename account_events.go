@@ -128,7 +128,8 @@ const (
 // associated entity, including ID, Type, Label, and a URL that
 // can be used to access it.
 type EventEntity struct {
-	ID    int
+	// ID may be a string or int, it depends on the EntityType
+	ID    interface{}
 	Label string
 	Type  EntityType
 	URL   string
