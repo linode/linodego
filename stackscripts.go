@@ -34,8 +34,8 @@ type StackscriptsPagedResponse struct {
 	Data []*Stackscript
 }
 
-// Endpoint gets the endpoint URL for Stackscript
-func (StackscriptsPagedResponse) Endpoint(c *Client) string {
+// endpoint gets the endpoint URL for Stackscript
+func (StackscriptsPagedResponse) endpoint(c *Client) string {
 	endpoint, err := c.StackScripts.Endpoint()
 	if err != nil {
 		panic(err)
@@ -43,20 +43,20 @@ func (StackscriptsPagedResponse) Endpoint(c *Client) string {
 	return endpoint
 }
 
-// AppendData appends Stackscripts when processing paginated Stackscript responses
-func (resp *StackscriptsPagedResponse) AppendData(r *StackscriptsPagedResponse) {
+// appendData appends Stackscripts when processing paginated Stackscript responses
+func (resp *StackscriptsPagedResponse) appendData(r *StackscriptsPagedResponse) {
 	(*resp).Data = append(resp.Data, r.Data...)
 }
 
-// SetResult sets the Resty response type of Stackscript
-func (StackscriptsPagedResponse) SetResult(r *resty.Request) {
+// setResult sets the Resty response type of Stackscript
+func (StackscriptsPagedResponse) setResult(r *resty.Request) {
 	r.SetResult(StackscriptsPagedResponse{})
 }
 
 // ListStackscripts lists Stackscripts
 func (c *Client) ListStackscripts(opts *ListOptions) ([]*Stackscript, error) {
 	response := StackscriptsPagedResponse{}
-	err := c.ListHelper(&response, opts)
+	err := c.listHelper(&response, opts)
 	for _, el := range response.Data {
 		el.fixDates()
 	}

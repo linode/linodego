@@ -49,29 +49,29 @@ type InstanceDiskUpdateOptions struct {
 	ReadOnly bool   `json:"read_only,omitempty"`
 }
 
-// EndpointWithID gets the endpoint URL for InstanceDisks of a given Instance
-func (InstanceDisksPagedResponse) EndpointWithID(c *Client, id int) string {
-	endpoint, err := c.InstanceDisks.EndpointWithID(id)
+// endpointWithID gets the endpoint URL for InstanceDisks of a given Instance
+func (InstanceDisksPagedResponse) endpointWithID(c *Client, id int) string {
+	endpoint, err := c.InstanceDisks.endpointWithID(id)
 	if err != nil {
 		panic(err)
 	}
 	return endpoint
 }
 
-// AppendData appends InstanceDisks when processing paginated InstanceDisk responses
-func (resp *InstanceDisksPagedResponse) AppendData(r *InstanceDisksPagedResponse) {
+// appendData appends InstanceDisks when processing paginated InstanceDisk responses
+func (resp *InstanceDisksPagedResponse) appendData(r *InstanceDisksPagedResponse) {
 	(*resp).Data = append(resp.Data, r.Data...)
 }
 
-// SetResult sets the Resty response type of InstanceDisk
-func (InstanceDisksPagedResponse) SetResult(r *resty.Request) {
+// setResult sets the Resty response type of InstanceDisk
+func (InstanceDisksPagedResponse) setResult(r *resty.Request) {
 	r.SetResult(InstanceDisksPagedResponse{})
 }
 
 // ListInstanceDisks lists InstanceDisks
 func (c *Client) ListInstanceDisks(linodeID int, opts *ListOptions) ([]*InstanceDisk, error) {
 	response := InstanceDisksPagedResponse{}
-	err := c.ListHelperWithID(&response, linodeID, opts)
+	err := c.listHelperWithID(&response, linodeID, opts)
 	for _, el := range response.Data {
 		el.fixDates()
 	}
@@ -90,7 +90,7 @@ func (v *InstanceDisk) fixDates() *InstanceDisk {
 
 // GetInstanceDisk gets the template with the provided ID
 func (c *Client) GetInstanceDisk(linodeID int, configID int) (*InstanceDisk, error) {
-	e, err := c.InstanceDisks.EndpointWithID(linodeID)
+	e, err := c.InstanceDisks.endpointWithID(linodeID)
 	if err != nil {
 		return nil, err
 	}
@@ -105,7 +105,7 @@ func (c *Client) GetInstanceDisk(linodeID int, configID int) (*InstanceDisk, err
 // CreateInstanceDisk creates a new InstanceDisk for the given Instance
 func (c *Client) CreateInstanceDisk(linodeID int, createOpts InstanceDiskCreateOptions) (*InstanceDisk, error) {
 	var body string
-	e, err := c.InstanceDisks.EndpointWithID(linodeID)
+	e, err := c.InstanceDisks.endpointWithID(linodeID)
 	if err != nil {
 		return nil, err
 	}
@@ -133,7 +133,7 @@ func (c *Client) CreateInstanceDisk(linodeID int, createOpts InstanceDiskCreateO
 // UpdateInstanceDisk creates a new InstanceDisk for the given Instance
 func (c *Client) UpdateInstanceDisk(linodeID int, diskID int, updateOpts InstanceDiskUpdateOptions) (*InstanceDisk, error) {
 	var body string
-	e, err := c.InstanceDisks.EndpointWithID(linodeID)
+	e, err := c.InstanceDisks.endpointWithID(linodeID)
 	if err != nil {
 		return nil, err
 	}
@@ -167,7 +167,7 @@ func (c *Client) RenameInstanceDisk(linodeID int, diskID int, label string) (*In
 // ResizeInstanceDisk resizes the size of the Instance disk
 func (c *Client) ResizeInstanceDisk(linodeID int, diskID int, size int) (*InstanceDisk, error) {
 	var body string
-	e, err := c.InstanceDisks.EndpointWithID(linodeID)
+	e, err := c.InstanceDisks.endpointWithID(linodeID)
 	if err != nil {
 		return nil, err
 	}
@@ -197,7 +197,7 @@ func (c *Client) ResizeInstanceDisk(linodeID int, diskID int, size int) (*Instan
 
 // DeleteInstanceDisk deletes a Linode InstanceDisk
 func (c *Client) DeleteInstanceDisk(id int) error {
-	e, err := c.InstanceDisks.EndpointWithID(id)
+	e, err := c.InstanceDisks.endpointWithID(id)
 	if err != nil {
 		return err
 	}

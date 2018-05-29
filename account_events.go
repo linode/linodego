@@ -40,8 +40,8 @@ type EventsPagedResponse struct {
 	Data []*Event
 }
 
-// Endpoint gets the endpoint URL for Event
-func (EventsPagedResponse) Endpoint(c *Client) string {
+// endpoint gets the endpoint URL for Event
+func (EventsPagedResponse) endpoint(c *Client) string {
 	endpoint, err := c.Events.Endpoint()
 	if err != nil {
 		panic(err)
@@ -49,22 +49,22 @@ func (EventsPagedResponse) Endpoint(c *Client) string {
 	return endpoint
 }
 
-// EndpointWithID gets the endpoint URL for a specific Event
-func (EventsPagedResponse) EndpointWithID(c *Client, id int) string {
-	endpoint, err := c.Events.EndpointWithID(id)
+// endpointWithID gets the endpoint URL for a specific Event
+func (EventsPagedResponse) endpointWithID(c *Client, id int) string {
+	endpoint, err := c.Events.endpointWithID(id)
 	if err != nil {
 		panic(err)
 	}
 	return endpoint
 }
 
-// AppendData appends Events when processing paginated Event responses
-func (resp *EventsPagedResponse) AppendData(r *EventsPagedResponse) {
+// appendData appends Events when processing paginated Event responses
+func (resp *EventsPagedResponse) appendData(r *EventsPagedResponse) {
 	(*resp).Data = append(resp.Data, r.Data...)
 }
 
-// SetResult sets the Resty response type of Events
-func (EventsPagedResponse) SetResult(r *resty.Request) {
+// setResult sets the Resty response type of Events
+func (EventsPagedResponse) setResult(r *resty.Request) {
 	r.SetResult(EventsPagedResponse{})
 }
 
@@ -73,7 +73,7 @@ func (EventsPagedResponse) SetResult(r *resty.Request) {
 // of the associated user.
 func (c *Client) ListEvents(opts *ListOptions) ([]*Event, error) {
 	response := EventsPagedResponse{}
-	err := c.ListHelper(&response, opts)
+	err := c.listHelper(&response, opts)
 	for _, el := range response.Data {
 		el.fixDates()
 	}
