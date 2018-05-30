@@ -204,8 +204,8 @@ func (c *Client) MarkEventRead(event *Event) error {
 	return nil
 }
 
-// MarkEventSeen marks all Events up to and including this Event by ID as seen.
-func (c *Client) MarkEventSeen(event *Event) error {
+// MarkEventsSeen marks all Events up to and including this Event by ID as seen.
+func (c *Client) MarkEventsSeen(event *Event) error {
 	e := event.endpointWithID(c)
 	e = fmt.Sprintf("%s/seen", e)
 
