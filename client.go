@@ -185,7 +185,7 @@ func NewClient(codeAPIToken *string, transport http.RoundTripper) (client Client
 
 // WaitForEventFinished waits for an entity action to reach the 'finished' state
 // before returning. It will timeout with an error after timeoutSeconds.
-func (c Client) WaitForEventFinished(id interface{}, entityType EntityType, action EventAction, minStart time.Time, timeoutSeconds int) error {
+func (c Client) WaitForEventFinished(id interface{}, entityType EntityType, action EventAction, minStart time.Time, timeoutSeconds int) (*Event, error) {
 	start := time.Now()
 	for {
 		filter, err := json.Marshal(map[string]interface{}{
@@ -219,7 +219,7 @@ func (c Client) WaitForEventFinished(id interface{}, entityType EntityType, acti
 		listOptions := NewListOptions(1, string(filter))
 		events, err := c.ListEvents(listOptions)
 		if err != nil {
-			return err
+			return nil, err
 		}
 
 		log.Printf("waiting %ds for %s events since %v for %s %v", timeoutSeconds, action, minStart, entityType, id)
@@ -270,12 +270,12 @@ func (c Client) WaitForEventFinished(id interface{}, entityType EntityType, acti
 			}
 
 			if event.Status == EventFailed {
-				return fmt.Errorf("%s %v action %s failed", entityType, id, action)
+				return nil, fmt.Errorf("%s %v action %s failed", entityType, id, action)
 			} else if event.Status == EventScheduled {
 				log.Printf("%s %v action %s is scheduled", entityType, id, action)
 			} else if event.Status == EventFinished {
 				log.Printf("%s %v action %s is finished", entityType, id, action)
-				return nil
+				return event, nil
 			} else {
 				log.Printf("%s %v action %s is in state %s", entityType, id, action, event.Status)
 			}
@@ -284,7 +284,7 @@ func (c Client) WaitForEventFinished(id interface{}, entityType EntityType, acti
 		// Either pushed out of the event list or hasn't been added to the list yet
 		time.Sleep(time.Second * APISecondsPerPoll)
 		if time.Since(start) > time.Duration(timeoutSeconds)*time.Second {
-			return fmt.Errorf("Did not find '%s' status of %s %v action '%s' within %d seconds", EventFinished, entityType, id, action, timeoutSeconds)
+			return nil, fmt.Errorf("Did not find '%s' status of %s %v action '%s' within %d seconds", EventFinished, entityType, id, action, timeoutSeconds)
 		}
 	}
 }

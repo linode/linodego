@@ -1,6 +1,7 @@
 package linodego
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/go-resty/resty"
@@ -151,11 +152,12 @@ func (EventsPagedResponse) endpoint(c *Client) string {
 }
 
 // endpointWithID gets the endpoint URL for a specific Event
-func (EventsPagedResponse) endpointWithID(c *Client, id int) string {
-	endpoint, err := c.Events.endpointWithID(id)
+func (e Event) endpointWithID(c *Client) string {
+	endpoint, err := c.Events.Endpoint()
 	if err != nil {
 		panic(err)
 	}
+	endpoint = fmt.Sprintf("%s/%d", endpoint, e.ID)
 	return endpoint
 }
 
@@ -188,4 +190,28 @@ func (c *Client) ListEvents(opts *ListOptions) ([]*Event, error) {
 func (v *Event) fixDates() *Event {
 	v.Created, _ = parseDates(v.CreatedStr)
 	return v
+}
+
+// MarkEventRead marks a single Event as read.
+func (c *Client) MarkEventRead(event *Event) error {
+	e := event.endpointWithID(c)
+	e = fmt.Sprintf("%s/read", e)
+
+	if _, err := coupleAPIErrors(c.R().Post(e)); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// MarkEventSeen marks all Events up to and including this Event by ID as seen.
+func (c *Client) MarkEventSeen(event *Event) error {
+	e := event.endpointWithID(c)
+	e = fmt.Sprintf("%s/seen", e)
+
+	if _, err := coupleAPIErrors(c.R().Post(e)); err != nil {
+		return err
+	}
+
+	return nil
 }

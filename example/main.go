@@ -69,18 +69,23 @@ func moreExamples_authenticated() {
 		}
 
 		fmt.Println("## Created Instance\n", linode)
-		err = linodeClient.WaitForEventFinished(linode.ID, linodego.EntityLinode, linodego.ActionLinodeCreate, *linode.Created, 240)
+		event, err := linodeClient.WaitForEventFinished(linode.ID, linodego.EntityLinode, linodego.ActionLinodeCreate, *linode.Created, 240)
 		if err != nil {
 			log.Fatalf("* Failed to wait for Linode %d to finish creation: %s", linode.ID, err)
 		}
-
+		if err := linodeClient.MarkEventRead(event); err != nil {
+			log.Fatalln("* Failed to mark Linode create event seen", err)
+		}
 		disk, err := linodeClient.CreateInstanceDisk(linode.ID, linodego.InstanceDiskCreateOptions{Size: 50, Filesystem: "raw", Label: "linodego_disk"})
 		if err != nil {
 			log.Fatalln("* While creating disk:", err)
 		}
 
 		fmt.Println("### Created Disk\n", disk)
-		err = linodeClient.WaitForEventFinished(linode.ID, linodego.EntityLinode, linodego.ActionDiskCreate, disk.Created, 240)
+		event, err = linodeClient.WaitForEventFinished(linode.ID, linodego.EntityLinode, linodego.ActionDiskCreate, disk.Created, 240)
+		if err := linodeClient.MarkEventRead(event); err != nil {
+			log.Fatalln("* Failed to mark Disk create event seen", err)
+		}
 
 		// @TODO it is not sufficient that a disk was created. Which disk was it?
 		// Sounds like we'll need a WaitForEntityStatus function.
