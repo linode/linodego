@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/chiefy/linodego"
 )
@@ -57,10 +58,45 @@ func main() {
 
 func moreExamples_authenticated() {
 	var linode *linodego.Instance
-
 	linode, err := linodeClient.GetInstance(1231)
 	fmt.Println("## Instance request with Invalid ID")
 	fmt.Println("### Linode\n", linode, "\n### Error\n", err)
+
+	fmt.Println("## Stackscript create")
+
+	var ss *linodego.Stackscript
+	for rev := 1; rev < 4; rev++ {
+		fmt.Println("### Revision ", rev)
+		if rev == 1 {
+			stackscript := linodego.Stackscript{}.GetCreateOptions()
+			stackscript.Description = "description for example stackscript " + time.Now().String()
+			// stackscript.Images = make([]string, 2, 2)
+			stackscript.Images = []string{"linode/debian9", "linode/ubuntu18.04"}
+			stackscript.IsPublic = false
+			stackscript.Label = "example stackscript " + time.Now().String()
+			stackscript.RevNote = "revision " + strconv.Itoa(rev)
+			stackscript.Script = "#!/bin/bash\n"
+			ss, err = linodeClient.CreateStackscript(&stackscript)
+			if err != nil {
+				log.Fatal(err)
+			}
+		} else {
+			update := ss.GetUpdateOptions()
+			update.RevNote = "revision " + strconv.Itoa(rev)
+			update.Label = strconv.Itoa(rev) + " " + ss.Label
+			update.Script += "echo " + strconv.Itoa(rev) + "\n"
+			ss, err = linodeClient.UpdateStackscript(ss.ID, update)
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+	}
+
+	fmt.Println("### Delete ")
+	err = linodeClient.DeleteStackscript(ss.ID)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	if spendMoney {
 		linode, err = linodeClient.CreateInstance(&linodego.InstanceCreateOptions{Region: "us-central", Type: "g5-nanode-1"})
