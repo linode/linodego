@@ -71,3 +71,72 @@ func (c *Client) GetTemplate(id string) (*Template, error) {
 	}
 	return r.Result().(*Template).fixDates(), nil
 }
+
+
+// CreateTemplate creates a Template
+func (c *Client) CreateTemplate(Template *TemplateCreateOptions) (*Template, error) {
+	var body string
+	e, err := c.Templates.Endpoint()
+	if err != nil {
+		return nil, err
+	}
+
+	req := c.R().SetResult(&Template{})
+
+	if bodyData, err := json.Marshal(template); err == nil {
+		body = string(bodyData)
+	} else {
+		return nil, NewError(err)
+	}
+
+	r, err := coupleAPIErrors(req.
+		SetHeader("Content-Type", "application/json").
+		SetBody(body).
+		Post(e))
+
+	if err != nil {
+		return nil, err
+	}
+	return r.Result().(*Template).fixDates(), nil
+}
+
+// UpdateTemplate updates the Template with the specified id
+func (c *Client) UpdateTemplate(id int, updateOpts TemplateUpdateOptions) (*Template, error) {
+	var body string
+	e, err := c.Templates.Endpoint()
+	if err != nil {
+		return nil, err
+	}
+
+	req := c.R().SetResult(&Template{})
+
+	if bodyData, err := json.Marshal(template); err == nil {
+		body = string(bodyData)
+	} else {
+		return nil, NewError(err)
+	}
+
+	r, err := coupleAPIErrors(req.
+		SetBody(body).
+		Put(e))
+
+	if err != nil {
+		return nil, err
+	}
+	return r.Result().(*Template).fixDates(), nil
+}
+
+// DeleteTemplate deletes the Template with the specified id
+func (c *Client) DeleteTemplate(id int) error {
+	e, err := c.Templates.Endpoint()
+	if err != nil {
+		return err
+	}
+	e = fmt.Sprintf("%s/%d", e, id)
+
+	if _, err := coupleAPIErrors(c.R().Delete(e)); err != nil {
+		return err
+	}
+
+	return nil
+}

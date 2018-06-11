@@ -17,8 +17,8 @@ type InstanceDisk struct {
 	Status     string
 	Size       int
 	Filesystem string
-	Created    *time.Time `json:"-"`
-	Updated    *time.Time `json:"-"`
+	Created    time.Time `json:"-"`
+	Updated    time.Time `json:"-"`
 }
 
 // InstanceDisksPagedResponse represents a paginated InstanceDisk API response
@@ -83,8 +83,12 @@ func (c *Client) ListInstanceDisks(linodeID int, opts *ListOptions) ([]*Instance
 
 // fixDates converts JSON timestamps to Go time.Time values
 func (v *InstanceDisk) fixDates() *InstanceDisk {
-	v.Created, _ = parseDates(v.CreatedStr)
-	v.Updated, _ = parseDates(v.UpdatedStr)
+	if created, err := parseDates(v.CreatedStr); err == nil {
+		v.Created = *created
+	}
+	if updated, err := parseDates(v.UpdatedStr); err == nil {
+		v.Updated = *updated
+	}
 	return v
 }
 
@@ -127,7 +131,7 @@ func (c *Client) CreateInstanceDisk(linodeID int, createOpts InstanceDiskCreateO
 		return nil, err
 	}
 
-	return r.Result().(*InstanceDisk), nil
+	return r.Result().(*InstanceDisk).fixDates(), nil
 }
 
 // UpdateInstanceDisk creates a new InstanceDisk for the given Instance
@@ -156,7 +160,7 @@ func (c *Client) UpdateInstanceDisk(linodeID int, diskID int, updateOpts Instanc
 		return nil, err
 	}
 
-	return r.Result().(*InstanceDisk), nil
+	return r.Result().(*InstanceDisk).fixDates(), nil
 }
 
 // RenameInstanceDisk renames an InstanceDisk
@@ -192,7 +196,7 @@ func (c *Client) ResizeInstanceDisk(linodeID int, diskID int, size int) (*Instan
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*InstanceDisk), nil
+	return r.Result().(*InstanceDisk).fixDates(), nil
 }
 
 // DeleteInstanceDisk deletes a Linode InstanceDisk
