@@ -137,10 +137,10 @@ func (c *Client) ListInstanceConfigs(linodeID int, opts *ListOptions) ([]*Instan
 }
 
 // fixDates converts JSON timestamps to Go time.Time values
-func (v *InstanceConfig) fixDates() *InstanceConfig {
-	v.Created, _ = parseDates(v.CreatedStr)
-	v.Updated, _ = parseDates(v.UpdatedStr)
-	return v
+func (i *InstanceConfig) fixDates() *InstanceConfig {
+	i.Created, _ = parseDates(i.CreatedStr)
+	i.Updated, _ = parseDates(i.UpdatedStr)
+	return i
 }
 
 // GetInstanceConfig gets the template with the provided ID
@@ -182,7 +182,7 @@ func (c *Client) CreateInstanceConfig(linodeID int, createOpts InstanceConfigCre
 		return nil, err
 	}
 
-	return r.Result().(*InstanceConfig), nil
+	return r.Result().(*InstanceConfig).fixDates(), nil
 }
 
 // UpdateInstanceConfig update an InstanceConfig for the given Instance
@@ -210,7 +210,7 @@ func (c *Client) UpdateInstanceConfig(linodeID int, configID int, updateOpts Ins
 		return nil, err
 	}
 
-	return r.Result().(*InstanceConfig), nil
+	return r.Result().(*InstanceConfig).fixDates(), nil
 }
 
 // RenameInstanceConfig renames an InstanceConfig
