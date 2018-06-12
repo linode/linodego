@@ -107,6 +107,7 @@ func (c *Client) UpdateTemplate(id int, updateOpts TemplateUpdateOptions) (*Temp
 	if err != nil {
 		return nil, err
 	}
+	e = fmt.Sprintf("%s/%d", e, id)
 
 	req := c.R().SetResult(&Template{})
 

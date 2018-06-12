@@ -201,6 +201,7 @@ func (c *Client) UpdateDomain(id int, domain DomainUpdateOptions) (*Domain, erro
 	if err != nil {
 		return nil, err
 	}
+	e = fmt.Sprintf("%s/%d", e, id)
 
 	req := c.R().SetResult(&Domain{})
 
