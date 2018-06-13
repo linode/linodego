@@ -43,16 +43,6 @@ func main() {
 		}
 	}
 
-	// Wether or not we will enable Resty debugging output
-	if envDebug, apiOk := os.LookupEnv("LINODE_DEBUG"); apiOk {
-		if apiDebug, err := strconv.Atoi(envDebug); err == nil {
-			log.Println("LINODE_DEBUG being set to", apiDebug > 0)
-			linodeClient.SetDebug(apiDebug > 0)
-		} else {
-			log.Fatalln("LINODE_DEBUG should be an integer, 0 or 1")
-		}
-	}
-
 	moreExamples_authenticated()
 }
 
