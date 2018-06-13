@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
+	"math/rand"
 	"os"
 	"strconv"
 	"time"
@@ -102,27 +103,71 @@ func moreExamples_authenticated() {
 		if err := linodeClient.MarkEventRead(event); err != nil {
 			log.Fatalln("* Failed to mark Linode create event seen", err)
 		}
-		disk, err := linodeClient.CreateInstanceDisk(linode.ID, linodego.InstanceDiskCreateOptions{Size: 50, Filesystem: "raw", Label: "linodego_disk"})
+
+		diskSwap, err := linodeClient.CreateInstanceDisk(linode.ID, linodego.InstanceDiskCreateOptions{Size: 50, Filesystem: "swap", Label: "linodego_swap"})
 		if err != nil {
-			log.Fatalln("* While creating disk:", err)
+			log.Fatalln("* While creating swap disk:", err)
+		}
+		eventSwap, err := linodeClient.WaitForEventFinished(linode.ID, linodego.EntityLinode, linodego.ActionDiskCreate, diskSwap.Created, 240)
+		// @TODO it is not sufficient that a disk was created. Which disk was it?
+		// Sounds like we'll need a WaitForEntityStatus function.
+		if err != nil {
+			log.Fatalf("* Failed to wait for swap disk %d to finish creation: %s", diskSwap.ID, err)
+		}
+		if err := linodeClient.MarkEventRead(eventSwap); err != nil {
+			log.Fatalln("* Failed to mark swap disk create event seen", err)
 		}
 
-		fmt.Println("### Created Disk\n", disk)
-		event, err = linodeClient.WaitForEventFinished(linode.ID, linodego.EntityLinode, linodego.ActionDiskCreate, disk.Created, 240)
-		if err := linodeClient.MarkEventRead(event); err != nil {
-			log.Fatalln("* Failed to mark Disk create event seen", err)
+		diskRaw, err := linodeClient.CreateInstanceDisk(linode.ID, linodego.InstanceDiskCreateOptions{Size: 50, Filesystem: "raw", Label: "linodego_raw"})
+		if err != nil {
+			log.Fatalln("* While creating raw disk:", err)
 		}
+		eventRaw, err := linodeClient.WaitForEventFinished(linode.ID, linodego.EntityLinode, linodego.ActionDiskCreate, diskRaw.Created, 240)
+		// @TODO it is not sufficient that a disk was created. Which disk was it?
+		// Sounds like we'll need a WaitForEntityStatus function.
+		if err != nil {
+			log.Fatalf("* Failed to wait for raw disk %d to finish creation: %s", diskRaw.ID, err)
+		}
+		if err := linodeClient.MarkEventRead(eventRaw); err != nil {
+			log.Fatalln("* Failed to mark raw disk create event seen", err)
+		}
+
+		diskDebian, err := linodeClient.CreateInstanceDisk(
+			linode.ID,
+			linodego.InstanceDiskCreateOptions{
+				Size:       1500,
+				Filesystem: "ext4",
+				Image:      "linode/debian9",
+				Label:      "linodego_debian",
+				RootPass:   randPassword(),
+			},
+		)
+		if err != nil {
+			log.Fatalln("* While creating Debian disk:", err)
+		}
+		eventDebian, err := linodeClient.WaitForEventFinished(linode.ID, linodego.EntityLinode, linodego.ActionDiskCreate, diskDebian.Created, 240)
+		// @TODO it is not sufficient that a disk was created. Which disk was it?
+		// Sounds like we'll need a WaitForEntityStatus function.
+		if err != nil {
+			log.Fatalf("* Failed to wait for Debian disk %d to finish creation: %s", diskDebian.ID, err)
+		}
+		if err := linodeClient.MarkEventRead(eventDebian); err != nil {
+			log.Fatalln("* Failed to mark Debian disk create event seen", err)
+		}
+		fmt.Println("### Created Disks\n", diskDebian, diskSwap, diskRaw)
 
 		createOpts := linodego.InstanceConfigCreateOptions{
 			Devices: &linodego.InstanceConfigDeviceMap{
-				SDA: &linodego.InstanceConfigDevice{DiskID: disk.ID},
+				SDA: &linodego.InstanceConfigDevice{DiskID: diskDebian.ID},
+				SDB: &linodego.InstanceConfigDevice{DiskID: diskRaw.ID},
+				SDC: &linodego.InstanceConfigDevice{DiskID: diskSwap.ID},
 			},
-			Kernel:     "linode/direct-disk",
-			Label:      "example config label",
-			RunLevel:   "default",
-			VirtMode:   "paravirt",
-			Comments:   "example config comment",
-			RootDevice: "/dev/sda",
+			Kernel: "linode/direct-disk",
+			Label:  "example config label",
+			// RunLevel:   "default",
+			// VirtMode:   "paravirt",
+			Comments: "example config comment",
+			// RootDevice: "/dev/sda",
 			Helpers: &linodego.InstanceConfigHelpers{
 				Network:    true,
 				ModulesDep: false,
@@ -148,11 +193,17 @@ func moreExamples_authenticated() {
 		}
 		fmt.Println("### Deleted Config")
 
-		// @TODO it is not sufficient that a disk was created. Which disk was it?
-		// Sounds like we'll need a WaitForEntityStatus function.
+		err = linodeClient.DeleteInstanceDisk(linode.ID, diskSwap.ID)
 		if err != nil {
-			log.Fatalf("* Failed to wait for Linode disk %d to finish creation: %s", disk.ID, err)
+			log.Fatalln("* Failed to delete Disk", err)
 		}
+		fmt.Println("### Deleted Disk")
+
+		err = linodeClient.DeleteInstance(linode.ID)
+		if err != nil {
+			log.Fatalln("* Failed to delete Instance", err)
+		}
+		fmt.Println("### Deleted Instance")
 
 	}
 
@@ -237,4 +288,30 @@ func moreExamples_authenticated() {
 		}
 		fmt.Println("## Your Stackscripts\n", stackscripts)
 	}
+}
+
+// randPassword generates a password sufficient to pass the Linode API standards,
+// don't use it outside of this example script where the Linode is immediately destroyed.
+func randPassword() string {
+	const lowerBytes = "abcdefghijklmnopqrstuvwxyz"
+	const upperBytes = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	const digits = "0123456789"
+	const symbols = "/-=+@#$^&*()~!`|[]{}\\?,.<>;:'"
+
+	length := 64 // must be divisible by character class count (4)
+	b := make([]byte, length)
+
+	for i := 0; i < length; i += 4 {
+		b[i] = lowerBytes[rand.Intn(len(lowerBytes))]
+		b[i+1] = upperBytes[rand.Intn(len(upperBytes))]
+		b[i+2] = digits[rand.Intn(len(digits))]
+		b[i+3] = symbols[rand.Intn(len(symbols))]
+	}
+
+	for i := range b {
+		j := rand.Intn(i + 1)
+		b[i], b[j] = b[j], b[i]
+	}
+
+	return string(b)
 }
