@@ -123,6 +123,41 @@ func moreExamples_authenticated() {
 			log.Fatalln("* Failed to mark Disk create event seen", err)
 		}
 
+		createOpts := linodego.InstanceConfigCreateOptions{
+			Devices: &linodego.InstanceConfigDeviceMap{
+				SDA: &linodego.InstanceConfigDevice{DiskID: disk.ID},
+			},
+			Kernel:     "linode/direct-disk",
+			Label:      "example config label",
+			RunLevel:   "default",
+			VirtMode:   "paravirt",
+			Comments:   "example config comment",
+			RootDevice: "/dev/sda",
+			Helpers: &linodego.InstanceConfigHelpers{
+				Network:    true,
+				ModulesDep: false,
+			},
+		}
+		config, err := linodeClient.CreateInstanceConfig(linode.ID, createOpts)
+		if err != nil {
+			log.Fatalln("* Failed to create Config", err)
+		}
+		fmt.Println("### Created Config:\n", config)
+		updateOpts := linodego.InstanceConfigUpdateOptions{
+			Comments: "updated example config comment",
+		}
+		config, err = linodeClient.UpdateInstanceConfig(linode.ID, config.ID, updateOpts)
+		if err != nil {
+			log.Fatalln("* Failed to update Config", err)
+		}
+		fmt.Println("### Updated Config:\n", config)
+
+		err = linodeClient.DeleteInstanceConfig(linode.ID, config.ID)
+		if err != nil {
+			log.Fatalln("* Failed to delete Config", err)
+		}
+		fmt.Println("### Deleted Config")
+
 		// @TODO it is not sufficient that a disk was created. Which disk was it?
 		// Sounds like we'll need a WaitForEntityStatus function.
 		if err != nil {

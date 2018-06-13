@@ -28,19 +28,19 @@ type InstanceConfig struct {
 }
 
 type InstanceConfigDevice struct {
-	DiskID   int `json:"disk_id"`
-	VolumeID int `json:"volume_id"`
+	DiskID   int `json:"disk_id,omitempty"`
+	VolumeID int `json:"volume_id,omitempty"`
 }
 
 type InstanceConfigDeviceMap struct {
-	SDA *InstanceConfigDevice `json:"sda"`
-	SDB *InstanceConfigDevice `json:"sdb"`
-	SDC *InstanceConfigDevice `json:"sdc"`
-	SDD *InstanceConfigDevice `json:"sdd"`
-	SDE *InstanceConfigDevice `json:"sde"`
-	SDF *InstanceConfigDevice `json:"sdf"`
-	SDG *InstanceConfigDevice `json:"sdg"`
-	SDH *InstanceConfigDevice `json:"sdh"`
+	SDA *InstanceConfigDevice `json:"sda,omitempty"`
+	SDB *InstanceConfigDevice `json:"sdb,omitempty"`
+	SDC *InstanceConfigDevice `json:"sdc,omitempty"`
+	SDD *InstanceConfigDevice `json:"sdd,omitempty"`
+	SDE *InstanceConfigDevice `json:"sde,omitempty"`
+	SDF *InstanceConfigDevice `json:"sdf,omitempty"`
+	SDG *InstanceConfigDevice `json:"sdg,omitempty"`
+	SDH *InstanceConfigDevice `json:"sdh,omitempty"`
 }
 
 type InstanceConfigHelpers struct {
@@ -59,16 +59,16 @@ type InstanceConfigsPagedResponse struct {
 
 // InstanceConfigCreateOptions are InstanceConfig settings that can be used at creation
 type InstanceConfigCreateOptions struct {
-	Label       string                   `json:"label"`
-	Comments    string                   `json:"comments"`
-	Devices     *InstanceConfigDeviceMap `json:"devices"`
-	Helpers     *InstanceConfigHelpers   `json:"helpers"`
+	Label       string                   `json:"label,omitempty"`
+	Comments    string                   `json:"comments,omitempty"`
+	Devices     *InstanceConfigDeviceMap `json:"devices,omitempty"`
+	Helpers     *InstanceConfigHelpers   `json:"helpers,omitempty"`
 	MemoryLimit int                      `json:"memory_limit"`
-	Kernel      string                   `json:"kernel"`
+	Kernel      string                   `json:"kernel,omitempty"`
 	InitRD      int                      `json:"init_rd"`
-	RootDevice  string                   `json:"root_device"`
-	RunLevel    string                   `json:"run_level"`
-	VirtMode    string                   `json:"virt_mode"`
+	RootDevice  string                   `json:"root_device,omitempty"`
+	RunLevel    string                   `json:"run_level,omitempty"`
+	VirtMode    string                   `json:"virt_mode,omitempty"`
 }
 
 // InstanceConfigUpdateOptions are InstanceConfig settings that can be used in updates
@@ -173,10 +173,9 @@ func (c *Client) CreateInstanceConfig(linodeID int, createOpts InstanceConfigCre
 		return nil, err
 	}
 
-	r, err := req.
-		SetHeader("Content-Type", "application/json").
+	r, err := coupleAPIErrors(req.
 		SetBody(body).
-		Post(e)
+		Post(e))
 
 	if err != nil {
 		return nil, err
@@ -201,10 +200,9 @@ func (c *Client) UpdateInstanceConfig(linodeID int, configID int, updateOpts Ins
 		return nil, err
 	}
 
-	r, err := req.
-		SetHeader("Content-Type", "application/json").
+	r, err := coupleAPIErrors(req.
 		SetBody(body).
-		Put(e)
+		Put(e))
 
 	if err != nil {
 		return nil, err
@@ -219,13 +217,14 @@ func (c *Client) RenameInstanceConfig(linodeID int, configID int, label string) 
 }
 
 // DeleteInstanceConfig deletes a Linode InstanceConfig
-func (c *Client) DeleteInstanceConfig(id int) error {
-	e, err := c.InstanceConfigs.endpointWithID(id)
+func (c *Client) DeleteInstanceConfig(linodeID int, configID int) error {
+	e, err := c.InstanceConfigs.endpointWithID(linodeID)
 	if err != nil {
 		return err
 	}
+	e = fmt.Sprintf("%s/%d", e, configID)
 
-	if _, err = c.R().Delete(e); err != nil {
+	if _, err = coupleAPIErrors(c.R().Delete(e)); err != nil {
 		return err
 	}
 
