@@ -196,12 +196,13 @@ func (c *Client) ResizeInstanceDisk(linodeID int, diskID int, size int) (*Instan
 	return r.Result().(*InstanceDisk).fixDates(), nil
 }
 
-// DeleteInstanceDisk deletes a Linode InstanceDisk
-func (c *Client) DeleteInstanceDisk(id int) error {
-	e, err := c.InstanceDisks.endpointWithID(id)
+// DeleteInstanceDisk deletes a Linode Instance Disk
+func (c *Client) DeleteInstanceDisk(linodeID int, diskID int) error {
+	e, err := c.InstanceDisks.endpointWithID(linodeID)
 	if err != nil {
 		return err
 	}
+	e = fmt.Sprintf("%s/%d", e, diskID)
 
 	if _, err := coupleAPIErrors(c.R().Delete(e)); err != nil {
 		return err
