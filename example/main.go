@@ -187,6 +187,23 @@ func moreExamples_authenticated() {
 		}
 		fmt.Println("### Updated Config:\n", config)
 
+		booted, err := linodeClient.BootInstance(linode.ID, config.ID)
+		if err != nil || !booted {
+			log.Fatalln("* Failed to boot Instance", err)
+		}
+		fmt.Println("### Booted Instance")
+
+		eventBooted, err := linodeClient.WaitForEventFinished(linode.ID, linodego.EntityLinode, linodego.ActionLinodeBoot, *config.Updated, 240)
+		if err != nil {
+			fmt.Println("### Boot Instance failed as expected\n", err)
+		} else {
+			log.Fatalln("* Expected boot Instance to fail")
+		}
+
+		if err := linodeClient.MarkEventRead(eventBooted); err != nil {
+			log.Fatalln("* Failed to mark boot event seen", err)
+		}
+
 		err = linodeClient.DeleteInstanceConfig(linode.ID, config.ID)
 		if err != nil {
 			log.Fatalln("* Failed to delete Config", err)
