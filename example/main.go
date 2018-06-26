@@ -94,7 +94,10 @@ func moreExamples_authenticated() {
 		if err != nil {
 			log.Fatalln("* While creating instance: ", err)
 		}
-
+		linode, err = linodeClient.UpdateInstance(linode.ID, &linodego.InstanceUpdateOptions{Label: linode.Label + "-renamed"})
+		if err != nil {
+			log.Fatalln("* While renaming instance: ", err)
+		}
 		fmt.Println("## Created Instance\n", linode)
 		event, err := linodeClient.WaitForEventFinished(linode.ID, linodego.EntityLinode, linodego.ActionLinodeCreate, *linode.Created, 240)
 		if err != nil {
