@@ -195,7 +195,7 @@ func NewClient(codeAPIToken *string, transport http.RoundTripper) (client Client
 
 // waitForInstanceStatus waits for the Linode instance to reach the desired state
 // before returning. It will timeout with an error after timeoutSeconds.
-func waitForInstanceStatus(client *Client, instanceID int, status InstanceStatus, timeoutSeconds int) error {
+func WaitForInstanceStatus(client *Client, instanceID int, status InstanceStatus, timeoutSeconds int) error {
 	start := time.Now()
 	for {
 		instance, err := client.GetInstance(instanceID)
