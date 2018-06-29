@@ -154,9 +154,9 @@ func (c *Client) GetNodeBalancerConfig(nodebalancerID int, configID int) (*NodeB
 }
 
 // CreateNodeBalancerConfig creates a NodeBalancerConfig
-func (c *Client) CreateNodeBalancerConfig(nodebalancerConfig *NodeBalancerConfigCreateOptions) (*NodeBalancerConfig, error) {
+func (c *Client) CreateNodeBalancerConfig(nodebalancerID int, nodebalancerConfig *NodeBalancerConfigCreateOptions) (*NodeBalancerConfig, error) {
 	var body string
-	e, err := c.NodeBalancerConfigs.Endpoint()
+	e, err := c.NodeBalancerConfigs.endpointWithID(nodebalancerID)
 	if err != nil {
 		return nil, err
 	}
