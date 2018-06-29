@@ -1,4 +1,4 @@
-package main
+package linodego_test
 
 /**
  * The tests in the examples directory demontrate use and test the library
@@ -212,4 +212,24 @@ func ExampleListLongviewSubscriptions_page1() {
 
 	// Output:
 	// Longview Subscription Types: 4
+}
+
+func ExampleListStackscripts_page1() {
+	filterOpt := linodego.NewListOptions(1, "")
+	scripts, err := linodeClient.ListStackscripts(filterOpt)
+	if err != nil {
+		log.Fatal(err)
+	}
+	// The Linode API default pagination size is 100.
+	fmt.Println("Fetched == 100:", len(scripts) == 100)
+	fmt.Println("Results > 100:", filterOpt.Results > 100)
+	fmt.Println("Pages > 1:", filterOpt.Pages > 1)
+	s := scripts[len(scripts)-1]
+	fmt.Println("StackScript Script has shebang:", strings.Index(s.Script, "#!/") > -1)
+
+	// Output:
+	// Fetched == 100: true
+	// Results > 100: true
+	// Pages > 1: true
+	// StackScript Script has shebang: true
 }

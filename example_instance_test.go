@@ -1,4 +1,4 @@
-package main
+package linodego_test
 
 import (
 	"fmt"
@@ -14,7 +14,7 @@ import (
 var linodeClient = linodego.NewClient(nil, nil)
 var spendMoney = false
 
-func main() {
+func init() {
 	// Trigger endpoints that accrue a balance
 	apiToken, apiOk := os.LookupEnv("LINODE_TOKEN")
 	spendMoney = spendMoney && apiOk
@@ -43,11 +43,9 @@ func main() {
 			log.Fatalln("LINODE_SPEND should be an integer, 0 or 1")
 		}
 	}
-
-	moreExamples_authenticated()
 }
 
-func moreExamples_authenticated() {
+func Example() {
 	var linode *linodego.Instance
 	linode, err := linodeClient.GetInstance(1231)
 	fmt.Println("## Instance request with Invalid ID")
@@ -308,6 +306,8 @@ func moreExamples_authenticated() {
 		}
 		fmt.Println("## Your Stackscripts\n", stackscripts)
 	}
+
+	// Output:
 }
 
 // randPassword generates a password sufficient to pass the Linode API standards,
