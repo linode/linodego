@@ -6,9 +6,10 @@ import (
 	"math/rand"
 	"os"
 	"strconv"
-	"time"
+	"strings"
 
 	"github.com/chiefy/linodego"
+	"github.com/dnaeon/go-vcr/recorder"
 )
 
 var linodeClient = linodego.NewClient(nil, nil)
@@ -28,8 +29,15 @@ func init() {
 		log.Fatal("Could not find LINODE_TOKEN, please verify that it is set.")
 	}
 
+	r, err := recorder.NewAsMode("test/fixtures_examples", recorder.ModeRecording, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	defer r.Stop() // Make sure recorder is stopped once done with it
+
 	// Demonstrate endpoints that require an access token
-	linodeClient = linodego.NewClient(&apiToken, nil)
+	linodeClient = linodego.NewClient(&apiToken, r)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -45,47 +53,23 @@ func init() {
 	}
 }
 
+func ExampleGetAccount() {
+	account, err := linodeClient.GetAccount()
+	if err != nil {
+		log.Fatalln("* While getting account: ", err)
+	}
+	fmt.Println("Account email has @:", strings.Contains(account.Email, "@"))
+
+	// Output:
+	// Account email has @: true
+}
+
 func Example() {
 	var linode *linodego.Instance
 	linode, err := linodeClient.GetInstance(1231)
 	fmt.Println("## Instance request with Invalid ID")
-	fmt.Println("### Linode\n", linode, "\n### Error\n", err)
-
-	fmt.Println("## Stackscript create")
-
-	var ss *linodego.Stackscript
-	for rev := 1; rev < 4; rev++ {
-		fmt.Println("### Revision ", rev)
-		if rev == 1 {
-			stackscript := linodego.Stackscript{}.GetCreateOptions()
-			stackscript.Description = "description for example stackscript " + time.Now().String()
-			// stackscript.Images = make([]string, 2, 2)
-			stackscript.Images = []string{"linode/debian9", "linode/ubuntu18.04"}
-			stackscript.IsPublic = false
-			stackscript.Label = "example stackscript " + time.Now().String()
-			stackscript.RevNote = "revision " + strconv.Itoa(rev)
-			stackscript.Script = "#!/bin/bash\n"
-			ss, err = linodeClient.CreateStackscript(&stackscript)
-			if err != nil {
-				log.Fatal(err)
-			}
-		} else {
-			update := ss.GetUpdateOptions()
-			update.RevNote = "revision " + strconv.Itoa(rev)
-			update.Label = strconv.Itoa(rev) + " " + ss.Label
-			update.Script += "echo " + strconv.Itoa(rev) + "\n"
-			ss, err = linodeClient.UpdateStackscript(ss.ID, update)
-			if err != nil {
-				log.Fatal(err)
-			}
-		}
-	}
-
-	fmt.Println("### Delete ")
-	err = linodeClient.DeleteStackscript(ss.ID)
-	if err != nil {
-		log.Fatal(err)
-	}
+	fmt.Println("### Linode:", linode)
+	fmt.Println("### Error:", err)
 
 	if spendMoney {
 		linode, err = linodeClient.CreateInstance(&linodego.InstanceCreateOptions{Region: "us-central", Type: "g5-nanode-1"})
@@ -96,7 +80,7 @@ func Example() {
 		if err != nil {
 			log.Fatalln("* While renaming instance: ", err)
 		}
-		fmt.Println("## Created Instance\n", linode)
+		fmt.Println("## Created Instance")
 		event, err := linodeClient.WaitForEventFinished(linode.ID, linodego.EntityLinode, linodego.ActionLinodeCreate, *linode.Created, 240)
 		if err != nil {
 			log.Fatalf("* Failed to wait for Linode %d to finish creation: %s", linode.ID, err)
@@ -155,7 +139,7 @@ func Example() {
 		if err := linodeClient.MarkEventRead(eventDebian); err != nil {
 			log.Fatalln("* Failed to mark Debian disk create event seen", err)
 		}
-		fmt.Println("### Created Disks\n", diskDebian, diskSwap, diskRaw)
+		fmt.Println("### Created Disks")
 
 		createOpts := linodego.InstanceConfigCreateOptions{
 			Devices: &linodego.InstanceConfigDeviceMap{
@@ -178,7 +162,7 @@ func Example() {
 		if err != nil {
 			log.Fatalln("* Failed to create Config", err)
 		}
-		fmt.Println("### Created Config:\n", config)
+		fmt.Println("### Created Config:")
 		updateOpts := linodego.InstanceConfigUpdateOptions{
 			Comments: "updated example config comment",
 		}
@@ -186,7 +170,7 @@ func Example() {
 		if err != nil {
 			log.Fatalln("* Failed to update Config", err)
 		}
-		fmt.Println("### Updated Config:\n", config)
+		fmt.Println("### Updated Config:")
 
 		booted, err := linodeClient.BootInstance(linode.ID, config.ID)
 		if err != nil || !booted {
@@ -196,7 +180,7 @@ func Example() {
 
 		eventBooted, err := linodeClient.WaitForEventFinished(linode.ID, linodego.EntityLinode, linodego.ActionLinodeBoot, *config.Updated, 240)
 		if err != nil {
-			fmt.Println("### Boot Instance failed as expected\n", err)
+			fmt.Println("### Boot Instance failed as expected:", err)
 		} else {
 			log.Fatalln("* Expected boot Instance to fail")
 		}
@@ -237,7 +221,7 @@ func Example() {
 			log.Fatal(err)
 		}
 
-		fmt.Println("## First Linode\n", linode)
+		fmt.Println("## First Linode")
 
 		configs, err := linodeClient.ListInstanceConfigs(linode.ID, nil)
 		if err != nil {
@@ -247,7 +231,7 @@ func Example() {
 			if err != nil {
 				log.Fatal(err)
 			}
-			fmt.Println("### First Config:\n", config)
+			fmt.Println("### First Config:", config.ID > 0)
 		} else {
 			fmt.Println("### No Configs")
 		}
@@ -260,7 +244,7 @@ func Example() {
 			if err != nil {
 				log.Fatal(err)
 			}
-			fmt.Println("### First Disk\n", disk)
+			fmt.Println("### First Disk:", disk.ID > 0)
 		} else {
 			fmt.Println("### No Disks")
 		}
@@ -270,18 +254,18 @@ func Example() {
 			log.Fatal(err)
 		}
 		if len(backups.Automatic) > 0 {
-			fmt.Println("### First Auto Backup\n", backups.Automatic[0])
+			fmt.Println("### First Auto Backup")
 		} else {
 			fmt.Println("### No Auto Backups")
 		}
-		fmt.Println("### Snapshots\n", backups.Snapshot)
+		fmt.Println("### Snapshots")
 		if backups.Snapshot.Current != nil {
 			// snapshot fetched will be exactly the same as backups.Snapshot.Current
 			// just being redundant for illustrative purposes
 			if snapshot, err := linodeClient.GetInstanceSnapshot(linode.ID, backups.Snapshot.Current.ID); err == nil {
-				fmt.Println("#### Current\n", snapshot)
+				fmt.Println("#### Current:", snapshot.ID > 0)
 			} else {
-				fmt.Println("#### No Current Snapshot\n", err)
+				fmt.Println("#### No Current Snapshot:", err)
 			}
 		} else {
 			fmt.Println("### No Current Snapshot")
@@ -295,7 +279,7 @@ func Example() {
 			if err != nil {
 				log.Fatal(err)
 			}
-			fmt.Println("### First Volume\n", volume)
+			fmt.Println("### First Volume:", volume.ID > 0)
 		} else {
 			fmt.Println("### No Volumes")
 		}
@@ -304,10 +288,22 @@ func Example() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println("## Your Stackscripts\n", stackscripts)
+		fmt.Println("## Your Stackscripts:", len(stackscripts) > 0)
 	}
 
 	// Output:
+	// ## Instance request with Invalid ID
+	// ### Linode: <nil>
+	// ### Error: [404] Not found
+	// ## List Instances
+	// ## First Linode
+	// ### First Config: true
+	// ### First Disk: true
+	// ### First Auto Backup
+	// ### Snapshots
+	// #### Current: true
+	// ### No Volumes
+	// ## Your Stackscripts: true
 }
 
 // randPassword generates a password sufficient to pass the Linode API standards,

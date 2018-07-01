@@ -1,12 +1,13 @@
 package linodego
 
 import (
+	"os"
 	"testing"
 
 	"github.com/dnaeon/go-vcr/recorder"
 )
 
-var testingMode = recorder.ModeReplaying
+var testingMode = recorder.ModeRecording
 var debugAPI = false
 var validTestAPIKey = "NOTANAPIKEY"
 
@@ -18,6 +19,10 @@ func createTestClient(debug bool) (*Client, error) {
 	)
 
 	apiKey = &validTestAPIKey
+
+	if apiToken, gotToken := os.LookupEnv("LINODE_TOKEN"); gotToken {
+		apiKey = &apiToken
+	}
 
 	if testing.Short() {
 		apiKey = nil
