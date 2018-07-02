@@ -1,14 +1,14 @@
-package linodego
+package linodego_test
 
 import (
+	. "github.com/chiefy/linodego"
+
 	"testing"
 )
 
 func TestGetImage_missing(t *testing.T) {
-	client, err := createTestClient(debugAPI)
-	if err != nil {
-		t.Errorf("Error creating test client %v", err)
-	}
+	client, teardown := createTestClient(t, "fixtures/TestGetImage_missing")
+	defer teardown()
 
 	i, err := client.GetImage("does-not-exist")
 	if err == nil {
@@ -25,10 +25,9 @@ func TestGetImage_missing(t *testing.T) {
 }
 
 func TestGetImage_found(t *testing.T) {
-	client, err := createTestClient(debugAPI)
-	if err != nil {
-		t.Errorf("Error creating test client %v", err)
-	}
+	client, teardown := createTestClient(t, "fixtures/TestGetImage_found")
+	defer teardown()
+
 	i, err := client.GetImage("linode/ubuntu16.04lts")
 	if err != nil {
 		t.Errorf("Error getting image, expected struct, got %v and error %v", i, err)
@@ -38,10 +37,9 @@ func TestGetImage_found(t *testing.T) {
 	}
 }
 func TestListImages(t *testing.T) {
-	client, err := createTestClient(debugAPI)
-	if err != nil {
-		t.Errorf("Error creating test client %v", err)
-	}
+	client, teardown := createTestClient(t, "fixtures/TestListImages")
+	defer teardown()
+
 	i, err := client.ListImages(nil)
 	if err != nil {
 		t.Errorf("Error listing images, expected struct, got error %v", err)

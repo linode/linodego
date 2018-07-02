@@ -10,6 +10,10 @@ import (
 )
 
 func ExampleCreateStackscript() {
+	// Example readers, Ignore this bit of setup code needed to record test fixtures
+	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleCreateStackscript")
+	defer teardown()
+
 	fmt.Println("## Stackscript create")
 
 	var ss *linodego.Stackscript

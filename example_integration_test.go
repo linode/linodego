@@ -9,10 +9,8 @@ import (
 	"strings"
 
 	"github.com/chiefy/linodego"
-	"github.com/dnaeon/go-vcr/recorder"
 )
 
-var linodeClient = linodego.NewClient(nil, nil)
 var spendMoney = false
 
 func init() {
@@ -29,19 +27,6 @@ func init() {
 		log.Fatal("Could not find LINODE_TOKEN, please verify that it is set.")
 	}
 
-	r, err := recorder.NewAsMode("test/fixtures_examples", recorder.ModeRecording, nil)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	defer r.Stop() // Make sure recorder is stopped once done with it
-
-	// Demonstrate endpoints that require an access token
-	linodeClient = linodego.NewClient(&apiToken, r)
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	// Wether or not we will walk example endpoints that cost money
 	if envSpend, spendSet := os.LookupEnv("LINODE_SPEND"); apiOk && spendSet {
 		if apiSpend, err := strconv.Atoi(envSpend); err == nil {
@@ -54,6 +39,10 @@ func init() {
 }
 
 func ExampleGetAccount() {
+	// Example readers, Ignore this bit of setup code needed to record test fixtures
+	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleGetAccount")
+	defer teardown()
+
 	account, err := linodeClient.GetAccount()
 	if err != nil {
 		log.Fatalln("* While getting account: ", err)
@@ -65,6 +54,10 @@ func ExampleGetAccount() {
 }
 
 func Example() {
+	// Example readers, Ignore this bit of setup code needed to record test fixtures
+	linodeClient, teardown := createTestClient(nil, "fixtures/Example")
+	defer teardown()
+
 	var linode *linodego.Instance
 	linode, err := linodeClient.GetInstance(1231)
 	fmt.Println("## Instance request with Invalid ID")
@@ -275,7 +268,7 @@ func Example() {
 		if err != nil {
 			log.Fatal(err)
 		} else if len(volumes) > 0 {
-			volume, err := linodeClient.GetInstanceVolume(linode.ID, volumes[0].ID)
+			volume, err := linodeClient.GetVolume(volumes[0].ID)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -299,10 +292,10 @@ func Example() {
 	// ## First Linode
 	// ### First Config: true
 	// ### First Disk: true
-	// ### First Auto Backup
+	// ### No Auto Backups
 	// ### Snapshots
 	// #### Current: true
-	// ### No Volumes
+	// ### First Volume: true
 	// ## Your Stackscripts: true
 }
 

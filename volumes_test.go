@@ -1,4 +1,4 @@
-package linodego
+package linodego_test
 
 import (
 	"testing"
@@ -10,16 +10,15 @@ func TestListVolumes(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode.")
 	}
-	client, err := createTestClient(debugAPI)
-	if err != nil {
-		t.Errorf("Error creating test client %v", err)
-	}
+	client, teardown := createTestClient(t, "fixtures/TestListVolumes")
+	defer teardown()
+
 	volumes, err := client.ListVolumes(nil)
 	if err != nil {
-		t.Errorf("Error listing instances, expected struct, got error %v", err)
+		t.Errorf("Error listing volumes, expected struct, got error %v", err)
 	}
 	if len(volumes) == 0 {
-		t.Errorf("Expected a list of instances, but got %v", volumes)
+		t.Errorf("Expected a list of volumes, but got %v", volumes)
 	}
 }
 
@@ -27,11 +26,10 @@ func TestGetVolume(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode.")
 	}
-	client, err := createTestClient(debugAPI)
-	if err != nil {
-		t.Errorf("Error creating test client %v", err)
-	}
-	_, err = client.GetVolume(TestVolumeID)
+	client, teardown := createTestClient(t, "fixtures/TestGetVolume")
+	defer teardown()
+
+	_, err := client.GetVolume(TestVolumeID)
 	if err != nil {
 		t.Errorf("Error getting volume %d, expected *LinodeVolume, got error %v", TestVolumeID, err)
 	}

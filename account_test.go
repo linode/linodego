@@ -1,4 +1,4 @@
-package linodego
+package linodego_test
 
 import (
 	"strings"
@@ -10,10 +10,9 @@ func TestGetAccount(t *testing.T) {
 		t.Skip("Skipping test in short mode.")
 	}
 
-	client, err := createTestClient(debugAPI)
-	if err != nil {
-		t.Errorf("Error creating test client %v", err)
-	}
+	client, teardown := createTestClient(t, "fixtures/TestGetAccount")
+	defer teardown()
+
 	account, err := client.GetAccount()
 	if err != nil {
 		t.Errorf("Error getting Account, expected struct, got error %v", err)

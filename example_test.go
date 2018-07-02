@@ -16,6 +16,10 @@ import (
 )
 
 func ExampleListTypes_all() {
+	// Example readers, Ignore this bit of setup code needed to record test fixtures
+	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListTypes_all")
+	defer teardown()
+
 	types, err := linodeClient.ListTypes(nil)
 	if err != nil {
 		log.Fatal(err)
@@ -33,6 +37,10 @@ func ExampleListTypes_all() {
 // the request and response.  Error codes will be the HTTP status code,
 // or sub-100 for errors before the request was issued.
 func ExampleGetType_missing() {
+	// Example readers, Ignore this bit of setup code needed to record test fixtures
+	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleGetType_missing")
+	defer teardown()
+
 	_, err := linodeClient.GetType("missing-type")
 	if err != nil {
 		if v, ok := err.(*linodego.Error); ok {
@@ -51,6 +59,10 @@ func ExampleGetType_missing() {
 // ExampleListKernels_all Demonstrates how to list all Linode Kernels.  Paginated
 // responses are automatically traversed and concatenated when the ListOptions are nil
 func ExampleListKernels_all() {
+	// Example readers, Ignore this bit of setup code needed to record test fixtures
+	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListKernels_all")
+	defer teardown()
+
 	kernels, err := linodeClient.ListKernels(nil)
 	if err != nil {
 		log.Fatal(err)
@@ -64,6 +76,10 @@ func ExampleListKernels_all() {
 }
 
 func ExampleListKernels_allWithOpts() {
+	// Example readers, Ignore this bit of setup code needed to record test fixtures
+	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListKernels_allWithOpts")
+	defer teardown()
+
 	filterOpt := linodego.NewListOptions(0, "")
 	kernels, err := linodeClient.ListKernels(filterOpt)
 	if err != nil {
@@ -83,6 +99,10 @@ func ExampleListKernels_allWithOpts() {
 }
 
 func ExampleListKernels_filtered() {
+	// Example readers, Ignore this bit of setup code needed to record test fixtures
+	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListKernels_filtered")
+	defer teardown()
+
 	filterOpt := linodego.ListOptions{Filter: "{\"label\":\"Recovery - Finnix (kernel)\"}"}
 	kernels, err := linodeClient.ListKernels(&filterOpt)
 	if err != nil {
@@ -98,6 +118,10 @@ func ExampleListKernels_filtered() {
 }
 
 func ExampleListKernels_page1() {
+	// Example readers, Ignore this bit of setup code needed to record test fixtures
+	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListKernels_page1")
+	defer teardown()
+
 	filterOpt := linodego.NewListOptions(1, "")
 	kernels, err := linodeClient.ListKernels(filterOpt)
 	if err != nil {
@@ -120,6 +144,10 @@ func ExampleListKernels_page1() {
 }
 
 func ExampleGetKernel_specific() {
+	// Example readers, Ignore this bit of setup code needed to record test fixtures
+	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleGetKernel_specific")
+	defer teardown()
+
 	l32, err := linodeClient.GetKernel("linode/latest-32bit")
 	if err == nil {
 		fmt.Println("Label starts:", l32.Label[0:9])
@@ -143,6 +171,10 @@ func ExampleGetKernel_specific() {
 }
 
 func ExampleGetImage_missing() {
+	// Example readers, Ignore this bit of setup code needed to record test fixtures
+	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleGetImage_missing")
+	defer teardown()
+
 	_, err := linodeClient.GetImage("not-found")
 	if err != nil {
 		if v, ok := err.(*linodego.Error); ok {
@@ -158,6 +190,10 @@ func ExampleGetImage_missing() {
 	// Error was: [404] Not found
 }
 func ExampleListImages_all() {
+	// Example readers, Ignore this bit of setup code needed to record test fixtures
+	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListImages_all")
+	defer teardown()
+
 	filterOpt := linodego.NewListOptions(0, "")
 	images, err := linodeClient.ListImages(filterOpt)
 	if err != nil {
@@ -175,6 +211,10 @@ func ExampleListImages_all() {
 // ExampleListImages_notfound demonstrates that an empty slice is returned,
 // not an error, when a filter matches no results.
 func ExampleListImages_notfound() {
+	// Example readers, Ignore this bit of setup code needed to record test fixtures
+	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListImages_notfound")
+	defer teardown()
+
 	filterOpt := linodego.ListOptions{Filter: "{\"label\":\"not-found\"}"}
 	images, err := linodeClient.ListImages(&filterOpt)
 	if err != nil {
@@ -189,6 +229,10 @@ func ExampleListImages_notfound() {
 // ExampleListImages_notfound demonstrates that an error is returned by
 // the API and linodego when an invalid filter is provided
 func ExampleListImages_badfilter() {
+	// Example readers, Ignore this bit of setup code needed to record test fixtures
+	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListImages_badfilter")
+	defer teardown()
+
 	filterOpt := linodego.ListOptions{Filter: "{\"foo\":\"bar\"}"}
 	images, err := linodeClient.ListImages(&filterOpt)
 	if err == nil {
@@ -203,6 +247,10 @@ func ExampleListImages_badfilter() {
 }
 
 func ExampleListLongviewSubscriptions_page1() {
+	// Example readers, Ignore this bit of setup code needed to record test fixtures
+	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListLongviewSubscriptions_page1")
+	defer teardown()
+
 	pageOpt := linodego.ListOptions{PageOptions: &linodego.PageOptions{Page: 1}}
 	subscriptions, err := linodeClient.ListLongviewSubscriptions(&pageOpt)
 	if err != nil {
@@ -215,6 +263,10 @@ func ExampleListLongviewSubscriptions_page1() {
 }
 
 func ExampleListStackscripts_page1() {
+	// Example readers, Ignore this bit of setup code needed to record test fixtures
+	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListStackscripts_page1")
+	defer teardown()
+
 	filterOpt := linodego.NewListOptions(1, "")
 	scripts, err := linodeClient.ListStackscripts(filterOpt)
 	if err != nil {
