@@ -132,14 +132,12 @@ func ExampleListKernels_page1() {
 	fmt.Println("Results > 100:", filterOpt.Results > 100)
 	fmt.Println("Pages > 1:", filterOpt.Pages > 1)
 	k := kernels[len(kernels)-1]
-	fmt.Println("Kernel Version in Label:", strings.Index(k.Label, k.Version) > -1)
 	fmt.Println("Kernel Version in ID:", strings.Index(k.ID, k.Label) > -1)
 
 	// Output:
 	// Fetched == 100: true
 	// Results > 100: true
 	// Pages > 1: true
-	// Kernel Version in Label: true
 	// Kernel Version in ID: true
 }
 
