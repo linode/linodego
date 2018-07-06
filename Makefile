@@ -25,7 +25,7 @@ fixtures:
 	@LINODE_TOKEN=$(LINODE_TOKEN) \
 	LINODE_TEST_INSTANCE=$(LINODE_TEST_INSTANCE) \
 	LINODE_TEST_VOLUME=$(LINODE_TEST_VOLUME) \
-	LINODE_FIXTURE_MODE="record" go test $(ARGS) || true
+	LINODE_FIXTURE_MODE="record" go test $(ARGS)
 	@echo "* Santizing fixtures"
 	@for yaml in fixtures/*yaml; do \
 		sed -E -i "" -e "s/$(LINODE_TOKEN)/awesometokenawesometokenawesometoken/g" \
