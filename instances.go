@@ -330,8 +330,8 @@ func (c *Client) CloneInstance(id int, options *InstanceCloneOptions) (*Instance
 }
 
 // RebootInstance reboots a Linode instance
-func (c *Client) RebootInstance(id int, configID int) (bool, error) {
-	body := fmt.Sprintf("{\"config_id\":\"%d\"}", configID)
+func (c *Client) RebootInstance(id int) (bool, error) {
+	body := "{}"
 
 	e, err := c.Instances.Endpoint()
 	if err != nil {
