@@ -92,6 +92,7 @@ type InstanceCreateOptions struct {
 	BackupID        int               `json:"backup_id,omitempty"`
 	Image           string            `json:"image,omitempty"`
 	BackupsEnabled  bool              `json:"backups_enabled,omitempty"`
+	SwapSize        *int              `json:"swap_size,omitempty"`
 	Booted          bool              `json:"booted,omitempty"`
 }
 
