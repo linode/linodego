@@ -1,6 +1,9 @@
+// +build ignore
+
 package linodego
 
 import (
+	"encoding/json"
 	"fmt"
 
 	"github.com/go-resty/resty"
@@ -65,13 +68,12 @@ func (c *Client) GetTemplate(id string) (*Template, error) {
 		return nil, err
 	}
 	e = fmt.Sprintf("%s/%s", e, id)
-	r, err := c.R().SetResult(&Template{}).Get(e)
+	r, err := coupleAPIErrors(c.R().SetResult(&Template{}).Get(e))
 	if err != nil {
 		return nil, err
 	}
 	return r.Result().(*Template).fixDates(), nil
 }
-
 
 // CreateTemplate creates a Template
 func (c *Client) CreateTemplate(Template *TemplateCreateOptions) (*Template, error) {

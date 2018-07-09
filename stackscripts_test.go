@@ -1,13 +1,16 @@
-package linodego
+package linodego_test
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/chiefy/linodego"
+)
 
 func TestListStackscripts(t *testing.T) {
-	client, err := createTestClient(debugAPI)
-	if err != nil {
-		t.Errorf("Error creating test client %v", err)
-	}
-	filterOpt := NewListOptions(1, "")
+	client, teardown := createTestClient(t, "fixtures/TestListStackscripts")
+	defer teardown()
+
+	filterOpt := linodego.NewListOptions(1, "")
 	stackscripts, err := client.ListStackscripts(filterOpt)
 	if err != nil {
 		t.Errorf("Error listing stackscripts, expected struct - error %v", err)

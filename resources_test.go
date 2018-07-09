@@ -14,6 +14,7 @@ func TestResourceEndpoint(t *testing.T) {
 	if err != nil {
 		t.Error("Got error when querying for images endpoint")
 	}
+
 	if e != imagesEndpoint {
 		t.Errorf("Images endpoint did not match '%s'", imagesEndpoint)
 	}

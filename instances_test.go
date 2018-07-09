@@ -1,24 +1,21 @@
-package linodego
+package linodego_test
 
 import (
 	"testing"
 )
 
-const TestInstanceID = 8104671
-
 func TestListInstances(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode.")
 	}
-	client, err := createTestClient(debugAPI)
-	if err != nil {
-		t.Errorf("Error creating test client %v", err)
-	}
+	client, teardown := createTestClient(t, "fixtures/TestListInstances")
+	defer teardown()
+
 	linodes, err := client.ListInstances(nil)
 	if err != nil {
 		t.Errorf("Error listing instances, expected struct, got error %v", err)
 	}
-	if len(linodes) != 1 {
+	if len(linodes) == 0 {
 		t.Errorf("Expected a list of instances, but got %v", linodes)
 	}
 }
@@ -27,10 +24,9 @@ func TestGetInstance(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode.")
 	}
-	client, err := createTestClient(debugAPI)
-	if err != nil {
-		t.Errorf("Error creating test client %v", err)
-	}
+	client, teardown := createTestClient(t, "fixtures/TestGetInstance")
+	defer teardown()
+
 	instance, err := client.GetInstance(TestInstanceID)
 	if err != nil {
 		t.Errorf("Error getting instance TestInstanceID, expected *LinodeInstance, got error %v", err)
@@ -44,10 +40,9 @@ func TestListInstanceDisks(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode.")
 	}
-	client, err := createTestClient(debugAPI)
-	if err != nil {
-		t.Errorf("Error creating test client %v", err)
-	}
+	client, teardown := createTestClient(t, "fixtures/TestListInstanceDisks")
+	defer teardown()
+
 	disks, err := client.ListInstanceDisks(TestInstanceID, nil)
 	if err != nil {
 		t.Errorf("Error listing instance disks, expected struct, got error %v", err)
@@ -61,10 +56,9 @@ func TestListInstanceConfigs(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode.")
 	}
-	client, err := createTestClient(debugAPI)
-	if err != nil {
-		t.Errorf("Error creating test client %v", err)
-	}
+	client, teardown := createTestClient(t, "fixtures/TestListInstanceConfigs")
+	defer teardown()
+
 	configs, err := client.ListInstanceConfigs(TestInstanceID, nil)
 	if err != nil {
 		t.Errorf("Error listing instance configs, expected struct, got error %v", err)
@@ -78,15 +72,14 @@ func TestListInstanceVolumes(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode.")
 	}
-	client, err := createTestClient(debugAPI)
-	if err != nil {
-		t.Errorf("Error creating test client %v", err)
-	}
+	client, teardown := createTestClient(t, "fixtures/TestListInstanceVolumes")
+	defer teardown()
+
 	volumes, err := client.ListInstanceVolumes(TestInstanceID, nil)
 	if err != nil {
 		t.Errorf("Error listing instance volumes, expected struct, got error %v", err)
 	}
 	if len(volumes) == 0 {
-		t.Errorf("Expected a list of instance volumes, but got %v", volumes)
+		t.Errorf("Expected an list of instance volumes, but got %v", volumes)
 	}
 }

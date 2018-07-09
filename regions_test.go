@@ -1,14 +1,13 @@
-package linodego
+package linodego_test
 
 import (
 	"testing"
 )
 
 func TestListRegions(t *testing.T) {
-	client, err := createTestClient(debugAPI)
-	if err != nil {
-		t.Errorf("Error creating test client %v", err)
-	}
+	client, teardown := createTestClient(t, "fixtures/TestListRegions")
+	defer teardown()
+
 	regions, err := client.ListRegions(nil)
 	if err != nil {
 		t.Errorf("Error listing regions, expected struct - error %v", err)

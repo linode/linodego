@@ -14,6 +14,23 @@ import (
  * https://developers.linode.com/v4/reference/endpoints/linode/instances
  */
 
+type InstanceStatus string
+
+// InstanceStatus enum represents potential Instance.Status values
+const (
+	InstanceBooting      InstanceStatus = "booting"
+	InstanceRunning      InstanceStatus = "running"
+	InstanceOffline      InstanceStatus = "offline"
+	InstanceShuttingDown InstanceStatus = "shutting_down"
+	InstanceRebooting    InstanceStatus = "rebooting"
+	InstanceProvisioning InstanceStatus = "provisioning"
+	InstanceDeleting     InstanceStatus = "deleting"
+	InstanceMigrating    InstanceStatus = "migrating"
+	InstanceRebuilding   InstanceStatus = "rebuilding"
+	InstanceCloning      InstanceStatus = "cloning"
+	InstanceRestoring    InstanceStatus = "restoring"
+)
+
 // Instance represents a linode object
 type Instance struct {
 	CreatedStr string `json:"created"`
@@ -31,7 +48,7 @@ type Instance struct {
 	IPv6       string
 	Label      string
 	Type       string
-	Status     string
+	Status     InstanceStatus
 	Hypervisor string
 	Specs      *InstanceSpec
 }
@@ -75,6 +92,7 @@ type InstanceCreateOptions struct {
 	BackupID        int               `json:"backup_id,omitempty"`
 	Image           string            `json:"image,omitempty"`
 	BackupsEnabled  bool              `json:"backups_enabled,omitempty"`
+	SwapSize        *int              `json:"swap_size,omitempty"`
 	Booted          bool              `json:"booted,omitempty"`
 }
 
@@ -312,8 +330,8 @@ func (c *Client) CloneInstance(id int, options *InstanceCloneOptions) (*Instance
 }
 
 // RebootInstance reboots a Linode instance
-func (c *Client) RebootInstance(id int, configID int) (bool, error) {
-	body := fmt.Sprintf("{\"config_id\":\"%d\"}", configID)
+func (c *Client) RebootInstance(id int) (bool, error) {
+	body := "{}"
 
 	e, err := c.Instances.Endpoint()
 	if err != nil {
