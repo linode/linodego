@@ -19,6 +19,7 @@ type NodeBalancerConfig struct {
 	CheckPath      string                  `json:"check_path"`
 	CheckBody      string                  `json:"check_body"`
 	CheckPassive   bool                    `json:"check_passive"`
+	CheckTimeout   int                     `json:"check_timeout"`
 	CipherSuite    ConfigCipher            `json:"cipher_suite"`
 	NodeBalancerID int                     `json:"nodebalancer_id"`
 	SSLCommonName  string                  `json:"ssl_commonname"`
@@ -85,6 +86,7 @@ type NodeBalancerConfigCreateOptions struct {
 	CheckPath     string           `json:"check_path,omitempty"`
 	CheckBody     string           `json:"check_body,omitempty"`
 	CheckPassive  *bool            `json:"check_passive,omitempty"`
+	CheckTimeout  int              `json:"check_timeout,omitempty"`
 	CipherSuite   ConfigCipher     `json:"cipher_suite,omitempty"`
 	SSLCert       string           `json:"ssl_cert,omitempty"`
 	SSLKey        string           `json:"ssl_key,omitempty"`
@@ -102,6 +104,7 @@ func (i NodeBalancerConfig) GetCreateOptions() NodeBalancerConfigCreateOptions {
 		Check:         i.Check,
 		CheckInterval: i.CheckInterval,
 		CheckAttempts: i.CheckAttempts,
+		CheckTimeout:  i.CheckTimeout,
 		CheckPath:     i.CheckPath,
 		CheckBody:     i.CheckBody,
 		CheckPassive:  &i.CheckPassive,
@@ -123,6 +126,7 @@ func (i NodeBalancerConfig) GetUpdateOptions() NodeBalancerConfigUpdateOptions {
 		CheckPath:     i.CheckPath,
 		CheckBody:     i.CheckBody,
 		CheckPassive:  &i.CheckPassive,
+		CheckTimeout:  i.CheckTimeout,
 		CipherSuite:   i.CipherSuite,
 		SSLCert:       i.SSLCert,
 		SSLKey:        i.SSLKey,
