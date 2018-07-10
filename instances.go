@@ -275,7 +275,8 @@ func (c *Client) DeleteInstance(id int) error {
 	return nil
 }
 
-// BootInstance will boot a new linode instance
+// BootInstance will boot a Linode instance
+// A configID of 0 will cause Linode to choose the last/best config
 func (c *Client) BootInstance(id int, configID int) (bool, error) {
 	bodyStr := ""
 
@@ -330,8 +331,18 @@ func (c *Client) CloneInstance(id int, options *InstanceCloneOptions) (*Instance
 }
 
 // RebootInstance reboots a Linode instance
-func (c *Client) RebootInstance(id int) (bool, error) {
-	body := "{}"
+// A configID of 0 will cause Linode to choose the last/best config
+func (c *Client) RebootInstance(id int, configID int) (bool, error) {
+	bodyStr := "{}"
+
+	if configID != 0 {
+		bodyMap := map[string]int{"config_id": configID}
+		bodyJSON, err := json.Marshal(bodyMap)
+		if err != nil {
+			return false, NewError(err)
+		}
+		bodyStr = string(bodyJSON)
+	}
 
 	e, err := c.Instances.Endpoint()
 	if err != nil {
@@ -341,7 +352,7 @@ func (c *Client) RebootInstance(id int) (bool, error) {
 	e = fmt.Sprintf("%s/%d/reboot", e, id)
 
 	r, err := coupleAPIErrors(c.R().
-		SetBody(body).
+		SetBody(bodyStr).
 		Post(e))
 
 	return settleBoolResponseOrError(r, err)
