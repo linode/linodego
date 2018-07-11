@@ -127,7 +127,18 @@ func NewClient(codeAPIToken *string, transport http.RoundTripper) (client Client
 		SetHostURL(fmt.Sprintf("%s://%s/%s", APIProto, APIHost, APIVersion)).
 		SetAuthToken(linodeAPIToken).
 		SetTransport(transport).
-		SetHeader("User-Agent", userAgent)
+		SetHeader("User-Agent", userAgent).
+		AddRetryCondition(
+			// Condition function will be provided with *resty.Response as a
+			// parameter. It is expected to return (bool, error) pair. Resty will retry
+			// in case condition returns true or non nil error.
+			func(r *resty.Response) (bool, error) {
+				return r.StatusCode() == http.StatusTooManyRequests, nil
+			},
+		).
+		SetRetryWaitTime(time.Duration(5) * time.Second).
+		SetRetryMaxWaitTime(time.Duration(60) * time.Second).
+		SetRetryCount(4)
 
 	resources := map[string]*Resource{
 		stackscriptsName:          NewResource(&client, stackscriptsName, stackscriptsEndpoint, false, Stackscript{}, StackscriptsPagedResponse{}),
