@@ -167,6 +167,21 @@ func NewClient(hc *http.Client) (client Client) {
 	} else {
 		client.resty = resty.New()
 	}
+
+	client.resty.
+		AddRetryCondition(
+			// Condition function will be provided with *resty.Response as a
+			// parameter. It is expected to return (bool, error) pair. Resty will retry
+			// in case condition returns true or non nil error.
+			func(r *resty.Response) (bool, error) {
+				status := r.StatusCode()
+				retry := (status == http.StatusTooManyRequests) || (status == http.StatusRequestTimeout)
+				return retry, nil
+			},
+		).
+		SetRetryWaitTime(time.Duration(5) * time.Second).
+		SetRetryMaxWaitTime(time.Duration(60) * time.Second).
+		SetRetryCount(4)
 	client.SetUserAgent(DefaultUserAgent)
 	baseURL, baseURLExists := os.LookupEnv(APIHostVar)
 	if baseURLExists {
