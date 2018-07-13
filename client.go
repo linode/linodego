@@ -28,6 +28,8 @@ const (
 )
 
 var userAgent = fmt.Sprintf("linodego %s https://github.com/chiefy/linodego", Version)
+var baseURL = fmt.Sprintf("%s://%s/%s", APIProto, APIHost, APIVersion)
+
 var envDebug = false
 
 // Client is a wrapper around the Resty client
@@ -87,6 +89,13 @@ func (c *Client) SetUserAgent(ua string) *Client {
 	return c
 }
 
+// SetBaseURL sets a custom URL for API requests
+func (c *Client) SetBaseURL(url string) *Client {
+	baseURL = url
+	c.resty.SetHostURL(url)
+	return c
+}
+
 // R wraps resty's R method
 func (c *Client) R() *resty.Request {
 	return c.resty.R().
@@ -124,7 +133,7 @@ func NewClient(codeAPIToken *string, transport http.RoundTripper) (client Client
 	}
 
 	restyClient := resty.New().
-		SetHostURL(fmt.Sprintf("%s://%s/%s", APIProto, APIHost, APIVersion)).
+		SetHostURL(baseURL).
 		SetAuthToken(linodeAPIToken).
 		SetTransport(transport).
 		SetHeader("User-Agent", userAgent)
