@@ -21,12 +21,6 @@ const (
 	// VolumeResizing indicates the Volume is in the process of upgrading its current capacity
 	VolumeResizing VolumeStatus = "resizing"
 
-	// VolumeDeleting indicates the Volume is being deleted and is unavailable for use
-	VolumeDeleting VolumeStatus = "deleting"
-
-	// VolumeDeleted indicates the Volume has been deleted
-	VolumeDeleted VolumeStatus = "deleted"
-
 	// VolumeContactSupport indicates there is a problem with the Volume. A support ticket must be opened to resolve the issue
 	VolumeContactSupport VolumeStatus = "contact_support"
 )
@@ -36,14 +30,15 @@ type Volume struct {
 	CreatedStr string `json:"created"`
 	UpdatedStr string `json:"updated"`
 
-	ID       int
-	Label    string
-	Status   VolumeStatus
-	Region   string
-	Size     int
-	LinodeID int        `json:"linode_id"`
-	Created  *time.Time `json:"-"`
-	Updated  *time.Time `json:"-"`
+	ID             int
+	Label          string
+	Status         VolumeStatus
+	Region         string
+	Size           int
+	LinodeID       *int      `json:"linode_id"`
+	FilesystemPath string    `json:"filesystem_path"`
+	Created        time.Time `json:"-"`
+	Updated        time.Time `json:"-"`
 }
 
 type VolumeCreateOptions struct {
@@ -100,8 +95,12 @@ func (c *Client) ListVolumes(opts *ListOptions) ([]*Volume, error) {
 
 // fixDates converts JSON timestamps to Go time.Time values
 func (v *Volume) fixDates() *Volume {
-	v.Created, _ = parseDates(v.CreatedStr)
-	v.Updated, _ = parseDates(v.UpdatedStr)
+	if parsed, err := parseDates(v.CreatedStr); err != nil {
+		v.Created = *parsed
+	}
+	if parsed, err := parseDates(v.UpdatedStr); err != nil {
+		v.Updated = *parsed
+	}
 	return v
 }
 
