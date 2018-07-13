@@ -51,6 +51,8 @@ type VolumeCreateOptions struct {
 	Region   string `json:"region,omitempty"`
 	LinodeID int    `json:"linode_id,omitempty"`
 	ConfigID int    `json:"config_id,omitempty"`
+	// The Volume's size, in GiB. Minimum size is 10GiB, maximum size is 10240GiB. A "0" value will result in the default size.
+	Size int `json:"size,omitempty"`
 }
 
 type VolumeAttachOptions struct {
