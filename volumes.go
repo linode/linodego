@@ -8,6 +8,29 @@ import (
 	"github.com/go-resty/resty"
 )
 
+// VolumeStatus indicates the status of the Volume
+type VolumeStatus string
+
+const (
+	// VolumeCreating indicates the Volume is being created and is not yet available for use
+	VolumeCreating VolumeStatus = "creating"
+
+	// VolumeActive indicates the Volume is online and available for use
+	VolumeActive VolumeStatus = "active"
+
+	// VolumeResizing indicates the Volume is in the process of upgrading its current capacity
+	VolumeResizing VolumeStatus = "resizing"
+
+	// VolumeDeleting indicates the Volume is being deleted and is unavailable for use
+	VolumeDeleting VolumeStatus = "deleting"
+
+	// VolumeDeleted indicates the Volume has been deleted
+	VolumeDeleted VolumeStatus = "deleted"
+
+	// VolumeContactSupport indicates there is a problem with the Volume. A support ticket must be opened to resolve the issue
+	VolumeContactSupport VolumeStatus = "contact_support"
+)
+
 // Volume represents a linode volume object
 type Volume struct {
 	CreatedStr string `json:"created"`
@@ -15,7 +38,7 @@ type Volume struct {
 
 	ID       int
 	Label    string
-	Status   string
+	Status   VolumeStatus
 	Region   string
 	Size     int
 	LinodeID int        `json:"linode_id"`
@@ -23,12 +46,19 @@ type Volume struct {
 	Updated  *time.Time `json:"-"`
 }
 
+type VolumeCreateOptions struct {
+	Label    string `json:"label,omitempty"`
+	Region   string `json:"region,omitempty"`
+	LinodeID int    `json:"linode_id,omitempty"`
+	ConfigID int    `json:"config_id,omitempty"`
+}
+
 type VolumeAttachOptions struct {
 	LinodeID int
 	ConfigID int
 }
 
-// LinodeVolumesPagedResponse represents a linode API response for listing of volumes
+// VolumesPagedResponse represents a linode API response for listing of volumes
 type VolumesPagedResponse struct {
 	*PageOptions
 	Data []*Volume
@@ -80,7 +110,7 @@ func (c *Client) GetVolume(id int) (*Volume, error) {
 		return nil, err
 	}
 	e = fmt.Sprintf("%s/%d", e, id)
-	r, err := c.R().SetResult(&Volume{}).Get(e)
+	r, err := coupleAPIErrors(c.R().SetResult(&Volume{}).Get(e))
 	if err != nil {
 		return nil, err
 	}
@@ -93,39 +123,41 @@ func (c *Client) AttachVolume(id int, options *VolumeAttachOptions) (bool, error
 	if bodyData, err := json.Marshal(options); err == nil {
 		body = string(bodyData)
 	} else {
-		return false, err
+		return false, NewError(err)
 	}
 
 	e, err := c.Volumes.Endpoint()
 	if err != nil {
-		return false, err
+		return false, NewError(err)
 	}
 
 	e = fmt.Sprintf("%s/%d/attach", e, id)
-	resp, err := c.R().
+	resp, err := coupleAPIErrors(c.R().
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
-		Post(e)
+		Post(e))
 
 	return settleBoolResponseOrError(resp, err)
 }
 
-// CloneVolume clones a Linode instance
-func (c *Client) CloneVolume(id int, label string) (*Volume, error) {
-	body := fmt.Sprintf("{\"label\":\"%s\"}", label)
+// CreateVolume creates a Linode Volume
+func (c *Client) CreateVolume(createOpts VolumeCreateOptions) (*Volume, error) {
+	body := ""
+	if bodyData, err := json.Marshal(createOpts); err == nil {
+		body = string(bodyData)
+	} else {
+		return nil, NewError(err)
+	}
 
 	e, err := c.Volumes.Endpoint()
 	if err != nil {
-		return nil, err
+		return nil, NewError(err)
 	}
-	e = fmt.Sprintf("%s/%d/clone", e, id)
 
-	req := c.R().SetResult(&Volume{})
-
-	resp, err := req.
-		SetHeader("Content-Type", "application/json").
+	resp, err := coupleAPIErrors(c.R().
+		SetResult(&Volume{}).
 		SetBody(body).
-		Post(e)
+		Post(e))
 
 	if err != nil {
 		return nil, err
@@ -134,21 +166,42 @@ func (c *Client) CloneVolume(id int, label string) (*Volume, error) {
 	return resp.Result().(*Volume).fixDates(), nil
 }
 
-// DetachVolume detaches a Linode instance
+// CloneVolume clones a Linode volume
+func (c *Client) CloneVolume(id int, label string) (*Volume, error) {
+	body := fmt.Sprintf("{\"label\":\"%s\"}", label)
+
+	e, err := c.Volumes.Endpoint()
+	if err != nil {
+		return nil, NewError(err)
+	}
+	e = fmt.Sprintf("%s/%d/clone", e, id)
+
+	resp, err := coupleAPIErrors(c.R().
+		SetResult(&Volume{}).
+		SetBody(body).
+		Post(e))
+
+	if err != nil {
+		return nil, err
+	}
+
+	return resp.Result().(*Volume).fixDates(), nil
+}
+
+// DetachVolume detaches a Linode volume
 func (c *Client) DetachVolume(id int) (bool, error) {
 	body := ""
 
 	e, err := c.Volumes.Endpoint()
 	if err != nil {
-		return false, err
+		return false, NewError(err)
 	}
 
 	e = fmt.Sprintf("%s/%d/detach", e, id)
 
-	resp, err := c.R().
-		SetHeader("Content-Type", "application/json").
+	resp, err := coupleAPIErrors(c.R().
 		SetBody(body).
-		Post(e)
+		Post(e))
 
 	return settleBoolResponseOrError(resp, err)
 }
@@ -159,14 +212,28 @@ func (c *Client) ResizeVolume(id int, size int) (bool, error) {
 
 	e, err := c.Volumes.Endpoint()
 	if err != nil {
-		return false, err
+		return false, NewError(err)
 	}
 	e = fmt.Sprintf("%s/%d/resize", e, id)
 
-	resp, err := c.R().
-		SetHeader("Content-Type", "application/json").
+	resp, err := coupleAPIErrors(c.R().
 		SetBody(body).
-		Post(e)
+		Post(e))
 
 	return settleBoolResponseOrError(resp, err)
+}
+
+// DeleteVolume deletes the Volume with the specified id
+func (c *Client) DeleteVolume(id int) error {
+	e, err := c.Volumes.Endpoint()
+	if err != nil {
+		return err
+	}
+	e = fmt.Sprintf("%s/%d", e, id)
+
+	if _, err := coupleAPIErrors(c.R().Delete(e)); err != nil {
+		return err
+	}
+
+	return nil
 }
