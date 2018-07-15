@@ -307,7 +307,7 @@
   - [X] `POST`
 - `/volumes/$id`
   - [X] `GET`
-  - [ ] `POST`
+  - [X] `PUT`
   - [X] `DELETE`
 - `/volumes/$id/attach`
   - [X] `POST`

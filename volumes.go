@@ -167,6 +167,29 @@ func (c *Client) CreateVolume(createOpts VolumeCreateOptions) (*Volume, error) {
 	return resp.Result().(*Volume).fixDates(), nil
 }
 
+// RenameVolume renames the label of a Linode volume
+// There is no UpdateVolume because the label is the only alterable field.
+func (c *Client) RenameVolume(id int, label string) (*Volume, error) {
+	body, _ := json.Marshal(map[string]string{"label": label})
+
+	e, err := c.Volumes.Endpoint()
+	if err != nil {
+		return nil, NewError(err)
+	}
+	e = fmt.Sprintf("%s/%d", e, id)
+
+	resp, err := coupleAPIErrors(c.R().
+		SetResult(&Volume{}).
+		SetBody(body).
+		Put(e))
+
+	if err != nil {
+		return nil, err
+	}
+
+	return resp.Result().(*Volume).fixDates(), nil
+}
+
 // CloneVolume clones a Linode volume
 func (c *Client) CloneVolume(id int, label string) (*Volume, error) {
 	body := fmt.Sprintf("{\"label\":\"%s\"}", label)
