@@ -34,7 +34,7 @@ func TestRenameVolume(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode.")
 	}
-	client, volume, teardown, err := setupVolume(t, "fixtures/TestCreateVolume")
+	client, volume, teardown, err := setupVolume(t, "fixtures/TestRenameVolume")
 	defer teardown()
 
 	volume, err = client.RenameVolume(volume.ID, "test-volume-renamed")
