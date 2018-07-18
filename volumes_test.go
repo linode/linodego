@@ -43,6 +43,24 @@ func TestRenameVolume(t *testing.T) {
 	}
 }
 
+func TestResizeVolume(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode.")
+	}
+	client, volume, teardown, err := setupVolume(t, "fixtures/TestResizeVolume")
+	defer teardown()
+
+	if err != nil {
+		t.Errorf("Error setting up volume test, %s", err)
+	}
+
+	if ok, err := client.ResizeVolume(volume.ID, volume.Size+1); err != nil {
+		t.Errorf("Error resizing volume, %s", err)
+	} else if !ok {
+		t.Errorf("Error resizing volume")
+	}
+}
+
 func TestListVolumes(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode.")

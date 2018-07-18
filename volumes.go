@@ -232,7 +232,7 @@ func (c *Client) DetachVolume(id int) (bool, error) {
 
 // ResizeVolume resizes an instance to new Linode type
 func (c *Client) ResizeVolume(id int, size int) (bool, error) {
-	body := fmt.Sprintf("{\"size\":\"%d\"}", size)
+	body := fmt.Sprintf("{\"size\": %d}", size)
 
 	e, err := c.Volumes.Endpoint()
 	if err != nil {
