@@ -1,6 +1,7 @@
 package linodego_test
 
 import (
+	"context"
 	"testing"
 
 	"github.com/chiefy/linodego"
@@ -13,7 +14,7 @@ func TestListInstances(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestListInstances")
 	defer teardown()
 
-	linodes, err := client.ListInstances(nil)
+	linodes, err := client.ListInstances(context.TODO(), nil)
 	if err != nil {
 		t.Errorf("Error listing instances, expected struct, got error %v", err)
 	}
@@ -29,7 +30,7 @@ func TestGetInstance(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestGetInstance")
 	defer teardown()
 
-	instance, err := client.GetInstance(TestInstanceID)
+	instance, err := client.GetInstance(context.TODO(), TestInstanceID)
 	if err != nil {
 		t.Errorf("Error getting instance TestInstanceID, expected *LinodeInstance, got error %v", err)
 	}
@@ -45,7 +46,7 @@ func TestListInstanceDisks(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestListInstanceDisks")
 	defer teardown()
 
-	disks, err := client.ListInstanceDisks(TestInstanceID, nil)
+	disks, err := client.ListInstanceDisks(context.TODO(), TestInstanceID, nil)
 	if err != nil {
 		t.Errorf("Error listing instance disks, expected struct, got error %v", err)
 	}
@@ -61,7 +62,7 @@ func TestListInstanceConfigs(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestListInstanceConfigs")
 	defer teardown()
 
-	configs, err := client.ListInstanceConfigs(TestInstanceID, nil)
+	configs, err := client.ListInstanceConfigs(context.TODO(), TestInstanceID, nil)
 	if err != nil {
 		t.Errorf("Error listing instance configs, expected struct, got error %v", err)
 	}
@@ -77,7 +78,7 @@ func TestListInstanceVolumes(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestListInstanceVolumes")
 	defer teardown()
 
-	volumes, err := client.ListInstanceVolumes(TestInstanceID, nil)
+	volumes, err := client.ListInstanceVolumes(context.TODO(), TestInstanceID, nil)
 	if err != nil {
 		t.Errorf("Error listing instance volumes, expected struct, got error %v", err)
 	}

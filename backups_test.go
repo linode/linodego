@@ -1,6 +1,7 @@
 package linodego_test
 
 import (
+	"context"
 	"testing"
 )
 
@@ -12,7 +13,7 @@ func TestListInstanceBackups(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestListInstanceBackups")
 	defer teardown()
 
-	backups, err := client.GetInstanceBackups(TestInstanceID)
+	backups, err := client.GetInstanceBackups(context.TODO(), TestInstanceID)
 	if err != nil {
 		t.Errorf("Error listing backups, expected struct, got error %v", err)
 	}
