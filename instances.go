@@ -105,14 +105,14 @@ type InstanceUpdateOptions struct {
 
 // InstanceCloneOptions is an options struct when sending a clone request to the API
 type InstanceCloneOptions struct {
-	Region         string
-	Type           string
-	LinodeID       int
-	Label          string
-	Group          string
-	BackupsEnabled bool
-	Disks          []string
-	Configs        []string
+	Region         string   `json:"region"`
+	Type           string   `json:"type"`
+	LinodeID       int      `json:"linode_id"`
+	Label          string   `json:"label"`
+	Group          string   `json:"group"`
+	BackupsEnabled bool     `json:"backups_enabled"`
+	Disks          []string `json:"disks"`
+	Configs        []string `json:"configs"`
 }
 
 func (l *Instance) fixDates() *Instance {
@@ -192,7 +192,6 @@ func (c *Client) CreateInstance(instance *InstanceCreateOptions) (*Instance, err
 	}
 
 	r, err := coupleAPIErrors(req.
-		SetHeader("Content-Type", "application/json").
 		SetBody(body).
 		Post(e))
 
@@ -346,12 +345,12 @@ func (c *Client) MutateInstance(id int) (bool, error) {
 
 // RebuildInstanceOptions is a struct representing the options to send to the rebuild linode endpoint
 type RebuildInstanceOptions struct {
-	Image           string
-	RootPass        string
-	AuthorizedKeys  []string
-	StackscriptID   int
-	StackscriptData map[string]string
-	Booted          bool
+	Image           string            `json:"image"`
+	RootPass        string            `json:"root_pass"`
+	AuthorizedKeys  []string          `json:"authorized_keys"`
+	StackscriptID   int               `json:"stackscript_id"`
+	StackscriptData map[string]string `json:"stackscript_data"`
+	Booted          bool              `json:"booted"`
 }
 
 // RebuildInstance Deletes all Disks and Configs on this Linode,

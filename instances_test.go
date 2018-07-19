@@ -2,6 +2,8 @@ package linodego_test
 
 import (
 	"testing"
+
+	"github.com/chiefy/linodego"
 )
 
 func TestListInstances(t *testing.T) {
@@ -82,4 +84,28 @@ func TestListInstanceVolumes(t *testing.T) {
 	if len(volumes) == 0 {
 		t.Errorf("Expected an list of instance volumes, but got %v", volumes)
 	}
+}
+
+func setupInstance(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.Instance, func(), error) {
+	t.Helper()
+	var fixtureTeardown func()
+	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+	createOpts := linodego.InstanceCreateOptions{
+		Label:    "linodego-test-instance",
+		RootPass: "R34lBAdP455",
+		Region:   "us-west",
+		Type:     "g6-nanode-1",
+	}
+	instance, err := client.CreateInstance(&createOpts)
+	if err != nil {
+		t.Errorf("Error creating test Instance: %s", err)
+	}
+
+	teardown := func() {
+		if err := client.DeleteInstance(instance.ID); err != nil {
+			t.Errorf("Error deleting test Instance: %s", err)
+		}
+		fixtureTeardown()
+	}
+	return client, instance, teardown, err
 }
