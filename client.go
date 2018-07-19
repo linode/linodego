@@ -236,7 +236,31 @@ func WaitForVolumeStatus(client *Client, volumeID int, status VolumeStatus, time
 
 		time.Sleep(1 * time.Second)
 		if time.Since(start) > time.Duration(timeoutSeconds)*time.Second {
-			return fmt.Errorf("Instance %d didn't reach '%s' status in %d seconds", volumeID, status, timeoutSeconds)
+			return fmt.Errorf("Volume %d didn't reach '%s' status in %d seconds", volumeID, status, timeoutSeconds)
+		}
+	}
+}
+
+// WaitForVolumeLinodeID waits for the Volume to match the desired LinodeID
+// before returning. An active Instance will not immediately attach or detach a volume, so the
+// the LinodeID must be polled to determine volume readiness from the API.
+// WaitForVolumeLinodeID will timeout with an error after timeoutSeconds.
+func WaitForVolumeLinodeID(client *Client, volumeID int, linodeID *int, timeoutSeconds int) error {
+	start := time.Now()
+	for {
+		volume, err := client.GetVolume(volumeID)
+		if err != nil {
+			return err
+		}
+		complete := (volume.LinodeID == linodeID)
+
+		if complete {
+			return nil
+		}
+
+		time.Sleep(1 * time.Second)
+		if time.Since(start) > time.Duration(timeoutSeconds)*time.Second {
+			return fmt.Errorf("Volume %d didn't match LinodeID %d in %d seconds", volumeID, linodeID, timeoutSeconds)
 		}
 	}
 }
