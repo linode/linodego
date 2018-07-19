@@ -88,7 +88,6 @@ func TestListInstanceVolumes(t *testing.T) {
 
 func setupInstance(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.Instance, func(), error) {
 	t.Helper()
-	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := linodego.InstanceCreateOptions{
 		Label:    "linodego-test-instance",

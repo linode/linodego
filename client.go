@@ -126,8 +126,12 @@ func NewClient(codeAPIToken *string, transport http.RoundTripper) (client Client
 	restyClient := resty.New().
 		SetHostURL(fmt.Sprintf("%s://%s/%s", APIProto, APIHost, APIVersion)).
 		SetAuthToken(linodeAPIToken).
-		SetTransport(transport).
 		SetHeader("User-Agent", userAgent)
+
+	if transport != nil {
+		restyClient.SetTransport(transport)
+
+	}
 
 	resources := map[string]*Resource{
 		stackscriptsName:          NewResource(&client, stackscriptsName, stackscriptsEndpoint, false, Stackscript{}, StackscriptsPagedResponse{}),
@@ -255,6 +259,8 @@ func WaitForVolumeLinodeID(client *Client, volumeID int, linodeID *int, timeoutS
 
 		if linodeID == nil && volume.LinodeID == nil {
 			return nil
+		} else if linodeID == nil || volume.LinodeID == nil {
+			// continue waiting
 		} else if *volume.LinodeID == *linodeID {
 			return nil
 		}

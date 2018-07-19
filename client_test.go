@@ -2,6 +2,7 @@ package linodego_test
 
 import (
 	"log"
+	"net/http"
 	"os"
 	"strconv"
 	"testing"
@@ -81,7 +82,7 @@ func createTestClient(t *testing.T, fixturesYaml string) (*Client, func()) {
 	apiKey = &validTestAPIKey
 
 	var recordStopper func()
-	var r *recorder.Recorder
+	var r http.RoundTripper
 
 	if testing.Short() {
 		apiKey = nil
@@ -89,6 +90,9 @@ func createTestClient(t *testing.T, fixturesYaml string) (*Client, func()) {
 
 	if len(fixturesYaml) > 0 {
 		r, recordStopper = testRecorder(t, fixturesYaml, testingMode)
+	} else {
+		r = nil
+		recordStopper = func() {}
 	}
 
 	c = NewClient(apiKey, r)

@@ -51,8 +51,8 @@ type VolumeCreateOptions struct {
 }
 
 type VolumeAttachOptions struct {
-	LinodeID int
-	ConfigID int
+	LinodeID int `json:"linode_id"`
+	ConfigID int `json:"config_id,omitempty"`
 }
 
 // VolumesPagedResponse represents a linode API response for listing of volumes
