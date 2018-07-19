@@ -252,9 +252,10 @@ func WaitForVolumeLinodeID(client *Client, volumeID int, linodeID *int, timeoutS
 		if err != nil {
 			return err
 		}
-		complete := (volume.LinodeID == linodeID)
 
-		if complete {
+		if linodeID == nil && volume.LinodeID == nil {
+			return nil
+		} else if *volume.LinodeID == *linodeID {
 			return nil
 		}
 
