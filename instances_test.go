@@ -96,13 +96,13 @@ func setupInstance(t *testing.T, fixturesYaml string) (*linodego.Client, *linode
 		Region:   "us-west",
 		Type:     "g6-nanode-1",
 	}
-	instance, err := client.CreateInstance(&createOpts)
+	instance, err := client.CreateInstance(context.Background(), &createOpts)
 	if err != nil {
 		t.Errorf("Error creating test Instance: %s", err)
 	}
 
 	teardown := func() {
-		if err := client.DeleteInstance(instance.ID); err != nil {
+		if err := client.DeleteInstance(context.Background(), instance.ID); err != nil {
 			t.Errorf("Error deleting test Instance: %s", err)
 		}
 		fixtureTeardown()
