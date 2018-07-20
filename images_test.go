@@ -12,7 +12,7 @@ func TestGetImage_missing(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestGetImage_missing")
 	defer teardown()
 
-	i, err := client.GetImage(context.TODO(), "does-not-exist")
+	i, err := client.GetImage(context.Background(), "does-not-exist")
 	if err == nil {
 		t.Errorf("should have received an error requesting a missing image, got %v", i)
 	}
@@ -30,7 +30,7 @@ func TestGetImage_found(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestGetImage_found")
 	defer teardown()
 
-	i, err := client.GetImage(context.TODO(), "linode/ubuntu16.04lts")
+	i, err := client.GetImage(context.Background(), "linode/ubuntu16.04lts")
 	if err != nil {
 		t.Errorf("Error getting image, expected struct, got %v and error %v", i, err)
 	}
@@ -42,7 +42,7 @@ func TestListImages(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestListImages")
 	defer teardown()
 
-	i, err := client.ListImages(context.TODO(), nil)
+	i, err := client.ListImages(context.Background(), nil)
 	if err != nil {
 		t.Errorf("Error listing images, expected struct, got error %v", err)
 	}

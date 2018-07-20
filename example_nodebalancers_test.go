@@ -21,27 +21,27 @@ func ExampleCreateNodeBalancer() {
 	}
 
 	createOpts := nb.GetCreateOptions()
-	nb, err := linodeClient.CreateNodeBalancer(context.TODO(), &createOpts)
+	nb, err := linodeClient.CreateNodeBalancer(context.Background(), &createOpts)
 	if err != nil {
 		log.Fatal(err)
 	}
 	nbID = nb.ID
 
 	fmt.Println("### Get")
-	nb, err = linodeClient.GetNodeBalancer(context.TODO(), nbID)
+	nb, err = linodeClient.GetNodeBalancer(context.Background(), nbID)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	updateOpts := nb.GetUpdateOptions()
 	*updateOpts.Label += "_renamed"
-	nb, err = linodeClient.UpdateNodeBalancer(context.TODO(), nbID, updateOpts)
+	nb, err = linodeClient.UpdateNodeBalancer(context.Background(), nbID, updateOpts)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	fmt.Println("### Delete")
-	if err := linodeClient.DeleteNodeBalancer(context.TODO(), nbID); err != nil {
+	if err := linodeClient.DeleteNodeBalancer(context.Background(), nbID); err != nil {
 		log.Fatal(err)
 	}
 
@@ -58,7 +58,7 @@ func ExampleCreateNodeBalancerConfig() {
 
 	fmt.Println("## NodeBalancer create")
 	clientConnThrottle := 20
-	nb, err := linodeClient.CreateNodeBalancer(context.TODO(), &linodego.NodeBalancerCreateOptions{
+	nb, err := linodeClient.CreateNodeBalancer(context.Background(), &linodego.NodeBalancerCreateOptions{
 		ClientConnThrottle: &clientConnThrottle,
 		Region:             "us-east",
 	})
@@ -79,7 +79,7 @@ func ExampleCreateNodeBalancerConfig() {
 			CipherSuite:   linodego.CipherRecommended,
 		*/
 	}
-	nbc, err := linodeClient.CreateNodeBalancerConfig(context.TODO(), nb.ID, &createOpts)
+	nbc, err := linodeClient.CreateNodeBalancerConfig(context.Background(), nb.ID, &createOpts)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -88,19 +88,19 @@ func ExampleCreateNodeBalancerConfig() {
 	fmt.Println("## NodeBalancer Config update")
 	updateOpts := nbc.GetUpdateOptions()
 	updateOpts.Port += 8000
-	nbc, err = linodeClient.UpdateNodeBalancerConfig(context.TODO(), nb.ID, nbc.ID, updateOpts)
+	nbc, err = linodeClient.UpdateNodeBalancerConfig(context.Background(), nb.ID, nbc.ID, updateOpts)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	fmt.Println("### List")
-	configs, err := linodeClient.ListNodeBalancerConfigs(context.TODO(), nb.ID, nil)
+	configs, err := linodeClient.ListNodeBalancerConfigs(context.Background(), nb.ID, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	fmt.Println("### Get")
-	nbc, err = linodeClient.GetNodeBalancerConfig(context.TODO(), nb.ID, configs[0].ID)
+	nbc, err = linodeClient.GetNodeBalancerConfig(context.Background(), nb.ID, configs[0].ID)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -109,11 +109,11 @@ func ExampleCreateNodeBalancerConfig() {
 	if nbc.ID != nbcID {
 		log.Fatalf("Unexpected Nodebalancer Config ID %d != %d", nbc.ID, nbcID)
 	}
-	if err := linodeClient.DeleteNodeBalancerConfig(context.TODO(), nb.ID, nbc.ID); err != nil {
+	if err := linodeClient.DeleteNodeBalancerConfig(context.Background(), nb.ID, nbc.ID); err != nil {
 		log.Fatal(err)
 	}
 
-	if err := linodeClient.DeleteNodeBalancer(context.TODO(), nb.ID); err != nil {
+	if err := linodeClient.DeleteNodeBalancer(context.Background(), nb.ID); err != nil {
 		log.Fatal(err)
 	}
 
@@ -133,7 +133,7 @@ func ExampleCreateNodeBalancerNode() {
 
 	fmt.Println("## NodeBalancer create")
 	clientConnThrottle := 20
-	nb, err := linodeClient.CreateNodeBalancer(context.TODO(), &linodego.NodeBalancerCreateOptions{
+	nb, err := linodeClient.CreateNodeBalancer(context.Background(), &linodego.NodeBalancerCreateOptions{
 		ClientConnThrottle: &clientConnThrottle,
 		Region:             "us-east",
 	})
@@ -143,7 +143,7 @@ func ExampleCreateNodeBalancerNode() {
 
 	fmt.Println("## NodeBalancer Config create")
 
-	nbc, err := linodeClient.CreateNodeBalancerConfig(context.TODO(), nb.ID, &linodego.NodeBalancerConfigCreateOptions{
+	nbc, err := linodeClient.CreateNodeBalancerConfig(context.Background(), nb.ID, &linodego.NodeBalancerConfigCreateOptions{
 		Port: 80,
 	})
 	if err != nil {
@@ -155,7 +155,7 @@ func ExampleCreateNodeBalancerNode() {
 		Address: "192.168.129.255:80",
 		Label:   "192.168.129.255-80",
 	}
-	nbn, err := linodeClient.CreateNodeBalancerNode(context.TODO(), nb.ID, nbc.ID, &createOpts)
+	nbn, err := linodeClient.CreateNodeBalancerNode(context.Background(), nb.ID, nbc.ID, &createOpts)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -164,19 +164,19 @@ func ExampleCreateNodeBalancerNode() {
 	fmt.Println("## NodeBalancer Node update")
 	updateOpts := nbn.GetUpdateOptions()
 	updateOpts.Address = "192.168.129.0:8080"
-	nbn, err = linodeClient.UpdateNodeBalancerNode(context.TODO(), nb.ID, nbc.ID, nbn.ID, updateOpts)
+	nbn, err = linodeClient.UpdateNodeBalancerNode(context.Background(), nb.ID, nbc.ID, nbn.ID, updateOpts)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	fmt.Println("### List")
-	nodes, err := linodeClient.ListNodeBalancerNodes(context.TODO(), nb.ID, nbc.ID, nil)
+	nodes, err := linodeClient.ListNodeBalancerNodes(context.Background(), nb.ID, nbc.ID, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	fmt.Println("### Get")
-	nbn, err = linodeClient.GetNodeBalancerNode(context.TODO(), nb.ID, nbc.ID, nodes[0].ID)
+	nbn, err = linodeClient.GetNodeBalancerNode(context.Background(), nb.ID, nbc.ID, nodes[0].ID)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -185,15 +185,15 @@ func ExampleCreateNodeBalancerNode() {
 	if nbn.ID != nbnID {
 		log.Fatalf("Unexpected Nodebalancer Node ID %d != %d", nbn.ID, nbnID)
 	}
-	if err := linodeClient.DeleteNodeBalancerNode(context.TODO(), nb.ID, nbc.ID, nbn.ID); err != nil {
+	if err := linodeClient.DeleteNodeBalancerNode(context.Background(), nb.ID, nbc.ID, nbn.ID); err != nil {
 		log.Fatal(err)
 	}
 
-	if err := linodeClient.DeleteNodeBalancerConfig(context.TODO(), nb.ID, nbc.ID); err != nil {
+	if err := linodeClient.DeleteNodeBalancerConfig(context.Background(), nb.ID, nbc.ID); err != nil {
 		log.Fatal(err)
 	}
 
-	if err := linodeClient.DeleteNodeBalancer(context.TODO(), nb.ID); err != nil {
+	if err := linodeClient.DeleteNodeBalancer(context.Background(), nb.ID); err != nil {
 		log.Fatal(err)
 	}
 

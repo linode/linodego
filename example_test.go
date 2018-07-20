@@ -21,7 +21,7 @@ func ExampleListTypes_all() {
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListTypes_all")
 	defer teardown()
 
-	types, err := linodeClient.ListTypes(context.TODO(), nil)
+	types, err := linodeClient.ListTypes(context.Background(), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -42,7 +42,7 @@ func ExampleGetType_missing() {
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleGetType_missing")
 	defer teardown()
 
-	_, err := linodeClient.GetType(context.TODO(), "missing-type")
+	_, err := linodeClient.GetType(context.Background(), "missing-type")
 	if err != nil {
 		if v, ok := err.(*linodego.Error); ok {
 			fmt.Println("Request was:", v.Response.Request.URL)
@@ -64,7 +64,7 @@ func ExampleListKernels_all() {
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListKernels_all")
 	defer teardown()
 
-	kernels, err := linodeClient.ListKernels(context.TODO(), nil)
+	kernels, err := linodeClient.ListKernels(context.Background(), nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -82,7 +82,7 @@ func ExampleListKernels_allWithOpts() {
 	defer teardown()
 
 	filterOpt := linodego.NewListOptions(0, "")
-	kernels, err := linodeClient.ListKernels(context.TODO(), filterOpt)
+	kernels, err := linodeClient.ListKernels(context.Background(), filterOpt)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -105,7 +105,7 @@ func ExampleListKernels_filtered() {
 	defer teardown()
 
 	filterOpt := linodego.ListOptions{Filter: "{\"label\":\"Recovery - Finnix (kernel)\"}"}
-	kernels, err := linodeClient.ListKernels(context.TODO(), &filterOpt)
+	kernels, err := linodeClient.ListKernels(context.Background(), &filterOpt)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -124,7 +124,7 @@ func ExampleListKernels_page1() {
 	defer teardown()
 
 	filterOpt := linodego.NewListOptions(1, "")
-	kernels, err := linodeClient.ListKernels(context.TODO(), filterOpt)
+	kernels, err := linodeClient.ListKernels(context.Background(), filterOpt)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -147,14 +147,14 @@ func ExampleGetKernel_specific() {
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleGetKernel_specific")
 	defer teardown()
 
-	l32, err := linodeClient.GetKernel(context.TODO(), "linode/latest-32bit")
+	l32, err := linodeClient.GetKernel(context.Background(), "linode/latest-32bit")
 	if err == nil {
 		fmt.Println("Label starts:", l32.Label[0:9])
 	} else {
 		log.Fatalln(err)
 	}
 
-	l64, err := linodeClient.GetKernel(context.TODO(), "linode/latest-64bit")
+	l64, err := linodeClient.GetKernel(context.Background(), "linode/latest-64bit")
 	if err == nil {
 		fmt.Println("Label starts:", l64.Label[0:9])
 	} else {
@@ -174,7 +174,7 @@ func ExampleGetImage_missing() {
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleGetImage_missing")
 	defer teardown()
 
-	_, err := linodeClient.GetImage(context.TODO(), "not-found")
+	_, err := linodeClient.GetImage(context.Background(), "not-found")
 	if err != nil {
 		if v, ok := err.(*linodego.Error); ok {
 			fmt.Println("Request was:", v.Response.Request.URL)
@@ -194,7 +194,7 @@ func ExampleListImages_all() {
 	defer teardown()
 
 	filterOpt := linodego.NewListOptions(0, "")
-	images, err := linodeClient.ListImages(context.TODO(), filterOpt)
+	images, err := linodeClient.ListImages(context.Background(), filterOpt)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -215,7 +215,7 @@ func ExampleListImages_notfound() {
 	defer teardown()
 
 	filterOpt := linodego.ListOptions{Filter: "{\"label\":\"not-found\"}"}
-	images, err := linodeClient.ListImages(context.TODO(), &filterOpt)
+	images, err := linodeClient.ListImages(context.Background(), &filterOpt)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -233,7 +233,7 @@ func ExampleListImages_badfilter() {
 	defer teardown()
 
 	filterOpt := linodego.ListOptions{Filter: "{\"foo\":\"bar\"}"}
-	images, err := linodeClient.ListImages(context.TODO(), &filterOpt)
+	images, err := linodeClient.ListImages(context.Background(), &filterOpt)
 	if err == nil {
 		log.Fatal(err)
 	}
@@ -251,7 +251,7 @@ func ExampleListLongviewSubscriptions_page1() {
 	defer teardown()
 
 	pageOpt := linodego.ListOptions{PageOptions: &linodego.PageOptions{Page: 1}}
-	subscriptions, err := linodeClient.ListLongviewSubscriptions(context.TODO(), &pageOpt)
+	subscriptions, err := linodeClient.ListLongviewSubscriptions(context.Background(), &pageOpt)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -267,7 +267,7 @@ func ExampleListStackscripts_page1() {
 	defer teardown()
 
 	filterOpt := linodego.NewListOptions(1, "")
-	scripts, err := linodeClient.ListStackscripts(context.TODO(), filterOpt)
+	scripts, err := linodeClient.ListStackscripts(context.Background(), filterOpt)
 	if err != nil {
 		log.Fatal(err)
 	}

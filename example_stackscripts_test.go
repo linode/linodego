@@ -30,7 +30,7 @@ func ExampleCreateStackscript() {
 			stackscript.Label = "example stackscript " + time.Now().String()
 			stackscript.RevNote = "revision " + strconv.Itoa(rev)
 			stackscript.Script = "#!/bin/bash\n"
-			ss, err = linodeClient.CreateStackscript(context.TODO(), &stackscript)
+			ss, err = linodeClient.CreateStackscript(context.Background(), &stackscript)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -39,7 +39,7 @@ func ExampleCreateStackscript() {
 			update.RevNote = "revision " + strconv.Itoa(rev)
 			update.Label = strconv.Itoa(rev) + " " + ss.Label
 			update.Script += "echo " + strconv.Itoa(rev) + "\n"
-			ss, err = linodeClient.UpdateStackscript(context.TODO(), ss.ID, update)
+			ss, err = linodeClient.UpdateStackscript(context.Background(), ss.ID, update)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -47,13 +47,13 @@ func ExampleCreateStackscript() {
 	}
 
 	fmt.Println("### Get")
-	ss, err = linodeClient.GetStackscript(context.TODO(), ss.ID)
+	ss, err = linodeClient.GetStackscript(context.Background(), ss.ID)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	fmt.Println("### Delete")
-	err = linodeClient.DeleteStackscript(context.TODO(), ss.ID)
+	err = linodeClient.DeleteStackscript(context.Background(), ss.ID)
 	if err != nil {
 		log.Fatal(err)
 	}

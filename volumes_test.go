@@ -18,7 +18,7 @@ func TestCreateVolume(t *testing.T) {
 		Label:  "linodego-test-volume",
 		Region: "us-west",
 	}
-	volume, err := client.CreateVolume(context.TODO(), createOpts)
+	volume, err := client.CreateVolume(context.Background(), createOpts)
 	if err != nil {
 		t.Errorf("Error listing volumes, expected struct, got error %v", err)
 	}
@@ -26,7 +26,7 @@ func TestCreateVolume(t *testing.T) {
 		t.Errorf("Expected a volumes id, but got 0")
 	}
 
-	if err := client.DeleteVolume(context.TODO(), volume.ID); err != nil {
+	if err := client.DeleteVolume(context.Background(), volume.ID); err != nil {
 		t.Errorf("Expected to delete a volume, but got %v", err)
 	}
 }
@@ -38,7 +38,7 @@ func TestRenameVolume(t *testing.T) {
 	client, volume, teardown, err := setupVolume(t, "fixtures/TestRenameVolume")
 	defer teardown()
 
-	volume, err = client.RenameVolume(context.TODO(), volume.ID, "test-volume-renamed")
+	volume, err = client.RenameVolume(context.Background(), volume.ID, "test-volume-renamed")
 	if err != nil {
 		t.Errorf("Error renaming volume, %s", err)
 	}
@@ -55,7 +55,7 @@ func TestResizeVolume(t *testing.T) {
 		t.Errorf("Error setting up volume test, %s", err)
 	}
 
-	if ok, err := client.ResizeVolume(context.TODO(), volume.ID, volume.Size+1); err != nil {
+	if ok, err := client.ResizeVolume(context.Background(), volume.ID, volume.Size+1); err != nil {
 		t.Errorf("Error resizing volume, %s", err)
 	} else if !ok {
 		t.Errorf("Error resizing volume")
@@ -69,7 +69,7 @@ func TestListVolumes(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestListVolumes")
 	defer teardown()
 
-	volumes, err := client.ListVolumes(context.TODO(), nil)
+	volumes, err := client.ListVolumes(context.Background(), nil)
 	if err != nil {
 		t.Errorf("Error listing volumes, expected struct, got error %v", err)
 	}
@@ -85,7 +85,7 @@ func TestGetVolume(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestGetVolume")
 	defer teardown()
 
-	_, err := client.GetVolume(context.TODO(), TestVolumeID)
+	_, err := client.GetVolume(context.Background(), TestVolumeID)
 	if err != nil {
 		t.Errorf("Error getting volume %d, expected *LinodeVolume, got error %v", TestVolumeID, err)
 	}
@@ -161,13 +161,13 @@ func setupVolume(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 		Label:  "linodego-test-volume",
 		Region: "us-west",
 	}
-	volume, err := client.CreateVolume(context.TODO(), createOpts)
+	volume, err := client.CreateVolume(context.Background(), createOpts)
 	if err != nil {
 		t.Errorf("Error listing volumes, expected struct, got error %v", err)
 	}
 
 	teardown := func() {
-		if err := client.DeleteVolume(context.TODO(), volume.ID); err != nil {
+		if err := client.DeleteVolume(context.Background(), volume.ID); err != nil {
 			t.Errorf("Expected to delete a volume, but got %v", err)
 		}
 		fixtureTeardown()

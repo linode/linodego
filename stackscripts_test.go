@@ -12,7 +12,7 @@ func TestListStackscripts(t *testing.T) {
 	defer teardown()
 
 	filterOpt := linodego.NewListOptions(1, "")
-	stackscripts, err := client.ListStackscripts(context.TODO(), filterOpt)
+	stackscripts, err := client.ListStackscripts(context.Background(), filterOpt)
 	if err != nil {
 		t.Errorf("Error listing stackscripts, expected struct - error %v", err)
 	}

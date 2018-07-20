@@ -13,7 +13,7 @@ func TestListInstanceBackups(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestListInstanceBackups")
 	defer teardown()
 
-	backups, err := client.GetInstanceBackups(context.TODO(), TestInstanceID)
+	backups, err := client.GetInstanceBackups(context.Background(), TestInstanceID)
 	if err != nil {
 		t.Errorf("Error listing backups, expected struct, got error %v", err)
 	}
