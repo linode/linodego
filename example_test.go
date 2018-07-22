@@ -15,7 +15,7 @@ import (
 	"github.com/chiefy/linodego"
 )
 
-func ExampleListTypes_all() {
+func ExampleClient_ListTypes_all() {
 	// Example readers, Ignore this bit of setup code needed to record test fixtures
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListTypes_all")
 	defer teardown()
@@ -36,7 +36,7 @@ func ExampleListTypes_all() {
 // ExampleGetType_missing demonstrates the Error type, which allows inspecting
 // the request and response.  Error codes will be the HTTP status code,
 // or sub-100 for errors before the request was issued.
-func ExampleGetType_missing() {
+func ExampleClient_GetType_missing() {
 	// Example readers, Ignore this bit of setup code needed to record test fixtures
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleGetType_missing")
 	defer teardown()
@@ -58,7 +58,7 @@ func ExampleGetType_missing() {
 
 // ExampleListKernels_all Demonstrates how to list all Linode Kernels.  Paginated
 // responses are automatically traversed and concatenated when the ListOptions are nil
-func ExampleListKernels_all() {
+func ExampleClient_ListKernels_all() {
 	// Example readers, Ignore this bit of setup code needed to record test fixtures
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListKernels_all")
 	defer teardown()
@@ -75,7 +75,7 @@ func ExampleListKernels_all() {
 	// Fetched > 100: true
 }
 
-func ExampleListKernels_allWithOpts() {
+func ExampleClient_ListKernels_allWithOpts() {
 	// Example readers, Ignore this bit of setup code needed to record test fixtures
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListKernels_allWithOpts")
 	defer teardown()
@@ -98,7 +98,7 @@ func ExampleListKernels_allWithOpts() {
 
 }
 
-func ExampleListKernels_filtered() {
+func ExampleClient_ListKernels_filtered() {
 	// Example readers, Ignore this bit of setup code needed to record test fixtures
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListKernels_filtered")
 	defer teardown()
@@ -117,7 +117,7 @@ func ExampleListKernels_filtered() {
 	// linode/finnix-legacy Recovery - Finnix (kernel)
 }
 
-func ExampleListKernels_page1() {
+func ExampleClient_ListKernels_page1() {
 	// Example readers, Ignore this bit of setup code needed to record test fixtures
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListKernels_page1")
 	defer teardown()
@@ -141,7 +141,7 @@ func ExampleListKernels_page1() {
 	// Kernel Version in ID: true
 }
 
-func ExampleGetKernel_specific() {
+func ExampleClient_GetKernel_specific() {
 	// Example readers, Ignore this bit of setup code needed to record test fixtures
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleGetKernel_specific")
 	defer teardown()
@@ -168,7 +168,7 @@ func ExampleGetKernel_specific() {
 	// First Label still starts: Latest 32
 }
 
-func ExampleGetImage_missing() {
+func ExampleClient_GetImage_missing() {
 	// Example readers, Ignore this bit of setup code needed to record test fixtures
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleGetImage_missing")
 	defer teardown()
@@ -187,7 +187,7 @@ func ExampleGetImage_missing() {
 	// Response was: 404 NOT FOUND
 	// Error was: [404] Not found
 }
-func ExampleListImages_all() {
+func ExampleClient_ListImages_all() {
 	// Example readers, Ignore this bit of setup code needed to record test fixtures
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListImages_all")
 	defer teardown()
@@ -208,7 +208,7 @@ func ExampleListImages_all() {
 
 // ExampleListImages_notfound demonstrates that an empty slice is returned,
 // not an error, when a filter matches no results.
-func ExampleListImages_notfound() {
+func ExampleClient_ListImages_notfound() {
 	// Example readers, Ignore this bit of setup code needed to record test fixtures
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListImages_notfound")
 	defer teardown()
@@ -226,7 +226,7 @@ func ExampleListImages_notfound() {
 
 // ExampleListImages_notfound demonstrates that an error is returned by
 // the API and linodego when an invalid filter is provided
-func ExampleListImages_badfilter() {
+func ExampleClient_ListImages_badfilter() {
 	// Example readers, Ignore this bit of setup code needed to record test fixtures
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListImages_badfilter")
 	defer teardown()
@@ -244,7 +244,7 @@ func ExampleListImages_badfilter() {
 	// Images on bad filter: []
 }
 
-func ExampleListLongviewSubscriptions_page1() {
+func ExampleClient_ListLongviewSubscriptions_page1() {
 	// Example readers, Ignore this bit of setup code needed to record test fixtures
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListLongviewSubscriptions_page1")
 	defer teardown()
@@ -260,7 +260,7 @@ func ExampleListLongviewSubscriptions_page1() {
 	// Longview Subscription Types: 4
 }
 
-func ExampleListStackscripts_page1() {
+func ExampleClient_ListStackscripts_page1() {
 	// Example readers, Ignore this bit of setup code needed to record test fixtures
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListStackscripts_page1")
 	defer teardown()

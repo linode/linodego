@@ -38,7 +38,7 @@ func init() {
 	}
 }
 
-func ExampleGetAccount() {
+func ExampleClient_GetAccount() {
 	// Example readers, Ignore this bit of setup code needed to record test fixtures
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleGetAccount")
 	defer teardown()

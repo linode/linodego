@@ -9,7 +9,7 @@ import (
 	"github.com/chiefy/linodego"
 )
 
-func ExampleCreateStackscript() {
+func ExampleClient_CreateStackscript() {
 	// Example readers, Ignore this bit of setup code needed to record test fixtures
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleCreateStackscript")
 	defer teardown()

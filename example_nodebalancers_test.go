@@ -7,7 +7,7 @@ import (
 	"github.com/chiefy/linodego"
 )
 
-func ExampleCreateNodeBalancer() {
+func ExampleClient_CreateNodeBalancer() {
 	// Example readers, Ignore this bit of setup code needed to record test fixtures
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleCreateNodeBalancer")
 	defer teardown()
@@ -50,7 +50,7 @@ func ExampleCreateNodeBalancer() {
 	// ### Delete
 }
 
-func ExampleCreateNodeBalancerConfig() {
+func ExampleClient_CreateNodeBalancerConfig() {
 	// Example readers, Ignore this bit of setup code needed to record test fixtures
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleCreateNodeBalancerConfig")
 	defer teardown()
@@ -125,7 +125,7 @@ func ExampleCreateNodeBalancerConfig() {
 	// ### Delete
 }
 
-func ExampleCreateNodeBalancerNode() {
+func ExampleClient_CreateNodeBalancerNode() {
 	// Example readers, Ignore this bit of setup code needed to record test fixtures
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleCreateNodeBalancerNode")
 	defer teardown()
