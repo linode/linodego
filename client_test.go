@@ -9,6 +9,7 @@ import (
 
 	. "github.com/chiefy/linodego"
 	"github.com/dnaeon/go-vcr/recorder"
+	"golang.org/x/oauth2"
 )
 
 var testingMode = recorder.ModeDisabled
@@ -95,13 +96,21 @@ func createTestClient(t *testing.T, fixturesYaml string) (*Client, func()) {
 		recordStopper = func() {}
 	}
 
-	c = NewClient(apiKey, r)
+	tokenSource := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: *apiKey})
+	oc := &http.Client{
+		Transport: &oauth2.Transport{
+			Source: tokenSource,
+			Base:   r,
+		},
+	}
+
+	c = NewClient(oc)
 	c.SetDebug(debugAPI)
 	return &c, recordStopper
 }
 
 func TestClientAliases(t *testing.T) {
-	client := NewClient(&validTestAPIKey, nil)
+	client, _ := createTestClient(t, "")
 
 	if client.Images == nil {
 		t.Error("Expected alias for Images to return a *Resource")

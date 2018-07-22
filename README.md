@@ -50,7 +50,15 @@ func main() {
   if !ok {
     log.Fatal("Could not find LINODE_TOKEN, please assert it is set.")
   }
-  linodeClient, err := linodego.NewClient(apiKey)
+  tokenSource := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: apiKey})
+
+  oauth2Client := &http.Client{
+    Transport: &oauth2.Transport{
+      Source: tokenSource,
+    },
+  }
+
+  linodeClient, err := linodego.NewClient(oauth2Client)
   if err != nil {
     log.Fatal(err)
   }
@@ -60,7 +68,6 @@ func main() {
     log.Fatal(err)
   }
   fmt.Printf("%v", res)
-
 }
 ```
 

@@ -28,13 +28,13 @@ const (
 	APISecondsPerPoll = 10
 )
 
-var userAgent = fmt.Sprintf("linodego %s https://github.com/chiefy/linodego", Version)
+var DefaultUserAgent = fmt.Sprintf("linodego %s https://github.com/chiefy/linodego", Version)
 var envDebug = false
 
 // Client is a wrapper around the Resty client
 type Client struct {
-	apiToken  string
 	resty     *resty.Client
+	userAgent string
 	resources map[string]*Resource
 
 	Images                *Resource
@@ -84,7 +84,9 @@ func init() {
 
 // SetUserAgent sets a custom user-agent for HTTP requests
 func (c *Client) SetUserAgent(ua string) *Client {
-	userAgent = ua
+	c.userAgent = ua
+	c.resty.SetHeader("User-Agent", c.userAgent)
+
 	return c
 }
 
@@ -102,6 +104,11 @@ func (c *Client) SetDebug(debug bool) *Client {
 	return c
 }
 
+func (c *Client) SetURL(url string) *Client {
+	c.resty.SetHostURL(url)
+	return c
+}
+
 // Resource looks up a resource by name
 func (c Client) Resource(resourceName string) *Resource {
 	selectedResource, ok := c.resources[resourceName]
@@ -112,28 +119,11 @@ func (c Client) Resource(resourceName string) *Resource {
 }
 
 // NewClient factory to create new Client struct
-func NewClient(codeAPIToken *string, transport http.RoundTripper) (client Client) {
-	linodeAPIToken := ""
-
-	if codeAPIToken != nil {
-		linodeAPIToken = *codeAPIToken
-	} else if envAPIToken, ok := os.LookupEnv(APIEnvVar); ok {
-		linodeAPIToken = envAPIToken
-	}
-
-	if len(linodeAPIToken) == 0 || linodeAPIToken == "" {
-		log.Print("Could not find LINODE_TOKEN, authenticated endpoints will fail.")
-	}
-
-	restyClient := resty.New().
-		SetHostURL(fmt.Sprintf("%s://%s/%s", APIProto, APIHost, APIVersion)).
-		SetAuthToken(linodeAPIToken).
-		SetHeader("User-Agent", userAgent)
-
-	if transport != nil {
-		restyClient.SetTransport(transport)
-
-	}
+func NewClient(hc *http.Client) (client Client) {
+	restyClient := resty.NewWithClient(hc)
+	client.resty = restyClient
+	client.SetUserAgent(DefaultUserAgent)
+	client.SetURL(fmt.Sprintf("%s://%s/%s", APIProto, APIHost, APIVersion))
 
 	resources := map[string]*Resource{
 		stackscriptsName:          NewResource(&client, stackscriptsName, stackscriptsEndpoint, false, Stackscript{}, StackscriptsPagedResponse{}),
@@ -168,8 +158,6 @@ func NewClient(codeAPIToken *string, transport http.RoundTripper) (client Client
 		managedName:               NewResource(&client, managedName, managedEndpoint, false, nil, nil), // really?
 	}
 
-	client.apiToken = linodeAPIToken
-	client.resty = restyClient
 	client.resources = resources
 
 	client.SetDebug(envDebug)
