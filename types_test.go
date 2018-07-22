@@ -1,6 +1,7 @@
 package linodego_test
 
 import (
+	"context"
 	"testing"
 
 	"github.com/chiefy/linodego"
@@ -10,7 +11,7 @@ func TestGetType_missing(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestGetType_missing")
 	defer teardown()
 
-	i, err := client.GetType("does-not-exist")
+	i, err := client.GetType(context.Background(), "does-not-exist")
 	if err == nil {
 		t.Errorf("should have received an error requesting a missing image, got %v", i)
 	}
@@ -28,7 +29,7 @@ func TestGetType_found(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestGetType_found")
 	defer teardown()
 
-	i, err := client.GetType("g6-standard-1")
+	i, err := client.GetType(context.Background(), "g6-standard-1")
 	if err != nil {
 		t.Errorf("Error getting image, expected struct, got %v and error %v", i, err)
 	}
@@ -40,7 +41,7 @@ func TestListTypes(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestListTypes")
 	defer teardown()
 
-	i, err := client.ListTypes(nil)
+	i, err := client.ListTypes(context.Background(), nil)
 	if err != nil {
 		t.Errorf("Error listing images, expected struct, got error %v", err)
 	}

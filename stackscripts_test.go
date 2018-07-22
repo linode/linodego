@@ -1,6 +1,7 @@
 package linodego_test
 
 import (
+	"context"
 	"testing"
 
 	"github.com/chiefy/linodego"
@@ -11,7 +12,7 @@ func TestListStackscripts(t *testing.T) {
 	defer teardown()
 
 	filterOpt := linodego.NewListOptions(1, "")
-	stackscripts, err := client.ListStackscripts(filterOpt)
+	stackscripts, err := client.ListStackscripts(context.Background(), filterOpt)
 	if err != nil {
 		t.Errorf("Error listing stackscripts, expected struct - error %v", err)
 	}

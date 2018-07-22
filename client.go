@@ -1,6 +1,7 @@
 package linodego
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -88,9 +89,10 @@ func (c *Client) SetUserAgent(ua string) *Client {
 }
 
 // R wraps resty's R method
-func (c *Client) R() *resty.Request {
+func (c *Client) R(ctx context.Context) *resty.Request {
 	return c.resty.R().
 		SetHeader("Content-Type", "application/json").
+		SetContext(ctx).
 		SetError(APIError{})
 }
 
@@ -203,10 +205,10 @@ func NewClient(codeAPIToken *string, transport http.RoundTripper) (client Client
 
 // waitForInstanceStatus waits for the Linode instance to reach the desired state
 // before returning. It will timeout with an error after timeoutSeconds.
-func WaitForInstanceStatus(client *Client, instanceID int, status InstanceStatus, timeoutSeconds int) error {
+func WaitForInstanceStatus(ctx context.Context, client *Client, instanceID int, status InstanceStatus, timeoutSeconds int) error {
 	start := time.Now()
 	for {
-		instance, err := client.GetInstance(instanceID)
+		instance, err := client.GetInstance(ctx, instanceID)
 		if err != nil {
 			return err
 		}
@@ -225,10 +227,10 @@ func WaitForInstanceStatus(client *Client, instanceID int, status InstanceStatus
 
 // WaitForVolumeStatus waits for the Volume to reach the desired state
 // before returning. It will timeout with an error after timeoutSeconds.
-func WaitForVolumeStatus(client *Client, volumeID int, status VolumeStatus, timeoutSeconds int) error {
+func WaitForVolumeStatus(ctx context.Context, client *Client, volumeID int, status VolumeStatus, timeoutSeconds int) error {
 	start := time.Now()
 	for {
-		volume, err := client.GetVolume(volumeID)
+		volume, err := client.GetVolume(ctx, volumeID)
 		if err != nil {
 			return err
 		}
@@ -249,10 +251,10 @@ func WaitForVolumeStatus(client *Client, volumeID int, status VolumeStatus, time
 // before returning. An active Instance will not immediately attach or detach a volume, so the
 // the LinodeID must be polled to determine volume readiness from the API.
 // WaitForVolumeLinodeID will timeout with an error after timeoutSeconds.
-func WaitForVolumeLinodeID(client *Client, volumeID int, linodeID *int, timeoutSeconds int) error {
+func WaitForVolumeLinodeID(ctx context.Context, client *Client, volumeID int, linodeID *int, timeoutSeconds int) error {
 	start := time.Now()
 	for {
-		volume, err := client.GetVolume(volumeID)
+		volume, err := client.GetVolume(ctx, volumeID)
 		if err != nil {
 			return err
 		}
@@ -275,7 +277,7 @@ func WaitForVolumeLinodeID(client *Client, volumeID int, linodeID *int, timeoutS
 // WaitForEventFinished waits for an entity action to reach the 'finished' state
 // before returning. It will timeout with an error after timeoutSeconds.
 // If the event indicates a failure both the failed event and the error will be returned.
-func (c Client) WaitForEventFinished(id interface{}, entityType EntityType, action EventAction, minStart time.Time, timeoutSeconds int) (*Event, error) {
+func (c Client) WaitForEventFinished(ctx context.Context, id interface{}, entityType EntityType, action EventAction, minStart time.Time, timeoutSeconds int) (*Event, error) {
 	start := time.Now()
 	for {
 		filter, err := json.Marshal(map[string]interface{}{
@@ -307,7 +309,7 @@ func (c Client) WaitForEventFinished(id interface{}, entityType EntityType, acti
 		// Optimistically restrict results to page 1.  We should remove this when more
 		// precise filtering options exist.
 		listOptions := NewListOptions(1, string(filter))
-		events, err := c.ListEvents(listOptions)
+		events, err := c.ListEvents(ctx, listOptions)
 		if err != nil {
 			return nil, err
 		}
