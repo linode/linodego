@@ -104,7 +104,7 @@ func (c *Client) SetDebug(debug bool) *Client {
 	return c
 }
 
-func (c *Client) SetURL(url string) *Client {
+func (c *Client) SetBaseURL(url string) *Client {
 	c.resty.SetHostURL(url)
 	return c
 }
@@ -123,7 +123,7 @@ func NewClient(hc *http.Client) (client Client) {
 	restyClient := resty.NewWithClient(hc)
 	client.resty = restyClient
 	client.SetUserAgent(DefaultUserAgent)
-	client.SetURL(fmt.Sprintf("%s://%s/%s", APIProto, APIHost, APIVersion))
+	client.SetBaseURL(fmt.Sprintf("%s://%s/%s", APIProto, APIHost, APIVersion))
 
 	resources := map[string]*Resource{
 		stackscriptsName:          NewResource(&client, stackscriptsName, stackscriptsEndpoint, false, Stackscript{}, StackscriptsPagedResponse{}),
