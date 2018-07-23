@@ -1,13 +1,19 @@
 package linodego
 
 import (
+	"context"
 	"fmt"
 	"testing"
+
+	"golang.org/x/oauth2"
 )
 
 func TestResourceEndpoint(t *testing.T) {
 	apiKey := "MYFAKEAPIKEY"
-	client := NewClient(&apiKey, nil)
+
+	tokenSource := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: apiKey})
+	oc := oauth2.NewClient(context.Background(), tokenSource)
+	client := NewClient(oc)
 
 	r := client.Resource("images")
 	e, err := r.Endpoint()
@@ -21,7 +27,11 @@ func TestResourceEndpoint(t *testing.T) {
 }
 func TestResourceTemplatedendpointWithID(t *testing.T) {
 	apiKey := "MYFAKEAPIKEY"
-	client := NewClient(&apiKey, nil)
+
+	tokenSource := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: apiKey})
+	oc := oauth2.NewClient(context.Background(), tokenSource)
+	client := NewClient(oc)
+
 	backupID := 1234255
 	e, err := client.InstanceSnapshots.endpointWithID(backupID)
 	if err != nil {
