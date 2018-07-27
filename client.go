@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"math/rand"
 	"net/http"
 	"os"
 	"strconv"
@@ -71,6 +72,8 @@ type Client struct {
 }
 
 func init() {
+	rand.Seed(time.Now().UTC().UnixNano())
+
 	// Wether or not we will enable Resty debugging output
 	if envDebug, ok := os.LookupEnv("LINODE_DEBUG"); ok {
 		if apiDebug, err := strconv.ParseBool(envDebug); err == nil {
@@ -177,6 +180,7 @@ func NewClient(hc *http.Client) (client Client) {
 	client.Kernels = resources[kernelsName]
 	client.Types = resources[typesName]
 	client.Domains = resources[domainsName]
+	client.DomainRecords = resources[domainRecordsName]
 	client.Longview = resources[longviewName]
 	client.LongviewSubscriptions = resources[longviewsubscriptionsName]
 	client.NodeBalancers = resources[nodebalancersName]
