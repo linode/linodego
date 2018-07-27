@@ -2,6 +2,7 @@ package linodego_test
 
 import (
 	"context"
+	"encoding/json"
 	"testing"
 
 	"github.com/chiefy/linodego"
@@ -61,8 +62,12 @@ func TestListDomainRecords(t *testing.T) {
 	client, domain, record, teardown, err := setupDomainRecord(t, "fixtures/TestListDomainRecords")
 	defer teardown()
 
-	listOpts := linodego.ListOptions{Filter: "{\"name\":\"" + record.Name + "\"}"}
-	records, err := client.ListDomainRecords(context.Background(), domain.ID, &listOpts)
+	filter, err := json.Marshal(map[string]interface{}{
+		"name": record.Name,
+	})
+
+	listOpts := linodego.NewListOptions(0, string(filter))
+	records, err := client.ListDomainRecords(context.Background(), domain.ID, listOpts)
 	if err != nil {
 		t.Errorf("Error listing domains records, expected array, got error %v", err)
 	}
