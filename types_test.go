@@ -37,6 +37,7 @@ func TestGetType_found(t *testing.T) {
 		t.Errorf("Expected a specific image, but got a different one %v", i)
 	}
 }
+
 func TestListTypes(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestListTypes")
 	defer teardown()
@@ -47,5 +48,15 @@ func TestListTypes(t *testing.T) {
 	}
 	if len(i) == 0 {
 		t.Errorf("Expected a list of images, but got none %v", i)
+	}
+}
+
+func TestListTypes_429(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestListTypes_429")
+	defer teardown()
+
+	_, err := client.ListTypes(context.Background(), nil)
+	if err == nil {
+		t.Errorf("Error listing images, expected error")
 	}
 }
