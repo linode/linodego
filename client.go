@@ -37,6 +37,7 @@ type Client struct {
 	resty     *resty.Client
 	userAgent string
 	resources map[string]*Resource
+	debug     bool
 
 	Images                *Resource
 	InstanceDisks         *Resource
@@ -75,9 +76,10 @@ func init() {
 	rand.Seed(time.Now().UTC().UnixNano())
 
 	// Wether or not we will enable Resty debugging output
-	if envDebug, ok := os.LookupEnv("LINODE_DEBUG"); ok {
-		if apiDebug, err := strconv.ParseBool(envDebug); err == nil {
-			log.Println("[INFO] LINODE_DEBUG being set to", apiDebug)
+	if apiDebug, ok := os.LookupEnv("LINODE_DEBUG"); ok {
+		if parsed, err := strconv.ParseBool(apiDebug); err == nil {
+			envDebug = parsed
+			log.Println("[INFO] LINODE_DEBUG being set to", envDebug)
 		} else {
 			log.Println("[WARN] LINODE_DEBUG should be an integer, 0 or 1")
 		}
@@ -96,6 +98,7 @@ func (c *Client) SetUserAgent(ua string) *Client {
 // R wraps resty's R method
 func (c *Client) R(ctx context.Context) *resty.Request {
 	return c.resty.R().
+		ExpectContentType("application/json").
 		SetHeader("Content-Type", "application/json").
 		SetContext(ctx).
 		SetError(APIError{})
@@ -103,6 +106,7 @@ func (c *Client) R(ctx context.Context) *resty.Request {
 
 // SetDebug sets the debug on resty's client
 func (c *Client) SetDebug(debug bool) *Client {
+	c.debug = debug
 	c.resty.SetDebug(debug)
 	return c
 }
@@ -195,7 +199,7 @@ func NewClient(hc *http.Client) (client Client) {
 	return
 }
 
-// waitForInstanceStatus waits for the Linode instance to reach the desired state
+// WaitForInstanceStatus waits for the Linode instance to reach the desired state
 // before returning. It will timeout with an error after timeoutSeconds.
 func WaitForInstanceStatus(ctx context.Context, client *Client, instanceID int, status InstanceStatus, timeoutSeconds int) error {
 	start := time.Now()

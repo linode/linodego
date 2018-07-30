@@ -25,7 +25,12 @@ func init() {
 	}
 
 	if apiDebug, ok := os.LookupEnv("LINODE_DEBUG"); ok {
-		debugAPI, _ = strconv.ParseBool(apiDebug)
+		if parsed, err := strconv.ParseBool(apiDebug); err == nil {
+			debugAPI = parsed
+			log.Println("[INFO] LINODE_DEBUG being set to", debugAPI)
+		} else {
+			log.Println("[WARN] LINODE_DEBUG should be an integer, 0 or 1")
+		}
 	}
 
 	if envFixtureMode, ok := os.LookupEnv("LINODE_FIXTURE_MODE"); ok {
@@ -106,6 +111,7 @@ func createTestClient(t *testing.T, fixturesYaml string) (*Client, func()) {
 
 	c = NewClient(oc)
 	c.SetDebug(debugAPI)
+
 	return &c, recordStopper
 }
 
