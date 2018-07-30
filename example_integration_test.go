@@ -301,22 +301,24 @@ func Example() {
 	// ## Your Stackscripts: true
 }
 
-// randPassword generates a password sufficient to pass the Linode API standards,
-// don't use it outside of this example script where the Linode is immediately destroyed.
-func randPassword() string {
-	const lowerBytes = "abcdefghijklmnopqrstuvwxyz"
-	const upperBytes = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	const digits = "0123456789"
-	const symbols = "/-=+@#$^&*()~!`|[]{}\\?,.<>;:'"
+const lowerBytes = "abcdefghijklmnopqrstuvwxyz"
+const upperBytes = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+const digits = "0123456789"
+const symbols = "/-=+@#$^&*()~!`|[]{}\\?,.<>;:'"
 
-	length := 64 // must be divisible by character class count (4)
+func randString(length int, characterClasses ...string) string {
+	quotient := (0.0 + length) / len(characterClasses)
+	if quotient != int(quotient) {
+		panic("length must be divisible by characterClasses count")
+	}
+
 	b := make([]byte, length)
 
-	for i := 0; i < length; i += 4 {
-		b[i] = lowerBytes[rand.Intn(len(lowerBytes))]
-		b[i+1] = upperBytes[rand.Intn(len(upperBytes))]
-		b[i+2] = digits[rand.Intn(len(digits))]
-		b[i+3] = symbols[rand.Intn(len(symbols))]
+	for i := 0; i < length; i += len(characterClasses) {
+		for j, characterClass := range characterClasses {
+			randPos := rand.Intn(len(characterClass))
+			b[i+j] = characterClass[randPos]
+		}
 	}
 
 	for i := range b {
@@ -325,4 +327,14 @@ func randPassword() string {
 	}
 
 	return string(b)
+}
+
+// randPassword generates a password sufficient to pass the Linode API standards,
+// don't use it outside of this example script where the Linode is immediately destroyed.
+func randPassword() string {
+	return randString(64, lowerBytes, upperBytes, digits, symbols)
+}
+
+func randLabel() string {
+	return randString(32, lowerBytes, digits)
 }
