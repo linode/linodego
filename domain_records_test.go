@@ -45,7 +45,7 @@ func TestUpdateDomainRecord(t *testing.T) {
 	updateOpts := linodego.DomainRecordUpdateOptions{
 		Name: "renamed",
 	}
-	recordUpdated, err := client.UpdateDomainRecord(context.Background(), domain.ID, record.ID, updateOpts)
+	recordUpdated, err := client.UpdateDomainRecord(context.Background(), domain.ID, record.ID, &updateOpts)
 
 	if err != nil {
 		t.Errorf("Error updating domain record, %s", err)
