@@ -42,7 +42,7 @@ func TestUpdateDomain(t *testing.T) {
 	updateOpts := linodego.DomainUpdateOptions{
 		Domain: "linodego-renamed-domain.com",
 	}
-	domain, err = client.UpdateDomain(context.Background(), domain.ID, updateOpts)
+	domain, err = client.UpdateDomain(context.Background(), domain.ID, &updateOpts)
 	if err != nil {
 		t.Errorf("Error renaming domain, %s", err)
 	}

@@ -246,7 +246,7 @@ func (c *Client) CreateDomain(ctx context.Context, domain *DomainCreateOptions) 
 }
 
 // UpdateDomain updates the Domain with the specified id
-func (c *Client) UpdateDomain(ctx context.Context, id int, domain DomainUpdateOptions) (*Domain, error) {
+func (c *Client) UpdateDomain(ctx context.Context, id int, domain *DomainUpdateOptions) (*Domain, error) {
 	var body string
 	e, err := c.Domains.Endpoint()
 	if err != nil {

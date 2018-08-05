@@ -176,7 +176,7 @@ func (c *Client) CreateDomainRecord(ctx context.Context, domainID int, domainrec
 }
 
 // UpdateDomainRecord updates the DomainRecord with the specified id
-func (c *Client) UpdateDomainRecord(ctx context.Context, domainID int, id int, domainrecord DomainRecordUpdateOptions) (*DomainRecord, error) {
+func (c *Client) UpdateDomainRecord(ctx context.Context, domainID int, id int, domainrecord *DomainRecordUpdateOptions) (*DomainRecord, error) {
 	var body string
 	e, err := c.DomainRecords.endpointWithID(domainID)
 	if err != nil {
