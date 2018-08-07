@@ -383,7 +383,7 @@ func (c *Client) listHelperWithID(ctx context.Context, i interface{}, id int, op
 
 	if opts == nil {
 		for page := 2; page <= pages; page = page + 1 {
-			c.listHelper(ctx, i, &ListOptions{PageOptions: &PageOptions{Page: page}})
+			c.listHelperWithID(ctx, i, id, &ListOptions{PageOptions: &PageOptions{Page: page}})
 		}
 	} else {
 		if opts.PageOptions == nil {
@@ -392,7 +392,7 @@ func (c *Client) listHelperWithID(ctx context.Context, i interface{}, id int, op
 		if opts.Page == 0 {
 			for page := 2; page <= pages; page = page + 1 {
 				opts.Page = page
-				c.listHelper(ctx, i, opts)
+				c.listHelperWithID(ctx, i, id, opts)
 			}
 		}
 		opts.Results = results
