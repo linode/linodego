@@ -76,6 +76,27 @@ func TestListDomainRecords(t *testing.T) {
 	}
 }
 
+func TestListDomainRecordsMultiplePages(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode.")
+	}
+	client, domain, record, teardown, err := setupDomainRecord(t, "fixtures/TestListDomainRecordsMultiplePages")
+	defer teardown()
+
+	filter, err := json.Marshal(map[string]interface{}{
+		"name": record.Name,
+	})
+
+	listOpts := linodego.NewListOptions(0, string(filter))
+	records, err := client.ListDomainRecords(context.Background(), domain.ID, listOpts)
+	if err != nil {
+		t.Errorf("Error listing domains records, expected array, got error %v", err)
+	}
+	if len(records) != 2 {
+		t.Errorf("Expected ListDomainRecords to match one result")
+	}
+}
+
 func TestGetDomainRecord(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode.")
