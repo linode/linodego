@@ -451,7 +451,7 @@ func (c *Client) listHelperWithTwoIDs(ctx context.Context, i interface{}, firstI
 		if opts.Page == 0 {
 			for page := 2; page <= pages; page = page + 1 {
 				opts.Page = page
-				c.listHelper(ctx, i, opts)
+				c.listHelperWithTwoIDs(ctx, i, firstID, secondID, opts)
 			}
 		}
 		opts.Results = results
