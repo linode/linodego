@@ -359,7 +359,7 @@ type RebuildInstanceOptions struct {
 
 // RebuildInstance Deletes all Disks and Configs on this Linode,
 // then deploys a new Image to this Linode with the given attributes.
-func (c *Client) RebuildInstance(ctx context.Context, id int, opts *RebuildInstanceOptions) (*Instance, error) {
+func (c *Client) RebuildInstance(ctx context.Context, id int, opts RebuildInstanceOptions) (*Instance, error) {
 	o, err := json.Marshal(opts)
 	if err != nil {
 		return nil, NewError(err)
@@ -378,6 +378,33 @@ func (c *Client) RebuildInstance(ctx context.Context, id int, opts *RebuildInsta
 		return nil, err
 	}
 	return r.Result().(*Instance).fixDates(), nil
+}
+
+type RescueInstanceOptions struct {
+	Devices InstanceConfigDeviceMap `json:"devices"`
+}
+
+// RescueInstance reboots an instance into a safe environment for performing many system recovery and disk management tasks.
+// Rescue Mode is based on the Finnix recovery distribution, a self-contained and bootable Linux distribution.
+// You can also use Rescue Mode for tasks other than disaster recovery, such as formatting disks to use different filesystems,
+// copying data between disks, and downloading files from a disk via SSH and SFTP.
+func (c *Client) RescueInstance(ctx context.Context, id int, opts RescueInstanceOptions) (bool, error) {
+	o, err := json.Marshal(opts)
+	if err != nil {
+		return false, NewError(err)
+	}
+	b := string(o)
+	e, err := c.Instances.Endpoint()
+	if err != nil {
+		return false, err
+	}
+	e = fmt.Sprintf("%s/%d/rescue", e, id)
+
+	r, err := coupleAPIErrors(c.R(ctx).
+		SetBody(b).
+		Post(e))
+
+	return settleBoolResponseOrError(r, err)
 }
 
 // ResizeInstance resizes an instance to new Linode type
