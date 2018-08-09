@@ -132,7 +132,7 @@ func setupNodeBalancerNode(t *testing.T, fixturesYaml string) (*linodego.Client,
 	}
 
 	createOpts := testNodeBalancerNodeCreateOpts
-	node, err := client.CreateNodeBalancerNode(context.Background(), nodebalancer.ID, config.ID, &createOpts)
+	node, err := client.CreateNodeBalancerNode(context.Background(), nodebalancer.ID, config.ID, createOpts)
 	if err != nil {
 		t.Errorf("Error creating NodeBalancer Config Node, got error %v", err)
 	}

@@ -66,11 +66,11 @@ func Example() {
 	fmt.Println("### Error:", err)
 
 	if spendMoney {
-		linode, err = linodeClient.CreateInstance(context.Background(), &linodego.InstanceCreateOptions{Region: "us-central", Type: "g5-nanode-1"})
+		linode, err = linodeClient.CreateInstance(context.Background(), linodego.InstanceCreateOptions{Region: "us-central", Type: "g5-nanode-1"})
 		if err != nil {
 			log.Fatalln("* While creating instance: ", err)
 		}
-		linode, err = linodeClient.UpdateInstance(context.Background(), linode.ID, &linodego.InstanceUpdateOptions{Label: linode.Label + "-renamed"})
+		linode, err = linodeClient.UpdateInstance(context.Background(), linode.ID, linodego.InstanceUpdateOptions{Label: linode.Label + "-renamed"})
 		if err != nil {
 			log.Fatalln("* While renaming instance: ", err)
 		}

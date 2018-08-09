@@ -21,7 +21,7 @@ func ExampleClient_CreateNodeBalancer() {
 	}
 
 	createOpts := nb.GetCreateOptions()
-	nb, err := linodeClient.CreateNodeBalancer(context.Background(), &createOpts)
+	nb, err := linodeClient.CreateNodeBalancer(context.Background(), createOpts)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -58,7 +58,7 @@ func ExampleClient_CreateNodeBalancerConfig() {
 
 	fmt.Println("## NodeBalancer create")
 	clientConnThrottle := 20
-	nb, err := linodeClient.CreateNodeBalancer(context.Background(), &linodego.NodeBalancerCreateOptions{
+	nb, err := linodeClient.CreateNodeBalancer(context.Background(), linodego.NodeBalancerCreateOptions{
 		ClientConnThrottle: &clientConnThrottle,
 		Region:             "us-east",
 	})
@@ -79,7 +79,7 @@ func ExampleClient_CreateNodeBalancerConfig() {
 			CipherSuite:   linodego.CipherRecommended,
 		*/
 	}
-	nbc, err := linodeClient.CreateNodeBalancerConfig(context.Background(), nb.ID, &createOpts)
+	nbc, err := linodeClient.CreateNodeBalancerConfig(context.Background(), nb.ID, createOpts)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -133,7 +133,7 @@ func ExampleClient_CreateNodeBalancerNode() {
 
 	fmt.Println("## NodeBalancer create")
 	clientConnThrottle := 20
-	nb, err := linodeClient.CreateNodeBalancer(context.Background(), &linodego.NodeBalancerCreateOptions{
+	nb, err := linodeClient.CreateNodeBalancer(context.Background(), linodego.NodeBalancerCreateOptions{
 		ClientConnThrottle: &clientConnThrottle,
 		Region:             "us-east",
 	})
@@ -143,7 +143,7 @@ func ExampleClient_CreateNodeBalancerNode() {
 
 	fmt.Println("## NodeBalancer Config create")
 
-	nbc, err := linodeClient.CreateNodeBalancerConfig(context.Background(), nb.ID, &linodego.NodeBalancerConfigCreateOptions{
+	nbc, err := linodeClient.CreateNodeBalancerConfig(context.Background(), nb.ID, linodego.NodeBalancerConfigCreateOptions{
 		Port: 80,
 	})
 	if err != nil {
@@ -155,7 +155,7 @@ func ExampleClient_CreateNodeBalancerNode() {
 		Address: "192.168.129.255:80",
 		Label:   "192.168.129.255-80",
 	}
-	nbn, err := linodeClient.CreateNodeBalancerNode(context.Background(), nb.ID, nbc.ID, &createOpts)
+	nbn, err := linodeClient.CreateNodeBalancerNode(context.Background(), nb.ID, nbc.ID, createOpts)
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -123,7 +123,7 @@ func (c *Client) GetNodeBalancerNode(ctx context.Context, nodebalancerID int, co
 }
 
 // CreateNodeBalancerNode creates a NodeBalancerNode
-func (c *Client) CreateNodeBalancerNode(ctx context.Context, nodebalancerID int, configID int, createOpts *NodeBalancerNodeCreateOptions) (*NodeBalancerNode, error) {
+func (c *Client) CreateNodeBalancerNode(ctx context.Context, nodebalancerID int, configID int, createOpts NodeBalancerNodeCreateOptions) (*NodeBalancerNode, error) {
 	var body string
 	e, err := c.NodeBalancerNodes.endpointWithID(nodebalancerID, configID)
 	if err != nil {

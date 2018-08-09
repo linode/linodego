@@ -82,7 +82,7 @@ func setupDomain(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := testDomainCreateOpts
-	domain, err := client.CreateDomain(context.Background(), &createOpts)
+	domain, err := client.CreateDomain(context.Background(), createOpts)
 	if err != nil {
 		t.Errorf("Error listing domains, expected struct, got error %v", err)
 	}

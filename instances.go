@@ -180,7 +180,7 @@ func (c *Client) GetInstance(ctx context.Context, linodeID int) (*Instance, erro
 }
 
 // CreateInstance creates a Linode instance
-func (c *Client) CreateInstance(ctx context.Context, instance *InstanceCreateOptions) (*Instance, error) {
+func (c *Client) CreateInstance(ctx context.Context, instance InstanceCreateOptions) (*Instance, error) {
 	var body string
 	e, err := c.Instances.Endpoint()
 	if err != nil {
