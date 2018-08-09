@@ -2,6 +2,7 @@ package linodego_test
 
 import (
 	"context"
+	"strings"
 	"testing"
 
 	"github.com/chiefy/linodego"
@@ -28,8 +29,8 @@ func TestCreateNodeBalancer(t *testing.T) {
 		t.Errorf("Error creating nodebalancer: %v", err)
 	}
 
-	// when comparing fixtures to random value nodebalancer will differ
-	if *nodebalancer.Label != *testNodeBalancerCreateOpts.Label {
+	// when comparing fixtures to random value Label will differ, compare the known suffix
+	if !strings.Contains(*nodebalancer.Label, "-linodego-testing") {
 		t.Errorf("nodebalancer returned does not match nodebalancer create request")
 	}
 }
@@ -46,8 +47,13 @@ func TestUpdateNodeBalancer(t *testing.T) {
 		Label: &renamedLabel,
 	}
 	nodebalancer, err = client.UpdateNodeBalancer(context.Background(), nodebalancer.ID, updateOpts)
+
 	if err != nil {
 		t.Errorf("Error renaming nodebalancer, %s", err)
+	}
+
+	if !strings.Contains(*nodebalancer.Label, "-linodego-testing_r") {
+		t.Errorf("nodebalancer returned does not match nodebalancer create request")
 	}
 }
 
