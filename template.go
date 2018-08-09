@@ -2,6 +2,15 @@
 
 package linodego
 
+/*
+ - replace "Template" with "NameOfResource"
+ - replace "template" with "nameOfResource"
+ - When updating Template structs,
+   - use pointers where ever null'able would have a different meaning if the wrapper
+	 supplied "" or 0 instead
+ - Add "NameOfResource" to client.go, resources.go, pagination.go
+*/
+
 import (
 	"context"
 	"encoding/json"
@@ -15,6 +24,24 @@ type Template struct {
 	ID int
 	// UpdatedStr string `json:"updated"`
 	// Updated *time.Time `json:"-"`
+}
+
+type TemplateCreateOptions struct {
+}
+
+type TemplateUpdateOptions struct {
+}
+
+func (i Template) GetCreateOptions() (o TemplateCreateOptions) {
+	// o.Label = i.Label
+	// o.Description = copyString(o.Description)
+	return
+}
+
+func (i Template) GetUpdateOptions() (o TemplateCreateOptions) {
+	// o.Label = i.Label
+	// o.Description = copyString(o.Description)
+	return
 }
 
 // TemplatesPagedResponse represents a paginated Template API response
