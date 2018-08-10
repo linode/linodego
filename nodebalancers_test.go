@@ -91,7 +91,7 @@ func setupNodeBalancer(t *testing.T, fixturesYaml string) (*linodego.Client, *li
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := testNodeBalancerCreateOpts
-	nodebalancer, err := client.CreateNodeBalancer(context.Background(), &createOpts)
+	nodebalancer, err := client.CreateNodeBalancer(context.Background(), createOpts)
 	if err != nil {
 		t.Errorf("Error listing nodebalancers, expected struct, got error %v", err)
 	}

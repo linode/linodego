@@ -122,7 +122,7 @@ func setupDomainRecord(t *testing.T, fixturesYaml string) (*linodego.Client, *li
 	}
 
 	createOpts := testDomainRecordCreateOpts
-	record, err := client.CreateDomainRecord(context.Background(), domain.ID, &createOpts)
+	record, err := client.CreateDomainRecord(context.Background(), domain.ID, createOpts)
 	if err != nil {
 		t.Errorf("Error creating domain record, got error %v", err)
 	}

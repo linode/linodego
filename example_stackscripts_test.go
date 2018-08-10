@@ -30,7 +30,7 @@ func ExampleClient_CreateStackscript() {
 			stackscript.Label = "example stackscript " + time.Now().String()
 			stackscript.RevNote = "revision " + strconv.Itoa(rev)
 			stackscript.Script = "#!/bin/bash\n"
-			ss, err = linodeClient.CreateStackscript(context.Background(), &stackscript)
+			ss, err = linodeClient.CreateStackscript(context.Background(), stackscript)
 			if err != nil {
 				log.Fatal(err)
 			}

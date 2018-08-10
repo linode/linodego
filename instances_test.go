@@ -96,7 +96,7 @@ func setupInstance(t *testing.T, fixturesYaml string) (*linodego.Client, *linode
 		Region:   "us-west",
 		Type:     "g6-nanode-1",
 	}
-	instance, err := client.CreateInstance(context.Background(), &createOpts)
+	instance, err := client.CreateInstance(context.Background(), createOpts)
 	if err != nil {
 		t.Errorf("Error creating test Instance: %s", err)
 	}

@@ -2,7 +2,17 @@
 
 package linodego
 
+/*
+ - replace "Template" with "NameOfResource"
+ - replace "template" with "nameOfResource"
+ - When updating Template structs,
+   - use pointers where ever null'able would have a different meaning if the wrapper
+	 supplied "" or 0 instead
+ - Add "NameOfResource" to client.go, resources.go, pagination.go
+*/
+
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 
@@ -14,6 +24,24 @@ type Template struct {
 	ID int
 	// UpdatedStr string `json:"updated"`
 	// Updated *time.Time `json:"-"`
+}
+
+type TemplateCreateOptions struct {
+}
+
+type TemplateUpdateOptions struct {
+}
+
+func (i Template) GetCreateOptions() (o TemplateCreateOptions) {
+	// o.Label = i.Label
+	// o.Description = copyString(o.Description)
+	return
+}
+
+func (i Template) GetUpdateOptions() (o TemplateCreateOptions) {
+	// o.Label = i.Label
+	// o.Description = copyString(o.Description)
+	return
 }
 
 // TemplatesPagedResponse represents a paginated Template API response
@@ -62,12 +90,12 @@ func (v *Template) fixDates() *Template {
 }
 
 // GetTemplate gets the template with the provided ID
-func (c *Client) GetTemplate(id string) (*Template, error) {
+func (c *Client) GetTemplate(id int) (*Template, error) {
 	e, err := c.Templates.Endpoint()
 	if err != nil {
 		return nil, err
 	}
-	e = fmt.Sprintf("%s/%s", e, id)
+	e = fmt.Sprintf("%s/%d", e, id)
 	r, err := coupleAPIErrors(c.R().SetResult(&Template{}).Get(e))
 	if err != nil {
 		return nil, err
@@ -76,23 +104,22 @@ func (c *Client) GetTemplate(id string) (*Template, error) {
 }
 
 // CreateTemplate creates a Template
-func (c *Client) CreateTemplate(Template *TemplateCreateOptions) (*Template, error) {
+func (c *Client) CreateTemplate(ctx context.Context, createOpts TemplateCreateOptions) (*Template, error) {
 	var body string
 	e, err := c.Templates.Endpoint()
 	if err != nil {
 		return nil, err
 	}
 
-	req := c.R().SetResult(&Template{})
+	req := c.R(ctx).SetResult(&Template{})
 
-	if bodyData, err := json.Marshal(template); err == nil {
+	if bodyData, err := json.Marshal(createOpts); err == nil {
 		body = string(bodyData)
 	} else {
 		return nil, NewError(err)
 	}
 
 	r, err := coupleAPIErrors(req.
-		SetHeader("Content-Type", "application/json").
 		SetBody(body).
 		Post(e))
 
@@ -103,7 +130,7 @@ func (c *Client) CreateTemplate(Template *TemplateCreateOptions) (*Template, err
 }
 
 // UpdateTemplate updates the Template with the specified id
-func (c *Client) UpdateTemplate(id int, updateOpts TemplateUpdateOptions) (*Template, error) {
+func (c *Client) UpdateTemplate(ctx context.Context, id int, updateOpts TemplateUpdateOptions) (*Template, error) {
 	var body string
 	e, err := c.Templates.Endpoint()
 	if err != nil {
@@ -111,9 +138,9 @@ func (c *Client) UpdateTemplate(id int, updateOpts TemplateUpdateOptions) (*Temp
 	}
 	e = fmt.Sprintf("%s/%d", e, id)
 
-	req := c.R().SetResult(&Template{})
+	req := c.R(ctx).SetResult(&Template{})
 
-	if bodyData, err := json.Marshal(template); err == nil {
+	if bodyData, err := json.Marshal(updateOpts); err == nil {
 		body = string(bodyData)
 	} else {
 		return nil, NewError(err)
@@ -130,14 +157,14 @@ func (c *Client) UpdateTemplate(id int, updateOpts TemplateUpdateOptions) (*Temp
 }
 
 // DeleteTemplate deletes the Template with the specified id
-func (c *Client) DeleteTemplate(id int) error {
+func (c *Client) DeleteTemplate(ctx context.Context, id int) error {
 	e, err := c.Templates.Endpoint()
 	if err != nil {
 		return err
 	}
 	e = fmt.Sprintf("%s/%d", e, id)
 
-	if _, err := coupleAPIErrors(c.R().Delete(e)); err != nil {
+	if _, err := coupleAPIErrors(c.R(ctx).Delete(e)); err != nil {
 		return err
 	}
 
