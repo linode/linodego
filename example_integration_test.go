@@ -137,7 +137,7 @@ func Example() {
 		fmt.Println("### Created Disks")
 
 		createOpts := linodego.InstanceConfigCreateOptions{
-			Devices: &linodego.InstanceConfigDeviceMap{
+			Devices: linodego.InstanceConfigDeviceMap{
 				SDA: &linodego.InstanceConfigDevice{DiskID: diskDebian.ID},
 				SDB: &linodego.InstanceConfigDevice{DiskID: diskRaw.ID},
 				SDC: &linodego.InstanceConfigDevice{DiskID: diskSwap.ID},
