@@ -109,3 +109,36 @@ func setupInstance(t *testing.T, fixturesYaml string) (*linodego.Client, *linode
 	}
 	return client, instance, teardown, err
 }
+
+func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.Instance, func(), error) {
+	t.Helper()
+	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+	falseBool := false
+	createOpts := linodego.InstanceCreateOptions{
+		Label:  "linodego-test-instance",
+		Region: "us-west",
+		Type:   "g6-nanode-1",
+		Booted: &falseBool,
+	}
+	instance, err := client.CreateInstance(context.Background(), createOpts)
+	if err != nil {
+		t.Errorf("Error creating test Instance: %s", err)
+		return nil, nil, fixtureTeardown, err
+	}
+	configOpts := linodego.InstanceConfigCreateOptions{
+		Label: "linodego-test-config",
+	}
+	_, err = client.CreateInstanceConfig(context.Background(), instance.ID, configOpts)
+	if err != nil {
+		t.Errorf("Error creating config: %s", err)
+		return nil, nil, fixtureTeardown, err
+	}
+
+	teardown := func() {
+		if err := client.DeleteInstance(context.Background(), instance.ID); err != nil {
+			t.Errorf("Error deleting test Instance: %s", err)
+		}
+		fixtureTeardown()
+	}
+	return client, instance, teardown, err
+}

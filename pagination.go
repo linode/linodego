@@ -331,12 +331,6 @@ func (c *Client) listHelperWithID(ctx context.Context, i interface{}, id int, op
 			results = r.Result().(*DomainRecordsPagedResponse).Results
 			v.appendData(r.Result().(*DomainRecordsPagedResponse))
 		}
-	case *InstanceSnapshotsPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(InstanceSnapshotsPagedResponse{}).Get(v.endpointWithID(c, id))); err == nil {
-			pages = r.Result().(*InstanceSnapshotsPagedResponse).Pages
-			results = r.Result().(*InstanceSnapshotsPagedResponse).Results
-			v.appendData(r.Result().(*InstanceSnapshotsPagedResponse))
-		}
 	case *InstanceConfigsPagedResponse:
 		if r, err = coupleAPIErrors(req.SetResult(InstanceConfigsPagedResponse{}).Get(v.endpointWithID(c, id))); err == nil {
 			pages = r.Result().(*InstanceConfigsPagedResponse).Pages

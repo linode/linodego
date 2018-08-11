@@ -93,7 +93,7 @@ type InstanceCreateOptions struct {
 	Image           string            `json:"image,omitempty"`
 	BackupsEnabled  bool              `json:"backups_enabled,omitempty"`
 	SwapSize        *int              `json:"swap_size,omitempty"`
-	Booted          bool              `json:"booted,omitempty"`
+	Booted          *bool             `json:"booted,omitempty"`
 }
 
 // InstanceUpdateOptions is an options struct used when Updating an Instance

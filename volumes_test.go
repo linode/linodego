@@ -101,7 +101,7 @@ func TestWaitForVolumeLinodeID_nil(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error setting up volume test, %s", err)
 	}
-	err = linodego.WaitForVolumeLinodeID(context.Background(), client, volume.ID, nil, 3)
+	err = client.WaitForVolumeLinodeID(context.Background(), volume.ID, nil, 3)
 
 	if err != nil {
 		t.Errorf("Error getting volume %d, expected *LinodeVolume, got error %v", TestVolumeID, err)
@@ -122,7 +122,7 @@ func TestWaitForVolumeLinodeID(t *testing.T) {
 
 	createConfigOpts := linodego.InstanceConfigCreateOptions{
 		Label:   "test-instance-volume",
-		Devices: &linodego.InstanceConfigDeviceMap{},
+		Devices: linodego.InstanceConfigDeviceMap{},
 	}
 	config, err := client.CreateInstanceConfig(context.Background(), instance.ID, createConfigOpts)
 	if err != nil {
@@ -136,18 +136,18 @@ func TestWaitForVolumeLinodeID(t *testing.T) {
 	defer teardownVolume()
 
 	attachOptions := linodego.VolumeAttachOptions{LinodeID: instance.ID, ConfigID: config.ID}
-	if ok, err := client.AttachVolume(context.Background(), volume.ID, &attachOptions); err != nil {
+	if volumeAttached, err := client.AttachVolume(context.Background(), volume.ID, &attachOptions); err != nil {
 		t.Errorf("Error attaching volume, %s", err)
-	} else if !ok {
+	} else if volumeAttached.LinodeID == nil {
 		t.Errorf("Could not attach test volume to test instance")
 	}
 
-	err = linodego.WaitForVolumeLinodeID(context.Background(), client, volume.ID, nil, 3)
+	err = client.WaitForVolumeLinodeID(context.Background(), volume.ID, nil, 3)
 	if err == nil {
 		t.Errorf("Expected to timeout waiting for nil LinodeID on volume %d : %s", volume.ID, err)
 	}
 
-	err = linodego.WaitForVolumeLinodeID(context.Background(), client, volume.ID, &instance.ID, 3)
+	err = client.WaitForVolumeLinodeID(context.Background(), volume.ID, &instance.ID, 3)
 	if err != nil {
 		t.Errorf("Error waiting for volume %d to attach to instance %d: %s", volume.ID, instance.ID, err)
 	}
