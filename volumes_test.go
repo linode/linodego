@@ -101,7 +101,7 @@ func TestWaitForVolumeLinodeID_nil(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error setting up volume test, %s", err)
 	}
-	err = client.WaitForVolumeLinodeID(context.Background(), volume.ID, nil, 3)
+	_, err = client.WaitForVolumeLinodeID(context.Background(), volume.ID, nil, 3)
 
 	if err != nil {
 		t.Errorf("Error getting volume %d, expected *LinodeVolume, got error %v", TestVolumeID, err)
@@ -142,12 +142,12 @@ func TestWaitForVolumeLinodeID(t *testing.T) {
 		t.Errorf("Could not attach test volume to test instance")
 	}
 
-	err = client.WaitForVolumeLinodeID(context.Background(), volume.ID, nil, 3)
+	_, err = client.WaitForVolumeLinodeID(context.Background(), volume.ID, nil, 3)
 	if err == nil {
 		t.Errorf("Expected to timeout waiting for nil LinodeID on volume %d : %s", volume.ID, err)
 	}
 
-	err = client.WaitForVolumeLinodeID(context.Background(), volume.ID, &instance.ID, 3)
+	_, err = client.WaitForVolumeLinodeID(context.Background(), volume.ID, &instance.ID, 3)
 	if err != nil {
 		t.Errorf("Error waiting for volume %d to attach to instance %d: %s", volume.ID, instance.ID, err)
 	}
