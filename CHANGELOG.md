@@ -1,5 +1,14 @@
 # Change Log
 
+<a name="0.3.0"></a>
+
+## [0.3.0](https://github.com/linode/linodego/compare/v0.2.0...0.3.0) (2018-08-15)
+
+### Breaking Changes
+
+* WaitForVolumeLinodeID return fetch volume for consistency with out WaitFors
+* Moved linodego from chiefy to github.com/linode. Thanks [@chiefy](https://github.com/chiefy)!
+
 <a name="v0.2.0"></a>
 
 ## [v0.2.0](https://github.com/linode/linodego/compare/v0.1.1...v0.2.0) (2018-08-11)
