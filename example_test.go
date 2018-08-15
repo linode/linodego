@@ -13,7 +13,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/chiefy/linodego"
+	"github.com/linode/linodego"
 )
 
 func ExampleClient_ListTypes_all() {

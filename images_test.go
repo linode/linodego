@@ -3,7 +3,7 @@ package linodego_test
 import (
 	"context"
 
-	. "github.com/chiefy/linodego"
+	. "github.com/linode/linodego"
 
 	"testing"
 )

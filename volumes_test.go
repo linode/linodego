@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/chiefy/linodego"
+	"github.com/linode/linodego"
 )
 
 func TestCreateVolume(t *testing.T) {

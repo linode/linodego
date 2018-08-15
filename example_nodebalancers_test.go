@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/chiefy/linodego"
+	"github.com/linode/linodego"
 )
 
 func ExampleClient_CreateNodeBalancer() {

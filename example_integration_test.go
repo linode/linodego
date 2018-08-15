@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/chiefy/linodego"
+	"github.com/linode/linodego"
 )
 
 var spendMoney = false

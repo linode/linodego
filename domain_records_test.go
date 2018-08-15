@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/chiefy/linodego"
+	"github.com/linode/linodego"
 )
 
 var (

@@ -2,7 +2,7 @@
 
 <a name="v0.2.0"></a>
 
-## [v0.2.0](https://github.com/chiefy/linodego/compare/v0.1.1...v0.2.0) (2018-08-11)
+## [v0.2.0](https://github.com/linode/linodego/compare/v0.1.1...v0.2.0) (2018-08-11)
 
 ### Breaking Changes
 
@@ -53,7 +53,7 @@
 
 <a name="v0.1.1"></a>
 
-## [v0.1.1](https://github.com/chiefy/linodego/compare/v0.0.1...v0.1.0) (2018-07-30)
+## [v0.1.1](https://github.com/linode/linodego/compare/v0.0.1...v0.1.0) (2018-07-30)
 
 Adds more Domain handling
 
@@ -68,7 +68,7 @@ Adds more Domain handling
 
 <a name="v0.1.0"></a>
 
-## [v0.1.0](https://github.com/chiefy/linodego/compare/v0.0.1...v0.1.0) (2018-07-23)
+## [v0.1.0](https://github.com/linode/linodego/compare/v0.0.1...v0.1.0) (2018-07-23)
 
 Deals with NewClient and context for all http requests
 
