@@ -212,11 +212,9 @@ func (c *Client) MarkEventRead(ctx context.Context, event *Event) error {
 	e := event.endpointWithID(c)
 	e = fmt.Sprintf("%s/read", e)
 
-	if _, err := coupleAPIErrors(c.R(ctx).Post(e)); err != nil {
-		return err
-	}
+	_, err := coupleAPIErrors(c.R(ctx).Post(e))
 
-	return nil
+	return err
 }
 
 // MarkEventsSeen marks all Events up to and including this Event by ID as seen.
@@ -224,9 +222,7 @@ func (c *Client) MarkEventsSeen(ctx context.Context, event *Event) error {
 	e := event.endpointWithID(c)
 	e = fmt.Sprintf("%s/seen", e)
 
-	if _, err := coupleAPIErrors(c.R(ctx).Post(e)); err != nil {
-		return err
-	}
+	_, err := coupleAPIErrors(c.R(ctx).Post(e))
 
-	return nil
+	return err
 }

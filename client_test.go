@@ -7,8 +7,8 @@ import (
 	"strconv"
 	"testing"
 
-	. "github.com/linode/linodego"
 	"github.com/dnaeon/go-vcr/recorder"
+	. "github.com/linode/linodego"
 	"golang.org/x/oauth2"
 )
 

@@ -215,8 +215,6 @@ func (c *Client) DeleteInstanceDisk(ctx context.Context, linodeID int, diskID in
 	}
 	e = fmt.Sprintf("%s/%d", e, diskID)
 
-	if _, err := coupleAPIErrors(c.R(ctx).Delete(e)); err != nil {
-		return err
-	}
-	return nil
+	_, err = coupleAPIErrors(c.R(ctx).Delete(e))
+	return err
 }

@@ -81,8 +81,7 @@ func copyInt(iPtr *int) *int {
 	if iPtr == nil {
 		return nil
 	}
-	var t int
-	t = *iPtr
+	var t int = *iPtr
 	return &t
 }
 
@@ -90,8 +89,7 @@ func copyString(sPtr *string) *string {
 	if sPtr == nil {
 		return nil
 	}
-	var t string
-	t = *sPtr
+	var t string = *sPtr
 	return &t
 }
 
@@ -210,9 +208,6 @@ func (c *Client) DeleteDomainRecord(ctx context.Context, domainID int, id int) e
 	}
 	e = fmt.Sprintf("%s/%d", e, id)
 
-	if _, err := coupleAPIErrors(c.R(ctx).Delete(e)); err != nil {
-		return err
-	}
-
-	return nil
+	_, err = coupleAPIErrors(c.R(ctx).Delete(e))
+	return err
 }

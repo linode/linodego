@@ -183,9 +183,6 @@ func (c *Client) DeleteNodeBalancerNode(ctx context.Context, nodebalancerID int,
 	}
 	e = fmt.Sprintf("%s/%d", e, nodeID)
 
-	if _, err := coupleAPIErrors(c.R(ctx).Delete(e)); err != nil {
-		return err
-	}
-
-	return nil
+	_, err = coupleAPIErrors(c.R(ctx).Delete(e))
+	return err
 }

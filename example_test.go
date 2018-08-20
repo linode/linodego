@@ -26,7 +26,7 @@ func ExampleClient_ListTypes_all() {
 		log.Fatal(err)
 	}
 
-	fmt.Println("ID contains class:", strings.Index(types[0].ID, string(types[0].Class)) > -1)
+	fmt.Println("ID contains class:", strings.Contains(types[0].ID, string(types[0].Class)))
 	fmt.Println("Plan has Ram:", types[0].Memory > 0)
 
 	// Output:
@@ -133,7 +133,7 @@ func ExampleClient_ListKernels_page1() {
 	fmt.Println("Results > 100:", filterOpt.Results > 100)
 	fmt.Println("Pages > 1:", filterOpt.Pages > 1)
 	k := kernels[len(kernels)-1]
-	fmt.Println("Kernel Version in ID:", strings.Index(k.ID, k.Label) > -1)
+	fmt.Println("Kernel Version in ID:", strings.Contains(k.ID, k.Label))
 
 	// Output:
 	// Fetched == 100: true
@@ -276,7 +276,7 @@ func ExampleClient_ListStackscripts_page1() {
 	fmt.Println("Results > 100:", filterOpt.Results > 100)
 	fmt.Println("Pages > 1:", filterOpt.Pages > 1)
 	s := scripts[len(scripts)-1]
-	fmt.Println("StackScript Script has shebang:", strings.Index(s.Script, "#!/") > -1)
+	fmt.Println("StackScript Script has shebang:", strings.Contains(s.Script, "#!/"))
 
 	// Output:
 	// Fetched == 100: true
