@@ -13,7 +13,7 @@ type InstanceConfig struct {
 	CreatedStr string `json:"created"`
 	UpdatedStr string `json:"updated"`
 
-	ID          int
+	ID          int                      `json:"id"`
 	Label       string                   `json:"label"`
 	Comments    string                   `json:"comments"`
 	Devices     *InstanceConfigDeviceMap `json:"devices"`
@@ -55,7 +55,7 @@ type InstanceConfigHelpers struct {
 // InstanceConfigsPagedResponse represents a paginated InstanceConfig API response
 type InstanceConfigsPagedResponse struct {
 	*PageOptions
-	Data []*InstanceConfig
+	Data []*InstanceConfig `json:"data"`
 }
 
 // InstanceConfigCreateOptions are InstanceConfig settings that can be used at creation

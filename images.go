@@ -13,14 +13,14 @@ import (
 type Image struct {
 	CreatedStr  string `json:"created"`
 	UpdatedStr  string `json:"updated"`
-	ID          string
-	Label       string
-	Description string
-	Type        string
-	IsPublic    bool `json:"is_public"`
-	Size        int
-	Vendor      string
-	Deprecated  bool
+	ID          string `json:"id"`
+	Label       string `json:"label"`
+	Description string `json:"description"`
+	Type        string `json:"type"`
+	IsPublic    bool   `json:"is_public"`
+	Size        int    `json:"size"`
+	Vendor      string `json:"vendor"`
+	Deprecated  bool   `json:"deprecated"`
 
 	CreatedBy string     `json:"created_by"`
 	Created   *time.Time `json:"-"`
@@ -53,7 +53,7 @@ func (i Image) GetUpdateOptions() (iu ImageUpdateOptions) {
 // ImagesPagedResponse represents a linode API response for listing of images
 type ImagesPagedResponse struct {
 	*PageOptions
-	Data []*Image
+	Data []*Image `json:"data"`
 }
 
 func (ImagesPagedResponse) endpoint(c *Client) string {

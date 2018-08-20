@@ -13,34 +13,34 @@ type Event struct {
 	CreatedStr string `json:"created"`
 
 	// The unique ID of this Event.
-	ID int
+	ID int `json:"id"`
 
 	// Current status of the Event, Enum: "failed" "finished" "notification" "scheduled" "started"
-	Status EventStatus
+	Status EventStatus `json:"status"`
 
 	// The action that caused this Event. New actions may be added in the future.
-	Action EventAction
+	Action EventAction `json:"action"`
 
 	// A percentage estimating the amount of time remaining for an Event. Returns null for notification events.
 	PercentComplete int `json:"percent_complete"`
 
 	// The rate of completion of the Event. Only some Events will return rate; for example, migration and resize Events.
-	Rate string
+	Rate string `json:"rate"`
 
 	// If this Event has been read.
-	Read bool
+	Read bool `json:"read"`
 
 	// If this Event has been seen.
-	Seen bool
+	Seen bool `json:"seen"`
 
 	// The estimated time remaining until the completion of this Event. This value is only returned for in-progress events.
-	TimeRemaining int
+	TimeRemaining int `json:"time_remaining"`
 
 	// The username of the User who caused the Event.
-	Username string
+	Username string `json:"username"`
 
 	// Detailed information about the Event's entity, including ID, type, label, and URL used to access it.
-	Entity *EventEntity
+	Entity *EventEntity `json:"entity"`
 
 	// When this Event was created.
 	Created *time.Time `json:"-"`
@@ -131,16 +131,16 @@ const (
 // can be used to access it.
 type EventEntity struct {
 	// ID may be a string or int, it depends on the EntityType
-	ID    interface{}
-	Label string
-	Type  EntityType
-	URL   string
+	ID    interface{} `json:"id"`
+	Label string      `json:"label"`
+	Type  EntityType  `json:"type"`
+	URL   string      `json:"url"`
 }
 
 // EventsPagedResponse represents a paginated Events API response
 type EventsPagedResponse struct {
 	*PageOptions
-	Data []*Event
+	Data []*Event `json:"data"`
 }
 
 // endpoint gets the endpoint URL for Event

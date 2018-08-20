@@ -10,17 +10,17 @@ import (
 
 // DomainRecord represents a DomainRecord object
 type DomainRecord struct {
-	ID       int
-	Type     DomainRecordType
-	Name     string
-	Target   string
-	Priority int
-	Weight   int
-	Port     int
-	Service  *string
-	Protocol *string
-	TTLSec   int `json:"ttl_sec"`
-	Tag      *string
+	ID       int              `json:"id"`
+	Type     DomainRecordType `json:"type"`
+	Name     string           `json:"name"`
+	Target   string           `json:"target"`
+	Priority int              `json:"priority"`
+	Weight   int              `json:"weight"`
+	Port     int              `json:"port"`
+	Service  *string          `json:"service"`
+	Protocol *string          `json:"protocol"`
+	TTLSec   int              `json:"ttl_sec"`
+	Tag      *string          `json:"tag"`
 }
 
 type DomainRecordCreateOptions struct {
@@ -98,7 +98,7 @@ func copyString(sPtr *string) *string {
 // DomainRecordsPagedResponse represents a paginated DomainRecord API response
 type DomainRecordsPagedResponse struct {
 	*PageOptions
-	Data []*DomainRecord
+	Data []*DomainRecord `json:"data"`
 }
 
 // endpoint gets the endpoint URL for InstanceConfig

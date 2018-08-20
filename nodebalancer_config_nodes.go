@@ -9,14 +9,14 @@ import (
 )
 
 type NodeBalancerNode struct {
-	ID             int
-	Address        string
-	Label          string
-	Status         string
-	Weight         int
-	Mode           NodeMode
-	ConfigID       int `json:"config_id"`
-	NodeBalancerID int `json:"nodebalancer_id"`
+	ID             int      `json:"id"`
+	Address        string   `json:"address"`
+	Label          string   `json:"label"`
+	Status         string   `json:"status"`
+	Weight         int      `json:"weight"`
+	Mode           NodeMode `json:"mode"`
+	ConfigID       int      `json:"config_id"`
+	NodeBalancerID int      `json:"nodebalancer_id"`
 }
 
 // NodeMode is the mode a NodeBalancer should use when sending traffic to a NodeBalancer Node
@@ -68,7 +68,7 @@ func (i NodeBalancerNode) GetUpdateOptions() NodeBalancerNodeUpdateOptions {
 // NodeBalancerNodesPagedResponse represents a paginated NodeBalancerNode API response
 type NodeBalancerNodesPagedResponse struct {
 	*PageOptions
-	Data []*NodeBalancerNode
+	Data []*NodeBalancerNode `json:"data"`
 }
 
 // endpoint gets the endpoint URL for NodeBalancerNode
