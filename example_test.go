@@ -26,7 +26,7 @@ func ExampleClient_ListTypes_all() {
 		log.Fatal(err)
 	}
 
-	fmt.Println("ID contains class:", strings.Index(types[0].ID, types[0].Class) > -1)
+	fmt.Println("ID contains class:", strings.Index(types[0].ID, string(types[0].Class)) > -1)
 	fmt.Println("Plan has Ram:", types[0].Memory > 0)
 
 	// Output:
