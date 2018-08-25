@@ -30,6 +30,14 @@
 
 [[projects]]
   branch = "master"
+  digest = "1:6ae5a13d9eb0768f382705a404ea895ad6190944526269d8e2947a5d52ddb1f1"
+  name = "github.com/kubernetes/repo-infra"
+  packages = ["verify/boilerplate/test"]
+  pruneopts = "UT"
+  revision = "df7dea618361619dcad654691fd5c4720018083e"
+
+[[projects]]
+  branch = "master"
   digest = "1:33b9d71d1dde2106309484a388eb7ba53cd1f67014e34a71f7b3dbc20bd186e5"
   name = "golang.org/x/net"
   packages = [
@@ -105,6 +113,7 @@
   input-imports = [
     "github.com/dnaeon/go-vcr/recorder",
     "github.com/go-resty/resty",
+    "github.com/kubernetes/repo-infra/verify/boilerplate/test",
     "golang.org/x/oauth2",
   ]
   solver-name = "gps-cdcl"

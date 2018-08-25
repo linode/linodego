@@ -24,7 +24,12 @@
 #   go-tests = true
 #   unused-packages = true
 
+required = ["github.com/kubernetes/repo-infra/verify/boilerplate/test"]
+ignored = ["github.com/kubernetes/repo-infra/kazel"]
 
 [prune]
   go-tests = true
-  unused-packages = true
+
+[[constraint]]
+  branch = "master"
+  name = "github.com/kubernetes/repo-infra"
