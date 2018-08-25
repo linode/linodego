@@ -1,6 +1,25 @@
 language: "go"
+
+matrix:
+  allow_failures:
+  - go: tip
+
 go:
   - "1.10"
-script: "touch .env && make test ARGS='-coverprofile=coverage.txt -covermode=atomic'"
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
+  - tip
+
+before_install:
+  - go get github.com/mattn/goveralls
+  - go get github.com/lawrencewoodman/roveralls
+  - go get github.com/alecthomas/gometalinter
+
+install:
+  - gometalinter --install
+
+script:
+  - touch .env
+  - make vendor
+  - vendor/github.com/kubernetes/repo-infra/verify/verify-go-src.sh -v --rootdir $(pwd)
+  - make
+  - travis_wait 20 roveralls
+  # - goveralls -coverprofile=roveralls.coverprofile -service=travis-ci
