@@ -149,11 +149,6 @@ func (resp *InstancesPagedResponse) appendData(r *InstancesPagedResponse) {
 	(*resp).Data = append(resp.Data, r.Data...)
 }
 
-// setResult sets the Resty response type of Instance
-func (InstancesPagedResponse) setResult(r *resty.Request) {
-	r.SetResult(InstancesPagedResponse{})
-}
-
 // ListInstances lists linode instances
 func (c *Client) ListInstances(ctx context.Context, opts *ListOptions) ([]*Instance, error) {
 	response := InstancesPagedResponse{}

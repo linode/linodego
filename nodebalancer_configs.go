@@ -4,8 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-
-	"github.com/go-resty/resty"
 )
 
 // NodeBalancerConfig objects allow a NodeBalancer to accept traffic on a new port
@@ -166,11 +164,6 @@ func (NodeBalancerConfigsPagedResponse) endpointWithID(c *Client, id int) string
 // appendData appends NodeBalancerConfigs when processing paginated NodeBalancerConfig responses
 func (resp *NodeBalancerConfigsPagedResponse) appendData(r *NodeBalancerConfigsPagedResponse) {
 	(*resp).Data = append(resp.Data, r.Data...)
-}
-
-// setResult sets the Resty response type of NodeBalancerConfig
-func (NodeBalancerConfigsPagedResponse) setResult(r *resty.Request) {
-	r.SetResult(NodeBalancerConfigsPagedResponse{})
 }
 
 // ListNodeBalancerConfigs lists NodeBalancerConfigs

@@ -4,8 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-
-	"github.com/go-resty/resty"
 )
 
 // NodeBalancerNode objects represent a backend that can accept traffic for a NodeBalancer Config
@@ -88,11 +86,6 @@ func (NodeBalancerNodesPagedResponse) endpointWithTwoIDs(c *Client, nodebalancer
 // appendData appends NodeBalancerNodes when processing paginated NodeBalancerNode responses
 func (resp *NodeBalancerNodesPagedResponse) appendData(r *NodeBalancerNodesPagedResponse) {
 	(*resp).Data = append(resp.Data, r.Data...)
-}
-
-// setResult sets the Resty response type of NodeBalancerNode
-func (NodeBalancerNodesPagedResponse) setResult(r *resty.Request) {
-	r.SetResult(NodeBalancerNodesPagedResponse{})
 }
 
 // ListNodeBalancerNodes lists NodeBalancerNodes

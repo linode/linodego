@@ -5,8 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
-
-	"github.com/go-resty/resty"
 )
 
 // NodeBalancer represents a NodeBalancer object
@@ -90,10 +88,6 @@ func (NodeBalancersPagedResponse) endpoint(c *Client) string {
 
 func (resp *NodeBalancersPagedResponse) appendData(r *NodeBalancersPagedResponse) {
 	(*resp).Data = append(resp.Data, r.Data...)
-}
-
-func (NodeBalancersPagedResponse) setResult(r *resty.Request) {
-	r.SetResult(NodeBalancersPagedResponse{})
 }
 
 // ListNodeBalancers lists NodeBalancers

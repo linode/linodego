@@ -5,8 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
-
-	"github.com/go-resty/resty"
 )
 
 // InstanceDisk represents an Instance Disk object
@@ -75,11 +73,6 @@ func (InstanceDisksPagedResponse) endpointWithID(c *Client, id int) string {
 // appendData appends InstanceDisks when processing paginated InstanceDisk responses
 func (resp *InstanceDisksPagedResponse) appendData(r *InstanceDisksPagedResponse) {
 	(*resp).Data = append(resp.Data, r.Data...)
-}
-
-// setResult sets the Resty response type of InstanceDisk
-func (InstanceDisksPagedResponse) setResult(r *resty.Request) {
-	r.SetResult(InstanceDisksPagedResponse{})
 }
 
 // ListInstanceDisks lists InstanceDisks

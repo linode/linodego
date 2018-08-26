@@ -4,8 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-
-	"github.com/go-resty/resty"
 )
 
 // Domain represents a Domain object
@@ -190,11 +188,6 @@ func (DomainsPagedResponse) endpoint(c *Client) string {
 // appendData appends Domains when processing paginated Domain responses
 func (resp *DomainsPagedResponse) appendData(r *DomainsPagedResponse) {
 	(*resp).Data = append(resp.Data, r.Data...)
-}
-
-// setResult sets the Resty response type of Domain
-func (DomainsPagedResponse) setResult(r *resty.Request) {
-	r.SetResult(DomainsPagedResponse{})
 }
 
 // ListDomains lists Domains

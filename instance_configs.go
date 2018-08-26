@@ -5,8 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
-
-	"github.com/go-resty/resty"
 )
 
 // InstanceConfig represents all of the settings that control the boot and run configuration of a Linode Instance
@@ -136,11 +134,6 @@ func (InstanceConfigsPagedResponse) endpointWithID(c *Client, id int) string {
 // appendData appends InstanceConfigs when processing paginated InstanceConfig responses
 func (resp *InstanceConfigsPagedResponse) appendData(r *InstanceConfigsPagedResponse) {
 	(*resp).Data = append(resp.Data, r.Data...)
-}
-
-// setResult sets the Resty response type of InstanceConfig
-func (InstanceConfigsPagedResponse) setResult(r *resty.Request) {
-	r.SetResult(InstanceConfigsPagedResponse{})
 }
 
 // ListInstanceConfigs lists InstanceConfigs

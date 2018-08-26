@@ -4,8 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-
-	"github.com/go-resty/resty"
 )
 
 // DomainRecord represents a DomainRecord object
@@ -116,11 +114,6 @@ func (DomainRecordsPagedResponse) endpointWithID(c *Client, id int) string {
 // appendData appends DomainRecords when processing paginated DomainRecord responses
 func (resp *DomainRecordsPagedResponse) appendData(r *DomainRecordsPagedResponse) {
 	(*resp).Data = append(resp.Data, r.Data...)
-}
-
-// setResult sets the Resty response type of DomainRecord
-func (DomainRecordsPagedResponse) setResult(r *resty.Request) {
-	r.SetResult(DomainRecordsPagedResponse{})
 }
 
 // ListDomainRecords lists DomainRecords

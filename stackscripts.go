@@ -5,8 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
-
-	"github.com/go-resty/resty"
 )
 
 // Stackscript represents a Linode StackScript
@@ -106,11 +104,6 @@ func (StackscriptsPagedResponse) endpoint(c *Client) string {
 // appendData appends Stackscripts when processing paginated Stackscript responses
 func (resp *StackscriptsPagedResponse) appendData(r *StackscriptsPagedResponse) {
 	(*resp).Data = append(resp.Data, r.Data...)
-}
-
-// setResult sets the Resty response type of Stackscript
-func (StackscriptsPagedResponse) setResult(r *resty.Request) {
-	r.SetResult(StackscriptsPagedResponse{})
 }
 
 // ListStackscripts lists Stackscripts

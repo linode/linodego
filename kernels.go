@@ -3,8 +3,6 @@ package linodego
 import (
 	"context"
 	"fmt"
-
-	"github.com/go-resty/resty"
 )
 
 // LinodeKernel represents a linode kernel object
@@ -44,10 +42,6 @@ func (LinodeKernelsPagedResponse) endpoint(c *Client) string {
 
 func (resp *LinodeKernelsPagedResponse) appendData(r *LinodeKernelsPagedResponse) {
 	(*resp).Data = append(resp.Data, r.Data...)
-}
-
-func (LinodeKernelsPagedResponse) setResult(r *resty.Request) {
-	r.SetResult(LinodeKernelsPagedResponse{})
 }
 
 // GetKernel gets the kernel with the provided ID

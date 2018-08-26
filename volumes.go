@@ -5,8 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
-
-	"github.com/go-resty/resty"
 )
 
 // VolumeStatus indicates the status of the Volume
@@ -78,11 +76,6 @@ func (resp *VolumesPagedResponse) appendData(r *VolumesPagedResponse) {
 	(*resp).Data = append(resp.Data, r.Data...)
 }
 
-// setResult sets the Resty response type of Volume
-func (VolumesPagedResponse) setResult(r *resty.Request) {
-	r.SetResult(VolumesPagedResponse{})
-}
-
 // ListVolumes lists Volumes
 func (c *Client) ListVolumes(ctx context.Context, opts *ListOptions) ([]*Volume, error) {
 	response := VolumesPagedResponse{}
@@ -140,6 +133,10 @@ func (c *Client) AttachVolume(ctx context.Context, id int, options *VolumeAttach
 		SetResult(&Volume{}).
 		SetBody(body).
 		Post(e))
+
+	if err != nil {
+		return nil, err
+	}
 
 	return resp.Result().(*Volume).fixDates(), nil
 }

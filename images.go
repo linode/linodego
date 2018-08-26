@@ -5,8 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
-
-	"github.com/go-resty/resty"
 )
 
 // Image represents a deployable Image object for use with Linode Instances
@@ -69,10 +67,6 @@ func (ImagesPagedResponse) endpoint(c *Client) string {
 
 func (resp *ImagesPagedResponse) appendData(r *ImagesPagedResponse) {
 	(*resp).Data = append(resp.Data, r.Data...)
-}
-
-func (ImagesPagedResponse) setResult(r *resty.Request) {
-	r.SetResult(ImagesPagedResponse{})
 }
 
 // ListImages lists Images

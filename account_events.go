@@ -4,8 +4,6 @@ import (
 	"context"
 	"fmt"
 	"time"
-
-	"github.com/go-resty/resty"
 )
 
 // Event represents an action taken on the Account.
@@ -168,11 +166,6 @@ func (e Event) endpointWithID(c *Client) string {
 // appendData appends Events when processing paginated Event responses
 func (resp *EventsPagedResponse) appendData(r *EventsPagedResponse) {
 	(*resp).Data = append(resp.Data, r.Data...)
-}
-
-// setResult sets the Resty response type of Events
-func (EventsPagedResponse) setResult(r *resty.Request) {
-	r.SetResult(EventsPagedResponse{})
 }
 
 // ListEvents gets a collection of Event objects representing actions taken
