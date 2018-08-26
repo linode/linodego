@@ -7,6 +7,7 @@ import (
 	"github.com/go-resty/resty"
 )
 
+// Notification represents a notification on an Account
 type Notification struct {
 	UntilStr string `json:"until"`
 	WhenStr  string `json:"when"`

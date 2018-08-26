@@ -23,6 +23,7 @@ type DomainRecord struct {
 	Tag      *string          `json:"tag"`
 }
 
+// DomainRecordCreateOptions fields are those accepted by CreateDomainRecord
 type DomainRecordCreateOptions struct {
 	Type     DomainRecordType `json:"type"`
 	Name     string           `json:"name"`
@@ -36,6 +37,7 @@ type DomainRecordCreateOptions struct {
 	Tag      *string          `json:"tag,omitempty"`
 }
 
+// DomainRecordUpdateOptions fields are those accepted by UpdateDomainRecord
 type DomainRecordUpdateOptions struct {
 	Type     DomainRecordType `json:"type,omitempty"`
 	Name     string           `json:"name,omitempty"`
@@ -49,8 +51,10 @@ type DomainRecordUpdateOptions struct {
 	Tag      *string          `json:"tag,omitempty"`
 }
 
+// DomainRecordType constants start with RecordType and include Linode API Domain Record Types
 type DomainRecordType string
 
+// DomainRecordType contants are the DNS record types a DomainRecord can assign
 const (
 	RecordTypeA     DomainRecordType = "A"
 	RecordTypeAAAA  DomainRecordType = "AAAA"
@@ -63,6 +67,7 @@ const (
 	RecordTypeCAA   DomainRecordType = "CAA"
 )
 
+// GetUpdateOptions converts a DomainRecord to DomainRecordUpdateOptions for use in UpdateDomainRecord
 func (d DomainRecord) GetUpdateOptions() (du DomainRecordUpdateOptions) {
 	du.Type = d.Type
 	du.Name = d.Name
@@ -81,7 +86,7 @@ func copyInt(iPtr *int) *int {
 	if iPtr == nil {
 		return nil
 	}
-	var t int = *iPtr
+	var t = *iPtr
 	return &t
 }
 
@@ -89,7 +94,7 @@ func copyString(sPtr *string) *string {
 	if sPtr == nil {
 		return nil
 	}
-	var t string = *sPtr
+	var t = *sPtr
 	return &t
 }
 
@@ -129,8 +134,8 @@ func (c *Client) ListDomainRecords(ctx context.Context, domainID int, opts *List
 }
 
 // fixDates converts JSON timestamps to Go time.Time values
-func (v *DomainRecord) fixDates() *DomainRecord {
-	return v
+func (d *DomainRecord) fixDates() *DomainRecord {
+	return d
 }
 
 // GetDomainRecord gets the domainrecord with the provided ID

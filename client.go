@@ -28,7 +28,9 @@ const (
 	APISecondsPerPoll = 10
 )
 
-var DefaultUserAgent = fmt.Sprintf("linodego %s https://github.com/linode/linodego", Version)
+// DefaultUserAgent is the default User-Agent sent in HTTP request headers
+const DefaultUserAgent = "linodego " + Version + " https://github.com/linode/linodego"
+
 var envDebug = false
 
 // Client is a wrapper around the Resty client
@@ -110,6 +112,7 @@ func (c *Client) SetDebug(debug bool) *Client {
 	return c
 }
 
+// SetBaseURL sets the base URL of the Linode v4 API (https://api.linode.com/v4)
 func (c *Client) SetBaseURL(url string) *Client {
 	c.resty.SetHostURL(url)
 	return c

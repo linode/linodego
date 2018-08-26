@@ -26,18 +26,6 @@ type ListOptions struct {
 	Filter string
 }
 
-type pagedResponse struct {
-	listResponse
-	*PageOptions
-}
-
-type listResponse interface {
-	endpoint(*Client) string
-	appendData(*resty.Response)
-	setResult(*resty.Request)
-	listHelper(*resty.Request, *ListOptions) *Error
-}
-
 // NewListOptions simplified construction of ListOptions using only
 // the two writable properties, Page and Filter
 func NewListOptions(Page int, Filter string) *ListOptions {

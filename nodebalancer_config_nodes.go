@@ -8,6 +8,7 @@ import (
 	"github.com/go-resty/resty"
 )
 
+// NodeBalancerNode objects represent a backend that can accept traffic for a NodeBalancer Config
 type NodeBalancerNode struct {
 	ID             int      `json:"id"`
 	Address        string   `json:"address"`
@@ -33,6 +34,7 @@ var (
 	ModeDrain NodeMode = "drain"
 )
 
+// NodeBalancerNodeCreateOptions fields are those accepted by CreateNodeBalancerNode
 type NodeBalancerNodeCreateOptions struct {
 	Address string   `json:"address"`
 	Label   string   `json:"label"`
@@ -40,6 +42,7 @@ type NodeBalancerNodeCreateOptions struct {
 	Mode    NodeMode `json:"mode,omitempty"`
 }
 
+// NodeBalancerNodeUpdateOptions fields are those accepted by UpdateNodeBalancerNode
 type NodeBalancerNodeUpdateOptions struct {
 	Address string   `json:"address,omitempty"`
 	Label   string   `json:"label,omitempty"`
@@ -47,6 +50,7 @@ type NodeBalancerNodeUpdateOptions struct {
 	Mode    NodeMode `json:"mode,omitempty"`
 }
 
+// GetCreateOptions converts a NodeBalancerNode to NodeBalancerNodeCreateOptions for use in CreateNodeBalancerNode
 func (i NodeBalancerNode) GetCreateOptions() NodeBalancerNodeCreateOptions {
 	return NodeBalancerNodeCreateOptions{
 		Address: i.Address,
@@ -56,6 +60,7 @@ func (i NodeBalancerNode) GetCreateOptions() NodeBalancerNodeCreateOptions {
 	}
 }
 
+// GetUpdateOptions converts a NodeBalancerNode to NodeBalancerNodeUpdateOptions for use in UpdateNodeBalancerNode
 func (i NodeBalancerNode) GetUpdateOptions() NodeBalancerNodeUpdateOptions {
 	return NodeBalancerNodeUpdateOptions{
 		Address: i.Address,
@@ -104,8 +109,8 @@ func (c *Client) ListNodeBalancerNodes(ctx context.Context, nodebalancerID int, 
 }
 
 // fixDates converts JSON timestamps to Go time.Time values
-func (v *NodeBalancerNode) fixDates() *NodeBalancerNode {
-	return v
+func (i *NodeBalancerNode) fixDates() *NodeBalancerNode {
+	return i
 }
 
 // GetNodeBalancerNode gets the template with the provided ID

@@ -42,6 +42,7 @@ type Volume struct {
 	Updated        time.Time    `json:"-"`
 }
 
+// VolumeCreateOptions fields are those accepted by CreateVolume
 type VolumeCreateOptions struct {
 	Label    string `json:"label,omitempty"`
 	Region   string `json:"region,omitempty"`
@@ -51,6 +52,7 @@ type VolumeCreateOptions struct {
 	Size int `json:"size,omitempty"`
 }
 
+// VolumeAttachOptions fields are those accepted by AttachVolume
 type VolumeAttachOptions struct {
 	LinodeID int `json:"linode_id"`
 	ConfigID int `json:"config_id,omitempty"`

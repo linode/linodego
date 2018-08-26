@@ -49,6 +49,7 @@ type Event struct {
 // EventAction constants start with Action and include all known Linode API Event Actions.
 type EventAction string
 
+// EventAction constants represent the actions that cause an Event. New actions may be added in the future.
 const (
 	ActionBackupsEnable            EventAction = "backups_enable"
 	ActionBackupsCancel            EventAction = "backups_cancel"
@@ -110,6 +111,7 @@ const (
 // EntityType constants start with Entity and include Linode API Event Entity Types
 type EntityType string
 
+// EntityType contants are the entities an Event can be related to
 const (
 	EntityLinode EntityType = "linode"
 	EntityDisk   EntityType = "disk"
@@ -118,6 +120,7 @@ const (
 // EventStatus constants start with Event and include Linode API Event Status values
 type EventStatus string
 
+// EventStatus constants reflect the current status of an Event
 const (
 	EventFailed       EventStatus = "failed"
 	EventFinished     EventStatus = "finished"
@@ -202,9 +205,9 @@ func (c *Client) GetEvent(ctx context.Context, id int) (*Event, error) {
 }
 
 // fixDates converts JSON timestamps to Go time.Time values
-func (v *Event) fixDates() *Event {
-	v.Created, _ = parseDates(v.CreatedStr)
-	return v
+func (e *Event) fixDates() *Event {
+	e.Created, _ = parseDates(e.CreatedStr)
+	return e
 }
 
 // MarkEventRead marks a single Event as read.

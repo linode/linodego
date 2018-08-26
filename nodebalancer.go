@@ -34,6 +34,7 @@ type NodeBalancer struct {
 	Updated *time.Time `json:"-"`
 }
 
+// NodeBalancerTransfer contains information about the amount of transfer a NodeBalancer has had in the current month
 type NodeBalancerTransfer struct {
 	// The total transfer, in MB, used by this NodeBalancer this month.
 	Total *float64 `json:"total"`
@@ -56,6 +57,7 @@ type NodeBalancerUpdateOptions struct {
 	ClientConnThrottle *int    `json:"client_conn_throttle,omitempty"`
 }
 
+// GetCreateOptions converts a NodeBalancer to NodeBalancerCreateOptions for use in CreateNodeBalancer
 func (i NodeBalancer) GetCreateOptions() NodeBalancerCreateOptions {
 	return NodeBalancerCreateOptions{
 		Label:              i.Label,
@@ -64,6 +66,7 @@ func (i NodeBalancer) GetCreateOptions() NodeBalancerCreateOptions {
 	}
 }
 
+// GetUpdateOptions converts a NodeBalancer to NodeBalancerUpdateOptions for use in UpdateNodeBalancer
 func (i NodeBalancer) GetUpdateOptions() NodeBalancerUpdateOptions {
 	return NodeBalancerUpdateOptions{
 		Label:              i.Label,
@@ -103,10 +106,11 @@ func (c *Client) ListNodeBalancers(ctx context.Context, opts *ListOptions) ([]*N
 	return response.Data, nil
 }
 
-func (n *NodeBalancer) fixDates() *NodeBalancer {
-	n.Created, _ = parseDates(n.CreatedStr)
-	n.Updated, _ = parseDates(n.UpdatedStr)
-	return n
+// fixDates converts JSON timestamps to Go time.Time values
+func (i *NodeBalancer) fixDates() *NodeBalancer {
+	i.Created, _ = parseDates(i.CreatedStr)
+	i.Updated, _ = parseDates(i.UpdatedStr)
+	return i
 }
 
 // GetNodeBalancer gets the NodeBalancer with the provided ID

@@ -7,13 +7,13 @@ import (
 	"github.com/go-resty/resty"
 )
 
-// LinodeRegion represents a linode region object
+// Region represents a linode region object
 type Region struct {
 	ID      string `json:"id"`
 	Country string `json:"country"`
 }
 
-// LinodeRegionsPagedResponse represents a linode API response for listing
+// RegionsPagedResponse represents a linode API response for listing
 type RegionsPagedResponse struct {
 	*PageOptions
 	Data []*Region `json:"data"`

@@ -27,26 +27,29 @@ type Image struct {
 	Updated   *time.Time `json:"-"`
 }
 
+// ImageCreateOptions fields are those accepted by CreateImage
 type ImageCreateOptions struct {
 	DiskID      int    `json:"disk_id"`
 	Label       string `json:"label"`
 	Description string `json:"description,omitempty"`
 }
 
+// ImageUpdateOptions fields are those accepted by UpdateImage
 type ImageUpdateOptions struct {
 	Label       string  `json:"label,omitempty"`
 	Description *string `json:"description,omitempty"`
 }
 
-func (l *Image) fixDates() *Image {
-	l.Created, _ = parseDates(l.CreatedStr)
-	l.Updated, _ = parseDates(l.UpdatedStr)
-	return l
+func (i *Image) fixDates() *Image {
+	i.Created, _ = parseDates(i.CreatedStr)
+	i.Updated, _ = parseDates(i.UpdatedStr)
+	return i
 }
 
+// GetUpdateOptions converts an Image to ImageUpdateOptions for use in UpdateImage
 func (i Image) GetUpdateOptions() (iu ImageUpdateOptions) {
 	iu.Label = i.Label
-	iu.Description = copyString(iu.Description)
+	iu.Description = copyString(&i.Description)
 	return
 }
 

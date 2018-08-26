@@ -9,6 +9,7 @@ import (
 	"github.com/go-resty/resty"
 )
 
+// InstanceDisk represents an Instance Disk object
 type InstanceDisk struct {
 	CreatedStr string `json:"created"`
 	UpdatedStr string `json:"updated"`
@@ -22,9 +23,11 @@ type InstanceDisk struct {
 	Updated    time.Time      `json:"-"`
 }
 
+// DiskFilesystem constants start with Filesystem and include Linode API Filesystems
 type DiskFilesystem string
 
-var (
+// DiskFilesystem constants represent the filesystems types an Instance Disk may use
+const (
 	FilesystemRaw    DiskFilesystem = "raw"
 	FilesystemSwap   DiskFilesystem = "swap"
 	FilesystemExt3   DiskFilesystem = "ext3"

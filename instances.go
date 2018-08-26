@@ -14,9 +14,10 @@ import (
  * https://developers.linode.com/v4/reference/endpoints/linode/instances
  */
 
+// InstanceStatus constants start with Instance and include Linode API Instance Status values
 type InstanceStatus string
 
-// InstanceStatus enum represents potential Instance.Status values
+// InstanceStatus constants reflect the current status of an Instance
 const (
 	InstanceBooting      InstanceStatus = "booting"
 	InstanceRunning      InstanceStatus = "running"
@@ -380,6 +381,7 @@ func (c *Client) RebuildInstance(ctx context.Context, id int, opts RebuildInstan
 	return r.Result().(*Instance).fixDates(), nil
 }
 
+// RescueInstanceOptions fields are those accepted by RescueInstance
 type RescueInstanceOptions struct {
 	Devices InstanceConfigDeviceMap `json:"devices"`
 }

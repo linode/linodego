@@ -32,9 +32,10 @@ type TicketEntity struct {
 	URL   string `json:"url"`
 }
 
+// TicketStatus constants start with Ticket and include Linode API Ticket Status values
 type TicketStatus string
 
-// Ticket Statuses
+// TicketStatus constants reflect the current status of a Ticket
 const (
 	TicketNew    TicketStatus = "new"
 	TicketClosed TicketStatus = "closed"
