@@ -4,11 +4,9 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"math/rand"
 	"net/http"
 	"os"
 	"strconv"
-	"time"
 
 	"github.com/go-resty/resty"
 )
@@ -74,8 +72,6 @@ type Client struct {
 }
 
 func init() {
-	rand.Seed(time.Now().UTC().UnixNano())
-
 	// Wether or not we will enable Resty debugging output
 	if apiDebug, ok := os.LookupEnv("LINODE_DEBUG"); ok {
 		if parsed, err := strconv.ParseBool(apiDebug); err == nil {
