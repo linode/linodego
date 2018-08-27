@@ -125,48 +125,45 @@ func (c *Client) GetInstanceBackups(ctx context.Context, linodeID int) (*Instanc
 }
 
 // EnableInstanceBackups Enables backups for the specified Linode.
-func (c *Client) EnableInstanceBackups(ctx context.Context, linodeID int) (bool, error) {
+func (c *Client) EnableInstanceBackups(ctx context.Context, linodeID int) error {
 	e, err := c.InstanceSnapshots.endpointWithID(linodeID)
 	if err != nil {
-		return false, err
+		return err
 	}
 	e = fmt.Sprintf("%s/enable", e)
 
-	r, err := coupleAPIErrors(c.R(ctx).Post(e))
-	return settleBoolResponseOrError(r, err)
+	_, err = coupleAPIErrors(c.R(ctx).Post(e))
+	return err
 }
 
 // CancelInstanceBackups Cancels backups for the specified Linode.
-func (c *Client) CancelInstanceBackups(ctx context.Context, linodeID int) (bool, error) {
+func (c *Client) CancelInstanceBackups(ctx context.Context, linodeID int) error {
 	e, err := c.InstanceSnapshots.endpointWithID(linodeID)
 	if err != nil {
-		return false, err
+		return err
 	}
 	e = fmt.Sprintf("%s/cancel", e)
 
-	r, err := coupleAPIErrors(c.R(ctx).Post(e))
-	return settleBoolResponseOrError(r, err)
+	_, err = coupleAPIErrors(c.R(ctx).Post(e))
+	return err
 }
 
 // RestoreInstanceBackup Restores a Linode's Backup to the specified Linode.
-func (c *Client) RestoreInstanceBackup(ctx context.Context, linodeID int, backupID int, opts RestoreInstanceOptions) (bool, error) {
+func (c *Client) RestoreInstanceBackup(ctx context.Context, linodeID int, backupID int, opts RestoreInstanceOptions) error {
 	o, err := json.Marshal(opts)
 	if err != nil {
-		return false, NewError(err)
+		return NewError(err)
 	}
 	body := string(o)
 	e, err := c.InstanceSnapshots.endpointWithID(linodeID)
 	if err != nil {
-		return false, err
+		return err
 	}
 	e = fmt.Sprintf("%s/%d/restore", e, backupID)
 
-	r, err := coupleAPIErrors(c.R(ctx).SetBody(body).Post(e))
-	if err != nil {
-		return false, err
-	}
+	_, err = coupleAPIErrors(c.R(ctx).SetBody(body).Post(e))
 
-	return settleBoolResponseOrError(r, err)
+	return err
 
 }
 

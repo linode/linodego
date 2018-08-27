@@ -167,8 +167,8 @@ func Example() {
 		}
 		fmt.Println("### Updated Config:")
 
-		booted, errBoot := linodeClient.BootInstance(context.Background(), linode.ID, config.ID)
-		if errBoot != nil || !booted {
+		errBoot := linodeClient.BootInstance(context.Background(), linode.ID, config.ID)
+		if errBoot != nil {
 			log.Fatalln("* Failed to boot Instance", errBoot)
 		}
 		fmt.Println("### Booted Instance")

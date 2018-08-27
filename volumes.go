@@ -213,38 +213,38 @@ func (c *Client) CloneVolume(ctx context.Context, id int, label string) (*Volume
 }
 
 // DetachVolume detaches a Linode volume
-func (c *Client) DetachVolume(ctx context.Context, id int) (bool, error) {
+func (c *Client) DetachVolume(ctx context.Context, id int) error {
 	body := ""
 
 	e, err := c.Volumes.Endpoint()
 	if err != nil {
-		return false, NewError(err)
+		return NewError(err)
 	}
 
 	e = fmt.Sprintf("%s/%d/detach", e, id)
 
-	resp, err := coupleAPIErrors(c.R(ctx).
+	_, err = coupleAPIErrors(c.R(ctx).
 		SetBody(body).
 		Post(e))
 
-	return settleBoolResponseOrError(resp, err)
+	return err
 }
 
 // ResizeVolume resizes an instance to new Linode type
-func (c *Client) ResizeVolume(ctx context.Context, id int, size int) (bool, error) {
+func (c *Client) ResizeVolume(ctx context.Context, id int, size int) error {
 	body := fmt.Sprintf("{\"size\": %d}", size)
 
 	e, err := c.Volumes.Endpoint()
 	if err != nil {
-		return false, NewError(err)
+		return NewError(err)
 	}
 	e = fmt.Sprintf("%s/%d/resize", e, id)
 
-	resp, err := coupleAPIErrors(c.R(ctx).
+	_, err = coupleAPIErrors(c.R(ctx).
 		SetBody(body).
 		Post(e))
 
-	return settleBoolResponseOrError(resp, err)
+	return err
 }
 
 // DeleteVolume deletes the Volume with the specified id

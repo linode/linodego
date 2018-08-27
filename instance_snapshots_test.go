@@ -52,18 +52,14 @@ func TestListInstanceBackups(t *testing.T) {
 		Overwrite: true,
 	}
 
-	ok, err := client.RestoreInstanceBackup(context.Background(), instance.ID, backup.ID, restoreOpts)
+	err = client.RestoreInstanceBackup(context.Background(), instance.ID, backup.ID, restoreOpts)
 	if err != nil {
 		t.Errorf("Error restoring backup: %v", err)
-	} else if !ok {
-		t.Errorf("Error restoring backup.")
 	}
 
-	ok, err = client.CancelInstanceBackups(context.Background(), instance.ID)
+	err = client.CancelInstanceBackups(context.Background(), instance.ID)
 	if err != nil {
 		t.Errorf("Error cancelling backups: %v", err)
-	} else if !ok {
-		t.Errorf("Error cancelling backups.")
 	}
 }
 
@@ -95,11 +91,9 @@ func setupInstanceBackup(t *testing.T, fixturesYaml string) (*linodego.Client, *
 		t.Errorf("Error creating instance disk: Disk Create Failed")
 	}
 
-	ok, err := client.EnableInstanceBackups(context.Background(), instance.ID)
+	err = client.EnableInstanceBackups(context.Background(), instance.ID)
 	if err != nil {
 		t.Errorf("Error enabling Instance Backups: %v", err)
-	} else if !ok {
-		t.Errorf("Error enabling Instance Backups.")
 	}
 
 	snapshot, err := client.CreateInstanceSnapshot(context.Background(), instance.ID, testSnapshotLabel)

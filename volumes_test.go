@@ -58,10 +58,8 @@ func TestResizeVolume(t *testing.T) {
 		t.Errorf("Error setting up volume test, %s", err)
 	}
 
-	if ok, err := client.ResizeVolume(context.Background(), volume.ID, volume.Size+1); err != nil {
+	if err := client.ResizeVolume(context.Background(), volume.ID, volume.Size+1); err != nil {
 		t.Errorf("Error resizing volume, %s", err)
-	} else if !ok {
-		t.Errorf("Error resizing volume")
 	}
 }
 
