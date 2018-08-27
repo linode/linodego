@@ -8,18 +8,11 @@ go:
   - "1.10"
   - tip
 
-before_install:
-  - go get github.com/mattn/goveralls
-  - go get github.com/lawrencewoodman/roveralls
-  - go get github.com/alecthomas/gometalinter
-
-install:
-  - gometalinter --install
-
 script:
   - touch .env
-  - make vendor
-  - vendor/github.com/kubernetes/repo-infra/verify/verify-go-src.sh -v --rootdir $(pwd)
-  - make
-  - travis_wait 20 roveralls
-  # - goveralls -coverprofile=roveralls.coverprofile -service=travis-ci
+  - make test ARGS='-coverprofile=coverage.txt -covermode=atomic'"
+  - gometalinter.v2 --enable-all --disable=vetshadow --disable=gocyclo --disable=unparm --disable=nakedret --disable=lll --disable=dupl --disable=test --deadline=120s
+  - gometalinter.v2 --disable-all --enable=vetshadow --enable=gocyclo --enable=unparm --enable=nakedret --enable=lll --enable=dupl --enable=test --deadline=120s || true
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

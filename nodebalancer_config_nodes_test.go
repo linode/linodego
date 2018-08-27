@@ -48,6 +48,9 @@ func TestUpdateNodeBalancerNode(t *testing.T) {
 	}
 	client, nodebalancer, config, node, teardown, err := setupNodeBalancerNode(t, "fixtures/TestUpdateNodeBalancerNode")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	updateOpts := linodego.NodeBalancerNodeUpdateOptions{
 		Address: testNodeAddress + ":" + ("1" + testNodePort),
@@ -76,6 +79,9 @@ func TestListNodeBalancerNodes(t *testing.T) {
 	}
 	client, nodebalancer, config, _, teardown, err := setupNodeBalancerNode(t, "fixtures/TestListNodeBalancerNodes")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	listOpts := linodego.NewListOptions(0, "")
 	nodes, err := client.ListNodeBalancerNodes(context.Background(), nodebalancer.ID, config.ID, listOpts)
@@ -96,6 +102,9 @@ func TestListNodeBalancerNodesMultiplePages(t *testing.T) {
 	// "results:1,data:[],page:1,pages:2"  .. "results:1,data[{...}],page:2,pages:2"
 	client, nodebalancer, config, _, teardown, err := setupNodeBalancerNode(t, "fixtures/TestListNodeBalancerNodesMultiplePages")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	listOpts := linodego.NewListOptions(0, "")
 	nodes, err := client.ListNodeBalancerNodes(context.Background(), nodebalancer.ID, config.ID, listOpts)
@@ -113,6 +122,9 @@ func TestGetNodeBalancerNode(t *testing.T) {
 	}
 	client, nodebalancer, config, node, teardown, err := setupNodeBalancerNode(t, "fixtures/TestGetNodeBalancerNode")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	nodeGot, err := client.GetNodeBalancerNode(context.Background(), nodebalancer.ID, config.ID, node.ID)
 	if nodeGot.Address != node.Address {
@@ -138,7 +150,7 @@ func setupNodeBalancerNode(t *testing.T, fixturesYaml string) (*linodego.Client,
 	}
 
 	teardown := func() {
-		// delete the NodeBalancerNode to excercise the code
+		// delete the NodeBalancerNode to exercise the code
 		if err := client.DeleteNodeBalancerNode(context.Background(), nodebalancer.ID, config.ID, node.ID); err != nil {
 			t.Errorf("Expected to delete a NodeBalancer Config Node, but got %v", err)
 		}

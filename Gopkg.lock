@@ -3,42 +3,34 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:7b43a70c164e221667c40ade1698f75925b31843d21a556e11616373a265525e"
+  digest = "1:6e1c13bc32e58ccb4afa1115a3ba4fc071d918ed897b40dfa323ffb3fcc6619d"
   name = "github.com/dnaeon/go-vcr"
   packages = [
     "cassette",
     "recorder",
   ]
-  pruneopts = "T"
+  pruneopts = "UT"
   revision = "aafff18a5cc28fa0b2f26baf6a14472cda9b54c6"
 
 [[projects]]
-  digest = "1:f227faee81743a2ef161f2e4bd2fff1f595963ce24ecf25f8bab0393d36edeee"
+  digest = "1:4a4785749b54b948fd45be3824c6bb1d606578a440657f7cabc79dbbbdc7c476"
   name = "github.com/go-resty/resty"
   packages = ["."]
-  pruneopts = "T"
+  pruneopts = "UT"
   revision = "383acc8a8b687098ee02168c0335a43dfee701f0"
   version = "v1.9.0"
 
 [[projects]]
-  digest = "1:a2ecb56e5053d942aafc86738915fb94c9131bac848c543b8b6764365fd69080"
+  digest = "1:97df918963298c287643883209a2c3f642e6593379f97ab400c2a2e219ab647d"
   name = "github.com/golang/protobuf"
   packages = ["proto"]
-  pruneopts = "T"
+  pruneopts = "UT"
   revision = "aa810b61a9c79d51363740d207bb46cf8e620ed5"
   version = "v1.2.0"
 
 [[projects]]
   branch = "master"
-  digest = "1:a7f1bee6ec56687df751bc936bcb891e941824965c6accaef99fda8bb2155bb4"
-  name = "github.com/kubernetes/repo-infra"
-  packages = ["verify/boilerplate/test"]
-  pruneopts = "T"
-  revision = "df7dea618361619dcad654691fd5c4720018083e"
-
-[[projects]]
-  branch = "master"
-  digest = "1:c96475ce8a4befca406926432f1a9dea8d17c1573fe99c3086055d28e0910bec"
+  digest = "1:33b9d71d1dde2106309484a388eb7ba53cd1f67014e34a71f7b3dbc20bd186e5"
   name = "golang.org/x/net"
   packages = [
     "context",
@@ -46,22 +38,22 @@
     "idna",
     "publicsuffix",
   ]
-  pruneopts = "T"
+  pruneopts = "UT"
   revision = "8a410e7b638dca158bf9e766925842f6651ff828"
 
 [[projects]]
   branch = "master"
-  digest = "1:b532962365df3c36d313cb4a9c0551523b1ed562b9e5736780577b02835086f7"
+  digest = "1:363b547c971a2b07474c598b6e9ebcb238d556d8a27f37b3895ad20cd50e7281"
   name = "golang.org/x/oauth2"
   packages = [
     ".",
     "internal",
   ]
-  pruneopts = "T"
+  pruneopts = "UT"
   revision = "d2e6202438beef2727060aa7cabdd924d92ebfd9"
 
 [[projects]]
-  digest = "1:6164911cb5e94e8d8d5131d646613ff82c14f5a8ce869de2f6d80d9889df8c5a"
+  digest = "1:a2ab62866c75542dd18d2b069fec854577a20211d7c0ea6ae746072a1dccdd18"
   name = "golang.org/x/text"
   packages = [
     "collate",
@@ -79,12 +71,12 @@
     "unicode/norm",
     "unicode/rangetable",
   ]
-  pruneopts = "T"
+  pruneopts = "UT"
   revision = "f21a4dfb5e38f5895301dc265a8def02365cc3d0"
   version = "v0.3.0"
 
 [[projects]]
-  digest = "1:57110331f17b52e924ef93f28e20a2dd67101a487e578d02cd48af7dd357e6fe"
+  digest = "1:328b5e4f197d928c444a51a75385f4b978915c0e75521f0ad6a3db976c97a7d3"
   name = "google.golang.org/appengine"
   packages = [
     "internal",
@@ -95,7 +87,7 @@
     "internal/urlfetch",
     "urlfetch",
   ]
-  pruneopts = "T"
+  pruneopts = "UT"
   revision = "b1f26356af11148e710935ed1ac8a7f5702c7612"
   version = "v1.1.0"
 
@@ -103,7 +95,7 @@
   digest = "1:342378ac4dcb378a5448dd723f0784ae519383532f5e70ade24132c4c8693202"
   name = "gopkg.in/yaml.v2"
   packages = ["."]
-  pruneopts = "T"
+  pruneopts = "UT"
   revision = "5420a8b6744d3b0345ab293f6fcba19c978f1183"
   version = "v2.2.1"
 
@@ -113,7 +105,6 @@
   input-imports = [
     "github.com/dnaeon/go-vcr/recorder",
     "github.com/go-resty/resty",
-    "github.com/kubernetes/repo-infra/verify/boilerplate/test",
     "golang.org/x/oauth2",
   ]
   solver-name = "gps-cdcl"

@@ -12,17 +12,17 @@ type Image struct {
 	CreatedStr  string `json:"created"`
 	UpdatedStr  string `json:"updated"`
 	ID          string `json:"id"`
+	CreatedBy   string `json:"created_by"`
 	Label       string `json:"label"`
 	Description string `json:"description"`
 	Type        string `json:"type"`
-	IsPublic    bool   `json:"is_public"`
-	Size        int    `json:"size"`
 	Vendor      string `json:"vendor"`
+	Size        int    `json:"size"`
+	IsPublic    bool   `json:"is_public"`
 	Deprecated  bool   `json:"deprecated"`
 
-	CreatedBy string     `json:"created_by"`
-	Created   *time.Time `json:"-"`
-	Updated   *time.Time `json:"-"`
+	Created *time.Time `json:"-"`
+	Updated *time.Time `json:"-"`
 }
 
 // ImageCreateOptions fields are those accepted by CreateImage

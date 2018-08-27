@@ -116,9 +116,9 @@ func TestWaitForVolumeLinodeID(t *testing.T) {
 		t.Skip("Skipping test in short mode")
 	}
 
-	client, instance, teardownInstance, err := setupInstance(t, "fixtures/TestWaitForVolumeLinodeID_linode")
-	if err != nil {
-		t.Errorf("Error setting up instance for volume test, %s", err)
+	client, instance, teardownInstance, errInstance := setupInstance(t, "fixtures/TestWaitForVolumeLinodeID_linode")
+	if errInstance != nil {
+		t.Errorf("Error setting up instance for volume test, %s", errInstance)
 	}
 
 	defer teardownInstance()
@@ -127,14 +127,14 @@ func TestWaitForVolumeLinodeID(t *testing.T) {
 		Label:   "test-instance-volume",
 		Devices: linodego.InstanceConfigDeviceMap{},
 	}
-	config, err := client.CreateInstanceConfig(context.Background(), instance.ID, createConfigOpts)
-	if err != nil {
-		t.Errorf("Error setting up instance config for volume test, %s", err)
+	config, errConfig := client.CreateInstanceConfig(context.Background(), instance.ID, createConfigOpts)
+	if errConfig != nil {
+		t.Errorf("Error setting up instance config for volume test, %s", errConfig)
 	}
 
-	client, volume, teardownVolume, err := setupVolume(t, "fixtures/TestWaitForVolumeLinodeID")
-	if err != nil {
-		t.Errorf("Error setting up volume test, %s", err)
+	client, volume, teardownVolume, errVolume := setupVolume(t, "fixtures/TestWaitForVolumeLinodeID")
+	if errVolume != nil {
+		t.Errorf("Error setting up volume test, %s", errVolume)
 	}
 	defer teardownVolume()
 
@@ -145,14 +145,14 @@ func TestWaitForVolumeLinodeID(t *testing.T) {
 		t.Errorf("Could not attach test volume to test instance")
 	}
 
-	_, err = client.WaitForVolumeLinodeID(context.Background(), volume.ID, nil, 3)
-	if err == nil {
-		t.Errorf("Expected to timeout waiting for nil LinodeID on volume %d : %s", volume.ID, err)
+	_, errWait := client.WaitForVolumeLinodeID(context.Background(), volume.ID, nil, 3)
+	if errWait == nil {
+		t.Errorf("Expected to timeout waiting for nil LinodeID on volume %d : %s", volume.ID, errWait)
 	}
 
-	_, err = client.WaitForVolumeLinodeID(context.Background(), volume.ID, &instance.ID, 3)
-	if err != nil {
-		t.Errorf("Error waiting for volume %d to attach to instance %d: %s", volume.ID, instance.ID, err)
+	_, errWait = client.WaitForVolumeLinodeID(context.Background(), volume.ID, &instance.ID, 3)
+	if errWait != nil {
+		t.Errorf("Error waiting for volume %d to attach to instance %d: %s", volume.ID, instance.ID, errWait)
 	}
 }
 
@@ -170,8 +170,8 @@ func setupVolume(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 	}
 
 	teardown := func() {
-		if err := client.DeleteVolume(context.Background(), volume.ID); err != nil {
-			t.Errorf("Expected to delete a volume, but got %v", err)
+		if terr := client.DeleteVolume(context.Background(), volume.ID); terr != nil {
+			t.Errorf("Expected to delete a volume, but got %v", terr)
 		}
 		fixtureTeardown()
 	}

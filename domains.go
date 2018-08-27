@@ -229,11 +229,11 @@ func (c *Client) CreateDomain(ctx context.Context, domain DomainCreateOptions) (
 
 	req := c.R(ctx).SetResult(&Domain{})
 
-	if bodyData, err := json.Marshal(domain); err == nil {
-		body = string(bodyData)
-	} else {
+	bodyData, err := json.Marshal(domain)
+	if err != nil {
 		return nil, NewError(err)
 	}
+	body = string(bodyData)
 
 	r, err := coupleAPIErrors(req.
 		SetBody(body).

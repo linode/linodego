@@ -38,6 +38,9 @@ func TestUpdateDomain(t *testing.T) {
 	}
 	client, domain, teardown, err := setupDomain(t, "fixtures/TestUpdateDomain")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	updateOpts := linodego.DomainUpdateOptions{
 		Domain: "linodego-renamed-domain.com",
@@ -45,6 +48,8 @@ func TestUpdateDomain(t *testing.T) {
 	domain, err = client.UpdateDomain(context.Background(), domain.ID, updateOpts)
 	if err != nil {
 		t.Errorf("Error renaming domain, %s", err)
+	} else if domain.Domain != updateOpts.Domain {
+		t.Errorf("Error renaming domain: Domain does not match")
 	}
 }
 
@@ -54,6 +59,9 @@ func TestListDomains(t *testing.T) {
 	}
 	client, _, teardown, err := setupDomain(t, "fixtures/TestListDomains")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	domains, err := client.ListDomains(context.Background(), nil)
 	if err != nil {
@@ -70,6 +78,9 @@ func TestGetDomain(t *testing.T) {
 	}
 	client, domain, teardown, err := setupDomain(t, "fixtures/TestGetDomain")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	_, err = client.GetDomain(context.Background(), domain.ID)
 	if err != nil {

@@ -135,8 +135,8 @@ func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string) (*linodego.Cli
 	}
 
 	teardown := func() {
-		if err := client.DeleteInstance(context.Background(), instance.ID); err != nil {
-			t.Errorf("Error deleting test Instance: %s", err)
+		if terr := client.DeleteInstance(context.Background(), instance.ID); terr != nil {
+			t.Errorf("Error deleting test Instance: %s", terr)
 		}
 		fixtureTeardown()
 	}

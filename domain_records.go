@@ -155,11 +155,11 @@ func (c *Client) CreateDomainRecord(ctx context.Context, domainID int, domainrec
 
 	req := c.R(ctx).SetResult(&DomainRecord{})
 
-	if bodyData, err := json.Marshal(domainrecord); err == nil {
-		body = string(bodyData)
-	} else {
+	bodyData, err := json.Marshal(domainrecord)
+	if err != nil {
 		return nil, NewError(err)
 	}
+	body = string(bodyData)
 
 	r, err := coupleAPIErrors(req.
 		SetBody(body).

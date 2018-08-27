@@ -16,6 +16,9 @@ func TestListInstanceBackups(t *testing.T) {
 
 	client, instance, backup, teardown, err := setupInstanceBackup(t, "fixtures/TestListInstanceBackups")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	backupGotten, err := client.GetInstanceSnapshot(context.Background(), instance.ID, backup.ID)
 	if err != nil {

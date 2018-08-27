@@ -100,6 +100,11 @@ func (c *Client) CreateInstanceSnapshot(ctx context.Context, linodeID int, label
 		SetBody(body).
 		SetResult(&InstanceSnapshot{}).
 		Post(e))
+
+	if err != nil {
+		return nil, err
+	}
+
 	return r.Result().(*InstanceSnapshot).fixDates(), nil
 }
 

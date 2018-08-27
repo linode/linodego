@@ -40,6 +40,9 @@ func TestUpdateNodeBalancerConfig(t *testing.T) {
 	}
 	client, nodebalancer, config, teardown, err := setupNodeBalancerConfig(t, "fixtures/TestUpdateNodeBalancerConfig")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	updateOpts := linodego.NodeBalancerConfigUpdateOptions{
 		Port:      8080,
@@ -64,6 +67,9 @@ func TestListNodeBalancerConfigs(t *testing.T) {
 	}
 	client, nodebalancer, _, teardown, err := setupNodeBalancerConfig(t, "fixtures/TestListNodeBalancerConfigs")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	listOpts := linodego.NewListOptions(0, "")
 	configs, err := client.ListNodeBalancerConfigs(context.Background(), nodebalancer.ID, listOpts)
@@ -84,6 +90,9 @@ func TestListNodeBalancerConfigsMultiplePages(t *testing.T) {
 	// "results:1,data:[],page:1,pages:2"  .. "results:1,data[{...}],page:2,pages:2"
 	client, nodebalancer, _, teardown, err := setupNodeBalancerConfig(t, "fixtures/TestListNodeBalancerConfigsMultiplePages")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	listOpts := linodego.NewListOptions(0, "")
 	configs, err := client.ListNodeBalancerConfigs(context.Background(), nodebalancer.ID, listOpts)
@@ -101,6 +110,9 @@ func TestGetNodeBalancerConfig(t *testing.T) {
 	}
 	client, nodebalancer, config, teardown, err := setupNodeBalancerConfig(t, "fixtures/TestGetNodeBalancerConfig")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	configGot, err := client.GetNodeBalancerConfig(context.Background(), nodebalancer.ID, config.ID)
 	if configGot.Port != config.Port {
@@ -126,7 +138,7 @@ func setupNodeBalancerConfig(t *testing.T, fixturesYaml string) (*linodego.Clien
 	}
 
 	teardown := func() {
-		// delete the NodeBalancerConfig to excercise the code
+		// delete the NodeBalancerConfig to exercise the code
 		if err := client.DeleteNodeBalancerConfig(context.Background(), nodebalancer.ID, config.ID); err != nil {
 			t.Errorf("Expected to delete a NodeBalancer Config, but got %v", err)
 		}

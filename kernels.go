@@ -5,18 +5,18 @@ import (
 	"fmt"
 )
 
-// LinodeKernel represents a linode kernel object
+// LinodeKernel represents a Linode Instance kernel object
 type LinodeKernel struct {
 	ID           string `json:"id"`
 	Label        string `json:"label"`
 	Version      string `json:"version"`
+	Architecture string `json:"architecture"`
 	KVM          bool   `json:"kvm"`
 	XEN          bool   `json:"xen"`
-	Architecture string `json:"architecture"`
 	PVOPS        bool   `json:"pvops"`
 }
 
-// LinodeKernelsPagedResponse represents a linode kernels API response for listing
+// LinodeKernelsPagedResponse represents a Linode kernels API response for listing
 type LinodeKernelsPagedResponse struct {
 	*PageOptions
 	Data []*LinodeKernel `json:"data"`
