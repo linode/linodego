@@ -28,6 +28,7 @@ const (
 	InstanceRebuilding   InstanceStatus = "rebuilding"
 	InstanceCloning      InstanceStatus = "cloning"
 	InstanceRestoring    InstanceStatus = "restoring"
+	InstanceResizing     InstanceStatus = "resizing"
 )
 
 // Instance represents a linode object
@@ -329,18 +330,6 @@ func (c *Client) RebootInstance(ctx context.Context, id int, configID int) error
 	return err
 }
 
-// MutateInstance Upgrades a Linode to its next generation.
-func (c *Client) MutateInstance(ctx context.Context, id int) error {
-	e, err := c.Instances.Endpoint()
-	if err != nil {
-		return err
-	}
-	e = fmt.Sprintf("%s/%d/mutate", e, id)
-
-	_, err = coupleAPIErrors(c.R(ctx).Post(e))
-	return err
-}
-
 // RebuildInstanceOptions is a struct representing the options to send to the rebuild linode endpoint
 type RebuildInstanceOptions struct {
 	Image           string            `json:"image"`
@@ -421,11 +410,27 @@ func (c *Client) ResizeInstance(ctx context.Context, id int, linodeType string) 
 
 // ShutdownInstance - Shutdown an instance
 func (c *Client) ShutdownInstance(ctx context.Context, id int) error {
+	return c.simpleInstanceAction(ctx, "shutdown", id)
+}
+
+// MutateInstance Upgrades a Linode to its next generation.
+func (c *Client) MutateInstance(ctx context.Context, id int) error {
+	return c.simpleInstanceAction(ctx, "mutate", id)
+}
+
+// MigrateInstance - Migrate an instance
+func (c *Client) MigrateInstance(ctx context.Context, id int) error {
+	return c.simpleInstanceAction(ctx, "migrate", id)
+}
+
+// simpleInstanceAction is a helper for Instance actions that take no parameters
+// and return empty responses `{}` unless they return a standard error
+func (c *Client) simpleInstanceAction(ctx context.Context, action string, id int) error {
 	e, err := c.Instances.Endpoint()
 	if err != nil {
 		return err
 	}
-	e = fmt.Sprintf("%s/%d/shutdown", e, id)
+	e = fmt.Sprintf("%s/%d/%s", e, id, action)
 	_, err = coupleAPIErrors(c.R(ctx).Post(e))
 	return err
 }
