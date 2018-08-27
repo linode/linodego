@@ -4,11 +4,9 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"math/rand"
 	"net/http"
 	"os"
 	"strconv"
-	"time"
 
 	"github.com/go-resty/resty"
 )
@@ -28,7 +26,9 @@ const (
 	APISecondsPerPoll = 10
 )
 
-var DefaultUserAgent = fmt.Sprintf("linodego %s https://github.com/linode/linodego", Version)
+// DefaultUserAgent is the default User-Agent sent in HTTP request headers
+const DefaultUserAgent = "linodego " + Version + " https://github.com/linode/linodego"
+
 var envDebug = false
 
 // Client is a wrapper around the Resty client
@@ -72,8 +72,6 @@ type Client struct {
 }
 
 func init() {
-	rand.Seed(time.Now().UTC().UnixNano())
-
 	// Wether or not we will enable Resty debugging output
 	if apiDebug, ok := os.LookupEnv("LINODE_DEBUG"); ok {
 		if parsed, err := strconv.ParseBool(apiDebug); err == nil {
@@ -110,6 +108,7 @@ func (c *Client) SetDebug(debug bool) *Client {
 	return c
 }
 
+// SetBaseURL sets the base URL of the Linode v4 API (https://api.linode.com/v4)
 func (c *Client) SetBaseURL(url string) *Client {
 	c.resty.SetHostURL(url)
 	return c

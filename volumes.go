@@ -5,8 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
-
-	"github.com/go-resty/resty"
 )
 
 // VolumeStatus indicates the status of the Volume
@@ -42,6 +40,7 @@ type Volume struct {
 	Updated        time.Time    `json:"-"`
 }
 
+// VolumeCreateOptions fields are those accepted by CreateVolume
 type VolumeCreateOptions struct {
 	Label    string `json:"label,omitempty"`
 	Region   string `json:"region,omitempty"`
@@ -51,6 +50,7 @@ type VolumeCreateOptions struct {
 	Size int `json:"size,omitempty"`
 }
 
+// VolumeAttachOptions fields are those accepted by AttachVolume
 type VolumeAttachOptions struct {
 	LinodeID int `json:"linode_id"`
 	ConfigID int `json:"config_id,omitempty"`
@@ -74,11 +74,6 @@ func (VolumesPagedResponse) endpoint(c *Client) string {
 // appendData appends Volumes when processing paginated Volume responses
 func (resp *VolumesPagedResponse) appendData(r *VolumesPagedResponse) {
 	(*resp).Data = append(resp.Data, r.Data...)
-}
-
-// setResult sets the Resty response type of Volume
-func (VolumesPagedResponse) setResult(r *resty.Request) {
-	r.SetResult(VolumesPagedResponse{})
 }
 
 // ListVolumes lists Volumes
@@ -138,6 +133,10 @@ func (c *Client) AttachVolume(ctx context.Context, id int, options *VolumeAttach
 		SetResult(&Volume{}).
 		SetBody(body).
 		Post(e))
+
+	if err != nil {
+		return nil, err
+	}
 
 	return resp.Result().(*Volume).fixDates(), nil
 }

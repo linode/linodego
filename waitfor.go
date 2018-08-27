@@ -159,7 +159,7 @@ func (client Client) WaitForEventFinished(ctx context.Context, id interface{}, e
 	defer cancel()
 
 	if deadline, ok := ctx.Deadline(); ok {
-		duration := deadline.Sub(time.Now())
+		duration := time.Until(deadline)
 		log.Printf("[INFO] Waiting %d seconds for %s events since %v for %s %v", int(duration.Seconds()), action, minStart, titledEntityType, id)
 	}
 

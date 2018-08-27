@@ -41,6 +41,9 @@ func TestUpdateNodeBalancer(t *testing.T) {
 	}
 	client, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestUpdateNodeBalancer")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	renamedLabel := *nodebalancer.Label + "_r"
 	updateOpts := linodego.NodeBalancerUpdateOptions{
@@ -63,6 +66,9 @@ func TestListNodeBalancers(t *testing.T) {
 	}
 	client, _, teardown, err := setupNodeBalancer(t, "fixtures/TestListNodeBalancers")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	nodebalancers, err := client.ListNodeBalancers(context.Background(), nil)
 	if err != nil {
@@ -79,6 +85,9 @@ func TestGetNodeBalancer(t *testing.T) {
 	}
 	client, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestGetNodeBalancer")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	_, err = client.GetNodeBalancer(context.Background(), nodebalancer.ID)
 	if err != nil {

@@ -41,6 +41,9 @@ func TestUpdateDomainRecord(t *testing.T) {
 	}
 	client, domain, record, teardown, err := setupDomainRecord(t, "fixtures/TestUpdateDomainRecord")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	updateOpts := linodego.DomainRecordUpdateOptions{
 		Name: "renamed",
@@ -61,10 +64,16 @@ func TestListDomainRecords(t *testing.T) {
 	}
 	client, domain, record, teardown, err := setupDomainRecord(t, "fixtures/TestListDomainRecords")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	filter, err := json.Marshal(map[string]interface{}{
 		"name": record.Name,
 	})
+	if err != nil {
+		t.Error(err)
+	}
 
 	listOpts := linodego.NewListOptions(0, string(filter))
 	records, err := client.ListDomainRecords(context.Background(), domain.ID, listOpts)
@@ -82,11 +91,16 @@ func TestListDomainRecordsMultiplePages(t *testing.T) {
 	}
 	client, domain, record, teardown, err := setupDomainRecord(t, "fixtures/TestListDomainRecordsMultiplePages")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	filter, err := json.Marshal(map[string]interface{}{
 		"name": record.Name,
 	})
-
+	if err != nil {
+		t.Error(err)
+	}
 	listOpts := linodego.NewListOptions(0, string(filter))
 	records, err := client.ListDomainRecords(context.Background(), domain.ID, listOpts)
 	if err != nil {
@@ -103,6 +117,9 @@ func TestGetDomainRecord(t *testing.T) {
 	}
 	client, domain, record, teardown, err := setupDomainRecord(t, "fixtures/TestGetDomainRecord")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	recordGot, err := client.GetDomainRecord(context.Background(), domain.ID, record.ID)
 	if recordGot.Name != record.Name {
@@ -128,7 +145,7 @@ func setupDomainRecord(t *testing.T, fixturesYaml string) (*linodego.Client, *li
 	}
 
 	teardown := func() {
-		// delete the DomainRecord to excercise the code
+		// delete the DomainRecord to exercise the code
 		if err := client.DeleteDomainRecord(context.Background(), domain.ID, record.ID); err != nil {
 			t.Errorf("Expected to delete a domain record, but got %v", err)
 		}

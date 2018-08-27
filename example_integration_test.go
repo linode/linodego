@@ -75,43 +75,43 @@ func Example() {
 			log.Fatalln("* While renaming instance: ", err)
 		}
 		fmt.Println("## Created Instance")
-		event, err := linodeClient.WaitForEventFinished(context.Background(), linode.ID, linodego.EntityLinode, linodego.ActionLinodeCreate, *linode.Created, 240)
-		if err != nil {
-			log.Fatalf("* Failed to wait for Linode %d to finish creation: %s", linode.ID, err)
+		event, errEvent := linodeClient.WaitForEventFinished(context.Background(), linode.ID, linodego.EntityLinode, linodego.ActionLinodeCreate, *linode.Created, 240)
+		if errEvent != nil {
+			log.Fatalf("* Failed to wait for Linode %d to finish creation: %s", linode.ID, errEvent)
 		}
-		if err := linodeClient.MarkEventRead(context.Background(), event); err != nil {
-			log.Fatalln("* Failed to mark Linode create event seen", err)
+		if errEvent = linodeClient.MarkEventRead(context.Background(), event); errEvent != nil {
+			log.Fatalln("* Failed to mark Linode create event seen", errEvent)
 		}
 
-		diskSwap, err := linodeClient.CreateInstanceDisk(context.Background(), linode.ID, linodego.InstanceDiskCreateOptions{Size: 50, Filesystem: "swap", Label: "linodego_swap"})
-		if err != nil {
-			log.Fatalln("* While creating swap disk:", err)
+		diskSwap, errSwap := linodeClient.CreateInstanceDisk(context.Background(), linode.ID, linodego.InstanceDiskCreateOptions{Size: 50, Filesystem: "swap", Label: "linodego_swap"})
+		if errSwap != nil {
+			log.Fatalln("* While creating swap disk:", errSwap)
 		}
-		eventSwap, err := linodeClient.WaitForEventFinished(context.Background(), linode.ID, linodego.EntityLinode, linodego.ActionDiskCreate, diskSwap.Created, 240)
+		eventSwap, errSwapEvent := linodeClient.WaitForEventFinished(context.Background(), linode.ID, linodego.EntityLinode, linodego.ActionDiskCreate, diskSwap.Created, 240)
 		// @TODO it is not sufficient that a disk was created. Which disk was it?
 		// Sounds like we'll need a WaitForEntityStatus function.
-		if err != nil {
-			log.Fatalf("* Failed to wait for swap disk %d to finish creation: %s", diskSwap.ID, err)
+		if errSwapEvent != nil {
+			log.Fatalf("* Failed to wait for swap disk %d to finish creation: %s", diskSwap.ID, errSwapEvent)
 		}
-		if err := linodeClient.MarkEventRead(context.Background(), eventSwap); err != nil {
-			log.Fatalln("* Failed to mark swap disk create event seen", err)
+		if errSwapEvent = linodeClient.MarkEventRead(context.Background(), eventSwap); errSwapEvent != nil {
+			log.Fatalln("* Failed to mark swap disk create event seen", errSwapEvent)
 		}
 
-		diskRaw, err := linodeClient.CreateInstanceDisk(context.Background(), linode.ID, linodego.InstanceDiskCreateOptions{Size: 50, Filesystem: "raw", Label: "linodego_raw"})
-		if err != nil {
-			log.Fatalln("* While creating raw disk:", err)
+		diskRaw, errRaw := linodeClient.CreateInstanceDisk(context.Background(), linode.ID, linodego.InstanceDiskCreateOptions{Size: 50, Filesystem: "raw", Label: "linodego_raw"})
+		if errRaw != nil {
+			log.Fatalln("* While creating raw disk:", errRaw)
 		}
-		eventRaw, err := linodeClient.WaitForEventFinished(context.Background(), linode.ID, linodego.EntityLinode, linodego.ActionDiskCreate, diskRaw.Created, 240)
+		eventRaw, errRawEvent := linodeClient.WaitForEventFinished(context.Background(), linode.ID, linodego.EntityLinode, linodego.ActionDiskCreate, diskRaw.Created, 240)
 		// @TODO it is not sufficient that a disk was created. Which disk was it?
 		// Sounds like we'll need a WaitForEntityStatus function.
-		if err != nil {
-			log.Fatalf("* Failed to wait for raw disk %d to finish creation: %s", diskRaw.ID, err)
+		if errRawEvent != nil {
+			log.Fatalf("* Failed to wait for raw disk %d to finish creation: %s", diskRaw.ID, errRawEvent)
 		}
-		if err := linodeClient.MarkEventRead(context.Background(), eventRaw); err != nil {
-			log.Fatalln("* Failed to mark raw disk create event seen", err)
+		if errRawEvent = linodeClient.MarkEventRead(context.Background(), eventRaw); errRawEvent != nil {
+			log.Fatalln("* Failed to mark raw disk create event seen", errRawEvent)
 		}
 
-		diskDebian, err := linodeClient.CreateInstanceDisk(
+		diskDebian, errDebian := linodeClient.CreateInstanceDisk(
 			context.Background(),
 			linode.ID,
 			linodego.InstanceDiskCreateOptions{
@@ -122,17 +122,17 @@ func Example() {
 				RootPass:   randPassword(),
 			},
 		)
-		if err != nil {
-			log.Fatalln("* While creating Debian disk:", err)
+		if errDebian != nil {
+			log.Fatalln("* While creating Debian disk:", errDebian)
 		}
-		eventDebian, err := linodeClient.WaitForEventFinished(context.Background(), linode.ID, linodego.EntityLinode, linodego.ActionDiskCreate, diskDebian.Created, 240)
+		eventDebian, errDebianEvent := linodeClient.WaitForEventFinished(context.Background(), linode.ID, linodego.EntityLinode, linodego.ActionDiskCreate, diskDebian.Created, 240)
 		// @TODO it is not sufficient that a disk was created. Which disk was it?
 		// Sounds like we'll need a WaitForEntityStatus function.
-		if err != nil {
-			log.Fatalf("* Failed to wait for Debian disk %d to finish creation: %s", diskDebian.ID, err)
+		if errDebianEvent != nil {
+			log.Fatalf("* Failed to wait for Debian disk %d to finish creation: %s", diskDebian.ID, errDebianEvent)
 		}
-		if err := linodeClient.MarkEventRead(context.Background(), eventDebian); err != nil {
-			log.Fatalln("* Failed to mark Debian disk create event seen", err)
+		if errDebianEvent = linodeClient.MarkEventRead(context.Background(), eventDebian); errDebianEvent != nil {
+			log.Fatalln("* Failed to mark Debian disk create event seen", errDebianEvent)
 		}
 		fmt.Println("### Created Disks")
 
@@ -153,35 +153,35 @@ func Example() {
 				ModulesDep: false,
 			},
 		}
-		config, err := linodeClient.CreateInstanceConfig(context.Background(), linode.ID, createOpts)
-		if err != nil {
-			log.Fatalln("* Failed to create Config", err)
+		config, errConfig := linodeClient.CreateInstanceConfig(context.Background(), linode.ID, createOpts)
+		if errConfig != nil {
+			log.Fatalln("* Failed to create Config", errConfig)
 		}
 		fmt.Println("### Created Config:")
 		updateOpts := linodego.InstanceConfigUpdateOptions{
 			Comments: "updated example config comment",
 		}
-		config, err = linodeClient.UpdateInstanceConfig(context.Background(), linode.ID, config.ID, updateOpts)
-		if err != nil {
-			log.Fatalln("* Failed to update Config", err)
+		config, errConfig = linodeClient.UpdateInstanceConfig(context.Background(), linode.ID, config.ID, updateOpts)
+		if errConfig != nil {
+			log.Fatalln("* Failed to update Config", errConfig)
 		}
 		fmt.Println("### Updated Config:")
 
-		booted, err := linodeClient.BootInstance(context.Background(), linode.ID, config.ID)
-		if err != nil || !booted {
-			log.Fatalln("* Failed to boot Instance", err)
+		booted, errBoot := linodeClient.BootInstance(context.Background(), linode.ID, config.ID)
+		if errBoot != nil || !booted {
+			log.Fatalln("* Failed to boot Instance", errBoot)
 		}
 		fmt.Println("### Booted Instance")
 
-		eventBooted, err := linodeClient.WaitForEventFinished(context.Background(), linode.ID, linodego.EntityLinode, linodego.ActionLinodeBoot, *config.Updated, 240)
-		if err != nil {
-			fmt.Println("### Boot Instance failed as expected:", err)
+		eventBooted, errBootEvent := linodeClient.WaitForEventFinished(context.Background(), linode.ID, linodego.EntityLinode, linodego.ActionLinodeBoot, *config.Updated, 240)
+		if errBootEvent != nil {
+			fmt.Println("### Boot Instance failed as expected:", errBootEvent)
 		} else {
 			log.Fatalln("* Expected boot Instance to fail")
 		}
 
-		if err := linodeClient.MarkEventRead(context.Background(), eventBooted); err != nil {
-			log.Fatalln("* Failed to mark boot event seen", err)
+		if errBootEvent = linodeClient.MarkEventRead(context.Background(), eventBooted); errBootEvent != nil {
+			log.Fatalln("* Failed to mark boot event seen", errBootEvent)
 		}
 
 		err = linodeClient.DeleteInstanceConfig(context.Background(), linode.ID, config.ID)
@@ -205,6 +205,9 @@ func Example() {
 	}
 
 	linodes, err := linodeClient.ListInstances(context.Background(), nil)
+	if err != nil {
+		log.Fatal(err)
+	}
 	fmt.Println("## List Instances")
 
 	if len(linodes) == 0 {

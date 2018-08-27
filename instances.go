@@ -14,9 +14,10 @@ import (
  * https://developers.linode.com/v4/reference/endpoints/linode/instances
  */
 
+// InstanceStatus constants start with Instance and include Linode API Instance Status values
 type InstanceStatus string
 
-// InstanceStatus enum represents potential Instance.Status values
+// InstanceStatus constants reflect the current status of an Instance
 const (
 	InstanceBooting      InstanceStatus = "booting"
 	InstanceRunning      InstanceStatus = "running"
@@ -146,11 +147,6 @@ func (InstancesPagedResponse) endpoint(c *Client) string {
 // appendData appends Instances when processing paginated Instance responses
 func (resp *InstancesPagedResponse) appendData(r *InstancesPagedResponse) {
 	(*resp).Data = append(resp.Data, r.Data...)
-}
-
-// setResult sets the Resty response type of Instance
-func (InstancesPagedResponse) setResult(r *resty.Request) {
-	r.SetResult(InstancesPagedResponse{})
 }
 
 // ListInstances lists linode instances
@@ -380,6 +376,7 @@ func (c *Client) RebuildInstance(ctx context.Context, id int, opts RebuildInstan
 	return r.Result().(*Instance).fixDates(), nil
 }
 
+// RescueInstanceOptions fields are those accepted by RescueInstance
 type RescueInstanceOptions struct {
 	Devices InstanceConfigDeviceMap `json:"devices"`
 }

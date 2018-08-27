@@ -13,11 +13,13 @@ type InstanceBackupsResponse struct {
 	Snapshot  *InstanceBackupSnapshotResponse `json:"snapshot"`
 }
 
+// InstanceBackupSnapshotResponse fields are those representing Instance Backup Snapshots
 type InstanceBackupSnapshotResponse struct {
 	Current    *InstanceSnapshot `json:"current"`
 	InProgress *InstanceSnapshot `json:"in_progress"`
 }
 
+// RestoreInstanceOptions fields are those accepted by InstanceRestore
 type RestoreInstanceOptions struct {
 	LinodeID  int  `json:"linode_id"`
 	Overwrite bool `json:"overwrite"`
@@ -40,14 +42,17 @@ type InstanceSnapshot struct {
 	Disks    []*InstanceSnapshotDisk `json:"disks"`
 }
 
+// InstanceSnapshotDisk fields represent the source disk of a Snapshot
 type InstanceSnapshotDisk struct {
 	Label      string `json:"label"`
 	Size       int    `json:"size"`
 	Filesystem string `json:"filesystem"`
 }
 
+// InstanceSnapshotStatus constants start with Snapshot and include Linode API Instance Backup Snapshot status values
 type InstanceSnapshotStatus string
 
+// InstanceSnapshotStatus constants reflect the current status of an Instance Snapshot
 var (
 	SnapshotPaused              InstanceSnapshotStatus = "paused"
 	SnapshotPending             InstanceSnapshotStatus = "pending"
@@ -95,6 +100,11 @@ func (c *Client) CreateInstanceSnapshot(ctx context.Context, linodeID int, label
 		SetBody(body).
 		SetResult(&InstanceSnapshot{}).
 		Post(e))
+
+	if err != nil {
+		return nil, err
+	}
+
 	return r.Result().(*InstanceSnapshot).fixDates(), nil
 }
 
