@@ -56,7 +56,7 @@ func TestUpdateNodeBalancerConfig(t *testing.T) {
 	}
 	if configUpdated.Port != updateOpts.Port ||
 		string(updateOpts.Algorithm) != string(configUpdated.Algorithm) ||
-		string(updateOpts.Algorithm) != string(configUpdated.Algorithm) {
+		string(updateOpts.Protocol) != string(configUpdated.Protocol) {
 		t.Errorf("NodeBalancerConfig did not match UpdateOptions")
 	}
 }
