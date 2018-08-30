@@ -2,7 +2,6 @@ package linodego
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"log"
 	"strconv"
@@ -125,7 +124,7 @@ func (client Client) WaitForVolumeLinodeID(ctx context.Context, volumeID int, li
 // If the event indicates a failure both the failed event and the error will be returned.
 func (client Client) WaitForEventFinished(ctx context.Context, id interface{}, entityType EntityType, action EventAction, minStart time.Time, timeoutSeconds int) (*Event, error) {
 	titledEntityType := strings.Title(string(entityType))
-	filter, _ := json.Marshal(map[string]interface{}{
+	filter := map[string]interface{}{
 		// Entity is not filtered by the API
 		// Perhaps one day they will permit Entity ID/Type filtering.
 		// We'll have to verify these values manually, for now.
@@ -149,11 +148,11 @@ func (client Client) WaitForEventFinished(ctx context.Context, id interface{}, e
 		// Float the latest events to page 1
 		"+order_by": "created",
 		"+order":    "desc",
-	})
+	}
 
 	// Optimistically restrict results to page 1.  We should remove this when more
 	// precise filtering options exist.
-	listOptions := NewListOptions(1, string(filter))
+	listOptions := NewListOptions(1, filter)
 
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()

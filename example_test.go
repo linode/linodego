@@ -81,7 +81,7 @@ func ExampleClient_ListKernels_allWithOpts() {
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListKernels_allWithOpts")
 	defer teardown()
 
-	filterOpt := linodego.NewListOptions(0, "")
+	filterOpt := linodego.NewListOptions(0, nil)
 	kernels, err := linodeClient.ListKernels(context.Background(), filterOpt)
 	if err != nil {
 		log.Fatal(err)
@@ -104,7 +104,7 @@ func ExampleClient_ListKernels_filtered() {
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListKernels_filtered")
 	defer teardown()
 
-	filterOpt := linodego.ListOptions{Filter: "{\"label\":\"Recovery - Finnix (kernel)\"}"}
+	filterOpt := linodego.ListOptions{Filter: map[string]interface{}{"label": "Recovery - Finnix (kernel)"}}
 	kernels, err := linodeClient.ListKernels(context.Background(), &filterOpt)
 	if err != nil {
 		log.Fatal(err)
@@ -123,7 +123,7 @@ func ExampleClient_ListKernels_page1() {
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListKernels_page1")
 	defer teardown()
 
-	filterOpt := linodego.NewListOptions(1, "")
+	filterOpt := linodego.NewListOptions(1, nil)
 	kernels, err := linodeClient.ListKernels(context.Background(), filterOpt)
 	if err != nil {
 		log.Fatal(err)
@@ -193,7 +193,7 @@ func ExampleClient_ListImages_all() {
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListImages_all")
 	defer teardown()
 
-	filterOpt := linodego.NewListOptions(0, "")
+	filterOpt := linodego.NewListOptions(0, nil)
 	images, err := linodeClient.ListImages(context.Background(), filterOpt)
 	if err != nil {
 		log.Fatal(err)
@@ -214,7 +214,7 @@ func ExampleClient_ListImages_notfound() {
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListImages_notfound")
 	defer teardown()
 
-	filterOpt := linodego.ListOptions{Filter: "{\"label\":\"not-found\"}"}
+	filterOpt := linodego.ListOptions{Filter: map[string]interface{}{"label": "not-found"}}
 	images, err := linodeClient.ListImages(context.Background(), &filterOpt)
 	if err != nil {
 		log.Fatal(err)
@@ -232,7 +232,7 @@ func ExampleClient_ListImages_badfilter() {
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListImages_badfilter")
 	defer teardown()
 
-	filterOpt := linodego.ListOptions{Filter: "{\"foo\":\"bar\"}"}
+	filterOpt := linodego.ListOptions{Filter: map[string]interface{}{"foo": "bar"}}
 	images, err := linodeClient.ListImages(context.Background(), &filterOpt)
 	if err == nil {
 		log.Fatal(err)
@@ -266,7 +266,7 @@ func ExampleClient_ListStackscripts_page1() {
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListStackscripts_page1")
 	defer teardown()
 
-	filterOpt := linodego.NewListOptions(1, "")
+	filterOpt := linodego.NewListOptions(1, nil)
 	scripts, err := linodeClient.ListStackscripts(context.Background(), filterOpt)
 	if err != nil {
 		log.Fatal(err)

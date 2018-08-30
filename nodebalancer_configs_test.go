@@ -71,7 +71,7 @@ func TestListNodeBalancerConfigs(t *testing.T) {
 		t.Error(err)
 	}
 
-	listOpts := linodego.NewListOptions(0, "")
+	listOpts := linodego.NewListOptions(0, nil)
 	configs, err := client.ListNodeBalancerConfigs(context.Background(), nodebalancer.ID, listOpts)
 	if err != nil {
 		t.Errorf("Error listing nodebalancers configs, expected array, got error %v", err)
@@ -94,7 +94,7 @@ func TestListNodeBalancerConfigsMultiplePages(t *testing.T) {
 		t.Error(err)
 	}
 
-	listOpts := linodego.NewListOptions(0, "")
+	listOpts := linodego.NewListOptions(0, nil)
 	configs, err := client.ListNodeBalancerConfigs(context.Background(), nodebalancer.ID, listOpts)
 	if err != nil {
 		t.Errorf("Error listing nodebalancers configs, expected array, got error %v", err)

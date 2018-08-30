@@ -2,7 +2,6 @@ package linodego_test
 
 import (
 	"context"
-	"encoding/json"
 	"testing"
 
 	"github.com/linode/linodego"
@@ -68,14 +67,11 @@ func TestListDomainRecords(t *testing.T) {
 		t.Error(err)
 	}
 
-	filter, err := json.Marshal(map[string]interface{}{
+	filter := map[string]interface{}{
 		"name": record.Name,
-	})
-	if err != nil {
-		t.Error(err)
 	}
 
-	listOpts := linodego.NewListOptions(0, string(filter))
+	listOpts := linodego.NewListOptions(0, filter)
 	records, err := client.ListDomainRecords(context.Background(), domain.ID, listOpts)
 	if err != nil {
 		t.Errorf("Error listing domains records, expected array, got error %v", err)
@@ -95,13 +91,10 @@ func TestListDomainRecordsMultiplePages(t *testing.T) {
 		t.Error(err)
 	}
 
-	filter, err := json.Marshal(map[string]interface{}{
+	filter := map[string]interface{}{
 		"name": record.Name,
-	})
-	if err != nil {
-		t.Error(err)
 	}
-	listOpts := linodego.NewListOptions(0, string(filter))
+	listOpts := linodego.NewListOptions(0, filter)
 	records, err := client.ListDomainRecords(context.Background(), domain.ID, listOpts)
 	if err != nil {
 		t.Errorf("Error listing domains records, expected array, got error %v", err)

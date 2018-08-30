@@ -282,7 +282,7 @@ func Example() {
 			fmt.Println("### No Volumes")
 		}
 
-		stackscripts, err := linodeClient.ListStackscripts(context.Background(), &linodego.ListOptions{Filter: "{\"mine\":true}"})
+		stackscripts, err := linodeClient.ListStackscripts(context.Background(), &linodego.ListOptions{Filter: map[string]interface{}{"mine": true}})
 		if err != nil {
 			log.Fatal(err)
 		}

@@ -6,6 +6,7 @@ package linodego
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"strconv"
@@ -23,12 +24,12 @@ type PageOptions struct {
 // ListOptions are the pagination and filtering (TODO) parameters for endpoints
 type ListOptions struct {
 	*PageOptions
-	Filter string
+	Filter map[string]interface{}
 }
 
 // NewListOptions simplified construction of ListOptions using only
 // the two writable properties, Page and Filter
-func NewListOptions(Page int, Filter string) *ListOptions {
+func NewListOptions(Page int, Filter map[string]interface{}) *ListOptions {
 	return &ListOptions{PageOptions: &PageOptions{Page: Page}, Filter: Filter}
 
 }
@@ -52,7 +53,11 @@ func (c *Client) listHelper(ctx context.Context, i interface{}, opts *ListOption
 	)
 
 	if opts != nil && len(opts.Filter) > 0 {
-		req.SetHeader("X-Filter", opts.Filter)
+		b, err := json.Marshal(&opts.Filter)
+		if err != nil {
+			return err
+		}
+		req.SetHeader("X-Filter", string(b))
 	}
 
 	switch v := i.(type) {
@@ -312,7 +317,11 @@ func (c *Client) listHelperWithID(ctx context.Context, i interface{}, id int, op
 	)
 
 	if opts != nil && len(opts.Filter) > 0 {
-		req.SetHeader("X-Filter", opts.Filter)
+		b, err := json.Marshal(&opts.Filter)
+		if err != nil {
+			return err
+		}
+		req.SetHeader("X-Filter", string(b))
 	}
 
 	switch v := i.(type) {
@@ -426,7 +435,11 @@ func (c *Client) listHelperWithTwoIDs(ctx context.Context, i interface{}, firstI
 	)
 
 	if opts != nil && len(opts.Filter) > 0 {
-		req.SetHeader("X-Filter", opts.Filter)
+		b, err := json.Marshal(&opts.Filter)
+		if err != nil {
+			return err
+		}
+		req.SetHeader("X-Filter", string(b))
 	}
 
 	switch v := i.(type) {

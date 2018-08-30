@@ -11,7 +11,7 @@ func TestListStackscripts(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestListStackscripts")
 	defer teardown()
 
-	filterOpt := linodego.NewListOptions(1, "")
+	filterOpt := linodego.NewListOptions(1, nil)
 	stackscripts, err := client.ListStackscripts(context.Background(), filterOpt)
 	if err != nil {
 		t.Errorf("Error listing stackscripts, expected struct - error %v", err)
