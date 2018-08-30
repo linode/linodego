@@ -14,7 +14,7 @@
 
 [[projects]]
   digest = "1:4a4785749b54b948fd45be3824c6bb1d606578a440657f7cabc79dbbbdc7c476"
-  name = "github.com/go-resty/resty"
+  name = "gopkg.in/resty.v1"
   packages = ["."]
   pruneopts = "UT"
   revision = "383acc8a8b687098ee02168c0335a43dfee701f0"
@@ -104,7 +104,7 @@
   analyzer-version = 1
   input-imports = [
     "github.com/dnaeon/go-vcr/recorder",
-    "github.com/go-resty/resty",
+    "gopkg.in/resty.v1",
     "golang.org/x/oauth2",
   ]
   solver-name = "gps-cdcl"
