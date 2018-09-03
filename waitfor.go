@@ -226,6 +226,7 @@ func (client Client) WaitForEventFinished(ctx context.Context, id interface{}, e
 					log.Printf("[INFO] %s %v action %s is finished", titledEntityType, id, action)
 					return event, nil
 				}
+				// TODO(displague) can we bump the ticker to TimeRemaining/2 (>=1) when non-nil?
 				log.Printf("[INFO] %s %v action %s is %s", titledEntityType, id, action, event.Status)
 			}
 		case <-ctx.Done():

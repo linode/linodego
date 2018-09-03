@@ -76,10 +76,10 @@ type InstanceConfigCreateOptions struct {
 
 // InstanceConfigUpdateOptions are InstanceConfig settings that can be used in updates
 type InstanceConfigUpdateOptions struct {
-	Label    string                  `json:"label,omitempty"`
-	Comments string                  `json:"comments"`
-	Devices  InstanceConfigDeviceMap `json:"devices"`
-	Helpers  *InstanceConfigHelpers  `json:"helpers,omitempty"`
+	Label    string                   `json:"label,omitempty"`
+	Comments string                   `json:"comments"`
+	Devices  *InstanceConfigDeviceMap `json:"devices,omitempty"`
+	Helpers  *InstanceConfigHelpers   `json:"helpers,omitempty"`
 	// MemoryLimit 0 means unlimitted, this is not omitted
 	MemoryLimit int    `json:"memory_limit"`
 	Kernel      string `json:"kernel,omitempty"`
@@ -111,7 +111,7 @@ func (i InstanceConfig) GetUpdateOptions() InstanceConfigUpdateOptions {
 	return InstanceConfigUpdateOptions{
 		Label:       i.Label,
 		Comments:    i.Comments,
-		Devices:     *i.Devices,
+		Devices:     i.Devices,
 		Helpers:     i.Helpers,
 		MemoryLimit: i.MemoryLimit,
 		Kernel:      i.Kernel,
