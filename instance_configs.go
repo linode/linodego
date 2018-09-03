@@ -69,7 +69,7 @@ type InstanceConfigCreateOptions struct {
 	MemoryLimit int                     `json:"memory_limit,omitempty"`
 	Kernel      string                  `json:"kernel,omitempty"`
 	InitRD      int                     `json:"init_rd,omitempty"`
-	RootDevice  string                  `json:"root_device,omitempty"`
+	RootDevice  *string                 `json:"root_device,omitempty"`
 	RunLevel    string                  `json:"run_level,omitempty"`
 	VirtMode    string                  `json:"virt_mode,omitempty"`
 }
@@ -84,14 +84,18 @@ type InstanceConfigUpdateOptions struct {
 	MemoryLimit int    `json:"memory_limit"`
 	Kernel      string `json:"kernel,omitempty"`
 	// InitRD is nullable, permit the sending of null
-	InitRD     *int   `json:"init_rd"`
-	RootDevice string `json:"root_device,omitempty"`
-	RunLevel   string `json:"run_level,omitempty"`
-	VirtMode   string `json:"virt_mode,omitempty"`
+	InitRD     *int    `json:"init_rd"`
+	RootDevice *string `json:"root_device,omitempty"`
+	RunLevel   string  `json:"run_level,omitempty"`
+	VirtMode   string  `json:"virt_mode,omitempty"`
 }
 
 // GetCreateOptions converts a InstanceConfig to InstanceConfigCreateOptions for use in CreateInstanceConfig
 func (i InstanceConfig) GetCreateOptions() InstanceConfigCreateOptions {
+	initrd := 0
+	if i.InitRD != nil {
+		initrd = *i.InitRD
+	}
 	return InstanceConfigCreateOptions{
 		Label:       i.Label,
 		Comments:    i.Comments,
@@ -99,8 +103,8 @@ func (i InstanceConfig) GetCreateOptions() InstanceConfigCreateOptions {
 		Helpers:     i.Helpers,
 		MemoryLimit: i.MemoryLimit,
 		Kernel:      i.Kernel,
-		InitRD:      *i.InitRD,
-		RootDevice:  i.RootDevice,
+		InitRD:      initrd,
+		RootDevice:  copyString(&i.RootDevice),
 		RunLevel:    i.RunLevel,
 		VirtMode:    i.VirtMode,
 	}
@@ -116,7 +120,7 @@ func (i InstanceConfig) GetUpdateOptions() InstanceConfigUpdateOptions {
 		MemoryLimit: i.MemoryLimit,
 		Kernel:      i.Kernel,
 		InitRD:      copyInt(i.InitRD),
-		RootDevice:  i.RootDevice,
+		RootDevice:  copyString(&i.RootDevice),
 		RunLevel:    i.RunLevel,
 		VirtMode:    i.VirtMode,
 	}
