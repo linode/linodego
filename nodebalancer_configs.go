@@ -103,6 +103,33 @@ type NodeBalancerConfigCreateOptions struct {
 	SSLKey        string           `json:"ssl_key,omitempty"`
 }
 
+// NodeBalancerConfigRebuildOptionsNode for a nodebalancer instance mapping
+type NodeBalancerConfigRebuildOptionsNode struct {
+	Address *string `json:"address"`
+	Label   *string `json:"label"`
+	Weight  *int    `json:"weight"`
+	Mode    *string `json:"mode"`
+}
+
+// NodeBalancerConfigRebuildOptions used by RebuildNodeBalancerConfig
+type NodeBalancerConfigRebuildOptions struct {
+	Port          int                                     `json:"port"`
+	Protocol      ConfigProtocol                          `json:"protocol,omitempty"`
+	Algorithm     ConfigAlgorithm                         `json:"algorithm,omitempty"`
+	Stickiness    ConfigStickiness                        `json:"stickiness,omitempty"`
+	Check         ConfigCheck                             `json:"check,omitempty"`
+	CheckInterval int                                     `json:"check_interval,omitempty"`
+	CheckAttempts int                                     `json:"check_attempts,omitempty"`
+	CheckPath     string                                  `json:"check_path,omitempty"`
+	CheckBody     string                                  `json:"check_body,omitempty"`
+	CheckPassive  *bool                                   `json:"check_passive,omitempty"`
+	CheckTimeout  int                                     `json:"check_timeout,omitempty"`
+	CipherSuite   ConfigCipher                            `json:"cipher_suite,omitempty"`
+	SSLCert       string                                  `json:"ssl_cert,omitempty"`
+	SSLKey        string                                  `json:"ssl_key,omitempty"`
+	Nodes         []*NodeBalancerConfigRebuildOptionsNode `json:"nodes,omitempty"`
+}
+
 // NodeBalancerConfigUpdateOptions are permitted by UpdateNodeBalancerConfig
 type NodeBalancerConfigUpdateOptions NodeBalancerConfigCreateOptions
 
@@ -263,4 +290,31 @@ func (c *Client) DeleteNodeBalancerConfig(ctx context.Context, nodebalancerID in
 
 	_, err = coupleAPIErrors(c.R(ctx).Delete(e))
 	return err
+}
+
+// RebuildNodeBalancerConfig updates the NodeBalancer with the specified id
+func (c *Client) RebuildNodeBalancerConfig(ctx context.Context, nodeBalancerID int, configID int, rebuildOpts NodeBalancerConfigRebuildOptions) (*NodeBalancer, error) {
+	var body string
+	e, err := c.NodeBalancerConfigs.endpointWithID(nodeBalancerID)
+	if err != nil {
+		return nil, err
+	}
+	e = fmt.Sprintf("%s/%d/rebuild", e, configID)
+
+	req := c.R(ctx).SetResult(&NodeBalancer{})
+
+	if bodyData, err := json.Marshal(rebuildOpts); err == nil {
+		body = string(bodyData)
+	} else {
+		return nil, NewError(err)
+	}
+
+	r, err := coupleAPIErrors(req.
+		SetBody(body).
+		Put(e))
+
+	if err != nil {
+		return nil, err
+	}
+	return r.Result().(*NodeBalancer).fixDates(), nil
 }
