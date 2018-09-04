@@ -1,4 +1,8 @@
 include .env
+BIN_DIR := $(GOPATH)/bin
+GOMETALINTER := $(BIN_DIR)/gometalinter.v2
+GOMETALINTER_ARGS := --enable-all --disable=vetshadow --disable=gocyclo --disable=unparam --disable=nakedret --disable=lll --disable=dupl --disable=gosec --disable=gochecknoinits --disable=gochecknoglobals --disable=test
+GOMETALINTER_WARN_ARGS := --disable-all --enable=vetshadow --enable=gocyclo --enable=unparam --enable=nakedret --enable=lll --enable=dupl --enable=gosec --enable=gochecknoinits --enable=gochecknoglobals --deadline=120s 
 
 .PHONY: vendor example refresh-fixtures clean-fixtures
 
@@ -6,21 +10,25 @@ LINODE_FIXTURE_INSTANCE:=76859403
 LINODE_FIXTURE_VOLUME:=6574839201
 
 .PHONY: test
-test: vendor
+test: vendor lint
 	@LINODE_TEST_INSTANCE=$(LINODE_FIXTURE_INSTANCE) \
 	LINODE_TEST_VOLUME=$(LINODE_FIXTURE_VOLUME) \
 	LINODE_FIXTURE_MODE="play" \
 	LINODE_TOKEN="awesometokenawesometokenawesometoken" \
-	vgo test $(ARGS)
+	GO111MODULE="on" \
+	go test $(ARGS)
 
-$(GOPATH)/bin/vgo:
-	@go get -u golang.org/x/vgo
+$(GOMETALINTER):
+	go get -u gopkg.in/alecthomas/gometalinter.v2
+	$(GOMETALINTER) --install &> /dev/null
 
-vendor: $(GOPATH)/bin/vgo
-	@vgo get -u
+.PHONY: lint
+lint: $(GOMETALINTER)
+	$(GOMETALINTER) ./... --vendor $(GOMETALINTER_ARGS)
 
-example:
-	@go run example/main.go
+.PHONY: lint-warn
+lint-warn: $(GOMETALINTER)
+	$(GOMETALINTER) ./... --vendor $(GOMETALINTER_WARN_ARGS) || true
 
 clean-fixtures:
 	@-rm fixtures/*.yaml
