@@ -11,13 +11,13 @@ test: vendor
 	LINODE_TEST_VOLUME=$(LINODE_FIXTURE_VOLUME) \
 	LINODE_FIXTURE_MODE="play" \
 	LINODE_TOKEN="awesometokenawesometokenawesometoken" \
-	go test $(ARGS)
+	vgo test $(ARGS)
 
-$(GOPATH)/bin/dep:
-	@go get -u github.com/golang/dep/cmd/dep
+$(GOPATH)/bin/vgo:
+	@go get -u golang.org/x/vgo
 
-vendor: $(GOPATH)/bin/dep
-	@dep ensure
+vendor: $(GOPATH)/bin/vgo
+	@vgo get -u
 
 example:
 	@go run example/main.go

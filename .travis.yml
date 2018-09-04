@@ -9,6 +9,7 @@ go:
   - tip
 
 install:
+  - go get -u golang.org/x/vgo
   - go get -u gopkg.in/alecthomas/gometalinter.v2
   - gometalinter.v2 --install
 
