@@ -234,12 +234,12 @@ func unmarshalTimeRemaining(m json.RawMessage) *int {
 	if err != nil {
 		panic(err)
 	}
-	if err := json.Unmarshal(jsonBytes, intPtr); err == nil {
+	if err := json.Unmarshal(jsonBytes, intPtr); err == nil && intPtr != nil {
 		return intPtr
 	}
-	var timeStr string
-	if err := json.Unmarshal(jsonBytes, timeStr); err == nil {
-		if dur, err := durationToSeconds(timeStr); err != nil {
+	var timeStr *string
+	if err := json.Unmarshal(jsonBytes, timeStr); err == nil && timeStr != nil {
+		if dur, err := durationToSeconds(*timeStr); err != nil {
 			panic(err)
 		} else {
 			return &dur
