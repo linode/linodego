@@ -4,19 +4,22 @@ GOMETALINTER := $(BIN_DIR)/gometalinter.v2
 GOMETALINTER_ARGS := --enable-all --disable=vetshadow --disable=gocyclo --disable=unparam --disable=nakedret --disable=lll --disable=dupl --disable=gosec --disable=gochecknoinits --disable=gochecknoglobals --disable=test
 GOMETALINTER_WARN_ARGS := --disable-all --enable=vetshadow --enable=gocyclo --enable=unparam --enable=nakedret --enable=lll --enable=dupl --enable=gosec --enable=gochecknoinits --enable=gochecknoglobals --deadline=120s 
 
-.PHONY: vendor example refresh-fixtures clean-fixtures
+.PHONY: build example refresh-fixtures clean-fixtures
 
 LINODE_FIXTURE_INSTANCE:=76859403
 LINODE_FIXTURE_VOLUME:=6574839201
 
 .PHONY: test
-test: vendor lint
+test: build lint
 	@LINODE_TEST_INSTANCE=$(LINODE_FIXTURE_INSTANCE) \
 	LINODE_TEST_VOLUME=$(LINODE_FIXTURE_VOLUME) \
 	LINODE_FIXTURE_MODE="play" \
 	LINODE_TOKEN="awesometokenawesometokenawesometoken" \
 	GO111MODULE="on" \
 	go test $(ARGS)
+
+build:
+	go build ./...
 
 $(GOMETALINTER):
 	go get -u gopkg.in/alecthomas/gometalinter.v2
