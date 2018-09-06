@@ -57,7 +57,7 @@ type InstanceConfigHelpers struct {
 // InstanceConfigsPagedResponse represents a paginated InstanceConfig API response
 type InstanceConfigsPagedResponse struct {
 	*PageOptions
-	Data []*InstanceConfig `json:"data"`
+	Data []InstanceConfig `json:"data"`
 }
 
 // InstanceConfigCreateOptions are InstanceConfig settings that can be used at creation
@@ -133,11 +133,11 @@ func (InstanceConfigsPagedResponse) endpointWithID(c *Client, id int) string {
 
 // appendData appends InstanceConfigs when processing paginated InstanceConfig responses
 func (resp *InstanceConfigsPagedResponse) appendData(r *InstanceConfigsPagedResponse) {
-	(*resp).Data = append(resp.Data, r.Data...)
+	resp.Data = append(resp.Data, r.Data...)
 }
 
 // ListInstanceConfigs lists InstanceConfigs
-func (c *Client) ListInstanceConfigs(ctx context.Context, linodeID int, opts *ListOptions) ([]*InstanceConfig, error) {
+func (c *Client) ListInstanceConfigs(ctx context.Context, linodeID int, opts *ListOptions) ([]InstanceConfig, error) {
 	response := InstanceConfigsPagedResponse{}
 	err := c.listHelperWithID(ctx, &response, linodeID, opts)
 	for _, el := range response.Data {

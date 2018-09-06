@@ -141,7 +141,7 @@ type EventEntity struct {
 // EventsPagedResponse represents a paginated Events API response
 type EventsPagedResponse struct {
 	*PageOptions
-	Data []*Event `json:"data"`
+	Data []Event `json:"data"`
 }
 
 // endpoint gets the endpoint URL for Event
@@ -165,13 +165,13 @@ func (e Event) endpointWithID(c *Client) string {
 
 // appendData appends Events when processing paginated Event responses
 func (resp *EventsPagedResponse) appendData(r *EventsPagedResponse) {
-	(*resp).Data = append(resp.Data, r.Data...)
+	resp.Data = append(resp.Data, r.Data...)
 }
 
 // ListEvents gets a collection of Event objects representing actions taken
 // on the Account. The Events returned depend on the token grants and the grants
 // of the associated user.
-func (c *Client) ListEvents(ctx context.Context, opts *ListOptions) ([]*Event, error) {
+func (c *Client) ListEvents(ctx context.Context, opts *ListOptions) ([]Event, error) {
 	response := EventsPagedResponse{}
 	err := c.listHelper(ctx, &response, opts)
 	for _, el := range response.Data {

@@ -149,7 +149,7 @@ func (i NodeBalancerConfig) GetUpdateOptions() NodeBalancerConfigUpdateOptions {
 // NodeBalancerConfigsPagedResponse represents a paginated NodeBalancerConfig API response
 type NodeBalancerConfigsPagedResponse struct {
 	*PageOptions
-	Data []*NodeBalancerConfig `json:"data"`
+	Data []NodeBalancerConfig `json:"data"`
 }
 
 // endpointWithID gets the endpoint URL for NodeBalancerConfig
@@ -163,11 +163,11 @@ func (NodeBalancerConfigsPagedResponse) endpointWithID(c *Client, id int) string
 
 // appendData appends NodeBalancerConfigs when processing paginated NodeBalancerConfig responses
 func (resp *NodeBalancerConfigsPagedResponse) appendData(r *NodeBalancerConfigsPagedResponse) {
-	(*resp).Data = append(resp.Data, r.Data...)
+	resp.Data = append(resp.Data, r.Data...)
 }
 
 // ListNodeBalancerConfigs lists NodeBalancerConfigs
-func (c *Client) ListNodeBalancerConfigs(ctx context.Context, nodebalancerID int, opts *ListOptions) ([]*NodeBalancerConfig, error) {
+func (c *Client) ListNodeBalancerConfigs(ctx context.Context, nodebalancerID int, opts *ListOptions) ([]NodeBalancerConfig, error) {
 	response := NodeBalancerConfigsPagedResponse{}
 	err := c.listHelperWithID(ctx, &response, nodebalancerID, opts)
 	for _, el := range response.Data {

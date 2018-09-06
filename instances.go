@@ -131,7 +131,7 @@ func (l *Instance) fixDates() *Instance {
 // InstancesPagedResponse represents a linode API response for listing
 type InstancesPagedResponse struct {
 	*PageOptions
-	Data []*Instance `json:"data"`
+	Data []Instance `json:"data"`
 }
 
 // endpoint gets the endpoint URL for Instance
@@ -145,11 +145,11 @@ func (InstancesPagedResponse) endpoint(c *Client) string {
 
 // appendData appends Instances when processing paginated Instance responses
 func (resp *InstancesPagedResponse) appendData(r *InstancesPagedResponse) {
-	(*resp).Data = append(resp.Data, r.Data...)
+	resp.Data = append(resp.Data, r.Data...)
 }
 
 // ListInstances lists linode instances
-func (c *Client) ListInstances(ctx context.Context, opts *ListOptions) ([]*Instance, error) {
+func (c *Client) ListInstances(ctx context.Context, opts *ListOptions) ([]Instance, error) {
 	response := InstancesPagedResponse{}
 	err := c.listHelper(ctx, &response, opts)
 	for _, el := range response.Data {

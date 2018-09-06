@@ -219,12 +219,12 @@ func (client Client) WaitForEventFinished(ctx context.Context, id interface{}, e
 				}
 
 				if event.Status == EventFailed {
-					return event, fmt.Errorf("%s %v action %s failed", titledEntityType, id, action)
+					return &event, fmt.Errorf("%s %v action %s failed", titledEntityType, id, action)
 				} else if event.Status == EventScheduled {
 					log.Printf("[INFO] %s %v action %s is scheduled", titledEntityType, id, action)
 				} else if event.Status == EventFinished {
 					log.Printf("[INFO] %s %v action %s is finished", titledEntityType, id, action)
-					return event, nil
+					return &event, nil
 				}
 				log.Printf("[INFO] %s %v action %s is %s", titledEntityType, id, action, event.Status)
 			}
