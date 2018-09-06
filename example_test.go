@@ -277,10 +277,12 @@ func ExampleClient_ListStackscripts_page1() {
 	fmt.Println("Pages > 1:", filterOpt.Pages > 1)
 	s := scripts[len(scripts)-1]
 	fmt.Println("StackScript Script has shebang:", strings.Contains(s.Script, "#!/"))
+	fmt.Println("Created is parsed:", s.Created != nil)
 
 	// Output:
 	// Fetched == 100: true
 	// Results > 100: true
 	// Pages > 1: true
 	// StackScript Script has shebang: true
+	// Created is parsed: true
 }
