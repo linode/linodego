@@ -289,6 +289,56 @@
 - `/account/users/$username/password`
   - [ ] `POST`
 
+## Profile
+
+### Personalized User Settings
+
+- `/profile`
+  - [ ] `GET`
+  - [ ] `PUT`
+
+### Granted OAuth Apps
+
+- `/profile/apps`
+  - [ ] `GET`
+- `/profile/apps/$id`
+  - [ ] `GET`
+  - [ ] `DELETE`
+
+### Grants to Linode Resources
+
+- `/profile/grants`
+  - [ ] `GET`
+
+### SSH Keys
+
+- `/profile/sshkeys`
+  - [x] `GET`
+  - [x] `POST`
+- `/profile/sshkeys/$id`
+  - [x] `GET`
+  - [x] `PUT`
+  - [x] `DELETE`
+  
+### Two-Factor
+
+- `/profile/tfa-disable`
+  - [ ] `POST`
+- `/profile/tfa-enable`
+  - [ ] `POST`
+- `/profile/tfa-enable-confirm`
+  - [ ] `POST`
+
+### Personal Access API Tokens
+
+- `/profile/tokens`
+  - [ ] `GET`
+  - [ ] `POST`
+- `/profile/tokens/$id`
+  - [ ] `GET`
+  - [ ] `PUT`
+  - [ ] `DELETE`
+
 ## Images
 
 - `/images`

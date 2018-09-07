@@ -25,19 +25,23 @@ type Template struct {
 	// Updated *time.Time `json:"-"`
 }
 
+// TemplateCreateOptions fields are those accepted by CreateTemplate
 type TemplateCreateOptions struct {
 }
 
+// TemplateUpdateOptions fields are those accepted by UpdateTemplate
 type TemplateUpdateOptions struct {
 }
 
+// GetCreateOptions converts a Template to TemplateCreateOptions for use in CreateTemplate
 func (i Template) GetCreateOptions() (o TemplateCreateOptions) {
 	// o.Label = i.Label
 	// o.Description = copyString(o.Description)
 	return
 }
 
-func (i Template) GetUpdateOptions() (o TemplateCreateOptions) {
+// GetUpdateOptions converts a Template to TemplateUpdateOptions for use in UpdateTemplate
+func (i Template) GetUpdateOptions() (o TemplateUpdateOptions) {
 	// o.Label = i.Label
 	// o.Description = copyString(o.Description)
 	return
@@ -77,10 +81,10 @@ func (c *Client) ListTemplates(ctx context.Context, opts *ListOptions) ([]Templa
 }
 
 // fixDates converts JSON timestamps to Go time.Time values
-func (v *Template) fixDates() *Template {
-	// v.Created, _ = parseDates(v.CreatedStr)
-	// v.Updated, _ = parseDates(v.UpdatedStr)
-	return v
+func (i *Template) fixDates() *Template {
+	// i.Created, _ = parseDates(i.CreatedStr)
+	// i.Updated, _ = parseDates(i.UpdatedStr)
+	return i
 }
 
 // GetTemplate gets the template with the provided ID
