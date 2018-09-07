@@ -46,7 +46,7 @@ func (i Template) GetUpdateOptions() (o TemplateCreateOptions) {
 // TemplatesPagedResponse represents a paginated Template API response
 type TemplatesPagedResponse struct {
 	*PageOptions
-	Data []*Template `json:"data"`
+	Data []Template `json:"data"`
 }
 
 // endpoint gets the endpoint URL for Template
@@ -60,15 +60,15 @@ func (TemplatesPagedResponse) endpoint(c *Client) string {
 
 // appendData appends Templates when processing paginated Template responses
 func (resp *TemplatesPagedResponse) appendData(r *TemplatesPagedResponse) {
-	(*resp).Data = append(resp.Data, r.Data...)
+	resp.Data = append(resp.Data, r.Data...)
 }
 
 // ListTemplates lists Templates
-func (c *Client) ListTemplates(ctx context.Context, opts *ListOptions) ([]*Template, error) {
+func (c *Client) ListTemplates(ctx context.Context, opts *ListOptions) ([]Template, error) {
 	response := TemplatesPagedResponse{}
 	err := c.listHelper(ctx, &response, opts)
-	for _, el := range response.Data {
-		el.fixDates()
+	for i := range response.Data {
+		response.Data[i].fixDates()
 	}
 	if err != nil {
 		return nil, err
