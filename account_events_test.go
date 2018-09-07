@@ -18,6 +18,8 @@ func TestListEvents_resizing(t *testing.T) {
 		t.Errorf("Error getting Events, expected struct, got error %v", err)
 	}
 
+	// TODO(displague) this test is dependent on specific fixture data, mock it here, or just test
+	// fixDates directly
 	if events[2].TimeRemaining != nil {
 		t.Errorf("Error listing Events, expected resize event time_remaining to be nil, got %v", events[2].TimeRemaining)
 	}

@@ -87,6 +87,7 @@ type InstanceCreateOptions struct {
 	Group           string            `json:"group,omitempty"`
 	RootPass        string            `json:"root_pass,omitempty"`
 	AuthorizedKeys  []string          `json:"authorized_keys,omitempty"`
+	AuthorizedUsers []string          `json:"authorized_users,omitempty"`
 	StackScriptID   int               `json:"stackscript_id,omitempty"`
 	StackScriptData map[string]string `json:"stackscript_data,omitempty"`
 	BackupID        int               `json:"backup_id,omitempty"`
@@ -335,6 +336,7 @@ type RebuildInstanceOptions struct {
 	Image           string            `json:"image"`
 	RootPass        string            `json:"root_pass"`
 	AuthorizedKeys  []string          `json:"authorized_keys"`
+	AuthorizedUsers []string          `json:"authorized_users"`
 	StackscriptID   int               `json:"stackscript_id"`
 	StackscriptData map[string]string `json:"stackscript_data"`
 	Booted          bool              `json:"booted"`

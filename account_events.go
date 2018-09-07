@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
 	"strconv"
 	"strings"
 	"time"
@@ -229,23 +230,30 @@ func (c *Client) MarkEventsSeen(ctx context.Context, event *Event) error {
 }
 
 func unmarshalTimeRemaining(m json.RawMessage) *int {
-	var intPtr *int
 	jsonBytes, err := m.MarshalJSON()
 	if err != nil {
-		panic(err)
+		panic(jsonBytes)
 	}
-	if err := json.Unmarshal(jsonBytes, intPtr); err == nil && intPtr != nil {
-		return intPtr
+
+	if len(jsonBytes) == 4 && string(jsonBytes) == "null" {
+		return nil
 	}
-	var timeStr *string
-	if err := json.Unmarshal(jsonBytes, timeStr); err == nil && timeStr != nil {
-		if dur, err := durationToSeconds(*timeStr); err != nil {
+
+	var timeStr string
+	if err := json.Unmarshal(jsonBytes, &timeStr); err == nil && len(timeStr) > 0 {
+		if dur, err := durationToSeconds(timeStr); err != nil {
 			panic(err)
 		} else {
 			return &dur
 		}
+	} else {
+		var intPtr int
+		if err := json.Unmarshal(jsonBytes, &intPtr); err == nil {
+			return &intPtr
+		}
 	}
 
+	log.Println("[WARN] Unexpected unmarshalTimeRemaining value: ", jsonBytes)
 	return nil
 }
 

@@ -2,6 +2,7 @@ package linodego
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"testing"
 
@@ -39,5 +40,17 @@ func TestResourceTemplatedendpointWithID(t *testing.T) {
 	}
 	if e != fmt.Sprintf("linode/instances/%d/backups", backupID) {
 		t.Errorf("Backups endpoint did not contain backup ID '%d'", backupID)
+	}
+}
+
+func TestUnmarshalTimeRemaining(t *testing.T) {
+	if *unmarshalTimeRemaining(json.RawMessage("\"1:23\"")) != 83 {
+		t.Errorf("Error parsing duration style time_remaining")
+	}
+	if unmarshalTimeRemaining(json.RawMessage("null")) != nil {
+		t.Errorf("Error parsing null time_remaining")
+	}
+	if *unmarshalTimeRemaining(json.RawMessage("0")) != 0 {
+		t.Errorf("Error parsing int style time_remaining")
 	}
 }
