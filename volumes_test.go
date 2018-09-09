@@ -83,12 +83,15 @@ func TestGetVolume(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode.")
 	}
-	client, teardown := createTestClient(t, "fixtures/TestGetVolume")
-	defer teardown()
+	client, volume, teardownVolume, errVolume := setupVolume(t, "fixtures/TestGetVolume")
+	defer teardownVolume()
+	if errVolume != nil {
+		t.Error(errVolume)
+	}
 
-	_, err := client.GetVolume(context.Background(), TestVolumeID)
+	_, err := client.GetVolume(context.Background(), volume.ID)
 	if err != nil {
-		t.Errorf("Error getting volume %d, expected *LinodeVolume, got error %v", TestVolumeID, err)
+		t.Errorf("Error getting volume %d, expected *LinodeVolume, got error %v", volume.ID, err)
 	}
 }
 
@@ -105,7 +108,7 @@ func TestWaitForVolumeLinodeID_nil(t *testing.T) {
 	_, err = client.WaitForVolumeLinodeID(context.Background(), volume.ID, nil, 3)
 
 	if err != nil {
-		t.Errorf("Error getting volume %d, expected *LinodeVolume, got error %v", TestVolumeID, err)
+		t.Errorf("Error getting volume %d, expected *LinodeVolume, got error %v", volume.ID, err)
 	}
 }
 
