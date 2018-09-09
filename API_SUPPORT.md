@@ -169,6 +169,8 @@
   - [X] `GET`
   - [X] `PUT`
   - [X] `DELETE`
+- `/nodebalancers/$id/configs/$id/rebuild`
+  - [X] `POST`
 
 ## Networking
 

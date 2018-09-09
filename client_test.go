@@ -16,9 +16,6 @@ var testingMode = recorder.ModeDisabled
 var debugAPI = false
 var validTestAPIKey = "NOTANAPIKEY"
 
-var TestInstanceID int
-var TestVolumeID int
-
 func init() {
 	if apiToken, ok := os.LookupEnv("LINODE_TOKEN"); ok {
 		validTestAPIKey = apiToken
@@ -42,17 +39,6 @@ func init() {
 			testingMode = recorder.ModeReplaying
 		}
 	}
-
-	if apiTestInstance, ok := os.LookupEnv("LINODE_TEST_INSTANCE"); ok {
-		TestInstanceID, _ = strconv.Atoi(apiTestInstance)
-		log.Printf("[INFO] LINODE_TEST_INSTANCE %d will be examined for tests", TestInstanceID)
-	}
-
-	if apiTestVolume, ok := os.LookupEnv("LINODE_TEST_VOLUME"); ok {
-		TestVolumeID, _ = strconv.Atoi(apiTestVolume)
-		log.Printf("[INFO] LINODE_TEST_VOLUME %d will be examined for tests", TestVolumeID)
-	}
-
 }
 
 // testRecorder returns a go-vcr recorder and an associated function that the caller must defer

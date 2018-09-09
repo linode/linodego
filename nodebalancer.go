@@ -44,9 +44,10 @@ type NodeBalancerTransfer struct {
 
 // NodeBalancerCreateOptions are the options permitted for CreateNodeBalancer
 type NodeBalancerCreateOptions struct {
-	Label              *string `json:"label,omitempty"`
-	Region             string  `json:"region,omitempty"`
-	ClientConnThrottle *int    `json:"client_conn_throttle,omitempty"`
+	Label              *string                            `json:"label,omitempty"`
+	Region             string                             `json:"region,omitempty"`
+	ClientConnThrottle *int                               `json:"client_conn_throttle,omitempty"`
+	Configs            []*NodeBalancerConfigCreateOptions `json:"configs,omitempty"`
 }
 
 // NodeBalancerUpdateOptions are the options permitted for UpdateNodeBalancer

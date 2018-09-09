@@ -65,7 +65,7 @@ func TestListInstanceBackups(t *testing.T) {
 
 func setupInstanceBackup(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.Instance, *linodego.InstanceSnapshot, func(), error) {
 	t.Helper()
-	client, instance, fixtureTeardown, err := setupInstanceWithoutDisks(t, fixturesYaml)
+	client, instance, _, fixtureTeardown, err := setupInstanceWithoutDisks(t, fixturesYaml)
 	if err != nil {
 		t.Errorf("Error creating instance, got error %v", err)
 	}
