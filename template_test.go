@@ -31,6 +31,9 @@ func TestGetTemplate_missing(t *testing.T) {
 func TestGetTemplate_found(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestGetTemplate_found")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	i, err := client.GetTemplate(context.Background(), "linode/ubuntu16.04lts")
 	if err != nil {

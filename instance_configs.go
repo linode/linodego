@@ -84,10 +84,10 @@ type InstanceConfigUpdateOptions struct {
 	MemoryLimit int    `json:"memory_limit"`
 	Kernel      string `json:"kernel,omitempty"`
 	// InitRD is nullable, permit the sending of null
-	InitRD     *int    `json:"init_rd"`
-	RootDevice *string `json:"root_device,omitempty"`
-	RunLevel   string  `json:"run_level,omitempty"`
-	VirtMode   string  `json:"virt_mode,omitempty"`
+	InitRD     *int   `json:"init_rd"`
+	RootDevice string `json:"root_device,omitempty"`
+	RunLevel   string `json:"run_level,omitempty"`
+	VirtMode   string `json:"virt_mode,omitempty"`
 }
 
 // GetCreateOptions converts a InstanceConfig to InstanceConfigCreateOptions for use in CreateInstanceConfig
@@ -120,7 +120,7 @@ func (i InstanceConfig) GetUpdateOptions() InstanceConfigUpdateOptions {
 		MemoryLimit: i.MemoryLimit,
 		Kernel:      i.Kernel,
 		InitRD:      copyInt(i.InitRD),
-		RootDevice:  copyString(&i.RootDevice),
+		RootDevice:  i.RootDevice,
 		RunLevel:    i.RunLevel,
 		VirtMode:    i.VirtMode,
 	}

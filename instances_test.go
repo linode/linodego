@@ -15,6 +15,10 @@ func TestListInstances(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestListInstances")
 	defer teardown()
 
+	if err != nil {
+		t.Error(err)
+	}
+
 	listOpts := linodego.NewListOptions(1, "{\"id\": "+strconv.Itoa(instance.ID)+"}")
 	linodes, err := client.ListInstances(context.Background(), listOpts)
 	if err != nil {
@@ -35,6 +39,9 @@ func TestGetInstance(t *testing.T) {
 	}
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestGetInstance")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	instanceGot, err := client.GetInstance(context.Background(), instance.ID)
 	if err != nil {
@@ -55,6 +62,9 @@ func TestListInstanceDisks(t *testing.T) {
 	}
 	client, instance, teardown, err := setupInstance(t, "fixtures/TestListInstanceDisks")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	disks, err := client.ListInstanceDisks(context.Background(), instance.ID, nil)
 	if err != nil {
@@ -71,6 +81,9 @@ func TestListInstanceConfigs(t *testing.T) {
 	}
 	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestListInstanceConfigs")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	configs, err := client.ListInstanceConfigs(context.Background(), instance.ID, nil)
 	if err != nil {
@@ -90,10 +103,13 @@ func TestUpdateInstanceConfig(t *testing.T) {
 	}
 	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestUpdateInstanceConfig")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	updateConfigOpts := linodego.InstanceConfigUpdateOptions{
 		Label:      "bar",
-		Devices:    linodego.InstanceConfigDeviceMap{},
+		Devices:    &linodego.InstanceConfigDeviceMap{},
 		RootDevice: "/dev/root",
 	}
 
@@ -122,7 +138,7 @@ func TestListInstanceVolumes(t *testing.T) {
 
 	configOpts := linodego.InstanceConfigUpdateOptions{
 		Label: "volume-test",
-		Devices: linodego.InstanceConfigDeviceMap{
+		Devices: &linodego.InstanceConfigDeviceMap{
 			SDA: &linodego.InstanceConfigDevice{
 				VolumeID: volume.ID,
 			},

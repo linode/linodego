@@ -38,6 +38,9 @@ func TestGetSSHKey_missing(t *testing.T) {
 func TestGetSSHKey_found(t *testing.T) {
 	client, sshkey, teardown, err := setupSSHKey(t, "fixtures/TestGetSSHKey_found")
 	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
 
 	i, err := client.GetSSHKey(context.Background(), sshkey.ID)
 	if err != nil {
