@@ -50,6 +50,7 @@ type InstanceDiskCreateOptions struct {
 
 	Filesystem      string            `json:"filesystem,omitempty"`
 	AuthorizedKeys  []string          `json:"authorized_keys,omitempty"`
+	AuthorizedUsers []string          `json:"authorized_users,omitempty"`
 	ReadOnly        bool              `json:"read_only,omitempty"`
 	StackscriptID   int               `json:"stackscript_id,omitempty"`
 	StackscriptData map[string]string `json:"stackscript_data,omitempty"`
