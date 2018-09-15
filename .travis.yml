@@ -17,6 +17,7 @@ install:
 
 script:
   - touch .env
+  - go mod download
   - go mod vendor
   - make test ARGS='-v -race -count=2 -coverprofile=coverage.txt -covermode=atomic ./...'
   - gometalinter.v2 --enable-all --disable=vetshadow --disable=gocyclo --disable=unparam --disable=nakedret --disable=lll --disable=dupl --disable=gosec --disable=gochecknoinits --disable=gochecknoglobals --disable=test --deadline=120s
