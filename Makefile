@@ -1,6 +1,6 @@
 include .env
 BIN_DIR := $(GOPATH)/bin
-GOMETALINTER := $(BIN_DIR)/gometalinter.v2
+GOMETALINTER := $(BIN_DIR)/gometalinter
 GOMETALINTER_ARGS := --enable-all --disable=vetshadow --disable=gocyclo --disable=unparam --disable=nakedret --disable=lll --disable=dupl --disable=gosec --disable=gochecknoinits --disable=gochecknoglobals --disable=test
 GOMETALINTER_WARN_ARGS := --disable-all --enable=vetshadow --enable=gocyclo --enable=unparam --enable=nakedret --enable=lll --enable=dupl --enable=gosec --enable=gochecknoinits --enable=gochecknoglobals --deadline=120s
 
@@ -17,16 +17,15 @@ build:
 	go build ./...
 
 $(GOMETALINTER):
-	curl -L https://git.io/vp6lP | sh
-	$(GOMETALINTER) --install &> /dev/null
+	curl -L https://git.io/vp6lP | sh -s -- -b $(BIN_DIR) -d
 
 .PHONY: lint
 lint: $(GOMETALINTER)
-	$(GOMETALINTER) ./... --vendor $(GOMETALINTER_ARGS)
+	$(GOMETALINTER) $(shell go list ./... | grep -v vendor) --vendor $(GOMETALINTER_ARGS)
 
 .PHONY: lint-warn
 lint-warn: $(GOMETALINTER)
-	$(GOMETALINTER) ./... --vendor $(GOMETALINTER_WARN_ARGS) || true
+	$(GOMETALINTER) $(shell go list ./... | grep -v vendor) --vendor $(GOMETALINTER_WARN_ARGS) || true
 
 clean-fixtures:
 	@-rm fixtures/*.yaml
