@@ -1,0 +1,87 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer awesometokenawesometokenawesometoken
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego 0.1.1 https://github.com/linode/linodego
+    url: https://api.linode.com/v4/account/events
+    method: GET
+  response:
+    body: '{"data": [{"created": "2018-01-02T03:04:05", "username": "restricted_tester",
+    "status": "resizing", "time_remaining": "1:23", "id": 11846172, "percent_complete":
+      0, "entity": {"label": "linodego-test-instance", "url": "/v4/linode/instances/9588435",
+      "id": 9588435, "type": "linode"}, "read": false, "rate": "1.23 MB/s", "seen": false,
+      "action": "linode_resize"}, {"created": "2018-01-02T03:04:05", "username": "restricted_tester",
+      "status": "finished", "time_remaining": 0, "id": 11846182, "percent_complete":
+      100, "entity": {"label": "linodego-test-instance", "url": "/v4/linode/instances/9588435",
+      "id": 9588435, "type": "linode"}, "read": false, "rate": null, "seen": false,
+      "action": "linode_resize"},{"created": "2018-01-02T03:04:05", "username": "restricted_tester",
+      "status": "finished", "time_remaining": null, "id": 11846192, "percent_complete":
+      null, "entity": {"label": "linodego-test-instance", "url": "/v4/linode/instances/9588435",
+      "id": 9588435, "type": "linode"}, "read": false, "rate": null, "seen": false,
+      "action": "linode_resize"}], "page": 1, "pages": 1, "results": 3}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "35494"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Date:
+      - Sat, 11 Aug 2018 00:02:11 GMT
+      Retry-After:
+      - "114"
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Ratelimit-Remaining:
+      - "397"
+      X-Ratelimit-Reset:
+      - "1533945846"
+      X-Spec-Version:
+      - 4.0.3
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""

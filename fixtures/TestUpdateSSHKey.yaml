@@ -2,7 +2,8 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"linodego-test-volume","region":"us-west"}'
+    body: '{"label":"lpq6h62z88m4-linodego-testing","ssh_key":"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYlv4Ns3tY2NEseuuMXEz1sLzO9sGC0cwaT2ECbWFyrsn1Fg5ISdkaJD8LiuhZ41/1Mh0Sq49wY89yLkmw+Ukrd+thFbhUqTzjL09U89kn3Ds/ajVJgwnJ4pXmBqhq0/3pmO/UkYIBi5ErTnPWL+yHAoQ1HsVetxYUmY2SPaT0pduDIrvNZRvWn3Nvn9qsUVfthWiGc8oHWE5xyd7+3UPLHSMkE4rZd2k6e7bJWCM/VJ7ZrJQ6UVTDXjBCkkT12WsOWxcEuL36RUGgGa4h5M4IY0SkgQSKHer01dJSj3c6OBzj2CRDZFoM8f/YC66s0+ZQ9cE/aADDycMIvqOJBI6X
+      lpq6h62z88m4-linodego-testing"}'
     form: {}
     headers:
       Accept:
@@ -12,13 +13,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.4.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/volumes
+      - linodego 0.5.0 https://github.com/linode/linodego
+    url: https://api.linode.com/v4/profile/sshkeys
     method: POST
   response:
-    body: '{"updated": "2018-01-02T03:04:05", "filesystem_path": "/dev/disk/by-id/scsi-0Linode_Volume_linodego-test-volume",
-      "created": "2018-01-02T03:04:05", "id": 12771, "label": "linodego-test-volume",
-      "status": "creating", "region": "us-west", "linode_id": null, "size": 20}'
+    body: '{"label": "lpq6h62z88m4-linodego-testing", "id": 44, "ssh_key": "ssh-rsa
+      AAAAB3NzaC1yc2EAAAADAQABAAABAQDYlv4Ns3tY2NEseuuMXEz1sLzO9sGC0cwaT2ECbWFyrsn1Fg5ISdkaJD8LiuhZ41/1Mh0Sq49wY89yLkmw+Ukrd+thFbhUqTzjL09U89kn3Ds/ajVJgwnJ4pXmBqhq0/3pmO/UkYIBi5ErTnPWL+yHAoQ1HsVetxYUmY2SPaT0pduDIrvNZRvWn3Nvn9qsUVfthWiGc8oHWE5xyd7+3UPLHSMkE4rZd2k6e7bJWCM/VJ7ZrJQ6UVTDXjBCkkT12WsOWxcEuL36RUGgGa4h5M4IY0SkgQSKHer01dJSj3c6OBzj2CRDZFoM8f/YC66s0+ZQ9cE/aADDycMIvqOJBI6X
+      lpq6h62z88m4-linodego-testing", "created": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -35,13 +36,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "267"
+      - "511"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Date:
-      - Sat, 08 Sep 2018 22:25:51 GMT
+      - Fri, 07 Sep 2018 15:02:07 GMT
       Retry-After:
       - "119"
       Server:
@@ -51,7 +52,7 @@ interactions:
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - volumes:read_write
+      - account:read_write
       X-Content-Type-Options:
       - nosniff
       - nosniff
@@ -65,7 +66,7 @@ interactions:
       X-Ratelimit-Remaining:
       - "399"
       X-Ratelimit-Reset:
-      - "1536445671"
+      - "1536332647"
       X-Spec-Version:
       - 4.0.4
       X-Xss-Protection:
@@ -74,7 +75,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: ""
+    body: '{"label":"lpq6h62z88m4-linodego-testing_r"}'
     form: {}
     headers:
       Accept:
@@ -84,13 +85,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.4.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/volumes/12771
-    method: GET
+      - linodego 0.5.0 https://github.com/linode/linodego
+    url: https://api.linode.com/v4/profile/sshkeys/44
+    method: PUT
   response:
-    body: '{"label": "linodego-test-volume", "filesystem_path": "/dev/disk/by-id/scsi-0Linode_Volume_linodego-test-volume",
-      "size": 20, "status": "creating", "updated": "2018-01-02T03:04:05", "created":
-      "2018-01-02T03:04:05", "linode_id": null, "region": "us-west", "id": 12771}'
+    body: '{"label": "lpq6h62z88m4-linodego-testing_r", "id": 44, "ssh_key": "ssh-rsa
+      AAAAB3NzaC1yc2EAAAADAQABAAABAQDYlv4Ns3tY2NEseuuMXEz1sLzO9sGC0cwaT2ECbWFyrsn1Fg5ISdkaJD8LiuhZ41/1Mh0Sq49wY89yLkmw+Ukrd+thFbhUqTzjL09U89kn3Ds/ajVJgwnJ4pXmBqhq0/3pmO/UkYIBi5ErTnPWL+yHAoQ1HsVetxYUmY2SPaT0pduDIrvNZRvWn3Nvn9qsUVfthWiGc8oHWE5xyd7+3UPLHSMkE4rZd2k6e7bJWCM/VJ7ZrJQ6UVTDXjBCkkT12WsOWxcEuL36RUGgGa4h5M4IY0SkgQSKHer01dJSj3c6OBzj2CRDZFoM8f/YC66s0+ZQ9cE/aADDycMIvqOJBI6X
+      lpq6h62z88m4-linodego-testing", "created": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -103,18 +104,17 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Connection:
       - keep-alive
       Content-Length:
-      - "267"
+      - "513"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Date:
-      - Sat, 08 Sep 2018 22:25:52 GMT
+      - Fri, 07 Sep 2018 15:02:07 GMT
       Retry-After:
       - "119"
       Server:
@@ -123,9 +123,8 @@ interactions:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
-      - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - volumes:read_only
+      - account:read_write
       X-Content-Type-Options:
       - nosniff
       - nosniff
@@ -139,7 +138,7 @@ interactions:
       X-Ratelimit-Remaining:
       - "399"
       X-Ratelimit-Reset:
-      - "1536445672"
+      - "1536332647"
       X-Spec-Version:
       - 4.0.4
       X-Xss-Protection:
@@ -158,8 +157,8 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.4.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/volumes/12771
+      - linodego 0.5.0 https://github.com/linode/linodego
+    url: https://api.linode.com/v4/profile/sshkeys/44
     method: DELETE
   response:
     body: '{}'
@@ -185,9 +184,9 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sat, 08 Sep 2018 22:25:52 GMT
+      - Fri, 07 Sep 2018 15:02:07 GMT
       Retry-After:
-      - "119"
+      - "118"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -195,7 +194,7 @@ interactions:
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - volumes:read_write
+      - account:read_write
       X-Content-Type-Options:
       - nosniff
       - nosniff
@@ -207,9 +206,9 @@ interactions:
       X-Ratelimit-Limit:
       - "400"
       X-Ratelimit-Remaining:
-      - "399"
+      - "398"
       X-Ratelimit-Reset:
-      - "1536445672"
+      - "1536332646"
       X-Spec-Version:
       - 4.0.4
       X-Xss-Protection:

@@ -21,7 +21,7 @@ type Domain struct {
 	Group string `json:"group"`
 
 	// Used to control whether this Domain is currently being rendered.
-	Status DomainStatus `json:"domain_status"` // Enum:"disabled" "active" "edit_mode" "has_errors"
+	Status DomainStatus `json:"status"` // Enum:"disabled" "active" "edit_mode" "has_errors"
 
 	// A description for this Domain. This is for display purposes only.
 	Description string `json:"description"`
@@ -173,7 +173,7 @@ func (d Domain) GetUpdateOptions() (du DomainUpdateOptions) {
 // DomainsPagedResponse represents a paginated Domain API response
 type DomainsPagedResponse struct {
 	*PageOptions
-	Data []*Domain `json:"data"`
+	Data []Domain `json:"data"`
 }
 
 // endpoint gets the endpoint URL for Domain
@@ -187,11 +187,11 @@ func (DomainsPagedResponse) endpoint(c *Client) string {
 
 // appendData appends Domains when processing paginated Domain responses
 func (resp *DomainsPagedResponse) appendData(r *DomainsPagedResponse) {
-	(*resp).Data = append(resp.Data, r.Data...)
+	resp.Data = append(resp.Data, r.Data...)
 }
 
 // ListDomains lists Domains
-func (c *Client) ListDomains(ctx context.Context, opts *ListOptions) ([]*Domain, error) {
+func (c *Client) ListDomains(ctx context.Context, opts *ListOptions) ([]Domain, error) {
 	response := DomainsPagedResponse{}
 	err := c.listHelper(ctx, &response, opts)
 	if err != nil {

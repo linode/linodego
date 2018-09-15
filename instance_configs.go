@@ -57,7 +57,7 @@ type InstanceConfigHelpers struct {
 // InstanceConfigsPagedResponse represents a paginated InstanceConfig API response
 type InstanceConfigsPagedResponse struct {
 	*PageOptions
-	Data []*InstanceConfig `json:"data"`
+	Data []InstanceConfig `json:"data"`
 }
 
 // InstanceConfigCreateOptions are InstanceConfig settings that can be used at creation
@@ -69,17 +69,17 @@ type InstanceConfigCreateOptions struct {
 	MemoryLimit int                     `json:"memory_limit,omitempty"`
 	Kernel      string                  `json:"kernel,omitempty"`
 	InitRD      int                     `json:"init_rd,omitempty"`
-	RootDevice  string                  `json:"root_device,omitempty"`
+	RootDevice  *string                 `json:"root_device,omitempty"`
 	RunLevel    string                  `json:"run_level,omitempty"`
 	VirtMode    string                  `json:"virt_mode,omitempty"`
 }
 
 // InstanceConfigUpdateOptions are InstanceConfig settings that can be used in updates
 type InstanceConfigUpdateOptions struct {
-	Label    string                  `json:"label,omitempty"`
-	Comments string                  `json:"comments"`
-	Devices  InstanceConfigDeviceMap `json:"devices"`
-	Helpers  *InstanceConfigHelpers  `json:"helpers,omitempty"`
+	Label    string                   `json:"label,omitempty"`
+	Comments string                   `json:"comments"`
+	Devices  *InstanceConfigDeviceMap `json:"devices,omitempty"`
+	Helpers  *InstanceConfigHelpers   `json:"helpers,omitempty"`
 	// MemoryLimit 0 means unlimitted, this is not omitted
 	MemoryLimit int    `json:"memory_limit"`
 	Kernel      string `json:"kernel,omitempty"`
@@ -92,6 +92,10 @@ type InstanceConfigUpdateOptions struct {
 
 // GetCreateOptions converts a InstanceConfig to InstanceConfigCreateOptions for use in CreateInstanceConfig
 func (i InstanceConfig) GetCreateOptions() InstanceConfigCreateOptions {
+	initrd := 0
+	if i.InitRD != nil {
+		initrd = *i.InitRD
+	}
 	return InstanceConfigCreateOptions{
 		Label:       i.Label,
 		Comments:    i.Comments,
@@ -99,8 +103,8 @@ func (i InstanceConfig) GetCreateOptions() InstanceConfigCreateOptions {
 		Helpers:     i.Helpers,
 		MemoryLimit: i.MemoryLimit,
 		Kernel:      i.Kernel,
-		InitRD:      *i.InitRD,
-		RootDevice:  i.RootDevice,
+		InitRD:      initrd,
+		RootDevice:  copyString(&i.RootDevice),
 		RunLevel:    i.RunLevel,
 		VirtMode:    i.VirtMode,
 	}
@@ -111,7 +115,7 @@ func (i InstanceConfig) GetUpdateOptions() InstanceConfigUpdateOptions {
 	return InstanceConfigUpdateOptions{
 		Label:       i.Label,
 		Comments:    i.Comments,
-		Devices:     *i.Devices,
+		Devices:     i.Devices,
 		Helpers:     i.Helpers,
 		MemoryLimit: i.MemoryLimit,
 		Kernel:      i.Kernel,
@@ -133,15 +137,15 @@ func (InstanceConfigsPagedResponse) endpointWithID(c *Client, id int) string {
 
 // appendData appends InstanceConfigs when processing paginated InstanceConfig responses
 func (resp *InstanceConfigsPagedResponse) appendData(r *InstanceConfigsPagedResponse) {
-	(*resp).Data = append(resp.Data, r.Data...)
+	resp.Data = append(resp.Data, r.Data...)
 }
 
 // ListInstanceConfigs lists InstanceConfigs
-func (c *Client) ListInstanceConfigs(ctx context.Context, linodeID int, opts *ListOptions) ([]*InstanceConfig, error) {
+func (c *Client) ListInstanceConfigs(ctx context.Context, linodeID int, opts *ListOptions) ([]InstanceConfig, error) {
 	response := InstanceConfigsPagedResponse{}
 	err := c.listHelperWithID(ctx, &response, linodeID, opts)
-	for _, el := range response.Data {
-		el.fixDates()
+	for i := range response.Data {
+		response.Data[i].fixDates()
 	}
 	if err != nil {
 		return nil, err

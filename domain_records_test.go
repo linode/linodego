@@ -107,7 +107,7 @@ func TestListDomainRecordsMultiplePages(t *testing.T) {
 		t.Errorf("Error listing domains records, expected array, got error %v", err)
 	}
 	if len(records) != 2 {
-		t.Errorf("Expected ListDomainRecords to match one result")
+		t.Errorf("Expected ListDomainRecords to match two results")
 	}
 }
 

@@ -2,7 +2,8 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-west","type":"g6-nanode-1","label":"linodego-test-instance","booted":false}'
+    body: '{"label":"lpq6h62z88m4-linodego-testing","ssh_key":"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYlv4Ns3tY2NEseuuMXEz1sLzO9sGC0cwaT2ECbWFyrsn1Fg5ISdkaJD8LiuhZ41/1Mh0Sq49wY89yLkmw+Ukrd+thFbhUqTzjL09U89kn3Ds/ajVJgwnJ4pXmBqhq0/3pmO/UkYIBi5ErTnPWL+yHAoQ1HsVetxYUmY2SPaT0pduDIrvNZRvWn3Nvn9qsUVfthWiGc8oHWE5xyd7+3UPLHSMkE4rZd2k6e7bJWCM/VJ7ZrJQ6UVTDXjBCkkT12WsOWxcEuL36RUGgGa4h5M4IY0SkgQSKHer01dJSj3c6OBzj2CRDZFoM8f/YC66s0+ZQ9cE/aADDycMIvqOJBI6X
+      lpq6h62z88m4-linodego-testing"}'
     form: {}
     headers:
       Accept:
@@ -12,92 +13,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.4.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances
+      - linodego 0.5.0 https://github.com/linode/linodego
+    url: https://api.linode.com/v4/profile/sshkeys
     method: POST
   response:
-    body: '{"status": "provisioning", "group": "", "watchdog_enabled": true, "hypervisor":
-      "kvm", "specs": {"memory": 1024, "transfer": 1000, "disk": 25600, "vcpus": 1},
-      "ipv4": ["010.020.030.040"], "label": "linodego-test-instance", "updated": "2018-01-02T03:04:05",
-      "id": 10157365, "type": "g6-nanode-1", "image": null, "created": "2018-01-02T03:04:05",
-      "backups": {"schedule": {"window": null, "day": null}, "enabled": false}, "alerts":
-      {"network_in": 10, "network_out": 10, "cpu": 90, "transfer_quota": 80, "io":
-      10000}, "ipv6": "1234::5678/64", "region": "us-west"}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Cache-Control:
-      - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "576"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Date:
-      - Sat, 08 Sep 2018 20:04:03 GMT
-      Retry-After:
-      - "116"
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - linodes:read_write
-      X-Content-Type-Options:
-      - nosniff
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "400"
-      X-Ratelimit-Remaining:
-      - "399"
-      X-Ratelimit-Reset:
-      - "1536437160"
-      X-Spec-Version:
-      - 4.0.4
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: '{"label":"linodego-test-config","devices":{}}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Authorization:
-      - Bearer awesometokenawesometokenawesometoken
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego 0.4.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/10157365/configs
-    method: POST
-  response:
-    body: '{"helpers": {"distro": true, "devtmpfs_automount": true, "updatedb_disabled":
-      true, "network": true, "modules_dep": true}, "memory_limit": 0, "label": "linodego-test-config",
-      "comments": "", "updated": "2018-01-02T03:04:05", "run_level": "default", "id":
-      11404221, "initrd": null, "root_device": "/dev/sda", "virt_mode": "paravirt",
-      "devices": {"sdg": null, "sde": null, "sdc": null, "sdh": null, "sda": null,
-      "sdf": null, "sdb": null, "sdd": null}, "kernel": "linode/latest-64bit", "created":
+    body: '{"id": 43, "ssh_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYlv4Ns3tY2NEseuuMXEz1sLzO9sGC0cwaT2ECbWFyrsn1Fg5ISdkaJD8LiuhZ41/1Mh0Sq49wY89yLkmw+Ukrd+thFbhUqTzjL09U89kn3Ds/ajVJgwnJ4pXmBqhq0/3pmO/UkYIBi5ErTnPWL+yHAoQ1HsVetxYUmY2SPaT0pduDIrvNZRvWn3Nvn9qsUVfthWiGc8oHWE5xyd7+3UPLHSMkE4rZd2k6e7bJWCM/VJ7ZrJQ6UVTDXjBCkkT12WsOWxcEuL36RUGgGa4h5M4IY0SkgQSKHer01dJSj3c6OBzj2CRDZFoM8f/YC66s0+ZQ9cE/aADDycMIvqOJBI6X
+      lpq6h62z88m4-linodego-testing", "label": "lpq6h62z88m4-linodego-testing", "created":
       "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -115,13 +36,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "516"
+      - "511"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Date:
-      - Sat, 08 Sep 2018 20:04:03 GMT
+      - Fri, 07 Sep 2018 15:02:07 GMT
       Retry-After:
       - "119"
       Server:
@@ -131,7 +52,7 @@ interactions:
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - linodes:read_write
+      - account:read_write
       X-Content-Type-Options:
       - nosniff
       - nosniff
@@ -145,7 +66,7 @@ interactions:
       X-Ratelimit-Remaining:
       - "399"
       X-Ratelimit-Reset:
-      - "1536437163"
+      - "1536332646"
       X-Spec-Version:
       - 4.0.4
       X-Xss-Protection:
@@ -164,20 +85,13 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.4.0 https://github.com/linode/linodego
-      X-Filter:
-      - '{"id": 10157365}'
-    url: https://api.linode.com/v4/linode/instances?page=1
+      - linodego 0.5.0 https://github.com/linode/linodego
+    url: https://api.linode.com/v4/profile/sshkeys/43
     method: GET
   response:
-    body: '{"data": [{"backups": {"enabled": false, "schedule": {"window": null, "day":
-      null}}, "ipv6": "1234::5678/64", "status": "provisioning",
-      "group": "", "type": "g6-nanode-1", "hypervisor": "kvm", "specs": {"vcpus":
-      1, "disk": 25600, "transfer": 1000, "memory": 1024}, "region": "us-west", "label":
-      "linodego-test-instance", "ipv4": ["010.020.030.040"], "id": 10157365, "created":
-      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "alerts": {"cpu": 90,
-      "network_out": 10, "transfer_quota": 80, "network_in": 10, "io": 10000}, "image":
-      null, "watchdog_enabled": true}], "results": 1, "page": 1, "pages": 1}'
+    body: '{"ssh_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYlv4Ns3tY2NEseuuMXEz1sLzO9sGC0cwaT2ECbWFyrsn1Fg5ISdkaJD8LiuhZ41/1Mh0Sq49wY89yLkmw+Ukrd+thFbhUqTzjL09U89kn3Ds/ajVJgwnJ4pXmBqhq0/3pmO/UkYIBi5ErTnPWL+yHAoQ1HsVetxYUmY2SPaT0pduDIrvNZRvWn3Nvn9qsUVfthWiGc8oHWE5xyd7+3UPLHSMkE4rZd2k6e7bJWCM/VJ7ZrJQ6UVTDXjBCkkT12WsOWxcEuL36RUGgGa4h5M4IY0SkgQSKHer01dJSj3c6OBzj2CRDZFoM8f/YC66s0+ZQ9cE/aADDycMIvqOJBI6X
+      lpq6h62z88m4-linodego-testing", "id": 43, "created": "2018-01-02T03:04:05",
+      "label": "lpq6h62z88m4-linodego-testing"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -195,15 +109,15 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "625"
+      - "511"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Date:
-      - Sat, 08 Sep 2018 20:04:04 GMT
+      - Fri, 07 Sep 2018 15:02:07 GMT
       Retry-After:
-      - "118"
+      - "119"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -212,7 +126,7 @@ interactions:
       - Authorization, X-Filter
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - linodes:read_only
+      - account:read_only
       X-Content-Type-Options:
       - nosniff
       - nosniff
@@ -226,7 +140,7 @@ interactions:
       X-Ratelimit-Remaining:
       - "399"
       X-Ratelimit-Reset:
-      - "1536437163"
+      - "1536332647"
       X-Spec-Version:
       - 4.0.4
       X-Xss-Protection:
@@ -245,8 +159,8 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.4.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/10157365
+      - linodego 0.5.0 https://github.com/linode/linodego
+    url: https://api.linode.com/v4/profile/sshkeys/43
     method: DELETE
   response:
     body: '{}'
@@ -272,7 +186,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sat, 08 Sep 2018 20:04:04 GMT
+      - Fri, 07 Sep 2018 15:02:07 GMT
       Retry-After:
       - "119"
       Server:
@@ -282,7 +196,7 @@ interactions:
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - linodes:read_write
+      - account:read_write
       X-Content-Type-Options:
       - nosniff
       - nosniff
@@ -296,7 +210,7 @@ interactions:
       X-Ratelimit-Remaining:
       - "399"
       X-Ratelimit-Reset:
-      - "1536437164"
+      - "1536332647"
       X-Spec-Version:
       - 4.0.4
       X-Xss-Protection:

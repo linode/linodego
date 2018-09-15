@@ -2,7 +2,11 @@ package linodego
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
+	"log"
+	"strconv"
+	"strings"
 	"time"
 )
 
@@ -23,7 +27,7 @@ type Event struct {
 	PercentComplete int `json:"percent_complete"`
 
 	// The rate of completion of the Event. Only some Events will return rate; for example, migration and resize Events.
-	Rate string `json:"rate"`
+	Rate *string `json:"rate"`
 
 	// If this Event has been read.
 	Read bool `json:"read"`
@@ -32,7 +36,8 @@ type Event struct {
 	Seen bool `json:"seen"`
 
 	// The estimated time remaining until the completion of this Event. This value is only returned for in-progress events.
-	TimeRemaining int `json:"time_remaining"`
+	TimeRemainingMsg json.RawMessage `json:"time_remaining"`
+	TimeRemaining    *int            `json:"-"`
 
 	// The username of the User who caused the Event.
 	Username string `json:"username"`
@@ -141,7 +146,7 @@ type EventEntity struct {
 // EventsPagedResponse represents a paginated Events API response
 type EventsPagedResponse struct {
 	*PageOptions
-	Data []*Event `json:"data"`
+	Data []Event `json:"data"`
 }
 
 // endpoint gets the endpoint URL for Event
@@ -165,17 +170,17 @@ func (e Event) endpointWithID(c *Client) string {
 
 // appendData appends Events when processing paginated Event responses
 func (resp *EventsPagedResponse) appendData(r *EventsPagedResponse) {
-	(*resp).Data = append(resp.Data, r.Data...)
+	resp.Data = append(resp.Data, r.Data...)
 }
 
 // ListEvents gets a collection of Event objects representing actions taken
 // on the Account. The Events returned depend on the token grants and the grants
 // of the associated user.
-func (c *Client) ListEvents(ctx context.Context, opts *ListOptions) ([]*Event, error) {
+func (c *Client) ListEvents(ctx context.Context, opts *ListOptions) ([]Event, error) {
 	response := EventsPagedResponse{}
 	err := c.listHelper(ctx, &response, opts)
-	for _, el := range response.Data {
-		el.fixDates()
+	for i := range response.Data {
+		response.Data[i].fixDates()
 	}
 	if err != nil {
 		return nil, err
@@ -200,6 +205,7 @@ func (c *Client) GetEvent(ctx context.Context, id int) (*Event, error) {
 // fixDates converts JSON timestamps to Go time.Time values
 func (e *Event) fixDates() *Event {
 	e.Created, _ = parseDates(e.CreatedStr)
+	e.TimeRemaining = unmarshalTimeRemaining(e.TimeRemainingMsg)
 	return e
 }
 
@@ -221,4 +227,51 @@ func (c *Client) MarkEventsSeen(ctx context.Context, event *Event) error {
 	_, err := coupleAPIErrors(c.R(ctx).Post(e))
 
 	return err
+}
+
+func unmarshalTimeRemaining(m json.RawMessage) *int {
+	jsonBytes, err := m.MarshalJSON()
+	if err != nil {
+		panic(jsonBytes)
+	}
+
+	if len(jsonBytes) == 4 && string(jsonBytes) == "null" {
+		return nil
+	}
+
+	var timeStr string
+	if err := json.Unmarshal(jsonBytes, &timeStr); err == nil && len(timeStr) > 0 {
+		if dur, err := durationToSeconds(timeStr); err != nil {
+			panic(err)
+		} else {
+			return &dur
+		}
+	} else {
+		var intPtr int
+		if err := json.Unmarshal(jsonBytes, &intPtr); err == nil {
+			return &intPtr
+		}
+	}
+
+	log.Println("[WARN] Unexpected unmarshalTimeRemaining value: ", jsonBytes)
+	return nil
+}
+
+// durationToSeconds takes a hh:mm:ss string and returns the number of seconds
+func durationToSeconds(s string) (int, error) {
+	multipliers := [3]int{60 * 60, 60, 1}
+	segs := strings.Split(s, ":")
+	if len(segs) > len(multipliers) {
+		return 0, fmt.Errorf("too many ':' separators in time duration: %s", s)
+	}
+	var d int
+	l := len(segs)
+	for i := 0; i < l; i++ {
+		m, err := strconv.Atoi(segs[i])
+		if err != nil {
+			return 0, err
+		}
+		d += m * multipliers[i+len(multipliers)-l]
+	}
+	return d, nil
 }

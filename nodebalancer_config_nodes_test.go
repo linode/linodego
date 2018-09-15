@@ -135,6 +135,28 @@ func TestGetNodeBalancerNode(t *testing.T) {
 	}
 }
 
+func TestRebuildNodeBalancer(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode.")
+	}
+	client, nodebalancer, config, _, teardown, err := setupNodeBalancerNode(t, "fixtures/TestRebuildNodeBalancer")
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	nbcRebuildOpts := config.GetRebuildOptions()
+
+	nbcGot, err := client.RebuildNodeBalancerConfig(context.Background(), nodebalancer.ID, config.ID, nbcRebuildOpts)
+	if err != nil {
+		t.Errorf("Error rebuilding nodebalancer config %d: %v", config.ID, err)
+	}
+	if nbcGot.Port != config.Port {
+		t.Errorf("RebuildNodeBalancerConfig did not return the expected port")
+	}
+
+}
+
 func setupNodeBalancerNode(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.NodeBalancer, *linodego.NodeBalancerConfig, *linodego.NodeBalancerNode, func(), error) {
 	t.Helper()
 	var fixtureTeardown func()
@@ -152,7 +174,11 @@ func setupNodeBalancerNode(t *testing.T, fixturesYaml string) (*linodego.Client,
 	teardown := func() {
 		// delete the NodeBalancerNode to exercise the code
 		if err := client.DeleteNodeBalancerNode(context.Background(), nodebalancer.ID, config.ID, node.ID); err != nil {
-			t.Errorf("Expected to delete a NodeBalancer Config Node, but got %v", err)
+			e, ok := err.(*linodego.Error)
+			// Tollerate 404 because Rebuild testing will delete all Nodes
+			if !ok || e.Code != 404 {
+				t.Errorf("Expected to delete a NodeBalancer Config Node, but got %v", err)
+			}
 		}
 		fixtureTeardown()
 	}
