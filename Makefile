@@ -17,7 +17,7 @@ build:
 	go build ./...
 
 $(GOMETALINTER):
-	go get -u gopkg.in/alecthomas/gometalinter.v2
+	curl -L https://git.io/vp6lP | sh
 	$(GOMETALINTER) --install &> /dev/null
 
 .PHONY: lint
