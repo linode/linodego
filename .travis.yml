@@ -13,6 +13,7 @@ go:
 
 script:
   - touch .env
+  - go mod vendor
   - make test ARGS='-coverprofile=coverage.txt -covermode=atomic'
   - make lint-warn
 
