@@ -13,6 +13,7 @@ go:
 
 script:
   - touch .env
+  - curl -L https://git.io/vp6lP | sh -s -- -b ${GOPATH}/bin -d
   - go mod download
   - go mod vendor
   - make test ARGS='-v -race -count=2 -coverprofile=coverage.txt -covermode=atomic ./...'

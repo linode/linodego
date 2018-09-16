@@ -16,15 +16,12 @@ test: build lint
 build:
 	go build ./...
 
-$(GOMETALINTER):
-	curl -L https://git.io/vp6lP | sh -s -- -b $(BIN_DIR) -d
-
 .PHONY: lint
-lint: $(GOMETALINTER)
+lint:
 	$(GOMETALINTER) $(shell go list ./... | grep -v vendor) --vendor $(GOMETALINTER_ARGS)
 
 .PHONY: lint-warn
-lint-warn: $(GOMETALINTER)
+lint-warn:
 	$(GOMETALINTER) $(shell go list ./... | grep -v vendor) --vendor $(GOMETALINTER_WARN_ARGS) || true
 
 clean-fixtures:
