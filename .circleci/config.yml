@@ -4,9 +4,6 @@ jobs:
     docker:
       - image: circleci/golang:1.10
     working_directory: /go/src/github.com/linode/linodego
-    environment:
-      #LINODE_INSTANCE_ID: something
-      #LINODE_VOLUME_ID: something
     steps:
       - checkout
       - run:
