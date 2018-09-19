@@ -47,15 +47,22 @@ func (client Client) WaitForInstanceDiskStatus(ctx context.Context, instanceID i
 	for {
 		select {
 		case <-ticker.C:
-			disk, err := client.GetInstanceDisk(ctx, instanceID, diskID)
+			// GetInstanceDisk will 404 on newly created disks. use List instead.
+			// disk, err := client.GetInstanceDisk(ctx, instanceID, diskID)
+			disks, err := client.ListInstanceDisks(ctx, instanceID, nil)
 			if err != nil {
-				return disk, err
+				return nil, err
 			}
-			complete := (disk.Status == status)
+			for _, disk := range disks {
+				if disk.ID == diskID {
+					complete := (disk.Status == status)
+					if complete {
+						return &disk, nil
+					}
+					break
+				}
+			}
 
-			if complete {
-				return disk, nil
-			}
 		case <-ctx.Done():
 			return nil, fmt.Errorf("Error waiting for Instance %d Disk %d status %s: %s", instanceID, diskID, status, ctx.Err())
 		}
