@@ -16,7 +16,7 @@ func (client Client) WaitForInstanceStatus(ctx context.Context, instanceID int, 
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
-	ticker := time.NewTicker(client.secondsPerPoll * time.Second)
+	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
 	defer ticker.Stop()
 	for {
 		select {
@@ -42,7 +42,7 @@ func (client Client) WaitForInstanceDiskStatus(ctx context.Context, instanceID i
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
-	ticker := time.NewTicker(client.secondsPerPoll * time.Second)
+	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
 	defer ticker.Stop()
 	for {
 		select {
@@ -75,7 +75,7 @@ func (client Client) WaitForVolumeStatus(ctx context.Context, volumeID int, stat
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
-	ticker := time.NewTicker(client.secondsPerPoll * time.Second)
+	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
 	defer ticker.Stop()
 	for {
 		select {
@@ -101,7 +101,7 @@ func (client Client) WaitForSnapshotStatus(ctx context.Context, instanceID int, 
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
-	ticker := time.NewTicker(client.secondsPerPoll * time.Second)
+	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
 	defer ticker.Stop()
 	for {
 		select {
@@ -129,7 +129,7 @@ func (client Client) WaitForVolumeLinodeID(ctx context.Context, volumeID int, li
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
-	ticker := time.NewTicker(client.secondsPerPoll * time.Second)
+	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
 	defer ticker.Stop()
 	for {
 		select {
@@ -196,7 +196,7 @@ func (client Client) WaitForEventFinished(ctx context.Context, id interface{}, e
 		log.Printf("[INFO] Waiting %d seconds for %s events since %v for %s %v", int(duration.Seconds()), action, minStart, titledEntityType, id)
 	}
 
-	ticker := time.NewTicker(client.secondsPerPoll * time.Second)
+	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
 	defer ticker.Stop()
 	for {
 		select {
@@ -250,7 +250,7 @@ func (client Client) WaitForEventFinished(ctx context.Context, id interface{}, e
 					log.Printf("[WARN] event.Created is nil when API returned: %#+v", event.CreatedStr)
 				} else if *event.Created != minStart && !event.Created.After(minStart) {
 					// Not the event we were looking for
-					// log.Println(event.Created, "is not >=", minStart)
+					log.Println(event.Created, "is not >=", minStart)
 					continue
 
 				}

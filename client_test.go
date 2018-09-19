@@ -16,7 +16,7 @@ import (
 var testingMode = recorder.ModeDisabled
 var debugAPI = false
 var validTestAPIKey = "NOTANAPIKEY"
-var testingPollDuration = time.Duration(1)
+var testingPollDuration = time.Duration(50)
 
 func init() {
 	if apiToken, ok := os.LookupEnv("LINODE_TOKEN"); ok {
