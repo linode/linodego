@@ -181,7 +181,7 @@ func (c *Client) ResizeInstanceDisk(ctx context.Context, linodeID int, diskID in
 	if err != nil {
 		return nil, err
 	}
-	e = fmt.Sprintf("%s/%d", e, diskID)
+	e = fmt.Sprintf("%s/%d/resize", e, diskID)
 
 	req := c.R(ctx).SetResult(&InstanceDisk{})
 	updateOpts := map[string]interface{}{
