@@ -75,6 +75,79 @@ func TestListInstanceDisks(t *testing.T) {
 	}
 }
 
+func TestResizeInstanceDisk(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode.")
+	}
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestResizeInstanceDisk")
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	instance, err = client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceOffline, 180)
+	if err != nil {
+		t.Errorf("Error waiting for instance readiness for resize: %s", err)
+	}
+
+	disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
+		Label:      "test",
+		Filesystem: "ext4",
+		Size:       2000,
+	})
+	if err != nil {
+		t.Errorf("Error creating disk for resize: %s", err)
+	}
+
+	disk, err = client.WaitForInstanceDiskStatus(context.Background(), instance.ID, disk.ID, linodego.DiskReady, 180)
+	if err != nil {
+		t.Errorf("Error waiting for disk readiness for resize: %s", err)
+	}
+
+	err = client.ResizeInstanceDisk(context.Background(), instance.ID, disk.ID, 4000)
+	if err != nil {
+		t.Errorf("Error resizing instance disk: %s", err)
+	}
+}
+
+func TestPasswordResetInstanceDisk(t *testing.T) {
+	if testing.Short() {
+		t.Skip("Skipping test in short mode.")
+	}
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestPasswordResetInstanceDisk")
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	instance, err = client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceOffline, 180)
+	if err != nil {
+		t.Errorf("Error waiting for instance readiness for password reset: %s", err)
+	}
+
+	disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
+		Label:      "test",
+		Filesystem: "ext4",
+		Image:      "linode/debian9",
+		RootPass:   "b4d_p455",
+		Size:       2000,
+	})
+	if err != nil {
+		t.Errorf("Error creating disk for password reset: %s", err)
+	}
+
+	instance, err = client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceOffline, 180)
+	disk, err = client.WaitForInstanceDiskStatus(context.Background(), instance.ID, disk.ID, linodego.DiskReady, 180)
+	if err != nil {
+		t.Errorf("Error waiting for disk readiness for password reset: %s", err)
+	}
+
+	err = client.PasswordResetInstanceDisk(context.Background(), instance.ID, disk.ID, "r34!_b4d_p455")
+	if err != nil {
+		t.Errorf("Error reseting password on instance disk: %s", err)
+	}
+}
+
 func TestListInstanceConfigs(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode.")
