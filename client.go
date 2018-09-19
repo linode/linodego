@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"time"
 
 	"gopkg.in/resty.v1"
 )
@@ -22,14 +23,15 @@ const (
 	Version = "0.5.1"
 	// APIEnvVar environment var to check for API token
 	APIEnvVar = "LINODE_TOKEN"
-	// APISecondsPerPoll how frequently to poll for new Events
+	// APISecondsPerPoll how frequently to poll for new Events or Status in WaitFor functions
 	APISecondsPerPoll = 10
+	// DefaultUserAgent is the default User-Agent sent in HTTP request headers
+	DefaultUserAgent = "linodego " + Version + " https://github.com/linode/linodego"
 )
 
-// DefaultUserAgent is the default User-Agent sent in HTTP request headers
-const DefaultUserAgent = "linodego " + Version + " https://github.com/linode/linodego"
-
-var envDebug = false
+var (
+	envDebug = false
+)
 
 // Client is a wrapper around the Resty client
 type Client struct {
@@ -37,6 +39,8 @@ type Client struct {
 	userAgent string
 	resources map[string]*Resource
 	debug     bool
+
+	secondsPerPoll time.Duration
 
 	Images                *Resource
 	InstanceDisks         *Resource
@@ -115,6 +119,11 @@ func (c *Client) SetBaseURL(url string) *Client {
 	return c
 }
 
+func (c *Client) SetPollDelay(delay time.Duration) *Client {
+	c.secondsPerPoll = delay
+	return c
+}
+
 // Resource looks up a resource by name
 func (c Client) Resource(resourceName string) *Resource {
 	selectedResource, ok := c.resources[resourceName]
@@ -130,6 +139,7 @@ func NewClient(hc *http.Client) (client Client) {
 	client.resty = restyClient
 	client.SetUserAgent(DefaultUserAgent)
 	client.SetBaseURL(fmt.Sprintf("%s://%s/%s", APIProto, APIHost, APIVersion))
+	client.SetPollDelay(APISecondsPerPoll)
 
 	resources := map[string]*Resource{
 		stackscriptsName:          NewResource(&client, stackscriptsName, stackscriptsEndpoint, false, Stackscript{}, StackscriptsPagedResponse{}),
