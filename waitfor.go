@@ -16,7 +16,7 @@ func (client Client) WaitForInstanceStatus(ctx context.Context, instanceID int, 
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
-	ticker := time.NewTicker(time.Second)
+	ticker := time.NewTicker(client.secondsPerPoll * time.Second)
 	defer ticker.Stop()
 	for {
 		select {
@@ -36,13 +36,39 @@ func (client Client) WaitForInstanceStatus(ctx context.Context, instanceID int, 
 	}
 }
 
+// WaitForInstanceDiskStatus waits for the Linode instance disk to reach the desired state
+// before returning. It will timeout with an error after timeoutSeconds.
+func (client Client) WaitForInstanceDiskStatus(ctx context.Context, instanceID int, diskID int, status DiskStatus, timeoutSeconds int) (*InstanceDisk, error) {
+	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
+	defer cancel()
+
+	ticker := time.NewTicker(client.secondsPerPoll * time.Second)
+	defer ticker.Stop()
+	for {
+		select {
+		case <-ticker.C:
+			disk, err := client.GetInstanceDisk(ctx, instanceID, diskID)
+			if err != nil {
+				return disk, err
+			}
+			complete := (disk.Status == status)
+
+			if complete {
+				return disk, nil
+			}
+		case <-ctx.Done():
+			return nil, fmt.Errorf("Error waiting for Instance %d Disk %d status %s: %s", instanceID, diskID, status, ctx.Err())
+		}
+	}
+}
+
 // WaitForVolumeStatus waits for the Volume to reach the desired state
 // before returning. It will timeout with an error after timeoutSeconds.
 func (client Client) WaitForVolumeStatus(ctx context.Context, volumeID int, status VolumeStatus, timeoutSeconds int) (*Volume, error) {
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
-	ticker := time.NewTicker(time.Second)
+	ticker := time.NewTicker(client.secondsPerPoll * time.Second)
 	defer ticker.Stop()
 	for {
 		select {
@@ -68,7 +94,7 @@ func (client Client) WaitForSnapshotStatus(ctx context.Context, instanceID int, 
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
-	ticker := time.NewTicker(time.Second)
+	ticker := time.NewTicker(client.secondsPerPoll * time.Second)
 	defer ticker.Stop()
 	for {
 		select {
@@ -96,7 +122,7 @@ func (client Client) WaitForVolumeLinodeID(ctx context.Context, volumeID int, li
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
-	ticker := time.NewTicker(time.Second)
+	ticker := time.NewTicker(client.secondsPerPoll * time.Second)
 	defer ticker.Stop()
 	for {
 		select {
@@ -163,7 +189,7 @@ func (client Client) WaitForEventFinished(ctx context.Context, id interface{}, e
 		log.Printf("[INFO] Waiting %d seconds for %s events since %v for %s %v", int(duration.Seconds()), action, minStart, titledEntityType, id)
 	}
 
-	ticker := time.NewTicker(time.Second)
+	ticker := time.NewTicker(client.secondsPerPoll * time.Second)
 	defer ticker.Stop()
 	for {
 		select {
