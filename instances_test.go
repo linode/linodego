@@ -137,6 +137,9 @@ func TestPasswordResetInstanceDisk(t *testing.T) {
 	}
 
 	instance, err = client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceOffline, 180)
+	if err != nil {
+		t.Errorf("Error waiting for instance readiness after creating disk for password reset: %s", err)
+	}
 	disk, err = client.WaitForInstanceDiskStatus(context.Background(), instance.ID, disk.ID, linodego.DiskReady, 180)
 	if err != nil {
 		t.Errorf("Error waiting for disk readiness for password reset: %s", err)
