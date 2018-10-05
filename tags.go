@@ -34,7 +34,8 @@ type TaggedObjectList []TaggedObject
 
 // TagCreateOptions fields are those accepted by CreateTag
 type TagCreateOptions struct {
-	Label string `json:"label"`
+	Label   string `json:"label"`
+	Linodes []int  `json:"linodes,omitempty"`
 }
 
 // GetCreateOptions converts a Tag to TagCreateOptions for use in CreateTag

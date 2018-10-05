@@ -16,14 +16,14 @@ interactions:
     url: https://api.linode.com/v4/linode/instances
     method: POST
   response:
-    body: '{"status": "provisioning", "watchdog_enabled": true, "specs": {"transfer":
-      1000, "disk": 25600, "vcpus": 1, "memory": 1024}, "label": "linodego-test-instance",
-      "created": "2018-01-02T03:04:05", "id": 10697741, "ipv4": ["010.020.030.040"],
-      "type": "g6-nanode-1", "group": "", "image": null, "updated": "2018-01-02T03:04:05",
-      "ipv6": "1234::5678/64", "backups": {"enabled": false, "schedule":
-      {"day": null, "window": null}}, "tags": ["linodego-test"], "hypervisor": "kvm",
-      "region": "us-west", "alerts": {"io": 10000, "transfer_quota": 80, "cpu": 90,
-      "network_out": 10, "network_in": 10}}'
+    body: '{"ipv6": "1234::5678/64", "group": "", "region": "us-west",
+      "alerts": {"cpu": 90, "network_out": 10, "network_in": 10, "transfer_quota":
+      80, "io": 10000}, "label": "linodego-test-instance", "status": "provisioning",
+      "type": "g6-nanode-1", "created": "2018-01-02T03:04:05", "id": 10698247, "backups":
+      {"enabled": false, "schedule": {"day": null, "window": null}}, "ipv4": ["010.020.030.040"],
+      "image": null, "specs": {"vcpus": 1, "memory": 1024, "disk": 25600, "transfer":
+      1000}, "tags": ["linodego-test"], "hypervisor": "kvm", "watchdog_enabled": true,
+      "updated": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -40,15 +40,15 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "603"
+      - "604"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Date:
-      - Fri, 05 Oct 2018 21:30:47 GMT
+      - Fri, 05 Oct 2018 23:07:21 GMT
       Retry-After:
-      - "118"
+      - "72"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -68,9 +68,9 @@ interactions:
       X-Ratelimit-Limit:
       - "400"
       X-Ratelimit-Remaining:
-      - "399"
+      - "396"
       X-Ratelimit-Reset:
-      - "1538775166"
+      - "1538780914"
       X-Spec-Version:
       - 4.0.6
       X-Xss-Protection:
@@ -90,14 +90,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/10697741
+    url: https://api.linode.com/v4/linode/instances/10698247
     method: PUT
   response:
     body: '{"hypervisor": "kvm", "updated": "2018-01-02T03:04:05", "group": "", "ipv6":
       "1234::5678/64", "ipv4": ["010.020.030.040"], "label": "linodego-test-instance",
       "region": "us-west", "alerts": {"cpu": 90, "network_out": 10, "transfer_quota":
       80, "network_in": 10, "io": 10000}, "watchdog_enabled": true, "backups": {"enabled":
-      false, "schedule": {"day": null, "window": null}}, "id": 10697741, "specs":
+      false, "schedule": {"day": null, "window": null}}, "id": 10698247, "specs":
       {"vcpus": 1, "transfer": 1000, "memory": 1024, "disk": 25600}, "created": "2018-01-02T03:04:05",
       "type": "g6-nanode-1", "status": "provisioning", "tags": ["linodego-test", "linodego-test-bar"],
       "image": null}'
@@ -117,13 +117,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "624"
+      - "625"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Date:
-      - Fri, 05 Oct 2018 21:30:48 GMT
+      - Fri, 05 Oct 2018 23:07:22 GMT
       Retry-After:
       - "118"
       Server:
@@ -147,7 +147,7 @@ interactions:
       X-Ratelimit-Remaining:
       - "399"
       X-Ratelimit-Reset:
-      - "1538775167"
+      - "1538780961"
       X-Spec-Version:
       - 4.0.6
       X-Xss-Protection:
@@ -156,7 +156,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"linodego-test-foo"}'
+    body: '{"label":"linodego-test-foo","linodes":[10698247]}'
     form: {}
     headers:
       Accept:
@@ -193,9 +193,9 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 05 Oct 2018 21:30:48 GMT
+      - Fri, 05 Oct 2018 23:07:22 GMT
       Retry-After:
-      - "119"
+      - "71"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -215,9 +215,9 @@ interactions:
       X-Ratelimit-Limit:
       - "400"
       X-Ratelimit-Remaining:
-      - "399"
+      - "395"
       X-Ratelimit-Reset:
-      - "1538775168"
+      - "1538780914"
       X-Spec-Version:
       - 4.0.6
       X-Xss-Protection:
@@ -240,9 +240,8 @@ interactions:
     url: https://api.linode.com/v4/tags
     method: GET
   response:
-    body: '{"results": 5, "page": 1, "data": [{"label": "foo-test"}, {"label": "linodego-test"},
-      {"label": "linodego-test-bar"}, {"label": "linodego-test-foo"}, {"label": "linodego-test2"}],
-      "pages": 1}'
+    body: '{"results": 3, "page": 1, "data": [{"label": "linodego-test"}, {"label":
+      "linodego-test-bar"}, {"label": "linodego-test-foo"}], "pages": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -260,15 +259,15 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "191"
+      - "139"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Date:
-      - Fri, 05 Oct 2018 21:30:48 GMT
+      - Fri, 05 Oct 2018 23:07:22 GMT
       Retry-After:
-      - "119"
+      - "71"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -289,9 +288,9 @@ interactions:
       X-Ratelimit-Limit:
       - "400"
       X-Ratelimit-Remaining:
-      - "399"
+      - "397"
       X-Ratelimit-Reset:
-      - "1538775168"
+      - "1538780914"
       X-Spec-Version:
       - 4.0.6
       X-Xss-Protection:
@@ -314,15 +313,15 @@ interactions:
     url: https://api.linode.com/v4/tags/linodego-test
     method: GET
   response:
-    body: '{"page": 1, "results": 1, "pages": 1, "data": [{"data": {"region": "us-west",
-      "created": "2018-01-02T03:04:05", "type": "g6-nanode-1", "label": "linodego-test-instance",
-      "ipv4": ["010.020.030.040"], "hypervisor": "kvm", "image": null, "updated": "2018-01-02T03:04:05",
-      "ipv6": "1234::5678/64", "status": "offline", "watchdog_enabled":
-      true, "id": 10697741, "backups": {"enabled": false, "schedule": {"day": null,
-      "window": null}}, "tags": ["linodego-test", "linodego-test-bar"], "group": "",
-      "specs": {"disk": 25600, "memory": 1024, "transfer": 1000, "vcpus": 1}, "alerts":
-      {"cpu": 90, "network_in": 10, "transfer_quota": 80, "io": 10000, "network_out":
-      10}}, "type": "linode"}]}'
+    body: '{"pages": 1, "results": 1, "data": [{"type": "linode", "data": {"hypervisor":
+      "kvm", "updated": "2018-01-02T03:04:05", "group": "", "ipv6": "1234::5678/64",
+      "ipv4": ["010.020.030.040"], "label": "linodego-test-instance", "region": "us-west",
+      "alerts": {"cpu": 90, "network_out": 10, "transfer_quota": 80, "network_in":
+      10, "io": 10000}, "watchdog_enabled": true, "backups": {"enabled": false, "schedule":
+      {"day": null, "window": null}}, "id": 10698247, "specs": {"vcpus": 1, "transfer":
+      1000, "memory": 1024, "disk": 25600}, "created": "2018-01-02T03:04:05", "type":
+      "g6-nanode-1", "status": "offline", "tags": ["linodego-test", "linodego-test-bar",
+      "linodego-test-foo"], "image": null}}], "page": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -340,15 +339,15 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "696"
+      - "718"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Date:
-      - Fri, 05 Oct 2018 21:30:48 GMT
+      - Fri, 05 Oct 2018 23:07:22 GMT
       Retry-After:
-      - "119"
+      - "118"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -369,9 +368,9 @@ interactions:
       X-Ratelimit-Limit:
       - "400"
       X-Ratelimit-Remaining:
-      - "399"
+      - "398"
       X-Ratelimit-Reset:
-      - "1538775168"
+      - "1538780961"
       X-Spec-Version:
       - 4.0.6
       X-Xss-Protection:
@@ -417,9 +416,9 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 05 Oct 2018 21:30:49 GMT
+      - Fri, 05 Oct 2018 23:07:23 GMT
       Retry-After:
-      - "118"
+      - "119"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -441,7 +440,7 @@ interactions:
       X-Ratelimit-Remaining:
       - "399"
       X-Ratelimit-Reset:
-      - "1538775168"
+      - "1538780963"
       X-Spec-Version:
       - 4.0.6
       X-Xss-Protection:
@@ -487,9 +486,9 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 05 Oct 2018 21:30:49 GMT
+      - Fri, 05 Oct 2018 23:07:23 GMT
       Retry-After:
-      - "116"
+      - "70"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -509,9 +508,9 @@ interactions:
       X-Ratelimit-Limit:
       - "400"
       X-Ratelimit-Remaining:
-      - "398"
+      - "396"
       X-Ratelimit-Reset:
-      - "1538775166"
+      - "1538780914"
       X-Spec-Version:
       - 4.0.6
       X-Xss-Protection:
@@ -557,9 +556,9 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 05 Oct 2018 21:30:49 GMT
+      - Fri, 05 Oct 2018 23:07:23 GMT
       Retry-After:
-      - "112"
+      - "119"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -579,9 +578,9 @@ interactions:
       X-Ratelimit-Limit:
       - "400"
       X-Ratelimit-Remaining:
-      - "398"
+      - "399"
       X-Ratelimit-Reset:
-      - "1538775162"
+      - "1538780963"
       X-Spec-Version:
       - 4.0.6
       X-Xss-Protection:
@@ -601,7 +600,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/10697741
+    url: https://api.linode.com/v4/linode/instances/10698247
     method: DELETE
   response:
     body: '{}'
@@ -627,9 +626,9 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Fri, 05 Oct 2018 21:30:49 GMT
+      - Fri, 05 Oct 2018 23:07:24 GMT
       Retry-After:
-      - "118"
+      - "69"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -649,9 +648,9 @@ interactions:
       X-Ratelimit-Limit:
       - "400"
       X-Ratelimit-Remaining:
-      - "398"
+      - "397"
       X-Ratelimit-Reset:
-      - "1538775168"
+      - "1538780913"
       X-Spec-Version:
       - 4.0.6
       X-Xss-Protection:

@@ -30,7 +30,7 @@ func TestCreateTag(t *testing.T) {
 		t.Errorf("should have updated instance tags, got %q", err)
 	}
 
-	tag, err := client.CreateTag(context.Background(), TagCreateOptions{Label: "linodego-test-foo"})
+	tag, err := client.CreateTag(context.Background(), TagCreateOptions{Label: "linodego-test-foo", Linodes: []int{instance.ID}})
 	if err != nil {
 		t.Errorf("should have created a tag, got %q", err)
 	}
