@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"time"
 )
 
 // DomainRecord represents a DomainRecord object
@@ -93,6 +94,14 @@ func copyString(sPtr *string) *string {
 		return nil
 	}
 	var t = *sPtr
+	return &t
+}
+
+func copyTime(tPtr *time.Time) *time.Time {
+	if tPtr == nil {
+		return nil
+	}
+	var t = *tPtr
 	return &t
 }
 

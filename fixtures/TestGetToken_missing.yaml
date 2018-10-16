@@ -1,0 +1,59 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer awesometokenawesometokenawesometoken
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego 0.5.1 https://github.com/linode/linodego
+    url: https://api.linode.com/v4/profile/tokens/123
+    method: GET
+  response:
+    body: '{"errors": [{"reason": "Not found"}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "37"
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 18 Oct 2018 19:49:36 GMT
+      Retry-After:
+      - "6"
+      Server:
+      - nginx
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - account:read_only
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - linodes:delete,domains:delete,nodebalancers:delete,images:delete,stackscripts:delete,longview:delete,events:delete,tokens:delete,clients:delete,account:delete,users:delete,tickets:delete
+      X-Ratelimit-Limit:
+      - "400"
+      X-Ratelimit-Remaining:
+      - "398"
+      X-Ratelimit-Reset:
+      - "1539892183"
+      X-Spec-Version:
+      - 4.0.6
+    status: 404 NOT FOUND
+    code: 404
+    duration: ""

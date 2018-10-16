@@ -67,6 +67,8 @@ type Client struct {
 	NodeBalancerNodes     *Resource
 	SSHKeys               *Resource
 	Tickets               *Resource
+	Tokens                *Resource
+	Token                 *Resource
 	Account               *Resource
 	Invoices              *Resource
 	InvoiceItems          *Resource
@@ -170,6 +172,7 @@ func NewClient(hc *http.Client) (client Client) {
 		nodebalancernodesName:     NewResource(&client, nodebalancernodesName, nodebalancernodesEndpoint, true, NodeBalancerNode{}, NodeBalancerNodesPagedResponse{}),
 		sshkeysName:               NewResource(&client, sshkeysName, sshkeysEndpoint, false, SSHKey{}, SSHKeysPagedResponse{}),
 		ticketsName:               NewResource(&client, ticketsName, ticketsEndpoint, false, Ticket{}, TicketsPagedResponse{}),
+		tokensName:                NewResource(&client, tokensName, tokensEndpoint, false, Token{}, TokensPagedResponse{}),
 		accountName:               NewResource(&client, accountName, accountEndpoint, false, Account{}, nil), // really?
 		eventsName:                NewResource(&client, eventsName, eventsEndpoint, false, Event{}, EventsPagedResponse{}),
 		invoicesName:              NewResource(&client, invoicesName, invoicesEndpoint, false, Invoice{}, InvoicesPagedResponse{}),
@@ -206,6 +209,7 @@ func NewClient(hc *http.Client) (client Client) {
 	client.NodeBalancerNodes = resources[nodebalancernodesName]
 	client.SSHKeys = resources[sshkeysName]
 	client.Tickets = resources[ticketsName]
+	client.Tokens = resources[tokensName]
 	client.Account = resources[accountName]
 	client.Events = resources[eventsName]
 	client.Invoices = resources[invoicesName]
