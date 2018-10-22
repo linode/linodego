@@ -29,7 +29,9 @@ func TestGetToken_missing(t *testing.T) {
 }
 
 func TestGetToken_found(t *testing.T) {
-	client, token, teardown, err := setupProfileToken(t, "fixtures/TestGetToken_found")
+	tokenTTLSeconds := 120
+	ttl := time.Now().UTC().Add(time.Second * time.Duration(tokenTTLSeconds))
+	client, token, teardown, err := setupProfileToken(t, "fixtures/TestGetToken_found", &ttl)
 	defer teardown()
 	if err != nil {
 		t.Errorf("Error creating test token: %s", err)
@@ -42,9 +44,71 @@ func TestGetToken_found(t *testing.T) {
 	if i.ID != token.ID {
 		t.Errorf("Expected a specific token, but got a different one %v", i)
 	}
+
+	updateOpts := i.GetUpdateOptions()
+	if updateOpts.Label != i.Label {
+		t.Errorf("Expected matching Label from GetUpdateOptions, got: %v", updateOpts)
+	}
+
+	createOpts := i.GetCreateOptions()
+	if createOpts.Expiry == nil {
+		t.Errorf("Expected non-nil Expiry from GetCreateOptions, got: %v", createOpts)
+	}
+}
+
+func TestGetToken_noexpiry(t *testing.T) {
+	client, token, teardown, err := setupProfileToken(t, "fixtures/TestGetToken_noexpiry", nil)
+	defer teardown()
+	if err != nil {
+		t.Errorf("Error creating test token: %s", err)
+	}
+
+	i, err := client.GetToken(context.Background(), token.ID)
+	if err != nil {
+		t.Errorf("Error getting token, expected struct, got %v and error %v", i, err)
+	}
+	if i.ID != token.ID {
+		t.Errorf("Expected a specific token, but got a different one %v", i)
+	}
+
+	createOpts := i.GetCreateOptions()
+	if createOpts.Expiry != nil && createOpts.Expiry.Year() != 2999 {
+		t.Errorf("Expected \"never\" expiring timestamp from GetCreateOptions, got: %v", createOpts)
+	}
+}
+func TestUpdateTokens(t *testing.T) {
+	tokenTTLSeconds := 120
+	ttl := time.Now().UTC().Add(time.Second * time.Duration(tokenTTLSeconds))
+	client, token, teardown, err := setupProfileToken(t, "fixtures/TestUpdateToken", &ttl)
+	defer teardown()
+	if err != nil {
+		t.Errorf("Error creating test token: %s", err)
+	}
+
+	createOpts := token.GetCreateOptions()
+	if createOpts.Expiry == nil {
+		t.Errorf("Expected non-nil Expiry from GetCreateOptions, got: %v", createOpts)
+	}
+
+	updateOpts := token.GetUpdateOptions()
+	if updateOpts.Label != token.Label {
+		t.Errorf("Expected matching Label from GetUpdateOptions, got: %v", updateOpts)
+	}
+
+	updateOpts.Label = updateOpts.Label + "_renamed"
+
+	i, err := client.UpdateToken(context.Background(), token.ID, updateOpts)
+	if err != nil {
+		t.Errorf("Error updating token: %s", err)
+	}
+	if i.Label != updateOpts.Label {
+		t.Errorf("Expected token label to be changed, but found %v", i)
+	}
 }
 func TestListTokens(t *testing.T) {
-	client, _, teardown, err := setupProfileToken(t, "fixtures/TestListTokens")
+	tokenTTLSeconds := 120
+	ttl := time.Now().UTC().Add(time.Second * time.Duration(tokenTTLSeconds))
+	client, _, teardown, err := setupProfileToken(t, "fixtures/TestListTokens", &ttl)
 	defer teardown()
 	if err != nil {
 		t.Errorf("Error creating test token: %s", err)
@@ -59,19 +123,16 @@ func TestListTokens(t *testing.T) {
 	}
 }
 
-func setupProfileToken(t *testing.T, fixturesYaml string) (*Client, *Token, func(), error) {
+func setupProfileToken(t *testing.T, fixturesYaml string, ttl *time.Time) (*Client, *Token, func(), error) {
 	t.Helper()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 
-	tokenTTLSeconds := 120
 	// This scope must be <= the scope used for testing
 	limitedTestScope := "linodes:read_only"
 
-	ttl := time.Now().UTC().Add(time.Second * time.Duration(tokenTTLSeconds))
-
 	createOpts := TokenCreateOptions{
 		Label:  "linodego-test-token",
-		Expiry: &ttl,
+		Expiry: ttl,
 		Scopes: limitedTestScope,
 	}
 	token, err := client.CreateToken(context.Background(), createOpts)

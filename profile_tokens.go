@@ -46,15 +46,12 @@ type TokenCreateOptions struct {
 type TokenUpdateOptions struct {
 	// This token's label. This is for display purposes only, but can be used to more easily track what you're using each token for. (1-100 Characters)
 	Label string `json:"label"`
-
-	// When this token will expire. Personal Access Tokens cannot be renewed, so after this time the token will be completely unusable and a new token will need to be generated. Tokens may be created with "null" as their expiry and will never expire unless revoked.
-	Expiry *time.Time `json:"expiry"`
 }
 
 // GetCreateOptions converts a Token to TokenCreateOptions for use in CreateToken
 func (i Token) GetCreateOptions() (o TokenCreateOptions) {
 	o.Label = i.Label
-	o.Expiry = copyTime(o.Expiry)
+	o.Expiry = copyTime(i.Expiry)
 	o.Scopes = i.Scopes
 	return
 }
@@ -62,7 +59,6 @@ func (i Token) GetCreateOptions() (o TokenCreateOptions) {
 // GetUpdateOptions converts a Token to TokenUpdateOptions for use in UpdateToken
 func (i Token) GetUpdateOptions() (o TokenUpdateOptions) {
 	o.Label = i.Label
-	o.Expiry = copyTime(o.Expiry)
 	return
 }
 

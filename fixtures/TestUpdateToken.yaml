@@ -16,9 +16,9 @@ interactions:
     url: https://api.linode.com/v4/profile/tokens
     method: POST
   response:
-    body: '{"label": "linodego-test-token", "expiry": "2018-01-02T03:04:05", "created":
-      "2018-01-02T03:04:05", "scopes": "linodes:read_only", "id": 319506, "token":
-      "21763c3e7ced3fbb641a843e28018cd4dfb155794bbcce08755d32340c3982ca"}'
+    body: '{"label": "linodego-test-token", "expiry": "2018-01-02T03:04:05", "token":
+      "4f7699d7f0c2274263fe231bd5f7dfdf7d06e7639984b58b6ca9da91d64f2941", "id": 319505,
+      "created": "2018-01-02T03:04:05", "scopes": "linodes:read_only"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -43,7 +43,7 @@ interactions:
       Date:
       - Fri, 19 Oct 2018 18:03:22 GMT
       Retry-After:
-      - "3598"
+      - "3599"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -63,9 +63,9 @@ interactions:
       X-Ratelimit-Limit:
       - "3"
       X-Ratelimit-Remaining:
-      - "1"
+      - "2"
       X-Ratelimit-Reset:
-      - "1539975801"
+      - "1539975802"
       X-Spec-Version:
       - 4.0.6
       X-Xss-Protection:
@@ -74,7 +74,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: ""
+    body: '{"label":"linodego-test-token_renamed"}'
     form: {}
     headers:
       Accept:
@@ -85,12 +85,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/profile/tokens
-    method: GET
+    url: https://api.linode.com/v4/profile/tokens/319505
+    method: PUT
   response:
-    body: '{"page": 1, "pages": 1, "data": [{"expiry": "2018-01-02T03:04:05", "id": 319506, "scopes":
-      "linodes:read_only", "token": "21763c3e7ced3fbb", "label": "linodego-test-token",
-      "created": "2018-01-02T03:04:05"}], "results": 1}'
+    body: '{"id": 319505, "label": "linodego-test-token_renamed", "token": "4f7699d7f0c22742",
+      "created": "2018-01-02T03:04:05", "expiry": "2018-01-02T03:04:05", "scopes":
+      "linodes:read_only"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -103,12 +103,11 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Connection:
       - keep-alive
       Content-Length:
-      - "1457"
+      - "181"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -123,9 +122,8 @@ interactions:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
-      - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - account:read_only
+      - account:read_write
       X-Content-Type-Options:
       - nosniff
       - nosniff
@@ -159,7 +157,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/profile/tokens/319506
+    url: https://api.linode.com/v4/profile/tokens/319505
     method: DELETE
   response:
     body: '{}'
@@ -207,7 +205,7 @@ interactions:
       X-Ratelimit-Limit:
       - "400"
       X-Ratelimit-Remaining:
-      - "398"
+      - "399"
       X-Ratelimit-Reset:
       - "1539972322"
       X-Spec-Version:

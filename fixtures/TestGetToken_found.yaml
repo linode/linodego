@@ -16,9 +16,9 @@ interactions:
     url: https://api.linode.com/v4/profile/tokens
     method: POST
   response:
-    body: '{"label": "linodego-test-token", "expiry": "2018-01-02T03:04:05", "created":
-      "2018-01-02T03:04:05", "scopes": "linodes:read_only", "id": 318433, "token":
-      "d51829db126528cd4ee1b52b1a4b444fc31bfb01492c281a5dc955336da32078"}'
+    body: '{"token": "b0c2deb6a3d1ebd82fd34b9dc388c3a4338d11e425ed79ad783423b6f8484360",
+      "id": 319582, "label": "linodego-test-token", "expiry": "2018-01-02T03:04:05",
+      "scopes": "linodes:read_only", "created": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -41,7 +41,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Oct 2018 19:49:36 GMT
+      - Fri, 19 Oct 2018 19:13:37 GMT
       Retry-After:
       - "3599"
       Server:
@@ -65,7 +65,7 @@ interactions:
       X-Ratelimit-Remaining:
       - "2"
       X-Ratelimit-Reset:
-      - "1539895776"
+      - "1539980017"
       X-Spec-Version:
       - 4.0.6
       X-Xss-Protection:
@@ -85,11 +85,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/profile/tokens/318433
+    url: https://api.linode.com/v4/profile/tokens/319582
     method: GET
   response:
-    body: '{"expiry": "2018-01-02T03:04:05", "id": 318433, "scopes": "linodes:read_only",
-      "token": "d51829db126528cd", "label": "linodego-test-token", "created": "2018-01-02T03:04:05"}'
+    body: '{"label": "linodego-test-token", "expiry": "2018-01-02T03:04:05", "created":
+      "2018-01-02T03:04:05", "scopes": "linodes:read_only", "id": 319582, "token":
+      "b0c2deb6a3d1ebd8"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -113,9 +114,9 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Oct 2018 19:49:36 GMT
+      - Fri, 19 Oct 2018 19:13:38 GMT
       Retry-After:
-      - "119"
+      - "118"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -138,7 +139,7 @@ interactions:
       X-Ratelimit-Remaining:
       - "399"
       X-Ratelimit-Reset:
-      - "1539892296"
+      - "1539976537"
       X-Spec-Version:
       - 4.0.6
       X-Xss-Protection:
@@ -158,7 +159,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/profile/tokens/318433
+    url: https://api.linode.com/v4/profile/tokens/319582
     method: DELETE
   response:
     body: '{}'
@@ -184,7 +185,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 18 Oct 2018 19:49:36 GMT
+      - Fri, 19 Oct 2018 19:13:38 GMT
       Retry-After:
       - "119"
       Server:
@@ -208,7 +209,7 @@ interactions:
       X-Ratelimit-Remaining:
       - "399"
       X-Ratelimit-Reset:
-      - "1539892296"
+      - "1539976538"
       X-Spec-Version:
       - 4.0.6
       X-Xss-Protection:
