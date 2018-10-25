@@ -191,11 +191,15 @@ func (c *Client) listHelper(ctx context.Context, i interface{}, opts *ListOption
 			results = r.Result().(*TokensPagedResponse).Results
 			v.appendData(r.Result().(*TokensPagedResponse))
 		}
-
+	case *UsersPagedResponse:
+		if r, err = coupleAPIErrors(req.SetResult(UsersPagedResponse{}).Get(v.endpoint(c))); err == nil {
+			pages = r.Result().(*UsersPagedResponse).Pages
+			results = r.Result().(*UsersPagedResponse).Results
+			v.appendData(r.Result().(*UsersPagedResponse))
+		}
 	/**
 	case AccountOauthClientsPagedResponse:
 	case AccountPaymentsPagedResponse:
-	case AccountUsersPagedResponse:
 	case ProfileAppsPagedResponse:
 	case ProfileWhitelistPagedResponse:
 	case ManagedContactsPagedResponse:
