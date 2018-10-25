@@ -77,6 +77,7 @@ type Client struct {
 	Profile               *Resource
 	Managed               *Resource
 	Tags                  *Resource
+	Users                 *Resource
 }
 
 func init() {
@@ -180,6 +181,7 @@ func NewClient(hc *http.Client) (client Client) {
 		profileName:               NewResource(&client, profileName, profileEndpoint, false, nil, nil), // really?
 		managedName:               NewResource(&client, managedName, managedEndpoint, false, nil, nil), // really?
 		tagsName:                  NewResource(&client, tagsName, tagsEndpoint, false, Tag{}, TagsPagedResponse{}),
+		usersName:                 NewResource(&client, usersName, usersEndpoint, false, User{}, UsersPagedResponse{}),
 	}
 
 	client.resources = resources
@@ -216,5 +218,38 @@ func NewClient(hc *http.Client) (client Client) {
 	client.Profile = resources[profileName]
 	client.Managed = resources[managedName]
 	client.Tags = resources[tagsName]
+	client.Users = resources[usersName]
 	return
+}
+
+func copyBool(bPtr *bool) *bool {
+	if bPtr == nil {
+		return nil
+	}
+	var t = *bPtr
+	return &t
+}
+
+func copyInt(iPtr *int) *int {
+	if iPtr == nil {
+		return nil
+	}
+	var t = *iPtr
+	return &t
+}
+
+func copyString(sPtr *string) *string {
+	if sPtr == nil {
+		return nil
+	}
+	var t = *sPtr
+	return &t
+}
+
+func copyTime(tPtr *time.Time) *time.Time {
+	if tPtr == nil {
+		return nil
+	}
+	var t = *tPtr
+	return &t
 }

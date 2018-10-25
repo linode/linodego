@@ -43,6 +43,7 @@ const (
 	profileName               = "profile"
 	managedName               = "managed"
 	tagsName                  = "tags"
+	usersName                 = "users"
 	// notificationsName = "notifications"
 
 	stackscriptsEndpoint          = "linode/stackscripts"
@@ -82,6 +83,7 @@ const (
 	profileEndpoint             = "profile"
 	managedEndpoint             = "managed"
 	tagsEndpoint                = "tags"
+	usersEndpoint               = "account/users"
 	// notificationsEndpoint       = "account/notifications"
 )
 

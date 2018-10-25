@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"time"
 )
 
 // DomainRecord represents a DomainRecord object
@@ -79,30 +78,6 @@ func (d DomainRecord) GetUpdateOptions() (du DomainRecordUpdateOptions) {
 	du.TTLSec = d.TTLSec
 	du.Tag = copyString(d.Tag)
 	return
-}
-
-func copyInt(iPtr *int) *int {
-	if iPtr == nil {
-		return nil
-	}
-	var t = *iPtr
-	return &t
-}
-
-func copyString(sPtr *string) *string {
-	if sPtr == nil {
-		return nil
-	}
-	var t = *sPtr
-	return &t
-}
-
-func copyTime(tPtr *time.Time) *time.Time {
-	if tPtr == nil {
-		return nil
-	}
-	var t = *tPtr
-	return &t
 }
 
 // DomainRecordsPagedResponse represents a paginated DomainRecord API response

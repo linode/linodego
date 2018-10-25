@@ -54,6 +54,22 @@ func ExampleClient_GetAccount() {
 	// Account email has @: true
 }
 
+func ExampleClient_ListUsers() {
+	// Example readers, Ignore this bit of setup code needed to record test fixtures
+	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListUsers")
+	defer teardown()
+
+	users, err := linodeClient.ListUsers(context.Background(), nil)
+	if err != nil {
+		log.Fatalln("* While getting users: ", err)
+	}
+	user := users[0]
+	fmt.Println("Account email has @:", strings.Contains(user.Email, "@"))
+
+	// Output:
+	// Account email has @: true
+}
+
 func Example() {
 	// Example readers, Ignore this bit of setup code needed to record test fixtures
 	linodeClient, teardown := createTestClient(nil, "fixtures/Example")
