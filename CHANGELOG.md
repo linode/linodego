@@ -1,5 +1,13 @@
 # Change Log
 
+## Unreleased
+
+### Fixes
+
+### Features
+
+* Adds support for fetching and updating basic Profile information
+
 <a name-"v0.6.0"></a>
 ## [v0.6.0](https://github.com/linode/linodego/compare/v0.5.1..v0.6.0) (2018-10-25)
 
