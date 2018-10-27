@@ -6,6 +6,11 @@
 
 ### Features
 
+<a name-"v0.6.1"></a>
+## [v0.6.1](https://github.com/linode/linodego/compare/v0.6.0..v0.6.1) (2018-10-26)
+
+### Features
+
 * Adds support for fetching and updating basic Profile information
 
 <a name-"v0.6.0"></a>
