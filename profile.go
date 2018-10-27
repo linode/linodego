@@ -11,7 +11,6 @@ package linodego
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 )
 
 // LishAuthMethod constants start with AuthMethod and include Linode API Lish Authentication Methods
@@ -26,12 +25,12 @@ const (
 
 // ProfileReferrals represent a User's status in the Referral Program
 type ProfileReferrals struct {
-	Code      string  `json:"code"`
-	URL       string  `json:"url"`
 	Total     int     `json:"total"`
 	Completed int     `json:"completed"`
 	Pending   int     `json:"pending"`
 	Credit    float64 `json:"credit"`
+	Code      string  `json:"code"`
+	URL       string  `json:"url"`
 }
 
 // Profile represents a Profile object
@@ -41,12 +40,12 @@ type Profile struct {
 	Email              string           `json:"email"`
 	Timezone           string           `json:"timezone"`
 	EmailNotifications bool             `json:"email_notifications"`
-	Referrals          ProfileReferrals `json:"referrals"`
 	IPWhitelistEnabled bool             `json:"ip_whitelist_enabled"`
-	LishAuthMethod     LishAuthMethod   `json:"lish_auth_method"`
-	AuthorizedKeys     []string         `json:"authorized_keys"`
 	TwoFactorAuth      bool             `json:"two_factor_auth"`
 	Restricted         bool             `json:"restricted"`
+	LishAuthMethod     LishAuthMethod   `json:"lish_auth_method"`
+	Referrals          ProfileReferrals `json:"referrals"`
+	AuthorizedKeys     []string         `json:"authorized_keys"`
 }
 
 // ProfileUpdateOptions fields are those accepted by UpdateProfile
@@ -83,7 +82,7 @@ func (c *Client) GetProfile(ctx context.Context) (*Profile, error) {
 	if err != nil {
 		return nil, err
 	}
-	e = fmt.Sprintf("%s", e)
+
 	r, err := coupleAPIErrors(c.R(ctx).SetResult(&Profile{}).Get(e))
 	if err != nil {
 		return nil, err
@@ -98,7 +97,6 @@ func (c *Client) UpdateProfile(ctx context.Context, updateOpts ProfileUpdateOpti
 	if err != nil {
 		return nil, err
 	}
-	e = fmt.Sprintf("%s", e)
 
 	req := c.R(ctx).SetResult(&Profile{})
 
