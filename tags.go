@@ -22,9 +22,10 @@ type TaggedObject struct {
 // SortedObjects currently only includes Instances
 type SortedObjects struct {
 	Instances []Instance
+	Domains   []Domain
+	Volumes   []Volume
 	/*
 		NodeBalancers []NodeBalancer
-		Domains       []Domain
 		StackScripts  []Stackscript
 	*/
 }
@@ -36,6 +37,8 @@ type TaggedObjectList []TaggedObject
 type TagCreateOptions struct {
 	Label   string `json:"label"`
 	Linodes []int  `json:"linodes,omitempty"`
+	Domains []int  `json:"domains,omitempty"`
+	Volumes []int  `json:"volumes,omitempty"`
 }
 
 // GetCreateOptions converts a Tag to TagCreateOptions for use in CreateTag
@@ -133,6 +136,18 @@ func (t TaggedObjectList) SortedObjects() (SortedObjects, error) {
 				so.Instances = append(so.Instances, instance)
 			} else {
 				return so, errors.New("Expected an Instance when Type was \"linode\"")
+			}
+		case "domain":
+			if domain, ok := o.Data.(Domain); ok {
+				so.Domains = append(so.Domains, domain)
+			} else {
+				return so, errors.New("Expected a Domain when Type was \"domain\"")
+			}
+		case "volume":
+			if volume, ok := o.Data.(Volume); ok {
+				so.Volumes = append(so.Volumes, volume)
+			} else {
+				return so, errors.New("Expected an Volume when Type was \"volume\"")
 			}
 		}
 	}
