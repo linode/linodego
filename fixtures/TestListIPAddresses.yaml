@@ -1,0 +1,381 @@
+---
+version: 1
+interactions:
+- request:
+    body: '{"region":"us-west","type":"g6-nanode-1","label":"linodego-test-instance","booted":false}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer awesometokenawesometokenawesometoken
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego 0.6.2 https://github.com/linode/linodego
+    url: https://api.linode.com/v4/linode/instances
+    method: POST
+  response:
+    body: '{"status": "provisioning", "backups": {"schedule": {"window": null, "day":
+      null}, "enabled": false}, "specs": {"vcpus": 1, "memory": 1024, "disk": 25600,
+      "transfer": 1000}, "id": 11750570, "ipv6": "1234::5678/64",
+      "tags": [], "label": "linodego-test-instance", "created": "2018-01-02T03:04:05",
+      "ipv4": ["010.020.030.040"], "type": "g6-nanode-1", "alerts": {"transfer_quota":
+      80, "io": 10000, "cpu": 90, "network_out": 10, "network_in": 10}, "image": null,
+      "region": "us-west", "hypervisor": "kvm", "group": "", "watchdog_enabled": true,
+      "updated": "2018-01-02T03:04:05"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "588"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 03 Dec 2018 03:10:37 GMT
+      Retry-After:
+      - "77"
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - linodes:read_write
+      X-Content-Type-Options:
+      - nosniff
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Ratelimit-Remaining:
+      - "398"
+      X-Ratelimit-Reset:
+      - "1543806715"
+      X-Spec-Version:
+      - 4.0.9
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"label":"linodego-test-config","devices":{}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer awesometokenawesometokenawesometoken
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego 0.6.2 https://github.com/linode/linodego
+    url: https://api.linode.com/v4/linode/instances/11750570/configs
+    method: POST
+  response:
+    body: '{"label": "linodego-test-config", "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "helpers": {"updatedb_disabled": true, "distro": true,
+      "modules_dep": true, "network": true, "devtmpfs_automount": true}, "initrd":
+      null, "virt_mode": "paravirt", "devices": {"sdd": null, "sdb": null, "sda":
+      null, "sde": null, "sdh": null, "sdf": null, "sdg": null, "sdc": null}, "id":
+      12976938, "run_level": "default", "memory_limit": 0, "root_device": "/dev/sda",
+      "kernel": "linode/latest-64bit", "comments": ""}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "516"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 03 Dec 2018 03:10:37 GMT
+      Retry-After:
+      - "119"
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - linodes:read_write
+      X-Content-Type-Options:
+      - nosniff
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Ratelimit-Remaining:
+      - "399"
+      X-Ratelimit-Reset:
+      - "1543806757"
+      X-Spec-Version:
+      - 4.0.9
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer awesometokenawesometokenawesometoken
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego 0.6.2 https://github.com/linode/linodego
+      X-Filter:
+      - '{"linode_id":11750570}'
+    url: https://api.linode.com/v4/networking/ips
+    method: GET
+  response:
+    body: '{"data": [{"gateway": "010.020.030.040", "prefix": 24, "subnet_mask": "010.020.030.040",
+      "type": "ipv4", "linode_id": 10967576, "address": "010.020.030.040", "region":
+      "us-east", "rdns": "li1831-217.members.linode.com", "public": true}, {"gateway":
+      "010.020.030.040", "prefix": 24, "subnet_mask": "010.020.030.040", "type": "ipv4",
+      "linode_id": 11221635, "address": "010.020.030.040", "region": "us-east", "rdns":
+      "li244-79.members.linode.com", "public": true}, {"gateway": "010.020.030.040",
+      "prefix": 24, "subnet_mask": "010.020.030.040", "type": "ipv4", "linode_id": 11404729,
+      "address": "010.020.030.040", "region": "eu-west", "rdns": "li559-212.members.linode.com",
+      "public": true}, {"gateway": null, "prefix": 17, "subnet_mask": "010.020.030.040",
+      "type": "ipv4", "linode_id": 11404729, "address": "192.168.030.040", "region":
+      "eu-west", "rdns": null, "public": false}, {"gateway": "010.020.030.040", "prefix":
+      24, "subnet_mask": "010.020.030.040", "type": "ipv4", "linode_id": 11404777, "address":
+      "010.020.030.040", "region": "eu-west", "rdns": "li150-141.members.linode.com",
+      "public": true}, {"gateway": null, "prefix": 17, "subnet_mask": "010.020.030.040",
+      "type": "ipv4", "linode_id": 11404777, "address": "192.168.030.040", "region":
+      "eu-west", "rdns": null, "public": false}, {"gateway": "010.020.030.040", "prefix":
+      24, "subnet_mask": "010.020.030.040", "type": "ipv4", "linode_id": 11538741, "address":
+      "010.020.030.040", "region": "us-east", "rdns": "li101-100.members.linode.com",
+      "public": true}, {"gateway": null, "prefix": 17, "subnet_mask": "010.020.030.040",
+      "type": "ipv4", "linode_id": 11605313, "address": "192.168.030.040", "region":
+      "eu-west", "rdns": null, "public": false}, {"gateway": "010.020.030.040", "prefix":
+      24, "subnet_mask": "010.020.030.040", "type": "ipv4", "linode_id": 11605313, "address":
+      "010.020.030.040", "region": "eu-west", "rdns": "li1529-189.members.linode.com",
+      "public": true}, {"gateway": null, "prefix": 17, "subnet_mask": "010.020.030.040",
+      "type": "ipv4", "linode_id": 11605341, "address": "192.168.030.040", "region":
+      "eu-west", "rdns": null, "public": false}, {"gateway": "010.020.030.040", "prefix":
+      24, "subnet_mask": "010.020.030.040", "type": "ipv4", "linode_id": 11605341, "address":
+      "010.020.030.040", "region": "eu-west", "rdns": "li1513-115.members.linode.com",
+      "public": true}, {"gateway": null, "prefix": 17, "subnet_mask": "010.020.030.040",
+      "type": "ipv4", "linode_id": 11688849, "address": "192.168.030.040", "region":
+      "eu-west", "rdns": null, "public": false}, {"gateway": "010.020.030.040", "prefix":
+      24, "subnet_mask": "010.020.030.040", "type": "ipv4", "linode_id": 11688849, "address":
+      "010.020.030.040", "region": "eu-west", "rdns": "li1087-135.members.linode.com",
+      "public": true}, {"gateway": null, "prefix": 17, "subnet_mask": "010.020.030.040",
+      "type": "ipv4", "linode_id": 11688863, "address": "192.168.030.040", "region":
+      "eu-west", "rdns": null, "public": false}, {"gateway": "010.020.030.040", "prefix":
+      24, "subnet_mask": "010.020.030.040", "type": "ipv4", "linode_id": 11688863, "address":
+      "010.020.030.040", "region": "eu-west", "rdns": "li1357-64.members.linode.com",
+      "public": true}, {"gateway": null, "prefix": 17, "subnet_mask": "010.020.030.040",
+      "type": "ipv4", "linode_id": 11728736, "address": "192.168.030.040", "region":
+      "eu-west", "rdns": null, "public": false}, {"gateway": "010.020.030.040", "prefix":
+      24, "subnet_mask": "010.020.030.040", "type": "ipv4", "linode_id": 11728736, "address":
+      "010.020.030.040", "region": "eu-west", "rdns": "li1530-185.members.linode.com",
+      "public": true}, {"gateway": "010.020.030.040", "prefix": 24, "subnet_mask": "010.020.030.040",
+      "type": "ipv4", "linode_id": 11728737, "address": "010.020.030.040", "region":
+      "eu-west", "rdns": "li185-161.members.linode.com", "public": true}, {"gateway":
+      null, "prefix": 17, "subnet_mask": "010.020.030.040", "type": "ipv4", "linode_id":
+      11728737, "address": "192.168.030.040", "region": "eu-west", "rdns": null, "public":
+      false}, {"gateway": "010.020.030.040", "prefix": 24, "subnet_mask": "010.020.030.040",
+      "type": "ipv4", "linode_id": 11750570, "address": "010.020.030.040", "region":
+      "us-west", "rdns": "li451-124.members.linode.com", "public": true}, {"gateway":
+      "1234::5678", "prefix": 64, "subnet_mask": "1234::5678", "type": "ipv6",
+      "linode_id": 10967576, "address": "1234::5678", "region":
+      "us-east", "rdns": null, "public": true}, {"gateway": "1234::5678", "prefix": 64,
+      "subnet_mask": "1234::5678", "type": "ipv6", "linode_id": 11221635,
+      "address": "1234::5678", "region": "us-east", "rdns": null,
+      "public": true}, {"gateway": "1234::5678", "prefix": 64, "subnet_mask": "1234::5678",
+      "type": "ipv6", "linode_id": 11404729, "address": "1234::5678",
+      "region": "eu-west", "rdns": null, "public": true}, {"gateway": "1234::5678", "prefix":
+      64, "subnet_mask": "1234::5678", "type": "ipv6", "linode_id": 11404777,
+      "address": "1234::5678", "region": "eu-west", "rdns": null,
+      "public": true}, {"gateway": "1234::5678", "prefix": 64, "subnet_mask": "1234::5678",
+      "type": "ipv6", "linode_id": 11538741, "address": "1234::5678",
+      "region": "us-east", "rdns": null, "public": true}, {"gateway": "1234::5678", "prefix":
+      64, "subnet_mask": "1234::5678", "type": "ipv6", "linode_id": 11605313,
+      "address": "1234::5678", "region": "eu-west", "rdns": null,
+      "public": true}, {"gateway": "1234::5678", "prefix": 64, "subnet_mask": "1234::5678",
+      "type": "ipv6", "linode_id": 11605341, "address": "1234::5678",
+      "region": "eu-west", "rdns": null, "public": true}, {"gateway": "1234::5678", "prefix":
+      64, "subnet_mask": "1234::5678", "type": "ipv6", "linode_id": 11688849,
+      "address": "1234::5678", "region": "eu-west", "rdns": null,
+      "public": true}, {"gateway": "1234::5678", "prefix": 64, "subnet_mask": "1234::5678",
+      "type": "ipv6", "linode_id": 11688863, "address": "1234::5678",
+      "region": "eu-west", "rdns": null, "public": true}, {"gateway": "1234::5678", "prefix":
+      64, "subnet_mask": "1234::5678", "type": "ipv6", "linode_id": 11728736,
+      "address": "1234::5678", "region": "eu-west", "rdns": null,
+      "public": true}, {"gateway": "1234::5678", "prefix": 64, "subnet_mask": "1234::5678",
+      "type": "ipv6", "linode_id": 11728737, "address": "1234::5678",
+      "region": "eu-west", "rdns": null, "public": true}, {"gateway": "1234::5678", "prefix":
+      64, "subnet_mask": "1234::5678", "type": "ipv6", "linode_id": 11750570,
+      "address": "1234::5678", "region": "us-west", "rdns": null,
+      "public": true}], "page": 1, "results": 32, "pages": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "6738"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 03 Dec 2018 03:10:38 GMT
+      Retry-After:
+      - "118"
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - ips:read_only
+      X-Content-Type-Options:
+      - nosniff
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Ratelimit-Remaining:
+      - "399"
+      X-Ratelimit-Reset:
+      - "1543806757"
+      X-Spec-Version:
+      - 4.0.9
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer awesometokenawesometokenawesometoken
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego 0.6.2 https://github.com/linode/linodego
+    url: https://api.linode.com/v4/linode/instances/11750570
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 03 Dec 2018 03:10:38 GMT
+      Retry-After:
+      - "15"
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - linodes:read_write
+      X-Content-Type-Options:
+      - nosniff
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Ratelimit-Remaining:
+      - "396"
+      X-Ratelimit-Reset:
+      - "1543806654"
+      X-Spec-Version:
+      - 4.0.9
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
