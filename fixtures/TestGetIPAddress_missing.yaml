@@ -1,0 +1,59 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer awesometokenawesometokenawesometoken
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego 0.6.2 https://github.com/linode/linodego
+    url: https://api.linode.com/v4/networking/ips/010.020.030.040
+    method: GET
+  response:
+    body: '{"errors": [{"reason": "Not found"}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "37"
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 03 Dec 2018 12:40:08 GMT
+      Retry-After:
+      - "61"
+      Server:
+      - nginx
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - ips:read_only
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Ratelimit-Remaining:
+      - "398"
+      X-Ratelimit-Reset:
+      - "1543840870"
+      X-Spec-Version:
+      - 4.0.9
+    status: 404 NOT FOUND
+    code: 404
+    duration: ""
