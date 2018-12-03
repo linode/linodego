@@ -31,6 +31,9 @@ func TestGetIPAddress_missing(t *testing.T) {
 func TestGetIPAddress_found(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestGetIPAddress_found")
 	defer teardown()
+	if err != nil {
+		t.Errorf("Error creating IPAddress test Instance, got error %v", err)
+	}
 
 	address := instance.IPv4[0].String()
 	i, err := client.GetIPAddress(context.Background(), address)
@@ -44,6 +47,9 @@ func TestGetIPAddress_found(t *testing.T) {
 func TestListIPAddresses(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestListIPAddresses")
 	defer teardown()
+	if err != nil {
+		t.Errorf("Error creating IPAddress test Instance, got error %v", err)
+	}
 
 	filter := fmt.Sprintf("{\"linode_id\":%d}", instance.ID)
 	i, err := client.ListIPAddresses(context.Background(), NewListOptions(0, filter))
@@ -58,6 +64,9 @@ func TestListIPAddresses(t *testing.T) {
 func TestGetInstanceIPAddresses(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestGetInstanceIPAddresses")
 	defer teardown()
+	if err != nil {
+		t.Errorf("Error creating IPAddress test Instance, got error %v", err)
+	}
 
 	i, err := client.GetInstanceIPAddresses(context.Background(), instance.ID)
 	if err != nil {
@@ -80,6 +89,9 @@ func TestUpdateIPAddress(t *testing.T) {
 
 	address := instance.IPv4[0].String()
 	i, err := client.GetInstanceIPAddresses(context.Background(), instance.ID)
+	if err != nil {
+		t.Errorf("Error getting ipaddress: %s", err)
+	}
 	rdns := i.IPv4.Public[0].RDNS
 
 	updateOpts := IPAddressUpdateOptions{
