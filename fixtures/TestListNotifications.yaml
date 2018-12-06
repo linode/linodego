@@ -1,0 +1,83 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer awesometokenawesometokenawesometoken
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego 0.7.0 https://github.com/linode/linodego
+    url: https://api.linode.com/v4/account/notifications
+    method: GET
+  response:
+    body: '{"data": [{"type": "migration_pending", "severity": "major", "label": "You
+      have a migration pending!", "message": "You have a migration pending! Your Linode
+      must be offline before starting the migration.", "until": null, "entity": {"id":
+      123456, "type": "linode", "url": "/linode/instances/123456", "label": "linode"},
+      "when": null, "body": null}, {"type": "ticket_important", "severity": "major",
+      "label": "You have an important ticket open!", "message": "You have an important
+      ticket open!", "until": null, "entity": {"id": 12345678, "type": "ticket", "url":
+      "/support/tickets/12345678", "label": "Linode Backup Failure"}, "when": null,
+      "body": null}], "page": 1, "results": 2, "pages": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "690"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Date:
+      - Thu, 06 Dec 2018 03:09:43 GMT
+      Retry-After:
+      - "119"
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - linodes:delete,domains:delete,nodebalancers:delete,images:delete,stackscripts:delete,longview:delete,events:delete,tokens:delete,clients:delete,account:delete,users:delete,tickets:delete
+      X-Ratelimit-Limit:
+      - "400"
+      X-Ratelimit-Remaining:
+      - "399"
+      X-Ratelimit-Reset:
+      - "1544065903"
+      X-Spec-Version:
+      - 4.0.10
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
