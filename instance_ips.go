@@ -106,9 +106,9 @@ func (c *Client) AddInstanceIPAddress(ctx context.Context, linodeID int, public 
 }
 
 // UpdateInstanceIPAddress updates the IPAddress with the specified instance id and IP address
-func (c *Client) UpdateInstanceIPAddress(ctx context.Context, id int, ipAddress string, updateOpts IPAddressUpdateOptions) (*InstanceIP, error) {
+func (c *Client) UpdateInstanceIPAddress(ctx context.Context, linodeID int, ipAddress string, updateOpts IPAddressUpdateOptions) (*InstanceIP, error) {
 	var body string
-	e, err := c.InstanceIPs.endpointWithID(id)
+	e, err := c.InstanceIPs.endpointWithID(linodeID)
 	if err != nil {
 		return nil, err
 	}
