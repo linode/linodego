@@ -49,7 +49,7 @@ type Client struct {
 	InstanceIPs           *Resource
 	InstanceVolumes       *Resource
 	InstanceStats         *Resource
-    Instances             *Resource
+	Instances             *Resource
 	IPAddresses           *Resource
 	IPv6Pools             *Resource
 	IPv6Ranges            *Resource
@@ -157,9 +157,9 @@ func NewClient(hc *http.Client) (client Client) {
 		instanceSnapshotsName:     NewResource(&client, instanceSnapshotsName, instanceSnapshotsEndpoint, true, InstanceSnapshot{}, nil),
 		instanceIPsName:           NewResource(&client, instanceIPsName, instanceIPsEndpoint, true, InstanceIP{}, nil),                           // really?
 		instanceVolumesName:       NewResource(&client, instanceVolumesName, instanceVolumesEndpoint, true, nil, InstanceVolumesPagedResponse{}), // really?
-        instanceStatsName:         NewResource(&client, instanceStatsName, instanceStatsEndpoint, true, InstanceStats{}, nil),
-        ipaddressesName:           NewResource(&client, ipaddressesName, ipaddressesEndpoint, false, nil, IPAddressesPagedResponse{}),            // really?
-		ipv6poolsName:             NewResource(&client, ipv6poolsName, ipv6poolsEndpoint, false, nil, IPv6PoolsPagedResponse{}),                  // really?
+		instanceStatsName:         NewResource(&client, instanceStatsName, instanceStatsEndpoint, true, InstanceStats{}, nil),
+		ipaddressesName:           NewResource(&client, ipaddressesName, ipaddressesEndpoint, false, nil, IPAddressesPagedResponse{}), // really?
+		ipv6poolsName:             NewResource(&client, ipv6poolsName, ipv6poolsEndpoint, false, nil, IPv6PoolsPagedResponse{}),       // really?
 		ipv6rangesName:            NewResource(&client, ipv6rangesName, ipv6rangesEndpoint, false, IPv6Range{}, IPv6RangesPagedResponse{}),
 		regionsName:               NewResource(&client, regionsName, regionsEndpoint, false, Region{}, RegionsPagedResponse{}),
 		volumesName:               NewResource(&client, volumesName, volumesEndpoint, false, Volume{}, VolumesPagedResponse{}),
@@ -200,7 +200,7 @@ func NewClient(hc *http.Client) (client Client) {
 	client.InstanceIPs = resources[instanceIPsName]
 	client.InstanceVolumes = resources[instanceVolumesName]
 	client.InstanceStats = resources[instanceStatsName]
-    client.IPAddresses = resources[ipaddressesName]
+	client.IPAddresses = resources[ipaddressesName]
 	client.IPv6Pools = resources[ipv6poolsName]
 	client.IPv6Ranges = resources[ipv6rangesName]
 	client.Volumes = resources[volumesName]
