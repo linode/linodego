@@ -48,7 +48,8 @@ type Client struct {
 	InstanceSnapshots     *Resource
 	InstanceIPs           *Resource
 	InstanceVolumes       *Resource
-	Instances             *Resource
+	InstanceStats         *Resource
+    Instances             *Resource
 	IPAddresses           *Resource
 	IPv6Pools             *Resource
 	IPv6Ranges            *Resource
@@ -156,7 +157,8 @@ func NewClient(hc *http.Client) (client Client) {
 		instanceSnapshotsName:     NewResource(&client, instanceSnapshotsName, instanceSnapshotsEndpoint, true, InstanceSnapshot{}, nil),
 		instanceIPsName:           NewResource(&client, instanceIPsName, instanceIPsEndpoint, true, InstanceIP{}, nil),                           // really?
 		instanceVolumesName:       NewResource(&client, instanceVolumesName, instanceVolumesEndpoint, true, nil, InstanceVolumesPagedResponse{}), // really?
-		ipaddressesName:           NewResource(&client, ipaddressesName, ipaddressesEndpoint, false, nil, IPAddressesPagedResponse{}),            // really?
+        instanceStatsName:         NewResource(&client, instanceStatsName, instanceStatsEndpoint, true, InstanceStatsResponse{}, nil),
+        ipaddressesName:           NewResource(&client, ipaddressesName, ipaddressesEndpoint, false, nil, IPAddressesPagedResponse{}),            // really?
 		ipv6poolsName:             NewResource(&client, ipv6poolsName, ipv6poolsEndpoint, false, nil, IPv6PoolsPagedResponse{}),                  // really?
 		ipv6rangesName:            NewResource(&client, ipv6rangesName, ipv6rangesEndpoint, false, IPv6Range{}, IPv6RangesPagedResponse{}),
 		regionsName:               NewResource(&client, regionsName, regionsEndpoint, false, Region{}, RegionsPagedResponse{}),
@@ -197,7 +199,8 @@ func NewClient(hc *http.Client) (client Client) {
 	client.InstanceSnapshots = resources[instanceSnapshotsName]
 	client.InstanceIPs = resources[instanceIPsName]
 	client.InstanceVolumes = resources[instanceVolumesName]
-	client.IPAddresses = resources[ipaddressesName]
+	client.InstanceStats = resources[instanceStatsName]
+    client.IPAddresses = resources[ipaddressesName]
 	client.IPv6Pools = resources[ipv6poolsName]
 	client.IPv6Ranges = resources[ipv6rangesName]
 	client.Volumes = resources[volumesName]
