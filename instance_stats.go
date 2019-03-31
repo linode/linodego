@@ -4,28 +4,28 @@ import (
 	"context"
 )
 
-type Net struct {
+type StatsNet struct {
 	In         [][]float64 `json:"in"`
 	Out        [][]float64 `json:"out"`
 	PrivateIn  [][]float64 `json:"private_in"`
 	PrivateOut [][]float64 `json:"private_out"`
 }
 
-type IO struct {
+type StatsIO struct {
 	IO   [][]float64 `json:"io"`
 	Swap [][]float64 `json:"swap"`
 }
 
-type Data struct {
+type InstanceStatsData struct {
 	CPU   [][]float64 `json:"cpu"`
-	IO    *IO         `json:"io"`
-	Netv4 *Net        `json:"netv4"`
-	Netv6 *Net        `json:"netv6"`
+	IO    StatsIO     `json:"io"`
+	NetV4 StatsNet    `json:"netv4"`
+	NetV6 StatsNet    `json:"netv6"`
 }
 
 type InstanceStats struct {
 	Title string `json:"title"`
-	Data  *Data  `json:"data"`
+	Data  InstanceStatsData  `json:"data"`
 }
 
 // endpointWithID gets the endpoint URL for InstanceStats of a given Instance
