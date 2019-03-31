@@ -2,6 +2,7 @@ package linodego
 
 import (
 	"context"
+	"fmt"
 )
 
 type StatsNet struct {
@@ -24,16 +25,18 @@ type InstanceStatsData struct {
 }
 
 type InstanceStats struct {
-	Title string `json:"title"`
-	Data  InstanceStatsData  `json:"data"`
+	Title string            `json:"title"`
+	Data  InstanceStatsData `json:"data"`
 }
 
-// endpointWithID gets the endpoint URL for InstanceStats of a given Instance
-func (InstanceStats) endpointWithID(c *Client, id int) string {
+// endpointWithIDAndDate gets the endpoint URL for InstanceStats of a given Instance and Year/Month
+func endpointWithIDAndDate(c *Client, id int, year int, month int) string {
 	endpoint, err := c.InstanceStats.endpointWithID(id)
 	if err != nil {
 		panic(err)
 	}
+
+	endpoint = fmt.Sprintf("%s/%d/%d", endpoint, year, month)
 	return endpoint
 }
 
@@ -43,6 +46,16 @@ func (c *Client) GetInstanceStats(ctx context.Context, linodeID int) (*InstanceS
 	if err != nil {
 		return nil, err
 	}
+	r, err := coupleAPIErrors(c.R(ctx).SetResult(&InstanceStats{}).Get(e))
+	if err != nil {
+		return nil, err
+	}
+	return r.Result().(*InstanceStats), nil
+}
+
+// GetInstanceStatsByDate gets the template with the provided ID, year, and month
+func (c *Client) GetInstanceStatsByDate(ctx context.Context, linodeID int, year int, month int) (*InstanceStats, error) {
+	e := endpointWithIDAndDate(c, linodeID, year, month)
 	r, err := coupleAPIErrors(c.R(ctx).SetResult(&InstanceStats{}).Get(e))
 	if err != nil {
 		return nil, err
