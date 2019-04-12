@@ -25,20 +25,33 @@ func TestGetInstanceStats(t *testing.T) {
         t.Error(err)
     }
 
-    // Need to wait a while for the new linode to boot and start returning stats
-    time.Sleep(9 * time.Minute)
+    ticker := time.NewTicker(10 * time.Second)
+    timer := time.NewTimer(570 * time.Second)
+    defer ticker.Stop()
 
-    _, err = client.GetInstanceStats(context.Background(), instance.ID)
-    if err != nil {
-        t.Errorf("Error getting stats, expected struct, got error %v", err)
+    // Test GetInstanceStats
+    poll:
+    for {
+        select {
+        case <-ticker.C:
+            _, err = client.GetInstanceStats(context.Background(), instance.ID)
+            if err == nil { // stats are now returning
+                break poll
+            }
+        case <-timer.C:
+            t.Fatal("Error getting stats, polling timed out")
+        }
     }
 
+    // test GetInstanceStatsByDate
+    // No need to poll, since we know that if we get to this point,
+    // the instance is returning stats
     currentTime := time.Now()
     currentYear := currentTime.Year()
     currentMonth := int(currentTime.Month())
     _, err = client.GetInstanceStatsByDate(
         context.Background(), instance.ID, currentYear, currentMonth)
     if err != nil {
-        t.Errorf("Error getting stats, expected struct, got error %v", err)
+        t.Errorf("Error getting stats by date, expected struct, got error %v", err)
     }
 }
