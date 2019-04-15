@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// StatsNet represents a network stats object 
 type StatsNet struct {
 	In         [][]float64 `json:"in"`
 	Out        [][]float64 `json:"out"`
@@ -12,11 +13,13 @@ type StatsNet struct {
 	PrivateOut [][]float64 `json:"private_out"`
 }
 
+// StatsIO represents an IO stats object
 type StatsIO struct {
 	IO   [][]float64 `json:"io"`
 	Swap [][]float64 `json:"swap"`
 }
 
+// InstanceStatsData represents an instance stats data object
 type InstanceStatsData struct {
 	CPU   [][]float64 `json:"cpu"`
 	IO    StatsIO     `json:"io"`
@@ -24,6 +27,7 @@ type InstanceStatsData struct {
 	NetV6 StatsNet    `json:"netv6"`
 }
 
+// InstanceStats represents an instance stats object
 type InstanceStats struct {
 	Title string            `json:"title"`
 	Data  InstanceStatsData `json:"data"`
