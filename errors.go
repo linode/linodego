@@ -49,7 +49,7 @@ func coupleAPIErrors(r *resty.Response, err error) (*resty.Response, error) {
 	}
 
 	// Special case for undocumented rate limit response
-	if r.StatusCode() == 429 && r.Size() == 0 {
+	if r.StatusCode() == http.StatusTooManyRequests && r.Size() == 0 {
 		return nil, NewError(r)
 	}
 

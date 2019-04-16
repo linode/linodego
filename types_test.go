@@ -50,13 +50,3 @@ func TestListTypes(t *testing.T) {
 		t.Errorf("Expected a list of images, but got none %v", i)
 	}
 }
-
-func TestListTypes_429(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestListTypes_429")
-	defer teardown()
-
-	_, err := client.ListTypes(context.Background(), nil)
-	if err == nil {
-		t.Errorf("Error listing images, expected error")
-	}
-}
