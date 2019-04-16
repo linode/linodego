@@ -1,8 +1,8 @@
 include .env
 BIN_DIR := $(GOPATH)/bin
-GOMETALINTER := $(BIN_DIR)/gometalinter
-GOMETALINTER_ARGS := --enable-all --disable=vetshadow --disable=gocyclo --disable=unparam --disable=nakedret --disable=lll --disable=dupl --disable=gosec --disable=gochecknoinits --disable=gochecknoglobals --disable=test
-GOMETALINTER_WARN_ARGS := --disable-all --enable=vetshadow --enable=gocyclo --enable=unparam --enable=nakedret --enable=lll --enable=dupl --enable=gosec --enable=gochecknoinits --enable=gochecknoglobals --deadline=120s
+GOLANGCILINT := $(BIN_DIR)/golangci-lint
+GOLANGCILINT_ARGS := run --no-config --issues-exit-code=1 --enable-all --disable=vetshadow --disable=gocyclo --disable=unparam --disable=nakedret --disable=lll --disable=dupl --disable=gosec --disable=gochecknoinits --disable=gochecknoglobals --tests=false
+GOLANGCILINT_WARN_ARGS := run --no-config --issues-exit-code=0 --disable-all --enable=vetshadow --enable=gocyclo --enable=unparam --enable=nakedret --enable=lll --enable=dupl --enable=gosec --enable=gochecknoinits --enable=gochecknoglobals --deadline=120s
 
 .PHONY: build example refresh-fixtures clean-fixtures
 
@@ -18,11 +18,11 @@ build:
 
 .PHONY: lint
 lint:
-	$(GOMETALINTER) $(shell go list ./... | grep -v vendor) --vendor $(GOMETALINTER_ARGS)
+	$(GOLANGCILINT) $(GOLANGCILINT_ARGS)
 
 .PHONY: lint-warn
 lint-warn:
-	$(GOMETALINTER) $(shell go list ./... | grep -v vendor) --vendor $(GOMETALINTER_WARN_ARGS) || true
+	$(GOLANGCILINT) $(GOLANGCILINT_WARN_ARGS)
 
 clean-fixtures:
 	@-rm fixtures/*.yaml
