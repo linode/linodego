@@ -2,13 +2,11 @@ package linodego_test
 
 import (
 	"context"
-	"fmt"
 	"testing"
 	"time"
 )
 
 func TestGetInstanceStats(t *testing.T) {
-	fmt.Println("Started TestGetInstanceStats")
 	if testing.Short() {
 		t.Skip("Skipping test in short mode.")
 	}
