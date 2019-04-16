@@ -2,15 +2,13 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/golang:1.10
-    working_directory: /go/src/github.com/linode/linodego
+      - image: circleci/golang:1.11
     steps:
       - checkout
       - run:
           name: "Install Dependencies"
           command: |
-            go get -u gopkg.in/alecthomas/gometalinter.v2
-            gometalinter.v2 --install
+            curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s -- -b $(go env GOPATH)/bin v1.16.0
             touch .env
       - run:
           name: "Run Tests"
@@ -19,8 +17,8 @@ jobs:
       - run:
           name: "Run Linter"
           command: |
-            gometalinter.v2 --enable-all --disable=vetshadow --disable=gocyclo --disable=unparam --disable=nakedret --disable=lll --disable=dupl --disable=gosec --disable=gochecknoinits --disable=gochecknoglobals --disable=test --deadline=120s
-            gometalinter.v2 --disable-all --enable=vetshadow --enable=gocyclo --enable=unparam --enable=nakedret --enable=lll --enable=dupl --enable=gosec --enable=gochecknoinits --enable=gochecknoglobals --deadline=120s || true
+            golangci-lint run --no-config --issues-exit-code=1 --enable-all --disable=vetshadow --disable=gocyclo --disable=unparam --disable=nakedret --disable=lll --disable=dupl --disable=gosec --disable=gochecknoinits --disable=gochecknoglobals --tests=false
+            golangci-lint run --no-config --issues-exit-code=0 --disable-all --enable=vetshadow --enable=gocyclo --enable=unparam --enable=nakedret --enable=lll --enable=dupl --enable=gosec --enable=gochecknoinits --enable=gochecknoglobals --deadline=120s
       - run:
           name: "Upload Coverage"
           command: bash <(curl -s https://codecov.io/bash)
