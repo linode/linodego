@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"math"
 	"math/rand"
 	"os"
 	"strconv"
@@ -49,6 +50,22 @@ func ExampleClient_GetAccount() {
 		log.Fatalln("* While getting account: ", err)
 	}
 	fmt.Println("Account email has @:", strings.Contains(account.Email, "@"))
+
+	// Output:
+	// Account email has @: true
+}
+
+func ExampleClient_ListUsers() {
+	// Example readers, Ignore this bit of setup code needed to record test fixtures
+	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListUsers")
+	defer teardown()
+
+	users, err := linodeClient.ListUsers(context.Background(), nil)
+	if err != nil {
+		log.Fatalln("* While getting users: ", err)
+	}
+	user := users[0]
+	fmt.Println("Account email has @:", strings.Contains(user.Email, "@"))
 
 	// Output:
 	// Account email has @: true
@@ -310,8 +327,8 @@ const digits = "0123456789"
 const symbols = "/-=+@#$^&*()~!`|[]{}\\?,.<>;:'"
 
 func randString(length int, characterClasses ...string) string {
-	quotient := (0.0 + length) / len(characterClasses)
-	if quotient != int(quotient) {
+	quotient := (0.0 + float64(length)) / float64(len(characterClasses))
+	if quotient != math.Trunc(quotient) {
 		panic("length must be divisible by characterClasses count")
 	}
 

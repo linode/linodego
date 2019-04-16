@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 	"testing"
+	"time"
 
 	"github.com/dnaeon/go-vcr/recorder"
 	. "github.com/linode/linodego"
@@ -15,6 +16,7 @@ import (
 var testingMode = recorder.ModeDisabled
 var debugAPI = false
 var validTestAPIKey = "NOTANAPIKEY"
+var testingPollDuration = time.Duration(50)
 
 func init() {
 	if apiToken, ok := os.LookupEnv("LINODE_TOKEN"); ok {
@@ -37,6 +39,7 @@ func init() {
 		} else if envFixtureMode == "play" {
 			log.Printf("[INFO] LINODE_FIXTURE_MODE %s will be used for tests", envFixtureMode)
 			testingMode = recorder.ModeReplaying
+			testingPollDuration = 1
 		}
 	}
 }
@@ -97,6 +100,7 @@ func createTestClient(t *testing.T, fixturesYaml string) (*Client, func()) {
 
 	c = NewClient(oc)
 	c.SetDebug(debugAPI)
+	c.SetPollDelay(testingPollDuration)
 
 	return &c, recordStopper
 }

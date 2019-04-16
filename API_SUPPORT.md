@@ -61,7 +61,7 @@
   - [X] `POST`
   - [X] `DELETE`
 - `/linode/instances/$id/disks/$id/password`
-  - [ ] `POST`
+  - [X] `POST`
 - `/linode/instances/$id/disks/$id/resize`
   - [X] `POST`
 
@@ -216,6 +216,15 @@
   - [ ] `GET`
   - [ ] `POST`
 
+## Tags
+
+- `/tags/`
+  - [X] `GET`
+  - [X] `POST`
+- `/tags/$id`
+  - [X] `GET`
+  - [X] `DELETE`
+
 ## Account
 
 ### Events
@@ -279,12 +288,12 @@
 ### Users
 
 - `/account/users`
-  - [ ] `GET`
-  - [ ] `POST`
+  - [X] `GET`
+  - [X] `POST`
 - `/account/users/$username`
-  - [ ] `GET`
-  - [ ] `PUT`
-  - [ ] `DELETE`
+  - [X] `GET`
+  - [X] `PUT`
+  - [X] `DELETE`
 - `/account/users/$username/grants`
   - [ ] `GET`
   - [ ] `PUT`
@@ -296,8 +305,8 @@
 ### Personalized User Settings
 
 - `/profile`
-  - [ ] `GET`
-  - [ ] `PUT`
+  - [X] `GET`
+  - [X] `PUT`
 
 ### Granted OAuth Apps
 
@@ -334,12 +343,12 @@
 ### Personal Access API Tokens
 
 - `/profile/tokens`
-  - [ ] `GET`
-  - [ ] `POST`
+  - [X] `GET`
+  - [X] `POST`
 - `/profile/tokens/$id`
-  - [ ] `GET`
-  - [ ] `PUT`
-  - [ ] `DELETE`
+  - [X] `GET`
+  - [X] `PUT`
+  - [X] `DELETE`
 
 ## Images
 

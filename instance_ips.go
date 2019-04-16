@@ -104,3 +104,30 @@ func (c *Client) AddInstanceIPAddress(ctx context.Context, linodeID int, public 
 
 	return r.Result().(*InstanceIP), nil
 }
+
+// UpdateInstanceIPAddress updates the IPAddress with the specified instance id and IP address
+func (c *Client) UpdateInstanceIPAddress(ctx context.Context, linodeID int, ipAddress string, updateOpts IPAddressUpdateOptions) (*InstanceIP, error) {
+	var body string
+	e, err := c.InstanceIPs.endpointWithID(linodeID)
+	if err != nil {
+		return nil, err
+	}
+	e = fmt.Sprintf("%s/%s", e, ipAddress)
+
+	req := c.R(ctx).SetResult(&InstanceIP{})
+
+	if bodyData, err := json.Marshal(updateOpts); err == nil {
+		body = string(bodyData)
+	} else {
+		return nil, NewError(err)
+	}
+
+	r, err := coupleAPIErrors(req.
+		SetBody(body).
+		Put(e))
+
+	if err != nil {
+		return nil, err
+	}
+	return r.Result().(*InstanceIP), nil
+}

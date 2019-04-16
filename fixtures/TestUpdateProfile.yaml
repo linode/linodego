@@ -1,0 +1,155 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer awesometokenawesometokenawesometoken
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego 0.6.0 https://github.com/linode/linodego
+    url: https://api.linode.com/v4/profile
+    method: GET
+  response:
+    body: '{"username": "restricted_tester", "ip_whitelist_enabled": false, "timezone":
+      "GMT", "uid": 123456, "restricted": true, "lish_auth_method": "password_keys",
+      "two_factor_auth": false, "email": "restricted_tester@example.com", "referrals":
+      {"pending": 0, "credit": 0, "total": 0, "completed": 0, "code": "919117eb5f8eb87eff289a49d30c76bf0c3f7de1",
+      "url": "https://www.linode.com/?r=919117eb5f8eb87eff289a49d30c76bf0c3f7de1"},
+      "email_notifications": true, "authorized_keys": null}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "478"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 26 Oct 2018 03:20:21 GMT
+      Retry-After:
+      - "80"
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Ratelimit-Remaining:
+      - "398"
+      X-Ratelimit-Reset:
+      - "1540524102"
+      X-Spec-Version:
+      - 4.0.7
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"email":"restricted_tester@example.com","timezone":"GMT","email_notifications":true,"ip_whitelist_enabled":false,"lish_auth_method":"password_keys","authorized_keys":[],"two_factor_auth":false,"restricted":true}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer awesometokenawesometokenawesometoken
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego 0.6.0 https://github.com/linode/linodego
+    url: https://api.linode.com/v4/profile
+    method: PUT
+  response:
+    body: '{"restricted": true, "email": "restricted_tester@example.com", "two_factor_auth":
+      false, "username": "restricted_tester", "lish_auth_method": "password_keys",
+      "timezone": "GMT", "authorized_keys": null, "referrals": {"credit": 0, "completed":
+      0, "code": "919117eb5f8eb87eff289a49d30c76bf0c3f7de1", "pending": 0, "url":
+      "https://www.linode.com/?r=919117eb5f8eb87eff289a49d30c76bf0c3f7de1", "total":
+      0}, "uid": 123456, "ip_whitelist_enabled": false, "email_notifications": true}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "478"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Date:
+      - Fri, 26 Oct 2018 03:20:22 GMT
+      Retry-After:
+      - "119"
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - account:read_write
+      X-Content-Type-Options:
+      - nosniff
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Ratelimit-Remaining:
+      - "399"
+      X-Ratelimit-Reset:
+      - "1540524142"
+      X-Spec-Version:
+      - 4.0.7
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""

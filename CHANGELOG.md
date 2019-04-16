@@ -1,5 +1,73 @@
 # Change Log
 
+## Unreleased
+
+### Fixes
+
+### Features
+
+<a name-"v0.7.1"></a>
+
+## [v0.7.1](https://github.com/linode/linodego/compare/v0.7.0..v0.7.1) (2018-02-05)
+
+### Features
+
+* add `ClassDedicated` constant (`dedicated`) for use in `LinodeType` `Class` values
+  See the [Dedicated CPU Announcement](https://blog.linode.com/2019/02/05/introducing-linode-dedicated-cpu-instances/)
+
+<a name-"v0.7.0"></a>
+
+## [v0.7.0](https://github.com/linode/linodego/compare/v0.6.2..v0.7.0) (2018-12-03)
+
+### Features
+
+* add `Tags` field in: `NodeBalancer`, `Domain`, `Volume`
+* add `UpdateIPAddress` (for setting RDNS)
+
+### Fixes
+
+* invalid URL for `/v4/networking/` enpoints (IPv6 Ranges and Pools) has been correcrted
+
+<a name-"v0.6.2"></a>
+
+## [v0.6.2](https://github.com/linode/linodego/compare/v0.6.1..v0.6.2) (2018-10-26)
+
+### Fixes
+
+* add missing `Account` fields: `address_1`, `address_2`, `phone`
+
+<a name-"v0.6.1"></a>
+## [v0.6.1](https://github.com/linode/linodego/compare/v0.6.0..v0.6.1) (2018-10-26)
+
+### Features
+
+* Adds support for fetching and updating basic Profile information
+
+<a name-"v0.6.0"></a>
+## [v0.6.0](https://github.com/linode/linodego/compare/v0.5.1..v0.6.0) (2018-10-25)
+
+### Fixes
+
+* Fixes Image date handling
+* Fixes broken example code in README
+* Fixes WaitForEventFinished when encountering events without entity
+* Fixes ResizeInstanceDisk which was executing CloneInstanceDisk
+* Fixes go-resty import path to gopkg.in version for future go module support
+
+### Features
+
+* Adds support for user account operations
+* Adds support for profile tokens
+* Adds support for Tags
+* Adds PasswordResetInstanceDisk
+* Adds DiskStatus constants
+* Adds WaitForInstanceDiskStatus
+* Adds SetPollDelay for configuring poll duration
+
+  * Reduced polling time to millisecond granularity
+  * Change polling default to 3s to avoid 429 conditions
+  * Use poll delay in waitfor functions
+
 <a name="v0.5.1"></a>
 ## [v0.5.1](https://github.com/linode/linodego/compare/v0.5.0...v0.5.1) (2018-09-10)
 
