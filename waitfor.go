@@ -106,11 +106,12 @@ func (client Client) WaitForVolumeLinodeID(ctx context.Context, volumeID int, li
 				return volume, err
 			}
 
-			if linodeID == nil && volume.LinodeID == nil {
+			switch {
+			case linodeID == nil && volume.LinodeID == nil:
 				return volume, nil
-			} else if linodeID == nil || volume.LinodeID == nil {
+			case linodeID == nil || volume.LinodeID == nil:
 				// continue waiting
-			} else if *volume.LinodeID == *linodeID {
+			case *volume.LinodeID == *linodeID:
 				return volume, nil
 			}
 
@@ -176,6 +177,7 @@ func (client Client) WaitForEventFinished(ctx context.Context, id interface{}, e
 
 			// If there are events for this instance + action, inspect them
 			for _, event := range events {
+				event := event
 				if event.Action != action {
 					// log.Println("action mismatch", event.Action, action)
 					continue
@@ -187,21 +189,21 @@ func (client Client) WaitForEventFinished(ctx context.Context, id interface{}, e
 
 				var entID string
 
-				switch event.Entity.ID.(type) {
+				switch id := event.Entity.ID.(type) {
 				case float64, float32:
-					entID = fmt.Sprintf("%.f", event.Entity.ID)
+					entID = fmt.Sprintf("%.f", id)
 				case int:
-					entID = strconv.Itoa(event.Entity.ID.(int))
+					entID = strconv.Itoa(id)
 				default:
-					entID = fmt.Sprintf("%v", event.Entity.ID)
+					entID = fmt.Sprintf("%v", id)
 				}
 
 				var findID string
-				switch id.(type) {
+				switch id := id.(type) {
 				case float64, float32:
 					findID = fmt.Sprintf("%.f", id)
 				case int:
-					findID = strconv.Itoa(id.(int))
+					findID = strconv.Itoa(id)
 				default:
 					findID = fmt.Sprintf("%v", id)
 				}
@@ -222,11 +224,12 @@ func (client Client) WaitForEventFinished(ctx context.Context, id interface{}, e
 
 				}
 
-				if event.Status == EventFailed {
+				switch event.Status {
+				case EventFailed:
 					return &event, fmt.Errorf("%s %v action %s failed", titledEntityType, id, action)
-				} else if event.Status == EventScheduled {
+				case EventScheduled:
 					log.Printf("[INFO] %s %v action %s is scheduled", titledEntityType, id, action)
-				} else if event.Status == EventFinished {
+				case EventFinished:
 					log.Printf("[INFO] %s %v action %s is finished", titledEntityType, id, action)
 					return &event, nil
 				}

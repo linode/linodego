@@ -118,14 +118,15 @@ func (r Resource) render(data ...interface{}) (string, error) {
 	buf := bytes.NewBufferString(out)
 
 	var substitutions interface{}
-	if len(data) == 1 {
+	switch len(data) {
+	case 1:
 		substitutions = struct{ ID interface{} }{data[0]}
-	} else if len(data) == 2 {
+	case 2:
 		substitutions = struct {
 			ID       interface{}
 			SecondID interface{}
 		}{data[0], data[1]}
-	} else {
+	default:
 		return "", NewError("Too many arguments to render template (expected 1 or 2)")
 	}
 	if err := r.endpointTemplate.Execute(buf, substitutions); err != nil {
