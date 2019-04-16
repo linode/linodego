@@ -5,7 +5,7 @@ import (
 	"fmt"
 )
 
-// StatsNet represents a network stats object 
+// StatsNet represents a network stats object
 type StatsNet struct {
 	In         [][]float64 `json:"in"`
 	Out        [][]float64 `json:"out"`
