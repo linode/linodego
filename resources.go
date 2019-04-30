@@ -46,7 +46,7 @@ const (
 	managedName               = "managed"
 	tagsName                  = "tags"
 	usersName                 = "users"
-	// notificationsName = "notifications"
+	paymentsName              = "payments"
 
 	stackscriptsEndpoint          = "linode/stackscripts"
 	imagesEndpoint                = "images"
@@ -88,6 +88,7 @@ const (
 	tagsEndpoint                = "tags"
 	usersEndpoint               = "account/users"
 	notificationsEndpoint       = "account/notifications"
+	paymentsEndpoint						= "account/payments"
 )
 
 // Resource represents a linode API resource

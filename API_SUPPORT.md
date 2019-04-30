@@ -270,10 +270,10 @@
 ### Payments
 
 - `/account/payments`
-  - [ ] `GET`
-  - [ ] `POST`
+  - [X] `GET`
+  - [X] `POST`
 - `/account/payments/$id`
-  - [ ] `GET`
+  - [X] `GET`
 - `/account/payments/paypal`
   - [ ] `GET`
 - `/account/payments/paypal/execute`
@@ -330,7 +330,7 @@
   - [x] `GET`
   - [x] `PUT`
   - [x] `DELETE`
-  
+
 ### Two-Factor
 
 - `/profile/tfa-disable`
