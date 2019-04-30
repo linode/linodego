@@ -76,6 +76,7 @@ type Client struct {
 	InvoiceItems          *Resource
 	Events                *Resource
 	Notifications         *Resource
+	OAuthClients          *Resource
 	Profile               *Resource
 	Managed               *Resource
 	Tags                  *Resource
@@ -175,6 +176,7 @@ func NewClient(hc *http.Client) (client Client) {
 		nodebalancerconfigsName:   NewResource(&client, nodebalancerconfigsName, nodebalancerconfigsEndpoint, true, NodeBalancerConfig{}, NodeBalancerConfigsPagedResponse{}),
 		nodebalancernodesName:     NewResource(&client, nodebalancernodesName, nodebalancernodesEndpoint, true, NodeBalancerNode{}, NodeBalancerNodesPagedResponse{}),
 		notificationsName:         NewResource(&client, notificationsName, notificationsEndpoint, false, Notification{}, NotificationsPagedResponse{}),
+		oauthClientsName:          NewResource(&client, oauthClientsName, oauthClientsEndpoint, false, OAuthClient{}, OAuthClientsPagedResponse{}),
 		sshkeysName:               NewResource(&client, sshkeysName, sshkeysEndpoint, false, SSHKey{}, SSHKeysPagedResponse{}),
 		ticketsName:               NewResource(&client, ticketsName, ticketsEndpoint, false, Ticket{}, TicketsPagedResponse{}),
 		tokensName:                NewResource(&client, tokensName, tokensEndpoint, false, Token{}, TokensPagedResponse{}),
@@ -216,6 +218,7 @@ func NewClient(hc *http.Client) (client Client) {
 	client.NodeBalancerConfigs = resources[nodebalancerconfigsName]
 	client.NodeBalancerNodes = resources[nodebalancernodesName]
 	client.Notifications = resources[notificationsName]
+	client.OAuthClients = resources[oauthClientsName]
 	client.SSHKeys = resources[sshkeysName]
 	client.Tickets = resources[ticketsName]
 	client.Tokens = resources[tokensName]

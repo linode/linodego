@@ -173,6 +173,12 @@ func (c *Client) listHelper(ctx context.Context, i interface{}, opts *ListOption
 			results = r.Result().(*NotificationsPagedResponse).Results
 			v.appendData(r.Result().(*NotificationsPagedResponse))
 		}
+	case *OAuthClientsPagedResponse:
+		if r, err = coupleAPIErrors(req.SetResult(OAuthClientsPagedResponse{}).Get(v.endpoint(c))); err == nil {
+			pages = r.Result().(*OAuthClientsPagedResponse).Pages
+			results = r.Result().(*OAuthClientsPagedResponse).Results
+			v.appendData(r.Result().(*OAuthClientsPagedResponse))
+		}
 	case *NodeBalancersPagedResponse:
 		if r, err = coupleAPIErrors(req.SetResult(NodeBalancersPagedResponse{}).Get(v.endpoint(c))); err == nil {
 			pages = r.Result().(*NodeBalancersPagedResponse).Pages
