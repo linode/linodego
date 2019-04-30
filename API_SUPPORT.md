@@ -1,5 +1,19 @@
 # API Support
 
+This document tracks LinodeGo support for the features of the [Linode API](https://developers.linode.com/changelog/api/).
+
+Endpoints are implemented as needed, by need or user-request.  As new features are added (as reported in the [Linode API Changelog](https://developers.linode.com/changelog/api/)) this document should be updated to reflect any missing endpoints.  New or deprecated fields should also be indicated below the affected HTTP method, for example:
+
+```markdown
+- `/fake/endpoint`
+  - [x] `GET`
+        * 4.0.29 field X is not implemented <http://...>
+  - [ ] `POST`
+        * 4.0.30 added support to create Fake things <http://...>
+```
+
+See `template.go` and `template_test.go` for tips on adding new endpoints.
+
 ## Linodes
 
 - `/linode/instances`
@@ -68,11 +82,11 @@
 ### IPs
 
 - `/linode/instances/$id/ips`
-  - [ ] `GET`
-  - [ ] `POST`
+  - [X] `GET`
+  - [X] `POST`
 - `/linode/instances/$id/ips/$ip_address`
-  - [ ] `GET`
-  - [ ] `PUT`
+  - [X] `GET`
+  - [X] `PUT`
   - [ ] `DELETE`
 - `/linode/instances/$id/ips/sharing`
   - [ ] `POST`
@@ -97,9 +111,9 @@
 ### Stats
 
 - `/linode/instances/$id/stats`
-  - [ ] `GET`
+  - [X] `GET`
 - `/linode/instances/$id/stats/$year/$month`
-  - [ ] `GET`
+  - [X] `GET`
 
 ### Types
 
@@ -181,7 +195,7 @@
   - [ ] `POST`
 - `/networking/ips/$address`
   - [X] `GET`
-  - [ ] `PUT`
+  - [X] `PUT`
   - [ ] `DELETE`
 
 ### IPv6
@@ -191,9 +205,9 @@
 - `/networking/ips/$address`
   - [X] `GET`
   - [ ] `PUT`
-- /networking/ipv6/ranges
+- `/networking/ipv6/ranges`
   - [X] `GET`
-- /networking/ipv6/pools
+- `/networking/ipv6/pools`
   - [X] `GET`
 
 ## Regions
@@ -282,8 +296,8 @@
 ### Settings
 
 - `/account/settings`
-  - [ ] `GET`
-  - [ ] `PUT`
+  - [X] `GET`
+  - [X] `PUT`
 
 ### Users
 
