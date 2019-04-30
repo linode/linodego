@@ -11,6 +11,7 @@
 * add `GetAccountSettings` and `UpdateAccountSettings`
 * switched from `metalinter` to `golangci-lint`
 * switched to `go mod` from `dep`
+* add `CreatePayment` `GetPayment` `ListPayments`
 
 <a name-"v0.7.1"></a>
 

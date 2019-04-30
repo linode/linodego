@@ -284,10 +284,10 @@ See `template.go` and `template_test.go` for tips on adding new endpoints.
 ### Payments
 
 - `/account/payments`
-  - [ ] `GET`
-  - [ ] `POST`
+  - [X] `GET`
+  - [X] `POST`
 - `/account/payments/$id`
-  - [ ] `GET`
+  - [X] `GET`
 - `/account/payments/paypal`
   - [ ] `GET`
 - `/account/payments/paypal/execute`
@@ -344,7 +344,7 @@ See `template.go` and `template_test.go` for tips on adding new endpoints.
   - [x] `GET`
   - [x] `PUT`
   - [x] `DELETE`
-  
+
 ### Two-Factor
 
 - `/profile/tfa-disable`
