@@ -20,7 +20,7 @@ const (
 	// APIProto connect to API with http(s)
 	APIProto = "https"
 	// Version of linodego
-	Version = "0.7.0"
+	Version = "0.7.1"
 	// APIEnvVar environment var to check for API token
 	APIEnvVar = "LINODE_TOKEN"
 	// APISecondsPerPoll how frequently to poll for new Events or Status in WaitFor functions
@@ -71,6 +71,7 @@ type Client struct {
 	Tokens                *Resource
 	Token                 *Resource
 	Account               *Resource
+	AccountSettings       *Resource
 	Invoices              *Resource
 	InvoiceItems          *Resource
 	Events                *Resource
@@ -177,7 +178,8 @@ func NewClient(hc *http.Client) (client Client) {
 		sshkeysName:               NewResource(&client, sshkeysName, sshkeysEndpoint, false, SSHKey{}, SSHKeysPagedResponse{}),
 		ticketsName:               NewResource(&client, ticketsName, ticketsEndpoint, false, Ticket{}, TicketsPagedResponse{}),
 		tokensName:                NewResource(&client, tokensName, tokensEndpoint, false, Token{}, TokensPagedResponse{}),
-		accountName:               NewResource(&client, accountName, accountEndpoint, false, Account{}, nil), // really?
+		accountName:               NewResource(&client, accountName, accountEndpoint, false, Account{}, nil),                         // really?
+		accountSettingsName:       NewResource(&client, accountSettingsName, accountSettingsEndpoint, false, AccountSettings{}, nil), // really?
 		eventsName:                NewResource(&client, eventsName, eventsEndpoint, false, Event{}, EventsPagedResponse{}),
 		invoicesName:              NewResource(&client, invoicesName, invoicesEndpoint, false, Invoice{}, InvoicesPagedResponse{}),
 		invoiceItemsName:          NewResource(&client, invoiceItemsName, invoiceItemsEndpoint, true, InvoiceItem{}, InvoiceItemsPagedResponse{}),
