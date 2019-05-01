@@ -190,7 +190,7 @@ func NewClient(hc *http.Client) (client Client) {
 		managedName:               NewResource(&client, managedName, managedEndpoint, false, nil, nil), // really?
 		tagsName:                  NewResource(&client, tagsName, tagsEndpoint, false, Tag{}, TagsPagedResponse{}),
 		usersName:                 NewResource(&client, usersName, usersEndpoint, false, User{}, UsersPagedResponse{}),
-		paymentsName:							 NewResource(&client, paymentsName, paymentsEndpoint, false, Payment{}, PaymentsPagedResponse{}),
+		paymentsName:              NewResource(&client, paymentsName, paymentsEndpoint, false, Payment{}, PaymentsPagedResponse{}),
 	}
 
 	client.resources = resources

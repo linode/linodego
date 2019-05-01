@@ -18,9 +18,8 @@ const (
 
 // OAuthClient represents a OAuthClient object
 type OAuthClient struct {
-
 	// The unique ID of this OAuth Client.
-	ID int `json:"id"`
+	ID string `json:"id"`
 
 	// The location a successful log in from https://login.linode.com should be redirected to for this client. The receiver of this redirect should be ready to accept an OAuth exchange code and finish the OAuth exchange.
 	RedirectURI string `json:"redirect_uri"`
@@ -37,7 +36,7 @@ type OAuthClient struct {
 	// If this OAuth Client is public or private.
 	Public bool `json:"public"`
 
-	// The URL where this client's thumbnail may be viewed, or null if this client does not have a thumbnail set.
+	// The URL where this client's thumbnail may be viewed, or nil if this client does not have a thumbnail set.
 	ThumbnailURL *string `json:"thumbnail_url"`
 }
 
@@ -48,6 +47,9 @@ type OAuthClientCreateOptions struct {
 
 	// The name of this application. This will be presented to users when they are asked to grant it access to their Account.
 	Label string `json:"label"`
+
+	// If this OAuth Client is public or private.
+	Public bool `json:"public"`
 }
 
 // OAuthClientUpdateOptions fields are those accepted by UpdateOAuthClient
@@ -57,12 +59,16 @@ type OAuthClientUpdateOptions struct {
 
 	// The name of this application. This will be presented to users when they are asked to grant it access to their Account.
 	Label string `json:"label"`
+
+	// If this OAuth Client is public or private.
+	Public bool `json:"public"`
 }
 
 // GetCreateOptions converts a OAuthClient to OAuthClientCreateOptions for use in CreateOAuthClient
 func (i OAuthClient) GetCreateOptions() (o OAuthClientCreateOptions) {
 	o.RedirectURI = i.RedirectURI
 	o.Label = i.Label
+	o.Public = i.Public
 	return
 }
 
@@ -70,6 +76,7 @@ func (i OAuthClient) GetCreateOptions() (o OAuthClientCreateOptions) {
 func (i OAuthClient) GetUpdateOptions() (o OAuthClientUpdateOptions) {
 	o.RedirectURI = i.RedirectURI
 	o.Label = i.Label
+	o.Public = i.Public
 	return
 }
 
@@ -97,37 +104,27 @@ func (resp *OAuthClientsPagedResponse) appendData(r *OAuthClientsPagedResponse) 
 func (c *Client) ListOAuthClients(ctx context.Context, opts *ListOptions) ([]OAuthClient, error) {
 	response := OAuthClientsPagedResponse{}
 	err := c.listHelper(ctx, &response, opts)
-	for i := range response.Data {
-		response.Data[i].fixDates()
-	}
 	if err != nil {
 		return nil, err
 	}
 	return response.Data, nil
 }
 
-// fixDates converts JSON timestamps to Go time.Time values
-func (i *OAuthClient) fixDates() *OAuthClient {
-	// i.Created, _ = parseDates(i.CreatedStr)
-	// i.Updated, _ = parseDates(i.UpdatedStr)
-	return i
-}
-
-// GetOAuthClient gets the oauthClient with the provided ID
-func (c *Client) GetOAuthClient(ctx context.Context, id int) (*OAuthClient, error) {
+// GetOAuthClient gets the OAuthClient with the provided ID
+func (c *Client) GetOAuthClient(ctx context.Context, id string) (*OAuthClient, error) {
 	e, err := c.OAuthClients.Endpoint()
 	if err != nil {
 		return nil, err
 	}
-	e = fmt.Sprintf("%s/%d", e, id)
+	e = fmt.Sprintf("%s/%s", e, id)
 	r, err := coupleAPIErrors(c.R(ctx).SetResult(&OAuthClient{}).Get(e))
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*OAuthClient).fixDates(), nil
+	return r.Result().(*OAuthClient), nil
 }
 
-// CreateOAuthClient creates a OAuthClient
+// CreateOAuthClient creates an OAuthClient
 func (c *Client) CreateOAuthClient(ctx context.Context, createOpts OAuthClientCreateOptions) (*OAuthClient, error) {
 	var body string
 	e, err := c.OAuthClients.Endpoint()
@@ -150,17 +147,17 @@ func (c *Client) CreateOAuthClient(ctx context.Context, createOpts OAuthClientCr
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*OAuthClient).fixDates(), nil
+	return r.Result().(*OAuthClient), nil
 }
 
 // UpdateOAuthClient updates the OAuthClient with the specified id
-func (c *Client) UpdateOAuthClient(ctx context.Context, id int, updateOpts OAuthClientUpdateOptions) (*OAuthClient, error) {
+func (c *Client) UpdateOAuthClient(ctx context.Context, id string, updateOpts OAuthClientUpdateOptions) (*OAuthClient, error) {
 	var body string
 	e, err := c.OAuthClients.Endpoint()
 	if err != nil {
 		return nil, err
 	}
-	e = fmt.Sprintf("%s/%d", e, id)
+	e = fmt.Sprintf("%s/%s", e, id)
 
 	req := c.R(ctx).SetResult(&OAuthClient{})
 
@@ -177,16 +174,16 @@ func (c *Client) UpdateOAuthClient(ctx context.Context, id int, updateOpts OAuth
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*OAuthClient).fixDates(), nil
+	return r.Result().(*OAuthClient), nil
 }
 
 // DeleteOAuthClient deletes the OAuthClient with the specified id
-func (c *Client) DeleteOAuthClient(ctx context.Context, id int) error {
+func (c *Client) DeleteOAuthClient(ctx context.Context, id string) error {
 	e, err := c.OAuthClients.Endpoint()
 	if err != nil {
 		return err
 	}
-	e = fmt.Sprintf("%s/%d", e, id)
+	e = fmt.Sprintf("%s/%s", e, id)
 
 	_, err = coupleAPIErrors(c.R(ctx).Delete(e))
 	return err

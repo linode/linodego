@@ -269,12 +269,12 @@ See `template.go` and `template_test.go` for tips on adding new endpoints.
 ### OAuth Clients
 
 - `/account/oauth-clients`
-  - [ ] `GET`
-  - [ ] `POST`
+  - [X] `GET`
+  - [X] `POST`
 - `/account/oauth-clients/$id`
-  - [ ] `GET`
-  - [ ] `PUT`
-  - [ ] `DELETE`
+  - [X] `GET`
+  - [X] `PUT`
+  - [X] `DELETE`
 - `/account/oauth-clients/$id/reset_secret`
   - [ ] `POST`
 - `/account/oauth-clients/$id/thumbnail`

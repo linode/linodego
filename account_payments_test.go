@@ -12,7 +12,7 @@ func TestGetPayment_missing(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestGetPayment_missing")
 	defer teardown()
 
-	i, err := client.GetPayment(context.Background(), "does-not-exist")
+	i, err := client.GetPayment(context.Background(), -1)
 	if err == nil {
 		t.Errorf("should have received an error requesting a missing payment, got %v", i)
 	}
@@ -27,14 +27,26 @@ func TestGetPayment_missing(t *testing.T) {
 }
 
 func TestGetPayment_found(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestGetPayment_found")
+	client, teardown := createTestClient(t, "fixtures/TestListPayments")
 	defer teardown()
 
-	i, err := client.GetPayment(context.Background(), "linode/ubuntu16.04lts")
+	p, err := client.ListPayments(context.Background(), nil)
+
+	if err != nil {
+		t.Errorf("Error listing payments, expected struct, got error %v", err)
+	}
+	if len(p) == 0 {
+		t.Errorf("Expected a list of payments, but got none %v", p)
+	}
+
+	client, teardown = createTestClient(t, "fixtures/TestGetPayment_found")
+	defer teardown()
+
+	i, err := client.GetPayment(context.Background(), p[0].ID)
 	if err != nil {
 		t.Errorf("Error getting payment, expected struct, got %v and error %v", i, err)
 	}
-	if i.ID != "linode/ubuntu16.04lts" {
+	if i.ID != p[0].ID {
 		t.Errorf("Expected a specific payment, but got a different one %v", i)
 	}
 }

@@ -1,15 +1,5 @@
 package linodego
 
-/*
- - replace "Payment" with "NameOfResource"
- - replace "payment" with "nameOfResource"
- - copy payment_test.go and do the same
- - When updating Payment structs,
-   - use pointers where ever null'able would have a different meaning if the wrapper
-	 supplied "" or 0 instead
- - Add "NameOfResource" to client.go, resources.go, pagination.go
-*/
-
 import (
 	"context"
 	"encoding/json"
@@ -23,11 +13,11 @@ type Payment struct {
 	ID int `json:"id"`
 
 	// The amount, in US dollars, of the Payment.
-	USD int `json:"usd"`
+	USD json.Number `json:"usd,Number"`
 
 	// When the Payment was made.
-	DateStr string `json:"date"`
-	Date *time.Time `json:"-"`
+	DateStr string     `json:"date"`
+	Date    *time.Time `json:"-"`
 }
 
 // PaymentCreateOptions fields are those accepted by CreatePayment
@@ -36,17 +26,12 @@ type PaymentCreateOptions struct {
 	CVV string `json:"cvv,omitempty"`
 
 	// The amount, in US dollars, of the Payment
-	USD string `json:"usd"`
-}
-
-// PaymentUpdateOptions fields are those accepted by UpdatePayment
-type PaymentUpdateOptions struct {
+	USD json.Number `json:"usd,Number"`
 }
 
 // GetCreateOptions converts a Payment to PaymentCreateOptions for use in CreatePayment
 func (i Payment) GetCreateOptions() (o PaymentCreateOptions) {
-	// o.Label = i.Label
-	// o.Description = copyString(i.Description)
+	o.USD = i.USD
 	return
 }
 
