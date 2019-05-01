@@ -173,6 +173,18 @@ func (c *Client) listHelper(ctx context.Context, i interface{}, opts *ListOption
 			results = r.Result().(*NotificationsPagedResponse).Results
 			v.appendData(r.Result().(*NotificationsPagedResponse))
 		}
+	case *OAuthClientsPagedResponse:
+		if r, err = coupleAPIErrors(req.SetResult(OAuthClientsPagedResponse{}).Get(v.endpoint(c))); err == nil {
+			pages = r.Result().(*OAuthClientsPagedResponse).Pages
+			results = r.Result().(*OAuthClientsPagedResponse).Results
+			v.appendData(r.Result().(*OAuthClientsPagedResponse))
+		}
+	case *PaymentsPagedResponse:
+		if r, err = coupleAPIErrors(req.SetResult(PaymentsPagedResponse{}).Get(v.endpoint(c))); err == nil {
+			pages = r.Result().(*PaymentsPagedResponse).Pages
+			results = r.Result().(*PaymentsPagedResponse).Results
+			v.appendData(r.Result().(*PaymentsPagedResponse))
+		}
 	case *NodeBalancersPagedResponse:
 		if r, err = coupleAPIErrors(req.SetResult(NodeBalancersPagedResponse{}).Get(v.endpoint(c))); err == nil {
 			pages = r.Result().(*NodeBalancersPagedResponse).Pages
@@ -198,8 +210,6 @@ func (c *Client) listHelper(ctx context.Context, i interface{}, opts *ListOption
 			v.appendData(r.Result().(*UsersPagedResponse))
 		}
 	/**
-	case AccountOauthClientsPagedResponse:
-	case AccountPaymentsPagedResponse:
 	case ProfileAppsPagedResponse:
 	case ProfileWhitelistPagedResponse:
 	case ManagedContactsPagedResponse:

@@ -6,6 +6,14 @@
 
 ### Features
 
+* add `GetInstanceStats` and `GetInstanceStatsByDate`
+* add `UpdateInstanceIPAddress`
+* add `GetAccountSettings` and `UpdateAccountSettings`
+* add `CreatePayment` `GetPayment` `ListPayments`
+* add `CreateOAuthClient`, `ListOAuthClients`, `GetOAuthClient`, `UpdateOAuthClient`, `DeleteOAuthClient`
+* switched from `metalinter` to `golangci-lint`
+* switched to `go mod` from `dep`
+
 <a name-"v0.7.1"></a>
 
 ## [v0.7.1](https://github.com/linode/linodego/compare/v0.7.0..v0.7.1) (2018-02-05)
