@@ -43,7 +43,7 @@ poll:
 	// test GetInstanceStatsByDate
 	// No need to poll, since we know that if we get to this point,
 	// the instance is returning stats
-	currentTime := time.Now()
+	currentTime := instance.Created
 	currentYear := currentTime.Year()
 	currentMonth := int(currentTime.Month())
 	_, err = client.GetInstanceStatsByDate(
