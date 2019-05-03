@@ -8,6 +8,7 @@
 
 ### Features
 
+* optimized `WaitForEventFinished` event polling (and deduped its logs)
 * add `GetInstanceStats` and `GetInstanceStatsByDate`
 * add `UpdateInstanceIPAddress`
 * add `GetAccountSettings` and `UpdateAccountSettings`
