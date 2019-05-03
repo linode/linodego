@@ -1,8 +1,10 @@
 # Change Log
 
-## Unreleased
+## [v0.8.0](https://github.com/linode/linodego/compare/v0.7.1..v0.8.0) (2019-05-01)
 
 ### Fixes
+
+* *breaking change* const `ActionTicketReply` is now `ActionTicketUpdate`
 
 ### Features
 
@@ -11,19 +13,23 @@
 * add `GetAccountSettings` and `UpdateAccountSettings`
 * add `CreatePayment` `GetPayment` `ListPayments`
 * add `CreateOAuthClient`, `ListOAuthClients`, `GetOAuthClient`, `UpdateOAuthClient`, `DeleteOAuthClient`
+* added many new `EventAction` constants `ActionAccountUpdate`, `ActionAccountSettingsUpdate`, `ActionCommunityLike`, `ActionDiskUpdate`, `ActionDNSRecordUpdate`, `ActionDNSZoneUpdate`, `ActionHostReboot`, `ActionImageUpdate`, `ActionLassieReboot`, `ActionLinodeUpdate`, `ActionLinodeConfigCreate`, `ActionLinodeConfigDelete`, `ActionLinodeConfigUpdate`, `ActionLongviewClientUpdate`, `ActionNodebalancerUpdate`, `ActionNodebalancerConfigUpdate`, `ActionStackScriptUpdate`, `ActionVolumeUpdate` (API v4.0.17)
+* added `EntityType` constants `EntityDisk`, `EntityDomain`, `EntityNodebalancer` (the Linode API now permits these in ListEvents Filters keyed with `event.id` and `event.type`)
+* added `ActionCommunityLike` `EventAction` constant (API v4.0.11)
+* added `IPv6Range` `Prefix` (API v4.0.11, Only populated for the regional floating pools (`/116`), not the Instance bound ranges (`/64`, `/56`).  See [Additional IPv6 Addresses](https://www.linode.com/docs/networking/an-overview-of-ipv6-on-linode/#additional-ipv6-addresses))
 * switched from `metalinter` to `golangci-lint`
 * switched to `go mod` from `dep`
 
-<a name-"v0.7.1"></a>
+<a name="v0.7.1"></a>
 
-## [v0.7.1](https://github.com/linode/linodego/compare/v0.7.0..v0.7.1) (2018-02-05)
+## [v0.7.1](https://github.com/linode/linodego/compare/v0.7.0..v0.7.1) (2019-02-05)
 
 ### Features
 
 * add `ClassDedicated` constant (`dedicated`) for use in `LinodeType` `Class` values
   See the [Dedicated CPU Announcement](https://blog.linode.com/2019/02/05/introducing-linode-dedicated-cpu-instances/)
 
-<a name-"v0.7.0"></a>
+<a name="v0.7.0"></a>
 
 ## [v0.7.0](https://github.com/linode/linodego/compare/v0.6.2..v0.7.0) (2018-12-03)
 
@@ -36,7 +42,7 @@
 
 * invalid URL for `/v4/networking/` enpoints (IPv6 Ranges and Pools) has been correcrted
 
-<a name-"v0.6.2"></a>
+<a name="v0.6.2"></a>
 
 ## [v0.6.2](https://github.com/linode/linodego/compare/v0.6.1..v0.6.2) (2018-10-26)
 
@@ -44,14 +50,14 @@
 
 * add missing `Account` fields: `address_1`, `address_2`, `phone`
 
-<a name-"v0.6.1"></a>
+<a name="v0.6.1"></a>
 ## [v0.6.1](https://github.com/linode/linodego/compare/v0.6.0..v0.6.1) (2018-10-26)
 
 ### Features
 
 * Adds support for fetching and updating basic Profile information
 
-<a name-"v0.6.0"></a>
+<a name="v0.6.0"></a>
 ## [v0.6.0](https://github.com/linode/linodego/compare/v0.5.1..v0.6.0) (2018-10-25)
 
 ### Fixes
