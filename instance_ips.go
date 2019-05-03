@@ -43,6 +43,7 @@ type InstanceIPv6Response struct {
 type IPv6Range struct {
 	Range  string `json:"range"`
 	Region string `json:"region"`
+	Prefix int    `json:"prefix"`
 }
 
 // GetInstanceIPAddresses gets the IPAddresses for a Linode instance

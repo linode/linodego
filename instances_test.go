@@ -235,7 +235,9 @@ func TestListInstanceVolumes(t *testing.T) {
 }
 
 func setupInstance(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.Instance, func(), error) {
-	t.Helper()
+	if t != nil {
+		t.Helper()
+	}
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	falseBool := false
 	createOpts := linodego.InstanceCreateOptions{
@@ -253,7 +255,9 @@ func setupInstance(t *testing.T, fixturesYaml string) (*linodego.Client, *linode
 
 	teardown := func() {
 		if err := client.DeleteInstance(context.Background(), instance.ID); err != nil {
-			t.Errorf("Error deleting test Instance: %s", err)
+			if t != nil {
+				t.Errorf("Error deleting test Instance: %s", err)
+			}
 		}
 		fixtureTeardown()
 	}
