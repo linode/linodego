@@ -1,10 +1,13 @@
 # Change Log
 
+## Unreleased
+
 ## [v0.8.0](https://github.com/linode/linodego/compare/v0.7.1..v0.8.0) (2019-05-01)
 
 ### Fixes
 
 * *breaking change* const `ActionTicketReply` is now `ActionTicketUpdate`
+* *breaking change* `InstanceIP` `Type` values are now represented by `InstanceIPType` string constants
 
 ### Features
 
@@ -18,6 +21,8 @@
 * added `EntityType` constants `EntityDisk`, `EntityDomain`, `EntityNodebalancer` (the Linode API now permits these in ListEvents Filters keyed with `event.id` and `event.type`)
 * added `ActionCommunityLike` `EventAction` constant (API v4.0.11)
 * added `IPv6Range` `Prefix` (API v4.0.11, Only populated for the regional floating pools (`/116`), not the Instance bound ranges (`/64`, `/56`).  See [Additional IPv6 Addresses](https://www.linode.com/docs/networking/an-overview-of-ipv6-on-linode/#additional-ipv6-addresses))
+* added `LogoURL` and `Ordinal` to `Stackscript` (API v4.0.20)
+* added `Reserved` to `InstanceIPv4Response` (API v4.0.20, when present, indicates IP addresses that will be available after a cross region migration)
 * switched from `metalinter` to `golangci-lint`
 * switched to `go mod` from `dep`
 
