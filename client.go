@@ -15,6 +15,8 @@ import (
 const (
 	// APIHost Linode API hostname
 	APIHost = "api.linode.com"
+	// APIHostVar environment var to check for alternate API URL
+	APIHostVar = "LINODE_URL"
 	// APIVersion Linode API version
 	APIVersion = "v4"
 	// APIProto connect to API with http(s)
@@ -148,7 +150,12 @@ func NewClient(hc *http.Client) (client Client) {
 	restyClient := resty.NewWithClient(hc)
 	client.resty = restyClient
 	client.SetUserAgent(DefaultUserAgent)
-	client.SetBaseURL(fmt.Sprintf("%s://%s/%s", APIProto, APIHost, APIVersion))
+	baseURL, baseURLExists := os.LookupEnv(APIHostVar)
+	if baseURLExists {
+		client.SetBaseURL(baseURL)
+	} else {
+		client.SetBaseURL(fmt.Sprintf("%s://%s/%s", APIProto, APIHost, APIVersion))
+	}
 	client.SetPollDelay(1000 * APISecondsPerPoll)
 
 	resources := map[string]*Resource{
