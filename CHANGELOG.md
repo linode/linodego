@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+## [v0.8.1](https://github.com/linode/linodego/compare/v0.8.0..v0.8.1) (2019-05-17)
+
+### Features
+
+* add `LINODE_URL` environment variable
+
 ## [v0.8.0](https://github.com/linode/linodego/compare/v0.7.1..v0.8.0) (2019-05-01)
 
 ### Fixes
