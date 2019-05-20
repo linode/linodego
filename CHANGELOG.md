@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-## [v0.8.1](https://github.com/linode/linodego/compare/v0.8.0..v0.8.1) (2019-05-17)
+## [v0.8.1](https://github.com/linode/linodego/compare/v0.8.0..v0.8.1) (2019-05-20)
 
 ### Features
 
