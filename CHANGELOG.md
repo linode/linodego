@@ -1,6 +1,19 @@
 # Change Log
 
-## Unreleased
+## Unreleased (Unknown)
+
+## [v0.9.0](https://github.com/linode/linodego/compare/v0.8.1..v0.9.0) (Unknown)
+
+### Breaking Changes
+
+* `ResizeInstance` now takes `ResizeInstanceOptions` to support `AllowAutoDiskResize` (API v4.0.23)
+* `ResizeInstanceOptions` renamed to `InstanceResizeOptions` to fit convention
+* `RescueInstanceOptions` renamed to `InstanceRescueOptions` to fit convention
+
+### Features
+
+* Adds new `EventAction` constants: `ActionLinodeMutateCreate`, `ActionLinodeResizeCreate`, `ActionLishBoot` (API v4.0.23)
+* Adds `GetInstanceTransfer` which returns an `InstanceTransfer` (API v4.0.23)
 
 ## [v0.8.1](https://github.com/linode/linodego/compare/v0.8.0..v0.8.1) (2019-05-20)
 
