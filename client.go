@@ -17,6 +17,8 @@ const (
 	APIHost = "api.linode.com"
 	// APIHostVar environment var to check for alternate API URL
 	APIHostVar = "LINODE_URL"
+	// APIHostCert environment var containing path to CA cert to validate against
+	APIHostCert = "LINODE_CA"
 	// APIVersion Linode API version
 	APIVersion = "v4"
 	// APIProto connect to API with http(s)
@@ -129,6 +131,11 @@ func (c *Client) SetBaseURL(url string) *Client {
 	return c
 }
 
+func (c *Client) SetRootCertificate(path string) *Client {
+	c.resty.SetRootCertificate(path)
+	return c
+}
+
 // SetPollDelay sets the number of milliseconds to wait between events or status polls.
 // Affects all WaitFor* functions.
 func (c *Client) SetPollDelay(delay time.Duration) *Client {
@@ -155,6 +162,10 @@ func NewClient(hc *http.Client) (client Client) {
 		client.SetBaseURL(baseURL)
 	} else {
 		client.SetBaseURL(fmt.Sprintf("%s://%s/%s", APIProto, APIHost, APIVersion))
+	}
+	certPath, certPathExists := os.LookupEnv(APIHostCert)
+	if certPathExists {
+		client.SetRootCertificate(certPath)
 	}
 	client.SetPollDelay(1000 * APISecondsPerPoll)
 
