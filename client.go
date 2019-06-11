@@ -3,6 +3,7 @@ package linodego
 import (
 	"context"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -165,7 +166,14 @@ func NewClient(hc *http.Client) (client Client) {
 	}
 	certPath, certPathExists := os.LookupEnv(APIHostCert)
 	if certPathExists {
+		cert, err := ioutil.ReadFile(certPath)
+		if err != nil {
+			log.Fatalf("[ERROR] Error when reading cert at %s: %s\n", certPath, err.Error())
+		}
 		client.SetRootCertificate(certPath)
+		if envDebug {
+			log.Printf("[DEBUG] Set API root certificate to %s with contents %s\n", certPath, cert)
+		}
 	}
 	client.SetPollDelay(1000 * APISecondsPerPoll)
 
