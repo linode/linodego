@@ -156,7 +156,7 @@ type InstanceResizeOptions struct {
 	Type string `json:"type"`
 
 	// When enabled, an instance resize will also resize a data disk if the instance has no more than one data disk and one swap disk
-	AllowAutoDiskResize bool `json:allow_auto_disk_resize,omitempty"`
+	AllowAutoDiskResize bool `json:"allow_auto_disk_resize,omitempty"`
 }
 
 func (l *Instance) fixDates() *Instance {
