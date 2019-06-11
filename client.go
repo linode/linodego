@@ -137,6 +137,13 @@ func (c *Client) SetRootCertificate(path string) *Client {
 	return c
 }
 
+// SetToken sets the API token for all requests from this client
+// Only necessary if you haven't already provided an http client to NewClient() configured with the token.
+func (c *Client) SetToken(token string) *Client {
+	c.resty.SetHeader("Authorization", fmt.Sprintf("Bearer %s", token))
+	return c
+}
+
 // SetPollDelay sets the number of milliseconds to wait between events or status polls.
 // Affects all WaitFor* functions.
 func (c *Client) SetPollDelay(delay time.Duration) *Client {
@@ -155,8 +162,11 @@ func (c Client) Resource(resourceName string) *Resource {
 
 // NewClient factory to create new Client struct
 func NewClient(hc *http.Client) (client Client) {
-	restyClient := resty.NewWithClient(hc)
-	client.resty = restyClient
+	if hc != nil {
+		client.resty = resty.NewWithClient(hc)
+	} else {
+		client.resty = resty.New()
+	}
 	client.SetUserAgent(DefaultUserAgent)
 	baseURL, baseURLExists := os.LookupEnv(APIHostVar)
 	if baseURLExists {
