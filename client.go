@@ -3,6 +3,7 @@ package linodego
 import (
 	"context"
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -17,6 +18,8 @@ const (
 	APIHost = "api.linode.com"
 	// APIHostVar environment var to check for alternate API URL
 	APIHostVar = "LINODE_URL"
+	// APIHostCert environment var containing path to CA cert to validate against
+	APIHostCert = "LINODE_CA"
 	// APIVersion Linode API version
 	APIVersion = "v4"
 	// APIProto connect to API with http(s)
@@ -129,6 +132,18 @@ func (c *Client) SetBaseURL(url string) *Client {
 	return c
 }
 
+func (c *Client) SetRootCertificate(path string) *Client {
+	c.resty.SetRootCertificate(path)
+	return c
+}
+
+// SetToken sets the API token for all requests from this client
+// Only necessary if you haven't already provided an http client to NewClient() configured with the token.
+func (c *Client) SetToken(token string) *Client {
+	c.resty.SetHeader("Authorization", fmt.Sprintf("Bearer %s", token))
+	return c
+}
+
 // SetPollDelay sets the number of milliseconds to wait between events or status polls.
 // Affects all WaitFor* functions.
 func (c *Client) SetPollDelay(delay time.Duration) *Client {
@@ -147,14 +162,28 @@ func (c Client) Resource(resourceName string) *Resource {
 
 // NewClient factory to create new Client struct
 func NewClient(hc *http.Client) (client Client) {
-	restyClient := resty.NewWithClient(hc)
-	client.resty = restyClient
+	if hc != nil {
+		client.resty = resty.NewWithClient(hc)
+	} else {
+		client.resty = resty.New()
+	}
 	client.SetUserAgent(DefaultUserAgent)
 	baseURL, baseURLExists := os.LookupEnv(APIHostVar)
 	if baseURLExists {
 		client.SetBaseURL(baseURL)
 	} else {
 		client.SetBaseURL(fmt.Sprintf("%s://%s/%s", APIProto, APIHost, APIVersion))
+	}
+	certPath, certPathExists := os.LookupEnv(APIHostCert)
+	if certPathExists {
+		cert, err := ioutil.ReadFile(certPath)
+		if err != nil {
+			log.Fatalf("[ERROR] Error when reading cert at %s: %s\n", certPath, err.Error())
+		}
+		client.SetRootCertificate(certPath)
+		if envDebug {
+			log.Printf("[DEBUG] Set API root certificate to %s with contents %s\n", certPath, cert)
+		}
 	}
 	client.SetPollDelay(1000 * APISecondsPerPoll)
 
