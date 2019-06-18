@@ -1,8 +1,17 @@
 # Change Log
 
-## Unreleased (Unknown)
+## [v0.9.1](https://github.com/linode/linodego/compare/v0.9.0..v0.9.1) (2019-06-18)
 
-## [v0.9.0](https://github.com/linode/linodego/compare/v0.8.1..v0.9.0) (Unknown)
+### Fixes
+
+* Fix the json struct tag for the AllowAutoDiskResize flag on Linodes
+
+### Features
+
+* Support alternative root CA certificates with `Client.SetRooteCertificate`
+* Support setting a client's API token with `Client.SetToken`
+
+## [v0.9.0](https://github.com/linode/linodego/compare/v0.8.1..v0.9.0) (2019-05-24)
 
 ### Breaking Changes
 
