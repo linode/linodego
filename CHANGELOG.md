@@ -1,8 +1,14 @@
 # Change Log
 
+## [v0.10.0](https://github.com/linode/linodego/compare/v0.9.2..v0.10.0) (2019-06-25)
+
+### Breaking Changes
+
+* Change to `AllowAutoDiskResize` to `*bool` is a breaking change, so bump minor version.
+
 ## [v0.9.2](https://github.com/linode/linodego/compare/v0.9.1..v0.9.2) (2019-06-25)
 
-### Fixes
+### Breaking Changes
 
 * `AllowAutoDiskResize` on `InstanceResizeOptions` is now a pointer, allowing it to be set to false.
 
