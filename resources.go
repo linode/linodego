@@ -49,6 +49,7 @@ const (
 	tagsName                  = "tags"
 	usersName                 = "users"
 	paymentsName              = "payments"
+	clustersName              = "clusters"
 
 	stackscriptsEndpoint          = "linode/stackscripts"
 	imagesEndpoint                = "images"
@@ -93,6 +94,7 @@ const (
 	notificationsEndpoint       = "account/notifications"
 	oauthClientsEndpoint        = "account/oauth-clients"
 	paymentsEndpoint            = "account/payments"
+	clustersEndpoint            = "object-storage/clusters"
 )
 
 // Resource represents a linode API resource
