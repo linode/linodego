@@ -89,6 +89,7 @@ type Client struct {
 	Types                 *Resource
 	Users                 *Resource
 	Volumes               *Resource
+	Clusters              *Resource
 }
 
 func init() {
@@ -247,6 +248,7 @@ func addResources(client *Client) {
 		typesName:                 NewResource(client, typesName, typesEndpoint, false, LinodeType{}, LinodeTypesPagedResponse{}),
 		usersName:                 NewResource(client, usersName, usersEndpoint, false, User{}, UsersPagedResponse{}),
 		volumesName:               NewResource(client, volumesName, volumesEndpoint, false, Volume{}, VolumesPagedResponse{}),
+		clustersName:              NewResource(client, clustersName, clustersEndpoint, false, Cluster{}, ClustersPagedResponse{}),
 	}
 
 	client.resources = resources
@@ -287,6 +289,7 @@ func addResources(client *Client) {
 	client.Types = resources[typesName]
 	client.Users = resources[usersName]
 	client.Volumes = resources[volumesName]
+	client.Clusters = resources[clustersName]
 }
 
 func copyBool(bPtr *bool) *bool {

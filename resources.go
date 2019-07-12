@@ -49,6 +49,7 @@ const (
 	typesName                 = "types"
 	usersName                 = "users"
 	volumesName               = "volumes"
+	clustersName              = "clusters"
 
 	accountEndpoint               = "account"
 	accountSettingsEndpoint       = "account/settings"
@@ -93,6 +94,7 @@ const (
 	typesEndpoint               = "linode/types"
 	usersEndpoint               = "account/users"
 	volumesEndpoint             = "volumes"
+	clustersEndpoint            = "object-storage/clusters"
 )
 
 // Resource represents a linode API resource

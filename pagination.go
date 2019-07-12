@@ -210,6 +210,12 @@ func (c *Client) listHelper(ctx context.Context, i interface{}, opts *ListOption
 			results = r.Result().(*UsersPagedResponse).Results
 			v.appendData(r.Result().(*UsersPagedResponse))
 		}
+	case *ClustersPagedResponse:
+		if r, err = coupleAPIErrors(req.SetResult(ClustersPagedResponse{}).Get(v.endpoint(c))); err == nil {
+			pages = r.Result().(*ClustersPagedResponse).Pages
+			results = r.Result().(*ClustersPagedResponse).Results
+			v.appendData(r.Result().(*ClustersPagedResponse))
+		}
 	/**
 	case ProfileAppsPagedResponse:
 	case ProfileWhitelistPagedResponse:
