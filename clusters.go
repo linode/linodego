@@ -7,11 +7,11 @@ import (
 
 // Cluster represents a linode cluster object
 type Cluster struct {
-	ID      			string `json:"id"`
-	Domain  			string `json:"domain"`
-	Status  			string `json:"status"`
-	Region 				string `json:"region"`
-	StaticSiteDomain	string `json:"static_site_domain"`
+	ID                  string `json:"id"`
+	Domain              string `json:"domain"`
+	Status              string `json:"status"`
+	Region              string `json:"region"`
+	StaticSiteDomain    string `json:"static_site_domain"`
 }
 
 // ClustersPagedResponse represents a linode API response for listing
