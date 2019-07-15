@@ -90,6 +90,7 @@ type Client struct {
 	Users                 *Resource
 	Volumes               *Resource
 	Clusters              *Resource
+	ObjKeys               *Resource
 }
 
 func init() {
@@ -249,6 +250,7 @@ func addResources(client *Client) {
 		usersName:                 NewResource(client, usersName, usersEndpoint, false, User{}, UsersPagedResponse{}),
 		volumesName:               NewResource(client, volumesName, volumesEndpoint, false, Volume{}, VolumesPagedResponse{}),
 		clustersName:              NewResource(client, clustersName, clustersEndpoint, false, Cluster{}, ClustersPagedResponse{}),
+		objkeysName:               NewResource(client, objkeysName, objkeysEndpoint, false, ObjKey{}, ObjKeysPagedResponse{}),
 	}
 
 	client.resources = resources
@@ -290,6 +292,7 @@ func addResources(client *Client) {
 	client.Users = resources[usersName]
 	client.Volumes = resources[volumesName]
 	client.Clusters = resources[clustersName]
+	client.ObjKeys = resources[objkeysName]
 }
 
 func copyBool(bPtr *bool) *bool {
