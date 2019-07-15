@@ -124,6 +124,19 @@ func (c *Client) UpdateObjKey(ctx context.Context, id int, updateOpts ObjKeyUpda
 	return r.Result().(*ObjKey).fixDates(), nil
 }
 
+// DeleteObjKey deletes the objkey with the specified id
+func (c *Client) DeleteObjKey(ctx context.Context, id int) error {
+	e, err := c.ObjKeys.Endpoint()
+	if err != nil {
+		return err
+	}
+	e = fmt.Sprintf("%s/%d", e, id)
+
+	_, err = coupleAPIErrors(c.R(ctx).Delete(e))
+	return err
+
+}
+
 // fixDates converts JSON timestamps to Go time.Time values
 func (v *ObjKey) fixDates() *ObjKey {
 	return v
