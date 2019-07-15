@@ -2,6 +2,7 @@ package linodego
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 )
 
@@ -11,6 +12,11 @@ type ObjKey struct {
 	Label     string `json:"label"`
 	AccessKey string `json:"access_key"`
 	SecretKey string `json:"secret_key"`
+}
+
+// ObjKeyCreateOptions fields are those accepted by CreateObjKey
+type ObjKeyCreateOptions struct {
+	Label string `json:"label"`
 }
 
 // ObjKeysPagedResponse represents a linode API response for listing
@@ -44,6 +50,32 @@ func (c *Client) ListObjKeys(ctx context.Context, opts *ListOptions) ([]ObjKey, 
 		return nil, err
 	}
 	return response.Data, nil
+}
+
+// CreateObjKey creates a ObjKey
+func (c *Client) CreateObjKey(ctx context.Context, createOpts ObjKeyCreateOptions) (*ObjKey, error) {
+	var body string
+	e, err := c.ObjKeys.Endpoint()
+	if err != nil {
+		return nil, err
+	}
+
+	req := c.R(ctx).SetResult(&ObjKey{})
+
+	if bodyData, err := json.Marshal(createOpts); err == nil {
+		body = string(bodyData)
+	} else {
+		return nil, NewError(err)
+	}
+
+	r, err := coupleAPIErrors(req.
+		SetBody(body).
+		Post(e))
+
+	if err != nil {
+		return nil, err
+	}
+	return r.Result().(*ObjKey).fixDates(), nil
 }
 
 // fixDates converts JSON timestamps to Go time.Time values
