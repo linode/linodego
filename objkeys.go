@@ -19,6 +19,11 @@ type ObjKeyCreateOptions struct {
 	Label string `json:"label"`
 }
 
+// ObjKeyUpdateOptions fields are those accepted by UpdateObjKey
+type ObjKeyUpdateOptions struct {
+	Label string `json:"label"`
+}
+
 // ObjKeysPagedResponse represents a linode API response for listing
 type ObjKeysPagedResponse struct {
 	*PageOptions
@@ -78,21 +83,48 @@ func (c *Client) CreateObjKey(ctx context.Context, createOpts ObjKeyCreateOption
 	return r.Result().(*ObjKey).fixDates(), nil
 }
 
-// fixDates converts JSON timestamps to Go time.Time values
-func (v *ObjKey) fixDates() *ObjKey {
-	return v
-}
-
-// GetObjKey gets the template with the provided ID
-func (c *Client) GetObjKey(ctx context.Context, id string) (*ObjKey, error) {
+// GetObjKey gets the objkey with the provided ID
+func (c *Client) GetObjKey(ctx context.Context, id int) (*ObjKey, error) {
 	e, err := c.ObjKeys.Endpoint()
 	if err != nil {
 		return nil, err
 	}
-	e = fmt.Sprintf("%s/%s", e, id)
+	e = fmt.Sprintf("%s/%d", e, id)
 	r, err := coupleAPIErrors(c.R(ctx).SetResult(&ObjKey{}).Get(e))
 	if err != nil {
 		return nil, err
 	}
 	return r.Result().(*ObjKey).fixDates(), nil
+}
+
+// UpdateObjKey updates the objkey with the specified id
+func (c *Client) UpdateObjKey(ctx context.Context, id int, updateOpts ObjKeyUpdateOptions) (*ObjKey, error) {
+	var body string
+	e, err := c.ObjKeys.Endpoint()
+	if err != nil {
+		return nil, err
+	}
+	e = fmt.Sprintf("%s/%d", e, id)
+
+	req := c.R(ctx).SetResult(&ObjKey{})
+
+	if bodyData, err := json.Marshal(updateOpts); err == nil {
+		body = string(bodyData)
+	} else {
+		return nil, NewError(err)
+	}
+
+	r, err := coupleAPIErrors(req.
+		SetBody(body).
+		Put(e))
+
+	if err != nil {
+		return nil, err
+	}
+	return r.Result().(*ObjKey).fixDates(), nil
+}
+
+// fixDates converts JSON timestamps to Go time.Time values
+func (v *ObjKey) fixDates() *ObjKey {
+	return v
 }
