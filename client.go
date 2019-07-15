@@ -21,7 +21,7 @@ const (
 	// APIHostCert environment var containing path to CA cert to validate against
 	APIHostCert = "LINODE_CA"
 	// APIVersion Linode API version
-	APIVersion = "v4beta"
+	APIVersion = "v4"
 	// APIProto connect to API with http(s)
 	APIProto = "https"
 	// Version of linodego
