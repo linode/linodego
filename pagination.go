@@ -216,7 +216,6 @@ func (c *Client) listHelper(ctx context.Context, i interface{}, opts *ListOption
 			v.appendData(r.Result().(*ClustersPagedResponse))
 		}
 	case *ObjKeysPagedResponse:
-		fmt.Printf("Going")
 		if r, err = coupleAPIErrors(req.SetResult(ObjKeysPagedResponse{}).Get(v.endpoint(c))); err == nil {
 			pages = r.Result().(*ObjKeysPagedResponse).Pages
 			results = r.Result().(*ObjKeysPagedResponse).Results

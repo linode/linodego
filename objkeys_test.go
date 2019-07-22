@@ -2,14 +2,14 @@ package linodego_test
 
 import (
 	"context"
-	"strings"
 	. "github.com/linode/linodego"
+	"strings"
 	"testing"
 )
 
 var (
 	testObjKeyCreateOpts = ObjKeyCreateOptions{
-		Label:  label,
+		Label: label,
 	}
 )
 

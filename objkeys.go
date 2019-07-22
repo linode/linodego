@@ -2,26 +2,26 @@ package linodego
 
 import (
 	"context"
-	"fmt"
 	"encoding/json"
+	"fmt"
 )
 
 // ObjKeys represents a linode object storage key object
 type ObjKey struct {
-	ID                  int    `json:"id"`
-	Label               string `json:"label"`
-	AccessKey           string `json:"access_key"`
-	SecretKey           string `json:"secret_key"`
+	ID        int    `json:"id"`
+	Label     string `json:"label"`
+	AccessKey string `json:"access_key"`
+	SecretKey string `json:"secret_key"`
 }
 
 // ObjKeyCreateOptions fields are those accepted by CreateObjKey
 type ObjKeyCreateOptions struct {
-	Label  string `json:"label"`
+	Label string `json:"label"`
 }
 
 // ObjKeyUpdateOptions fields are those accepted by UpdateObjKey
 type ObjKeyUpdateOptions struct {
-	Label  string `json:"label"`
+	Label string `json:"label"`
 }
 
 // ObjKeysPagedResponse represents a linode API response for listing
