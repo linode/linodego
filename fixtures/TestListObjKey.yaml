@@ -1,0 +1,221 @@
+---
+version: 1
+interactions:
+- request:
+    body: '{"label":"lpq6h62z88m4-linodego-testing"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer awesometokenawesometokenawesometoken
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego 0.10.0 https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/keys
+    method: POST
+  response:
+    body: '{"label": "lpq6h62z88m4-linodego-testing", "id": 346, "secret_key": "[REDACTED]",
+      "access_key": "[REDACTED]"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "149"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 22 Jul 2019 19:41:41 GMT
+      Retry-After:
+      - "49"
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Ratelimit-Remaining:
+      - "398"
+      X-Ratelimit-Reset:
+      - "1563824484"
+      X-Spec-Version:
+      - 4.2.3
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer awesometokenawesometokenawesometoken
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego 0.10.0 https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/keys
+    method: GET
+  response:
+    body: '{"pages": 1, "results": 6, "page": 1, "data": [{"label": "primary", "id":
+      183, "access_key": "[REDACTED]", "secret_key": "[REDACTED]"}, {"label":
+      "some label", "id": 272, "access_key": "[REDACTED]", "secret_key":
+      "[REDACTED]"}, {"label": "some label", "id": 273, "access_key": "[REDACTED]",
+      "secret_key": "[REDACTED]"}, {"label": "[REDACTED]", "id": 275, "access_key":
+      "[REDACTED]", "secret_key": "[REDACTED]"}, {"label": "sauber2", "id":
+      276, "access_key": "[READACTED]", "secret_key": "[REDACTED]"}, {"label":
+      "lpq6h62z88m4-linodego-testing", "id": 346, "access_key": "[REDACTED]",
+      "secret_key": "[REDACTED]"}]}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "672"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 22 Jul 2019 19:41:41 GMT
+      Retry-After:
+      - "119"
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Ratelimit-Remaining:
+      - "399"
+      X-Ratelimit-Reset:
+      - "1563824554"
+      X-Spec-Version:
+      - 4.2.3
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Authorization:
+      - Bearer awesometokenawesometokenawesometoken
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego 0.10.0 https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/keys/346
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Date:
+      - Mon, 22 Jul 2019 19:41:42 GMT
+      Retry-After:
+      - "87"
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Ratelimit-Remaining:
+      - "398"
+      X-Ratelimit-Reset:
+      - "1563824523"
+      X-Spec-Version:
+      - 4.2.3
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""

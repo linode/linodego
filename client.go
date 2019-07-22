@@ -31,7 +31,7 @@ const (
 	// APISecondsPerPoll how frequently to poll for new Events or Status in WaitFor functions
 	APISecondsPerPoll = 3
 	// DefaultUserAgent is the default User-Agent sent in HTTP request headers
-	DefaultUserAgent = "linodego " + Version + " https://github.com/ellisbenjamin/linodego"
+	DefaultUserAgent = "linodego " + Version + " https://github.com/linode/linodego"
 )
 
 var (
