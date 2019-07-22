@@ -97,7 +97,6 @@ const (
 	paymentsEndpoint            = "account/payments"
 	clustersEndpoint            = "object-storage/clusters"
 	objkeysEndpoint             = "object-storage/keys"
-
 )
 
 // Resource represents a linode API resource
