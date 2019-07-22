@@ -87,6 +87,8 @@ type Client struct {
 	Tags                  *Resource
 	Users                 *Resource
 	Payments              *Resource
+	Clusters              *Resource
+	ObjKeys               *Resource
 }
 
 func init() {
@@ -227,6 +229,8 @@ func NewClient(hc *http.Client) (client Client) {
 		tagsName:                  NewResource(&client, tagsName, tagsEndpoint, false, Tag{}, TagsPagedResponse{}),
 		usersName:                 NewResource(&client, usersName, usersEndpoint, false, User{}, UsersPagedResponse{}),
 		paymentsName:              NewResource(&client, paymentsName, paymentsEndpoint, false, Payment{}, PaymentsPagedResponse{}),
+		clustersName:              NewResource(&client, clustersName, clustersEndpoint, false, Cluster{}, ClustersPagedResponse{}),
+		objkeysName:               NewResource(&client, objkeysName, objkeysEndpoint, false, ObjKey{}, ObjKeysPagedResponse{}),
 	}
 
 	client.resources = resources
@@ -268,6 +272,8 @@ func NewClient(hc *http.Client) (client Client) {
 	client.Tags = resources[tagsName]
 	client.Users = resources[usersName]
 	client.Payments = resources[paymentsName]
+	client.Clusters = resources[clustersName]
+	client.ObjKeys = resources[objkeysName]
 	return
 }
 
