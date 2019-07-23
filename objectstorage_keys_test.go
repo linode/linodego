@@ -80,21 +80,28 @@ func TestListObjectStorageKeys(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode.")
 	}
-	client, objkey, teardown, err := setupObjKey(t, "fixtures/TestListObjectStorageKey")
+	client, objkey, teardown, err := setupObjectStorageKey(t, "fixtures/TestListObjectStorageKey")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
 	}
-
-	objkeys, err := client.ListObjectStorageKeys(context.Background(), nil)
+	objectStorageKeys, err := client.ListObjectStorageKeys(context.Background(), nil)
 	if err != nil {
-		t.Errorf("Error listing objectStorageKey, expected struct, got error %v", err)
+		t.Errorf("Error listing objectStorageKeys, expected struct, got error %v", err)
 	}
-	if len(objectStorageKey) == 0 {
-		t.Errorf("Expected a list of objectStorageKey, but got %v", objectStorageKey)
+	if len(objectStorageKeys) == 0 {
+		t.Errorf("Expected a list of objectStorageKeys, but got %v", objectStorageKeys)
 	}
-	if !strings.Contains(objectStorageKey.Label, "-linodego-testing") {
-		t.Errorf("objectStorageKey returned does not match objectStorageKey update request")
+
+	notFound := true
+	for i := range objectStorageKeys {
+		if objectStorageKeys[i].Label == objkey.Label {
+			notFound = false
+			break
+		}
+	}
+	if notFound {
+		t.Errorf("Expected to find created objectStorageKey, but '%s' was not found", objkey.Label)
 	}
 }
 

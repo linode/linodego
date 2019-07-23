@@ -210,17 +210,17 @@ func (c *Client) listHelper(ctx context.Context, i interface{}, opts *ListOption
 			results = r.Result().(*UsersPagedResponse).Results
 			v.appendData(r.Result().(*UsersPagedResponse))
 		}
-	case *ClustersPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(ClustersPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*ClustersPagedResponse).Pages
-			results = r.Result().(*ClustersPagedResponse).Results
-			v.appendData(r.Result().(*ClustersPagedResponse))
+	case *ObjectStorageClustersPagedResponse:
+		if r, err = coupleAPIErrors(req.SetResult(ObjectStorageClustersPagedResponse{}).Get(v.endpoint(c))); err == nil {
+			pages = r.Result().(*ObjectStorageClustersPagedResponse).Pages
+			results = r.Result().(*ObjectStorageClustersPagedResponse).Results
+			v.appendData(r.Result().(*ObjectStorageClustersPagedResponse))
 		}
-	case *ObjKeysPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(ObjKeysPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*ObjKeysPagedResponse).Pages
-			results = r.Result().(*ObjKeysPagedResponse).Results
-			v.appendData(r.Result().(*ObjKeysPagedResponse))
+	case *ObjectStorageKeysPagedResponse:
+		if r, err = coupleAPIErrors(req.SetResult(ObjectStorageKeysPagedResponse{}).Get(v.endpoint(c))); err == nil {
+			pages = r.Result().(*ObjectStorageKeysPagedResponse).Pages
+			results = r.Result().(*ObjectStorageKeysPagedResponse).Results
+			v.appendData(r.Result().(*ObjectStorageKeysPagedResponse))
 		}
 	/**
 	case ProfileAppsPagedResponse:
