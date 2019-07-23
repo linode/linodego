@@ -281,6 +281,22 @@ See `template.go` and `template_test.go` for tips on adding new endpoints.
   - [ ] `GET`
   - [ ] `PUT`
 
+### Object Storage Keys
+
+- `/object-storage/keys`
+  - [X] `GET`
+  - [X] `POST`
+- `/object-storage/keys/$id`
+  - [X] `GET`
+  - [X] `PUT`
+  - [X] `DELETE`
+
+### Object Storage Clusters
+- `/object-storage/clusters`
+  - [X] `GET`
+- `/object-storage/clusters/$id`
+  - [X] `GET`
+
 ### Payments
 
 - `/account/payments`

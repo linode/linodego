@@ -10,6 +10,7 @@ package linodego
    - use pointers where ever null'able would have a different meaning if the wrapper
 	 supplied "" or 0 instead
  - Add "NameOfResource" to client.go, resources.go, pagination.go
+ - Update API_SUPPORT.md to reflect newly accessible endpoints
 */
 
 import (
