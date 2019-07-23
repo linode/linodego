@@ -89,8 +89,8 @@ type Client struct {
 	Types                 *Resource
 	Users                 *Resource
 	Volumes               *Resource
-	Clusters              *Resource
-	ObjKeys               *Resource
+	ObjectStorageClusters *Resource
+	ObjectStorageKeys     *Resource
 }
 
 func init() {
@@ -249,8 +249,8 @@ func addResources(client *Client) {
 		typesName:                 NewResource(client, typesName, typesEndpoint, false, LinodeType{}, LinodeTypesPagedResponse{}),
 		usersName:                 NewResource(client, usersName, usersEndpoint, false, User{}, UsersPagedResponse{}),
 		volumesName:               NewResource(client, volumesName, volumesEndpoint, false, Volume{}, VolumesPagedResponse{}),
-		clustersName:              NewResource(client, clustersName, clustersEndpoint, false, Cluster{}, ClustersPagedResponse{}),
-		objkeysName:               NewResource(client, objkeysName, objkeysEndpoint, false, ObjKey{}, ObjKeysPagedResponse{}),
+		objectStorageClustersName: NewResource(client, objectStorageClustersName, objectStorageClustersEndpoint, false, ObjectStorageCluster{}, ObjectStorageClustersPagedResponse{}),
+		objectStorageKeysName:     NewResource(client, objectStorageKeysName, objectStorageKeysEndpoint, false, ObjectStorageKey{}, ObjectStorageKeysPagedResponse{}),
 	}
 
 	client.resources = resources
@@ -280,6 +280,8 @@ func addResources(client *Client) {
 	client.NodeBalancers = resources[nodebalancersName]
 	client.Notifications = resources[notificationsName]
 	client.OAuthClients = resources[oauthClientsName]
+	client.ObjectStorageClusters = resources[objectStorageClustersName]
+	client.ObjectStorageKeys = resources[objectStorageKeysName]
 	client.Payments = resources[paymentsName]
 	client.Profile = resources[profileName]
 	client.Regions = resources[regionsName]
@@ -291,8 +293,6 @@ func addResources(client *Client) {
 	client.Types = resources[typesName]
 	client.Users = resources[usersName]
 	client.Volumes = resources[volumesName]
-	client.Clusters = resources[clustersName]
-	client.ObjKeys = resources[objkeysName]
 }
 
 func copyBool(bPtr *bool) *bool {
