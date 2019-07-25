@@ -38,18 +38,10 @@ func (resp *ObjectStorageClustersPagedResponse) appendData(r *ObjectStorageClust
 func (c *Client) ListObjectStorageClusters(ctx context.Context, opts *ListOptions) ([]ObjectStorageCluster, error) {
 	response := ObjectStorageClustersPagedResponse{}
 	err := c.listHelper(ctx, &response, opts)
-	for i := range response.Data {
-		response.Data[i].fixDates()
-	}
 	if err != nil {
 		return nil, err
 	}
 	return response.Data, nil
-}
-
-// fixDates converts JSON timestamps to Go time.Time values
-func (v *ObjectStorageCluster) fixDates() *ObjectStorageCluster {
-	return v
 }
 
 // GetObjectStorageCluster gets the template with the provided ID
@@ -63,5 +55,5 @@ func (c *Client) GetObjectStorageCluster(ctx context.Context, id string) (*Objec
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*ObjectStorageCluster).fixDates(), nil
+	return r.Result().(*ObjectStorageCluster), nil
 }

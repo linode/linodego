@@ -48,9 +48,6 @@ func (resp *ObjectStorageKeysPagedResponse) appendData(r *ObjectStorageKeysPaged
 func (c *Client) ListObjectStorageKeys(ctx context.Context, opts *ListOptions) ([]ObjectStorageKey, error) {
 	response := ObjectStorageKeysPagedResponse{}
 	err := c.listHelper(ctx, &response, opts)
-	for i := range response.Data {
-		response.Data[i].fixDates()
-	}
 	if err != nil {
 		return nil, err
 	}
@@ -80,7 +77,7 @@ func (c *Client) CreateObjectStorageKey(ctx context.Context, createOpts ObjectSt
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*ObjectStorageKey).fixDates(), nil
+	return r.Result().(*ObjectStorageKey), nil
 }
 
 // GetObjectStorageKey gets the object storage key with the provided ID
@@ -94,7 +91,7 @@ func (c *Client) GetObjectStorageKey(ctx context.Context, id int) (*ObjectStorag
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*ObjectStorageKey).fixDates(), nil
+	return r.Result().(*ObjectStorageKey), nil
 }
 
 // UpdateObjKey updates the object storage key with the specified id
@@ -121,7 +118,7 @@ func (c *Client) UpdateObjectStorageKey(ctx context.Context, id int, updateOpts 
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*ObjectStorageKey).fixDates(), nil
+	return r.Result().(*ObjectStorageKey), nil
 }
 
 // DeleteObjectStorageKey deletes the ObjectStorageKey with the specified id
@@ -135,9 +132,4 @@ func (c *Client) DeleteObjectStorageKey(ctx context.Context, id int) error {
 	_, err = coupleAPIErrors(c.R(ctx).Delete(e))
 	return err
 
-}
-
-// fixDates converts JSON timestamps to Go time.Time values
-func (v *ObjectStorageKey) fixDates() *ObjectStorageKey {
-	return v
 }
