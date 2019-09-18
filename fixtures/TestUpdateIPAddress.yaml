@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.6.2 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances
+    url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
     body: '{"group": "", "label": "linodego-test-instance", "created": "2018-01-02T03:04:05",
@@ -90,7 +90,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.6.2 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/11758361/configs
+    url: https://api.linode.com/v4beta/linode/instances/11758361/configs
     method: POST
   response:
     body: '{"helpers": {"distro": true, "updatedb_disabled": true, "modules_dep":
@@ -166,7 +166,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.6.2 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/11758361/ips
+    url: https://api.linode.com/v4beta/linode/instances/11758361/ips
     method: GET
   response:
     body: '{"ipv4": {"public": [{"public": true, "address": "10.20.30.40", "subnet_mask":
@@ -246,7 +246,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.6.2 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/networking/ips/10.20.30.40
+    url: https://api.linode.com/v4beta/networking/ips/10.20.30.40
     method: PUT
   response:
     body: '{"gateway": "10.20.30.40", "prefix": 24, "subnet_mask": "10.20.30.40",
@@ -318,7 +318,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.6.2 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/11758361
+    url: https://api.linode.com/v4beta/linode/instances/11758361
     method: DELETE
   response:
     body: '{}'

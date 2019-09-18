@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.6.2 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances
+    url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
     body: '{"status": "provisioning", "backups": {"schedule": {"window": null, "day":
@@ -90,7 +90,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.6.2 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/11758358/configs
+    url: https://api.linode.com/v4beta/linode/instances/11758358/configs
     method: POST
   response:
     body: '{"created": "2018-01-02T03:04:05", "virt_mode": "paravirt", "kernel": "linode/latest-64bit",
@@ -165,7 +165,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.6.2 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/11758358/ips
+    url: https://api.linode.com/v4beta/linode/instances/11758358/ips
     method: GET
   response:
     body: '{"ipv4": {"shared": [], "private": [], "public": [{"rdns": "li594-78.members.linode.com",
@@ -245,7 +245,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.6.2 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/11758358
+    url: https://api.linode.com/v4beta/linode/instances/11758358
     method: DELETE
   response:
     body: '{}'

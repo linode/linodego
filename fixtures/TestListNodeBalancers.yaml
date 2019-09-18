@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/nodebalancers
+    url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
     body: '{"transfer": {"out": null, "in": null, "total": null}, "hostname": "nb-10-20-30-40.fremont.nodebalancer.linode.com",
@@ -86,7 +86,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/nodebalancers
+    url: https://api.linode.com/v4beta/nodebalancers
     method: GET
   response:
     body: '{"pages": 1, "results": 3, "page": 1, "data": [{"updated": "2018-01-02T03:04:05",
@@ -171,7 +171,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/nodebalancers/37827
+    url: https://api.linode.com/v4beta/nodebalancers/37827
     method: DELETE
   response:
     body: '{}'

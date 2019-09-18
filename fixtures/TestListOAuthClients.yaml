@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.7.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/account/oauth-clients
+    url: https://api.linode.com/v4beta/account/oauth-clients
     method: POST
   response:
     body: '{"thumbnail_url": null, "public": true, "id": "8a1df9a00ada5083f936", "secret":
@@ -84,7 +84,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.7.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/account/oauth-clients
+    url: https://api.linode.com/v4beta/account/oauth-clients
     method: GET
   response:
     body: '{"page": 1, "data": [{"thumbnail_url": null, "public": true, "id": "8a1df9a00ada5083f936",
@@ -157,7 +157,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.7.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/account/oauth-clients/8a1df9a00ada5083f936
+    url: https://api.linode.com/v4beta/account/oauth-clients/8a1df9a00ada5083f936
     method: DELETE
   response:
     body: '{}'

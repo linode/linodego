@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.6.2 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances
+    url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
     body: '{"status": "provisioning", "backups": {"schedule": {"window": null, "day":
@@ -90,7 +90,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.6.2 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/11758356/configs
+    url: https://api.linode.com/v4beta/linode/instances/11758356/configs
     method: POST
   response:
     body: '{"virt_mode": "paravirt", "initrd": null, "id": 12984581, "memory_limit":
@@ -168,7 +168,7 @@ interactions:
       - linodego 0.6.2 https://github.com/linode/linodego
       X-Filter:
       - '{"linode_id":11758356}'
-    url: https://api.linode.com/v4/networking/ips
+    url: https://api.linode.com/v4beta/networking/ips
     method: GET
   response:
     body: '{"pages": 1, "page": 1, "data": [{"public": true, "subnet_mask": "10.20.30.40",
@@ -321,7 +321,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.6.2 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/11758356
+    url: https://api.linode.com/v4beta/linode/instances/11758356
     method: DELETE
   response:
     body: '{}'

@@ -52,7 +52,7 @@ func ExampleClient_GetType_missing() {
 	}
 
 	// Output:
-	// Request was: https://api.linode.com/v4/linode/types/missing-type
+	// Request was: https://api.linode.com/v4beta/linode/types/missing-type
 	// Response was: 404 NOT FOUND
 	// Error was: [404] Not found
 }
@@ -184,7 +184,7 @@ func ExampleClient_GetImage_missing() {
 	}
 
 	// Output:
-	// Request was: https://api.linode.com/v4/images/not-found
+	// Request was: https://api.linode.com/v4beta/images/not-found
 	// Response was: 404 NOT FOUND
 	// Error was: [404] Not found
 }

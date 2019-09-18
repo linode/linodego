@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/kernels/linode/latest-32bit
+    url: https://api.linode.com/v4beta/linode/kernels/linode/latest-32bit
     method: GET
   response:
     body: '{"xen": true, "label": "Latest 32 bit (4.15.13-x86-linode125)", "architecture":
@@ -87,7 +87,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/kernels/linode/latest-64bit
+    url: https://api.linode.com/v4beta/linode/kernels/linode/latest-64bit
     method: GET
   response:
     body: '{"pvops": true, "id": "linode/latest-64bit", "xen": true, "kvm": true,

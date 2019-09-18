@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/types/does-not-exist
+    url: https://api.linode.com/v4beta/linode/types/does-not-exist
     method: GET
   response:
     body: '{"errors": [{"reason": "Not found"}]}'

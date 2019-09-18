@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.7.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances
+    url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
     body: '{"backups": {"schedule": {"window": null, "day": null}, "enabled": false},
@@ -89,7 +89,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.7.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/13585000/boot
+    url: https://api.linode.com/v4beta/linode/instances/13585000/boot
     method: POST
   response:
     body: '{}'
@@ -158,7 +158,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.7.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/13585000/stats
+    url: https://api.linode.com/v4beta/linode/instances/13585000/stats
     method: GET
   response:
     body: '{"data": {"cpu": [[1555000500000, 0], [1555000800000, 0], [1555001100000,
@@ -1019,7 +1019,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.7.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/13585000/stats/2018/1
+    url: https://api.linode.com/v4beta/linode/instances/13585000/stats/2018/1
     method: GET
   response:
     body: '{"title": "linode.com - linodego-test-instance (linode13585000) - month
@@ -2077,7 +2077,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.7.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/13585000
+    url: https://api.linode.com/v4beta/linode/instances/13585000
     method: DELETE
   response:
     body: '{}'

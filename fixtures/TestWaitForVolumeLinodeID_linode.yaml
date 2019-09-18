@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances
+    url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
     body: '{"alerts": {"network_in": 10, "io": 10000, "transfer_quota": 80, "cpu":
@@ -89,7 +89,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/9006360/configs
+    url: https://api.linode.com/v4beta/linode/instances/9006360/configs
     method: POST
   response:
     body: '{"id": 10269896, "root_device": "/dev/sda", "label": "test-instance-volume",
@@ -165,7 +165,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/9006360
+    url: https://api.linode.com/v4beta/linode/instances/9006360
     method: DELETE
   response:
     body: '{}'

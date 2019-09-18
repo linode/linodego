@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/stackscripts?page=1
+    url: https://api.linode.com/v4beta/linode/stackscripts?page=1
     method: GET
   response:
     body: '{"pages": 11, "page": 1, "data": [{"script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"

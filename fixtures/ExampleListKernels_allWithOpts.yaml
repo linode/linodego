@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/kernels
+    url: https://api.linode.com/v4beta/linode/kernels
     method: GET
   response:
     body: '{"results": 224, "data": [{"pvops": true, "id": "linode/latest-2.6-32bit",
@@ -279,7 +279,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/kernels?page=2
+    url: https://api.linode.com/v4beta/linode/kernels?page=2
     method: GET
   response:
     body: '{"data": [{"architecture": "i386", "pvops": true, "id": "linode/010.020.030.040-linode21",
@@ -549,7 +549,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/kernels?page=3
+    url: https://api.linode.com/v4beta/linode/kernels?page=3
     method: GET
   response:
     body: '{"pages": 3, "page": 3, "data": [{"xen": true, "label": "010.020.030.040-x86_64-linode16",

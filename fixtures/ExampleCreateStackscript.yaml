@@ -15,7 +15,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/stackscripts
+    url: https://api.linode.com/v4beta/linode/stackscripts
     method: POST
   response:
     body: '{"user_defined_fields": [], "images": ["linode/debian9", "linode/ubuntu18.04"],
@@ -94,7 +94,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/stackscripts/324986
+    url: https://api.linode.com/v4beta/linode/stackscripts/324986
     method: PUT
   response:
     body: '{"script": "#!/bin/bash\necho 2\n", "images": ["linode/debian9", "linode/ubuntu18.04"],
@@ -173,7 +173,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/stackscripts/324986
+    url: https://api.linode.com/v4beta/linode/stackscripts/324986
     method: PUT
   response:
     body: '{"user_gravatar_id": "8293c9dd7d457c488afaee7fea921610", "id": 324986,
@@ -249,7 +249,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/stackscripts/324986
+    url: https://api.linode.com/v4beta/linode/stackscripts/324986
     method: GET
   response:
     body: '{"user_defined_fields": [], "images": ["linode/debian9", "linode/ubuntu18.04"],
@@ -328,7 +328,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/stackscripts/324986
+    url: https://api.linode.com/v4beta/linode/stackscripts/324986
     method: DELETE
   response:
     body: '{}'

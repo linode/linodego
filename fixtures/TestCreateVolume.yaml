@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/volumes
+    url: https://api.linode.com/v4beta/volumes
     method: POST
   response:
     body: '{"status": "creating", "linode_id": null, "label": "linodego-test-volume",
@@ -86,7 +86,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/volumes/9357
+    url: https://api.linode.com/v4beta/volumes/9357
     method: DELETE
   response:
     body: '{}'

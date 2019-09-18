@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances
+    url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
     body: '{"ipv6": "1234::5678/64", "group": "", "region": "us-west",
@@ -90,7 +90,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/10698247
+    url: https://api.linode.com/v4beta/linode/instances/10698247
     method: PUT
   response:
     body: '{"hypervisor": "kvm", "updated": "2018-01-02T03:04:05", "group": "", "ipv6":
@@ -167,7 +167,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/tags
+    url: https://api.linode.com/v4beta/tags
     method: POST
   response:
     body: '{"label": "linodego-test-foo"}'
@@ -237,7 +237,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/tags
+    url: https://api.linode.com/v4beta/tags
     method: GET
   response:
     body: '{"results": 3, "page": 1, "data": [{"label": "linodego-test"}, {"label":
@@ -310,7 +310,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/tags/linodego-test
+    url: https://api.linode.com/v4beta/tags/linodego-test
     method: GET
   response:
     body: '{"pages": 1, "results": 1, "data": [{"type": "linode", "data": {"hypervisor":
@@ -390,7 +390,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/tags/linodego-test
+    url: https://api.linode.com/v4beta/tags/linodego-test
     method: DELETE
   response:
     body: '{}'
@@ -460,7 +460,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/tags/linodego-test-foo
+    url: https://api.linode.com/v4beta/tags/linodego-test-foo
     method: DELETE
   response:
     body: '{}'
@@ -530,7 +530,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/tags/linodego-test-bar
+    url: https://api.linode.com/v4beta/tags/linodego-test-bar
     method: DELETE
   response:
     body: '{}'
@@ -600,7 +600,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/10698247
+    url: https://api.linode.com/v4beta/linode/instances/10698247
     method: DELETE
   response:
     body: '{}'

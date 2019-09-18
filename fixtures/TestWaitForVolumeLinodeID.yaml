@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/volumes
+    url: https://api.linode.com/v4beta/volumes
     method: POST
   response:
     body: '{"size": 20, "label": "linodego-test-volume", "id": 9589, "linode_id":
@@ -86,7 +86,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/volumes/9589/attach
+    url: https://api.linode.com/v4beta/volumes/9589/attach
     method: POST
   response:
     body: '{"size": 20, "created": "2018-01-02T03:04:05", "id": 9589, "label": "linodego-test-volume",
@@ -158,7 +158,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/volumes/9589
+    url: https://api.linode.com/v4beta/volumes/9589
     method: GET
   response:
     body: '{"id": 9589, "size": 20, "label": "linodego-test-volume", "region": "us-west",
@@ -232,7 +232,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/volumes/9589
+    url: https://api.linode.com/v4beta/volumes/9589
     method: GET
   response:
     body: '{"size": 20, "label": "linodego-test-volume", "id": 9589, "linode_id":
@@ -307,7 +307,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/volumes/9589
+    url: https://api.linode.com/v4beta/volumes/9589
     method: GET
   response:
     body: '{"size": 20, "created": "2018-01-02T03:04:05", "id": 9589, "label": "linodego-test-volume",
@@ -381,7 +381,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/volumes/9589
+    url: https://api.linode.com/v4beta/volumes/9589
     method: GET
   response:
     body: '{"id": 9589, "size": 20, "label": "linodego-test-volume", "region": "us-west",
@@ -455,7 +455,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/volumes/9589
+    url: https://api.linode.com/v4beta/volumes/9589
     method: DELETE
   response:
     body: '{}'

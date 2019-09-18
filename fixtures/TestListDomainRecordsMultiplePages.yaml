@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/domains
+    url: https://api.linode.com/v4beta/domains
     method: POST
   response:
     body: '{"expire_sec": 0, "refresh_sec": 0, "type": "master", "group": "", "master_ips":
@@ -86,7 +86,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/domains/1102892/records
+    url: https://api.linode.com/v4beta/domains/1102892/records
     method: POST
   response:
     body: '{"type": "A", "priority": 0, "protocol": null, "port": 0, "target": "010.020.030.040",
@@ -160,7 +160,7 @@ interactions:
       - linodego 0.1.0 https://github.com/linode/linodego
       X-Filter:
       - '{"name":"a"}'
-    url: https://api.linode.com/v4/domains/1102892/records
+    url: https://api.linode.com/v4beta/domains/1102892/records
     method: GET
   response:
     body: '{"page": 1, "data": [{"id": 10468540, "priority": 0, "tag": null, "port":
@@ -236,7 +236,7 @@ interactions:
       - linodego 0.1.0 https://github.com/linode/linodego
       X-Filter:
       - '{"name":"a"}'
-    url: https://api.linode.com/v4/domains/1102892/records?page=2
+    url: https://api.linode.com/v4beta/domains/1102892/records?page=2
     method: GET
   response:
     body: '{"page": 2, "data": [{"id": 10468541, "priority": 0, "tag": null, "port":
@@ -310,7 +310,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/domains/1102892/records/10468540
+    url: https://api.linode.com/v4beta/domains/1102892/records/10468540
     method: DELETE
   response:
     body: '{}'
@@ -380,7 +380,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/domains/1102892
+    url: https://api.linode.com/v4beta/domains/1102892
     method: DELETE
   response:
     body: '{}'

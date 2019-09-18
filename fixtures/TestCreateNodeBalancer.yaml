@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/nodebalancers
+    url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
     body: '{"ipv4": "010.020.030.040", "region": "us-west", "label": "o7x58j8hy1c2-linodego-testing",
@@ -87,7 +87,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/nodebalancers/37826
+    url: https://api.linode.com/v4beta/nodebalancers/37826
     method: DELETE
   response:
     body: '{}'

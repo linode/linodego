@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.4.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances
+    url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
     body: '{"region": "us-west", "alerts": {"network_in": 10, "io": 10000, "cpu":
@@ -90,7 +90,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.4.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/10157452/configs
+    url: https://api.linode.com/v4beta/linode/instances/10157452/configs
     method: POST
   response:
     body: '{"virt_mode": "paravirt", "devices": {"sdg": null, "sda": null, "sdd":
@@ -166,7 +166,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.4.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/10157452
+    url: https://api.linode.com/v4beta/linode/instances/10157452
     method: GET
   response:
     body: '{"group": "", "backups": {"schedule": {"window": null, "day": null}, "enabled":
@@ -244,7 +244,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.4.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/10157452
+    url: https://api.linode.com/v4beta/linode/instances/10157452
     method: DELETE
   response:
     body: '{}'

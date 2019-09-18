@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.7.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/account/notifications
+    url: https://api.linode.com/v4beta/account/notifications
     method: GET
   response:
     body: '{"data": [{"type": "migration_pending", "severity": "major", "label": "You
