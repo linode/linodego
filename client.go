@@ -22,6 +22,8 @@ const (
 	APIHostCert = "LINODE_CA"
 	// APIVersion Linode API version
 	APIVersion = "v4"
+	// APIVersionVar environment var to check for alternate API Version
+	APIVersionVar = "LINODE_API_VERSION"
 	// APIProto connect to API with http(s)
 	APIProto = "https"
 	// Version of linodego
@@ -132,6 +134,11 @@ func (c *Client) SetBaseURL(url string) *Client {
 	return c
 }
 
+func (c *Client) SetAPIVersion(apiVersion string) *Client {
+	c.SetBaseURL(fmt.Sprintf("%s://%s/%s", APIProto, APIHost, apiVersion))
+	return c
+}
+
 func (c *Client) SetRootCertificate(path string) *Client {
 	c.resty.SetRootCertificate(path)
 	return c
@@ -172,7 +179,12 @@ func NewClient(hc *http.Client) (client Client) {
 	if baseURLExists {
 		client.SetBaseURL(baseURL)
 	} else {
-		client.SetBaseURL(fmt.Sprintf("%s://%s/%s", APIProto, APIHost, APIVersion))
+		apiVersion, apiVersionExists := os.LookupEnv(APIVersionVar)
+		if apiVersionExists {
+			client.SetAPIVersion(apiVersion)
+		} else {
+			client.SetAPIVersion(APIVersion)
+		}
 	}
 	certPath, certPathExists := os.LookupEnv(APIHostCert)
 	if certPathExists {
