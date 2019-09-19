@@ -38,6 +38,7 @@ func NewListOptions(page int, filter string) *ListOptions {
 // When opts (or opts.Page) is nil, all pages will be fetched and
 // returned in a single (endpoint-specific)PagedResponse
 // opts.results and opts.pages will be updated from the API response
+// nolint
 func (c *Client) listHelper(ctx context.Context, i interface{}, opts *ListOptions) error {
 	req := c.R(ctx)
 	if opts != nil && opts.PageOptions != nil && opts.Page > 0 {
@@ -257,6 +258,7 @@ func (c *Client) listHelper(ctx context.Context, i interface{}, opts *ListOption
 // When opts (or opts.Page) is nil, all pages will be fetched and
 // returned in a single (endpoint-specific)PagedResponse
 // opts.results and opts.pages will be updated from the API response
+// nolint
 func (c *Client) listHelperWithID(ctx context.Context, i interface{}, idRaw interface{}, opts *ListOptions) error {
 	req := c.R(ctx)
 	if opts != nil && opts.Page > 0 {
