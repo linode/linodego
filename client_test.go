@@ -1,6 +1,7 @@
 package linodego_test
 
 import (
+	"context"
 	"log"
 	"net/http"
 	"os"
@@ -126,4 +127,17 @@ func TestClientAliases(t *testing.T) {
 	if client.Volumes == nil {
 		t.Error("Expected alias for Volumes to return a *Resource")
 	}
+}
+
+func TestClient_APIResponseBadGateway(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestClient_APIResponseBadGateway.yaml")
+	defer teardown()
+
+	defer func() {
+		if r := recover(); r != nil {
+			t.Errorf("Expected Client to handle 502 from API Server")
+		}
+	}()
+	client.ListImages(context.Background(), nil)
+
 }
