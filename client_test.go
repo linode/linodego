@@ -131,7 +131,7 @@ func TestClientAliases(t *testing.T) {
 }
 
 func TestClient_APIResponseBadGateway(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestClient_APIResponseBadGateway.yaml")
+	client, teardown := createTestClient(t, "fixtures/TestClient_APIResponseBadGateway")
 	defer teardown()
 
 	defer func() {
