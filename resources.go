@@ -38,6 +38,9 @@ const (
 	nodebalancersName         = "nodebalancers"
 	notificationsName         = "notifications"
 	oauthClientsName          = "oauthClients"
+	objectStorageBucketsName  = "objectstoragebuckets"
+	objectStorageClustersName = "objectstorageclusters"
+	objectStorageKeysName     = "objectstoragekeys"
 	paymentsName              = "payments"
 	profileName               = "profile"
 	regionsName               = "regions"
@@ -49,8 +52,6 @@ const (
 	typesName                 = "types"
 	usersName                 = "users"
 	volumesName               = "volumes"
-	objectStorageClustersName = "objectStorageClusters"
-	objectStorageKeysName     = "objectStoragekeys"
 
 	accountEndpoint               = "account"
 	accountSettingsEndpoint       = "account/settings"
@@ -84,6 +85,9 @@ const (
 	nodebalancersEndpoint         = "nodebalancers"
 	notificationsEndpoint         = "account/notifications"
 	oauthClientsEndpoint          = "account/oauth-clients"
+	objectStorageBucketsEndpoint  = "object-storage/buckets"
+	objectStorageClustersEndpoint = "object-storage/clusters"
+	objectStorageKeysEndpoint     = "object-storage/keys"
 	paymentsEndpoint              = "account/payments"
 	profileEndpoint               = "profile"
 	regionsEndpoint               = "regions"
@@ -95,8 +99,6 @@ const (
 	typesEndpoint                 = "linode/types"
 	usersEndpoint                 = "account/users"
 	volumesEndpoint               = "volumes"
-	objectStorageClustersEndpoint = "object-storage/clusters"
-	objectStorageKeysEndpoint     = "object-storage/keys"
 )
 
 // Resource represents a linode API resource

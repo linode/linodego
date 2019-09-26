@@ -297,6 +297,15 @@ See `template.go` and `template_test.go` for tips on adding new endpoints.
 - `/object-storage/clusters/$id`
   - [X] `GET`
 
+### Object Storage Buckets
+
+- `/object-storage/buckets`
+  - [X] `GET`
+  - [X] `POST`
+- `/object-storage/buckets/$id/$id`
+  - [X] `GET`
+  - [X] `DELETE`
+
 ### Payments
 
 - `/account/payments`

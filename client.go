@@ -77,6 +77,9 @@ type Client struct {
 	NodeBalancers         *Resource
 	Notifications         *Resource
 	OAuthClients          *Resource
+	ObjectStorageBuckets  *Resource
+	ObjectStorageClusters *Resource
+	ObjectStorageKeys     *Resource
 	Payments              *Resource
 	Profile               *Resource
 	Regions               *Resource
@@ -89,8 +92,6 @@ type Client struct {
 	Types                 *Resource
 	Users                 *Resource
 	Volumes               *Resource
-	ObjectStorageClusters *Resource
-	ObjectStorageKeys     *Resource
 }
 
 func init() {
@@ -238,6 +239,9 @@ func addResources(client *Client) {
 		nodebalancersName:         NewResource(client, nodebalancersName, nodebalancersEndpoint, false, NodeBalancer{}, NodeBalancerConfigsPagedResponse{}),
 		notificationsName:         NewResource(client, notificationsName, notificationsEndpoint, false, Notification{}, NotificationsPagedResponse{}),
 		oauthClientsName:          NewResource(client, oauthClientsName, oauthClientsEndpoint, false, OAuthClient{}, OAuthClientsPagedResponse{}),
+		objectStorageBucketsName:  NewResource(client, objectStorageBucketsName, objectStorageBucketsEndpoint, false, ObjectStorageBucket{}, ObjectStorageBucketsPagedResponse{}),
+		objectStorageClustersName: NewResource(client, objectStorageClustersName, objectStorageClustersEndpoint, false, ObjectStorageCluster{}, ObjectStorageClustersPagedResponse{}),
+		objectStorageKeysName:     NewResource(client, objectStorageKeysName, objectStorageKeysEndpoint, false, ObjectStorageKey{}, ObjectStorageKeysPagedResponse{}),
 		paymentsName:              NewResource(client, paymentsName, paymentsEndpoint, false, Payment{}, PaymentsPagedResponse{}),
 		profileName:               NewResource(client, profileName, profileEndpoint, false, nil, nil), // really?
 		regionsName:               NewResource(client, regionsName, regionsEndpoint, false, Region{}, RegionsPagedResponse{}),
@@ -249,8 +253,6 @@ func addResources(client *Client) {
 		typesName:                 NewResource(client, typesName, typesEndpoint, false, LinodeType{}, LinodeTypesPagedResponse{}),
 		usersName:                 NewResource(client, usersName, usersEndpoint, false, User{}, UsersPagedResponse{}),
 		volumesName:               NewResource(client, volumesName, volumesEndpoint, false, Volume{}, VolumesPagedResponse{}),
-		objectStorageClustersName: NewResource(client, objectStorageClustersName, objectStorageClustersEndpoint, false, ObjectStorageCluster{}, ObjectStorageClustersPagedResponse{}),
-		objectStorageKeysName:     NewResource(client, objectStorageKeysName, objectStorageKeysEndpoint, false, ObjectStorageKey{}, ObjectStorageKeysPagedResponse{}),
 	}
 
 	client.resources = resources
@@ -280,6 +282,7 @@ func addResources(client *Client) {
 	client.NodeBalancers = resources[nodebalancersName]
 	client.Notifications = resources[notificationsName]
 	client.OAuthClients = resources[oauthClientsName]
+	client.ObjectStorageBuckets = resources[objectStorageBucketsName]
 	client.ObjectStorageClusters = resources[objectStorageClustersName]
 	client.ObjectStorageKeys = resources[objectStorageKeysName]
 	client.Payments = resources[paymentsName]

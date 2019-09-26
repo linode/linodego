@@ -210,6 +210,12 @@ func (c *Client) listHelper(ctx context.Context, i interface{}, opts *ListOption
 			results = r.Result().(*UsersPagedResponse).Results
 			v.appendData(r.Result().(*UsersPagedResponse))
 		}
+	case *ObjectStorageBucketsPagedResponse:
+		if r, err = coupleAPIErrors(req.SetResult(ObjectStorageBucketsPagedResponse{}).Get(v.endpoint(c))); err == nil {
+			pages = r.Result().(*ObjectStorageBucketsPagedResponse).Pages
+			results = r.Result().(*ObjectStorageBucketsPagedResponse).Results
+			v.appendData(r.Result().(*ObjectStorageBucketsPagedResponse))
+		}
 	case *ObjectStorageClustersPagedResponse:
 		if r, err = coupleAPIErrors(req.SetResult(ObjectStorageClustersPagedResponse{}).Get(v.endpoint(c))); err == nil {
 			pages = r.Result().(*ObjectStorageClustersPagedResponse).Pages
