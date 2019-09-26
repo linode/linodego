@@ -1,10 +1,12 @@
 package linodego_test
 
 import (
+	"context"
 	"log"
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"testing"
 	"time"
 
@@ -126,4 +128,32 @@ func TestClientAliases(t *testing.T) {
 	if client.Volumes == nil {
 		t.Error("Expected alias for Volumes to return a *Resource")
 	}
+}
+
+func TestClient_APIResponseBadGateway(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestClient_APIResponseBadGateway")
+	defer teardown()
+
+	defer func() {
+		if r := recover(); r != nil {
+			t.Errorf("Expected Client to handle 502 from API Server")
+		}
+	}()
+
+	_, err := client.ListImages(context.Background(), nil)
+
+	if err == nil {
+		t.Errorf("Error should be thrown on 502 Response from API")
+	}
+
+	responseError, ok := err.(*Error)
+
+	if !ok {
+		t.Errorf("Error type did not match the expected result")
+	}
+
+	if !strings.Contains(responseError.Message, "Unexpected Content-Type") {
+		t.Errorf("Error message does not contain: \"Unexpected Content-Type\"")
+	}
+
 }
