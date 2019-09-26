@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 	"testing"
 	"time"
 
@@ -138,6 +139,21 @@ func TestClient_APIResponseBadGateway(t *testing.T) {
 			t.Errorf("Expected Client to handle 502 from API Server")
 		}
 	}()
-	client.ListImages(context.Background(), nil)
+
+	_, err := client.ListImages(context.Background(), nil)
+
+	if err == nil {
+		t.Errorf("Error should be thrown on 502 Response from API")
+	}
+
+	responseError, ok := err.(*Error)
+
+	if !ok {
+		t.Errorf("Error type did not match the expected result")
+	}
+
+	if !strings.Contains(responseError.Message, "Unexpected Content-Type") {
+		t.Errorf("Error message does not contain: \"Unexpected Content-Type\"")
+	}
 
 }
