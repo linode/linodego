@@ -15,7 +15,7 @@ interactions:
       - linodego 0.0.1 https://github.com/linode/linodego
       X-Filter:
       - '{"foo":"bar"}'
-    url: https://api.linode.com/v4/images
+    url: https://api.linode.com/v4beta/images
     method: GET
   response:
     body: '{"errors": [{"reason": "Cannot filter on foo", "field": "X-Filter"}]}'

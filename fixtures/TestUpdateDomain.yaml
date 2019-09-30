@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/domains
+    url: https://api.linode.com/v4beta/domains
     method: POST
   response:
     body: '{"description": "", "master_ips": [], "id": 1102858, "refresh_sec": 0,
@@ -86,7 +86,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/domains/1102858
+    url: https://api.linode.com/v4beta/domains/1102858
     method: PUT
   response:
     body: '{"expire_sec": 0, "refresh_sec": 0, "type": "master", "group": "", "master_ips":
@@ -159,7 +159,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/domains/1102858
+    url: https://api.linode.com/v4beta/domains/1102858
     method: DELETE
   response:
     body: '{}'

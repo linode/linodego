@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/nodebalancers
+    url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
     body: '{"ipv4": "010.020.030.040", "region": "us-west", "label": "1163u49dpliq-linodego-testing",
@@ -87,7 +87,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/nodebalancers/37834/configs
+    url: https://api.linode.com/v4beta/nodebalancers/37834/configs
     method: POST
   response:
     body: '{"check_path": "", "algorithm": "roundrobin", "ssl_fingerprint": "", "check_body":
@@ -161,7 +161,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/nodebalancers/37834/configs/33573/nodes
+    url: https://api.linode.com/v4beta/nodebalancers/37834/configs/33573/nodes
     method: POST
   response:
     body: '{"weight": 10, "nodebalancer_id": 37834, "label": "test-label", "address":
@@ -233,7 +233,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/nodebalancers/37834/configs/33573/nodes
+    url: https://api.linode.com/v4beta/nodebalancers/37834/configs/33573/nodes
     method: GET
   response:
     body: '{"results": 1, "page": 1, "pages": 2, "data": []}'
@@ -305,7 +305,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/nodebalancers/37834/configs/33573/nodes?page=2
+    url: https://api.linode.com/v4beta/nodebalancers/37834/configs/33573/nodes?page=2
     method: GET
   response:
     body: '{"results": 1, "page": 2, "pages": 2, "data": [{"status": "Unknown", "mode":
@@ -379,7 +379,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/nodebalancers/37834/configs/33573/nodes/316376
+    url: https://api.linode.com/v4beta/nodebalancers/37834/configs/33573/nodes/316376
     method: DELETE
   response:
     body: '{}'
@@ -449,7 +449,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/nodebalancers/37834/configs/33573
+    url: https://api.linode.com/v4beta/nodebalancers/37834/configs/33573
     method: DELETE
   response:
     body: '{}'
@@ -519,7 +519,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/nodebalancers/37834
+    url: https://api.linode.com/v4beta/nodebalancers/37834
     method: DELETE
   response:
     body: '{}'

@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.4.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances
+    url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
     body: '{"backups": {"enabled": false, "schedule": {"day": null, "window": null}},
@@ -90,7 +90,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.4.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/10174066/configs
+    url: https://api.linode.com/v4beta/linode/instances/10174066/configs
     method: POST
   response:
     body: '{"helpers": {"distro": true, "network": true, "devtmpfs_automount": true,
@@ -166,7 +166,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.4.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/10174066/configs
+    url: https://api.linode.com/v4beta/linode/instances/10174066/configs
     method: GET
   response:
     body: '{"data": [{"helpers": {"distro": true, "devtmpfs_automount": true, "updatedb_disabled":
@@ -244,7 +244,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.4.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/10174066
+    url: https://api.linode.com/v4beta/linode/instances/10174066
     method: DELETE
   response:
     body: '{}'

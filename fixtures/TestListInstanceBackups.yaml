@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances
+    url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
     body: '{"created": "2018-01-02T03:04:05", "image": null, "id": 9588435, "updated":
@@ -90,7 +90,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/9588435/configs
+    url: https://api.linode.com/v4beta/linode/instances/9588435/configs
     method: POST
   response:
     body: '{"created": "2018-01-02T03:04:05", "comments": "", "updated": "2018-01-02T03:04:05",
@@ -166,7 +166,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/9588435
+    url: https://api.linode.com/v4beta/linode/instances/9588435
     method: GET
   response:
     body: '{"alerts": {"network_in": 10, "io": 10000, "network_out": 10, "transfer_quota":
@@ -244,7 +244,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/9588435/disks
+    url: https://api.linode.com/v4beta/linode/instances/9588435/disks
     method: POST
   response:
     body: '{"created": "2018-01-02T03:04:05", "id": 20675853, "updated": "2018-01-02T03:04:05",
@@ -318,7 +318,7 @@ interactions:
       - linodego 0.1.1 https://github.com/linode/linodego
       X-Filter:
       - '{"+order":"desc","+order_by":"created","seen":false}'
-    url: https://api.linode.com/v4/account/events?page=1
+    url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
     body: '{"data": [{"created": "2018-01-02T03:04:05", "username": "restricted_tester",
@@ -398,7 +398,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/9588435/backups/enable
+    url: https://api.linode.com/v4beta/linode/instances/9588435/backups/enable
     method: POST
   response:
     body: '{}'
@@ -468,7 +468,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/9588435/backups
+    url: https://api.linode.com/v4beta/linode/instances/9588435/backups
     method: POST
   response:
     body: '{"created": "2018-01-02T03:04:05", "region": "us-west", "id": 98986758,
@@ -540,7 +540,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/9588435/backups
+    url: https://api.linode.com/v4beta/linode/instances/9588435/backups
     method: GET
   response:
     body: '{"snapshot": {"in_progress": null, "current": {"configs": ["linodego-test-config"],
@@ -617,7 +617,7 @@ interactions:
       - linodego 0.1.1 https://github.com/linode/linodego
       X-Filter:
       - '{"+order":"desc","+order_by":"created","seen":false}'
-    url: https://api.linode.com/v4/account/events?page=1
+    url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
     body: '{"data": [{"created": "2018-01-02T03:04:05", "username": "restricted_tester",
@@ -697,7 +697,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/9588435/backups/98986758
+    url: https://api.linode.com/v4beta/linode/instances/9588435/backups/98986758
     method: GET
   response:
     body: '{"created": "2018-01-02T03:04:05", "region": "us-west", "id": 98986758,
@@ -773,7 +773,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/9588435/backups/98986758/restore
+    url: https://api.linode.com/v4beta/linode/instances/9588435/backups/98986758/restore
     method: POST
   response:
     body: '{}'
@@ -843,7 +843,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/9588435/backups/cancel
+    url: https://api.linode.com/v4beta/linode/instances/9588435/backups/cancel
     method: POST
   response:
     body: '{}'
@@ -913,7 +913,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/9588435
+    url: https://api.linode.com/v4beta/linode/instances/9588435
     method: DELETE
   response:
     body: '{}'

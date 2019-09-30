@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/1231
+    url: https://api.linode.com/v4beta/linode/instances/1231
     method: GET
   response:
     body: '{"errors": [{"reason": "Not found"}]}'
@@ -69,7 +69,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances
+    url: https://api.linode.com/v4beta/linode/instances
     method: GET
   response:
     body: '{"data": [{"region": "us-east", "alerts": {"network_in": 10, "network_out":
@@ -149,7 +149,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/76859403
+    url: https://api.linode.com/v4beta/linode/instances/76859403
     method: GET
   response:
     body: '{"image": "linode/ubuntu18.04", "group": "", "updated": "2018-01-02T03:04:05",
@@ -228,7 +228,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/76859403/configs
+    url: https://api.linode.com/v4beta/linode/instances/76859403/configs
     method: GET
   response:
     body: '{"results": 1, "data": [{"memory_limit": 0, "kernel": "linode/grub2", "label":
@@ -308,7 +308,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/76859403/configs/9958462
+    url: https://api.linode.com/v4beta/linode/instances/76859403/configs/9958462
     method: GET
   response:
     body: '{"initrd": null, "kernel": "linode/grub2", "devices": {"sdh": null, "sdf":
@@ -387,7 +387,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/76859403/disks
+    url: https://api.linode.com/v4beta/linode/instances/76859403/disks
     method: GET
   response:
     body: '{"pages": 1, "page": 1, "data": [{"updated": "2018-01-02T03:04:05", "label":
@@ -463,7 +463,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/76859403/disks/18974977
+    url: https://api.linode.com/v4beta/linode/instances/76859403/disks/18974977
     method: GET
   response:
     body: '{"created": "2018-01-02T03:04:05", "id": 18974977, "filesystem": "ext4",
@@ -537,7 +537,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/76859403/backups
+    url: https://api.linode.com/v4beta/linode/instances/76859403/backups
     method: GET
   response:
     body: '{"snapshot": {"in_progress": null, "current": {"configs": ["My Ubuntu 18.04
@@ -615,7 +615,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/76859403/backups/96509901
+    url: https://api.linode.com/v4beta/linode/instances/76859403/backups/96509901
     method: GET
   response:
     body: '{"label": "test-snapshot", "region": "us-east", "status": "successful",
@@ -691,7 +691,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/76859403/volumes
+    url: https://api.linode.com/v4beta/linode/instances/76859403/volumes
     method: GET
   response:
     body: '{"results": 1, "data": [{"created": "2018-01-02T03:04:05", "id": 6574839201,
@@ -766,7 +766,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/volumes/6574839201
+    url: https://api.linode.com/v4beta/volumes/6574839201
     method: GET
   response:
     body: '{"filesystem_path": "/dev/disk/by-id/scsi-0Linode_Volume_test-volume",
@@ -843,7 +843,7 @@ interactions:
       - linodego 0.0.1 https://github.com/linode/linodego
       X-Filter:
       - '{"mine":true}'
-    url: https://api.linode.com/v4/linode/stackscripts
+    url: https://api.linode.com/v4beta/linode/stackscripts
     method: GET
   response:
     body: '{"pages": 1, "page": 1, "data": [{"script": "#!/bin/bash\n# <UDF name=\"gh_username\"

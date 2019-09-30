@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.4.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances
+    url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
     body: '{"group": "", "specs": {"transfer": 1000, "memory": 1024, "disk": 25600,
@@ -89,7 +89,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.4.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/10174075/configs
+    url: https://api.linode.com/v4beta/linode/instances/10174075/configs
     method: POST
   response:
     body: '{"virt_mode": "paravirt", "devices": {"sdg": null, "sda": null, "sdd":
@@ -165,7 +165,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.4.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/10174075/configs/11421192
+    url: https://api.linode.com/v4beta/linode/instances/10174075/configs/11421192
     method: PUT
   response:
     body: '{"root_device": "/dev/sda", "updated": "2018-01-02T03:04:05", "virt_mode":
@@ -241,7 +241,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.4.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/10174075
+    url: https://api.linode.com/v4beta/linode/instances/10174075
     method: DELETE
   response:
     body: '{}'

@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/domains
+    url: https://api.linode.com/v4beta/domains
     method: POST
   response:
     body: '{"expire_sec": 0, "refresh_sec": 0, "type": "master", "group": "", "master_ips":
@@ -86,7 +86,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/domains/1102872/records
+    url: https://api.linode.com/v4beta/domains/1102872/records
     method: POST
   response:
     body: '{"type": "A", "priority": 0, "protocol": null, "port": 0, "target": "010.020.030.040",
@@ -158,7 +158,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/domains/1102872/records/10468361
+    url: https://api.linode.com/v4beta/domains/1102872/records/10468361
     method: GET
   response:
     body: '{"id": 10468361, "priority": 0, "tag": null, "port": 0, "protocol": null,
@@ -232,7 +232,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/domains/1102872/records/10468361
+    url: https://api.linode.com/v4beta/domains/1102872/records/10468361
     method: DELETE
   response:
     body: '{}'
@@ -302,7 +302,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/domains/1102872
+    url: https://api.linode.com/v4beta/domains/1102872
     method: DELETE
   response:
     body: '{}'

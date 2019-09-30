@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.6.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/profile
+    url: https://api.linode.com/v4beta/profile
     method: GET
   response:
     body: '{"username": "restricted_tester", "ip_whitelist_enabled": false, "timezone":
@@ -90,7 +90,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.6.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/profile
+    url: https://api.linode.com/v4beta/profile
     method: PUT
   response:
     body: '{"restricted": true, "email": "restricted_tester@example.com", "two_factor_auth":

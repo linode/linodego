@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/volumes
+    url: https://api.linode.com/v4beta/volumes
     method: POST
   response:
     body: '{"label": "linodego-test-volume", "filesystem_path": "/dev/disk/by-id/scsi-0Linode_Volume_linodego-test-volume",
@@ -85,7 +85,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/volumes/9356
+    url: https://api.linode.com/v4beta/volumes/9356
     method: PUT
   response:
     body: '{"status": "creating", "linode_id": null, "label": "test-volume-renamed",
@@ -158,7 +158,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/volumes/9356
+    url: https://api.linode.com/v4beta/volumes/9356
     method: DELETE
   response:
     body: '{}'

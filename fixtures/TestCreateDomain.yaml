@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/domains
+    url: https://api.linode.com/v4beta/domains
     method: POST
   response:
     body: '{"id": 1102856, "description": "", "axfr_ips": [], "status": "active",
@@ -86,7 +86,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/domains/1102856
+    url: https://api.linode.com/v4beta/domains/1102856
     method: DELETE
   response:
     body: '{}'

@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.4.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances
+    url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
     body: '{"group": "", "specs": {"transfer": 1000, "memory": 1024, "disk": 25600,
@@ -89,7 +89,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.4.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/10158886/disks
+    url: https://api.linode.com/v4beta/linode/instances/10158886/disks
     method: GET
   response:
     body: '{"pages": 1, "results": 2, "data": [{"id": 21758686, "status": "not ready",
@@ -165,7 +165,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.4.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/10158886
+    url: https://api.linode.com/v4beta/linode/instances/10158886
     method: DELETE
   response:
     body: '{}'

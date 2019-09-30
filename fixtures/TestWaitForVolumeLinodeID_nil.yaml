@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/volumes
+    url: https://api.linode.com/v4beta/volumes
     method: POST
   response:
     body: '{"size": 20, "created": "2018-01-02T03:04:05", "id": 9588, "label": "linodego-test-volume",
@@ -85,7 +85,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/volumes/9588
+    url: https://api.linode.com/v4beta/volumes/9588
     method: GET
   response:
     body: '{"id": 9588, "size": 20, "label": "linodego-test-volume", "region": "us-west",
@@ -159,7 +159,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/volumes/9588
+    url: https://api.linode.com/v4beta/volumes/9588
     method: DELETE
   response:
     body: '{}'

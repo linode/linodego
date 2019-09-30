@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances
+    url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
     body: '{"hypervisor": "kvm", "type": "g6-nanode-1", "region": "us-west", "status":
@@ -90,7 +90,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/10341639/configs
+    url: https://api.linode.com/v4beta/linode/instances/10341639/configs
     method: POST
   response:
     body: '{"comments": "", "label": "linodego-test-config", "root_device": "/dev/sda",
@@ -166,7 +166,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/10341639
+    url: https://api.linode.com/v4beta/linode/instances/10341639
     method: GET
   response:
     body: '{"hypervisor": "kvm", "type": "g6-nanode-1", "region": "us-west", "status":
@@ -245,7 +245,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/10341639/disks
+    url: https://api.linode.com/v4beta/linode/instances/10341639/disks
     method: POST
   response:
     body: '{"updated": "2018-01-02T03:04:05", "status": "not ready", "id": 22109252,
@@ -317,7 +317,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/10341639/disks
+    url: https://api.linode.com/v4beta/linode/instances/10341639/disks
     method: GET
   response:
     body: '{"results": 1, "page": 1, "data": [{"id": 22109252, "filesystem": "ext4",
@@ -391,7 +391,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/10341639/disks/22109252/resize
+    url: https://api.linode.com/v4beta/linode/instances/10341639/disks/22109252/resize
     method: POST
   response:
     body: '{}'
@@ -461,7 +461,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/linode/instances/10341639
+    url: https://api.linode.com/v4beta/linode/instances/10341639
     method: DELETE
   response:
     body: '{}'

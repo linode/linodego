@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/nodebalancers
+    url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
     body: '{"updated": "2018-01-02T03:04:05", "client_conn_throttle": 20, "created":
@@ -86,7 +86,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/nodebalancers/37811/configs
+    url: https://api.linode.com/v4beta/nodebalancers/37811/configs
     method: POST
   response:
     body: '{"check_path": "", "algorithm": "roundrobin", "ssl_fingerprint": "", "check_body":
@@ -160,7 +160,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/nodebalancers/37811/configs/33558
+    url: https://api.linode.com/v4beta/nodebalancers/37811/configs/33558
     method: PUT
   response:
     body: '{"cipher_suite": "recommended", "algorithm": "leastconn", "check": "none",
@@ -235,7 +235,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/nodebalancers/37811/configs/33558
+    url: https://api.linode.com/v4beta/nodebalancers/37811/configs/33558
     method: DELETE
   response:
     body: '{}'
@@ -305,7 +305,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/nodebalancers/37811
+    url: https://api.linode.com/v4beta/nodebalancers/37811
     method: DELETE
   response:
     body: '{}'

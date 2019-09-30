@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.7.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/account/payments/-1
+    url: https://api.linode.com/v4beta/account/payments/-1
     method: GET
   response:
     body: '{"errors": [{"reason": "Not found"}]}'

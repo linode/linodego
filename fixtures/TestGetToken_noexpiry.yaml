@@ -13,7 +13,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/profile/tokens
+    url: https://api.linode.com/v4beta/profile/tokens
     method: POST
   response:
     body: '{"label": "linodego-test-token", "expiry": "2999-12-12T05:00:00", "token":
@@ -85,7 +85,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/profile/tokens/319584
+    url: https://api.linode.com/v4beta/profile/tokens/319584
     method: GET
   response:
     body: '{"id": 319584, "label": "linodego-test-token", "token": "431485bee492baf2",
@@ -159,7 +159,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.5.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4/profile/tokens/319584
+    url: https://api.linode.com/v4beta/profile/tokens/319584
     method: DELETE
   response:
     body: '{}'
