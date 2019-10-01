@@ -1,5 +1,11 @@
 # Change Log
 
+## [v0.10.1](https://github.com/linode/linodego/compare/v0.10.0..v0.10.1) (2019-10-01)
+
+### Fixes
+
+* Fixes panic when API is down #84
+
 ## [v0.10.0](https://github.com/linode/linodego/compare/v0.9.2..v0.10.0) (2019-06-25)
 
 ### Breaking Changes
