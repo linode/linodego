@@ -4,7 +4,7 @@
 
 ### Features
 
-* Adds supprt for Object Storage
+* Adds support for Object Storage
 
 ## [v0.10.1](https://github.com/linode/linodego/compare/v0.10.0..v0.10.1) (2019-10-01)
 
