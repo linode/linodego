@@ -1,5 +1,11 @@
 # Change Log
 
+## [v0.11.0](https://github.com/linode/linodego/compare/v0.10.1..v0.11.0) (2019-10-02)
+
+### Features
+
+* Adds supprt for Object Storage
+
 ## [v0.10.1](https://github.com/linode/linodego/compare/v0.10.0..v0.10.1) (2019-10-01)
 
 ### Fixes
