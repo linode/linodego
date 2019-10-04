@@ -15,10 +15,7 @@ type ObjectStorageBucket struct {
 	Cluster string `json:"cluster"`
 
 	Created  *time.Time `json:"-"`
-	Size     int        `json:"size"`
-	Region   string     `json:"region"`
 	Hostname string     `json:"hostname"`
-	Objects  int        `json:"integer"`
 }
 
 // ObjectStorageBucketCreateOptions fields are those accepted by CreateObjectStorageBucket

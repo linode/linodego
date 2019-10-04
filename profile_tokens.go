@@ -13,6 +13,7 @@ type Token struct {
 	ID int `json:"id"`
 
 	// The scopes this token was created with. These define what parts of the Account the token can be used to access. Many command-line tools, such as the Linode CLI, require tokens with access to *. Tokens with more restrictive scopes are generally more secure.
+	// Valid values are "*" or a comma separated list of scopes https://developers.linode.com/api/v4/#o-auth
 	Scopes string `json:"scopes"`
 
 	// This token's label. This is for display purposes only, but can be used to more easily track what you're using each token for. (1-100 Characters)

@@ -1,5 +1,11 @@
 # Change Log
 
+## [v0.12.0](https://github.com/linode/linodego/compare/v0.11.0..v0.12.0) (2019-10-04)
+
+### Breaking Changes
+
+* ObjectStorageBucket no longer provides `objects`, `size`, or `region`.
+
 ## [v0.11.0](https://github.com/linode/linodego/compare/v0.10.1..v0.11.0) (2019-10-02)
 
 ### Features
