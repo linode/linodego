@@ -138,8 +138,10 @@ func (s *Listener) getResults(ctx context.Context) error {
 	}
 
 	// We could wrap each send in a goroutine, but that might just make it harder to track down
-	// resource leaks later.
-	for _, instance := range instances {
+	// resource leaks later. Since we need to take references to individual items in the slice,
+	// we just iterate over the index here.
+	for i := range instances {
+		instance := &instances[i]
 
 		// Bail if we somehow find an instance with no associated future.
 		future, ok := s.instanceFutures[instance.ID]
@@ -148,8 +150,8 @@ func (s *Listener) getResults(ctx context.Context) error {
 		}
 
 		// Only emit a value for that future if it passes that future's filter function.
-		if future.filterFunc(&instance) {
-			future.outCh <- &instance
+		if future.filterFunc(instance) {
+			future.outCh <- instance
 		}
 	}
 
