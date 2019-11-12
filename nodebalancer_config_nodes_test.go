@@ -154,7 +154,6 @@ func TestRebuildNodeBalancer(t *testing.T) {
 	if nbcGot.Port != config.Port {
 		t.Errorf("RebuildNodeBalancerConfig did not return the expected port")
 	}
-
 }
 
 func setupNodeBalancerNode(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.NodeBalancer, *linodego.NodeBalancerConfig, *linodego.NodeBalancerNode, func(), error) {

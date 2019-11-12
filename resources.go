@@ -138,6 +138,7 @@ func (r Resource) render(data ...interface{}) (string, error) {
 	buf := bytes.NewBufferString(out)
 
 	var substitutions interface{}
+
 	switch len(data) {
 	case 1:
 		substitutions = struct{ ID interface{} }{data[0]}
@@ -149,6 +150,7 @@ func (r Resource) render(data ...interface{}) (string, error) {
 	default:
 		return "", NewError("Too many arguments to render template (expected 1 or 2)")
 	}
+
 	if err := r.endpointTemplate.Execute(buf, substitutions); err != nil {
 		return "", NewError(err)
 	}
@@ -161,6 +163,7 @@ func (r Resource) endpointWithID(id ...int) (string, error) {
 		return r.endpoint, nil
 	}
 	data := make([]interface{}, len(id))
+
 	for i, v := range id {
 		data[i] = v
 	}

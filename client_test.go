@@ -155,5 +155,4 @@ func TestClient_APIResponseBadGateway(t *testing.T) {
 	if !strings.Contains(responseError.Message, "Unexpected Content-Type") {
 		t.Errorf("Error message does not contain: \"Unexpected Content-Type\"")
 	}
-
 }
