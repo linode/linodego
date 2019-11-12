@@ -17,7 +17,6 @@ script:
   - go mod download
   - go mod vendor
   - make test ARGS='-v -race -count=2 -coverprofile=coverage.txt -covermode=atomic ./...'
-  - make lint-warn
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
