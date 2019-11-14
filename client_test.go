@@ -10,6 +10,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/dnaeon/go-vcr/cassette"
 	"github.com/dnaeon/go-vcr/recorder"
 	. "github.com/linode/linodego"
 	"golang.org/x/oauth2"
@@ -56,6 +57,11 @@ func testRecorder(t *testing.T, fixturesYaml string, testingMode recorder.Mode) 
 	if err != nil {
 		log.Fatalln(err)
 	}
+
+	r.AddFilter(func(i *cassette.Interaction) error {
+		delete(i.Request.Headers, "Authorization")
+		return nil
+	})
 
 	recordStopper = func() {
 		r.Stop()
