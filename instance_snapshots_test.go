@@ -72,7 +72,7 @@ func setupInstanceBackup(t *testing.T, fixturesYaml string) (*linodego.Client, *
 
 	client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceOffline, 180)
 	createOpts := linodego.InstanceDiskCreateOptions{
-		Size:       1,
+		Size:       10,
 		Label:      "snapshot-linodego-testing",
 		Filesystem: "ext4",
 	}
