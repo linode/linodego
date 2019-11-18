@@ -10,7 +10,7 @@ import (
 	"log"
 	"strconv"
 
-	"gopkg.in/resty.v1"
+	"github.com/go-resty/resty/v2"
 )
 
 // PageOptions are the pagination parameters for List endpoints
