@@ -105,14 +105,14 @@ func TestWaitForVolumeLinodeID_nil(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error setting up volume test, %s", err)
 	}
-	_, err = client.WaitForVolumeLinodeID(context.Background(), volume.ID, nil, 3)
+	_, err = client.WaitForVolumeLinodeID(context.Background(), volume.ID, nil, 20)
 
 	if err != nil {
 		t.Errorf("Error getting volume %d, expected *LinodeVolume, got error %v", volume.ID, err)
 	}
 }
 
-func TestWaitForVolumeLinodeID(t *testing.T) {
+func TestWaitForVolumeLinodeIDInstance(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode")
 	}
@@ -133,7 +133,7 @@ func TestWaitForVolumeLinodeID(t *testing.T) {
 		t.Errorf("Error setting up instance config for volume test, %s", errConfig)
 	}
 
-	client, volume, teardownVolume, errVolume := setupVolume(t, "fixtures/TestWaitForVolumeLinodeID")
+	client, volume, teardownVolume, errVolume := setupVolume(t, "fixtures/TestWaitForVolumeLinodeID_volume")
 	if errVolume != nil {
 		t.Errorf("Error setting up volume test, %s", errVolume)
 	}
@@ -146,12 +146,15 @@ func TestWaitForVolumeLinodeID(t *testing.T) {
 		t.Errorf("Could not attach test volume to test instance")
 	}
 
-	_, errWait := client.WaitForVolumeLinodeID(context.Background(), volume.ID, nil, 3)
+	_, errWait := client.WaitForVolumeLinodeID(context.Background(), volume.ID, nil, 20)
 	if errWait == nil {
 		t.Errorf("Expected to timeout waiting for nil LinodeID on volume %d : %s", volume.ID, errWait)
 	}
 
-	_, errWait = client.WaitForVolumeLinodeID(context.Background(), volume.ID, &instance.ID, 3)
+	client, teardownWait := createTestClient(t, "fixtures/TestWaitForVolumeLinodeID_waiting")
+	defer teardownWait()
+
+	_, errWait = client.WaitForVolumeLinodeID(context.Background(), volume.ID, &instance.ID, 20)
 	if errWait != nil {
 		t.Errorf("Error waiting for volume %d to attach to instance %d: %s", volume.ID, instance.ID, errWait)
 	}
@@ -161,6 +164,7 @@ func setupVolume(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 	t.Helper()
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+
 	createOpts := linodego.VolumeCreateOptions{
 		Label:  "linodego-test-volume",
 		Region: "us-west",
