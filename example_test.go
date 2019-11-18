@@ -3,8 +3,6 @@ package linodego_test
 /**
  * The tests in the examples directory demontrate use and test the library
  * in a real-use setting
- *
- * cd examples && go test -test.v
  */
 
 import (
@@ -96,7 +94,6 @@ func ExampleClient_ListKernels_allWithOpts() {
 	// Fetched > 100: true
 	// Fetched Results/100 pages: true
 	// Fetched all results: true
-
 }
 
 func ExampleClient_ListKernels_filtered() {
@@ -204,7 +201,6 @@ func ExampleClient_ListImages_all() {
 	// Output:
 	// Fetched Results/100 pages: true
 	// Fetched all results: true
-
 }
 
 // ExampleListImages_notfound demonstrates that an empty slice is returned,

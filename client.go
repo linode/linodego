@@ -104,7 +104,6 @@ func init() {
 			log.Println("[WARN] LINODE_DEBUG should be an integer, 0 or 1")
 		}
 	}
-
 }
 
 // SetUserAgent sets a custom user-agent for HTTP requests
@@ -128,6 +127,7 @@ func (c *Client) R(ctx context.Context) *resty.Request {
 func (c *Client) SetDebug(debug bool) *Client {
 	c.debug = debug
 	c.resty.SetDebug(debug)
+
 	return c
 }
 
@@ -167,6 +167,7 @@ func (c Client) Resource(resourceName string) *Resource {
 	if !ok {
 		log.Fatalf("Could not find resource named '%s', exiting.", resourceName)
 	}
+
 	return selectedResource
 }
 
@@ -177,8 +178,11 @@ func NewClient(hc *http.Client) (client Client) {
 	} else {
 		client.resty = resty.New()
 	}
+
 	client.SetUserAgent(DefaultUserAgent)
+
 	baseURL, baseURLExists := os.LookupEnv(APIHostVar)
+
 	if baseURLExists {
 		client.SetBaseURL(baseURL)
 	} else {
@@ -189,17 +193,22 @@ func NewClient(hc *http.Client) (client Client) {
 			client.SetAPIVersion(APIVersion)
 		}
 	}
+
 	certPath, certPathExists := os.LookupEnv(APIHostCert)
+
 	if certPathExists {
 		cert, err := ioutil.ReadFile(certPath)
 		if err != nil {
 			log.Fatalf("[ERROR] Error when reading cert at %s: %s\n", certPath, err.Error())
 		}
+
 		client.SetRootCertificate(certPath)
+
 		if envDebug {
 			log.Printf("[DEBUG] Set API root certificate to %s with contents %s\n", certPath, cert)
 		}
 	}
+
 	client.SetPollDelay(1000 * APISecondsPerPoll)
 	client.SetDebug(envDebug)
 
@@ -302,7 +311,9 @@ func copyBool(bPtr *bool) *bool {
 	if bPtr == nil {
 		return nil
 	}
+
 	var t = *bPtr
+
 	return &t
 }
 
@@ -310,7 +321,9 @@ func copyInt(iPtr *int) *int {
 	if iPtr == nil {
 		return nil
 	}
+
 	var t = *iPtr
+
 	return &t
 }
 
@@ -318,7 +331,9 @@ func copyString(sPtr *string) *string {
 	if sPtr == nil {
 		return nil
 	}
+
 	var t = *sPtr
+
 	return &t
 }
 
@@ -326,6 +341,8 @@ func copyTime(tPtr *time.Time) *time.Time {
 	if tPtr == nil {
 		return nil
 	}
+
 	var t = *tPtr
+
 	return &t
 }

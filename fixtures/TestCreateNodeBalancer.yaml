@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"o7x58j8hy1c2-linodego-testing","region":"us-west","client_conn_throttle":20}'
+    body: '{"label":"lpq6h62z88m4-linodego-testing","region":"us-west","client_conn_throttle":20,"tags":null}'
     form: {}
     headers:
       Accept:
@@ -12,15 +12,15 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.1.1 https://github.com/linode/linodego
+      - linodego 0.12.0 https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"ipv4": "010.020.030.040", "region": "us-west", "label": "o7x58j8hy1c2-linodego-testing",
-      "id": 37826, "ipv6": "1234::5678", "created": "2018-01-02T03:04:05",
-      "hostname": "nb-10-20-30-40.fremont.nodebalancer.linode.com", "transfer": {"total":
-      null, "out": null, "in": null}, "updated": "2018-01-02T03:04:05", "client_conn_throttle":
-      20}'
+    body: '{"client_conn_throttle": 20, "ipv6": "1234::5678", "label":
+      "lpq6h62z88m4-linodego-testing", "tags": [], "region": "us-west", "transfer":
+      {"out": null, "in": null, "total": null}, "ipv4": "10.20.30.40", "hostname":
+      "nb-10-20-30-40.fremont.nodebalancer.linode.com", "id": 53601, "updated":
+      "2018-01-02T03:04:05", "created": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -37,15 +37,15 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "343"
+      - "363"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Date:
-      - Thu, 09 Aug 2018 16:03:46 GMT
+      - Wed, 13 Nov 2019 15:27:39 GMT
       Retry-After:
-      - "118"
+      - "119"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -56,7 +56,6 @@ interactions:
       - nodebalancers:read_write
       X-Content-Type-Options:
       - nosniff
-      - nosniff
       X-Frame-Options:
       - DENY
       - DENY
@@ -65,11 +64,11 @@ interactions:
       X-Ratelimit-Limit:
       - "400"
       X-Ratelimit-Remaining:
-      - "398"
+      - "399"
       X-Ratelimit-Reset:
-      - "1533830745"
+      - "1573658961"
       X-Spec-Version:
-      - 4.0.3
+      - 4.7.0
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -86,8 +85,8 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.1.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/37826
+      - linodego 0.12.0 https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/nodebalancers/53601
     method: DELETE
   response:
     body: '{}'
@@ -113,9 +112,9 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 09 Aug 2018 16:03:47 GMT
+      - Wed, 13 Nov 2019 15:27:39 GMT
       Retry-After:
-      - "117"
+      - "119"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -126,7 +125,6 @@ interactions:
       - nodebalancers:read_write
       X-Content-Type-Options:
       - nosniff
-      - nosniff
       X-Frame-Options:
       - DENY
       - DENY
@@ -135,11 +133,11 @@ interactions:
       X-Ratelimit-Limit:
       - "400"
       X-Ratelimit-Remaining:
-      - "398"
+      - "399"
       X-Ratelimit-Reset:
-      - "1533830745"
+      - "1573658961"
       X-Spec-Version:
-      - 4.0.3
+      - 4.7.0
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

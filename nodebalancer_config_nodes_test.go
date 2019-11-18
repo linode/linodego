@@ -8,15 +8,13 @@ import (
 )
 
 var (
-	testNodeAddress                = "192.168.128.1"
 	testNodePort                   = "8080"
 	testNodeLabel                  = "test-label"
 	testNodeWeight                 = 10
 	testNodeBalancerNodeCreateOpts = linodego.NodeBalancerNodeCreateOptions{
-		Address: testNodeAddress + ":" + testNodePort,
-		Label:   testNodeLabel,
-		Weight:  testNodeWeight,
-		Mode:    linodego.ModeAccept,
+		Label:  testNodeLabel,
+		Weight: testNodeWeight,
+		Mode:   linodego.ModeAccept,
 	}
 )
 
@@ -33,12 +31,10 @@ func TestCreateNodeBalancerNode(t *testing.T) {
 
 	expected := testNodeBalancerNodeCreateOpts
 
-	// fixture sanitization breaks predictability for this test, verify the prefix
-	if node.Address[:7] != expected.Address[:7] ||
-		node.Label != expected.Label ||
+	if node.Label != expected.Label ||
 		node.Weight != expected.Weight ||
 		node.Mode != expected.Mode {
-		t.Errorf("NodeBalancerNode did not match CreateOptions")
+		t.Errorf("NodeBalancerNode did not match CreateOptions - %v", node)
 	}
 }
 
@@ -53,10 +49,9 @@ func TestUpdateNodeBalancerNode(t *testing.T) {
 	}
 
 	updateOpts := linodego.NodeBalancerNodeUpdateOptions{
-		Address: testNodeAddress + ":" + ("1" + testNodePort),
-		Mode:    linodego.ModeDrain,
-		Weight:  testNodeWeight + 90,
-		Label:   testNodeLabel + "_r",
+		Mode:   linodego.ModeDrain,
+		Weight: testNodeWeight + 90,
+		Label:  testNodeLabel + "_r",
 	}
 	nodeUpdated, err := client.UpdateNodeBalancerNode(context.Background(), nodebalancer.ID, config.ID, node.ID, updateOpts)
 
@@ -65,8 +60,7 @@ func TestUpdateNodeBalancerNode(t *testing.T) {
 	}
 
 	// fixture sanitization breaks predictability for this test, verify the prefix
-	if updateOpts.Address[:7] != nodeUpdated.Address[:7] ||
-		string(updateOpts.Mode) != string(nodeUpdated.Mode) ||
+	if string(updateOpts.Mode) != string(nodeUpdated.Mode) ||
 		updateOpts.Label != nodeUpdated.Label ||
 		updateOpts.Weight != nodeUpdated.Weight {
 		t.Errorf("NodeBalancerNode did not match UpdateOptions")
@@ -154,7 +148,6 @@ func TestRebuildNodeBalancer(t *testing.T) {
 	if nbcGot.Port != config.Port {
 		t.Errorf("RebuildNodeBalancerConfig did not return the expected port")
 	}
-
 }
 
 func setupNodeBalancerNode(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.NodeBalancer, *linodego.NodeBalancerConfig, *linodego.NodeBalancerNode, func(), error) {
@@ -165,7 +158,18 @@ func setupNodeBalancerNode(t *testing.T, fixturesYaml string) (*linodego.Client,
 		t.Errorf("Error creating nodebalancer config, got error %v", err)
 	}
 
+	client, instance, instanceTeardown, err := setupInstance(t, fixturesYaml+"Instance")
+	if err != nil {
+		t.Error(err)
+	}
+
+	instanceIP, err := client.AddInstanceIPAddress(context.Background(), instance.ID, false)
+	if err != nil {
+		t.Error(err)
+	}
+
 	createOpts := testNodeBalancerNodeCreateOpts
+	createOpts.Address = instanceIP.Address + ":" + testNodePort
 	node, err := client.CreateNodeBalancerNode(context.Background(), nodebalancer.ID, config.ID, createOpts)
 	if err != nil {
 		t.Errorf("Error creating NodeBalancer Config Node, got error %v", err)
@@ -181,6 +185,7 @@ func setupNodeBalancerNode(t *testing.T, fixturesYaml string) (*linodego.Client,
 			}
 		}
 		fixtureTeardown()
+		instanceTeardown()
 	}
 	return client, nodebalancer, config, node, teardown, err
 }

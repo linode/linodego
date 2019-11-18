@@ -218,7 +218,6 @@ func Example() {
 			log.Fatalln("* Failed to delete Instance", err)
 		}
 		fmt.Println("### Deleted Instance")
-
 	}
 
 	linodes, err := linodeClient.ListInstances(context.Background(), nil)
