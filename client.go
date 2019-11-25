@@ -68,6 +68,9 @@ type Client struct {
 	InvoiceItems          *Resource
 	Invoices              *Resource
 	Kernels               *Resource
+	LKEClusters           *Resource
+	LKEClusterPools       *Resource
+	LKEVersions           *Resource
 	Longview              *Resource
 	LongviewClients       *Resource
 	LongviewSubscriptions *Resource
@@ -263,6 +266,9 @@ func addResources(client *Client) {
 		ipv6poolsName:             NewResource(client, ipv6poolsName, ipv6poolsEndpoint, false, nil, IPv6PoolsPagedResponse{}),       // really?
 		ipv6rangesName:            NewResource(client, ipv6rangesName, ipv6rangesEndpoint, false, IPv6Range{}, IPv6RangesPagedResponse{}),
 		kernelsName:               NewResource(client, kernelsName, kernelsEndpoint, false, LinodeKernel{}, LinodeKernelsPagedResponse{}),
+		lkeClustersName:           NewResource(client, lkeClustersName, lkeClustersEndpoint, false, LKECluster{}, LKEClustersPagedResponse{}),
+		lkeClusterPoolsName:       NewResource(client, lkeClusterPoolsName, lkeClusterPoolsEndpoint, true, LKEClusterPool{}, LKEClusterPoolsPagedResponse{}),
+		lkeVersionsName:           NewResource(client, lkeVersionsName, lkeVersionsEndpoint, false, LKEVersion{}, LKEVersionsPagedResponse{}),
 		longviewName:              NewResource(client, longviewName, longviewEndpoint, false, nil, nil), // really?
 		longviewclientsName:       NewResource(client, longviewclientsName, longviewclientsEndpoint, false, LongviewClient{}, LongviewClientsPagedResponse{}),
 		longviewsubscriptionsName: NewResource(client, longviewsubscriptionsName, longviewsubscriptionsEndpoint, false, LongviewSubscription{}, LongviewSubscriptionsPagedResponse{}),
@@ -307,6 +313,9 @@ func addResources(client *Client) {
 	client.Instances = resources[instancesName]
 	client.Invoices = resources[invoicesName]
 	client.Kernels = resources[kernelsName]
+	client.LKEClusters = resources[lkeClustersName]
+	client.LKEClusterPools = resources[lkeClusterPoolsName]
+	client.LKEVersions = resources[lkeVersionsName]
 	client.Longview = resources[longviewName]
 	client.LongviewSubscriptions = resources[longviewsubscriptionsName]
 	client.Managed = resources[managedName]

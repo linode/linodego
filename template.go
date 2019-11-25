@@ -5,11 +5,13 @@ package linodego
 /*
  - replace "Template" with "NameOfResource"
  - replace "template" with "nameOfResource"
+ - remove "+build ignore"
  - copy template_test.go and do the same
  - When updating Template structs,
-   - use pointers where ever null'able would have a different meaning if the wrapper
-	 supplied "" or 0 instead
+   - use pointers where ever null'able would have a different meaning if the
+	 wrapper supplied "" or 0 instead
  - Add "NameOfResource" to client.go, resources.go, pagination.go
+ - Generate fixtures `make ARGS="-run ^.*NameOfResource" fixtures`
  - Update API_SUPPORT.md to reflect newly accessible endpoints
 */
 
