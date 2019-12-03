@@ -110,6 +110,86 @@ func TestResizeInstanceDisk(t *testing.T) {
 	}
 }
 
+func TestMultiplePrivateInstanceDisk(t *testing.T) {
+	// This is a long running test
+	if testing.Short() {
+		t.Skip("Skipping test in short mode.")
+	}
+	client, instance1, teardown1, err := setupInstance(t, "fixtures/TestMultiplePrivateInstanceDiskInitial")
+	defer teardown1()
+	if err != nil {
+		t.Error(err)
+	}
+	err = client.BootInstance(context.Background(), instance1.ID, 0)
+	if err != nil {
+		t.Error(err)
+	}
+	instance1, err = client.WaitForInstanceStatus(context.Background(), instance1.ID, linodego.InstanceRunning, 180)
+	if err != nil {
+		t.Errorf("Error waiting for instance readiness: %s", err)
+	}
+
+	disks, err := client.ListInstanceDisks(context.Background(), instance1.ID, nil)
+	if err != nil {
+		t.Error(err)
+	}
+
+	disk, err := client.WaitForInstanceDiskStatus(context.Background(), instance1.ID, disks[0].ID, linodego.DiskReady, 180)
+	if err != nil {
+		t.Errorf("Error waiting for disk readiness: %s", err)
+	}
+
+	imageCreateOptions := linodego.ImageCreateOptions{Label: "linodego-test-image", DiskID: disk.ID}
+	image, err := client.CreateImage(context.Background(), imageCreateOptions)
+
+	defer client.DeleteImage(context.Background(), image.ID)
+	if err != nil {
+		t.Error(err)
+	}
+
+	client, instance2, _, teardown2, err := setupInstanceWithoutDisks(t, "fixtures/TestMultiplePrivateInstanceDiskSecond")
+	defer teardown2()
+	if err != nil {
+		t.Error(err)
+	}
+	instance2, err = client.WaitForInstanceStatus(context.Background(), instance2.ID, linodego.InstanceOffline, 180)
+	if err != nil {
+		t.Errorf("Error waiting for instance readiness: %s", err)
+	}
+
+	_, err = client.WaitForEventFinished(context.Background(), instance1.ID, linodego.EntityLinode, linodego.ActionDiskImagize, disk.Created, 300)
+	if err != nil {
+		t.Errorf("Error waiting for imagize event: %s", err)
+	}
+
+	_, err = client.CreateInstanceDisk(context.Background(), instance2.ID, linodego.InstanceDiskCreateOptions{
+		Label:    "linodego-test-instancedisk",
+		Image:    image.ID,
+		RootPass: "R34lBAdP455",
+		Size:     2000,
+	})
+	if err != nil {
+		t.Errorf("Error creating disk from private image: %s", err)
+	}
+
+	disk, err = client.CreateInstanceDisk(context.Background(), instance2.ID, linodego.InstanceDiskCreateOptions{
+		Label: "linodego-test-2",
+		Size:  2000,
+	})
+
+	if err != nil {
+		t.Errorf("Error creating disk after a private image: %s", err)
+	}
+
+	disks, err = client.ListInstanceDisks(context.Background(), instance2.ID, nil)
+	if err != nil {
+		t.Errorf("Error listing instance disks, expected struct, got error %v", err)
+	}
+	if len(disks) != 2 {
+		t.Errorf("Expected a list of instance disks, but got %v", disks)
+	}
+}
+
 func TestPasswordResetInstanceDisk(t *testing.T) {
 	if testing.Short() {
 		t.Skip("Skipping test in short mode.")
@@ -269,7 +349,7 @@ func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string) (*linodego.Cli
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	falseBool := false
 	createOpts := linodego.InstanceCreateOptions{
-		Label:  "linodego-test-instance",
+		Label:  "linodego-test-instance-wo-disk",
 		Region: "us-west",
 		Type:   "g6-nanode-1",
 		Booted: &falseBool,
