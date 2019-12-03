@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 <!--- end unreleased changes --->
 <!--- remember to add diff link to footer --->
 
+## [v0.12.2] (2019-12-03)
+
+### Added
+
+* Retries on `Linode Busy.` errors.
+
 ## [v0.12.1] (2019-11-22)
 
 ### Changed
@@ -317,6 +323,7 @@ Deals with NewClient and context for all http requests
 
 
 [unreleased]: https://github.com/linode/linodego/compare/v0.12.1...HEAD
+[v0.12.2]: https://github.com/linode/linodego/compare/v0.12.1...v0.12.2
 [v0.12.1]: https://github.com/linode/linodego/compare/v0.12.0...v0.12.1
 [v0.12.0]: https://github.com/linode/linodego/compare/v0.11.0..v0.12.0
 [v0.11.0]: https://github.com/linode/linodego/compare/v0.10.1..v0.11.0
