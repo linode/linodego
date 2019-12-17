@@ -4,6 +4,8 @@ import (
 	"context"
 	"testing"
 	"time"
+
+	"github.com/linode/linodego"
 )
 
 func TestGetNodeBalancerStats(t *testing.T) {
@@ -18,7 +20,7 @@ func TestGetNodeBalancerStats(t *testing.T) {
 	}
 
 	ticker := time.NewTicker(10 * time.Second)
-	timer := time.NewTimer(570 * time.Second)
+	timer := time.NewTimer(120 * time.Second)
 	defer ticker.Stop()
 
 poll:
@@ -26,19 +28,21 @@ poll:
 		select {
 		case <-ticker.C:
 			_, err = client.GetNodeBalancerStats(context.Background(), nodebalancer.ID)
+			if err != nil {
+				// Possible that the call succeeded but that stats aren't available (HTTP: 4XX)
+				if v, ok := err.(*linodego.Error); ok {
+					if v.Code == 400 && v.Message == "Stats are unavailable at this time." {
+						break poll
+					}
+					// Otherwise, let's call it fatal
+					t.Fatal(err)
+				}
+			}
 			if err == nil { //stats are now returning
 				break poll
 			}
 		case <-timer.C:
 			t.Fatal("Error getting stats, polling timed out")
 		}
-	}
-	currentTime := nodebalancer.Created
-	currentYear := currentTime.Year()
-	currentMonth := int(currentTime.Month())
-	_, err = client.GetInstanceStatsByDate(
-		context.Background(), nodebalancer.ID, currentYear, currentMonth)
-	if err != nil {
-		t.Errorf("Error getting stats by date, expected struct, got error %v", err)
 	}
 }
