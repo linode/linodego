@@ -35,7 +35,7 @@ run_fixtures:
 	go test -timeout=60m $(ARGS)
 
 sanitize:
-	@echo "* Santizing fixtures"
+	@echo "* Sanitizing fixtures"
 	@for yaml in fixtures/*yaml; do \
 		sed -E -i.bak -e "s/$(LINODE_TOKEN)/awesometokenawesometokenawesometoken/g" \
 			-e 's_stats/20[0-9]{2}/[1-9][0-2]?_stats/2018/1_g' \
