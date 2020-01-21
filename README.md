@@ -1,6 +1,7 @@
 # linodego
 
 [![Build Status](https://travis-ci.org/linode/linodego.svg?branch=master)](https://travis-ci.org/linode/linodego)
+[![Release](https://img.shields.io/github/v/release/linode/linodego)](https://github.com/linode/linodego/releases/latest)
 [![GoDoc](https://godoc.org/github.com/linode/linodego?status.svg)](https://godoc.org/github.com/linode/linodego)
 [![Go Report Card](https://goreportcard.com/badge/github.com/linode/linodego)](https://goreportcard.com/report/github.com/linode/linodego)
 [![codecov](https://codecov.io/gh/linode/linodego/branch/master/graph/badge.svg)](https://codecov.io/gh/linode/linodego)
