@@ -167,6 +167,8 @@ See `template.go` and `template_test.go` for tips on adding new endpoints.
   - [X] `GET`
   - [X] `PUT`
   - [X] `DELETE`
+- `/nodebalancers/$id/stats`
+  - [X] `GET`
 
 ### NodeBalancer Configs
 

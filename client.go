@@ -74,6 +74,7 @@ type Client struct {
 	Managed               *Resource
 	NodeBalancerConfigs   *Resource
 	NodeBalancerNodes     *Resource
+	NodeBalancerStats     *Resource
 	NodeBalancers         *Resource
 	Notifications         *Resource
 	OAuthClients          *Resource
@@ -269,6 +270,7 @@ func addResources(client *Client) {
 		managedName:               NewResource(client, managedName, managedEndpoint, false, nil, nil), // really?
 		nodebalancerconfigsName:   NewResource(client, nodebalancerconfigsName, nodebalancerconfigsEndpoint, true, NodeBalancerConfig{}, NodeBalancerConfigsPagedResponse{}),
 		nodebalancernodesName:     NewResource(client, nodebalancernodesName, nodebalancernodesEndpoint, true, NodeBalancerNode{}, NodeBalancerNodesPagedResponse{}),
+		nodebalancerStatsName:     NewResource(client, nodebalancerStatsName, nodebalancerStatsEndpoint, true, NodeBalancerStats{}, nil),
 		nodebalancersName:         NewResource(client, nodebalancersName, nodebalancersEndpoint, false, NodeBalancer{}, NodeBalancerConfigsPagedResponse{}),
 		notificationsName:         NewResource(client, notificationsName, notificationsEndpoint, false, Notification{}, NotificationsPagedResponse{}),
 		oauthClientsName:          NewResource(client, oauthClientsName, oauthClientsEndpoint, false, OAuthClient{}, OAuthClientsPagedResponse{}),
@@ -312,6 +314,7 @@ func addResources(client *Client) {
 	client.Managed = resources[managedName]
 	client.NodeBalancerConfigs = resources[nodebalancerconfigsName]
 	client.NodeBalancerNodes = resources[nodebalancernodesName]
+	client.NodeBalancerStats = resources[nodebalancerStatsName]
 	client.NodeBalancers = resources[nodebalancersName]
 	client.Notifications = resources[notificationsName]
 	client.OAuthClients = resources[oauthClientsName]

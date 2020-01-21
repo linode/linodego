@@ -35,6 +35,7 @@ const (
 	managedName               = "managed"
 	nodebalancerconfigsName   = "nodebalancerconfigs"
 	nodebalancernodesName     = "nodebalancernodes"
+	nodebalancerStatsName     = "nodebalancerstats"
 	nodebalancersName         = "nodebalancers"
 	notificationsName         = "notifications"
 	oauthClientsName          = "oauthClients"
@@ -82,6 +83,7 @@ const (
 	// Should we include these fields in CreateOpts and UpdateOpts?
 	nodebalancerconfigsEndpoint   = "nodebalancers/{{ .ID }}/configs"
 	nodebalancernodesEndpoint     = "nodebalancers/{{ .ID }}/configs/{{ .SecondID }}/nodes"
+	nodebalancerStatsEndpoint     = "nodebalancers/{{ .ID }}/stats"
 	nodebalancersEndpoint         = "nodebalancers"
 	notificationsEndpoint         = "account/notifications"
 	oauthClientsEndpoint          = "account/oauth-clients"
