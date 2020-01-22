@@ -1,4 +1,4 @@
-package linodego_test
+package integration
 
 import (
 	"testing"

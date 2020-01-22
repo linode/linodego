@@ -1,4 +1,4 @@
-package linodego_test
+package integration
 
 /**
  * The tests in the examples directory demontrate use and test the library

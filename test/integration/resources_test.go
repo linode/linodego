@@ -1,4 +1,4 @@
-package linodego
+package integration
 
 import (
 	"context"

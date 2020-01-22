@@ -1,6 +1,6 @@
 // +build ignore
 
-package linodego_test
+package integration
 
 import (
 	"context"
