@@ -18,9 +18,6 @@ var (
 )
 
 func TestCreateObjectStorageBucket(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	_, bucket, teardown, err := setupObjectStorageBucket(t, "fixtures/TestCreateObjectStorageBucket")
 	defer teardown()
 

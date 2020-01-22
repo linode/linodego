@@ -10,10 +10,6 @@ import (
 var testSnapshotLabel = "snapshot-linodego-testing"
 
 func TestListInstanceBackups(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
-
 	client, instance, backup, teardown, err := setupInstanceBackup(t, "fixtures/TestListInstanceBackups")
 	defer teardown()
 	if err != nil {

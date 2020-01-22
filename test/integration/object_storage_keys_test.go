@@ -2,9 +2,10 @@ package integration
 
 import (
 	"context"
-	. "github.com/linode/linodego"
 	"strings"
 	"testing"
+
+	. "github.com/linode/linodego"
 )
 
 var (
@@ -52,9 +53,6 @@ func TestGetObjectStorageKey_found(t *testing.T) {
 }
 
 func TestUpdateObjectStorageKey(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, objectStorageKey, teardown, err := setupObjectStorageKey(t, "fixtures/TestUpdateObjectStorageKey")
 	defer teardown()
 	if err != nil {
@@ -77,9 +75,6 @@ func TestUpdateObjectStorageKey(t *testing.T) {
 }
 
 func TestListObjectStorageKeys(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, objkey, teardown, err := setupObjectStorageKey(t, "fixtures/TestListObjectStorageKey")
 	defer teardown()
 	if err != nil {

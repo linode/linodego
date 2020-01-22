@@ -86,10 +86,6 @@ func createTestClient(t *testing.T, fixturesYaml string) (*linodego.Client, func
 	var recordStopper func()
 	var r http.RoundTripper
 
-	if testing.Short() {
-		apiKey = nil
-	}
-
 	if len(fixturesYaml) > 0 {
 		r, recordStopper = testRecorder(t, fixturesYaml, testingMode)
 	} else {

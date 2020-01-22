@@ -17,9 +17,6 @@ var (
 )
 
 func TestCreateDomainRecord(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	_, _, record, teardown, err := setupDomainRecord(t, "fixtures/TestCreateDomainRecord")
 	defer teardown()
 
@@ -36,9 +33,6 @@ func TestCreateDomainRecord(t *testing.T) {
 }
 
 func TestUpdateDomainRecord(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, domain, record, teardown, err := setupDomainRecord(t, "fixtures/TestUpdateDomainRecord")
 	defer teardown()
 	if err != nil {
@@ -59,9 +53,6 @@ func TestUpdateDomainRecord(t *testing.T) {
 }
 
 func TestListDomainRecords(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, domain, record, teardown, err := setupDomainRecord(t, "fixtures/TestListDomainRecords")
 	defer teardown()
 	if err != nil {
@@ -86,9 +77,6 @@ func TestListDomainRecords(t *testing.T) {
 }
 
 func TestListDomainRecordsMultiplePages(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, domain, record, teardown, err := setupDomainRecord(t, "fixtures/TestListDomainRecordsMultiplePages")
 	defer teardown()
 	if err != nil {
@@ -112,9 +100,6 @@ func TestListDomainRecordsMultiplePages(t *testing.T) {
 }
 
 func TestGetDomainRecord(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, domain, record, teardown, err := setupDomainRecord(t, "fixtures/TestGetDomainRecord")
 	defer teardown()
 	if err != nil {

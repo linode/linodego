@@ -60,9 +60,6 @@ func TestGetSSHKey_found(t *testing.T) {
 }
 
 func TestUpdateSSHKey(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, sshkey, teardown, err := setupSSHKey(t, "fixtures/TestUpdateSSHKey")
 	defer teardown()
 	if err != nil {
@@ -85,9 +82,6 @@ func TestUpdateSSHKey(t *testing.T) {
 }
 
 func TestListSSHKeys(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, sshkey, teardown, err := setupSSHKey(t, "fixtures/TestListSSHKey")
 	defer teardown()
 	if err != nil {

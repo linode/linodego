@@ -78,9 +78,6 @@ func TestGetInstanceIPAddresses(t *testing.T) {
 }
 
 func TestUpdateIPAddress(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestUpdateIPAddress")
 	defer teardown()
 	if err != nil {

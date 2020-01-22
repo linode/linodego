@@ -16,9 +16,6 @@ var (
 )
 
 func TestCreateNodeBalancerConfig(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	_, _, config, teardown, err := setupNodeBalancerConfig(t, "fixtures/TestCreateNodeBalancerConfig")
 	defer teardown()
 
@@ -35,9 +32,6 @@ func TestCreateNodeBalancerConfig(t *testing.T) {
 }
 
 func TestUpdateNodeBalancerConfig(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, nodebalancer, config, teardown, err := setupNodeBalancerConfig(t, "fixtures/TestUpdateNodeBalancerConfig")
 	defer teardown()
 	if err != nil {
@@ -62,9 +56,6 @@ func TestUpdateNodeBalancerConfig(t *testing.T) {
 }
 
 func TestListNodeBalancerConfigs(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, nodebalancer, _, teardown, err := setupNodeBalancerConfig(t, "fixtures/TestListNodeBalancerConfigs")
 	defer teardown()
 	if err != nil {
@@ -82,10 +73,6 @@ func TestListNodeBalancerConfigs(t *testing.T) {
 }
 
 func TestListNodeBalancerConfigsMultiplePages(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
-
 	// This fixture was hand-crafted to render an empty page 1 result, with a single result on page 2
 	// "results:1,data:[],page:1,pages:2"  .. "results:1,data[{...}],page:2,pages:2"
 	client, nodebalancer, _, teardown, err := setupNodeBalancerConfig(t, "fixtures/TestListNodeBalancerConfigsMultiplePages")
@@ -105,9 +92,6 @@ func TestListNodeBalancerConfigsMultiplePages(t *testing.T) {
 }
 
 func TestGetNodeBalancerConfig(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, nodebalancer, config, teardown, err := setupNodeBalancerConfig(t, "fixtures/TestGetNodeBalancerConfig")
 	defer teardown()
 	if err != nil {

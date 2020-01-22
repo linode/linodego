@@ -9,9 +9,6 @@ import (
 )
 
 func TestListEvents(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, instance, teardown, err := setupInstance(t, "fixtures/TestListEvents")
 	defer teardown()
 	if err != nil {

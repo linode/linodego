@@ -19,9 +19,6 @@ var (
 )
 
 func TestCreateNodeBalancer(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	_, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestCreateNodeBalancer")
 	defer teardown()
 
@@ -39,9 +36,6 @@ func TestCreateNodeBalancer(t *testing.T) {
 }
 
 func TestUpdateNodeBalancer(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestUpdateNodeBalancer")
 	defer teardown()
 	if err != nil {
@@ -64,9 +58,6 @@ func TestUpdateNodeBalancer(t *testing.T) {
 }
 
 func TestListNodeBalancers(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, _, teardown, err := setupNodeBalancer(t, "fixtures/TestListNodeBalancers")
 	defer teardown()
 	if err != nil {
@@ -83,9 +74,6 @@ func TestListNodeBalancers(t *testing.T) {
 }
 
 func TestGetNodeBalancer(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestGetNodeBalancer")
 	defer teardown()
 	if err != nil {

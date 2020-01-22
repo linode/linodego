@@ -9,10 +9,6 @@ import (
 )
 
 func TestGetNodeBalancerStats(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
-
 	client, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestGetNodeBalancerStats")
 	defer teardown()
 	if err != nil {

@@ -7,10 +7,6 @@ import (
 )
 
 func TestGetAccount(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
-
 	client, teardown := createTestClient(t, "fixtures/TestGetAccount")
 	defer teardown()
 

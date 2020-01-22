@@ -8,9 +8,6 @@ import (
 )
 
 func TestCreateVolume(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, teardown := createTestClient(t, "fixtures/TestCreateVolume")
 	defer teardown()
 
@@ -35,9 +32,6 @@ func TestCreateVolume(t *testing.T) {
 }
 
 func TestRenameVolume(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, volume, teardown, err := setupVolume(t, "fixtures/TestRenameVolume")
 	defer teardown()
 	if err != nil {
@@ -51,9 +45,6 @@ func TestRenameVolume(t *testing.T) {
 }
 
 func TestResizeVolume(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, volume, teardown, err := setupVolume(t, "fixtures/TestResizeVolume")
 	defer teardown()
 
@@ -67,9 +58,6 @@ func TestResizeVolume(t *testing.T) {
 }
 
 func TestListVolumes(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, teardown := createTestClient(t, "fixtures/TestListVolumes")
 	defer teardown()
 
@@ -83,9 +71,6 @@ func TestListVolumes(t *testing.T) {
 }
 
 func TestGetVolume(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, volume, teardownVolume, errVolume := setupVolume(t, "fixtures/TestGetVolume")
 	defer teardownVolume()
 	if errVolume != nil {
@@ -101,9 +86,6 @@ func TestGetVolume(t *testing.T) {
 }
 
 func TestWaitForVolumeLinodeID_nil(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, volume, teardown, err := setupVolume(t, "fixtures/TestWaitForVolumeLinodeID_nil")
 	defer teardown()
 
@@ -118,10 +100,6 @@ func TestWaitForVolumeLinodeID_nil(t *testing.T) {
 }
 
 func TestWaitForVolumeLinodeIDInstance(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode")
-	}
-
 	client, instance, teardownInstance, errInstance := setupInstance(t, "fixtures/TestWaitForVolumeLinodeID_linode")
 	if errInstance != nil {
 		t.Errorf("Error setting up instance for volume test, %s", errInstance)

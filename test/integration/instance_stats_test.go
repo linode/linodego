@@ -7,10 +7,6 @@ import (
 )
 
 func TestGetInstanceStats(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
-
 	client, instance, teardown, err := setupInstance(t, "fixtures/TestGetInstanceStats")
 	defer teardown()
 	if err != nil {

@@ -16,9 +16,6 @@ var (
 )
 
 func TestCreateDomain(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	_, domain, teardown, err := setupDomain(t, "fixtures/TestCreateDomain")
 	defer teardown()
 
@@ -33,9 +30,6 @@ func TestCreateDomain(t *testing.T) {
 }
 
 func TestUpdateDomain(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, domain, teardown, err := setupDomain(t, "fixtures/TestUpdateDomain")
 	defer teardown()
 	if err != nil {
@@ -54,9 +48,6 @@ func TestUpdateDomain(t *testing.T) {
 }
 
 func TestListDomains(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, _, teardown, err := setupDomain(t, "fixtures/TestListDomains")
 	defer teardown()
 	if err != nil {
@@ -73,9 +64,6 @@ func TestListDomains(t *testing.T) {
 }
 
 func TestGetDomain(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, domain, teardown, err := setupDomain(t, "fixtures/TestGetDomain")
 	defer teardown()
 	if err != nil {

@@ -8,9 +8,6 @@ import (
 )
 
 func TestListNotifications(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, fixtureTeardown := createTestClient(t, "fixtures/TestListNotifications")
 	defer fixtureTeardown()
 

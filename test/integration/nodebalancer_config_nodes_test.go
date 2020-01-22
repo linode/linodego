@@ -19,9 +19,6 @@ var (
 )
 
 func TestCreateNodeBalancerNode(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	_, _, _, node, teardown, err := setupNodeBalancerNode(t, "fixtures/TestCreateNodeBalancerNode")
 	defer teardown()
 
@@ -39,9 +36,6 @@ func TestCreateNodeBalancerNode(t *testing.T) {
 }
 
 func TestUpdateNodeBalancerNode(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, nodebalancer, config, node, teardown, err := setupNodeBalancerNode(t, "fixtures/TestUpdateNodeBalancerNode")
 	defer teardown()
 	if err != nil {
@@ -68,9 +62,6 @@ func TestUpdateNodeBalancerNode(t *testing.T) {
 }
 
 func TestListNodeBalancerNodes(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, nodebalancer, config, _, teardown, err := setupNodeBalancerNode(t, "fixtures/TestListNodeBalancerNodes")
 	defer teardown()
 	if err != nil {
@@ -88,10 +79,7 @@ func TestListNodeBalancerNodes(t *testing.T) {
 }
 
 func TestListNodeBalancerNodesMultiplePages(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
-
+	//TODO: replace hand crafted fixtures with unit tests
 	// This fixture was hand-crafted to render an empty page 1 result, with a single result on page 2
 	// "results:1,data:[],page:1,pages:2"  .. "results:1,data[{...}],page:2,pages:2"
 	client, nodebalancer, config, _, teardown, err := setupNodeBalancerNode(t, "fixtures/TestListNodeBalancerNodesMultiplePages")
@@ -111,9 +99,6 @@ func TestListNodeBalancerNodesMultiplePages(t *testing.T) {
 }
 
 func TestGetNodeBalancerNode(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, nodebalancer, config, node, teardown, err := setupNodeBalancerNode(t, "fixtures/TestGetNodeBalancerNode")
 	defer teardown()
 	if err != nil {
@@ -130,9 +115,6 @@ func TestGetNodeBalancerNode(t *testing.T) {
 }
 
 func TestRebuildNodeBalancer(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, nodebalancer, config, _, teardown, err := setupNodeBalancerNode(t, "fixtures/TestRebuildNodeBalancer")
 	defer teardown()
 	if err != nil {

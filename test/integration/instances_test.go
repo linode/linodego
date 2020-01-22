@@ -9,9 +9,6 @@ import (
 )
 
 func TestListInstances(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestListInstances")
 	defer teardown()
 
@@ -34,9 +31,6 @@ func TestListInstances(t *testing.T) {
 }
 
 func TestGetInstance(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestGetInstance")
 	defer teardown()
 	if err != nil {
@@ -60,9 +54,6 @@ func TestGetInstance(t *testing.T) {
 }
 
 func TestListInstanceDisks(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, instance, teardown, err := setupInstance(t, "fixtures/TestListInstanceDisks")
 	defer teardown()
 	if err != nil {
@@ -79,9 +70,6 @@ func TestListInstanceDisks(t *testing.T) {
 }
 
 func TestResizeInstanceDisk(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestResizeInstanceDisk")
 	defer teardown()
 	if err != nil {
@@ -115,9 +103,6 @@ func TestResizeInstanceDisk(t *testing.T) {
 
 func TestMultiplePrivateInstanceDisk(t *testing.T) {
 	// This is a long running test
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, instance1, teardown1, err := setupInstance(t, "fixtures/TestMultiplePrivateInstanceDiskInitial")
 	defer teardown1()
 	if err != nil {
@@ -194,9 +179,6 @@ func TestMultiplePrivateInstanceDisk(t *testing.T) {
 }
 
 func TestPasswordResetInstanceDisk(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestPasswordResetInstanceDisk")
 	defer teardown()
 	if err != nil {
@@ -235,9 +217,6 @@ func TestPasswordResetInstanceDisk(t *testing.T) {
 }
 
 func TestListInstanceConfigs(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestListInstanceConfigs")
 	defer teardown()
 	if err != nil {
@@ -257,9 +236,6 @@ func TestListInstanceConfigs(t *testing.T) {
 }
 
 func TestUpdateInstanceConfig(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
 	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestUpdateInstanceConfig")
 	defer teardown()
 	if err != nil {
@@ -279,10 +255,6 @@ func TestUpdateInstanceConfig(t *testing.T) {
 }
 
 func TestListInstanceVolumes(t *testing.T) {
-	if testing.Short() {
-		t.Skip("Skipping test in short mode.")
-	}
-
 	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestListInstanceVolumes_instance")
 	defer teardown()
 	if err != nil {
