@@ -26,6 +26,9 @@ func TestCreateVolume(t *testing.T) {
 		t.Errorf("Expected a volumes id, but got 0")
 	}
 
+	assertDateSet(t, &volume.Created)
+	assertDateSet(t, &volume.Updated)
+
 	if err := client.DeleteVolume(context.Background(), volume.ID); err != nil {
 		t.Errorf("Expected to delete a volume, but got %v", err)
 	}
@@ -93,6 +96,8 @@ func TestGetVolume(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error getting volume %d, expected *LinodeVolume, got error %v", volume.ID, err)
 	}
+	assertDateSet(t, &volume.Created)
+	assertDateSet(t, &volume.Updated)
 }
 
 func TestWaitForVolumeLinodeID_nil(t *testing.T) {

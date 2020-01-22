@@ -17,16 +17,14 @@ const (
 
 // LKECluster represents a LKECluster object
 type LKECluster struct {
-	ID         int              `json:"id"`
-	Created    *time.Time       `json:"-"`
-	Updated    *time.Time       `json:"-"`
-	CreatedStr string           `json:"created"`
-	UpdatedStr string           `json:"updated"`
-	Label      string           `json:"label"`
-	Region     string           `json:"region"`
-	Status     LKEClusterStatus `json:"status"`
-	Version    string           `json:"version"`
-	Tags       []string         `json:"tags"`
+	ID      int              `json:"id"`
+	Created *time.Time       `json:"-"`
+	Updated *time.Time       `json:"-"`
+	Label   string           `json:"label"`
+	Region  string           `json:"region"`
+	Status  LKEClusterStatus `json:"status"`
+	Version string           `json:"version"`
+	Tags    []string         `json:"tags"`
 }
 
 // LKEClusterCreateOptions fields are those accepted by CreateLKECluster
@@ -56,6 +54,27 @@ type LKEClusterKubeconfig struct {
 // LKEVersion fields are those returned by GetLKEVersion
 type LKEVersion struct {
 	ID string `json:"id"`
+}
+
+func (i *LKECluster) UnmarshalJSON(b []byte) error {
+	type Mask LKECluster
+
+	p := struct {
+		*Mask
+		Created *ParseableTime `json:"created"`
+		Updated *ParseableTime `json:"updated"`
+	}{
+		Mask: (*Mask)(i),
+	}
+
+	if err := json.Unmarshal(b, &p); err != nil {
+		return err
+	}
+
+	i.Created = (*time.Time)(p.Created)
+	i.Updated = (*time.Time)(p.Updated)
+
+	return nil
 }
 
 // GetCreateOptions converts a LKECluster to LKEClusterCreateOptions for use in CreateLKECluster
@@ -118,20 +137,10 @@ func (resp *LKEVersionsPagedResponse) appendData(r *LKEVersionsPagedResponse) {
 func (c *Client) ListLKEClusters(ctx context.Context, opts *ListOptions) ([]LKECluster, error) {
 	response := LKEClustersPagedResponse{}
 	err := c.listHelper(ctx, &response, opts)
-	for i := range response.Data {
-		response.Data[i].fixDates()
-	}
 	if err != nil {
 		return nil, err
 	}
 	return response.Data, nil
-}
-
-// fixDates converts JSON timestamps to Go time.Time values
-func (i *LKECluster) fixDates() *LKECluster {
-	i.Created, _ = parseDates(i.CreatedStr)
-	i.Updated, _ = parseDates(i.UpdatedStr)
-	return i
 }
 
 // GetLKECluster gets the lkeCluster with the provided ID
@@ -145,7 +154,7 @@ func (c *Client) GetLKECluster(ctx context.Context, id int) (*LKECluster, error)
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*LKECluster).fixDates(), nil
+	return r.Result().(*LKECluster), nil
 }
 
 // CreateLKECluster creates a LKECluster
@@ -171,7 +180,7 @@ func (c *Client) CreateLKECluster(ctx context.Context, createOpts LKEClusterCrea
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*LKECluster).fixDates(), nil
+	return r.Result().(*LKECluster), nil
 }
 
 // UpdateLKECluster updates the LKECluster with the specified id
@@ -198,7 +207,7 @@ func (c *Client) UpdateLKECluster(ctx context.Context, id int, updateOpts LKEClu
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*LKECluster).fixDates(), nil
+	return r.Result().(*LKECluster), nil
 }
 
 // DeleteLKECluster deletes the LKECluster with the specified id

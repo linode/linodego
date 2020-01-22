@@ -8,10 +8,15 @@ const (
 	dateLayout = "2006-01-02T15:04:05"
 )
 
-func parseDates(dateStr string) (*time.Time, error) {
-	d, err := time.Parse(dateLayout, dateStr)
+type ParseableTime time.Time
+
+func (p *ParseableTime) UnmarshalJSON(b []byte) error {
+	t, err := time.Parse(`"`+dateLayout+`"`, string(b))
 	if err != nil {
-		return nil, err
+		return err
 	}
-	return &d, nil
+
+	*p = ParseableTime(t)
+
+	return nil
 }

@@ -55,6 +55,8 @@ func TestGetSSHKey_found(t *testing.T) {
 	if testSSHKeyCreateOpts.SSHKey != sshkey.SSHKey {
 		t.Errorf("Expected sshkey sshkey, but got a different one")
 	}
+
+	assertDateSet(t, sshkey.Created)
 }
 
 func TestUpdateSSHKey(t *testing.T) {
@@ -107,6 +109,7 @@ func TestListSSHKeys(t *testing.T) {
 			if sshkeys[i].Created == nil {
 				t.Errorf("Expected listed sshkeys to have parsed Created")
 			}
+			assertDateSet(t, sshkeys[i].Created)
 			break
 		}
 	}

@@ -94,7 +94,7 @@ func (c *Client) GetTemplate(ctx context.Context, id int) (*Template, error) {
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*Template).fixDates(), nil
+	return r.Result().(*Template), nil
 }
 
 // CreateTemplate creates a Template
@@ -120,7 +120,7 @@ func (c *Client) CreateTemplate(ctx context.Context, createOpts TemplateCreateOp
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*Template).fixDates(), nil
+	return r.Result().(*Template), nil
 }
 
 // UpdateTemplate updates the Template with the specified id
@@ -147,7 +147,7 @@ func (c *Client) UpdateTemplate(ctx context.Context, id int, updateOpts Template
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*Template).fixDates(), nil
+	return r.Result().(*Template), nil
 }
 
 // DeleteTemplate deletes the Template with the specified id

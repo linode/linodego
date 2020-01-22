@@ -33,6 +33,9 @@ func TestCreateNodeBalancer(t *testing.T) {
 	if !strings.Contains(*nodebalancer.Label, "-linodego-testing") {
 		t.Errorf("nodebalancer returned does not match nodebalancer create request")
 	}
+
+	assertDateSet(t, nodebalancer.Created)
+	assertDateSet(t, nodebalancer.Updated)
 }
 
 func TestUpdateNodeBalancer(t *testing.T) {

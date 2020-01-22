@@ -9,8 +9,6 @@ import (
 
 // NodeBalancer represents a NodeBalancer object
 type NodeBalancer struct {
-	CreatedStr string `json:"created"`
-	UpdatedStr string `json:"updated"`
 	// This NodeBalancer's unique ID.
 	ID int `json:"id"`
 	// This NodeBalancer's label. These must be unique on your Account.
@@ -61,6 +59,27 @@ type NodeBalancerUpdateOptions struct {
 	Tags               *[]string `json:"tags,omitempty"`
 }
 
+func (i *NodeBalancer) UnmarshalJSON(b []byte) error {
+	type Mask NodeBalancer
+
+	p := struct {
+		*Mask
+		Created *ParseableTime `json:"created"`
+		Updated *ParseableTime `json:"updated"`
+	}{
+		Mask: (*Mask)(i),
+	}
+
+	if err := json.Unmarshal(b, &p); err != nil {
+		return err
+	}
+
+	i.Created = (*time.Time)(p.Created)
+	i.Updated = (*time.Time)(p.Updated)
+
+	return nil
+}
+
 // GetCreateOptions converts a NodeBalancer to NodeBalancerCreateOptions for use in CreateNodeBalancer
 func (i NodeBalancer) GetCreateOptions() NodeBalancerCreateOptions {
 	return NodeBalancerCreateOptions{
@@ -108,13 +127,6 @@ func (c *Client) ListNodeBalancers(ctx context.Context, opts *ListOptions) ([]No
 	return response.Data, nil
 }
 
-// fixDates converts JSON timestamps to Go time.Time values
-func (i *NodeBalancer) fixDates() *NodeBalancer {
-	i.Created, _ = parseDates(i.CreatedStr)
-	i.Updated, _ = parseDates(i.UpdatedStr)
-	return i
-}
-
 // GetNodeBalancer gets the NodeBalancer with the provided ID
 func (c *Client) GetNodeBalancer(ctx context.Context, id int) (*NodeBalancer, error) {
 	e, err := c.NodeBalancers.Endpoint()
@@ -128,7 +140,7 @@ func (c *Client) GetNodeBalancer(ctx context.Context, id int) (*NodeBalancer, er
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*NodeBalancer).fixDates(), nil
+	return r.Result().(*NodeBalancer), nil
 }
 
 // CreateNodeBalancer creates a NodeBalancer
@@ -155,7 +167,7 @@ func (c *Client) CreateNodeBalancer(ctx context.Context, nodebalancer NodeBalanc
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*NodeBalancer).fixDates(), nil
+	return r.Result().(*NodeBalancer), nil
 }
 
 // UpdateNodeBalancer updates the NodeBalancer with the specified id
@@ -182,7 +194,7 @@ func (c *Client) UpdateNodeBalancer(ctx context.Context, id int, updateOpts Node
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*NodeBalancer).fixDates(), nil
+	return r.Result().(*NodeBalancer), nil
 }
 
 // DeleteNodeBalancer deletes the NodeBalancer with the specified id

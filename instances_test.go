@@ -54,6 +54,9 @@ func TestGetInstance(t *testing.T) {
 	if instance.Specs.Disk <= 0 {
 		t.Errorf("Error parsing instance spec for disk size: %v", instance.Specs)
 	}
+
+	assertDateSet(t, instance.Created)
+	assertDateSet(t, instance.Updated)
 }
 
 func TestListInstanceDisks(t *testing.T) {
