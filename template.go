@@ -75,19 +75,12 @@ func (c *Client) ListTemplates(ctx context.Context, opts *ListOptions) ([]Templa
 	response := TemplatesPagedResponse{}
 	err := c.listHelper(ctx, &response, opts)
 	for i := range response.Data {
-		response.Data[i].fixDates()
+		response.Data[i]
 	}
 	if err != nil {
 		return nil, err
 	}
 	return response.Data, nil
-}
-
-// fixDates converts JSON timestamps to Go time.Time values
-func (i *Template) fixDates() *Template {
-	// i.Created, _ = parseDates(i.CreatedStr)
-	// i.Updated, _ = parseDates(i.UpdatedStr)
-	return i
 }
 
 // GetTemplate gets the template with the provided ID

@@ -27,11 +27,6 @@ type CreditCard struct {
 	Expiry   string `json:"expiry"`
 }
 
-// fixDates converts JSON timestamps to Go time.Time values
-func (v *Account) fixDates() *Account {
-	return v
-}
-
 // GetAccount gets the contact and billing information related to the Account
 func (c *Client) GetAccount(ctx context.Context) (*Account, error) {
 	e, err := c.Account.Endpoint()
@@ -45,5 +40,5 @@ func (c *Client) GetAccount(ctx context.Context) (*Account, error) {
 		return nil, err
 	}
 
-	return r.Result().(*Account).fixDates(), nil
+	return r.Result().(*Account), nil
 }
