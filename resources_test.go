@@ -1,4 +1,4 @@
-package integration
+package linodego
 
 import (
 	"context"
@@ -25,6 +25,7 @@ func TestResourceEndpoint(t *testing.T) {
 		t.Errorf("Images endpoint did not match '%s'", imagesEndpoint)
 	}
 }
+
 func TestResourceTemplatedendpointWithID(t *testing.T) {
 	apiKey := "MYFAKEAPIKEY"
 
