@@ -158,24 +158,13 @@ func (c *Client) SetToken(token string) *Client {
 	return c
 }
 
-// SetLinodeBusyRetry configures resty to retry specifically on "Linode busy." errors
-// The retry wait time is configured in SetPollDelay
-func (c *Client) SetLinodeBusyRetry() *Client {
+func (c *Client) SetRetries() *Client {
+	addRetryConditional(linodeBusyRetryCondition)
+	addRetryConditional(tooManyRequestsRetryCondition)
 	c.resty.
 		SetRetryCount(1000).
 		SetRetryMaxWaitTime(30 * time.Second).
-		AddRetryCondition(
-			func(r *resty.Response, _ error) bool {
-				apiError, ok := r.Error().(*APIError)
-				linodeBusy := ok && apiError.Error() == "Linode busy."
-				retry := r.StatusCode() == http.StatusBadRequest && linodeBusy
-				if retry {
-					log.Printf("[INFO] Received error %s - Retrying", apiError)
-				}
-				return retry
-			},
-		)
-
+		AddRetryCondition(checkRetryConditionals)
 	return c
 }
 
@@ -237,7 +226,7 @@ func NewClient(hc *http.Client) (client Client) {
 
 	client.
 		SetPollDelay(1000 * APISecondsPerPoll).
-		SetLinodeBusyRetry().
+		SetRetries().
 		SetDebug(envDebug)
 
 	addResources(&client)
