@@ -5,12 +5,17 @@ GOLANGCILINT_ARGS := run
 
 .PHONY: build vet test example refresh-fixtures clean-fixtures lint run_fixtures sanitize fixtures godoc
 
-test: build lint
+test: testunit testint
+
+testunit: build lint
+	go test . ./internal/utils $(ARGS)
+
+testint: build lint
 	@LINODE_FIXTURE_MODE="play" \
 	LINODE_TOKEN="awesometokenawesometokenawesometoken" \
 	LINODE_API_VERSION="v4beta" \
 	GO111MODULE="on" \
-	go test $(ARGS)
+	go test ./test/integration $(ARGS)
 
 build: vet lint
 	go build ./...
