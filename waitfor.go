@@ -310,7 +310,7 @@ func (client Client) WaitForEventFinished(ctx context.Context, id interface{}, e
 				// @TODO(displague) This event.Created check shouldn't be needed, but it appears
 				// that the ListEvents method is not populating it correctly
 				if event.Created == nil {
-					log.Printf("[WARN] event.Created is nil when API returned: %#+v", event.CreatedStr)
+					log.Printf("[WARN] event.Created is nil when API returned: %#+v", event.Created)
 				} else if *event.Created != minStart && !event.Created.After(minStart) {
 					// Not the event we were looking for
 					// log.Println(event.Created, "is not >=", minStart)

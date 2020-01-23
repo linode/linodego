@@ -75,19 +75,12 @@ func (c *Client) ListTemplates(ctx context.Context, opts *ListOptions) ([]Templa
 	response := TemplatesPagedResponse{}
 	err := c.listHelper(ctx, &response, opts)
 	for i := range response.Data {
-		response.Data[i].fixDates()
+		response.Data[i]
 	}
 	if err != nil {
 		return nil, err
 	}
 	return response.Data, nil
-}
-
-// fixDates converts JSON timestamps to Go time.Time values
-func (i *Template) fixDates() *Template {
-	// i.Created, _ = parseDates(i.CreatedStr)
-	// i.Updated, _ = parseDates(i.UpdatedStr)
-	return i
 }
 
 // GetTemplate gets the template with the provided ID
@@ -101,7 +94,7 @@ func (c *Client) GetTemplate(ctx context.Context, id int) (*Template, error) {
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*Template).fixDates(), nil
+	return r.Result().(*Template), nil
 }
 
 // CreateTemplate creates a Template
@@ -127,7 +120,7 @@ func (c *Client) CreateTemplate(ctx context.Context, createOpts TemplateCreateOp
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*Template).fixDates(), nil
+	return r.Result().(*Template), nil
 }
 
 // UpdateTemplate updates the Template with the specified id
@@ -154,7 +147,7 @@ func (c *Client) UpdateTemplate(ctx context.Context, id int, updateOpts Template
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*Template).fixDates(), nil
+	return r.Result().(*Template), nil
 }
 
 // DeleteTemplate deletes the Template with the specified id

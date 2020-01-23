@@ -9,9 +9,6 @@ import (
 
 // InstanceDisk represents an Instance Disk object
 type InstanceDisk struct {
-	CreatedStr string `json:"created"`
-	UpdatedStr string `json:"updated"`
-
 	ID         int            `json:"id"`
 	Label      string         `json:"label"`
 	Status     DiskStatus     `json:"status"`
@@ -91,26 +88,35 @@ func (c *Client) ListInstanceDisks(ctx context.Context, linodeID int, opts *List
 	response := InstanceDisksPagedResponse{}
 	err := c.listHelperWithID(ctx, &response, linodeID, opts)
 
-	for i := range response.Data {
-		response.Data[i].fixDates()
-	}
-
 	if err != nil {
 		return nil, err
 	}
 	return response.Data, nil
 }
 
-// fixDates converts JSON timestamps to Go time.Time values
-func (v *InstanceDisk) fixDates() *InstanceDisk {
-	if created, err := parseDates(v.CreatedStr); err == nil {
-		v.Created = *created
+func (i *InstanceDisk) UnmarshalJSON(b []byte) error {
+	type Mask InstanceDisk
+
+	p := struct {
+		*Mask
+		Created *ParseableTime `json:"created"`
+		Updated *ParseableTime `json:"updated"`
+	}{
+		Mask: (*Mask)(i),
 	}
 
-	if updated, err := parseDates(v.UpdatedStr); err == nil {
-		v.Updated = *updated
+	if err := json.Unmarshal(b, &p); err != nil {
+		return err
 	}
-	return v
+
+	if p.Created != nil {
+		i.Created = time.Time(*p.Created)
+	}
+	if p.Updated != nil {
+		i.Updated = time.Time(*p.Updated)
+	}
+
+	return nil
 }
 
 // GetInstanceDisk gets the template with the provided ID
@@ -126,7 +132,7 @@ func (c *Client) GetInstanceDisk(ctx context.Context, linodeID int, configID int
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*InstanceDisk).fixDates(), nil
+	return r.Result().(*InstanceDisk), nil
 }
 
 // CreateInstanceDisk creates a new InstanceDisk for the given Instance
@@ -154,7 +160,7 @@ func (c *Client) CreateInstanceDisk(ctx context.Context, linodeID int, createOpt
 		return nil, err
 	}
 
-	return r.Result().(*InstanceDisk).fixDates(), nil
+	return r.Result().(*InstanceDisk), nil
 }
 
 // UpdateInstanceDisk creates a new InstanceDisk for the given Instance
@@ -183,7 +189,7 @@ func (c *Client) UpdateInstanceDisk(ctx context.Context, linodeID int, diskID in
 		return nil, err
 	}
 
-	return r.Result().(*InstanceDisk).fixDates(), nil
+	return r.Result().(*InstanceDisk), nil
 }
 
 // RenameInstanceDisk renames an InstanceDisk

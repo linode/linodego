@@ -35,6 +35,8 @@ func TestCreateObjectStorageBucket(t *testing.T) {
 		bucket.Cluster != expected.Cluster {
 		t.Errorf("Object Storage Bucket did not match CreateOptions")
 	}
+
+	assertDateSet(t, bucket.Created)
 }
 
 func TestGetObjectStorageBucket_missing(t *testing.T) {

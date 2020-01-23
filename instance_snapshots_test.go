@@ -27,6 +27,9 @@ func TestListInstanceBackups(t *testing.T) {
 		t.Errorf("Error getting backup, Labels dont match")
 	}
 
+	assertDateSet(t, backupGotten.Created)
+	assertDateSet(t, backupGotten.Updated)
+
 	backups, err := client.GetInstanceBackups(context.Background(), instance.ID)
 	if err != nil {
 		t.Errorf("Error getting backups: %v", err)

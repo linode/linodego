@@ -45,6 +45,8 @@ func TestGetToken_found(t *testing.T) {
 		t.Errorf("Expected a specific token, but got a different one %v", i)
 	}
 
+	assertDateSet(t, i.Created)
+
 	updateOpts := i.GetUpdateOptions()
 	if updateOpts.Label != i.Label {
 		t.Errorf("Expected matching Label from GetUpdateOptions, got: %v", updateOpts)

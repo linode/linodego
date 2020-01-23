@@ -9,11 +9,10 @@ import (
 
 // SSHKey represents a SSHKey object
 type SSHKey struct {
-	ID         int        `json:"id"`
-	Label      string     `json:"label"`
-	SSHKey     string     `json:"ssh_key"`
-	CreatedStr string     `json:"created"`
-	Created    *time.Time `json:"-"`
+	ID      int        `json:"id"`
+	Label   string     `json:"label"`
+	SSHKey  string     `json:"ssh_key"`
+	Created *time.Time `json:"-"`
 }
 
 // SSHKeyCreateOptions fields are those accepted by CreateSSHKey
@@ -25,6 +24,25 @@ type SSHKeyCreateOptions struct {
 // SSHKeyUpdateOptions fields are those accepted by UpdateSSHKey
 type SSHKeyUpdateOptions struct {
 	Label string `json:"label"`
+}
+
+func (i *SSHKey) UnmarshalJSON(b []byte) error {
+	type Mask SSHKey
+
+	p := struct {
+		*Mask
+		Created *ParseableTime `json:"created"`
+	}{
+		Mask: (*Mask)(i),
+	}
+
+	if err := json.Unmarshal(b, &p); err != nil {
+		return err
+	}
+
+	i.Created = (*time.Time)(p.Created)
+
+	return nil
 }
 
 // GetCreateOptions converts a SSHKey to SSHKeyCreateOptions for use in CreateSSHKey
@@ -65,20 +83,10 @@ func (c *Client) ListSSHKeys(ctx context.Context, opts *ListOptions) ([]SSHKey, 
 	response := SSHKeysPagedResponse{}
 	err := c.listHelper(ctx, &response, opts)
 
-	for i := range response.Data {
-		response.Data[i].fixDates()
-	}
-
 	if err != nil {
 		return nil, err
 	}
 	return response.Data, nil
-}
-
-// fixDates converts JSON timestamps to Go time.Time values
-func (i *SSHKey) fixDates() *SSHKey {
-	i.Created, _ = parseDates(i.CreatedStr)
-	return i
 }
 
 // GetSSHKey gets the sshkey with the provided ID
@@ -92,7 +100,7 @@ func (c *Client) GetSSHKey(ctx context.Context, id int) (*SSHKey, error) {
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*SSHKey).fixDates(), nil
+	return r.Result().(*SSHKey), nil
 }
 
 // CreateSSHKey creates a SSHKey
@@ -118,7 +126,7 @@ func (c *Client) CreateSSHKey(ctx context.Context, createOpts SSHKeyCreateOption
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*SSHKey).fixDates(), nil
+	return r.Result().(*SSHKey), nil
 }
 
 // UpdateSSHKey updates the SSHKey with the specified id
@@ -145,7 +153,7 @@ func (c *Client) UpdateSSHKey(ctx context.Context, id int, updateOpts SSHKeyUpda
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*SSHKey).fixDates(), nil
+	return r.Result().(*SSHKey), nil
 }
 
 // DeleteSSHKey deletes the SSHKey with the specified id

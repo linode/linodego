@@ -34,5 +34,8 @@ func TestListEvents(t *testing.T) {
 
 	if len(events) == 0 {
 		t.Errorf("Expected to see at least one event")
+	} else {
+		assertDateSet(t, events[0].Created)
 	}
+
 }

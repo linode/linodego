@@ -49,6 +49,8 @@ func TestGetPayment_found(t *testing.T) {
 	if i.ID != p[0].ID {
 		t.Errorf("Expected a specific payment, but got a different one %v", i)
 	}
+
+	assertDateSet(t, i.Date)
 }
 func TestListPayments(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestListPayments")
