@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
+
+	"github.com/linode/linodego/internal/parseabletime"
 )
 
 // Image represents a deployable Image object for use with Linode Instances
@@ -40,8 +42,8 @@ func (i *Image) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
-		Created *ParseableTime `json:"created"`
-		Expiry  *ParseableTime `json:"expiry"`
+		Created *parseabletime.ParseableTime `json:"created"`
+		Expiry  *parseabletime.ParseableTime `json:"expiry"`
 	}{
 		Mask: (*Mask)(i),
 	}

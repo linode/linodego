@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"net"
 	"time"
+
+	"github.com/linode/linodego/internal/parseabletime"
 )
 
 /*
@@ -127,8 +129,8 @@ func (i *Instance) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
-		Created *ParseableTime `json:"created"`
-		Updated *ParseableTime `json:"updated"`
+		Created *parseabletime.ParseableTime `json:"created"`
+		Updated *parseabletime.ParseableTime `json:"updated"`
 	}{
 		Mask: (*Mask)(i),
 	}

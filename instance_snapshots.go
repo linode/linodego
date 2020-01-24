@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
+
+	"github.com/linode/linodego/internal/parseabletime"
 )
 
 // InstanceBackupsResponse response struct for backup snapshot
@@ -64,9 +66,9 @@ func (i *InstanceSnapshot) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
-		Created  *ParseableTime `json:"created"`
-		Updated  *ParseableTime `json:"updated"`
-		Finished *ParseableTime `json:"finished"`
+		Created  *parseabletime.ParseableTime `json:"created"`
+		Updated  *parseabletime.ParseableTime `json:"updated"`
+		Finished *parseabletime.ParseableTime `json:"finished"`
 	}{
 		Mask: (*Mask)(i),
 	}

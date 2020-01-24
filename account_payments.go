@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
+
+	"github.com/linode/linodego/internal/parseabletime"
 )
 
 // Payment represents a Payment object
@@ -33,7 +35,7 @@ func (i *Payment) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
-		Date *ParseableTime `json:"date"`
+		Date *parseabletime.ParseableTime `json:"date"`
 	}{
 		Mask: (*Mask)(i),
 	}

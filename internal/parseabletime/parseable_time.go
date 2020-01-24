@@ -1,4 +1,4 @@
-package linodego
+package parseabletime
 
 import (
 	"time"

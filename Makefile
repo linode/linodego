@@ -2,13 +2,14 @@ include .env
 BIN_DIR := $(GOPATH)/bin
 GOLANGCILINT := golangci-lint
 GOLANGCILINT_ARGS := run
+PACKAGES := $(shell go list ./... | grep -v integration)
 
-.PHONY: build vet test example refresh-fixtures clean-fixtures lint run_fixtures sanitize fixtures godoc
+.PHONY: build vet test refresh-fixtures clean-fixtures lint run_fixtures sanitize fixtures godoc testint testunit
 
 test: testunit testint
 
 testunit: build lint
-	go test . ./internal/utils $(ARGS)
+	go test $(PACKAGES) $(ARGS)
 
 testint: build lint
 	@LINODE_FIXTURE_MODE="play" \

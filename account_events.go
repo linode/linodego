@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/linode/linodego/internal/parseabletime"
 	"github.com/linode/linodego/internal/utils"
 )
 
@@ -183,8 +184,8 @@ func (i *Event) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
-		Created       *ParseableTime  `json:"created"`
-		TimeRemaining json.RawMessage `json:"time_remaining"`
+		Created       *parseabletime.ParseableTime `json:"created"`
+		TimeRemaining json.RawMessage              `json:"time_remaining"`
 	}{
 		Mask: (*Mask)(i),
 	}

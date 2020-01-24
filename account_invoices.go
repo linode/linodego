@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
+
+	"github.com/linode/linodego/internal/parseabletime"
 )
 
 // Invoice structs reflect an invoice for billable activity on the account.
@@ -64,7 +66,7 @@ func (i *Invoice) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
-		Date *ParseableTime `json:"date"`
+		Date *parseabletime.ParseableTime `json:"date"`
 	}{
 		Mask: (*Mask)(i),
 	}
@@ -83,8 +85,8 @@ func (i *InvoiceItem) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
-		From *ParseableTime `json:"from"`
-		To   *ParseableTime `json:"to"`
+		From *parseabletime.ParseableTime `json:"from"`
+		To   *parseabletime.ParseableTime `json:"to"`
 	}{
 		Mask: (*Mask)(i),
 	}
