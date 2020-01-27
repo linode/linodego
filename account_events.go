@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/linode/linodego/internal/duration"
 	"github.com/linode/linodego/internal/parseabletime"
-	"github.com/linode/linodego/internal/utils"
 )
 
 // Event represents an action taken on the Account.
@@ -195,7 +195,7 @@ func (i *Event) UnmarshalJSON(b []byte) error {
 	}
 
 	i.Created = (*time.Time)(p.Created)
-	i.TimeRemaining = utils.UnmarshalTimeRemaining(p.TimeRemaining)
+	i.TimeRemaining = duration.UnmarshalTimeRemaining(p.TimeRemaining)
 
 	return nil
 }

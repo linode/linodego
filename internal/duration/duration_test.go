@@ -1,4 +1,4 @@
-package utils
+package duration
 
 import (
 	"encoding/json"
