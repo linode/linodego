@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
+
+	"github.com/linode/linodego/internal/parseabletime"
 )
 
 // Stackscript represents a Linode StackScript
@@ -66,8 +68,8 @@ func (i *Stackscript) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
-		Created *ParseableTime `json:"created"`
-		Updated *ParseableTime `json:"updated"`
+		Created *parseabletime.ParseableTime `json:"created"`
+		Updated *parseabletime.ParseableTime `json:"updated"`
 	}{
 		Mask: (*Mask)(i),
 	}

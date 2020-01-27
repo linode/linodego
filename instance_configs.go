@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
+
+	"github.com/linode/linodego/internal/parseabletime"
 )
 
 // InstanceConfig represents all of the settings that control the boot and run configuration of a Linode Instance
@@ -92,8 +94,8 @@ func (i *InstanceConfig) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
-		Created *ParseableTime `json:"created"`
-		Updated *ParseableTime `json:"updated"`
+		Created *parseabletime.ParseableTime `json:"created"`
+		Updated *parseabletime.ParseableTime `json:"updated"`
 	}{
 		Mask: (*Mask)(i),
 	}

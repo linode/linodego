@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"time"
+
+	"github.com/linode/linodego/internal/parseabletime"
 )
 
 // Notification represents a notification on an Account
@@ -96,8 +98,8 @@ func (i *Notification) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
-		Until *ParseableTime `json:"until"`
-		When  *ParseableTime `json:"when"`
+		Until *parseabletime.ParseableTime `json:"until"`
+		When  *parseabletime.ParseableTime `json:"when"`
 	}{
 		Mask: (*Mask)(i),
 	}

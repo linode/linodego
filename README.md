@@ -154,15 +154,9 @@ When performing a `POST` or `PUT` request, multiple field related errors will be
 
 ## Tests
 
-Run `make test` to run the unit tests.  This is the same as running `go test` except that `make test` will
-execute the tests while playing back API response fixtures that were recorded during a previous development build.
+Run `make testunit` to run the unit tests. 
 
-`go test` can be used without the fixtures. Copy `env.sample` to `.env` and configure your persistent test
-settings, including an API token.
-
-`go test -short` can be used to run live API tests that do not require an account token.
-
-This will be simplified in future versions.
+Run `make testint` to run the integration tests. The integration tests use fixtures.
 
 To update the test fixtures, run `make fixtures`.  This will record the API responses into the `fixtures/` directory.
 Be careful about committing any sensitive account details.  An attempt has been made to sanitize IP addresses and

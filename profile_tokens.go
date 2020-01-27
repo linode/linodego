@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"time"
+
+	"github.com/linode/linodego/internal/parseabletime"
 )
 
 // Token represents a Token object
@@ -52,8 +54,8 @@ func (i *Token) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
-		Created *ParseableTime `json:"created"`
-		Expiry  *ParseableTime `json:"expiry"`
+		Created *parseabletime.ParseableTime `json:"created"`
+		Expiry  *parseabletime.ParseableTime `json:"expiry"`
 	}{
 		Mask: (*Mask)(i),
 	}
