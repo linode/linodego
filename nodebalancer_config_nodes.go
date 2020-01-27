@@ -30,6 +30,9 @@ var (
 
 	// ModeDrain is the NodeMode indicating a NodeBalancer Node is not receiving new traffic, but may continue receiving traffic from pinned connections
 	ModeDrain NodeMode = "drain"
+
+	// ModeBackup is the NodeMode indicating a NodeBalancer Node will only receive traffic if all "accept" Nodes are down
+	ModeBackup NodeMode = "backup"
 )
 
 // NodeBalancerNodeCreateOptions fields are those accepted by CreateNodeBalancerNode
