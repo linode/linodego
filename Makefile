@@ -9,14 +9,14 @@ PACKAGES := $(shell go list ./... | grep -v integration)
 test: testunit testint
 
 testunit: build lint
-	go test $(PACKAGES) $(ARGS)
+	go test -v $(PACKAGES) $(ARGS)
 
 testint: build lint
 	@LINODE_FIXTURE_MODE="play" \
 	LINODE_TOKEN="awesometokenawesometokenawesometoken" \
 	LINODE_API_VERSION="v4beta" \
 	GO111MODULE="on" \
-	go test ./test/integration $(ARGS)
+	go test -v ./test/integration $(ARGS)
 
 build: vet lint
 	go build ./...
