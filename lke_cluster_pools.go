@@ -26,7 +26,7 @@ type LKEClusterPoolLinode struct {
 type LKEClusterPool struct {
 	ID      int                    `json:"id"`
 	Count   int                    `json:"count"`
-	Type    string                 `json:"string"`
+	Type    string                 `json:"type"`
 	Linodes []LKEClusterPoolLinode `json:"linodes"`
 }
 
