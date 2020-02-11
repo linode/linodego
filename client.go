@@ -187,6 +187,36 @@ func (c *Client) SetPollDelay(delay time.Duration) *Client {
 	return c
 }
 
+// SetRetryAfterRateLimit sets the client to retry all requests that fail with a 429 error. If this
+// is set, functions that call requests that are rate limited will block until enough time has
+// passed to retry the request as determined by the Retry-After response header. If the Retry-After
+// header is not set, SetRetryAfterRateLimit will default to the given duration.
+func (c *Client) SetRetryAfterRateLimit(d time.Duration) *Client {
+	c.resty.AddRetryCondition(func(r *resty.Response, err error) bool {
+		if err != nil {
+			return false
+		}
+
+		return r.StatusCode() == http.StatusTooManyRequests
+	})
+
+	c.resty.SetRetryAfter(func(client *resty.Client, resp *resty.Response) (time.Duration, error) {
+		retryAfterStr := resp.Header().Get("Retry-After")
+		if retryAfterStr == "" {
+			return d, nil
+		}
+
+		retryAfter, err := strconv.Atoi(retryAfterStr)
+		if err != nil {
+			return 0, err
+		}
+
+		return time.Duration(retryAfter) * time.Second, nil
+	})
+
+	return c
+}
+
 // Resource looks up a resource by name
 func (c Client) Resource(resourceName string) *Resource {
 	selectedResource, ok := c.resources[resourceName]
