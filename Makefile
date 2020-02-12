@@ -1,4 +1,4 @@
-include .env
+-include .env
 BIN_DIR := $(GOPATH)/bin
 GOLANGCILINT := golangci-lint
 GOLANGCILINT_ARGS := run
@@ -25,7 +25,12 @@ vet:
 	go vet ./...
 
 lint:
+ifndef $(shell command -v $(GOLANGCILINT) -v dot 2> /dev/null)
+	@echo Warning golangci-lint not installed. Skipping lint step
+	@echo Installation: https://github.com/golangci/golangci-lint#install
+else
 	$(GOLANGCILINT) $(GOLANGCILINT_ARGS)
+endif
 
 clean-fixtures:
 	@-rm fixtures/*.yaml
