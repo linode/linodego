@@ -61,6 +61,7 @@ var (
 	SnapshotUserAborted         InstanceSnapshotStatus = "userAborted"
 )
 
+// UnmarshalJSON implements the json.Unmarshaler interface
 func (i *InstanceSnapshot) UnmarshalJSON(b []byte) error {
 	type Mask InstanceSnapshot
 

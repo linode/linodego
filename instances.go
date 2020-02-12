@@ -124,6 +124,7 @@ type InstanceUpdateOptions struct {
 	Tags            *[]string       `json:"tags,omitempty"`
 }
 
+// UnmarshalJSON implements the json.Unmarshaler interface
 func (i *Instance) UnmarshalJSON(b []byte) error {
 	type Mask Instance
 

@@ -58,6 +58,7 @@ type LKEVersion struct {
 	ID string `json:"id"`
 }
 
+// UnmarshalJSON implements the json.Unmarshaler interface
 func (i *LKECluster) UnmarshalJSON(b []byte) error {
 	type Mask LKECluster
 

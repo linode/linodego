@@ -93,6 +93,7 @@ func (c *Client) ListNotifications(ctx context.Context, opts *ListOptions) ([]No
 	return response.Data, nil
 }
 
+// UnmarshalJSON implements the json.Unmarshaler interface
 func (i *Notification) UnmarshalJSON(b []byte) error {
 	type Mask Notification
 

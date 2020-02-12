@@ -89,6 +89,7 @@ type InstanceConfigUpdateOptions struct {
 	VirtMode   string `json:"virt_mode,omitempty"`
 }
 
+// UnmarshalJSON implements the json.Unmarshaler interface
 func (i *InstanceConfig) UnmarshalJSON(b []byte) error {
 	type Mask InstanceConfig
 

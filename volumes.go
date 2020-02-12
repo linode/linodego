@@ -72,6 +72,7 @@ type VolumesPagedResponse struct {
 	Data []Volume `json:"data"`
 }
 
+// UnmarshalJSON implements the json.Unmarshaler interface
 func (v *Volume) UnmarshalJSON(b []byte) error {
 	type Mask Volume
 

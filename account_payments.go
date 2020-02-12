@@ -30,6 +30,7 @@ type PaymentCreateOptions struct {
 	USD json.Number `json:"usd,Number"`
 }
 
+// UnmarshalJSON implements the json.Unmarshaler interface
 func (i *Payment) UnmarshalJSON(b []byte) error {
 	type Mask Payment
 

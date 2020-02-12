@@ -61,6 +61,7 @@ type NodeBalancerUpdateOptions struct {
 	Tags               *[]string `json:"tags,omitempty"`
 }
 
+// UnmarshalJSON implements the json.Unmarshaler interface
 func (i *NodeBalancer) UnmarshalJSON(b []byte) error {
 	type Mask NodeBalancer
 
