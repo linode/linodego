@@ -9,6 +9,7 @@ import (
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
+// LKEClusterStatus represents the status of an LKECluster
 type LKEClusterStatus string
 
 // LKEClusterStatus enums start with LKECluster
