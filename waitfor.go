@@ -187,6 +187,46 @@ func (client Client) WaitForLKEClusterStatus(ctx context.Context, clusterID int,
 	}
 }
 
+// WaitForLKEClusterPoolStatus determines if a given LKE cluster is ready
+// only when all the instances of the cluster pool are in ready status.
+func (client Client) WaitForLKEClusterPoolStatus(ctx context.Context, clusterID int, timeoutSeconds int) error {
+	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
+	defer cancel()
+
+	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
+	defer ticker.Stop()
+
+	for {
+		select {
+		case <-ticker.C:
+			pools, err := client.ListLKEClusterPools(ctx, clusterID, nil)
+			if err != nil {
+				return fmt.Errorf("Error retrieving the LKE Cluster Pool associated to %d %s", clusterID, err)
+			}
+
+			allNodesReady := func(p []LKEClusterPool) bool {
+				var tNodes int
+				for _, pool := range p {
+					tNodes = tNodes + pool.Count
+					for _, node := range pool.Linodes {
+						if node.Status == LKELinodeReady {
+							tNodes = tNodes - 1
+						}
+					}
+				}
+				return tNodes == 0
+			}(pools)
+
+			if allNodesReady {
+				return nil
+			}
+
+		case <-ctx.Done():
+			return fmt.Errorf("Error waiting for cluster pools to be ready for LKE cluster ID %d %s", clusterID, ctx.Err())
+		}
+	}
+}
+
 // WaitForEventFinished waits for an entity action to reach the 'finished' state
 // before returning. It will timeout with an error after timeoutSeconds.
 // If the event indicates a failure both the failed event and the error will be returned.

@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Features
 
 * add `CreateLKECluster`, `GetLKECluster`, `ListLKEClusters`, `UpdateLKECluster`, `DeleteLKECluster`
-* add `CreateLKEClusterPool`, `GetLKEClusterPool`, `ListLKEClusterPools`, `UpdateLKEClusterPool`, `DeleteLKEClusterPool`, `WaitForLKEClusterStatus`
+* add `CreateLKEClusterPool`, `GetLKEClusterPool`, `ListLKEClusterPools`, `UpdateLKEClusterPool`, `DeleteLKEClusterPool`, `WaitForLKEClusterStatus`, `WaitForLKEClusterPoolStatus`
 * add `ListLKEVersions`, `GetLKEVersion`, `GetLKEClusterAPIEndpoint`, `GetLKEClusterKubeconfig`
 
 ## [v0.12.2] (2019-12-03)
