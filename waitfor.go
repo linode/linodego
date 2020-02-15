@@ -207,10 +207,10 @@ func (client Client) WaitForLKEClusterPoolStatus(ctx context.Context, clusterID 
 			allNodesReady := func(p []LKEClusterPool) bool {
 				var tNodes int
 				for _, pool := range p {
-					tNodes = tNodes + pool.Count
+					tNodes += pool.Count
 					for _, node := range pool.Linodes {
 						if node.Status == LKELinodeReady {
-							tNodes = tNodes - 1
+							tNodes--
 						}
 					}
 				}
