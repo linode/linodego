@@ -35,6 +35,21 @@ func TestGetLKECluster_missing(t *testing.T) {
 	}
 }
 
+func TestLKEClusterWaitForClusterPool(t *testing.T) {
+	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
+		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
+	}}, "fixtures/TestGetLKECluster_found")
+	defer teardown()
+	cluster, err := client.GetLKECluster(context.Background(), lkeCluster.ID)
+	if err != nil {
+		t.Errorf("Error getting LKE Cluster, got %v and error %v", cluster, err)
+	}
+	err = client.WaitForLKEClusterPoolStatus(context.Background(), cluster.ID, 300)
+	if err != nil {
+		t.Errorf("Error waiting for the LKE cluster pools to be ready %s", err)
+	}
+}
+
 func TestGetLKECluster_found(t *testing.T) {
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
