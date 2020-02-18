@@ -158,29 +158,11 @@ func (c *Client) SetToken(token string) *Client {
 	return c
 }
 
-// SetRetries adds retry conditions for Linode Busy. errors and 429s. It also configures resty to
-// lock until enough time has passed to retry the request as determined by the Retry-After response header.
-// If the Retry-After header is not set, SetRetryAfterRateLimit will default to the given duration.
+// SetRetries adds retry conditions for Linode Busy. errors and 429s.efault to the given duration.
 func (c *Client) SetRetries() *Client {
 	addRetryConditional(linodeBusyRetryCondition)
 	addRetryConditional(tooManyRequestsRetryCondition)
-	c.resty.
-		SetRetryCount(1000).
-		SetRetryMaxWaitTime(30 * time.Second).
-		AddRetryCondition(checkRetryConditionals).
-		SetRetryAfter(func(client *resty.Client, resp *resty.Response) (time.Duration, error) {
-			retryAfterStr := resp.Header().Get("Retry-After")
-			if retryAfterStr == "" {
-				return d, nil
-			}
-
-			retryAfter, err := strconv.Atoi(retryAfterStr)
-			if err != nil {
-				return 0, err
-			}
-
-			return time.Duration(retryAfter) * time.Second, nil
-		})
+	configureRestyRetries(c.resty)
 	return c
 }
 
