@@ -61,6 +61,7 @@ func (c *Client) ListInvoices(ctx context.Context, opts *ListOptions) ([]Invoice
 	return response.Data, nil
 }
 
+// UnmarshalJSON implements the json.Unmarshaler interface
 func (i *Invoice) UnmarshalJSON(b []byte) error {
 	type Mask Invoice
 
@@ -80,6 +81,7 @@ func (i *Invoice) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// UnmarshalJSON implements the json.Unmarshaler interface
 func (i *InvoiceItem) UnmarshalJSON(b []byte) error {
 	type Mask InvoiceItem
 

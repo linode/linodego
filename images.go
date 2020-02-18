@@ -37,6 +37,7 @@ type ImageUpdateOptions struct {
 	Description *string `json:"description,omitempty"`
 }
 
+// UnmarshalJSON implements the json.Unmarshaler interface
 func (i *Image) UnmarshalJSON(b []byte) error {
 	type Mask Image
 

@@ -9,6 +9,7 @@ import (
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
+// LKEClusterStatus represents the status of an LKECluster
 type LKEClusterStatus string
 
 // LKEClusterStatus enums start with LKECluster
@@ -58,6 +59,7 @@ type LKEVersion struct {
 	ID string `json:"id"`
 }
 
+// UnmarshalJSON implements the json.Unmarshaler interface
 func (i *LKECluster) UnmarshalJSON(b []byte) error {
 	type Mask LKECluster
 

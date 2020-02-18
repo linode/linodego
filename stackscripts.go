@@ -63,6 +63,7 @@ type StackscriptCreateOptions struct {
 // StackscriptUpdateOptions fields are those accepted by UpdateStackscript
 type StackscriptUpdateOptions StackscriptCreateOptions
 
+// UnmarshalJSON implements the json.Unmarshaler interface
 func (i *Stackscript) UnmarshalJSON(b []byte) error {
 	type Mask Stackscript
 

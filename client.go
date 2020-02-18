@@ -141,11 +141,13 @@ func (c *Client) SetBaseURL(url string) *Client {
 	return c
 }
 
+// SetAPIVersion sets the version of the API to interface with
 func (c *Client) SetAPIVersion(apiVersion string) *Client {
 	c.SetBaseURL(fmt.Sprintf("%s://%s/%s", APIProto, APIHost, apiVersion))
 	return c
 }
 
+// SetRootCertificate adds a root certificate to the underlying TLS client config
 func (c *Client) SetRootCertificate(path string) *Client {
 	c.resty.SetRootCertificate(path)
 	return c

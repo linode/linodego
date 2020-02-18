@@ -18,6 +18,7 @@ type ObjectStorageBucket struct {
 	Hostname string     `json:"hostname"`
 }
 
+// UnmarshalJSON implements the json.Unmarshaler interface
 func (i *ObjectStorageBucket) UnmarshalJSON(b []byte) error {
 	type Mask ObjectStorageBucket
 

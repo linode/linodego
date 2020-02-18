@@ -96,6 +96,7 @@ func (c *Client) ListInstanceDisks(ctx context.Context, linodeID int, opts *List
 	return response.Data, nil
 }
 
+// UnmarshalJSON implements the json.Unmarshaler interface
 func (i *InstanceDisk) UnmarshalJSON(b []byte) error {
 	type Mask InstanceDisk
 

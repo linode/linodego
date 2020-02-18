@@ -179,6 +179,7 @@ func (EventsPagedResponse) endpoint(c *Client) string {
 	return endpoint
 }
 
+// UnmarshalJSON implements the json.Unmarshaler interface
 func (i *Event) UnmarshalJSON(b []byte) error {
 	type Mask Event
 

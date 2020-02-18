@@ -28,6 +28,7 @@ type SSHKeyUpdateOptions struct {
 	Label string `json:"label"`
 }
 
+// UnmarshalJSON implements the json.Unmarshaler interface
 func (i *SSHKey) UnmarshalJSON(b []byte) error {
 	type Mask SSHKey
 

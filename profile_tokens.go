@@ -49,6 +49,7 @@ type TokenUpdateOptions struct {
 	Label string `json:"label"`
 }
 
+// UnmarshalJSON implements the json.Unmarshaler interface
 func (i *Token) UnmarshalJSON(b []byte) error {
 	type Mask Token
 

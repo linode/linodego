@@ -124,6 +124,7 @@ type InstanceUpdateOptions struct {
 	Tags            *[]string       `json:"tags,omitempty"`
 }
 
+// UnmarshalJSON implements the json.Unmarshaler interface
 func (i *Instance) UnmarshalJSON(b []byte) error {
 	type Mask Instance
 
@@ -171,7 +172,7 @@ type InstanceCloneOptions struct {
 	Configs        []int  `json:"configs,omitempty"`
 }
 
-// InstanceResizeOptions
+// InstanceResizeOptions is an options struct used when resizing an instance
 type InstanceResizeOptions struct {
 	Type string `json:"type"`
 
@@ -226,7 +227,7 @@ func (c *Client) GetInstance(ctx context.Context, linodeID int) (*Instance, erro
 	return r.Result().(*Instance), nil
 }
 
-// GetInstance gets the instance with the provided ID
+// GetInstanceTransfer gets the instance with the provided ID
 func (c *Client) GetInstanceTransfer(ctx context.Context, linodeID int) (*InstanceTransfer, error) {
 	e, err := c.Instances.Endpoint()
 	if err != nil {
