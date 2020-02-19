@@ -158,7 +158,7 @@ func (c *Client) SetToken(token string) *Client {
 	return c
 }
 
-// SetRetries adds retry conditions for Linode Busy. errors and 429s.efault to the given duration.
+// SetRetries adds retry conditions for "Linode Busy." errors and 429s.
 func (c *Client) SetRetries() *Client {
 	addRetryConditional(linodeBusyRetryCondition)
 	addRetryConditional(tooManyRequestsRetryCondition)
