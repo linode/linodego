@@ -32,6 +32,8 @@ const (
 	APIEnvVar = "LINODE_TOKEN"
 	// APISecondsPerPoll how frequently to poll for new Events or Status in WaitFor functions
 	APISecondsPerPoll = 3
+	// Maximum wait time for retries
+	APIRetryMaxWaitTime = time.Duration(30) * time.Second
 	// DefaultUserAgent is the default User-Agent sent in HTTP request headers
 	DefaultUserAgent = "linodego " + Version + " https://github.com/linode/linodego"
 )
@@ -161,14 +163,22 @@ func (c *Client) SetToken(token string) *Client {
 
 // SetRetries adds retry conditions for "Linode Busy." errors and 429s.
 func (c *Client) SetRetries() *Client {
-	c.addRetryConditional(linodeBusyRetryCondition)
-	c.addRetryConditional(tooManyRequestsRetryCondition)
+	c.
+		addRetryConditional(linodeBusyRetryCondition).
+		addRetryConditional(tooManyRequestsRetryCondition).
+		SetRetryMaxWaitTime(APIRetryMaxWaitTime)
 	configureRetries(c)
 	return c
 }
 
-func (c *Client) addRetryConditional(retryConditional RetryConditional) {
+func (c *Client) addRetryConditional(retryConditional RetryConditional) *Client {
 	c.retryConditionals = append(c.retryConditionals, retryConditional)
+	return c
+}
+
+func (c *Client) SetRetryMaxWaitTime(max time.Duration) *Client {
+	c.resty.SetRetryMaxWaitTime(max)
+	return c
 }
 
 // SetPollDelay sets the number of milliseconds to wait between events or status polls.

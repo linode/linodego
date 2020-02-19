@@ -19,6 +19,7 @@ var debugAPI = false
 var validTestAPIKey = "NOTANAPIKEY"
 
 var testingPollDuration = time.Duration(15000)
+var testingMaxRetryTime = time.Duration(30) * time.Second
 
 func init() {
 	if apiToken, ok := os.LookupEnv("LINODE_TOKEN"); ok {
@@ -42,6 +43,7 @@ func init() {
 			log.Printf("[INFO] LINODE_FIXTURE_MODE %s will be used for tests", envFixtureMode)
 			testingMode = recorder.ModeReplaying
 			testingPollDuration = 1
+			testingMaxRetryTime = time.Duration(1) * time.Nanosecond
 		}
 	}
 }
@@ -102,8 +104,9 @@ func createTestClient(t *testing.T, fixturesYaml string) (*linodego.Client, func
 	}
 
 	c = linodego.NewClient(oc)
-	c.SetDebug(debugAPI)
-	c.SetPollDelay(testingPollDuration)
+	c.SetDebug(debugAPI).
+		SetPollDelay(testingPollDuration).
+		SetRetryMaxWaitTime(testingMaxRetryTime)
 
 	return &c, recordStopper
 }

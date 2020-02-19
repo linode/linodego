@@ -18,9 +18,8 @@ type RetryConditional resty.RetryConditionFunc
 func configureRetries(c *Client) {
 	c.resty.
 		SetRetryCount(1000).
-		SetRetryMaxWaitTime(30 * time.Second).
 		AddRetryCondition(checkRetryConditionals(c)).
-		SetRetryAfter(retryAfter)
+		SetRetryAfter(respectRetryAfter)
 }
 
 func checkRetryConditionals(c *Client) func(*resty.Response, error) bool {
@@ -49,7 +48,7 @@ func tooManyRequestsRetryCondition(r *resty.Response, _ error) bool {
 	return r.StatusCode() == http.StatusTooManyRequests
 }
 
-func retryAfter(client *resty.Client, resp *resty.Response) (time.Duration, error) {
+func respectRetryAfter(client *resty.Client, resp *resty.Response) (time.Duration, error) {
 	retryAfterStr := resp.Header().Get("Retry-After")
 	if retryAfterStr == "" {
 		return 0, nil
@@ -61,6 +60,6 @@ func retryAfter(client *resty.Client, resp *resty.Response) (time.Duration, erro
 	}
 
 	duration := time.Duration(retryAfter) * time.Second
-	log.Printf("[INFO] Respecting Retry-After Header. Waiting %s", duration)
+	log.Printf("[INFO] Respecting Retry-After Header of %d (%s) (max %s)", retryAfter, duration, client.RetryMaxWaitTime)
 	return duration, nil
 }
