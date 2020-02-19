@@ -18,7 +18,7 @@ const (
 
 // LKEClusterPoolLinode represents a LKEClusterPoolLinode object
 type LKEClusterPoolLinode struct {
-	ID     *int            `json:"id"`
+	ID     string          `json:"id"`
 	Status LKELinodeStatus `json:"status"`
 }
 
@@ -27,7 +27,7 @@ type LKEClusterPool struct {
 	ID      int                    `json:"id"`
 	Count   int                    `json:"count"`
 	Type    string                 `json:"type"`
-	Linodes []LKEClusterPoolLinode `json:"linodes"`
+	Linodes []LKEClusterPoolLinode `json:"nodes"`
 }
 
 // LKEClusterPoolCreateOptions fields are those accepted by CreateLKEClusterPool
