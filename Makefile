@@ -43,7 +43,7 @@ run_fixtures:
 	LINODE_TOKEN=$(LINODE_TOKEN) \
 	LINODE_API_VERSION="v4beta" \
 	GO111MODULE="on" \
-	go test -timeout=60m $(ARGS)
+	go test -timeout=60m -v ./test/integration $(ARGS)
 
 sanitize:
 	@echo "* Sanitizing fixtures"
