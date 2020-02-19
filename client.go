@@ -42,10 +42,11 @@ var (
 
 // Client is a wrapper around the Resty client
 type Client struct {
-	resty     *resty.Client
-	userAgent string
-	resources map[string]*Resource
-	debug     bool
+	resty             *resty.Client
+	userAgent         string
+	resources         map[string]*Resource
+	debug             bool
+	retryConditionals []RetryConditional
 
 	millisecondsPerPoll time.Duration
 
@@ -160,10 +161,14 @@ func (c *Client) SetToken(token string) *Client {
 
 // SetRetries adds retry conditions for "Linode Busy." errors and 429s.
 func (c *Client) SetRetries() *Client {
-	addRetryConditional(linodeBusyRetryCondition)
-	addRetryConditional(tooManyRequestsRetryCondition)
-	configureRestyRetries(c.resty)
+	c.addRetryConditional(linodeBusyRetryCondition)
+	c.addRetryConditional(tooManyRequestsRetryCondition)
+	configureRetries(c)
 	return c
+}
+
+func (c *Client) addRetryConditional(retryConditional RetryConditional) {
+	c.retryConditionals = append(c.retryConditionals, retryConditional)
 }
 
 // SetPollDelay sets the number of milliseconds to wait between events or status polls.

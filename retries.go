@@ -12,32 +12,28 @@ import (
 // type RetryConditional func(r *resty.Response) (shouldRetry bool)
 type RetryConditional resty.RetryConditionFunc
 
-var retryConditionals []RetryConditional
-
 // Configures resty to
 // lock until enough time has passed to retry the request as determined by the Retry-After response header.
 // If the Retry-After header is not set, we fall back to value of SetPollDelay.
-func configureRestyRetries(resty *resty.Client) {
-	resty.
+func configureRetries(c *Client) {
+	c.resty.
 		SetRetryCount(1000).
 		SetRetryMaxWaitTime(30 * time.Second).
-		AddRetryCondition(checkRetryConditionals).
+		AddRetryCondition(checkRetryConditionals(c)).
 		SetRetryAfter(retryAfter)
 }
 
-func addRetryConditional(retryConditional RetryConditional) {
-	retryConditionals = append(retryConditionals, retryConditional)
-}
-
-func checkRetryConditionals(r *resty.Response, err error) bool {
-	for _, retryConditional := range retryConditionals {
-		retry := retryConditional(r, err)
-		if retry {
-			log.Printf("[INFO] Received error %s - Retrying", r.Error())
-			return true
+func checkRetryConditionals(c *Client) func(*resty.Response, error) bool {
+	return func(r *resty.Response, err error) bool {
+		for _, retryConditional := range c.retryConditionals {
+			retry := retryConditional(r, err)
+			if retry {
+				log.Printf("[INFO] Received error %s - Retrying", r.Error())
+				return true
+			}
 		}
+		return false
 	}
-	return false
 }
 
 // SetLinodeBusyRetry configures resty to retry specifically on "Linode busy." errors
