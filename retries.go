@@ -64,5 +64,7 @@ func retryAfter(client *resty.Client, resp *resty.Response) (time.Duration, erro
 		return 0, err
 	}
 
-	return time.Duration(retryAfter) * time.Second, nil
+	duration := time.Duration(retryAfter) * time.Second
+	log.Printf("[INFO] Respecting Retry-After Header. Waiting %s", duration)
+	return duration, nil
 }
