@@ -1,12 +1,19 @@
 -include .env
 BIN_DIR := $(GOPATH)/bin
-GOLANGCILINT := golangci-lint
+
+GOLANGCILINT      := golangci-lint
+GOLANGCILINT_IMG  := golangci/golangci-lint:v1.23-alpine
 GOLANGCILINT_ARGS := run
+
 PACKAGES := $(shell go list ./... | grep -v integration)
+
+SKIP_LINT ?= 0
 
 .PHONY: build vet test refresh-fixtures clean-fixtures lint run_fixtures sanitize fixtures godoc testint testunit
 
 test: testunit testint
+
+citest: lint test
 
 testunit: build lint
 	go test -v $(PACKAGES) $(ARGS)
@@ -25,11 +32,10 @@ vet:
 	go vet ./...
 
 lint:
-ifndef $(shell command -v $(GOLANGCILINT) -v dot 2> /dev/null)
-	@echo Warning golangci-lint not installed. Skipping lint step
-	@echo Installation: https://github.com/golangci/golangci-lint#install
+ifeq ($(SKIP_LINT), 1)
+	@echo Skipping lint stage
 else
-	$(GOLANGCILINT) $(GOLANGCILINT_ARGS)
+	docker run --rm -v $(shell pwd):/app -w /app $(GOLANGCILINT_IMG) $(GOLANGCILINT) run
 endif
 
 clean-fixtures:
