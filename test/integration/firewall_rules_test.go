@@ -13,9 +13,7 @@ var (
 			IPv6: []string{"::0/0"},
 		},
 	}
-)
 
-var (
 	testFirewallRuleSet = linodego.FirewallRuleSet{
 		Inbound:  []linodego.FirewallRule{testFirewallRule},
 		Outbound: []linodego.FirewallRule{testFirewallRule},
