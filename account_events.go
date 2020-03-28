@@ -43,7 +43,7 @@ type Event struct {
 	Entity *EventEntity `json:"entity"`
 
 	// When this Event was created.
-	Created *time.Time `json:"-"`
+	Created *time.Time `json:"created"`
 }
 
 // EventAction constants start with Action and include all known Linode API Event Actions.
