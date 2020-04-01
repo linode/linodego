@@ -17,7 +17,7 @@ func TestListEvents(t *testing.T) {
 	configOpts := linodego.InstanceConfigCreateOptions{
 		Label: "linodego-test-config",
 	}
-	_, err = client.CreateInstanceConfig(context.Background(), instance.ID, configOpts)
+	instanceConfig, err := client.CreateInstanceConfig(context.Background(), instance.ID, configOpts)
 	if err != nil {
 		t.Error(err)
 	}
@@ -32,7 +32,12 @@ func TestListEvents(t *testing.T) {
 	if len(events) == 0 {
 		t.Errorf("Expected to see at least one event")
 	} else {
-		assertDateSet(t, events[0].Created)
+		event := events[0]
+		assertDateSet(t, event.Created)
+		if event.SecondaryEntity == nil {
+			t.Errorf("Expected Secondary Entity to be set")
+		} else if event.SecondaryEntity.Label != instanceConfig.Label {
+			t.Errorf("Expected Secondary Entity label to be '%s', got '%s'", instanceConfig.Label, event.SecondaryEntity.Label)
+		}
 	}
-
 }
