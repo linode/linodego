@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"a83ef3go2h76-linodego-testing","rules":{"inbound":[{"ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["::0/0"]}}],"outbound":[{"ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["::0/0"]}}]},"tags":["testing"],"devices":{}}'
+    body: '{"label":"a83ef3go2h76-linodego-testing","rules":{"inbound":[{"ports":"22","protocol":"TCP","addresses":{"ipv4":["10.20.30.40/0"],"ipv6":["1234::5678/0"]}}],"outbound":[{"ports":"22","protocol":"TCP","addresses":{"ipv4":["10.20.30.40/0"],"ipv6":["1234::5678/0"]}}]},"tags":["testing"],"devices":{}}'
     form: {}
     headers:
       Accept:
@@ -14,11 +14,11 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 37, "label": "a83ef3go2h76-linodego-testing", "created": "2020-02-19T19:38:16",
-      "updated": "2020-02-19T19:38:16", "status": "enabled", "rules": {"inbound":
-      [{"ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6":
-      ["::0/0"]}}], "outbound": [{"ports": "22", "protocol": "TCP", "addresses": {"ipv4":
-      ["0.0.0.0/0"], "ipv6": ["::0/0"]}}]}, "tags": ["testing"]}'
+    body: '{"id": 37, "label": "a83ef3go2h76-linodego-testing", "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
+      [{"ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["10.20.30.40/0"], "ipv6":
+      ["1234::5678/0"]}}], "outbound": [{"ports": "22", "protocol": "TCP", "addresses": {"ipv4":
+      ["10.20.30.40/0"], "ipv6": ["1234::5678/0"]}}]}, "tags": ["testing"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -85,39 +85,39 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: GET
   response:
-    body: '{"data": [{"id": 19, "label": "firewall19", "created": "2020-02-10T22:24:05",
-      "updated": "2020-02-10T22:24:05", "status": "disabled", "rules": {"inbound":
-      [{"ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["172.104.2.4"]}}]},
-      "tags": []}, {"id": 20, "label": "firewall20", "created": "2020-02-11T14:48:23",
-      "updated": "2020-02-11T14:48:23", "status": "disabled", "rules": {"inbound":
-      [{"ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["172.104.2.4"]}}]},
-      "tags": []}, {"id": 31, "label": "firewall31", "created": "2020-02-14T22:31:45",
-      "updated": "2020-02-14T22:31:45", "status": "disabled", "rules": {"inbound":
-      [{"ports": "3306", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6":
-      ["::0/0"]}}], "outbound": [{"ports": "3306", "protocol": "TCP", "addresses":
-      {"ipv4": ["0.0.0.0/0"], "ipv6": ["::0/0"]}}]}, "tags": []}, {"id": 32, "label":
-      "blah", "created": "2020-02-19T15:36:40", "updated": "2020-02-19T15:36:40",
+    body: '{"data": [{"id": 19, "label": "firewall19", "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "status": "disabled", "rules": {"inbound":
+      [{"ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["10.20.30.40"]}}]},
+      "tags": []}, {"id": 20, "label": "firewall20", "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "status": "disabled", "rules": {"inbound":
+      [{"ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["10.20.30.40"]}}]},
+      "tags": []}, {"id": 31, "label": "firewall31", "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "status": "disabled", "rules": {"inbound":
+      [{"ports": "3306", "protocol": "TCP", "addresses": {"ipv4": ["10.20.30.40/0"], "ipv6":
+      ["1234::5678/0"]}}], "outbound": [{"ports": "3306", "protocol": "TCP", "addresses":
+      {"ipv4": ["10.20.30.40/0"], "ipv6": ["1234::5678/0"]}}]}, "tags": []}, {"id": 32, "label":
+      "blah", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "status": "enabled", "rules": {"inbound": [{"ports": "80", "protocol": "TCP",
-      "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["::0/0"]}}, {"ports": "443", "protocol":
-      "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["::0/0"]}}], "outbound":
-      [{"ports": "80", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6":
-      ["::0/0"]}}, {"ports": "443", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"],
-      "ipv6": ["::0/0"]}}]}, "tags": []}, {"id": 33, "label": "test-firewall", "created":
-      "2020-02-19T17:45:58", "updated": "2020-02-19T17:45:58", "status": "enabled",
+      "addresses": {"ipv4": ["10.20.30.40/0"], "ipv6": ["1234::5678/0"]}}, {"ports": "443", "protocol":
+      "TCP", "addresses": {"ipv4": ["10.20.30.40/0"], "ipv6": ["1234::5678/0"]}}], "outbound":
+      [{"ports": "80", "protocol": "TCP", "addresses": {"ipv4": ["10.20.30.40/0"], "ipv6":
+      ["1234::5678/0"]}}, {"ports": "443", "protocol": "TCP", "addresses": {"ipv4": ["10.20.30.40/0"],
+      "ipv6": ["1234::5678/0"]}}]}, "tags": []}, {"id": 33, "label": "test-firewall", "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "status": "enabled",
       "rules": {"inbound": [{"ports": "80", "protocol": "TCP", "addresses": {"ipv4":
-      ["0.0.0.0/0"], "ipv6": ["::0/0"]}}, {"ports": "443", "protocol": "TCP", "addresses":
-      {"ipv4": ["0.0.0.0/0"], "ipv6": ["::0/0"]}}], "outbound": [{"ports": "80", "protocol":
-      "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["::0/0"]}}, {"ports": "443",
-      "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["::0/0"]}}]},
-      "tags": []}, {"id": 34, "label": "asdf", "created": "2020-02-19T18:03:47", "updated":
-      "2020-02-19T18:03:47", "status": "disabled", "rules": {"inbound": [{"ports":
-      "443", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["::0/0"]}}],
-      "outbound": [{"ports": "443", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"],
-      "ipv6": ["::0/0"]}}]}, "tags": []}, {"id": 37, "label": "a83ef3go2h76-linodego-testing",
-      "created": "2020-02-19T19:38:17", "updated": "2020-02-19T19:38:17", "status":
+      ["10.20.30.40/0"], "ipv6": ["1234::5678/0"]}}, {"ports": "443", "protocol": "TCP", "addresses":
+      {"ipv4": ["10.20.30.40/0"], "ipv6": ["1234::5678/0"]}}], "outbound": [{"ports": "80", "protocol":
+      "TCP", "addresses": {"ipv4": ["10.20.30.40/0"], "ipv6": ["1234::5678/0"]}}, {"ports": "443",
+      "protocol": "TCP", "addresses": {"ipv4": ["10.20.30.40/0"], "ipv6": ["1234::5678/0"]}}]},
+      "tags": []}, {"id": 34, "label": "asdf", "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "status": "disabled", "rules": {"inbound": [{"ports":
+      "443", "protocol": "TCP", "addresses": {"ipv4": ["10.20.30.40/0"], "ipv6": ["1234::5678/0"]}}],
+      "outbound": [{"ports": "443", "protocol": "TCP", "addresses": {"ipv4": ["10.20.30.40/0"],
+      "ipv6": ["1234::5678/0"]}}]}, "tags": []}, {"id": 37, "label": "a83ef3go2h76-linodego-testing",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "status":
       "enabled", "rules": {"inbound": [{"ports": "22", "protocol": "TCP", "addresses":
-      {"ipv4": ["0.0.0.0/0"], "ipv6": ["::0/0"]}}], "outbound": [{"ports": "22", "protocol":
-      "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["::0/0"]}}]}, "tags": ["testing"]}],
+      {"ipv4": ["10.20.30.40/0"], "ipv6": ["1234::5678/0"]}}], "outbound": [{"ports": "22", "protocol":
+      "TCP", "addresses": {"ipv4": ["10.20.30.40/0"], "ipv6": ["1234::5678/0"]}}]}, "tags": ["testing"]}],
       "page": 1, "pages": 1, "results": 7}'
     headers:
       Access-Control-Allow-Credentials:
