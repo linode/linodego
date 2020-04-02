@@ -289,6 +289,31 @@ func TestListInstanceVolumes(t *testing.T) {
 	}
 }
 
+func TestRebuildInstance(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestRebuildInstance")
+	defer teardown()
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	_, err = client.WaitForEventFinished(context.Background(), instance.ID, linodego.EntityLinode, linodego.ActionLinodeCreate, *instance.Created, 180)
+
+	if err != nil {
+		t.Errorf("Error waiting for instance created: %s", err)
+	}
+
+	rebuildOpts := linodego.InstanceRebuildOptions{
+		Image:    "linode/alpine3.11",
+		RootPass: "R34lBAdP455",
+	}
+	instance, err = client.RebuildInstance(context.Background(), instance.ID, rebuildOpts)
+
+	if err != nil {
+		t.Error(err)
+	}
+}
+
 func setupInstance(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.Instance, func(), error) {
 	if t != nil {
 		t.Helper()
