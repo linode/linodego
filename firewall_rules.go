@@ -7,7 +7,7 @@ type NetworkProtocol string
 const (
 	TCP  NetworkProtocol = "TCP"
 	UDP  NetworkProtocol = "UDP"
-	ICMP NetworkProtocol = "ALL"
+	ICMP NetworkProtocol = "ICMP"
 )
 
 // NetworkAddresses are arrays of ipv4 and v6 addresses
