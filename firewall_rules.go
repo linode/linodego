@@ -18,7 +18,7 @@ type NetworkAddresses struct {
 
 // A FirewallRule is a whitelist of ports, protocols, and addresses for which traffic should be allowed.
 type FirewallRule struct {
-	Ports     string           `json:"ports"`
+	Ports     string           `json:"ports,omitempty"`
 	Protocol  NetworkProtocol  `json:"protocol"`
 	Addresses NetworkAddresses `json:"addresses"`
 }
