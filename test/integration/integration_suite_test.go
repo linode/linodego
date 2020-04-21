@@ -12,6 +12,7 @@ import (
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/linode/linodego"
 	"golang.org/x/oauth2"
+	"k8s.io/client-go/transport"
 )
 
 var testingMode = recorder.ModeDisabled
@@ -49,12 +50,12 @@ func init() {
 }
 
 // testRecorder returns a go-vcr recorder and an associated function that the caller must defer
-func testRecorder(t *testing.T, fixturesYaml string, testingMode recorder.Mode) (r *recorder.Recorder, recordStopper func()) {
+func testRecorder(t *testing.T, fixturesYaml string, testingMode recorder.Mode, realTransport http.RoundTripper) (r *recorder.Recorder, recordStopper func()) {
 	if t != nil {
 		t.Helper()
 	}
 
-	r, err := recorder.NewAsMode(fixturesYaml, testingMode, nil)
+	r, err := recorder.NewAsMode(fixturesYaml, testingMode, realTransport)
 	if err != nil {
 		log.Fatalln(err)
 	}
@@ -89,7 +90,7 @@ func createTestClient(t *testing.T, fixturesYaml string) (*linodego.Client, func
 	var r http.RoundTripper
 
 	if len(fixturesYaml) > 0 {
-		r, recordStopper = testRecorder(t, fixturesYaml, testingMode)
+		r, recordStopper = testRecorder(t, fixturesYaml, testingMode, nil)
 	} else {
 		r = nil
 		recordStopper = func() {}
@@ -109,4 +110,15 @@ func createTestClient(t *testing.T, fixturesYaml string) (*linodego.Client, func
 		SetRetryMaxWaitTime(testingMaxRetryTime)
 
 	return &c, recordStopper
+}
+
+// transportRecordWrapper returns a tranport.WrapperFunc which
+func transportRecorderWrapper(t *testing.T, fixtureYaml string) (transport.WrapperFunc, func()) {
+	t.Helper()
+
+	rec, teardown := testRecorder(t, fixtureYaml, testingMode, nil)
+	return func(r http.RoundTripper) http.RoundTripper {
+		rec.SetTransport(r)
+		return rec
+	}, teardown
 }
