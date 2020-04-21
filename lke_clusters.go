@@ -35,7 +35,7 @@ type LKEClusterCreateOptions struct {
 	NodePools []LKEClusterPoolCreateOptions `json:"node_pools"`
 	Label     string                        `json:"label"`
 	Region    string                        `json:"region"`
-	Version   string                        `json:"version"`
+	Version   string                        `json:"k8s_version"`
 	Tags      []string                      `json:"tags,omitempty"`
 }
 

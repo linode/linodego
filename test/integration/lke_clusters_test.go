@@ -35,18 +35,17 @@ func TestGetLKECluster_missing(t *testing.T) {
 	}
 }
 
-func TestLKEClusterWaitForClusterPool(t *testing.T) {
-	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
+func TestWaitForLKEClusterReady(t *testing.T) {
+	client, cluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
-	}}, "fixtures/TestGetLKECluster_found")
+		createOpts.NodePools = []linodego.LKEClusterPoolCreateOptions{
+			{Count: 3, Type: "g6-standard-2"},
+		}
+	}}, "fixtures/TestWaitForLKEClusterReady")
 	defer teardown()
-	cluster, err := client.GetLKECluster(context.Background(), lkeCluster.ID)
-	if err != nil {
-		t.Errorf("Error getting LKE Cluster, got %v and error %v", cluster, err)
-	}
-	err = client.WaitForLKEClusterPoolStatus(context.Background(), cluster.ID, 300)
-	if err != nil {
-		t.Errorf("Error waiting for the LKE cluster pools to be ready %s", err)
+	timeoutSeconds := 5 * 60
+	if err = client.WaitForLKEClusterReady(context.Background(), cluster.ID, timeoutSeconds); err != nil {
+		t.Errorf("Error waiting for the LKE cluster pools to be ready: %s", err)
 	}
 }
 
@@ -172,17 +171,18 @@ func setupLKECluster(t *testing.T, clusterModifiers []clusterModifier, fixturesY
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := testLKEClusterCreateOpts
+	createOpts.Version = "1.17"
 	for _, modifier := range clusterModifiers {
 		modifier(&createOpts)
 	}
 	lkeCluster, err := client.CreateLKECluster(context.Background(), createOpts)
 	if err != nil {
-		t.Errorf("Error listing lkeClusters, expected struct, got error %v", err)
+		t.Errorf("failed to create LKE cluster: %s", err)
 	}
 
 	teardown := func() {
 		if err := client.DeleteLKECluster(context.Background(), lkeCluster.ID); err != nil {
-			t.Errorf("Expected to delete a lkeClusters, but got %v", err)
+			t.Errorf("failed to delete LKE cluster: %s", err)
 		}
 		fixtureTeardown()
 	}

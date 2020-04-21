@@ -2,12 +2,19 @@ package linodego
 
 import (
 	"context"
+	"encoding/base64"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"log"
 	"strconv"
 	"strings"
 	"time"
+
+	corev1 "k8s.io/api/core/v1"
+	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/tools/clientcmd"
 )
 
 // WaitForInstanceStatus waits for the Linode instance to reach the desired state
@@ -187,37 +194,82 @@ func (client Client) WaitForLKEClusterStatus(ctx context.Context, clusterID int,
 	}
 }
 
-// WaitForLKEClusterPoolStatus determines if a given LKE cluster is ready
-// only when all the instances of the cluster pool are in ready status.
-func (client Client) WaitForLKEClusterPoolStatus(ctx context.Context, clusterID int, timeoutSeconds int) error {
+// buildK8sClientsetForLKECluster fetches the kubeconfig for the given cluster and
+// builds a *kubernetes.Clientset from it.
+func buildK8sClientsetForLKECluster(ctx context.Context, client *Client, clusterID int) (*kubernetes.Clientset, error) {
+	resp, err := client.GetLKEClusterKubeconfig(ctx, clusterID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to resolve kubeconfig: %s", err)
+	}
+
+	kubeConfigBytes, err := base64.StdEncoding.DecodeString(resp.KubeConfig)
+	if err != nil {
+		return nil, fmt.Errorf("failed to decode kubeconfig: %s", err)
+	}
+
+	config, err := clientcmd.NewClientConfigFromBytes(kubeConfigBytes)
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse LKE cluster kubeconfig: %s", err)
+	}
+
+	restClientConfig, err := config.ClientConfig()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get REST client config: %s", err)
+	}
+
+	clientset, err := kubernetes.NewForConfig(restClientConfig)
+	if err != nil {
+		return nil, fmt.Errorf("failed to build k8s client from LKE cluster kubeconfig: %s", err)
+	}
+	return clientset, nil
+}
+
+// WaitForLKEClusterReady polls with a given timeout for the LKE Cluster's api-server
+// to be healthy and for the cluster to have at least one node with the NodeReady
+// condition true.
+func (client Client) WaitForLKEClusterReady(ctx context.Context, clusterID, timeoutSeconds int) error {
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
 	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
 	defer ticker.Stop()
 
+	var clientset *kubernetes.Clientset
+	pollReady := func() (err error) {
+		if clientset == nil {
+			clientset, err = buildK8sClientsetForLKECluster(ctx, &client, clusterID)
+			if err != nil {
+				return fmt.Errorf("failed to build client for LKE cluster %d: %s", clusterID, err)
+			}
+			log.Printf("[INFO] successfully built client for LKE cluster %d\n", clusterID)
+		}
+
+		nodes, err := clientset.CoreV1().Nodes().List(v1.ListOptions{})
+		if err != nil {
+			return fmt.Errorf("failed to get nodes for LKE cluster %d: %s", clusterID, err)
+		}
+
+		for _, node := range nodes.Items {
+			for _, condition := range node.Status.Conditions {
+				if condition.Type == corev1.NodeReady && condition.Status == corev1.ConditionTrue {
+					log.Printf("[INFO] LKE cluster %d is ready\n", clusterID)
+					return nil
+				}
+			}
+		}
+		return errors.New("no nodes in the cluster are ready")
+	}
+
+	var prevLog string
+
 	for {
 		select {
 		case <-ticker.C:
-			pools, err := client.ListLKEClusterPools(ctx, clusterID, nil)
-			if err != nil {
-				return fmt.Errorf("Error retrieving the LKE Cluster Pool associated to %d %s", clusterID, err)
-			}
-
-			allNodesReady := func(p []LKEClusterPool) bool {
-				var tNodes int
-				for _, pool := range p {
-					tNodes += pool.Count
-					for _, node := range pool.Linodes {
-						if node.Status == LKELinodeReady {
-							tNodes--
-						}
-					}
-				}
-				return tNodes == 0
-			}(pools)
-
-			if allNodesReady {
+			if err := pollReady(); err != nil && prevLog != err.Error() {
+				// de-dup logs
+				prevLog = err.Error()
+				log.Printf("[ERROR] %s\n", err)
+			} else if err == nil {
 				return nil
 			}
 
