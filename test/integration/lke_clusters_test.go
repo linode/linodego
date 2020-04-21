@@ -43,8 +43,14 @@ func TestWaitForLKEClusterReady(t *testing.T) {
 		}
 	}}, "fixtures/TestWaitForLKEClusterReady")
 	defer teardown()
-	timeoutSeconds := 5 * 60
-	if err = client.WaitForLKEClusterReady(context.Background(), cluster.ID, timeoutSeconds); err != nil {
+
+	wrapper, teardownClusterClient := transportRecorderWrapper(t, "fixtures/TestWaitForLKEClusterReadyClusterClient")
+	defer teardownClusterClient()
+
+	if err = client.WaitForLKEClusterReady(context.Background(), cluster.ID, linodego.LKEClusterPollOptions{
+		TimeoutSeconds:   5 * 60,
+		TransportWrapper: wrapper,
+	}); err != nil {
 		t.Errorf("Error waiting for the LKE cluster pools to be ready: %s", err)
 	}
 }

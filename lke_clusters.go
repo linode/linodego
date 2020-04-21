@@ -2,11 +2,15 @@ package linodego
 
 import (
 	"context"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"time"
 
 	"github.com/linode/linodego/internal/parseabletime"
+	"k8s.io/client-go/kubernetes"
+	"k8s.io/client-go/tools/clientcmd"
+	"k8s.io/client-go/transport"
 )
 
 // LKEClusterStatus represents the status of an LKECluster
@@ -276,4 +280,45 @@ func (c *Client) ListLKEVersions(ctx context.Context, opts *ListOptions) ([]LKEV
 		return nil, err
 	}
 	return response.Data, nil
+}
+
+// buildK8sClientsetForLKECluster fetches the kubeconfig for the given cluster and
+// builds a *kubernetes.Clientset from it.
+//
+// Takes an optional transport.WrapperFunc to add request/response middleware to
+// api-server requests.
+func (c *Client) buildK8sClientsetForLKECluster(
+	ctx context.Context,
+	clusterID int,
+	transportWrapper transport.WrapperFunc,
+) (*kubernetes.Clientset, error) {
+	resp, err := c.GetLKEClusterKubeconfig(ctx, clusterID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to resolve kubeconfig: %s", err)
+	}
+
+	kubeConfigBytes, err := base64.StdEncoding.DecodeString(resp.KubeConfig)
+	if err != nil {
+		return nil, fmt.Errorf("failed to decode kubeconfig: %s", err)
+	}
+
+	config, err := clientcmd.NewClientConfigFromBytes(kubeConfigBytes)
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse LKE cluster kubeconfig: %s", err)
+	}
+
+	restClientConfig, err := config.ClientConfig()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get REST client config: %s", err)
+	}
+
+	if transportWrapper != nil {
+		restClientConfig.Wrap(transportWrapper)
+	}
+
+	clientset, err := kubernetes.NewForConfig(restClientConfig)
+	if err != nil {
+		return nil, fmt.Errorf("failed to build k8s client from LKE cluster kubeconfig: %s", err)
+	}
+	return clientset, nil
 }
