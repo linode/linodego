@@ -112,7 +112,8 @@ func createTestClient(t *testing.T, fixturesYaml string) (*linodego.Client, func
 	return &c, recordStopper
 }
 
-// transportRecordWrapper returns a tranport.WrapperFunc which
+// transportRecordWrapper returns a tranport.WrapperFunc which provides the test
+// recorder as an http.RoundTripper.
 func transportRecorderWrapper(t *testing.T, fixtureYaml string) (transport.WrapperFunc, func()) {
 	t.Helper()
 
