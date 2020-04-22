@@ -10,8 +10,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/linode/linodego/internal/kubernetes"
 	"github.com/linode/linodego/pkg/condition"
-	"k8s.io/client-go/kubernetes"
 )
 
 // WaitForInstanceStatus waits for the Linode instance to reach the desired state
@@ -219,12 +219,16 @@ func (client Client) WaitForLKEClusterConditions(
 	defer ticker.Stop()
 
 	var prevLog string
-	var clientset *kubernetes.Clientset
+	var clientset kubernetes.Clientset
 
-	clientReady := func(ctx context.Context, c *kubernetes.Clientset) (bool, error) {
+	clientReady := func(ctx context.Context, c kubernetes.Clientset) (bool, error) {
 		if clientset == nil {
-			var err error
-			clientset, err = client.buildK8sClientsetForLKECluster(ctx, clusterID, options.TransportWrapper)
+			resp, err := client.GetLKEClusterKubeconfig(ctx, clusterID)
+			if err != nil {
+				return false, fmt.Errorf("failed to get Kubeconfig for LKE cluster %d: %s", clusterID, err)
+			}
+
+			clientset, err = kubernetes.BuildClientsetFromConfigBytes(ctx, resp.KubeConfig, options.TransportWrapper)
 			if err != nil {
 				return false, fmt.Errorf("failed to build client for LKE cluster %d: %s", clusterID, err)
 			}
