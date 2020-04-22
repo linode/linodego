@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/linode/linodego/condition"
+	"github.com/linode/linodego/pkg/condition"
 	"k8s.io/client-go/kubernetes"
 )
 
