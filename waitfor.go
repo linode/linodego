@@ -2,6 +2,7 @@ package linodego
 
 import (
 	"context"
+	"encoding/base64"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -228,7 +229,12 @@ func (client Client) WaitForLKEClusterConditions(
 				return false, fmt.Errorf("failed to get Kubeconfig for LKE cluster %d: %s", clusterID, err)
 			}
 
-			clientset, err = kubernetes.BuildClientsetFromConfigBytes(ctx, resp.KubeConfig, options.TransportWrapper)
+			kubeConfigBytes, err := base64.StdEncoding.DecodeString(resp.KubeConfig)
+			if err != nil {
+				return false, fmt.Errorf("failed to decode kubeconfig: %s", err)
+			}
+
+			clientset, err = kubernetes.BuildClientsetFromConfig(kubeConfigBytes, options.TransportWrapper)
 			if err != nil {
 				return false, fmt.Errorf("failed to build client for LKE cluster %d: %s", clusterID, err)
 			}
