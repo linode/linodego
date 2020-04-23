@@ -1,8 +1,6 @@
 package kubernetes
 
 import (
-	"context"
-	"encoding/base64"
 	"fmt"
 
 	"k8s.io/client-go/kubernetes"
@@ -13,22 +11,15 @@ import (
 // Clientset is an alias to k8s.io/client-go/kubernetes.Interface
 type Clientset kubernetes.Interface
 
-// buildClientsetFromConfigBytes builds a Clientset from a given Kubeconfig
-// from the Linode API.
+// NewClientsetFromBytes builds a Clientset from a given Kubeconfig.
 //
 // Takes an optional transport.WrapperFunc to add request/response middleware to
 // api-server requests.
-func BuildClientsetFromConfigBytes(
-	ctx context.Context,
-	kubeconfig string,
+func BuildClientsetFromConfig(
+	kubeconfigBytes []byte,
 	transportWrapper transport.WrapperFunc,
 ) (Clientset, error) {
-	kubeConfigBytes, err := base64.StdEncoding.DecodeString(kubeconfig)
-	if err != nil {
-		return nil, fmt.Errorf("failed to decode kubeconfig: %s", err)
-	}
-
-	config, err := clientcmd.NewClientConfigFromBytes(kubeConfigBytes)
+	config, err := clientcmd.NewClientConfigFromBytes(kubeconfigBytes)
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse LKE cluster kubeconfig: %s", err)
 	}
