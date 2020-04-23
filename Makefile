@@ -1,6 +1,9 @@
 -include .env
 BIN_DIR := $(GOPATH)/bin
 
+LINODE_TOKEN ?= awesometokenawesometokenawesometoken
+LINODE_API_VERSION ?= v4beta
+
 GOLANGCILINT      := golangci-lint
 GOLANGCILINT_IMG  := golangci/golangci-lint:v1.23-alpine
 GOLANGCILINT_ARGS := run
@@ -20,8 +23,8 @@ testunit: build lint
 
 testint: build lint
 	@LINODE_FIXTURE_MODE="play" \
-	LINODE_TOKEN="awesometokenawesometokenawesometoken" \
-	LINODE_API_VERSION="v4beta" \
+	LINODE_TOKEN="$(LINODE_TOKEN)" \
+	LINODE_API_VERSION="$(LINODE_API_VERSION)" \
 	GO111MODULE="on" \
 	go test -v ./test/integration $(ARGS)
 
@@ -46,8 +49,8 @@ refresh-fixtures: clean-fixtures fixtures
 run_fixtures:
 	@echo "* Running fixtures"
 	@LINODE_FIXTURE_MODE="record" \
-	LINODE_TOKEN=$(LINODE_TOKEN) \
-	LINODE_API_VERSION="v4beta" \
+	LINODE_TOKEN="$(LINODE_TOKEN)" \
+	LINODE_API_VERSION="$(LINODE_API_VERSION)" \
 	GO111MODULE="on" \
 	go test -timeout=60m -v ./test/integration $(ARGS)
 
