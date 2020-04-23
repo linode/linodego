@@ -9,11 +9,11 @@ import (
 
 var (
 	testLKEClusterCreateOpts = linodego.LKEClusterCreateOptions{
-		Label:     label,
-		Region:    "us-central",
-		Version:   "1.16",
-		Tags:      []string{"testing"},
-		NodePools: []linodego.LKEClusterPoolCreateOptions{{Count: 1, Type: "g6-standard-2"}},
+		Label:      label,
+		Region:     "us-central",
+		K8sVersion: "1.16",
+		Tags:       []string{"testing"},
+		NodePools:  []linodego.LKEClusterPoolCreateOptions{{Count: 1, Type: "g6-standard-2"}},
 	}
 )
 
@@ -177,7 +177,7 @@ func setupLKECluster(t *testing.T, clusterModifiers []clusterModifier, fixturesY
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := testLKEClusterCreateOpts
-	createOpts.Version = "1.17"
+	createOpts.K8sVersion = "1.17"
 	for _, modifier := range clusterModifiers {
 		modifier(&createOpts)
 	}

@@ -203,6 +203,29 @@ type LKEClusterPollOptions struct {
 	TransportWrapper func(http.RoundTripper) http.RoundTripper
 }
 
+func getLKEClusterClientset(
+	ctx context.Context,
+	client *Client,
+	clusterID int,
+	transportWrapper func(http.RoundTripper) http.RoundTripper,
+) (kubernetes.Clientset, error) {
+	resp, err := client.GetLKEClusterKubeconfig(ctx, clusterID)
+	if err != nil {
+		return nil, fmt.Errorf("failed to get Kubeconfig for LKE cluster %d: %s", clusterID, err)
+	}
+
+	kubeConfigBytes, err := base64.StdEncoding.DecodeString(resp.KubeConfig)
+	if err != nil {
+		return nil, fmt.Errorf("failed to decode kubeconfig: %s", err)
+	}
+
+	clientset, err := kubernetes.BuildClientsetFromConfig(kubeConfigBytes, transportWrapper)
+	if err != nil {
+		return nil, fmt.Errorf("failed to build client for LKE cluster %d: %s", clusterID, err)
+	}
+	return clientset, nil
+}
+
 // WaitForLKEClusterConditions waits for the given LKE conditions to be true
 func (client Client) WaitForLKEClusterConditions(
 	ctx context.Context,
@@ -223,20 +246,11 @@ func (client Client) WaitForLKEClusterConditions(
 	var clientset kubernetes.Clientset
 
 	clientReady := func(ctx context.Context, c kubernetes.Clientset) (bool, error) {
+		var err error
 		if clientset == nil {
-			resp, err := client.GetLKEClusterKubeconfig(ctx, clusterID)
+			clientset, err = getLKEClusterClientset(ctx, &client, clusterID, options.TransportWrapper)
 			if err != nil {
-				return false, fmt.Errorf("failed to get Kubeconfig for LKE cluster %d: %s", clusterID, err)
-			}
-
-			kubeConfigBytes, err := base64.StdEncoding.DecodeString(resp.KubeConfig)
-			if err != nil {
-				return false, fmt.Errorf("failed to decode kubeconfig: %s", err)
-			}
-
-			clientset, err = kubernetes.BuildClientsetFromConfig(kubeConfigBytes, options.TransportWrapper)
-			if err != nil {
-				return false, fmt.Errorf("failed to build client for LKE cluster %d: %s", clusterID, err)
+				return false, err
 			}
 			log.Printf("[INFO] successfully built client for LKE cluster %d\n", clusterID)
 		}
