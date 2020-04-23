@@ -20,23 +20,23 @@ const (
 
 // LKECluster represents a LKECluster object
 type LKECluster struct {
-	ID      int              `json:"id"`
-	Created *time.Time       `json:"-"`
-	Updated *time.Time       `json:"-"`
-	Label   string           `json:"label"`
-	Region  string           `json:"region"`
-	Status  LKEClusterStatus `json:"status"`
-	Version string           `json:"version"`
-	Tags    []string         `json:"tags"`
+	ID         int              `json:"id"`
+	Created    *time.Time       `json:"-"`
+	Updated    *time.Time       `json:"-"`
+	Label      string           `json:"label"`
+	Region     string           `json:"region"`
+	Status     LKEClusterStatus `json:"status"`
+	K8sVersion string           `json:"k8s_version"`
+	Tags       []string         `json:"tags"`
 }
 
 // LKEClusterCreateOptions fields are those accepted by CreateLKECluster
 type LKEClusterCreateOptions struct {
-	NodePools []LKEClusterPoolCreateOptions `json:"node_pools"`
-	Label     string                        `json:"label"`
-	Region    string                        `json:"region"`
-	Version   string                        `json:"k8s_version"`
-	Tags      []string                      `json:"tags,omitempty"`
+	NodePools  []LKEClusterPoolCreateOptions `json:"node_pools"`
+	Label      string                        `json:"label"`
+	Region     string                        `json:"region"`
+	K8sVersion string                        `json:"k8s_version"`
+	Tags       []string                      `json:"tags,omitempty"`
 }
 
 // LKEClusterUpdateOptions fields are those accepted by UpdateLKECluster
@@ -85,7 +85,7 @@ func (i *LKECluster) UnmarshalJSON(b []byte) error {
 func (i LKECluster) GetCreateOptions() (o LKEClusterCreateOptions) {
 	o.Label = i.Label
 	o.Region = i.Region
-	o.Version = i.Version
+	o.K8sVersion = i.K8sVersion
 	o.Tags = i.Tags
 	// @TODO copy NodePools?
 	return
