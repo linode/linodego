@@ -102,6 +102,19 @@ type Client struct {
 	Volumes               *Resource
 }
 
+// clone creates a clone of the current Client.
+func (c *Client) clone() Client {
+	clone := NewClient(c.resty.GetClient())
+	clone.SetDebug(c.resty.Debug)
+	clone.SetUserAgent(c.userAgent)
+	clone.millisecondsPerPoll = c.millisecondsPerPoll
+
+	clone.retryConditionals = make([]RetryConditional, len(c.retryConditionals))
+	copy(clone.retryConditionals, c.retryConditionals)
+
+	return clone
+}
+
 func init() {
 	// Wether or not we will enable Resty debugging output
 	if apiDebug, ok := os.LookupEnv("LINODE_DEBUG"); ok {
