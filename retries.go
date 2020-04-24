@@ -15,14 +15,8 @@ type RetryConditional resty.RetryConditionFunc
 // Configures resty to
 // lock until enough time has passed to retry the request as determined by the Retry-After response header.
 // If the Retry-After header is not set, we fall back to value of SetPollDelay.
-func configureRetries(c *Client) {
-	c.resty.
-		SetRetryCount(1000).
-		AddRetryCondition(checkRetryConditionals(c)).
-		SetRetryAfter(respectRetryAfter)
-}
 
-func checkRetryConditionals(c *Client) func(*resty.Response, error) bool {
+func checkRetryConditionals(c Client) func(*resty.Response, error) bool {
 	return func(r *resty.Response, err error) bool {
 		for _, retryConditional := range c.retryConditionals {
 			retry := retryConditional(r, err)

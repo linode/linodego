@@ -44,14 +44,17 @@ var (
 
 // Client is a wrapper around the Resty client
 type Client struct {
-	resty             *resty.Client
-	userAgent         string
-	resources         map[string]*Resource
-	debug             bool
-	retryConditionals []RetryConditional
-
+	httpClient          *http.Client
+	apiToken            string
+	userAgent           string
+	baseURL             string
+	rootCertificatePath string
+	debug               bool
+	retryConditionals   []RetryConditional
+	retryMaxWaitTime    time.Duration
 	millisecondsPerPoll time.Duration
 
+	resources             map[string]*Resource
 	Account               *Resource
 	AccountSettings       *Resource
 	DomainRecords         *Resource
@@ -117,14 +120,12 @@ func init() {
 // SetUserAgent sets a custom user-agent for HTTP requests
 func (c *Client) SetUserAgent(ua string) *Client {
 	c.userAgent = ua
-	c.resty.SetHeader("User-Agent", c.userAgent)
-
 	return c
 }
 
 // R wraps resty's R method
 func (c *Client) R(ctx context.Context) *resty.Request {
-	return c.resty.R().
+	return c.resty().R().
 		ExpectContentType("application/json").
 		SetHeader("Content-Type", "application/json").
 		SetContext(ctx).
@@ -134,14 +135,12 @@ func (c *Client) R(ctx context.Context) *resty.Request {
 // SetDebug sets the debug on resty's client
 func (c *Client) SetDebug(debug bool) *Client {
 	c.debug = debug
-	c.resty.SetDebug(debug)
-
 	return c
 }
 
 // SetBaseURL sets the base URL of the Linode v4 API (https://api.linode.com/v4)
 func (c *Client) SetBaseURL(url string) *Client {
-	c.resty.SetHostURL(url)
+	c.baseURL = url
 	return c
 }
 
@@ -153,14 +152,14 @@ func (c *Client) SetAPIVersion(apiVersion string) *Client {
 
 // SetRootCertificate adds a root certificate to the underlying TLS client config
 func (c *Client) SetRootCertificate(path string) *Client {
-	c.resty.SetRootCertificate(path)
+	c.rootCertificatePath = path
 	return c
 }
 
 // SetToken sets the API token for all requests from this client
 // Only necessary if you haven't already provided an http client to NewClient() configured with the token.
 func (c *Client) SetToken(token string) *Client {
-	c.resty.SetHeader("Authorization", fmt.Sprintf("Bearer %s", token))
+	c.apiToken = token
 	return c
 }
 
@@ -170,7 +169,6 @@ func (c *Client) SetRetries() *Client {
 		addRetryConditional(linodeBusyRetryCondition).
 		addRetryConditional(tooManyRequestsRetryCondition).
 		SetRetryMaxWaitTime(APIRetryMaxWaitTime)
-	configureRetries(c)
 	return c
 }
 
@@ -180,7 +178,7 @@ func (c *Client) addRetryConditional(retryConditional RetryConditional) *Client 
 }
 
 func (c *Client) SetRetryMaxWaitTime(max time.Duration) *Client {
-	c.resty.SetRetryMaxWaitTime(max)
+	c.retryMaxWaitTime = max
 	return c
 }
 
@@ -188,7 +186,6 @@ func (c *Client) SetRetryMaxWaitTime(max time.Duration) *Client {
 // Affects all WaitFor* functions and retries.
 func (c *Client) SetPollDelay(delay time.Duration) *Client {
 	c.millisecondsPerPoll = delay
-	c.resty.SetRetryWaitTime(delay * time.Millisecond)
 	return c
 }
 
@@ -202,14 +199,44 @@ func (c Client) Resource(resourceName string) *Resource {
 	return selectedResource
 }
 
-// NewClient factory to create new Client struct
-func NewClient(hc *http.Client) (client Client) {
-	if hc != nil {
-		client.resty = resty.NewWithClient(hc)
+func (c Client) resty() (restyClient *resty.Client) {
+	if c.httpClient != nil {
+		restyClient = resty.NewWithClient(c.httpClient)
 	} else {
-		client.resty = resty.New()
+		restyClient = resty.New()
+	}
+	restyClient.SetDebug(c.debug)
+
+	if c.userAgent != "" {
+		restyClient.SetHeader("User-Agent", c.userAgent)
+	}
+	if c.millisecondsPerPoll != 0 {
+		restyClient.SetRetryWaitTime(c.millisecondsPerPoll * time.Millisecond)
+	}
+	if c.retryMaxWaitTime != 0 {
+		restyClient.SetRetryMaxWaitTime(c.retryMaxWaitTime)
+	}
+	if c.apiToken != "" {
+		restyClient.SetHeader("Authorization", fmt.Sprintf("Bearer %s", c.apiToken))
+	}
+	if c.baseURL != "" {
+		restyClient.SetHostURL(c.baseURL)
+	}
+	if c.rootCertificatePath != "" {
+		restyClient.SetRootCertificate(c.rootCertificatePath)
 	}
 
+	restyClient.
+		SetRetryCount(1000).
+		AddRetryCondition(checkRetryConditionals(c)).
+		SetRetryAfter(respectRetryAfter)
+
+	return restyClient
+}
+
+// NewClient factory to create new Client struct
+func NewClient(hc *http.Client) (client Client) {
+	client.httpClient = hc
 	client.SetUserAgent(DefaultUserAgent)
 
 	baseURL, baseURLExists := os.LookupEnv(APIHostVar)
