@@ -239,26 +239,18 @@ func (client Client) WaitForLKEClusterConditions(
 	}
 	defer cancel()
 
-	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
-	defer ticker.Stop()
-
 	var prevLog string
 	var clientset kubernetes.Clientset
 
-	clientReady := func(ctx context.Context, c kubernetes.Clientset) (bool, error) {
-		var err error
-		if clientset == nil {
-			clientset, err = getLKEClusterClientset(ctx, &client, clusterID, options.TransportWrapper)
-			if err != nil {
-				return false, err
-			}
-			log.Printf("[INFO] successfully built client for LKE cluster %d\n", clusterID)
-		}
-		return true, nil
+	clientset, err := getLKEClusterClientset(ctx, &client, clusterID, options.TransportWrapper)
+	if err != nil {
+		return err
 	}
 
-	clusterConditions := append([]condition.ClusterConditionFunc{clientReady}, conditions...)
-	for _, condition := range clusterConditions {
+	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
+	defer ticker.Stop()
+
+	for _, condition := range conditions {
 	ConditionSucceeded:
 		for {
 			select {
