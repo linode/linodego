@@ -151,10 +151,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.12.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/891/api-endpoint
+    url: https://api.linode.com/v4beta/lke/clusters/891/api-endpoints
     method: GET
   response:
-    body: '{"endpoints": ["https://10.20.30.40:6443"]}'
+    body: '{"data": [ {"endpoint": "https://10.20.30.40:6443"} ], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"

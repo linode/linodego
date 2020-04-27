@@ -69,22 +69,22 @@ func TestGetLKECluster_found(t *testing.T) {
 	}
 }
 
-func TestGetLKEClusterAPIEndpoint(t *testing.T) {
+func TestListLKEClusterAPIEndpoints(t *testing.T) {
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
-	}}, "fixtures/TestGetLKEClusterAPIEndpoint")
+	}}, "fixtures/TestListLKEClusterAPIEndpoints")
 	defer teardown()
 
-	_, err = client.WaitForLKEClusterStatus(context.Background(), lkeCluster.ID, linodego.LKEClusterReady, 180)
 	if err != nil {
-		t.Errorf("Error waiting for NodePool readiness: %s", err)
+		t.Error(err)
 	}
-	i, err := client.GetLKEClusterAPIEndpoint(context.Background(), lkeCluster.ID)
+
+	i, err := client.ListLKEClusterAPIEndpoints(context.Background(), lkeCluster.ID, nil)
 	if err != nil {
-		t.Errorf("Error getting lkeCluster APIEndpoint, expected struct, got %v and error %v", i, err)
+		t.Errorf("Error listing lkeClusterAPIEndpoints, expected struct, got error %v", err)
 	}
-	if len(i.Endpoints) == 0 {
-		t.Errorf("Expected an lkeCluster APIEndpoint, but got empty string %v", i)
+	if len(i) != 1 {
+		t.Errorf("Expected a single lkeClusterAPIEndpoints, but got none %v", i)
 	}
 }
 
