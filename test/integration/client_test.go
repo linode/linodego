@@ -2,10 +2,7 @@ package integration
 
 import (
 	"context"
-	"strings"
 	"testing"
-
-	. "github.com/linode/linodego"
 )
 
 func TestClientAliases(t *testing.T) {
@@ -47,13 +44,8 @@ func TestClient_APIResponseBadGateway(t *testing.T) {
 		t.Errorf("Error should be thrown on 502 Response from API")
 	}
 
-	responseError, ok := err.(*Error)
-
-	if !ok {
-		t.Errorf("Error type did not match the expected result")
-	}
-
-	if !strings.Contains(responseError.Message, "Unexpected Content-Type") {
-		t.Errorf("Error message does not contain: \"Unexpected Content-Type\"")
+	expectedErr := "[502] Bad Gateway"
+	if err.Error() != expectedErr {
+		t.Errorf(`expected error to be "%s" but got "%s"`, expectedErr, err)
 	}
 }
