@@ -3,6 +3,7 @@ package linodego
 import (
 	"net/http"
 	"testing"
+	"time"
 
 	"github.com/go-resty/resty/v2"
 )
@@ -25,7 +26,7 @@ func TestLinodeBusyRetryCondition(t *testing.T) {
 
 	apiError := APIError{
 		Errors: []APIErrorReason{
-			APIErrorReason{Reason: "Linode busy."},
+			{Reason: "Linode busy."},
 		},
 	}
 	request.SetError(&apiError)
@@ -34,5 +35,26 @@ func TestLinodeBusyRetryCondition(t *testing.T) {
 
 	if !retry {
 		t.Errorf("Should have retried")
+	}
+}
+
+func TestLinodeServiceUnavailableRetryCondition(t *testing.T) {
+	request := resty.Request{}
+	rawResponse := http.Response{StatusCode: http.StatusServiceUnavailable, Header: http.Header{
+		retryAfterHeaderName: []string{"20"},
+	}}
+	response := resty.Response{
+		Request:     &request,
+		RawResponse: &rawResponse,
+	}
+
+	if retry := serviceUnavailableRetryCondition(&response, nil); !retry {
+		t.Error("expected request to be retried")
+	}
+
+	if retryAfter, err := respectRetryAfter(NewClient(nil).resty, &response); err != nil {
+		t.Errorf("expected error to be nil but got %s", err)
+	} else if retryAfter != time.Second*20 {
+		t.Errorf("expected retryAfter to be 20 but got %d", retryAfter)
 	}
 }

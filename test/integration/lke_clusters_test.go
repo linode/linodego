@@ -9,11 +9,11 @@ import (
 
 var (
 	testLKEClusterCreateOpts = linodego.LKEClusterCreateOptions{
-		Label:     label,
-		Region:    "us-central",
-		Version:   "1.16",
-		Tags:      []string{"testing"},
-		NodePools: []linodego.LKEClusterPoolCreateOptions{{Count: 1, Type: "g6-standard-2"}},
+		Label:      label,
+		Region:     "us-central",
+		K8sVersion: "1.16",
+		Tags:       []string{"testing"},
+		NodePools:  []linodego.LKEClusterPoolCreateOptions{{Count: 1, Type: "g6-standard-2"}},
 	}
 )
 
@@ -32,6 +32,26 @@ func TestGetLKECluster_missing(t *testing.T) {
 
 	if e.Code != 404 {
 		t.Errorf("should have received a 404 Code requesting a missing lkeCluster, got %v", e.Code)
+	}
+}
+
+func TestWaitForLKEClusterReady(t *testing.T) {
+	client, cluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
+		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
+		createOpts.NodePools = []linodego.LKEClusterPoolCreateOptions{
+			{Count: 3, Type: "g6-standard-2"},
+		}
+	}}, "fixtures/TestWaitForLKEClusterReady")
+	defer teardown()
+
+	wrapper, teardownClusterClient := transportRecorderWrapper(t, "fixtures/TestWaitForLKEClusterReadyClusterClient")
+	defer teardownClusterClient()
+
+	if err = client.WaitForLKEClusterReady(context.Background(), cluster.ID, linodego.LKEClusterPollOptions{
+		TimeoutSeconds:   5 * 60,
+		TransportWrapper: wrapper,
+	}); err != nil {
+		t.Errorf("Error waiting for the LKE cluster pools to be ready: %s", err)
 	}
 }
 
@@ -157,17 +177,18 @@ func setupLKECluster(t *testing.T, clusterModifiers []clusterModifier, fixturesY
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := testLKEClusterCreateOpts
+	createOpts.K8sVersion = "1.17"
 	for _, modifier := range clusterModifiers {
 		modifier(&createOpts)
 	}
 	lkeCluster, err := client.CreateLKECluster(context.Background(), createOpts)
 	if err != nil {
-		t.Errorf("Error listing lkeClusters, expected struct, got error %v", err)
+		t.Errorf("failed to create LKE cluster: %s", err)
 	}
 
 	teardown := func() {
 		if err := client.DeleteLKECluster(context.Background(), lkeCluster.ID); err != nil {
-			t.Errorf("Expected to delete a lkeClusters, but got %v", err)
+			t.Errorf("failed to delete LKE cluster: %s", err)
 		}
 		fixtureTeardown()
 	}
