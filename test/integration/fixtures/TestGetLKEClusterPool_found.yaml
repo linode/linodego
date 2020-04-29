@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"node_pools":[{"count":1,"type":"g6-standard-2"}],"label":"a83ef3go2h76-linodego-testing","region":"us-central","version":"1.16","tags":["testing"]}'
+    body: '{"node_pools":[{"count":1,"type":"g6-standard-2"}],"label":"a83ef3go2h76-linodego-testing","region":"us-central","k8s_version":"1.16","tags":["testing"]}'
     form: {}
     headers:
       Accept:
@@ -16,7 +16,7 @@ interactions:
   response:
     body: '{"id": 888, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "label": "a83ef3go2h76-linodego-testing", "region": "us-central",
-      "version": "1.16", "tags": []}'
+      "k8s_version": "1.16", "tags": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
