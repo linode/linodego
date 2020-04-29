@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"node_pools":[{"count":1,"type":"g6-standard-2"}],"label":"dj7861ur2d2m-linodego-testing","region":"us-central","k8s_version":"1.16","tags":["testing"]}'
+    body: '{"node_pools":[{"count":1,"type":"g6-standard-2"}],"label":"dj7861ur2d2m-linodego-testing","region":"us-central","k8s_version":"1.17","tags":["testing"]}'
     form: {}
     headers:
       Accept:
@@ -16,7 +16,7 @@ interactions:
   response:
     body: '{"id": 893, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "label": "dj7861ur2d2m-linodego-testing", "region": "us-central",
-      "k8s_version": "1.16", "tags": []}'
+      "k8s_version": "1.17", "tags": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -85,9 +85,9 @@ interactions:
   response:
     body: '{"data": [{"id": 102, "status": "ready", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "label": "lke", "region": "us-central", "k8s_version":
-      "1.16", "tags": []}, {"id": 893, "status": "ready", "created": "2018-01-02T03:04:05",
+      "1.17", "tags": []}, {"id": 893, "status": "ready", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "label": "dj7861ur2d2m-linodego-testing",
-      "region": "us-central", "k8s_version": "1.16", "tags": []}], "page": 1, "pages":
+      "region": "us-central", "k8s_version": "1.17", "tags": []}], "page": 1, "pages":
       1, "results": 2}'
     headers:
       Access-Control-Allow-Credentials:
