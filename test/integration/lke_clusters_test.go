@@ -11,7 +11,7 @@ var (
 	testLKEClusterCreateOpts = linodego.LKEClusterCreateOptions{
 		Label:      label,
 		Region:     "us-central",
-		K8sVersion: "1.16",
+		K8sVersion: "1.17",
 		Tags:       []string{"testing"},
 		NodePools:  []linodego.LKEClusterPoolCreateOptions{{Count: 1, Type: "g6-standard-2"}},
 	}
@@ -69,22 +69,22 @@ func TestGetLKECluster_found(t *testing.T) {
 	}
 }
 
-func TestGetLKEClusterAPIEndpoint(t *testing.T) {
+func TestListLKEClusterAPIEndpoints(t *testing.T) {
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
-	}}, "fixtures/TestGetLKEClusterAPIEndpoint")
+	}}, "fixtures/TestListLKEClusterAPIEndpoints")
 	defer teardown()
 
-	_, err = client.WaitForLKEClusterStatus(context.Background(), lkeCluster.ID, linodego.LKEClusterReady, 180)
 	if err != nil {
-		t.Errorf("Error waiting for NodePool readiness: %s", err)
+		t.Error(err)
 	}
-	i, err := client.GetLKEClusterAPIEndpoint(context.Background(), lkeCluster.ID)
+
+	i, err := client.ListLKEClusterAPIEndpoints(context.Background(), lkeCluster.ID, nil)
 	if err != nil {
-		t.Errorf("Error getting lkeCluster APIEndpoint, expected struct, got %v and error %v", i, err)
+		t.Errorf("Error listing lkeClusterAPIEndpoints, expected struct, got error %v", err)
 	}
-	if len(i.Endpoints) == 0 {
-		t.Errorf("Expected an lkeCluster APIEndpoint, but got empty string %v", i)
+	if len(i) != 1 {
+		t.Errorf("Expected a single lkeClusterAPIEndpoints, but got none %v", i)
 	}
 }
 
@@ -177,7 +177,6 @@ func setupLKECluster(t *testing.T, clusterModifiers []clusterModifier, fixturesY
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := testLKEClusterCreateOpts
-	createOpts.K8sVersion = "1.17"
 	for _, modifier := range clusterModifiers {
 		modifier(&createOpts)
 	}
