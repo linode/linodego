@@ -169,6 +169,7 @@ func (c *Client) SetRetries() *Client {
 	c.
 		addRetryConditional(linodeBusyRetryCondition).
 		addRetryConditional(tooManyRequestsRetryCondition).
+		addRetryConditional(serviceUnavailableRetryCondition).
 		SetRetryMaxWaitTime(APIRetryMaxWaitTime)
 	configureRetries(c)
 	return c
