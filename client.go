@@ -58,6 +58,7 @@ type Client struct {
 	Domains                *Resource
 	Events                 *Resource
 	Firewalls              *Resource
+	FirewallDevices        *Resource
 	IPAddresses            *Resource
 	IPv6Pools              *Resource
 	IPv6Ranges             *Resource
@@ -261,6 +262,7 @@ func addResources(client *Client) {
 		domainsName:                NewResource(client, domainsName, domainsEndpoint, false, Domain{}, DomainsPagedResponse{}),
 		eventsName:                 NewResource(client, eventsName, eventsEndpoint, false, Event{}, EventsPagedResponse{}),
 		firewallsName:              NewResource(client, firewallsName, firewallsEndpoint, false, Firewall{}, FirewallsPagedResponse{}),
+		firewallDevicesName:        NewResource(client, firewallDevicesName, firewallDevicesEndpoint, true, FirewallDevice{}, FirewallDevicesPagedResponse{}),
 		imagesName:                 NewResource(client, imagesName, imagesEndpoint, false, Image{}, ImagesPagedResponse{}),
 		instanceConfigsName:        NewResource(client, instanceConfigsName, instanceConfigsEndpoint, true, InstanceConfig{}, InstanceConfigsPagedResponse{}),
 		instanceDisksName:          NewResource(client, instanceDisksName, instanceDisksEndpoint, true, InstanceDisk{}, InstanceDisksPagedResponse{}),
@@ -312,6 +314,7 @@ func addResources(client *Client) {
 	client.Domains = resources[domainsName]
 	client.Events = resources[eventsName]
 	client.Firewalls = resources[firewallsName]
+	client.FirewallDevices = resources[firewallDevicesName]
 	client.IPAddresses = resources[ipaddressesName]
 	client.IPv6Pools = resources[ipv6poolsName]
 	client.IPv6Ranges = resources[ipv6rangesName]
