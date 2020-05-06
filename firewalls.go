@@ -32,8 +32,8 @@ type Firewall struct {
 
 // DevicesCreationOptions fields are used when adding devices during the Firewall creation process.
 type DevicesCreationOptions struct {
-	Linodes       []string `json:"linodes,omitempty"`
-	NodeBalancers []string `json:"nodebalancers,omitempty"`
+	Linodes       []int `json:"linodes,omitempty"`
+	NodeBalancers []int `json:"nodebalancers,omitempty"`
 }
 
 // FirewallCreateOptions fields are those accepted by CreateFirewall
