@@ -74,10 +74,8 @@ func TestGetFirewall(t *testing.T) {
 
 type firewallModifier func(*linodego.FirewallCreateOptions)
 
-func setupFirewall(t *testing.T, firewallModifiers []firewallModifier, fixturesYaml string) (*linodego.Client, *linodego.Firewall, func(), error) {
+func createFirewall(t *testing.T, client *linodego.Client, firewallModifiers ...firewallModifier) (*linodego.Firewall, func(), error) {
 	t.Helper()
-	var fixtureTeardown func()
-	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 
 	createOpts := testFirewallCreateOpts
 	for _, modifier := range firewallModifiers {
@@ -86,13 +84,24 @@ func setupFirewall(t *testing.T, firewallModifiers []firewallModifier, fixturesY
 
 	firewall, err := client.CreateFirewall(context.Background(), createOpts)
 	if err != nil {
-		t.Errorf("Error creating Firewall, expected struct, got error %v", err)
+		t.Errorf("failed to create firewall: %s", err)
 	}
 
 	teardown := func() {
 		if err := client.DeleteFirewall(context.Background(), firewall.ID); err != nil {
-			t.Errorf("Expected to delete a Firewall, but got %v", err)
+			t.Errorf("failed to delete firewall: %s", err)
 		}
+	}
+	return firewall, teardown, nil
+}
+
+func setupFirewall(t *testing.T, firewallModifiers []firewallModifier, fixturesYaml string) (*linodego.Client, *linodego.Firewall, func(), error) {
+	t.Helper()
+	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+	firewall, firewallTeardown, err := createFirewall(t, client, firewallModifiers...)
+
+	teardown := func() {
+		firewallTeardown()
 		fixtureTeardown()
 	}
 	return client, firewall, teardown, err
