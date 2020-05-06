@@ -14,7 +14,8 @@ type FirewallDeviceType string
 
 // FirewallDeviceType constants start with FirewallDevice
 const (
-	FirewallDeviceLinode FirewallDeviceType = "linode"
+	FirewallDeviceLinode       FirewallDeviceType = "linode"
+	FirewallDeviceNodeBalancer FirewallDeviceType = "nodebalancer"
 )
 
 // FirewallDevice represents a device governed by a Firewall
