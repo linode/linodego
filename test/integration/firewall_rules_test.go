@@ -5,7 +5,6 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/google/go-cmp/cmp/cmpopts"
 	"github.com/linode/linodego"
 )
 
@@ -24,10 +23,6 @@ var (
 		Outbound: []linodego.FirewallRule{testFirewallRule},
 	}
 )
-
-// ignoreNetworkAddresses negates comparing IP addresses. Because of fixture sanitization,
-// these addresses will be changed to bogus values when running tests.
-var ignoreNetworkAddresses = cmpopts.IgnoreFields(linodego.FirewallRule{}, "Addresses")
 
 func TestGetFirewallRules(t *testing.T) {
 	client, firewall, teardown, err := setupFirewall(t, []firewallModifier{func(createOpts *linodego.FirewallCreateOptions) {
