@@ -5,6 +5,8 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/google/go-cmp/cmp"
+	"github.com/google/go-cmp/cmp/cmpopts"
 	"github.com/linode/linodego"
 )
 
@@ -15,6 +17,14 @@ var (
 		Tags:  []string{"testing"},
 	}
 )
+
+// ignoreNetworkAddresses negates comparing IP addresses. Because of fixture sanitization,
+// these addresses will be changed to bogus values when running tests.
+var ignoreNetworkAddresses = cmpopts.IgnoreFields(linodego.FirewallRule{}, "Addresses")
+
+// ignoreFirewallTimestamps negates comparing created and updated timestamps. Because of
+// fixture sanitization, these addresses will be changed to bogus values when running tests.
+var ignoreFirewallTimestamps = cmpopts.IgnoreFields(linodego.Firewall{}, "Created", "Updated")
 
 // TestListFirewalls should return a paginated list of Firewalls
 func TestListFirewalls(t *testing.T) {
@@ -69,6 +79,40 @@ func TestGetFirewall(t *testing.T) {
 
 	if !reflect.DeepEqual(result.Rules, rules) {
 		t.Errorf("Expected firewall rules to be %#v but got %#v", rules, result.Rules)
+	}
+}
+
+func TestUpdateFirewall(t *testing.T) {
+	label := randString(12, lowerBytes, upperBytes) + "-linodego-testing"
+	rules := linodego.FirewallRuleSet{
+		Inbound: []linodego.FirewallRule{
+			{
+				Protocol: linodego.ICMP,
+				Addresses: linodego.NetworkAddresses{
+					IPv4: []string{"0.0.0.0/0"},
+				},
+			},
+		},
+	}
+
+	client, firewall, teardown, err := setupFirewall(t, []firewallModifier{
+		func(createOpts *linodego.FirewallCreateOptions) {
+			createOpts.Label = label
+			createOpts.Rules = rules
+		},
+	}, "fixtures/TestUpdateFirewall")
+	if err != nil {
+		t.Error(err)
+	}
+	defer teardown()
+
+	firewall.Status = linodego.FirewallDisabled
+	firewall.Label = "updatedFirewallLabel"
+	firewall.Tags = []string{"newTag"}
+	if updated, err := client.UpdateFirewall(context.Background(), firewall.ID, firewall.GetUpdateOptions()); err != nil {
+		t.Error(err)
+	} else if !cmp.Equal(firewall, updated, ignoreFirewallTimestamps, ignoreNetworkAddresses) {
+		t.Errorf("expected firewall to have updates but got diff: %s", cmp.Diff(firewall, updated, ignoreFirewallTimestamps, ignoreNetworkAddresses))
 	}
 }
 
