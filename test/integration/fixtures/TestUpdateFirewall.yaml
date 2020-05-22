@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"aSTefFgoEhTM-linodego-testing","rules":{"inbound":[{"protocol":"ICMP","addresses":{"ipv4":["10.20.30.40/0"],"ipv6":null}}]},"tags":["testing"],"devices":{}}'
+    body: '{"label":"aSTefFgoEhTM-linodego-testing","rules":{"inbound":[{"protocol":"ICMP","addresses":{"ipv4":["10.20.30.40/0"],"ipv6":null}}]},"tags":["test"],"devices":{}}'
     form: {}
     headers:
       Accept:
@@ -14,10 +14,10 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 246, "label": "aSTefFgoEhTM-linodego-testing", "created": "2018-01-02T03:04:05",
+    body: '{"id": 250, "label": "aSTefFgoEhTM-linodego-testing", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"protocol": "ICMP", "addresses": {"ipv4": ["10.20.30.40/0"], "ipv6": null}}]},
-      "tags": ["testing"]}'
+      "tags": ["test"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -32,13 +32,13 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "261"
+      - "258"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Date:
-      - Thu, 21 May 2020 18:12:11 GMT
+      - Fri, 22 May 2020 13:35:21 GMT
       Retry-After:
       - "118"
       Server:
@@ -61,7 +61,7 @@ interactions:
       X-Ratelimit-Remaining:
       - "1595"
       X-Ratelimit-Reset:
-      - "1590084849"
+      - "1590154640"
       X-Spec-Version:
       - 4.65.1
       X-Xss-Protection:
@@ -70,7 +70,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"updatedFirewallLabel","status":"disabled","tags":["newTag"]}'
+    body: '{"label":"updatedFirewallLabel","status":"disabled","tags":[]}'
     form: {}
     headers:
       Accept:
@@ -79,13 +79,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.12.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/246
+    url: https://api.linode.com/v4beta/networking/firewalls/250
     method: PUT
   response:
-    body: '{"id": 246, "label": "updatedFirewallLabel", "created": "2018-01-02T03:04:05",
+    body: '{"id": 250, "label": "updatedFirewallLabel", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "disabled", "rules": {"inbound":
       [{"protocol": "ICMP", "addresses": {"ipv4": ["10.20.30.40/0"], "ipv6": null}}]},
-      "tags": ["newTag"]}'
+      "tags": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -100,13 +100,13 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "252"
+      - "244"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Date:
-      - Thu, 21 May 2020 18:12:11 GMT
+      - Fri, 22 May 2020 13:35:22 GMT
       Retry-After:
       - "118"
       Server:
@@ -129,7 +129,7 @@ interactions:
       X-Ratelimit-Remaining:
       - "1594"
       X-Ratelimit-Reset:
-      - "1590084850"
+      - "1590154641"
       X-Spec-Version:
       - 4.65.1
       X-Xss-Protection:
@@ -147,7 +147,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego 0.12.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/246
+    url: https://api.linode.com/v4beta/networking/firewalls/250
     method: DELETE
   response:
     body: '{}'
@@ -171,7 +171,7 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Thu, 21 May 2020 18:12:11 GMT
+      - Fri, 22 May 2020 13:35:22 GMT
       Retry-After:
       - "118"
       Server:
@@ -194,7 +194,7 @@ interactions:
       X-Ratelimit-Remaining:
       - "1593"
       X-Ratelimit-Reset:
-      - "1590084850"
+      - "1590154641"
       X-Spec-Version:
       - 4.65.1
       X-Xss-Protection:
