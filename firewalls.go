@@ -44,8 +44,24 @@ type FirewallCreateOptions struct {
 	Devices DevicesCreationOptions `json:"devices,omitempty"`
 }
 
+// FirewallUpdateOptions is an options struct used when Updating a Firewall
+type FirewallUpdateOptions struct {
+	Label  string         `json:"label,omitempty"`
+	Status FirewallStatus `json:"status,omitempty"`
+	Tags   *[]string      `json:"tags,omitempty"`
+}
+
+// GetUpdateOptions converts a Firewall to FirewallUpdateOptions for use in Client.UpdateFirewall.
+func (f *Firewall) GetUpdateOptions() FirewallUpdateOptions {
+	return FirewallUpdateOptions{
+		Label:  f.Label,
+		Status: f.Status,
+		Tags:   &f.Tags,
+	}
+}
+
 // UnmarshalJSON for Firewall responses
-func (i *Firewall) UnmarshalJSON(b []byte) error {
+func (f *Firewall) UnmarshalJSON(b []byte) error {
 	type Mask Firewall
 
 	p := struct {
@@ -53,16 +69,15 @@ func (i *Firewall) UnmarshalJSON(b []byte) error {
 		Created *parseabletime.ParseableTime `json:"created"`
 		Updated *parseabletime.ParseableTime `json:"updated"`
 	}{
-		Mask: (*Mask)(i),
+		Mask: (*Mask)(f),
 	}
 
 	if err := json.Unmarshal(b, &p); err != nil {
 		return err
 	}
 
-	i.Created = (*time.Time)(p.Created)
-	i.Updated = (*time.Time)(p.Updated)
-
+	f.Created = (*time.Time)(p.Created)
+	f.Updated = (*time.Time)(p.Updated)
 	return nil
 }
 
@@ -134,6 +149,31 @@ func (c *Client) GetFirewall(ctx context.Context, id int) (*Firewall, error) {
 
 	e = fmt.Sprintf("%s/%d", e, id)
 	r, err := coupleAPIErrors(req.SetResult(&Firewall{}).Get(e))
+	if err != nil {
+		return nil, err
+	}
+
+	return r.Result().(*Firewall), nil
+}
+
+// UpdateFirewall updates a Firewall with the given ID
+func (c *Client) UpdateFirewall(ctx context.Context, id int, updateOpts FirewallUpdateOptions) (*Firewall, error) {
+	e, err := c.Firewalls.Endpoint()
+	if err != nil {
+		return nil, err
+	}
+
+	req := c.R(ctx).SetResult(&Firewall{})
+
+	bodyData, err := json.Marshal(updateOpts)
+	if err != nil {
+		return nil, NewError(err)
+	}
+
+	body := string(bodyData)
+
+	e = fmt.Sprintf("%s/%d", e, id)
+	r, err := coupleAPIErrors(req.SetBody(body).Put(e))
 	if err != nil {
 		return nil, err
 	}
