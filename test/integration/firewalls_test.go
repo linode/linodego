@@ -99,6 +99,7 @@ func TestUpdateFirewall(t *testing.T) {
 		func(createOpts *linodego.FirewallCreateOptions) {
 			createOpts.Label = label
 			createOpts.Rules = rules
+			createOpts.Tags = []string{"test"}
 		},
 	}, "fixtures/TestUpdateFirewall")
 	if err != nil {
@@ -106,13 +107,24 @@ func TestUpdateFirewall(t *testing.T) {
 	}
 	defer teardown()
 
-	firewall.Status = linodego.FirewallDisabled
-	firewall.Label = "updatedFirewallLabel"
-	firewall.Tags = []string{"newTag"}
-	if updated, err := client.UpdateFirewall(context.Background(), firewall.ID, firewall.GetUpdateOptions()); err != nil {
+	updateOpts := firewall.GetUpdateOptions()
+	updateOpts.Status = linodego.FirewallDisabled
+	updateOpts.Label = "updatedFirewallLabel"
+	updateOpts.Tags = &[]string{}
+
+	updated, err := client.UpdateFirewall(context.Background(), firewall.ID, updateOpts)
+	if err != nil {
 		t.Error(err)
-	} else if !cmp.Equal(firewall, updated, ignoreFirewallTimestamps, ignoreNetworkAddresses) {
-		t.Errorf("expected firewall to have updates but got diff: %s", cmp.Diff(firewall, updated, ignoreFirewallTimestamps, ignoreNetworkAddresses))
+	}
+
+	if !cmp.Equal(updated.Tags, *updateOpts.Tags) {
+		t.Errorf("expected tags to be updated: %s", cmp.Diff(updated.Tags, *updateOpts.Tags))
+	}
+	if updated.Status != updateOpts.Status {
+		t.Errorf("expected status %s but got %s", updateOpts.Status, updated.Status)
+	}
+	if updated.Label != updateOpts.Label {
+		t.Errorf(`expected label to be "%s" but got "%s"`, updateOpts.Label, updated.Label)
 	}
 }
 
