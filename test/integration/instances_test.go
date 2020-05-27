@@ -145,7 +145,7 @@ func TestMultiplePrivateInstanceDisk(t *testing.T) {
 		t.Errorf("Error waiting for instance readiness: %s", err)
 	}
 
-	_, err = client.WaitForEventFinished(context.Background(), instance1.ID, linodego.EntityLinode, linodego.ActionDiskImagize, disk.Created, 300)
+	_, err = client.WaitForEventFinished(context.Background(), instance1.ID, linodego.EntityLinode, linodego.ActionDiskImagize, *disk.Created, 300)
 	if err != nil {
 		t.Errorf("Error waiting for imagize event: %s", err)
 	}
