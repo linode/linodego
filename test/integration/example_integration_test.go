@@ -104,7 +104,7 @@ func Example() {
 		if errSwap != nil {
 			log.Fatalln("* While creating swap disk:", errSwap)
 		}
-		eventSwap, errSwapEvent := linodeClient.WaitForEventFinished(context.Background(), linode.ID, linodego.EntityLinode, linodego.ActionDiskCreate, diskSwap.Created, 240)
+		eventSwap, errSwapEvent := linodeClient.WaitForEventFinished(context.Background(), linode.ID, linodego.EntityLinode, linodego.ActionDiskCreate, *diskSwap.Created, 240)
 		// @TODO it is not sufficient that a disk was created. Which disk was it?
 		// Sounds like we'll need a WaitForEntityStatus function.
 		if errSwapEvent != nil {
@@ -118,7 +118,7 @@ func Example() {
 		if errRaw != nil {
 			log.Fatalln("* While creating raw disk:", errRaw)
 		}
-		eventRaw, errRawEvent := linodeClient.WaitForEventFinished(context.Background(), linode.ID, linodego.EntityLinode, linodego.ActionDiskCreate, diskRaw.Created, 240)
+		eventRaw, errRawEvent := linodeClient.WaitForEventFinished(context.Background(), linode.ID, linodego.EntityLinode, linodego.ActionDiskCreate, *diskRaw.Created, 240)
 		// @TODO it is not sufficient that a disk was created. Which disk was it?
 		// Sounds like we'll need a WaitForEntityStatus function.
 		if errRawEvent != nil {
@@ -142,7 +142,7 @@ func Example() {
 		if errDebian != nil {
 			log.Fatalln("* While creating Debian disk:", errDebian)
 		}
-		eventDebian, errDebianEvent := linodeClient.WaitForEventFinished(context.Background(), linode.ID, linodego.EntityLinode, linodego.ActionDiskCreate, diskDebian.Created, 240)
+		eventDebian, errDebianEvent := linodeClient.WaitForEventFinished(context.Background(), linode.ID, linodego.EntityLinode, linodego.ActionDiskCreate, *diskDebian.Created, 240)
 		// @TODO it is not sufficient that a disk was created. Which disk was it?
 		// Sounds like we'll need a WaitForEntityStatus function.
 		if errDebianEvent != nil {
