@@ -17,7 +17,7 @@ type ClusterConditionFunc func(context.Context, kubernetes.Clientset) (bool, err
 // ClusterHasReadyNode is a ClusterConditionFunc which polls for at least one node to have the
 // condition NodeReady=True.
 func ClusterHasReadyNode(ctx context.Context, clientset kubernetes.Clientset) (bool, error) {
-	nodes, err := clientset.CoreV1().Nodes().List(v1.ListOptions{})
+	nodes, err := clientset.CoreV1().Nodes().List(ctx, v1.ListOptions{})
 	if err != nil {
 		return false, fmt.Errorf("failed to get nodes for cluster: %s", err)
 	}
