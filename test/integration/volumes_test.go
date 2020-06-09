@@ -31,19 +31,6 @@ func TestCreateVolume(t *testing.T) {
 	}
 }
 
-func TestRenameVolume(t *testing.T) {
-	client, volume, teardown, err := setupVolume(t, "fixtures/TestRenameVolume")
-	defer teardown()
-	if err != nil {
-		t.Error(err)
-	}
-
-	volume, err = client.RenameVolume(context.Background(), volume.ID, "test-volume-renamed")
-	if err != nil || volume.Label != "test-volume-renamed" {
-		t.Errorf("Error renaming volume, %s", err)
-	}
-}
-
 func TestResizeVolume(t *testing.T) {
 	client, volume, teardown, err := setupVolume(t, "fixtures/TestResizeVolume")
 	defer teardown()
