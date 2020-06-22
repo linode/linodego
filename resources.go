@@ -7,6 +7,7 @@ import (
 	"text/template"
 
 	"github.com/go-resty/resty/v2"
+	"github.com/linode/linodego/pkg/errors"
 )
 
 const (
@@ -148,7 +149,7 @@ func NewResource(client *Client, name string, endpoint string, useTemplate bool,
 
 func (r Resource) render(data ...interface{}) (string, error) {
 	if data == nil {
-		return "", NewError("Cannot template endpoint with <nil> data")
+		return "", errors.New("Cannot template endpoint with <nil> data")
 	}
 	out := ""
 	buf := bytes.NewBufferString(out)
@@ -164,11 +165,11 @@ func (r Resource) render(data ...interface{}) (string, error) {
 			SecondID interface{}
 		}{data[0], data[1]}
 	default:
-		return "", NewError("Too many arguments to render template (expected 1 or 2)")
+		return "", errors.New("Too many arguments to render template (expected 1 or 2)")
 	}
 
 	if err := r.endpointTemplate.Execute(buf, substitutions); err != nil {
-		return "", NewError(err)
+		return "", errors.New(err)
 	}
 	return buf.String(), nil
 }
@@ -189,7 +190,7 @@ func (r Resource) endpointWithID(id ...int) (string, error) {
 // Endpoint will return the non-templated endpoint string for resource
 func (r Resource) Endpoint() (string, error) {
 	if r.isTemplate {
-		return "", NewError(fmt.Sprintf("Tried to get endpoint for %s without providing data for template", r.name))
+		return "", errors.New(fmt.Sprintf("Tried to get endpoint for %s without providing data for template", r.name))
 	}
 	return r.endpoint, nil
 }

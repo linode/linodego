@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/pkg/errors"
 )
 
 // FirewallDeviceType represents the different kinds of devices governable by a Firewall
@@ -99,7 +100,7 @@ func (c *Client) GetFirewallDevice(ctx context.Context, firewallID, deviceID int
 	}
 
 	e = fmt.Sprintf("%s/%d", e, deviceID)
-	r, err := coupleAPIErrors(c.R(ctx).SetResult(&FirewallDevice{}).Get(e))
+	r, err := errors.CoupleAPIErrors(c.R(ctx).SetResult(&FirewallDevice{}).Get(e))
 	if err != nil {
 		return nil, err
 	}
@@ -118,10 +119,10 @@ func (c *Client) CreateFirewallDevice(ctx context.Context, firewallID int, creat
 	if bodyData, err := json.Marshal(createOpts); err == nil {
 		body = string(bodyData)
 	} else {
-		return nil, NewError(err)
+		return nil, errors.New(err)
 	}
 
-	r, err := coupleAPIErrors(req.SetBody(body).Post(e))
+	r, err := errors.CoupleAPIErrors(req.SetBody(body).Post(e))
 	if err != nil {
 		return nil, err
 	}
@@ -136,6 +137,6 @@ func (c *Client) DeleteFirewallDevice(ctx context.Context, firewallID, deviceID 
 	}
 
 	e = fmt.Sprintf("%s/%d", e, deviceID)
-	_, err = coupleAPIErrors(c.R(ctx).Delete(e))
+	_, err = errors.CoupleAPIErrors(c.R(ctx).Delete(e))
 	return err
 }

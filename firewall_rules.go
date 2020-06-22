@@ -3,6 +3,8 @@ package linodego
 import (
 	"context"
 	"encoding/json"
+
+	"github.com/linode/linodego/pkg/errors"
 )
 
 // NetworkProtocol enum type
@@ -41,7 +43,7 @@ func (c *Client) GetFirewallRules(ctx context.Context, firewallID int) (*Firewal
 		return nil, err
 	}
 
-	r, err := coupleAPIErrors(c.R(ctx).SetResult(&FirewallRuleSet{}).Get(e))
+	r, err := errors.CoupleAPIErrors(c.R(ctx).SetResult(&FirewallRuleSet{}).Get(e))
 	if err != nil {
 		return nil, err
 	}
@@ -60,10 +62,10 @@ func (c *Client) UpdateFirewallRules(ctx context.Context, firewallID int, rules 
 	if bodyData, err := json.Marshal(rules); err == nil {
 		body = string(bodyData)
 	} else {
-		return nil, NewError(err)
+		return nil, errors.New(err)
 	}
 
-	r, err := coupleAPIErrors(req.SetBody(body).Put(e))
+	r, err := errors.CoupleAPIErrors(req.SetBody(body).Put(e))
 	if err != nil {
 		return nil, err
 	}

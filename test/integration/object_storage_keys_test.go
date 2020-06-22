@@ -5,11 +5,12 @@ import (
 	"strings"
 	"testing"
 
-	. "github.com/linode/linodego"
+	"github.com/linode/linodego"
+	"github.com/linode/linodego/pkg/errors"
 )
 
 var (
-	testObjectStorageKeyCreateOpts = ObjectStorageKeyCreateOptions{
+	testObjectStorageKeyCreateOpts = linodego.ObjectStorageKeyCreateOptions{
 		Label: label,
 	}
 )
@@ -23,7 +24,7 @@ func TestGetObjectStorageKey_missing(t *testing.T) {
 	if err == nil {
 		t.Errorf("should have received an error requesting a missing object storage key, got %v", i)
 	}
-	e, ok := err.(*Error)
+	e, ok := err.(*errors.Error)
 	if !ok {
 		t.Errorf("should have received an Error requesting a missing object storage key, got %v", e)
 	}
@@ -60,7 +61,7 @@ func TestUpdateObjectStorageKey(t *testing.T) {
 	}
 
 	renamedLabel := objectStorageKey.Label + "_r"
-	updateOpts := ObjectStorageKeyUpdateOptions{
+	updateOpts := linodego.ObjectStorageKeyUpdateOptions{
 		Label: renamedLabel,
 	}
 	objectStorageKey, err = client.UpdateObjectStorageKey(context.Background(), objectStorageKey.ID, updateOpts)
@@ -100,7 +101,7 @@ func TestListObjectStorageKeys(t *testing.T) {
 	}
 }
 
-func setupObjectStorageKey(t *testing.T, fixturesYaml string) (*Client, *ObjectStorageKey, func(), error) {
+func setupObjectStorageKey(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.ObjectStorageKey, func(), error) {
 	t.Helper()
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)

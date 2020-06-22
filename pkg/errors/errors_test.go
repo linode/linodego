@@ -1,4 +1,4 @@
-package linodego
+package errors
 
 import (
 	"bytes"
@@ -39,7 +39,7 @@ func TestCoupleAPIErrors_badGatewayError(t *testing.T) {
 		Message: http.StatusText(http.StatusBadGateway),
 	}
 
-	if _, err := coupleAPIErrors(resp, nil); !cmp.Equal(err, expectedError) {
+	if _, err := CoupleAPIErrors(resp, nil); !cmp.Equal(err, expectedError) {
 		t.Errorf("expected error %#v to match error %#v", err, expectedError)
 	}
 }

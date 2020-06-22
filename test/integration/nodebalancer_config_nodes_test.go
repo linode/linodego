@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/linode/linodego"
+	"github.com/linode/linodego/pkg/errors"
 )
 
 var (
@@ -160,7 +161,7 @@ func setupNodeBalancerNode(t *testing.T, fixturesYaml string) (*linodego.Client,
 	teardown := func() {
 		// delete the NodeBalancerNode to exercise the code
 		if err := client.DeleteNodeBalancerNode(context.Background(), nodebalancer.ID, config.ID, node.ID); err != nil {
-			e, ok := err.(*linodego.Error)
+			e, ok := err.(*errors.Error)
 			// Tollerate 404 because Rebuild testing will delete all Nodes
 			if !ok || e.Code != 404 {
 				t.Errorf("Expected to delete a NodeBalancer Config Node, but got %v", err)

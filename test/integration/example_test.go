@@ -12,6 +12,7 @@ import (
 	"strings"
 
 	"github.com/linode/linodego"
+	"github.com/linode/linodego/pkg/errors"
 )
 
 func ExampleClient_ListTypes_all() {
@@ -42,7 +43,7 @@ func ExampleClient_GetType_missing() {
 
 	_, err := linodeClient.GetType(context.Background(), "missing-type")
 	if err != nil {
-		if v, ok := err.(*linodego.Error); ok {
+		if v, ok := err.(*errors.Error); ok {
 			fmt.Println("Request was:", v.Response.Request.URL)
 			fmt.Println("Response was:", v.Response.Status)
 			fmt.Println("Error was:", v)
@@ -173,7 +174,7 @@ func ExampleClient_GetImage_missing() {
 
 	_, err := linodeClient.GetImage(context.Background(), "not-found")
 	if err != nil {
-		if v, ok := err.(*linodego.Error); ok {
+		if v, ok := err.(*errors.Error); ok {
 			fmt.Println("Request was:", v.Response.Request.URL)
 			fmt.Println("Response was:", v.Response.Status)
 			fmt.Println("Error was:", v)

@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/pkg/errors"
 )
 
 // InstanceDisk represents an Instance Disk object
@@ -126,7 +127,7 @@ func (c *Client) GetInstanceDisk(ctx context.Context, linodeID int, configID int
 	}
 
 	e = fmt.Sprintf("%s/%d", e, configID)
-	r, err := coupleAPIErrors(c.R(ctx).SetResult(&InstanceDisk{}).Get(e))
+	r, err := errors.CoupleAPIErrors(c.R(ctx).SetResult(&InstanceDisk{}).Get(e))
 
 	if err != nil {
 		return nil, err
@@ -148,10 +149,10 @@ func (c *Client) CreateInstanceDisk(ctx context.Context, linodeID int, createOpt
 	if bodyData, err := json.Marshal(createOpts); err == nil {
 		body = string(bodyData)
 	} else {
-		return nil, NewError(err)
+		return nil, errors.New(err)
 	}
 
-	r, err := coupleAPIErrors(req.
+	r, err := errors.CoupleAPIErrors(req.
 		SetBody(body).
 		Post(e))
 
@@ -177,10 +178,10 @@ func (c *Client) UpdateInstanceDisk(ctx context.Context, linodeID int, diskID in
 	if bodyData, err := json.Marshal(updateOpts); err == nil {
 		body = string(bodyData)
 	} else {
-		return nil, NewError(err)
+		return nil, errors.New(err)
 	}
 
-	r, err := coupleAPIErrors(req.
+	r, err := errors.CoupleAPIErrors(req.
 		SetBody(body).
 		Put(e))
 
@@ -214,10 +215,10 @@ func (c *Client) ResizeInstanceDisk(ctx context.Context, linodeID int, diskID in
 	if bodyData, err := json.Marshal(updateOpts); err == nil {
 		body = string(bodyData)
 	} else {
-		return NewError(err)
+		return errors.New(err)
 	}
 
-	_, err = coupleAPIErrors(req.
+	_, err = errors.CoupleAPIErrors(req.
 		SetBody(body).
 		Post(e))
 
@@ -242,10 +243,10 @@ func (c *Client) PasswordResetInstanceDisk(ctx context.Context, linodeID int, di
 	if bodyData, err := json.Marshal(updateOpts); err == nil {
 		body = string(bodyData)
 	} else {
-		return NewError(err)
+		return errors.New(err)
 	}
 
-	_, err = coupleAPIErrors(req.
+	_, err = errors.CoupleAPIErrors(req.
 		SetBody(body).
 		Post(e))
 
@@ -260,6 +261,6 @@ func (c *Client) DeleteInstanceDisk(ctx context.Context, linodeID int, diskID in
 	}
 	e = fmt.Sprintf("%s/%d", e, diskID)
 
-	_, err = coupleAPIErrors(c.R(ctx).Delete(e))
+	_, err = errors.CoupleAPIErrors(c.R(ctx).Delete(e))
 	return err
 }

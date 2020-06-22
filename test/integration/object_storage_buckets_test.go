@@ -5,13 +5,14 @@ import (
 	"fmt"
 	"time"
 
-	. "github.com/linode/linodego"
-
 	"testing"
+
+	"github.com/linode/linodego"
+	"github.com/linode/linodego/pkg/errors"
 )
 
 var (
-	testObjectStorageBucketCreateOpts = ObjectStorageBucketCreateOptions{
+	testObjectStorageBucketCreateOpts = linodego.ObjectStorageBucketCreateOptions{
 		Cluster: "us-east-1",
 		Label:   fmt.Sprintf("linodego-test-bucket-%d", time.Now().UnixNano()),
 	}
@@ -47,7 +48,7 @@ func TestGetObjectStorageBucket_missing(t *testing.T) {
 	if err == nil {
 		t.Errorf("should have received an error requesting a missing ObjectStorageBucket, got %v", i)
 	}
-	e, ok := err.(*Error)
+	e, ok := err.(*errors.Error)
 	if !ok {
 		t.Errorf("should have received an Error requesting a missing ObjectStorageBucket, got %v", e)
 	}
@@ -95,7 +96,7 @@ func TestListObjectStorageBuckets(t *testing.T) {
 	}
 }
 
-func setupObjectStorageBucket(t *testing.T, fixturesYaml string) (*Client, *ObjectStorageBucket, func(), error) {
+func setupObjectStorageBucket(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.ObjectStorageBucket, func(), error) {
 	t.Helper()
 
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)

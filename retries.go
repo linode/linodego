@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/go-resty/resty/v2"
+	"github.com/linode/linodego/pkg/errors"
 )
 
 const retryAfterHeaderName = "Retry-After"
@@ -40,7 +41,7 @@ func checkRetryConditionals(c *Client) func(*resty.Response, error) bool {
 // SetLinodeBusyRetry configures resty to retry specifically on "Linode busy." errors
 // The retry wait time is configured in SetPollDelay
 func linodeBusyRetryCondition(r *resty.Response, _ error) bool {
-	apiError, ok := r.Error().(*APIError)
+	apiError, ok := r.Error().(*errors.APIError)
 	linodeBusy := ok && apiError.Error() == "Linode busy."
 	retry := r.StatusCode() == http.StatusBadRequest && linodeBusy
 	return retry

@@ -19,6 +19,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/linode/linodego/pkg/errors"
 )
 
 // Template represents a Template object
@@ -90,7 +92,7 @@ func (c *Client) GetTemplate(ctx context.Context, id int) (*Template, error) {
 		return nil, err
 	}
 	e = fmt.Sprintf("%s/%d", e, id)
-	r, err := coupleAPIErrors(c.R(ctx).SetResult(&Template{}).Get(e))
+	r, err := errors.CoupleAPIErrors(c.R(ctx).SetResult(&Template{}).Get(e))
 	if err != nil {
 		return nil, err
 	}
@@ -110,10 +112,10 @@ func (c *Client) CreateTemplate(ctx context.Context, createOpts TemplateCreateOp
 	if bodyData, err := json.Marshal(createOpts); err == nil {
 		body = string(bodyData)
 	} else {
-		return nil, NewError(err)
+		return nil, errors.New(err)
 	}
 
-	r, err := coupleAPIErrors(req.
+	r, err := errors.CoupleAPIErrors(req.
 		SetBody(body).
 		Post(e))
 
@@ -137,10 +139,10 @@ func (c *Client) UpdateTemplate(ctx context.Context, id int, updateOpts Template
 	if bodyData, err := json.Marshal(updateOpts); err == nil {
 		body = string(bodyData)
 	} else {
-		return nil, NewError(err)
+		return nil, errors.New(err)
 	}
 
-	r, err := coupleAPIErrors(req.
+	r, err := errors.CoupleAPIErrors(req.
 		SetBody(body).
 		Put(e))
 
@@ -158,6 +160,6 @@ func (c *Client) DeleteTemplate(ctx context.Context, id int) error {
 	}
 	e = fmt.Sprintf("%s/%d", e, id)
 
-	_, err = coupleAPIErrors(c.R(ctx).Delete(e))
+	_, err = errors.CoupleAPIErrors(c.R(ctx).Delete(e))
 	return err
 }

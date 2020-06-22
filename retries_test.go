@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/go-resty/resty/v2"
+	"github.com/linode/linodego/pkg/errors"
 )
 
 func TestLinodeBusyRetryCondition(t *testing.T) {
@@ -24,8 +25,8 @@ func TestLinodeBusyRetryCondition(t *testing.T) {
 		t.Errorf("Should not have retried")
 	}
 
-	apiError := APIError{
-		Errors: []APIErrorReason{
+	apiError := errors.APIError{
+		Errors: []errors.APIErrorReason{
 			{Reason: "Linode busy."},
 		},
 	}

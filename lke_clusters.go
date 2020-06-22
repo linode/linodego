@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/pkg/errors"
 )
 
 // LKEClusterStatus represents the status of an LKECluster
@@ -176,7 +177,7 @@ func (c *Client) GetLKECluster(ctx context.Context, id int) (*LKECluster, error)
 		return nil, err
 	}
 	e = fmt.Sprintf("%s/%d", e, id)
-	r, err := coupleAPIErrors(c.R(ctx).SetResult(&LKECluster{}).Get(e))
+	r, err := errors.CoupleAPIErrors(c.R(ctx).SetResult(&LKECluster{}).Get(e))
 	if err != nil {
 		return nil, err
 	}
@@ -196,10 +197,10 @@ func (c *Client) CreateLKECluster(ctx context.Context, createOpts LKEClusterCrea
 	if bodyData, err := json.Marshal(createOpts); err == nil {
 		body = string(bodyData)
 	} else {
-		return nil, NewError(err)
+		return nil, errors.New(err)
 	}
 
-	r, err := coupleAPIErrors(req.
+	r, err := errors.CoupleAPIErrors(req.
 		SetBody(body).
 		Post(e))
 
@@ -223,10 +224,10 @@ func (c *Client) UpdateLKECluster(ctx context.Context, id int, updateOpts LKEClu
 	if bodyData, err := json.Marshal(updateOpts); err == nil {
 		body = string(bodyData)
 	} else {
-		return nil, NewError(err)
+		return nil, errors.New(err)
 	}
 
-	r, err := coupleAPIErrors(req.
+	r, err := errors.CoupleAPIErrors(req.
 		SetBody(body).
 		Put(e))
 
@@ -244,7 +245,7 @@ func (c *Client) DeleteLKECluster(ctx context.Context, id int) error {
 	}
 	e = fmt.Sprintf("%s/%d", e, id)
 
-	_, err = coupleAPIErrors(c.R(ctx).Delete(e))
+	_, err = errors.CoupleAPIErrors(c.R(ctx).Delete(e))
 	return err
 }
 
@@ -265,7 +266,7 @@ func (c *Client) GetLKEClusterKubeconfig(ctx context.Context, id int) (*LKEClust
 		return nil, err
 	}
 	e = fmt.Sprintf("%s/%d/kubeconfig", e, id)
-	r, err := coupleAPIErrors(c.R(ctx).SetResult(&LKEClusterKubeconfig{}).Get(e))
+	r, err := errors.CoupleAPIErrors(c.R(ctx).SetResult(&LKEClusterKubeconfig{}).Get(e))
 	if err != nil {
 		return nil, err
 	}
@@ -279,7 +280,7 @@ func (c *Client) GetLKEVersion(ctx context.Context, version string) (*LKEVersion
 		return nil, err
 	}
 	e = fmt.Sprintf("%s/%s", e, version)
-	r, err := coupleAPIErrors(c.R(ctx).SetResult(&LKEVersion{}).Get(e))
+	r, err := errors.CoupleAPIErrors(c.R(ctx).SetResult(&LKEVersion{}).Get(e))
 	if err != nil {
 		return nil, err
 	}

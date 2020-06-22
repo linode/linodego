@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/pkg/errors"
 )
 
 func TestGetNodeBalancerStats(t *testing.T) {
@@ -26,7 +26,7 @@ poll:
 			_, err = client.GetNodeBalancerStats(context.Background(), nodebalancer.ID)
 			if err != nil {
 				// Possible that the call succeeded but that stats aren't available (HTTP: 4XX)
-				if v, ok := err.(*linodego.Error); ok {
+				if v, ok := err.(*errors.Error); ok {
 					if v.Code == 400 && v.Message == "Stats are unavailable at this time." {
 						break poll
 					}

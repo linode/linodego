@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/pkg/errors"
 )
 
 func TestGetType_missing(t *testing.T) {
@@ -15,7 +15,7 @@ func TestGetType_missing(t *testing.T) {
 	if err == nil {
 		t.Errorf("should have received an error requesting a missing image, got %v", i)
 	}
-	e, ok := err.(*linodego.Error)
+	e, ok := err.(*errors.Error)
 	if !ok {
 		t.Errorf("should have received an Error requesting a missing image, got %v", e)
 	}

@@ -8,6 +8,7 @@ import (
 
 	"github.com/linode/linodego/internal/duration"
 	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/pkg/errors"
 )
 
 // Event represents an action taken on the Account.
@@ -266,7 +267,7 @@ func (c *Client) MarkEventRead(ctx context.Context, event *Event) error {
 	e := event.endpointWithID(c)
 	e = fmt.Sprintf("%s/read", e)
 
-	_, err := coupleAPIErrors(c.R(ctx).Post(e))
+	_, err := errors.CoupleAPIErrors(c.R(ctx).Post(e))
 
 	return err
 }
@@ -276,7 +277,7 @@ func (c *Client) MarkEventsSeen(ctx context.Context, event *Event) error {
 	e := event.endpointWithID(c)
 	e = fmt.Sprintf("%s/seen", e)
 
-	_, err := coupleAPIErrors(c.R(ctx).Post(e))
+	_, err := errors.CoupleAPIErrors(c.R(ctx).Post(e))
 
 	return err
 }

@@ -1,8 +1,7 @@
-package linodego
+package errors
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"strings"
 
@@ -10,22 +9,29 @@ import (
 )
 
 const (
-	// ErrorFromString is the Code identifying Errors created by string types
-	ErrorFromString = 1
-	// ErrorFromError is the Code identifying Errors created by error types
-	ErrorFromError = 2
-	// ErrorFromStringer is the Code identifying Errors created by fmt.Stringer types
-	ErrorFromStringer = 3
+	// FromString is the Code identifying Errors created by string types
+	FromString = iota + 1
+	// FromError is the Code identifying Errors created by error types
+	FromError
+	// FromStringer is the Code identifying Errors created by fmt.Stringer types
+	FromStringer
 )
 
-// Error wraps the LinodeGo error with the relevant http.Response
+// Error represents an Error in the context of an API method call.
 type Error struct {
 	Response *http.Response
 	Code     int
 	Message  string
 }
 
-// APIErrorReason is an individual invalid request message returned by the Linode API
+func (e Error) Error() string {
+	return fmt.Sprintf("[%03d] %s", e.Code, e.Message)
+}
+
+// Error implements error.
+var _ error = (*Error)(nil)
+
+// APIErrorReason represents an individual invalid request message returned by the Linode API.
 type APIErrorReason struct {
 	Reason string `json:"reason"`
 	Field  string `json:"field"`
@@ -39,14 +45,29 @@ func (r APIErrorReason) Error() string {
 	return fmt.Sprintf("[%s] %s", r.Field, r.Reason)
 }
 
-// APIError is the error-set returned by the Linode API when presented with an invalid request
+// APIErrorReason implements error.
+var _ error = (*APIErrorReason)(nil)
+
+// APIError is the set of errors returned by the Linode API on an invalid request.
 type APIError struct {
 	Errors []APIErrorReason `json:"errors"`
 }
 
-func coupleAPIErrors(r *resty.Response, err error) (*resty.Response, error) {
+func (e APIError) Error() string {
+	x := []string{}
+	for _, msg := range e.Errors {
+		x = append(x, msg.Error())
+	}
+
+	return strings.Join(x, "; ")
+}
+
+// APIError implements error.
+var _ error = (*APIError)(nil)
+
+func CoupleAPIErrors(r *resty.Response, err error) (*resty.Response, error) {
 	if err != nil {
-		return nil, NewError(err)
+		return nil, New(err)
 	}
 
 	if r.Error() != nil {
@@ -67,8 +88,7 @@ func coupleAPIErrors(r *resty.Response, err error) (*resty.Response, error) {
 				expectedContentType,
 				responseContentType,
 			)
-
-			return nil, NewError(msg)
+			return nil, New(msg)
 		}
 
 		apiError, ok := r.Error().(*APIError)
@@ -76,31 +96,18 @@ func coupleAPIErrors(r *resty.Response, err error) (*resty.Response, error) {
 			return r, nil
 		}
 
-		return nil, NewError(r)
+		return nil, New(r)
 	}
 
 	return r, nil
 }
 
-func (e APIError) Error() string {
-	x := []string{}
-	for _, msg := range e.Errors {
-		x = append(x, msg.Error())
-	}
-
-	return strings.Join(x, "; ")
-}
-
-func (g Error) Error() string {
-	return fmt.Sprintf("[%03d] %s", g.Code, g.Message)
-}
-
-// NewError creates a linodego.Error with a Code identifying the source err type,
-// - ErrorFromString   (1) from a string
-// - ErrorFromError    (2) for an error
-// - ErrorFromStringer (3) for a Stringer
+// New creates a Error with a Code identifying the source err type.
+// - FromString   (1) from a string
+// - FromError    (2) for an error
+// - FromStringer (3) for a Stringer
 // - HTTP Status Codes (100-600) for a resty.Response object
-func NewError(err interface{}) *Error {
+func New(err interface{}) *Error {
 	if err == nil {
 		return nil
 	}
@@ -110,9 +117,8 @@ func NewError(err interface{}) *Error {
 		return e
 	case *resty.Response:
 		apiError, ok := e.Error().(*APIError)
-
 		if !ok {
-			log.Fatalln("Unexpected Resty Error Response")
+			return nil
 		}
 
 		return &Error{
@@ -121,13 +127,12 @@ func NewError(err interface{}) *Error {
 			Response: e.RawResponse,
 		}
 	case error:
-		return &Error{Code: ErrorFromError, Message: e.Error()}
+		return &Error{Code: FromError, Message: e.Error()}
 	case string:
-		return &Error{Code: ErrorFromString, Message: e}
+		return &Error{Code: FromString, Message: e}
 	case fmt.Stringer:
-		return &Error{Code: ErrorFromStringer, Message: e.String()}
+		return &Error{Code: FromStringer, Message: e.String()}
 	default:
-		log.Fatalln("Unsupported type to linodego.NewError")
-		panic(err)
+		return nil
 	}
 }

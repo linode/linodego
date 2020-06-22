@@ -11,6 +11,7 @@ import (
 	"time"
 
 	"github.com/go-resty/resty/v2"
+	"github.com/linode/linodego/pkg/errors"
 )
 
 const (
@@ -131,7 +132,7 @@ func (c *Client) R(ctx context.Context) *resty.Request {
 		ExpectContentType("application/json").
 		SetHeader("Content-Type", "application/json").
 		SetContext(ctx).
-		SetError(APIError{})
+		SetError(errors.APIError{})
 }
 
 // SetDebug sets the debug on resty's client

@@ -7,6 +7,7 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/linode/linodego"
+	"github.com/linode/linodego/pkg/errors"
 )
 
 func TestListFirewallDevices(t *testing.T) {
@@ -92,7 +93,7 @@ func TestDeleteFirewallDevice(t *testing.T) {
 
 	if _, getErr := client.GetFirewallDevice(context.Background(), firewall.ID, firewallDevice.ID); err != nil {
 		t.Error("expected fetching firewall device to fail")
-	} else if apiError, ok := getErr.(*linodego.Error); !ok || apiError.Code != http.StatusNotFound {
+	} else if apiError, ok := getErr.(*errors.Error); !ok || apiError.Code != http.StatusNotFound {
 		t.Errorf("expected fetching firewall device to throw Not Found but got: %s", getErr)
 	}
 }
