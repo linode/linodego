@@ -12,6 +12,7 @@ import (
 
 	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/pkg/errors"
+	"github.com/linode/linodego/pkg/retry"
 )
 
 const (
@@ -41,6 +42,12 @@ const (
 
 var (
 	envDebug = false
+
+	defaultRetryConditionals = []retry.ConditionFunc{
+		retry.LinodeBusyRetryCondition,
+		retry.ServiceUnavailableRetryCondition,
+		retry.TooManyRequestsRetryCondition,
+	}
 )
 
 // Client is a wrapper around the Resty client
@@ -49,7 +56,7 @@ type Client struct {
 	userAgent         string
 	resources         map[string]*Resource
 	debug             bool
-	retryConditionals []RetryConditional
+	retryConditionals []retry.ConditionFunc
 
 	millisecondsPerPoll time.Duration
 
@@ -168,18 +175,15 @@ func (c *Client) SetToken(token string) *Client {
 	return c
 }
 
-// SetRetries adds retry conditions for "Linode Busy." errors and 429s.
-func (c *Client) SetRetries() *Client {
-	c.
-		addRetryConditional(linodeBusyRetryCondition).
-		addRetryConditional(tooManyRequestsRetryCondition).
-		addRetryConditional(serviceUnavailableRetryCondition).
-		SetRetryMaxWaitTime(APIRetryMaxWaitTime)
-	configureRetries(c)
+// SetRetryConditionals sets the conditions that will be evaluated on a request error to
+// determine whether the request should be retried.
+func (c *Client) SetRetryConditionals(conditionals []retry.ConditionFunc) *Client {
+	c.retryConditionals = conditionals
 	return c
 }
 
-func (c *Client) addRetryConditional(retryConditional RetryConditional) *Client {
+// AddRetryConditional adds a request retry conditional to the underlying client.
+func (c *Client) AddRetryConditional(retryConditional retry.ConditionFunc) *Client {
 	c.retryConditionals = append(c.retryConditionals, retryConditional)
 	return c
 }
@@ -247,12 +251,34 @@ func NewClient(hc *http.Client) (client Client) {
 
 	client.
 		SetPollDelay(1000 * APISecondsPerPoll).
-		SetRetries().
-		SetDebug(envDebug)
+		SetDebug(envDebug).
+		configureRetries()
 
 	addResources(&client)
 
 	return
+}
+
+func (c *Client) configureRetries() {
+	c.SetRetryConditionals(defaultRetryConditionals)
+	c.resty.SetRetryCount(1000).
+		AddRetryCondition(resty.RetryConditionFunc(c.retryConditional())).
+		SetRetryAfter(retry.RespectRetryAfter)
+}
+
+// retryConditional composes a retry.ConditionFunc, which evaluates all the underlying
+// conditions in c.retryConditionals.
+func (c Client) retryConditional() retry.ConditionFunc {
+	return func(r *resty.Response, err error) bool {
+		for _, retryConditional := range c.retryConditionals {
+			retry := retryConditional(r, err)
+			if retry {
+				log.Printf("[INFO] Received error %s - Retrying", r.Error())
+				return true
+			}
+		}
+		return false
+	}
 }
 
 // nolint

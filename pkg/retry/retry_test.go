@@ -1,4 +1,4 @@
-package linodego
+package retry
 
 import (
 	"net/http"
@@ -19,7 +19,7 @@ func TestLinodeBusyRetryCondition(t *testing.T) {
 		RawResponse: &rawResponse,
 	}
 
-	retry = linodeBusyRetryCondition(&response, nil)
+	retry = LinodeBusyRetryCondition(&response, nil)
 
 	if retry {
 		t.Errorf("Should not have retried")
@@ -32,7 +32,7 @@ func TestLinodeBusyRetryCondition(t *testing.T) {
 	}
 	request.SetError(&apiError)
 
-	retry = linodeBusyRetryCondition(&response, nil)
+	retry = LinodeBusyRetryCondition(&response, nil)
 
 	if !retry {
 		t.Errorf("Should have retried")
@@ -49,11 +49,11 @@ func TestLinodeServiceUnavailableRetryCondition(t *testing.T) {
 		RawResponse: &rawResponse,
 	}
 
-	if retry := serviceUnavailableRetryCondition(&response, nil); !retry {
+	if retry := ServiceUnavailableRetryCondition(&response, nil); !retry {
 		t.Error("expected request to be retried")
 	}
 
-	if retryAfter, err := respectRetryAfter(NewClient(nil).resty, &response); err != nil {
+	if retryAfter, err := RespectRetryAfter(resty.New(), &response); err != nil {
 		t.Errorf("expected error to be nil but got %s", err)
 	} else if retryAfter != time.Second*20 {
 		t.Errorf("expected retryAfter to be 20 but got %d", retryAfter)
