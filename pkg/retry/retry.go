@@ -16,19 +16,6 @@ const retryAfterHeaderName = "Retry-After"
 // should be retried, given the response and error.
 type ConditionFunc resty.RetryConditionFunc
 
-// ComposeConditional composes a ConditionFunc function from an array
-// of ConditionFunc functions.
-func ComposeConditionFunc(conditionals ...ConditionFunc) ConditionFunc {
-	return func(res *resty.Response, err error) bool {
-		for _, conditional := range conditionals {
-			if shouldRetry := conditional(res, err); shouldRetry {
-				return true
-			}
-		}
-		return false
-	}
-}
-
 // LinodeBusyRetryCondition is a ConditionFunc that retries requests which have
 // resulted in "Linode busy." errors.
 func LinodeBusyRetryCondition(r *resty.Response, _ error) bool {

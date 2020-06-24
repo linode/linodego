@@ -28,9 +28,6 @@ func (e Error) Error() string {
 	return fmt.Sprintf("[%03d] %s", e.Code, e.Message)
 }
 
-// Error implements error.
-var _ error = (*Error)(nil)
-
 // APIErrorReason represents an individual invalid request message returned by the Linode API.
 type APIErrorReason struct {
 	Reason string `json:"reason"`
@@ -45,9 +42,6 @@ func (r APIErrorReason) Error() string {
 	return fmt.Sprintf("[%s] %s", r.Field, r.Reason)
 }
 
-// APIErrorReason implements error.
-var _ error = (*APIErrorReason)(nil)
-
 // APIError is the set of errors returned by the Linode API on an invalid request.
 type APIError struct {
 	Errors []APIErrorReason `json:"errors"`
@@ -61,9 +55,6 @@ func (e APIError) Error() string {
 
 	return strings.Join(x, "; ")
 }
-
-// APIError implements error.
-var _ error = (*APIError)(nil)
 
 func CoupleAPIErrors(r *resty.Response, err error) (*resty.Response, error) {
 	if err != nil {
