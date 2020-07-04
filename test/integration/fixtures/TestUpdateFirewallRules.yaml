@@ -2,23 +2,23 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"linodego-test-volume","region":"us-west"}'
+    body: '{"label":"label","rules":{"inbound":[{"ports":"22","protocol":"TCP","addresses":{"ipv4":["10.20.30.40/0"],"ipv6":["1234::5678/0"]}}],"outbound":[{"ports":"22","protocol":"TCP","addresses":{"ipv4":["10.20.30.40/0"],"ipv6":["1234::5678/0"]}}]},"tags":["testing"],"devices":{}}'
     form: {}
     headers:
       Accept:
       - application/json
-      Authorization:
-      - Bearer awesometokenawesometokenawesometoken
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/volumes
+      - linodego 0.12.0 https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"label": "linodego-test-volume", "filesystem_path": "/dev/disk/by-id/scsi-0Linode_Volume_linodego-test-volume",
-      "size": 20, "created": "2018-01-02T03:04:05", "region": "us-west", "linode_id":
-      null, "id": 9356, "updated": "2018-01-02T03:04:05", "status": "creating"}'
+    body: '{"id": 223, "label": "label", "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound": [{"ports":
+      "22", "protocol": "TCP", "addresses": {"ipv4": ["10.20.30.40/0"], "ipv6": ["1234::5678/0"]}}],
+      "outbound": [{"ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["10.20.30.40/0"],
+      "ipv6": ["1234::5678/0"]}}]}, "tags": ["testing"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -32,18 +32,16 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
-      - "266"
+      - "363"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Jul 2018 21:19:59 GMT
+      - Tue, 19 May 2020 16:41:15 GMT
       Retry-After:
-      - "119"
+      - "92"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -51,9 +49,8 @@ interactions:
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - volumes:read_write
+      - firewall:read_write
       X-Content-Type-Options:
-      - nosniff
       - nosniff
       X-Frame-Options:
       - DENY
@@ -61,37 +58,33 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Ratelimit-Remaining:
-      - "399"
+      - "1595"
       X-Ratelimit-Reset:
-      - "1531689719"
+      - "1589906568"
       X-Spec-Version:
-      - 4.0.3
+      - 4.65.1
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"label":"test-volume-renamed"}'
+    body: '{"inbound":[{"ports":"22","protocol":"TCP","addresses":{"ipv4":["10.20.30.40/0"],"ipv6":["1234::5678/0"]}}]}'
     form: {}
     headers:
       Accept:
       - application/json
-      Authorization:
-      - Bearer awesometokenawesometokenawesometoken
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/volumes/9356
+      - linodego 0.12.0 https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/firewalls/223/rules
     method: PUT
   response:
-    body: '{"status": "creating", "linode_id": null, "label": "test-volume-renamed",
-      "size": 20, "id": 9356, "created": "2018-01-02T03:04:05", "filesystem_path":
-      "/dev/disk/by-id/scsi-0Linode_Volume_test-volume-renamed", "updated": "2018-01-02T03:04:05",
-      "region": "us-west"}'
+    body: '{"inbound": [{"ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["10.20.30.40/0"],
+      "ipv6": ["1234::5678/0"]}}]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -105,18 +98,16 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
-      - "264"
+      - "106"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Jul 2018 21:20:00 GMT
+      - Tue, 19 May 2020 16:41:15 GMT
       Retry-After:
-      - "118"
+      - "92"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -124,9 +115,8 @@ interactions:
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - volumes:read_write
+      - firewall:read_write
       X-Content-Type-Options:
-      - nosniff
       - nosniff
       X-Frame-Options:
       - DENY
@@ -134,13 +124,13 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Ratelimit-Remaining:
-      - "399"
+      - "1594"
       X-Ratelimit-Reset:
-      - "1531689719"
+      - "1589906568"
       X-Spec-Version:
-      - 4.0.3
+      - 4.65.1
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -152,13 +142,79 @@ interactions:
     headers:
       Accept:
       - application/json
-      Authorization:
-      - Bearer awesometokenawesometokenawesometoken
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.0.1 https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/volumes/9356
+      - linodego 0.12.0 https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/firewalls/223/rules
+    method: GET
+  response:
+    body: '{"inbound": [{"ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["10.20.30.40/0"],
+      "ipv6": ["1234::5678/0"]}}]}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "106"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Date:
+      - Tue, 19 May 2020 16:41:16 GMT
+      Retry-After:
+      - "92"
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - firewall:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1600"
+      X-Ratelimit-Remaining:
+      - "1593"
+      X-Ratelimit-Reset:
+      - "1589906569"
+      X-Spec-Version:
+      - 4.65.1
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego 0.12.0 https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/firewalls/223
     method: DELETE
   response:
     body: '{}'
@@ -175,8 +231,6 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
       - "2"
       Content-Security-Policy:
@@ -184,9 +238,9 @@ interactions:
       Content-Type:
       - application/json
       Date:
-      - Sun, 15 Jul 2018 21:20:00 GMT
+      - Tue, 19 May 2020 16:41:16 GMT
       Retry-After:
-      - "119"
+      - "91"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -194,9 +248,8 @@ interactions:
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - volumes:read_write
+      - firewall:read_write
       X-Content-Type-Options:
-      - nosniff
       - nosniff
       X-Frame-Options:
       - DENY
@@ -204,13 +257,13 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Ratelimit-Remaining:
-      - "399"
+      - "1592"
       X-Ratelimit-Reset:
-      - "1531689720"
+      - "1589906568"
       X-Spec-Version:
-      - 4.0.3
+      - 4.65.1
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

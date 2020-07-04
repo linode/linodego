@@ -36,8 +36,8 @@ type Volume struct {
 	LinodeID       *int         `json:"linode_id"`
 	FilesystemPath string       `json:"filesystem_path"`
 	Tags           []string     `json:"tags"`
-	Created        time.Time    `json:"-"`
-	Updated        time.Time    `json:"-"`
+	Created        *time.Time   `json:"-"`
+	Updated        *time.Time   `json:"-"`
 }
 
 // VolumeCreateOptions fields are those accepted by CreateVolume
@@ -88,8 +88,8 @@ func (v *Volume) UnmarshalJSON(b []byte) error {
 		return err
 	}
 
-	v.Created = time.Time(*p.Created)
-	v.Updated = time.Time(*p.Updated)
+	v.Created = (*time.Time)(p.Created)
+	v.Updated = (*time.Time)(p.Updated)
 
 	return nil
 }
@@ -203,13 +203,6 @@ func (c *Client) CreateVolume(ctx context.Context, createOpts VolumeCreateOption
 	}
 
 	return resp.Result().(*Volume), nil
-}
-
-// RenameVolume renames the label of a Linode volume
-// DEPRECATED: use UpdateVolume
-func (c *Client) RenameVolume(ctx context.Context, id int, label string) (*Volume, error) {
-	updateOpts := VolumeUpdateOptions{Label: label}
-	return c.UpdateVolume(ctx, id, updateOpts)
 }
 
 // UpdateVolume updates the Volume with the specified id

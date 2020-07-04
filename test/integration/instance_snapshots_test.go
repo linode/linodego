@@ -81,7 +81,7 @@ func setupInstanceBackup(t *testing.T, fixturesYaml string) (*linodego.Client, *
 	}
 
 	// wait for disk to finish provisioning
-	event, err := client.WaitForEventFinished(context.Background(), instance.ID, linodego.EntityLinode, linodego.ActionDiskCreate, disk.Created, 240)
+	event, err := client.WaitForEventFinished(context.Background(), instance.ID, linodego.EntityLinode, linodego.ActionDiskCreate, *disk.Created, 240)
 	if err != nil {
 		t.Errorf("Error waiting for instance snapshot: %v", err)
 	}
