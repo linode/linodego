@@ -11,6 +11,12 @@ var (
 	testLKEClusterPoolCreateOpts = linodego.LKEClusterPoolCreateOptions{
 		Type:  "g6-standard-2",
 		Count: 1,
+		Disks: []linodego.LKEClusterPoolDisk{
+			{
+				Size: 1000,
+				Type: "ext4",
+			},
+		},
 	}
 )
 
@@ -59,8 +65,8 @@ func TestListLKEClusterPools(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error listing lkeClusterPools, expected struct, got error %v", err)
 	}
-	if len(i) != 1 {
-		t.Errorf("Expected a single lkeClusterPools, but got none %v", i)
+	if len(i) != 2 {
+		t.Errorf("Expected two lkeClusterPools, but got %#v", i)
 	}
 }
 
@@ -74,14 +80,11 @@ func setupLKEClusterPool(t *testing.T, fixturesYaml string) (*linodego.Client, *
 		t.Errorf("Error creating lkeCluster, got error %v", err)
 	}
 
-	pools, err := client.ListLKEClusterPools(context.Background(), lkeCluster.ID, nil)
+	pool, err := client.CreateLKEClusterPool(context.Background(), lkeCluster.ID, testLKEClusterPoolCreateOpts)
 	if err != nil {
 		t.Errorf("Error creating LKECluster Pool, got error %v", err)
 	}
-	if len(pools) == 0 {
-		t.Errorf("Missing initial LKECluster Pool")
-	}
-	pool := &pools[0]
+
 	teardown := func() {
 		// delete the LKEClusterPool to exercise the code
 		if err := client.DeleteLKEClusterPool(context.Background(), lkeCluster.ID, pool.ID); err != nil {
