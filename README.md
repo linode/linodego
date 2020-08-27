@@ -94,7 +94,7 @@ kernels, err := linodego.ListKernels(context.Background(), opts)
 
 ```go
 opts := linodego.NewListOptions(2,"")
-// or opts := linodego.ListOptions{PageOptions: &PageOptions: {Page: 2 }}
+// or opts := linodego.ListOptions{PageOptions: &linodego.PageOptions{Page: 2}, PageSize: 500}
 kernels, err := linodego.ListKernels(context.Background(), opts)
 // len(kernels) == 100
 ```
