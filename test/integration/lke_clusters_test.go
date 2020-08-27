@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/linode/linodego"
+	k8scondition "github.com/linode/linodego/k8s/pkg/condition"
 )
 
 var (
@@ -47,7 +48,7 @@ func TestWaitForLKEClusterReady(t *testing.T) {
 	wrapper, teardownClusterClient := transportRecorderWrapper(t, "fixtures/TestWaitForLKEClusterReadyClusterClient")
 	defer teardownClusterClient()
 
-	if err = client.WaitForLKEClusterReady(context.Background(), cluster.ID, linodego.LKEClusterPollOptions{
+	if err = k8scondition.WaitForLKEClusterReady(context.Background(), *client, cluster.ID, linodego.LKEClusterPollOptions{
 		TimeoutSeconds:   5 * 60,
 		TransportWrapper: wrapper,
 	}); err != nil {

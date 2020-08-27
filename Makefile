@@ -9,27 +9,25 @@ PACKAGES := $(shell go list ./... | grep -v integration)
 
 SKIP_LINT ?= 0
 
-.PHONY: build vet test refresh-fixtures clean-fixtures lint run_fixtures sanitize fixtures godoc testint testunit
+.PHONY: build vet test refresh-fixtures clean-fixtures lint run_fixtures sanitize fixtures godoc testint testunit tidy
 
-test: testunit testint
+test: build lint testunit testint
 
 citest: lint test
 
-testunit: build lint
+testunit:
 	go test -v $(PACKAGES) $(ARGS)
 
-testint: build lint
-	@LINODE_FIXTURE_MODE="play" \
-	LINODE_TOKEN="awesometokenawesometokenawesometoken" \
-	LINODE_API_VERSION="v4beta" \
-	GO111MODULE="on" \
-	go test -v ./test/integration $(ARGS)
+testint:
+	cd test && make test
 
 build: vet lint
 	go build ./...
+	cd k8s && go build ./...
 
 vet:
 	go vet ./...
+	cd k8s && go vet ./...
 
 lint:
 ifeq ($(SKIP_LINT), 1)
@@ -69,3 +67,8 @@ fixtures: run_fixtures sanitize
 
 godoc:
 	@godoc -http=:6060
+
+tidy:
+	go mod tidy
+	cd k8s && go mod tidy
+	cd test && go mod tidy
