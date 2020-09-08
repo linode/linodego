@@ -129,7 +129,7 @@ func (client Client) WaitForSnapshotStatus(ctx context.Context, instanceID int, 
 }
 
 // WaitForVolumeLinodeID waits for the Volume to match the desired LinodeID
-// before returning. An active Instance will not immediately attach or detach a volume, so the
+// before returning. An active Instance will not immediately attach or detach a volume, so
 // the LinodeID must be polled to determine volume readiness from the API.
 // WaitForVolumeLinodeID will timeout with an error after timeoutSeconds.
 func (client Client) WaitForVolumeLinodeID(ctx context.Context, volumeID int, linodeID *int, timeoutSeconds int) (*Volume, error) {
