@@ -39,9 +39,10 @@ func TestUpdateNodeBalancerConfig(t *testing.T) {
 	}
 
 	updateOpts := linodego.NodeBalancerConfigUpdateOptions{
-		Port:      8080,
-		Protocol:  linodego.ProtocolTCP,
-		Algorithm: linodego.AlgorithmLeastConn,
+		Port:          8080,
+		Protocol:      linodego.ProtocolTCP,
+		ProxyProtocol: linodego.ProxyProtocolV2,
+		Algorithm:     linodego.AlgorithmLeastConn,
 	}
 	configUpdated, err := client.UpdateNodeBalancerConfig(context.Background(), nodebalancer.ID, config.ID, updateOpts)
 
@@ -50,7 +51,8 @@ func TestUpdateNodeBalancerConfig(t *testing.T) {
 	}
 	if configUpdated.Port != updateOpts.Port ||
 		string(updateOpts.Algorithm) != string(configUpdated.Algorithm) ||
-		string(updateOpts.Protocol) != string(configUpdated.Protocol) {
+		string(updateOpts.Protocol) != string(configUpdated.Protocol) ||
+		string(updateOpts.ProxyProtocol) != string(configUpdated.ProxyProtocol) {
 		t.Errorf("NodeBalancerConfig did not match UpdateOptions")
 	}
 }
