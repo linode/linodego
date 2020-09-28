@@ -2,7 +2,6 @@ package condition
 
 import (
 	"context"
-	"errors"
 	"fmt"
 
 	"github.com/linode/linodego"
@@ -31,8 +30,7 @@ func ClusterHasReadyNode(ctx context.Context, options linodego.ClusterConditionO
 			}
 		}
 	}
-
-	return false, errors.New("no nodes in cluster are ready")
+	return false, nil
 }
 
 // WaitForLKEClusterReady polls with a given timeout for the LKE Cluster's api-server

@@ -221,7 +221,6 @@ func (client Client) WaitForLKEClusterConditions(
 	}
 	defer cancel()
 
-	var prevLog string
 	lkeKubeConfig, err := client.GetLKEClusterKubeconfig(ctx, clusterID)
 	if err != nil {
 		return fmt.Errorf("failed to get Kubeconfig for LKE cluster %d: %s", clusterID, err)
@@ -239,10 +238,7 @@ func (client Client) WaitForLKEClusterConditions(
 			case <-ticker.C:
 				result, err := condition(ctx, conditionOptions)
 				if err != nil {
-					if err.Error() != prevLog {
-						prevLog = err.Error()
-						log.Printf("[ERROR] %s\n", err)
-					}
+					return err
 				}
 
 				if result {
