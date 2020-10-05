@@ -60,7 +60,7 @@ const (
 
 // GetInstanceIPAddresses gets the IPAddresses for a Linode instance
 func (c *Client) GetInstanceIPAddresses(ctx context.Context, linodeID int) (*InstanceIPAddressResponse, error) {
-	e, err := c.InstanceIPs.endpointWithID(linodeID)
+	e, err := c.InstanceIPs.endpointWithParams(linodeID)
 	if err != nil {
 		return nil, err
 	}
@@ -74,7 +74,7 @@ func (c *Client) GetInstanceIPAddresses(ctx context.Context, linodeID int) (*Ins
 
 // GetInstanceIPAddress gets the IPAddress for a Linode instance matching a supplied IP address
 func (c *Client) GetInstanceIPAddress(ctx context.Context, linodeID int, ipaddress string) (*InstanceIP, error) {
-	e, err := c.InstanceIPs.endpointWithID(linodeID)
+	e, err := c.InstanceIPs.endpointWithParams(linodeID)
 	if err != nil {
 		return nil, err
 	}
@@ -90,7 +90,7 @@ func (c *Client) GetInstanceIPAddress(ctx context.Context, linodeID int, ipaddre
 // AddInstanceIPAddress adds a public or private IP to a Linode instance
 func (c *Client) AddInstanceIPAddress(ctx context.Context, linodeID int, public bool) (*InstanceIP, error) {
 	var body string
-	e, err := c.InstanceIPs.endpointWithID(linodeID)
+	e, err := c.InstanceIPs.endpointWithParams(linodeID)
 
 	if err != nil {
 		return nil, err
@@ -124,7 +124,7 @@ func (c *Client) AddInstanceIPAddress(ctx context.Context, linodeID int, public 
 // UpdateInstanceIPAddress updates the IPAddress with the specified instance id and IP address
 func (c *Client) UpdateInstanceIPAddress(ctx context.Context, linodeID int, ipAddress string, updateOpts IPAddressUpdateOptions) (*InstanceIP, error) {
 	var body string
-	e, err := c.InstanceIPs.endpointWithID(linodeID)
+	e, err := c.InstanceIPs.endpointWithParams(linodeID)
 
 	if err != nil {
 		return nil, err

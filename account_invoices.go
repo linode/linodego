@@ -128,7 +128,7 @@ type InvoiceItemsPagedResponse struct {
 
 // endpointWithID gets the endpoint URL for InvoiceItems associated with a specific Invoice
 func (InvoiceItemsPagedResponse) endpointWithID(c *Client, id int) string {
-	endpoint, err := c.InvoiceItems.endpointWithID(id)
+	endpoint, err := c.InvoiceItems.endpointWithParams(id)
 	if err != nil {
 		panic(err)
 	}

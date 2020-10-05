@@ -211,7 +211,7 @@ type NodeBalancerConfigsPagedResponse struct {
 
 // endpointWithID gets the endpoint URL for NodeBalancerConfig
 func (NodeBalancerConfigsPagedResponse) endpointWithID(c *Client, id int) string {
-	endpoint, err := c.NodeBalancerConfigs.endpointWithID(id)
+	endpoint, err := c.NodeBalancerConfigs.endpointWithParams(id)
 	if err != nil {
 		panic(err)
 	}
@@ -236,7 +236,7 @@ func (c *Client) ListNodeBalancerConfigs(ctx context.Context, nodebalancerID int
 
 // GetNodeBalancerConfig gets the template with the provided ID
 func (c *Client) GetNodeBalancerConfig(ctx context.Context, nodebalancerID int, configID int) (*NodeBalancerConfig, error) {
-	e, err := c.NodeBalancerConfigs.endpointWithID(nodebalancerID)
+	e, err := c.NodeBalancerConfigs.endpointWithParams(nodebalancerID)
 	if err != nil {
 		return nil, err
 	}
@@ -251,7 +251,7 @@ func (c *Client) GetNodeBalancerConfig(ctx context.Context, nodebalancerID int, 
 // CreateNodeBalancerConfig creates a NodeBalancerConfig
 func (c *Client) CreateNodeBalancerConfig(ctx context.Context, nodebalancerID int, nodebalancerConfig NodeBalancerConfigCreateOptions) (*NodeBalancerConfig, error) {
 	var body string
-	e, err := c.NodeBalancerConfigs.endpointWithID(nodebalancerID)
+	e, err := c.NodeBalancerConfigs.endpointWithParams(nodebalancerID)
 
 	if err != nil {
 		return nil, err
@@ -279,7 +279,7 @@ func (c *Client) CreateNodeBalancerConfig(ctx context.Context, nodebalancerID in
 // UpdateNodeBalancerConfig updates the NodeBalancerConfig with the specified id
 func (c *Client) UpdateNodeBalancerConfig(ctx context.Context, nodebalancerID int, configID int, updateOpts NodeBalancerConfigUpdateOptions) (*NodeBalancerConfig, error) {
 	var body string
-	e, err := c.NodeBalancerConfigs.endpointWithID(nodebalancerID)
+	e, err := c.NodeBalancerConfigs.endpointWithParams(nodebalancerID)
 	if err != nil {
 		return nil, err
 	}
@@ -305,7 +305,7 @@ func (c *Client) UpdateNodeBalancerConfig(ctx context.Context, nodebalancerID in
 
 // DeleteNodeBalancerConfig deletes the NodeBalancerConfig with the specified id
 func (c *Client) DeleteNodeBalancerConfig(ctx context.Context, nodebalancerID int, configID int) error {
-	e, err := c.NodeBalancerConfigs.endpointWithID(nodebalancerID)
+	e, err := c.NodeBalancerConfigs.endpointWithParams(nodebalancerID)
 	if err != nil {
 		return err
 	}
@@ -318,7 +318,7 @@ func (c *Client) DeleteNodeBalancerConfig(ctx context.Context, nodebalancerID in
 // RebuildNodeBalancerConfig updates the NodeBalancer with the specified id
 func (c *Client) RebuildNodeBalancerConfig(ctx context.Context, nodeBalancerID int, configID int, rebuildOpts NodeBalancerConfigRebuildOptions) (*NodeBalancerConfig, error) {
 	var body string
-	e, err := c.NodeBalancerConfigs.endpointWithID(nodeBalancerID)
+	e, err := c.NodeBalancerConfigs.endpointWithParams(nodeBalancerID)
 	if err != nil {
 		return nil, err
 	}

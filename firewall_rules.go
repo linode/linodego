@@ -36,7 +36,7 @@ type FirewallRuleSet struct {
 
 // GetFirewallRules gets the FirewallRuleSet for the given Firewall.
 func (c *Client) GetFirewallRules(ctx context.Context, firewallID int) (*FirewallRuleSet, error) {
-	e, err := c.FirewallRules.endpointWithID(firewallID)
+	e, err := c.FirewallRules.endpointWithParams(firewallID)
 	if err != nil {
 		return nil, err
 	}
@@ -50,7 +50,7 @@ func (c *Client) GetFirewallRules(ctx context.Context, firewallID int) (*Firewal
 
 // UpdateFirewallRules updates the FirewallRuleSet for the given Firewall
 func (c *Client) UpdateFirewallRules(ctx context.Context, firewallID int, rules FirewallRuleSet) (*FirewallRuleSet, error) {
-	e, err := c.FirewallRules.endpointWithID(firewallID)
+	e, err := c.FirewallRules.endpointWithParams(firewallID)
 	if err != nil {
 		return nil, err
 	}
