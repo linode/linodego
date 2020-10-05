@@ -34,7 +34,7 @@ func TestResourceTemplatedendpointWithID(t *testing.T) {
 	client := NewClient(oc)
 
 	backupID := 1234255
-	e, err := client.InstanceSnapshots.endpointWithID(backupID)
+	e, err := client.InstanceSnapshots.endpointWithParams(backupID)
 	if err != nil {
 		t.Error("Got error when getting endpoint with id for backups")
 	}

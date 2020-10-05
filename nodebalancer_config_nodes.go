@@ -79,7 +79,7 @@ type NodeBalancerNodesPagedResponse struct {
 
 // endpoint gets the endpoint URL for NodeBalancerNode
 func (NodeBalancerNodesPagedResponse) endpointWithTwoIDs(c *Client, nodebalancerID int, configID int) string {
-	endpoint, err := c.NodeBalancerNodes.endpointWithID(nodebalancerID, configID)
+	endpoint, err := c.NodeBalancerNodes.endpointWithParams(nodebalancerID, configID)
 	if err != nil {
 		panic(err)
 	}
@@ -104,7 +104,7 @@ func (c *Client) ListNodeBalancerNodes(ctx context.Context, nodebalancerID int, 
 
 // GetNodeBalancerNode gets the template with the provided ID
 func (c *Client) GetNodeBalancerNode(ctx context.Context, nodebalancerID int, configID int, nodeID int) (*NodeBalancerNode, error) {
-	e, err := c.NodeBalancerNodes.endpointWithID(nodebalancerID, configID)
+	e, err := c.NodeBalancerNodes.endpointWithParams(nodebalancerID, configID)
 	if err != nil {
 		return nil, err
 	}
@@ -119,7 +119,7 @@ func (c *Client) GetNodeBalancerNode(ctx context.Context, nodebalancerID int, co
 // CreateNodeBalancerNode creates a NodeBalancerNode
 func (c *Client) CreateNodeBalancerNode(ctx context.Context, nodebalancerID int, configID int, createOpts NodeBalancerNodeCreateOptions) (*NodeBalancerNode, error) {
 	var body string
-	e, err := c.NodeBalancerNodes.endpointWithID(nodebalancerID, configID)
+	e, err := c.NodeBalancerNodes.endpointWithParams(nodebalancerID, configID)
 	if err != nil {
 		return nil, err
 	}
@@ -145,7 +145,7 @@ func (c *Client) CreateNodeBalancerNode(ctx context.Context, nodebalancerID int,
 // UpdateNodeBalancerNode updates the NodeBalancerNode with the specified id
 func (c *Client) UpdateNodeBalancerNode(ctx context.Context, nodebalancerID int, configID int, nodeID int, updateOpts NodeBalancerNodeUpdateOptions) (*NodeBalancerNode, error) {
 	var body string
-	e, err := c.NodeBalancerNodes.endpointWithID(nodebalancerID, configID)
+	e, err := c.NodeBalancerNodes.endpointWithParams(nodebalancerID, configID)
 	if err != nil {
 		return nil, err
 	}
@@ -171,7 +171,7 @@ func (c *Client) UpdateNodeBalancerNode(ctx context.Context, nodebalancerID int,
 
 // DeleteNodeBalancerNode deletes the NodeBalancerNode with the specified id
 func (c *Client) DeleteNodeBalancerNode(ctx context.Context, nodebalancerID int, configID int, nodeID int) error {
-	e, err := c.NodeBalancerNodes.endpointWithID(nodebalancerID, configID)
+	e, err := c.NodeBalancerNodes.endpointWithParams(nodebalancerID, configID)
 	if err != nil {
 		return err
 	}

@@ -149,7 +149,7 @@ func (i InstanceConfig) GetUpdateOptions() InstanceConfigUpdateOptions {
 
 // endpointWithID gets the endpoint URL for InstanceConfigs of a given Instance
 func (InstanceConfigsPagedResponse) endpointWithID(c *Client, id int) string {
-	endpoint, err := c.InstanceConfigs.endpointWithID(id)
+	endpoint, err := c.InstanceConfigs.endpointWithParams(id)
 	if err != nil {
 		panic(err)
 	}
@@ -174,7 +174,7 @@ func (c *Client) ListInstanceConfigs(ctx context.Context, linodeID int, opts *Li
 
 // GetInstanceConfig gets the template with the provided ID
 func (c *Client) GetInstanceConfig(ctx context.Context, linodeID int, configID int) (*InstanceConfig, error) {
-	e, err := c.InstanceConfigs.endpointWithID(linodeID)
+	e, err := c.InstanceConfigs.endpointWithParams(linodeID)
 	if err != nil {
 		return nil, err
 	}
@@ -190,7 +190,7 @@ func (c *Client) GetInstanceConfig(ctx context.Context, linodeID int, configID i
 // CreateInstanceConfig creates a new InstanceConfig for the given Instance
 func (c *Client) CreateInstanceConfig(ctx context.Context, linodeID int, createOpts InstanceConfigCreateOptions) (*InstanceConfig, error) {
 	var body string
-	e, err := c.InstanceConfigs.endpointWithID(linodeID)
+	e, err := c.InstanceConfigs.endpointWithParams(linodeID)
 
 	if err != nil {
 		return nil, err
@@ -218,7 +218,7 @@ func (c *Client) CreateInstanceConfig(ctx context.Context, linodeID int, createO
 // UpdateInstanceConfig update an InstanceConfig for the given Instance
 func (c *Client) UpdateInstanceConfig(ctx context.Context, linodeID int, configID int, updateOpts InstanceConfigUpdateOptions) (*InstanceConfig, error) {
 	var body string
-	e, err := c.InstanceConfigs.endpointWithID(linodeID)
+	e, err := c.InstanceConfigs.endpointWithParams(linodeID)
 
 	if err != nil {
 		return nil, err
@@ -250,7 +250,7 @@ func (c *Client) RenameInstanceConfig(ctx context.Context, linodeID int, configI
 
 // DeleteInstanceConfig deletes a Linode InstanceConfig
 func (c *Client) DeleteInstanceConfig(ctx context.Context, linodeID int, configID int) error {
-	e, err := c.InstanceConfigs.endpointWithID(linodeID)
+	e, err := c.InstanceConfigs.endpointWithParams(linodeID)
 	if err != nil {
 		return err
 	}
