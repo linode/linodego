@@ -175,19 +175,6 @@ func (r Resource) render(data ...interface{}) (string, error) {
 	return buf.String(), nil
 }
 
-// endpointWithID will return the rendered endpoint string for the resource with provided id
-func (r Resource) endpointWithID(id ...int) (string, error) {
-	if !r.isTemplate {
-		return r.endpoint, nil
-	}
-	data := make([]interface{}, len(id))
-
-	for i, v := range id {
-		data[i] = v
-	}
-	return r.render(data...)
-}
-
 // endpointWithParams will return the rendered endpoint string for the resource with provided parameters
 func (r Resource) endpointWithParams(params ...interface{}) (string, error) {
 	if !r.isTemplate {

@@ -89,7 +89,7 @@ type DomainRecordsPagedResponse struct {
 
 // endpoint gets the endpoint URL for InstanceConfig
 func (DomainRecordsPagedResponse) endpointWithID(c *Client, id int) string {
-	endpoint, err := c.DomainRecords.endpointWithID(id)
+	endpoint, err := c.DomainRecords.endpointWithParams(id)
 	if err != nil {
 		panic(err)
 	}
@@ -116,7 +116,7 @@ func (c *Client) ListDomainRecords(ctx context.Context, domainID int, opts *List
 
 // GetDomainRecord gets the domainrecord with the provided ID
 func (c *Client) GetDomainRecord(ctx context.Context, domainID int, id int) (*DomainRecord, error) {
-	e, err := c.DomainRecords.endpointWithID(domainID)
+	e, err := c.DomainRecords.endpointWithParams(domainID)
 	if err != nil {
 		return nil, err
 	}
@@ -135,7 +135,7 @@ func (c *Client) GetDomainRecord(ctx context.Context, domainID int, id int) (*Do
 func (c *Client) CreateDomainRecord(ctx context.Context, domainID int, domainrecord DomainRecordCreateOptions) (*DomainRecord, error) {
 	var body string
 
-	e, err := c.DomainRecords.endpointWithID(domainID)
+	e, err := c.DomainRecords.endpointWithParams(domainID)
 
 	if err != nil {
 		return nil, err
@@ -165,7 +165,7 @@ func (c *Client) CreateDomainRecord(ctx context.Context, domainID int, domainrec
 func (c *Client) UpdateDomainRecord(ctx context.Context, domainID int, id int, domainrecord DomainRecordUpdateOptions) (*DomainRecord, error) {
 	var body string
 
-	e, err := c.DomainRecords.endpointWithID(domainID)
+	e, err := c.DomainRecords.endpointWithParams(domainID)
 
 	if err != nil {
 		return nil, err
@@ -194,7 +194,7 @@ func (c *Client) UpdateDomainRecord(ctx context.Context, domainID int, id int, d
 
 // DeleteDomainRecord deletes the DomainRecord with the specified id
 func (c *Client) DeleteDomainRecord(ctx context.Context, domainID int, id int) error {
-	e, err := c.DomainRecords.endpointWithID(domainID)
+	e, err := c.DomainRecords.endpointWithParams(domainID)
 	if err != nil {
 		return err
 	}
