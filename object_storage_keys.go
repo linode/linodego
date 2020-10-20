@@ -8,15 +8,26 @@ import (
 
 // ObjectStorageKey represents a linode object storage key object
 type ObjectStorageKey struct {
-	ID        int    `json:"id"`
-	Label     string `json:"label"`
-	AccessKey string `json:"access_key"`
-	SecretKey string `json:"secret_key"`
+	ID           int                             `json:"id"`
+	Label        string                          `json:"label"`
+	AccessKey    string                          `json:"access_key"`
+	SecretKey    string                          `json:"secret_key"`
+	Limited      bool                            `json:"limited"`
+	BucketAccess *[]ObjectStorageKeyBucketAccess `json:"bucket_access"`
+}
+
+// ObjectStorageKeyBucketAccess represents a linode limited object storage key's bucket access
+type ObjectStorageKeyBucketAccess struct {
+	Cluster     string `json:"cluster"`
+	BucketName  string `json:"bucket_name"`
+	Permissions string `json:"permissions"`
 }
 
 // ObjectStorageKeyCreateOptions fields are those accepted by CreateObjectStorageKey
 type ObjectStorageKeyCreateOptions struct {
-	Label string `json:"label"`
+	Label        string                          `json:"label"`
+	Limited      bool                            `json:"limited,omitempty"`
+	BucketAccess *[]ObjectStorageKeyBucketAccess `json:"bucket_access"`
 }
 
 // ObjectStorageKeyUpdateOptions fields are those accepted by UpdateObjectStorageKey

@@ -5,11 +5,13 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/google/go-cmp/cmp"
+
 	. "github.com/linode/linodego"
 )
 
 var (
-	testObjectStorageKeyCreateOpts = ObjectStorageKeyCreateOptions{
+	testBasicObjectStorageKeyCreateOpts = ObjectStorageKeyCreateOptions{
 		Label: label,
 	}
 )
@@ -34,7 +36,7 @@ func TestGetObjectStorageKey_missing(t *testing.T) {
 }
 
 func TestGetObjectStorageKey_found(t *testing.T) {
-	client, objectStorageKey, teardown, err := setupObjectStorageKey(t, "fixtures/TestGetObjectStorageKey_found")
+	client, objectStorageKey, teardown, err := setupObjectStorageKey(t, testBasicObjectStorageKeyCreateOpts, "fixtures/TestGetObjectStorageKey_found")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -47,13 +49,16 @@ func TestGetObjectStorageKey_found(t *testing.T) {
 	if i.ID != objectStorageKey.ID {
 		t.Errorf("Expected objectStorageKey id %d, but got %d", i.ID, objectStorageKey.ID)
 	}
-	if testObjectStorageKeyCreateOpts.Label != objectStorageKey.Label {
-		t.Errorf("Expected objectStorageKey label '%s', but got '%s'", testObjectStorageKeyCreateOpts.Label, objectStorageKey.Label)
+	if testBasicObjectStorageKeyCreateOpts.Label != objectStorageKey.Label {
+		t.Errorf("Expected objectStorageKey label '%s', but got '%s'", testBasicObjectStorageKeyCreateOpts.Label, objectStorageKey.Label)
+	}
+	if objectStorageKey.BucketAccess != nil || objectStorageKey.Limited {
+		t.Errorf("Expected objectStorageKey to have full permissions, but got %v, %v", objectStorageKey.Limited, objectStorageKey.BucketAccess)
 	}
 }
 
 func TestUpdateObjectStorageKey(t *testing.T) {
-	client, objectStorageKey, teardown, err := setupObjectStorageKey(t, "fixtures/TestUpdateObjectStorageKey")
+	client, objectStorageKey, teardown, err := setupObjectStorageKey(t, testBasicObjectStorageKeyCreateOpts, "fixtures/TestUpdateObjectStorageKey")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -70,12 +75,15 @@ func TestUpdateObjectStorageKey(t *testing.T) {
 	}
 
 	if !strings.Contains(objectStorageKey.Label, "-linodego-testing_r") {
-		t.Errorf("objectStorageKey returned does not match objectStorageKey update request")
+		t.Errorf("objectStorageKey returned does not match objectStorageKey update request, %v", objectStorageKey)
+	}
+	if objectStorageKey.BucketAccess != nil || objectStorageKey.Limited {
+		t.Errorf("Expected objectStorageKey to have full permissions, but got %v, %v", objectStorageKey.Limited, objectStorageKey.BucketAccess)
 	}
 }
 
 func TestListObjectStorageKeys(t *testing.T) {
-	client, objkey, teardown, err := setupObjectStorageKey(t, "fixtures/TestListObjectStorageKey")
+	client, objkey, teardown, err := setupObjectStorageKey(t, testBasicObjectStorageKeyCreateOpts, "fixtures/TestListObjectStorageKey")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -100,14 +108,58 @@ func TestListObjectStorageKeys(t *testing.T) {
 	}
 }
 
-func setupObjectStorageKey(t *testing.T, fixturesYaml string) (*Client, *ObjectStorageKey, func(), error) {
+func TestLimitedObjectStorageKeys(t *testing.T) {
+	_, bucket, teardown, err := setupObjectStorageBucket(t, "fixtures/TestLimitedObjectStorageKeys_bucket")
+	defer teardown()
+
+	createOpts := testBasicObjectStorageKeyCreateOpts
+	createOpts.Limited = true
+	createOpts.BucketAccess = &[]ObjectStorageKeyBucketAccess{
+		{
+			Cluster:     "us-east-1",
+			BucketName:  bucket.Label,
+			Permissions: "read_only",
+		},
+		{
+			Cluster:     "us-east-1",
+			BucketName:  bucket.Label,
+			Permissions: "read_write",
+		},
+	}
+
+	_, objectStorageKey, teardown, err := setupObjectStorageKey(t, createOpts, "fixtures/TestLimitedObjectStorageKeys")
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+	if !objectStorageKey.Limited || !cmp.Equal(objectStorageKey.BucketAccess, createOpts.BucketAccess) {
+		t.Errorf("objectStorageKey returned (%v) does not match objectStorageKey creation request (%v)", *objectStorageKey.BucketAccess, *createOpts.BucketAccess)
+	}
+}
+
+func TestLimitedObjectStorageKeys_noaccess(t *testing.T) {
+	createOpts := testBasicObjectStorageKeyCreateOpts
+	createOpts.Limited = true
+	createOpts.BucketAccess = &[]ObjectStorageKeyBucketAccess{}
+
+	_, objectStorageKey, teardown, err := setupObjectStorageKey(t, createOpts, "fixtures/TestLimitedObjectStorageKeys_noaccess")
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	if !objectStorageKey.Limited || objectStorageKey.BucketAccess == nil || len(*objectStorageKey.BucketAccess) != 0 {
+		t.Errorf("objectStorageKey returned access, %v, %v", objectStorageKey.Limited, objectStorageKey.BucketAccess)
+	}
+}
+
+func setupObjectStorageKey(t *testing.T, createOpts ObjectStorageKeyCreateOptions, fixturesYaml string) (*Client, *ObjectStorageKey, func(), error) {
 	t.Helper()
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
-	createOpts := testObjectStorageKeyCreateOpts
 	objectStorageKey, err := client.CreateObjectStorageKey(context.Background(), createOpts)
 	if err != nil {
-		t.Errorf("Error listing objectStorageKey, expected struct, got error %v", err)
+		t.Errorf("Error creating ObjectStorageKey: %v", err)
 	}
 
 	teardown := func() {
