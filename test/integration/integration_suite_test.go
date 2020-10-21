@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"regexp"
 	"strconv"
 	"testing"
 	"time"
@@ -62,6 +63,23 @@ func testRecorder(t *testing.T, fixturesYaml string, testingMode recorder.Mode, 
 
 	r.AddFilter(func(i *cassette.Interaction) error {
 		delete(i.Request.Headers, "Authorization")
+		return nil
+	})
+
+	r.AddFilter(func(i *cassette.Interaction) error {
+		delete(i.Response.Headers, "Date")
+		delete(i.Response.Headers, "Retry-After")
+		delete(i.Response.Headers, "X-Customer-Uuid")
+		delete(i.Response.Headers, "X-Ratelimit-Reset")
+		delete(i.Response.Headers, "X-Ratelimit-Remaining")
+		return nil
+	})
+
+	r.AddFilter(func(i *cassette.Interaction) error {
+		accessKeyRe := regexp.MustCompile(`"access_key": "[[:alnum:]]*"`)
+		i.Response.Body = accessKeyRe.ReplaceAllString(i.Response.Body, `"access_key": "[SANITIZED]"`)
+		secretKeyRe := regexp.MustCompile(`"secret_key": "[[:alnum:]]*"`)
+		i.Response.Body = secretKeyRe.ReplaceAllString(i.Response.Body, `"secret_key": "[SANITIZED]"`)
 		return nil
 	})
 

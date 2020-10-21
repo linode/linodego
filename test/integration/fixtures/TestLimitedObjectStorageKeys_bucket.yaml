@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"lpq6h62z88m4-linodego-testing","bucket_access":null}'
+    body: '{"cluster":"us-east-1","label":"linodego-test-bucket-1603309943521033000"}'
     form: {}
     headers:
       Accept:
@@ -11,10 +11,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys
+    url: https://api.linode.com/v4beta/object-storage/buckets
     method: POST
   response:
-    body: '{"id": 48240, "label": "lpq6h62z88m4-linodego-testing", "access_key": "[SANITIZED]", "secret_key": "[SANITIZED]", "limited": false, "bucket_access": null}'
+    body: '{"hostname": "linodego-test-bucket-1603309943521033000.us-east-1.linodeobjects.com", "label": "linodego-test-bucket-1603309943521033000", "created": "2020-10-21T19:52:57", "cluster": "us-east-1", "size": 0}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -29,64 +29,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "192"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - object_storage:read_write
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "800"
-      X-Spec-Version:
-      - 4.78.3
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: '{"label":"lpq6h62z88m4-linodego-testing_r"}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/48240
-    method: PUT
-  response:
-    body: '{"id": 48240, "label": "lpq6h62z88m4-linodego-testing_r", "access_key": "[SANITIZED]", "secret_key": "[REDACTED]", "limited": false, "bucket_access": null}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Cache-Control:
-      - private, max-age=60, s-maxage=60
-      Content-Length:
-      - "164"
+      - "206"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -125,7 +68,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/48240
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linodego-test-bucket-1603309943521033000
     method: DELETE
   response:
     body: '{}'

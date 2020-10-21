@@ -8,7 +8,7 @@ env:
   - GO111MODULE=on
 
 go:
-  - "1.13"
+  - "1.15"
 
 before_script:
   - bash ./scripts/verify-gomod-tidy.sh
