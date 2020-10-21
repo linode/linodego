@@ -7,18 +7,14 @@ interactions:
     headers:
       Accept:
       - application/json
-      Authorization:
-      - Bearer awesometokenawesometokenawesometoken
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.10.0 https://github.com/linode/linodego
+      - linodego https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/object-storage/clusters
     method: GET
   response:
-    body: '{"pages": 1, "results": 1, "data": [{"domain": "us-east-1.linodeobjects.com",
-      "id": "us-east-1", "region": "us-east", "status": "available", "static_site_domain":
-      "website-us-east-1.linodeobjects.com"}], "page": 1}'
+    body: '{"data": [{"id": "us-east-1", "region": "us-east", "status": "available", "domain": "us-east-1.linodeobjects.com", "static_site_domain": "website-us-east-1.linodeobjects.com"}, {"id": "eu-central-1", "region": "eu-central", "status": "available", "domain": "eu-central-1.linodeobjects.com", "static_site_domain": "website-eu-central-1.linodeobjects.com"}, {"id": "ap-south-1", "region": "ap-south", "status": "available", "domain": "ap-south-1.linodeobjects.com", "static_site_domain": "website-ap-south-1.linodeobjects.com"}], "page": 1, "pages": 1, "results": 3}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -33,18 +29,12 @@ interactions:
       Cache-Control:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
-      - "214"
+      - "564"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Mon, 22 Jul 2019 20:04:06 GMT
-      Retry-After:
-      - "92"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -62,13 +52,9 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
-      X-Ratelimit-Remaining:
-      - "398"
-      X-Ratelimit-Reset:
-      - "1563825939"
+      - "800"
       X-Spec-Version:
-      - 4.2.3
+      - 4.78.3
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

@@ -2,22 +2,19 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"lpq6h62z88m4-linodego-testing"}'
+    body: '{"label":"lpq6h62z88m4-linodego-testing","bucket_access":null}'
     form: {}
     headers:
       Accept:
       - application/json
-      Authorization:
-      - Bearer awesometokenawesometokenawesometoken
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.10.0 https://github.com/linode/linodego
+      - linodego https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/object-storage/keys
     method: POST
   response:
-    body: '{"label": "lpq6h62z88m4-linodego-testing", "id": 346, "secret_key": "[REDACTED]",
-      "access_key": "[REDACTED]"}'
+    body: '{"id": 48241, "label": "lpq6h62z88m4-linodego-testing", "access_key": "[SANITIZED]", "secret_key": "[SANITIZED]", "limited": false, "bucket_access": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -31,18 +28,12 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
-      - "149"
+      - "192"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Mon, 22 Jul 2019 19:41:41 GMT
-      Retry-After:
-      - "49"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -59,13 +50,9 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
-      X-Ratelimit-Remaining:
-      - "398"
-      X-Ratelimit-Reset:
-      - "1563824484"
+      - "800"
       X-Spec-Version:
-      - 4.2.3
+      - 4.78.3
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -77,24 +64,14 @@ interactions:
     headers:
       Accept:
       - application/json
-      Authorization:
-      - Bearer awesometokenawesometokenawesometoken
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.10.0 https://github.com/linode/linodego
+      - linodego https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/object-storage/keys
     method: GET
   response:
-    body: '{"pages": 1, "results": 6, "page": 1, "data": [{"label": "primary", "id":
-      183, "access_key": "[REDACTED]", "secret_key": "[REDACTED]"}, {"label":
-      "some label", "id": 272, "access_key": "[REDACTED]", "secret_key":
-      "[REDACTED]"}, {"label": "some label", "id": 273, "access_key": "[REDACTED]",
-      "secret_key": "[REDACTED]"}, {"label": "[REDACTED]", "id": 275, "access_key":
-      "[REDACTED]", "secret_key": "[REDACTED]"}, {"label": "sauber2", "id":
-      276, "access_key": "[READACTED]", "secret_key": "[REDACTED]"}, {"label":
-      "lpq6h62z88m4-linodego-testing", "id": 346, "access_key": "[REDACTED]",
-      "secret_key": "[REDACTED]"}]}'
+    body: '{"data": [{"id": 31356, "label": "", "access_key": "[SANITIZED]", "secret_key": "[REDACTED]", "limited": false, "bucket_access": null}, {"id": 36970, "label": "linode-cli-pcampbell@pcampbell-C02-1596478669", "access_key": "[SANITIZED]", "secret_key": "[REDACTED]", "limited": false, "bucket_access": null}, {"id": 48241, "label": "lpq6h62z88m4-linodego-testing", "access_key": "[SANITIZED]", "secret_key": "[REDACTED]", "limited": false, "bucket_access": null}], "page": 1, "pages": 1, "results": 3}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -109,18 +86,12 @@ interactions:
       Cache-Control:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
-      - "672"
+      - "526"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Mon, 22 Jul 2019 19:41:41 GMT
-      Retry-After:
-      - "119"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -138,13 +109,9 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
-      X-Ratelimit-Remaining:
-      - "399"
-      X-Ratelimit-Reset:
-      - "1563824554"
+      - "800"
       X-Spec-Version:
-      - 4.2.3
+      - 4.78.3
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -156,13 +123,11 @@ interactions:
     headers:
       Accept:
       - application/json
-      Authorization:
-      - Bearer awesometokenawesometokenawesometoken
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.10.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/346
+      - linodego https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/keys/48241
     method: DELETE
   response:
     body: '{}'
@@ -179,18 +144,12 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
       - "2"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Mon, 22 Jul 2019 19:41:42 GMT
-      Retry-After:
-      - "87"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -207,13 +166,9 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
-      X-Ratelimit-Remaining:
-      - "398"
-      X-Ratelimit-Reset:
-      - "1563824523"
+      - "800"
       X-Spec-Version:
-      - 4.2.3
+      - 4.78.3
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
