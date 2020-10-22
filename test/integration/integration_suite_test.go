@@ -72,14 +72,17 @@ func testRecorder(t *testing.T, fixturesYaml string, testingMode recorder.Mode, 
 		delete(i.Response.Headers, "X-Customer-Uuid")
 		delete(i.Response.Headers, "X-Ratelimit-Reset")
 		delete(i.Response.Headers, "X-Ratelimit-Remaining")
+		delete(i.Response.Headers, "X-Spec-Version")
 		return nil
 	})
 
 	r.AddFilter(func(i *cassette.Interaction) error {
-		accessKeyRe := regexp.MustCompile(`"access_key": "[[:alnum:]]*"`)
-		i.Response.Body = accessKeyRe.ReplaceAllString(i.Response.Body, `"access_key": "[SANITIZED]"`)
-		secretKeyRe := regexp.MustCompile(`"secret_key": "[[:alnum:]]*"`)
-		i.Response.Body = secretKeyRe.ReplaceAllString(i.Response.Body, `"secret_key": "[SANITIZED]"`)
+		re := regexp.MustCompile(`"access_key": "[[:alnum:]]*"`)
+		i.Response.Body = re.ReplaceAllString(i.Response.Body, `"access_key": "[SANITIZED]"`)
+		re = regexp.MustCompile(`"secret_key": "[[:alnum:]]*"`)
+		i.Response.Body = re.ReplaceAllString(i.Response.Body, `"secret_key": "[SANITIZED]"`)
+		re = regexp.MustCompile("20[0-9]{2}-[01][0-9]-[0-3][0-9]T[0-2][0-9]:[0-9]{2}:[0-9]{2}")
+		i.Response.Body = re.ReplaceAllString(i.Response.Body, "2018-01-02T03:04:05")
 		return nil
 	})
 

@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"lpq6h62z88m4-linodego-testing","limited":true,"bucket_access":[{"cluster":"us-east-1","bucket_name":"linodego-test-bucket-1603309943521033000","permissions":"read_only"},{"cluster":"us-east-1","bucket_name":"linodego-test-bucket-1603309943521033000","permissions":"read_write"}]}'
+    body: '{"label":"lpq6h62z88m4-linodego-testing","limited":true,"bucket_access":[{"cluster":"us-east-1","bucket_name":"linodego-test-bucket-1603371589949339000","permissions":"read_only"},{"cluster":"us-east-1","bucket_name":"linodego-test-bucket-1603371589949339000","permissions":"read_write"}]}'
     form: {}
     headers:
       Accept:
@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/keys
     method: POST
   response:
-    body: '{"id": 48242, "label": "lpq6h62z88m4-linodego-testing", "access_key": "[SANITIZED]", "secret_key": "[SANITIZED]", "limited": true, "bucket_access": [{"cluster": "us-east-1", "bucket_name": "linodego-test-bucket-1603309943521033000", "permissions": "read_only"}, {"cluster": "us-east-1", "bucket_name": "linodego-test-bucket-1603309943521033000", "permissions": "read_write"}]}'
+    body: '{"id": 48353, "label": "lpq6h62z88m4-linodego-testing", "access_key": "[SANITIZED]", "secret_key": "[SANITIZED]", "limited": true, "bucket_access": [{"cluster": "us-east-1", "bucket_name": "linodego-test-bucket-1603371589949339000", "permissions": "read_only"}, {"cluster": "us-east-1", "bucket_name": "linodego-test-bucket-1603371589949339000", "permissions": "read_write"}]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -51,8 +51,6 @@ interactions:
       - '*'
       X-Ratelimit-Limit:
       - "800"
-      X-Spec-Version:
-      - 4.78.3
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -68,7 +66,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/48242
+    url: https://api.linode.com/v4beta/object-storage/keys/48353
     method: DELETE
   response:
     body: '{}'
@@ -108,8 +106,6 @@ interactions:
       - '*'
       X-Ratelimit-Limit:
       - "800"
-      X-Spec-Version:
-      - 4.78.3
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

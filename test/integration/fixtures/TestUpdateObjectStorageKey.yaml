@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/keys
     method: POST
   response:
-    body: '{"id": 48240, "label": "lpq6h62z88m4-linodego-testing", "access_key": "[SANITIZED]", "secret_key": "[SANITIZED]", "limited": false, "bucket_access": null}'
+    body: '{"id": 48351, "label": "lpq6h62z88m4-linodego-testing", "access_key": "[SANITIZED]", "secret_key": "[SANITIZED]", "limited": false, "bucket_access": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -51,8 +51,6 @@ interactions:
       - '*'
       X-Ratelimit-Limit:
       - "800"
-      X-Spec-Version:
-      - 4.78.3
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -68,10 +66,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/48240
+    url: https://api.linode.com/v4beta/object-storage/keys/48351
     method: PUT
   response:
-    body: '{"id": 48240, "label": "lpq6h62z88m4-linodego-testing_r", "access_key": "[SANITIZED]", "secret_key": "[REDACTED]", "limited": false, "bucket_access": null}'
+    body: '{"id": 48351, "label": "lpq6h62z88m4-linodego-testing_r", "access_key": "[SANITIZED]", "secret_key": "[REDACTED]", "limited": false, "bucket_access": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -108,8 +106,6 @@ interactions:
       - '*'
       X-Ratelimit-Limit:
       - "800"
-      X-Spec-Version:
-      - 4.78.3
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -125,7 +121,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/48240
+    url: https://api.linode.com/v4beta/object-storage/keys/48351
     method: DELETE
   response:
     body: '{}'
@@ -165,8 +161,6 @@ interactions:
       - '*'
       X-Ratelimit-Limit:
       - "800"
-      X-Spec-Version:
-      - 4.78.3
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
