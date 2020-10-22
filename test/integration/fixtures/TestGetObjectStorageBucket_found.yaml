@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"cluster":"us-east-1","label":"linodego-test-bucket-1603309943521033000"}'
+    body: '{"cluster":"us-east-1","label":"linodego-test-bucket-1603371589949339000"}'
     form: {}
     headers:
       Accept:
@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/buckets
     method: POST
   response:
-    body: '{"hostname": "linodego-test-bucket-1603309943521033000.us-east-1.linodeobjects.com", "label": "linodego-test-bucket-1603309943521033000", "created": "2020-10-21T19:52:35", "cluster": "us-east-1", "size": 0}'
+    body: '{"hostname": "linodego-test-bucket-1603371589949339000.us-east-1.linodeobjects.com", "label": "linodego-test-bucket-1603371589949339000", "created": "2018-01-02T03:04:05", "cluster": "us-east-1", "size": 0}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -51,8 +51,6 @@ interactions:
       - '*'
       X-Ratelimit-Limit:
       - "800"
-      X-Spec-Version:
-      - 4.78.3
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -68,10 +66,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linodego-test-bucket-1603309943521033000
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linodego-test-bucket-1603371589949339000
     method: GET
   response:
-    body: '{"hostname": "linodego-test-bucket-1603309943521033000.us-east-1.linodeobjects.com", "label": "linodego-test-bucket-1603309943521033000", "created": "2020-10-21T19:52:35", "cluster": "us-east-1", "size": 0}'
+    body: '{"hostname": "linodego-test-bucket-1603371589949339000.us-east-1.linodeobjects.com", "label": "linodego-test-bucket-1603371589949339000", "created": "2018-01-02T03:04:05", "cluster": "us-east-1", "size": 0}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -110,8 +108,6 @@ interactions:
       - '*'
       X-Ratelimit-Limit:
       - "800"
-      X-Spec-Version:
-      - 4.78.3
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -127,7 +123,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linodego-test-bucket-1603309943521033000
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linodego-test-bucket-1603371589949339000
     method: DELETE
   response:
     body: '{}'
@@ -167,8 +163,6 @@ interactions:
       - '*'
       X-Ratelimit-Limit:
       - "800"
-      X-Spec-Version:
-      - 4.78.3
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
