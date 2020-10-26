@@ -113,7 +113,6 @@ func TestLimitedObjectStorageKeys(t *testing.T) {
 	defer teardown()
 
 	createOpts := testBasicObjectStorageKeyCreateOpts
-	createOpts.Limited = true
 	createOpts.BucketAccess = &[]ObjectStorageKeyBucketAccess{
 		{
 			Cluster:     "us-east-1",
@@ -139,7 +138,6 @@ func TestLimitedObjectStorageKeys(t *testing.T) {
 
 func TestLimitedObjectStorageKeys_noaccess(t *testing.T) {
 	createOpts := testBasicObjectStorageKeyCreateOpts
-	createOpts.Limited = true
 	createOpts.BucketAccess = &[]ObjectStorageKeyBucketAccess{}
 
 	_, objectStorageKey, teardown, err := setupObjectStorageKey(t, createOpts, "fixtures/TestLimitedObjectStorageKeys_noaccess")
