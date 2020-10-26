@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"lpq6h62z88m4-linodego-testing","limited":true,"bucket_access":[]}'
+    body: '{"label":"lpq6h62z88m4-linodego-testing","bucket_access":[]}'
     form: {}
     headers:
       Accept:
@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/keys
     method: POST
   response:
-    body: '{"id": 48354, "label": "lpq6h62z88m4-linodego-testing", "access_key": "[SANITIZED]", "secret_key": "[SANITIZED]", "limited": true, "bucket_access": []}'
+    body: '{"id": 49092, "label": "lpq6h62z88m4-linodego-testing", "access_key": "[SANITIZED]", "secret_key": "[SANITIZED]", "limited": true, "bucket_access": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -66,7 +66,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/48354
+    url: https://api.linode.com/v4beta/object-storage/keys/49092
     method: DELETE
   response:
     body: '{}'

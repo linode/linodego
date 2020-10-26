@@ -26,7 +26,6 @@ type ObjectStorageKeyBucketAccess struct {
 // ObjectStorageKeyCreateOptions fields are those accepted by CreateObjectStorageKey
 type ObjectStorageKeyCreateOptions struct {
 	Label        string                          `json:"label"`
-	Limited      bool                            `json:"limited,omitempty"`
 	BucketAccess *[]ObjectStorageKeyBucketAccess `json:"bucket_access"`
 }
 
