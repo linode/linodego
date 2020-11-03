@@ -256,6 +256,12 @@ func (c *Client) listHelper(ctx context.Context, i interface{}, opts *ListOption
 			results = r.Result().(*ObjectStorageKeysPagedResponse).Results
 			v.appendData(r.Result().(*ObjectStorageKeysPagedResponse))
 		}
+	case *VLANsPagedResponse:
+		if r, err = coupleAPIErrors(req.SetResult(VLANsPagedResponse{}).Get(v.endpoint(c))); err == nil {
+			pages = r.Result().(*VLANsPagedResponse).Pages
+			results = r.Result().(*VLANsPagedResponse).Results
+			v.appendData(r.Result().(*VLANsPagedResponse))
+		}
 	/**
 	case ProfileAppsPagedResponse:
 	case ProfileWhitelistPagedResponse:
