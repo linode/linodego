@@ -61,6 +61,7 @@ const (
 	typesName                    = "types"
 	usersName                    = "users"
 	volumesName                  = "volumes"
+	vlansName                    = "vlans"
 
 	accountEndpoint                = "account"
 	accountSettingsEndpoint        = "account/settings"
@@ -116,6 +117,7 @@ const (
 	tokensEndpoint                   = "profile/tokens"
 	typesEndpoint                    = "linode/types"
 	usersEndpoint                    = "account/users"
+	vlansEndpoint                    = "networking/vlans"
 	volumesEndpoint                  = "volumes"
 )
 

@@ -8,6 +8,8 @@ import (
 	"github.com/linode/linodego"
 )
 
+type instanceModifier func(*linodego.InstanceCreateOptions)
+
 func TestListInstances(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestListInstances")
 	defer teardown()
@@ -314,23 +316,36 @@ func TestRebuildInstance(t *testing.T) {
 	}
 }
 
-func setupInstance(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.Instance, func(), error) {
+func createInstance(t *testing.T, client *linodego.Client, modifiers ...instanceModifier) (*linodego.Instance, error) {
 	if t != nil {
 		t.Helper()
 	}
-	client, fixtureTeardown := createTestClient(t, fixturesYaml)
-	falseBool := false
+
+	booted := false
 	createOpts := linodego.InstanceCreateOptions{
 		Label:    "linodego-test-instance",
 		RootPass: "R34lBAdP455",
 		Region:   "us-west",
 		Type:     "g6-nanode-1",
 		Image:    "linode/debian9",
-		Booted:   &falseBool,
+		Booted:   &booted,
 	}
-	instance, err := client.CreateInstance(context.Background(), createOpts)
+
+	for _, modifier := range modifiers {
+		modifier(&createOpts)
+	}
+	return client.CreateInstance(context.Background(), createOpts)
+}
+
+func setupInstance(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.Instance, func(), error) {
+	if t != nil {
+		t.Helper()
+	}
+	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+
+	instance, err := createInstance(t, client)
 	if err != nil {
-		t.Errorf("Error creating test Instance: %s", err)
+		t.Errorf("failed to create test instance: %s", err)
 	}
 
 	teardown := func() {
