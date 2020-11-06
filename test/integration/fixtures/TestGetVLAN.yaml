@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/vlans
     method: POST
   response:
-    body: '{"id": 1099, "region": "ca-central", "description": "testing123", "linodes": [], "cidr_block": "0.0.0.0/0"}'
+    body: '{"id": 1113, "region": "ca-central", "description": "testing123", "linodes": [], "cidr_block": "0.0.0.0/0", "created": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -29,7 +29,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "107"
+      - "141"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -66,10 +66,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/vlans/1099
+    url: https://api.linode.com/v4beta/networking/vlans/1113
     method: GET
   response:
-    body: '{"id": 1099, "region": "ca-central", "description": "testing123", "linodes": [], "cidr_block": "0.0.0.0/0"}'
+    body: '{"id": 1113, "region": "ca-central", "description": "testing123", "linodes": [], "cidr_block": "0.0.0.0/0", "created": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -85,7 +85,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "107"
+      - "141"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -123,7 +123,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/vlans/1099
+    url: https://api.linode.com/v4beta/networking/vlans/1113
     method: DELETE
   response:
     body: '{}'
