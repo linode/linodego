@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/vlans
     method: POST
   response:
-    body: '{"id": 1096, "region": "ca-central", "description": "linodego-testing", "linodes": [], "cidr_block": null}'
+    body: '{"id": 1114, "region": "ca-central", "description": "linodego-testing", "linodes": [], "cidr_block": null, "created": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -29,7 +29,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "106"
+      - "140"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -69,7 +69,7 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 22709910, "label": "linodego-test-instance", "group": "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "type": "g6-nanode-1", "ipv4": ["10.20.30.40"], "ipv6": "1234::5678/64", "image": "linode/debian9", "region": "ca-central", "specs": {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled": false, "schedule": {"day": null, "window": null}, "last_successful": null}, "hypervisor": "kvm", "watchdog_enabled": true, "tags": []}'
+    body: '{"id": 22764691, "label": "linodego-test-instance", "group": "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "type": "g6-nanode-1", "ipv4": ["172.105.17.174"], "ipv6": "1234::5678/64", "image": "linode/debian9", "region": "ca-central", "specs": {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled": false, "schedule": {"day": null, "window": null}, "last_successful": null}, "hypervisor": "kvm", "watchdog_enabled": true, "tags": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -84,7 +84,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "639"
+      - "641"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -112,7 +112,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"linodes":[22709910]}'
+    body: '{"linodes":[22764691]}'
     form: {}
     headers:
       Accept:
@@ -121,10 +121,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/vlans/1096/attach
+    url: https://api.linode.com/v4beta/networking/vlans/1114/attach
     method: POST
   response:
-    body: '{"id": 1096, "region": "ca-central", "description": "linodego-testing", "linodes": [22709910], "cidr_block": null}'
+    body: '{"id": 1114, "region": "ca-central", "description": "linodego-testing", "linodes": [{"id": 22764691, "mac_address": "ba:c2:6d:5c:9e:b6"}], "cidr_block": null, "created": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -139,7 +139,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "114"
+      - "192"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -176,7 +176,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/22709910
+    url: https://api.linode.com/v4beta/linode/instances/22764691
     method: DELETE
   response:
     body: '{}'
@@ -231,7 +231,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/vlans/1096
+    url: https://api.linode.com/v4beta/networking/vlans/1114
     method: DELETE
   response:
     body: '{}'

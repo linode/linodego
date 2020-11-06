@@ -90,7 +90,7 @@ func TestAttachVLAN(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if !(len(vlan.Linodes) == 1 && vlan.Linodes[0] == instance.ID) {
+	if !(len(vlan.Linodes) == 1 && vlan.Linodes[0].ID == instance.ID) {
 		t.Errorf("expected linode %d to have been attached to the vlan", instance.ID)
 	}
 }
@@ -128,7 +128,7 @@ func TestDetachVLAN(t *testing.T) {
 		t.Error(err)
 	}
 
-	if !(len(vlan.Linodes) == 1 && vlan.Linodes[0] == instance.ID) {
+	if !(len(vlan.Linodes) == 1 && vlan.Linodes[0].ID == instance.ID) {
 		t.Errorf("expected linode %d to be attached to vlan", instance.ID)
 	}
 
