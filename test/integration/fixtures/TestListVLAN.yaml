@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/vlans
     method: POST
   response:
-    body: '{"id": 1094, "region": "ca-central", "description": "linodego-testing", "linodes": [], "cidr_block": null}'
+    body: '{"id": 1112, "region": "ca-central", "description": "linodego-testing", "linodes": [], "cidr_block": null, "created": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -29,7 +29,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "106"
+      - "140"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -69,7 +69,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/vlans
     method: GET
   response:
-    body: '{"data": [{"id": 1074, "region": "ca-central", "description": "testing123", "linodes": [], "cidr_block": "10.20.30.40/24"}, {"id": 1075, "region": "ca-central", "description": "testing123", "linodes": [], "cidr_block": "10.20.30.40/24"}, {"id": 1076, "region": "ca-central", "description": "testing123", "linodes": [], "cidr_block": "10.20.30.40/24"}, {"id": 1077, "region": "ca-central", "description": "testing123", "linodes": [], "cidr_block": "10.20.30.40/24"}, {"id": 1079, "region": "ca-central", "description": "linodego-testing", "linodes": [], "cidr_block": null}, {"id": 1086, "region": "ca-central", "description": "linodego-testing", "linodes": [], "cidr_block": null}, {"id": 1087, "region": "ca-central", "description": "linodego-testing", "linodes": [], "cidr_block": null}, {"id": 1094, "region": "ca-central", "description": "linodego-testing", "linodes": [], "cidr_block": null}], "page": 1, "pages": 1, "results": 8}'
+    body: '{"data": [{"id": 1074, "region": "ca-central", "description": "testing123", "linodes": [{"id": 22697673, "mac_address": "ba:c2:6d:f4:56:3f", "ipv4_address": "10.0.0.1/24"}], "cidr_block": "10.0.0.0/24", "created": "2018-01-02T03:04:05"}, {"id": 1075, "region": "ca-central", "description": "testing123", "linodes": [], "cidr_block": "10.0.0.0/24", "created": "2018-01-02T03:04:05"}, {"id": 1076, "region": "ca-central", "description": "testing123", "linodes": [], "cidr_block": "10.0.0.0/24", "created": "2018-01-02T03:04:05"}, {"id": 1077, "region": "ca-central", "description": "testing123", "linodes": [], "cidr_block": "10.0.0.0/24", "created": "2018-01-02T03:04:05"}, {"id": 1079, "region": "ca-central", "description": "linodego-testing", "linodes": [], "cidr_block": null, "created": "2018-01-02T03:04:05"}, {"id": 1086, "region": "ca-central", "description": "linodego-testing", "linodes": [], "cidr_block": null, "created": "2018-01-02T03:04:05"}, {"id": 1087, "region": "ca-central", "description": "linodego-testing", "linodes": [], "cidr_block": null, "created": "2018-01-02T03:04:05"}, {"id": 1100, "region": "ca-central", "description": "terraform-provider-linode acctest", "linodes": [], "cidr_block": "0.0.0.0/0", "created": "2018-01-02T03:04:05"}, {"id": 1112, "region": "ca-central", "description": "linodego-testing", "linodes": [], "cidr_block": null, "created": "2018-01-02T03:04:05"}], "page": 1, "pages": 1, "results": 9}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -84,8 +84,6 @@ interactions:
       Cache-Control:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
-      Content-Length:
-      - "923"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -123,7 +121,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/vlans/1094
+    url: https://api.linode.com/v4beta/networking/vlans/1112
     method: DELETE
   response:
     body: '{}'

@@ -10,12 +10,18 @@ import (
 )
 
 type VLAN struct {
-	ID          int        `json:"id"`
-	Description string     `json:"description"`
-	Region      string     `json:"region"`
-	Linodes     []int      `json:"linodes"`
-	CIDRBlock   string     `json:"cidr_block"`
-	Created     *time.Time `json:"-"`
+	ID          int          `json:"id"`
+	Description string       `json:"description"`
+	Region      string       `json:"region"`
+	Linodes     []VLANLinode `json:"linodes"`
+	CIDRBlock   string       `json:"cidr_block"`
+	Created     *time.Time   `json:"-"`
+}
+
+type VLANLinode struct {
+	ID          int    `json:"id"`
+	MacAddress  string `json:"mac_address"`
+	IPv4Address string `json:"ipv4_address"`
 }
 
 // VLANCreateOptions fields are those accepted by CreateVLAN
