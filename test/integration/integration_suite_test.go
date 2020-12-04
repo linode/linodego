@@ -92,6 +92,13 @@ func testRecorder(t *testing.T, fixturesYaml string, testingMode recorder.Mode, 
 		return nil
 	})
 
+	r.AddSaveFilter(func(i *cassette.Interaction) error {
+		re := regexp.MustCompile("AWSAccessKeyId=[[:alnum:]]{20}")
+		i.Response.Body = re.ReplaceAllString(i.Response.Body, "AWSAccessKeyID=SANITIZED")
+		i.Request.URL = re.ReplaceAllString(i.Request.URL, "AWSAccessKeyID=SANITIZED")
+		return nil
+	})
+
 	recordStopper = func() {
 		r.Stop()
 	}
