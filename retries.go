@@ -14,6 +14,9 @@ const retryAfterHeaderName = "Retry-After"
 // type RetryConditional func(r *resty.Response) (shouldRetry bool)
 type RetryConditional resty.RetryConditionFunc
 
+// type RetryAfter func(c *resty.Client, r *resty.Response) (time.Duration, error)
+type RetryAfter resty.RetryAfterFunc
+
 // Configures resty to
 // lock until enough time has passed to retry the request as determined by the Retry-After response header.
 // If the Retry-After header is not set, we fall back to value of SetPollDelay.
