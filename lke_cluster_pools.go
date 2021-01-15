@@ -72,7 +72,7 @@ type LKEClusterPoolsPagedResponse struct {
 
 // endpointWithID gets the endpoint URL for InstanceConfigs of a given Instance
 func (LKEClusterPoolsPagedResponse) endpointWithID(c *Client, id int) string {
-	endpoint, err := c.LKEClusterPools.endpointWithID(id)
+	endpoint, err := c.LKEClusterPools.endpointWithParams(id)
 	if err != nil {
 		panic(err)
 	}
@@ -97,7 +97,7 @@ func (c *Client) ListLKEClusterPools(ctx context.Context, clusterID int, opts *L
 
 // GetLKEClusterPool gets the lkeClusterPool with the provided ID
 func (c *Client) GetLKEClusterPool(ctx context.Context, clusterID, id int) (*LKEClusterPool, error) {
-	e, err := c.LKEClusterPools.endpointWithID(clusterID)
+	e, err := c.LKEClusterPools.endpointWithParams(clusterID)
 	if err != nil {
 		return nil, err
 	}
@@ -112,7 +112,7 @@ func (c *Client) GetLKEClusterPool(ctx context.Context, clusterID, id int) (*LKE
 // CreateLKEClusterPool creates a LKEClusterPool
 func (c *Client) CreateLKEClusterPool(ctx context.Context, clusterID int, createOpts LKEClusterPoolCreateOptions) (*LKEClusterPool, error) {
 	var body string
-	e, err := c.LKEClusterPools.endpointWithID(clusterID)
+	e, err := c.LKEClusterPools.endpointWithParams(clusterID)
 	if err != nil {
 		return nil, err
 	}
@@ -138,7 +138,7 @@ func (c *Client) CreateLKEClusterPool(ctx context.Context, clusterID int, create
 // UpdateLKEClusterPool updates the LKEClusterPool with the specified id
 func (c *Client) UpdateLKEClusterPool(ctx context.Context, clusterID, id int, updateOpts LKEClusterPoolUpdateOptions) (*LKEClusterPool, error) {
 	var body string
-	e, err := c.LKEClusterPools.endpointWithID(clusterID)
+	e, err := c.LKEClusterPools.endpointWithParams(clusterID)
 	if err != nil {
 		return nil, err
 	}
@@ -165,7 +165,7 @@ func (c *Client) UpdateLKEClusterPool(ctx context.Context, clusterID, id int, up
 // DeleteLKEClusterPool deletes the LKEClusterPool with the specified id
 func (c *Client) DeleteLKEClusterPool(ctx context.Context,
 	clusterID, id int) error {
-	e, err := c.LKEClusterPools.endpointWithID(clusterID)
+	e, err := c.LKEClusterPools.endpointWithParams(clusterID)
 	if err != nil {
 		return err
 	}

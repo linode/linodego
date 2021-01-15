@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"cluster":"us-east-1","label":"linodego-test-bucket-1603371589949339000"}'
+    body: '{"description":"testing123","region":"ca-central","linodes":null,"cidr_block":"0.0.0.0/0"}'
     form: {}
     headers:
       Accept:
@@ -11,10 +11,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets
+    url: https://api.linode.com/v4beta/networking/vlans
     method: POST
   response:
-    body: '{"hostname": "linodego-test-bucket-1603371589949339000.us-east-1.linodeobjects.com", "label": "linodego-test-bucket-1603371589949339000", "created": "2018-01-02T03:04:05", "cluster": "us-east-1", "size": 0}'
+    body: '{"id": 1113, "region": "ca-central", "description": "testing123", "linodes": [], "cidr_block": "0.0.0.0/0", "created": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -29,7 +29,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "206"
+      - "141"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -41,7 +41,7 @@ interactions:
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - object_storage:read_write
+      - account:read_write,linodes:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -66,37 +66,52 @@ interactions:
       - application/json
       User-Agent:
       - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-west-1/linodego-test-bucket-1603371589949339000
+    url: https://api.linode.com/v4beta/networking/vlans/1113
     method: GET
   response:
-    body: '{"errors": [{"reason": "Not found"}]}'
+    body: '{"id": 1113, "region": "ca-central", "description": "testing123", "linodes": [], "cidr_block": "0.0.0.0/0", "created": "2018-01-02T03:04:05"}'
     headers:
+      Access-Control-Allow-Credentials:
+      - "true"
       Access-Control-Allow-Headers:
       - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
       Access-Control-Allow-Methods:
       - HEAD, GET, OPTIONS, POST, PUT, DELETE
       Access-Control-Allow-Origin:
       - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
       Content-Length:
-      - "37"
+      - "141"
+      Content-Security-Policy:
+      - default-src 'none'
       Content-Type:
       - application/json
       Server:
       - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
       Vary:
       - Authorization, X-Filter
+      - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - object_storage:read_only
+      - account:read_only
+      X-Content-Type-Options:
+      - nosniff
       X-Frame-Options:
+      - DENY
       - DENY
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
       - "800"
-    status: 404 Not Found
-    code: 404
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
     duration: ""
 - request:
     body: ""
@@ -108,7 +123,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linodego-test-bucket-1603371589949339000
+    url: https://api.linode.com/v4beta/networking/vlans/1113
     method: DELETE
   response:
     body: '{}'
@@ -138,7 +153,7 @@ interactions:
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - object_storage:read_write
+      - account:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:

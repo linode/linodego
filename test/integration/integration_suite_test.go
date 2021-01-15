@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"regexp"
 	"strconv"
 	"testing"
 	"time"
@@ -62,6 +63,39 @@ func testRecorder(t *testing.T, fixturesYaml string, testingMode recorder.Mode, 
 
 	r.AddFilter(func(i *cassette.Interaction) error {
 		delete(i.Request.Headers, "Authorization")
+		return nil
+	})
+
+	r.AddFilter(func(i *cassette.Interaction) error {
+		delete(i.Response.Headers, "Date")
+		delete(i.Response.Headers, "Retry-After")
+		delete(i.Response.Headers, "X-Customer-Uuid")
+		delete(i.Response.Headers, "X-Ratelimit-Reset")
+		delete(i.Response.Headers, "X-Ratelimit-Remaining")
+		delete(i.Response.Headers, "X-Spec-Version")
+		return nil
+	})
+
+	r.AddFilter(func(i *cassette.Interaction) error {
+		re := regexp.MustCompile(`"access_key": "[[:alnum:]]*"`)
+		i.Response.Body = re.ReplaceAllString(i.Response.Body, `"access_key": "[SANITIZED]"`)
+		re = regexp.MustCompile(`"secret_key": "[[:alnum:]]*"`)
+		i.Response.Body = re.ReplaceAllString(i.Response.Body, `"secret_key": "[SANITIZED]"`)
+		re = regexp.MustCompile("20[0-9]{2}-[01][0-9]-[0-3][0-9]T[0-2][0-9]:[0-9]{2}:[0-9]{2}")
+		i.Response.Body = re.ReplaceAllString(i.Response.Body, "2018-01-02T03:04:05")
+		re = regexp.MustCompile("192\\.168\\.((1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])\\.)(1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])")
+		i.Response.Body = re.ReplaceAllString(i.Response.Body, "192.168.030.040")
+		re = regexp.MustCompile("^192\\.168/!s/((1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])\\.){3}(1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])")
+		i.Response.Body = re.ReplaceAllString(i.Response.Body, "0.0.0.0")
+		re = regexp.MustCompile("nb-[0-9]{1,3}-[0-9]{1,3}-[0-9]{1,3}-[0-9]{1,3}")
+		i.Response.Body = re.ReplaceAllString(i.Response.Body, "nb-0-0-0-0")
+		return nil
+	})
+
+	r.AddSaveFilter(func(i *cassette.Interaction) error {
+		re := regexp.MustCompile("AWSAccessKeyId=[[:alnum:]]{20}")
+		i.Response.Body = re.ReplaceAllString(i.Response.Body, "AWSAccessKeyID=SANITIZED")
+		i.Request.URL = re.ReplaceAllString(i.Request.URL, "AWSAccessKeyID=SANITIZED")
 		return nil
 	})
 

@@ -142,7 +142,7 @@ func (LKEVersionsPagedResponse) endpoint(c *Client) string {
 
 // endpoint gets the endpoint URL for LKEClusterAPIEndpoints
 func (LKEClusterAPIEndpointsPagedResponse) endpointWithID(c *Client, id int) string {
-	endpoint, err := c.LKEClusterAPIEndpoints.endpointWithID(id)
+	endpoint, err := c.LKEClusterAPIEndpoints.endpointWithParams(id)
 	if err != nil {
 		panic(err)
 	}
