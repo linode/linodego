@@ -184,8 +184,28 @@ func (c *Client) addRetryConditional(retryConditional RetryConditional) *Client 
 	return c
 }
 
+// SetRetryMaxWaitTime sets the maximum delay before retrying a request.
 func (c *Client) SetRetryMaxWaitTime(max time.Duration) *Client {
 	c.resty.SetRetryMaxWaitTime(max)
+	return c
+}
+
+// SetRetryWaitTime sets the default (minimum) delay before retrying a request.
+func (c *Client) SetRetryWaitTime(min time.Duration) *Client {
+	c.resty.SetRetryWaitTime(min)
+	return c
+}
+
+// SetRetryAfter sets the callback function to be invoked with a failed request
+// to determine wben it should be retried.
+func (c *Client) SetRetryAfter(callback RetryAfter) *Client {
+	c.resty.SetRetryAfter(resty.RetryAfterFunc(callback))
+	return c
+}
+
+// SetRetryCount sets the maximum retry attempts before aborting.
+func (c *Client) SetRetryCount(count int) *Client {
+	c.resty.SetRetryCount(count)
 	return c
 }
 
