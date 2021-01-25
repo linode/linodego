@@ -100,3 +100,37 @@ func TestUpdateIPAddress(t *testing.T) {
 		t.Error(err)
 	}
 }
+
+// TestDeleteInstanceIPAddress requires the customer account to have
+// default_IPMax set to at least 2 and default_InterfaceMax set to 3.
+func TestDeleteInstanceIPAddress(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestDeleteInstanceIPAddress")
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	ip, err := client.AddInstanceIPAddress(context.TODO(), instance.ID, true)
+	if err != nil {
+		t.Fatalf("failed to allocate public IPv4 for instance (%d): %s", instance.ID, err)
+	}
+
+	i, err := client.GetInstanceIPAddresses(context.TODO(), instance.ID)
+	if err != nil {
+		t.Fatalf("failed to get instance (%d) IP addresses: %s", instance.ID, err)
+	}
+	if len(i.IPv4.Public) != 2 {
+		t.Errorf("expected instance (%d) to have 2 public IPv4 addresses; got %d", instance.ID, len(i.IPv4.Public))
+	}
+
+	if err := client.DeleteInstanceIPAddress(context.TODO(), instance.ID, ip.Address); err != nil {
+		t.Fatalf("failed to delete instance (%d) public IPv4 address (%s): %s", instance.ID, ip.Address, err)
+	}
+
+	if i, err = client.GetInstanceIPAddresses(context.TODO(), instance.ID); err != nil {
+		t.Fatalf("failed to get instance (%d) IP addresses: %s", instance.ID, err)
+	}
+	if len(i.IPv4.Public) != 1 {
+		t.Errorf("expected instance (%d) to have 1 public IPv4 address; got %d", instance.ID, len(i.IPv4.Public))
+	}
+}
