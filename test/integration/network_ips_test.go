@@ -101,6 +101,8 @@ func TestUpdateIPAddress(t *testing.T) {
 	}
 }
 
+// TestDeleteInstanceIPAddress requires the customer account to have
+// default_IPMax set to at least 2 and default_InterfaceMax set to 3.
 func TestDeleteInstanceIPAddress(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestDeleteInstanceIPAddress")
 	defer teardown()
