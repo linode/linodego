@@ -148,3 +148,14 @@ func (c *Client) UpdateInstanceIPAddress(ctx context.Context, linodeID int, ipAd
 	}
 	return r.Result().(*InstanceIP), nil
 }
+
+func (c *Client) DeleteInstanceIPAddress(ctx context.Context, linodeID int, ipAddress string) error {
+	e, err := c.InstanceIPs.endpointWithParams(linodeID)
+	if err != nil {
+		return err
+	}
+
+	e = fmt.Sprintf("%s/%s", e, ipAddress)
+	_, err = coupleAPIErrors(c.R(ctx).Delete(e))
+	return err
+}
