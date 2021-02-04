@@ -3,10 +3,15 @@ package integration
 import (
 	"context"
 
+	"github.com/linode/linodego"
 	. "github.com/linode/linodego"
 
 	"testing"
 )
+
+const usernamePrefix = "linodegotest-"
+
+type userModifier func(*linodego.UserCreateOptions)
 
 func TestGetUser_missing(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestGetUser_missing")
@@ -26,98 +31,140 @@ func TestGetUser_missing(t *testing.T) {
 	}
 }
 
-/**
-// -----------------------------------------------------------
-// TODO(displague)
-// User creation/list/updates require User email confirmation.
-// Testing will be revisited.
-// -----------------------------------------------------------
-func TestGetUser_found(t *testing.T) {
-	client, _, teardown, err := setupUser(t, "fixtures/TestGetUser_found")
+func TestGetUser(t *testing.T) {
+	username := usernamePrefix + "getuser"
+	email := usernamePrefix + "getuser@example.com"
+	restricted := true
+
+	client, _, teardown := setupUser(t, []userModifier{
+		func(createOpts *linodego.UserCreateOptions) {
+			createOpts.Username = username
+			createOpts.Email = email
+			createOpts.Restricted = restricted
+		},
+	}, "fixtures/TestGetUser")
 	defer teardown()
+
+	user, err := client.GetUser(context.TODO(), username)
 	if err != nil {
-		t.Fatal(err)
+		t.Fatalf("failed to get user (%s): %s", username, err)
 	}
 
-	i, err := client.GetUser(context.Background(), "linodego-testuser")
-	if err != nil {
-		t.Errorf("Error getting user, expected struct, got %v and error %v", i, err)
+	if user.Email != email {
+		t.Errorf("expected user email to be %s; got %s", email, user.Email)
 	}
-	if i.Username != "linodego-testuser" {
-		t.Errorf("Expected a specific user, but got a different one %v", i)
+	if len(user.SSHKeys) != 0 {
+		t.Error("expected user to have no SSH keys")
+	}
+	if !user.Restricted {
+		t.Error("expected user to be restricted")
 	}
 }
 
 func TestUpdateUser(t *testing.T) {
-	client, user, teardown, err := setupUser(t, "fixtures/TestUpdateUser")
+	username := usernamePrefix + "updateuser"
+	email := usernamePrefix + "updateuser@example.com"
+	restricted := false
+
+	client, user, teardown := setupUser(t, []userModifier{
+		func(createOpts *linodego.UserCreateOptions) {
+			createOpts.Username = username
+			createOpts.Email = email
+			createOpts.Restricted = restricted
+		},
+	}, "fixtures/TestUpdateUser")
 	defer teardown()
+
+	updatedUsername := username + "-updated"
+	restricted = true
+	updateOpts := UserUpdateOptions{
+		Username:   updatedUsername,
+		Restricted: &restricted,
+	}
+
+	updated, err := client.UpdateUser(context.TODO(), username, updateOpts)
 	if err != nil {
-		t.Fatal(err)
+		t.Fatalf("failed to update user (%s): %s", username, err)
 	}
+	// update username to be deleted in teardown
+	user.Username = updatedUsername
 
-	createOpts := user.GetCreateOptions()
-	if createOpts.Restricted != user.Restricted {
-		t.Errorf("Expected Restricted to match GetCreateOptions, got: %v", createOpts)
+	if updated.Username != updatedUsername {
+		t.Errorf("expected username to be %s; got %s", updatedUsername, updated.Username)
 	}
-
-	updateOpts := user.GetUpdateOptions()
-	if updateOpts.Email != user.Email {
-		t.Errorf("Expected matching Email from GetUpdateOptions, got: %v", updateOpts)
-	}
-
-	updateOpts.Email = "r_" + user.Email
-	user, err = client.UpdateUser(context.Background(), user.Username, updateOpts)
-	if err != nil {
-		t.Errorf("Error listing users, expected struct, got error %v", err)
-	}
-
-	if user.Email != updateOpts.Email {
-		t.Errorf("Expected a change in user Email, but got none %v", user)
+	if !updated.Restricted {
+		t.Error("expected user to be restricted")
 	}
 }
 
 func TestListUsers(t *testing.T) {
-	client, user, teardown, err := setupUser(t, "fixtures/TestListUsers")
+	username := usernamePrefix + "listuser"
+	email := usernamePrefix + "listuser@example.com"
+	restricted := false
+
+	client, _, teardown := setupUser(t, []userModifier{
+		func(createOpts *linodego.UserCreateOptions) {
+			createOpts.Username = username
+			createOpts.Email = email
+			createOpts.Restricted = restricted
+		},
+	}, "fixtures/TestListUsers")
 	defer teardown()
+
+	users, err := client.ListUsers(context.TODO(), nil)
 	if err != nil {
-		t.Fatal(err)
+		t.Fatalf("failed to get users: %s", err)
 	}
 
-	listOpts := NewListOptions(1, "{\"username\":\""+user.Username+"\"}")
-	i, err := client.ListUsers(context.Background(), listOpts)
-	if err != nil {
-		t.Errorf("Error listing users, expected struct, got error %v", err)
+	if len(users) == 0 {
+		t.Fatalf("expected at least one user to be returned")
 	}
-	if len(i) == 0 {
-		t.Errorf("Expected a list of users, but got none %v", i)
+
+	var newUser User
+	for _, user := range users {
+		if user.Username == username {
+			newUser = user
+		}
+	}
+
+	if newUser.Email != email {
+		t.Errorf("expected user email to be %s; got %s", email, newUser.Email)
+	}
+	if len(newUser.SSHKeys) != 0 {
+		t.Error("expected user to have no SSH keys")
+	}
+	if newUser.Restricted {
+		t.Error("expected user to not be restricted")
 	}
 }
 
-func setupUser(t *testing.T, fixturesYaml string) (*Client, *User, func(), error) {
+func createUser(t *testing.T, client *linodego.Client, userModifiers ...userModifier) (*User, func()) {
+	t.Helper()
+
+	var createOpts UserCreateOptions
+	for _, modifier := range userModifiers {
+		modifier(&createOpts)
+	}
+
+	user, err := client.CreateUser(context.TODO(), createOpts)
+	if err != nil {
+		t.Fatalf("failed to create test user: %s", err)
+	}
+
+	return user, func() {
+		if err := client.DeleteUser(context.TODO(), user.Username); err != nil {
+			t.Errorf("failed to delete test user (%s): %s", user.Username, err)
+		}
+	}
+}
+
+func setupUser(t *testing.T, userModifiers []userModifier, fixturesYaml string) (*Client, *User, func()) {
 	t.Helper()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 
-	// This scope must be <= the scope used for testing
-	username := "linodego-testuser"
-
-	createOpts := UserCreateOptions{
-		Username:   username,
-		Email:      username + "@example.com",
-		Restricted: true,
-	}
-	user, err := client.CreateUser(context.Background(), createOpts)
-	if err != nil {
-		t.Fatalf("Error creating test User: %s", err)
-	}
-
-	teardown := func() {
-		if user != nil {
-			if err := client.DeleteUser(context.Background(), user.Username); err != nil {
-				t.Errorf("Error deleting test User: %s", err)
-			}
-		}
+	user, teardown := createUser(t, client, userModifiers...)
+	return client, user, func() {
+		teardown()
 		fixtureTeardown()
 	}
-	return client, user, teardown, err
 }
-**/
