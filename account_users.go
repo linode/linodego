@@ -11,6 +11,7 @@ type User struct {
 	Username   string   `json:"username"`
 	Email      string   `json:"email"`
 	Restricted bool     `json:"restricted"`
+	TFAEnabled bool     `json:"tfa_enabled"`
 	SSHKeys    []string `json:"ssh_keys"`
 }
 
@@ -18,15 +19,13 @@ type User struct {
 type UserCreateOptions struct {
 	Username   string `json:"username"`
 	Email      string `json:"email"`
-	Restricted bool   `json:"restricted,omitempty"`
+	Restricted bool   `json:"restricted"`
 }
 
 // UserUpdateOptions fields are those accepted by UpdateUser
 type UserUpdateOptions struct {
-	Username   string    `json:"username,omitempty"`
-	Email      string    `json:"email,omitempty"`
-	Restricted *bool     `json:"restricted,omitempty"`
-	SSHKeys    *[]string `json:"ssh_keys,omitempty"`
+	Username   string `json:"username,omitempty"`
+	Restricted *bool  `json:"restricted,omitempty"`
 }
 
 // GetCreateOptions converts a User to UserCreateOptions for use in CreateUser
@@ -41,7 +40,6 @@ func (i User) GetCreateOptions() (o UserCreateOptions) {
 // GetUpdateOptions converts a User to UserUpdateOptions for use in UpdateUser
 func (i User) GetUpdateOptions() (o UserUpdateOptions) {
 	o.Username = i.Username
-	o.Email = i.Email
 	o.Restricted = copyBool(&i.Restricted)
 
 	return
