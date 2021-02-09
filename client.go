@@ -100,6 +100,7 @@ type Client struct {
 	Token                    *Resource
 	Tokens                   *Resource
 	Types                    *Resource
+	UserGrants               *Resource
 	Users                    *Resource
 	VLANs                    *Resource
 	Volumes                  *Resource
@@ -327,6 +328,7 @@ func addResources(client *Client) {
 		ticketsName:                  NewResource(client, ticketsName, ticketsEndpoint, false, Ticket{}, TicketsPagedResponse{}),
 		tokensName:                   NewResource(client, tokensName, tokensEndpoint, false, Token{}, TokensPagedResponse{}),
 		typesName:                    NewResource(client, typesName, typesEndpoint, false, LinodeType{}, LinodeTypesPagedResponse{}),
+		userGrantsName:               NewResource(client, typesName, userGrantsEndpoint, true, UserGrants{}, nil),
 		usersName:                    NewResource(client, usersName, usersEndpoint, false, User{}, UsersPagedResponse{}),
 		vlansName:                    NewResource(client, vlansName, vlansEndpoint, false, VLAN{}, VLANsPagedResponse{}),
 		volumesName:                  NewResource(client, volumesName, volumesEndpoint, false, Volume{}, VolumesPagedResponse{}),
@@ -380,6 +382,7 @@ func addResources(client *Client) {
 	client.Tickets = resources[ticketsName]
 	client.Tokens = resources[tokensName]
 	client.Types = resources[typesName]
+	client.UserGrants = resources[userGrantsName]
 	client.Users = resources[usersName]
 	client.VLANs = resources[vlansName]
 	client.Volumes = resources[volumesName]
