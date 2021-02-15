@@ -2,6 +2,7 @@ package integration
 
 import (
 	"context"
+	"reflect"
 	"testing"
 
 	"github.com/linode/linodego"
@@ -67,6 +68,38 @@ func TestGetLKECluster_found(t *testing.T) {
 	}
 	if i.ID != lkeCluster.ID {
 		t.Errorf("Expected a specific lkeCluster, but got a different one %v", i)
+	}
+}
+
+func TestUpdateLKECluster(t *testing.T) {
+	client, cluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
+		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
+	}}, "fixtures/TestUpdateLKECluster")
+	defer teardown()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	updatedTags := []string{"test=true"}
+	updatedLabel := "new" + cluster.Label
+	updatedK8sVersion := "1.17"
+	updatedCluster, err := client.UpdateLKECluster(context.TODO(), cluster.ID, linodego.LKEClusterUpdateOptions{
+		Tags:       &updatedTags,
+		Label:      updatedLabel,
+		K8sVersion: updatedK8sVersion,
+	})
+	if err != nil {
+		t.Fatalf("failed to update LKE Cluster (%d): %s", cluster.ID, err)
+	}
+
+	if updatedCluster.Label != updatedLabel {
+		t.Errorf("expected label to be updated to %q; got %q", updatedLabel, updatedCluster.Label)
+	}
+	if updatedCluster.K8sVersion != updatedK8sVersion {
+		t.Errorf("expected k8s version to be updated to %q; got %q", updatedK8sVersion, updatedCluster.K8sVersion)
+	}
+	if !reflect.DeepEqual(updatedTags, updatedCluster.Tags) {
+		t.Errorf("expected tags to be updated to %#v; got %#v", updatedTags, updatedCluster.Tags)
 	}
 }
 
