@@ -53,10 +53,10 @@ func TestUpdateFirewallRules(t *testing.T) {
 				Protocol: "TCP",
 				Addresses: linodego.NetworkAddresses{
 					IPv4: []string{"0.0.0.0/0"},
-					IPv6: []string{"::0/0"},
 				},
 			},
 		},
+		Outbound: []linodego.FirewallRule{},
 	}
 
 	if _, err := client.UpdateFirewallRules(context.Background(), firewall.ID, newRules); err != nil {
