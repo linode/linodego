@@ -41,8 +41,9 @@ type LKEClusterCreateOptions struct {
 
 // LKEClusterUpdateOptions fields are those accepted by UpdateLKECluster
 type LKEClusterUpdateOptions struct {
-	Label string    `json:"label,omitempty"`
-	Tags  *[]string `json:"tags,omitempty"`
+	K8sVersion string    `json:"k8s_version,omitempty"`
+	Label      string    `json:"label,omitempty"`
+	Tags       *[]string `json:"tags,omitempty"`
 }
 
 // LKEClusterAPIEndpoint fields are those returned by ListLKEClusterAPIEndpoints
@@ -94,6 +95,7 @@ func (i LKECluster) GetCreateOptions() (o LKEClusterCreateOptions) {
 
 // GetUpdateOptions converts a LKECluster to LKEClusterUpdateOptions for use in UpdateLKECluster
 func (i LKECluster) GetUpdateOptions() (o LKEClusterUpdateOptions) {
+	o.K8sVersion = i.K8sVersion
 	o.Label = i.Label
 	o.Tags = &i.Tags
 	return
