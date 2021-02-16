@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"label","rules":{"inbound":[{"ports":"22","protocol":"TCP","addresses":{"ipv4":["10.20.30.40/0"],"ipv6":["1234::5678/0"]}}],"outbound":[{"ports":"22","protocol":"TCP","addresses":{"ipv4":["10.20.30.40/0"],"ipv6":["1234::5678/0"]}}]},"tags":["testing"],"devices":{}}'
+    body: '{"label":"label","rules":{"inbound":[{"ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"outbound":[{"ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}]},"tags":["testing"],"devices":{}}'
     form: {}
     headers:
       Accept:
@@ -10,15 +10,11 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.12.0 https://github.com/linode/linodego
+      - linodego https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 223, "label": "label", "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound": [{"ports":
-      "22", "protocol": "TCP", "addresses": {"ipv4": ["10.20.30.40/0"], "ipv6": ["1234::5678/0"]}}],
-      "outbound": [{"ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["10.20.30.40/0"],
-      "ipv6": ["1234::5678/0"]}}]}, "tags": ["testing"]}'
+    body: '{"id": 2403, "label": "label", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound": [{"ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "outbound": [{"ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}]}, "tags": ["testing"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -33,15 +29,11 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "363"
+      - "362"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Tue, 19 May 2020 16:41:15 GMT
-      Retry-After:
-      - "92"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -58,20 +50,14 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
-      X-Ratelimit-Remaining:
-      - "1595"
-      X-Ratelimit-Reset:
-      - "1589906568"
-      X-Spec-Version:
-      - 4.65.1
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"inbound":[{"ports":"22","protocol":"TCP","addresses":{"ipv4":["10.20.30.40/0"],"ipv6":["1234::5678/0"]}}]}'
+    body: '{"inbound":[{"ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"]}}]}'
     form: {}
     headers:
       Accept:
@@ -79,12 +65,11 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.12.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/223/rules
+      - linodego https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/firewalls/2403/rules
     method: PUT
   response:
-    body: '{"inbound": [{"ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["10.20.30.40/0"],
-      "ipv6": ["1234::5678/0"]}}]}'
+    body: '{"inbound": [{"ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"]}}], "outbound": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -99,15 +84,11 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "106"
+      - "103"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Tue, 19 May 2020 16:41:15 GMT
-      Retry-After:
-      - "92"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -124,13 +105,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
-      X-Ratelimit-Remaining:
-      - "1594"
-      X-Ratelimit-Reset:
-      - "1589906568"
-      X-Spec-Version:
-      - 4.65.1
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -145,12 +120,11 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.12.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/223/rules
+      - linodego https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/firewalls/2403/rules
     method: GET
   response:
-    body: '{"inbound": [{"ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["10.20.30.40/0"],
-      "ipv6": ["1234::5678/0"]}}]}'
+    body: '{"inbound": [{"ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"]}}], "outbound": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -166,15 +140,11 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "106"
+      - "103"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Tue, 19 May 2020 16:41:16 GMT
-      Retry-After:
-      - "92"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -192,13 +162,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
-      X-Ratelimit-Remaining:
-      - "1593"
-      X-Ratelimit-Reset:
-      - "1589906569"
-      X-Spec-Version:
-      - 4.65.1
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -213,8 +177,8 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.12.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/223
+      - linodego https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/firewalls/2403
     method: DELETE
   response:
     body: '{}'
@@ -237,10 +201,6 @@ interactions:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Tue, 19 May 2020 16:41:16 GMT
-      Retry-After:
-      - "91"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -257,13 +217,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
-      X-Ratelimit-Remaining:
-      - "1592"
-      X-Ratelimit-Reset:
-      - "1589906568"
-      X-Spec-Version:
-      - 4.65.1
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
