@@ -274,6 +274,17 @@ func (c *Client) GetLKEClusterKubeconfig(ctx context.Context, id int) (*LKEClust
 	return r.Result().(*LKEClusterKubeconfig), nil
 }
 
+// RecycleLKEClusterNodes recycles all nodes in all pools of the specified LKE Cluster.
+func (c *Client) RecycleLKEClusterNodes(ctx context.Context, id int) error {
+	e, err := c.LKEClusters.Endpoint()
+	if err != nil {
+		return err
+	}
+	e = fmt.Sprintf("%s/%d/recycle", e, id)
+	_, err = coupleAPIErrors(c.R(ctx).Post(e))
+	return err
+}
+
 // GetLKEVersion gets details about a specific LKE Version
 func (c *Client) GetLKEVersion(ctx context.Context, version string) (*LKEVersion, error) {
 	e, err := c.LKEVersions.Endpoint()
