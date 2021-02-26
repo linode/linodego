@@ -103,6 +103,21 @@ func TestUpdateLKECluster(t *testing.T) {
 	}
 }
 
+func TestRecycleLKEClusterNodes(t *testing.T) {
+	client, cluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
+		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
+	}}, "fixtures/TestRecycleLKEClusterNodes")
+	defer teardown()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	err = client.RecycleLKEClusterNodes(context.TODO(), cluster.ID)
+	if err != nil {
+		t.Errorf("failed to recycle LKE cluster: %s", err)
+	}
+}
+
 func TestListLKEClusterAPIEndpoints(t *testing.T) {
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
