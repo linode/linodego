@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"label","rules":{"inbound":[{"ports":"22","protocol":"TCP","addresses":{"ipv4":["10.20.30.40/0"],"ipv6":["1234::5678/0"]}}],"outbound":[{"ports":"22","protocol":"TCP","addresses":{"ipv4":["10.20.30.40/0"],"ipv6":["1234::5678/0"]}}]},"tags":["testing"],"devices":{}}'
+    body: '{"label":"label","rules":{"inbound":[{"action":"ACCEPT","label":"test-label","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["::0/0"]}}],"inbound_policy":"ACCEPT","outbound":[{"action":"ACCEPT","label":"test-label","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["::0/0"]}}],"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
     form: {}
     headers:
       Accept:
@@ -10,15 +10,11 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.12.0 https://github.com/linode/linodego
+      - linodego https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 217, "label": "label", "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound": [{"ports":
-      "22", "protocol": "TCP", "addresses": {"ipv4": ["10.20.30.40/0"], "ipv6": ["1234::5678/0"]}}],
-      "outbound": [{"ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["10.20.30.40/0"],
-      "ipv6": ["1234::5678/0"]}}]}, "tags": ["testing"]}'
+    body: '{"id": 3410, "label": "label", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound": [{"action": "ACCEPT", "label": "test-label", "ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["::/0"]}}], "inbound_policy": "ACCEPT", "outbound": [{"action": "ACCEPT", "label": "test-label", "ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["::/0"]}}], "outbound_policy": "ACCEPT"}, "tags": ["testing"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -33,15 +29,11 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "363"
+      - "505"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Tue, 19 May 2020 16:26:33 GMT
-      Retry-After:
-      - "119"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -58,13 +50,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
-      X-Ratelimit-Remaining:
-      - "1599"
-      X-Ratelimit-Reset:
-      - "1589905713"
-      X-Spec-Version:
-      - 4.65.1
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -79,13 +65,11 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.12.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/217/rules
+      - linodego https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/firewalls/3410/rules
     method: GET
   response:
-    body: '{"inbound": [{"ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["10.20.30.40/0"],
-      "ipv6": ["1234::5678/0"]}}], "outbound": [{"ports": "22", "protocol": "TCP", "addresses":
-      {"ipv4": ["10.20.30.40/0"], "ipv6": ["1234::5678/0"]}}]}'
+    body: '{"inbound": [{"action": "ACCEPT", "label": "test-label", "ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["::/0"]}}], "inbound_policy": "ACCEPT", "outbound": [{"action": "ACCEPT", "label": "test-label", "ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["::/0"]}}], "outbound_policy": "ACCEPT"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -101,15 +85,11 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "213"
+      - "354"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Tue, 19 May 2020 16:26:33 GMT
-      Retry-After:
-      - "119"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -127,13 +107,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
-      X-Ratelimit-Remaining:
-      - "1598"
-      X-Ratelimit-Reset:
-      - "1589905713"
-      X-Spec-Version:
-      - 4.65.1
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -148,8 +122,8 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.12.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/217
+      - linodego https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/firewalls/3410
     method: DELETE
   response:
     body: '{}'
@@ -172,10 +146,6 @@ interactions:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Tue, 19 May 2020 16:26:33 GMT
-      Retry-After:
-      - "118"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -192,13 +162,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
-      X-Ratelimit-Remaining:
-      - "1597"
-      X-Ratelimit-Reset:
-      - "1589905712"
-      X-Spec-Version:
-      - 4.65.1
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

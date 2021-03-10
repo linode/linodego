@@ -325,7 +325,7 @@ func createInstance(t *testing.T, client *linodego.Client, modifiers ...instance
 	createOpts := linodego.InstanceCreateOptions{
 		Label:    "linodego-test-instance",
 		RootPass: "R34lBAdP455",
-		Region:   "us-west",
+		Region:   "ca-central",
 		Type:     "g6-nanode-1",
 		Image:    "linode/debian9",
 		Booted:   &booted,
