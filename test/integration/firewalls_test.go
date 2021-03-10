@@ -53,13 +53,17 @@ func TestGetFirewall(t *testing.T) {
 	rules := linodego.FirewallRuleSet{
 		Inbound: []linodego.FirewallRule{
 			{
+				Label: "test-label",
+				Action: "DROP",
 				Protocol: linodego.ICMP,
 				Addresses: linodego.NetworkAddresses{
-					IPv4: []string{"10.20.30.40/0"},
-					IPv6: []string{"1234::5678/0"},
+					IPv4: &[]string{"0.0.0.0/0"},
+					IPv6: &[]string{"::/0"},
 				},
 			},
 		},
+		InboundPolicy: "ACCEPT",
+		OutboundPolicy: "ACCEPT",
 	}
 	client, created, teardown, err := setupFirewall(t, []firewallModifier{
 		func(createOpts *linodego.FirewallCreateOptions) {
@@ -85,14 +89,18 @@ func TestGetFirewall(t *testing.T) {
 func TestUpdateFirewall(t *testing.T) {
 	label := randString(12, lowerBytes, upperBytes) + "-linodego-testing"
 	rules := linodego.FirewallRuleSet{
+		InboundPolicy: "ACCEPT",
 		Inbound: []linodego.FirewallRule{
 			{
+				Label: "test-label",
+				Action: "DROP",
 				Protocol: linodego.ICMP,
 				Addresses: linodego.NetworkAddresses{
-					IPv4: []string{"0.0.0.0/0"},
+					IPv4: &[]string{"0.0.0.0/0"},
 				},
 			},
 		},
+		OutboundPolicy: "ACCEPT",
 	}
 
 	client, firewall, teardown, err := setupFirewall(t, []firewallModifier{
