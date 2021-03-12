@@ -2,10 +2,9 @@ package integration
 
 import (
 	"context"
+	"testing"
 
 	. "github.com/linode/linodego"
-
-	"testing"
 )
 
 func TestGetImage_missing(t *testing.T) {
@@ -38,6 +37,7 @@ func TestGetImage_found(t *testing.T) {
 		t.Errorf("Expected a specific image, but got a different one %v", i)
 	}
 }
+
 func TestListImages(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestListImages")
 	defer teardown()

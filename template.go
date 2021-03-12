@@ -29,12 +29,10 @@ type Template struct {
 }
 
 // TemplateCreateOptions fields are those accepted by CreateTemplate
-type TemplateCreateOptions struct {
-}
+type TemplateCreateOptions struct{}
 
 // TemplateUpdateOptions fields are those accepted by UpdateTemplate
-type TemplateUpdateOptions struct {
-}
+type TemplateUpdateOptions struct{}
 
 // GetCreateOptions converts a Template to TemplateCreateOptions for use in CreateTemplate
 func (i Template) GetCreateOptions() (o TemplateCreateOptions) {
@@ -116,7 +114,6 @@ func (c *Client) CreateTemplate(ctx context.Context, createOpts TemplateCreateOp
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Post(e))
-
 	if err != nil {
 		return nil, err
 	}
@@ -143,7 +140,6 @@ func (c *Client) UpdateTemplate(ctx context.Context, id int, updateOpts Template
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Put(e))
-
 	if err != nil {
 		return nil, err
 	}

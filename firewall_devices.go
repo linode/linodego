@@ -84,7 +84,6 @@ func (resp *FirewallDevicesPagedResponse) appendData(r *FirewallDevicesPagedResp
 func (c *Client) ListFirewallDevices(ctx context.Context, firewallID int, opts *ListOptions) ([]FirewallDevice, error) {
 	response := FirewallDevicesPagedResponse{}
 	err := c.listHelperWithID(ctx, &response, firewallID, opts)
-
 	if err != nil {
 		return nil, err
 	}

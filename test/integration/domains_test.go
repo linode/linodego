@@ -7,13 +7,11 @@ import (
 	"github.com/linode/linodego"
 )
 
-var (
-	testDomainCreateOpts = linodego.DomainCreateOptions{
-		Domain:   randLabel() + "-linodego-testing.com",
-		Type:     linodego.DomainTypeMaster,
-		SOAEmail: "example@example.com",
-	}
-)
+var testDomainCreateOpts = linodego.DomainCreateOptions{
+	Domain:   randLabel() + "-linodego-testing.com",
+	Type:     linodego.DomainTypeMaster,
+	SOAEmail: "example@example.com",
+}
 
 func TestCreateDomain(t *testing.T) {
 	_, domain, teardown, err := setupDomain(t, "fixtures/TestCreateDomain")

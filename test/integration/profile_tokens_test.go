@@ -2,18 +2,17 @@ package integration
 
 import (
 	"context"
+	"testing"
 	"time"
 
 	. "github.com/linode/linodego"
-
-	"testing"
 )
 
 func TestGetToken_missing(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestGetToken_missing")
 	defer teardown()
 
-	var doesNotExist = 123
+	doesNotExist := 123
 	i, err := client.GetToken(context.Background(), doesNotExist)
 	if err == nil {
 		t.Errorf("should have received an error requesting a missing token, got %v", i)
@@ -78,6 +77,7 @@ func TestGetToken_noexpiry(t *testing.T) {
 		t.Errorf("Expected \"never\" expiring timestamp from GetCreateOptions, got: %v", createOpts)
 	}
 }
+
 func TestUpdateTokens(t *testing.T) {
 	tokenTTLSeconds := 120
 	ttl := time.Now().UTC().Add(time.Second * time.Duration(tokenTTLSeconds))
@@ -107,6 +107,7 @@ func TestUpdateTokens(t *testing.T) {
 		t.Errorf("Expected token label to be changed, but found %v", i)
 	}
 }
+
 func TestListTokens(t *testing.T) {
 	tokenTTLSeconds := 120
 	ttl := time.Now().UTC().Add(time.Second * time.Duration(tokenTTLSeconds))

@@ -70,7 +70,6 @@ func (resp *UsersPagedResponse) appendData(r *UsersPagedResponse) {
 func (c *Client) ListUsers(ctx context.Context, opts *ListOptions) ([]User, error) {
 	response := UsersPagedResponse{}
 	err := c.listHelper(ctx, &response, opts)
-
 	if err != nil {
 		return nil, err
 	}
@@ -87,7 +86,6 @@ func (c *Client) GetUser(ctx context.Context, id string) (*User, error) {
 
 	e = fmt.Sprintf("%s/%s", e, id)
 	r, err := coupleAPIErrors(c.R(ctx).SetResult(&User{}).Get(e))
-
 	if err != nil {
 		return nil, err
 	}
@@ -101,7 +99,6 @@ func (c *Client) CreateUser(ctx context.Context, createOpts UserCreateOptions) (
 	var body string
 
 	e, err := c.Users.Endpoint()
-
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +114,6 @@ func (c *Client) CreateUser(ctx context.Context, createOpts UserCreateOptions) (
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Post(e))
-
 	if err != nil {
 		return nil, err
 	}
@@ -130,7 +126,6 @@ func (c *Client) UpdateUser(ctx context.Context, id string, updateOpts UserUpdat
 	var body string
 
 	e, err := c.Users.Endpoint()
-
 	if err != nil {
 		return nil, err
 	}
@@ -148,7 +143,6 @@ func (c *Client) UpdateUser(ctx context.Context, id string, updateOpts UserUpdat
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Put(e))
-
 	if err != nil {
 		return nil, err
 	}

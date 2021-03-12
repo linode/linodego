@@ -9,15 +9,13 @@ import (
 	k8scondition "github.com/linode/linodego/k8s/pkg/condition"
 )
 
-var (
-	testLKEClusterCreateOpts = linodego.LKEClusterCreateOptions{
-		Label:      label,
-		Region:     "us-central",
-		K8sVersion: "1.17",
-		Tags:       []string{"testing"},
-		NodePools:  []linodego.LKEClusterPoolCreateOptions{{Count: 1, Type: "g6-standard-2"}},
-	}
-)
+var testLKEClusterCreateOpts = linodego.LKEClusterCreateOptions{
+	Label:      label,
+	Region:     "us-central",
+	K8sVersion: "1.17",
+	Tags:       []string{"testing"},
+	NodePools:  []linodego.LKEClusterPoolCreateOptions{{Count: 1, Type: "g6-standard-2"}},
+}
 
 func TestGetLKECluster_missing(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestGetLKECluster_missing")
@@ -206,6 +204,7 @@ func TestGetLKEVersion_found(t *testing.T) {
 		t.Errorf("Expected a specific version, but got a different one %v", i)
 	}
 }
+
 func TestListLKEVersions(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestListLKEVersions")
 	defer teardown()

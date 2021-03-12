@@ -9,9 +9,7 @@ import (
 	"github.com/linode/linodego"
 )
 
-var (
-	objectStorageObjectURLExpirySeconds = 360
-)
+var objectStorageObjectURLExpirySeconds = 360
 
 func putObjectStorageObject(t *testing.T, client *linodego.Client, bucket *linodego.ObjectStorageBucket, name, content string) {
 	t.Helper()

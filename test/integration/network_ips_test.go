@@ -3,10 +3,9 @@ package integration
 import (
 	"context"
 	"fmt"
+	"testing"
 
 	. "github.com/linode/linodego"
-
-	"testing"
 )
 
 func TestGetIPAddress_missing(t *testing.T) {
@@ -44,6 +43,7 @@ func TestGetIPAddress_found(t *testing.T) {
 		t.Errorf("Expected a specific ipaddress, but got a different one %v", i)
 	}
 }
+
 func TestListIPAddresses(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestListIPAddresses")
 	defer teardown()

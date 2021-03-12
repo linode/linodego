@@ -133,7 +133,6 @@ func (resp *StackscriptsPagedResponse) appendData(r *StackscriptsPagedResponse) 
 func (c *Client) ListStackscripts(ctx context.Context, opts *ListOptions) ([]Stackscript, error) {
 	response := StackscriptsPagedResponse{}
 	err := c.listHelper(ctx, &response, opts)
-
 	if err != nil {
 		return nil, err
 	}
@@ -175,7 +174,6 @@ func (c *Client) CreateStackscript(ctx context.Context, createOpts StackscriptCr
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Post(e))
-
 	if err != nil {
 		return nil, err
 	}
@@ -202,7 +200,6 @@ func (c *Client) UpdateStackscript(ctx context.Context, id int, updateOpts Stack
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Put(e))
-
 	if err != nil {
 		return nil, err
 	}

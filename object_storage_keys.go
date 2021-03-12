@@ -83,7 +83,6 @@ func (c *Client) CreateObjectStorageKey(ctx context.Context, createOpts ObjectSt
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Post(e))
-
 	if err != nil {
 		return nil, err
 	}
@@ -124,7 +123,6 @@ func (c *Client) UpdateObjectStorageKey(ctx context.Context, id int, updateOpts 
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Put(e))
-
 	if err != nil {
 		return nil, err
 	}

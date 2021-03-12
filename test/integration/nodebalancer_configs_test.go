@@ -7,13 +7,11 @@ import (
 	"github.com/linode/linodego"
 )
 
-var (
-	testNodeBalancerConfigCreateOpts = linodego.NodeBalancerConfigCreateOptions{
-		Port:      80,
-		Protocol:  linodego.ProtocolHTTP,
-		Algorithm: linodego.AlgorithmRoundRobin,
-	}
-)
+var testNodeBalancerConfigCreateOpts = linodego.NodeBalancerConfigCreateOptions{
+	Port:      80,
+	Protocol:  linodego.ProtocolHTTP,
+	Algorithm: linodego.AlgorithmRoundRobin,
+}
 
 func TestCreateNodeBalancerConfig(t *testing.T) {
 	_, _, config, teardown, err := setupNodeBalancerConfig(t, "fixtures/TestCreateNodeBalancerConfig")
@@ -45,7 +43,6 @@ func TestUpdateNodeBalancerConfig(t *testing.T) {
 		Algorithm:     linodego.AlgorithmLeastConn,
 	}
 	configUpdated, err := client.UpdateNodeBalancerConfig(context.Background(), nodebalancer.ID, config.ID, updateOpts)
-
 	if err != nil {
 		t.Errorf("Error updating NodeBalancer Config, %s", err)
 	}

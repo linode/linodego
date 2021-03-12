@@ -28,7 +28,6 @@ func (resp *InstanceVolumesPagedResponse) appendData(r *InstanceVolumesPagedResp
 func (c *Client) ListInstanceVolumes(ctx context.Context, linodeID int, opts *ListOptions) ([]Volume, error) {
 	response := InstanceVolumesPagedResponse{}
 	err := c.listHelperWithID(ctx, &response, linodeID, opts)
-
 	if err != nil {
 		return nil, err
 	}

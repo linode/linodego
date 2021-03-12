@@ -15,7 +15,7 @@ func ExampleClient_CreateNodeBalancer() {
 
 	fmt.Println("## NodeBalancer create")
 	var nbID int
-	var nb = &linodego.NodeBalancer{
+	nb := &linodego.NodeBalancer{
 		ClientConnThrottle: 20,
 		Region:             "us-east",
 	}

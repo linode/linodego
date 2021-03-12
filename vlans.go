@@ -84,7 +84,6 @@ func (c *Client) ListVLANs(ctx context.Context, opts *ListOptions) ([]VLAN, erro
 	response := VLANsPagedResponse{}
 
 	err := c.listHelper(ctx, &response, opts)
-
 	if err != nil {
 		return nil, err
 	}
@@ -111,7 +110,6 @@ func (c *Client) CreateVLAN(ctx context.Context, createOpts VLANCreateOptions) (
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Post(e))
-
 	if err != nil {
 		return nil, err
 	}
@@ -170,7 +168,6 @@ func (c *Client) AttachVLAN(ctx context.Context, id int, opts VLANAttachOptions)
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Post(e))
-
 	if err != nil {
 		return nil, err
 	}
@@ -197,7 +194,6 @@ func (c *Client) DetachVLAN(ctx context.Context, id int, opts VLANDetachOptions)
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Post(e))
-
 	if err != nil {
 		return nil, err
 	}

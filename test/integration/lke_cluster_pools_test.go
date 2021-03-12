@@ -7,18 +7,16 @@ import (
 	"github.com/linode/linodego"
 )
 
-var (
-	testLKEClusterPoolCreateOpts = linodego.LKEClusterPoolCreateOptions{
-		Type:  "g6-standard-2",
-		Count: 1,
-		Disks: []linodego.LKEClusterPoolDisk{
-			{
-				Size: 1000,
-				Type: "ext4",
-			},
+var testLKEClusterPoolCreateOpts = linodego.LKEClusterPoolCreateOptions{
+	Type:  "g6-standard-2",
+	Count: 1,
+	Disks: []linodego.LKEClusterPoolDisk{
+		{
+			Size: 1000,
+			Type: "ext4",
 		},
-	}
-)
+	},
+}
 
 func TestGetLKEClusterPool_missing(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestGetLKEClusterPool_missing")

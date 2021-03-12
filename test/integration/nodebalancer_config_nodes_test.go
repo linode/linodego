@@ -48,7 +48,6 @@ func TestUpdateNodeBalancerNode(t *testing.T) {
 		Label:  testNodeLabel + "_r",
 	}
 	nodeUpdated, err := client.UpdateNodeBalancerNode(context.Background(), nodebalancer.ID, config.ID, node.ID, updateOpts)
-
 	if err != nil {
 		t.Errorf("Error updating NodeBalancer Node, %s", err)
 	}
@@ -79,7 +78,7 @@ func TestListNodeBalancerNodes(t *testing.T) {
 }
 
 func TestListNodeBalancerNodesMultiplePages(t *testing.T) {
-	//TODO: replace hand crafted fixtures with unit tests
+	// TODO: replace hand crafted fixtures with unit tests
 	// This fixture was hand-crafted to render an empty page 1 result, with a single result on page 2
 	// "results:1,data:[],page:1,pages:2"  .. "results:1,data[{...}],page:2,pages:2"
 	client, nodebalancer, config, _, teardown, err := setupNodeBalancerNode(t, "fixtures/TestListNodeBalancerNodesMultiplePages")
