@@ -204,7 +204,6 @@ func (c *Client) CreateLKECluster(ctx context.Context, createOpts LKEClusterCrea
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Post(e))
-
 	if err != nil {
 		return nil, err
 	}
@@ -231,7 +230,6 @@ func (c *Client) UpdateLKECluster(ctx context.Context, id int, updateOpts LKEClu
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Put(e))
-
 	if err != nil {
 		return nil, err
 	}

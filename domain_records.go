@@ -106,7 +106,6 @@ func (resp *DomainRecordsPagedResponse) appendData(r *DomainRecordsPagedResponse
 func (c *Client) ListDomainRecords(ctx context.Context, domainID int, opts *ListOptions) ([]DomainRecord, error) {
 	response := DomainRecordsPagedResponse{}
 	err := c.listHelperWithID(ctx, &response, domainID, opts)
-
 	if err != nil {
 		return nil, err
 	}
@@ -123,7 +122,6 @@ func (c *Client) GetDomainRecord(ctx context.Context, domainID int, id int) (*Do
 
 	e = fmt.Sprintf("%s/%d", e, id)
 	r, err := coupleAPIErrors(c.R(ctx).SetResult(&DomainRecord{}).Get(e))
-
 	if err != nil {
 		return nil, err
 	}
@@ -136,7 +134,6 @@ func (c *Client) CreateDomainRecord(ctx context.Context, domainID int, domainrec
 	var body string
 
 	e, err := c.DomainRecords.endpointWithParams(domainID)
-
 	if err != nil {
 		return nil, err
 	}
@@ -153,7 +150,6 @@ func (c *Client) CreateDomainRecord(ctx context.Context, domainID int, domainrec
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Post(e))
-
 	if err != nil {
 		return nil, err
 	}
@@ -166,7 +162,6 @@ func (c *Client) UpdateDomainRecord(ctx context.Context, domainID int, id int, d
 	var body string
 
 	e, err := c.DomainRecords.endpointWithParams(domainID)
-
 	if err != nil {
 		return nil, err
 	}
@@ -184,7 +179,6 @@ func (c *Client) UpdateDomainRecord(ctx context.Context, domainID int, id int, d
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Put(e))
-
 	if err != nil {
 		return nil, err
 	}

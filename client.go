@@ -36,9 +36,7 @@ const (
 	DefaultUserAgent = "linodego https://github.com/linode/linodego"
 )
 
-var (
-	envDebug = false
-)
+var envDebug = false
 
 // Client is a wrapper around the Resty client
 type Client struct {
@@ -393,7 +391,7 @@ func copyBool(bPtr *bool) *bool {
 		return nil
 	}
 
-	var t = *bPtr
+	t := *bPtr
 
 	return &t
 }
@@ -403,7 +401,7 @@ func copyInt(iPtr *int) *int {
 		return nil
 	}
 
-	var t = *iPtr
+	t := *iPtr
 
 	return &t
 }
@@ -413,7 +411,7 @@ func copyString(sPtr *string) *string {
 		return nil
 	}
 
-	var t = *sPtr
+	t := *sPtr
 
 	return &t
 }
@@ -423,7 +421,7 @@ func copyTime(tPtr *time.Time) *time.Time {
 		return nil
 	}
 
-	var t = *tPtr
+	t := *tPtr
 
 	return &t
 }

@@ -24,7 +24,6 @@ func TestListEvents(t *testing.T) {
 
 	filter := fmt.Sprintf("{\"entity.id\":%d, \"entity.type\": \"linode\"}", instance.ID)
 	events, err := client.ListEvents(context.Background(), &linodego.ListOptions{Filter: filter})
-
 	if err != nil {
 		t.Errorf("Error getting Events, expected struct, got error %v", err)
 	}

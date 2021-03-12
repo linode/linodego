@@ -2,10 +2,9 @@ package integration
 
 import (
 	"context"
+	"testing"
 
 	. "github.com/linode/linodego"
-
-	"testing"
 )
 
 func TestGetPayment_missing(t *testing.T) {
@@ -31,7 +30,6 @@ func TestGetPayment_found(t *testing.T) {
 	defer teardown()
 
 	p, err := client.ListPayments(context.Background(), nil)
-
 	if err != nil {
 		t.Errorf("Error listing payments, expected struct, got error %v", err)
 	}
@@ -52,6 +50,7 @@ func TestGetPayment_found(t *testing.T) {
 
 	assertDateSet(t, i.Date)
 }
+
 func TestListPayments(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestListPayments")
 	defer teardown()

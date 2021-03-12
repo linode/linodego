@@ -2,11 +2,10 @@ package integration
 
 import (
 	"context"
+	"testing"
 
 	"github.com/linode/linodego"
 	. "github.com/linode/linodego"
-
-	"testing"
 )
 
 func TestGetOAuthClient_missing(t *testing.T) {
@@ -48,6 +47,7 @@ func TestGetOAuthClient_found(t *testing.T) {
 		t.Errorf("Expected a specific oauthClient, but got a different one %v", i)
 	}
 }
+
 func TestListOAuthClients(t *testing.T) {
 	createOpts := linodego.OAuthClientCreateOptions{
 		Public:      true,

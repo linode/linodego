@@ -204,7 +204,6 @@ func (resp *InstancesPagedResponse) appendData(r *InstancesPagedResponse) {
 func (c *Client) ListInstances(ctx context.Context, opts *ListOptions) ([]Instance, error) {
 	response := InstancesPagedResponse{}
 	err := c.listHelper(ctx, &response, opts)
-
 	if err != nil {
 		return nil, err
 	}
@@ -262,7 +261,6 @@ func (c *Client) CreateInstance(ctx context.Context, instance InstanceCreateOpti
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Post(e))
-
 	if err != nil {
 		return nil, err
 	}
@@ -289,7 +287,6 @@ func (c *Client) UpdateInstance(ctx context.Context, id int, instance InstanceUp
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Put(e))
-
 	if err != nil {
 		return nil, err
 	}
@@ -360,7 +357,6 @@ func (c *Client) CloneInstance(ctx context.Context, id int, options InstanceClon
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Post(e))
-
 	if err != nil {
 		return nil, err
 	}

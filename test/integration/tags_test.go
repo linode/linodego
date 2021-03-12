@@ -2,10 +2,9 @@ package integration
 
 import (
 	"context"
+	"testing"
 
 	. "github.com/linode/linodego"
-
-	"testing"
 )
 
 func TestCreateTag(t *testing.T) {

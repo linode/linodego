@@ -10,11 +10,9 @@ import (
 	. "github.com/linode/linodego"
 )
 
-var (
-	testBasicObjectStorageKeyCreateOpts = ObjectStorageKeyCreateOptions{
-		Label: label,
-	}
-)
+var testBasicObjectStorageKeyCreateOpts = ObjectStorageKeyCreateOptions{
+	Label: label,
+}
 
 func TestGetObjectStorageKey_missing(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestGetObjectStorageKey_missing")
