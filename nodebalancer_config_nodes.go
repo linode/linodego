@@ -95,7 +95,6 @@ func (resp *NodeBalancerNodesPagedResponse) appendData(r *NodeBalancerNodesPaged
 func (c *Client) ListNodeBalancerNodes(ctx context.Context, nodebalancerID int, configID int, opts *ListOptions) ([]NodeBalancerNode, error) {
 	response := NodeBalancerNodesPagedResponse{}
 	err := c.listHelperWithTwoIDs(ctx, &response, nodebalancerID, configID, opts)
-
 	if err != nil {
 		return nil, err
 	}
@@ -135,7 +134,6 @@ func (c *Client) CreateNodeBalancerNode(ctx context.Context, nodebalancerID int,
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Post(e))
-
 	if err != nil {
 		return nil, err
 	}
@@ -162,7 +160,6 @@ func (c *Client) UpdateNodeBalancerNode(ctx context.Context, nodebalancerID int,
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Put(e))
-
 	if err != nil {
 		return nil, err
 	}

@@ -88,7 +88,6 @@ func (resp *ImagesPagedResponse) appendData(r *ImagesPagedResponse) {
 func (c *Client) ListImages(ctx context.Context, opts *ListOptions) ([]Image, error) {
 	response := ImagesPagedResponse{}
 	err := c.listHelper(ctx, &response, opts)
-
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +103,6 @@ func (c *Client) GetImage(ctx context.Context, id string) (*Image, error) {
 
 	e = fmt.Sprintf("%s/%s", e, id)
 	r, err := coupleAPIErrors(c.Images.R(ctx).Get(e))
-
 	if err != nil {
 		return nil, err
 	}
@@ -116,7 +114,6 @@ func (c *Client) CreateImage(ctx context.Context, createOpts ImageCreateOptions)
 	var body string
 
 	e, err := c.Images.Endpoint()
-
 	if err != nil {
 		return nil, err
 	}
@@ -132,7 +129,6 @@ func (c *Client) CreateImage(ctx context.Context, createOpts ImageCreateOptions)
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Post(e))
-
 	if err != nil {
 		return nil, err
 	}
@@ -161,7 +157,6 @@ func (c *Client) UpdateImage(ctx context.Context, id string, updateOpts ImageUpd
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Put(e))
-
 	if err != nil {
 		return nil, err
 	}

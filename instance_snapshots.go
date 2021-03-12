@@ -93,7 +93,6 @@ func (c *Client) GetInstanceSnapshot(ctx context.Context, linodeID int, snapshot
 	}
 	e = fmt.Sprintf("%s/%d", e, snapshotID)
 	r, err := coupleAPIErrors(c.R(ctx).SetResult(&InstanceSnapshot{}).Get(e))
-
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +107,6 @@ func (c *Client) CreateInstanceSnapshot(ctx context.Context, linodeID int, label
 	}
 	body := string(o)
 	e, err := c.InstanceSnapshots.endpointWithParams(linodeID)
-
 	if err != nil {
 		return nil, err
 	}
@@ -117,7 +115,6 @@ func (c *Client) CreateInstanceSnapshot(ctx context.Context, linodeID int, label
 		SetBody(body).
 		SetResult(&InstanceSnapshot{}).
 		Post(e))
-
 	if err != nil {
 		return nil, err
 	}
@@ -135,7 +132,6 @@ func (c *Client) GetInstanceBackups(ctx context.Context, linodeID int) (*Instanc
 	r, err := coupleAPIErrors(c.R(ctx).
 		SetResult(&InstanceBackupsResponse{}).
 		Get(e))
-
 	if err != nil {
 		return nil, err
 	}

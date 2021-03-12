@@ -128,7 +128,6 @@ func (c *Client) CreateLKEClusterPool(ctx context.Context, clusterID int, create
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Post(e))
-
 	if err != nil {
 		return nil, err
 	}
@@ -155,7 +154,6 @@ func (c *Client) UpdateLKEClusterPool(ctx context.Context, clusterID, id int, up
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Put(e))
-
 	if err != nil {
 		return nil, err
 	}

@@ -206,7 +206,6 @@ func (resp *DomainsPagedResponse) appendData(r *DomainsPagedResponse) {
 func (c *Client) ListDomains(ctx context.Context, opts *ListOptions) ([]Domain, error) {
 	response := DomainsPagedResponse{}
 	err := c.listHelper(ctx, &response, opts)
-
 	if err != nil {
 		return nil, err
 	}
@@ -223,7 +222,6 @@ func (c *Client) GetDomain(ctx context.Context, id int) (*Domain, error) {
 
 	e = fmt.Sprintf("%s/%d", e, id)
 	r, err := coupleAPIErrors(c.R(ctx).SetResult(&Domain{}).Get(e))
-
 	if err != nil {
 		return nil, err
 	}
@@ -236,7 +234,6 @@ func (c *Client) CreateDomain(ctx context.Context, domain DomainCreateOptions) (
 	var body string
 
 	e, err := c.Domains.Endpoint()
-
 	if err != nil {
 		return nil, err
 	}
@@ -253,7 +250,6 @@ func (c *Client) CreateDomain(ctx context.Context, domain DomainCreateOptions) (
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Post(e))
-
 	if err != nil {
 		return nil, err
 	}
@@ -266,7 +262,6 @@ func (c *Client) UpdateDomain(ctx context.Context, id int, domain DomainUpdateOp
 	var body string
 
 	e, err := c.Domains.Endpoint()
-
 	if err != nil {
 		return nil, err
 	}
@@ -284,7 +279,6 @@ func (c *Client) UpdateDomain(ctx context.Context, id int, domain DomainUpdateOp
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Put(e))
-
 	if err != nil {
 		return nil, err
 	}
