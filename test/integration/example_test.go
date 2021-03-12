@@ -185,6 +185,7 @@ func ExampleClient_GetImage_missing() {
 	// Response was: 404 NOT FOUND
 	// Error was: [404] Not found
 }
+
 func ExampleClient_ListImages_all() {
 	// Example readers, Ignore this bit of setup code needed to record test fixtures
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListImages_all")

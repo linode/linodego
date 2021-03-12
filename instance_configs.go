@@ -165,7 +165,6 @@ func (resp *InstanceConfigsPagedResponse) appendData(r *InstanceConfigsPagedResp
 func (c *Client) ListInstanceConfigs(ctx context.Context, linodeID int, opts *ListOptions) ([]InstanceConfig, error) {
 	response := InstanceConfigsPagedResponse{}
 	err := c.listHelperWithID(ctx, &response, linodeID, opts)
-
 	if err != nil {
 		return nil, err
 	}
@@ -180,7 +179,6 @@ func (c *Client) GetInstanceConfig(ctx context.Context, linodeID int, configID i
 	}
 	e = fmt.Sprintf("%s/%d", e, configID)
 	r, err := coupleAPIErrors(c.R(ctx).SetResult(&InstanceConfig{}).Get(e))
-
 	if err != nil {
 		return nil, err
 	}
@@ -191,7 +189,6 @@ func (c *Client) GetInstanceConfig(ctx context.Context, linodeID int, configID i
 func (c *Client) CreateInstanceConfig(ctx context.Context, linodeID int, createOpts InstanceConfigCreateOptions) (*InstanceConfig, error) {
 	var body string
 	e, err := c.InstanceConfigs.endpointWithParams(linodeID)
-
 	if err != nil {
 		return nil, err
 	}
@@ -207,7 +204,6 @@ func (c *Client) CreateInstanceConfig(ctx context.Context, linodeID int, createO
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Post(e))
-
 	if err != nil {
 		return nil, err
 	}
@@ -219,7 +215,6 @@ func (c *Client) CreateInstanceConfig(ctx context.Context, linodeID int, createO
 func (c *Client) UpdateInstanceConfig(ctx context.Context, linodeID int, configID int, updateOpts InstanceConfigUpdateOptions) (*InstanceConfig, error) {
 	var body string
 	e, err := c.InstanceConfigs.endpointWithParams(linodeID)
-
 	if err != nil {
 		return nil, err
 	}
@@ -235,7 +230,6 @@ func (c *Client) UpdateInstanceConfig(ctx context.Context, linodeID int, configI
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Put(e))
-
 	if err != nil {
 		return nil, err
 	}

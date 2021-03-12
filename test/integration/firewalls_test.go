@@ -10,13 +10,11 @@ import (
 	"github.com/linode/linodego"
 )
 
-var (
-	testFirewallCreateOpts = linodego.FirewallCreateOptions{
-		Label: "label",
-		Rules: testFirewallRuleSet, // borrowed from firewall_rules.test.go
-		Tags:  []string{"testing"},
-	}
-)
+var testFirewallCreateOpts = linodego.FirewallCreateOptions{
+	Label: "label",
+	Rules: testFirewallRuleSet, // borrowed from firewall_rules.test.go
+	Tags:  []string{"testing"},
+}
 
 // ignoreNetworkAddresses negates comparing IP addresses. Because of fixture sanitization,
 // these addresses will be changed to bogus values when running tests.
@@ -53,8 +51,8 @@ func TestGetFirewall(t *testing.T) {
 	rules := linodego.FirewallRuleSet{
 		Inbound: []linodego.FirewallRule{
 			{
-				Label: "test-label",
-				Action: "DROP",
+				Label:    "test-label",
+				Action:   "DROP",
 				Protocol: linodego.ICMP,
 				Addresses: linodego.NetworkAddresses{
 					IPv4: &[]string{"0.0.0.0/0"},
@@ -62,7 +60,7 @@ func TestGetFirewall(t *testing.T) {
 				},
 			},
 		},
-		InboundPolicy: "ACCEPT",
+		InboundPolicy:  "ACCEPT",
 		OutboundPolicy: "ACCEPT",
 	}
 	client, created, teardown, err := setupFirewall(t, []firewallModifier{
@@ -92,8 +90,8 @@ func TestUpdateFirewall(t *testing.T) {
 		InboundPolicy: "ACCEPT",
 		Inbound: []linodego.FirewallRule{
 			{
-				Label: "test-label",
-				Action: "DROP",
+				Label:    "test-label",
+				Action:   "DROP",
 				Protocol: linodego.ICMP,
 				Addresses: linodego.NetworkAddresses{
 					IPv4: &[]string{"0.0.0.0/0"},

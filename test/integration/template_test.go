@@ -4,10 +4,9 @@ package integration
 
 import (
 	"context"
+	"testing"
 
 	. "github.com/linode/linodego"
-
-	"testing"
 )
 
 func TestGetTemplate_missing(t *testing.T) {
@@ -40,6 +39,7 @@ func TestGetTemplate_found(t *testing.T) {
 		t.Errorf("Expected a specific template, but got a different one %v", i)
 	}
 }
+
 func TestListTemplates(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestListTemplates")
 	defer teardown()

@@ -3,19 +3,16 @@ package integration
 import (
 	"context"
 	"fmt"
+	"testing"
 	"time"
 
 	. "github.com/linode/linodego"
-
-	"testing"
 )
 
-var (
-	testObjectStorageBucketCreateOpts = ObjectStorageBucketCreateOptions{
-		Cluster: "us-east-1",
-		Label:   fmt.Sprintf("linodego-test-bucket-%d", time.Now().UnixNano()),
-	}
-)
+var testObjectStorageBucketCreateOpts = ObjectStorageBucketCreateOptions{
+	Cluster: "us-east-1",
+	Label:   fmt.Sprintf("linodego-test-bucket-%d", time.Now().UnixNano()),
+}
 
 func TestCreateObjectStorageBucket(t *testing.T) {
 	_, bucket, teardown, err := setupObjectStorageBucket(t, "fixtures/TestCreateObjectStorageBucket")
@@ -79,6 +76,7 @@ func TestGetObjectStorageBucket_found(t *testing.T) {
 		t.Errorf("Object Storage Bucket did not match CreateOptions")
 	}
 }
+
 func TestListObjectStorageBuckets(t *testing.T) {
 	client, _, teardown, err := setupObjectStorageBucket(t, "fixtures/TestListObjectStorageBucket")
 	defer teardown()
@@ -100,7 +98,6 @@ func setupObjectStorageBucket(t *testing.T, fixturesYaml string) (*Client, *Obje
 
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	bucket, err := client.CreateObjectStorageBucket(context.Background(), testObjectStorageBucketCreateOpts)
-
 	if err != nil {
 		t.Errorf("Error creating test Bucket: %s", err)
 	}

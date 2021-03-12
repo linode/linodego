@@ -35,7 +35,6 @@ func (c *Client) GetAccount(ctx context.Context) (*Account, error) {
 	}
 
 	r, err := coupleAPIErrors(c.R(ctx).SetResult(&Account{}).Get(e))
-
 	if err != nil {
 		return nil, err
 	}

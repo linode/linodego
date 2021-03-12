@@ -68,7 +68,6 @@ func (resp *ObjectStorageBucketsPagedResponse) appendData(r *ObjectStorageBucket
 func (c *Client) ListObjectStorageBuckets(ctx context.Context, opts *ListOptions) ([]ObjectStorageBucket, error) {
 	response := ObjectStorageBucketsPagedResponse{}
 	err := c.listHelper(ctx, &response, opts)
-
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +107,6 @@ func (c *Client) CreateObjectStorageBucket(ctx context.Context, createOpts Objec
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Post(e))
-
 	if err != nil {
 		return nil, err
 	}

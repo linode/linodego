@@ -2,11 +2,10 @@ package integration
 
 import (
 	"context"
+	"testing"
 
 	"github.com/linode/linodego"
 	. "github.com/linode/linodego"
-
-	"testing"
 )
 
 const usernamePrefix = "linodegotest-"

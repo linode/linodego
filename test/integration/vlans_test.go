@@ -7,12 +7,10 @@ import (
 	"github.com/linode/linodego"
 )
 
-var (
-	testVLANCreateOpts = linodego.VLANCreateOptions{
-		Description: "linodego-testing",
-		Region:      "ca-central",
-	}
-)
+var testVLANCreateOpts = linodego.VLANCreateOptions{
+	Description: "linodego-testing",
+	Region:      "ca-central",
+}
 
 type vlanModifier func(*linodego.VLANCreateOptions)
 

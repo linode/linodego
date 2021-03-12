@@ -8,13 +8,11 @@ import (
 	"github.com/linode/linodego"
 )
 
-var (
-	testDomainRecordCreateOpts = linodego.DomainRecordCreateOptions{
-		Target: "127.0.0.1",
-		Type:   linodego.RecordTypeA,
-		Name:   "a",
-	}
-)
+var testDomainRecordCreateOpts = linodego.DomainRecordCreateOptions{
+	Target: "127.0.0.1",
+	Type:   linodego.RecordTypeA,
+	Name:   "a",
+}
 
 func TestCreateDomainRecord(t *testing.T) {
 	_, _, record, teardown, err := setupDomainRecord(t, "fixtures/TestCreateDomainRecord")
@@ -43,7 +41,6 @@ func TestUpdateDomainRecord(t *testing.T) {
 		Name: "renamed",
 	}
 	recordUpdated, err := client.UpdateDomainRecord(context.Background(), domain.ID, record.ID, updateOpts)
-
 	if err != nil {
 		t.Errorf("Error updating domain record, %s", err)
 	}

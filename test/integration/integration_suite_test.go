@@ -16,12 +16,16 @@ import (
 	"k8s.io/client-go/transport"
 )
 
-var testingMode = recorder.ModeDisabled
-var debugAPI = false
-var validTestAPIKey = "NOTANAPIKEY"
+var (
+	testingMode     = recorder.ModeDisabled
+	debugAPI        = false
+	validTestAPIKey = "NOTANAPIKEY"
+)
 
-var testingPollDuration = time.Duration(15000)
-var testingMaxRetryTime = time.Duration(30) * time.Second
+var (
+	testingPollDuration = time.Duration(15000)
+	testingMaxRetryTime = time.Duration(30) * time.Second
+)
 
 func init() {
 	if apiToken, ok := os.LookupEnv("LINODE_TOKEN"); ok {
