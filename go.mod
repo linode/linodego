@@ -6,4 +6,6 @@ require (
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
 )
 
-go 1.15
+go 1.16
+
+retract v1.0.0 // Accidental branch push
