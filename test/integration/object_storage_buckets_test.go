@@ -10,8 +10,8 @@ import (
 )
 
 var testObjectStorageBucketCreateOpts = ObjectStorageBucketCreateOptions{
-	Cluster: "us-east-1",
-	Label:   fmt.Sprintf("linodego-test-bucket-%d", time.Now().UnixNano()),
+	Cluster:     "us-east-1",
+	Label:       fmt.Sprintf("linodego-test-bucket-%d", time.Now().UnixNano()),
 }
 
 func TestCreateObjectStorageBucket(t *testing.T) {
