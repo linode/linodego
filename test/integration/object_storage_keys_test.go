@@ -107,7 +107,7 @@ func TestListObjectStorageKeys(t *testing.T) {
 }
 
 func TestLimitedObjectStorageKeys(t *testing.T) {
-	_, bucket, teardown, err := setupObjectStorageBucket(t, "fixtures/TestLimitedObjectStorageKeys_bucket")
+	_, bucket, teardown, err := setupObjectStorageBucket(t, nil, "fixtures/TestLimitedObjectStorageKeys_bucket")
 	defer teardown()
 
 	createOpts := testBasicObjectStorageKeyCreateOpts
