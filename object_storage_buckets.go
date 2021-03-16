@@ -42,7 +42,21 @@ func (i *ObjectStorageBucket) UnmarshalJSON(b []byte) error {
 type ObjectStorageBucketCreateOptions struct {
 	Cluster string `json:"cluster"`
 	Label   string `json:"label"`
+
+	ACL         ObjectStorageACL `json:"acl,omitempty"`
+	CorsEnabled *bool            `json:"cors_enabled,omitempty"`
 }
+
+// ObjectStorageACL options start with ACL and include all known ACL types
+type ObjectStorageACL string
+
+// ObjectStorageACL options represent the access control level of a bucket.
+const (
+	ACLPrivate           ObjectStorageACL = "private"
+	ACLPublicRead        ObjectStorageACL = "public-read"
+	ACLAuthenticatedRead ObjectStorageACL = "authenticated-read"
+	ACLPublicReadWrite   ObjectStorageACL = "public-read-write"
+)
 
 // ObjectStorageBucketsPagedResponse represents a paginated ObjectStorageBucket API response
 type ObjectStorageBucketsPagedResponse struct {
