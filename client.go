@@ -212,7 +212,6 @@ func (c *Client) SetRetryCount(count int) *Client {
 // Affects all WaitFor* functions and retries.
 func (c *Client) SetPollDelay(delay time.Duration) *Client {
 	c.millisecondsPerPoll = delay
-	c.resty.SetRetryWaitTime(delay * time.Millisecond)
 	return c
 }
 
@@ -265,6 +264,7 @@ func NewClient(hc *http.Client) (client Client) {
 	}
 
 	client.
+		SetRetryWaitTime((1000 * APISecondsPerPoll) * time.Millisecond).
 		SetPollDelay(1000 * APISecondsPerPoll).
 		SetRetries().
 		SetDebug(envDebug)
