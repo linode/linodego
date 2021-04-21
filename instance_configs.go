@@ -11,19 +11,20 @@ import (
 
 // InstanceConfig represents all of the settings that control the boot and run configuration of a Linode Instance
 type InstanceConfig struct {
-	ID          int                      `json:"id"`
-	Label       string                   `json:"label"`
-	Comments    string                   `json:"comments"`
-	Devices     *InstanceConfigDeviceMap `json:"devices"`
-	Helpers     *InstanceConfigHelpers   `json:"helpers"`
-	MemoryLimit int                      `json:"memory_limit"`
-	Kernel      string                   `json:"kernel"`
-	InitRD      *int                     `json:"init_rd"`
-	RootDevice  string                   `json:"root_device"`
-	RunLevel    string                   `json:"run_level"`
-	VirtMode    string                   `json:"virt_mode"`
-	Created     *time.Time               `json:"-"`
-	Updated     *time.Time               `json:"-"`
+	ID          int                       `json:"id"`
+	Label       string                    `json:"label"`
+	Comments    string                    `json:"comments"`
+	Devices     *InstanceConfigDeviceMap  `json:"devices"`
+	Helpers     *InstanceConfigHelpers    `json:"helpers"`
+	Interfaces  []InstanceConfigInterface `json:"interfaces"`
+	MemoryLimit int                       `json:"memory_limit"`
+	Kernel      string                    `json:"kernel"`
+	InitRD      *int                      `json:"init_rd"`
+	RootDevice  string                    `json:"root_device"`
+	RunLevel    string                    `json:"run_level"`
+	VirtMode    string                    `json:"virt_mode"`
+	Created     *time.Time                `json:"-"`
+	Updated     *time.Time                `json:"-"`
 }
 
 // InstanceConfigDevice contains either the DiskID or VolumeID assigned to a Config Device
@@ -53,6 +54,21 @@ type InstanceConfigHelpers struct {
 	DevTmpFsAutomount bool `json:"devtmpfs_automount"`
 }
 
+// ConfigInterfacePurpose options start with InterfacePurpose and include all known interface purpose types
+type ConfigInterfacePurpose string
+
+const (
+	InterfacePurposePublic ConfigInterfacePurpose = "public"
+	InterfacePurposeVLAN   ConfigInterfacePurpose = "vlan"
+)
+
+// InstanceConfigInterface contains information about a configuration's network interface
+type InstanceConfigInterface struct {
+	IPAMAddress string                 `json:"ipam_address"`
+	Label       string                 `json:"label"`
+	Purpose     ConfigInterfacePurpose `json:"purpose"`
+}
+
 // InstanceConfigsPagedResponse represents a paginated InstanceConfig API response
 type InstanceConfigsPagedResponse struct {
 	*PageOptions
@@ -61,24 +77,26 @@ type InstanceConfigsPagedResponse struct {
 
 // InstanceConfigCreateOptions are InstanceConfig settings that can be used at creation
 type InstanceConfigCreateOptions struct {
-	Label       string                  `json:"label,omitempty"`
-	Comments    string                  `json:"comments,omitempty"`
-	Devices     InstanceConfigDeviceMap `json:"devices"`
-	Helpers     *InstanceConfigHelpers  `json:"helpers,omitempty"`
-	MemoryLimit int                     `json:"memory_limit,omitempty"`
-	Kernel      string                  `json:"kernel,omitempty"`
-	InitRD      int                     `json:"init_rd,omitempty"`
-	RootDevice  *string                 `json:"root_device,omitempty"`
-	RunLevel    string                  `json:"run_level,omitempty"`
-	VirtMode    string                  `json:"virt_mode,omitempty"`
+	Label       string                    `json:"label,omitempty"`
+	Comments    string                    `json:"comments,omitempty"`
+	Devices     InstanceConfigDeviceMap   `json:"devices"`
+	Helpers     *InstanceConfigHelpers    `json:"helpers,omitempty"`
+	Interfaces  []InstanceConfigInterface `json:"interfaces,omitempty"`
+	MemoryLimit int                       `json:"memory_limit,omitempty"`
+	Kernel      string                    `json:"kernel,omitempty"`
+	InitRD      int                       `json:"init_rd,omitempty"`
+	RootDevice  *string                   `json:"root_device,omitempty"`
+	RunLevel    string                    `json:"run_level,omitempty"`
+	VirtMode    string                    `json:"virt_mode,omitempty"`
 }
 
 // InstanceConfigUpdateOptions are InstanceConfig settings that can be used in updates
 type InstanceConfigUpdateOptions struct {
-	Label    string                   `json:"label,omitempty"`
-	Comments string                   `json:"comments"`
-	Devices  *InstanceConfigDeviceMap `json:"devices,omitempty"`
-	Helpers  *InstanceConfigHelpers   `json:"helpers,omitempty"`
+	Label      string                    `json:"label,omitempty"`
+	Comments   string                    `json:"comments"`
+	Devices    *InstanceConfigDeviceMap  `json:"devices,omitempty"`
+	Helpers    *InstanceConfigHelpers    `json:"helpers,omitempty"`
+	Interfaces []InstanceConfigInterface `json:"interfaces,omitempty"`
 	// MemoryLimit 0 means unlimitted, this is not omitted
 	MemoryLimit int    `json:"memory_limit"`
 	Kernel      string `json:"kernel,omitempty"`
@@ -122,6 +140,7 @@ func (i InstanceConfig) GetCreateOptions() InstanceConfigCreateOptions {
 		Comments:    i.Comments,
 		Devices:     *i.Devices,
 		Helpers:     i.Helpers,
+		Interfaces:  i.Interfaces,
 		MemoryLimit: i.MemoryLimit,
 		Kernel:      i.Kernel,
 		InitRD:      initrd,
@@ -138,6 +157,7 @@ func (i InstanceConfig) GetUpdateOptions() InstanceConfigUpdateOptions {
 		Comments:    i.Comments,
 		Devices:     i.Devices,
 		Helpers:     i.Helpers,
+		Interfaces:  i.Interfaces,
 		MemoryLimit: i.MemoryLimit,
 		Kernel:      i.Kernel,
 		InitRD:      copyInt(i.InitRD),

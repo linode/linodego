@@ -2,174 +2,90 @@ package integration
 
 import (
 	"context"
+	"fmt"
 	"testing"
 
 	"github.com/linode/linodego"
 )
 
-var testVLANCreateOpts = linodego.VLANCreateOptions{
-	Description: "linodego-testing",
-	Region:      "ca-central",
-}
-
-type vlanModifier func(*linodego.VLANCreateOptions)
-
 func TestListVLANs(t *testing.T) {
-	client, _, teardown, err := setupVLAN(t, []vlanModifier{}, "fixtures/TestListVLAN")
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer teardown()
+	instancePrefix :=  "linodego-testing-" + randString(12, lowerBytes, upperBytes)
+	vlanName := "linodego-really-cool-vlan-" + randString(12, lowerBytes, upperBytes)
 
-	vlans, err := client.ListVLANs(context.TODO(), nil)
-	if err != nil {
-		t.Fatal(err)
+	client, fixturesTeardown := createTestClient(t, "fixtures/TestListVLAN")
+	defer fixturesTeardown()
+
+	var instances []*linodego.Instance
+	for i := 0; i < 2; i++ {
+		instance, instanceTeardown, err := createVLANInstance(t, client, fmt.Sprintf("%s-%d", instancePrefix, i), vlanName)
+		if err != nil {
+			t.Fatal(err)
+		}
+		defer instanceTeardown()
+
+		instances = append(instances, instance)
 	}
 
-	if len(vlans) == 0 {
+	for _, instance := range instances {
+		if _, err := client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceRunning, 240); err != nil {
+			t.Error(err)
+		}
+	}
+
+	vlans, err := client.ListVLANs(context.TODO(), &linodego.ListOptions{
+		Filter: fmt.Sprintf("{\"label\": \"%s\"}", vlanName),
+	})
+	if err != nil {
+		t.Error(err)
+	}
+
+	if len(vlans) < 1 {
 		t.Error("expected list of vlans but got none")
 	}
-}
 
-func TestGetVLAN(t *testing.T) {
-	description := "testing123"
-	cidrBlock := "0.0.0.0/0"
-
-	client, created, teardown, err := setupVLAN(t, []vlanModifier{
-		func(opts *linodego.VLANCreateOptions) {
-			opts.Description = description
-			opts.CIDRBlock = cidrBlock
-		},
-	}, "fixtures/TestGetVLAN")
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer teardown()
-
-	vlan, err := client.GetVLAN(context.TODO(), created.ID)
-	if err != nil {
-		t.Error(err)
-	}
-
-	if len(vlan.Linodes) != 0 {
-		t.Error("expected no linodes to be attached to vlan")
-	}
-	if vlan.CIDRBlock != cidrBlock {
-		t.Errorf("expected cidr block to be '%s'; got '%s'", cidrBlock, vlan.CIDRBlock)
-	}
-	if vlan.Description != description {
-		t.Errorf("expected description to be '%s'; got '%s'", description, vlan.Description)
-	}
-}
-
-func TestAttachVLAN(t *testing.T) {
-	client, vlan, teardown, err := setupVLAN(t, []vlanModifier{}, "fixtures/TestAttachVLAN")
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer teardown()
-
-	instance, err := createInstance(t, client, func(opts *linodego.InstanceCreateOptions) {
-		opts.Region = "ca-central"
-	})
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer func() {
-		if err := client.DeleteInstance(context.TODO(), instance.ID); err != nil {
-			t.Error(err)
-		}
-	}()
-
-	vlan, err = client.AttachVLAN(context.TODO(), vlan.ID, linodego.VLANAttachOptions{
-		Linodes: []int{instance.ID},
-	})
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if !(len(vlan.Linodes) == 1 && vlan.Linodes[0].ID == instance.ID) {
-		t.Errorf("expected linode %d to have been attached to the vlan", instance.ID)
-	}
-}
-
-func TestDetachVLAN(t *testing.T) {
-	client, fixtureTeardown := createTestClient(t, "fixtures/TestDetachVLAN")
-	defer fixtureTeardown()
-
-	instance, err := createInstance(t, client, func(opts *linodego.InstanceCreateOptions) {
-		opts.Region = "ca-central"
-	})
-	if err != nil {
-		t.Error(err)
-	}
-	teardownInstance := func() {
-		if err := client.DeleteInstance(context.TODO(), instance.ID); err != nil {
-			t.Error(err)
+	for _, instance := range instances {
+		if !vlanHasLinodeID(&vlans[0], instance.ID) {
+			t.Errorf("instance %d not found in vlan", instance.ID)
 		}
 	}
-
-	vlan, teardownVlan, err := createVLAN(t, client, func(opts *linodego.VLANCreateOptions) {
-		opts.Linodes = []int{instance.ID}
-	})
-	if err != nil {
-		defer teardownInstance()
-		t.Error(err)
-	}
-	defer func() {
-		teardownInstance()
-		teardownVlan()
-	}()
-
-	vlan, err = client.GetVLAN(context.TODO(), vlan.ID)
-	if err != nil {
-		t.Error(err)
-	}
-
-	if !(len(vlan.Linodes) == 1 && vlan.Linodes[0].ID == instance.ID) {
-		t.Errorf("expected linode %d to be attached to vlan", instance.ID)
-	}
-
-	if vlan, err = client.DetachVLAN(context.TODO(), vlan.ID, linodego.VLANDetachOptions{
-		Linodes: []int{instance.ID},
-	}); err != nil {
-		t.Error(err)
-	}
-
-	if len(vlan.Linodes) != 0 {
-		t.Errorf("expect linode %d to be detached from vlan", instance.ID)
-	}
 }
 
-func createVLAN(t *testing.T, client *linodego.Client, vlanModifiers ...vlanModifier) (*linodego.VLAN, func(), error) {
+func createVLANInstance(t *testing.T, client *linodego.Client, instanceName, vlanName string) (*linodego.Instance, func(), error) {
 	t.Helper()
 
-	createOpts := testVLANCreateOpts
-	for _, modifier := range vlanModifiers {
-		modifier(&createOpts)
-	}
+	trueBool := true
 
-	vlan, err := client.CreateVLAN(context.TODO(), createOpts)
+	instance, err := createInstance(t, client, func(opts *linodego.InstanceCreateOptions) {
+		opts.Interfaces = []linodego.InstanceConfigInterface{
+			{
+				Label:   vlanName,
+				Purpose: linodego.InterfacePurposeVLAN,
+			},
+		}
+
+		opts.Booted = &trueBool
+		opts.Label = instanceName
+		opts.Region = "us-southeast"
+	})
 	if err != nil {
-		t.Errorf("failed to create vlan: %s", err)
+		return nil, nil, err
 	}
 
 	teardown := func() {
-		if err := client.DeleteVLAN(context.TODO(), vlan.ID); err != nil {
-			t.Errorf("failed to delete vlan: %s", err)
+		if terr := client.DeleteInstance(context.Background(), instance.ID); terr != nil {
+			t.Errorf("Error deleting test Instance: %s", terr)
 		}
 	}
-	return vlan, teardown, nil
+
+	return instance, teardown, err
 }
 
-func setupVLAN(t *testing.T, vlanModifiers []vlanModifier, fixturesYaml string) (*linodego.Client, *linodego.VLAN, func(), error) {
-	t.Helper()
-	client, fixtureTeardown := createTestClient(t, fixturesYaml)
-	vlan, vlanTeardown, err := createVLAN(t, client, vlanModifiers...)
-
-	teardown := func() {
-		vlanTeardown()
-		fixtureTeardown()
+func vlanHasLinodeID(vlan *linodego.VLAN, linodeID int) bool {
+	for _, id := range vlan.Linodes {
+		if id == linodeID {
+			return true
+		}
 	}
-	return client, vlan, teardown, err
+
+	return false
 }
