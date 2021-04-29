@@ -81,7 +81,7 @@ type InstanceConfigCreateOptions struct {
 	Comments    string                    `json:"comments,omitempty"`
 	Devices     InstanceConfigDeviceMap   `json:"devices"`
 	Helpers     *InstanceConfigHelpers    `json:"helpers,omitempty"`
-	Interfaces  []InstanceConfigInterface `json:"interfaces,omitempty"`
+	Interfaces  []InstanceConfigInterface `json:"interfaces"`
 	MemoryLimit int                       `json:"memory_limit,omitempty"`
 	Kernel      string                    `json:"kernel,omitempty"`
 	InitRD      int                       `json:"init_rd,omitempty"`
@@ -96,7 +96,7 @@ type InstanceConfigUpdateOptions struct {
 	Comments   string                    `json:"comments"`
 	Devices    *InstanceConfigDeviceMap  `json:"devices,omitempty"`
 	Helpers    *InstanceConfigHelpers    `json:"helpers,omitempty"`
-	Interfaces []InstanceConfigInterface `json:"interfaces,omitempty"`
+	Interfaces []InstanceConfigInterface `json:"interfaces"`
 	// MemoryLimit 0 means unlimitted, this is not omitted
 	MemoryLimit int    `json:"memory_limit"`
 	Kernel      string `json:"kernel,omitempty"`
