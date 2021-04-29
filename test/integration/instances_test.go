@@ -292,6 +292,16 @@ func TestUpdateInstanceConfigInterfaces(t *testing.T) {
 	if !reflect.DeepEqual(result.Interfaces, updateConfigOpts.Interfaces) {
 		t.Error("failed to update linode interfaces: configs do not match")
 	}
+
+	// Ensure that a nil value will not update interfaces
+	_, err = client.UpdateInstanceConfig(context.Background(), instance.ID, config.ID, linodego.InstanceConfigUpdateOptions{})
+	if err != nil {
+		t.Error(err)
+	}
+
+	if !reflect.DeepEqual(result.Interfaces, updateConfigOpts.Interfaces) {
+		t.Error("failed to update linode interfaces: configs do not match")
+	}
 }
 
 func TestListInstanceVolumes(t *testing.T) {
