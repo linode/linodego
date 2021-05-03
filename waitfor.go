@@ -409,3 +409,30 @@ func (client Client) WaitForEventFinished(ctx context.Context, id interface{}, e
 		}
 	}
 }
+
+// WaitForImageStatus waits for the Image to reach the desired state
+// before returning. It will timeout with an error after timeoutSeconds.
+func (client Client) WaitForImageStatus(ctx context.Context, imageID string, status ImageStatus, timeoutSeconds int) (*Image, error) {
+	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
+	defer cancel()
+
+	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
+	defer ticker.Stop()
+
+	for {
+		select {
+		case <-ticker.C:
+			image, err := client.GetImage(ctx, imageID)
+			if err != nil {
+				return image, err
+			}
+			complete := image.Status == status
+
+			if complete {
+				return image, nil
+			}
+		case <-ctx.Done():
+			return nil, fmt.Errorf("failed to wait for Image %s status %s: %s", imageID, status, ctx.Err())
+		}
+	}
+}
