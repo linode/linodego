@@ -246,10 +246,10 @@ func (c *Client) CreateImageUpload(ctx context.Context, createOpts ImageCreateUp
 
 // UploadImageToURL uploads the given image to the given upload URL
 func (c *Client) UploadImageToURL(ctx context.Context, uploadURL string, image io.Reader) error {
-	// We currently need to create a new resty instance in order to bypass the global transport.
-	// This is due to the S3 rejecting requests with Authorization headers, which are injected
-	// by the client and test suite.
+	// Linode-specific headers do not need to be sent to this endpoint
 	req := resty.New().SetDebug(c.resty.Debug).R().
+		SetContext(ctx).
+		SetContentLength(true).
 		SetHeader("Content-Type", "application/octet-stream").
 		SetBody(image)
 
