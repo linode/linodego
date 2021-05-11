@@ -79,10 +79,10 @@ type DomainCreateOptions struct {
 	RetrySec int `json:"retry_sec,omitempty"`
 
 	// The IP addresses representing the master DNS for this Domain.
-	MasterIPs []string `json:"master_ips,omitempty"`
+	MasterIPs []string `json:"master_ips"`
 
 	// The list of IPs that may perform a zone transfer for this Domain. This is potentially dangerous, and should be set to an empty list unless you intend to use it.
-	AXfrIPs []string `json:"axfr_ips,omitempty"`
+	AXfrIPs []string `json:"axfr_ips"`
 
 	// An array of tags applied to this object. Tags are for organizational purposes only.
 	Tags []string `json:"tags"`
@@ -124,10 +124,10 @@ type DomainUpdateOptions struct {
 	RetrySec int `json:"retry_sec,omitempty"`
 
 	// The IP addresses representing the master DNS for this Domain.
-	MasterIPs []string `json:"master_ips,omitempty"`
+	MasterIPs []string `json:"master_ips"`
 
 	// The list of IPs that may perform a zone transfer for this Domain. This is potentially dangerous, and should be set to an empty list unless you intend to use it.
-	AXfrIPs []string `json:"axfr_ips,omitempty"`
+	AXfrIPs []string `json:"axfr_ips"`
 
 	// An array of tags applied to this object. Tags are for organizational purposes only.
 	Tags []string `json:"tags"`
