@@ -32,8 +32,6 @@ const (
 	APISecondsPerPoll = 3
 	// Maximum wait time for retries
 	APIRetryMaxWaitTime = time.Duration(30) * time.Second
-	// DefaultUserAgent is the default User-Agent sent in HTTP request headers
-	DefaultUserAgent = "linodego https://github.com/linode/linodego"
 )
 
 var envDebug = false
