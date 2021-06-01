@@ -21,6 +21,7 @@ type Stackscript struct {
 	DeploymentsTotal  int               `json:"deployments_total"`
 	DeploymentsActive int               `json:"deployments_active"`
 	IsPublic          bool              `json:"is_public"`
+	Mine              bool              `json:"mine"`
 	Created           *time.Time        `json:"-"`
 	Updated           *time.Time        `json:"-"`
 	RevNote           string            `json:"rev_note"`
