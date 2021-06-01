@@ -2,13 +2,13 @@ package integration
 
 import (
 	"context"
+	"fmt"
 	"testing"
 
 	"github.com/linode/linodego"
 )
 
 var testDomainCreateOpts = linodego.DomainCreateOptions{
-	Domain:   randLabel() + "-linodego-testing.com",
 	Type:     linodego.DomainTypeMaster,
 	SOAEmail: "example@example.com",
 }
@@ -78,10 +78,13 @@ func setupDomain(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 	t.Helper()
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+
 	createOpts := testDomainCreateOpts
+	createOpts.Domain = fmt.Sprintf("%s-linodego-testing.com", randLabel())
+
 	domain, err := client.CreateDomain(context.Background(), createOpts)
 	if err != nil {
-		t.Errorf("Error listing domains, expected struct, got error %v", err)
+		t.Errorf("Error creating domain, expected struct, got error %v", err)
 	}
 
 	teardown := func() {
