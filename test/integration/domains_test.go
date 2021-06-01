@@ -74,6 +74,19 @@ func TestGetDomain(t *testing.T) {
 	}
 }
 
+func TestGetDomainZoneFile(t *testing.T) {
+	client, domain, teardown, err := setupDomain(t, "fixtures/TestGetDomainZoneFile")
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	_, err = client.GetDomainZoneFile(context.Background(), domain.ID)
+	if err != nil {
+		t.Errorf("failed to get domain zone file %d, expected *DomainZoneFile, got error %v", domain.ID, err)
+	}
+}
+
 func setupDomain(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.Domain, func(), error) {
 	t.Helper()
 	var fixtureTeardown func()
