@@ -2,24 +2,19 @@
 version: 1
 interactions:
 - request:
-    body: '{"domain":"7s73knsgh1t4vkia5736d8b4b6z0015g-linodego-testing.com","type":"master","soa_email":"example@example.com"}'
+    body: '{"domain":"r74rt745mahydd25p9z20x4b37p157rc-linodego-testing.com","type":"master","soa_email":"example@example.com","master_ips":null,"axfr_ips":null,"tags":null}'
     form: {}
     headers:
       Accept:
       - application/json
-      Authorization:
-      - Bearer awesometokenawesometokenawesometoken
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.1.0 https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/domains
     method: POST
   response:
-    body: '{"description": "", "master_ips": [], "id": 1102858, "refresh_sec": 0,
-      "axfr_ips": [], "status": "active", "ttl_sec": 0, "group": "", "retry_sec":
-      0, "type": "master", "soa_email": "example@example.com", "expire_sec": 0, "domain":
-      "7s73knsgh1t4vkia5736d8b4b6z0015g-linodego-testing.com"}'
+    body: '{"id": 1598865, "type": "master", "domain": "r74rt745mahydd25p9z20x4b37p157rc-linodego-testing.com", "tags": [], "group": "", "status": "active", "description": "", "soa_email": "example@example.com", "retry_sec": 0, "master_ips": [], "axfr_ips": [], "expire_sec": 0, "refresh_sec": 0, "ttl_sec": 0, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -33,18 +28,12 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
-      - "287"
+      - "367"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Fri, 27 Jul 2018 02:22:14 GMT
-      Retry-After:
-      - "13"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -55,44 +44,32 @@ interactions:
       - domains:read_write
       X-Content-Type-Options:
       - nosniff
-      - nosniff
       X-Frame-Options:
       - DENY
       - DENY
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
-      X-Ratelimit-Remaining:
-      - "394"
-      X-Ratelimit-Reset:
-      - "1532658148"
-      X-Spec-Version:
-      - 4.0.3
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"domain":"linodego-renamed-domain.com"}'
+    body: '{"domain":"linodego-renamed-domain.com","master_ips":null,"axfr_ips":null,"tags":null}'
     form: {}
     headers:
       Accept:
       - application/json
-      Authorization:
-      - Bearer awesometokenawesometokenawesometoken
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.1.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/domains/1102858
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/domains/1598865
     method: PUT
   response:
-    body: '{"expire_sec": 0, "refresh_sec": 0, "type": "master", "group": "", "master_ips":
-      [], "axfr_ips": [], "domain": "linodego-renamed-domain.com", "retry_sec": 0,
-      "description": "", "soa_email": "example@example.com", "status": "active", "id":
-      1102858, "ttl_sec": 0}'
+    body: '{"id": 1598865, "type": "master", "domain": "linodego-renamed-domain.com", "tags": [], "group": "", "status": "active", "description": "", "soa_email": "example@example.com", "retry_sec": 0, "master_ips": [], "axfr_ips": [], "expire_sec": 0, "refresh_sec": 0, "ttl_sec": 0, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -106,18 +83,12 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
-      - "261"
+      - "341"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Fri, 27 Jul 2018 02:22:16 GMT
-      Retry-After:
-      - "10"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -128,20 +99,13 @@ interactions:
       - domains:read_write
       X-Content-Type-Options:
       - nosniff
-      - nosniff
       X-Frame-Options:
       - DENY
       - DENY
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
-      X-Ratelimit-Remaining:
-      - "395"
-      X-Ratelimit-Reset:
-      - "1532658146"
-      X-Spec-Version:
-      - 4.0.3
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -153,13 +117,11 @@ interactions:
     headers:
       Accept:
       - application/json
-      Authorization:
-      - Bearer awesometokenawesometokenawesometoken
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.1.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/domains/1102858
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/domains/1598865
     method: DELETE
   response:
     body: '{}'
@@ -176,18 +138,12 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
       - "2"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Fri, 27 Jul 2018 02:22:16 GMT
-      Retry-After:
-      - "21"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -198,20 +154,13 @@ interactions:
       - domains:read_write
       X-Content-Type-Options:
       - nosniff
-      - nosniff
       X-Frame-Options:
       - DENY
       - DENY
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
-      X-Ratelimit-Remaining:
-      - "394"
-      X-Ratelimit-Reset:
-      - "1532658158"
-      X-Spec-Version:
-      - 4.0.3
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
