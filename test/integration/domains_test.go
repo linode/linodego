@@ -2,13 +2,13 @@ package integration
 
 import (
 	"context"
+	"fmt"
 	"testing"
 
 	"github.com/linode/linodego"
 )
 
 var testDomainCreateOpts = linodego.DomainCreateOptions{
-	Domain:   randLabel() + "-linodego-testing.com",
 	Type:     linodego.DomainTypeMaster,
 	SOAEmail: "example@example.com",
 }
@@ -74,14 +74,30 @@ func TestGetDomain(t *testing.T) {
 	}
 }
 
+func TestGetDomainZoneFile(t *testing.T) {
+	client, domain, teardown, err := setupDomain(t, "fixtures/TestGetDomainZoneFile")
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	_, err = client.GetDomainZoneFile(context.Background(), domain.ID)
+	if err != nil {
+		t.Errorf("failed to get domain zone file %d, expected *DomainZoneFile, got error %v", domain.ID, err)
+	}
+}
+
 func setupDomain(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.Domain, func(), error) {
 	t.Helper()
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+
 	createOpts := testDomainCreateOpts
+	createOpts.Domain = fmt.Sprintf("%s-linodego-testing.com", randLabel())
+
 	domain, err := client.CreateDomain(context.Background(), createOpts)
 	if err != nil {
-		t.Errorf("Error listing domains, expected struct, got error %v", err)
+		t.Errorf("Error creating domain, expected struct, got error %v", err)
 	}
 
 	teardown := func() {

@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"bzi7l8090x1m-linodego-testing","bucket_access":null}'
+    body: '{"domain":"5xe887qn63fxjbo1l1s54d1xx7l6f039-linodego-testing.com","type":"master","soa_email":"example@example.com","master_ips":null,"axfr_ips":null,"tags":null}'
     form: {}
     headers:
       Accept:
@@ -11,10 +11,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys
+    url: https://api.linode.com/v4beta/domains
     method: POST
   response:
-    body: '{"id": 206956, "label": "bzi7l8090x1m-linodego-testing", "access_key": "[SANITIZED]", "secret_key": "[SANITIZED]", "limited": false, "bucket_access": null}'
+    body: '{"id": 1598823, "type": "master", "domain": "5xe887qn63fxjbo1l1s54d1xx7l6f039-linodego-testing.com", "tags": [], "group": "", "status": "active", "description": "", "soa_email": "example@example.com", "retry_sec": 0, "master_ips": [], "axfr_ips": [], "expire_sec": 0, "refresh_sec": 0, "ttl_sec": 0, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -29,7 +29,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "193"
+      - "367"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -41,7 +41,7 @@ interactions:
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - object_storage:read_write
+      - domains:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -66,10 +66,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/206956
+    url: https://api.linode.com/v4beta/domains/1598823/zone-file
     method: GET
   response:
-    body: '{"id": 206956, "label": "bzi7l8090x1m-linodego-testing", "access_key": "[SANITIZED]", "secret_key": "[REDACTED]", "limited": false, "bucket_access": null}'
+    body: '{"zone_file": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -85,7 +85,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "163"
+      - "17"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -98,7 +98,7 @@ interactions:
       - Authorization, X-Filter
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - object_storage:read_write
+      - domains:read_only
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -123,7 +123,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/206956
+    url: https://api.linode.com/v4beta/domains/1598823
     method: DELETE
   response:
     body: '{}'
@@ -153,7 +153,7 @@ interactions:
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - object_storage:read_write
+      - domains:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:

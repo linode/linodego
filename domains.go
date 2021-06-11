@@ -52,6 +52,11 @@ type Domain struct {
 	TTLSec int `json:"ttl_sec"`
 }
 
+// DomainZoneFile represents the Zone File of a Domain
+type DomainZoneFile struct {
+	ZoneFile []string `json:"zone_file"`
+}
+
 // DomainCreateOptions fields are those accepted by CreateDomain
 type DomainCreateOptions struct {
 	// The domain this Domain represents. These must be unique in our system; you cannot have two Domains representing the same domain.
@@ -298,4 +303,21 @@ func (c *Client) DeleteDomain(ctx context.Context, id int) error {
 	_, err = coupleAPIErrors(c.R(ctx).Delete(e))
 
 	return err
+}
+
+// GetDomainZoneFile gets the zone file for the last rendered zone for the specified domain.
+func (c *Client) GetDomainZoneFile(ctx context.Context, domainID int) (*DomainZoneFile, error) {
+	e, err := c.Domains.Endpoint()
+	if err != nil {
+		return nil, err
+	}
+
+	e = fmt.Sprintf("%s/%d/zone-file", e, domainID)
+
+	resp, err := coupleAPIErrors(c.R(ctx).SetResult(&DomainZoneFile{}).Get(e))
+	if err != nil {
+		return nil, err
+	}
+
+	return resp.Result().(*DomainZoneFile), nil
 }
