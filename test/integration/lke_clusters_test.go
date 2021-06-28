@@ -14,7 +14,7 @@ var testLKEClusterCreateOpts = linodego.LKEClusterCreateOptions{
 	Region:     "us-central",
 	K8sVersion: "1.21",
 	Tags:       []string{"testing"},
-	NodePools:  []linodego.LKEClusterPoolCreateOptions{{Count: 1, Type: "g6-standard-2"}},
+	NodePools:  []linodego.LKEClusterPoolCreateOptions{{Count: 1, Type: "g6-standard-2", Tags: []string{"test"}}},
 }
 
 func TestGetLKECluster_missing(t *testing.T) {
