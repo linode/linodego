@@ -12,7 +12,7 @@ import (
 var testLKEClusterCreateOpts = linodego.LKEClusterCreateOptions{
 	Label:      label,
 	Region:     "us-central",
-	K8sVersion: "1.17",
+	K8sVersion: "1.21",
 	Tags:       []string{"testing"},
 	NodePools:  []linodego.LKEClusterPoolCreateOptions{{Count: 1, Type: "g6-standard-2"}},
 }
