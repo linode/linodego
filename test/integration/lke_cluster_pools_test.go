@@ -9,7 +9,7 @@ import (
 
 var testLKEClusterPoolCreateOpts = linodego.LKEClusterPoolCreateOptions{
 	Type:  "g6-standard-2",
-	Count: 1,
+	Count: 2,
 	Disks: []linodego.LKEClusterPoolDisk{
 		{
 			Size: 1000,
@@ -65,6 +65,29 @@ func TestListLKEClusterPools(t *testing.T) {
 	}
 	if len(i) != 2 {
 		t.Errorf("Expected two lkeClusterPools, but got %#v", i)
+	}
+}
+
+func TestDeleteLKEClusterPoolNode(t *testing.T) {
+	client, lkeCluster, clusterPool, teardown, err := setupLKEClusterPool(t, "fixtures/TestDeleteLKEClusterPoolNode")
+	if err != nil {
+		t.Error(err)
+	}
+	defer teardown()
+
+	linodes := clusterPool.Linodes
+	err = client.DeleteLKEClusterPoolNode(context.TODO(), lkeCluster.ID, linodes[0].ID)
+	if err != nil {
+		t.Errorf("failed to delete node %q: %s", linodes[0].ID, err)
+	}
+
+	clusterPool, err = client.GetLKEClusterPool(context.TODO(), lkeCluster.ID, clusterPool.ID)
+	if err != nil {
+		t.Errorf("failed to get updated node pool: %s", err)
+	}
+
+	if !(len(clusterPool.Linodes) == 1 && clusterPool.Linodes[0].ID == linodes[1].ID) {
+		t.Errorf("expected cluster pool to have 1 linode (%s); got %v", linodes[1].ID, clusterPool.Linodes)
 	}
 }
 
