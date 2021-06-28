@@ -172,3 +172,15 @@ func (c *Client) DeleteLKEClusterPool(ctx context.Context,
 	_, err = coupleAPIErrors(c.R(ctx).Delete(e))
 	return err
 }
+
+// DeleteLKEClusterPoolNode deletes a given node from a cluster pool
+func (c *Client) DeleteLKEClusterPoolNode(ctx context.Context, clusterID int, id string) error {
+	e, err := c.LKEClusters.Endpoint()
+	if err != nil {
+		return err
+	}
+	e = fmt.Sprintf("%s/%d/nodes/%s", e, clusterID, id)
+
+	_, err = coupleAPIErrors(c.R(ctx).Delete(e))
+	return err
+}
