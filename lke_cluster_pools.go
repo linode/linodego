@@ -36,6 +36,7 @@ type LKEClusterPool struct {
 	Type    string                 `json:"type"`
 	Disks   []LKEClusterPoolDisk   `json:"disks"`
 	Linodes []LKEClusterPoolLinode `json:"nodes"`
+	Tags    []string               `json:"tags"`
 }
 
 // LKEClusterPoolCreateOptions fields are those accepted by CreateLKEClusterPool
@@ -43,11 +44,13 @@ type LKEClusterPoolCreateOptions struct {
 	Count int                  `json:"count"`
 	Type  string               `json:"type"`
 	Disks []LKEClusterPoolDisk `json:"disks"`
+	Tags  []string             `json:"tags"`
 }
 
 // LKEClusterPoolUpdateOptions fields are those accepted by UpdateLKEClusterPool
 type LKEClusterPoolUpdateOptions struct {
-	Count int `json:"count"`
+	Count int       `json:"count,omitempty"`
+	Tags  *[]string `json:"tags,omitempty"`
 }
 
 // GetCreateOptions converts a LKEClusterPool to LKEClusterPoolCreateOptions for
@@ -55,12 +58,14 @@ type LKEClusterPoolUpdateOptions struct {
 func (l LKEClusterPool) GetCreateOptions() (o LKEClusterPoolCreateOptions) {
 	o.Count = l.Count
 	o.Disks = l.Disks
+	o.Tags = l.Tags
 	return
 }
 
 // GetUpdateOptions converts a LKEClusterPool to LKEClusterPoolUpdateOptions for use in UpdateLKEClusterPool
 func (l LKEClusterPool) GetUpdateOptions() (o LKEClusterPoolUpdateOptions) {
 	o.Count = l.Count
+	o.Tags = &l.Tags
 	return
 }
 
