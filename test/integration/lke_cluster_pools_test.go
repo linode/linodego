@@ -4,6 +4,7 @@ import (
 	"context"
 	"testing"
 
+	"github.com/google/go-cmp/cmp"
 	"github.com/linode/linodego"
 )
 
@@ -16,6 +17,7 @@ var testLKEClusterPoolCreateOpts = linodego.LKEClusterPoolCreateOptions{
 			Type: "ext4",
 		},
 	},
+	Tags: []string{"testing"},
 }
 
 func TestGetLKEClusterPool_missing(t *testing.T) {
@@ -47,8 +49,18 @@ func TestGetLKEClusterPool_found(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error getting lkeClusterPool, expected struct, got %v and error %v", i, err)
 	}
+
 	if i.ID != pool.ID {
 		t.Errorf("Expected a specific lkeClusterPool, but got a different one %v", i)
+	}
+	if i.Count != 1 {
+		t.Errorf("expected count to be 1; got %d", i.Count)
+	}
+	if i.Type != "g6-standard-2" {
+		t.Errorf("expected type to be g6-standard-2; got %s", i.Type)
+	}
+	if diff := cmp.Diff([]string{"testing"}, i.Tags); diff != "" {
+		t.Errorf("unexpected tags:\n%s", diff)
 	}
 }
 
@@ -88,6 +100,46 @@ func TestDeleteLKEClusterPoolNode(t *testing.T) {
 
 	if !(len(clusterPool.Linodes) == 1 && clusterPool.Linodes[0].ID == linodes[1].ID) {
 		t.Errorf("expected cluster pool to have 1 linode (%s); got %v", linodes[1].ID, clusterPool.Linodes)
+	}
+}
+
+func TestUpdateLKEClusterPool(t *testing.T) {
+	client, lkeCluster, clusterPool, teardown, err := setupLKEClusterPool(t, "fixtures/TestUpdateLKEClusterPool")
+	if err != nil {
+		t.Error(err)
+	}
+	defer teardown()
+
+	updatedTags := []string{}
+	updated, err := client.UpdateLKEClusterPool(context.TODO(), lkeCluster.ID, clusterPool.ID, linodego.LKEClusterPoolUpdateOptions{
+		Count: 2,            // downsize
+		Tags:  &updatedTags, // remove all tags
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if len(updated.Tags) != 0 {
+		t.Errorf("expected tags to be empty; got %v", updated.Tags)
+	}
+	if updated.Count != 2 {
+		t.Errorf("expected count to be 2; got %d", updated.Count)
+	}
+
+	updatedTags = []string{"bar", "foo", "test"}
+	updated, err = client.UpdateLKEClusterPool(context.TODO(), lkeCluster.ID, clusterPool.ID, linodego.LKEClusterPoolUpdateOptions{
+		Count: 3,            // upsize
+		Tags:  &updatedTags, // repopulate tags
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if diff := cmp.Diff(updatedTags, updated.Tags); diff != "" {
+		t.Errorf("unexpected tags:\n%s", diff)
+	}
+	if updated.Count != 3 {
+		t.Errorf("expected count to be 3; got %d", updated.Count)
 	}
 }
 
