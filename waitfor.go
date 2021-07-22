@@ -261,13 +261,12 @@ func (client Client) WaitForEventFinished(ctx context.Context, id interface{}, e
 	titledEntityType := strings.Title(string(entityType))
 	filterStruct := map[string]interface{}{
 		// Nor is action
-		//"action": action,
+		"action": action,
 
-		// Created is not correctly filtered by the API
-		// We'll have to verify these values manually, for now.
-		//"created": map[string]interface{}{
-		//	"+gte": minStart.Format(time.RFC3339),
-		//},
+		"created": map[string]interface{}{
+			// The API uses UTC time, so we need to ensure the time is converted
+			"+gte": minStart.UTC().Format("2006-01-02T15:04:05"),
+		},
 
 		// With potentially 1000+ events coming back, we should filter on something
 		// Warning: This optimization has the potential to break if users are clearing
@@ -338,10 +337,6 @@ func (client Client) WaitForEventFinished(ctx context.Context, id interface{}, e
 			for _, event := range events {
 				event := event
 
-				if event.Action != action {
-					// log.Println("action mismatch", event.Action, action)
-					continue
-				}
 				if event.Entity == nil || event.Entity.Type != entityType {
 					// log.Println("type mismatch", event.Entity.Type, entityType)
 					continue
@@ -377,10 +372,6 @@ func (client Client) WaitForEventFinished(ctx context.Context, id interface{}, e
 				// that the ListEvents method is not populating it correctly
 				if event.Created == nil {
 					log.Printf("[WARN] event.Created is nil when API returned: %#+v", event.Created)
-				} else if *event.Created != minStart && !event.Created.After(minStart) {
-					// Not the event we were looking for
-					// log.Println(event.Created, "is not >=", minStart)
-					continue
 				}
 
 				// This is the event we are looking for. Save our place.
