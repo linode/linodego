@@ -274,7 +274,7 @@ func TestUpdateInstanceConfigInterfaces(t *testing.T) {
 			},
 			{
 				Purpose: linodego.InterfacePurposeVLAN,
-				Label: "linodego-cool-vlan",
+				Label:   "linodego-cool-vlan",
 			},
 		},
 	}
