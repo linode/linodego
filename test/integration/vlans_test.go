@@ -9,7 +9,7 @@ import (
 )
 
 func TestListVLANs(t *testing.T) {
-	instancePrefix :=  "linodego-testing-" + randString(12, lowerBytes, upperBytes)
+	instancePrefix := "linodego-testing-" + randString(12, lowerBytes, upperBytes)
 	vlanName := "linodego-really-cool-vlan-" + randString(12, lowerBytes, upperBytes)
 
 	client, fixturesTeardown := createTestClient(t, "fixtures/TestListVLAN")

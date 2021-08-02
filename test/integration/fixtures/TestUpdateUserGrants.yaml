@@ -10,11 +10,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/account/users
     method: POST
   response:
-    body: '{"username": "linodegotest-updateusergrants", "email": "linodegotest-updateusergrants@example.com", "restricted": true, "ssh_keys": [], "tfa_enabled": false}'
+    body: '{"username": "linodegotest-updateusergrants", "email": "linodegotest-updateusergrants@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -57,7 +58,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"global":{"account_access":"read_only","add_domains":false,"add_images":true,"add_linodes":false,"add_longview":true,"add_nodebalancers":false,"add_stackscripts":true,"add_volumes":true,"cancel_account":false,"longview_subscription":false}}'
+    body: '{"global":{"account_access":"read_only","add_domains":false,"add_firewalls":true,"add_images":true,"add_linodes":false,"add_longview":true,"add_nodebalancers":false,"add_stackscripts":true,"add_volumes":true,"cancel_account":false,"longview_subscription":false}}'
     form: {}
     headers:
       Accept:
@@ -65,11 +66,18 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/account/users/linodegotest-updateusergrants/grants
     method: PUT
   response:
-    body: '{"linode": [], "nodebalancer": [], "domain": [], "stackscript": [], "longview": [], "image": [], "volume": [], "global": {"add_domains": false, "add_linodes": false, "add_longview": true, "longview_subscription": false, "add_stackscripts": true, "add_nodebalancers": false, "add_images": true, "add_volumes": true, "account_access": "read_only", "cancel_account": false}}'
+    body: '{"linode": [{"id": 28839970, "label": "aaaaaaa", "permissions":
+      null}], "nodebalancer": [], "domain": [], "stackscript": [{"id": 873369, "label":
+      "aaaaaaa", "permissions": null}], "longview": [], "image": [],
+      "volume": [], "firewall": [{"id": 17053, "label": "sdf", "permissions": null}],
+      "global": {"add_domains": false, "add_linodes": false, "add_longview": true,
+      "longview_subscription": false, "add_stackscripts": true, "add_nodebalancers":
+      false, "add_images": true, "add_volumes": true, "add_firewalls": true, "account_access":
+      "read_only", "cancel_account": false}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -83,6 +91,8 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "594"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -118,7 +128,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/account/users/linodegotest-updateusergrants
     method: DELETE
   response:
