@@ -25,6 +25,7 @@ func TestUpdateUserGrants(t *testing.T) {
 	globalGrants := linodego.GlobalUserGrants{
 		AccountAccess:    &accessLevel,
 		AddDomains:       false,
+		AddFirewalls:     true,
 		AddImages:        true,
 		AddLinodes:       false,
 		AddLongview:      true,
@@ -34,16 +35,6 @@ func TestUpdateUserGrants(t *testing.T) {
 		CancelAccount:    false,
 	}
 
-	expectedUserGrants := linodego.UserGrants{
-		Global:       globalGrants,
-		Domain:       []linodego.GrantedEntity{},
-		Image:        []linodego.GrantedEntity{},
-		Linode:       []linodego.GrantedEntity{},
-		Longview:     []linodego.GrantedEntity{},
-		NodeBalancer: []linodego.GrantedEntity{},
-		StackScript:  []linodego.GrantedEntity{},
-		Volume:       []linodego.GrantedEntity{},
-	}
 	grants, err := client.UpdateUserGrants(context.TODO(), username, linodego.UserGrantsUpdateOptions{
 		Global: globalGrants,
 	})
@@ -51,8 +42,8 @@ func TestUpdateUserGrants(t *testing.T) {
 		t.Fatalf("failed to get user grants: %s", err)
 	}
 
-	if !cmp.Equal(grants, &expectedUserGrants) {
-		t.Errorf("expected rules to match test rules, but got diff: %s", cmp.Diff(grants, &expectedUserGrants))
+	if !cmp.Equal(grants.Global, globalGrants) {
+		t.Errorf("expected rules to match test rules, but got diff: %s", cmp.Diff(grants.Global, globalGrants))
 	}
 }
 
@@ -72,16 +63,6 @@ func TestUpdateUserGrants_noAccess(t *testing.T) {
 		AccountAccess: nil,
 	}
 
-	expectedUserGrants := linodego.UserGrants{
-		Global:       globalGrants,
-		Domain:       []linodego.GrantedEntity{},
-		Image:        []linodego.GrantedEntity{},
-		Linode:       []linodego.GrantedEntity{},
-		Longview:     []linodego.GrantedEntity{},
-		NodeBalancer: []linodego.GrantedEntity{},
-		StackScript:  []linodego.GrantedEntity{},
-		Volume:       []linodego.GrantedEntity{},
-	}
 	grants, err := client.UpdateUserGrants(context.TODO(), username, linodego.UserGrantsUpdateOptions{
 		Global: globalGrants,
 	})
@@ -89,7 +70,27 @@ func TestUpdateUserGrants_noAccess(t *testing.T) {
 		t.Fatalf("failed to get user grants: %s", err)
 	}
 
-	if !cmp.Equal(grants, &expectedUserGrants) {
-		t.Errorf("expected rules to match test rules, but got diff: %s", cmp.Diff(grants, &expectedUserGrants))
+	if !cmp.Equal(grants.Global, globalGrants) {
+		t.Errorf("expected rules to match test rules, but got diff: %s", cmp.Diff(grants.Global, globalGrants))
+	}
+
+	// Ensure all grants are no access
+	grantFields := [][]linodego.GrantedEntity{
+		grants.Domain,
+		grants.Firewall,
+		grants.Image,
+		grants.Linode,
+		grants.Longview,
+		grants.NodeBalancer,
+		grants.StackScript,
+		grants.Volume,
+	}
+
+	for _, grantField := range grantFields {
+		for _, grant := range grantField {
+			if grant.Permissions != "" {
+				t.Errorf("expected permissions to be nil, but got %s", grant.Permissions)
+			}
+		}
 	}
 }
