@@ -53,11 +53,18 @@ func TestGetLKEClusterPool_found(t *testing.T) {
 	if i.ID != pool.ID {
 		t.Errorf("Expected a specific lkeClusterPool, but got a different one %v", i)
 	}
-	if i.Count != 1 {
-		t.Errorf("expected count to be 1; got %d", i.Count)
+	if i.Count != 2 {
+		t.Errorf("expected count to be 2; got %d", i.Count)
 	}
 	if i.Type != "g6-standard-2" {
 		t.Errorf("expected type to be g6-standard-2; got %s", i.Type)
+	}
+	if diff := cmp.Diff(linodego.LKEClusterPoolAutoscaler{
+		Min:     2,
+		Max:     2,
+		Enabled: false,
+	}, pool.Autoscaler); diff != "" {
+		t.Errorf("unexpected autoscaler:\n%s", diff)
 	}
 	if diff := cmp.Diff([]string{"testing"}, i.Tags); diff != "" {
 		t.Errorf("unexpected tags:\n%s", diff)
@@ -110,10 +117,16 @@ func TestUpdateLKEClusterPool(t *testing.T) {
 	}
 	defer teardown()
 
+	updatedAutoscaler := linodego.LKEClusterPoolAutoscaler{
+		Enabled: true,
+		Min:     2,
+		Max:     5,
+	}
 	updatedTags := []string{}
 	updated, err := client.UpdateLKEClusterPool(context.TODO(), lkeCluster.ID, clusterPool.ID, linodego.LKEClusterPoolUpdateOptions{
-		Count: 2,            // downsize
-		Tags:  &updatedTags, // remove all tags
+		Count:      2,            // downsize
+		Tags:       &updatedTags, // remove all tags
+		Autoscaler: &updatedAutoscaler,
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -137,6 +150,9 @@ func TestUpdateLKEClusterPool(t *testing.T) {
 
 	if diff := cmp.Diff(updatedTags, updated.Tags); diff != "" {
 		t.Errorf("unexpected tags:\n%s", diff)
+	}
+	if diff := cmp.Diff(updatedAutoscaler, updated.Autoscaler); diff != "" {
+		t.Errorf("unexpected autoscaler:\n%s", diff)
 	}
 	if updated.Count != 3 {
 		t.Errorf("expected count to be 3; got %d", updated.Count)
