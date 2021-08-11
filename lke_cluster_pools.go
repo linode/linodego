@@ -22,6 +22,12 @@ type LKEClusterPoolDisk struct {
 	Type string `json:"type"`
 }
 
+type LKEClusterPoolAutoscaler struct {
+	Enabled bool `json:"enabled"`
+	Min     int  `json:"min"`
+	Max     int  `json:"max"`
+}
+
 // LKEClusterPoolLinode represents a LKEClusterPoolLinode object
 type LKEClusterPoolLinode struct {
 	ID         string          `json:"id"`
@@ -37,6 +43,8 @@ type LKEClusterPool struct {
 	Disks   []LKEClusterPoolDisk   `json:"disks"`
 	Linodes []LKEClusterPoolLinode `json:"nodes"`
 	Tags    []string               `json:"tags"`
+
+	Autoscaler LKEClusterPoolAutoscaler `json:"autoscaler"`
 }
 
 // LKEClusterPoolCreateOptions fields are those accepted by CreateLKEClusterPool
@@ -45,12 +53,16 @@ type LKEClusterPoolCreateOptions struct {
 	Type  string               `json:"type"`
 	Disks []LKEClusterPoolDisk `json:"disks"`
 	Tags  []string             `json:"tags"`
+
+	Autoscaler *LKEClusterPoolAutoscaler `json:"autoscaler,omitempty"`
 }
 
 // LKEClusterPoolUpdateOptions fields are those accepted by UpdateLKEClusterPool
 type LKEClusterPoolUpdateOptions struct {
 	Count int       `json:"count,omitempty"`
 	Tags  *[]string `json:"tags,omitempty"`
+
+	Autoscaler *LKEClusterPoolAutoscaler `json:"autoscaler,omitempty"`
 }
 
 // GetCreateOptions converts a LKEClusterPool to LKEClusterPoolCreateOptions for
@@ -59,6 +71,7 @@ func (l LKEClusterPool) GetCreateOptions() (o LKEClusterPoolCreateOptions) {
 	o.Count = l.Count
 	o.Disks = l.Disks
 	o.Tags = l.Tags
+	o.Autoscaler = &l.Autoscaler
 	return
 }
 
@@ -66,6 +79,7 @@ func (l LKEClusterPool) GetCreateOptions() (o LKEClusterPoolCreateOptions) {
 func (l LKEClusterPool) GetUpdateOptions() (o LKEClusterPoolUpdateOptions) {
 	o.Count = l.Count
 	o.Tags = &l.Tags
+	o.Autoscaler = &l.Autoscaler
 	return
 }
 
