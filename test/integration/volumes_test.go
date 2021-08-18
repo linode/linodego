@@ -131,27 +131,26 @@ func TestWaitForVolumeLinodeIDInstance(t *testing.T) {
 }
 
 func TestUpdateVolume(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestUpdateVolume")
-	defer teardown()
-
-	updateOpts := linodego.VolumeUpdateOptions{
-		Label: "my-testing-volume",
+	client, volume, teardown, err := setupVolume(t, "fixtures/TestUpdateVolume")
+	if err != nil {
+		t.Errorf("Error setting up volume test, %s", err)
 	}
-	volume, err := client.UpdateVolume(context.Background(), 123456, updateOpts)
+	defer teardown()
+	updateOpts := linodego.VolumeUpdateOptions{
+		Label: "our-testing-volume",
+	}
+	volume, err = client.UpdateVolume(context.Background(), volume.ID, updateOpts)
 	if err != nil {
 		t.Errorf("Error updating volume, expected struct, got error %v", err)
 	}
 	if volume.ID == 0 {
 		t.Errorf("Expected a volumes id, but got 0")
 	}
-	if volume.Label != "my-testing-volume" {
-		t.Errorf("Expected volume label to be equal to updated label")
+	if volume.Label != "our-testing-volume" {
+		t.Errorf("Expected volume label to be equal to updated volume label")
 	}
 	assertDateSet(t, volume.Created)
 	assertDateSet(t, volume.Updated)
-	if err := client.DeleteVolume(context.Background(), volume.ID); err != nil {
-		t.Errorf("Expected to delete a volume, but got %v", err)
-	}
 }
 
 func setupVolume(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.Volume, func(), error) {
