@@ -268,11 +268,6 @@ func (client Client) WaitForEventFinished(ctx context.Context, id interface{}, e
 			"+gte": minStart.UTC().Format("2006-01-02T15:04:05"),
 		},
 
-		// With potentially 1000+ events coming back, we should filter on something
-		// Warning: This optimization has the potential to break if users are clearing
-		// events before we see them.
-		"seen": false,
-
 		// Float the latest events to page 1
 		"+order_by": "created",
 		"+order":    "desc",
