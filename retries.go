@@ -9,7 +9,10 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
-const retryAfterHeaderName = "Retry-After"
+const (
+	retryAfterHeaderName      = "Retry-After"
+	maintenanceModeHeaderName = "X-Maintenance-Mode"
+)
 
 // type RetryConditional func(r *resty.Response) (shouldRetry bool)
 type RetryConditional resty.RetryConditionFunc
@@ -54,7 +57,19 @@ func tooManyRequestsRetryCondition(r *resty.Response, _ error) bool {
 }
 
 func serviceUnavailableRetryCondition(r *resty.Response, _ error) bool {
-	return r.StatusCode() == http.StatusServiceUnavailable
+	var retry bool
+	if r.StatusCode() == http.StatusServiceUnavailable {
+		// During maintenance events, the API will return a 503 and add
+		// an `X-MAINTENANCE-MODE` header. Don't rety during maintenance
+		// events, only for legitimate 503s.
+		if r.Header().Get(maintenanceModeHeaderName) != "" {
+			log.Printf("[INFO] Linode API is under maintenance, request will not be retried")
+		} else {
+			retry = true
+		}
+	}
+
+	return retry
 }
 
 func requestTimeoutRetryCondition(r *resty.Response, _ error) bool {
