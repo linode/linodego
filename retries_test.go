@@ -58,3 +58,19 @@ func TestLinodeServiceUnavailableRetryCondition(t *testing.T) {
 		t.Errorf("expected retryAfter to be 20 but got %d", retryAfter)
 	}
 }
+
+func TestLinodeServiceMaintenanceModeRetryCondition(t *testing.T) {
+	request := resty.Request{}
+	rawResponse := http.Response{StatusCode: http.StatusServiceUnavailable, Header: http.Header{
+		retryAfterHeaderName:      []string{"20"},
+		maintenanceModeHeaderName: []string{"Currently in maintenance mode."},
+	}}
+	response := resty.Response{
+		Request:     &request,
+		RawResponse: &rawResponse,
+	}
+
+	if retry := serviceUnavailableRetryCondition(&response, nil); retry {
+		t.Error("expected retry to be skipped due to maintenance mode header")
+	}
+}
