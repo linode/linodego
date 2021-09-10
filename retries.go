@@ -63,7 +63,7 @@ func serviceUnavailableRetryCondition(r *resty.Response, _ error) bool {
 	// an `X-MAINTENANCE-MODE` header. Don't retry during maintenance
 	// events, only for legitimate 503s.
 	if serviceUnavailable && r.Header().Get(maintenanceModeHeaderName) != "" {
-		log.Printf("[INFO] Linode API is under maintenance, request will not be retried")
+		log.Printf("[INFO] Linode API is under maintenance, request will not be retried - please see status.linode.com for more information")
 		return false
 	}
 
