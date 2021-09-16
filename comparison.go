@@ -111,3 +111,11 @@ func And(nodes ...FilterNode) *Filter {
 func Or(nodes ...FilterNode) *Filter {
 	return &Filter{LogicalOr, nodes}
 }
+
+func getJSONValueString(value interface{}) string {
+	if _, ok := value.(string); ok {
+		return fmt.Sprintf("\"%s\"", value)
+	}
+
+	return fmt.Sprintf("%v", value)
+}
