@@ -97,24 +97,11 @@ func (c *Comparison) GetChildren() []FilterNode {
 
 func (c *Comparison) JSON() string {
 	if c.Operator == Eq {
-		if _, ok := c.Value.(string); ok {
-			return fmt.Sprintf("{\"%s\": \"%s\"}", c.Column, c.Value)
-		}
-		if _, ok := c.Value.(int); ok {
-			return fmt.Sprintf("{\"%s\": %d}", c.Column, c.Value)
-		}
+		return fmt.Sprintf("{\"%s\": %s}", c.Column, getJSONValueString(c.Value))
 	}
 
-	if _, ok := c.Value.(string); ok {
-		return fmt.Sprintf("{\"%s\": {\"%s\": \"%s\"}",
-			c.Column, c.Operator, c.Value)
-	}
-	if _, ok := c.Value.(int); ok {
-		return fmt.Sprintf("{\"%s\": {\"%s\": %d}",
-			c.Column, c.Operator, c.Value)
-	}
-
-	return ""
+	return fmt.Sprintf("{\"%s\": {\"%s\": %s}",
+		c.Column, c.Operator, getJSONValueString(c.Value))
 }
 
 func And(nodes ...FilterNode) *Filter {
