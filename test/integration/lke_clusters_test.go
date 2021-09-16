@@ -2,21 +2,20 @@ package integration
 
 import (
 	"context"
+	"reflect"
 	"testing"
 
 	"github.com/linode/linodego"
 	k8scondition "github.com/linode/linodego/k8s/pkg/condition"
 )
 
-var (
-	testLKEClusterCreateOpts = linodego.LKEClusterCreateOptions{
-		Label:      label,
-		Region:     "us-central",
-		K8sVersion: "1.17",
-		Tags:       []string{"testing"},
-		NodePools:  []linodego.LKEClusterPoolCreateOptions{{Count: 1, Type: "g6-standard-2"}},
-	}
-)
+var testLKEClusterCreateOpts = linodego.LKEClusterCreateOptions{
+	Label:      label,
+	Region:     "us-central",
+	K8sVersion: "1.21",
+	Tags:       []string{"testing"},
+	NodePools:  []linodego.LKEClusterPoolCreateOptions{{Count: 1, Type: "g6-standard-2", Tags: []string{"test"}}},
+}
 
 func TestGetLKECluster_missing(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestGetLKECluster_missing")
@@ -67,6 +66,53 @@ func TestGetLKECluster_found(t *testing.T) {
 	}
 	if i.ID != lkeCluster.ID {
 		t.Errorf("Expected a specific lkeCluster, but got a different one %v", i)
+	}
+}
+
+func TestUpdateLKECluster(t *testing.T) {
+	client, cluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
+		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
+	}}, "fixtures/TestUpdateLKECluster")
+	defer teardown()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	updatedTags := []string{"test=true"}
+	updatedLabel := "new" + cluster.Label
+	updatedK8sVersion := "1.17"
+	updatedCluster, err := client.UpdateLKECluster(context.TODO(), cluster.ID, linodego.LKEClusterUpdateOptions{
+		Tags:       &updatedTags,
+		Label:      updatedLabel,
+		K8sVersion: updatedK8sVersion,
+	})
+	if err != nil {
+		t.Fatalf("failed to update LKE Cluster (%d): %s", cluster.ID, err)
+	}
+
+	if updatedCluster.Label != updatedLabel {
+		t.Errorf("expected label to be updated to %q; got %q", updatedLabel, updatedCluster.Label)
+	}
+	if updatedCluster.K8sVersion != updatedK8sVersion {
+		t.Errorf("expected k8s version to be updated to %q; got %q", updatedK8sVersion, updatedCluster.K8sVersion)
+	}
+	if !reflect.DeepEqual(updatedTags, updatedCluster.Tags) {
+		t.Errorf("expected tags to be updated to %#v; got %#v", updatedTags, updatedCluster.Tags)
+	}
+}
+
+func TestRecycleLKEClusterNodes(t *testing.T) {
+	client, cluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
+		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
+	}}, "fixtures/TestRecycleLKEClusterNodes")
+	defer teardown()
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	err = client.RecycleLKEClusterNodes(context.TODO(), cluster.ID)
+	if err != nil {
+		t.Errorf("failed to recycle LKE cluster: %s", err)
 	}
 }
 
@@ -158,6 +204,7 @@ func TestGetLKEVersion_found(t *testing.T) {
 		t.Errorf("Expected a specific version, but got a different one %v", i)
 	}
 }
+
 func TestListLKEVersions(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestListLKEVersions")
 	defer teardown()

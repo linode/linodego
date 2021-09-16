@@ -3,22 +3,21 @@ package integration
 import (
 	"context"
 	"fmt"
+	"testing"
 	"time"
 
 	. "github.com/linode/linodego"
-
-	"testing"
 )
 
-var (
-	testObjectStorageBucketCreateOpts = ObjectStorageBucketCreateOptions{
-		Cluster: "us-east-1",
-		Label:   fmt.Sprintf("linodego-test-bucket-%d", time.Now().UnixNano()),
-	}
-)
+var testObjectStorageBucketCreateOpts = ObjectStorageBucketCreateOptions{
+	Cluster: "us-east-1",
+	Label:   fmt.Sprintf("linodego-test-bucket-%d", time.Now().UnixNano()),
+}
 
 func TestCreateObjectStorageBucket(t *testing.T) {
-	_, bucket, teardown, err := setupObjectStorageBucket(t, "fixtures/TestCreateObjectStorageBucket")
+	_, bucket, teardown, err := setupObjectStorageBucket(t,
+		nil,
+		"fixtures/TestCreateObjectStorageBucket")
 	defer teardown()
 
 	if err != nil {
@@ -37,7 +36,9 @@ func TestCreateObjectStorageBucket(t *testing.T) {
 }
 
 func TestGetObjectStorageBucket_missing(t *testing.T) {
-	client, bucket, teardown, err := setupObjectStorageBucket(t, "fixtures/TestGetObjectStorageBucket_missing")
+	client, bucket, teardown, err := setupObjectStorageBucket(t,
+		nil,
+		"fixtures/TestGetObjectStorageBucket_missing")
 	defer teardown()
 
 	sameLabel := bucket.Label
@@ -58,7 +59,9 @@ func TestGetObjectStorageBucket_missing(t *testing.T) {
 }
 
 func TestGetObjectStorageBucket_found(t *testing.T) {
-	client, bucket, teardown, err := setupObjectStorageBucket(t, "fixtures/TestGetObjectStorageBucket_found")
+	client, bucket, teardown, err := setupObjectStorageBucket(t,
+		nil,
+		"fixtures/TestGetObjectStorageBucket_found")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -79,8 +82,11 @@ func TestGetObjectStorageBucket_found(t *testing.T) {
 		t.Errorf("Object Storage Bucket did not match CreateOptions")
 	}
 }
+
 func TestListObjectStorageBuckets(t *testing.T) {
-	client, _, teardown, err := setupObjectStorageBucket(t, "fixtures/TestListObjectStorageBucket")
+	client, _, teardown, err := setupObjectStorageBucket(t,
+		nil,
+		"fixtures/TestListObjectStorageBucket")
 	defer teardown()
 
 	i, err := client.ListObjectStorageBuckets(context.Background(), nil)
@@ -95,12 +101,85 @@ func TestListObjectStorageBuckets(t *testing.T) {
 	}
 }
 
-func setupObjectStorageBucket(t *testing.T, fixturesYaml string) (*Client, *ObjectStorageBucket, func(), error) {
+func TestGetObjectStorageBucketAccess(t *testing.T) {
+	corsEnabled := false
+
+	createOpts := ObjectStorageBucketCreateOptions{
+		ACL:         ACLAuthenticatedRead,
+		CorsEnabled: &corsEnabled,
+	}
+
+	client, bucket, teardown, err := setupObjectStorageBucket(t,
+		[]objectStorageBucketModifier{
+			func(opts *ObjectStorageBucketCreateOptions) {
+				opts.ACL = createOpts.ACL
+				opts.CorsEnabled = createOpts.CorsEnabled
+			},
+		},
+		"fixtures/TestGetObjectStorageBucketAccess")
+	defer teardown()
+
+	newBucket, err := client.GetObjectStorageBucketAccess(context.Background(), bucket.Cluster, bucket.Label)
+	if err != nil {
+		t.Errorf("Error getting ObjectStorageBucket access, got error %s", err)
+	}
+
+	if newBucket.CorsEnabled != corsEnabled {
+		t.Errorf("ObjectStorageBucket access CORS does not match update, expected %t, got %t", corsEnabled, newBucket.CorsEnabled)
+	}
+
+	if newBucket.ACL != createOpts.ACL {
+		t.Errorf("ObjectStorageBucket access ACL does not match update, expected %s, got %s",
+			createOpts.ACL,
+			newBucket.ACL)
+	}
+}
+
+func TestUpdateObjectStorageBucketAccess(t *testing.T) {
+	client, bucket, teardown, err := setupObjectStorageBucket(t,
+		nil,
+		"fixtures/TestUpdateObjectStorageBucketAccess")
+	defer teardown()
+
+	corsEnabled := false
+
+	opts := ObjectStorageBucketUpdateAccessOptions{
+		ACL:         ACLPrivate,
+		CorsEnabled: &corsEnabled,
+	}
+
+	err = client.UpdateObjectStorageBucketAccess(context.Background(), bucket.Cluster, bucket.Label, opts)
+	if err != nil {
+		t.Errorf("Error updating ObjectStorageBucket access, got error %s", err)
+	}
+
+	newBucket, err := client.GetObjectStorageBucketAccess(context.Background(), bucket.Cluster, bucket.Label)
+	if err != nil {
+		t.Errorf("Error getting ObjectStorageBucket access, got error %s", err)
+	}
+
+	if newBucket.CorsEnabled != corsEnabled {
+		t.Errorf("ObjectStorageBucket access CORS does not match update, expected %t, got %t", corsEnabled, newBucket.CorsEnabled)
+	}
+
+	if newBucket.ACL != opts.ACL {
+		t.Errorf("ObjectStorageBucket access ACL does not match update, expected %s, got %s", opts.ACL, newBucket.ACL)
+	}
+}
+
+type objectStorageBucketModifier func(*ObjectStorageBucketCreateOptions)
+
+func setupObjectStorageBucket(t *testing.T, bucketModifiers []objectStorageBucketModifier, fixturesYaml string) (*Client, *ObjectStorageBucket, func(), error) {
 	t.Helper()
 
-	client, fixtureTeardown := createTestClient(t, fixturesYaml)
-	bucket, err := client.CreateObjectStorageBucket(context.Background(), testObjectStorageBucketCreateOpts)
+	createOpts := testObjectStorageBucketCreateOpts
 
+	for _, modifier := range bucketModifiers {
+		modifier(&createOpts)
+	}
+
+	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+	bucket, err := client.CreateObjectStorageBucket(context.Background(), createOpts)
 	if err != nil {
 		t.Errorf("Error creating test Bucket: %s", err)
 	}

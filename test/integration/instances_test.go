@@ -2,6 +2,7 @@ package integration
 
 import (
 	"context"
+	"reflect"
 	"strconv"
 	"testing"
 
@@ -256,6 +257,53 @@ func TestUpdateInstanceConfig(t *testing.T) {
 	}
 }
 
+func TestUpdateInstanceConfigInterfaces(t *testing.T) {
+	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestUpdateInstanceConfigInterfaces", func(opts *linodego.InstanceCreateOptions) {
+		// Ensure we're in a region that supports VLANs
+		opts.Region = "us-southeast"
+	})
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	updateConfigOpts := linodego.InstanceConfigUpdateOptions{
+		Interfaces: []linodego.InstanceConfigInterface{
+			{
+				Purpose: linodego.InterfacePurposePublic,
+			},
+			{
+				Purpose: linodego.InterfacePurposeVLAN,
+				Label:   "linodego-cool-vlan",
+			},
+		},
+	}
+
+	_, err = client.UpdateInstanceConfig(context.Background(), instance.ID, config.ID, updateConfigOpts)
+	if err != nil {
+		t.Error(err)
+	}
+
+	result, err := client.GetInstanceConfig(context.Background(), instance.ID, config.ID)
+	if err != nil {
+		t.Error(err)
+	}
+
+	if !reflect.DeepEqual(result.Interfaces, updateConfigOpts.Interfaces) {
+		t.Error("failed to update linode interfaces: configs do not match")
+	}
+
+	// Ensure that a nil value will not update interfaces
+	_, err = client.UpdateInstanceConfig(context.Background(), instance.ID, config.ID, linodego.InstanceConfigUpdateOptions{})
+	if err != nil {
+		t.Error(err)
+	}
+
+	if !reflect.DeepEqual(result.Interfaces, updateConfigOpts.Interfaces) {
+		t.Error("failed to update linode interfaces: configs do not match")
+	}
+}
+
 func TestListInstanceVolumes(t *testing.T) {
 	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestListInstanceVolumes_instance")
 	defer teardown()
@@ -325,7 +373,7 @@ func createInstance(t *testing.T, client *linodego.Client, modifiers ...instance
 	createOpts := linodego.InstanceCreateOptions{
 		Label:    "linodego-test-instance",
 		RootPass: "R34lBAdP455",
-		Region:   "us-west",
+		Region:   "ca-central",
 		Type:     "g6-nanode-1",
 		Image:    "linode/debian9",
 		Booted:   &booted,
@@ -359,7 +407,7 @@ func setupInstance(t *testing.T, fixturesYaml string) (*linodego.Client, *linode
 	return client, instance, teardown, err
 }
 
-func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.Instance, *linodego.InstanceConfig, func(), error) {
+func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string, modifiers ...instanceModifier) (*linodego.Client, *linodego.Instance, *linodego.InstanceConfig, func(), error) {
 	t.Helper()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	falseBool := false
@@ -369,6 +417,11 @@ func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string) (*linodego.Cli
 		Type:   "g6-nanode-1",
 		Booted: &falseBool,
 	}
+
+	for _, modifier := range modifiers {
+		modifier(&createOpts)
+	}
+
 	instance, err := client.CreateInstance(context.Background(), createOpts)
 	if err != nil {
 		t.Errorf("Error creating test Instance: %s", err)

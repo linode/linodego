@@ -320,10 +320,12 @@ func Example() {
 	// ## Your Stackscripts: true
 }
 
-const lowerBytes = "abcdefghijklmnopqrstuvwxyz"
-const upperBytes = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-const digits = "0123456789"
-const symbols = "/-=+@#$^&*()~!`|[]{}\\?,.<>;:'"
+const (
+	lowerBytes = "abcdefghijklmnopqrstuvwxyz"
+	upperBytes = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	digits     = "0123456789"
+	symbols    = "/-=+@#$^&*()~!`|[]{}\\?,.<>;:'"
+)
 
 func randString(length int, characterClasses ...string) string {
 	quotient := (0.0 + float64(length)) / float64(len(characterClasses))

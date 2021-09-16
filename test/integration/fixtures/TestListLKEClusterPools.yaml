@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null}],"label":"a83ef3go2h76-linodego-testing","region":"us-central","k8s_version":"1.17","tags":["testing"]}'
+    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"]}],"label":"xf886ld17qx5-linodego-testing","region":"us-central","k8s_version":"1.21","tags":["testing"]}'
     form: {}
     headers:
       Accept:
@@ -10,13 +10,11 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 8265, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "label": "a83ef3go2h76-linodego-testing", "region": "us-central",
-      "k8s_version": "1.17", "tags": ["testing"]}'
+    body: '{"id": 30053, "status": "ready", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "label": "xf886ld17qx5-linodego-testing", "region": "us-central", "k8s_version": "1.21", "tags": ["testing"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -31,15 +29,11 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "209"
+      - "210"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Mon, 27 Jul 2020 16:42:09 GMT
-      Retry-After:
-      - "53"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -57,19 +51,13 @@ interactions:
       - '*'
       X-Ratelimit-Limit:
       - "800"
-      X-Ratelimit-Remaining:
-      - "799"
-      X-Ratelimit-Reset:
-      - "1595868183"
-      X-Spec-Version:
-      - 4.69.2
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"count":1,"type":"g6-standard-2","disks":[{"size":1000,"type":"ext4"}]}'
+    body: '{"count":1,"type":"g6-standard-2","disks":[{"size":1000,"type":"ext4"}],"tags":["testing"]}'
     form: {}
     headers:
       Accept:
@@ -77,13 +65,11 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/8265/pools
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/30053/pools
     method: POST
   response:
-    body: '{"id": 10373, "type": "g6-standard-2", "count": 1, "nodes": [{"id": "10373-5f1f03e19443",
-      "instance_id": null, "status": "not_ready"}], "disks": [{"size": 1000, "type":
-      "ext4"}]}'
+    body: '{"id": 45025, "type": "g6-standard-2", "count": 1, "nodes": [{"id": "45025-60d9e17880f8", "instance_id": null, "status": "not_ready"}], "disks": [{"size": 1000, "type": "ext4"}], "tags": ["testing"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -98,15 +84,11 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "178"
+      - "199"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Mon, 27 Jul 2020 16:42:09 GMT
-      Retry-After:
-      - "53"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -124,12 +106,6 @@ interactions:
       - '*'
       X-Ratelimit-Limit:
       - "800"
-      X-Ratelimit-Remaining:
-      - "798"
-      X-Ratelimit-Reset:
-      - "1595868183"
-      X-Spec-Version:
-      - 4.69.2
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -144,15 +120,11 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/8265/pools
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/30053/pools
     method: GET
   response:
-    body: '{"data": [{"id": 10372, "type": "g6-standard-2", "count": 1, "nodes": [{"id":
-      "10372-5f1f03e14188", "instance_id": null, "status": "not_ready"}], "disks":
-      []}, {"id": 10373, "type": "g6-standard-2", "count": 1, "nodes": [{"id": "10373-5f1f03e19443",
-      "instance_id": null, "status": "not_ready"}], "disks": [{"size": 1000, "type":
-      "ext4"}]}], "page": 1, "pages": 1, "results": 2}'
+    body: '{"data": [{"id": 45024, "type": "g6-standard-2", "count": 1, "nodes": [{"id": "45024-60d9e17805d6", "instance_id": null, "status": "not_ready"}], "disks": [], "tags": ["test"]}, {"id": 45025, "type": "g6-standard-2", "count": 1, "nodes": [{"id": "45025-60d9e17880f8", "instance_id": null, "status": "not_ready"}], "disks": [{"size": 1000, "type": "ext4"}], "tags": ["testing"]}], "page": 1, "pages": 1, "results": 2}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -168,15 +140,11 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "377"
+      - "416"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Mon, 27 Jul 2020 16:42:09 GMT
-      Retry-After:
-      - "53"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -195,12 +163,6 @@ interactions:
       - '*'
       X-Ratelimit-Limit:
       - "800"
-      X-Ratelimit-Remaining:
-      - "797"
-      X-Ratelimit-Reset:
-      - "1595868183"
-      X-Spec-Version:
-      - 4.69.2
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -215,8 +177,8 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/8265/pools/10373
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/30053/pools/45025
     method: DELETE
   response:
     body: '{}'
@@ -239,10 +201,6 @@ interactions:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Mon, 27 Jul 2020 16:42:10 GMT
-      Retry-After:
-      - "52"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -260,12 +218,6 @@ interactions:
       - '*'
       X-Ratelimit-Limit:
       - "800"
-      X-Ratelimit-Remaining:
-      - "796"
-      X-Ratelimit-Reset:
-      - "1595868183"
-      X-Spec-Version:
-      - 4.69.2
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -280,8 +232,8 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/8265
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/30053
     method: DELETE
   response:
     body: '{}'
@@ -304,10 +256,6 @@ interactions:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Mon, 27 Jul 2020 16:42:10 GMT
-      Retry-After:
-      - "52"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -325,12 +273,6 @@ interactions:
       - '*'
       X-Ratelimit-Limit:
       - "800"
-      X-Ratelimit-Remaining:
-      - "795"
-      X-Ratelimit-Reset:
-      - "1595868183"
-      X-Spec-Version:
-      - 4.69.2
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

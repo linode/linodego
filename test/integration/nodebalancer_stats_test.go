@@ -34,7 +34,7 @@ poll:
 					t.Fatal(err)
 				}
 			}
-			if err == nil { //stats are now returning
+			if err == nil { // stats are now returning
 				break poll
 			}
 		case <-timer.C:

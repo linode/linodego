@@ -227,7 +227,6 @@ func (resp *NodeBalancerConfigsPagedResponse) appendData(r *NodeBalancerConfigsP
 func (c *Client) ListNodeBalancerConfigs(ctx context.Context, nodebalancerID int, opts *ListOptions) ([]NodeBalancerConfig, error) {
 	response := NodeBalancerConfigsPagedResponse{}
 	err := c.listHelperWithID(ctx, &response, nodebalancerID, opts)
-
 	if err != nil {
 		return nil, err
 	}
@@ -252,7 +251,6 @@ func (c *Client) GetNodeBalancerConfig(ctx context.Context, nodebalancerID int, 
 func (c *Client) CreateNodeBalancerConfig(ctx context.Context, nodebalancerID int, nodebalancerConfig NodeBalancerConfigCreateOptions) (*NodeBalancerConfig, error) {
 	var body string
 	e, err := c.NodeBalancerConfigs.endpointWithParams(nodebalancerID)
-
 	if err != nil {
 		return nil, err
 	}
@@ -269,7 +267,6 @@ func (c *Client) CreateNodeBalancerConfig(ctx context.Context, nodebalancerID in
 		SetHeader("Content-Type", "application/json").
 		SetBody(body).
 		Post(e))
-
 	if err != nil {
 		return nil, err
 	}
@@ -296,7 +293,6 @@ func (c *Client) UpdateNodeBalancerConfig(ctx context.Context, nodebalancerID in
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Put(e))
-
 	if err != nil {
 		return nil, err
 	}
@@ -335,7 +331,6 @@ func (c *Client) RebuildNodeBalancerConfig(ctx context.Context, nodeBalancerID i
 	r, err := coupleAPIErrors(req.
 		SetBody(body).
 		Post(e))
-
 	if err != nil {
 		return nil, err
 	}

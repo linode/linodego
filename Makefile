@@ -5,7 +5,7 @@ INTEGRATION_DIR := ./test/integration
 FIXTURES_DIR    := $(INTEGRATION_DIR)/fixtures
 
 GOLANGCILINT      := golangci-lint
-GOLANGCILINT_IMG  := golangci/golangci-lint:v1.23-alpine
+GOLANGCILINT_IMG  := golangci/golangci-lint:v1.38-alpine
 GOLANGCILINT_ARGS := run
 
 PACKAGES := $(shell go list ./... | grep -v integration)
