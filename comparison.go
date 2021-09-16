@@ -65,7 +65,7 @@ func (l LogicalOperator) String() string {
 
 type FilterNode interface {
 	GetChildren() []FilterNode
-	Json() string
+	JSON() string
 }
 
 type Filter struct {
@@ -77,10 +77,10 @@ func (f *Filter) GetChildren() []FilterNode {
 	return f.Children
 }
 
-func (f *Filter) Json() string {
-	var children []string
+func (f *Filter) JSON() string {
+	children := make([]string, 0, len(f.Children))
 	for _, c := range f.Children {
-		children = append(children, c.Json())
+		children = append(children, c.JSON())
 	}
 	return fmt.Sprintf("\"%s\": [%s]", f.Operator, strings.Join(children, ", "))
 }
@@ -88,20 +88,33 @@ func (f *Filter) Json() string {
 type Comparison struct {
 	Column   string
 	Operator ComparisonOperator
-	Value    string
+	Value    interface{}
 }
 
 func (c *Comparison) GetChildren() []FilterNode {
 	return []FilterNode{}
 }
 
-func (c *Comparison) Json() string {
+func (c *Comparison) JSON() string {
 	if c.Operator == Eq {
-		return fmt.Sprintf("{\"%s\": \"%s\"}", c.Column, c.Value)
+		if _, ok := c.Value.(string); ok {
+			return fmt.Sprintf("{\"%s\": \"%s\"}", c.Column, c.Value)
+		}
+		if _, ok := c.Value.(int); ok {
+			return fmt.Sprintf("{\"%s\": %d}", c.Column, c.Value)
+		}
 	}
 
-	return fmt.Sprintf("{\"%s\": {\"%s\": \"%s\"}}",
-		c.Column, c.Operator, c.Value)
+	if _, ok := c.Value.(string); ok {
+		return fmt.Sprintf("{\"%s\": {\"%s\": \"%s\"}",
+			c.Column, c.Operator, c.Value)
+	}
+	if _, ok := c.Value.(int); ok {
+		return fmt.Sprintf("{\"%s\": {\"%s\": %d}",
+			c.Column, c.Operator, c.Value)
+	}
+
+	return ""
 }
 
 func And(nodes ...FilterNode) *Filter {
