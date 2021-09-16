@@ -1,9 +1,6 @@
 package linodego
 
-import (
-	"fmt"
-	"testing"
-)
+import "testing"
 
 func TestComparisonOperator(t *testing.T) {
 	var opTests = []struct {
@@ -55,7 +52,6 @@ func TestFilter(t *testing.T) {
 		Value:    "standard",
 	}
 	out := And(c1, c2)
-	fmt.Println(out.JSON())
 	if out.JSON() != expected {
 		t.Fatal(out.JSON(), " doesn't match ", expected)
 	}
