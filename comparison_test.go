@@ -2,56 +2,57 @@ package linodego
 
 import "testing"
 
-func TestComparisonOperator(t *testing.T) {
-	var opTests = []struct {
-		in  ComparisonOperator
-		out string
-	}{
-		{Eq, "+eq"},
-		{Neq, "+neq"},
-		{Gt, "+gt"},
-		{Gte, "+gte"},
-		{Lt, "+lt"},
-		{Lte, "+lte"},
-		{Contains, "+contains"},
-	}
-	for _, tests := range opTests {
-		out := tests.in.String()
-		if out != tests.out {
-			t.Fatal(out, " doesn't match ", tests.out)
-		}
-	}
-}
-
-func TestLogicalOperator(t *testing.T) {
-	var opTests = []struct {
-		in  LogicalOperator
-		out string
-	}{
-		{LogicalOr, "+or"},
-		{LogicalAnd, "+and"},
-	}
-	for _, tests := range opTests {
-		out := tests.in.String()
-		if out != tests.out {
-			t.Fatal(out, " doesn't match ", tests.out)
-		}
-	}
-}
-
 func TestFilter(t *testing.T) {
-	expected := `"+and": [{"vcpus": {"+gte": 12}, {"class": "standard"}]`
-	c1 := &Comparison{
-		Column:   "vcpus",
-		Operator: Gte,
-		Value:    12,
+	expected := `"vcpus": {"+gte": 12}, {"class": "standard"}`
+	f := Filter{}
+	f.Add(&Comp{"vcpus", Gte, 12})
+	f.Add(&Comp{"class", Eq, "standard"})
+	if f.JSON() != expected {
+		t.Fatal(f.JSON(), " doesn't match ", expected)
 	}
-	c2 := &Comparison{
-		Column:   "class",
-		Operator: Eq,
-		Value:    "standard",
+}
+
+func TestAscending(t *testing.T) {
+	expected := `{"vcpus": {"+gte": 12}}, {"class": "standard"}, "+order_by": "class", "+order": "asc"`
+	f := Filter{
+		Order:   Ascending,
+		OrderBy: "class",
 	}
-	out := And(c1, c2)
+	f.Add(&Comp{"vcpus", Gte, 12})
+	f.Add(&Comp{"class", Eq, "standard"})
+	if f.JSON() != expected {
+		t.Fatal(f.JSON(), " doesn't match ", expected)
+	}
+}
+
+func TestDescending(t *testing.T) {
+	expected := `{"vcpus": {"+gte": 12}}, {"class": "standard"}, "+order_by": "class", "+order": "desc"`
+	f := Filter{
+		Order:   Descending,
+		OrderBy: "class",
+	}
+	f.Add(&Comp{"vcpus", Gte, 12})
+	f.Add(&Comp{"class", Eq, "standard"})
+	if f.JSON() != expected {
+		t.Fatal(f.JSON(), " doesn't match ", expected)
+	}
+}
+
+func TestAnd(t *testing.T) {
+	expected := `"+and": [{"vcpus": {"+gte": 12}}, {"class": "standard"}]`
+	c1 := &Comp{"vcpus", Gte, 12}
+	c2 := &Comp{"class", Eq, "standard"}
+	out := And("", "", c1, c2)
+	if out.JSON() != expected {
+		t.Fatal(out.JSON(), " doesn't match ", expected)
+	}
+}
+
+func TestOr(t *testing.T) {
+	expected := `"+or": [{"vcpus": {"+gte": 12}}, {"class": "standard"}]`
+	c1 := &Comp{"vcpus", Gte, 12}
+	c2 := &Comp{"class", Eq, "standard"}
+	out := Or("", "", c1, c2)
 	if out.JSON() != expected {
 		t.Fatal(out.JSON(), " doesn't match ", expected)
 	}

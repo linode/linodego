@@ -1,76 +1,36 @@
 package linodego
 
-/**
- * Pagination and Filtering types and helpers
- */
-
 import (
 	"fmt"
 	"strings"
 )
 
-type ComparisonOperator int
-
 const (
-	Eq = iota
-	Neq
-
-	Gt
-	Gte
-
-	Lt
-	Lte
-
-	Contains
+	Eq         = "+eq"
+	Neq        = "+neq"
+	Gt         = "+gt"
+	Gte        = "+gte"
+	Lt         = "+lt"
+	Lte        = "+lte"
+	Contains   = "+contains"
+	Ascending  = "asc"
+	Descending = "desc"
 )
-
-func (c ComparisonOperator) String() string {
-	switch c {
-	case Eq:
-		return "+eq"
-	case Neq:
-		return "+neq"
-	case Gt:
-		return "+gt"
-	case Gte:
-		return "+gte"
-	case Lt:
-		return "+lt"
-	case Lte:
-		return "+lte"
-	case Contains:
-		return "+contains"
-	default:
-		return "Unknown ComparisonOperator"
-	}
-}
-
-type LogicalOperator int
-
-const (
-	LogicalAnd = iota
-	LogicalOr
-)
-
-func (l LogicalOperator) String() string {
-	switch l {
-	case LogicalAnd:
-		return "+and"
-	case LogicalOr:
-		return "+or"
-	default:
-		return "Unknown LogicalOperator"
-	}
-}
 
 type FilterNode interface {
-	GetChildren() []FilterNode
 	JSON() string
+	GetChildren() []FilterNode
 }
 
 type Filter struct {
-	Operator LogicalOperator
+	Operator string
 	Children []FilterNode
+	OrderBy  string
+	Order    string
+}
+
+func (f *Filter) Add(c *Comp) {
+	f.Children = append(f.Children, c)
 }
 
 func (f *Filter) GetChildren() []FilterNode {
@@ -82,34 +42,48 @@ func (f *Filter) JSON() string {
 	for _, c := range f.Children {
 		children = append(children, c.JSON())
 	}
+	if f.OrderBy != "" {
+		orderBy := fmt.Sprintf("\"+order_by\": \"%s\"", f.OrderBy)
+		order := fmt.Sprintf("\"+order\": \"%s\"", f.Order)
+		if f.Operator == "" {
+			return fmt.Sprintf("%s, %s, %s",
+				strings.Join(children, ", "), orderBy, order)
+		}
+		return fmt.Sprintf("\"%s\": [%s], %s, %s", f.Operator,
+			strings.Join(children, ", "), orderBy, order)
+	}
+	if f.Operator == "" {
+		return fmt.Sprintf("%s", strings.Join(children, ", "))
+	}
 	return fmt.Sprintf("\"%s\": [%s]", f.Operator, strings.Join(children, ", "))
 }
 
-type Comparison struct {
+type Comp struct {
 	Column   string
-	Operator ComparisonOperator
+	Operator string
 	Value    interface{}
 }
 
-func (c *Comparison) GetChildren() []FilterNode {
+func (c *Comp) GetChildren() []FilterNode {
 	return []FilterNode{}
 }
 
-func (c *Comparison) JSON() string {
+func (c *Comp) JSON() string {
 	if c.Operator == Eq {
-		return fmt.Sprintf("{\"%s\": %s}", c.Column, getJSONValueString(c.Value))
+		return fmt.Sprintf("{\"%s\": %s}", c.Column,
+			getJSONValueString(c.Value))
 	}
 
-	return fmt.Sprintf("{\"%s\": {\"%s\": %s}",
-		c.Column, c.Operator, getJSONValueString(c.Value))
+	return fmt.Sprintf("{\"%s\": {\"%s\": %s}}", c.Column, c.Operator,
+		getJSONValueString(c.Value))
 }
 
-func And(nodes ...FilterNode) *Filter {
-	return &Filter{LogicalAnd, nodes}
+func Or(order string, orderBy string, nodes ...FilterNode) *Filter {
+	return &Filter{"+or", nodes, orderBy, order}
 }
 
-func Or(nodes ...FilterNode) *Filter {
-	return &Filter{LogicalOr, nodes}
+func And(order string, orderBy string, nodes ...FilterNode) *Filter {
+	return &Filter{"+and", nodes, orderBy, order}
 }
 
 func getJSONValueString(value interface{}) string {
