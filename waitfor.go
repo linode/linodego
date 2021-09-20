@@ -263,7 +263,7 @@ func (client Client) WaitForEventFinished(ctx context.Context, id interface{}, e
 		OrderBy: "created",
 	}
 	filter.Add(&Comp{"action", Eq, action})
-	filter.Add(&Comp{"created", Gte, "2006-01-02T15:04:05"})
+	filter.Add(&Comp{"created", Gte, minStart.UTC().Format("2006-01-02T15:04:05")})
 
 	// Optimistically restrict results to page 1.  We should remove this when more
 	// precise filtering options exist.
