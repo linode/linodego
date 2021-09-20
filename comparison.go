@@ -53,7 +53,7 @@ func (f *Filter) JSON() string {
 			strings.Join(children, ", "), orderBy, order)
 	}
 	if f.Operator == "" {
-		return fmt.Sprintf("%s", strings.Join(children, ", "))
+		return strings.Join(children, ", ")
 	}
 	return fmt.Sprintf("\"%s\": [%s]", f.Operator, strings.Join(children, ", "))
 }
