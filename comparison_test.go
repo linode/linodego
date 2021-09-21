@@ -7,7 +7,7 @@ import (
 )
 
 func TestFilter(t *testing.T) {
-	expected := map[string]interface{} {
+	expected := map[string]interface{}{
 		"vcpus": map[string]interface{}{
 			"+gte": 12,
 		},
@@ -20,8 +20,8 @@ func TestFilter(t *testing.T) {
 	}
 
 	f := Filter{}
-	f.Add(&Comp{"vcpus", Gte, 12})
-	f.Add(&Comp{"class", Eq, "standard"})
+	f.AddField(Gte, "vcpus", 12)
+	f.AddField(Eq, "class", "standard")
 
 	result, err := f.MarshalJSON()
 	if err != nil {
@@ -34,13 +34,13 @@ func TestFilter(t *testing.T) {
 }
 
 func TestFilterAscending(t *testing.T) {
-	expected := map[string]interface{} {
+	expected := map[string]interface{}{
 		"vcpus": map[string]interface{}{
 			"+gte": 12,
 		},
-		"class": "standard",
+		"class":     "standard",
 		"+order_by": "class",
-		"+order": "asc",
+		"+order":    "asc",
 	}
 
 	expectedStr, err := json.Marshal(expected)
@@ -52,8 +52,8 @@ func TestFilterAscending(t *testing.T) {
 		Order:   Ascending,
 		OrderBy: "class",
 	}
-	f.Add(&Comp{"vcpus", Gte, 12})
-	f.Add(&Comp{"class", Eq, "standard"})
+	f.AddField(Gte, "vcpus", 12)
+	f.AddField(Eq, "class", "standard")
 
 	result, err := f.MarshalJSON()
 	if err != nil {
@@ -66,13 +66,13 @@ func TestFilterAscending(t *testing.T) {
 }
 
 func TestFilterDescending(t *testing.T) {
-	expected := map[string]interface{} {
+	expected := map[string]interface{}{
 		"vcpus": map[string]interface{}{
 			"+gte": 12,
 		},
-		"class": "standard",
+		"class":     "standard",
 		"+order_by": "class",
-		"+order": "desc",
+		"+order":    "desc",
 	}
 
 	expectedStr, err := json.Marshal(expected)
@@ -84,8 +84,8 @@ func TestFilterDescending(t *testing.T) {
 		Order:   Descending,
 		OrderBy: "class",
 	}
-	f.Add(&Comp{"vcpus", Gte, 12})
-	f.Add(&Comp{"class", Eq, "standard"})
+	f.AddField(Gte, "vcpus", 12)
+	f.AddField(Eq, "class", "standard")
 
 	result, err := f.MarshalJSON()
 	if err != nil {
@@ -98,7 +98,7 @@ func TestFilterDescending(t *testing.T) {
 }
 
 func TestFilterAnd(t *testing.T) {
-	expected := map[string]interface{} {
+	expected := map[string]interface{}{
 		"+and": []map[string]interface{}{
 			{
 				"vcpus": map[string]interface{}{
@@ -131,7 +131,7 @@ func TestFilterAnd(t *testing.T) {
 }
 
 func TestFilterOr(t *testing.T) {
-	expected := map[string]interface{} {
+	expected := map[string]interface{}{
 		"+or": []map[string]interface{}{
 			{
 				"vcpus": map[string]interface{}{

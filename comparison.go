@@ -4,37 +4,37 @@ import (
 	"encoding/json"
 )
 
+type FilterOperator string
+
 const (
-	Eq         = "+eq"
-	Neq        = "+neq"
-	Gt         = "+gt"
-	Gte        = "+gte"
-	Lt         = "+lt"
-	Lte        = "+lte"
-	Contains   = "+contains"
-	Ascending  = "asc"
-	Descending = "desc"
+	Eq         FilterOperator = "+eq"
+	Neq        FilterOperator = "+neq"
+	Gt         FilterOperator = "+gt"
+	Gte        FilterOperator = "+gte"
+	Lt         FilterOperator = "+lt"
+	Lte        FilterOperator = "+lte"
+	Contains   FilterOperator = "+contains"
+	Ascending                 = "asc"
+	Descending                = "desc"
 )
 
 type FilterNode interface {
-	GetChildren() []FilterNode
 	Key() string
 	JSONValueSegment() interface{}
 }
 
 type Filter struct {
+	// Operator is the logic for all Children nodes ("+and"/"+or")
 	Operator string
 	Children []FilterNode
-	OrderBy  string
-	Order    string
+	// OrderBy is the field you want to order your results by (ex: "+order_by": "class")
+	OrderBy string
+	// Order is the direction in which to order the results ("+order": "asc"/"desc")
+	Order string
 }
 
-func (f *Filter) Add(c *Comp) {
-	f.Children = append(f.Children, c)
-}
-
-func (f *Filter) GetChildren() []FilterNode {
-	return f.Children
+func (f *Filter) AddField(op FilterOperator, key string, value interface{}) {
+	f.Children = append(f.Children, &Comp{key, op, value})
 }
 
 func (f *Filter) MarshalJSON() ([]byte, error) {
@@ -70,12 +70,8 @@ func (f *Filter) MarshalJSON() ([]byte, error) {
 
 type Comp struct {
 	Column   string
-	Operator string
+	Operator FilterOperator
 	Value    interface{}
-}
-
-func (c *Comp) GetChildren() []FilterNode {
-	return []FilterNode{}
 }
 
 func (c *Comp) Key() string {
@@ -88,7 +84,7 @@ func (c *Comp) JSONValueSegment() interface{} {
 	}
 
 	return map[string]interface{}{
-		c.Operator: c.Value,
+		string(c.Operator): c.Value,
 	}
 }
 

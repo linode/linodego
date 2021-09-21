@@ -262,8 +262,8 @@ func (client Client) WaitForEventFinished(ctx context.Context, id interface{}, e
 		Order:   Descending,
 		OrderBy: "created",
 	}
-	filter.Add(&Comp{"action", Eq, action})
-	filter.Add(&Comp{"created", Gte, minStart.UTC().Format("2006-01-02T15:04:05")})
+	filter.AddField(Eq, "action", action)
+	filter.AddField(Gte, "created", minStart.UTC().Format("2006-01-02T15:04:05"))
 
 	// Optimistically restrict results to page 1.  We should remove this when more
 	// precise filtering options exist.
@@ -278,8 +278,8 @@ func (client Client) WaitForEventFinished(ctx context.Context, id interface{}, e
 		if err != nil {
 			return nil, fmt.Errorf("Error parsing Entity ID %q for optimized WaitForEventFinished EventType %q: %s", id, entityType, err)
 		}
-		filter.Add(&Comp{"entity.id", Eq, filterableEntityID})
-		filter.Add(&Comp{"entity.type", Eq, entityType})
+		filter.AddField(Eq, "entity.id", filterableEntityID)
+		filter.AddField(Eq, "entity.type", entityType)
 
 		// TODO: are we conformatable with pages = 0 with the event type and id filter?
 	}
@@ -304,7 +304,7 @@ func (client Client) WaitForEventFinished(ctx context.Context, id interface{}, e
 		select {
 		case <-ticker.C:
 			if lastEventID > 0 {
-				filter.Add(&Comp{"id", Gte, lastEventID})
+				filter.AddField(Gte, "id", lastEventID)
 			}
 
 			filterStr, err := filter.MarshalJSON()

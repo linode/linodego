@@ -109,8 +109,13 @@ values are set in the supplied ListOptions.
 #### Filtering
 
 ```go
-opts := linodego.ListOptions{Filter: "{\"mine\":true}"}
-// or opts := linodego.NewListOptions(0, "{\"mine\":true}")
+f := linodego.Filter{}
+f.AddField(linodego.Eq, "mine", true)
+fStr, err := f.MarshalJSON()
+if err != nil {
+    log.Fatal(err)
+}
+opts := linodego.NewListOptions(0, string(fStr))
 stackscripts, err := linodego.ListStackscripts(context.Background(), opts)
 ```
 
