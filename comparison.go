@@ -1,121 +1,97 @@
 package linodego
 
-/**
- * Pagination and Filtering types and helpers
- */
-
 import (
-	"fmt"
-	"strings"
+	"encoding/json"
 )
 
-type ComparisonOperator int
+type FilterOperator string
 
 const (
-	Eq = iota
-	Neq
-
-	Gt
-	Gte
-
-	Lt
-	Lte
-
-	Contains
+	Eq         FilterOperator = "+eq"
+	Neq        FilterOperator = "+neq"
+	Gt         FilterOperator = "+gt"
+	Gte        FilterOperator = "+gte"
+	Lt         FilterOperator = "+lt"
+	Lte        FilterOperator = "+lte"
+	Contains   FilterOperator = "+contains"
+	Ascending                 = "asc"
+	Descending                = "desc"
 )
-
-func (c ComparisonOperator) String() string {
-	switch c {
-	case Eq:
-		return "+eq"
-	case Neq:
-		return "+neq"
-	case Gt:
-		return "+gt"
-	case Gte:
-		return "+gte"
-	case Lt:
-		return "+lt"
-	case Lte:
-		return "+lte"
-	case Contains:
-		return "+contains"
-	default:
-		return "Unknown ComparisonOperator"
-	}
-}
-
-type LogicalOperator int
-
-const (
-	LogicalAnd = iota
-	LogicalOr
-)
-
-func (l LogicalOperator) String() string {
-	switch l {
-	case LogicalAnd:
-		return "+and"
-	case LogicalOr:
-		return "+or"
-	default:
-		return "Unknown LogicalOperator"
-	}
-}
 
 type FilterNode interface {
-	GetChildren() []FilterNode
-	JSON() string
+	Key() string
+	JSONValueSegment() interface{}
 }
 
 type Filter struct {
-	Operator LogicalOperator
+	// Operator is the logic for all Children nodes ("+and"/"+or")
+	Operator string
 	Children []FilterNode
+	// OrderBy is the field you want to order your results by (ex: "+order_by": "class")
+	OrderBy string
+	// Order is the direction in which to order the results ("+order": "asc"/"desc")
+	Order string
 }
 
-func (f *Filter) GetChildren() []FilterNode {
-	return f.Children
+func (f *Filter) AddField(op FilterOperator, key string, value interface{}) {
+	f.Children = append(f.Children, &Comp{key, op, value})
 }
 
-func (f *Filter) JSON() string {
-	children := make([]string, 0, len(f.Children))
-	for _, c := range f.Children {
-		children = append(children, c.JSON())
+func (f *Filter) MarshalJSON() ([]byte, error) {
+	result := make(map[string]interface{})
+
+	if f.OrderBy != "" {
+		result["+order_by"] = f.OrderBy
 	}
-	return fmt.Sprintf("\"%s\": [%s]", f.Operator, strings.Join(children, ", "))
+
+	if f.Order != "" {
+		result["+order"] = f.Order
+	}
+
+	if f.Operator == "" {
+		for _, c := range f.Children {
+			result[c.Key()] = c.JSONValueSegment()
+		}
+
+		return json.Marshal(result)
+	}
+
+	fields := make([]map[string]interface{}, len(f.Children))
+	for i, c := range f.Children {
+		fields[i] = map[string]interface{}{
+			c.Key(): c.JSONValueSegment(),
+		}
+	}
+
+	result[f.Operator] = fields
+
+	return json.Marshal(result)
 }
 
-type Comparison struct {
+type Comp struct {
 	Column   string
-	Operator ComparisonOperator
+	Operator FilterOperator
 	Value    interface{}
 }
 
-func (c *Comparison) GetChildren() []FilterNode {
-	return []FilterNode{}
+func (c *Comp) Key() string {
+	return c.Column
 }
 
-func (c *Comparison) JSON() string {
+func (c *Comp) JSONValueSegment() interface{} {
 	if c.Operator == Eq {
-		return fmt.Sprintf("{\"%s\": %s}", c.Column, getJSONValueString(c.Value))
+		return c.Value
 	}
 
-	return fmt.Sprintf("{\"%s\": {\"%s\": %s}",
-		c.Column, c.Operator, getJSONValueString(c.Value))
-}
-
-func And(nodes ...FilterNode) *Filter {
-	return &Filter{LogicalAnd, nodes}
-}
-
-func Or(nodes ...FilterNode) *Filter {
-	return &Filter{LogicalOr, nodes}
-}
-
-func getJSONValueString(value interface{}) string {
-	if _, ok := value.(string); ok {
-		return fmt.Sprintf("\"%s\"", value)
+	return map[string]interface{}{
+		string(c.Operator): c.Value,
 	}
+}
 
-	return fmt.Sprintf("%v", value)
+func Or(order string, orderBy string, nodes ...FilterNode) *Filter {
+	return &Filter{"+or", nodes, orderBy, order}
+}
+
+func And(order string, orderBy string, nodes ...FilterNode) *Filter {
+	return &Filter{"+and", nodes, orderBy, order}
 }
