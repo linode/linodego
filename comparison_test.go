@@ -1,59 +1,164 @@
 package linodego
 
-import "testing"
+import (
+	"encoding/json"
+	"reflect"
+	"testing"
+)
 
 func TestFilter(t *testing.T) {
-	expected := `"vcpus": {"+gte": 12}, {"class": "standard"}`
+	expected := map[string]interface{} {
+		"vcpus": map[string]interface{}{
+			"+gte": 12,
+		},
+		"class": "standard",
+	}
+
+	expectedStr, err := json.Marshal(expected)
+	if err != nil {
+		t.Fatalf("failed to marshal expected json: %v", err)
+	}
+
 	f := Filter{}
 	f.Add(&Comp{"vcpus", Gte, 12})
 	f.Add(&Comp{"class", Eq, "standard"})
-	if f.JSON() != expected {
-		t.Fatal(f.JSON(), " doesn't match ", expected)
+
+	result, err := f.MarshalJSON()
+	if err != nil {
+		t.Fatalf("failed to marshal filter: %v", err)
+	}
+
+	if !reflect.DeepEqual(result, expectedStr) {
+		t.Fatal(string(result), " doesn't match ", string(expectedStr))
 	}
 }
 
-func TestAscending(t *testing.T) {
-	expected := `{"vcpus": {"+gte": 12}}, {"class": "standard"}, "+order_by": "class", "+order": "asc"`
+func TestFilterAscending(t *testing.T) {
+	expected := map[string]interface{} {
+		"vcpus": map[string]interface{}{
+			"+gte": 12,
+		},
+		"class": "standard",
+		"+order_by": "class",
+		"+order": "asc",
+	}
+
+	expectedStr, err := json.Marshal(expected)
+	if err != nil {
+		t.Fatalf("failed to marshal expected json: %v", err)
+	}
+
 	f := Filter{
 		Order:   Ascending,
 		OrderBy: "class",
 	}
 	f.Add(&Comp{"vcpus", Gte, 12})
 	f.Add(&Comp{"class", Eq, "standard"})
-	if f.JSON() != expected {
-		t.Fatal(f.JSON(), " doesn't match ", expected)
+
+	result, err := f.MarshalJSON()
+	if err != nil {
+		t.Fatalf("failed to marshal filter: %v", err)
+	}
+
+	if !reflect.DeepEqual(result, expectedStr) {
+		t.Fatal(string(result), " doesn't match ", string(expectedStr))
 	}
 }
 
-func TestDescending(t *testing.T) {
-	expected := `{"vcpus": {"+gte": 12}}, {"class": "standard"}, "+order_by": "class", "+order": "desc"`
+func TestFilterDescending(t *testing.T) {
+	expected := map[string]interface{} {
+		"vcpus": map[string]interface{}{
+			"+gte": 12,
+		},
+		"class": "standard",
+		"+order_by": "class",
+		"+order": "desc",
+	}
+
+	expectedStr, err := json.Marshal(expected)
+	if err != nil {
+		t.Fatalf("failed to marshal expected json: %v", err)
+	}
+
 	f := Filter{
 		Order:   Descending,
 		OrderBy: "class",
 	}
 	f.Add(&Comp{"vcpus", Gte, 12})
 	f.Add(&Comp{"class", Eq, "standard"})
-	if f.JSON() != expected {
-		t.Fatal(f.JSON(), " doesn't match ", expected)
+
+	result, err := f.MarshalJSON()
+	if err != nil {
+		t.Fatalf("failed to marshal filter: %v", err)
+	}
+
+	if !reflect.DeepEqual(result, expectedStr) {
+		t.Fatal(string(result), " doesn't match ", string(expectedStr))
 	}
 }
 
-func TestAnd(t *testing.T) {
-	expected := `"+and": [{"vcpus": {"+gte": 12}}, {"class": "standard"}]`
+func TestFilterAnd(t *testing.T) {
+	expected := map[string]interface{} {
+		"+and": []map[string]interface{}{
+			{
+				"vcpus": map[string]interface{}{
+					"+gte": 12,
+				},
+			},
+			{
+				"class": "standard",
+			},
+		},
+	}
+
+	expectedStr, err := json.Marshal(expected)
+	if err != nil {
+		t.Fatalf("failed to marshal expected json: %v", err)
+	}
+
 	c1 := &Comp{"vcpus", Gte, 12}
 	c2 := &Comp{"class", Eq, "standard"}
 	out := And("", "", c1, c2)
-	if out.JSON() != expected {
-		t.Fatal(out.JSON(), " doesn't match ", expected)
+
+	result, err := out.MarshalJSON()
+	if err != nil {
+		t.Fatalf("failed to marshal filter: %v", err)
+	}
+
+	if !reflect.DeepEqual(result, expectedStr) {
+		t.Fatal(string(result), " doesn't match ", string(expectedStr))
 	}
 }
 
-func TestOr(t *testing.T) {
-	expected := `"+or": [{"vcpus": {"+gte": 12}}, {"class": "standard"}]`
+func TestFilterOr(t *testing.T) {
+	expected := map[string]interface{} {
+		"+or": []map[string]interface{}{
+			{
+				"vcpus": map[string]interface{}{
+					"+gte": 12,
+				},
+			},
+			{
+				"class": "standard",
+			},
+		},
+	}
+
+	expectedStr, err := json.Marshal(expected)
+	if err != nil {
+		t.Fatalf("failed to marshal expected json: %v", err)
+	}
+
 	c1 := &Comp{"vcpus", Gte, 12}
 	c2 := &Comp{"class", Eq, "standard"}
 	out := Or("", "", c1, c2)
-	if out.JSON() != expected {
-		t.Fatal(out.JSON(), " doesn't match ", expected)
+
+	result, err := out.MarshalJSON()
+	if err != nil {
+		t.Fatalf("failed to marshal filter: %v", err)
+	}
+
+	if !reflect.DeepEqual(result, expectedStr) {
+		t.Fatal(string(result), " doesn't match ", string(expectedStr))
 	}
 }
