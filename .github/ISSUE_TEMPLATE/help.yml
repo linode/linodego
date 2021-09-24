@@ -1,0 +1,21 @@
+name: Help
+description: You're pretty sure it's not a bug but you can't figure out why it's not working
+title: "[Help]: "
+labels: ["help wanted"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What would you like this feature to do in detail?
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Example Code
+      description: How would you use this feature in some example code?
+      placeholder: |
+        ```go
+        var := linodego.NewFeature()
+        ```

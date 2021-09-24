@@ -1,0 +1,21 @@
+name: Enhancement
+description: Request a feature
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What would you like this feature to do in detail?
+    validations:
+      required: true
+  - type: textarea
+    id: example
+    attributes:
+      label: Example Code
+      description: How would you use this feature in some example code?
+      placeholder: |
+        ```go
+        var := linodego.NewFeature()
+        ```
