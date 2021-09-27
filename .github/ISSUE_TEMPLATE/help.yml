@@ -7,14 +7,15 @@ body:
     id: description
     attributes:
       label: Description
-      description: What would you like this feature to do in detail?
+      description: What are you attempting to do, what error messages are you getting?
     validations:
       required: true
+
   - type: textarea
-    id: example
+    id: code
     attributes:
-      label: Example Code
-      description: How would you use this feature in some example code?
+      label: Attempted Code
+      description: If your code is longer than a small snipit please use Gists
       placeholder: |
         ```go
         var := linodego.NewFeature()
