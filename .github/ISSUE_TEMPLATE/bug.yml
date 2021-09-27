@@ -11,6 +11,7 @@ body:
       placeholder: go version go1.17.1 linux/amd64
     validations:
       required: true
+
   - type: input
     id: linodego-version
     attributes:
@@ -19,12 +20,14 @@ body:
       placeholder: github.com/linode/linodego v1.0.0
     validations:
       required: true
+
   - type: textarea
     id: code
     attributes:
       render: go
       label: Code Snippet
       description: If your files are too long for a short code snippet please use GitHub Gists
+
   - type: textarea
     id: expected
     attributes:
@@ -32,6 +35,7 @@ body:
       description: What should have happened?
     validations:
       required: true
+
   - type: textarea
     id: actual
     attributes:
@@ -39,6 +43,7 @@ body:
       description: What actually happened?
     validations:
       required: true
+
   - type: textarea
     id: reproduce
     attributes:
