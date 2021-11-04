@@ -147,7 +147,13 @@ func (c *Client) SetBaseURL(url string) *Client {
 
 // SetAPIVersion sets the version of the API to interface with
 func (c *Client) SetAPIVersion(apiVersion string) *Client {
-	c.SetBaseURL(fmt.Sprintf("%s://%s/%s", APIProto, APIHost, apiVersion))
+	baseURL := c.resty.HostURL
+
+	if baseURL == "" {
+		baseURL = APIHost
+	}
+
+	c.SetBaseURL(fmt.Sprintf("%s://%s/%s", APIProto, baseURL, apiVersion))
 	return c
 }
 
