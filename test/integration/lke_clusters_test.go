@@ -80,11 +80,13 @@ func TestUpdateLKECluster(t *testing.T) {
 
 	updatedTags := []string{"test=true"}
 	updatedLabel := "new" + cluster.Label
-	updatedK8sVersion := "1.17"
+	updatedK8sVersion := "1.21"
+	updatedControlPlane := &linodego.LKEClusterControlPlane{HighAvailability: true}
 	updatedCluster, err := client.UpdateLKECluster(context.TODO(), cluster.ID, linodego.LKEClusterUpdateOptions{
 		Tags:       &updatedTags,
 		Label:      updatedLabel,
 		K8sVersion: updatedK8sVersion,
+		ControlPlane: updatedControlPlane,
 	})
 	if err != nil {
 		t.Fatalf("failed to update LKE Cluster (%d): %s", cluster.ID, err)
@@ -93,11 +95,17 @@ func TestUpdateLKECluster(t *testing.T) {
 	if updatedCluster.Label != updatedLabel {
 		t.Errorf("expected label to be updated to %q; got %q", updatedLabel, updatedCluster.Label)
 	}
+
 	if updatedCluster.K8sVersion != updatedK8sVersion {
 		t.Errorf("expected k8s version to be updated to %q; got %q", updatedK8sVersion, updatedCluster.K8sVersion)
 	}
+
 	if !reflect.DeepEqual(updatedTags, updatedCluster.Tags) {
 		t.Errorf("expected tags to be updated to %#v; got %#v", updatedTags, updatedCluster.Tags)
+	}
+
+	if !reflect.DeepEqual(*updatedControlPlane, updatedCluster.ControlPlane) {
+		t.Errorf("expected control plane to be updated to %#v; got %#v", updatedControlPlane, updatedCluster.ControlPlane)
 	}
 }
 
