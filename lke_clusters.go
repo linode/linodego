@@ -20,30 +20,33 @@ const (
 
 // LKECluster represents a LKECluster object
 type LKECluster struct {
-	ID         int              `json:"id"`
-	Created    *time.Time       `json:"-"`
-	Updated    *time.Time       `json:"-"`
-	Label      string           `json:"label"`
-	Region     string           `json:"region"`
-	Status     LKEClusterStatus `json:"status"`
-	K8sVersion string           `json:"k8s_version"`
-	Tags       []string         `json:"tags"`
+	ID           int                    `json:"id"`
+	Created      *time.Time             `json:"-"`
+	Updated      *time.Time             `json:"-"`
+	Label        string                 `json:"label"`
+	Region       string                 `json:"region"`
+	Status       LKEClusterStatus       `json:"status"`
+	K8sVersion   string                 `json:"k8s_version"`
+	Tags         []string               `json:"tags"`
+	ControlPlane LKEClusterControlPlane `json:"control_plane"`
 }
 
 // LKEClusterCreateOptions fields are those accepted by CreateLKECluster
 type LKEClusterCreateOptions struct {
-	NodePools  []LKEClusterPoolCreateOptions `json:"node_pools"`
-	Label      string                        `json:"label"`
-	Region     string                        `json:"region"`
-	K8sVersion string                        `json:"k8s_version"`
-	Tags       []string                      `json:"tags,omitempty"`
+	NodePools    []LKEClusterPoolCreateOptions `json:"node_pools"`
+	Label        string                        `json:"label"`
+	Region       string                        `json:"region"`
+	K8sVersion   string                        `json:"k8s_version"`
+	Tags         []string                      `json:"tags,omitempty"`
+	ControlPlane *LKEClusterControlPlane       `json:"control_plane,omitempty"`
 }
 
 // LKEClusterUpdateOptions fields are those accepted by UpdateLKECluster
 type LKEClusterUpdateOptions struct {
-	K8sVersion string    `json:"k8s_version,omitempty"`
-	Label      string    `json:"label,omitempty"`
-	Tags       *[]string `json:"tags,omitempty"`
+	K8sVersion   string                  `json:"k8s_version,omitempty"`
+	Label        string                  `json:"label,omitempty"`
+	Tags         *[]string               `json:"tags,omitempty"`
+	ControlPlane *LKEClusterControlPlane `json:"control_plane,omitempty"`
 }
 
 // LKEClusterAPIEndpoint fields are those returned by ListLKEClusterAPIEndpoints
@@ -54,6 +57,11 @@ type LKEClusterAPIEndpoint struct {
 // LKEClusterKubeconfig fields are those returned by GetLKEClusterKubeconfig
 type LKEClusterKubeconfig struct {
 	KubeConfig string `json:"kubeconfig"`
+}
+
+// LKEClusterControlPlane fields contained within the `control_plane` attribute of an LKE cluster.
+type LKEClusterControlPlane struct {
+	HighAvailability bool `json:"high_availability"`
 }
 
 // LKEVersion fields are those returned by GetLKEVersion
@@ -89,6 +97,7 @@ func (i LKECluster) GetCreateOptions() (o LKEClusterCreateOptions) {
 	o.Region = i.Region
 	o.K8sVersion = i.K8sVersion
 	o.Tags = i.Tags
+	o.ControlPlane = &i.ControlPlane
 	// @TODO copy NodePools?
 	return
 }
@@ -98,6 +107,7 @@ func (i LKECluster) GetUpdateOptions() (o LKEClusterUpdateOptions) {
 	o.K8sVersion = i.K8sVersion
 	o.Label = i.Label
 	o.Tags = &i.Tags
+	o.ControlPlane = &i.ControlPlane
 	return
 }
 
