@@ -6,7 +6,9 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
+	"path"
 	"strconv"
 	"time"
 
@@ -40,6 +42,8 @@ var envDebug = false
 type Client struct {
 	resty             *resty.Client
 	userAgent         string
+	baseURL           string
+	apiVersion        string
 	resources         map[string]*Resource
 	debug             bool
 	retryConditionals []RetryConditional
@@ -140,21 +144,38 @@ func (c *Client) SetDebug(debug bool) *Client {
 }
 
 // SetBaseURL sets the base URL of the Linode v4 API (https://api.linode.com/v4)
-func (c *Client) SetBaseURL(url string) *Client {
-	c.resty.SetHostURL(url)
+func (c *Client) SetBaseURL(baseURL string) *Client {
+	baseURLPath, _ := url.Parse(baseURL)
+
+	c.baseURL = path.Join(baseURLPath.Host, baseURLPath.Path)
+
+	c.updateHostURL()
+
 	return c
 }
 
 // SetAPIVersion sets the version of the API to interface with
 func (c *Client) SetAPIVersion(apiVersion string) *Client {
-	baseURL := c.resty.HostURL
+	c.apiVersion = apiVersion
 
-	if baseURL == "" {
-		baseURL = APIHost
+	c.updateHostURL()
+
+	return c
+}
+
+func (c *Client) updateHostURL() {
+	baseURL := APIHost
+	apiVersion := APIVersion
+
+	if c.baseURL != "" {
+		baseURL = c.baseURL
 	}
 
-	c.SetBaseURL(fmt.Sprintf("%s://%s/%s", APIProto, baseURL, apiVersion))
-	return c
+	if c.apiVersion != "" {
+		apiVersion = c.apiVersion
+	}
+
+	c.resty.SetHostURL(fmt.Sprintf("%s://%s/%s", APIProto, baseURL, apiVersion))
 }
 
 // SetRootCertificate adds a root certificate to the underlying TLS client config
