@@ -8,9 +8,14 @@ import (
 
 func TestClient_SetAPIVersion(t *testing.T) {
 	defaultURL := "https://api.linode.com/v4"
+
 	baseURL := "api.very.cool.com"
 	apiVersion := "v4beta"
 	expectedHost := fmt.Sprintf("https://%s/%s", baseURL, apiVersion)
+
+	updatedBaseURL := "api.more.cool.com"
+	updatedAPIVersion := "v4beta_changed"
+	updatedExpectedHost := fmt.Sprintf("https://%s/%s", updatedBaseURL, updatedAPIVersion)
 
 	client := NewClient(nil)
 
@@ -26,6 +31,14 @@ func TestClient_SetAPIVersion(t *testing.T) {
 	}
 
 	// Ensure setting twice does not cause conflicts
+	client.SetBaseURL(updatedBaseURL)
+	client.SetAPIVersion(updatedAPIVersion)
+
+	if client.resty.HostURL != updatedExpectedHost {
+		t.Fatal(cmp.Diff(client.resty.HostURL, updatedExpectedHost))
+	}
+
+	// Revert
 	client.SetBaseURL(baseURL)
 	client.SetAPIVersion(apiVersion)
 
