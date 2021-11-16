@@ -42,13 +42,15 @@ var envDebug = false
 type Client struct {
 	resty             *resty.Client
 	userAgent         string
-	baseURL           string
-	apiVersion        string
 	resources         map[string]*Resource
 	debug             bool
 	retryConditionals []RetryConditional
 
 	millisecondsPerPoll time.Duration
+
+	baseURL    string
+	apiVersion string
+	apiProto   string
 
 	Account                  *Resource
 	AccountSettings          *Resource
@@ -148,6 +150,7 @@ func (c *Client) SetBaseURL(baseURL string) *Client {
 	baseURLPath, _ := url.Parse(baseURL)
 
 	c.baseURL = path.Join(baseURLPath.Host, baseURLPath.Path)
+	c.apiProto = baseURLPath.Scheme
 
 	c.updateHostURL()
 
@@ -164,6 +167,7 @@ func (c *Client) SetAPIVersion(apiVersion string) *Client {
 }
 
 func (c *Client) updateHostURL() {
+	apiProto := APIProto
 	baseURL := APIHost
 	apiVersion := APIVersion
 
@@ -175,7 +179,11 @@ func (c *Client) updateHostURL() {
 		apiVersion = c.apiVersion
 	}
 
-	c.resty.SetHostURL(fmt.Sprintf("%s://%s/%s", APIProto, baseURL, apiVersion))
+	if c.apiProto != "" {
+		apiProto = c.apiProto
+	}
+
+	c.resty.SetHostURL(fmt.Sprintf("%s://%s/%s", apiProto, baseURL, apiVersion))
 }
 
 // SetRootCertificate adds a root certificate to the underlying TLS client config
