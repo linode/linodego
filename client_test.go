@@ -17,6 +17,10 @@ func TestClient_SetAPIVersion(t *testing.T) {
 	updatedAPIVersion := "v4beta_changed"
 	updatedExpectedHost := fmt.Sprintf("https://%s/%s", updatedBaseURL, updatedAPIVersion)
 
+	protocolBaseURL := "http://api.more.cool.com"
+	protocolAPIVersion := "v4_http"
+	protocolExpectedHost := fmt.Sprintf("%s/%s", protocolBaseURL, protocolAPIVersion)
+
 	client := NewClient(nil)
 
 	if client.resty.HostURL != defaultURL {
@@ -43,6 +47,14 @@ func TestClient_SetAPIVersion(t *testing.T) {
 	client.SetAPIVersion(apiVersion)
 
 	if client.resty.HostURL != expectedHost {
+		t.Fatal(cmp.Diff(client.resty.HostURL, expectedHost))
+	}
+
+	// Custom protocol
+	client.SetBaseURL(protocolBaseURL)
+	client.SetAPIVersion(protocolAPIVersion)
+
+	if client.resty.HostURL != protocolExpectedHost {
 		t.Fatal(cmp.Diff(client.resty.HostURL, expectedHost))
 	}
 }
