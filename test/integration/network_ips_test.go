@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"testing"
+	"time"
 
 	. "github.com/linode/linodego"
 )
@@ -133,4 +134,64 @@ func TestDeleteInstanceIPAddress(t *testing.T) {
 	if len(i.IPv4.Public) != 1 {
 		t.Errorf("expected instance (%d) to have 1 public IPv4 address; got %d", instance.ID, len(i.IPv4.Public))
 	}
+}
+
+func TestAssignInstancesIPs(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestAssignInstancesIPs")
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	newInstance, err := createInstance(t, client, func(options *InstanceCreateOptions) {
+		options.Label = fmt.Sprintf("linodego-%d", time.Now().UnixNano())
+		options.Region = instance.Region
+	})
+
+	defer func() {
+		if err := client.DeleteInstance(context.Background(), newInstance.ID); err != nil {
+			if t != nil {
+				t.Errorf("Error deleting test Instance: %s", err)
+			}
+		}
+	}()
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	ipRange, err := client.CreateIPv6Range(context.Background(), IPv6RangeCreateOptions{
+		PrefixLength: 64,
+		LinodeID:     newInstance.ID,
+	})
+	if err != nil {
+		t.Error(err)
+	}
+
+	// IP reassignment
+	err = client.InstancesAssignIPs(context.Background(), LinodesAssignIPsOptions{
+		Region: instance.Region,
+		Assignments: []LinodeIPAssignment{
+			{
+				LinodeID: instance.ID,
+				Address:  ipRange.Range,
+			},
+		},
+	})
+	if err != nil {
+		t.Error(err)
+	}
+
+	ips, err := client.GetInstanceIPAddresses(context.Background(), instance.ID)
+	if err != nil {
+		t.Error(err)
+	}
+
+	for _, r := range ips.IPv6.Global {
+		if fmt.Sprintf("%s/%d", r.Range, r.Prefix) == ipRange.Range {
+			return
+		}
+	}
+
+	t.Errorf("failed to find assigned ip")
 }

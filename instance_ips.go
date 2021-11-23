@@ -42,9 +42,10 @@ type InstanceIPv6Response struct {
 
 // IPv6Range represents a range of IPv6 addresses routed to a single Linode in a given Region
 type IPv6Range struct {
-	Range  string `json:"range"`
-	Region string `json:"region"`
-	Prefix int    `json:"prefix"`
+	Range       string `json:"range"`
+	Region      string `json:"region"`
+	RouteTarget string `json:"route_target"`
+	Prefix      int    `json:"prefix"`
 }
 
 // InstanceIPType constants start with IPType and include Linode Instance IP Types
