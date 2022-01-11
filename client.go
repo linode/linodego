@@ -334,7 +334,7 @@ func addResources(client *Client) {
 		kernelsName:                  NewResource(client, kernelsName, kernelsEndpoint, false, LinodeKernel{}, LinodeKernelsPagedResponse{}),
 		lkeClusterAPIEndpointsName:   NewResource(client, lkeClusterAPIEndpointsName, lkeClusterAPIEndpointsEndpoint, true, LKEClusterAPIEndpoint{}, LKEClusterAPIEndpointsPagedResponse{}),
 		lkeClustersName:              NewResource(client, lkeClustersName, lkeClustersEndpoint, false, LKECluster{}, LKEClustersPagedResponse{}),
-		lkeClusterPoolsName:          NewResource(client, lkeClusterPoolsName, lkeClusterPoolsEndpoint, true, LKEClusterPool{}, LKEClusterPoolsPagedResponse{}),
+		lkeClusterPoolsName:          NewResource(client, lkeClusterPoolsName, lkeClusterPoolsEndpoint, true, LKENodePool{}, LKENodePoolsPagedResponse{}),
 		lkeVersionsName:              NewResource(client, lkeVersionsName, lkeVersionsEndpoint, false, LKEVersion{}, LKEVersionsPagedResponse{}),
 		longviewName:                 NewResource(client, longviewName, longviewEndpoint, false, nil, nil), // really?
 		longviewclientsName:          NewResource(client, longviewclientsName, longviewclientsEndpoint, false, LongviewClient{}, LongviewClientsPagedResponse{}),

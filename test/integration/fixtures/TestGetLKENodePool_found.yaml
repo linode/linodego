@@ -14,9 +14,10 @@ interactions:
     url: https://api.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 34103, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+    body: '{"id": 49182, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "label": "xf886ld17qx5-linodego-testing", "region": "us-central",
-      "k8s_version": "1.21", "tags": ["testing"]}'
+      "k8s_version": "1.21", "control_plane": {"high_availability": false}, "tags":
+      ["testing"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -31,7 +32,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "210"
+      - "257"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -51,8 +52,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -68,11 +67,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/34103/pools
+    url: https://api.linode.com/v4beta/lke/clusters/49182/pools
     method: POST
   response:
-    body: '{"id": 52682, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "52682-6113e6aba44d",
-      "instance_id": null, "status": "not_ready"}, {"id": "52682-6113e6abaeec", "instance_id":
+    body: '{"id": 77983, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "77983-61dda4b732b6",
+      "instance_id": null, "status": "not_ready"}, {"id": "77983-61dda4b73f8c", "instance_id":
       null, "status": "not_ready"}], "disks": [{"size": 1000, "type": "ext4"}], "autoscaler":
       {"enabled": false, "min": 2, "max": 2}, "tags": ["testing"]}'
     headers:
@@ -109,8 +108,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -126,11 +123,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/34103/pools/52682
+    url: https://api.linode.com/v4beta/lke/clusters/49182/pools/77983
     method: GET
   response:
-    body: '{"id": 52682, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "52682-6113e6aba44d",
-      "instance_id": null, "status": "not_ready"}, {"id": "52682-6113e6abaeec", "instance_id":
+    body: '{"id": 77983, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "77983-61dda4b732b6",
+      "instance_id": null, "status": "not_ready"}, {"id": "77983-61dda4b73f8c", "instance_id":
       null, "status": "not_ready"}], "disks": [{"size": 1000, "type": "ext4"}], "autoscaler":
       {"enabled": false, "min": 2, "max": 2}, "tags": ["testing"]}'
     headers:
@@ -169,8 +166,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -186,7 +181,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/34103/pools/52682
+    url: https://api.linode.com/v4beta/lke/clusters/49182/pools/77983
     method: DELETE
   response:
     body: '{}'
@@ -224,8 +219,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -241,7 +234,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/34103
+    url: https://api.linode.com/v4beta/lke/clusters/49182
     method: DELETE
   response:
     body: '{}'
@@ -279,8 +272,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
