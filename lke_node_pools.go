@@ -57,7 +57,7 @@ type LKENodePoolCreateOptions struct {
 	Autoscaler *LKENodePoolAutoscaler `json:"autoscaler,omitempty"`
 }
 
-// LKENodePoolUpdateOptions fields are those accepted by UpdateLKENodePoolUpdateLKENodePool
+// LKENodePoolUpdateOptions fields are those accepted by UpdateLKENodePoolUpdate
 type LKENodePoolUpdateOptions struct {
 	Count int       `json:"count,omitempty"`
 	Tags  *[]string `json:"tags,omitempty"`
@@ -75,7 +75,7 @@ func (l LKENodePool) GetCreateOptions() (o LKENodePoolCreateOptions) {
 	return
 }
 
-// GetUpdateOptions converts a LKENodePool to LKENodePoolUpdateOptions for use in UpdateLKENodePoolUpdateLKEClusterPool
+// GetUpdateOptions converts a LKENodePool to LKENodePoolUpdateOptions for use in UpdateLKENodePoolUpdate
 func (l LKENodePool) GetUpdateOptions() (o LKENodePoolUpdateOptions) {
 	o.Count = l.Count
 	o.Tags = &l.Tags
@@ -91,7 +91,7 @@ type LKENodePoolsPagedResponse struct {
 
 // endpointWithID gets the endpoint URL for InstanceConfigs of a given Instance
 func (LKENodePoolsPagedResponse) endpointWithID(c *Client, id int) string {
-	endpoint, err := c.LKEClusterPools.endpointWithParams(id)
+	endpoint, err := c.LKENodePools.endpointWithParams(id)
 	if err != nil {
 		panic(err)
 	}
@@ -116,7 +116,7 @@ func (c *Client) ListLKENodePools(ctx context.Context, clusterID int, opts *List
 
 // GetLKENodePool gets the LKENodePool with the provided ID
 func (c *Client) GetLKENodePool(ctx context.Context, clusterID, id int) (*LKENodePool, error) {
-	e, err := c.LKEClusterPools.endpointWithParams(clusterID)
+	e, err := c.LKENodePools.endpointWithParams(clusterID)
 	if err != nil {
 		return nil, err
 	}
@@ -131,7 +131,7 @@ func (c *Client) GetLKENodePool(ctx context.Context, clusterID, id int) (*LKENod
 // CreateLKENodePool creates a LKENodePool
 func (c *Client) CreateLKENodePool(ctx context.Context, clusterID int, createOpts LKENodePoolCreateOptions) (*LKENodePool, error) {
 	var body string
-	e, err := c.LKEClusterPools.endpointWithParams(clusterID)
+	e, err := c.LKENodePools.endpointWithParams(clusterID)
 	if err != nil {
 		return nil, err
 	}
@@ -156,7 +156,7 @@ func (c *Client) CreateLKENodePool(ctx context.Context, clusterID int, createOpt
 // UpdateLKENodePool updates the LKENodePool with the specified id
 func (c *Client) UpdateLKENodePool(ctx context.Context, clusterID, id int, updateOpts LKENodePoolUpdateOptions) (*LKENodePool, error) {
 	var body string
-	e, err := c.LKEClusterPools.endpointWithParams(clusterID)
+	e, err := c.LKENodePools.endpointWithParams(clusterID)
 	if err != nil {
 		return nil, err
 	}
@@ -182,7 +182,7 @@ func (c *Client) UpdateLKENodePool(ctx context.Context, clusterID, id int, updat
 // DeleteLKENodePool deletes the LKENodePool with the specified id
 func (c *Client) DeleteLKENodePool(ctx context.Context,
 	clusterID, id int) error {
-	e, err := c.LKEClusterPools.endpointWithParams(clusterID)
+	e, err := c.LKENodePools.endpointWithParams(clusterID)
 	if err != nil {
 		return err
 	}
