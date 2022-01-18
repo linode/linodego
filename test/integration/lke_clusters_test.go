@@ -14,7 +14,7 @@ var testLKEClusterCreateOpts = linodego.LKEClusterCreateOptions{
 	Region:     "us-central",
 	K8sVersion: "1.21",
 	Tags:       []string{"testing"},
-	NodePools:  []linodego.LKEClusterPoolCreateOptions{{Count: 1, Type: "g6-standard-2", Tags: []string{"test"}}},
+	NodePools:  []linodego.LKENodePoolCreateOptions{{Count: 1, Type: "g6-standard-2", Tags: []string{"test"}}},
 }
 
 func TestGetLKECluster_missing(t *testing.T) {
@@ -38,7 +38,7 @@ func TestGetLKECluster_missing(t *testing.T) {
 func TestWaitForLKEClusterReady(t *testing.T) {
 	client, cluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
-		createOpts.NodePools = []linodego.LKEClusterPoolCreateOptions{
+		createOpts.NodePools = []linodego.LKENodePoolCreateOptions{
 			{Count: 3, Type: "g6-standard-2"},
 		}
 	}}, "fixtures/TestWaitForLKEClusterReady")

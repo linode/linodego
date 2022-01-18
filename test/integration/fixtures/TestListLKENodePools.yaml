@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null}],"label":"xf886ld17qx5-linodego-testing","region":"us-central","k8s_version":"1.21","tags":["testing"]}'
+    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"]}],"label":"5n5lxn8931co-linodego-testing","region":"us-central","k8s_version":"1.21","tags":["testing"]}'
     form: {}
     headers:
       Accept:
@@ -14,7 +14,10 @@ interactions:
     url: https://api.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 30069, "status": "ready", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "label": "xf886ld17qx5-linodego-testing", "region": "us-central", "k8s_version": "1.21", "tags": ["testing"]}'
+    body: '{"id": 49320, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "label": "5n5lxn8931co-linodego-testing", "region": "us-central",
+      "k8s_version": "1.21", "control_plane": {"high_availability": false}, "tags":
+      ["testing"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -29,7 +32,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "210"
+      - "257"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -49,15 +52,13 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"count":2,"type":"g6-standard-2","disks":[{"size":1000,"type":"ext4"}]}'
+    body: '{"count":2,"type":"g6-standard-2","disks":[{"size":1000,"type":"ext4"}],"tags":["testing"]}'
     form: {}
     headers:
       Accept:
@@ -66,10 +67,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/30069/pools
+    url: https://api.linode.com/v4beta/lke/clusters/49320/pools
     method: POST
   response:
-    body: '{"id": 45054, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "45054-60d9f3f23b0e", "instance_id": null, "status": "not_ready"}, {"id": "45054-60d9f3f24ab5", "instance_id": null, "status": "not_ready"}], "disks": [{"size": 1000, "type": "ext4"}], "tags": []}'
+    body: '{"id": 78170, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "78170-61df0eb34a6c",
+      "instance_id": null, "status": "not_ready"}, {"id": "78170-61df0eb355ca", "instance_id":
+      null, "status": "not_ready"}], "disks": [{"size": 1000, "type": "ext4"}], "autoscaler":
+      {"enabled": false, "min": 2, "max": 2}, "tags": ["testing"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -84,7 +88,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "264"
+      - "327"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -104,8 +108,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -121,65 +123,17 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/30069/nodes/45054-60d9f3f23b0e
-    method: DELETE
-  response:
-    body: '{}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Cache-Control:
-      - private, max-age=60, s-maxage=60
-      Content-Length:
-      - "2"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - lke:read_write
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "800"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/30069/pools/45054
+    url: https://api.linode.com/v4beta/lke/clusters/49320/pools
     method: GET
   response:
-    body: '{"id": 45054, "type": "g6-standard-2", "count": 1, "nodes": [{"id": "45054-60d9f3f24ab5", "instance_id": null, "status": "not_ready"}], "disks": [{"size": 1000, "type": "ext4"}], "tags": []}'
+    body: '{"data": [{"id": 78169, "type": "g6-standard-2", "count": 1, "nodes": [{"id":
+      "78169-61df0eb31665", "instance_id": null, "status": "not_ready"}], "disks":
+      [], "autoscaler": {"enabled": false, "min": 1, "max": 1}, "tags": ["test"]},
+      {"id": 78170, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "78170-61df0eb34a6c",
+      "instance_id": null, "status": "not_ready"}, {"id": "78170-61df0eb355ca", "instance_id":
+      null, "status": "not_ready"}], "disks": [{"size": 1000, "type": "ext4"}], "autoscaler":
+      {"enabled": false, "min": 2, "max": 2}, "tags": ["testing"]}], "page": 1, "pages":
+      1, "results": 2}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -195,7 +149,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "190"
+      - "598"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -216,8 +170,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -233,7 +185,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/30069/pools/45054
+    url: https://api.linode.com/v4beta/lke/clusters/49320/pools/78170
     method: DELETE
   response:
     body: '{}'
@@ -271,8 +223,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -288,7 +238,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/30069
+    url: https://api.linode.com/v4beta/lke/clusters/49320
     method: DELETE
   response:
     body: '{}'
@@ -326,8 +276,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

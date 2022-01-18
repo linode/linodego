@@ -371,11 +371,11 @@ func (c *Client) listHelperWithID(ctx context.Context, i interface{}, idRaw inte
 			results = r.Result().(*LKEClusterAPIEndpointsPagedResponse).Results
 			v.appendData(r.Result().(*LKEClusterAPIEndpointsPagedResponse))
 		}
-	case *LKEClusterPoolsPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(LKEClusterPoolsPagedResponse{}).Get(v.endpointWithID(c, id))); err == nil {
-			pages = r.Result().(*LKEClusterPoolsPagedResponse).Pages
-			results = r.Result().(*LKEClusterPoolsPagedResponse).Results
-			v.appendData(r.Result().(*LKEClusterPoolsPagedResponse))
+	case *LKENodePoolsPagedResponse:
+		if r, err = coupleAPIErrors(req.SetResult(LKENodePoolsPagedResponse{}).Get(v.endpointWithID(c, id))); err == nil {
+			pages = r.Result().(*LKENodePoolsPagedResponse).Pages
+			results = r.Result().(*LKENodePoolsPagedResponse).Results
+			v.appendData(r.Result().(*LKENodePoolsPagedResponse))
 		}
 	case *NodeBalancerConfigsPagedResponse:
 		if r, err = coupleAPIErrors(req.SetResult(NodeBalancerConfigsPagedResponse{}).Get(v.endpointWithID(c, id))); err == nil {

@@ -33,12 +33,12 @@ type LKECluster struct {
 
 // LKEClusterCreateOptions fields are those accepted by CreateLKECluster
 type LKEClusterCreateOptions struct {
-	NodePools    []LKEClusterPoolCreateOptions `json:"node_pools"`
-	Label        string                        `json:"label"`
-	Region       string                        `json:"region"`
-	K8sVersion   string                        `json:"k8s_version"`
-	Tags         []string                      `json:"tags,omitempty"`
-	ControlPlane *LKEClusterControlPlane       `json:"control_plane,omitempty"`
+	NodePools    []LKENodePoolCreateOptions `json:"node_pools"`
+	Label        string                     `json:"label"`
+	Region       string                     `json:"region"`
+	K8sVersion   string                     `json:"k8s_version"`
+	Tags         []string                   `json:"tags,omitempty"`
+	ControlPlane *LKEClusterControlPlane    `json:"control_plane,omitempty"`
 }
 
 // LKEClusterUpdateOptions fields are those accepted by UpdateLKECluster
