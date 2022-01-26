@@ -3,9 +3,11 @@ package integration
 import (
 	"context"
 	"fmt"
+	"reflect"
 	"strings"
 	"testing"
 
+	"github.com/google/go-cmp/cmp"
 	. "github.com/linode/linodego"
 )
 
@@ -28,6 +30,20 @@ func TestListIPv6Range_instance(t *testing.T) {
 
 	for _, r := range result {
 		if r.RouteTarget == ipRange.RouteTarget && fmt.Sprintf("%s/%d", r.Range, r.Prefix) == ipRange.Range {
+			rangeView, err := client.GetIPv6Range(context.Background(), r.Range)
+			if err != nil {
+				t.Errorf("failed to get ipv6 range: %s", err)
+			}
+
+			rangeCommonFields := []IPv6Range{
+				{Range: r.Range, Prefix: r.Prefix, Region: r.Region},
+				{Range: rangeView.Range, Prefix: rangeView.Prefix, Region: rangeView.Region},
+			}
+
+			if !reflect.DeepEqual(rangeCommonFields[0], rangeCommonFields[1]) {
+				t.Errorf("ipv6 range view does not match result from list: %s", cmp.Diff(rangeCommonFields[0], rangeCommonFields[1]))
+			}
+
 			return
 		}
 	}
