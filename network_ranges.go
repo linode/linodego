@@ -43,13 +43,13 @@ func (c *Client) ListIPv6Ranges(ctx context.Context, opts *ListOptions) ([]IPv6R
 	return response.Data, nil
 }
 
-// GetIPv6Range gets the template with the provided ID
-func (c *Client) GetIPv6Range(ctx context.Context, id string) (*IPv6Range, error) {
+// GetIPv6Range gets details about an IPv6 range
+func (c *Client) GetIPv6Range(ctx context.Context, ipRange string) (*IPv6Range, error) {
 	e, err := c.IPv6Ranges.Endpoint()
 	if err != nil {
 		return nil, err
 	}
-	e = fmt.Sprintf("%s/%s", e, id)
+	e = fmt.Sprintf("%s/%s", e, ipRange)
 	r, err := coupleAPIErrors(c.R(ctx).SetResult(&IPv6Range{}).Get(e))
 	if err != nil {
 		return nil, err
