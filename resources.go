@@ -70,7 +70,7 @@ const (
 
 	accountEndpoint                = "account"
 	accountSettingsEndpoint        = "account/settings"
-	databasesEndpoint              = "databases"
+	databasesEndpoint              = "databases/instances"
 	databaseEnginesEndpoint        = "databases/engines"
 	domainRecordsEndpoint          = "domains/{{ .ID }}/records"
 	domainsEndpoint                = "domains"
@@ -101,7 +101,7 @@ const (
 	longviewclientsEndpoint        = "longview/clients"
 	longviewsubscriptionsEndpoint  = "longview/subscriptions"
 	managedEndpoint                = "managed"
-	mysqlEndpoint                  = "databases/mysql"
+	mysqlEndpoint                  = "databases/mysql/instances"
 	// @TODO we can't use these nodebalancer endpoints unless we include these templated fields
 	// The API seems inconsistent about including parent IDs in objects, (compare instance configs to nb configs)
 	// Parent IDs would be immutable for updates and are ignored in create requests ..

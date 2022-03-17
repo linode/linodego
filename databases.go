@@ -21,22 +21,28 @@ func (DatabasesPagedResponse) endpoint(c *Client) string {
 	return endpoint
 }
 
+func (resp *DatabasesPagedResponse) appendData(r *DatabasesPagedResponse) {
+	resp.Data = append(resp.Data, r.Data...)
+}
+
 // A Database is a managed DBaaS instance
 type Database struct {
-	ID          int           `json:"id"`
-	Status      string        `json:"status"`
-	Label       string        `json:"label"`
-	Hosts       DatabaseHosts `json:"hosts"`
-	Region      string        `json:"region"`
-	Type        string        `json:"type"`
-	Engine      string        `json:"engine"`
-	Version     string        `json:"version"`
-	ClusterSize int           `json:"cluster_size"`
-	Encrypted   bool          `json:"encrypted"`
-	AllowList   []string      `json:"allow_list"`
-	InstanceURI string        `json:"instance_uri"`
-	Created     *time.Time    `json:"-"`
-	Updated     *time.Time    `json:"-"`
+	ID              int           `json:"id"`
+	Status          string        `json:"status"`
+	Label           string        `json:"label"`
+	Hosts           DatabaseHosts `json:"hosts"`
+	Region          string        `json:"region"`
+	Type            string        `json:"type"`
+	Engine          string        `json:"engine"`
+	Version         string        `json:"version"`
+	ClusterSize     int           `json:"cluster_size"`
+	ReplicationType string        `json:"replication_type"`
+	SSLConnection   bool          `json:"ssl_connection"`
+	Encrypted       bool          `json:"encrypted"`
+	AllowList       []string      `json:"allow_list"`
+	InstanceURI     string        `json:"instance_uri"`
+	Created         *time.Time    `json:"-"`
+	Updated         *time.Time    `json:"-"`
 }
 
 // DatabaseHost for Primary/Secondary of Database

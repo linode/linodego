@@ -7,18 +7,15 @@ interactions:
     headers:
       Accept:
       - application/json
-      Authorization:
-      - Bearer awesometokenawesometokenawesometoken
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.7.1 https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/account/payments
     method: GET
   response:
-    body: '{"data": [{"date":
-      "2018-01-02T03:04:05", "usd": 1.0, "id": 123}, {"date": "2018-01-02T03:04:05",
-      "usd": -1.0, "id": 456}], "pages": 1, "page": 1, "results": 2}'
+    body: '{"data": [{"id": 12065587, "date": "2018-01-02T03:04:05", "usd": 25.0}],
+      "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -33,18 +30,12 @@ interactions:
       Cache-Control:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
-      - "471"
+      - "109"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Wed, 01 May 2019 02:39:29 GMT
-      Retry-After:
-      - "119"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -61,14 +52,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "400"
-      X-Ratelimit-Remaining:
-      - "399"
-      X-Ratelimit-Reset:
-      - "1556678489"
-      X-Spec-Version:
-      - 4.0.22
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

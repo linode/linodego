@@ -62,6 +62,8 @@ const (
 	ActionCommunityQuestionReply   EventAction = "community_question_reply"
 	ActionCommunityLike            EventAction = "community_like"
 	ActionCreateCardUpdated        EventAction = "credit_card_updated"
+	ActionDatabaseCreate           EventAction = "database_create"
+	ActionDatabaseDelete           EventAction = "database_delete"
 	ActionDiskCreate               EventAction = "disk_create"
 	ActionDiskDelete               EventAction = "disk_delete"
 	ActionDiskUpdate               EventAction = "disk_update"
@@ -147,6 +149,7 @@ type EntityType string
 const (
 	EntityLinode       EntityType = "linode"
 	EntityDisk         EntityType = "disk"
+	EntityDatabase     EntityType = "database"
 	EntityDomain       EntityType = "domain"
 	EntityFirewall     EntityType = "firewall"
 	EntityNodebalancer EntityType = "nodebalancer"
@@ -169,10 +172,11 @@ const (
 // can be used to access it.
 type EventEntity struct {
 	// ID may be a string or int, it depends on the EntityType
-	ID    interface{} `json:"id"`
-	Label string      `json:"label"`
-	Type  EntityType  `json:"type"`
-	URL   string      `json:"url"`
+	ID     interface{} `json:"id"`
+	Label  string      `json:"label"`
+	Type   EntityType  `json:"type"`
+	Status string      `json:"status"`
+	URL    string      `json:"url"`
 }
 
 // EventsPagedResponse represents a paginated Events API response

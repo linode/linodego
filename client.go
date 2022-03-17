@@ -87,7 +87,7 @@ type Client struct {
 	LongviewClients          *Resource
 	LongviewSubscriptions    *Resource
 	Managed                  *Resource
-	Mysql                    *Resource
+	MySQL                    *Resource
 	NodeBalancerConfigs      *Resource
 	NodeBalancerNodes        *Resource
 	NodeBalancerStats        *Resource
@@ -348,7 +348,7 @@ func addResources(client *Client) {
 		longviewclientsName:          NewResource(client, longviewclientsName, longviewclientsEndpoint, false, LongviewClient{}, LongviewClientsPagedResponse{}),
 		longviewsubscriptionsName:    NewResource(client, longviewsubscriptionsName, longviewsubscriptionsEndpoint, false, LongviewSubscription{}, LongviewSubscriptionsPagedResponse{}),
 		managedName:                  NewResource(client, managedName, managedEndpoint, false, nil, nil), // really?
-		mysqlName:                    NewResource(client, mysqlName, mysqlEndpoint, false, Mysql{}, nil),
+		mysqlName:                    NewResource(client, mysqlName, mysqlEndpoint, false, Database{}, nil),
 		nodebalancerconfigsName:      NewResource(client, nodebalancerconfigsName, nodebalancerconfigsEndpoint, true, NodeBalancerConfig{}, NodeBalancerConfigsPagedResponse{}),
 		nodebalancernodesName:        NewResource(client, nodebalancernodesName, nodebalancernodesEndpoint, true, NodeBalancerNode{}, NodeBalancerNodesPagedResponse{}),
 		nodebalancerStatsName:        NewResource(client, nodebalancerStatsName, nodebalancerStatsEndpoint, true, NodeBalancerStats{}, nil),
@@ -405,7 +405,7 @@ func addResources(client *Client) {
 	client.Longview = resources[longviewName]
 	client.LongviewSubscriptions = resources[longviewsubscriptionsName]
 	client.Managed = resources[managedName]
-	client.Mysql = resources[mysqlName]
+	client.MySQL = resources[mysqlName]
 	client.NodeBalancerConfigs = resources[nodebalancerconfigsName]
 	client.NodeBalancerNodes = resources[nodebalancernodesName]
 	client.NodeBalancerStats = resources[nodebalancerStatsName]
