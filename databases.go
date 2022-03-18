@@ -3,6 +3,7 @@ package linodego
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"time"
 
 	"github.com/linode/linodego/internal/parseabletime"
@@ -25,30 +26,100 @@ func (resp *DatabasesPagedResponse) appendData(r *DatabasesPagedResponse) {
 	resp.Data = append(resp.Data, r.Data...)
 }
 
+type DatabaseEnginesPagedResponse struct {
+	*PageOptions
+	Data []DatabaseEngine `json:"data"`
+}
+
+func (DatabaseEnginesPagedResponse) endpoint(c *Client) string {
+	endpoint, err := c.Databases.Endpoint()
+	if err != nil {
+		panic(err)
+	}
+	return fmt.Sprintf("%s/engines", endpoint)
+}
+
+func (resp *DatabaseEnginesPagedResponse) appendData(r *DatabaseEnginesPagedResponse) {
+	resp.Data = append(resp.Data, r.Data...)
+}
+
+type DatabaseTypesPagedResponse struct {
+	*PageOptions
+	Data []DatabaseType `json:"data"`
+}
+
+func (DatabaseTypesPagedResponse) endpoint(c *Client) string {
+	endpoint, err := c.Databases.Endpoint()
+	if err != nil {
+		panic(err)
+	}
+	return fmt.Sprintf("%s/types", endpoint)
+}
+
+func (resp *DatabaseTypesPagedResponse) appendData(r *DatabaseTypesPagedResponse) {
+	resp.Data = append(resp.Data, r.Data...)
+}
+
 // A Database is a managed DBaaS instance
 type Database struct {
-	ID              int           `json:"id"`
-	Status          string        `json:"status"`
-	Label           string        `json:"label"`
-	Hosts           DatabaseHosts `json:"hosts"`
-	Region          string        `json:"region"`
-	Type            string        `json:"type"`
-	Engine          string        `json:"engine"`
-	Version         string        `json:"version"`
-	ClusterSize     int           `json:"cluster_size"`
-	ReplicationType string        `json:"replication_type"`
-	SSLConnection   bool          `json:"ssl_connection"`
-	Encrypted       bool          `json:"encrypted"`
-	AllowList       []string      `json:"allow_list"`
-	InstanceURI     string        `json:"instance_uri"`
-	Created         *time.Time    `json:"-"`
-	Updated         *time.Time    `json:"-"`
+	ID              int          `json:"id"`
+	Status          string       `json:"status"`
+	Label           string       `json:"label"`
+	Hosts           DatabaseHost `json:"hosts"`
+	Region          string       `json:"region"`
+	Type            string       `json:"type"`
+	Engine          string       `json:"engine"`
+	Version         string       `json:"version"`
+	ClusterSize     int          `json:"cluster_size"`
+	ReplicationType string       `json:"replication_type"`
+	SSLConnection   bool         `json:"ssl_connection"`
+	Encrypted       bool         `json:"encrypted"`
+	AllowList       []string     `json:"allow_list"`
+	InstanceURI     string       `json:"instance_uri"`
+	Created         *time.Time   `json:"-"`
+	Updated         *time.Time   `json:"-"`
 }
 
 // DatabaseHost for Primary/Secondary of Database
-type DatabaseHosts struct {
+type DatabaseHost struct {
 	Primary   string `json:"primary"`
 	Secondary string `json:"secondary,omitempty"`
+}
+
+type DatabaseEngine struct {
+	ID      string `json:"id"`
+	Engine  string `json:"engine"`
+	Version string `json:"version"`
+}
+
+type DatabaseType struct {
+	ID          string            `json:"id"`
+	Label       string            `json:"label"`
+	Class       string            `json:"class"`
+	Deprecated  bool              `json:"deprecated"`
+	VirtualCPUs int               `json:"vcpus"`
+	Disk        int               `json:"disk"`
+	Memory      int               `json:"memory"`
+	ClusterSize []DatabaseCluster `json:"cluster_size"`
+}
+
+type DatabaseCluster struct {
+	Quantity int          `json:"quantity"`
+	Price    ClusterPrice `json:"price"`
+}
+
+type ClusterPrice struct {
+	Hourly  float32 `json:"hourly"`
+	Monthly float32 `json:"monthly"`
+}
+
+type DatabaseSSL struct {
+	Certificate []byte `json:"ca_certificate"`
+}
+
+type DatabaseCredential struct {
+	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
 // UnmasrhalJSON for Database responses
@@ -81,4 +152,60 @@ func (c *Client) ListDatabases(ctx context.Context, opts *ListOptions) ([]Databa
 	}
 
 	return response.Data, nil
+}
+
+func (c *Client) ListDatabaseEngines(ctx context.Context, opts *ListOptions) ([]DatabaseEngine, error) {
+	response := DatabaseEnginesPagedResponse{}
+
+	err := c.listHelper(ctx, &response, opts)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
+func (c *Client) GetDatabaseEngine(ctx context.Context, opts *ListOptions, id string) (*DatabaseEngine, error) {
+	e, err := c.Databases.Endpoint()
+	if err != nil {
+		return nil, err
+	}
+
+	req := c.R(ctx)
+
+	e = fmt.Sprintf("%s/engines/%s", e, id)
+	r, err := coupleAPIErrors(req.SetResult(&DatabaseEngine{}).Get(e))
+	if err != nil {
+		return nil, err
+	}
+
+	return r.Result().(*DatabaseEngine), nil
+}
+
+func (c *Client) ListDatabaseTypes(ctx context.Context, opts *ListOptions) ([]DatabaseType, error) {
+	response := DatabaseTypesPagedResponse{}
+
+	err := c.listHelper(ctx, &response, opts)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
+func (c *Client) GetDatabaseType(ctx context.Context, opts *ListOptions, id string) (*DatabaseType, error) {
+	e, err := c.Databases.Endpoint()
+	if err != nil {
+		return nil, err
+	}
+
+	req := c.R(ctx)
+
+	e = fmt.Sprintf("%s/types/%s", e, id)
+	r, err := coupleAPIErrors(req.SetResult(&DatabaseType{}).Get(e))
+	if err != nil {
+		return nil, err
+	}
+
+	return r.Result().(*DatabaseType), nil
 }

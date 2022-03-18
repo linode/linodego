@@ -115,6 +115,24 @@ func (c *Client) listHelper(ctx context.Context, i interface{}, opts *ListOption
 			results = r.Result().(*DatabasesPagedResponse).Results
 			v.appendData(r.Result().(*DatabasesPagedResponse))
 		}
+	case *DatabaseEnginesPagedResponse:
+		if r, err = coupleAPIErrors(req.SetResult(DatabaseEnginesPagedResponse{}).Get(v.endpoint(c))); err == nil {
+			pages = r.Result().(*DatabaseEnginesPagedResponse).Pages
+			results = r.Result().(*DatabaseEnginesPagedResponse).Results
+			v.appendData(r.Result().(*DatabaseEnginesPagedResponse))
+		}
+	case *DatabaseTypesPagedResponse:
+		if r, err = coupleAPIErrors(req.SetResult(DatabaseTypesPagedResponse{}).Get(v.endpoint(c))); err == nil {
+			pages = r.Result().(*DatabaseTypesPagedResponse).Pages
+			results = r.Result().(*DatabaseTypesPagedResponse).Results
+			v.appendData(r.Result().(*DatabaseTypesPagedResponse))
+		}
+	case *MySQLDatabasesPagedResponse:
+		if r, err = coupleAPIErrors(req.SetResult(MySQLDatabasesPagedResponse{}).Get(v.endpoint(c))); err == nil {
+			pages = r.Result().(*MySQLDatabasesPagedResponse).Pages
+			results = r.Result().(*MySQLDatabasesPagedResponse).Results
+			v.appendData(r.Result().(*MySQLDatabasesPagedResponse))
+		}
 	case *DomainsPagedResponse:
 		if r, err = coupleAPIErrors(req.SetResult(DomainsPagedResponse{}).Get(v.endpoint(c))); err == nil {
 			response, ok := r.Result().(*DomainsPagedResponse)

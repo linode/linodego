@@ -13,7 +13,6 @@ const (
 	accountName                  = "account"
 	accountSettingsName          = "accountsettings"
 	databasesName                = "databases"
-	databaseEnginesName          = "databaseengines"
 	domainRecordsName            = "records"
 	domainsName                  = "domains"
 	eventsName                   = "events"
@@ -70,8 +69,7 @@ const (
 
 	accountEndpoint                = "account"
 	accountSettingsEndpoint        = "account/settings"
-	databasesEndpoint              = "databases/instances"
-	databaseEnginesEndpoint        = "databases/engines"
+	databasesEndpoint              = "databases"
 	domainRecordsEndpoint          = "domains/{{ .ID }}/records"
 	domainsEndpoint                = "domains"
 	eventsEndpoint                 = "account/events"
