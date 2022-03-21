@@ -76,7 +76,7 @@ interactions:
       10, "io": 10000, "cpu": 90, "transfer_quota": 80}, "specs": {"disk": 51200,
       "transfer": 2000, "vcpus": 1, "memory": 2048}, "image": "linode/ubuntu18.04",
       "created": "2018-01-02T03:04:05", "ipv6": "1234::5678/64",
-      "hypervisor": "kvm", "ipv4": ["010.020.030.040", "192.168.030.040"], "updated":
+      "hypervisor": "kvm", "ipv4": ["10.0.0.1", "10.0.0.1"], "updated":
       "2018-01-02T03:04:05", "watchdog_enabled": true, "group": "", "id": 76859403,
       "status": "running", "backups": {"schedule": {"day": "Monday", "window": "W16"},
       "enabled": true}, "label": "test-linode", "type": "g6-standard-1"}], "page":
@@ -155,7 +155,7 @@ interactions:
     body: '{"image": "linode/ubuntu18.04", "group": "", "updated": "2018-01-02T03:04:05",
       "backups": {"schedule": {"day": "Monday", "window": "W16"}, "enabled": true},
       "alerts": {"io": 10000, "cpu": 90, "network_out": 10, "network_in": 10, "transfer_quota":
-      80}, "id": 76859403, "ipv4": ["010.020.030.040", "192.168.030.040"], "label": "test-linode",
+      80}, "id": 76859403, "ipv4": ["10.0.0.1", "10.0.0.1"], "label": "test-linode",
       "region": "us-east", "created": "2018-01-02T03:04:05", "specs": {"memory": 2048,
       "disk": 51200, "transfer": 2000, "vcpus": 1}, "ipv6": "1234::5678/64",
       "watchdog_enabled": true, "status": "running", "type": "g6-standard-1", "hypervisor":

@@ -19,7 +19,7 @@ interactions:
     body: '{"region": "us-west", "alerts": {"network_in": 10, "io": 10000, "cpu":
       90, "transfer_quota": 80, "network_out": 10}, "created": "2018-01-02T03:04:05",
       "label": "linodego-test-instance", "updated": "2018-01-02T03:04:05", "watchdog_enabled":
-      true, "image": null, "id": 10157452, "group": "", "ipv4": ["010.020.030.040"],
+      true, "image": null, "id": 10157452, "group": "", "ipv4": ["10.0.0.1"],
       "status": "provisioning", "hypervisor": "kvm", "ipv6": "1234::5678/64",
       "type": "g6-nanode-1", "backups": {"enabled": false, "schedule": {"day": null,
       "window": null}}, "specs": {"vcpus": 1, "disk": 25600, "memory": 1024, "transfer":
@@ -175,7 +175,7 @@ interactions:
       1000, "vcpus": 1, "disk": 25600, "memory": 1024}, "updated": "2018-01-02T03:04:05",
       "ipv6": "1234::5678/64", "hypervisor": "kvm", "type": "g6-nanode-1",
       "alerts": {"cpu": 90, "network_in": 10, "io": 10000, "transfer_quota": 80, "network_out":
-      10}, "ipv4": ["010.020.030.040"], "watchdog_enabled": true}'
+      10}, "ipv4": ["10.0.0.1"], "watchdog_enabled": true}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"

@@ -20,7 +20,7 @@ interactions:
       "alerts": {"cpu": 90, "network_out": 10, "network_in": 10, "transfer_quota":
       80, "io": 10000}, "label": "linodego-test-instance", "status": "provisioning",
       "type": "g6-nanode-1", "created": "2018-01-02T03:04:05", "id": 10698247, "backups":
-      {"enabled": false, "schedule": {"day": null, "window": null}}, "ipv4": ["010.020.030.040"],
+      {"enabled": false, "schedule": {"day": null, "window": null}}, "ipv4": ["10.0.0.1"],
       "image": null, "specs": {"vcpus": 1, "memory": 1024, "disk": 25600, "transfer":
       1000}, "tags": ["linodego-test"], "hypervisor": "kvm", "watchdog_enabled": true,
       "updated": "2018-01-02T03:04:05"}'
@@ -94,7 +94,7 @@ interactions:
     method: PUT
   response:
     body: '{"hypervisor": "kvm", "updated": "2018-01-02T03:04:05", "group": "", "ipv6":
-      "1234::5678/64", "ipv4": ["010.020.030.040"], "label": "linodego-test-instance",
+      "1234::5678/64", "ipv4": ["10.0.0.1"], "label": "linodego-test-instance",
       "region": "us-west", "alerts": {"cpu": 90, "network_out": 10, "transfer_quota":
       80, "network_in": 10, "io": 10000}, "watchdog_enabled": true, "backups": {"enabled":
       false, "schedule": {"day": null, "window": null}}, "id": 10698247, "specs":
@@ -315,7 +315,7 @@ interactions:
   response:
     body: '{"pages": 1, "results": 1, "data": [{"type": "linode", "data": {"hypervisor":
       "kvm", "updated": "2018-01-02T03:04:05", "group": "", "ipv6": "1234::5678/64",
-      "ipv4": ["010.020.030.040"], "label": "linodego-test-instance", "region": "us-west",
+      "ipv4": ["10.0.0.1"], "label": "linodego-test-instance", "region": "us-west",
       "alerts": {"cpu": 90, "network_out": 10, "transfer_quota": 80, "network_in":
       10, "io": 10000}, "watchdog_enabled": true, "backups": {"enabled": false, "schedule":
       {"day": null, "window": null}}, "id": 10698247, "specs": {"vcpus": 1, "transfer":
