@@ -401,6 +401,12 @@ func (c *Client) listHelperWithID(ctx context.Context, i interface{}, idRaw inte
 			results = r.Result().(*LKENodePoolsPagedResponse).Results
 			v.appendData(r.Result().(*LKENodePoolsPagedResponse))
 		}
+	case *MySQLDatabaseBackupsPagedResponse:
+		if r, err = coupleAPIErrors(req.SetResult(MySQLDatabaseBackupsPagedResponse{}).Get(v.endpointWithID(c, id))); err == nil {
+			pages = r.Result().(*MySQLDatabaseBackupsPagedResponse).Pages
+			results = r.Result().(*MySQLDatabaseBackupsPagedResponse).Results
+			v.appendData(r.Result().(*MySQLDatabaseBackupsPagedResponse))
+		}
 	case *NodeBalancerConfigsPagedResponse:
 		if r, err = coupleAPIErrors(req.SetResult(NodeBalancerConfigsPagedResponse{}).Get(v.endpointWithID(c, id))); err == nil {
 			pages = r.Result().(*NodeBalancerConfigsPagedResponse).Pages

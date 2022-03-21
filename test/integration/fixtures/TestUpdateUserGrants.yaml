@@ -68,12 +68,12 @@ interactions:
     url: https://api.linode.com/v4beta/account/users/linodegotest-updateusergrants/grants
     method: PUT
   response:
-    body: '{"linode": [{"id": 29745916, "label": "workdev", "permissions": null},
-      {"id": 35420421, "label": "linodego-test-instance-wo-disk", "permissions": null}],
+    body: '{"linode": [{"id": 29745916, "label": "workdev", "permissions": null}],
       "nodebalancer": [], "domain": [], "stackscript": [], "longview": [], "image":
-      [], "volume": [], "firewall": [], "global": {"add_domains": false, "add_linodes":
-      false, "add_longview": true, "longview_subscription": false, "add_stackscripts":
-      true, "add_nodebalancers": false, "add_images": true, "add_volumes": true, "add_firewalls":
+      [], "volume": [{"id": 284063, "label": "linodego-test-volume", "permissions":
+      null}], "firewall": [], "global": {"add_domains": false, "add_linodes": false,
+      "add_longview": true, "longview_subscription": false, "add_stackscripts": true,
+      "add_nodebalancers": false, "add_images": true, "add_volumes": true, "add_firewalls":
       true, "account_access": "read_only", "cancel_account": false}}'
     headers:
       Access-Control-Allow-Credentials:
@@ -89,7 +89,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "549"
+      - "535"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:

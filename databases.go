@@ -19,7 +19,7 @@ func (DatabasesPagedResponse) endpoint(c *Client) string {
 	if err != nil {
 		panic(err)
 	}
-	return endpoint
+	return fmt.Sprintf("%s/instances", endpoint)
 }
 
 func (resp *DatabasesPagedResponse) appendData(r *DatabasesPagedResponse) {

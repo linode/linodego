@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"time"
 )
 
 type MySQLCreateOptions struct {
@@ -21,6 +22,13 @@ type MySQLCreateOptions struct {
 type MySQLUpdateOptions struct {
 	Label     string   `json:"label"`
 	AllowList []string `json:"allow_list"`
+}
+
+type MySQLDatabaseBackup struct {
+	ID      int
+	Label   string
+	Type    string
+	Created time.Time
 }
 
 type MySQLDatabasesPagedResponse struct {
@@ -44,6 +52,34 @@ func (c *Client) ListMySQLDatabases(ctx context.Context, opts *ListOptions) ([]D
 	response := MySQLDatabasesPagedResponse{}
 
 	err := c.listHelper(ctx, &response, opts)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Data, nil
+}
+
+type MySQLDatabaseBackupsPagedResponse struct {
+	*PageOptions
+	Data []MySQLDatabaseBackup `json:"data"`
+}
+
+func (MySQLDatabaseBackupsPagedResponse) endpointWithID(c *Client, id int) string {
+	endpoint, err := c.MySQL.Endpoint()
+	if err != nil {
+		panic(err)
+	}
+	return fmt.Sprintf("%s/%d/backups", endpoint, id)
+}
+
+func (resp *MySQLDatabaseBackupsPagedResponse) appendData(r *MySQLDatabaseBackupsPagedResponse) {
+	resp.Data = append(resp.Data, r.Data...)
+}
+
+func (c *Client) ListMySQLDatabaseBackups(ctx context.Context, databaseID int, opts *ListOptions) ([]MySQLDatabaseBackup, error) {
+	response := MySQLDatabaseBackupsPagedResponse{}
+
+	err := c.listHelperWithID(ctx, &response, databaseID, opts)
 	if err != nil {
 		return nil, err
 	}
@@ -176,5 +212,38 @@ func (c *Client) ResetMySQLDatabaseCredentials(ctx context.Context, id int) erro
 		return err
 	}
 
+	return nil
+}
+
+func (c *Client) GetMySQLDatabaseBackup(ctx context.Context, databaseID int, backupID int) (*MySQLDatabaseBackup, error) {
+	e, err := c.MySQL.Endpoint()
+	if err != nil {
+		return nil, err
+	}
+
+	req := c.R(ctx)
+
+	e = fmt.Sprintf("%s/%d/backups/%d", e, databaseID, backupID)
+	r, err := coupleAPIErrors(req.SetResult(&MySQLDatabaseBackup{}).Get(e))
+	if err != nil {
+		return nil, err
+	}
+
+	return r.Result().(*MySQLDatabaseBackup), nil
+}
+
+func (c *Client) RestoreMySQLDatabaseBackup(ctx context.Context, databaseID int, backupID int) error {
+	e, err := c.MySQL.Endpoint()
+	if err != nil {
+		return err
+	}
+
+	req := c.R(ctx)
+
+	e = fmt.Sprintf("%s/%d/backups/%d/restore", e, databaseID, backupID)
+	_, err = coupleAPIErrors(req.Post(e))
+	if err != nil {
+		return err
+	}
 	return nil
 }

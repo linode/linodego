@@ -123,7 +123,7 @@ func TestDatabaseSuite(t *testing.T) {
 	}
 
 	opts := linodego.MySQLUpdateOptions{
-		AllowList: []string{"", ""},
+		AllowList: []string{"128.173.205.21", "123.177.200.20"},
 		Label:     "updated-mysql1-linodego-testing",
 	}
 	db, err = client.UpdateMySQLDatabase(context.Background(), database.ID, opts)
@@ -149,10 +149,12 @@ func TestDatabaseSuite(t *testing.T) {
 	if err != nil {
 		t.Errorf("failed to get credentials for db: %v", err)
 	}
+	time.Sleep(time.Second * 10)
 	err = client.ResetMySQLDatabaseCredentials(context.Background(), database.ID)
 	if err != nil {
 		t.Errorf("failed to reset credentials for db: %v", err)
 	}
+	time.Sleep(time.Minute * 5)
 	newcreds, err := client.GetMySQLDatabaseCredentials(context.Background(), database.ID)
 	if err != nil {
 		t.Errorf("failed to get new credentials for db: %v", err)
@@ -161,15 +163,14 @@ func TestDatabaseSuite(t *testing.T) {
 		t.Error("credentials have not changed for db")
 	}
 
-	// TODO: not sure how to implement listing backups yet
-	// backups, err := client.ListMySQLDatabaseBackups(context.Background(), nil, database.ID)
-	// if err != nil {
-	// 	t.Errorf("failed to get backups for db: %v", err)
-	// }
+	backups, err := client.ListMySQLDatabaseBackups(context.Background(), database.ID, nil)
+	if err != nil {
+		t.Errorf("failed to get backups for db: %v", err)
+	}
 
-	// if len(backups) > 0 {
-	// 	t.Errorf("expected 0 backups, recieved some: %v", backups)
-	// }
+	if len(backups) > 0 {
+		t.Errorf("expected 0 backups, recieved some: %v", backups)
+	}
 
 	// can't test get mysql/instances/{id}/backups/{id} until on demand backups
 	// can't test post mysql/instances/{id}/backups/{id}/restore until on demand backups
