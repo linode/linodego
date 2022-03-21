@@ -18,7 +18,7 @@ interactions:
   response:
     body: '{"transfer": {"out": null, "in": null, "total": null}, "hostname": "nb-10-20-30-40.fremont.nodebalancer.linode.com",
       "client_conn_throttle": 20, "updated": "2018-01-02T03:04:05", "region": "us-west",
-      "ipv4": "010.020.030.040", "label": "9nmqn30r1v37-linodego-testing", "created":
+      "ipv4": "10.0.0.1", "label": "9nmqn30r1v37-linodego-testing", "created":
       "2018-01-02T03:04:05", "id": 37818, "ipv6": "1234::5678"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -89,7 +89,7 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers/37818
     method: PUT
   response:
-    body: '{"updated": "2018-01-02T03:04:05", "ipv4": "010.020.030.040", "label": "9nmqn30r1v37-linodego-testing_r",
+    body: '{"updated": "2018-01-02T03:04:05", "ipv4": "10.0.0.1", "label": "9nmqn30r1v37-linodego-testing_r",
       "ipv6": "1234::5678", "transfer": {"in": null, "out": null, "total":
       null}, "hostname": "nb-10-20-30-40.fremont.nodebalancer.linode.com", "region":
       "us-west", "created": "2018-01-02T03:04:05", "id": 37818, "client_conn_throttle":
