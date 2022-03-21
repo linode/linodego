@@ -3,6 +3,7 @@ package integration
 import (
 	"context"
 	"fmt"
+	"log"
 	"reflect"
 	"strings"
 	"testing"
@@ -17,12 +18,19 @@ var testIPv6RangeCreateOptions = IPv6RangeCreateOptions{
 
 // TestGetIPv6Range should return an IPv6 Range by id.
 func TestListIPv6Range_instance(t *testing.T) {
-	client, ipRange, _, err := setupIPv6RangeInstance(t, []ipv6RangeModifier{}, "fixtures/TestListIPv6Range_instance")
+	client, ipRange, inst, err := setupIPv6RangeInstance(t, []ipv6RangeModifier{}, "fixtures/TestListIPv6Range_instance")
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	result, err := client.ListIPv6Ranges(context.Background(), nil)
+	filter := Filter{}
+	filter.AddField(Eq, "region", inst.Region)
+	filterStr, err := filter.MarshalJSON()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	result, err := client.ListIPv6Ranges(context.Background(), &ListOptions{Filter: string(filterStr)})
 	if err != nil {
 		t.Errorf("Error listing IPv6 Ranges, expected struct, got error %v", err)
 	}
