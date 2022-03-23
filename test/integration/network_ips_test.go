@@ -13,7 +13,7 @@ func TestGetIPAddress_missing(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestGetIPAddress_missing")
 	defer teardown()
 
-	doesNotExist := "010.020.030.040"
+	doesNotExist := "10.0.0.1"
 	i, err := client.GetIPAddress(context.Background(), doesNotExist)
 	if err == nil {
 		t.Errorf("should have received an error requesting a missing ipaddress, got %v", i)

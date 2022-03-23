@@ -59,6 +59,11 @@ type LKEClusterKubeconfig struct {
 	KubeConfig string `json:"kubeconfig"`
 }
 
+// LKEClusterDashboard fields are those returned by GetLKEClusterDashboard
+type LKEClusterDashboard struct {
+	URL string `json:"url"`
+}
+
 // LKEClusterControlPlane fields contained within the `control_plane` attribute of an LKE cluster.
 type LKEClusterControlPlane struct {
 	HighAvailability bool `json:"high_availability"`
@@ -280,6 +285,20 @@ func (c *Client) GetLKEClusterKubeconfig(ctx context.Context, id int) (*LKEClust
 		return nil, err
 	}
 	return r.Result().(*LKEClusterKubeconfig), nil
+}
+
+// GetLKEClusterDashboard gets information about the dashboard for an LKE cluster
+func (c *Client) GetLKEClusterDashboard(ctx context.Context, id int) (*LKEClusterDashboard, error) {
+	e, err := c.LKEClusters.Endpoint()
+	if err != nil {
+		return nil, err
+	}
+	e = fmt.Sprintf("%s/%d/dashboard", e, id)
+	r, err := coupleAPIErrors(c.R(ctx).SetResult(&LKEClusterDashboard{}).Get(e))
+	if err != nil {
+		return nil, err
+	}
+	return r.Result().(*LKEClusterDashboard), nil
 }
 
 // RecycleLKEClusterNodes recycles all nodes in all pools of the specified LKE Cluster.
