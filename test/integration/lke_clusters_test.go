@@ -2,6 +2,7 @@ package integration
 
 import (
 	"context"
+	"net/url"
 	"reflect"
 	"testing"
 
@@ -159,6 +160,30 @@ func TestGetLKEClusterKubeconfig(t *testing.T) {
 	}
 	if len(i.KubeConfig) == 0 {
 		t.Errorf("Expected an lkeCluster Kubeconfig, but got empty string %v", i)
+	}
+}
+
+func TestGetLKEClusterDashboard(t *testing.T) {
+	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
+		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
+	}}, "fixtures/TestGetLKEClusterDashboard")
+	defer teardown()
+
+	_, err = client.WaitForLKEClusterStatus(context.Background(), lkeCluster.ID, linodego.LKEClusterReady, 180)
+	if err != nil {
+		t.Errorf("Error waiting for LKECluster readiness: %s", err)
+	}
+	i, err := client.GetLKEClusterDashboard(context.Background(), lkeCluster.ID)
+	if err != nil {
+		t.Errorf("Error getting LKE cluster dashboard URL, expected struct, got %v and error %v", i, err)
+	}
+
+	if len(i.URL) == 0 {
+		t.Errorf("Expected an LKE cluster dashboard URL, but got empty string %v", i)
+	}
+
+	if _, err := url.ParseRequestURI(i.URL); err != nil {
+		t.Errorf("invalid url: %s", err)
 	}
 }
 
