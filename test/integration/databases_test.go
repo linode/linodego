@@ -149,12 +149,12 @@ func TestDatabaseSuite(t *testing.T) {
 	if err != nil {
 		t.Errorf("failed to get credentials for db: %v", err)
 	}
-	time.Sleep(time.Second * 10)
+	time.Sleep(time.Minute * 5)
 	err = client.ResetMySQLDatabaseCredentials(context.Background(), database.ID)
 	if err != nil {
 		t.Errorf("failed to reset credentials for db: %v", err)
 	}
-	time.Sleep(time.Minute * 5)
+	time.Sleep(time.Second * 15)
 	newcreds, err := client.GetMySQLDatabaseCredentials(context.Background(), database.ID)
 	if err != nil {
 		t.Errorf("failed to get new credentials for db: %v", err)

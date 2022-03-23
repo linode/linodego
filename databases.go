@@ -60,7 +60,7 @@ func (resp *DatabaseTypesPagedResponse) appendData(r *DatabaseTypesPagedResponse
 	resp.Data = append(resp.Data, r.Data...)
 }
 
-// A Database is a managed DBaaS instance
+// A Database is a instance of Linode Managed Databases
 type Database struct {
 	ID              int          `json:"id"`
 	Status          string       `json:"status"`
@@ -86,12 +86,14 @@ type DatabaseHost struct {
 	Secondary string `json:"secondary,omitempty"`
 }
 
+// DatabaseEngine is information about Engines supported by Linode Managed Databases
 type DatabaseEngine struct {
 	ID      string `json:"id"`
 	Engine  string `json:"engine"`
 	Version string `json:"version"`
 }
 
+// DatabaseType is information about the supported Database Types by Linode Managed Databases
 type DatabaseType struct {
 	ID          string            `json:"id"`
 	Label       string            `json:"label"`
@@ -103,26 +105,29 @@ type DatabaseType struct {
 	ClusterSize []DatabaseCluster `json:"cluster_size"`
 }
 
+// DatabaseCluster Sizes and Prices
 type DatabaseCluster struct {
 	Quantity int          `json:"quantity"`
 	Price    ClusterPrice `json:"price"`
 }
 
+// ClusterPrice for Hourly and Monthly price models
 type ClusterPrice struct {
 	Hourly  float32 `json:"hourly"`
 	Monthly float32 `json:"monthly"`
 }
 
+// DatabaseSSL is the SSL Certificate to access the Linode Managed Database
 type DatabaseSSL struct {
 	Certificate []byte `json:"ca_certificate"`
 }
 
+// DatabaseCredential is the Root Credentials to access the Linode Managed Database
 type DatabaseCredential struct {
 	Username string `json:"username"`
 	Password string `json:"password"`
 }
 
-// UnmasrhalJSON for Database responses
 func (d *Database) UnmarshalJSON(b []byte) error {
 	type Mask Database
 
@@ -143,6 +148,7 @@ func (d *Database) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// List all Database instances in Linode Managed Databases for the account
 func (c *Client) ListDatabases(ctx context.Context, opts *ListOptions) ([]Database, error) {
 	response := DatabasesPagedResponse{}
 
@@ -154,6 +160,7 @@ func (c *Client) ListDatabases(ctx context.Context, opts *ListOptions) ([]Databa
 	return response.Data, nil
 }
 
+// List all Database Engines
 func (c *Client) ListDatabaseEngines(ctx context.Context, opts *ListOptions) ([]DatabaseEngine, error) {
 	response := DatabaseEnginesPagedResponse{}
 
@@ -165,6 +172,7 @@ func (c *Client) ListDatabaseEngines(ctx context.Context, opts *ListOptions) ([]
 	return response.Data, nil
 }
 
+// Get a specific Database Engine
 func (c *Client) GetDatabaseEngine(ctx context.Context, opts *ListOptions, id string) (*DatabaseEngine, error) {
 	e, err := c.Databases.Endpoint()
 	if err != nil {
@@ -182,6 +190,7 @@ func (c *Client) GetDatabaseEngine(ctx context.Context, opts *ListOptions, id st
 	return r.Result().(*DatabaseEngine), nil
 }
 
+// List all Types of Database provided in Linode Managed Databases
 func (c *Client) ListDatabaseTypes(ctx context.Context, opts *ListOptions) ([]DatabaseType, error) {
 	response := DatabaseTypesPagedResponse{}
 
@@ -193,6 +202,7 @@ func (c *Client) ListDatabaseTypes(ctx context.Context, opts *ListOptions) ([]Da
 	return response.Data, nil
 }
 
+// Get a specific Database Type
 func (c *Client) GetDatabaseType(ctx context.Context, opts *ListOptions, id string) (*DatabaseType, error) {
 	e, err := c.Databases.Endpoint()
 	if err != nil {
