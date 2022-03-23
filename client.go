@@ -277,7 +277,6 @@ func NewClient(hc *http.Client) (client Client) {
 	if baseURLExists {
 		client.SetBaseURL(baseURL)
 	}
-
 	apiVersion, apiVersionExists := os.LookupEnv(APIVersionVar)
 	if apiVersionExists {
 		client.SetAPIVersion(apiVersion)
