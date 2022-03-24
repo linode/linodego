@@ -35,9 +35,9 @@ type InstanceIP struct {
 
 // InstanceIPv6Response contains the IPv6 addresses and ranges for an Instance
 type InstanceIPv6Response struct {
-	LinkLocal *InstanceIP  `json:"link_local"`
-	SLAAC     *InstanceIP  `json:"slaac"`
-	Global    []*IPv6Range `json:"global"`
+	LinkLocal *InstanceIP `json:"link_local"`
+	SLAAC     *InstanceIP `json:"slaac"`
+	Global    []IPv6Range `json:"global"`
 }
 
 // IPv6Range represents a range of IPv6 addresses routed to a single Linode in a given Region

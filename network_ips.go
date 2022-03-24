@@ -31,6 +31,12 @@ type LinodesAssignIPsOptions struct {
 	Assignments []LinodeIPAssignment `json:"assignments"`
 }
 
+// IPAddressesShareOptions fields are those accepted by ShareIPAddresses.
+type IPAddressesShareOptions struct {
+	IPs      []string `json:"ips"`
+	LinodeID int      `json:"linode_id"`
+}
+
 // GetUpdateOptions converts a IPAddress to IPAddressUpdateOptions for use in UpdateIPAddress
 func (i InstanceIP) GetUpdateOptions() (o IPAddressUpdateOptions) {
 	o.RDNS = copyString(&i.RDNS)
@@ -114,6 +120,31 @@ func (c *Client) InstancesAssignIPs(ctx context.Context, updateOpts LinodesAssig
 	e = fmt.Sprintf("%s/assign", e)
 
 	if bodyData, err := json.Marshal(updateOpts); err == nil {
+		body = string(bodyData)
+	} else {
+		return NewError(err)
+	}
+
+	_, err = coupleAPIErrors(c.R(ctx).
+		SetBody(body).
+		Post(e))
+
+	return err
+}
+
+// ShareIPAddresses allows IP address reassignment (also referred to as IP failover)
+// from one Linode to another if the primary Linode becomes unresponsive.
+func (c *Client) ShareIPAddresses(ctx context.Context, shareOpts IPAddressesShareOptions) error {
+	var body string
+
+	e, err := c.IPAddresses.Endpoint()
+	if err != nil {
+		return err
+	}
+
+	e = fmt.Sprintf("%s/share", e)
+
+	if bodyData, err := json.Marshal(shareOpts); err == nil {
 		body = string(bodyData)
 	} else {
 		return NewError(err)

@@ -3,6 +3,7 @@ package integration
 import (
 	"context"
 	"fmt"
+	"log"
 	"reflect"
 	"strings"
 	"testing"
@@ -17,19 +18,26 @@ var testIPv6RangeCreateOptions = IPv6RangeCreateOptions{
 
 // TestGetIPv6Range should return an IPv6 Range by id.
 func TestListIPv6Range_instance(t *testing.T) {
-	client, ipRange, _, teardown, err := setupIPv6RangeInstance(t, []ipv6RangeModifier{}, "fixtures/TestListIPv6Range_instance")
+	client, ipRange, inst, err := setupIPv6RangeInstance(t, []ipv6RangeModifier{}, "fixtures/TestListIPv6Range_instance")
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer teardown()
 
-	result, err := client.ListIPv6Ranges(context.Background(), nil)
+	filter := Filter{}
+	filter.AddField(Eq, "region", inst.Region)
+	filterStr, err := filter.MarshalJSON()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	result, err := client.ListIPv6Ranges(context.Background(), &ListOptions{Filter: string(filterStr)})
 	if err != nil {
 		t.Errorf("Error listing IPv6 Ranges, expected struct, got error %v", err)
 	}
 
 	for _, r := range result {
 		if r.RouteTarget == ipRange.RouteTarget && fmt.Sprintf("%s/%d", r.Range, r.Prefix) == ipRange.Range {
+			// Ensure GET returns the correct details
 			rangeView, err := client.GetIPv6Range(context.Background(), r.Range)
 			if err != nil {
 				t.Errorf("failed to get ipv6 range: %s", err)
@@ -51,9 +59,69 @@ func TestListIPv6Range_instance(t *testing.T) {
 	t.Errorf("failed to find ipv6 range with matching range")
 }
 
+// TestGetIPv6Range should return an IPv6 Range by id.
+func TestIPv6Range_share(t *testing.T) {
+	client, ipRange, origInst, err := setupIPv6RangeInstance(t, []ipv6RangeModifier{}, "fixtures/TestIPv6Range_share")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	inst, err := createInstance(t, client, func(inst *InstanceCreateOptions) {
+		inst.Label = "linodego-test-ipv6range-1"
+		inst.Region = origInst.Region
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Cleanup(func() {
+		if err := client.DeleteInstance(context.Background(), inst.ID); err != nil {
+			if t != nil {
+				t.Errorf("Error deleting test Instance: %s", err)
+			}
+		}
+	})
+
+	// Share the ip with the new instance
+	err = client.ShareIPAddresses(context.Background(), IPAddressesShareOptions{
+		LinodeID: origInst.ID,
+		IPs: []string{
+			strings.TrimSuffix(ipRange.Range, "/64"),
+		},
+	})
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	err = client.ShareIPAddresses(context.Background(), IPAddressesShareOptions{
+		LinodeID: inst.ID,
+		IPs: []string{
+			strings.TrimSuffix(ipRange.Range, "/64"),
+		},
+	})
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	ips, err := client.GetInstanceIPAddresses(context.Background(), inst.ID)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if len(ips.IPv6.Global) < 1 {
+		t.Fatal("invalid number of global ipv6 addresses")
+	}
+
+	if ips.IPv6.Global[0].Range != strings.TrimSuffix(ipRange.Range, "/64") {
+		t.Fatal("ipv6 address does not match")
+	}
+}
+
 type ipv6RangeModifier func(options *IPv6RangeCreateOptions)
 
-func createIPv6Range(t *testing.T, client *Client, ipv6RangeModifiers ...ipv6RangeModifier) (*IPv6Range, func(), error) {
+func createIPv6Range(t *testing.T, client *Client, ipv6RangeModifiers ...ipv6RangeModifier) (*IPv6Range, error) {
 	t.Helper()
 
 	createOpts := testIPv6RangeCreateOptions
@@ -66,34 +134,46 @@ func createIPv6Range(t *testing.T, client *Client, ipv6RangeModifiers ...ipv6Ran
 		t.Errorf("failed to create ipv6 range: %s", err)
 	}
 
-	teardown := func() {
+	t.Cleanup(func() {
 		rangeSegments := strings.Split(ipRange.Range, "/")
 
 		if err := client.DeleteIPv6Range(context.Background(),
 			strings.Join(rangeSegments[:len(rangeSegments)-1], "/")); err != nil {
 			t.Errorf("failed to delete ipv6 range: %s", err)
 		}
-	}
-	return ipRange, teardown, nil
+	})
+
+	return ipRange, nil
 }
 
-func setupIPv6RangeInstance(t *testing.T, ipv6RangeModifiers []ipv6RangeModifier, fixturesYaml string) (*Client, *IPv6Range, *Instance, func(), error) {
+func setupIPv6RangeInstance(t *testing.T, ipv6RangeModifiers []ipv6RangeModifier, fixturesYaml string) (*Client, *IPv6Range, *Instance, error) {
 	t.Helper()
 
-	client, instance, instanceTeardown, err := setupInstance(t, fixturesYaml)
+	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+
+	t.Cleanup(fixtureTeardown)
+
+	instance, err := createInstance(t, client, func(inst *InstanceCreateOptions) {
+		inst.Label = "linodego-test-ipv6range"
+		inst.Region = "us-east"
+	})
 	if err != nil {
 		t.Fatal(err)
 	}
+
+	t.Cleanup(func() {
+		if err := client.DeleteInstance(context.Background(), instance.ID); err != nil {
+			if t != nil {
+				t.Errorf("Error deleting test Instance: %s", err)
+			}
+		}
+	})
 
 	ipv6RangeModifiers = append(ipv6RangeModifiers, func(options *IPv6RangeCreateOptions) {
 		options.LinodeID = instance.ID
 	})
 
-	ipRange, rangeTeardown, err := createIPv6Range(t, client, ipv6RangeModifiers...)
+	ipRange, err := createIPv6Range(t, client, ipv6RangeModifiers...)
 
-	teardown := func() {
-		rangeTeardown()
-		instanceTeardown()
-	}
-	return client, ipRange, instance, teardown, err
+	return client, ipRange, instance, err
 }
