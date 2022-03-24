@@ -8,6 +8,8 @@ GOLANGCILINT      := golangci-lint
 GOLANGCILINT_IMG  := golangci/golangci-lint:v1.38-alpine
 GOLANGCILINT_ARGS := run
 
+LINODE_URL := https://api.linode.com/
+
 PACKAGES := $(shell go list ./... | grep -v integration)
 
 SKIP_LINT ?= 0
@@ -50,6 +52,7 @@ run_fixtures:
 	LINODE_FIXTURE_MODE="record" \
 	LINODE_TOKEN=$(LINODE_TOKEN) \
 	LINODE_API_VERSION="v4beta" \
+	LINODE_URL="$(LINODE_URL)" \
 	GO111MODULE="on" \
 	go test -timeout=60m -v $(ARGS)
 
