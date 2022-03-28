@@ -97,7 +97,7 @@ func TestDatabaseSuite(t *testing.T) {
 		t.Error("database not in database list")
 	}
 
-	dbs, err = client.ListMySQLDatabases(context.Background(), nil)
+	mysqldbs, err := client.ListMySQLDatabases(context.Background(), nil)
 	if len(dbs) == 0 {
 		t.Errorf("Expected a list of Databases, but got none: %v", err)
 	}
@@ -105,7 +105,7 @@ func TestDatabaseSuite(t *testing.T) {
 		t.Errorf("Error listing Databases, expected struct, got error %v", err)
 	}
 	success = false
-	for _, db := range dbs {
+	for _, db := range mysqldbs {
 		if db.ID == database.ID {
 			success = true
 		}
@@ -176,7 +176,7 @@ func TestDatabaseSuite(t *testing.T) {
 	// can't test post mysql/instances/{id}/backups/{id}/restore until on demand backups
 }
 
-func createDatabase(t *testing.T, client *linodego.Client) (*linodego.Database, func(), error) {
+func createDatabase(t *testing.T, client *linodego.Client) (*linodego.MySQLDatabase, func(), error) {
 	t.Helper()
 
 	createOpts := testMySQLCreateOpts
@@ -193,7 +193,7 @@ func createDatabase(t *testing.T, client *linodego.Client) (*linodego.Database, 
 	return database, teardown, nil
 }
 
-func setupDatabase(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.Database, func(), error) {
+func setupDatabase(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.MySQLDatabase, func(), error) {
 	t.Helper()
 	now := time.Now()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)

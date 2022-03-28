@@ -117,17 +117,6 @@ type ClusterPrice struct {
 	Monthly float32 `json:"monthly"`
 }
 
-// DatabaseSSL is the SSL Certificate to access the Linode Managed Database
-type DatabaseSSL struct {
-	Certificate []byte `json:"ca_certificate"`
-}
-
-// DatabaseCredential is the Root Credentials to access the Linode Managed Database
-type DatabaseCredential struct {
-	Username string `json:"username"`
-	Password string `json:"password"`
-}
-
 func (d *Database) UnmarshalJSON(b []byte) error {
 	type Mask Database
 
@@ -146,6 +135,11 @@ func (d *Database) UnmarshalJSON(b []byte) error {
 	d.Created = (*time.Time)(p.Created)
 	d.Updated = (*time.Time)(p.Updated)
 	return nil
+}
+
+// DatabaseSSL is the SSL Certificate to access the Linode Managed Database
+type DatabaseSSL struct {
+	CACertificate []byte `json:"ca_certificate"`
 }
 
 // List all Database instances in Linode Managed Databases for the account
