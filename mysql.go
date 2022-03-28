@@ -117,7 +117,12 @@ type MySQLDatabaseCredential struct {
 	Password string `json:"password"`
 }
 
-// List all MySQL Databases associated with the account
+// MySQLDatabaseSSL is the SSL Certificate to access the Linode Managed MySQL Database
+type MySQLDatabaseSSL struct {
+	CACertificate []byte `json:"ca_certificate"`
+}
+
+// ListMySQLDatabase lists all MySQL Databases associated with the account
 func (c *Client) ListMySQLDatabases(ctx context.Context, opts *ListOptions) ([]MySQLDatabase, error) {
 	response := MySQLDatabasesPagedResponse{}
 
@@ -146,7 +151,7 @@ func (resp *MySQLDatabaseBackupsPagedResponse) appendData(r *MySQLDatabaseBackup
 	resp.Data = append(resp.Data, r.Data...)
 }
 
-// List all MySQL Database Backups associated with the given MySQL Database
+// ListMySQLDatabaseBackups lists all MySQL Database Backups associated with the given MySQL Database
 func (c *Client) ListMySQLDatabaseBackups(ctx context.Context, databaseID int, opts *ListOptions) ([]MySQLDatabaseBackup, error) {
 	response := MySQLDatabaseBackupsPagedResponse{}
 
@@ -158,7 +163,7 @@ func (c *Client) ListMySQLDatabaseBackups(ctx context.Context, databaseID int, o
 	return response.Data, nil
 }
 
-// Get a single MySQL Database matching the id
+// GetMySQLDatabase returns a single MySQL Database matching the id
 func (c *Client) GetMySQLDatabase(ctx context.Context, id int) (*MySQLDatabase, error) {
 	e, err := c.DatabaseMySQLInstances.Endpoint()
 	if err != nil {
@@ -176,7 +181,7 @@ func (c *Client) GetMySQLDatabase(ctx context.Context, id int) (*MySQLDatabase, 
 	return r.Result().(*MySQLDatabase), nil
 }
 
-// Create a new MySQL Database using the createOpts as configuration, returns the new MySQL Database
+// CreateMySQLDatabase creates a new MySQL Database using the createOpts as configuration, returns the new MySQL Database
 func (c *Client) CreateMySQLDatabase(ctx context.Context, createOpts MySQLCreateOptions) (*MySQLDatabase, error) {
 	var body string
 	e, err := c.DatabaseMySQLInstances.Endpoint()
@@ -201,7 +206,7 @@ func (c *Client) CreateMySQLDatabase(ctx context.Context, createOpts MySQLCreate
 	return r.Result().(*MySQLDatabase), nil
 }
 
-// Delete an existing MySQL Database with the given id
+// DeleteMySQLDatabase deletes an existing MySQL Database with the given id
 func (c *Client) DeleteMySQLDatabase(ctx context.Context, id int) error {
 	e, err := c.DatabaseMySQLInstances.Endpoint()
 	if err != nil {
@@ -215,7 +220,7 @@ func (c *Client) DeleteMySQLDatabase(ctx context.Context, id int) error {
 	return err
 }
 
-// Update the given MySQL Database with the provided opts, returns the Database with the new settings
+// UpdateMySQLDatabase updates the given MySQL Database with the provided opts, returns the MySQLDatabase with the new settings
 func (c *Client) UpdateMySQLDatabase(ctx context.Context, id int, opts MySQLUpdateOptions) (*MySQLDatabase, error) {
 	e, err := c.DatabaseMySQLInstances.Endpoint()
 	if err != nil {
@@ -239,8 +244,8 @@ func (c *Client) UpdateMySQLDatabase(ctx context.Context, id int, opts MySQLUpda
 	return r.Result().(*MySQLDatabase), nil
 }
 
-// Get the SSL Certificate for the given MySQL Database
-func (c *Client) GetMySQLDatabaseSSL(ctx context.Context, id int) (*DatabaseSSL, error) {
+// GetMySQLDatabaseSSL returns the SSL Certificate for the given MySQL Database
+func (c *Client) GetMySQLDatabaseSSL(ctx context.Context, id int) (*MySQLDatabaseSSL, error) {
 	e, err := c.DatabaseMySQLInstances.Endpoint()
 	if err != nil {
 		return nil, err
@@ -249,15 +254,15 @@ func (c *Client) GetMySQLDatabaseSSL(ctx context.Context, id int) (*DatabaseSSL,
 	req := c.R(ctx)
 
 	e = fmt.Sprintf("%s/%d/ssl", e, id)
-	r, err := coupleAPIErrors(req.SetResult(&DatabaseSSL{}).Get(e))
+	r, err := coupleAPIErrors(req.SetResult(&MySQLDatabaseSSL{}).Get(e))
 	if err != nil {
 		return nil, err
 	}
 
-	return r.Result().(*DatabaseSSL), nil
+	return r.Result().(*MySQLDatabaseSSL), nil
 }
 
-// Get the Root Credentials for the given MySQL Database
+// GetMySQLDatabaseCredentials returns the Root Credentials for the given MySQL Database
 func (c *Client) GetMySQLDatabaseCredentials(ctx context.Context, id int) (*MySQLDatabaseCredential, error) {
 	e, err := c.DatabaseMySQLInstances.Endpoint()
 	if err != nil {
@@ -275,7 +280,7 @@ func (c *Client) GetMySQLDatabaseCredentials(ctx context.Context, id int) (*MySQ
 	return r.Result().(*MySQLDatabaseCredential), nil
 }
 
-// Reset the Root Credentials for the given MySQL Database (may take a few seconds to work)
+// ResetMySQLDatabaseCredentials returns the Root Credentials for the given MySQL Database (may take a few seconds to work)
 func (c *Client) ResetMySQLDatabaseCredentials(ctx context.Context, id int) error {
 	e, err := c.DatabaseMySQLInstances.Endpoint()
 	if err != nil {
@@ -293,7 +298,7 @@ func (c *Client) ResetMySQLDatabaseCredentials(ctx context.Context, id int) erro
 	return nil
 }
 
-// Get a specific MySQL Database Backup with the given ids
+// GetMySQLDatabaseBackup returns a specific MySQL Database Backup with the given ids
 func (c *Client) GetMySQLDatabaseBackup(ctx context.Context, databaseID int, backupID int) (*MySQLDatabaseBackup, error) {
 	e, err := c.DatabaseMySQLInstances.Endpoint()
 	if err != nil {
@@ -311,7 +316,7 @@ func (c *Client) GetMySQLDatabaseBackup(ctx context.Context, databaseID int, bac
 	return r.Result().(*MySQLDatabaseBackup), nil
 }
 
-// Restore the given MySQL Database with the given Backup
+// RestoreMySQLDatabaseBackup returns the given MySQL Database with the given Backup
 func (c *Client) RestoreMySQLDatabaseBackup(ctx context.Context, databaseID int, backupID int) error {
 	e, err := c.DatabaseMySQLInstances.Endpoint()
 	if err != nil {

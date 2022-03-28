@@ -137,12 +137,7 @@ func (d *Database) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// DatabaseSSL is the SSL Certificate to access the Linode Managed Database
-type DatabaseSSL struct {
-	CACertificate []byte `json:"ca_certificate"`
-}
-
-// List all Database instances in Linode Managed Databases for the account
+// ListDatabases lists all Database instances in Linode Managed Databases for the account
 func (c *Client) ListDatabases(ctx context.Context, opts *ListOptions) ([]Database, error) {
 	response := DatabasesPagedResponse{}
 
@@ -154,7 +149,7 @@ func (c *Client) ListDatabases(ctx context.Context, opts *ListOptions) ([]Databa
 	return response.Data, nil
 }
 
-// List all Database Engines
+// ListDatabaseEngines lists all Database Engines
 func (c *Client) ListDatabaseEngines(ctx context.Context, opts *ListOptions) ([]DatabaseEngine, error) {
 	response := DatabaseEnginesPagedResponse{}
 
@@ -166,7 +161,7 @@ func (c *Client) ListDatabaseEngines(ctx context.Context, opts *ListOptions) ([]
 	return response.Data, nil
 }
 
-// Get a specific Database Engine
+// GetDatabaseEngine returns a specific Database Engine
 func (c *Client) GetDatabaseEngine(ctx context.Context, opts *ListOptions, id string) (*DatabaseEngine, error) {
 	e, err := c.Databases.Endpoint()
 	if err != nil {
@@ -184,7 +179,7 @@ func (c *Client) GetDatabaseEngine(ctx context.Context, opts *ListOptions, id st
 	return r.Result().(*DatabaseEngine), nil
 }
 
-// List all Types of Database provided in Linode Managed Databases
+// ListDatabaseTypes lists all Types of Database provided in Linode Managed Databases
 func (c *Client) ListDatabaseTypes(ctx context.Context, opts *ListOptions) ([]DatabaseType, error) {
 	response := DatabaseTypesPagedResponse{}
 
@@ -196,7 +191,7 @@ func (c *Client) ListDatabaseTypes(ctx context.Context, opts *ListOptions) ([]Da
 	return response.Data, nil
 }
 
-// Get a specific Database Type
+// GetDatabaseType returns a specific Database Type
 func (c *Client) GetDatabaseType(ctx context.Context, opts *ListOptions, id string) (*DatabaseType, error) {
 	e, err := c.Databases.Endpoint()
 	if err != nil {
