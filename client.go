@@ -54,6 +54,7 @@ type Client struct {
 
 	Account                *Resource
 	AccountSettings        *Resource
+	Databases              *Resource
 	DomainRecords          *Resource
 	Domains                *Resource
 	Events                 *Resource
@@ -86,6 +87,7 @@ type Client struct {
 	LongviewClients          *Resource
 	LongviewSubscriptions    *Resource
 	Managed                  *Resource
+	DatabaseMySQLInstances   *Resource
 	NodeBalancerConfigs      *Resource
 	NodeBalancerNodes        *Resource
 	NodeBalancerStats        *Resource
@@ -315,6 +317,7 @@ func addResources(client *Client) {
 	resources := map[string]*Resource{
 		accountName:                  NewResource(client, accountName, accountEndpoint, false, Account{}, nil),                         // really?
 		accountSettingsName:          NewResource(client, accountSettingsName, accountSettingsEndpoint, false, AccountSettings{}, nil), // really?
+		databasesName:                NewResource(client, databasesName, databasesEndpoint, false, Database{}, nil),
 		domainRecordsName:            NewResource(client, domainRecordsName, domainRecordsEndpoint, true, DomainRecord{}, DomainRecordsPagedResponse{}),
 		domainsName:                  NewResource(client, domainsName, domainsEndpoint, false, Domain{}, DomainsPagedResponse{}),
 		eventsName:                   NewResource(client, eventsName, eventsEndpoint, false, Event{}, EventsPagedResponse{}),
@@ -344,6 +347,7 @@ func addResources(client *Client) {
 		longviewclientsName:          NewResource(client, longviewclientsName, longviewclientsEndpoint, false, LongviewClient{}, LongviewClientsPagedResponse{}),
 		longviewsubscriptionsName:    NewResource(client, longviewsubscriptionsName, longviewsubscriptionsEndpoint, false, LongviewSubscription{}, LongviewSubscriptionsPagedResponse{}),
 		managedName:                  NewResource(client, managedName, managedEndpoint, false, nil, nil), // really?
+		mysqlName:                    NewResource(client, mysqlName, mysqlEndpoint, false, Database{}, nil),
 		nodebalancerconfigsName:      NewResource(client, nodebalancerconfigsName, nodebalancerconfigsEndpoint, true, NodeBalancerConfig{}, NodeBalancerConfigsPagedResponse{}),
 		nodebalancernodesName:        NewResource(client, nodebalancernodesName, nodebalancernodesEndpoint, true, NodeBalancerNode{}, NodeBalancerNodesPagedResponse{}),
 		nodebalancerStatsName:        NewResource(client, nodebalancerStatsName, nodebalancerStatsEndpoint, true, NodeBalancerStats{}, nil),
@@ -372,6 +376,7 @@ func addResources(client *Client) {
 	client.resources = resources
 
 	client.Account = resources[accountName]
+	client.Databases = resources[databasesName]
 	client.DomainRecords = resources[domainRecordsName]
 	client.Domains = resources[domainsName]
 	client.Events = resources[eventsName]
@@ -399,6 +404,7 @@ func addResources(client *Client) {
 	client.Longview = resources[longviewName]
 	client.LongviewSubscriptions = resources[longviewsubscriptionsName]
 	client.Managed = resources[managedName]
+	client.DatabaseMySQLInstances = resources[mysqlName]
 	client.NodeBalancerConfigs = resources[nodebalancerconfigsName]
 	client.NodeBalancerNodes = resources[nodebalancernodesName]
 	client.NodeBalancerStats = resources[nodebalancerStatsName]

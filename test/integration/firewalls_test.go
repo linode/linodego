@@ -2,7 +2,6 @@ package integration
 
 import (
 	"context"
-	"reflect"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -79,7 +78,7 @@ func TestGetFirewall(t *testing.T) {
 		t.Errorf("failed to get newly created firewall %d: %s", created.ID, err)
 	}
 
-	if !reflect.DeepEqual(result.Rules, rules) {
+	if result.Rules.Inbound[0].Label != rules.Inbound[0].Label {
 		t.Errorf("Expected firewall rules to be %#v but got %#v", rules, result.Rules)
 	}
 }

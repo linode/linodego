@@ -50,8 +50,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -70,14 +68,13 @@ interactions:
     url: https://api.linode.com/v4beta/account/users/linodegotest-updateusergrants/grants
     method: PUT
   response:
-    body: '{"linode": [{"id": 28839970, "label": "aaaaaaa", "permissions":
-      null}], "nodebalancer": [], "domain": [], "stackscript": [{"id": 873369, "label":
-      "aaaaaaa", "permissions": null}], "longview": [], "image": [],
-      "volume": [], "firewall": [{"id": 17053, "label": "sdf", "permissions": null}],
-      "global": {"add_domains": false, "add_linodes": false, "add_longview": true,
-      "longview_subscription": false, "add_stackscripts": true, "add_nodebalancers":
-      false, "add_images": true, "add_volumes": true, "add_firewalls": true, "account_access":
-      "read_only", "cancel_account": false}}'
+    body: '{"linode": [{"id": 29745916, "label": "workdev", "permissions": null}],
+      "nodebalancer": [], "domain": [], "stackscript": [], "longview": [], "image":
+      [], "volume": [{"id": 284063, "label": "linodego-test-volume", "permissions":
+      null}], "firewall": [], "global": {"add_domains": false, "add_linodes": false,
+      "add_longview": true, "longview_subscription": false, "add_stackscripts": true,
+      "add_nodebalancers": false, "add_images": true, "add_volumes": true, "add_firewalls":
+      true, "account_access": "read_only", "cancel_account": false}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -92,7 +89,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "594"
+      - "535"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -112,8 +109,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -167,8 +162,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

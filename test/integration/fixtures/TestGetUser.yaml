@@ -10,11 +10,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/account/users
     method: POST
   response:
-    body: '{"username": "linodegotest-getuser", "email": "linodegotest-getuser@example.com", "restricted": true, "ssh_keys": [], "tfa_enabled": false}'
+    body: '{"username": "linodegotest-getuser", "email": "linodegotest-getuser@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -49,8 +50,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -65,11 +64,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/account/users/linodegotest-getuser
     method: GET
   response:
-    body: '{"username": "linodegotest-getuser", "email": "linodegotest-getuser@example.com", "restricted": true, "ssh_keys": [], "tfa_enabled": false}'
+    body: '{"username": "linodegotest-getuser", "email": "linodegotest-getuser@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -106,8 +106,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -122,7 +120,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/account/users/linodegotest-getuser
     method: DELETE
   response:
@@ -161,8 +159,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

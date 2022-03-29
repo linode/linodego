@@ -1,0 +1,199 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/databases/types
+    method: GET
+  response:
+    body: '{"data": [{"id": "g6-nanode-1", "label": "DBaaS MySQL - Nanode 1GB", "cluster_size":
+      [{"quantity": 1, "price": {"hourly": 0.0225, "monthly": 15.0}}, {"quantity":
+      2, "price": {"hourly": 0.0375, "monthly": 25.0}}, {"quantity": 3, "price": {"hourly":
+      0.0525, "monthly": 35.0}}], "memory": 1024, "disk": 25600, "vcpus": 1, "deprecated":
+      false, "class": "nanode"}, {"id": "g6-standard-1", "label": "DBaaS MySQL - Linode
+      2GB", "cluster_size": [{"quantity": 1, "price": {"hourly": 0.045, "monthly":
+      30.0}}, {"quantity": 2, "price": {"hourly": 0.075, "monthly": 50.0}}, {"quantity":
+      3, "price": {"hourly": 0.105, "monthly": 70.0}}], "memory": 2048, "disk": 51200,
+      "vcpus": 1, "deprecated": false, "class": "standard"}, {"id": "g6-standard-2",
+      "label": "DBaaS MySQL - Linode 4GB", "cluster_size": [{"quantity": 1, "price":
+      {"hourly": 0.09, "monthly": 60.0}}, {"quantity": 2, "price": {"hourly": 0.15,
+      "monthly": 100.0}}, {"quantity": 3, "price": {"hourly": 0.21, "monthly": 140.0}}],
+      "memory": 4096, "disk": 81920, "vcpus": 2, "deprecated": false, "class": "standard"},
+      {"id": "g6-standard-4", "label": "DBaaS MySQL - Linode 8GB", "cluster_size":
+      [{"quantity": 1, "price": {"hourly": 0.18, "monthly": 120.0}}, {"quantity":
+      2, "price": {"hourly": 0.3, "monthly": 200.0}}, {"quantity": 3, "price": {"hourly":
+      0.42, "monthly": 280.0}}], "memory": 8192, "disk": 163840, "vcpus": 4, "deprecated":
+      false, "class": "standard"}, {"id": "g6-standard-6", "label": "DBaaS MySQL -
+      Linode 16GB", "cluster_size": [{"quantity": 1, "price": {"hourly": 0.36, "monthly":
+      240.0}}, {"quantity": 2, "price": {"hourly": 0.6, "monthly": 400.0}}, {"quantity":
+      3, "price": {"hourly": 0.84, "monthly": 560.0}}], "memory": 16384, "disk": 327680,
+      "vcpus": 6, "deprecated": false, "class": "standard"}, {"id": "g6-standard-8",
+      "label": "DBaaS MySQL - Linode 32GB", "cluster_size": [{"quantity": 1, "price":
+      {"hourly": 0.72, "monthly": 480.0}}, {"quantity": 2, "price": {"hourly": 1.2,
+      "monthly": 800.0}}, {"quantity": 3, "price": {"hourly": 1.68, "monthly": 1120.0}}],
+      "memory": 32768, "disk": 655360, "vcpus": 8, "deprecated": false, "class": "standard"},
+      {"id": "g6-standard-16", "label": "DBaaS MySQL - Linode 64GB", "cluster_size":
+      [{"quantity": 1, "price": {"hourly": 1.44, "monthly": 960.0}}, {"quantity":
+      2, "price": {"hourly": 2.4, "monthly": 1600.0}}, {"quantity": 3, "price": {"hourly":
+      3.336, "monthly": 2224.0}}], "memory": 65536, "disk": 1310720, "vcpus": 16,
+      "deprecated": false, "class": "standard"}, {"id": "g6-standard-20", "label":
+      "DBaaS MySQL - Linode 96GB", "cluster_size": [{"quantity": 1, "price": {"hourly":
+      2.16, "monthly": 1440.0}}, {"quantity": 2, "price": {"hourly": 3.6, "monthly":
+      2400.0}}, {"quantity": 3, "price": {"hourly": 5.04, "monthly": 3360.0}}], "memory":
+      98304, "disk": 1966080, "vcpus": 20, "deprecated": false, "class": "standard"},
+      {"id": "g6-standard-24", "label": "DBaaS MySQL - Linode 128GB", "cluster_size":
+      [{"quantity": 1, "price": {"hourly": 2.88, "monthly": 1920.0}}, {"quantity":
+      2, "price": {"hourly": 4.8, "monthly": 3200.0}}, {"quantity": 3, "price": {"hourly":
+      6.72, "monthly": 4480.0}}], "memory": 131072, "disk": 2621440, "vcpus": 24,
+      "deprecated": false, "class": "standard"}, {"id": "g6-standard-32", "label":
+      "DBaaS MySQL - Linode 192GB", "cluster_size": [{"quantity": 1, "price": {"hourly":
+      4.32, "monthly": 2880.0}}, {"quantity": 2, "price": {"hourly": 7.2, "monthly":
+      4800.0}}, {"quantity": 3, "price": {"hourly": 10.08, "monthly": 6720.0}}], "memory":
+      196608, "disk": 3932160, "vcpus": 32, "deprecated": false, "class": "standard"},
+      {"id": "g6-dedicated-2", "label": "DBaaS MySQL - Dedicated 4GB", "cluster_size":
+      [{"quantity": 1, "price": {"hourly": 0.0975, "monthly": 65.0}}, {"quantity":
+      2, "price": {"hourly": 0.195, "monthly": 130.0}}, {"quantity": 3, "price": {"hourly":
+      0.2925, "monthly": 195.0}}], "memory": 4096, "disk": 81920, "vcpus": 2, "deprecated":
+      false, "class": "dedicated"}, {"id": "g6-dedicated-4", "label": "DBaaS MySQL
+      - Dedicated 8GB", "cluster_size": [{"quantity": 1, "price": {"hourly": 0.195,
+      "monthly": 130.0}}, {"quantity": 2, "price": {"hourly": 0.39, "monthly": 260.0}},
+      {"quantity": 3, "price": {"hourly": 0.585, "monthly": 390.0}}], "memory": 8192,
+      "disk": 163840, "vcpus": 4, "deprecated": false, "class": "dedicated"}, {"id":
+      "g6-dedicated-8", "label": "DBaaS MySQL - Dedicated 16GB", "cluster_size": [{"quantity":
+      1, "price": {"hourly": 0.39, "monthly": 260.0}}, {"quantity": 2, "price": {"hourly":
+      0.78, "monthly": 520.0}}, {"quantity": 3, "price": {"hourly": 1.17, "monthly":
+      780.0}}], "memory": 16384, "disk": 327680, "vcpus": 6, "deprecated": false,
+      "class": "dedicated"}, {"id": "g6-dedicated-16", "label": "DBaaS MySQL - Dedicated
+      32GB", "cluster_size": [{"quantity": 1, "price": {"hourly": 0.78, "monthly":
+      520.0}}, {"quantity": 2, "price": {"hourly": 1.56, "monthly": 1040.0}}, {"quantity":
+      3, "price": {"hourly": 2.34, "monthly": 1560.0}}], "memory": 32768, "disk":
+      655360, "vcpus": 8, "deprecated": false, "class": "dedicated"}, {"id": "g6-dedicated-32",
+      "label": "DBaaS MySQL - Dedicated 64GB", "cluster_size": [{"quantity": 1, "price":
+      {"hourly": 1.56, "monthly": 1040.0}}, {"quantity": 2, "price": {"hourly": 3.12,
+      "monthly": 2080.0}}, {"quantity": 3, "price": {"hourly": 4.68, "monthly": 3120.0}}],
+      "memory": 65536, "disk": 1310720, "vcpus": 16, "deprecated": false, "class":
+      "dedicated"}, {"id": "g6-dedicated-48", "label": "DBaaS MySQL - Dedicated 96GB",
+      "cluster_size": [{"quantity": 1, "price": {"hourly": 2.34, "monthly": 1560.0}},
+      {"quantity": 2, "price": {"hourly": 4.68, "monthly": 3120.0}}, {"quantity":
+      3, "price": {"hourly": 7.02, "monthly": 4680.0}}], "memory": 98304, "disk":
+      1966080, "vcpus": 20, "deprecated": false, "class": "dedicated"}, {"id": "g6-dedicated-50",
+      "label": "DBaaS MySQL - Dedicated 128GB", "cluster_size": [{"quantity": 1, "price":
+      {"hourly": 3.12, "monthly": 2080.0}}, {"quantity": 2, "price": {"hourly": 6.24,
+      "monthly": 4160.0}}, {"quantity": 3, "price": {"hourly": 9.36, "monthly": 6240.0}}],
+      "memory": 131072, "disk": 2560000, "vcpus": 50, "deprecated": false, "class":
+      "dedicated"}, {"id": "g6-dedicated-56", "label": "DBaaS MySQL - Dedicated 256GB",
+      "cluster_size": [{"quantity": 1, "price": {"hourly": 6.24, "monthly": 4160.0}},
+      {"quantity": 2, "price": {"hourly": 12.48, "monthly": 8320.0}}, {"quantity":
+      3, "price": {"hourly": 18.72, "monthly": 12480.0}}], "memory": 262144, "disk":
+      5120000, "vcpus": 56, "deprecated": false, "class": "dedicated"}, {"id": "g6-dedicated-64",
+      "label": "DBaaS MySQL - Dedicated 512GB", "cluster_size": [{"quantity": 1, "price":
+      {"hourly": 12.48, "monthly": 8320.0}}, {"quantity": 2, "price": {"hourly": 24.96,
+      "monthly": 16640.0}}, {"quantity": 3, "price": {"hourly": 37.44, "monthly":
+      24960.0}}], "memory": 524288, "disk": 7372800, "vcpus": 64, "deprecated": false,
+      "class": "dedicated"}], "page": 1, "pages": 1, "results": 19}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - unknown
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/databases/types/g6-nanode-1
+    method: GET
+  response:
+    body: '{"id": "g6-nanode-1", "label": "DBaaS MySQL - Nanode 1GB", "cluster_size":
+      [{"quantity": 1, "price": {"hourly": 0.0225, "monthly": 15.0}}, {"quantity":
+      2, "price": {"hourly": 0.0375, "monthly": 25.0}}, {"quantity": 3, "price": {"hourly":
+      0.0525, "monthly": 35.0}}], "memory": 1024, "disk": 25600, "vcpus": 1, "deprecated":
+      false, "class": "nanode"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "348"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - unknown
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""

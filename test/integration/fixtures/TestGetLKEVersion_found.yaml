@@ -10,11 +10,11 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.12.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/versions/1.16
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/versions/1.22
     method: GET
   response:
-    body: '{"id": "1.16"}'
+    body: '{"id": "1.22"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -29,18 +29,12 @@ interactions:
       Cache-Control:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
       - "14"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Tue, 14 Jan 2020 18:57:30 GMT
-      Retry-After:
-      - "119"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -57,14 +51,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "400"
-      X-Ratelimit-Remaining:
-      - "399"
-      X-Ratelimit-Reset:
-      - "1579028370"
-      X-Spec-Version:
-      - 4.12.0
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

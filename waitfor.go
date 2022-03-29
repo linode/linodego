@@ -272,7 +272,7 @@ func (client Client) WaitForEventFinished(ctx context.Context, id interface{}, e
 	// The API has limitted filtering support for Event ID and Event Type
 	// Optimize the list, if possible
 	switch entityType {
-	case EntityDisk, EntityLinode, EntityDomain, EntityNodebalancer:
+	case EntityDisk, EntityDatabase, EntityLinode, EntityDomain, EntityNodebalancer:
 		// All of the filter supported types have int ids
 		filterableEntityID, err := strconv.Atoi(fmt.Sprintf("%v", id))
 		if err != nil {

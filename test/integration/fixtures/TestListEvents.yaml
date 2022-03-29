@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-west","type":"g6-nanode-1","label":"linodego-test-instance","root_pass":"R34lBAdP455","image":"linode/debian9","booted":false}'
+    body: '{"region":"ca-central","type":"g6-nanode-1","label":"linodego-test-instance","root_pass":"R34lBAdP455","image":"linode/debian9","booted":false}'
     form: {}
     headers:
       Accept:
@@ -10,18 +10,18 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.12.0 https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 19967871, "label": "linodego-test-instance", "group": "", "status":
+    body: '{"id": 35548564, "label": "linodego-test-instance", "group": "", "status":
       "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["10.20.30.40"], "ipv6": "1234::5678/64",
-      "image": "linode/debian9", "region": "us-west", "specs": {"disk": 25600, "memory":
-      1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
-      10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
-      false, "schedule": {"day": null, "window": null}, "last_successful": null},
-      "hypervisor": "kvm", "watchdog_enabled": true, "tags": []}'
+      "type": "g6-nanode-1", "ipv4": ["139.177.199.224"], "ipv6": "1234::5678/128",
+      "image": "linode/debian9", "region": "ca-central", "specs": {"disk": 25600,
+      "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu":
+      90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io": 10000},
+      "backups": {"enabled": false, "schedule": {"day": null, "window": null}, "last_successful":
+      null}, "hypervisor": "kvm", "watchdog_enabled": true, "tags": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -35,18 +35,12 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
-      - "636"
+      - "643"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Wed, 01 Apr 2020 15:14:51 GMT
-      Retry-After:
-      - "106"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -62,21 +56,13 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "1600"
-      X-Ratelimit-Remaining:
-      - "1595"
-      X-Ratelimit-Reset:
-      - "1585754198"
-      X-Spec-Version:
-      - 4.60.0
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"label":"linodego-test-config","devices":{}}'
+    body: '{"label":"linodego-test-config","devices":{},"interfaces":null}'
     form: {}
     headers:
       Accept:
@@ -84,17 +70,17 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.12.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/19967871/configs
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/linode/instances/35548564/configs
     method: POST
   response:
-    body: '{"id": 21348302, "label": "linodego-test-config", "helpers": {"updatedb_disabled":
+    body: '{"id": 37846191, "label": "linodego-test-config", "helpers": {"updatedb_disabled":
       true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
       true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
       "devices": {"sda": null, "sdb": null, "sdc": null, "sdd": null, "sde": null,
       "sdf": null, "sdg": null, "sdh": null}, "initrd": null, "run_level": "default",
-      "virt_mode": "paravirt"}'
+      "virt_mode": "paravirt", "interfaces": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -108,18 +94,12 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
-      - "516"
+      - "534"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Wed, 01 Apr 2020 15:14:51 GMT
-      Retry-After:
-      - "105"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -135,14 +115,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "1600"
-      X-Ratelimit-Remaining:
-      - "1594"
-      X-Ratelimit-Reset:
-      - "1585754197"
-      X-Spec-Version:
-      - 4.60.0
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -157,26 +129,26 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.12.0 https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"entity.id":19967871, "entity.type": "linode"}'
+      - '{"entity.id":35548564, "entity.type": "linode"}'
     url: https://api.linode.com/v4beta/account/events
     method: GET
   response:
-    body: '{"data": [{"id": 79166449, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 288948532, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
-      "duration": null, "action": "linode_config_create", "username": "pccampbell",
-      "entity": {"label": "linodego-test-instance", "id": 19967871, "type": "linode",
-      "url": "/v4/linode/instances/19967871"}, "status": "notification", "secondary_entity":
-      {"id": 21348302, "type": "linode_config", "label": "linodego-test-config", "url":
-      "/v4/linode/instances/19967871/configs/21348302"}}, {"id": 79166446, "created":
-      "2018-01-02T03:04:05", "seen": false, "read": false, "percent_complete": 0,
-      "time_remaining": null, "rate": null, "duration": null, "action": "linode_create",
-      "username": "pccampbell", "entity": {"label": "linodego-test-instance", "id":
-      19967871, "type": "linode", "url": "/v4/linode/instances/19967871"}, "status":
+      "duration": null, "action": "linode_config_create", "username": "jriddle-dev",
+      "entity": {"label": "linodego-test-instance", "id": 35548564, "type": "linode",
+      "url": "/v4/linode/instances/35548564"}, "status": "notification", "secondary_entity":
+      {"id": 37846191, "type": "linode_config", "label": "linodego-test-config", "url":
+      "/v4/linode/instances/35548564/configs/37846191"}, "message": ""}, {"id": 288948529,
+      "created": "2018-01-02T03:04:05", "seen": false, "read": false, "percent_complete":
+      0, "time_remaining": null, "rate": null, "duration": null, "action": "linode_create",
+      "username": "jriddle-dev", "entity": {"label": "linodego-test-instance", "id":
+      35548564, "type": "linode", "url": "/v4/linode/instances/35548564"}, "status":
       "scheduled", "secondary_entity": {"id": "linode/debian9", "type": "image", "label":
-      "Debian 9", "url": "/v4/images/linode/debian9"}}], "page": 1, "pages": 1, "results":
-      2}'
+      "Debian 9", "url": "/v4/images/linode/debian9"}, "message": ""}], "page": 1,
+      "pages": 1, "results": 2}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -191,16 +163,10 @@ interactions:
       Cache-Control:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Wed, 01 Apr 2020 15:14:52 GMT
-      Retry-After:
-      - "105"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -217,14 +183,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "1600"
-      X-Ratelimit-Remaining:
-      - "1593"
-      X-Ratelimit-Reset:
-      - "1585754198"
-      X-Spec-Version:
-      - 4.60.0
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -239,8 +197,8 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.12.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/19967871
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/linode/instances/35548564
     method: DELETE
   response:
     body: '{}'
@@ -257,18 +215,12 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
       - "2"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Wed, 01 Apr 2020 15:14:52 GMT
-      Retry-After:
-      - "104"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -284,14 +236,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "1600"
-      X-Ratelimit-Remaining:
-      - "1592"
-      X-Ratelimit-Reset:
-      - "1585754197"
-      X-Spec-Version:
-      - 4.60.0
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
