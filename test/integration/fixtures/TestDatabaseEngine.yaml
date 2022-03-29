@@ -2,62 +2,6 @@
 version: 1
 interactions:
 - request:
-    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"]}],"label":"88925vafx4wh-linodego-testing","region":"us-central","k8s_version":"1.21","tags":["testing"]}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters
-    method: POST
-  response:
-    body: '{"id": 55942, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "label": "88925vafx4wh-linodego-testing", "region": "us-central",
-      "k8s_version": "1.21", "control_plane": {"high_availability": false}, "tags":
-      ["testing"]}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Cache-Control:
-      - private, max-age=60, s-maxage=60
-      Content-Length:
-      - "257"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - lke:read_write
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
     body: ""
     form: {}
     headers:
@@ -67,13 +11,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/55942
+    url: https://api.linode.com/v4beta/databases/engines
     method: GET
   response:
-    body: '{"id": 55942, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "label": "88925vafx4wh-linodego-testing", "region": "us-central",
-      "k8s_version": "1.21", "control_plane": {"high_availability": false}, "tags":
-      ["testing"]}'
+    body: '{"data": [{"id": "mysql/5.7.30", "engine": "mysql", "version": "5.7.30"},
+      {"id": "mysql/8.0.26", "engine": "mysql", "version": "8.0.26"}], "page": 1,
+      "pages": 1, "results": 2}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -89,7 +32,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "257"
+      - "175"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -102,14 +45,14 @@ interactions:
       - Authorization, X-Filter
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - lke:read_only
+      - '*'
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - unknown
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -125,10 +68,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/55942
-    method: DELETE
+    url: https://api.linode.com/v4beta/databases/engines/mysql/5.7.30
+    method: GET
   response:
-    body: '{}'
+    body: '{"id": "mysql/5.7.30", "engine": "mysql", "version": "5.7.30"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -141,9 +84,10 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "2"
+      - "62"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -154,15 +98,16 @@ interactions:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
+      - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - lke:read_write
+      - '*'
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - unknown
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

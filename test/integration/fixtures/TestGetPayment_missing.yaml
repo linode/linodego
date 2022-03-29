@@ -7,12 +7,10 @@ interactions:
     headers:
       Accept:
       - application/json
-      Authorization:
-      - Bearer awesometokenawesometokenawesometoken
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.7.1 https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/account/payments/-1
     method: GET
   response:
@@ -26,16 +24,10 @@ interactions:
       - '*'
       Cache-Control:
       - private, max-age=0, s-maxage=0, no-cache, no-store
-      Connection:
-      - keep-alive
       Content-Length:
       - "37"
       Content-Type:
       - application/json
-      Date:
-      - Wed, 01 May 2019 02:39:29 GMT
-      Retry-After:
-      - "118"
       Server:
       - nginx
       Vary:
@@ -46,14 +38,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "400"
-      X-Ratelimit-Remaining:
-      - "399"
-      X-Ratelimit-Reset:
-      - "1556678488"
-      X-Spec-Version:
-      - 4.0.22
-    status: 404 NOT FOUND
+    status: 404 Not Found
     code: 404
     duration: ""

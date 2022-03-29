@@ -109,6 +109,30 @@ func (c *Client) listHelper(ctx context.Context, i interface{}, opts *ListOption
 			results = r.Result().(*VolumesPagedResponse).Results
 			v.appendData(r.Result().(*VolumesPagedResponse))
 		}
+	case *DatabasesPagedResponse:
+		if r, err = coupleAPIErrors(req.SetResult(DatabasesPagedResponse{}).Get(v.endpoint(c))); err == nil {
+			pages = r.Result().(*DatabasesPagedResponse).Pages
+			results = r.Result().(*DatabasesPagedResponse).Results
+			v.appendData(r.Result().(*DatabasesPagedResponse))
+		}
+	case *DatabaseEnginesPagedResponse:
+		if r, err = coupleAPIErrors(req.SetResult(DatabaseEnginesPagedResponse{}).Get(v.endpoint(c))); err == nil {
+			pages = r.Result().(*DatabaseEnginesPagedResponse).Pages
+			results = r.Result().(*DatabaseEnginesPagedResponse).Results
+			v.appendData(r.Result().(*DatabaseEnginesPagedResponse))
+		}
+	case *DatabaseTypesPagedResponse:
+		if r, err = coupleAPIErrors(req.SetResult(DatabaseTypesPagedResponse{}).Get(v.endpoint(c))); err == nil {
+			pages = r.Result().(*DatabaseTypesPagedResponse).Pages
+			results = r.Result().(*DatabaseTypesPagedResponse).Results
+			v.appendData(r.Result().(*DatabaseTypesPagedResponse))
+		}
+	case *MySQLDatabasesPagedResponse:
+		if r, err = coupleAPIErrors(req.SetResult(MySQLDatabasesPagedResponse{}).Get(v.endpoint(c))); err == nil {
+			pages = r.Result().(*MySQLDatabasesPagedResponse).Pages
+			results = r.Result().(*MySQLDatabasesPagedResponse).Results
+			v.appendData(r.Result().(*MySQLDatabasesPagedResponse))
+		}
 	case *DomainsPagedResponse:
 		if r, err = coupleAPIErrors(req.SetResult(DomainsPagedResponse{}).Get(v.endpoint(c))); err == nil {
 			response, ok := r.Result().(*DomainsPagedResponse)
@@ -376,6 +400,12 @@ func (c *Client) listHelperWithID(ctx context.Context, i interface{}, idRaw inte
 			pages = r.Result().(*LKENodePoolsPagedResponse).Pages
 			results = r.Result().(*LKENodePoolsPagedResponse).Results
 			v.appendData(r.Result().(*LKENodePoolsPagedResponse))
+		}
+	case *MySQLDatabaseBackupsPagedResponse:
+		if r, err = coupleAPIErrors(req.SetResult(MySQLDatabaseBackupsPagedResponse{}).Get(v.endpointWithID(c, id))); err == nil {
+			pages = r.Result().(*MySQLDatabaseBackupsPagedResponse).Pages
+			results = r.Result().(*MySQLDatabaseBackupsPagedResponse).Results
+			v.appendData(r.Result().(*MySQLDatabaseBackupsPagedResponse))
 		}
 	case *NodeBalancerConfigsPagedResponse:
 		if r, err = coupleAPIErrors(req.SetResult(NodeBalancerConfigsPagedResponse{}).Get(v.endpointWithID(c, id))); err == nil {

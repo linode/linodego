@@ -14,7 +14,11 @@ interactions:
     url: https://api.linode.com/v4beta/domains
     method: POST
   response:
-    body: '{"id": 1598860, "type": "master", "domain": "7w0237x4foamd27gb238kw5eb371r6dh-linodego-testing.com", "tags": [], "group": "", "status": "active", "description": "", "soa_email": "example@example.com", "retry_sec": 0, "master_ips": [], "axfr_ips": [], "expire_sec": 0, "refresh_sec": 0, "ttl_sec": 0, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
+    body: '{"id": 1810430, "type": "master", "domain": "7w0237x4foamd27gb238kw5eb371r6dh-linodego-testing.com",
+      "tags": [], "group": "", "status": "active", "errors": "", "description": "",
+      "soa_email": "example@example.com", "retry_sec": 0, "master_ips": [], "axfr_ips":
+      [], "expire_sec": 0, "refresh_sec": 0, "ttl_sec": 0, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -29,7 +33,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "367"
+      - "381"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -49,8 +53,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -66,10 +68,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/domains/1598860/records
+    url: https://api.linode.com/v4beta/domains/1810430/records
     method: POST
   response:
-    body: '{"id": 18033321, "type": "A", "name": "a", "target": "127.0.0.1", "priority": 0, "weight": 0, "port": 0, "service": null, "protocol": null, "ttl_sec": 0, "tag": null, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
+    body: '{"id": 20325841, "type": "A", "name": "a", "target": "127.0.0.1", "priority":
+      0, "weight": 0, "port": 0, "service": null, "protocol": null, "ttl_sec": 0,
+      "tag": null, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -104,8 +108,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -121,10 +123,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/domains/1598860/records/18033321
+    url: https://api.linode.com/v4beta/domains/1810430/records/20325841
     method: PUT
   response:
-    body: '{"id": 18033321, "type": "A", "name": "renamed", "target": "127.0.0.1", "priority": 0, "weight": 0, "port": 0, "service": null, "protocol": null, "ttl_sec": 0, "tag": null, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
+    body: '{"id": 20325841, "type": "A", "name": "renamed", "target": "127.0.0.1",
+      "priority": 0, "weight": 0, "port": 0, "service": null, "protocol": null, "ttl_sec":
+      0, "tag": null, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -159,8 +163,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -176,7 +178,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/domains/1598860/records/18033321
+    url: https://api.linode.com/v4beta/domains/1810430/records/20325841
     method: DELETE
   response:
     body: '{}'
@@ -214,8 +216,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -231,7 +231,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/domains/1598860
+    url: https://api.linode.com/v4beta/domains/1810430
     method: DELETE
   response:
     body: '{}'
@@ -269,8 +269,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

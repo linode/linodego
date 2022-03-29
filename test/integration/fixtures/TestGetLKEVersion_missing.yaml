@@ -10,7 +10,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.12.0 https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/lke/versions/does-not-exist
     method: GET
   response:
@@ -24,16 +24,10 @@ interactions:
       - '*'
       Cache-Control:
       - private, max-age=0, s-maxage=0, no-cache, no-store
-      Connection:
-      - keep-alive
       Content-Length:
       - "37"
       Content-Type:
       - application/json
-      Date:
-      - Tue, 14 Jan 2020 18:57:30 GMT
-      Retry-After:
-      - "119"
       Server:
       - nginx
       Vary:
@@ -44,14 +38,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "400"
-      X-Ratelimit-Remaining:
-      - "399"
-      X-Ratelimit-Reset:
-      - "1579028370"
-      X-Spec-Version:
-      - 4.12.0
-    status: 404 NOT FOUND
+    status: 404 Not Found
     code: 404
     duration: ""

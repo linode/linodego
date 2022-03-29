@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"label","rules":{"inbound":[{"action":"ACCEPT","label":"test-label","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["::0/0"]}}],"inbound_policy":"ACCEPT","outbound":[{"action":"ACCEPT","label":"test-label","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["::0/0"]}}],"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
+    body: '{"label":"label","rules":{"inbound":[{"action":"ACCEPT","label":"test-label","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":[{"action":"ACCEPT","label":"test-label","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
     form: {}
     headers:
       Accept:
@@ -10,11 +10,17 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 3410, "label": "label", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound": [{"action": "ACCEPT", "label": "test-label", "ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["::/0"]}}], "inbound_policy": "ACCEPT", "outbound": [{"action": "ACCEPT", "label": "test-label", "ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["::/0"]}}], "outbound_policy": "ACCEPT"}, "tags": ["testing"]}'
+    body: '{"id": 54612, "label": "label", "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound": [{"action":
+      "ACCEPT", "label": "test-label", "ports": "22", "protocol": "TCP", "addresses":
+      {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy": "ACCEPT", "outbound":
+      [{"action": "ACCEPT", "label": "test-label", "ports": "22", "protocol": "TCP",
+      "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "outbound_policy":
+      "ACCEPT"}, "tags": ["testing"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -29,7 +35,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "505"
+      - "506"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -49,8 +55,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -65,11 +69,15 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/3410/rules
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/firewalls/54612/rules
     method: GET
   response:
-    body: '{"inbound": [{"action": "ACCEPT", "label": "test-label", "ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["::/0"]}}], "inbound_policy": "ACCEPT", "outbound": [{"action": "ACCEPT", "label": "test-label", "ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["::/0"]}}], "outbound_policy": "ACCEPT"}'
+    body: '{"inbound": [{"action": "ACCEPT", "label": "test-label", "ports": "22",
+      "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}],
+      "inbound_policy": "ACCEPT", "outbound": [{"action": "ACCEPT", "label": "test-label",
+      "ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6":
+      ["1234::5678/0"]}}], "outbound_policy": "ACCEPT"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -106,8 +114,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -122,8 +128,8 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/3410
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/firewalls/54612
     method: DELETE
   response:
     body: '{}'
@@ -161,8 +167,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

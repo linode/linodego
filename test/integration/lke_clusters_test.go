@@ -49,7 +49,7 @@ func TestWaitForLKEClusterReady(t *testing.T) {
 	defer teardownClusterClient()
 
 	if err = k8scondition.WaitForLKEClusterReady(context.Background(), *client, cluster.ID, linodego.LKEClusterPollOptions{
-		TimeoutSeconds:   5 * 60,
+		TimeoutSeconds:   10 * 60,
 		TransportWrapper: wrapper,
 	}); err != nil {
 		t.Errorf("Error waiting for the LKE cluster pools to be ready: %s", err)
@@ -139,8 +139,8 @@ func TestListLKEClusterAPIEndpoints(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error listing lkeClusterAPIEndpoints, expected struct, got error %v", err)
 	}
-	if len(i) != 1 {
-		t.Errorf("Expected a single lkeClusterAPIEndpoints, but got none %v", i)
+	if len(i) <= 0 {
+		t.Errorf("Expected some lkeClusterAPIEndpoints, but got none %v", i)
 	}
 }
 
@@ -229,11 +229,11 @@ func TestGetLKEVersion_found(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestGetLKEVersion_found")
 	defer teardown()
 
-	i, err := client.GetLKEVersion(context.Background(), "1.16")
+	i, err := client.GetLKEVersion(context.Background(), "1.22")
 	if err != nil {
 		t.Errorf("Error getting version, expected struct, got %v and error %v", i, err)
 	}
-	if i.ID != "1.16" {
+	if i.ID != "1.22" {
 		t.Errorf("Expected a specific version, but got a different one %v", i)
 	}
 }

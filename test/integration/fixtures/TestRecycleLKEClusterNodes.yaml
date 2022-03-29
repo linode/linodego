@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null}],"label":"a83ef3go2h76-linodego-testing","region":"us-central","k8s_version":"1.17","tags":["testing"]}'
+    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"]}],"label":"5ap633o3ycv3-linodego-testing","region":"us-central","k8s_version":"1.21","tags":["testing"]}'
     form: {}
     headers:
       Accept:
@@ -10,11 +10,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 20298, "status": "ready", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "label": "a83ef3go2h76-linodego-testing", "region": "us-central", "k8s_version": "1.17", "tags": ["testing"]}'
+    body: '{"id": 55944, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "label": "5ap633o3ycv3-linodego-testing", "region": "us-central",
+      "k8s_version": "1.21", "control_plane": {"high_availability": false}, "tags":
+      ["testing"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -29,7 +32,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "210"
+      - "257"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -49,8 +52,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -65,8 +66,8 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/20298/recycle
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/55944/recycle
     method: POST
   response:
     body: '{}'
@@ -104,8 +105,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -120,8 +119,8 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/20298
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/55944
     method: DELETE
   response:
     body: '{}'
@@ -159,8 +158,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

@@ -7,20 +7,21 @@ interactions:
     headers:
       Accept:
       - application/json
-      Authorization:
-      - Bearer awesometokenawesometokenawesometoken
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.0.1 https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/account
     method: GET
   response:
-    body: '{"phone": "555-555-5555", "email": "linode+_go_@example.com", "address_2":
-      "...", "company": "CompanyCo", "first_name": "Firsten", "address_1": "..", "country":
-      "US", "state": "..", "zip": "12345", "balance": 0.0, "city": "....", "credit_card":
-      {"expiry": "12/2099", "last_four": "5555"}, "last_name": "LastNamen", "tax_id":
-      ""}'
+    body: '{"company": "Linode", "email": "jriddle@linode.com", "first_name": "REDACTED",
+      "last_name": "REDACTED", "address_1": "REDACTED", "address_2": "Unit E", "city":
+      "Mooresville", "state": "REDACTED", "zip": "REDACTED", "country": "US", "phone": "REDACTED",
+      "balance": -25.0, "tax_id": "", "credit_card": {"last_four": "REDACTED", "expiry":
+      "REDACTED"}, "balance_uninvoiced": 0.0, "active_since": "2018-01-02T03:04:05",
+      "capabilities": ["Linodes", "NodeBalancers", "Block Storage", "Object Storage",
+      "Kubernetes", "Cloud Firewall", "Vlans", "LKE HA Control Planes", "Machine Images",
+      "Managed Databases"], "active_promotions": [], "euuid": "REDACTED"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -35,18 +36,12 @@ interactions:
       Cache-Control:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
-      - "328"
+      - "659"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Tue, 03 Jul 2018 01:17:22 GMT
-      Retry-After:
-      - "119"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -58,20 +53,11 @@ interactions:
       - account:read_only
       X-Content-Type-Options:
       - nosniff
-      - nosniff
       X-Frame-Options:
       - DENY
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "400"
-      X-Ratelimit-Remaining:
-      - "399"
-      X-Ratelimit-Reset:
-      - "1530580762"
-      X-Spec-Version:
-      - 4.0.2
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
