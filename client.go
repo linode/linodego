@@ -217,6 +217,12 @@ func (c *Client) SetRetries() *Client {
 	return c
 }
 
+// AddRetryCondition adds a RetryConditional function to the Client
+func (c *Client) AddRetryCondition(retryCondition RetryConditional) *Client {
+	c.resty.AddRetryCondition(resty.RetryConditionFunc(retryCondition))
+	return c
+}
+
 func (c *Client) addRetryConditional(retryConditional RetryConditional) *Client {
 	c.retryConditionals = append(c.retryConditionals, retryConditional)
 	return c
