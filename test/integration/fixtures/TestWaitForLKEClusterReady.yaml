@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"node_pools":[{"count":3,"type":"g6-standard-2"}],"label":"a83ef3go2h76-linodego-testing","region":"us-central","k8s_version":"1.17","tags":["testing"]}'
+    body: '{"node_pools":[{"count":3,"type":"g6-standard-2","disks":null,"tags":null}],"label":"xf886ld17qx5-linodego-testing","region":"us-central","k8s_version":"1.21","tags":["testing"]}'
     form: {}
     headers:
       Accept:
@@ -10,13 +10,14 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.12.0 https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 3937, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "label": "a83ef3go2h76-linodego-testing", "region": "us-central",
-      "k8s_version": "1.17", "tags": ["testing"]}'
+    body: '{"id": 56050, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "label": "xf886ld17qx5-linodego-testing", "region": "us-central",
+      "k8s_version": "1.21", "control_plane": {"high_availability": false}, "tags":
+      ["testing"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -31,15 +32,11 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "209"
+      - "257"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Sat, 25 Apr 2020 00:42:58 GMT
-      Retry-After:
-      - "116"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -55,14 +52,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "1600"
-      X-Ratelimit-Remaining:
-      - "1599"
-      X-Ratelimit-Reset:
-      - "1587775495"
-      X-Spec-Version:
-      - 4.63.1
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -77,8 +66,8 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.12.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/3937/kubeconfig
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/56050/kubeconfig
     method: GET
   response:
     body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
@@ -94,28 +83,16 @@ interactions:
       - "92"
       Content-Type:
       - application/json
-      Date:
-      - Sat, 25 Apr 2020 00:42:59 GMT
-      Retry-After:
-      - "116"
       Server:
       - nginx
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - lke:read_only
+      - lke:read_write
       X-Frame-Options:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "1600"
-      X-Ratelimit-Remaining:
-      - "1598"
-      X-Ratelimit-Reset:
-      - "1587775495"
-      X-Spec-Version:
-      - 4.63.1
     status: 503 Service Unavailable
     code: 503
     duration: ""
@@ -128,8 +105,8 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.12.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/3937/kubeconfig
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/56050/kubeconfig
     method: GET
   response:
     body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
@@ -145,28 +122,16 @@ interactions:
       - "92"
       Content-Type:
       - application/json
-      Date:
-      - Sat, 25 Apr 2020 00:43:29 GMT
-      Retry-After:
-      - "86"
       Server:
       - nginx
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - lke:read_only
+      - lke:read_write
       X-Frame-Options:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "1600"
-      X-Ratelimit-Remaining:
-      - "1597"
-      X-Ratelimit-Reset:
-      - "1587775496"
-      X-Spec-Version:
-      - 4.63.1
     status: 503 Service Unavailable
     code: 503
     duration: ""
@@ -179,11 +144,245 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.12.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/3937/kubeconfig
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/56050/kubeconfig
     method: GET
   response:
-    body: '{"kubeconfig": "CmFwaVZlcnNpb246IHYxCmtpbmQ6IENvbmZpZwpwcmVmZXJlbmNlczoge30KCmNsdXN0ZXJzOgotIGNsdXN0ZXI6CiAgICBjZXJ0aWZpY2F0ZS1hdXRob3JpdHktZGF0YTogTFMwdExTMUNSVWRKVGlCRFJWSlVTVVpKUTBGVVJTMHRMUzB0Q2sxSlNVTjVSRU5EUVdKRFowRjNTVUpCWjBsQ1FVUkJUa0puYTNGb2EybEhPWGN3UWtGUmMwWkJSRUZXVFZKTmQwVlJXVVJXVVZGRVJYZHdjbVJYU213S1kyMDFiR1JIVm5wTlFqUllSRlJKZDAxRVVYbE9WRUYzVGtSTmQwMXNiMWhFVkUxM1RVUlJlVTE2UVhkT1JFMTNUV3h2ZDBaVVJWUk5Ra1ZIUVRGVlJRcEJlRTFMWVROV2FWcFlTblZhV0ZKc1kzcERRMEZUU1hkRVVWbEtTMjlhU1doMlkwNUJVVVZDUWxGQlJHZG5SVkJCUkVORFFWRnZRMmRuUlVKQlNqbFRDa1UyY1ZWT1lUQjBiVkZqUzFWcFVEQlBXWEowZVZoUk5XWmtOQzk2YjJaRWVtbExielEzYVhob2NHbG9NRmRyTjJ0WFpFbHRjMU42Tm1KdFUyc3hZUzhLY1hSbE9IcENXVU5YZW1KWGMxVmFTM2htVFhKdk0zaFlNVXQ2U0dvM2NGUjVhREkwYjBsa2VrMWxla1JNVFRWQ1dHaElkRU54UjJoMVozbE9TbWMxZGdweGRWbHdXVFpYVDAxT1MxbFBVMEZwU2xSVmJWcExaR0phYm1oUWNGazBWemRCVUVwaFJHOU1ka2RtTHpCbU9IaDVNaXRYYzBOSVlXRnNPRVZrTUZOV0NsTlFNMlJJVmtONE5XWlllR05rYVVaME1GTnRjWEo1YVZCMGJqQnVkM1p5VkhSc1ZIb3hZblpQY1dkcGNVZEtOa0pFWVROMU1TdDBaMU52YzFwSk0xQUtlbGR1VFc5dWNubEpOelJtYzNSSWRsbHZORkUyYTBSQ2JubEZaM01yUm1STmVIVlNka2RQUVcxTFNsQnNORzFDU0dOWmRIUXZaa2RsTlRSb1Rua3Jjd3BhUTBwUldUZHVZWEJzV0d4VVZHdHZhSEU0UTBGM1JVRkJZVTFxVFVORmQwUm5XVVJXVWpCUVFWRklMMEpCVVVSQlowdHJUVUU0UjBFeFZXUkZkMFZDQ2k5M1VVWk5RVTFDUVdZNGQwUlJXVXBMYjFwSmFIWmpUa0ZSUlV4Q1VVRkVaMmRGUWtGRlFrNWFhbm95WTA1ckwxUkJRbTlOUzFWWlpqbEhNbmtyZGtvS2IwSnlSM0UxUzBZNFRHSnhNREptWTBFeGJGVmlibWxUWTFCemRFWkNRbXdyYVRBMlJHOHdiVEpOT0RnemRERTNPVkJYVVRaTlprdHhVRXhYU2s5RVJ3cE5jV2xNTDBVclJHTjRTMVE1WjJKa2NtNVBTMVZuTDFGYWEwVTFZV3RuTTBaMWVHUnBXazl6WW5kVWNtRnRlVGs0WjFaa2RteHdibTFWTTJveFkyVTFDbUZoVDFsU1ZFY3JNVFJJZWtkd2IxZHNVR1l5TjA0dlNrVXZPVXhpTkdWSGJuazRiMGRKTmpsS04zTXJOa0Y0ZVhSNlFTdElOaTlOTlZoM1VrdG1TbThLYTBwdkwyeG9TRFZYYW1zek5UQlNhbFl3YjFsSmRuRkxTWFZITm01M1VsbHlUWFZCTW1kTFMwVm1VemwyYW5oVFQxQmlaM1pxUTJ4M2FHdHlhWEpwTVFwWEwxZGpLMnRMVWxSaFNuaDJNREZrTm1kYUt6WnNhMGRLV21GVmIyTnJWRk54T1RWclNUZElSMVJ3U1hoQlpqZExUVzlEZURKR1ZVdG5WVDBLTFMwdExTMUZUa1FnUTBWU1ZFbEdTVU5CVkVVdExTMHRMUW89CiAgICBzZXJ2ZXI6IGh0dHBzOi8vN2Q5Y2Q1YWEtODZjOS00MDQ1LThiNmMtYTZiNTM5MTc5NTU3LmNwYzEtdXMtY2VudHJhbC5saW5vZGVsa2UubmV0OjQ0MwogIG5hbWU6IGxrZTM5MzcKCnVzZXJzOgotIG5hbWU6IGxrZTM5MzctYWRtaW4KICB1c2VyOgogICAgYXMtdXNlci1leHRyYToge30KICAgIHRva2VuOiBleUpoYkdjaU9pSlNVekkxTmlJc0ltdHBaQ0k2SWpKcWJFMUlkVk5VVEY5V05GcG9kbkEwZGxGYWRsUlJOazUzZUhKc05IaFhNbkpHYXpCMmVHWjZhREFpZlEuZXlKcGMzTWlPaUpyZFdKbGNtNWxkR1Z6TDNObGNuWnBZMlZoWTJOdmRXNTBJaXdpYTNWaVpYSnVaWFJsY3k1cGJ5OXpaWEoyYVdObFlXTmpiM1Z1ZEM5dVlXMWxjM0JoWTJVaU9pSnJkV0psTFhONWMzUmxiU0lzSW10MVltVnlibVYwWlhNdWFXOHZjMlZ5ZG1salpXRmpZMjkxYm5RdmMyVmpjbVYwTG01aGJXVWlPaUpzYTJVdFlXUnRhVzR0ZEc5clpXNHRiV1JzTW1zaUxDSnJkV0psY201bGRHVnpMbWx2TDNObGNuWnBZMlZoWTJOdmRXNTBMM05sY25acFkyVXRZV05qYjNWdWRDNXVZVzFsSWpvaWJHdGxMV0ZrYldsdUlpd2lhM1ZpWlhKdVpYUmxjeTVwYnk5elpYSjJhV05sWVdOamIzVnVkQzl6WlhKMmFXTmxMV0ZqWTI5MWJuUXVkV2xrSWpvaVl6a3hPVFJoWWpRdE5EUTJNQzAwWWpsaExUZzFPV0V0WldJNE1HWm1ZVFpsT0dVMElpd2ljM1ZpSWpvaWMzbHpkR1Z0T25ObGNuWnBZMlZoWTJOdmRXNTBPbXQxWW1VdGMzbHpkR1Z0T214clpTMWhaRzFwYmlKOS5DS3NuUUYzU0FBUzlOeHNIdm1VZDhOYXdPVGZfdC12Z0Z2QndqQTYyRmZzTVBkeXQxRmZqcVhEU0FfNTV0d1BXdkY5bjBBRlN6MWVBb0xkdFNSS2pBTVg1dTd3TEtYaTZaUnFrVzU2UGhQRm5LVmtJVGtWOUhab1k1VFdLV0p6QmVYX0NoZGhOc0F3NjBqclVpYzFXUVZJb2haUzlucHBiMk16TzNCNWdLM3pHNXNSTDNiNTh5TUxoN3luNTZGMlFhaVZWNDA2VWZCYlJfNWt4dkEtYl96N0JJMmliNkkxVEtza2hwZUczN0hHc2N6NXVWSWJfQ1NWREI3aWdyMmR1MGd5LTRFRldWNEZwXzNhT2QtTkl4bkt6TmhwXzNQLWJtOU92X01jZGFCaEZBNFRfUkttUXRlRDY0UnZweFFtOHc3Qk8wMnlnTHNGQlRqTDUyOFdPVHcKCmNvbnRleHRzOgotIGNvbnRleHQ6CiAgICBjbHVzdGVyOiBsa2UzOTM3CiAgICBuYW1lc3BhY2U6IGRlZmF1bHQKICAgIHVzZXI6IGxrZTM5MzctYWRtaW4KICBuYW1lOiBsa2UzOTM3LWN0eAoKY3VycmVudC1jb250ZXh0OiBsa2UzOTM3LWN0eAo="}'
+    body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
+      try again later."}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Content-Length:
+      - "92"
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - lke:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+    status: 503 Service Unavailable
+    code: 503
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/56050/kubeconfig
+    method: GET
+  response:
+    body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
+      try again later."}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Content-Length:
+      - "92"
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - lke:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+    status: 503 Service Unavailable
+    code: 503
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/56050/kubeconfig
+    method: GET
+  response:
+    body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
+      try again later."}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Content-Length:
+      - "92"
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - lke:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+    status: 503 Service Unavailable
+    code: 503
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/56050/kubeconfig
+    method: GET
+  response:
+    body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
+      try again later."}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Content-Length:
+      - "92"
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - lke:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+    status: 503 Service Unavailable
+    code: 503
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/56050/kubeconfig
+    method: GET
+  response:
+    body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
+      try again later."}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Content-Length:
+      - "92"
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - lke:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+    status: 503 Service Unavailable
+    code: 503
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/56050/kubeconfig
+    method: GET
+  response:
+    body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
+      try again later."}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Content-Length:
+      - "92"
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - lke:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+    status: 503 Service Unavailable
+    code: 503
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/56050/kubeconfig
+    method: GET
+  response:
+    body: '{"kubeconfig": "CmFwaVZlcnNpb246IHYxCmtpbmQ6IENvbmZpZwpwcmVmZXJlbmNlczoge30KCmNsdXN0ZXJzOgotIGNsdXN0ZXI6CiAgICBjZXJ0aWZpY2F0ZS1hdXRob3JpdHktZGF0YTogTFMwdExTMUNSVWRKVGlCRFJWSlVTVVpKUTBGVVJTMHRMUzB0Q2sxSlNVTTFla05EUVdNclowRjNTVUpCWjBsQ1FVUkJUa0puYTNGb2EybEhPWGN3UWtGUmMwWkJSRUZXVFZKTmQwVlJXVVJXVVZGRVJYZHdjbVJYU213S1kyMDFiR1JIVm5wTlFqUllSRlJKZVUxRVRYbE9WRWw0VFhwQk1VMVdiMWhFVkUxNVRVUk5lVTFxU1hoTmVrRXhUVlp2ZDBaVVJWUk5Ra1ZIUVRGVlJRcEJlRTFMWVROV2FWcFlTblZhV0ZKc1kzcERRMEZUU1hkRVVWbEtTMjlhU1doMlkwNUJVVVZDUWxGQlJHZG5SVkJCUkVORFFWRnZRMmRuUlVKQlRVaFpDbkpaU1N0WldXVldaRFJqT1cxdWVHdFVhbFl3ZFdFeVpWVXJla05vY0VkQk4yUkdPVmxuWmpkcWRUUm1WV040Y0dobFNUZHhSV1UyT0VWUGJrbHJXbU1LZVVWVlRqVmlXRlJtUWtkVWRsRldWbGxCV1VKUldDdDBhVE5vYVVZMlNUUk9NVmhST0ZZd2NuWkJWV1ZTTUdSUEszRmpWM1IyWlVkNFZrRlpVbWxMY1FwSVRHSXlRM0phZVd0TVdsZEtjbTk0VEc4MFFXUkpVbTFMVVZwMlVGQlRTbXRGZWxKaE9XZDZVelU1T1ZwTGRFVm1RMVpRTjNKMmFIZzFZbkZYWmxGMkNrRldiVlJ3YUhGTVoySnJWRzFaYUUxMFdqWlBUeXRaWlhvd2IwcHJTVWhZZUZWcVVrSXlSekp6VEdscmMyVlNlblZ6U2tGc0sxWlVOaXRzVlVWU1RuQUtkVWh5VDFCVFR6TkNkMm92V2tOT2FVSkJibTR2WkRneVZtdzRiVVF4YVVNMGQwVXlTRm81U2pkNGJXNXlRa042VUVVemFWVXlMekJFVGpSRGRXTkJWd3AwVEdwRk9ETnlNWHB0UVhCa2VFSXhOVFpOUTBGM1JVRkJZVTVEVFVWQmQwUm5XVVJXVWpCUVFWRklMMEpCVVVSQlowdHJUVUU0UjBFeFZXUkZkMFZDQ2k5M1VVWk5RVTFDUVdZNGQwaFJXVVJXVWpCUFFrSlpSVVpLYUUxNU1tWXdPRUZTUlVwWGEzaE9WbW8zTlhKeVkwVnVkVWhOUVRCSFExTnhSMU5KWWpNS1JGRkZRa04zVlVGQk5FbENRVkZEUTB0dFJXVjJUakJqZEhseGR6UlhWSGsyU0RGUlpXUmhTR3AzYUZod2RrSlRaemRVUW1jMVdtVlVkRkJFVkRKbWFBcHRNV1ZYY0VWalJHNVdhMHA1Y210TU5uZEVhSEZyTkRRNWNFVkxibXdyTlc5WWJWVkZSa3hrVUhaalkwRkNUbEJRYlV0b09XRlJjMUZzY2t4UFNXaEZDbmgzTDFjMFUwcHROMDExT0M5MVdYQmlPRkZDYmpacFFtZFdlV1F5WWtwWVluaElPRFJsTVZGb1p6TTJLMncwVjFWNU9UUm9WWFZ0V0V0TWIzQndhbEFLV1c1NlVuaDFXVUZYTUU5YVJWVXdWbWRaUTBNNE1FbEtRWFpMTlU5T2VGVkxaWEZaSzNWMGFEZHpUbEZuVlhOdGRYRjFMM041YkdaRGMweG1SQzlyYndwcmVEUlRaSGxuZVZKUEt6Um5PRVJ1VlVseWF6UmxlRlZEV0RCT0wwY3ZaWG80V2pKQllXaGhUekJVTm1GdU9XZFdaVkZzUlhWMlZuazRRV3hKZUV4SENsZEpSM1JWTlV0RGMyNXJXbFJaZGpkNmJIZHdORE5pV1RWbVMwRlhja0ZHV2k5bWJnb3RMUzB0TFVWT1JDQkRSVkpVU1VaSlEwRlVSUzB0TFMwdENnPT0KICAgIHNlcnZlcjogaHR0cHM6Ly9jZWUzODk5MC00MGE1LTRiOGYtODMxNi1hYWRlOGZkZGNlMjguY3BjMi11cy1jZW50cmFsLmxpbm9kZWxrZS5uZXQ6NDQzCiAgbmFtZTogbGtlNTYwNTAKCnVzZXJzOgotIG5hbWU6IGxrZTU2MDUwLWFkbWluCiAgdXNlcjoKICAgIGFzLXVzZXItZXh0cmE6IHt9CiAgICB0b2tlbjogZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNklsQTJVVFZvV1dsQmVYVXRXVTFzVDJST05GOUxUMlExUmpWbUxYRm9SakF6VTFBNFNHczVOemN5Y0ZVaWZRLmV5SnBjM01pT2lKcmRXSmxjbTVsZEdWekwzTmxjblpwWTJWaFkyTnZkVzUwSWl3aWEzVmlaWEp1WlhSbGN5NXBieTl6WlhKMmFXTmxZV05qYjNWdWRDOXVZVzFsYzNCaFkyVWlPaUpyZFdKbExYTjVjM1JsYlNJc0ltdDFZbVZ5Ym1WMFpYTXVhVzh2YzJWeWRtbGpaV0ZqWTI5MWJuUXZjMlZqY21WMExtNWhiV1VpT2lKc2EyVXRZV1J0YVc0dGRHOXJaVzR0TjJnMk4zTWlMQ0pyZFdKbGNtNWxkR1Z6TG1sdkwzTmxjblpwWTJWaFkyTnZkVzUwTDNObGNuWnBZMlV0WVdOamIzVnVkQzV1WVcxbElqb2liR3RsTFdGa2JXbHVJaXdpYTNWaVpYSnVaWFJsY3k1cGJ5OXpaWEoyYVdObFlXTmpiM1Z1ZEM5elpYSjJhV05sTFdGalkyOTFiblF1ZFdsa0lqb2lPVEl4WXpNellUUXRNR05rT0MwME1UYzNMVGxoTjJFdFl6YzVOVEppTXpRNFpEZzNJaXdpYzNWaUlqb2ljM2x6ZEdWdE9uTmxjblpwWTJWaFkyTnZkVzUwT210MVltVXRjM2x6ZEdWdE9teHJaUzFoWkcxcGJpSjkuaTdUcDNadjhsSlNXckc5MXc0ZlFYakw4Vm9Ob0hOeVNHaXBJbW5yZ1ZNS0hyTFRrcnZsamEzeUhnbVlLWng5ZmdjalpfaGh4OUVBT2lBZy1PVFgzalVoUVliai1qQXpvdVlYSU5lSWI5MDRObzZUMEhOLURqMTFhOHdLVm9pSGdvbjA1dXRGaE8yb3NWM0VSd0FBRXkzbEx0cVY1MkdTRnFtT21LZzV0TzlIVXoyQVh6aHJZWWk5T0s2UlZRa3hlNDJZR0k5UnhsUzJqMlRzVXU5Uk96R0FBR3YtaVlGNmNLWFdzc1pHZXZqeDJyRHZsUkx6dHZwNllyM3hfb0o4WFdvUWxlbnR1SHhYbV9DOEFOR28tS2hmdUpiU3U5ZWxHeTRJVzZQSjV4aHBtWkFybHhTbUNzb0tMR041U3pNS05HR1hjeU5aMzFJeUNmX2hqTTNUUHR3Cgpjb250ZXh0czoKLSBjb250ZXh0OgogICAgY2x1c3RlcjogbGtlNTYwNTAKICAgIG5hbWVzcGFjZTogZGVmYXVsdAogICAgdXNlcjogbGtlNTYwNTAtYWRtaW4KICBuYW1lOiBsa2U1NjA1MC1jdHgKCmN1cnJlbnQtY29udGV4dDogbGtlNTYwNTAtY3R4Cg=="}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -202,10 +401,6 @@ interactions:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Sat, 25 Apr 2020 00:43:59 GMT
-      Retry-After:
-      - "56"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -214,7 +409,7 @@ interactions:
       - Authorization, X-Filter
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - lke:read_only
+      - lke:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -222,14 +417,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "1600"
-      X-Ratelimit-Remaining:
-      - "1596"
-      X-Ratelimit-Reset:
-      - "1587775496"
-      X-Spec-Version:
-      - 4.63.1
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -244,8 +431,8 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.12.0 https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/3937
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/56050
     method: DELETE
   response:
     body: '{}'
@@ -268,10 +455,6 @@ interactions:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Sat, 25 Apr 2020 00:46:14 GMT
-      Retry-After:
-      - "119"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -287,14 +470,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "1600"
-      X-Ratelimit-Remaining:
-      - "1599"
-      X-Ratelimit-Reset:
-      - "1587775694"
-      X-Spec-Version:
-      - 4.63.1
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

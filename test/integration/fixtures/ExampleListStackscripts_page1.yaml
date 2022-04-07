@@ -119,7 +119,7 @@ interactions:
       $CODENAME-security main restricted universe multiverse\nEOF\n}\n\n# Set hostname\nfunction
       set_hostname() {\n  echo \"Setting Hostname to ${HOSTNAME}\" >> $logfile\n  echo
       ${HOSTNAME} > /etc/hostname\n  hostname -F /etc/hostname\n  short=$(hostname
-      -s)\n  echo \"010.020.030.040 ${short} ${short}\" >> /etc/hosts\n}\n\n# Update software
+      -s)\n  echo \"10.0.0.1 ${short} ${short}\" >> /etc/hosts\n}\n\n# Update software
       repositories and perform upgrade\nfunction system_upgrade() {\n  echo \"Update
       system packages\" >> $logfile\n  apt-get -y update\n  apt-get -y upgrade\n}\n\n#
       Clean system packages\nfunction system_clean() {\n  apt-get -y autoremove\n  apt-get
@@ -182,7 +182,7 @@ interactions:
       directly.\r\n\r\nA collection of useful Python functions to be included in other
       StackScripts.", "deployments_active": 0, "script": "#!/usr/bin/env python\n\n\"\"\"\nPython
       Library StackScript\n\n\tAuthor: Ricardo N Feliciano <rfeliciano@linode.com>\n\tVersion:
-      010.020.030.040\n\tRequirements:\n\t\t- n/a\n\nThis StackScript is not meant to be directly
+      10.0.0.1\n\tRequirements:\n\t\t- n/a\n\nThis StackScript is not meant to be directly
       deployed. Includes a host of\nfunctions to do very common task on a distro,
       as implemented in Python. The\nfunctions in this library are designed to be
       run accross the Linode Core\nDistributions:\n\t- Ubuntu\n\t- CentOS\n\t- Debian\n\t-
@@ -748,14 +748,14 @@ interactions:
       system_update_hostname(system hostname)\n    if [ -z \"$1\" ]; then\n        echo
       \"system_update_hostname() requires the system hostname as its first argument\"\n        return
       1;\n    fi\n    echo $1 > /etc/hostname\n    hostname -F /etc/hostname\n    echo
-      -e \"\\n010.020.030.040 $1 $1.local\\n\" >> /etc/hosts\n}\n\nfunction system_security_logcheck
+      -e \"\\n10.0.0.1 $1 $1.local\\n\" >> /etc/hosts\n}\n\nfunction system_security_logcheck
       {\n    aptitude -y install logcheck logcheck-database\n    # configure email\n    #
       start after setup\n}\n\nfunction system_security_fail2ban {\n    aptitude -y
       install fail2ban\n}\n\nfunction system_security_ufw_configure_basic {\n    #
       see https://help.ubuntu.com/community/UFW\n    ufw logging on\n\n    ufw default
       deny\n\n    ufw allow ssh/tcp\n    ufw limit ssh/tcp\n\n    ufw allow http/tcp\n    ufw
       allow https/tcp\n\n    ufw enable\n}\n\nfunction system_configure_private_network
-      {\n    # system_configure_private_network(private_ip)\n    PRIVATE_IP=$1\n    NETMASK=\"010.020.030.040\"\n    cat
+      {\n    # system_configure_private_network(private_ip)\n    PRIVATE_IP=$1\n    NETMASK=\"10.0.0.1\"\n    cat
       >>/etc/network/interfaces <<EOF\nauto eth0:0\niface eth0:0 inet static\n address
       $PRIVATE_IP\n netmask $NETMASK\nEOF\n    touch /tmp/restart_initd-networking\n}\n\nfunction
       restart_services {\n    # restarts upstart services that have a file in /tmp/needs-restart/\n    for
@@ -2692,7 +2692,7 @@ interactions:
       "#!/bin/bash\n\n# <udf name=\"hostname\" label=\"Hostname\" default=\"home\"
       />\n# HOSTNAME=home\n# <udf name=\"fqdn\" label=\"FQDN\" default=\"home.example.com\"
       />\n# FQDN=home.chenlichao.com\n# <udf name=\"ip_address\" label=\"IP Address\"
-      default=\"010.020.030.040\" />\n# IP_ADDRESS=\"010.020.030.040\"\n# <udf name=\"time_zone\"
+      default=\"10.0.0.1\" />\n# IP_ADDRESS=\"10.0.0.1\"\n# <udf name=\"time_zone\"
       label=\"Time Zone\" default=\"Etc/UTC\" />\n# TIME_ZONE=\"Asia/Shanghai\"\n\n#
       <udf name=\"user_ssh_port\" label=\"Default User SSH Port\" default=\"22\" />\n#
       USER_SSH_PORT=22\n# <udf name=\"user_name\" label=\"Default User Name\" default=\"username\"

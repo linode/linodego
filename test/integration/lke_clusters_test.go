@@ -2,6 +2,7 @@ package integration
 
 import (
 	"context"
+	"net/url"
 	"reflect"
 	"testing"
 
@@ -48,7 +49,7 @@ func TestWaitForLKEClusterReady(t *testing.T) {
 	defer teardownClusterClient()
 
 	if err = k8scondition.WaitForLKEClusterReady(context.Background(), *client, cluster.ID, linodego.LKEClusterPollOptions{
-		TimeoutSeconds:   5 * 60,
+		TimeoutSeconds:   10 * 60,
 		TransportWrapper: wrapper,
 	}); err != nil {
 		t.Errorf("Error waiting for the LKE cluster pools to be ready: %s", err)
@@ -138,8 +139,8 @@ func TestListLKEClusterAPIEndpoints(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error listing lkeClusterAPIEndpoints, expected struct, got error %v", err)
 	}
-	if len(i) != 1 {
-		t.Errorf("Expected a single lkeClusterAPIEndpoints, but got none %v", i)
+	if len(i) <= 0 {
+		t.Errorf("Expected some lkeClusterAPIEndpoints, but got none %v", i)
 	}
 }
 
@@ -159,6 +160,30 @@ func TestGetLKEClusterKubeconfig(t *testing.T) {
 	}
 	if len(i.KubeConfig) == 0 {
 		t.Errorf("Expected an lkeCluster Kubeconfig, but got empty string %v", i)
+	}
+}
+
+func TestGetLKEClusterDashboard(t *testing.T) {
+	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
+		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
+	}}, "fixtures/TestGetLKEClusterDashboard")
+	defer teardown()
+
+	_, err = client.WaitForLKEClusterStatus(context.Background(), lkeCluster.ID, linodego.LKEClusterReady, 180)
+	if err != nil {
+		t.Errorf("Error waiting for LKECluster readiness: %s", err)
+	}
+	i, err := client.GetLKEClusterDashboard(context.Background(), lkeCluster.ID)
+	if err != nil {
+		t.Errorf("Error getting LKE cluster dashboard URL, expected struct, got %v and error %v", i, err)
+	}
+
+	if len(i.URL) == 0 {
+		t.Errorf("Expected an LKE cluster dashboard URL, but got empty string %v", i)
+	}
+
+	if _, err := url.ParseRequestURI(i.URL); err != nil {
+		t.Errorf("invalid url: %s", err)
 	}
 }
 
@@ -204,11 +229,11 @@ func TestGetLKEVersion_found(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestGetLKEVersion_found")
 	defer teardown()
 
-	i, err := client.GetLKEVersion(context.Background(), "1.16")
+	i, err := client.GetLKEVersion(context.Background(), "1.22")
 	if err != nil {
 		t.Errorf("Error getting version, expected struct, got %v and error %v", i, err)
 	}
-	if i.ID != "1.16" {
+	if i.ID != "1.22" {
 		t.Errorf("Expected a specific version, but got a different one %v", i)
 	}
 }

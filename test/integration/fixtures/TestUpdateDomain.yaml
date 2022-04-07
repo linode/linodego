@@ -14,7 +14,11 @@ interactions:
     url: https://api.linode.com/v4beta/domains
     method: POST
   response:
-    body: '{"id": 1598865, "type": "master", "domain": "r74rt745mahydd25p9z20x4b37p157rc-linodego-testing.com", "tags": [], "group": "", "status": "active", "description": "", "soa_email": "example@example.com", "retry_sec": 0, "master_ips": [], "axfr_ips": [], "expire_sec": 0, "refresh_sec": 0, "ttl_sec": 0, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
+    body: '{"id": 1810435, "type": "master", "domain": "r74rt745mahydd25p9z20x4b37p157rc-linodego-testing.com",
+      "tags": [], "group": "", "status": "active", "errors": "", "description": "",
+      "soa_email": "example@example.com", "retry_sec": 0, "master_ips": [], "axfr_ips":
+      [], "expire_sec": 0, "refresh_sec": 0, "ttl_sec": 0, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -29,7 +33,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "367"
+      - "381"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -49,8 +53,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -66,10 +68,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/domains/1598865
+    url: https://api.linode.com/v4beta/domains/1810435
     method: PUT
   response:
-    body: '{"id": 1598865, "type": "master", "domain": "linodego-renamed-domain.com", "tags": [], "group": "", "status": "active", "description": "", "soa_email": "example@example.com", "retry_sec": 0, "master_ips": [], "axfr_ips": [], "expire_sec": 0, "refresh_sec": 0, "ttl_sec": 0, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
+    body: '{"id": 1810435, "type": "master", "domain": "linodego-renamed-domain.com",
+      "tags": [], "group": "", "status": "active", "errors": "", "description": "",
+      "soa_email": "example@example.com", "retry_sec": 0, "master_ips": [], "axfr_ips":
+      [], "expire_sec": 0, "refresh_sec": 0, "ttl_sec": 0, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -84,7 +90,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "341"
+      - "355"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -104,8 +110,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -121,7 +125,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/domains/1598865
+    url: https://api.linode.com/v4beta/domains/1810435
     method: DELETE
   response:
     body: '{}'
@@ -159,8 +163,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

@@ -2,7 +2,8 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-southeast","label":"linodego-test-image","description":"An image that does stuff."}'
+    body: '{"region":"us-southeast","label":"linodego-test-image","description":"An
+      image that does stuff."}'
     form: {}
     headers:
       Accept:
@@ -10,11 +11,16 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/images/upload
     method: POST
   response:
-    body: '{"upload_to": "https://us-east-1.linodeobjects.com:443/linode-production-machine-images-uploads/12071278?Signature=aXcQc8XotSGc3xD1ADUv5qIiksI%3D&Expires=1620392958&AWSAccessKeyID=SANITIZED", "image": {"id": "private/12071278", "label": "linodego-test-image", "description": "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "size": 0, "created_by": "LGarber", "type": "manual", "is_public": false, "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status": "pending_upload"}}'
+    body: '{"upload_to": "https://us-southeast-1.linodeobjects.com:443/linode-production-machine-images-uploads/15883430?Signature=3btXsSm8pjGgI9hTAA3IBtXYwcY%3D&Expires=1648236941&AWSAccessKeyID=SANITIZED",
+      "image": {"id": "private/15883430", "label": "linodego-test-image", "description":
+      "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "size": 0, "created_by": "jriddle-dev", "type": "manual", "is_public": false,
+      "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
+      "pending_upload"}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -29,7 +35,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "551"
+      - "560"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -49,8 +55,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -65,11 +69,15 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private/12071278
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/private/15883430
     method: GET
   response:
-    body: '{"id": "private/12071278", "label": "linodego-test-image", "description": "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "size": 0, "created_by": "LGarber", "type": "manual", "is_public": false, "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status": "pending_upload"}'
+    body: '{"id": "private/15883430", "label": "linodego-test-image", "description":
+      "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "size": 0, "created_by": "jriddle-dev", "type": "manual", "is_public": false,
+      "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
+      "pending_upload"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -85,7 +93,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "338"
+      - "342"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -106,8 +114,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -122,11 +128,15 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private/12071278
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/private/15883430
     method: GET
   response:
-    body: '{"id": "private/12071278", "label": "linodego-test-image", "description": "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "size": 0, "created_by": "LGarber", "type": "manual", "is_public": false, "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status": "pending_upload"}'
+    body: '{"id": "private/15883430", "label": "linodego-test-image", "description":
+      "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "size": 0, "created_by": "jriddle-dev", "type": "manual", "is_public": false,
+      "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
+      "pending_upload"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -142,7 +152,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "338"
+      - "342"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -163,8 +173,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -179,11 +187,15 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private/12071278
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/private/15883430
     method: GET
   response:
-    body: '{"id": "private/12071278", "label": "linodego-test-image", "description": "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "size": 0, "created_by": "LGarber", "type": "manual", "is_public": false, "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status": "pending_upload"}'
+    body: '{"id": "private/15883430", "label": "linodego-test-image", "description":
+      "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "size": 0, "created_by": "jriddle-dev", "type": "manual", "is_public": false,
+      "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
+      "pending_upload"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -199,7 +211,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "338"
+      - "342"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -220,8 +232,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -236,11 +246,15 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private/12071278
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/private/15883430
     method: GET
   response:
-    body: '{"id": "private/12071278", "label": "linodego-test-image", "description": "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "size": 0, "created_by": "LGarber", "type": "manual", "is_public": false, "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status": "pending_upload"}'
+    body: '{"id": "private/15883430", "label": "linodego-test-image", "description":
+      "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "size": 1, "created_by": "jriddle-dev", "type": "manual", "is_public": false,
+      "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
+      "available"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -256,7 +270,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "338"
+      - "337"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -277,8 +291,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -293,65 +305,8 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private/12071278
-    method: GET
-  response:
-    body: '{"id": "private/12071278", "label": "linodego-test-image", "description": "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "size": 1, "created_by": "LGarber", "type": "manual", "is_public": false, "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status": "available"}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
-      Content-Length:
-      - "333"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - images:read_only
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "800"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private/12071278
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/private/15883430
     method: DELETE
   response:
     body: '{}'
@@ -389,8 +344,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

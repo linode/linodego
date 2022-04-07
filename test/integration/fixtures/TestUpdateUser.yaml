@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"username":"linodegotest-updateuser","email":"linodegotest-updateuser@example.com"}'
+    body: '{"username":"linodegotest-updateuser","email":"linodegotest-updateuser@example.com","restricted":false}'
     form: {}
     headers:
       Accept:
@@ -10,11 +10,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/account/users
     method: POST
   response:
-    body: '{"username": "linodegotest-updateuser", "email": "linodegotest-updateuser@example.com", "restricted": true, "ssh_keys": [], "tfa_enabled": false}'
+    body: '{"username": "linodegotest-updateuser", "email": "linodegotest-updateuser@example.com",
+      "restricted": false, "ssh_keys": [], "tfa_enabled": false}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -29,7 +30,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "145"
+      - "146"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -49,8 +50,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -65,11 +64,12 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/account/users/linodegotest-updateuser
     method: PUT
   response:
-    body: '{"username": "linodegotest-updateuser-updated", "email": "linodegotest-updateuser@example.com", "restricted": true, "ssh_keys": [], "tfa_enabled": false}'
+    body: '{"username": "linodegotest-updateuser-updated", "email": "linodegotest-updateuser@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -104,8 +104,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -120,7 +118,7 @@ interactions:
       Content-Type:
       - application/json
       User-Agent:
-      - linodego https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/account/users/linodegotest-updateuser-updated
     method: DELETE
   response:
@@ -159,8 +157,6 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

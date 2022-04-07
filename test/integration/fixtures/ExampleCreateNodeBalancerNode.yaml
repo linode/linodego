@@ -18,7 +18,7 @@ interactions:
   response:
     body: '{"region": "us-east", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "ipv6": "1234::5678", "hostname": "nb-10-20-30-40.newark.nodebalancer.linode.com",
-      "ipv4": "010.020.030.040", "label": "balancer36398", "client_conn_throttle": 20,
+      "ipv4": "10.0.0.1", "label": "balancer36398", "client_conn_throttle": 20,
       "id": 36398, "transfer": {"total": null, "out": null, "in": null}}'
     headers:
       Access-Control-Allow-Credentials:
@@ -150,7 +150,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"address":"192.168.030.040:80","label":"192.168.030.040-80"}'
+    body: '{"address":"10.0.0.1:80","label":"10.0.0.1-80"}'
     form: {}
     headers:
       Accept:
@@ -164,8 +164,8 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers/36398/configs/32601/nodes
     method: POST
   response:
-    body: '{"id": 313257, "address": "192.168.030.040:80", "mode": "accept", "nodebalancer_id":
-      36398, "status": "Unknown", "weight": 50, "config_id": 32601, "label": "192.168.030.040-80"}'
+    body: '{"id": 313257, "address": "10.0.0.1:80", "mode": "accept", "nodebalancer_id":
+      36398, "status": "Unknown", "weight": 50, "config_id": 32601, "label": "10.0.0.1-80"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -221,7 +221,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"address":"192.168.030.040:8080","label":"192.168.030.040-80","weight":50,"mode":"accept"}'
+    body: '{"address":"10.0.0.1:8080","label":"10.0.0.1-80","weight":50,"mode":"accept"}'
     form: {}
     headers:
       Accept:
@@ -236,8 +236,8 @@ interactions:
     method: PUT
   response:
     body: '{"mode": "accept", "status": "Unknown", "config_id": 32601, "id": 313257,
-      "nodebalancer_id": 36398, "label": "192.168.030.040-80", "weight": 50, "address":
-      "192.168.030.040:8080"}'
+      "nodebalancer_id": 36398, "label": "10.0.0.1-80", "weight": 50, "address":
+      "10.0.0.1:8080"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -308,8 +308,8 @@ interactions:
     method: GET
   response:
     body: '{"data": [{"mode": "accept", "status": "Unknown", "config_id": 32601, "id":
-      313257, "nodebalancer_id": 36398, "label": "192.168.030.040-80", "weight": 50,
-      "address": "192.168.030.040:8080"}], "pages": 1, "page": 1, "results": 1}'
+      313257, "nodebalancer_id": 36398, "label": "10.0.0.1-80", "weight": 50,
+      "address": "10.0.0.1:8080"}], "pages": 1, "page": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -381,7 +381,7 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers/36398/configs/32601/nodes/313257
     method: GET
   response:
-    body: '{"address": "192.168.030.040:8080", "nodebalancer_id": 36398, "label": "192.168.030.040-80",
+    body: '{"address": "10.0.0.1:8080", "nodebalancer_id": 36398, "label": "10.0.0.1-80",
       "mode": "accept", "config_id": 32601, "id": 313257, "weight": 50, "status":
       "Unknown"}'
     headers:

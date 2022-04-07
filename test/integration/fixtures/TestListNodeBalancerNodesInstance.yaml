@@ -92,7 +92,7 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances/18425284/ips
     method: POST
   response:
-    body: '{"linode_id": 18425284, "address": "192.168.030.040", "gateway": null, "subnet_mask":
+    body: '{"linode_id": 18425284, "address": "10.0.0.1", "gateway": null, "subnet_mask":
       "10.20.30.40", "prefix": 17, "rdns": null, "region": "us-west", "public":
       false, "type": "ipv4"}'
     headers:
@@ -149,7 +149,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"address":"192.168.030.040:8080","label":"test-label","weight":10,"mode":"accept"}'
+    body: '{"address":"10.0.0.1:8080","label":"test-label","weight":10,"mode":"accept"}'
     form: {}
     headers:
       Accept:
@@ -164,7 +164,7 @@ interactions:
     method: POST
   response:
     body: '{"weight": 10, "id": 466778, "nodebalancer_id": 53606, "config_id": 48072,
-      "label": "test-label", "address": "192.168.030.040:8080", "status": "Unknown",
+      "label": "test-label", "address": "10.0.0.1:8080", "status": "Unknown",
       "mode": "accept"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -235,7 +235,7 @@ interactions:
     method: GET
   response:
     body: '{"pages": 1, "results": 1, "page": 1, "data": [{"nodebalancer_id": 53606,
-      "status": "Unknown", "weight": 10, "label": "test-label", "address": "192.168.030.040:8080",
+      "status": "Unknown", "weight": 10, "label": "test-label", "address": "10.0.0.1:8080",
       "id": 466778, "mode": "accept", "config_id": 48072}]}'
     headers:
       Access-Control-Allow-Credentials:
