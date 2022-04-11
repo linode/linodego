@@ -64,8 +64,8 @@ type MySQLCreateOptions struct {
 
 // MySQLUpdateOptions fields are used when altering the existing MySQL Database
 type MySQLUpdateOptions struct {
-	Label     string   `json:"label"`
-	AllowList []string `json:"allow_list"`
+	Label     string   `json:"label,omitempty"`
+	AllowList []string `json:"allow_list,omitempty"`
 }
 
 // MySQLDatabaseBackup is information for interacting with a backup for the existing MySQL Database
