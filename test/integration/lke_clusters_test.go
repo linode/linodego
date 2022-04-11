@@ -49,6 +49,7 @@ func TestWaitForLKEClusterReady(t *testing.T) {
 	defer teardownClusterClient()
 
 	if err = k8scondition.WaitForLKEClusterReady(context.Background(), *client, cluster.ID, linodego.LKEClusterPollOptions{
+		Retry:            true,
 		TimeoutSeconds:   10 * 60,
 		TransportWrapper: wrapper,
 	}); err != nil {

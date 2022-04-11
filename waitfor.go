@@ -189,6 +189,9 @@ func (client Client) WaitForLKEClusterStatus(ctx context.Context, clusterID int,
 
 // LKEClusterPollOptions configures polls against LKE Clusters.
 type LKEClusterPollOptions struct {
+	// Retry will cause the Poll to ignore interimittent errors
+	Retry bool
+
 	// TimeoutSeconds is the number of Seconds to wait for the poll to succeed
 	// before exiting.
 	TimeoutSeconds int
@@ -237,7 +240,10 @@ func (client Client) WaitForLKEClusterConditions(
 			case <-ticker.C:
 				result, err := condition(ctx, conditionOptions)
 				if err != nil {
-					return err
+					log.Printf("[WARN] Ignoring WaitForLKEClusterConditions conditional error: %s", err)
+					if !options.Retry {
+						return err
+					}
 				}
 
 				if result {
