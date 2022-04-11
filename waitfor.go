@@ -240,6 +240,7 @@ func (client Client) WaitForLKEClusterConditions(
 			case <-ticker.C:
 				result, err := condition(ctx, conditionOptions)
 				if err != nil {
+					log.Printf("[WARN] Ignoring WaitForLKEClusterConditions conditional error: %s", err)
 					if !options.Retry {
 						return err
 					}
