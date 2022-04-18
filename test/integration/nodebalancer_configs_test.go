@@ -13,8 +13,8 @@ var testNodeBalancerConfigCreateOpts = linodego.NodeBalancerConfigCreateOptions{
 	Algorithm: linodego.AlgorithmRoundRobin,
 }
 
-func TestCreateNodeBalancerConfig(t *testing.T) {
-	_, _, config, teardown, err := setupNodeBalancerConfig(t, "fixtures/TestCreateNodeBalancerConfig")
+func TestNodeBalancerConfig_Create(t *testing.T) {
+	_, _, config, teardown, err := setupNodeBalancerConfig(t, "fixtures/TestNodeBalancerConfig_Create")
 	defer teardown()
 
 	if err != nil {
@@ -29,8 +29,8 @@ func TestCreateNodeBalancerConfig(t *testing.T) {
 	}
 }
 
-func TestUpdateNodeBalancerConfig(t *testing.T) {
-	client, nodebalancer, config, teardown, err := setupNodeBalancerConfig(t, "fixtures/TestUpdateNodeBalancerConfig")
+func TestNodeBalancerConfig_Update(t *testing.T) {
+	client, nodebalancer, config, teardown, err := setupNodeBalancerConfig(t, "fixtures/TestNodeBalancerConfig_Update")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -54,8 +54,8 @@ func TestUpdateNodeBalancerConfig(t *testing.T) {
 	}
 }
 
-func TestListNodeBalancerConfigs(t *testing.T) {
-	client, nodebalancer, _, teardown, err := setupNodeBalancerConfig(t, "fixtures/TestListNodeBalancerConfigs")
+func TestNodeBalancerConfigs_List(t *testing.T) {
+	client, nodebalancer, _, teardown, err := setupNodeBalancerConfig(t, "fixtures/TestNodeBalancerConfigs_List")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -71,10 +71,10 @@ func TestListNodeBalancerConfigs(t *testing.T) {
 	}
 }
 
-func TestListNodeBalancerConfigsMultiplePages(t *testing.T) {
+func TestNodeBalancerConfigs_ListMultiplePages(t *testing.T) {
 	// This fixture was hand-crafted to render an empty page 1 result, with a single result on page 2
 	// "results:1,data:[],page:1,pages:2"  .. "results:1,data[{...}],page:2,pages:2"
-	client, nodebalancer, _, teardown, err := setupNodeBalancerConfig(t, "fixtures/TestListNodeBalancerConfigsMultiplePages")
+	client, nodebalancer, _, teardown, err := setupNodeBalancerConfig(t, "fixtures/TestNodeBalancerConfigs_ListMultiplePages")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -90,8 +90,8 @@ func TestListNodeBalancerConfigsMultiplePages(t *testing.T) {
 	}
 }
 
-func TestGetNodeBalancerConfig(t *testing.T) {
-	client, nodebalancer, config, teardown, err := setupNodeBalancerConfig(t, "fixtures/TestGetNodeBalancerConfig")
+func TestNodeBalancerConfig_Get(t *testing.T) {
+	client, nodebalancer, config, teardown, err := setupNodeBalancerConfig(t, "fixtures/TestNodeBalancerConfig_Get")
 	defer teardown()
 	if err != nil {
 		t.Error(err)

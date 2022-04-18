@@ -7,8 +7,8 @@ import (
 	. "github.com/linode/linodego"
 )
 
-func TestGetPayment_missing(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestGetPayment_missing")
+func TestPayment_GetMissing(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestPayment_GetMissing")
 	defer teardown()
 
 	i, err := client.GetPayment(context.Background(), -1)
@@ -25,8 +25,8 @@ func TestGetPayment_missing(t *testing.T) {
 	}
 }
 
-func TestGetPayment_found(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestListPayments")
+func TestPayment_GetFound(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestPayment_GetFound")
 	defer teardown()
 
 	p, err := client.ListPayments(context.Background(), nil)
@@ -51,8 +51,8 @@ func TestGetPayment_found(t *testing.T) {
 	assertDateSet(t, i.Date)
 }
 
-func TestListPayments(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestListPayments")
+func TestPayments_List(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestPayments_List")
 	defer teardown()
 
 	i, err := client.ListPayments(context.Background(), nil)

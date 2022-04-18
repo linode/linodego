@@ -18,8 +18,8 @@ var (
 	}
 )
 
-func TestCreateNodeBalancerNode(t *testing.T) {
-	_, _, _, node, teardown, err := setupNodeBalancerNode(t, "fixtures/TestCreateNodeBalancerNode")
+func TestNodeBalancerNode_Create(t *testing.T) {
+	_, _, _, node, teardown, err := setupNodeBalancerNode(t, "fixtures/TestNodeBalancerNode_Create")
 	defer teardown()
 
 	if err != nil {
@@ -35,8 +35,8 @@ func TestCreateNodeBalancerNode(t *testing.T) {
 	}
 }
 
-func TestUpdateNodeBalancerNode(t *testing.T) {
-	client, nodebalancer, config, node, teardown, err := setupNodeBalancerNode(t, "fixtures/TestUpdateNodeBalancerNode")
+func TestNodeBalancerNode_Update(t *testing.T) {
+	client, nodebalancer, config, node, teardown, err := setupNodeBalancerNode(t, "fixtures/TestNodeBalancerNode_Update")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -60,8 +60,8 @@ func TestUpdateNodeBalancerNode(t *testing.T) {
 	}
 }
 
-func TestListNodeBalancerNodes(t *testing.T) {
-	client, nodebalancer, config, _, teardown, err := setupNodeBalancerNode(t, "fixtures/TestListNodeBalancerNodes")
+func TestNodeBalancerNodes_List(t *testing.T) {
+	client, nodebalancer, config, _, teardown, err := setupNodeBalancerNode(t, "fixtures/TestNodeBalancerNodes_List")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -77,11 +77,11 @@ func TestListNodeBalancerNodes(t *testing.T) {
 	}
 }
 
-func TestListNodeBalancerNodesMultiplePages(t *testing.T) {
+func TestNodeBalancerNodes_ListMultiplePages(t *testing.T) {
 	// TODO: replace hand crafted fixtures with unit tests
 	// This fixture was hand-crafted to render an empty page 1 result, with a single result on page 2
 	// "results:1,data:[],page:1,pages:2"  .. "results:1,data[{...}],page:2,pages:2"
-	client, nodebalancer, config, _, teardown, err := setupNodeBalancerNode(t, "fixtures/TestListNodeBalancerNodesMultiplePages")
+	client, nodebalancer, config, _, teardown, err := setupNodeBalancerNode(t, "fixtures/TestNodeBalancerNodes_ListMultiplePages")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -97,8 +97,8 @@ func TestListNodeBalancerNodesMultiplePages(t *testing.T) {
 	}
 }
 
-func TestGetNodeBalancerNode(t *testing.T) {
-	client, nodebalancer, config, node, teardown, err := setupNodeBalancerNode(t, "fixtures/TestGetNodeBalancerNode")
+func TestNodeBalancerNode_Get(t *testing.T) {
+	client, nodebalancer, config, node, teardown, err := setupNodeBalancerNode(t, "fixtures/TestNodeBalancerNode_Get")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -113,8 +113,8 @@ func TestGetNodeBalancerNode(t *testing.T) {
 	}
 }
 
-func TestRebuildNodeBalancer(t *testing.T) {
-	client, nodebalancer, config, _, teardown, err := setupNodeBalancerNode(t, "fixtures/TestRebuildNodeBalancer")
+func TestNodeBalancer_Rebuild(t *testing.T) {
+	client, nodebalancer, config, _, teardown, err := setupNodeBalancerNode(t, "fixtures/TestNodeBalancer_Rebuild")
 	defer teardown()
 	if err != nil {
 		t.Error(err)

@@ -6,8 +6,8 @@ import (
 	"testing"
 )
 
-func TestGetProfile(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestGetProfile")
+func TestProfile_Get(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestProfile_Get")
 	defer teardown()
 
 	i, err := client.GetProfile(context.Background())
@@ -19,8 +19,8 @@ func TestGetProfile(t *testing.T) {
 	}
 }
 
-func TestUpdateProfile(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestUpdateProfile")
+func TestProfile_Update(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestProfile_Update")
 	defer teardown()
 
 	profile, err := client.GetProfile(context.Background())

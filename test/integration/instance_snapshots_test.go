@@ -9,8 +9,8 @@ import (
 
 var testSnapshotLabel = "snapshot-linodego-testing"
 
-func TestListInstanceBackups(t *testing.T) {
-	client, instance, backup, teardown, err := setupInstanceBackup(t, "fixtures/TestListInstanceBackups")
+func TestInstanceBackups_List(t *testing.T) {
+	client, instance, backup, teardown, err := setupInstanceBackup(t, "fixtures/TestInstanceBackups_List")
 	defer teardown()
 	if err != nil {
 		t.Error(err)

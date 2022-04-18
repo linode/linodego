@@ -23,8 +23,8 @@ var testMySQLCreateOpts = linodego.MySQLCreateOptions{
 
 var ignoreDatabaseTimestampes = cmpopts.IgnoreFields(linodego.Database{}, "Created", "Updated")
 
-func TestDatabaseEngine(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestDatabaseEngine")
+func TestDatabase_Engine(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestDatabase_Engine")
 	defer teardown()
 
 	engines, err := client.ListDatabaseEngines(context.Background(), nil)
@@ -48,8 +48,8 @@ func TestDatabaseEngine(t *testing.T) {
 	}
 }
 
-func TestDatabaseType(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestDatabaseType")
+func TestDatabase_Type(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestDatabase_Type")
 	defer teardown()
 
 	types, err := client.ListDatabaseTypes(context.Background(), nil)
@@ -73,8 +73,8 @@ func TestDatabaseType(t *testing.T) {
 	}
 }
 
-func TestDatabaseSuite(t *testing.T) {
-	client, database, teardown, err := setupDatabase(t, "fixtures/TestDatabaseSuite")
+func TestDatabase_Suite(t *testing.T) {
+	client, database, teardown, err := setupDatabase(t, "fixtures/TestDatabase_Suite")
 	if err != nil {
 		t.Error(err)
 	}

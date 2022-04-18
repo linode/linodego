@@ -7,8 +7,8 @@ import (
 	"github.com/linode/linodego"
 )
 
-func TestListNotifications(t *testing.T) {
-	client, fixtureTeardown := createTestClient(t, "fixtures/TestListNotifications")
+func TestAccountNotifications_List(t *testing.T) {
+	client, fixtureTeardown := createTestClient(t, "fixtures/TestAccountNotifications_List")
 	defer fixtureTeardown()
 
 	listOpts := linodego.NewListOptions(0, "")

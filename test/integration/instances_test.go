@@ -11,8 +11,8 @@ import (
 
 type instanceModifier func(*linodego.InstanceCreateOptions)
 
-func TestListInstances(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestListInstances")
+func TestInstances_List(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstances_List")
 	defer teardown()
 
 	if err != nil {
@@ -33,8 +33,8 @@ func TestListInstances(t *testing.T) {
 	}
 }
 
-func TestGetInstance(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestGetInstance")
+func TestInstance_Get(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Get")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -56,8 +56,8 @@ func TestGetInstance(t *testing.T) {
 	assertDateSet(t, instance.Updated)
 }
 
-func TestListInstanceDisks(t *testing.T) {
-	client, instance, teardown, err := setupInstance(t, "fixtures/TestListInstanceDisks")
+func TestInstance_Disks_List(t *testing.T) {
+	client, instance, teardown, err := setupInstance(t, "fixtures/TestInstance_Disks_List")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -72,8 +72,8 @@ func TestListInstanceDisks(t *testing.T) {
 	}
 }
 
-func TestResizeInstanceDisk(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestResizeInstanceDisk")
+func TestInstance_Disk_Resize(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Disk_Resize")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -104,9 +104,9 @@ func TestResizeInstanceDisk(t *testing.T) {
 	}
 }
 
-func TestMultiplePrivateInstanceDisk(t *testing.T) {
+func TestInstance_Disk_ListMultiple(t *testing.T) {
 	// This is a long running test
-	client, instance1, teardown1, err := setupInstance(t, "fixtures/TestMultiplePrivateInstanceDiskInitial")
+	client, instance1, teardown1, err := setupInstance(t, "fixtures/TestInstance_Disk_ListMultiple_Primary")
 	defer teardown1()
 	if err != nil {
 		t.Error(err)
@@ -138,7 +138,7 @@ func TestMultiplePrivateInstanceDisk(t *testing.T) {
 		t.Error(err)
 	}
 
-	client, instance2, _, teardown2, err := setupInstanceWithoutDisks(t, "fixtures/TestMultiplePrivateInstanceDiskSecond")
+	client, instance2, _, teardown2, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Disk_ListMultiple_Secondary")
 	defer teardown2()
 	if err != nil {
 		t.Error(err)
@@ -181,8 +181,8 @@ func TestMultiplePrivateInstanceDisk(t *testing.T) {
 	}
 }
 
-func TestPasswordResetInstanceDisk(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestPasswordResetInstanceDisk")
+func TestInstance_Disk_ResetPassword(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Disk_ResetPassword")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -219,8 +219,8 @@ func TestPasswordResetInstanceDisk(t *testing.T) {
 	}
 }
 
-func TestListInstanceConfigs(t *testing.T) {
-	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestListInstanceConfigs")
+func TestInstance_Configs_List(t *testing.T) {
+	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Configs_List")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -238,8 +238,8 @@ func TestListInstanceConfigs(t *testing.T) {
 	}
 }
 
-func TestUpdateInstanceConfig(t *testing.T) {
-	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestUpdateInstanceConfig")
+func TestInstance_Config_Update(t *testing.T) {
+	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Config_Update")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -257,11 +257,13 @@ func TestUpdateInstanceConfig(t *testing.T) {
 	}
 }
 
-func TestUpdateInstanceConfigInterfaces(t *testing.T) {
-	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestUpdateInstanceConfigInterfaces", func(opts *linodego.InstanceCreateOptions) {
-		// Ensure we're in a region that supports VLANs
-		opts.Region = "us-southeast"
-	})
+func TestInstance_ConfigInterfaces_Update(t *testing.T) {
+	client, instance, config, teardown, err := setupInstanceWithoutDisks(t,
+		"fixtures/TestInstance_ConfigInterfaces_Update",
+		func(opts *linodego.InstanceCreateOptions) {
+			// Ensure we're in a region that supports VLANs
+			opts.Region = "us-southeast"
+		})
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -304,14 +306,14 @@ func TestUpdateInstanceConfigInterfaces(t *testing.T) {
 	}
 }
 
-func TestListInstanceVolumes(t *testing.T) {
-	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestListInstanceVolumes_instance")
+func TestInstance_Volumes_List(t *testing.T) {
+	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Volumes_List_Instance")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
 	}
 
-	clientVol, volume, teardown, err := setupVolume(t, "fixtures/TestListInstanceVolumes")
+	clientVol, volume, teardown, err := setupVolume(t, "fixtures/TestInstance_Volumes_List")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -339,8 +341,8 @@ func TestListInstanceVolumes(t *testing.T) {
 	}
 }
 
-func TestRebuildInstance(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestRebuildInstance")
+func TestInstance_Rebuild(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Rebuild")
 	defer teardown()
 
 	if err != nil {

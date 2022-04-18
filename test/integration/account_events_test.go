@@ -8,8 +8,8 @@ import (
 	"github.com/linode/linodego"
 )
 
-func TestListEvents(t *testing.T) {
-	client, instance, teardown, err := setupInstance(t, "fixtures/TestListEvents")
+func TestAccountEvents_List(t *testing.T) {
+	client, instance, teardown, err := setupInstance(t, "fixtures/TestAccountEvents_List")
 	defer teardown()
 	if err != nil {
 		t.Error(err)

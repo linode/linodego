@@ -18,8 +18,8 @@ var testLKEClusterCreateOpts = linodego.LKEClusterCreateOptions{
 	NodePools:  []linodego.LKENodePoolCreateOptions{{Count: 1, Type: "g6-standard-2", Tags: []string{"test"}}},
 }
 
-func TestGetLKECluster_missing(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestGetLKECluster_missing")
+func TestLKECluster_GetMissing(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestLKECluster_GetMissing")
 	defer teardown()
 
 	i, err := client.GetLKECluster(context.Background(), 0)
@@ -36,16 +36,16 @@ func TestGetLKECluster_missing(t *testing.T) {
 	}
 }
 
-func TestWaitForLKEClusterReady(t *testing.T) {
+func TestLKECluster_WaitForReady(t *testing.T) {
 	client, cluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
 		createOpts.NodePools = []linodego.LKENodePoolCreateOptions{
 			{Count: 3, Type: "g6-standard-2"},
 		}
-	}}, "fixtures/TestWaitForLKEClusterReady")
+	}}, "fixtures/TestLKECluster_WaitForReady")
 	defer teardown()
 
-	wrapper, teardownClusterClient := transportRecorderWrapper(t, "fixtures/TestWaitForLKEClusterReadyClusterClient")
+	wrapper, teardownClusterClient := transportRecorderWrapper(t, "fixtures/TestLKECluster_WaitForReady_Cluster")
 	defer teardownClusterClient()
 
 	if err = k8scondition.WaitForLKEClusterReady(context.Background(), *client, cluster.ID, linodego.LKEClusterPollOptions{
@@ -57,10 +57,10 @@ func TestWaitForLKEClusterReady(t *testing.T) {
 	}
 }
 
-func TestGetLKECluster_found(t *testing.T) {
+func TestLKECluster_GetFound(t *testing.T) {
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
-	}}, "fixtures/TestGetLKECluster_found")
+	}}, "fixtures/TestLKECluster_GetFound")
 	defer teardown()
 	i, err := client.GetLKECluster(context.Background(), lkeCluster.ID)
 	if err != nil {
@@ -71,10 +71,10 @@ func TestGetLKECluster_found(t *testing.T) {
 	}
 }
 
-func TestUpdateLKECluster(t *testing.T) {
+func TestLKECluster_Update(t *testing.T) {
 	client, cluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
-	}}, "fixtures/TestUpdateLKECluster")
+	}}, "fixtures/TestLKECluster_Update")
 	defer teardown()
 	if err != nil {
 		t.Fatal(err)
@@ -111,10 +111,10 @@ func TestUpdateLKECluster(t *testing.T) {
 	}
 }
 
-func TestRecycleLKEClusterNodes(t *testing.T) {
+func TestLKECluster_Nodes_Recycle(t *testing.T) {
 	client, cluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
-	}}, "fixtures/TestRecycleLKEClusterNodes")
+	}}, "fixtures/TestLKECluster_Nodes_Recycle")
 	defer teardown()
 	if err != nil {
 		t.Fatal(err)
@@ -126,10 +126,10 @@ func TestRecycleLKEClusterNodes(t *testing.T) {
 	}
 }
 
-func TestListLKEClusterAPIEndpoints(t *testing.T) {
+func TestLKECluster_APIEndpoints_List(t *testing.T) {
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
-	}}, "fixtures/TestListLKEClusterAPIEndpoints")
+	}}, "fixtures/TestLKECluster_APIEndpoints_List")
 	defer teardown()
 
 	if err != nil {
@@ -145,10 +145,10 @@ func TestListLKEClusterAPIEndpoints(t *testing.T) {
 	}
 }
 
-func TestGetLKEClusterKubeconfig(t *testing.T) {
+func TestLKECluster_Kubeconfig_Get(t *testing.T) {
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
-	}}, "fixtures/TestGetLKEClusterKubeconfig")
+	}}, "fixtures/TestLKECluster_Kubeconfig_Get")
 	defer teardown()
 
 	_, err = client.WaitForLKEClusterStatus(context.Background(), lkeCluster.ID, linodego.LKEClusterReady, 180)
@@ -164,10 +164,10 @@ func TestGetLKEClusterKubeconfig(t *testing.T) {
 	}
 }
 
-func TestGetLKEClusterDashboard(t *testing.T) {
+func TestLKECluster_Dashboard_Get(t *testing.T) {
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
-	}}, "fixtures/TestGetLKEClusterDashboard")
+	}}, "fixtures/TestLKECluster_Dashboard_Get")
 	defer teardown()
 
 	_, err = client.WaitForLKEClusterStatus(context.Background(), lkeCluster.ID, linodego.LKEClusterReady, 180)
@@ -188,10 +188,10 @@ func TestGetLKEClusterDashboard(t *testing.T) {
 	}
 }
 
-func TestListLKEClusters(t *testing.T) {
+func TestLKEClusters_List(t *testing.T) {
 	client, _, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
-	}}, "fixtures/TestListLKEClusters")
+	}}, "fixtures/TestLKEClusters_List")
 	if err != nil {
 		t.Error(err)
 	}
@@ -208,8 +208,8 @@ func TestListLKEClusters(t *testing.T) {
 	}
 }
 
-func TestGetLKEVersion_missing(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestGetLKEVersion_missing")
+func TestLKEVersion_GetMissing(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestLKEVersion_GetMissing")
 	defer teardown()
 
 	i, err := client.GetLKEVersion(context.Background(), "does-not-exist")
@@ -226,8 +226,8 @@ func TestGetLKEVersion_missing(t *testing.T) {
 	}
 }
 
-func TestGetLKEVersion_found(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestGetLKEVersion_found")
+func TestLKEVersion_GetFound(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestLKEVersion_GetFound")
 	defer teardown()
 
 	i, err := client.GetLKEVersion(context.Background(), "1.22")
@@ -239,8 +239,8 @@ func TestGetLKEVersion_found(t *testing.T) {
 	}
 }
 
-func TestListLKEVersions(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestListLKEVersions")
+func TestLKEVersions_List(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestLKEVersions_List")
 	defer teardown()
 
 	i, err := client.ListLKEVersions(context.Background(), nil)

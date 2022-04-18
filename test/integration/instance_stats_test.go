@@ -6,8 +6,8 @@ import (
 	"time"
 )
 
-func TestGetInstanceStats(t *testing.T) {
-	client, instance, teardown, err := setupInstance(t, "fixtures/TestGetInstanceStats")
+func TestInstanceStats_Get(t *testing.T) {
+	client, instance, teardown, err := setupInstance(t, "fixtures/TestInstanceStats_Get")
 	defer teardown()
 	if err != nil {
 		t.Error(err)

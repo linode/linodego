@@ -7,8 +7,8 @@ import (
 	"github.com/linode/linodego"
 )
 
-func TestCreateVolume(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestCreateVolume")
+func TestVolume_Create(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestVolume_Create")
 	defer teardown()
 
 	createOpts := linodego.VolumeCreateOptions{
@@ -31,8 +31,8 @@ func TestCreateVolume(t *testing.T) {
 	}
 }
 
-func TestResizeVolume(t *testing.T) {
-	client, volume, teardown, err := setupVolume(t, "fixtures/TestResizeVolume")
+func TestVolume_Resize(t *testing.T) {
+	client, volume, teardown, err := setupVolume(t, "fixtures/TestVolume_Resize")
 	defer teardown()
 
 	if err != nil {
@@ -44,8 +44,8 @@ func TestResizeVolume(t *testing.T) {
 	}
 }
 
-func TestListVolumes(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestListVolumes")
+func TestVolumes_List(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestVolumes_List")
 	defer teardown()
 
 	volumes, err := client.ListVolumes(context.Background(), nil)
@@ -57,8 +57,8 @@ func TestListVolumes(t *testing.T) {
 	}
 }
 
-func TestGetVolume(t *testing.T) {
-	client, volume, teardownVolume, errVolume := setupVolume(t, "fixtures/TestGetVolume")
+func TestVolume_Get(t *testing.T) {
+	client, volume, teardownVolume, errVolume := setupVolume(t, "fixtures/TestVolume_Get")
 	defer teardownVolume()
 	if errVolume != nil {
 		t.Error(errVolume)
@@ -72,8 +72,8 @@ func TestGetVolume(t *testing.T) {
 	assertDateSet(t, volume.Updated)
 }
 
-func TestWaitForVolumeLinodeID_nil(t *testing.T) {
-	client, volume, teardown, err := setupVolume(t, "fixtures/TestWaitForVolumeLinodeID_nil")
+func TestVolume_WaitForLinodeID_nil(t *testing.T) {
+	client, volume, teardown, err := setupVolume(t, "fixtures/TestVolume_WaitForLinodeID_nil")
 	defer teardown()
 
 	if err != nil {
@@ -86,8 +86,8 @@ func TestWaitForVolumeLinodeID_nil(t *testing.T) {
 	}
 }
 
-func TestWaitForVolumeLinodeIDInstance(t *testing.T) {
-	client, instance, teardownInstance, errInstance := setupInstance(t, "fixtures/TestWaitForVolumeLinodeID_linode")
+func TestVolume_WaitForLinodeID(t *testing.T) {
+	client, instance, teardownInstance, errInstance := setupInstance(t, "fixtures/TestVolume_WaitForLinodeID_linode")
 	if errInstance != nil {
 		t.Errorf("Error setting up instance for volume test, %s", errInstance)
 	}
@@ -103,7 +103,7 @@ func TestWaitForVolumeLinodeIDInstance(t *testing.T) {
 		t.Errorf("Error setting up instance config for volume test, %s", errConfig)
 	}
 
-	client, volume, teardownVolume, errVolume := setupVolume(t, "fixtures/TestWaitForVolumeLinodeID_volume")
+	client, volume, teardownVolume, errVolume := setupVolume(t, "fixtures/TestVolume_WaitForLinodeID_volume")
 	if errVolume != nil {
 		t.Errorf("Error setting up volume test, %s", errVolume)
 	}
@@ -121,7 +121,7 @@ func TestWaitForVolumeLinodeIDInstance(t *testing.T) {
 		t.Errorf("Expected to timeout waiting for nil LinodeID on volume %d : %s", volume.ID, errWait)
 	}
 
-	client, teardownWait := createTestClient(t, "fixtures/TestWaitForVolumeLinodeID_waiting")
+	client, teardownWait := createTestClient(t, "fixtures/TestVolume_WaitForLinodeID_waiting")
 	defer teardownWait()
 
 	_, errWait = client.WaitForVolumeLinodeID(context.Background(), volume.ID, &instance.ID, 20)
@@ -130,8 +130,8 @@ func TestWaitForVolumeLinodeIDInstance(t *testing.T) {
 	}
 }
 
-func TestUpdateVolume(t *testing.T) {
-	client, volume, teardown, err := setupVolume(t, "fixtures/TestUpdateVolume")
+func TestVolume_Update(t *testing.T) {
+	client, volume, teardown, err := setupVolume(t, "fixtures/TestVolume_Update")
 	if err != nil {
 		t.Errorf("Error setting up volume test, %s", err)
 	}

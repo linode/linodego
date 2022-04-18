@@ -8,8 +8,8 @@ import (
 	. "github.com/linode/linodego"
 )
 
-func TestGetOAuthClient_missing(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestGetOAuthClient_missing")
+func TestOAuthClient_GetMissing(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestOAuthClient_GetMissing")
 	defer teardown()
 
 	i, err := client.GetOAuthClient(context.Background(), "does-not-exist")
@@ -26,14 +26,14 @@ func TestGetOAuthClient_missing(t *testing.T) {
 	}
 }
 
-func TestGetOAuthClient_found(t *testing.T) {
+func TestOAuthClient_GetFound(t *testing.T) {
 	createOpts := linodego.OAuthClientCreateOptions{
 		Public:      true,
 		RedirectURI: "https://example.com",
 		Label:       "test-client",
 	}
 
-	client, oauthClient, teardown, err := setupOAuthClient(t, createOpts, "fixtures/TestGetOAuthClient_found")
+	client, oauthClient, teardown, err := setupOAuthClient(t, createOpts, "fixtures/TestOAuthClient_GetFound")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -48,13 +48,13 @@ func TestGetOAuthClient_found(t *testing.T) {
 	}
 }
 
-func TestListOAuthClients(t *testing.T) {
+func TestOAuthClients_List(t *testing.T) {
 	createOpts := linodego.OAuthClientCreateOptions{
 		Public:      true,
 		RedirectURI: "https://example.com",
 		Label:       "test-client",
 	}
-	client, _, teardown, err := setupOAuthClient(t, createOpts, "fixtures/TestListOAuthClients")
+	client, _, teardown, err := setupOAuthClient(t, createOpts, "fixtures/TestOAuthClients_List")
 	defer teardown()
 	if err != nil {
 		t.Error(err)

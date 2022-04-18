@@ -13,8 +13,8 @@ var testDomainCreateOpts = linodego.DomainCreateOptions{
 	SOAEmail: "example@example.com",
 }
 
-func TestCreateDomain(t *testing.T) {
-	_, domain, teardown, err := setupDomain(t, "fixtures/TestCreateDomain")
+func TestDomain_Create(t *testing.T) {
+	_, domain, teardown, err := setupDomain(t, "fixtures/TestDomain_Create")
 	defer teardown()
 
 	if err != nil {
@@ -27,8 +27,8 @@ func TestCreateDomain(t *testing.T) {
 	}
 }
 
-func TestUpdateDomain(t *testing.T) {
-	client, domain, teardown, err := setupDomain(t, "fixtures/TestUpdateDomain")
+func TestDomain_Update(t *testing.T) {
+	client, domain, teardown, err := setupDomain(t, "fixtures/TestDomain_Update")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -45,8 +45,8 @@ func TestUpdateDomain(t *testing.T) {
 	}
 }
 
-func TestListDomains(t *testing.T) {
-	client, _, teardown, err := setupDomain(t, "fixtures/TestListDomains")
+func TestDomains_List(t *testing.T) {
+	client, _, teardown, err := setupDomain(t, "fixtures/TestDomains_List")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -61,8 +61,8 @@ func TestListDomains(t *testing.T) {
 	}
 }
 
-func TestGetDomain(t *testing.T) {
-	client, domain, teardown, err := setupDomain(t, "fixtures/TestGetDomain")
+func TestDomain_Get(t *testing.T) {
+	client, domain, teardown, err := setupDomain(t, "fixtures/TestDomain_Get")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -74,8 +74,8 @@ func TestGetDomain(t *testing.T) {
 	}
 }
 
-func TestGetDomainZoneFile(t *testing.T) {
-	client, domain, teardown, err := setupDomain(t, "fixtures/TestGetDomainZoneFile")
+func TestDomain_ZoneFile_Get(t *testing.T) {
+	client, domain, teardown, err := setupDomain(t, "fixtures/TestDomain_ZoneFile_Get")
 	defer teardown()
 	if err != nil {
 		t.Error(err)

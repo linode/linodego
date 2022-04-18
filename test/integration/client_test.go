@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestClientAliases(t *testing.T) {
+func TestClient_Aliases(t *testing.T) {
 	client, _ := createTestClient(t, "")
 
 	if client.Images == nil {

@@ -9,8 +9,8 @@ import (
 	"github.com/linode/linodego"
 )
 
-func TestListFirewallDevices(t *testing.T) {
-	client, instance, teardown, err := setupInstance(t, "fixtures/TestListFirewallDevices")
+func TestFirewallDevices_List(t *testing.T) {
+	client, instance, teardown, err := setupInstance(t, "fixtures/TestFirewallDevices_List")
 	if err != nil {
 		t.Error(err)
 	}
@@ -34,8 +34,8 @@ func TestListFirewallDevices(t *testing.T) {
 	}
 }
 
-func TestGetFirewallDevice(t *testing.T) {
-	client, instance, teardown, err := setupInstance(t, "fixtures/TestGetFirewallDevice")
+func TestFirewallDevice_Get(t *testing.T) {
+	client, instance, teardown, err := setupInstance(t, "fixtures/TestFirewallDevice_Get")
 	if err != nil {
 		t.Error(err)
 	}
@@ -62,8 +62,8 @@ func TestGetFirewallDevice(t *testing.T) {
 	}
 }
 
-func TestDeleteFirewallDevice(t *testing.T) {
-	client, instance, teardown, err := setupInstance(t, "fixtures/TestDeleteFirewallDevice")
+func TestFirewallDevice_Delete(t *testing.T) {
+	client, instance, teardown, err := setupInstance(t, "fixtures/TestFirewallDevice_Delete")
 	if err != nil {
 		t.Error(err)
 	}

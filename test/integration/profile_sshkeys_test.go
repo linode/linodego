@@ -13,8 +13,8 @@ var testSSHKeyCreateOpts = SSHKeyCreateOptions{
 	SSHKey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYlv4Ns3tY2NEseuuMXEz1sLzO9sGC0cwaT2ECbWFyrsn1Fg5ISdkaJD8LiuhZ41/1Mh0Sq49wY89yLkmw+Ukrd+thFbhUqTzjL09U89kn3Ds/ajVJgwnJ4pXmBqhq0/3pmO/UkYIBi5ErTnPWL+yHAoQ1HsVetxYUmY2SPaT0pduDIrvNZRvWn3Nvn9qsUVfthWiGc8oHWE5xyd7+3UPLHSMkE4rZd2k6e7bJWCM/VJ7ZrJQ6UVTDXjBCkkT12WsOWxcEuL36RUGgGa4h5M4IY0SkgQSKHer01dJSj3c6OBzj2CRDZFoM8f/YC66s0+ZQ9cE/aADDycMIvqOJBI6X " + label,
 }
 
-func TestGetSSHKey_missing(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestGetSSHKey_missing")
+func TestSSHKey_GetMissing(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestSSHKey_GetMissing")
 	defer teardown()
 
 	notfoundID := 123
@@ -32,8 +32,8 @@ func TestGetSSHKey_missing(t *testing.T) {
 	}
 }
 
-func TestGetSSHKey_found(t *testing.T) {
-	client, sshkey, teardown, err := setupSSHKey(t, "fixtures/TestGetSSHKey_found")
+func TestSSHKey_GetFound(t *testing.T) {
+	client, sshkey, teardown, err := setupSSHKey(t, "fixtures/TestSSHKey_GetFound")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -56,8 +56,8 @@ func TestGetSSHKey_found(t *testing.T) {
 	assertDateSet(t, sshkey.Created)
 }
 
-func TestUpdateSSHKey(t *testing.T) {
-	client, sshkey, teardown, err := setupSSHKey(t, "fixtures/TestUpdateSSHKey")
+func TestSSHKey_Update(t *testing.T) {
+	client, sshkey, teardown, err := setupSSHKey(t, "fixtures/TestSSHKey_Update")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -78,8 +78,8 @@ func TestUpdateSSHKey(t *testing.T) {
 	}
 }
 
-func TestListSSHKeys(t *testing.T) {
-	client, sshkey, teardown, err := setupSSHKey(t, "fixtures/TestListSSHKey")
+func TestSSHKeys_List(t *testing.T) {
+	client, sshkey, teardown, err := setupSSHKey(t, "fixtures/TestSSHKeys_List")
 	defer teardown()
 	if err != nil {
 		t.Error(err)

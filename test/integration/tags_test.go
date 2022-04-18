@@ -7,8 +7,8 @@ import (
 	. "github.com/linode/linodego"
 )
 
-func TestCreateTag(t *testing.T) {
-	client, instance, teardown, err := setupTaggedInstance(t, "fixtures/TestCreateTag")
+func TestTag_Create(t *testing.T) {
+	client, instance, teardown, err := setupTaggedInstance(t, "fixtures/TestTag_Create")
 	defer teardown()
 	if err != nil {
 		t.Errorf("Error creating test Instance: %s", err)
@@ -71,8 +71,8 @@ func TestCreateTag(t *testing.T) {
 	}
 }
 
-func TestListTaggedObjects_missing(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestListTaggedObjects_missing")
+func TestTag_ListTaggedObjects_Missing(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestTag_ListTaggedObjects_Missing")
 	defer teardown()
 
 	i, err := client.ListTaggedObjects(context.Background(), "does-not-exist", nil)

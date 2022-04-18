@@ -18,8 +18,8 @@ var (
 	}
 )
 
-func TestCreateNodeBalancer(t *testing.T) {
-	_, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestCreateNodeBalancer")
+func TestNodeBalancer_Create(t *testing.T) {
+	_, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancer_Create")
 	defer teardown()
 
 	if err != nil {
@@ -35,8 +35,8 @@ func TestCreateNodeBalancer(t *testing.T) {
 	assertDateSet(t, nodebalancer.Updated)
 }
 
-func TestUpdateNodeBalancer(t *testing.T) {
-	client, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestUpdateNodeBalancer")
+func TestNodeBalancer_Update(t *testing.T) {
+	client, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancer_Update")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -57,8 +57,8 @@ func TestUpdateNodeBalancer(t *testing.T) {
 	}
 }
 
-func TestListNodeBalancers(t *testing.T) {
-	client, _, teardown, err := setupNodeBalancer(t, "fixtures/TestListNodeBalancers")
+func TestNodeBalancers_List(t *testing.T) {
+	client, _, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancers_List")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -73,8 +73,8 @@ func TestListNodeBalancers(t *testing.T) {
 	}
 }
 
-func TestGetNodeBalancer(t *testing.T) {
-	client, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestGetNodeBalancer")
+func TestNodeBalancer_Get(t *testing.T) {
+	client, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancer_Get")
 	defer teardown()
 	if err != nil {
 		t.Error(err)

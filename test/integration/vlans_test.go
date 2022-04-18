@@ -8,11 +8,11 @@ import (
 	"github.com/linode/linodego"
 )
 
-func TestListVLANs(t *testing.T) {
+func TestVLANs_List(t *testing.T) {
 	instancePrefix := "linodego-testing-" + randString(12, lowerBytes, upperBytes)
 	vlanName := "linodego-really-cool-vlan-" + randString(12, lowerBytes, upperBytes)
 
-	client, fixturesTeardown := createTestClient(t, "fixtures/TestListVLAN")
+	client, fixturesTeardown := createTestClient(t, "fixtures/TestVLANs_List")
 	defer fixturesTeardown()
 
 	var instances []*linodego.Instance
