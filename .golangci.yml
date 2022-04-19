@@ -1,6 +1,6 @@
 run:
   tests: false
-  
+
 linters-settings:
   errcheck:
     check-type-assertions: true
@@ -34,6 +34,9 @@ linters:
     - unparam
     - nakedret
     - lll
+    - golint
+    - maligned
+    - scopelint
     - dupl
     - gosec
     - gochecknoinits
