@@ -180,8 +180,7 @@ func (c *Client) UpdateLKENodePool(ctx context.Context, clusterID, id int, updat
 }
 
 // DeleteLKENodePool deletes the LKENodePool with the specified id
-func (c *Client) DeleteLKENodePool(ctx context.Context,
-	clusterID, id int) error {
+func (c *Client) DeleteLKENodePool(ctx context.Context, clusterID, id int) error {
 	e, err := c.LKENodePools.endpointWithParams(clusterID)
 	if err != nil {
 		return err
