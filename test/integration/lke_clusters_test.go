@@ -13,7 +13,7 @@ import (
 var testLKEClusterCreateOpts = linodego.LKEClusterCreateOptions{
 	Label:      label,
 	Region:     "us-central",
-	K8sVersion: "1.21",
+	K8sVersion: "1.23",
 	Tags:       []string{"testing"},
 	NodePools:  []linodego.LKENodePoolCreateOptions{{Count: 1, Type: "g6-standard-2", Tags: []string{"test"}}},
 }
@@ -82,7 +82,7 @@ func TestLKECluster_Update(t *testing.T) {
 
 	updatedTags := []string{"test=true"}
 	updatedLabel := "new" + cluster.Label
-	updatedK8sVersion := "1.21"
+	updatedK8sVersion := "1.23"
 	updatedControlPlane := &linodego.LKEClusterControlPlane{HighAvailability: true}
 	updatedCluster, err := client.UpdateLKECluster(context.TODO(), cluster.ID, linodego.LKEClusterUpdateOptions{
 		Tags:         &updatedTags,
@@ -230,11 +230,11 @@ func TestLKEVersion_GetFound(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestLKEVersion_GetFound")
 	defer teardown()
 
-	i, err := client.GetLKEVersion(context.Background(), "1.22")
+	i, err := client.GetLKEVersion(context.Background(), "1.23")
 	if err != nil {
 		t.Errorf("Error getting version, expected struct, got %v and error %v", i, err)
 	}
-	if i.ID != "1.22" {
+	if i.ID != "1.23" {
 		t.Errorf("Expected a specific version, but got a different one %v", i)
 	}
 }

@@ -2,7 +2,6 @@ package integration
 
 import (
 	"context"
-	"fmt"
 	"testing"
 
 	"github.com/linode/linodego"
@@ -22,8 +21,15 @@ func TestAccountEvents_List(t *testing.T) {
 		t.Error(err)
 	}
 
-	filter := fmt.Sprintf("{\"entity.id\":%d, \"entity.type\": \"linode\"}", instance.ID)
-	events, err := client.ListEvents(context.Background(), &linodego.ListOptions{Filter: filter})
+	f := linodego.Filter{}
+	f.AddField(linodego.Eq, "entity.id", instance.ID)
+	f.AddField(linodego.Eq, "entity.type", "linode")
+	f.AddField(linodego.Eq, "entity.action", "linode_config_create")
+	filter, err := f.MarshalJSON()
+	if err != nil {
+		t.Fatalf("failed to marshal filter: %v", err)
+	}
+	events, err := client.ListEvents(context.Background(), &linodego.ListOptions{Filter: string(filter)})
 	if err != nil {
 		t.Errorf("Error getting Events, expected struct, got error %v", err)
 	}

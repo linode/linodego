@@ -14,9 +14,9 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 35955785, "label": "linodego-test-instance-wo-disk", "group": "",
+    body: '{"id": 35971264, "label": "linodego-test-instance-wo-disk", "group": "",
       "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["192.155.85.20"], "ipv6": "2600:3c01::f03c:93ff:fea1:92d0/128",
+      "type": "g6-nanode-1", "ipv4": ["45.79.108.145"], "ipv6": "2600:3c01::f03c:93ff:fea1:6ea6/128",
       "image": null, "region": "us-west", "specs": {"disk": 25600, "memory": 1024,
       "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
@@ -73,10 +73,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/35955785/configs
+    url: https://api.linode.com/v4beta/linode/instances/35971264/configs
     method: POST
   response:
-    body: '{"id": 38276975, "label": "linodego-test-config", "helpers": {"updatedb_disabled":
+    body: '{"id": 38293101, "label": "linodego-test-config", "helpers": {"updatedb_disabled":
       true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
       true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
@@ -134,10 +134,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/35955785/configs
+    url: https://api.linode.com/v4beta/linode/instances/35971264/configs
     method: GET
   response:
-    body: '{"data": [{"id": 38276975, "label": "linodego-test-config", "helpers":
+    body: '{"data": [{"id": 38293101, "label": "linodego-test-config", "helpers":
       {"updatedb_disabled": true, "distro": true, "modules_dep": true, "network":
       true, "devtmpfs_automount": true}, "kernel": "linode/latest-64bit", "comments":
       "", "memory_limit": 0, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
@@ -198,7 +198,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/35955785
+    url: https://api.linode.com/v4beta/linode/instances/35971264
     method: DELETE
   response:
     body: '{}'

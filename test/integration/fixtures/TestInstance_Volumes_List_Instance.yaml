@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"username":"linodegotest-updateusergrants","email":"linodegotest-updateusergrants@example.com","restricted":true}'
+    body: '{"region":"us-west","type":"g6-nanode-1","label":"linodego-test-instance-wo-disk","booted":false}'
     form: {}
     headers:
       Accept:
@@ -11,11 +11,17 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/users
+    url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"username": "linodegotest-updateusergrants", "email": "linodegotest-updateusergrants@example.com",
-      "restricted": true, "ssh_keys": [], "tfa_enabled": false}'
+    body: '{"id": 35971271, "label": "linodego-test-instance-wo-disk", "group": "",
+      "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "type": "g6-nanode-1", "ipv4": ["45.33.34.187"], "ipv6": "2600:3c01::f03c:93ff:fea1:6e08/128",
+      "image": null, "region": "us-west", "specs": {"disk": 25600, "memory": 1024,
+      "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
+      10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
+      false, "schedule": {"day": null, "window": null}, "last_successful": null},
+      "hypervisor": "kvm", "watchdog_enabled": true, "tags": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -30,7 +36,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "157"
+      - "633"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -42,7 +48,7 @@ interactions:
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - account:read_write
+      - linodes:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -51,14 +57,14 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "10"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"global":{"account_access":"read_only","add_domains":false,"add_firewalls":true,"add_images":true,"add_linodes":false,"add_longview":true,"add_nodebalancers":false,"add_stackscripts":true,"add_volumes":true,"cancel_account":false,"longview_subscription":false}}'
+    body: '{"label":"linodego-test-config","devices":{},"interfaces":null}'
     form: {}
     headers:
       Accept:
@@ -67,23 +73,16 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/users/linodegotest-updateusergrants/grants
-    method: PUT
+    url: https://api.linode.com/v4beta/linode/instances/35971271/configs
+    method: POST
   response:
-    body: '{"linode": [{"id": 29745916, "label": "workdev", "permissions": null},
-      {"id": 35971010, "label": "lke58194-90902-625f1a3a4477", "permissions": null},
-      {"id": 35971012, "label": "lke58195-90903-625f1a485dba", "permissions": null},
-      {"id": 35971013, "label": "lke58196-90904-625f1a57a972", "permissions": null},
-      {"id": 35971014, "label": "lke58197-90905-625f1a644905", "permissions": null},
-      {"id": 35971036, "label": "lke58199-90907-625f1b0374c7", "permissions": null},
-      {"id": 35971038, "label": "lke58200-90908-625f1b1f9f49", "permissions": null},
-      {"id": 35971044, "label": "lke58201-90910-625f1b4ce209", "permissions": null}],
-      "nodebalancer": [], "domain": [], "stackscript": [], "longview": [], "image":
-      [], "volume": [{"id": 315387, "label": "linodego-test-volume", "permissions":
-      null}], "firewall": [], "global": {"add_domains": false, "add_linodes": false,
-      "add_longview": true, "longview_subscription": false, "add_stackscripts": true,
-      "add_nodebalancers": false, "add_images": true, "add_volumes": true, "add_firewalls":
-      true, "account_access": "read_only", "cancel_account": false}}'
+    body: '{"id": 38293107, "label": "linodego-test-config", "helpers": {"updatedb_disabled":
+      true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
+      true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
+      "devices": {"sda": null, "sdb": null, "sdc": null, "sdd": null, "sde": null,
+      "sdf": null, "sdg": null, "sdh": null}, "initrd": null, "run_level": "default",
+      "virt_mode": "paravirt", "interfaces": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -97,6 +96,8 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "534"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -108,7 +109,7 @@ interactions:
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - account:read_write
+      - linodes:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -133,7 +134,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/users/linodegotest-updateusergrants
+    url: https://api.linode.com/v4beta/linode/instances/35971271
     method: DELETE
   response:
     body: '{}'
@@ -163,7 +164,7 @@ interactions:
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - account:read_write
+      - linodes:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:

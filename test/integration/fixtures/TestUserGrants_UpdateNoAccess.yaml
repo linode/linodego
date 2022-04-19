@@ -70,12 +70,20 @@ interactions:
     url: https://api.linode.com/v4beta/account/users/linodegotest-updateusergrantsna/grants
     method: PUT
   response:
-    body: '{"linode": [{"id": 29745916, "label": "workdev", "permissions": null}],
+    body: '{"linode": [{"id": 29745916, "label": "workdev", "permissions": null},
+      {"id": 35971010, "label": "lke58194-90902-625f1a3a4477", "permissions": null},
+      {"id": 35971012, "label": "lke58195-90903-625f1a485dba", "permissions": null},
+      {"id": 35971013, "label": "lke58196-90904-625f1a57a972", "permissions": null},
+      {"id": 35971014, "label": "lke58197-90905-625f1a644905", "permissions": null},
+      {"id": 35971036, "label": "lke58199-90907-625f1b0374c7", "permissions": null},
+      {"id": 35971038, "label": "lke58200-90908-625f1b1f9f49", "permissions": null},
+      {"id": 35971044, "label": "lke58201-90910-625f1b4ce209", "permissions": null}],
       "nodebalancer": [], "domain": [], "stackscript": [], "longview": [], "image":
-      [], "volume": [], "firewall": [], "global": {"add_domains": false, "add_linodes":
-      false, "add_longview": false, "longview_subscription": false, "add_stackscripts":
-      false, "add_nodebalancers": false, "add_images": false, "add_volumes": false,
-      "add_firewalls": false, "account_access": null, "cancel_account": false}}'
+      [], "volume": [{"id": 315387, "label": "linodego-test-volume", "permissions":
+      null}], "firewall": [], "global": {"add_domains": false, "add_linodes": false,
+      "add_longview": false, "longview_subscription": false, "add_stackscripts": false,
+      "add_nodebalancers": false, "add_images": false, "add_volumes": false, "add_firewalls":
+      false, "account_access": null, "cancel_account": false}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -89,8 +97,6 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
-      Content-Length:
-      - "465"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:

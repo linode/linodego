@@ -12,11 +12,8 @@ func TestAccountNotifications_List(t *testing.T) {
 	defer fixtureTeardown()
 
 	listOpts := linodego.NewListOptions(0, "")
-	records, err := client.ListNotifications(context.Background(), listOpts)
+	_, err := client.ListNotifications(context.Background(), listOpts)
 	if err != nil {
 		t.Errorf("Error listing notifications, expected array, got error %v", err)
-	}
-	if len(records) == 0 {
-		t.Errorf("Expected ListNotifications to have some results")
 	}
 }
