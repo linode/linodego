@@ -24,7 +24,7 @@ func TestAccountEvents_List(t *testing.T) {
 	f := linodego.Filter{}
 	f.AddField(linodego.Eq, "entity.id", instance.ID)
 	f.AddField(linodego.Eq, "entity.type", "linode")
-	f.AddField(linodego.Eq, "entity.action", "linode_config_create")
+	f.AddField(linodego.Eq, "action", "linode_config_create")
 	filter, err := f.MarshalJSON()
 	if err != nil {
 		t.Fatalf("failed to marshal filter: %v", err)

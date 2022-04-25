@@ -41,7 +41,7 @@ func TestInstanceBackups_List(t *testing.T) {
 		t.Errorf("Expected snapshot did not match current snapshot: %v", backups.Snapshot.Current)
 	}
 
-	_, err = client.WaitForSnapshotStatus(context.Background(), instance.ID, backup.ID, linodego.SnapshotSuccessful, 180)
+	_, err = client.WaitForSnapshotStatus(context.Background(), instance.ID, backup.ID, linodego.SnapshotSuccessful, 360)
 	if err != nil {
 		t.Errorf("Error waiting for snapshot: %v", err)
 	}

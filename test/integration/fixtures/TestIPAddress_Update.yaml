@@ -14,9 +14,9 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 36017234, "label": "linodego-test-instance-wo-disk", "group": "",
+    body: '{"id": 36017471, "label": "linodego-test-instance-wo-disk", "group": "",
       "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["50.116.5.133"], "ipv6": "2600:3c01::f03c:93ff:fe2c:6a92/128",
+      "type": "g6-nanode-1", "ipv4": ["192.81.131.143"], "ipv6": "2600:3c01::f03c:93ff:fe2c:0287/128",
       "image": null, "region": "us-west", "specs": {"disk": 25600, "memory": 1024,
       "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
@@ -36,7 +36,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "633"
+      - "635"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -73,10 +73,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/36017234/configs
+    url: https://api.linode.com/v4beta/linode/instances/36017471/configs
     method: POST
   response:
-    body: '{"id": 38341855, "label": "linodego-test-config", "helpers": {"updatedb_disabled":
+    body: '{"id": 38342077, "label": "linodego-test-config", "helpers": {"updatedb_disabled":
       true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
       true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
@@ -125,7 +125,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"volume-test","comments":"","devices":{"sda":{"volume_id":318100}},"interfaces":null,"memory_limit":0,"init_rd":null}'
+    body: ""
     form: {}
     headers:
       Accept:
@@ -134,16 +134,78 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/36017234/configs/38341855
+    url: https://api.linode.com/v4beta/linode/instances/36017471/ips
+    method: GET
+  response:
+    body: '{"ipv4": {"public": [{"address": "192.81.131.143", "gateway": "192.81.131.1",
+      "subnet_mask": "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true,
+      "rdns": "192-81-131-143.ip.linodeusercontent.com", "linode_id": 36017471, "region":
+      "us-west"}], "private": [], "shared": [], "reserved": []}, "ipv6": {"slaac":
+      {"address": "2600:3c01::f03c:93ff:fe2c:0287", "gateway": "fe80::1", "subnet_mask":
+      "ffff:ffff:ffff:ffff::", "prefix": 64, "type": "ipv6", "rdns": null, "linode_id":
+      36017471, "region": "us-west", "public": true}, "link_local": {"address": "fe80::f03c:93ff:fe2c:0287",
+      "gateway": "fe80::1", "subnet_mask": "ffff:ffff:ffff:ffff::", "prefix": 64,
+      "type": "ipv6", "rdns": null, "linode_id": 36017471, "region": "us-west", "public":
+      false}, "global": []}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "767"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - linodes:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"rdns":"192-81-131-143.ip.linodeusercontent.com"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/ips/192.81.131.143
     method: PUT
   response:
-    body: '{"id": 38341855, "label": "volume-test", "helpers": {"updatedb_disabled":
-      true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
-      true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
-      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
-      "devices": {"sda": {"disk_id": null, "volume_id": 318100}, "sdb": null, "sdc":
-      null, "sdd": null, "sde": null, "sdf": null, "sdg": null, "sdh": null}, "initrd":
-      null, "run_level": "default", "virt_mode": "paravirt", "interfaces": []}'
+    body: '{"address": "192.81.131.143", "gateway": "192.81.131.1", "subnet_mask":
+      "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true, "rdns": "192-81-131-143.ip.linodeusercontent.com",
+      "linode_id": 36017471, "region": "us-west"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -158,7 +220,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "559"
+      - "229"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -170,7 +232,7 @@ interactions:
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - linodes:read_write
+      - ips:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -195,7 +257,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/36017234
+    url: https://api.linode.com/v4beta/linode/instances/36017471
     method: DELETE
   response:
     body: '{}'

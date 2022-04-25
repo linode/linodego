@@ -2,7 +2,9 @@ package integration
 
 import (
 	"context"
+	"fmt"
 	"testing"
+	"time"
 
 	"github.com/linode/linodego"
 )
@@ -157,14 +159,13 @@ func setupVolume(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 	t.Helper()
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
-
 	createOpts := linodego.VolumeCreateOptions{
-		Label:  "linodego-test-volume",
+		Label:  fmt.Sprintf("linodego-test-volume-%.d", time.Now().Second()),
 		Region: "us-west",
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
 	if err != nil {
-		t.Errorf("Error listing volumes, expected struct, got error %v", err)
+		t.Errorf("Error creating volume, got error %v", err)
 	}
 
 	teardown := func() {

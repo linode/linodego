@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 59191, "label": "RNeQLzgBmaaB-linodego-testing", "created": "2018-01-02T03:04:05",
+    body: '{"id": 59870, "label": "RNeQLzgBmaaB-linodego-testing", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"action": "DROP", "label": "test-label", "protocol": "ICMP", "addresses":
       {"ipv4": ["0.0.0.0/0"]}}], "inbound_policy": "ACCEPT", "outbound": null, "outbound_policy":
@@ -70,10 +70,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/59191
+    url: https://api.linode.com/v4beta/networking/firewalls/59870
     method: PUT
   response:
-    body: '{"id": 59191, "label": "updatedFirewallLabel", "created": "2018-01-02T03:04:05",
+    body: '{"id": 59870, "label": "updatedFirewallLabel", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "disabled", "rules": {"inbound":
       [{"action": "DROP", "label": "test-label", "protocol": "ICMP", "addresses":
       {"ipv4": ["0.0.0.0/0"]}}], "inbound_policy": "ACCEPT", "outbound": null, "outbound_policy":
@@ -129,7 +129,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/59191
+    url: https://api.linode.com/v4beta/networking/firewalls/59870
     method: DELETE
   response:
     body: '{}'

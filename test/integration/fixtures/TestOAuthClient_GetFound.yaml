@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/account/oauth-clients
     method: POST
   response:
-    body: '{"id": "1a7766f5595a9a5bfee6", "redirect_uri": "https://example.com", "label":
-      "test-client", "status": "active", "secret": "83fe1c60e0f7593095d877514f93dd3c31719acd01f93466031f68422932a9ea",
+    body: '{"id": "bd8642adf87e2accae4d", "redirect_uri": "https://example.com", "label":
+      "test-client", "status": "active", "secret": "5bd6fa455195743933b014e951c2eb7808c6cad857b32c9f3e753424d88fd741",
       "thumbnail_url": null, "public": true}'
     headers:
       Access-Control-Allow-Credentials:
@@ -68,10 +68,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/oauth-clients/1a7766f5595a9a5bfee6
+    url: https://api.linode.com/v4beta/account/oauth-clients/bd8642adf87e2accae4d
     method: GET
   response:
-    body: '{"id": "1a7766f5595a9a5bfee6", "redirect_uri": "https://example.com", "label":
+    body: '{"id": "bd8642adf87e2accae4d", "redirect_uri": "https://example.com", "label":
       "test-client", "status": "active", "secret": "<REDACTED>", "thumbnail_url":
       null, "public": true}'
     headers:
@@ -127,7 +127,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/oauth-clients/1a7766f5595a9a5bfee6
+    url: https://api.linode.com/v4beta/account/oauth-clients/bd8642adf87e2accae4d
     method: DELETE
   response:
     body: '{}'
