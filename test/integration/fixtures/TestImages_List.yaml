@@ -14,28 +14,32 @@ interactions:
     url: https://api.linode.com/v4beta/images
     method: GET
   response:
-    body: '{"data": [{"id": "linode/almalinux8", "label": "AlmaLinux 8", "deprecated":
-      false, "size": 1700, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "description": "", "created_by": "linode", "type": "manual", "is_public": true,
-      "vendor": "AlmaLinux", "expiry": null, "eol": "2018-01-02T03:04:05", "status":
-      "available"}, {"id": "linode/alpine3.12", "label": "Alpine 3.12", "deprecated":
-      false, "size": 300, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "description": "", "created_by": "linode", "type": "manual", "is_public": true,
-      "vendor": "Alpine", "expiry": null, "eol": "2018-01-02T03:04:05", "status":
-      "available"}, {"id": "linode/alpine3.13", "label": "Alpine 3.13", "deprecated":
-      false, "size": 300, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "description": "", "created_by": "linode", "type": "manual", "is_public": true,
-      "vendor": "Alpine", "expiry": null, "eol": "2018-01-02T03:04:05", "status":
-      "available"}, {"id": "linode/alpine3.14", "label": "Alpine 3.14", "deprecated":
-      false, "size": 400, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "description": "", "created_by": "linode", "type": "manual", "is_public": true,
-      "vendor": "Alpine", "expiry": null, "eol": "2018-01-02T03:04:05", "status":
-      "available"}, {"id": "linode/alpine3.15", "label": "Alpine 3.15", "deprecated":
-      false, "size": 400, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "description": "", "created_by": "linode", "type": "manual", "is_public": true,
-      "vendor": "Alpine", "expiry": null, "eol": "2018-01-02T03:04:05", "status":
-      "available"}, {"id": "linode/arch", "label": "Arch Linux", "deprecated": false,
-      "size": 2000, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+    body: '{"pages": 1, "data": [{"id": "private/16115103", "label": "linodego-test-instance
+      - Debian 9 Disk", "description": "", "created": "2018-01-02T03:04:05", "updated":
+      null, "size": 25088, "created_by": null, "type": "automatic", "is_public": false,
+      "deprecated": false, "vendor": null, "expiry": "2018-01-02T03:04:05", "eol":
+      null, "status": "creating"}, {"id": "linode/almalinux8", "label": "AlmaLinux
+      8", "deprecated": false, "size": 1700, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "description": "", "created_by": "linode", "type": "manual",
+      "is_public": true, "vendor": "AlmaLinux", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "status": "available"}, {"id": "linode/alpine3.12", "label": "Alpine 3.12",
+      "deprecated": false, "size": 300, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "description": "", "created_by": "linode", "type": "manual",
+      "is_public": true, "vendor": "Alpine", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "status": "available"}, {"id": "linode/alpine3.13", "label": "Alpine 3.13",
+      "deprecated": false, "size": 300, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "description": "", "created_by": "linode", "type": "manual",
+      "is_public": true, "vendor": "Alpine", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "status": "available"}, {"id": "linode/alpine3.14", "label": "Alpine 3.14",
+      "deprecated": false, "size": 400, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "description": "", "created_by": "linode", "type": "manual",
+      "is_public": true, "vendor": "Alpine", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "status": "available"}, {"id": "linode/alpine3.15", "label": "Alpine 3.15",
+      "deprecated": false, "size": 400, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "description": "", "created_by": "linode", "type": "manual",
+      "is_public": true, "vendor": "Alpine", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "status": "available"}, {"id": "linode/arch", "label": "Arch Linux", "deprecated":
+      false, "size": 2000, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "description": "", "created_by": "linode", "type": "manual", "is_public": true,
       "vendor": "Arch", "expiry": null, "eol": null, "status": "available"}, {"id":
       "linode/centos7", "label": "CentOS 7", "deprecated": false, "size": 2800, "created":
@@ -163,8 +167,7 @@ interactions:
       "label": "Ubuntu 21.04", "deprecated": true, "size": 3500, "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
       "type": "manual", "is_public": true, "vendor": "Ubuntu", "expiry": null, "eol":
-      "2018-01-02T03:04:05", "status": "available"}], "page": 1, "pages": 1, "results":
-      37}'
+      "2018-01-02T03:04:05", "status": "available"}], "results": 38, "page": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"

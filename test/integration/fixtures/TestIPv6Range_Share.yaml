@@ -14,9 +14,9 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 36017511, "label": "linodego-test-ipv6range", "group": "", "status":
+    body: '{"id": 36059510, "label": "linodego-test-ipv6range", "group": "", "status":
       "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.104.203.125"], "ipv6": "2a01:7e01::f03c:93ff:fe2c:0244/128",
+      "type": "g6-nanode-1", "ipv4": ["139.162.163.115"], "ipv6": "2a01:7e01::f03c:93ff:fee0:51b3/128",
       "image": "linode/debian9", "region": "eu-central", "specs": {"disk": 25600,
       "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu":
       90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io": 10000},
@@ -64,7 +64,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"linode_id":36017511,"prefix_length":64}'
+    body: '{"linode_id":36059510,"prefix_length":64}'
     form: {}
     headers:
       Accept:
@@ -76,7 +76,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/ipv6/ranges
     method: POST
   response:
-    body: '{"range": "2a01:7e01:e001:281::/64", "route_target": "2a01:7e01::f03c:93ff:fe2c:0244"}'
+    body: '{"range": "2a01:7e01:e001:24c::/64", "route_target": "2a01:7e01::f03c:93ff:fee0:51b3"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -131,9 +131,9 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 36017513, "label": "linodego-test-ipv6range-1", "group": "", "status":
+    body: '{"id": 36059514, "label": "linodego-test-ipv6range-1", "group": "", "status":
       "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["139.162.177.179"], "ipv6": "2a01:7e01::f03c:93ff:fe2c:02b7/128",
+      "type": "g6-nanode-1", "ipv4": ["194.233.166.106"], "ipv6": "2a01:7e01::f03c:93ff:fee0:51cc/128",
       "image": "linode/debian9", "region": "eu-central", "specs": {"disk": 25600,
       "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu":
       90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io": 10000},
@@ -181,7 +181,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"ips":["2a01:7e01:e001:281::"],"linode_id":36017511}'
+    body: '{"ips":["2a01:7e01:e001:24c::"],"linode_id":36059510}'
     form: {}
     headers:
       Accept:
@@ -236,7 +236,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"ips":["2a01:7e01:e001:281::"],"linode_id":36017513}'
+    body: '{"ips":["2a01:7e01:e001:24c::"],"linode_id":36059514}'
     form: {}
     headers:
       Accept:
@@ -300,19 +300,19 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/36017513/ips
+    url: https://api.linode.com/v4beta/linode/instances/36059514/ips
     method: GET
   response:
-    body: '{"ipv4": {"public": [{"address": "139.162.177.179", "gateway": "139.162.177.1",
+    body: '{"ipv4": {"public": [{"address": "194.233.166.106", "gateway": "194.233.166.1",
       "subnet_mask": "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true,
-      "rdns": "139-162-177-179.ip.linodeusercontent.com", "linode_id": 36017513, "region":
+      "rdns": "194-233-166-106.ip.linodeusercontent.com", "linode_id": 36059514, "region":
       "eu-central"}], "private": [], "shared": [], "reserved": []}, "ipv6": {"slaac":
-      {"address": "2a01:7e01::f03c:93ff:fe2c:02b7", "gateway": "fe80::1", "subnet_mask":
+      {"address": "2a01:7e01::f03c:93ff:fee0:51cc", "gateway": "fe80::1", "subnet_mask":
       "ffff:ffff:ffff:ffff::", "prefix": 64, "type": "ipv6", "rdns": null, "linode_id":
-      36017513, "region": "eu-central", "public": true}, "link_local": {"address":
-      "fe80::f03c:93ff:fe2c:02b7", "gateway": "fe80::1", "subnet_mask": "ffff:ffff:ffff:ffff::",
-      "prefix": 64, "type": "ipv6", "rdns": null, "linode_id": 36017513, "region":
-      "eu-central", "public": false}, "global": [{"range": "2a01:7e01:e001:281::",
+      36059514, "region": "eu-central", "public": true}, "link_local": {"address":
+      "fe80::f03c:93ff:fee0:51cc", "gateway": "fe80::1", "subnet_mask": "ffff:ffff:ffff:ffff::",
+      "prefix": 64, "type": "ipv6", "rdns": null, "linode_id": 36059514, "region":
+      "eu-central", "public": false}, "global": [{"range": "2a01:7e01:e001:24c::",
       "prefix": 64, "region": "eu-central", "route_target": null}]}}'
     headers:
       Access-Control-Allow-Credentials:
@@ -367,7 +367,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/36017513
+    url: https://api.linode.com/v4beta/linode/instances/36059514
     method: DELETE
   response:
     body: '{}'
@@ -422,7 +422,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: 'https://api.linode.com/v4beta/networking/ipv6/ranges/2a01:7e01:e001:281::'
+    url: 'https://api.linode.com/v4beta/networking/ipv6/ranges/2a01:7e01:e001:24c::'
     method: DELETE
   response:
     body: '{}'
@@ -477,7 +477,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/36017511
+    url: https://api.linode.com/v4beta/linode/instances/36059510
     method: DELETE
   response:
     body: '{}'

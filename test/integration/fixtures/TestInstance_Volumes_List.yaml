@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"linodego-test-volume-11","region":"us-west","tags":null}'
+    body: '{"label":"linodego-test-volume-51","region":"us-west","tags":null}'
     form: {}
     headers:
       Accept:
@@ -14,9 +14,9 @@ interactions:
     url: https://api.linode.com/v4beta/volumes
     method: POST
   response:
-    body: '{"id": 318100, "status": "creating", "label": "linodego-test-volume-11",
+    body: '{"id": 320909, "status": "creating", "label": "linodego-test-volume-51",
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
-      "/dev/disk/by-id/scsi-0Linode_Volume_linodego-test-volume-11", "size": 20, "linode_id":
+      "/dev/disk/by-id/scsi-0Linode_Volume_linodego-test-volume-51", "size": 20, "linode_id":
       null, "linode_label": null, "region": "us-west", "tags": [], "hardware_type":
       "hdd"}'
     headers:
@@ -70,13 +70,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/36017234/volumes
+    url: https://api.linode.com/v4beta/linode/instances/36059351/volumes
     method: GET
   response:
-    body: '{"data": [{"id": 318100, "status": "creating", "label": "linodego-test-volume-11",
+    body: '{"data": [{"id": 320909, "status": "creating", "label": "linodego-test-volume-51",
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
-      "/dev/disk/by-id/scsi-0Linode_Volume_linodego-test-volume-11", "size": 20, "linode_id":
-      36017234, "linode_label": "linodego-test-instance-wo-disk", "region": "us-west",
+      "/dev/disk/by-id/scsi-0Linode_Volume_linodego-test-volume-51", "size": 20, "linode_id":
+      36059351, "linode_label": "linodego-test-instance-wo-disk", "region": "us-west",
       "tags": [], "hardware_type": "hdd"}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -131,7 +131,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/volumes/318100
+    url: https://api.linode.com/v4beta/volumes/320909
     method: DELETE
   response:
     body: '{}'

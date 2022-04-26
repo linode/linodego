@@ -136,24 +136,24 @@ func setupNodeBalancerNode(t *testing.T, fixturesYaml string) (*linodego.Client,
 	var fixtureTeardown func()
 	client, nodebalancer, config, fixtureTeardown, err := setupNodeBalancerConfig(t, fixturesYaml)
 	if err != nil {
-		t.Errorf("Error creating nodebalancer config, got error %v", err)
+		t.Fatalf("Error creating nodebalancer config, got error %v", err)
 	}
 
 	client, instance, instanceTeardown, err := setupInstance(t, fixturesYaml+"Instance")
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 
 	instanceIP, err := client.AddInstanceIPAddress(context.Background(), instance.ID, false)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 
 	createOpts := testNodeBalancerNodeCreateOpts
 	createOpts.Address = instanceIP.Address + ":" + testNodePort
 	node, err := client.CreateNodeBalancerNode(context.Background(), nodebalancer.ID, config.ID, createOpts)
 	if err != nil {
-		t.Errorf("Error creating NodeBalancer Config Node, got error %v", err)
+		t.Fatalf("Error creating NodeBalancer Config Node, got error %v", err)
 	}
 
 	teardown := func() {
@@ -162,7 +162,7 @@ func setupNodeBalancerNode(t *testing.T, fixturesYaml string) (*linodego.Client,
 			e, ok := err.(*linodego.Error)
 			// Tollerate 404 because Rebuild testing will delete all Nodes
 			if !ok || e.Code != 404 {
-				t.Errorf("Expected to delete a NodeBalancer Config Node, but got %v", err)
+				t.Fatalf("Expected to delete a NodeBalancer Config Node, but got %v", err)
 			}
 		}
 		fixtureTeardown()

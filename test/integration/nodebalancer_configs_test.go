@@ -111,19 +111,19 @@ func setupNodeBalancerConfig(t *testing.T, fixturesYaml string) (*linodego.Clien
 	var fixtureTeardown func()
 	client, nodebalancer, fixtureTeardown, err := setupNodeBalancer(t, fixturesYaml)
 	if err != nil {
-		t.Errorf("Error creating nodebalancer, got error %v", err)
+		t.Fatalf("Error creating nodebalancer, got error %v", err)
 	}
 
 	createOpts := testNodeBalancerConfigCreateOpts
 	config, err := client.CreateNodeBalancerConfig(context.Background(), nodebalancer.ID, createOpts)
 	if err != nil {
-		t.Errorf("Error creating NodeBalancer Config, got error %v", err)
+		t.Fatalf("Error creating NodeBalancer Config, got error %v", err)
 	}
 
 	teardown := func() {
 		// delete the NodeBalancerConfig to exercise the code
 		if err := client.DeleteNodeBalancerConfig(context.Background(), nodebalancer.ID, config.ID); err != nil {
-			t.Errorf("Expected to delete a NodeBalancer Config, but got %v", err)
+			t.Fatalf("Expected to delete a NodeBalancer Config, but got %v", err)
 		}
 		fixtureTeardown()
 	}

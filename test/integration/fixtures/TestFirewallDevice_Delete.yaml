@@ -14,9 +14,9 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 36016853, "label": "linodego-test-instance", "group": "", "status":
+    body: '{"id": 36058976, "label": "linodego-test-instance", "group": "", "status":
       "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.105.106.220"], "ipv6": "2600:3c04::f03c:93ff:fe2c:0d7a/128",
+      "type": "g6-nanode-1", "ipv4": ["192.53.122.193"], "ipv6": "2600:3c04::f03c:93ff:fee0:396d/128",
       "image": "linode/debian9", "region": "ca-central", "specs": {"disk": 25600,
       "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu":
       90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io": 10000},
@@ -36,7 +36,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "643"
+      - "642"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -76,7 +76,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 59867, "label": "label", "created": "2018-01-02T03:04:05", "updated":
+    body: '{"id": 60383, "label": "label", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound": [{"action":
       "ACCEPT", "label": "test-label", "ports": "22", "protocol": "TCP", "addresses":
       {"ipv4": ["0.0.0.0/0"], "ipv6": ["::/0"]}}], "inbound_policy": "ACCEPT", "outbound":
@@ -125,7 +125,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"id":36016853,"type":"linode"}'
+    body: '{"id":36058976,"type":"linode"}'
     form: {}
     headers:
       Accept:
@@ -134,12 +134,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/59867/devices
+    url: https://api.linode.com/v4beta/networking/firewalls/60383/devices
     method: POST
   response:
-    body: '{"id": 107589, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "entity": {"id": 36016853, "type": "linode", "label": "linodego-test-instance",
-      "url": "/v4/linode/instances/36016853"}}'
+    body: '{"id": 108580, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "entity": {"id": 36058976, "type": "linode", "label": "linodego-test-instance",
+      "url": "/v4/linode/instances/36058976"}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -191,7 +191,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/59867/devices/107589
+    url: https://api.linode.com/v4beta/networking/firewalls/60383/devices/108580
     method: DELETE
   response:
     body: '{}'
@@ -246,7 +246,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/59867/devices/107589
+    url: https://api.linode.com/v4beta/networking/firewalls/60383/devices/108580
     method: GET
   response:
     body: '{"errors": [{"reason": "Not found"}]}'
@@ -288,7 +288,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/59867
+    url: https://api.linode.com/v4beta/networking/firewalls/60383
     method: DELETE
   response:
     body: '{}'
@@ -343,7 +343,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/36016853
+    url: https://api.linode.com/v4beta/linode/instances/36058976
     method: DELETE
   response:
     body: '{}'

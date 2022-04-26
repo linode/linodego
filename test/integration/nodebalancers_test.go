@@ -13,7 +13,7 @@ var (
 	label                      = randString(12, lowerBytes, digits) + "-linodego-testing"
 	testNodeBalancerCreateOpts = linodego.NodeBalancerCreateOptions{
 		Label:              &label,
-		Region:             "us-west",
+		Region:             "eu-central",
 		ClientConnThrottle: &clientConnThrottle,
 	}
 )
@@ -93,7 +93,7 @@ func setupNodeBalancer(t *testing.T, fixturesYaml string) (*linodego.Client, *li
 	createOpts := testNodeBalancerCreateOpts
 	nodebalancer, err := client.CreateNodeBalancer(context.Background(), createOpts)
 	if err != nil {
-		t.Errorf("Error listing nodebalancers, expected struct, got error %v", err)
+		t.Fatalf("Error listing nodebalancers, expected struct, got error %v", err)
 	}
 
 	teardown := func() {

@@ -72,10 +72,12 @@ interactions:
   response:
     body: '{"linode": [{"id": 29745916, "label": "workdev", "permissions": null}],
       "nodebalancer": [], "domain": [], "stackscript": [], "longview": [], "image":
-      [], "volume": [{"id": 315387, "label": "linodego-test-volume", "permissions":
-      null}, {"id": 316313, "label": "linodego-test-volume-37", "permissions": null}],
-      "firewall": [], "global": {"add_domains": false, "add_linodes": false, "add_longview":
-      true, "longview_subscription": false, "add_stackscripts": true, "add_nodebalancers":
+      [{"id": 16115103, "label": "linodego-test-instance - Debian 9 Disk", "permissions":
+      null}], "volume": [{"id": 315387, "label": "linodego-test-volume", "permissions":
+      null}, {"id": 316313, "label": "linodego-test-volume-37", "permissions": null},
+      {"id": 318100, "label": "linodego-test-volume-11", "permissions": null}], "firewall":
+      [], "global": {"add_domains": false, "add_linodes": false, "add_longview": true,
+      "longview_subscription": false, "add_stackscripts": true, "add_nodebalancers":
       false, "add_images": true, "add_volumes": true, "add_firewalls": true, "account_access":
       "read_only", "cancel_account": false}}'
     headers:
@@ -92,7 +94,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "608"
+      - "769"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
