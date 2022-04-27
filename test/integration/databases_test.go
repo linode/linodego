@@ -71,6 +71,10 @@ func TestDatabaseType(t *testing.T) {
 	if aType.Label != response.Label {
 		t.Fatal("recieved type does not match source")
 	}
+
+	if response.Engines.MySQL[0].Quantity != aType.Engines.MySQL[0].Quantity {
+		t.Fatalf("mismatched type quantity: %d, %d", response.Engines.MySQL[0].Quantity, aType.Engines.MySQL[0].Quantity)
+	}
 }
 
 func TestDatabaseSuite(t *testing.T) {
