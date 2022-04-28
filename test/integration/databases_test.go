@@ -48,8 +48,8 @@ func TestDatabaseEngine(t *testing.T) {
 	}
 }
 
-func TestDatabaseType(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestDatabaseType")
+func TestDatabase_Type(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestDatabase_Type")
 	defer teardown()
 
 	types, err := client.ListDatabaseTypes(context.Background(), nil)
