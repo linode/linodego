@@ -106,8 +106,6 @@ type DatabaseType struct {
 
 // DatabaseTypeEngineMap stores a list of Database Engine types by engine
 type DatabaseTypeEngineMap struct {
-	// TODO: add engines as they're implemented
-
 	MySQL []DatabaseTypeEngine `json:"mysql"`
 }
 
