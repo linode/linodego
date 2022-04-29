@@ -48,8 +48,8 @@ func TestDatabaseEngine(t *testing.T) {
 	}
 }
 
-func TestDatabaseType(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestDatabaseType")
+func TestDatabase_Type(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestDatabase_Type")
 	defer teardown()
 
 	types, err := client.ListDatabaseTypes(context.Background(), nil)
@@ -70,6 +70,10 @@ func TestDatabaseType(t *testing.T) {
 
 	if aType.Label != response.Label {
 		t.Fatal("recieved type does not match source")
+	}
+
+	if response.Engines.MySQL[0].Quantity != aType.Engines.MySQL[0].Quantity {
+		t.Fatalf("mismatched type quantity: %d, %d", response.Engines.MySQL[0].Quantity, aType.Engines.MySQL[0].Quantity)
 	}
 }
 
