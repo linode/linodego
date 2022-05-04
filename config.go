@@ -2,13 +2,16 @@ package linodego
 
 import (
 	"fmt"
-	"gopkg.in/ini.v1"
 	"os"
 	"strings"
+
+	"gopkg.in/ini.v1"
 )
 
-const DefaultConfigPath = "%s/.config/linode" // home dir
-const DefaultConfigProfile = "default"
+const (
+	DefaultConfigPath    = "%s/.config/linode"
+	DefaultConfigProfile = "default"
+)
 
 type ConfigProfile struct {
 	APIToken   string `ini:"linode_api_token"`
