@@ -65,6 +65,7 @@ func TestClient_NewFromEnv(t *testing.T) {
 
 	// This is cool
 	t.Setenv(APIConfigEnvVar, file.Name())
+	t.Setenv(APIConfigProfileEnvVar, "cool")
 
 	client, err := NewClientFromEnv(nil)
 	if err != nil {
@@ -84,7 +85,9 @@ func TestClient_NewFromEnv(t *testing.T) {
 
 const configNewFromEnv = `
 [default]
-linode_api_token = blah
 linode_api_url = api.cool.linode.com
 linode_api_version = v4beta
+
+[cool]
+linode_api_token = blah
 `

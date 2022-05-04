@@ -18,6 +18,8 @@ import (
 const (
 	// APIConfigEnvVar environment var to get path to Linode config
 	APIConfigEnvVar = "LINODE_CONFIG"
+	// APIConfigProfileEnvVar specifies the profile to use when loading from a Linode config
+	APIConfigProfileEnvVar = "LINODE_PROFILE"
 	// APIHost Linode API hostname
 	APIHost = "api.linode.com"
 	// APIHostVar environment var to check for alternate API URL
@@ -354,8 +356,17 @@ func NewClientFromEnv(hc *http.Client) (Client, error) {
 		configPath = p
 	}
 
+	configProfile := DefaultConfigProfile
+
+	if p, ok := os.LookupEnv(APIConfigProfileEnvVar); ok {
+		configProfile = p
+	}
+
 	if _, err := os.Stat(configPath); err == nil {
-		if err := client.LoadConfig(&LoadConfigOptions{Path: configPath}); err != nil {
+		if err := client.LoadConfig(&LoadConfigOptions{
+			Path:    configPath,
+			Profile: configProfile,
+		}); err != nil {
 			return client, err
 		}
 
