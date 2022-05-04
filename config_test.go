@@ -13,7 +13,7 @@ func TestConfig_LoadWithDefaults(t *testing.T) {
 
 	file := createTestConfig(t, configLoadWithDefault)
 
-	err := client.LoadConfig(LoadConfigOptions{
+	err := client.LoadConfig(&LoadConfigOptions{
 		Path: file.Name(),
 	})
 	if err != nil {
@@ -59,7 +59,7 @@ func TestConfig_OverrideDefaults(t *testing.T) {
 
 	file := createTestConfig(t, configOverrideDefaults)
 
-	err := client.LoadConfig(LoadConfigOptions{
+	err := client.LoadConfig(&LoadConfigOptions{
 		Path:    file.Name(),
 		Profile: "cool",
 	})
@@ -106,7 +106,7 @@ func TestConfig_NoDefaults(t *testing.T) {
 
 	file := createTestConfig(t, configNoDefaults)
 
-	err := client.LoadConfig(LoadConfigOptions{
+	err := client.LoadConfig(&LoadConfigOptions{
 		Path:    file.Name(),
 		Profile: "cool",
 	})

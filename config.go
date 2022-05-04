@@ -25,7 +25,7 @@ type LoadConfigOptions struct {
 // If no options are specified, the following defaults will be used:
 // Path: ~/.config/linode
 // Profile: default
-func (c *Client) LoadConfig(options LoadConfigOptions) error {
+func (c *Client) LoadConfig(options *LoadConfigOptions) error {
 	path := options.Path
 	if path == "" {
 		homeDir, err := os.UserHomeDir()
