@@ -26,19 +26,22 @@ type LoadConfigOptions struct {
 // Path: ~/.config/linode
 // Profile: default
 func (c *Client) LoadConfig(options *LoadConfigOptions) error {
-	path := options.Path
-	if path == "" {
-		homeDir, err := os.UserHomeDir()
-		if err != nil {
-			return err
-		}
-
-		path = fmt.Sprintf(DefaultConfigPath, homeDir)
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		return err
 	}
 
-	profileOption := options.Profile
-	if profileOption == "" {
-		profileOption = DefaultConfigProfile
+	path := fmt.Sprintf(DefaultConfigPath, homeDir)
+	profileOption := DefaultConfigProfile
+
+	if options != nil {
+		if options.Path != "" {
+			path = options.Path
+		}
+
+		if options.Profile != "" {
+			profileOption = options.Profile
+		}
 	}
 
 	cfg, err := ini.Load(path)
