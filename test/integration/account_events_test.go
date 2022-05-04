@@ -2,7 +2,9 @@ package integration
 
 import (
 	"context"
+	"fmt"
 	"testing"
+	"time"
 
 	"github.com/linode/linodego"
 )
@@ -14,7 +16,7 @@ func TestAccountEvents_List(t *testing.T) {
 		t.Error(err)
 	}
 	configOpts := linodego.InstanceConfigCreateOptions{
-		Label: "linodego-test-config",
+		Label: fmt.Sprintf("linodego-test-config-%.d", time.Now().Second()),
 	}
 	instanceConfig, err := client.CreateInstanceConfig(context.Background(), instance.ID, configOpts)
 	if err != nil {

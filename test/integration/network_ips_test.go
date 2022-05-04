@@ -198,7 +198,7 @@ func TestIPAddress_Instance_Assign(t *testing.T) {
 
 func TestIPAddress_Instance_Share(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddress_Instance_Share", func(options *InstanceCreateOptions) {
-		options.Region = "eu-central"
+		options.Region = "us-west"
 	})
 	defer teardown()
 	if err != nil {

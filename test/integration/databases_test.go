@@ -2,6 +2,7 @@ package integration
 
 import (
 	"context"
+	"fmt"
 	"testing"
 	"time"
 
@@ -10,8 +11,8 @@ import (
 )
 
 var testMySQLCreateOpts = linodego.MySQLCreateOptions{
-	Label:           "basic-mysql1-linodego-testing",
-	Region:          "us-east",
+	Label:           fmt.Sprintf("linodego-testing-db-%.d", time.Now().Second()),
+	Region:          "us-southeast",
 	Type:            "g6-nanode-1",
 	Engine:          "mysql/8.0.26",
 	Encrypted:       false,
@@ -74,8 +75,6 @@ func TestDatabase_Type(t *testing.T) {
 }
 
 func TestDatabase_Suite(t *testing.T) {
-	// TODO REMOVE
-	t.Skip()
 	client, database, teardown, err := setupDatabase(t, "fixtures/TestDatabase_Suite")
 	if err != nil {
 		t.Error(err)
@@ -126,7 +125,7 @@ func TestDatabase_Suite(t *testing.T) {
 
 	opts := linodego.MySQLUpdateOptions{
 		AllowList: []string{"128.173.205.21", "123.177.200.20"},
-		Label:     "updated-mysql1-linodego-testing",
+		Label:     fmt.Sprintf("%s-updated", database.Label),
 	}
 	db, err = client.UpdateMySQLDatabase(context.Background(), database.ID, opts)
 	if err != nil {
@@ -135,7 +134,7 @@ func TestDatabase_Suite(t *testing.T) {
 	if db.ID != database.ID {
 		t.Errorf("updated db does not match original id")
 	}
-	if db.Label != "updated-mysql1-linodego-testing" {
+	if db.Label != fmt.Sprintf("%s-updated", database.Label) {
 		t.Errorf("label not updated for db")
 	}
 

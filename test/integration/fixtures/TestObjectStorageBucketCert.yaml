@@ -1,0 +1,284 @@
+---
+version: 1
+interactions:
+- request:
+    body: '{"cluster":"us-east-1","label":"linode-obj-bucket-cert-test.xyz"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/buckets
+    method: POST
+  response:
+    body: '{"hostname": "linode-obj-bucket-cert-test.xyz.us-east-1.linodeobjects.com",
+      "label": "linode-obj-bucket-cert-test.xyz", "created": "2018-01-02T03:04:05",
+      "cluster": "us-east-1", "size": 0, "objects": 0}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "202"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"certificate":"-----BEGIN CERTIFICATE-----\nMIIF3DCCA8QCCQC0dUFu1HvjazANBgkqhkiG9w0BAQsFADCBrzELMAkGA1UEBhMC\nVVMxCzAJBgNVBAgMAlBBMRUwEwYDVQQHDAxQaGlsYWRlbHBoaWExDzANBgNVBAoM\nBkxpbm9kZTELMAkGA1UECwwCRFgxKDAmBgNVBAMMH2xpbm9kZS1vYmotYnVja2V0\nLWNlcnQtdGVzdC54eXoxNDAyBgkqhkiG9w0BCQEWJWFkbWluQGxpbm9kZS1vYmot\nYnVja2V0LWNlcnQtdGVzdC54eXowHhcNMjAxMDA1MTg0MDUyWhcNMjExMDA1MTg0\nMDUyWjCBrzELMAkGA1UEBhMCVVMxCzAJBgNVBAgMAlBBMRUwEwYDVQQHDAxQaGls\nYWRlbHBoaWExDzANBgNVBAoMBkxpbm9kZTELMAkGA1UECwwCRFgxKDAmBgNVBAMM\nH2xpbm9kZS1vYmotYnVja2V0LWNlcnQtdGVzdC54eXoxNDAyBgkqhkiG9w0BCQEW\nJWFkbWluQGxpbm9kZS1vYmotYnVja2V0LWNlcnQtdGVzdC54eXowggIiMA0GCSqG\nSIb3DQEBAQUAA4ICDwAwggIKAoICAQCy4LqfRYXE314e6YkpR1BbKPH8ohO4lcMt\n+YzMUNlOC1KUktGjX8pWk4wAXYar7Mxccmbbh68pgE8iSio8V97CdQb8O64OQmre\n/y33z7Yts37/6mH5mBnfeiilVHOenQmh+4400tvF1jljU8MZSg6sLM4ZEBhfcT0V\n3yqxAwwzV8vk0t7uLRCMuDI5B4h4ZCsheCkA2roF4RGUG6KwGzf+dLSKzBcjy5ho\nh4huzp5jDYer7S86dV6/9Gwzh8CPhVaixbymHGoMbJM8lUtc/hFI+J8WVh/qLTKQ\nCcqvoZ96QU0LX2ib+ElvCMGl/UrznpHZUrGkLPfnnoxK/vKBNycJsENtWno9KgtN\nfsdmYy/blxNRW/qpi+l92f3zbjjpRqJ/oyA+hsSMn19O/v3O4wz+YS55xnVeEPIf\nfOq6VJ9BfVdXPPRp33sllM8EVWuS4ry3oJKI1CFTlhV7eU1RpJmbc5X8GhytiD2M\ngIrVlYzJTftSHw7J3v0orRD6SxI9enXI4o4pS1MMxRNb+ZQDvwx3ZujxjFXe3+qI\nkme3ih+Vl9W9rDeKAd95ciII9CxBqOvsso8zqDAEV25fn3tutk/7hQNMqv0APAah\nLo/eY1NK9i9YVJknVSzWBkE2MUyvpfFhiw6TPYh88qH+wN3CznWaCtXiAjH3kbOk\n6y2OmI8+4QIDAQABMA0GCSqGSIb3DQEBCwUAA4ICAQCP2UawP8GDWxyMOsHDPqKp\nPtedCxPpEPsQm8KMnt5KJ55NFqTcpARz1miHXT1aBedu9IoqxvTP4g8BQ4QFjP2s\nddNu2WKqnwyzkCtnB2zOrOKlvUtRAZ4x2iyhKNqls6D7I4tw22HMbTzW2TVeuGVa\noiRtawFcUsjSAcarRw6swLTln+BK54dWa9E5hiulBoHLosMWCEyUDrUnaiB+2+7C\nbsExYZTXRlii7YPSr46zPmte2iKa1+b0g5DXkzSazWp+R/dlGYp84uLWk71e4b/9\nSo1pIitPasCJHgO/ii9nIcmDXarkaGT5CEUP8WPp6mLY5W9NxgF2czdz6AMJa3P9\n2jNd4J1VFl8k+LDZ4GnwHGhyL3h3lFUmmoQV/0YVoXmA59SxE2JPvc2d1V6xh2gz\nyg2M+xcKliSXxshhAopsSSoEp5g3II2mCvzeSxwsXa4Ob5c5TJNdXslm1pugRCbB\ntjFNh70wZmCq+jY8C+vGsDwkf/5UeAd+c+14s3bwsBfWqZBGokVxyf/UWHtsWlVn\np3USWBwLxEWyQIioMmj4O6wROZeyePDlFDVky4hzTCrTS6EFIqkGBs5RneCHhTN0\ngNHFG8Ixql6mybJAwopvWGEL+7E4pbNdbhmgVvf2YEQuMZBCM7fGdBsRNkTs6jIA\n/8soO6buQgQoCq3GFbodZA==\n-----END
+      CERTIFICATE-----\n","private_key":"-----BEGIN PRIVATE KEY-----\n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\n7aJXvW2Q3oCt1sF576QNr9rLxhHl8A==\n-----END
+      PRIVATE KEY-----\n"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linode-obj-bucket-cert-test.xyz/ssl
+    method: POST
+  response:
+    body: '{"ssl": true}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "13"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linode-obj-bucket-cert-test.xyz/ssl
+    method: GET
+  response:
+    body: '{"ssl": true}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "13"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linode-obj-bucket-cert-test.xyz/ssl
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linode-obj-bucket-cert-test.xyz
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""

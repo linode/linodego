@@ -1,0 +1,316 @@
+---
+version: 1
+interactions:
+- request:
+    body: '{"label":"example stackscript 2022-05-04 01:26:13.800022973 +0000 UTC m=+1323.485689211","description":"description
+      for example stackscript 2022-05-04 01:26:13.800006103 +0000 UTC m=+1323.485672351","images":["linode/debian9","linode/ubuntu18.04"],"is_public":false,"rev_note":"revision
+      1","script":"#!/bin/bash\n"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/linode/stackscripts
+    method: POST
+  response:
+    body: '{"id": 1004489, "username": "jriddle-dev", "user_gravatar_id": "d3270279f01c3808197f56f0e8bf9f42",
+      "label": "example stackscript 2022-05-04 01:26:13.800022973 +0000 UTC m=+1323.485689211",
+      "description": "description for example stackscript 2022-05-04 01:26:13.800006103
+      +0000 UTC m=+1323.485672351", "ordinal": 0, "logo_url": "", "images": ["linode/debian9",
+      "linode/ubuntu18.04"], "deployments_total": 0, "deployments_active": 0, "is_public":
+      false, "mine": true, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "rev_note": "revision 1", "script": "#!/bin/bash\n", "user_defined_fields":
+      []}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "613"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - stackscripts:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"label":"2 example stackscript 2022-05-04 01:26:13.800022973 +0000 UTC
+      m=+1323.485689211","description":"description for example stackscript 2022-05-04
+      01:26:13.800006103 +0000 UTC m=+1323.485672351","images":["linode/debian9","linode/ubuntu18.04"],"is_public":false,"rev_note":"revision
+      2","script":"#!/bin/bash\necho 2\n"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/linode/stackscripts/1004489
+    method: PUT
+  response:
+    body: '{"id": 1004489, "username": "jriddle-dev", "user_gravatar_id": "d3270279f01c3808197f56f0e8bf9f42",
+      "label": "2 example stackscript 2022-05-04 01:26:13.800022973 +0000 UTC m=+1323.485689211",
+      "description": "description for example stackscript 2022-05-04 01:26:13.800006103
+      +0000 UTC m=+1323.485672351", "ordinal": 0, "logo_url": "", "images": ["linode/debian9",
+      "linode/ubuntu18.04"], "deployments_total": 0, "deployments_active": 0, "is_public":
+      false, "mine": true, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "rev_note": "revision 2", "script": "#!/bin/bash\necho 2\n", "user_defined_fields":
+      []}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "623"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - stackscripts:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"label":"3 2 example stackscript 2022-05-04 01:26:13.800022973 +0000 UTC
+      m=+1323.485689211","description":"description for example stackscript 2022-05-04
+      01:26:13.800006103 +0000 UTC m=+1323.485672351","images":["linode/debian9","linode/ubuntu18.04"],"is_public":false,"rev_note":"revision
+      3","script":"#!/bin/bash\necho 2\necho 3\n"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/linode/stackscripts/1004489
+    method: PUT
+  response:
+    body: '{"id": 1004489, "username": "jriddle-dev", "user_gravatar_id": "d3270279f01c3808197f56f0e8bf9f42",
+      "label": "3 2 example stackscript 2022-05-04 01:26:13.800022973 +0000 UTC m=+1323.485689211",
+      "description": "description for example stackscript 2022-05-04 01:26:13.800006103
+      +0000 UTC m=+1323.485672351", "ordinal": 0, "logo_url": "", "images": ["linode/debian9",
+      "linode/ubuntu18.04"], "deployments_total": 0, "deployments_active": 0, "is_public":
+      false, "mine": true, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "rev_note": "revision 3", "script": "#!/bin/bash\necho 2\necho 3\n", "user_defined_fields":
+      []}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "633"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - stackscripts:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/linode/stackscripts/1004489
+    method: GET
+  response:
+    body: '{"id": 1004489, "username": "jriddle-dev", "user_gravatar_id": "d3270279f01c3808197f56f0e8bf9f42",
+      "label": "3 2 example stackscript 2022-05-04 01:26:13.800022973 +0000 UTC m=+1323.485689211",
+      "description": "description for example stackscript 2022-05-04 01:26:13.800006103
+      +0000 UTC m=+1323.485672351", "ordinal": 0, "logo_url": "", "images": ["linode/debian9",
+      "linode/ubuntu18.04"], "deployments_total": 0, "deployments_active": 0, "is_public":
+      false, "mine": true, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "rev_note": "revision 3", "script": "#!/bin/bash\necho 2\necho 3\n", "user_defined_fields":
+      []}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "633"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - stackscripts:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/linode/stackscripts/1004489
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - stackscripts:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""

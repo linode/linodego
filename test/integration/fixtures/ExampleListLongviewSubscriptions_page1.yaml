@@ -1,0 +1,66 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/longview/subscriptions?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": "longview-3", "label": "Longview Pro 3 pack", "price":
+      {"hourly": 0.03, "monthly": 20.0}, "clients_included": 3}, {"id": "longview-10",
+      "label": "Longview Pro 10 pack", "price": {"hourly": 0.06, "monthly": 40.0},
+      "clients_included": 10}, {"id": "longview-40", "label": "Longview Pro 40 pack",
+      "price": {"hourly": 0.15, "monthly": 100.0}, "clients_included": 40}, {"id":
+      "longview-100", "label": "Longview Pro 100 pack", "price": {"hourly": 0.3, "monthly":
+      200.0}, "clients_included": 100}], "page": 1, "pages": 1, "results": 4}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "544"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - unknown
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""

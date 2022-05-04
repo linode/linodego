@@ -3,7 +3,9 @@ package integration
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"testing"
+	"time"
 
 	"github.com/dnaeon/go-vcr/recorder"
 	. "github.com/linode/linodego"
@@ -65,7 +67,7 @@ func TestImage_Upload(t *testing.T) {
 
 	image, uploadURL, err := client.CreateImageUpload(context.Background(), ImageCreateUploadOptions{
 		Region:      "us-southeast",
-		Label:       "linodego-test-image",
+		Label:       fmt.Sprintf("linodego-test-image-%.d", time.Now().Second()),
 		Description: "An image that does stuff.",
 	})
 	if err != nil {

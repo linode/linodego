@@ -2,7 +2,6 @@ package integration
 
 import (
 	"context"
-	"fmt"
 	"testing"
 	"time"
 
@@ -14,8 +13,8 @@ func TestVolume_Create(t *testing.T) {
 	defer teardown()
 
 	createOpts := linodego.VolumeCreateOptions{
-		Label:  "linodego-test-volume",
-		Region: "us-west",
+		Label:  "linodego-test-volume-" + randString(8, lowerBytes, digits),
+		Region: "us-southeast",
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
 	if err != nil {
@@ -28,6 +27,8 @@ func TestVolume_Create(t *testing.T) {
 	assertDateSet(t, volume.Created)
 	assertDateSet(t, volume.Updated)
 
+	// volumes deleted too fast tend to stick, adding a few seconds to catch up
+	time.Sleep(time.Second * 5)
 	if err := client.DeleteVolume(context.Background(), volume.ID); err != nil {
 		t.Errorf("Expected to delete a volume, but got %v", err)
 	}
@@ -41,21 +42,32 @@ func TestVolume_Resize(t *testing.T) {
 		t.Errorf("Error setting up volume test, %s", err)
 	}
 
+	_, err = client.WaitForVolumeStatus(context.Background(), volume.ID, linodego.VolumeActive, 500)
+	if err != nil {
+		t.Errorf("Error waiting for volume to be active, %s", err)
+	}
+
 	if err := client.ResizeVolume(context.Background(), volume.ID, volume.Size+1); err != nil {
 		t.Errorf("Error resizing volume, %s", err)
 	}
 }
 
 func TestVolumes_List(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestVolumes_List")
+	client, volume, teardown, err := setupVolume(t, "fixtures/TestVolume_List")
 	defer teardown()
 
 	volumes, err := client.ListVolumes(context.Background(), nil)
 	if err != nil {
 		t.Errorf("Error listing volumes, expected struct, got error %v", err)
 	}
-	if len(volumes) == 0 {
-		t.Errorf("Expected a list of volumes, but got %v", volumes)
+	found := true
+	for _, v := range volumes {
+		if v.ID == volume.ID {
+			found = true
+		}
+	}
+	if !found {
+		t.Errorf("%d volume not found in list", volume.ID)
 	}
 }
 
@@ -97,7 +109,7 @@ func TestVolume_WaitForLinodeID(t *testing.T) {
 	defer teardownInstance()
 
 	createConfigOpts := linodego.InstanceConfigCreateOptions{
-		Label:   "test-instance-volume",
+		Label:   "test-instance-volume-" + randString(8, lowerBytes, digits),
 		Devices: linodego.InstanceConfigDeviceMap{},
 	}
 	config, errConfig := client.CreateInstanceConfig(context.Background(), instance.ID, createConfigOpts)
@@ -160,8 +172,8 @@ func setupVolume(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := linodego.VolumeCreateOptions{
-		Label:  fmt.Sprintf("linodego-test-volume-%.d", time.Now().Second()),
-		Region: "us-west",
+		Label:  "linodego-test-volume-" + randString(8, lowerBytes, digits),
+		Region: "us-southeast",
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
 	if err != nil {
@@ -169,6 +181,8 @@ func setupVolume(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 	}
 
 	teardown := func() {
+		// volumes deleted too fast tend to stick, adding a few seconds to catch up
+		time.Sleep(time.Second * 5)
 		if terr := client.DeleteVolume(context.Background(), volume.ID); terr != nil {
 			t.Errorf("Expected to delete a volume, but got %v", terr)
 		}

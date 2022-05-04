@@ -94,7 +94,7 @@ func setupTaggedInstance(t *testing.T, fixturesYaml string) (*Client, *Instance,
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := InstanceCreateOptions{
 		Label:  "linodego-test-instance",
-		Region: "us-west",
+		Region: "us-southeast",
 		Type:   "g6-nanode-1",
 		Tags:   []string{"linodego-test"},
 	}

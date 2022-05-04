@@ -153,7 +153,7 @@ func setupIPv6RangeInstance(t *testing.T, ipv6RangeModifiers []ipv6RangeModifier
 
 	instance, err := createInstance(t, client, func(inst *InstanceCreateOptions) {
 		inst.Label = "linodego-test-ipv6range"
-		inst.Region = "eu-central"
+		inst.Region = "eu-west"
 	})
 	if err != nil {
 		t.Fatal(err)

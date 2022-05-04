@@ -2,7 +2,9 @@ package integration
 
 import (
 	"context"
+	"fmt"
 	"testing"
+	"time"
 
 	"github.com/linode/linodego"
 )
@@ -72,7 +74,7 @@ func setupInstanceBackup(t *testing.T, fixturesYaml string) (*linodego.Client, *
 	client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceOffline, 180)
 	createOpts := linodego.InstanceDiskCreateOptions{
 		Size:       10,
-		Label:      "snapshot-linodego-testing",
+		Label:      fmt.Sprintf("linodego-test-snap-%.d", time.Now().Second()),
 		Filesystem: "ext4",
 	}
 	disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, createOpts)

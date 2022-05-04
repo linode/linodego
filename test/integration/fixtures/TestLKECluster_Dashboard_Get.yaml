@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"]}],"label":"8e84q29t0lgl-linodego-testing","region":"us-central","k8s_version":"1.23","tags":["testing"]}'
+    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"]}],"label":"40rg03g9v7pg-linodego-testing","region":"us-southeast","k8s_version":"1.23","tags":["testing"]}'
     form: {}
     headers:
       Accept:
@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 58756, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "label": "8e84q29t0lgl-linodego-testing", "region": "us-central",
+    body: '{"id": 59832, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "label": "40rg03g9v7pg-linodego-testing", "region": "us-southeast",
       "k8s_version": "1.23", "control_plane": {"high_availability": false}, "tags":
       ["testing"]}'
     headers:
@@ -32,7 +32,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "257"
+      - "259"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -69,11 +69,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/58756
+    url: https://api.linode.com/v4beta/lke/clusters/59832
     method: GET
   response:
-    body: '{"id": 58756, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "label": "8e84q29t0lgl-linodego-testing", "region": "us-central",
+    body: '{"id": 59832, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "label": "40rg03g9v7pg-linodego-testing", "region": "us-southeast",
       "k8s_version": "1.23", "control_plane": {"high_availability": false}, "tags":
       ["testing"]}'
     headers:
@@ -91,7 +91,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "257"
+      - "259"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -129,10 +129,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/58756/dashboard
+    url: https://api.linode.com/v4beta/lke/clusters/59832/dashboard
     method: GET
   response:
-    body: '{"url": "https://f87f039d-cafc-498a-a167-3b4d62431421.dashboard.cpc1-us-central.linodelke.net"}'
+    body: '{"url": "https://24a136e6-9691-4329-adde-b6565d188dc1.dashboard.us-southeast-2.linodelke.net"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -148,7 +148,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "95"
+      - "94"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -186,7 +186,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/58756
+    url: https://api.linode.com/v4beta/lke/clusters/59832
     method: DELETE
   response:
     body: '{}'

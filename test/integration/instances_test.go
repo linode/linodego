@@ -2,9 +2,11 @@ package integration
 
 import (
 	"context"
+	"fmt"
 	"reflect"
 	"strconv"
 	"testing"
+	"time"
 
 	"github.com/linode/linodego"
 )
@@ -130,7 +132,8 @@ func TestInstance_Disk_ListMultiple(t *testing.T) {
 		t.Errorf("Error waiting for disk readiness: %s", err)
 	}
 
-	imageCreateOptions := linodego.ImageCreateOptions{Label: "linodego-test-image", DiskID: disk.ID}
+	imageLabel := fmt.Sprintf("linodego-test-image-%.d", time.Now().Second())
+	imageCreateOptions := linodego.ImageCreateOptions{Label: imageLabel, DiskID: disk.ID}
 	image, err := client.CreateImage(context.Background(), imageCreateOptions)
 
 	defer client.DeleteImage(context.Background(), image.ID)
@@ -375,7 +378,7 @@ func createInstance(t *testing.T, client *linodego.Client, modifiers ...instance
 	createOpts := linodego.InstanceCreateOptions{
 		Label:    "linodego-test-instance",
 		RootPass: "R34lBAdP455",
-		Region:   "ca-central",
+		Region:   "us-southeast",
 		Type:     "g6-nanode-1",
 		Image:    "linode/debian9",
 		Booted:   &booted,
@@ -415,7 +418,7 @@ func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string, modifiers ...i
 	falseBool := false
 	createOpts := linodego.InstanceCreateOptions{
 		Label:  "linodego-test-instance-wo-disk",
-		Region: "us-west",
+		Region: "us-southeast",
 		Type:   "g6-nanode-1",
 		Booted: &falseBool,
 	}

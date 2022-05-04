@@ -51,7 +51,7 @@ func ExampleClient_GetType_missing() {
 
 	// Output:
 	// Request was: https://api.linode.com/v4beta/linode/types/missing-type
-	// Response was: 404 NOT FOUND
+	// Response was: 404 Not Found
 	// Error was: [404] Not found
 }
 
@@ -101,7 +101,7 @@ func ExampleClient_ListKernels_filtered() {
 	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleListKernels_filtered")
 	defer teardown()
 
-	filterOpt := linodego.ListOptions{Filter: "{\"label\":\"Recovery - Finnix (kernel)\"}"}
+	filterOpt := linodego.ListOptions{Filter: "{\"label\":\"5.17.5-x86_64-linode154\"}"}
 	kernels, err := linodeClient.ListKernels(context.Background(), &filterOpt)
 	if err != nil {
 		log.Fatal(err)
@@ -111,8 +111,7 @@ func ExampleClient_ListKernels_filtered() {
 	}
 
 	// Unordered output:
-	// linode/finnix Recovery - Finnix (kernel)
-	// linode/finnix-legacy Recovery - Finnix (kernel)
+	// linode/5.17.5-x86_64-linode154 5.17.5-x86_64-linode154
 }
 
 func ExampleClient_ListKernels_page1() {
@@ -182,7 +181,7 @@ func ExampleClient_GetImage_missing() {
 
 	// Output:
 	// Request was: https://api.linode.com/v4beta/images/not-found
-	// Response was: 404 NOT FOUND
+	// Response was: 404 Not Found
 	// Error was: [404] Not found
 }
 
