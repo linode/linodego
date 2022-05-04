@@ -164,9 +164,11 @@ linode_api_version = v4beta
 
 [cool]
 linode_api_version = v4
+# Values from default are inherited here
 `
 
 const configNoDefaults = `
 [cool]
 linode_api_token = mytoken
+# Linodego default values are inherited here
 `

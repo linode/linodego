@@ -3,10 +3,11 @@ package linodego
 import (
 	"fmt"
 	"gopkg.in/ini.v1"
+	"os"
 	"strings"
 )
 
-const DefaultConfigPath = "~/.config/linode"
+const DefaultConfigPath = "%s/.config/linode" // home dir
 const DefaultConfigProfile = "default"
 
 type ConfigProfile struct {
@@ -27,7 +28,12 @@ type LoadConfigOptions struct {
 func (c *Client) LoadConfig(options LoadConfigOptions) error {
 	path := options.Path
 	if path == "" {
-		path = DefaultConfigPath
+		homeDir, err := os.UserHomeDir()
+		if err != nil {
+			return err
+		}
+
+		path = fmt.Sprintf(DefaultConfigPath, homeDir)
 	}
 
 	profileOption := options.Profile
@@ -35,7 +41,7 @@ func (c *Client) LoadConfig(options LoadConfigOptions) error {
 		profileOption = DefaultConfigProfile
 	}
 
-	cfg, err := ini.Load(options.Path)
+	cfg, err := ini.Load(path)
 	if err != nil {
 		return err
 	}
