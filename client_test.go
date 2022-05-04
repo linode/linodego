@@ -59,3 +59,32 @@ func TestClient_SetAPIVersion(t *testing.T) {
 		t.Fatal(cmp.Diff(client.resty.HostURL, expectedHost))
 	}
 }
+
+func TestClient_NewFromEnv(t *testing.T) {
+	file := createTestConfig(t, configNewFromEnv)
+
+	// This is cool
+	t.Setenv(APIConfigEnvVar, file.Name())
+
+	client, err := NewClientFromEnv(nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	expectedURL := "https://api.cool.linode.com/v4beta"
+
+	if client.resty.HostURL != expectedURL {
+		t.Fatalf("mismatched host url: %s != %s", client.resty.HostURL, expectedURL)
+	}
+
+	if client.resty.Header.Get("Authorization") != "Bearer blah" {
+		t.Fatalf("token not found in auth header: %s", "blah")
+	}
+}
+
+const configNewFromEnv = `
+[default]
+linode_api_token = blah
+linode_api_url = api.cool.linode.com
+linode_api_version = v4beta
+`

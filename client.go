@@ -16,6 +16,8 @@ import (
 )
 
 const (
+	// APIConfigEnvVar environment var to get path to Linode config
+	APIConfigEnvVar = "LINODE_CONFIG"
 	// APIHost Linode API hostname
 	APIHost = "api.linode.com"
 	// APIHostVar environment var to check for alternate API URL
@@ -335,6 +337,37 @@ func NewClient(hc *http.Client) (client Client) {
 	addResources(&client)
 
 	return
+}
+
+// NewClientFromEnv creates a Client and initializes it with values
+// from the LINODE_CONFIG file and the LINODE_TOKEN environment variable.
+func NewClientFromEnv(hc *http.Client) (Client, error) {
+	client := NewClient(hc)
+
+	// Users are expected to chain NewClient(...) and LoadConfig(...) to customize these options
+	configPath, err := GetDefaultConfigPath()
+	if err != nil {
+		return client, err
+	}
+
+	if p, ok := os.LookupEnv(APIConfigEnvVar); ok {
+		configPath = p
+	}
+
+	if _, err := os.Stat(configPath); err == nil {
+		if err := client.LoadConfig(&LoadConfigOptions{Path: configPath}); err != nil {
+			return client, err
+		}
+
+		return client, nil
+	}
+
+	// Populate the token from the environment
+	if token, ok := os.LookupEnv(APIEnvVar); ok {
+		client.SetToken(token)
+	}
+
+	return client, nil
 }
 
 // nolint
