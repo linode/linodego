@@ -52,6 +52,8 @@ type Client struct {
 	apiVersion string
 	apiProto   string
 
+	configProfiles map[string]ConfigProfile
+
 	Account                *Resource
 	AccountSettings        *Resource
 	Databases              *Resource
