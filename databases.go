@@ -95,18 +95,22 @@ type DatabaseEngine struct {
 
 // DatabaseType is information about the supported Database Types by Linode Managed Databases
 type DatabaseType struct {
-	ID          string            `json:"id"`
-	Label       string            `json:"label"`
-	Class       string            `json:"class"`
-	Deprecated  bool              `json:"deprecated"`
-	VirtualCPUs int               `json:"vcpus"`
-	Disk        int               `json:"disk"`
-	Memory      int               `json:"memory"`
-	ClusterSize []DatabaseCluster `json:"cluster_size"`
+	ID          string                `json:"id"`
+	Label       string                `json:"label"`
+	Class       string                `json:"class"`
+	VirtualCPUs int                   `json:"vcpus"`
+	Disk        int                   `json:"disk"`
+	Memory      int                   `json:"memory"`
+	Engines     DatabaseTypeEngineMap `json:"engines"`
 }
 
-// DatabaseCluster Sizes and Prices
-type DatabaseCluster struct {
+// DatabaseTypeEngineMap stores a list of Database Engine types by engine
+type DatabaseTypeEngineMap struct {
+	MySQL []DatabaseTypeEngine `json:"mysql"`
+}
+
+// DatabaseTypeEngine Sizes and Prices
+type DatabaseTypeEngine struct {
 	Quantity int          `json:"quantity"`
 	Price    ClusterPrice `json:"price"`
 }
