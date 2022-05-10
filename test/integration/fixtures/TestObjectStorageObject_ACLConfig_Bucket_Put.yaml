@@ -1,0 +1,27 @@
+---
+version: 1
+interactions:
+- request:
+    body: testing123
+    form: {}
+    headers:
+      Content-Type:
+      - text/plain
+    url: https://us-east-1.linodeobjects.com:443/linodego-test-bucket-1651626250325124704/test?Signature=KEh%2BuuJjIbc7h2iNpgiAH%2FQrs44%3D&Expires=1651627735&AWSAccessKeyID=SANITIZED
+    method: PUT
+  response:
+    body: ""
+    headers:
+      Accept-Ranges:
+      - bytes
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "0"
+      Etag:
+      - '"7f2ababa423061c509f4923dd04b6cf1"'
+      X-Amz-Request-Id:
+      - tx000000000000007d19f71-006271d56f-c8f8b7d-default
+    status: 200 OK
+    code: 200
+    duration: ""

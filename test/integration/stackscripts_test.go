@@ -7,8 +7,8 @@ import (
 	"github.com/linode/linodego"
 )
 
-func TestListStackscripts(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestListStackscripts")
+func TestStackscripts_List(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestStackscripts_List")
 	defer teardown()
 
 	filterOpt := linodego.NewListOptions(1, "")

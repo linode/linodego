@@ -6,8 +6,11 @@ import (
 	"time"
 )
 
-func TestGetInstanceStats(t *testing.T) {
-	client, instance, teardown, err := setupInstance(t, "fixtures/TestGetInstanceStats")
+func TestInstanceStats_Get(t *testing.T) {
+	// Skip on normal runs due to long-running test
+	t.Skip()
+
+	client, instance, teardown, err := setupInstance(t, "fixtures/TestInstanceStats_Get")
 	defer teardown()
 	if err != nil {
 		t.Error(err)

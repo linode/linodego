@@ -16,9 +16,8 @@ var testIPv6RangeCreateOptions = IPv6RangeCreateOptions{
 	PrefixLength: 64,
 }
 
-// TestGetIPv6Range should return an IPv6 Range by id.
-func TestListIPv6Range_instance(t *testing.T) {
-	client, ipRange, inst, err := setupIPv6RangeInstance(t, []ipv6RangeModifier{}, "fixtures/TestListIPv6Range_instance")
+func TestIPv6Range_Instance_List(t *testing.T) {
+	client, ipRange, inst, err := setupIPv6RangeInstance(t, []ipv6RangeModifier{}, "fixtures/TestIPv6Range_Instance_List")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -59,9 +58,8 @@ func TestListIPv6Range_instance(t *testing.T) {
 	t.Errorf("failed to find ipv6 range with matching range")
 }
 
-// TestGetIPv6Range should return an IPv6 Range by id.
-func TestIPv6Range_share(t *testing.T) {
-	client, ipRange, origInst, err := setupIPv6RangeInstance(t, []ipv6RangeModifier{}, "fixtures/TestIPv6Range_share")
+func TestIPv6Range_Share(t *testing.T) {
+	client, ipRange, origInst, err := setupIPv6RangeInstance(t, []ipv6RangeModifier{}, "fixtures/TestIPv6Range_Share")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -155,7 +153,7 @@ func setupIPv6RangeInstance(t *testing.T, ipv6RangeModifiers []ipv6RangeModifier
 
 	instance, err := createInstance(t, client, func(inst *InstanceCreateOptions) {
 		inst.Label = "linodego-test-ipv6range"
-		inst.Region = "us-east"
+		inst.Region = "eu-west"
 	})
 	if err != nil {
 		t.Fatal(err)

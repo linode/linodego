@@ -7,18 +7,16 @@ interactions:
     headers:
       Accept:
       - application/json
-      Authorization:
-      - Bearer awesometokenawesometokenawesometoken
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.0.1 https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/linode/kernels/linode/latest-32bit
     method: GET
   response:
-    body: '{"xen": true, "label": "Latest 32 bit (4.15.13-x86-linode125)", "architecture":
-      "i386", "kvm": true, "id": "linode/latest-32bit", "version": "4.15.13", "pvops":
-      true}'
+    body: '{"id": "linode/latest-32bit", "label": "Latest 32 bit (5.16.13-x86-linode173)",
+      "version": "5.16.13", "kvm": true, "architecture": "i386", "pvops": true, "deprecated":
+      false, "built": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -33,18 +31,12 @@ interactions:
       Cache-Control:
       - private, max-age=900
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
-      - "166"
+      - "206"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Tue, 03 Jul 2018 01:39:02 GMT
-      Retry-After:
-      - "15"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -56,20 +48,13 @@ interactions:
       - '*'
       X-Content-Type-Options:
       - nosniff
-      - nosniff
       X-Frame-Options:
       - DENY
       - DENY
       X-Oauth-Scopes:
       - unknown
       X-Ratelimit-Limit:
-      - "400"
-      X-Ratelimit-Remaining:
-      - "387"
-      X-Ratelimit-Reset:
-      - "1530581958"
-      X-Spec-Version:
-      - 4.0.2
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -81,18 +66,16 @@ interactions:
     headers:
       Accept:
       - application/json
-      Authorization:
-      - Bearer awesometokenawesometokenawesometoken
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.0.1 https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/linode/kernels/linode/latest-64bit
     method: GET
   response:
-    body: '{"pvops": true, "id": "linode/latest-64bit", "xen": true, "kvm": true,
-      "architecture": "x86_64", "label": "Latest 64 bit (4.15.13-x86_64-linode106)",
-      "version": "4.15.13"}'
+    body: '{"id": "linode/latest-64bit", "label": "Latest 64 bit (5.16.13-x86_64-linode153)",
+      "version": "5.16.13", "kvm": true, "architecture": "x86_64", "pvops": true,
+      "deprecated": false, "built": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -107,18 +90,12 @@ interactions:
       Cache-Control:
       - private, max-age=900
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
-      - "171"
+      - "211"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Tue, 03 Jul 2018 01:39:02 GMT
-      Retry-After:
-      - "14"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -130,20 +107,13 @@ interactions:
       - '*'
       X-Content-Type-Options:
       - nosniff
-      - nosniff
       X-Frame-Options:
       - DENY
       - DENY
       X-Oauth-Scopes:
       - unknown
       X-Ratelimit-Limit:
-      - "400"
-      X-Ratelimit-Remaining:
-      - "383"
-      X-Ratelimit-Reset:
-      - "1530581957"
-      X-Spec-Version:
-      - 4.0.2
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

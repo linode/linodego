@@ -17,7 +17,7 @@ func ExampleClient_CreateNodeBalancer() {
 	var nbID int
 	nb := &linodego.NodeBalancer{
 		ClientConnThrottle: 20,
-		Region:             "us-east",
+		Region:             "us-southeast",
 	}
 
 	createOpts := nb.GetCreateOptions()
@@ -60,7 +60,7 @@ func ExampleClient_CreateNodeBalancerConfig() {
 	clientConnThrottle := 20
 	nb, err := linodeClient.CreateNodeBalancer(context.Background(), linodego.NodeBalancerCreateOptions{
 		ClientConnThrottle: &clientConnThrottle,
-		Region:             "us-east",
+		Region:             "us-southeast",
 	})
 	if err != nil {
 		log.Fatal(err)
@@ -135,7 +135,7 @@ func ExampleClient_CreateNodeBalancerNode() {
 	clientConnThrottle := 20
 	nb, err := linodeClient.CreateNodeBalancer(context.Background(), linodego.NodeBalancerCreateOptions{
 		ClientConnThrottle: &clientConnThrottle,
-		Region:             "us-east",
+		Region:             "us-southeast",
 	})
 	if err != nil {
 		log.Fatal(err)
@@ -150,12 +150,31 @@ func ExampleClient_CreateNodeBalancerNode() {
 		log.Fatal(err)
 	}
 
-	fmt.Println("## NodeBalancer Node create")
-	createOpts := linodego.NodeBalancerNodeCreateOptions{
-		Address: "192.168.129.255:80",
-		Label:   "192.168.129.255-80",
+	booted := false
+	instanceOpts := linodego.InstanceCreateOptions{
+		Label:    "nodebalancer-example-instance",
+		RootPass: "R34lBAdP455",
+		Region:   "us-southeast",
+		Type:     "g6-nanode-1",
+		Image:    "linode/debian9",
+		Booted:   &booted,
 	}
-	nbn, err := linodeClient.CreateNodeBalancerNode(context.Background(), nb.ID, nbc.ID, createOpts)
+	instance, err := linodeClient.CreateInstance(context.Background(), instanceOpts)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	ip, err := linodeClient.AddInstanceIPAddress(context.Background(), instance.ID, false)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("## NodeBalancer Node create")
+	nodeOpts := linodego.NodeBalancerNodeCreateOptions{
+		Address: fmt.Sprintf("%s:%d", ip.Address, nbc.Port),
+		Label:   "node-" + ip.Address,
+	}
+	nbn, err := linodeClient.CreateNodeBalancerNode(context.Background(), nb.ID, nbc.ID, nodeOpts)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -163,7 +182,7 @@ func ExampleClient_CreateNodeBalancerNode() {
 
 	fmt.Println("## NodeBalancer Node update")
 	updateOpts := nbn.GetUpdateOptions()
-	updateOpts.Address = "192.168.129.0:8080"
+	updateOpts.Address = fmt.Sprintf("%s:8080", ip.Address)
 	nbn, err = linodeClient.UpdateNodeBalancerNode(context.Background(), nb.ID, nbc.ID, nbn.ID, updateOpts)
 	if err != nil {
 		log.Fatal(err)
@@ -194,6 +213,10 @@ func ExampleClient_CreateNodeBalancerNode() {
 	}
 
 	if err := linodeClient.DeleteNodeBalancer(context.Background(), nb.ID); err != nil {
+		log.Fatal(err)
+	}
+
+	if err := linodeClient.DeleteInstance(context.Background(), instance.ID); err != nil {
 		log.Fatal(err)
 	}
 

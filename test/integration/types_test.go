@@ -7,8 +7,8 @@ import (
 	"github.com/linode/linodego"
 )
 
-func TestGetType_missing(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestGetType_missing")
+func TestType_GetMissing(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestType_GetMissing")
 	defer teardown()
 
 	i, err := client.GetType(context.Background(), "does-not-exist")
@@ -25,8 +25,8 @@ func TestGetType_missing(t *testing.T) {
 	}
 }
 
-func TestGetType_found(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestGetType_found")
+func TestType_GetFound(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestType_GetFound")
 	defer teardown()
 
 	i, err := client.GetType(context.Background(), "g6-standard-1")
@@ -38,8 +38,8 @@ func TestGetType_found(t *testing.T) {
 	}
 }
 
-func TestListTypes(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestListTypes")
+func TestTypes_List(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestTypes_List")
 	defer teardown()
 
 	i, err := client.ListTypes(context.Background(), nil)
@@ -48,15 +48,5 @@ func TestListTypes(t *testing.T) {
 	}
 	if len(i) == 0 {
 		t.Errorf("Expected a list of images, but got none %v", i)
-	}
-}
-
-func TestListTypes_429(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestListTypes_429")
-	defer teardown()
-
-	_, err := client.ListTypes(context.Background(), nil)
-	if err == nil {
-		t.Errorf("Error listing images, expected error")
 	}
 }

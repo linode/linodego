@@ -5,8 +5,8 @@ import (
 	"testing"
 )
 
-func TestListRegions(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestListRegions")
+func TestRegions_List(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestRegions_List")
 	defer teardown()
 
 	regions, err := client.ListRegions(context.Background(), nil)

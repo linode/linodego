@@ -14,8 +14,8 @@ var testDomainRecordCreateOpts = linodego.DomainRecordCreateOptions{
 	Name:   "a",
 }
 
-func TestCreateDomainRecord(t *testing.T) {
-	_, _, record, teardown, err := setupDomainRecord(t, "fixtures/TestCreateDomainRecord")
+func TestDomainRecord_Create(t *testing.T) {
+	_, _, record, teardown, err := setupDomainRecord(t, "fixtures/TestDomainRecord_Create")
 	defer teardown()
 
 	if err != nil {
@@ -30,8 +30,8 @@ func TestCreateDomainRecord(t *testing.T) {
 	}
 }
 
-func TestUpdateDomainRecord(t *testing.T) {
-	client, domain, record, teardown, err := setupDomainRecord(t, "fixtures/TestUpdateDomainRecord")
+func TestDomainRecord_Update(t *testing.T) {
+	client, domain, record, teardown, err := setupDomainRecord(t, "fixtures/TestDomainRecord_Update")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -49,8 +49,8 @@ func TestUpdateDomainRecord(t *testing.T) {
 	}
 }
 
-func TestListDomainRecords(t *testing.T) {
-	client, domain, record, teardown, err := setupDomainRecord(t, "fixtures/TestListDomainRecords")
+func TestDomainRecords_List(t *testing.T) {
+	client, domain, record, teardown, err := setupDomainRecord(t, "fixtures/TestDomainRecords_List")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -73,8 +73,8 @@ func TestListDomainRecords(t *testing.T) {
 	}
 }
 
-func TestListDomainRecordsMultiplePages(t *testing.T) {
-	client, domain, record, teardown, err := setupDomainRecord(t, "fixtures/TestListDomainRecordsMultiplePages")
+func TestDomainRecords_ListMultiplePages(t *testing.T) {
+	client, domain, record, teardown, err := setupDomainRecord(t, "fixtures/TestDomainRecords_ListMultiplePages")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -96,8 +96,8 @@ func TestListDomainRecordsMultiplePages(t *testing.T) {
 	}
 }
 
-func TestGetDomainRecord(t *testing.T) {
-	client, domain, record, teardown, err := setupDomainRecord(t, "fixtures/TestGetDomainRecord")
+func TestDomainRecord_Get(t *testing.T) {
+	client, domain, record, teardown, err := setupDomainRecord(t, "fixtures/TestDomainRecord_Get")
 	defer teardown()
 	if err != nil {
 		t.Error(err)

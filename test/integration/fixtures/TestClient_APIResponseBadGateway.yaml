@@ -7,56 +7,198 @@ interactions:
     headers:
       Accept:
       - application/json
-      Authorization:
-      - Bearer awesometokenawesometokenawesometoken
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.0.1 https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/images
     method: GET
   response:
-    body: '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
-      <title>502 Bad Gateway</title>
-      <h1>Bad Gateway</h1>
-      <p>The proxy server received an invalid response from an upstream server.</p>'
+    body: '{"data": [{"id": "linode/almalinux8", "label": "AlmaLinux 8", "deprecated":
+      false, "size": 1700, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "is_public": true,
+      "vendor": "AlmaLinux", "expiry": null, "eol": "2018-01-02T03:04:05", "status":
+      "available"}, {"id": "linode/alpine3.12", "label": "Alpine 3.12", "deprecated":
+      false, "size": 300, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "is_public": true,
+      "vendor": "Alpine", "expiry": null, "eol": "2018-01-02T03:04:05", "status":
+      "available"}, {"id": "linode/alpine3.13", "label": "Alpine 3.13", "deprecated":
+      false, "size": 300, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "is_public": true,
+      "vendor": "Alpine", "expiry": null, "eol": "2018-01-02T03:04:05", "status":
+      "available"}, {"id": "linode/alpine3.14", "label": "Alpine 3.14", "deprecated":
+      false, "size": 400, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "is_public": true,
+      "vendor": "Alpine", "expiry": null, "eol": "2018-01-02T03:04:05", "status":
+      "available"}, {"id": "linode/alpine3.15", "label": "Alpine 3.15", "deprecated":
+      false, "size": 400, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "is_public": true,
+      "vendor": "Alpine", "expiry": null, "eol": "2018-01-02T03:04:05", "status":
+      "available"}, {"id": "linode/arch", "label": "Arch Linux", "deprecated": false,
+      "size": 2000, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "is_public": true,
+      "vendor": "Arch", "expiry": null, "eol": null, "status": "available"}, {"id":
+      "linode/centos7", "label": "CentOS 7", "deprecated": false, "size": 2800, "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description": "",
+      "created_by": "linode", "type": "manual", "is_public": true, "vendor": "CentOS",
+      "expiry": null, "eol": "2018-01-02T03:04:05", "status": "available"}, {"id":
+      "linode/centos-stream8", "label": "CentOS Stream 8", "deprecated": false, "size":
+      2600, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description":
+      "", "created_by": "linode", "type": "manual", "is_public": true, "vendor": "CentOS",
+      "expiry": null, "eol": "2018-01-02T03:04:05", "status": "available"}, {"id":
+      "linode/centos-stream9", "label": "CentOS Stream 9", "deprecated": false, "size":
+      1200, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description":
+      "", "created_by": "linode", "type": "manual", "is_public": true, "vendor": "CentOS",
+      "expiry": null, "eol": "2018-01-02T03:04:05", "status": "available"}, {"id":
+      "linode/debian10", "label": "Debian 10", "deprecated": false, "size": 1500,
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description":
+      "", "created_by": "linode", "type": "manual", "is_public": true, "vendor": "Debian",
+      "expiry": null, "eol": "2018-01-02T03:04:05", "status": "available"}, {"id":
+      "linode/debian11", "label": "Debian 11", "deprecated": false, "size": 1300,
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description":
+      "", "created_by": "linode", "type": "manual", "is_public": true, "vendor": "Debian",
+      "expiry": null, "eol": "2018-01-02T03:04:05", "status": "available"}, {"id":
+      "linode/debian9", "label": "Debian 9", "deprecated": false, "size": 1600, "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description": "",
+      "created_by": "linode", "type": "manual", "is_public": true, "vendor": "Debian",
+      "expiry": null, "eol": "2018-01-02T03:04:05", "status": "available"}, {"id":
+      "linode/fedora34", "label": "Fedora 34", "deprecated": false, "size": 1800,
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description":
+      "", "created_by": "linode", "type": "manual", "is_public": true, "vendor": "Fedora",
+      "expiry": null, "eol": "2018-01-02T03:04:05", "status": "available"}, {"id":
+      "linode/fedora35", "label": "Fedora 35", "deprecated": false, "size": 1500,
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description":
+      "", "created_by": "linode", "type": "manual", "is_public": true, "vendor": "Fedora",
+      "expiry": null, "eol": "2018-01-02T03:04:05", "status": "available"}, {"id":
+      "linode/gentoo", "label": "Gentoo", "deprecated": false, "size": 4600, "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description": "",
+      "created_by": "linode", "type": "manual", "is_public": true, "vendor": "Gentoo",
+      "expiry": null, "eol": null, "status": "available"}, {"id": "linode/debian11-kube-v1.20.15",
+      "label": "Kubernetes 1.20.15 on Debian 11", "deprecated": false, "size": 3500,
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description":
+      "", "created_by": "linode", "type": "manual", "is_public": true, "vendor": "Debian",
+      "expiry": null, "eol": "2018-01-02T03:04:05", "status": "available"}, {"id":
+      "linode/debian9-kube-v1.20.7", "label": "Kubernetes 1.20.7 on Debian 9", "deprecated":
+      false, "size": 3500, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "is_public": true,
+      "vendor": "Debian", "expiry": null, "eol": "2018-01-02T03:04:05", "status":
+      "available"}, {"id": "linode/debian9-kube-v1.21.1", "label": "Kubernetes 1.21.1
+      on Debian 9", "deprecated": false, "size": 3500, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
+      "type": "manual", "is_public": true, "vendor": "Debian", "expiry": null, "eol":
+      "2018-01-02T03:04:05", "status": "available"}, {"id": "linode/debian11-kube-v1.21.9",
+      "label": "Kubernetes 1.21.9 on Debian 11", "deprecated": false, "size": 3500,
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description":
+      "", "created_by": "linode", "type": "manual", "is_public": true, "vendor": "Debian",
+      "expiry": null, "eol": "2018-01-02T03:04:05", "status": "available"}, {"id":
+      "linode/debian9-kube-v1.22.2", "label": "Kubernetes 1.22.2 on Debian 9", "deprecated":
+      false, "size": 3500, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "is_public": true,
+      "vendor": "Debian", "expiry": null, "eol": "2018-01-02T03:04:05", "status":
+      "available"}, {"id": "linode/debian11-kube-v1.22.6", "label": "Kubernetes 1.22.6
+      on Debian 11", "deprecated": false, "size": 3500, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
+      "type": "manual", "is_public": true, "vendor": "Debian", "expiry": null, "eol":
+      "2018-01-02T03:04:05", "status": "available"}, {"id": "linode/debian11-kube-v1.23.4",
+      "label": "Kubernetes 1.23.4 on Debian 11", "deprecated": false, "size": 3500,
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description":
+      "", "created_by": "linode", "type": "manual", "is_public": true, "vendor": "Debian",
+      "expiry": null, "eol": "2018-01-02T03:04:05", "status": "available"}, {"id":
+      "linode/opensuse15.3", "label": "openSUSE Leap 15.3", "deprecated": false, "size":
+      1550, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description":
+      "", "created_by": "linode", "type": "manual", "is_public": true, "vendor": "openSUSE",
+      "expiry": null, "eol": "2018-01-02T03:04:05", "status": "available"}, {"id":
+      "linode/rocky8", "label": "Rocky Linux 8", "deprecated": false, "size": 2300,
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description":
+      "", "created_by": "linode", "type": "manual", "is_public": true, "vendor": "Rocky",
+      "expiry": null, "eol": "2018-01-02T03:04:05", "status": "available"}, {"id":
+      "linode/slackware14.2", "label": "Slackware 14.2", "deprecated": false, "size":
+      6000, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description":
+      "", "created_by": "linode", "type": "manual", "is_public": true, "vendor": "Slackware",
+      "expiry": null, "eol": "1970-01-01T05:00:00", "status": "available"}, {"id":
+      "linode/slackware15.0", "label": "Slackware 15.0", "deprecated": false, "size":
+      10000, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description":
+      "", "created_by": "linode", "type": "manual", "is_public": true, "vendor": "Slackware",
+      "expiry": null, "eol": null, "status": "available"}, {"id": "linode/ubuntu16.04lts",
+      "label": "Ubuntu 16.04 LTS", "deprecated": false, "size": 2700, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
+      "type": "manual", "is_public": true, "vendor": "Ubuntu", "expiry": null, "eol":
+      "2018-01-02T03:04:05", "status": "available"}, {"id": "linode/ubuntu18.04",
+      "label": "Ubuntu 18.04 LTS", "deprecated": false, "size": 2700, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
+      "type": "manual", "is_public": true, "vendor": "Ubuntu", "expiry": null, "eol":
+      "2018-01-02T03:04:05", "status": "available"}, {"id": "linode/ubuntu20.04",
+      "label": "Ubuntu 20.04 LTS", "deprecated": false, "size": 2000, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
+      "type": "manual", "is_public": true, "vendor": "Ubuntu", "expiry": null, "eol":
+      "2018-01-02T03:04:05", "status": "available"}, {"id": "linode/ubuntu21.10",
+      "label": "Ubuntu 21.10", "deprecated": false, "size": 3500, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
+      "type": "manual", "is_public": true, "vendor": "Ubuntu", "expiry": null, "eol":
+      "2018-01-02T03:04:05", "status": "available"}, {"id": "linode/alpine3.11", "label":
+      "Alpine 3.11", "deprecated": true, "size": 300, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
+      "type": "manual", "is_public": true, "vendor": "Alpine", "expiry": null, "eol":
+      "2018-01-02T03:04:05", "status": "available"}, {"id": "linode/centos8", "label":
+      "CentOS 8", "deprecated": true, "size": 2300, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
+      "type": "manual", "is_public": true, "vendor": "CentOS", "expiry": null, "eol":
+      "2018-01-02T03:04:05", "status": "available"}, {"id": "linode/fedora33", "label":
+      "Fedora 33", "deprecated": true, "size": 2600, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
+      "type": "manual", "is_public": true, "vendor": "Fedora", "expiry": null, "eol":
+      "2018-01-02T03:04:05", "status": "available"}, {"id": "linode/opensuse15.2",
+      "label": "openSUSE Leap 15.2", "deprecated": true, "size": 1550, "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description": "",
+      "created_by": "linode", "type": "manual", "is_public": true, "vendor": "openSUSE",
+      "expiry": null, "eol": "2018-01-02T03:04:05", "status": "available"}, {"id":
+      "linode/slackware14.1", "label": "Slackware 14.1", "deprecated": true, "size":
+      1000, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description":
+      null, "created_by": "linode", "type": "manual", "is_public": true, "vendor":
+      "Slackware", "expiry": null, "eol": null, "status": "available"}, {"id": "linode/ubuntu21.04",
+      "label": "Ubuntu 21.04", "deprecated": true, "size": 3500, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
+      "type": "manual", "is_public": true, "vendor": "Ubuntu", "expiry": null, "eol":
+      "2018-01-02T03:04:05", "status": "available"}], "page": 1, "pages": 1, "results":
+      36}'
     headers:
+      Access-Control-Allow-Credentials:
+      - "true"
       Access-Control-Allow-Headers:
       - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
       Access-Control-Allow-Methods:
       - HEAD, GET, OPTIONS, POST, PUT, DELETE
       Access-Control-Allow-Origin:
       - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=0, s-maxage=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "37"
+      - private, max-age=60, s-maxage=60
+      Content-Security-Policy:
+      - default-src 'none'
       Content-Type:
-      - text/html
-      Date:
-      - Tue, 03 Jul 2018 01:38:53 GMT
-      Retry-After:
-      - "23"
+      - application/json
       Server:
       - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
       Vary:
       - Authorization, X-Filter
+      - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - linodes:read_only
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
       X-Frame-Options:
+      - DENY
       - DENY
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
-      X-Ratelimit-Remaining:
-      - "391"
-      X-Ratelimit-Reset:
-      - "1530581957"
-      X-Spec-Version:
-      - 4.0.2
-    status: 502 Bad Gateway
-    code: 502
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
     duration: ""
