@@ -2,9 +2,7 @@ package integration
 
 import (
 	"context"
-	"fmt"
 	"testing"
-	"time"
 
 	"github.com/linode/linodego"
 	. "github.com/linode/linodego"
@@ -32,7 +30,7 @@ func TestOAuthClient_GetFound(t *testing.T) {
 	createOpts := linodego.OAuthClientCreateOptions{
 		Public:      true,
 		RedirectURI: "https://example.com",
-		Label:       fmt.Sprintf("test-client-%.d", time.Now().Second()),
+		Label:       "test-client",
 	}
 
 	client, oauthClient, teardown, err := setupOAuthClient(t, createOpts, "fixtures/TestOAuthClient_GetFound")
@@ -54,7 +52,7 @@ func TestOAuthClients_List(t *testing.T) {
 	createOpts := linodego.OAuthClientCreateOptions{
 		Public:      true,
 		RedirectURI: "https://example.com",
-		Label:       fmt.Sprintf("test-client-%.d", time.Now().Second()),
+		Label:       "test-client",
 	}
 	client, _, teardown, err := setupOAuthClient(t, createOpts, "fixtures/TestOAuthClients_List")
 	defer teardown()

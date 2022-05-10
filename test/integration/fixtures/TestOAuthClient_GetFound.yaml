@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"redirect_uri":"https://example.com","label":"test-client-37","public":true}'
+    body: '{"redirect_uri":"https://example.com","label":"test-client","public":true}'
     form: {}
     headers:
       Accept:
@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/account/oauth-clients
     method: POST
   response:
-    body: '{"id": "72c99707d69f5ae1c32b", "redirect_uri": "https://example.com", "label":
-      "test-client-37", "status": "active", "secret": "f96cf7cf07fcffda9dd9b2a8807f1b81069088d00660af73b6af595041f9572d",
+    body: '{"id": "e9fd3c85332ed2a73dff", "redirect_uri": "https://example.com", "label":
+      "test-client", "status": "active", "secret": "e2115a5b10b0a7e601b623011eba3ca22b07c4959af9579594ae08529ebd3017",
       "thumbnail_url": null, "public": true}'
     headers:
       Access-Control-Allow-Credentials:
@@ -31,7 +31,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "233"
+      - "230"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -68,11 +68,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/oauth-clients/72c99707d69f5ae1c32b
+    url: https://api.linode.com/v4beta/account/oauth-clients/e9fd3c85332ed2a73dff
     method: GET
   response:
-    body: '{"id": "72c99707d69f5ae1c32b", "redirect_uri": "https://example.com", "label":
-      "test-client-37", "status": "active", "secret": "<REDACTED>", "thumbnail_url":
+    body: '{"id": "e9fd3c85332ed2a73dff", "redirect_uri": "https://example.com", "label":
+      "test-client", "status": "active", "secret": "<REDACTED>", "thumbnail_url":
       null, "public": true}'
     headers:
       Access-Control-Allow-Credentials:
@@ -89,7 +89,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "179"
+      - "176"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -127,7 +127,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/oauth-clients/72c99707d69f5ae1c32b
+    url: https://api.linode.com/v4beta/account/oauth-clients/e9fd3c85332ed2a73dff
     method: DELETE
   response:
     body: '{}'
