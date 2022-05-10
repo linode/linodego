@@ -7,22 +7,20 @@ interactions:
     headers:
       Accept:
       - application/json
-      Authorization:
-      - Bearer awesometokenawesometokenawesometoken
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.0.1 https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/longview/subscriptions?page=1
     method: GET
   response:
-    body: '{"results": 4, "data": [{"clients_included": 3, "label": "Longview Pro
-      3 pack", "price": {"hourly": 0.03, "monthly": 20.0}, "id": "longview-3"}, {"clients_included":
-      10, "label": "Longview Pro 10 pack", "price": {"hourly": 0.06, "monthly": 40.0},
-      "id": "longview-10"}, {"clients_included": 40, "label": "Longview Pro 40 pack",
-      "price": {"hourly": 0.15, "monthly": 100.0}, "id": "longview-40"}, {"clients_included":
-      100, "label": "Longview Pro 100 pack", "price": {"hourly": 0.3, "monthly": 200.0},
-      "id": "longview-100"}], "pages": 1, "page": 1}'
+    body: '{"data": [{"id": "longview-3", "label": "Longview Pro 3 pack", "price":
+      {"hourly": 0.03, "monthly": 20.0}, "clients_included": 3}, {"id": "longview-10",
+      "label": "Longview Pro 10 pack", "price": {"hourly": 0.06, "monthly": 40.0},
+      "clients_included": 10}, {"id": "longview-40", "label": "Longview Pro 40 pack",
+      "price": {"hourly": 0.15, "monthly": 100.0}, "clients_included": 40}, {"id":
+      "longview-100", "label": "Longview Pro 100 pack", "price": {"hourly": 0.3, "monthly":
+      200.0}, "clients_included": 100}], "page": 1, "pages": 1, "results": 4}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -37,18 +35,12 @@ interactions:
       Cache-Control:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
       - "544"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Tue, 03 Jul 2018 01:39:03 GMT
-      Retry-After:
-      - "13"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -60,20 +52,13 @@ interactions:
       - '*'
       X-Content-Type-Options:
       - nosniff
-      - nosniff
       X-Frame-Options:
       - DENY
       - DENY
       X-Oauth-Scopes:
       - unknown
       X-Ratelimit-Limit:
-      - "400"
-      X-Ratelimit-Remaining:
-      - "382"
-      X-Ratelimit-Reset:
-      - "1530581957"
-      X-Spec-Version:
-      - 4.0.2
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

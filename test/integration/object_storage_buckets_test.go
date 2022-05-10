@@ -14,10 +14,10 @@ var testObjectStorageBucketCreateOpts = ObjectStorageBucketCreateOptions{
 	Label:   fmt.Sprintf("linodego-test-bucket-%d", time.Now().UnixNano()),
 }
 
-func TestCreateObjectStorageBucket(t *testing.T) {
+func TestObjectStorageBucket_Create(t *testing.T) {
 	_, bucket, teardown, err := setupObjectStorageBucket(t,
 		nil,
-		"fixtures/TestCreateObjectStorageBucket")
+		"fixtures/TestObjectStorageBucket_Create")
 	defer teardown()
 
 	if err != nil {
@@ -35,10 +35,10 @@ func TestCreateObjectStorageBucket(t *testing.T) {
 	assertDateSet(t, bucket.Created)
 }
 
-func TestGetObjectStorageBucket_missing(t *testing.T) {
+func TestObjectStorageBucket_GetMissing(t *testing.T) {
 	client, bucket, teardown, err := setupObjectStorageBucket(t,
 		nil,
-		"fixtures/TestGetObjectStorageBucket_missing")
+		"fixtures/TestObjectStorageBucket_GetMissing")
 	defer teardown()
 
 	sameLabel := bucket.Label
@@ -58,10 +58,10 @@ func TestGetObjectStorageBucket_missing(t *testing.T) {
 	}
 }
 
-func TestGetObjectStorageBucket_found(t *testing.T) {
+func TestObjectStorageBucket_GetFound(t *testing.T) {
 	client, bucket, teardown, err := setupObjectStorageBucket(t,
 		nil,
-		"fixtures/TestGetObjectStorageBucket_found")
+		"fixtures/TestObjectStorageBucket_GetFound")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -83,10 +83,10 @@ func TestGetObjectStorageBucket_found(t *testing.T) {
 	}
 }
 
-func TestListObjectStorageBuckets(t *testing.T) {
+func TestObjectStorageBuckets_List(t *testing.T) {
 	client, _, teardown, err := setupObjectStorageBucket(t,
 		nil,
-		"fixtures/TestListObjectStorageBucket")
+		"fixtures/TestObjectStorageBuckets_List")
 	defer teardown()
 
 	i, err := client.ListObjectStorageBuckets(context.Background(), nil)
@@ -101,7 +101,7 @@ func TestListObjectStorageBuckets(t *testing.T) {
 	}
 }
 
-func TestGetObjectStorageBucketAccess(t *testing.T) {
+func TestObjectStorageBucket_Access_Get(t *testing.T) {
 	corsEnabled := false
 
 	createOpts := ObjectStorageBucketCreateOptions{
@@ -116,7 +116,7 @@ func TestGetObjectStorageBucketAccess(t *testing.T) {
 				opts.CorsEnabled = createOpts.CorsEnabled
 			},
 		},
-		"fixtures/TestGetObjectStorageBucketAccess")
+		"fixtures/TestObjectStorageBucket_Access_Get")
 	defer teardown()
 
 	newBucket, err := client.GetObjectStorageBucketAccess(context.Background(), bucket.Cluster, bucket.Label)
@@ -135,10 +135,10 @@ func TestGetObjectStorageBucketAccess(t *testing.T) {
 	}
 }
 
-func TestUpdateObjectStorageBucketAccess(t *testing.T) {
+func TestObjectStorageBucket_Access_Update(t *testing.T) {
 	client, bucket, teardown, err := setupObjectStorageBucket(t,
 		nil,
-		"fixtures/TestUpdateObjectStorageBucketAccess")
+		"fixtures/TestObjectStorageBucket_Access_Update")
 	defer teardown()
 
 	corsEnabled := false

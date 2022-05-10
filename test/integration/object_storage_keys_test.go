@@ -14,8 +14,8 @@ var testBasicObjectStorageKeyCreateOpts = ObjectStorageKeyCreateOptions{
 	Label: label,
 }
 
-func TestGetObjectStorageKey_missing(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestGetObjectStorageKey_missing")
+func TestObjectStorageKey_GetMissing(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestObjectStorageKey_GetMissing")
 	defer teardown()
 
 	notfoundID := 123
@@ -33,8 +33,8 @@ func TestGetObjectStorageKey_missing(t *testing.T) {
 	}
 }
 
-func TestGetObjectStorageKey_found(t *testing.T) {
-	client, objectStorageKey, teardown, err := setupObjectStorageKey(t, testBasicObjectStorageKeyCreateOpts, "fixtures/TestGetObjectStorageKey_found")
+func TestObjectStorageKey_GetFound(t *testing.T) {
+	client, objectStorageKey, teardown, err := setupObjectStorageKey(t, testBasicObjectStorageKeyCreateOpts, "fixtures/TestObjectStorageKey_GetFound")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -55,8 +55,8 @@ func TestGetObjectStorageKey_found(t *testing.T) {
 	}
 }
 
-func TestUpdateObjectStorageKey(t *testing.T) {
-	client, objectStorageKey, teardown, err := setupObjectStorageKey(t, testBasicObjectStorageKeyCreateOpts, "fixtures/TestUpdateObjectStorageKey")
+func TestObjectStorageKey_Update(t *testing.T) {
+	client, objectStorageKey, teardown, err := setupObjectStorageKey(t, testBasicObjectStorageKeyCreateOpts, "fixtures/TestObjectStorageKey_Update")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -80,8 +80,8 @@ func TestUpdateObjectStorageKey(t *testing.T) {
 	}
 }
 
-func TestListObjectStorageKeys(t *testing.T) {
-	client, objkey, teardown, err := setupObjectStorageKey(t, testBasicObjectStorageKeyCreateOpts, "fixtures/TestListObjectStorageKey")
+func TestObjectStorageKeys_List(t *testing.T) {
+	client, objkey, teardown, err := setupObjectStorageKey(t, testBasicObjectStorageKeyCreateOpts, "fixtures/TestObjectStorageKey_List")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -106,8 +106,8 @@ func TestListObjectStorageKeys(t *testing.T) {
 	}
 }
 
-func TestLimitedObjectStorageKeys(t *testing.T) {
-	_, bucket, teardown, err := setupObjectStorageBucket(t, nil, "fixtures/TestLimitedObjectStorageKeys_bucket")
+func TestObjectStorageKeys_Limited(t *testing.T) {
+	_, bucket, teardown, err := setupObjectStorageBucket(t, nil, "fixtures/TestObjectStorageKeys_Limited_Bucket")
 	defer teardown()
 
 	createOpts := testBasicObjectStorageKeyCreateOpts
@@ -124,7 +124,7 @@ func TestLimitedObjectStorageKeys(t *testing.T) {
 		},
 	}
 
-	_, objectStorageKey, teardown, err := setupObjectStorageKey(t, createOpts, "fixtures/TestLimitedObjectStorageKeys")
+	_, objectStorageKey, teardown, err := setupObjectStorageKey(t, createOpts, "fixtures/TestObjectStorageKeys_Limited")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -134,11 +134,11 @@ func TestLimitedObjectStorageKeys(t *testing.T) {
 	}
 }
 
-func TestLimitedObjectStorageKeys_noaccess(t *testing.T) {
+func TestObjectStorageKeys_Limited_NoAccess(t *testing.T) {
 	createOpts := testBasicObjectStorageKeyCreateOpts
 	createOpts.BucketAccess = &[]ObjectStorageKeyBucketAccess{}
 
-	_, objectStorageKey, teardown, err := setupObjectStorageKey(t, createOpts, "fixtures/TestLimitedObjectStorageKeys_noaccess")
+	_, objectStorageKey, teardown, err := setupObjectStorageKey(t, createOpts, "fixtures/TestObjectStorageKeys_Limited_NoAccess")
 	defer teardown()
 	if err != nil {
 		t.Error(err)

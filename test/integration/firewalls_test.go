@@ -23,13 +23,12 @@ var ignoreNetworkAddresses = cmpopts.IgnoreFields(linodego.FirewallRule{}, "Addr
 // fixture sanitization, these addresses will be changed to bogus values when running tests.
 var ignoreFirewallTimestamps = cmpopts.IgnoreFields(linodego.Firewall{}, "Created", "Updated")
 
-// TestListFirewalls should return a paginated list of Firewalls
-func TestListFirewalls(t *testing.T) {
+func TestFirewalls_List(t *testing.T) {
 	client, _, teardown, err := setupFirewall(t, []firewallModifier{
 		func(createOpts *linodego.FirewallCreateOptions) {
 			createOpts.Label = randString(12, lowerBytes, upperBytes) + "-linodego-testing"
 		},
-	}, "fixtures/TestListFirewalls")
+	}, "fixtures/TestFirewalls_List")
 	if err != nil {
 		t.Error(err)
 	}
@@ -45,7 +44,7 @@ func TestListFirewalls(t *testing.T) {
 	}
 }
 
-func TestGetFirewall(t *testing.T) {
+func TestFirewall_Get(t *testing.T) {
 	label := randString(12, lowerBytes, upperBytes) + "-linodego-testing"
 	rules := linodego.FirewallRuleSet{
 		Inbound: []linodego.FirewallRule{
@@ -67,7 +66,7 @@ func TestGetFirewall(t *testing.T) {
 			createOpts.Label = label
 			createOpts.Rules = rules
 		},
-	}, "fixtures/TestGetFirewall")
+	}, "fixtures/TestFirewall_Get")
 	if err != nil {
 		t.Error(err)
 	}
@@ -83,7 +82,7 @@ func TestGetFirewall(t *testing.T) {
 	}
 }
 
-func TestUpdateFirewall(t *testing.T) {
+func TestFirewall_Update(t *testing.T) {
 	label := randString(12, lowerBytes, upperBytes) + "-linodego-testing"
 	rules := linodego.FirewallRuleSet{
 		InboundPolicy: "ACCEPT",
@@ -106,7 +105,7 @@ func TestUpdateFirewall(t *testing.T) {
 			createOpts.Rules = rules
 			createOpts.Tags = []string{"test"}
 		},
-	}, "fixtures/TestUpdateFirewall")
+	}, "fixtures/TestFirewall_Update")
 	if err != nil {
 		t.Error(err)
 	}

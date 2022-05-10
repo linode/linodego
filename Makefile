@@ -4,8 +4,9 @@ BIN_DIR := $(GOPATH)/bin
 INTEGRATION_DIR := ./test/integration
 FIXTURES_DIR    := $(INTEGRATION_DIR)/fixtures
 
+SKIP_DOCKER       ?= 0
 GOLANGCILINT      := golangci-lint
-GOLANGCILINT_IMG  := golangci/golangci-lint:v1.38-alpine
+GOLANGCILINT_IMG  := golangci/golangci-lint:v1.45.2-alpine
 GOLANGCILINT_ARGS := run
 
 LINODE_URL := https://api.linode.com/
@@ -37,8 +38,10 @@ vet:
 lint:
 ifeq ($(SKIP_LINT), 1)
 	@echo Skipping lint stage
+else ifeq ($(SKIP_DOCKER), 1)
+	$(GOLANGCILINT) $(GOLANGCILINT_ARGS)
 else
-	docker run --rm -v $(shell pwd):/app -w /app $(GOLANGCILINT_IMG) $(GOLANGCILINT) run
+	docker run --rm -v $(shell pwd):/app -w /app $(GOLANGCILINT_IMG) $(GOLANGCILINT) $(GOLANGCILINT_ARGS)
 endif
 
 clean-fixtures:

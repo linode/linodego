@@ -5,8 +5,8 @@ import (
 	"testing"
 )
 
-func TestListObjectStorageClusters(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestListObjectStorageClusters")
+func TestObjectStorageClusters_List(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestObjectStorageClusters_List")
 	defer teardown()
 
 	objectStorageClusters, err := client.ListObjectStorageClusters(context.Background(), nil)

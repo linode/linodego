@@ -6,8 +6,8 @@ import (
 	"testing"
 )
 
-func TestGetAccount(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestGetAccount")
+func TestAccount_Get(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestAccount_Get")
 	defer teardown()
 
 	account, err := client.GetAccount(context.Background())

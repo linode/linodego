@@ -3,9 +3,12 @@ package integration
 import (
 	"bytes"
 	"context"
+	"fmt"
+	"testing"
+	"time"
+
 	"github.com/dnaeon/go-vcr/recorder"
 	. "github.com/linode/linodego"
-	"testing"
 )
 
 // testImageBytes is a minimal Gzipped image.
@@ -14,8 +17,8 @@ var testImageBytes = []byte{0x1f, 0x8b, 0x08, 0x08, 0xbd, 0x5c, 0x91, 0x60,
 	0x00, 0x03, 0x74, 0x65, 0x73, 0x74, 0x2e, 0x69, 0x6d, 0x67, 0x00, 0x03, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00}
 
-func TestGetImage_missing(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestGetImage_missing")
+func TestImage_GetMissing(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestImage_GetMissing")
 	defer teardown()
 
 	i, err := client.GetImage(context.Background(), "does-not-exist")
@@ -32,8 +35,8 @@ func TestGetImage_missing(t *testing.T) {
 	}
 }
 
-func TestGetImage_found(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestGetImage_found")
+func TestImage_GetFound(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestImage_GetFound")
 	defer teardown()
 
 	i, err := client.GetImage(context.Background(), "linode/ubuntu16.04lts")
@@ -45,8 +48,8 @@ func TestGetImage_found(t *testing.T) {
 	}
 }
 
-func TestListImages(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestListImages")
+func TestImages_List(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestImages_List")
 	defer teardown()
 
 	i, err := client.ListImages(context.Background(), nil)
@@ -58,13 +61,13 @@ func TestListImages(t *testing.T) {
 	}
 }
 
-func TestUploadImage(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestUploadImage")
+func TestImage_Upload(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestImage_Upload")
 	defer teardown()
 
 	image, uploadURL, err := client.CreateImageUpload(context.Background(), ImageCreateUploadOptions{
 		Region:      "us-southeast",
-		Label:       "linodego-test-image",
+		Label:       fmt.Sprintf("linodego-test-image-%.d", time.Now().Second()),
 		Description: "An image that does stuff.",
 	})
 	if err != nil {

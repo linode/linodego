@@ -6,6 +6,12 @@ require (
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
 )
 
-go 1.16
+require (
+	github.com/golang/protobuf v1.2.0 // indirect
+	golang.org/x/net v0.0.0-20190628185345-da137c7871d7 // indirect
+	google.golang.org/appengine v1.4.0 // indirect
+)
+
+go 1.17
 
 retract v1.0.0 // Accidental branch push

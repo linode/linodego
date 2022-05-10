@@ -8,7 +8,7 @@ import (
 	"github.com/linode/linodego"
 )
 
-func TestUpdateUserGrants(t *testing.T) {
+func TestUserGrants_Update(t *testing.T) {
 	username := usernamePrefix + "updateusergrants"
 
 	client, _, teardown := setupUser(t, []userModifier{
@@ -17,7 +17,7 @@ func TestUpdateUserGrants(t *testing.T) {
 			createOpts.Email = usernamePrefix + "updateusergrants@example.com"
 			createOpts.Restricted = true
 		},
-	}, "fixtures/TestUpdateUserGrants")
+	}, "fixtures/TestUserGrants_Update")
 	defer teardown()
 
 	accessLevel := linodego.AccessLevelReadOnly
@@ -47,7 +47,7 @@ func TestUpdateUserGrants(t *testing.T) {
 	}
 }
 
-func TestUpdateUserGrants_noAccess(t *testing.T) {
+func TestUserGrants_UpdateNoAccess(t *testing.T) {
 	username := usernamePrefix + "updateusergrantsna"
 
 	client, _, teardown := setupUser(t, []userModifier{
@@ -56,7 +56,7 @@ func TestUpdateUserGrants_noAccess(t *testing.T) {
 			createOpts.Email = usernamePrefix + "updateusergrants@example.com"
 			createOpts.Restricted = true
 		},
-	}, "fixtures/TestUpdateUserGrants_noAccess")
+	}, "fixtures/TestUserGrants_UpdateNoAccess")
 	defer teardown()
 
 	globalGrants := linodego.GlobalUserGrants{

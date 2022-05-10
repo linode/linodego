@@ -51,6 +51,8 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
+      X-Ratelimit-Limit:
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
