@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestGetObjectStorageTransfer(t *testing.T) {
+func TestObjectStorage_Get_Transfer(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestObjectStorage_transfer")
 	defer teardown()
 
@@ -15,8 +15,8 @@ func TestGetObjectStorageTransfer(t *testing.T) {
 	}
 }
 
-func TestCancelObjectStorage(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestObjectStorage_transfer")
+func TestObjectStorage_Cancel(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestObjectStorage_cancel")
 	defer teardown()
 
 	err := client.CancelObjectStorage(context.Background())

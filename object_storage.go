@@ -16,11 +16,15 @@ func (c *Client) CancelObjectStorage(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
+
+	req := c.R(ctx)
+
 	e = fmt.Sprintf("%s/cancel", e)
-	_, err = coupleAPIErrors(c.R(ctx).Post(e))
+	_, err = coupleAPIErrors(req.Post(e))
 	if err != nil {
 		return err
 	}
+
 	return nil
 }
 
@@ -30,10 +34,14 @@ func (c *Client) GetObjectStorageTransfer(ctx context.Context) (*ObjectStorageTr
 	if err != nil {
 		return nil, err
 	}
+
+	req := c.R(ctx)
+
 	e = fmt.Sprintf("%s/transfer", e)
-	r, err := coupleAPIErrors(c.R(ctx).SetResult(&ObjectStorageTransfer{}).Get(e))
+	r, err := coupleAPIErrors(req.SetResult(&ObjectStorageTransfer{}).Get(e))
 	if err != nil {
 		return nil, err
 	}
+
 	return r.Result().(*ObjectStorageTransfer), nil
 }

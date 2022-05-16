@@ -432,6 +432,7 @@ func addResources(client *Client) {
 	client.ObjectStorageBucketCerts = resources[objectStorageBucketCertsName]
 	client.ObjectStorageClusters = resources[objectStorageClustersName]
 	client.ObjectStorageKeys = resources[objectStorageKeysName]
+	client.ObjectStorage = resources[objectStorageName]
 	client.Payments = resources[paymentsName]
 	client.Profile = resources[profileName]
 	client.Regions = resources[regionsName]
