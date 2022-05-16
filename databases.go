@@ -9,6 +9,25 @@ import (
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
+type DatabaseDayOfWeek int
+
+type DatabaseMaintenanceFrequency string
+
+const (
+	DatabaseMaintenanceDaySunday DatabaseDayOfWeek = iota + 1
+	DatabaseMaintenanceDayMonday
+	DatabaseMaintenanceDayTuesday
+	DatabaseMaintenanceDayWednesday
+	DatabaseMaintenanceDayThursday
+	DatabaseMaintenanceDayFriday
+	DatabaseMaintenanceDaySaturday
+)
+
+const (
+	DatabaseMaintenanceFrequencyWeekly  DatabaseMaintenanceFrequency = "weekly"
+	DatabaseMaintenanceFrequencyMonthly DatabaseMaintenanceFrequency = "monthly"
+)
+
 type DatabasesPagedResponse struct {
 	*PageOptions
 	Data []Database `json:"data"`
