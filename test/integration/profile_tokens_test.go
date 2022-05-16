@@ -8,8 +8,8 @@ import (
 	. "github.com/linode/linodego"
 )
 
-func TestGetToken_missing(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestGetToken_missing")
+func TestToken_GetMissing(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestToken_GetMissing")
 	defer teardown()
 
 	doesNotExist := 123
@@ -27,10 +27,10 @@ func TestGetToken_missing(t *testing.T) {
 	}
 }
 
-func TestGetToken_found(t *testing.T) {
+func TestToken_GetFound(t *testing.T) {
 	tokenTTLSeconds := 120
 	ttl := time.Now().UTC().Add(time.Second * time.Duration(tokenTTLSeconds))
-	client, token, teardown, err := setupProfileToken(t, "fixtures/TestGetToken_found", &ttl)
+	client, token, teardown, err := setupProfileToken(t, "fixtures/TestToken_GetFound", &ttl)
 	defer teardown()
 	if err != nil {
 		t.Errorf("Error creating test token: %s", err)
@@ -57,8 +57,8 @@ func TestGetToken_found(t *testing.T) {
 	}
 }
 
-func TestGetToken_noexpiry(t *testing.T) {
-	client, token, teardown, err := setupProfileToken(t, "fixtures/TestGetToken_noexpiry", nil)
+func TestToken_GetNoExpiry(t *testing.T) {
+	client, token, teardown, err := setupProfileToken(t, "fixtures/TestToken_GetNoExpiry", nil)
 	defer teardown()
 	if err != nil {
 		t.Errorf("Error creating test token: %s", err)
@@ -78,10 +78,10 @@ func TestGetToken_noexpiry(t *testing.T) {
 	}
 }
 
-func TestUpdateTokens(t *testing.T) {
+func TestTokens_Update(t *testing.T) {
 	tokenTTLSeconds := 120
 	ttl := time.Now().UTC().Add(time.Second * time.Duration(tokenTTLSeconds))
-	client, token, teardown, err := setupProfileToken(t, "fixtures/TestUpdateToken", &ttl)
+	client, token, teardown, err := setupProfileToken(t, "fixtures/TestTokens_Update", &ttl)
 	defer teardown()
 	if err != nil {
 		t.Errorf("Error creating test token: %s", err)
@@ -108,10 +108,10 @@ func TestUpdateTokens(t *testing.T) {
 	}
 }
 
-func TestListTokens(t *testing.T) {
+func TestTokens_List(t *testing.T) {
 	tokenTTLSeconds := 120
 	ttl := time.Now().UTC().Add(time.Second * time.Duration(tokenTTLSeconds))
-	client, _, teardown, err := setupProfileToken(t, "fixtures/TestListTokens", &ttl)
+	client, _, teardown, err := setupProfileToken(t, "fixtures/TestTokens_List", &ttl)
 	defer teardown()
 	if err != nil {
 		t.Errorf("Error creating test token: %s", err)

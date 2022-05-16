@@ -28,10 +28,10 @@ var (
 	}
 )
 
-func TestGetFirewallRules(t *testing.T) {
+func TestFirewallRules_Get(t *testing.T) {
 	client, firewall, teardown, err := setupFirewall(t, []firewallModifier{func(createOpts *linodego.FirewallCreateOptions) {
 		createOpts.Rules = testFirewallRuleSet
-	}}, "fixtures/TestGetFirewallRules")
+	}}, "fixtures/TestFirewallRules_Get")
 	if err != nil {
 		t.Error(err)
 	}
@@ -46,8 +46,8 @@ func TestGetFirewallRules(t *testing.T) {
 	}
 }
 
-func TestUpdateFirewallRules(t *testing.T) {
-	client, firewall, teardown, err := setupFirewall(t, []firewallModifier{}, "fixtures/TestUpdateFirewallRules")
+func TestFirewallRules_Update(t *testing.T) {
+	client, firewall, teardown, err := setupFirewall(t, []firewallModifier{}, "fixtures/TestFirewallRules_Update")
 	if err != nil {
 		t.Error(err)
 	}

@@ -7,12 +7,10 @@ interactions:
     headers:
       Accept:
       - application/json
-      Authorization:
-      - Bearer awesometokenawesometokenawesometoken
       Content-Type:
       - application/json
       User-Agent:
-      - linodego 0.0.1 https://github.com/linode/linodego
+      - linodego/dev https://github.com/linode/linodego
       X-Filter:
       - '{"label":"not-found"}'
     url: https://api.linode.com/v4beta/images
@@ -33,18 +31,12 @@ interactions:
       Cache-Control:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
       - "49"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Date:
-      - Tue, 03 Jul 2018 01:39:03 GMT
-      Retry-After:
-      - "14"
       Server:
       - nginx
       Strict-Transport-Security:
@@ -56,20 +48,13 @@ interactions:
       - '*'
       X-Content-Type-Options:
       - nosniff
-      - nosniff
       X-Frame-Options:
       - DENY
       - DENY
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
-      X-Ratelimit-Remaining:
-      - "386"
-      X-Ratelimit-Reset:
-      - "1530581958"
-      X-Spec-Version:
-      - 4.0.2
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

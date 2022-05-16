@@ -24,7 +24,7 @@ func putObjectStorageObject(t *testing.T, client *linodego.Client, bucket *linod
 		t.Errorf("failed to get object PUT url: %s", err)
 	}
 
-	rec, teardownRecorder := testRecorder(t, "fixtures/TestGetObjectStorageObjectACLConfigBucketClientPut", testingMode, nil)
+	rec, teardownRecorder := testRecorder(t, "fixtures/TestObjectStorageObject_ACLConfig_Bucket_Put", testingMode, nil)
 	defer teardownRecorder()
 
 	httpClient := http.Client{Transport: rec}
@@ -57,7 +57,7 @@ func deleteObjectStorageObject(t *testing.T, client *linodego.Client, bucket *li
 		t.Errorf("failed to get object PUT url: %s", err)
 	}
 
-	rec, teardownRecorder := testRecorder(t, "fixtures/TestGetObjectStorageObjectACLConfigBucketClientDelete", testingMode, nil)
+	rec, teardownRecorder := testRecorder(t, "fixtures/TestObjectStorageObject_ACLConfig_Bucket_Delete", testingMode, nil)
 	defer teardownRecorder()
 
 	httpClient := http.Client{Transport: rec}
@@ -73,8 +73,8 @@ func deleteObjectStorageObject(t *testing.T, client *linodego.Client, bucket *li
 	}
 }
 
-func TestUpdateObjectStorageObjectACLConfig(t *testing.T) {
-	client, bucket, teardown, err := setupObjectStorageBucket(t, nil, "fixtures/TestGetObjectStorageObjectACLConfig")
+func TestObjectStorageObject_ACLConfig_Update(t *testing.T) {
+	client, bucket, teardown, err := setupObjectStorageBucket(t, nil, "fixtures/TestObjectStorageObject_ACLConfig_Update")
 	if err != nil {
 		t.Fatalf("failed to create Object Storage Object: %s", err)
 	}

@@ -10,8 +10,8 @@ import (
 	. "github.com/linode/linodego"
 )
 
-func TestGetTemplate_missing(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestGetTemplate_missing")
+func TestTemplate_GetMissing(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestTemplate_GetMissing")
 	defer teardown()
 
 	i, err := client.GetTemplate(context.Background(), "does-not-exist")
@@ -28,8 +28,8 @@ func TestGetTemplate_missing(t *testing.T) {
 	}
 }
 
-func TestGetTemplate_found(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestGetTemplate_found")
+func TestTemplate_GetFound(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestTemplate_GetFound")
 	defer teardown()
 
 	i, err := client.GetTemplate(context.Background(), "linode/ubuntu16.04lts")
@@ -41,8 +41,8 @@ func TestGetTemplate_found(t *testing.T) {
 	}
 }
 
-func TestListTemplates(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestListTemplates")
+func TestTemplates_List(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestTemplates_List")
 	defer teardown()
 
 	i, err := client.ListTemplates(context.Background(), nil)

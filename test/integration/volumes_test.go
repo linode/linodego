@@ -3,17 +3,18 @@ package integration
 import (
 	"context"
 	"testing"
+	"time"
 
 	"github.com/linode/linodego"
 )
 
-func TestCreateVolume(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestCreateVolume")
+func TestVolume_Create(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestVolume_Create")
 	defer teardown()
 
 	createOpts := linodego.VolumeCreateOptions{
-		Label:  "linodego-test-volume",
-		Region: "us-west",
+		Label:  "linodego-test-volume-" + randString(8, lowerBytes, digits),
+		Region: "us-southeast",
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
 	if err != nil {
@@ -26,17 +27,24 @@ func TestCreateVolume(t *testing.T) {
 	assertDateSet(t, volume.Created)
 	assertDateSet(t, volume.Updated)
 
+	// volumes deleted too fast tend to stick, adding a few seconds to catch up
+	time.Sleep(time.Second * 5)
 	if err := client.DeleteVolume(context.Background(), volume.ID); err != nil {
 		t.Errorf("Expected to delete a volume, but got %v", err)
 	}
 }
 
-func TestResizeVolume(t *testing.T) {
-	client, volume, teardown, err := setupVolume(t, "fixtures/TestResizeVolume")
+func TestVolume_Resize(t *testing.T) {
+	client, volume, teardown, err := setupVolume(t, "fixtures/TestVolume_Resize")
 	defer teardown()
 
 	if err != nil {
 		t.Errorf("Error setting up volume test, %s", err)
+	}
+
+	_, err = client.WaitForVolumeStatus(context.Background(), volume.ID, linodego.VolumeActive, 500)
+	if err != nil {
+		t.Errorf("Error waiting for volume to be active, %s", err)
 	}
 
 	if err := client.ResizeVolume(context.Background(), volume.ID, volume.Size+1); err != nil {
@@ -44,21 +52,27 @@ func TestResizeVolume(t *testing.T) {
 	}
 }
 
-func TestListVolumes(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestListVolumes")
+func TestVolumes_List(t *testing.T) {
+	client, volume, teardown, err := setupVolume(t, "fixtures/TestVolume_List")
 	defer teardown()
 
 	volumes, err := client.ListVolumes(context.Background(), nil)
 	if err != nil {
 		t.Errorf("Error listing volumes, expected struct, got error %v", err)
 	}
-	if len(volumes) == 0 {
-		t.Errorf("Expected a list of volumes, but got %v", volumes)
+	found := true
+	for _, v := range volumes {
+		if v.ID == volume.ID {
+			found = true
+		}
+	}
+	if !found {
+		t.Errorf("%d volume not found in list", volume.ID)
 	}
 }
 
-func TestGetVolume(t *testing.T) {
-	client, volume, teardownVolume, errVolume := setupVolume(t, "fixtures/TestGetVolume")
+func TestVolume_Get(t *testing.T) {
+	client, volume, teardownVolume, errVolume := setupVolume(t, "fixtures/TestVolume_Get")
 	defer teardownVolume()
 	if errVolume != nil {
 		t.Error(errVolume)
@@ -72,8 +86,8 @@ func TestGetVolume(t *testing.T) {
 	assertDateSet(t, volume.Updated)
 }
 
-func TestWaitForVolumeLinodeID_nil(t *testing.T) {
-	client, volume, teardown, err := setupVolume(t, "fixtures/TestWaitForVolumeLinodeID_nil")
+func TestVolume_WaitForLinodeID_nil(t *testing.T) {
+	client, volume, teardown, err := setupVolume(t, "fixtures/TestVolume_WaitForLinodeID_nil")
 	defer teardown()
 
 	if err != nil {
@@ -86,8 +100,8 @@ func TestWaitForVolumeLinodeID_nil(t *testing.T) {
 	}
 }
 
-func TestWaitForVolumeLinodeIDInstance(t *testing.T) {
-	client, instance, teardownInstance, errInstance := setupInstance(t, "fixtures/TestWaitForVolumeLinodeID_linode")
+func TestVolume_WaitForLinodeID(t *testing.T) {
+	client, instance, teardownInstance, errInstance := setupInstance(t, "fixtures/TestVolume_WaitForLinodeID_linode")
 	if errInstance != nil {
 		t.Errorf("Error setting up instance for volume test, %s", errInstance)
 	}
@@ -95,7 +109,7 @@ func TestWaitForVolumeLinodeIDInstance(t *testing.T) {
 	defer teardownInstance()
 
 	createConfigOpts := linodego.InstanceConfigCreateOptions{
-		Label:   "test-instance-volume",
+		Label:   "test-instance-volume-" + randString(8, lowerBytes, digits),
 		Devices: linodego.InstanceConfigDeviceMap{},
 	}
 	config, errConfig := client.CreateInstanceConfig(context.Background(), instance.ID, createConfigOpts)
@@ -103,7 +117,7 @@ func TestWaitForVolumeLinodeIDInstance(t *testing.T) {
 		t.Errorf("Error setting up instance config for volume test, %s", errConfig)
 	}
 
-	client, volume, teardownVolume, errVolume := setupVolume(t, "fixtures/TestWaitForVolumeLinodeID_volume")
+	client, volume, teardownVolume, errVolume := setupVolume(t, "fixtures/TestVolume_WaitForLinodeID_volume")
 	if errVolume != nil {
 		t.Errorf("Error setting up volume test, %s", errVolume)
 	}
@@ -121,7 +135,7 @@ func TestWaitForVolumeLinodeIDInstance(t *testing.T) {
 		t.Errorf("Expected to timeout waiting for nil LinodeID on volume %d : %s", volume.ID, errWait)
 	}
 
-	client, teardownWait := createTestClient(t, "fixtures/TestWaitForVolumeLinodeID_waiting")
+	client, teardownWait := createTestClient(t, "fixtures/TestVolume_WaitForLinodeID_waiting")
 	defer teardownWait()
 
 	_, errWait = client.WaitForVolumeLinodeID(context.Background(), volume.ID, &instance.ID, 20)
@@ -130,8 +144,8 @@ func TestWaitForVolumeLinodeIDInstance(t *testing.T) {
 	}
 }
 
-func TestUpdateVolume(t *testing.T) {
-	client, volume, teardown, err := setupVolume(t, "fixtures/TestUpdateVolume")
+func TestVolume_Update(t *testing.T) {
+	client, volume, teardown, err := setupVolume(t, "fixtures/TestVolume_Update")
 	if err != nil {
 		t.Errorf("Error setting up volume test, %s", err)
 	}
@@ -157,17 +171,18 @@ func setupVolume(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 	t.Helper()
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
-
 	createOpts := linodego.VolumeCreateOptions{
-		Label:  "linodego-test-volume",
-		Region: "us-west",
+		Label:  "linodego-test-volume-" + randString(8, lowerBytes, digits),
+		Region: "us-southeast",
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
 	if err != nil {
-		t.Errorf("Error listing volumes, expected struct, got error %v", err)
+		t.Errorf("Error creating volume, got error %v", err)
 	}
 
 	teardown := func() {
+		// volumes deleted too fast tend to stick, adding a few seconds to catch up
+		time.Sleep(time.Second * 5)
 		if terr := client.DeleteVolume(context.Background(), volume.ID); terr != nil {
 			t.Errorf("Expected to delete a volume, but got %v", terr)
 		}

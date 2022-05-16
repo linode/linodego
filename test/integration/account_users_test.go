@@ -12,8 +12,8 @@ const usernamePrefix = "linodegotest-"
 
 type userModifier func(*linodego.UserCreateOptions)
 
-func TestGetUser_missing(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestGetUser_missing")
+func TestUser_GetMissing(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestUser_GetMissing")
 	defer teardown()
 
 	i, err := client.GetUser(context.Background(), "does-not-exist")
@@ -30,7 +30,7 @@ func TestGetUser_missing(t *testing.T) {
 	}
 }
 
-func TestGetUser(t *testing.T) {
+func TestUser_Get(t *testing.T) {
 	username := usernamePrefix + "getuser"
 	email := usernamePrefix + "getuser@example.com"
 	restricted := true
@@ -41,7 +41,7 @@ func TestGetUser(t *testing.T) {
 			createOpts.Email = email
 			createOpts.Restricted = restricted
 		},
-	}, "fixtures/TestGetUser")
+	}, "fixtures/TestUser_Get")
 	defer teardown()
 
 	user, err := client.GetUser(context.TODO(), username)
@@ -60,7 +60,7 @@ func TestGetUser(t *testing.T) {
 	}
 }
 
-func TestUpdateUser(t *testing.T) {
+func TestUser_Update(t *testing.T) {
 	username := usernamePrefix + "updateuser"
 	email := usernamePrefix + "updateuser@example.com"
 	restricted := false
@@ -71,7 +71,7 @@ func TestUpdateUser(t *testing.T) {
 			createOpts.Email = email
 			createOpts.Restricted = restricted
 		},
-	}, "fixtures/TestUpdateUser")
+	}, "fixtures/TestUser_Update")
 	defer teardown()
 
 	updatedUsername := username + "-updated"
@@ -96,7 +96,7 @@ func TestUpdateUser(t *testing.T) {
 	}
 }
 
-func TestListUsers(t *testing.T) {
+func TestUsers_List(t *testing.T) {
 	username := usernamePrefix + "listuser"
 	email := usernamePrefix + "listuser@example.com"
 	restricted := false
@@ -107,7 +107,7 @@ func TestListUsers(t *testing.T) {
 			createOpts.Email = email
 			createOpts.Restricted = restricted
 		},
-	}, "fixtures/TestListUsers")
+	}, "fixtures/TestUsers_List")
 	defer teardown()
 
 	users, err := client.ListUsers(context.TODO(), nil)

@@ -189,6 +189,9 @@ func (client Client) WaitForLKEClusterStatus(ctx context.Context, clusterID int,
 
 // LKEClusterPollOptions configures polls against LKE Clusters.
 type LKEClusterPollOptions struct {
+	// Retry will cause the Poll to ignore interimittent errors
+	Retry bool
+
 	// TimeoutSeconds is the number of Seconds to wait for the poll to succeed
 	// before exiting.
 	TimeoutSeconds int
@@ -237,7 +240,10 @@ func (client Client) WaitForLKEClusterConditions(
 			case <-ticker.C:
 				result, err := condition(ctx, conditionOptions)
 				if err != nil {
-					return err
+					log.Printf("[WARN] Ignoring WaitForLKEClusterConditions conditional error: %s", err)
+					if !options.Retry {
+						return err
+					}
 				}
 
 				if result {
@@ -272,7 +278,7 @@ func (client Client) WaitForEventFinished(ctx context.Context, id interface{}, e
 	// The API has limitted filtering support for Event ID and Event Type
 	// Optimize the list, if possible
 	switch entityType {
-	case EntityDisk, EntityLinode, EntityDomain, EntityNodebalancer:
+	case EntityDisk, EntityDatabase, EntityLinode, EntityDomain, EntityNodebalancer:
 		// All of the filter supported types have int ids
 		filterableEntityID, err := strconv.Atoi(fmt.Sprintf("%v", id))
 		if err != nil {

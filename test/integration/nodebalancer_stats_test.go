@@ -8,8 +8,8 @@ import (
 	"github.com/linode/linodego"
 )
 
-func TestGetNodeBalancerStats(t *testing.T) {
-	client, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestGetNodeBalancerStats")
+func TestNodeBalancerStats_Get(t *testing.T) {
+	client, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancerStats_Get")
 	defer teardown()
 	if err != nil {
 		t.Error(err)

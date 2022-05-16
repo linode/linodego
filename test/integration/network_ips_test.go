@@ -9,11 +9,11 @@ import (
 	. "github.com/linode/linodego"
 )
 
-func TestGetIPAddress_missing(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestGetIPAddress_missing")
+func TestIPAddress_GetMissing(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestIPAddress_GetMissing")
 	defer teardown()
 
-	doesNotExist := "010.020.030.040"
+	doesNotExist := "10.0.0.1"
 	i, err := client.GetIPAddress(context.Background(), doesNotExist)
 	if err == nil {
 		t.Errorf("should have received an error requesting a missing ipaddress, got %v", i)
@@ -28,8 +28,8 @@ func TestGetIPAddress_missing(t *testing.T) {
 	}
 }
 
-func TestGetIPAddress_found(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestGetIPAddress_found")
+func TestIPAddress_GetFound(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddress_GetFound")
 	defer teardown()
 	if err != nil {
 		t.Errorf("Error creating IPAddress test Instance, got error %v", err)
@@ -45,8 +45,8 @@ func TestGetIPAddress_found(t *testing.T) {
 	}
 }
 
-func TestListIPAddresses(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestListIPAddresses")
+func TestIPAddresses_List(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddresses_List")
 	defer teardown()
 	if err != nil {
 		t.Errorf("Error creating IPAddress test Instance, got error %v", err)
@@ -62,8 +62,8 @@ func TestListIPAddresses(t *testing.T) {
 	}
 }
 
-func TestGetInstanceIPAddresses(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestGetInstanceIPAddresses")
+func TestIPAddresses_Instance_Get(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddresses_Instance_Get")
 	defer teardown()
 	if err != nil {
 		t.Errorf("Error creating IPAddress test Instance, got error %v", err)
@@ -78,8 +78,8 @@ func TestGetInstanceIPAddresses(t *testing.T) {
 	}
 }
 
-func TestUpdateIPAddress(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestUpdateIPAddress")
+func TestIPAddress_Update(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddress_Update")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -102,10 +102,10 @@ func TestUpdateIPAddress(t *testing.T) {
 	}
 }
 
-// TestDeleteInstanceIPAddress requires the customer account to have
+// TestIPAddress_Instance_Delete requires the customer account to have
 // default_IPMax set to at least 2 and default_InterfaceMax set to 3.
-func TestDeleteInstanceIPAddress(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestDeleteInstanceIPAddress")
+func TestIPAddress_Instance_Delete(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddress_Instance_Delete")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -136,8 +136,8 @@ func TestDeleteInstanceIPAddress(t *testing.T) {
 	}
 }
 
-func TestAssignInstancesIPs(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestAssignInstancesIPs")
+func TestIPAddress_Instance_Assign(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddress_Instance_Assign")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -189,6 +189,62 @@ func TestAssignInstancesIPs(t *testing.T) {
 
 	for _, r := range ips.IPv6.Global {
 		if fmt.Sprintf("%s/%d", r.Range, r.Prefix) == ipRange.Range {
+			return
+		}
+	}
+
+	t.Errorf("failed to find assigned ip")
+}
+
+func TestIPAddress_Instance_Share(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddress_Instance_Share", func(options *InstanceCreateOptions) {
+		options.Region = "us-west"
+	})
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	newInstance, err := createInstance(t, client, func(options *InstanceCreateOptions) {
+		options.Label = fmt.Sprintf("linodego-%d", time.Now().UnixNano())
+		options.Region = instance.Region
+	})
+
+	defer func() {
+		if err := client.DeleteInstance(context.Background(), newInstance.ID); err != nil {
+			if t != nil {
+				t.Errorf("Error deleting test Instance: %s", err)
+			}
+		}
+	}()
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	ip, err := client.AddInstanceIPAddress(context.Background(), newInstance.ID, true)
+	if err != nil {
+		t.Error(err)
+	}
+
+	// IP sharing
+	err = client.ShareIPAddresses(context.Background(), IPAddressesShareOptions{
+		LinodeID: instance.ID,
+		IPs: []string{
+			ip.Address,
+		},
+	})
+	if err != nil {
+		t.Error(err)
+	}
+
+	ips, err := client.GetInstanceIPAddresses(context.Background(), instance.ID)
+	if err != nil {
+		t.Error(err)
+	}
+
+	for _, r := range ips.IPv4.Shared {
+		if r.Address == ip.Address {
 			return
 		}
 	}

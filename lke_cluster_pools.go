@@ -46,8 +46,7 @@ func (c *Client) UpdateLKEClusterPool(ctx context.Context, clusterID, id int, up
 }
 
 // Deprecated: DeleteLKEClusterPool deletes the LKEClusterPool with the specified id
-func (c *Client) DeleteLKEClusterPool(ctx context.Context,
-	clusterID, id int) error {
+func (c *Client) DeleteLKEClusterPool(ctx context.Context, clusterID, id int) error {
 	return c.DeleteLKENodePool(ctx, clusterID, id)
 }
 

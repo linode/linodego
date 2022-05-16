@@ -2,15 +2,17 @@ package integration
 
 import (
 	"context"
+	"fmt"
 	"testing"
+	"time"
 
 	"github.com/linode/linodego"
 )
 
 var testSnapshotLabel = "snapshot-linodego-testing"
 
-func TestListInstanceBackups(t *testing.T) {
-	client, instance, backup, teardown, err := setupInstanceBackup(t, "fixtures/TestListInstanceBackups")
+func TestInstanceBackups_List(t *testing.T) {
+	client, instance, backup, teardown, err := setupInstanceBackup(t, "fixtures/TestInstanceBackups_List")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -41,7 +43,7 @@ func TestListInstanceBackups(t *testing.T) {
 		t.Errorf("Expected snapshot did not match current snapshot: %v", backups.Snapshot.Current)
 	}
 
-	_, err = client.WaitForSnapshotStatus(context.Background(), instance.ID, backup.ID, linodego.SnapshotSuccessful, 180)
+	_, err = client.WaitForSnapshotStatus(context.Background(), instance.ID, backup.ID, linodego.SnapshotSuccessful, 360)
 	if err != nil {
 		t.Errorf("Error waiting for snapshot: %v", err)
 	}
@@ -72,7 +74,7 @@ func setupInstanceBackup(t *testing.T, fixturesYaml string) (*linodego.Client, *
 	client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceOffline, 180)
 	createOpts := linodego.InstanceDiskCreateOptions{
 		Size:       10,
-		Label:      "snapshot-linodego-testing",
+		Label:      fmt.Sprintf("linodego-test-snap-%.d", time.Now().Second()),
 		Filesystem: "ext4",
 	}
 	disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, createOpts)

@@ -20,8 +20,8 @@ var testLKENodePoolCreateOpts = linodego.LKENodePoolCreateOptions{
 	Tags: []string{"testing"},
 }
 
-func TestGetLKENodePool_missing(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestGetLKENodePool_missing")
+func TestLKENodePool_GetMissing(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestLKENodePool_GetMissing")
 	defer teardown()
 
 	i, err := client.GetLKENodePool(context.Background(), 0, 0)
@@ -38,8 +38,8 @@ func TestGetLKENodePool_missing(t *testing.T) {
 	}
 }
 
-func TestGetLKENodePool_found(t *testing.T) {
-	client, lkeCluster, pool, teardown, err := setupLKENodePool(t, "fixtures/TestGetLKENodePool_found")
+func TestLKENodePool_GetFound(t *testing.T) {
+	client, lkeCluster, pool, teardown, err := setupLKENodePool(t, "fixtures/TestLKENodePool_GetFound")
 	if err != nil {
 		t.Error(err)
 	}
@@ -71,8 +71,8 @@ func TestGetLKENodePool_found(t *testing.T) {
 	}
 }
 
-func TestListLKENodePools(t *testing.T) {
-	client, lkeCluster, _, teardown, err := setupLKENodePool(t, "fixtures/TestListLKENodePools")
+func TestLKENodePools_List(t *testing.T) {
+	client, lkeCluster, _, teardown, err := setupLKENodePool(t, "fixtures/TestLKENodePools_List")
 	if err != nil {
 		t.Error(err)
 	}
@@ -87,8 +87,8 @@ func TestListLKENodePools(t *testing.T) {
 	}
 }
 
-func TestDeleteLKENodePoolNode(t *testing.T) {
-	client, lkeCluster, nodePool, teardown, err := setupLKENodePool(t, "fixtures/TestDeleteLKENodePoolNode")
+func TestLKENodePoolNode_Delete(t *testing.T) {
+	client, lkeCluster, nodePool, teardown, err := setupLKENodePool(t, "fixtures/TestLKENodePoolNode_Delete")
 	if err != nil {
 		t.Error(err)
 	}
@@ -110,8 +110,8 @@ func TestDeleteLKENodePoolNode(t *testing.T) {
 	}
 }
 
-func TestUpdateLKENodePool(t *testing.T) {
-	client, lkeCluster, nodePool, teardown, err := setupLKENodePool(t, "fixtures/TestUpdateLKENodePool")
+func TestLKENodePool_Update(t *testing.T) {
+	client, lkeCluster, nodePool, teardown, err := setupLKENodePool(t, "fixtures/TestLKENodePool_Update")
 	if err != nil {
 		t.Error(err)
 	}
