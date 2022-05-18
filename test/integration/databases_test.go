@@ -3,6 +3,7 @@ package integration
 import (
 	"context"
 	"fmt"
+	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/google/go-cmp/cmp"
 	"reflect"
 	"testing"
@@ -173,13 +174,20 @@ func TestDatabase_Suite(t *testing.T) {
 	if err != nil {
 		t.Errorf("failed to get credentials for db: %v", err)
 	}
-	time.Sleep(time.Minute * 5)
+
+	if testingMode == recorder.ModeRecording {
+		time.Sleep(time.Minute * 5)
+	}
+
 	err = client.ResetMySQLDatabaseCredentials(context.Background(), database.ID)
 	if err != nil {
 		t.Errorf("failed to reset credentials for db: %v", err)
 	}
 
-	time.Sleep(time.Second * 15)
+	if testingMode == recorder.ModeRecording {
+		time.Sleep(time.Second * 15)
+	}
+
 	newcreds, err := client.GetMySQLDatabaseCredentials(context.Background(), database.ID)
 	if err != nil {
 		t.Errorf("failed to get new credentials for db: %v", err)
@@ -252,10 +260,17 @@ func createDatabase(t *testing.T, client *linodego.Client,
 
 	// We should retry on db cleanup
 	teardown := func() {
+		interval := 10 * time.Second
+
+		// We should skip this polling when running in playback mode
+		if testingMode != recorder.ModeRecording {
+			interval = 1
+		}
+
 		ctx, cancel := context.WithTimeout(context.Background(), 180*time.Second)
 		defer cancel()
 
-		ticker := time.NewTicker(10 * time.Second)
+		ticker := time.NewTicker(interval)
 		defer ticker.Stop()
 
 		for {
