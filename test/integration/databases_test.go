@@ -3,12 +3,12 @@ package integration
 import (
 	"context"
 	"fmt"
-	"github.com/dnaeon/go-vcr/recorder"
-	"github.com/google/go-cmp/cmp"
 	"reflect"
 	"testing"
 	"time"
 
+	"github.com/dnaeon/go-vcr/recorder"
+	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"github.com/linode/linodego"
 )
