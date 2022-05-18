@@ -9,10 +9,12 @@ import (
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
-type DatabaseEngineType string
-type DatabaseDayOfWeek int
-type DatabaseMaintenanceFrequency string
-type DatabaseStatus string
+type (
+	DatabaseEngineType           string
+	DatabaseDayOfWeek            int
+	DatabaseMaintenanceFrequency string
+	DatabaseStatus               string
+)
 
 const (
 	DatabaseMaintenanceDaySunday DatabaseDayOfWeek = iota + 1

@@ -71,7 +71,6 @@ type MySQLCreateOptions struct {
 }
 
 // MySQLDatabaseMaintenanceWindow stores information about a MySQL cluster's maintenance window
-// TODO: alias to generic maintenance window struct
 type MySQLDatabaseMaintenanceWindow struct {
 	DayOfWeek   DatabaseDayOfWeek            `json:"day_of_week"`
 	Duration    int                          `json:"duration"`

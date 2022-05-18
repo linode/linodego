@@ -13,8 +13,10 @@ import (
 	"github.com/linode/linodego"
 )
 
-const testMySQLBackupLabel = "reallycoolbackup"
-const testMySQLDBLabel = "linodego-test-mysql-database"
+const (
+	testMySQLBackupLabel = "reallycoolbackup"
+	testMySQLDBLabel     = "linodego-test-mysql-database"
+)
 
 var testMySQLCreateOpts = linodego.MySQLCreateOptions{
 	Label:           testMySQLDBLabel,
@@ -245,7 +247,8 @@ func TestDatabase_Suite(t *testing.T) {
 type mysqlDatabaseModifier func(options *linodego.MySQLCreateOptions)
 
 func createDatabase(t *testing.T, client *linodego.Client,
-	databaseMofidiers []mysqlDatabaseModifier) (*linodego.MySQLDatabase, func(), error) {
+	databaseMofidiers []mysqlDatabaseModifier,
+) (*linodego.MySQLDatabase, func(), error) {
 	t.Helper()
 
 	createOpts := testMySQLCreateOpts
@@ -292,13 +295,13 @@ func createDatabase(t *testing.T, client *linodego.Client,
 				t.Fatalf("failed to retry database deletion: %s", ctx.Err())
 			}
 		}
-
 	}
 	return database, teardown, nil
 }
 
 func setupDatabase(t *testing.T, databaseMofidiers []mysqlDatabaseModifier,
-	fixturesYaml string) (*linodego.Client, *linodego.MySQLDatabase, func(), error) {
+	fixturesYaml string,
+) (*linodego.Client, *linodego.MySQLDatabase, func(), error) {
 	t.Helper()
 	now := time.Now()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)

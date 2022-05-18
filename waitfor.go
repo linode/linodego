@@ -421,8 +421,7 @@ func (client Client) WaitForImageStatus(ctx context.Context, imageID string, sta
 }
 
 // WaitForMySQLDatabaseBackup waits for the backup with the given label to be available.
-func (client Client) WaitForMySQLDatabaseBackup(
-	ctx context.Context, dbID int, label string, timeoutSeconds int) (*MySQLDatabaseBackup, error) {
+func (client Client) WaitForMySQLDatabaseBackup(ctx context.Context, dbID int, label string, timeoutSeconds int) (*MySQLDatabaseBackup, error) {
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
@@ -463,7 +462,8 @@ var databaseStatusHandlers = map[DatabaseEngineType]databaseStatusFunc{
 
 // WaitForDatabaseStatus waits for the provided database to have the given status.
 func (client Client) WaitForDatabaseStatus(
-	ctx context.Context, dbID int, dbEngine DatabaseEngineType, status DatabaseStatus, timeoutSeconds int) error {
+	ctx context.Context, dbID int, dbEngine DatabaseEngineType, status DatabaseStatus, timeoutSeconds int,
+) error {
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
