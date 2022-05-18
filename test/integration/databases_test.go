@@ -13,7 +13,7 @@ import (
 )
 
 const testMySQLBackupLabel = "reallycoolbackup"
-const testMySQLDBLabel = "basic-mysql-linodemdo3-testing"
+const testMySQLDBLabel = "linodego-test-mysql-database"
 
 var testMySQLCreateOpts = linodego.MySQLCreateOptions{
 	Label:           testMySQLDBLabel,
@@ -178,6 +178,7 @@ func TestDatabase_Suite(t *testing.T) {
 	if err != nil {
 		t.Errorf("failed to reset credentials for db: %v", err)
 	}
+
 	time.Sleep(time.Second * 15)
 	newcreds, err := client.GetMySQLDatabaseCredentials(context.Background(), database.ID)
 	if err != nil {
@@ -185,6 +186,24 @@ func TestDatabase_Suite(t *testing.T) {
 	}
 	if creds.Password == newcreds.Password {
 		t.Error("credentials have not changed for db")
+	}
+
+	if err := client.PatchMySQLDatabase(context.Background(), database.ID); err != nil {
+		t.Fatalf("failed to patch database: %s", err)
+	}
+
+	// Wait for the DB to enter updating status
+	if err := client.WaitForDatabaseStatus(
+		context.Background(), database.ID, linodego.DatabaseEngineTypeMySQL,
+		linodego.DatabaseStatusUpdating, 240); err != nil {
+		t.Fatalf("failed to wait for database updating: %s", err)
+	}
+
+	// Wait for the DB to re-enter active status
+	if err := client.WaitForDatabaseStatus(
+		context.Background(), database.ID, linodego.DatabaseEngineTypeMySQL,
+		linodego.DatabaseStatusActive, 2400); err != nil {
+		t.Fatalf("failed to wait for database updating: %s", err)
 	}
 
 	backupOptions := linodego.MySQLBackupCreateOptions{
@@ -231,10 +250,35 @@ func createDatabase(t *testing.T, client *linodego.Client,
 		t.Fatalf("failed to create database: %s", err)
 	}
 
+	// We should retry on db cleanup
 	teardown := func() {
-		if err := client.DeleteMySQLDatabase(context.Background(), database.ID); err != nil {
-			t.Fatalf("failed to delete database: %s", err)
+		ctx, cancel := context.WithTimeout(context.Background(), 180*time.Second)
+		defer cancel()
+
+		ticker := time.NewTicker(10 * time.Second)
+		defer ticker.Stop()
+
+		for {
+			select {
+			case <-ticker.C:
+				err := client.DeleteMySQLDatabase(ctx, database.ID)
+
+				if err == nil {
+					return
+				}
+
+				if lErr, ok := err.(*linodego.Error); ok && lErr.Code == 500 {
+					continue
+				}
+
+				t.Fatalf("failed to delete database: %s", err)
+
+			case <-ctx.Done():
+				t.Fatalf("failed to retry database deletion: %s", ctx.Err())
+			}
 		}
+
+
 	}
 	return database, teardown, nil
 }

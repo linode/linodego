@@ -19,7 +19,7 @@ const (
 // A MySQLDatabase is a instance of Linode MySQL Managed Databases
 type MySQLDatabase struct {
 	ID              int                            `json:"id"`
-	Status          string                         `json:"status"`
+	Status          DatabaseStatus                 `json:"status"`
 	Label           string                         `json:"label"`
 	Hosts           DatabaseHost                   `json:"hosts"`
 	Region          string                         `json:"region"`
@@ -147,7 +147,7 @@ type MySQLDatabaseSSL struct {
 	CACertificate []byte `json:"ca_certificate"`
 }
 
-// ListMySQLDatabase lists all MySQL Databases associated with the account
+// ListMySQLDatabases lists all MySQL Databases associated with the account
 func (c *Client) ListMySQLDatabases(ctx context.Context, opts *ListOptions) ([]MySQLDatabase, error) {
 	response := MySQLDatabasesPagedResponse{}
 
@@ -221,8 +221,6 @@ func (c *Client) CreateMySQLDatabase(ctx context.Context, createOpts MySQLCreate
 	} else {
 		return nil, NewError(err)
 	}
-
-	fmt.Println(body)
 
 	r, err := coupleAPIErrors(req.
 		SetBody(body).

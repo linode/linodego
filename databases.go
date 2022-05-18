@@ -9,9 +9,10 @@ import (
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
+type DatabaseEngineType string
 type DatabaseDayOfWeek int
-
 type DatabaseMaintenanceFrequency string
+type DatabaseStatus string
 
 const (
 	DatabaseMaintenanceDaySunday DatabaseDayOfWeek = iota + 1
@@ -26,6 +27,22 @@ const (
 const (
 	DatabaseMaintenanceFrequencyWeekly  DatabaseMaintenanceFrequency = "weekly"
 	DatabaseMaintenanceFrequencyMonthly DatabaseMaintenanceFrequency = "monthly"
+)
+
+const (
+	DatabaseEngineTypeMySQL DatabaseEngineType = "mysql"
+)
+
+const (
+	DatabaseStatusProvisioning DatabaseStatus = "provisioning"
+	DatabaseStatusActive       DatabaseStatus = "active"
+	DatabaseStatusSuspending   DatabaseStatus = "suspending"
+	DatabaseStatusSuspended    DatabaseStatus = "suspended"
+	DatabaseStatusResuming     DatabaseStatus = "resuming"
+	DatabaseStatusRestoring    DatabaseStatus = "restoring"
+	DatabaseStatusFailed       DatabaseStatus = "failed"
+	DatabaseStatusDegraded     DatabaseStatus = "degraded"
+	DatabaseStatusUpdating     DatabaseStatus = "updating"
 )
 
 type DatabasesPagedResponse struct {
@@ -81,22 +98,22 @@ func (resp *DatabaseTypesPagedResponse) appendData(r *DatabaseTypesPagedResponse
 
 // A Database is a instance of Linode Managed Databases
 type Database struct {
-	ID              int          `json:"id"`
-	Status          string       `json:"status"`
-	Label           string       `json:"label"`
-	Hosts           DatabaseHost `json:"hosts"`
-	Region          string       `json:"region"`
-	Type            string       `json:"type"`
-	Engine          string       `json:"engine"`
-	Version         string       `json:"version"`
-	ClusterSize     int          `json:"cluster_size"`
-	ReplicationType string       `json:"replication_type"`
-	SSLConnection   bool         `json:"ssl_connection"`
-	Encrypted       bool         `json:"encrypted"`
-	AllowList       []string     `json:"allow_list"`
-	InstanceURI     string       `json:"instance_uri"`
-	Created         *time.Time   `json:"-"`
-	Updated         *time.Time   `json:"-"`
+	ID              int            `json:"id"`
+	Status          DatabaseStatus `json:"status"`
+	Label           string         `json:"label"`
+	Hosts           DatabaseHost   `json:"hosts"`
+	Region          string         `json:"region"`
+	Type            string         `json:"type"`
+	Engine          string         `json:"engine"`
+	Version         string         `json:"version"`
+	ClusterSize     int            `json:"cluster_size"`
+	ReplicationType string         `json:"replication_type"`
+	SSLConnection   bool           `json:"ssl_connection"`
+	Encrypted       bool           `json:"encrypted"`
+	AllowList       []string       `json:"allow_list"`
+	InstanceURI     string         `json:"instance_uri"`
+	Created         *time.Time     `json:"-"`
+	Updated         *time.Time     `json:"-"`
 }
 
 // DatabaseHost for Primary/Secondary of Database

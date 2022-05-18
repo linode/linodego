@@ -447,3 +447,47 @@ func (client Client) WaitForMySQLDatabaseBackup(
 		}
 	}
 }
+
+type databaseStatusFunc func(ctx context.Context, client Client, dbID int) (DatabaseStatus, error)
+
+var databaseStatusHandlers = map[DatabaseEngineType]databaseStatusFunc{
+	DatabaseEngineTypeMySQL: func(ctx context.Context, client Client, dbID int) (DatabaseStatus, error) {
+		db, err := client.GetMySQLDatabase(ctx, dbID)
+		if err != nil {
+			return "", err
+		}
+
+		return db.Status, nil
+	},
+}
+
+// WaitForDatabaseStatus waits for the provided database to have the given status.
+func (client Client) WaitForDatabaseStatus(
+	ctx context.Context, dbID int, dbEngine DatabaseEngineType, status DatabaseStatus, timeoutSeconds int) error {
+	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
+	defer cancel()
+
+	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
+	defer ticker.Stop()
+
+	for {
+		select {
+		case <-ticker.C:
+			statusHandler, ok := databaseStatusHandlers[dbEngine]
+			if !ok {
+				return fmt.Errorf("invalid db engine: %s", dbEngine)
+			}
+
+			currentStatus, err := statusHandler(ctx, client, dbID)
+			if err != nil {
+				return fmt.Errorf("failed to get db status: %s", err)
+			}
+
+			if currentStatus == status {
+				return nil
+			}
+		case <-ctx.Done():
+			return fmt.Errorf("failed to wait for database %d status: %s", dbID, ctx.Err())
+		}
+	}
+}
