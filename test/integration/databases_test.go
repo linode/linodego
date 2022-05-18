@@ -293,7 +293,6 @@ func createDatabase(t *testing.T, client *linodego.Client,
 			}
 		}
 
-
 	}
 	return database, teardown, nil
 }
