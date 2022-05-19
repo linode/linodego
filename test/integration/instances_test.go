@@ -359,7 +359,7 @@ func TestInstance_Rebuild(t *testing.T) {
 	}
 
 	rebuildOpts := linodego.InstanceRebuildOptions{
-		Image:    "linode/alpine3.11",
+		Image:    "linode/alpine3.15",
 		RootPass: "R34lBAdP455",
 	}
 	instance, err = client.RebuildInstance(context.Background(), instance.ID, rebuildOpts)

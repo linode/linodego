@@ -12,6 +12,6 @@ require (
 	google.golang.org/appengine v1.4.0 // indirect
 )
 
-go 1.17
+go 1.18
 
 retract v1.0.0 // Accidental branch push

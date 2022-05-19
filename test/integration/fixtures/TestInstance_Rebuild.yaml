@@ -14,9 +14,9 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 36182316, "label": "linodego-test-instance-wo-disk", "group": "",
+    body: '{"id": 36411249, "label": "linodego-test-instance-wo-disk", "group": "",
       "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["170.187.153.169"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["170.187.155.6"], "ipv6": "1234::5678/128",
       "image": null, "region": "us-southeast", "specs": {"disk": 25600, "memory":
       1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
@@ -36,7 +36,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "641"
+      - "639"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -73,10 +73,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/36182316/configs
+    url: https://api.linode.com/v4beta/linode/instances/36411249/configs
     method: POST
   response:
-    body: '{"id": 38517853, "label": "linodego-test-config", "helpers": {"updatedb_disabled":
+    body: '{"id": 38766148, "label": "linodego-test-config", "helpers": {"updatedb_disabled":
       true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
       true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
@@ -135,14 +135,14 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_create","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":36182316,"entity.type":"linode"}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_create","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":36411249,"entity.type":"linode"}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 305734779, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 311995439, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 100, "time_remaining": 0, "rate": null, "duration":
-      9.0, "action": "linode_create", "username": "jriddle-dev", "entity": {"label":
-      "linodego-test-instance-wo-disk", "id": 36182316, "type": "linode", "url": "/v4/linode/instances/36182316"},
+      6.0, "action": "linode_create", "username": "jriddle-dev", "entity": {"label":
+      "linodego-test-instance-wo-disk", "id": 36411249, "type": "linode", "url": "/v4/linode/instances/36411249"},
       "status": "finished", "secondary_entity": null, "message": ""}], "page": 1,
       "pages": 1, "results": 1}'
     headers:
@@ -189,7 +189,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"image":"linode/alpine3.11","root_pass":"R34lBAdP455"}'
+    body: '{"image":"linode/alpine3.15","root_pass":"R34lBAdP455"}'
     form: {}
     headers:
       Accept:
@@ -198,13 +198,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/36182316/rebuild
+    url: https://api.linode.com/v4beta/linode/instances/36411249/rebuild
     method: POST
   response:
-    body: '{"id": 36182316, "label": "linodego-test-instance-wo-disk", "group": "",
+    body: '{"id": 36411249, "label": "linodego-test-instance-wo-disk", "group": "",
       "status": "rebuilding", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["170.187.153.169"], "ipv6": "1234::5678/128",
-      "image": "linode/alpine3.11", "region": "us-southeast", "specs": {"disk": 25600,
+      "type": "g6-nanode-1", "ipv4": ["170.187.155.6"], "ipv6": "1234::5678/128",
+      "image": "linode/alpine3.15", "region": "us-southeast", "specs": {"disk": 25600,
       "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu":
       90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io": 10000},
       "backups": {"enabled": false, "schedule": {"day": null, "window": null}, "last_successful":
@@ -223,7 +223,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "654"
+      - "652"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -260,7 +260,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/36182316
+    url: https://api.linode.com/v4beta/linode/instances/36411249
     method: DELETE
   response:
     body: '{}'
