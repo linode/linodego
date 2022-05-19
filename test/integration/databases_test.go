@@ -263,17 +263,10 @@ func createDatabase(t *testing.T, client *linodego.Client,
 
 	// We should retry on db cleanup
 	teardown := func() {
-		interval := 10 * time.Second
-
-		// We should skip this polling when running in playback mode
-		if testingMode != recorder.ModeRecording {
-			interval = 1
-		}
-
 		ctx, cancel := context.WithTimeout(context.Background(), 180*time.Second)
 		defer cancel()
 
-		ticker := time.NewTicker(interval)
+		ticker := time.NewTicker(client.GetPollDelay() * time.Millisecond)
 		defer ticker.Stop()
 
 		for {
