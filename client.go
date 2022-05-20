@@ -98,6 +98,7 @@ type Client struct {
 	ObjectStorageBucketCerts *Resource
 	ObjectStorageClusters    *Resource
 	ObjectStorageKeys        *Resource
+	ObjectStorage            *Resource
 	Payments                 *Resource
 	Profile                  *Resource
 	Regions                  *Resource
@@ -373,6 +374,7 @@ func addResources(client *Client) {
 		objectStorageBucketCertsName: NewResource(client, objectStorageBucketCertsName, objectStorageBucketCertsEndpoint, true, ObjectStorageBucketCert{}, nil),
 		objectStorageClustersName:    NewResource(client, objectStorageClustersName, objectStorageClustersEndpoint, false, ObjectStorageCluster{}, ObjectStorageClustersPagedResponse{}),
 		objectStorageKeysName:        NewResource(client, objectStorageKeysName, objectStorageKeysEndpoint, false, ObjectStorageKey{}, ObjectStorageKeysPagedResponse{}),
+		objectStorageName:            NewResource(client, objectStorageName, objectStorageEndpoint, false, nil, nil),
 		paymentsName:                 NewResource(client, paymentsName, paymentsEndpoint, false, Payment{}, PaymentsPagedResponse{}),
 		profileName:                  NewResource(client, profileName, profileEndpoint, false, nil, nil), // really?
 		regionsName:                  NewResource(client, regionsName, regionsEndpoint, false, Region{}, RegionsPagedResponse{}),
@@ -430,6 +432,7 @@ func addResources(client *Client) {
 	client.ObjectStorageBucketCerts = resources[objectStorageBucketCertsName]
 	client.ObjectStorageClusters = resources[objectStorageClustersName]
 	client.ObjectStorageKeys = resources[objectStorageKeysName]
+	client.ObjectStorage = resources[objectStorageName]
 	client.Payments = resources[paymentsName]
 	client.Profile = resources[profileName]
 	client.Regions = resources[regionsName]
