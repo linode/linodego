@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"cluster":"us-east-1","label":"linodego-test-bucket-1651626250325124704","acl":"authenticated-read","cors_enabled":false}'
+    body: '{"cluster":"us-east-1","label":"linodego-test-bucket-1652723978403166804","acl":"authenticated-read","cors_enabled":false}'
     form: {}
     headers:
       Accept:
@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/buckets
     method: POST
   response:
-    body: '{"hostname": "linodego-test-bucket-1651626250325124704.us-east-1.linodeobjects.com",
-      "label": "linodego-test-bucket-1651626250325124704", "created": "2018-01-02T03:04:05",
+    body: '{"hostname": "linodego-test-bucket-1652723978403166804.us-east-1.linodeobjects.com",
+      "label": "linodego-test-bucket-1652723978403166804", "created": "2018-01-02T03:04:05",
       "cluster": "us-east-1", "size": 0, "objects": 0}'
     headers:
       Access-Control-Allow-Credentials:
@@ -68,7 +68,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linodego-test-bucket-1651626250325124704/access
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linodego-test-bucket-1652723978403166804/access
     method: GET
   response:
     body: '{"acl": "authenticated-read", "acl_xml": "<AccessControlPolicy xmlns=\"http://s3.amazonaws.com/doc/2006-03-01/\"><Owner><ID>ee86d510-a82a-4fad-8850-ac239eb1bec2</ID><DisplayName>ee86d510-a82a-4fad-8850-ac239eb1bec2</DisplayName></Owner><AccessControlList><Grant><Grantee
@@ -128,7 +128,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linodego-test-bucket-1651626250325124704
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linodego-test-bucket-1652723978403166804
     method: DELETE
   response:
     body: '{}'
