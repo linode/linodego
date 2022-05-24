@@ -9,24 +9,32 @@ import (
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
+type MySQLDatabaseTarget string
+
+const (
+	MySQLDatabaseTargetPrimary   MySQLDatabaseTarget = "primary"
+	MySQLDatabaseTargetSecondary MySQLDatabaseTarget = "secondary"
+)
+
 // A MySQLDatabase is a instance of Linode MySQL Managed Databases
 type MySQLDatabase struct {
-	ID              int          `json:"id"`
-	Status          string       `json:"status"`
-	Label           string       `json:"label"`
-	Hosts           DatabaseHost `json:"hosts"`
-	Region          string       `json:"region"`
-	Type            string       `json:"type"`
-	Engine          string       `json:"engine"`
-	Version         string       `json:"version"`
-	ClusterSize     int          `json:"cluster_size"`
-	ReplicationType string       `json:"replication_type"`
-	SSLConnection   bool         `json:"ssl_connection"`
-	Encrypted       bool         `json:"encrypted"`
-	AllowList       []string     `json:"allow_list"`
-	InstanceURI     string       `json:"instance_uri"`
-	Created         *time.Time   `json:"-"`
-	Updated         *time.Time   `json:"-"`
+	ID              int                            `json:"id"`
+	Status          DatabaseStatus                 `json:"status"`
+	Label           string                         `json:"label"`
+	Hosts           DatabaseHost                   `json:"hosts"`
+	Region          string                         `json:"region"`
+	Type            string                         `json:"type"`
+	Engine          string                         `json:"engine"`
+	Version         string                         `json:"version"`
+	ClusterSize     int                            `json:"cluster_size"`
+	ReplicationType string                         `json:"replication_type"`
+	SSLConnection   bool                           `json:"ssl_connection"`
+	Encrypted       bool                           `json:"encrypted"`
+	AllowList       []string                       `json:"allow_list"`
+	InstanceURI     string                         `json:"instance_uri"`
+	Created         *time.Time                     `json:"-"`
+	Updated         *time.Time                     `json:"-"`
+	Updates         MySQLDatabaseMaintenanceWindow `json:"updates"`
 }
 
 func (d *MySQLDatabase) UnmarshalJSON(b []byte) error {
@@ -62,10 +70,20 @@ type MySQLCreateOptions struct {
 	SSLConnection   bool     `json:"ssl_connection"`
 }
 
+// MySQLDatabaseMaintenanceWindow stores information about a MySQL cluster's maintenance window
+type MySQLDatabaseMaintenanceWindow struct {
+	DayOfWeek   DatabaseDayOfWeek            `json:"day_of_week"`
+	Duration    int                          `json:"duration"`
+	Frequency   DatabaseMaintenanceFrequency `json:"frequency"`
+	HourOfDay   int                          `json:"hour_of_day"`
+	WeekOfMonth int                          `json:"week_of_month,omitempty"`
+}
+
 // MySQLUpdateOptions fields are used when altering the existing MySQL Database
 type MySQLUpdateOptions struct {
-	Label     string   `json:"label,omitempty"`
-	AllowList []string `json:"allow_list,omitempty"`
+	Label     string                          `json:"label,omitempty"`
+	AllowList []string                        `json:"allow_list,omitempty"`
+	Updates   *MySQLDatabaseMaintenanceWindow `json:"updates,omitempty"`
 }
 
 // MySQLDatabaseBackup is information for interacting with a backup for the existing MySQL Database
@@ -74,6 +92,12 @@ type MySQLDatabaseBackup struct {
 	Label   string     `json:"label"`
 	Type    string     `json:"type"`
 	Created *time.Time `json:"-"`
+}
+
+// MySQLBackupCreateOptions are options used for CreateMySQLDatabaseBackup(...)
+type MySQLBackupCreateOptions struct {
+	Label  string              `json:"label"`
+	Target MySQLDatabaseTarget `json:"target"`
 }
 
 func (d *MySQLDatabaseBackup) UnmarshalJSON(b []byte) error {
@@ -122,7 +146,7 @@ type MySQLDatabaseSSL struct {
 	CACertificate []byte `json:"ca_certificate"`
 }
 
-// ListMySQLDatabase lists all MySQL Databases associated with the account
+// ListMySQLDatabases lists all MySQL Databases associated with the account
 func (c *Client) ListMySQLDatabases(ctx context.Context, opts *ListOptions) ([]MySQLDatabase, error) {
 	response := MySQLDatabasesPagedResponse{}
 
@@ -330,5 +354,48 @@ func (c *Client) RestoreMySQLDatabaseBackup(ctx context.Context, databaseID int,
 	if err != nil {
 		return err
 	}
+	return nil
+}
+
+// CreateMySQLDatabaseBackup creates a snapshot for the given MySQL database
+func (c *Client) CreateMySQLDatabaseBackup(ctx context.Context, databaseID int, options MySQLBackupCreateOptions) error {
+	e, err := c.DatabaseMySQLInstances.Endpoint()
+	if err != nil {
+		return err
+	}
+
+	req := c.R(ctx)
+
+	bodyData, err := json.Marshal(options)
+	if err != nil {
+		return NewError(err)
+	}
+
+	body := string(bodyData)
+
+	e = fmt.Sprintf("%s/%d/backups", e, databaseID)
+	_, err = coupleAPIErrors(req.SetBody(body).Post(e))
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// PatchMySQLDatabase applies security patches and updates to the underlying operating system of the Managed MySQL Database
+func (c *Client) PatchMySQLDatabase(ctx context.Context, databaseID int) error {
+	e, err := c.DatabaseMySQLInstances.Endpoint()
+	if err != nil {
+		return err
+	}
+
+	req := c.R(ctx)
+
+	e = fmt.Sprintf("%s/%d/patch", e, databaseID)
+	_, err = coupleAPIErrors(req.Post(e))
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
