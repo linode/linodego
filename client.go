@@ -270,6 +270,12 @@ func (c *Client) SetPollDelay(delay time.Duration) *Client {
 	return c
 }
 
+// GetPollDelay gets the number of milliseconds to wait between events or status polls.
+// Affects all WaitFor* functions and retries.
+func (c *Client) GetPollDelay() time.Duration {
+	return c.millisecondsPerPoll
+}
+
 // Resource looks up a resource by name
 func (c Client) Resource(resourceName string) *Resource {
 	selectedResource, ok := c.resources[resourceName]
