@@ -76,7 +76,7 @@ type MySQLDatabaseMaintenanceWindow struct {
 	Duration    int                          `json:"duration"`
 	Frequency   DatabaseMaintenanceFrequency `json:"frequency"`
 	HourOfDay   int                          `json:"hour_of_day"`
-	WeekOfMonth int                          `json:"week_of_month,omitempty"`
+	WeekOfMonth *int                         `json:"week_of_month"`
 }
 
 // MySQLUpdateOptions fields are used when altering the existing MySQL Database
