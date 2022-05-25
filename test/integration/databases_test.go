@@ -135,12 +135,14 @@ func TestDatabase_Suite(t *testing.T) {
 		t.Errorf("got wrong db from GetMySQLDatabase: %v", db)
 	}
 
+	week := 3
+
 	updatedWindow := linodego.MySQLDatabaseMaintenanceWindow{
 		DayOfWeek:   linodego.DatabaseMaintenanceDayWednesday,
 		Duration:    1,
 		Frequency:   linodego.DatabaseMaintenanceFrequencyMonthly,
 		HourOfDay:   8,
-		WeekOfMonth: 3,
+		WeekOfMonth: &week,
 	}
 
 	opts := linodego.MySQLUpdateOptions{
