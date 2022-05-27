@@ -4,6 +4,8 @@ BIN_DIR := $(GOPATH)/bin
 INTEGRATION_DIR := ./test/integration
 FIXTURES_DIR    := $(INTEGRATION_DIR)/fixtures
 
+TEST_TIMEOUT := 2h
+
 SKIP_DOCKER       ?= 0
 GOLANGCILINT      := golangci-lint
 GOLANGCILINT_IMG  := golangci/golangci-lint:v1.45.2-alpine
@@ -57,7 +59,7 @@ run_fixtures:
 	LINODE_API_VERSION="v4beta" \
 	LINODE_URL="$(LINODE_URL)" \
 	GO111MODULE="on" \
-	go test -timeout=60m -v $(ARGS)
+	go test -timeout=$(TEST_TIMEOUT) -v $(ARGS)
 
 sanitize:
 	@echo "* Sanitizing fixtures"
