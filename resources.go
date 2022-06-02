@@ -43,6 +43,7 @@ const (
 	longviewsubscriptionsName    = "longviewsubscriptions"
 	managedName                  = "managed"
 	mysqlName                    = "mysql"
+	mongoName                    = "mongo"
 	nodebalancerconfigsName      = "nodebalancerconfigs"
 	nodebalancernodesName        = "nodebalancernodes"
 	nodebalancerStatsName        = "nodebalancerstats"
@@ -101,6 +102,7 @@ const (
 	longviewsubscriptionsEndpoint  = "longview/subscriptions"
 	managedEndpoint                = "managed"
 	mysqlEndpoint                  = "databases/mysql/instances"
+	mongoEndpoint                  = "databases/mongodb/instances"
 	// @TODO we can't use these nodebalancer endpoints unless we include these templated fields
 	// The API seems inconsistent about including parent IDs in objects, (compare instance configs to nb configs)
 	// Parent IDs would be immutable for updates and are ignored in create requests ..

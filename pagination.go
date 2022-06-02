@@ -133,6 +133,12 @@ func (c *Client) listHelper(ctx context.Context, i interface{}, opts *ListOption
 			results = r.Result().(*MySQLDatabasesPagedResponse).Results
 			v.appendData(r.Result().(*MySQLDatabasesPagedResponse))
 		}
+	case *MongoDatabasesPagedResponse:
+		if r, err = coupleAPIErrors(req.SetResult(MongoDatabasesPagedResponse{}).Get(v.endpoint(c))); err == nil {
+			pages = r.Result().(*MongoDatabasesPagedResponse).Pages
+			results = r.Result().(*MongoDatabasesPagedResponse).Results
+			v.appendData(r.Result().(*MongoDatabasesPagedResponse))
+		}
 	case *DomainsPagedResponse:
 		if r, err = coupleAPIErrors(req.SetResult(DomainsPagedResponse{}).Get(v.endpoint(c))); err == nil {
 			response, ok := r.Result().(*DomainsPagedResponse)

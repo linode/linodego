@@ -88,6 +88,7 @@ type Client struct {
 	LongviewSubscriptions    *Resource
 	Managed                  *Resource
 	DatabaseMySQLInstances   *Resource
+	DatabaseMongoInstances   *Resource
 	NodeBalancerConfigs      *Resource
 	NodeBalancerNodes        *Resource
 	NodeBalancerStats        *Resource
@@ -369,7 +370,8 @@ func addResources(client *Client) {
 		longviewclientsName:          NewResource(client, longviewclientsName, longviewclientsEndpoint, false, LongviewClient{}, LongviewClientsPagedResponse{}),
 		longviewsubscriptionsName:    NewResource(client, longviewsubscriptionsName, longviewsubscriptionsEndpoint, false, LongviewSubscription{}, LongviewSubscriptionsPagedResponse{}),
 		managedName:                  NewResource(client, managedName, managedEndpoint, false, nil, nil), // really?
-		mysqlName:                    NewResource(client, mysqlName, mysqlEndpoint, false, Database{}, nil),
+		mysqlName:                    NewResource(client, mysqlName, mysqlEndpoint, false, MySQLDatabase{}, MySQLDatabasesPagedResponse{}),
+		mongoName:                    NewResource(client, mongoName, mongoEndpoint, false, MongoDatabase{}, MongoDatabasesPagedResponse{}),
 		nodebalancerconfigsName:      NewResource(client, nodebalancerconfigsName, nodebalancerconfigsEndpoint, true, NodeBalancerConfig{}, NodeBalancerConfigsPagedResponse{}),
 		nodebalancernodesName:        NewResource(client, nodebalancernodesName, nodebalancernodesEndpoint, true, NodeBalancerNode{}, NodeBalancerNodesPagedResponse{}),
 		nodebalancerStatsName:        NewResource(client, nodebalancerStatsName, nodebalancerStatsEndpoint, true, NodeBalancerStats{}, nil),
@@ -428,6 +430,7 @@ func addResources(client *Client) {
 	client.LongviewSubscriptions = resources[longviewsubscriptionsName]
 	client.Managed = resources[managedName]
 	client.DatabaseMySQLInstances = resources[mysqlName]
+	client.DatabaseMongoInstances = resources[mongoName]
 	client.NodeBalancerConfigs = resources[nodebalancerconfigsName]
 	client.NodeBalancerNodes = resources[nodebalancernodesName]
 	client.NodeBalancerStats = resources[nodebalancerStatsName]
