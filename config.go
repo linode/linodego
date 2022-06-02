@@ -128,7 +128,7 @@ func FormatConfigPath(path string) (string, error) {
 	return fmt.Sprintf(path, homeDir), nil
 }
 
-func resolveValidConfigPath() (string, error){
+func resolveValidConfigPath() (string, error) {
 	for _, cfg := range DefaultConfigPaths {
 		p, err := FormatConfigPath(cfg)
 		if err != nil {
