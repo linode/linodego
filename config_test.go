@@ -54,7 +54,6 @@ func TestConfig_LoadWithDefaults(t *testing.T) {
 }
 
 func TestConfig_OverrideDefaults(t *testing.T) {
-
 	client := NewClient(nil)
 
 	file := createTestConfig(t, configOverrideDefaults)
@@ -151,24 +150,24 @@ func createTestConfig(t *testing.T, conf string) *os.File {
 
 const configLoadWithDefault = `
 [default]
-linode_api_token = blah
-linode_api_url = api.cool.linode.com
-linode_api_version = v4beta
+token = blah
+api_url = api.cool.linode.com
+api_version = v4beta
 `
 
 const configOverrideDefaults = `
 [default]
-linode_api_token = blah
-linode_api_url = api.cool.linode.com
-linode_api_version = v4beta
+token = blah
+api_url = api.cool.linode.com
+api_version = v4beta
 
 [cool]
-linode_api_version = v4
+api_version = v4
 # Values from default are inherited here
 `
 
 const configNoDefaults = `
 [cool]
-linode_api_token = mytoken
+token = mytoken
 # Linodego default values are inherited here
 `

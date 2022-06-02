@@ -9,14 +9,18 @@ import (
 )
 
 const (
-	DefaultConfigPath    = "%s/.config/linode"
 	DefaultConfigProfile = "default"
 )
 
+var DefaultConfigPaths = []string{
+	"%s/.config/linode",
+	"%s/.config/linode-cli",
+}
+
 type ConfigProfile struct {
-	APIToken   string `ini:"linode_api_token"`
-	APIVersion string `ini:"linode_api_version"`
-	APIURL     string `ini:"linode_api_url"`
+	APIToken   string `ini:"token"`
+	APIVersion string `ini:"api_version"`
+	APIURL     string `ini:"api_url"`
 }
 
 type LoadConfigOptions struct {
@@ -29,7 +33,7 @@ type LoadConfigOptions struct {
 // Path: ~/.config/linode
 // Profile: default
 func (c *Client) LoadConfig(options *LoadConfigOptions) error {
-	path, err := GetDefaultConfigPath()
+	path, err := resolveValidConfigPath()
 	if err != nil {
 		return err
 	}
@@ -97,7 +101,7 @@ func (c *Client) UseProfile(name string) error {
 	}
 
 	if profile.APIToken == "" {
-		return fmt.Errorf("unable to resolve linode_api_token for profile %s", name)
+		return fmt.Errorf("unable to resolve linode_token for profile %s", name)
 	}
 
 	if profile.APIURL == "" {
@@ -115,11 +119,29 @@ func (c *Client) UseProfile(name string) error {
 	return nil
 }
 
-func GetDefaultConfigPath() (string, error) {
+func FormatConfigPath(path string) (string, error) {
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
 		return "", err
 	}
 
-	return fmt.Sprintf(DefaultConfigPath, homeDir), nil
+	return fmt.Sprintf(path, homeDir), nil
+}
+
+func resolveValidConfigPath() (string, error){
+	for _, cfg := range DefaultConfigPaths {
+		p, err := FormatConfigPath(cfg)
+		if err != nil {
+			return "", err
+		}
+
+		if _, err := os.Stat(p); err != nil {
+			continue
+		}
+
+		return p, err
+	}
+
+	// An empty result may not be an error
+	return "", nil
 }

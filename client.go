@@ -347,13 +347,15 @@ func NewClientFromEnv(hc *http.Client) (Client, error) {
 	client := NewClient(hc)
 
 	// Users are expected to chain NewClient(...) and LoadConfig(...) to customize these options
-	configPath, err := GetDefaultConfigPath()
+	configPath, err := resolveValidConfigPath()
 	if err != nil {
 		return client, err
 	}
 
 	if p, ok := os.LookupEnv(APIConfigEnvVar); ok {
 		configPath = p
+	} else if !ok && configPath == "" {
+		return client, fmt.Errorf("no linode config file found")
 	}
 
 	configProfile := DefaultConfigProfile
