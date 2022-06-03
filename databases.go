@@ -38,6 +38,8 @@ const (
 const (
 	DatabaseStatusProvisioning DatabaseStatus = "provisioning"
 	DatabaseStatusActive       DatabaseStatus = "active"
+	DatabaseStatusDeleting     DatabaseStatus = "deleting"
+	DatabaseStatusDeleted      DatabaseStatus = "deleted"
 	DatabaseStatusSuspending   DatabaseStatus = "suspending"
 	DatabaseStatusSuspended    DatabaseStatus = "suspended"
 	DatabaseStatusResuming     DatabaseStatus = "resuming"
@@ -45,6 +47,7 @@ const (
 	DatabaseStatusFailed       DatabaseStatus = "failed"
 	DatabaseStatusDegraded     DatabaseStatus = "degraded"
 	DatabaseStatusUpdating     DatabaseStatus = "updating"
+	DatabaseStatusBackingUp    DatabaseStatus = "backing_up"
 )
 
 type DatabasesPagedResponse struct {
