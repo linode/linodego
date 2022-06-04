@@ -485,6 +485,14 @@ var databaseStatusHandlers = map[DatabaseEngineType]databaseStatusFunc{
 
 		return db.Status, nil
 	},
+	DatabaseEngineTypeMongo: func(ctx context.Context, client Client, dbID int) (DatabaseStatus, error) {
+		db, err := client.GetMongoDatabase(ctx, dbID)
+		if err != nil {
+			return "", err
+		}
+
+		return db.Status, nil
+	},
 }
 
 // WaitForDatabaseStatus waits for the provided database to have the given status.

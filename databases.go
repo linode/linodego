@@ -33,7 +33,7 @@ const (
 
 const (
 	DatabaseEngineTypeMySQL DatabaseEngineType = "mysql"
-	DatabaseEngineTypeMongo DatabaseEngineType = "mongo"
+	DatabaseEngineTypeMongo DatabaseEngineType = "mongodb"
 )
 
 const (

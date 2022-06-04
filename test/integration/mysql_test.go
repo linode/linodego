@@ -170,6 +170,13 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 	if backup.Label != testMySQLBackupLabel {
 		t.Fatalf("backup label mismatch: %v != %v", testMySQLBackupLabel, backup.Label)
 	}
+
+	// Wait for the DB to re-enter active status after backup
+	if err := client.WaitForDatabaseStatus(
+		context.Background(), database.ID, linodego.DatabaseEngineTypeMySQL,
+		linodego.DatabaseStatusActive, 2400); err != nil {
+		t.Fatalf("failed to wait for database updating: %s", err)
+	}
 }
 
 type mysqlDatabaseModifier func(options *linodego.MySQLCreateOptions)

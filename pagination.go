@@ -413,6 +413,12 @@ func (c *Client) listHelperWithID(ctx context.Context, i interface{}, idRaw inte
 			results = r.Result().(*MySQLDatabaseBackupsPagedResponse).Results
 			v.appendData(r.Result().(*MySQLDatabaseBackupsPagedResponse))
 		}
+	case *MongoDatabaseBackupsPagedResponse:
+		if r, err = coupleAPIErrors(req.SetResult(MongoDatabaseBackupsPagedResponse{}).Get(v.endpointWithID(c, id))); err == nil {
+			pages = r.Result().(*MongoDatabaseBackupsPagedResponse).Pages
+			results = r.Result().(*MongoDatabaseBackupsPagedResponse).Results
+			v.appendData(r.Result().(*MongoDatabaseBackupsPagedResponse))
+		}
 	case *NodeBalancerConfigsPagedResponse:
 		if r, err = coupleAPIErrors(req.SetResult(NodeBalancerConfigsPagedResponse{}).Get(v.endpointWithID(c, id))); err == nil {
 			pages = r.Result().(*NodeBalancerConfigsPagedResponse).Pages

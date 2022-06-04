@@ -125,6 +125,10 @@ func TestDatabase_Mongo_Suite(t *testing.T) {
 		t.Error("credentials have not changed for db")
 	}
 
+	if testingMode == recorder.ModeRecording {
+		time.Sleep(time.Minute * 5)
+	}
+
 	if err := client.PatchMongoDatabase(context.Background(), database.ID); err != nil {
 		t.Fatalf("failed to patch database: %s", err)
 	}
@@ -168,6 +172,13 @@ func TestDatabase_Mongo_Suite(t *testing.T) {
 
 	if backup.Label != testMongoBackupLabel {
 		t.Fatalf("backup label mismatch: %v != %v", testMongoBackupLabel, backup.Label)
+	}
+
+	// Wait for the DB to re-enter active status before final deletion
+	if err := client.WaitForDatabaseStatus(
+		context.Background(), database.ID, linodego.DatabaseEngineTypeMongo,
+		linodego.DatabaseStatusActive, 2400); err != nil {
+		t.Fatalf("failed to wait for database updating: %s", err)
 	}
 }
 
