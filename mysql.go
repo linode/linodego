@@ -10,6 +10,7 @@ import (
 )
 
 type MySQLDatabaseTarget string
+type MySQLDatabaseMaintenanceWindow = DatabaseMaintenanceWindow
 
 const (
 	MySQLDatabaseTargetPrimary   MySQLDatabaseTarget = "primary"

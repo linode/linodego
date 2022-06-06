@@ -44,7 +44,7 @@ type MongoDatabase struct {
 	AllowList       []string                  `json:"allow_list"`
 	Peers           []string                  `json:"peers"`
 	Port            int                       `json:"port"`
-	ReplicatSet     string                    `json:"replica_set"`
+	ReplicaSet      string                    `json:"replica_set"`
 	SSLConnection   bool                      `json:"ssl_connection"`
 	ClusterSize     int                       `json:"cluster_size"`
 	Hosts           DatabaseHost              `json:"hosts"`
