@@ -8,7 +8,7 @@ TEST_TIMEOUT := 2h
 
 SKIP_DOCKER       ?= 0
 GOLANGCILINT      := golangci-lint
-GOLANGCILINT_IMG  := golangci/golangci-lint:v1.45.2-alpine
+GOLANGCILINT_IMG  := golangci/golangci-lint:v1.46.2-alpine
 GOLANGCILINT_ARGS := run
 
 LINODE_URL := https://api.linode.com/
