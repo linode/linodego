@@ -16,6 +16,10 @@ import (
 )
 
 const (
+	// APIConfigEnvVar environment var to get path to Linode config
+	APIConfigEnvVar = "LINODE_CONFIG"
+	// APIConfigProfileEnvVar specifies the profile to use when loading from a Linode config
+	APIConfigProfileEnvVar = "LINODE_PROFILE"
 	// APIHost Linode API hostname
 	APIHost = "api.linode.com"
 	// APIHostVar environment var to check for alternate API URL
@@ -48,9 +52,13 @@ type Client struct {
 
 	millisecondsPerPoll time.Duration
 
-	baseURL    string
-	apiVersion string
-	apiProto   string
+	baseURL         string
+	apiVersion      string
+	apiProto        string
+	selectedProfile string
+	loadedProfile   string
+
+	configProfiles map[string]ConfigProfile
 
 	Account                *Resource
 	AccountSettings        *Resource
@@ -114,6 +122,11 @@ type Client struct {
 	Users                    *Resource
 	VLANs                    *Resource
 	Volumes                  *Resource
+}
+
+type EnvDefaults struct {
+	Token   string
+	Profile string
 }
 
 type Request = resty.Request
@@ -333,6 +346,73 @@ func NewClient(hc *http.Client) (client Client) {
 	addResources(&client)
 
 	return
+}
+
+// NewClientFromEnv creates a Client and initializes it with values
+// from the LINODE_CONFIG file and the LINODE_TOKEN environment variable.
+func NewClientFromEnv(hc *http.Client) (*Client, error) {
+	client := NewClient(hc)
+
+	// Users are expected to chain NewClient(...) and LoadConfig(...) to customize these options
+	configPath, err := resolveValidConfigPath()
+	if err != nil {
+		return nil, err
+	}
+
+	// Populate the token from the environment.
+	// Tokens should be first priority to maintain backwards compatibility
+	if token, ok := os.LookupEnv(APIEnvVar); ok && token != "" {
+		client.SetToken(token)
+		return &client, nil
+	}
+
+	if p, ok := os.LookupEnv(APIConfigEnvVar); ok {
+		configPath = p
+	} else if !ok && configPath == "" {
+		return nil, fmt.Errorf("no linode config file or token found")
+	}
+
+	configProfile := DefaultConfigProfile
+
+	if p, ok := os.LookupEnv(APIConfigProfileEnvVar); ok {
+		configProfile = p
+	}
+
+	client.selectedProfile = configProfile
+
+	// We should only load the config if the config file exists
+	if _, err := os.Stat(configPath); err != nil {
+		return nil, fmt.Errorf("error loading config file %s: %s", configPath, err)
+	}
+
+	err = client.preLoadConfig(configPath)
+	return &client, err
+}
+
+func (c *Client) preLoadConfig(configPath string) error {
+	if envDebug {
+		log.Printf("[INFO] Loading profile from %s\n", configPath)
+	}
+
+	if err := c.LoadConfig(&LoadConfigOptions{
+		Path:            configPath,
+		SkipLoadProfile: true,
+	}); err != nil {
+		return err
+	}
+
+	// We don't want to load the profile until the user is actually making requests
+	c.OnBeforeRequest(func(request *Request) error {
+		if c.loadedProfile != c.selectedProfile {
+			if err := c.UseProfile(c.selectedProfile); err != nil {
+				return err
+			}
+		}
+
+		return nil
+	})
+
+	return nil
 }
 
 // nolint
