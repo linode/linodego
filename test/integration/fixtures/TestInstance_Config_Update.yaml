@@ -14,9 +14,9 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 36182308, "label": "linodego-test-instance-wo-disk", "group": "",
+    body: '{"id": 36364311, "label": "linodego-test-instance-wo-disk", "group": "",
       "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["170.187.153.139"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["170.187.203.10"], "ipv6": "1234::5678/128",
       "image": null, "region": "us-southeast", "specs": {"disk": 25600, "memory":
       1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
@@ -36,7 +36,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "641"
+      - "640"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -73,10 +73,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/36182308/configs
+    url: https://api.linode.com/v4beta/linode/instances/36364311/configs
     method: POST
   response:
-    body: '{"id": 38517845, "label": "linodego-test-config", "helpers": {"updatedb_disabled":
+    body: '{"id": 38714864, "label": "linodego-test-config", "helpers": {"updatedb_disabled":
       true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
       true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
@@ -134,10 +134,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/36182308/configs/38517845
+    url: https://api.linode.com/v4beta/linode/instances/36364311/configs/38714864
     method: PUT
   response:
-    body: '{"id": 38517845, "label": "bar", "helpers": {"updatedb_disabled": true,
+    body: '{"id": 38714864, "label": "bar", "helpers": {"updatedb_disabled": true,
       "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
       true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/root",
@@ -195,7 +195,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/36182308
+    url: https://api.linode.com/v4beta/linode/instances/36364311
     method: DELETE
   response:
     body: '{}'

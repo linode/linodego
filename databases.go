@@ -33,6 +33,7 @@ const (
 
 const (
 	DatabaseEngineTypeMySQL DatabaseEngineType = "mysql"
+	DatabaseEngineTypeMongo DatabaseEngineType = "mongodb"
 )
 
 const (
@@ -132,6 +133,15 @@ type DatabaseEngine struct {
 	ID      string `json:"id"`
 	Engine  string `json:"engine"`
 	Version string `json:"version"`
+}
+
+// DatabaseMaintenanceWindow stores information about a MySQL cluster's maintenance window
+type DatabaseMaintenanceWindow struct {
+	DayOfWeek   DatabaseDayOfWeek            `json:"day_of_week"`
+	Duration    int                          `json:"duration"`
+	Frequency   DatabaseMaintenanceFrequency `json:"frequency"`
+	HourOfDay   int                          `json:"hour_of_day"`
+	WeekOfMonth *int                         `json:"week_of_month"`
 }
 
 // DatabaseType is information about the supported Database Types by Linode Managed Databases

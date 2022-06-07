@@ -11,6 +11,8 @@ import (
 
 type MySQLDatabaseTarget string
 
+type MySQLDatabaseMaintenanceWindow = DatabaseMaintenanceWindow
+
 const (
 	MySQLDatabaseTargetPrimary   MySQLDatabaseTarget = "primary"
 	MySQLDatabaseTargetSecondary MySQLDatabaseTarget = "secondary"
@@ -18,23 +20,23 @@ const (
 
 // A MySQLDatabase is a instance of Linode MySQL Managed Databases
 type MySQLDatabase struct {
-	ID              int                            `json:"id"`
-	Status          DatabaseStatus                 `json:"status"`
-	Label           string                         `json:"label"`
-	Hosts           DatabaseHost                   `json:"hosts"`
-	Region          string                         `json:"region"`
-	Type            string                         `json:"type"`
-	Engine          string                         `json:"engine"`
-	Version         string                         `json:"version"`
-	ClusterSize     int                            `json:"cluster_size"`
-	ReplicationType string                         `json:"replication_type"`
-	SSLConnection   bool                           `json:"ssl_connection"`
-	Encrypted       bool                           `json:"encrypted"`
-	AllowList       []string                       `json:"allow_list"`
-	InstanceURI     string                         `json:"instance_uri"`
-	Created         *time.Time                     `json:"-"`
-	Updated         *time.Time                     `json:"-"`
-	Updates         MySQLDatabaseMaintenanceWindow `json:"updates"`
+	ID              int                       `json:"id"`
+	Status          DatabaseStatus            `json:"status"`
+	Label           string                    `json:"label"`
+	Hosts           DatabaseHost              `json:"hosts"`
+	Region          string                    `json:"region"`
+	Type            string                    `json:"type"`
+	Engine          string                    `json:"engine"`
+	Version         string                    `json:"version"`
+	ClusterSize     int                       `json:"cluster_size"`
+	ReplicationType string                    `json:"replication_type"`
+	SSLConnection   bool                      `json:"ssl_connection"`
+	Encrypted       bool                      `json:"encrypted"`
+	AllowList       []string                  `json:"allow_list"`
+	InstanceURI     string                    `json:"instance_uri"`
+	Created         *time.Time                `json:"-"`
+	Updated         *time.Time                `json:"-"`
+	Updates         DatabaseMaintenanceWindow `json:"updates"`
 }
 
 func (d *MySQLDatabase) UnmarshalJSON(b []byte) error {
@@ -59,31 +61,22 @@ func (d *MySQLDatabase) UnmarshalJSON(b []byte) error {
 
 // MySQLCreateOptions fields are used when creating a new MySQL Database
 type MySQLCreateOptions struct {
-	AllowList       []string `json:"allow_list"`
 	Label           string   `json:"label"`
 	Region          string   `json:"region"`
 	Type            string   `json:"type"`
 	Engine          string   `json:"engine"`
-	ReplicationType string   `json:"replication_type"`
-	ClusterSize     int      `json:"cluster_size"`
-	Encrypted       bool     `json:"encrypted"`
-	SSLConnection   bool     `json:"ssl_connection"`
-}
-
-// MySQLDatabaseMaintenanceWindow stores information about a MySQL cluster's maintenance window
-type MySQLDatabaseMaintenanceWindow struct {
-	DayOfWeek   DatabaseDayOfWeek            `json:"day_of_week"`
-	Duration    int                          `json:"duration"`
-	Frequency   DatabaseMaintenanceFrequency `json:"frequency"`
-	HourOfDay   int                          `json:"hour_of_day"`
-	WeekOfMonth *int                         `json:"week_of_month"`
+	AllowList       []string `json:"allow_list,omitempty"`
+	ReplicationType string   `json:"replication_type,omitempty"`
+	ClusterSize     int      `json:"cluster_size,omitempty"`
+	Encrypted       bool     `json:"encrypted,omitempty"`
+	SSLConnection   bool     `json:"ssl_connection,omitempty"`
 }
 
 // MySQLUpdateOptions fields are used when altering the existing MySQL Database
 type MySQLUpdateOptions struct {
-	Label     string                          `json:"label,omitempty"`
-	AllowList []string                        `json:"allow_list,omitempty"`
-	Updates   *MySQLDatabaseMaintenanceWindow `json:"updates,omitempty"`
+	Label     string                     `json:"label,omitempty"`
+	AllowList []string                   `json:"allow_list,omitempty"`
+	Updates   *DatabaseMaintenanceWindow `json:"updates,omitempty"`
 }
 
 // MySQLDatabaseBackup is information for interacting with a backup for the existing MySQL Database

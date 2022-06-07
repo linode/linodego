@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 62244, "label": "hFpvoOKDOlaY-linodego-testing", "created": "2018-01-02T03:04:05",
+    body: '{"id": 64378, "label": "hFpvoOKDOlaY-linodego-testing", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"action": "ACCEPT", "label": "test-label", "ports": "22", "protocol": "TCP",
       "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy":
@@ -75,7 +75,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: GET
   response:
-    body: '{"data": [{"id": 62244, "label": "hFpvoOKDOlaY-linodego-testing", "created":
+    body: '{"data": [{"id": 64378, "label": "hFpvoOKDOlaY-linodego-testing", "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "status": "enabled",
       "rules": {"inbound": [{"action": "ACCEPT", "label": "test-label", "ports": "22",
       "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}],
@@ -136,7 +136,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/62244
+    url: https://api.linode.com/v4beta/networking/firewalls/64378
     method: DELETE
   response:
     body: '{}'
