@@ -85,9 +85,9 @@ func TestClient_NewFromEnv(t *testing.T) {
 
 const configNewFromEnv = `
 [default]
-linode_api_url = api.cool.linode.com
-linode_api_version = v4beta
+api_url = api.cool.linode.com
+api_version = v4beta
 
 [cool]
-linode_api_token = blah
+token = blah
 `
