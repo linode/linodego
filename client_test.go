@@ -64,6 +64,7 @@ func TestClient_NewFromEnv(t *testing.T) {
 	file := createTestConfig(t, configNewFromEnv)
 
 	// This is cool
+	t.Setenv(APIEnvVar, "")
 	t.Setenv(APIConfigEnvVar, file.Name())
 	t.Setenv(APIConfigProfileEnvVar, "cool")
 
@@ -72,14 +73,33 @@ func TestClient_NewFromEnv(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	expectedURL := "https://api.cool.linode.com/v4beta"
+	if client.selectedProfile != "cool" {
+		t.Fatalf("mismatched profile: %s != %s", client.selectedProfile, "cool")
+	}
 
-	if client.resty.HostURL != expectedURL {
-		t.Fatalf("mismatched host url: %s != %s", client.resty.HostURL, expectedURL)
+	if client.loadedProfile != "" {
+		t.Fatal("expected empty loaded profile")
+	}
+
+	if err := client.UseProfile("cool"); err != nil {
+		t.Fatal(err)
+	}
+
+	if client.loadedProfile != "cool" {
+		t.Fatal("expected cool as loaded profile")
+	}
+}
+
+func TestClient_NewFromEnvToken(t *testing.T) {
+	t.Setenv(APIEnvVar, "blah")
+
+	client, err := NewClientFromEnv(nil)
+	if err != nil {
+		t.Fatal(err)
 	}
 
 	if client.resty.Header.Get("Authorization") != "Bearer blah" {
-		t.Fatalf("token not found in auth header: %s", "blah")
+		t.Fatal("token not found in auth header: blah")
 	}
 }
 

@@ -52,9 +52,11 @@ type Client struct {
 
 	millisecondsPerPoll time.Duration
 
-	baseURL    string
-	apiVersion string
-	apiProto   string
+	baseURL         string
+	apiVersion      string
+	apiProto        string
+	selectedProfile string
+	loadedProfile   string
 
 	configProfiles map[string]ConfigProfile
 
@@ -123,7 +125,7 @@ type Client struct {
 }
 
 type EnvDefaults struct {
-	Token string
+	Token   string
 	Profile string
 }
 
@@ -348,19 +350,26 @@ func NewClient(hc *http.Client) (client Client) {
 
 // NewClientFromEnv creates a Client and initializes it with values
 // from the LINODE_CONFIG file and the LINODE_TOKEN environment variable.
-func NewClientFromEnv(hc *http.Client) (Client, error) {
+func NewClientFromEnv(hc *http.Client) (*Client, error) {
 	client := NewClient(hc)
 
 	// Users are expected to chain NewClient(...) and LoadConfig(...) to customize these options
 	configPath, err := resolveValidConfigPath()
 	if err != nil {
-		return client, err
+		return &client, err
+	}
+
+	// Populate the token from the environment.
+	// Tokens should be first priority to maintain backwards compatibility
+	if token, ok := os.LookupEnv(APIEnvVar); ok && token != "" {
+		client.SetToken(token)
+		return &client, nil
 	}
 
 	if p, ok := os.LookupEnv(APIConfigEnvVar); ok {
 		configPath = p
 	} else if !ok && configPath == "" {
-		return client, fmt.Errorf("no linode config file found")
+		return &client, fmt.Errorf("no linode config or token file found")
 	}
 
 	configProfile := DefaultConfigProfile
@@ -369,23 +378,36 @@ func NewClientFromEnv(hc *http.Client) (Client, error) {
 		configProfile = p
 	}
 
+	client.selectedProfile = configProfile
+
+	// We should only load the config if the config file exists
 	if _, err := os.Stat(configPath); err == nil {
-		if err := client.LoadConfig(&LoadConfigOptions{
-			Path:    configPath,
-			Profile: configProfile,
-		}); err != nil {
-			return client, err
+		if envDebug {
+			log.Printf("[INFO] Loading profile from %s\n", configPath)
 		}
 
-		return client, nil
+		if err := client.LoadConfig(&LoadConfigOptions{
+			Path:            configPath,
+			SkipLoadProfile: true,
+		}); err != nil {
+			return &client, err
+		}
+
+		// We don't want to load the profile until the user is actually making requests
+		client.OnBeforeRequest(func(request *Request) error {
+			if client.loadedProfile != client.selectedProfile {
+				if err := client.UseProfile(client.selectedProfile); err != nil {
+					return err
+				}
+			}
+
+			return nil
+		})
+
+		return &client, nil
 	}
 
-	// Populate the token from the environment
-	if token, ok := os.LookupEnv(APIEnvVar); ok {
-		client.SetToken(token)
-	}
-
-	return client, nil
+	return &client, nil
 }
 
 // nolint

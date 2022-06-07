@@ -24,8 +24,9 @@ type ConfigProfile struct {
 }
 
 type LoadConfigOptions struct {
-	Path    string
-	Profile string
+	Path            string
+	Profile         string
+	SkipLoadProfile bool
 }
 
 // LoadConfig loads a Linode config according to the options argument.
@@ -83,8 +84,10 @@ func (c *Client) LoadConfig(options *LoadConfigOptions) error {
 
 	c.configProfiles = result
 
-	if err := c.UseProfile(profileOption); err != nil {
-		return fmt.Errorf("unable to use profile %s: %s", profileOption, err)
+	if !options.SkipLoadProfile {
+		if err := c.UseProfile(profileOption); err != nil {
+			return fmt.Errorf("unable to use profile %s: %s", profileOption, err)
+		}
 	}
 
 	return nil
@@ -115,6 +118,8 @@ func (c *Client) UseProfile(name string) error {
 	c.SetToken(profile.APIToken)
 	c.SetBaseURL(profile.APIURL)
 	c.SetAPIVersion(profile.APIVersion)
+	c.selectedProfile = name
+	c.loadedProfile = name
 
 	return nil
 }
