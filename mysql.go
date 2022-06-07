@@ -61,16 +61,15 @@ func (d *MySQLDatabase) UnmarshalJSON(b []byte) error {
 
 // MySQLCreateOptions fields are used when creating a new MySQL Database
 type MySQLCreateOptions struct {
-	Label           string                     `json:"label"`
-	Region          string                     `json:"region"`
-	Type            string                     `json:"type"`
-	Engine          string                     `json:"engine"`
-	AllowList       []string                   `json:"allow_list,omitempty"`
-	ReplicationType string                     `json:"replication_type,omitempty"`
-	ClusterSize     int                        `json:"cluster_size,omitempty"`
-	Encrypted       bool                       `json:"encrypted,omitempty"`
-	SSLConnection   bool                       `json:"ssl_connection,omitempty"`
-	Updates         *DatabaseMaintenanceWindow `json:"updates,omitempty"`
+	Label           string   `json:"label"`
+	Region          string   `json:"region"`
+	Type            string   `json:"type"`
+	Engine          string   `json:"engine"`
+	AllowList       []string `json:"allow_list,omitempty"`
+	ReplicationType string   `json:"replication_type,omitempty"`
+	ClusterSize     int      `json:"cluster_size,omitempty"`
+	Encrypted       bool     `json:"encrypted,omitempty"`
+	SSLConnection   bool     `json:"ssl_connection,omitempty"`
 }
 
 // MySQLUpdateOptions fields are used when altering the existing MySQL Database

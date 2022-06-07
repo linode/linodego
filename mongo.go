@@ -77,15 +77,16 @@ func (d *MongoDatabase) UnmarshalJSON(b []byte) error {
 
 // MongoCreateOptions fields are used when creating a new Mongo Database
 type MongoCreateOptions struct {
-	Label         string                     `json:"label"`
-	Region        string                     `json:"region"`
-	Type          string                     `json:"type"`
-	Engine        string                     `json:"engine"`
-	AllowList     []string                   `json:"allow_list,omitempty"`
-	ClusterSize   int                        `json:"cluster_size,omitempty"`
-	Encrypted     bool                       `json:"encrypted,omitempty"`
-	SSLConnection bool                       `json:"ssl_connection,omitempty"`
-	Updates       *DatabaseMaintenanceWindow `json:"updates,omitempty"`
+	Label           string               `json:"label"`
+	Region          string               `json:"region"`
+	Type            string               `json:"type"`
+	Engine          string               `json:"engine"`
+	AllowList       []string             `json:"allow_list,omitempty"`
+	ClusterSize     int                  `json:"cluster_size,omitempty"`
+	Encrypted       bool                 `json:"encrypted,omitempty"`
+	SSLConnection   bool                 `json:"ssl_connection,omitempty"`
+	CompressionType MongoCompressionType `json:"compression_type,omitempty"`
+	StorageEngine   MongoStorageEngine   `json:"storage_engine,omitempty"`
 }
 
 // MongoUpdateOptions fields are used when altering the existing Mongo Database
