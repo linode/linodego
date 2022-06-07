@@ -356,7 +356,7 @@ func NewClientFromEnv(hc *http.Client) (*Client, error) {
 	// Users are expected to chain NewClient(...) and LoadConfig(...) to customize these options
 	configPath, err := resolveValidConfigPath()
 	if err != nil {
-		return &client, err
+		return nil, err
 	}
 
 	// Populate the token from the environment.
@@ -369,7 +369,7 @@ func NewClientFromEnv(hc *http.Client) (*Client, error) {
 	if p, ok := os.LookupEnv(APIConfigEnvVar); ok {
 		configPath = p
 	} else if !ok && configPath == "" {
-		return &client, fmt.Errorf("no linode config or token file found")
+		return nil, fmt.Errorf("no linode config file or token found")
 	}
 
 	configProfile := DefaultConfigProfile
@@ -381,33 +381,38 @@ func NewClientFromEnv(hc *http.Client) (*Client, error) {
 	client.selectedProfile = configProfile
 
 	// We should only load the config if the config file exists
-	if _, err := os.Stat(configPath); err == nil {
-		if envDebug {
-			log.Printf("[INFO] Loading profile from %s\n", configPath)
-		}
-
-		if err := client.LoadConfig(&LoadConfigOptions{
-			Path:            configPath,
-			SkipLoadProfile: true,
-		}); err != nil {
-			return &client, err
-		}
-
-		// We don't want to load the profile until the user is actually making requests
-		client.OnBeforeRequest(func(request *Request) error {
-			if client.loadedProfile != client.selectedProfile {
-				if err := client.UseProfile(client.selectedProfile); err != nil {
-					return err
-				}
-			}
-
-			return nil
-		})
-
-		return &client, nil
+	if _, err := os.Stat(configPath); err != nil {
+		return nil, fmt.Errorf("error loading config file %s: %s", configPath, err)
 	}
 
-	return &client, nil
+	err = client.preLoadConfig(configPath)
+	return &client, err
+}
+
+func (c *Client) preLoadConfig(configPath string) error {
+	if envDebug {
+		log.Printf("[INFO] Loading profile from %s\n", configPath)
+	}
+
+	if err := c.LoadConfig(&LoadConfigOptions{
+		Path:            configPath,
+		SkipLoadProfile: true,
+	}); err != nil {
+		return err
+	}
+
+	// We don't want to load the profile until the user is actually making requests
+	c.OnBeforeRequest(func(request *Request) error {
+		if c.loadedProfile != c.selectedProfile {
+			if err := c.UseProfile(c.selectedProfile); err != nil {
+				return err
+			}
+		}
+
+		return nil
+	})
+
+	return nil
 }
 
 // nolint
