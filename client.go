@@ -122,6 +122,11 @@ type Client struct {
 	Volumes                  *Resource
 }
 
+type EnvDefaults struct {
+	Token string
+	Profile string
+}
+
 type Request = resty.Request
 
 func init() {
