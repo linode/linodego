@@ -92,7 +92,7 @@ type MongoCreateOptions struct {
 // MongoUpdateOptions fields are used when altering the existing Mongo Database
 type MongoUpdateOptions struct {
 	Label     string                     `json:"label,omitempty"`
-	AllowList []string                   `json:"allow_list,omitempty"`
+	AllowList *[]string                  `json:"allow_list,omitempty"`
 	Updates   *DatabaseMaintenanceWindow `json:"updates,omitempty"`
 }
 

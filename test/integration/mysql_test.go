@@ -71,8 +71,10 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 		WeekOfMonth: &week,
 	}
 
+	allowList := []string{"128.173.205.21", "123.177.200.20"}
+
 	opts := linodego.MySQLUpdateOptions{
-		AllowList: []string{"128.173.205.21", "123.177.200.20"},
+		AllowList: &allowList,
 		Label:     fmt.Sprintf("%s-updated", database.Label),
 		Updates:   &updatedWindow,
 	}
