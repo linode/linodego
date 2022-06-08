@@ -5,7 +5,7 @@ require (
 	github.com/google/go-cmp v0.5.7
 	github.com/stretchr/testify v1.7.1 // indirect
 	golang.org/x/oauth2 v0.0.0-20190604053449-0f29369cfe45
-	gopkg.in/ini.v1 v1.66.4
+	gopkg.in/ini.v1 v1.66.6
 )
 
 require (
