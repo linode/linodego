@@ -176,6 +176,10 @@ func TestDatabase_Mongo_Suite(t *testing.T) {
 		t.Fatalf("backup label mismatch: %v != %v", testMongoBackupLabel, backup.Label)
 	}
 
+	if backup.Created == nil {
+		t.Fatalf("expected value for created, got nil")
+	}
+
 	// Wait for the DB to re-enter active status before final deletion
 	if err := client.WaitForDatabaseStatus(
 		context.Background(), database.ID, linodego.DatabaseEngineTypeMongo,

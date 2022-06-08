@@ -173,6 +173,10 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 		t.Fatalf("backup label mismatch: %v != %v", testMySQLBackupLabel, backup.Label)
 	}
 
+	if backup.Created == nil {
+		t.Fatalf("expected value for created, got nil")
+	}
+
 	// Wait for the DB to re-enter active status after backup
 	if err := client.WaitForDatabaseStatus(
 		context.Background(), database.ID, linodego.DatabaseEngineTypeMySQL,
