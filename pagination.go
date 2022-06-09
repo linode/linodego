@@ -139,6 +139,12 @@ func (c *Client) listHelper(ctx context.Context, i interface{}, opts *ListOption
 			results = r.Result().(*MongoDatabasesPagedResponse).Results
 			v.appendData(r.Result().(*MongoDatabasesPagedResponse))
 		}
+	case *PostgresDatabasesPagedResponse:
+		if r, err = coupleAPIErrors(req.SetResult(PostgresDatabasesPagedResponse{}).Get(v.endpoint(c))); err == nil {
+			pages = r.Result().(*PostgresDatabasesPagedResponse).Pages
+			results = r.Result().(*PostgresDatabasesPagedResponse).Results
+			v.appendData(r.Result().(*PostgresDatabasesPagedResponse))
+		}
 	case *DomainsPagedResponse:
 		if r, err = coupleAPIErrors(req.SetResult(DomainsPagedResponse{}).Get(v.endpoint(c))); err == nil {
 			response, ok := r.Result().(*DomainsPagedResponse)
@@ -418,6 +424,12 @@ func (c *Client) listHelperWithID(ctx context.Context, i interface{}, idRaw inte
 			pages = r.Result().(*MongoDatabaseBackupsPagedResponse).Pages
 			results = r.Result().(*MongoDatabaseBackupsPagedResponse).Results
 			v.appendData(r.Result().(*MongoDatabaseBackupsPagedResponse))
+		}
+	case *PostgresDatabaseBackupsPagedResponse:
+		if r, err = coupleAPIErrors(req.SetResult(PostgresDatabaseBackupsPagedResponse{}).Get(v.endpointWithID(c, id))); err == nil {
+			pages = r.Result().(*PostgresDatabaseBackupsPagedResponse).Pages
+			results = r.Result().(*PostgresDatabaseBackupsPagedResponse).Results
+			v.appendData(r.Result().(*PostgresDatabaseBackupsPagedResponse))
 		}
 	case *NodeBalancerConfigsPagedResponse:
 		if r, err = coupleAPIErrors(req.SetResult(NodeBalancerConfigsPagedResponse{}).Get(v.endpointWithID(c, id))); err == nil {
