@@ -92,7 +92,7 @@ type MongoCreateOptions struct {
 // MongoUpdateOptions fields are used when altering the existing Mongo Database
 type MongoUpdateOptions struct {
 	Label     string                     `json:"label,omitempty"`
-	AllowList []string                   `json:"allow_list,omitempty"`
+	AllowList *[]string                  `json:"allow_list,omitempty"`
 	Updates   *DatabaseMaintenanceWindow `json:"updates,omitempty"`
 }
 
@@ -142,6 +142,24 @@ type MongoDatabaseBackup struct {
 	Label   string     `json:"label"`
 	Type    string     `json:"type"`
 	Created *time.Time `json:"-"`
+}
+
+func (d *MongoDatabaseBackup) UnmarshalJSON(b []byte) error {
+	type Mask MongoDatabaseBackup
+
+	p := struct {
+		*Mask
+		Created *parseabletime.ParseableTime `json:"created"`
+	}{
+		Mask: (*Mask)(d),
+	}
+
+	if err := json.Unmarshal(b, &p); err != nil {
+		return err
+	}
+
+	d.Created = (*time.Time)(p.Created)
+	return nil
 }
 
 // MongoBackupCreateOptions are options used for CreateMongoDatabaseBackup(...)

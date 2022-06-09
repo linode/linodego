@@ -70,8 +70,10 @@ func TestDatabase_Mongo_Suite(t *testing.T) {
 		WeekOfMonth: &week,
 	}
 
+	allowList := []string{"128.173.205.21", "123.177.200.20"}
+
 	opts := linodego.MongoUpdateOptions{
-		AllowList: []string{"128.173.205.21", "123.177.200.20"},
+		AllowList: &allowList,
 		Label:     fmt.Sprintf("%s-updated", database.Label),
 		Updates:   &updatedWindow,
 	}
@@ -79,6 +81,8 @@ func TestDatabase_Mongo_Suite(t *testing.T) {
 	if err != nil {
 		t.Errorf("failed to update db %d: %v", database.ID, err)
 	}
+
+	waitForDatabaseUpdated(t, client, db.ID, linodego.DatabaseEngineTypeMongo, db.Created)
 
 	if db.ID != database.ID {
 		t.Errorf("updated db does not match original id")
@@ -172,6 +176,10 @@ func TestDatabase_Mongo_Suite(t *testing.T) {
 
 	if backup.Label != testMongoBackupLabel {
 		t.Fatalf("backup label mismatch: %v != %v", testMongoBackupLabel, backup.Label)
+	}
+
+	if backup.Created == nil {
+		t.Fatalf("expected value for created, got nil")
 	}
 
 	// Wait for the DB to re-enter active status before final deletion

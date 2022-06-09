@@ -3,6 +3,7 @@ package integration
 import (
 	"context"
 	"testing"
+	"time"
 
 	"github.com/google/go-cmp/cmp/cmpopts"
 	"github.com/linode/linodego"
@@ -86,5 +87,21 @@ func TestDatabase_List(t *testing.T) {
 	}
 	if !success {
 		t.Error("database not in database list")
+	}
+}
+
+func waitForDatabaseUpdated(t *testing.T, client *linodego.Client, dbID int,
+	dbType linodego.DatabaseEngineType, minStart *time.Time) {
+	_, err := client.WaitForEventFinished(context.Background(), dbID, linodego.EntityDatabase,
+		linodego.ActionDatabaseUpdate, *minStart, 1200)
+	if err != nil {
+		t.Fatalf("failed to wait for database update: %s", err)
+	}
+
+	// Sometimes the event has finished but the status hasn't caught up
+	err = client.WaitForDatabaseStatus(context.Background(), dbID, dbType,
+		linodego.DatabaseStatusActive, 120)
+	if err != nil {
+		t.Fatalf("failed to wait for database active: %s", err)
 	}
 }
