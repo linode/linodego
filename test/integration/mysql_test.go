@@ -71,8 +71,10 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 		WeekOfMonth: &week,
 	}
 
+	allowList := []string{"128.173.205.21", "123.177.200.20"}
+
 	opts := linodego.MySQLUpdateOptions{
-		AllowList: []string{"128.173.205.21", "123.177.200.20"},
+		AllowList: &allowList,
 		Label:     fmt.Sprintf("%s-updated", database.Label),
 		Updates:   &updatedWindow,
 	}
@@ -80,6 +82,8 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 	if err != nil {
 		t.Errorf("failed to update db %d: %v", database.ID, err)
 	}
+
+	waitForDatabaseUpdated(t, client, db.ID, linodego.DatabaseEngineTypeMySQL, db.Created)
 
 	if db.ID != database.ID {
 		t.Errorf("updated db does not match original id")
@@ -169,6 +173,10 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 
 	if backup.Label != testMySQLBackupLabel {
 		t.Fatalf("backup label mismatch: %v != %v", testMySQLBackupLabel, backup.Label)
+	}
+
+	if backup.Created == nil {
+		t.Fatalf("expected value for created, got nil")
 	}
 
 	// Wait for the DB to re-enter active status after backup
