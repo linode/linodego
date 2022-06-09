@@ -83,6 +83,8 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 		t.Errorf("failed to update db %d: %v", database.ID, err)
 	}
 
+	waitForDatabaseUpdated(t, client, db.ID, linodego.DatabaseEngineTypeMySQL, db.Created)
+
 	if db.ID != database.ID {
 		t.Errorf("updated db does not match original id")
 	}
@@ -171,6 +173,10 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 
 	if backup.Label != testMySQLBackupLabel {
 		t.Fatalf("backup label mismatch: %v != %v", testMySQLBackupLabel, backup.Label)
+	}
+
+	if backup.Created == nil {
+		t.Fatalf("expected value for created, got nil")
 	}
 
 	// Wait for the DB to re-enter active status after backup
