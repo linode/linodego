@@ -82,6 +82,8 @@ func TestDatabase_Mongo_Suite(t *testing.T) {
 		t.Errorf("failed to update db %d: %v", database.ID, err)
 	}
 
+	waitForDatabaseUpdated(t, client, db.ID, linodego.DatabaseEngineTypeMongo, db.Created)
+
 	if db.ID != database.ID {
 		t.Errorf("updated db does not match original id")
 	}
@@ -174,6 +176,10 @@ func TestDatabase_Mongo_Suite(t *testing.T) {
 
 	if backup.Label != testMongoBackupLabel {
 		t.Fatalf("backup label mismatch: %v != %v", testMongoBackupLabel, backup.Label)
+	}
+
+	if backup.Created == nil {
+		t.Fatalf("expected value for created, got nil")
 	}
 
 	// Wait for the DB to re-enter active status before final deletion
