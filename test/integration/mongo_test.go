@@ -82,6 +82,8 @@ func TestDatabase_Mongo_Suite(t *testing.T) {
 		t.Errorf("failed to update db %d: %v", database.ID, err)
 	}
 
+	waitForDatabaseUpdated(t, client, db.ID, linodego.DatabaseEngineTypeMongo, db.Created)
+
 	if db.ID != database.ID {
 		t.Errorf("updated db does not match original id")
 	}
