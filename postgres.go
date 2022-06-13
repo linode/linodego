@@ -51,7 +51,7 @@ type PostgresDatabase struct {
 	SSLConnection         bool                      `json:"ssl_connection"`
 	ClusterSize           int                       `json:"cluster_size"`
 	ReplicationCommitType PostgresCommitType        `json:"replication_commit_type"`
-	ReplicationType       PostgresReplicationType   `json:"replication_type`
+	ReplicationType       PostgresReplicationType   `json:"replication_type"`
 	Hosts                 DatabaseHost              `json:"hosts"`
 	Updates               DatabaseMaintenanceWindow `json:"updates"`
 	Created               *time.Time                `json:"-"`
