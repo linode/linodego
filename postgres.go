@@ -45,9 +45,7 @@ type PostgresDatabase struct {
 	Version               string                    `json:"version"`
 	Encrypted             bool                      `json:"encrypted"`
 	AllowList             []string                  `json:"allow_list"`
-	Peers                 []string                  `json:"peers"`
 	Port                  int                       `json:"port"`
-	ReplicaSet            string                    `json:"replica_set"`
 	SSLConnection         bool                      `json:"ssl_connection"`
 	ClusterSize           int                       `json:"cluster_size"`
 	ReplicationCommitType PostgresCommitType        `json:"replication_commit_type"`
