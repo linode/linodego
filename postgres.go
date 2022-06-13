@@ -93,7 +93,7 @@ type PostgresCreateOptions struct {
 // PostgresUpdateOptions fields are used when altering the existing Postgres Database
 type PostgresUpdateOptions struct {
 	Label     string                     `json:"label,omitempty"`
-	AllowList []string                   `json:"allow_list,omitempty"`
+	AllowList *[]string                  `json:"allow_list,omitempty"`
 	Updates   *DatabaseMaintenanceWindow `json:"updates,omitempty"`
 }
 
