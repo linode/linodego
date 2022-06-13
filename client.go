@@ -89,39 +89,40 @@ type Client struct {
 	// Deprecated: Please use LKENodePools
 	LKEClusterPools *Resource
 
-	LKENodePools             *Resource
-	LKEVersions              *Resource
-	Longview                 *Resource
-	LongviewClients          *Resource
-	LongviewSubscriptions    *Resource
-	Managed                  *Resource
-	DatabaseMySQLInstances   *Resource
-	DatabaseMongoInstances   *Resource
-	NodeBalancerConfigs      *Resource
-	NodeBalancerNodes        *Resource
-	NodeBalancerStats        *Resource
-	NodeBalancers            *Resource
-	Notifications            *Resource
-	OAuthClients             *Resource
-	ObjectStorageBuckets     *Resource
-	ObjectStorageBucketCerts *Resource
-	ObjectStorageClusters    *Resource
-	ObjectStorageKeys        *Resource
-	ObjectStorage            *Resource
-	Payments                 *Resource
-	Profile                  *Resource
-	Regions                  *Resource
-	SSHKeys                  *Resource
-	StackScripts             *Resource
-	Tags                     *Resource
-	Tickets                  *Resource
-	Token                    *Resource
-	Tokens                   *Resource
-	Types                    *Resource
-	UserGrants               *Resource
-	Users                    *Resource
-	VLANs                    *Resource
-	Volumes                  *Resource
+	LKENodePools              *Resource
+	LKEVersions               *Resource
+	Longview                  *Resource
+	LongviewClients           *Resource
+	LongviewSubscriptions     *Resource
+	Managed                   *Resource
+	DatabaseMySQLInstances    *Resource
+	DatabaseMongoInstances    *Resource
+	DatabasePostgresInstances *Resource
+	NodeBalancerConfigs       *Resource
+	NodeBalancerNodes         *Resource
+	NodeBalancerStats         *Resource
+	NodeBalancers             *Resource
+	Notifications             *Resource
+	OAuthClients              *Resource
+	ObjectStorageBuckets      *Resource
+	ObjectStorageBucketCerts  *Resource
+	ObjectStorageClusters     *Resource
+	ObjectStorageKeys         *Resource
+	ObjectStorage             *Resource
+	Payments                  *Resource
+	Profile                   *Resource
+	Regions                   *Resource
+	SSHKeys                   *Resource
+	StackScripts              *Resource
+	Tags                      *Resource
+	Tickets                   *Resource
+	Token                     *Resource
+	Tokens                    *Resource
+	Types                     *Resource
+	UserGrants                *Resource
+	Users                     *Resource
+	VLANs                     *Resource
+	Volumes                   *Resource
 }
 
 type EnvDefaults struct {
@@ -452,6 +453,7 @@ func addResources(client *Client) {
 		managedName:                  NewResource(client, managedName, managedEndpoint, false, nil, nil), // really?
 		mysqlName:                    NewResource(client, mysqlName, mysqlEndpoint, false, MySQLDatabase{}, MySQLDatabasesPagedResponse{}),
 		mongoName:                    NewResource(client, mongoName, mongoEndpoint, false, MongoDatabase{}, MongoDatabasesPagedResponse{}),
+		postgresName:                 NewResource(client, postgresName, postgresEndpoint, false, PostgresDatabase{}, PostgresDatabasesPagedResponse{}),
 		nodebalancerconfigsName:      NewResource(client, nodebalancerconfigsName, nodebalancerconfigsEndpoint, true, NodeBalancerConfig{}, NodeBalancerConfigsPagedResponse{}),
 		nodebalancernodesName:        NewResource(client, nodebalancernodesName, nodebalancernodesEndpoint, true, NodeBalancerNode{}, NodeBalancerNodesPagedResponse{}),
 		nodebalancerStatsName:        NewResource(client, nodebalancerStatsName, nodebalancerStatsEndpoint, true, NodeBalancerStats{}, nil),
@@ -511,6 +513,7 @@ func addResources(client *Client) {
 	client.Managed = resources[managedName]
 	client.DatabaseMySQLInstances = resources[mysqlName]
 	client.DatabaseMongoInstances = resources[mongoName]
+	client.DatabasePostgresInstances = resources[postgresName]
 	client.NodeBalancerConfigs = resources[nodebalancerconfigsName]
 	client.NodeBalancerNodes = resources[nodebalancernodesName]
 	client.NodeBalancerStats = resources[nodebalancerStatsName]

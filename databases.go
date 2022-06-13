@@ -32,8 +32,9 @@ const (
 )
 
 const (
-	DatabaseEngineTypeMySQL DatabaseEngineType = "mysql"
-	DatabaseEngineTypeMongo DatabaseEngineType = "mongodb"
+	DatabaseEngineTypeMySQL    DatabaseEngineType = "mysql"
+	DatabaseEngineTypeMongo    DatabaseEngineType = "mongodb"
+	DatabaseEngineTypePostgres DatabaseEngineType = "postgresql"
 )
 
 const (

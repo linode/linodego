@@ -474,6 +474,33 @@ func (client Client) WaitForMongoDatabaseBackup(ctx context.Context, dbID int, l
 	}
 }
 
+// WaitForPostgresDatabaseBackup waits for the backup with the given label to be available.
+func (client Client) WaitForPostgresDatabaseBackup(ctx context.Context, dbID int, label string, timeoutSeconds int) (*PostgresDatabaseBackup, error) {
+	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
+	defer cancel()
+
+	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
+	defer ticker.Stop()
+
+	for {
+		select {
+		case <-ticker.C:
+			backups, err := client.ListPostgresDatabaseBackups(ctx, dbID, nil)
+			if err != nil {
+				return nil, err
+			}
+
+			for _, backup := range backups {
+				if backup.Label == label {
+					return &backup, nil
+				}
+			}
+		case <-ctx.Done():
+			return nil, fmt.Errorf("failed to wait for backup %s: %s", label, ctx.Err())
+		}
+	}
+}
+
 type databaseStatusFunc func(ctx context.Context, client Client, dbID int) (DatabaseStatus, error)
 
 var databaseStatusHandlers = map[DatabaseEngineType]databaseStatusFunc{
@@ -487,6 +514,14 @@ var databaseStatusHandlers = map[DatabaseEngineType]databaseStatusFunc{
 	},
 	DatabaseEngineTypeMongo: func(ctx context.Context, client Client, dbID int) (DatabaseStatus, error) {
 		db, err := client.GetMongoDatabase(ctx, dbID)
+		if err != nil {
+			return "", err
+		}
+
+		return db.Status, nil
+	},
+	DatabaseEngineTypePostgres: func(ctx context.Context, client Client, dbID int) (DatabaseStatus, error) {
+		db, err := client.GetPostgresDatabase(ctx, dbID)
 		if err != nil {
 			return "", err
 		}
