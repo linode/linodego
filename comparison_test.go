@@ -7,8 +7,8 @@ import (
 )
 
 func TestFilter(t *testing.T) {
-	expected := map[string]interface{}{
-		"vcpus": map[string]interface{}{
+	expected := map[string]any{
+		"vcpus": map[string]any{
 			"+gte": 12,
 		},
 		"class": "standard",
@@ -34,8 +34,8 @@ func TestFilter(t *testing.T) {
 }
 
 func TestFilterAscending(t *testing.T) {
-	expected := map[string]interface{}{
-		"vcpus": map[string]interface{}{
+	expected := map[string]any{
+		"vcpus": map[string]any{
 			"+gte": 12,
 		},
 		"class":     "standard",
@@ -66,8 +66,8 @@ func TestFilterAscending(t *testing.T) {
 }
 
 func TestFilterDescending(t *testing.T) {
-	expected := map[string]interface{}{
-		"vcpus": map[string]interface{}{
+	expected := map[string]any{
+		"vcpus": map[string]any{
 			"+gte": 12,
 		},
 		"class":     "standard",
@@ -98,10 +98,10 @@ func TestFilterDescending(t *testing.T) {
 }
 
 func TestFilterAnd(t *testing.T) {
-	expected := map[string]interface{}{
-		"+and": []map[string]interface{}{
+	expected := map[string]any{
+		"+and": []map[string]any{
 			{
-				"vcpus": map[string]interface{}{
+				"vcpus": map[string]any{
 					"+gte": 12,
 				},
 			},
@@ -131,10 +131,10 @@ func TestFilterAnd(t *testing.T) {
 }
 
 func TestFilterOr(t *testing.T) {
-	expected := map[string]interface{}{
-		"+or": []map[string]interface{}{
+	expected := map[string]any{
+		"+or": []map[string]any{
 			{
-				"vcpus": map[string]interface{}{
+				"vcpus": map[string]any{
 					"+gte": 12,
 				},
 			},
