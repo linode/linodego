@@ -42,7 +42,7 @@ import (
 	"fmt"
 
 	"github.com/linode/linodego"
-	"golang.org/x/oauth2"
+	"golang.com/x/oauth2"
 
 	"log"
 	"net/http"
