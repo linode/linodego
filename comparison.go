@@ -20,7 +20,7 @@ const (
 
 type FilterNode interface {
 	Key() string
-	JSONValueSegment() interface{}
+	JSONValueSegment() any
 }
 
 type Filter struct {
@@ -33,12 +33,12 @@ type Filter struct {
 	Order string
 }
 
-func (f *Filter) AddField(op FilterOperator, key string, value interface{}) {
+func (f *Filter) AddField(op FilterOperator, key string, value any) {
 	f.Children = append(f.Children, &Comp{key, op, value})
 }
 
 func (f *Filter) MarshalJSON() ([]byte, error) {
-	result := make(map[string]interface{})
+	result := make(map[string]any)
 
 	if f.OrderBy != "" {
 		result["+order_by"] = f.OrderBy
@@ -56,9 +56,9 @@ func (f *Filter) MarshalJSON() ([]byte, error) {
 		return json.Marshal(result)
 	}
 
-	fields := make([]map[string]interface{}, len(f.Children))
+	fields := make([]map[string]any, len(f.Children))
 	for i, c := range f.Children {
-		fields[i] = map[string]interface{}{
+		fields[i] = map[string]any{
 			c.Key(): c.JSONValueSegment(),
 		}
 	}
@@ -71,19 +71,19 @@ func (f *Filter) MarshalJSON() ([]byte, error) {
 type Comp struct {
 	Column   string
 	Operator FilterOperator
-	Value    interface{}
+	Value    any
 }
 
 func (c *Comp) Key() string {
 	return c.Column
 }
 
-func (c *Comp) JSONValueSegment() interface{} {
+func (c *Comp) JSONValueSegment() any {
 	if c.Operator == Eq {
 		return c.Value
 	}
 
-	return map[string]interface{}{
+	return map[string]any{
 		string(c.Operator): c.Value,
 	}
 }
