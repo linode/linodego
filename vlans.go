@@ -65,7 +65,7 @@ func (c *Client) ListVLANs(ctx context.Context, opts *ListOptions) ([]VLAN, erro
 	return response.Data, nil
 }
 
-// GetVLANIPAM return the IPAM Address for a given VLAN Label as a string (10.0.0.1/24)
+// GetVLANIPAMAddress returns the IPAM Address for a given VLAN Label as a string (10.0.0.1/24)
 func (c *Client) GetVLANIPAMAddress(ctx context.Context, linodeID int, vlanLabel string) (string, error) {
 	f := Filter{}
 	f.AddField(Eq, "interfaces", vlanLabel)
