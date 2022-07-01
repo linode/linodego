@@ -88,9 +88,9 @@ func createVLANInstance(t *testing.T, client *linodego.Client, instanceName, vla
 	instance, err := createInstance(t, client, func(opts *linodego.InstanceCreateOptions) {
 		opts.Interfaces = []linodego.InstanceConfigInterface{
 			{
-				IPAMAddress: "10.0.0.1/24",
 				Label:       vlanName,
 				Purpose:     linodego.InterfacePurposeVLAN,
+				IPAMAddress: "10.0.0.1/24",
 			},
 		}
 

@@ -86,5 +86,5 @@ func (c *Client) GetVLANIPAMAddress(ctx context.Context, linodeID int, vlanLabel
 		}
 	}
 
-	return "", fmt.Errorf("Failed to find IPAMAddress for %s VLAN: %s", vlanLabel, err)
+	return "", fmt.Errorf("Failed to find IPAMAddress for VLAN: %s", vlanLabel)
 }
