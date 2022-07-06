@@ -3,14 +3,15 @@ package integration
 import (
 	"context"
 	"fmt"
+	"regexp"
 	"testing"
 
 	"github.com/linode/linodego"
 )
 
 func TestVLANs_List(t *testing.T) {
-	instancePrefix := "linodego-testing-" + randString(12, lowerBytes, upperBytes)
-	vlanName := "linodego-really-cool-vlan-" + randString(12, lowerBytes, upperBytes)
+	instancePrefix := "linodego-testing-vlans-list"
+	vlanName := "linodego-really-cool-vlan-list"
 
 	client, fixturesTeardown := createTestClient(t, "fixtures/TestVLANs_List")
 	defer fixturesTeardown()
@@ -50,6 +51,35 @@ func TestVLANs_List(t *testing.T) {
 	}
 }
 
+func TestVLANs_GetIPAMAddress(t *testing.T) {
+	instancePrefix := "linodego-testing-vlan-ipamaddress"
+	vlanName := "linodego-really-cool-vlan-ipamaddress"
+
+	client, fixturesTeardown := createTestClient(t, "fixtures/TestVLANs_GetIPAMAddress")
+	defer fixturesTeardown()
+
+	instance, instanceTeardown, err := createVLANInstance(t, client, instancePrefix, vlanName)
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer instanceTeardown()
+
+	_, err = client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceRunning, 240)
+	if err != nil {
+		t.Error(err)
+	}
+
+	ipam, err := client.GetVLANIPAMAddress(context.Background(), instance.ID, vlanName)
+	if err != nil {
+		t.Error(err)
+	}
+
+	r, _ := regexp.Compile(`^(?:[0-9]{1,3}\.){3}[0-9]{1,3}/[0-9]{2}`)
+	if !r.MatchString(ipam) {
+		t.Errorf("Result does not match regular expression: %s", ipam)
+	}
+}
+
 func createVLANInstance(t *testing.T, client *linodego.Client, instanceName, vlanName string) (*linodego.Instance, func(), error) {
 	t.Helper()
 
@@ -58,8 +88,9 @@ func createVLANInstance(t *testing.T, client *linodego.Client, instanceName, vla
 	instance, err := createInstance(t, client, func(opts *linodego.InstanceCreateOptions) {
 		opts.Interfaces = []linodego.InstanceConfigInterface{
 			{
-				Label:   vlanName,
-				Purpose: linodego.InterfacePurposeVLAN,
+				Label:       vlanName,
+				Purpose:     linodego.InterfacePurposeVLAN,
+				IPAMAddress: "10.0.0.1/24",
 			},
 		}
 
