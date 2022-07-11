@@ -16,7 +16,7 @@ func TestObjectStorage_Get_Transfer(t *testing.T) {
 }
 
 func TestObjectStorage_Cancel(t *testing.T) {
-	//TODO: add object-storage/enable to test for repeatability
+	// TODO: add object-storage/enable to test for repeatability
 	t.Skip("Unable to enable Object Storage via the API, update test with /enable when available")
 
 	client, teardown := createTestClient(t, "fixtures/TestObjectStorage_cancel")
