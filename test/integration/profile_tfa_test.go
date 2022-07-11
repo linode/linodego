@@ -17,7 +17,7 @@ func TestTwoFactor_CreateSecret(t *testing.T) {
 		Secret: "verysecureverysecureverysecure",
 	}
 
-	httpmock.RegisterResponder("POST", "/v4/profile/tfa-enable",
+	httpmock.RegisterRegexpResponder("POST", mockRequestURL(t, "/profile/tfa-enable"),
 		httpmock.NewJsonResponderOrPanic(200, expectedResponse))
 
 	secret, err := client.CreateTwoFactorSecret(context.Background())
@@ -33,7 +33,7 @@ func TestTwoFactor_CreateSecret(t *testing.T) {
 func TestTwoFactor_Disable(t *testing.T) {
 	client := createMockClient(t)
 
-	httpmock.RegisterResponder("POST", "/v4/profile/tfa-disable",
+	httpmock.RegisterRegexpResponder("POST", mockRequestURL(t, "/profile/tfa-disable"),
 		httpmock.NewStringResponder(200, "{}"))
 
 	if err := client.DisableTwoFactor(context.Background()); err != nil {
@@ -47,7 +47,7 @@ func TestTwoFactor_Confirm(t *testing.T) {
 	request := linodego.ConfirmTwoFactorOptions{TFACode: "reallycoolandlegittfacode"}
 	response := linodego.ConfirmTwoFactorResponse{Scratch: "really cool scratch code"}
 
-	httpmock.RegisterResponder("POST", "/v4/profile/tfa-enable-confirm",
+	httpmock.RegisterRegexpResponder("POST", mockRequestURL(t, "/profile/tfa-enable-confirm"),
 		mockRequestBodyValidate(t, request, response))
 
 	runResult, err := client.ConfirmTwoFactor(context.Background(), request)

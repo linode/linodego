@@ -16,7 +16,7 @@ func TestPhoneNumber_SendVerificationCode(t *testing.T) {
 		PhoneNumber: "137-137-1337",
 	}
 
-	httpmock.RegisterResponder("POST", "/v4/profile/phone-number",
+	httpmock.RegisterRegexpResponder("POST", mockRequestURL(t, "/profile/phone-number"),
 		mockRequestBodyValidate(t, requestData, nil))
 
 	if err := client.SendPhoneNumberVerificationCode(context.Background(), requestData); err != nil {
@@ -27,7 +27,7 @@ func TestPhoneNumber_SendVerificationCode(t *testing.T) {
 func TestPhoneNumber_Delete(t *testing.T) {
 	client := createMockClient(t)
 
-	httpmock.RegisterResponder("DELETE", "/v4/profile/phone-number",
+	httpmock.RegisterRegexpResponder("DELETE", mockRequestURL(t, "/profile/phone-number"),
 		httpmock.NewStringResponder(200, "{}"))
 
 	if err := client.DeletePhoneNumber(context.Background()); err != nil {
@@ -42,7 +42,7 @@ func TestPhoneNumber_Verify(t *testing.T) {
 		OTPCode: "123456",
 	}
 
-	httpmock.RegisterResponder("POST", "/v4/profile/phone-number/verify",
+	httpmock.RegisterRegexpResponder("POST", mockRequestURL(t, "/profile/phone-number/verify"),
 		mockRequestBodyValidate(t, requestData, nil))
 
 	if err := client.VerifyPhoneNumber(context.Background(), requestData); err != nil {

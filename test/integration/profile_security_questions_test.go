@@ -23,7 +23,7 @@ func TestSecurityQuestions_List(t *testing.T) {
 		},
 	}
 
-	httpmock.RegisterResponder("GET", "/v4/profile/security-questions",
+	httpmock.RegisterRegexpResponder("GET", mockRequestURL(t, "/profile/security-questions"),
 		httpmock.NewJsonResponderOrPanic(200, &desiredResponse))
 
 	questions, err := client.SecurityQuestionsList(context.Background())
@@ -48,7 +48,7 @@ func TestSecurityQuestions_Answer(t *testing.T) {
 		},
 	}
 
-	httpmock.RegisterResponder("POST", "/v4/profile/security-questions",
+	httpmock.RegisterRegexpResponder("POST", mockRequestURL(t, "/profile/security-questions"),
 		mockRequestBodyValidate(t, requestData, nil))
 
 	if err := client.SecurityQuestionsAnswer(context.Background(), requestData); err != nil {

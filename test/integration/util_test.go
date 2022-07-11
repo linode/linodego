@@ -2,9 +2,12 @@ package integration
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"reflect"
+	"regexp"
+	"strings"
 	"testing"
 	"time"
 
@@ -48,4 +51,8 @@ func mockRequestBodyValidate(t *testing.T, expected interface{}, response interf
 
 		return httpmock.NewJsonResponse(200, response)
 	}
+}
+
+func mockRequestURL(t *testing.T, path string) *regexp.Regexp {
+	return regexp.MustCompile(fmt.Sprintf("/[a-zA-Z0-9]+/%s", strings.TrimPrefix(path, "/")))
 }
