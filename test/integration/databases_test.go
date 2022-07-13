@@ -91,7 +91,8 @@ func TestDatabase_List(t *testing.T) {
 }
 
 func waitForDatabaseUpdated(t *testing.T, client *linodego.Client, dbID int,
-	dbType linodego.DatabaseEngineType, minStart *time.Time) {
+	dbType linodego.DatabaseEngineType, minStart *time.Time,
+) {
 	_, err := client.WaitForEventFinished(context.Background(), dbID, linodego.EntityDatabase,
 		linodego.ActionDatabaseUpdate, *minStart, 1200)
 	if err != nil {
