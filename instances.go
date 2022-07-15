@@ -77,7 +77,7 @@ type InstanceBackup struct {
 	Schedule struct {
 		Day    string `json:"day,omitempty"`
 		Window string `json:"window,omitempty"`
-	}
+	} `json:"schedule,omitempty"`
 }
 
 // InstanceTransfer pool stats for a Linode Instance during the current billing month
