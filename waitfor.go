@@ -612,13 +612,7 @@ func (client Client) InitializeEventPoller(
 	}, nil
 }
 
-// WaitForNewEventFinished waits for a new event to be finished.
-func (p EventPoller) WaitForNewEventFinished(
-	ctx context.Context, timeoutSeconds int,
-) (*Event, error) {
-	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
-	defer cancel()
-
+func (p EventPoller) WaitForLatestUnknownEvent(ctx context.Context) (*Event, error) {
 	ticker := time.NewTicker(p.client.millisecondsPerPoll * time.Millisecond)
 	defer ticker.Stop()
 
@@ -640,35 +634,44 @@ func (p EventPoller) WaitForNewEventFinished(
 		PageOptions: &PageOptions{Page: 1},
 	}
 
-	waitForEvent := func() (*Event, error) {
-		for {
-			select {
-			case <-ticker.C:
-				events, err := p.client.ListEvents(ctx, &listOpts)
-				if err != nil {
-					return nil, fmt.Errorf("failed to list events: %s", err)
-				}
-
-				for _, event := range events {
-					isValid := true
-
-					for _, v := range p.PreviousEvents {
-						if event.ID == v {
-							isValid = false
-						}
-					}
-
-					if isValid {
-						return &event, nil
-					}
-				}
-			case <-ctx.Done():
-				return nil, fmt.Errorf("failed to wait for event: %s", ctx.Err())
+	for {
+		select {
+		case <-ticker.C:
+			events, err := p.client.ListEvents(ctx, &listOpts)
+			if err != nil {
+				return nil, fmt.Errorf("failed to list events: %s", err)
 			}
+
+			for _, event := range events {
+				isValid := true
+
+				for _, v := range p.PreviousEvents {
+					if event.ID == v {
+						isValid = false
+					}
+				}
+
+				if isValid {
+					return &event, nil
+				}
+			}
+		case <-ctx.Done():
+			return nil, fmt.Errorf("failed to wait for event: %s", ctx.Err())
 		}
 	}
+}
 
-	event, err := waitForEvent()
+// WaitForNewEventFinished waits for a new event to be finished.
+func (p EventPoller) WaitForNewEventFinished(
+	ctx context.Context, timeoutSeconds int,
+) (*Event, error) {
+	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
+	defer cancel()
+
+	ticker := time.NewTicker(p.client.millisecondsPerPoll * time.Millisecond)
+	defer ticker.Stop()
+
+	event, err := p.WaitForLatestUnknownEvent(ctx)
 	if err != nil {
 		return nil, fmt.Errorf("failed to wait for event: %s", err)
 	}
