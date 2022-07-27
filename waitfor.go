@@ -574,7 +574,8 @@ func (client Client) WaitForDatabaseStatus(
 // InitializeEventPoller initializes a new Linode event poller. This should be run before the event is triggered as it stores
 // the previous state of the entity's events.
 func (client Client) InitializeEventPoller(
-	ctx context.Context, id any, entityType EntityType, action EventAction) (*EventPoller, error) {
+	ctx context.Context, id any, entityType EntityType, action EventAction,
+) (*EventPoller, error) {
 	f := Filter{
 		OrderBy: "created",
 		Order:   Descending,
@@ -612,7 +613,9 @@ func (client Client) InitializeEventPoller(
 }
 
 // WaitForNewEventFinished waits for a new event to be finished.
-func (p EventPoller) WaitForNewEventFinished(ctx context.Context, timeoutSeconds int) (*Event, error) {
+func (p EventPoller) WaitForNewEventFinished(
+	ctx context.Context, timeoutSeconds int,
+) (*Event, error) {
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
@@ -683,6 +686,8 @@ func (p EventPoller) WaitForNewEventFinished(ctx context.Context, timeoutSeconds
 				return event, nil
 			case EventFailed:
 				return nil, fmt.Errorf("event %d has failed", event.ID)
+			default:
+				continue
 			}
 		case <-ctx.Done():
 			return nil, fmt.Errorf("failed to wait for event: %s", ctx.Err())
