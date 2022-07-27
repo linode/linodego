@@ -10,6 +10,15 @@ import (
 	"time"
 )
 
+type EventPoller struct {
+	PreviousEvents []int
+	EntityID       any
+	EntityType     EntityType
+	Action         EventAction
+
+	client Client
+}
+
 // WaitForInstanceStatus waits for the Linode instance to reach the desired state
 // before returning. It will timeout with an error after timeoutSeconds.
 func (client Client) WaitForInstanceStatus(ctx context.Context, instanceID int, status InstanceStatus, timeoutSeconds int) (*Instance, error) {
@@ -558,6 +567,125 @@ func (client Client) WaitForDatabaseStatus(
 			}
 		case <-ctx.Done():
 			return fmt.Errorf("failed to wait for database %d status: %s", dbID, ctx.Err())
+		}
+	}
+}
+
+// InitializeEventPoller initializes a new Linode event poller. This should be run before the event is triggered as it stores
+// the previous state of the entity's events.
+func (client Client) InitializeEventPoller(
+	ctx context.Context, id any, entityType EntityType, action EventAction) (*EventPoller, error) {
+	f := Filter{
+		OrderBy: "created",
+		Order:   Descending,
+	}
+	f.AddField(Eq, "entity.type", entityType)
+	f.AddField(Eq, "entity.id", id)
+	f.AddField(Eq, "action", action)
+
+	fBytes, err := f.MarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+
+	events, err := client.ListEvents(ctx, &ListOptions{
+		Filter:      string(fBytes),
+		PageOptions: &PageOptions{Page: 1},
+	})
+	if err != nil {
+		return nil, fmt.Errorf("failed to list events: %s", err)
+	}
+
+	eventIDs := make([]int, len(events))
+	for i, event := range events {
+		eventIDs[i] = event.ID
+	}
+
+	return &EventPoller{
+		PreviousEvents: eventIDs,
+		EntityID:       id,
+		EntityType:     entityType,
+		Action:         action,
+
+		client: client,
+	}, nil
+}
+
+// WaitForNewEventFinished waits for a new event to be finished.
+func (p EventPoller) WaitForNewEventFinished(ctx context.Context, timeoutSeconds int) (*Event, error) {
+	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
+	defer cancel()
+
+	ticker := time.NewTicker(p.client.millisecondsPerPoll * time.Millisecond)
+	defer ticker.Stop()
+
+	f := Filter{
+		OrderBy: "created",
+		Order:   Descending,
+	}
+	f.AddField(Eq, "entity.type", p.EntityType)
+	f.AddField(Eq, "entity.id", p.EntityID)
+	f.AddField(Eq, "action", p.Action)
+
+	fBytes, err := f.MarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+
+	listOpts := ListOptions{
+		Filter:      string(fBytes),
+		PageOptions: &PageOptions{Page: 1},
+	}
+
+	waitForEvent := func() (*Event, error) {
+		for {
+			select {
+			case <-ticker.C:
+				events, err := p.client.ListEvents(ctx, &listOpts)
+				if err != nil {
+					return nil, fmt.Errorf("failed to list events: %s", err)
+				}
+
+				for _, event := range events {
+					isValid := true
+
+					for _, v := range p.PreviousEvents {
+						if event.ID == v {
+							isValid = false
+						}
+					}
+
+					if isValid {
+						return &event, nil
+					}
+				}
+			case <-ctx.Done():
+				return nil, fmt.Errorf("failed to wait for event: %s", ctx.Err())
+			}
+		}
+	}
+
+	event, err := waitForEvent()
+	if err != nil {
+		return nil, fmt.Errorf("failed to wait for event: %s", err)
+	}
+
+	for {
+		select {
+		case <-ticker.C:
+			event, err := p.client.GetEvent(ctx, event.ID)
+			if err != nil {
+				return nil, fmt.Errorf("failed to get event: %s", err)
+			}
+
+			switch event.Status {
+			case EventFinished, EventNotification:
+				return event, nil
+			case EventFailed:
+				return nil, fmt.Errorf("event %d has failed", event.ID)
+			}
+		case <-ctx.Done():
+			return nil, fmt.Errorf("failed to wait for event: %s", ctx.Err())
 		}
 	}
 }
