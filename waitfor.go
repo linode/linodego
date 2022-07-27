@@ -686,7 +686,7 @@ func (p EventPoller) WaitForNewEventFinished(
 				return event, nil
 			case EventFailed:
 				return nil, fmt.Errorf("event %d has failed", event.ID)
-			default:
+			case EventScheduled, EventStarted:
 				continue
 			}
 		case <-ctx.Done():
