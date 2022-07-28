@@ -11,12 +11,12 @@ import (
 )
 
 type EventPoller struct {
-	PreviousEvents []int
-	EntityID       any
-	EntityType     EntityType
-	Action         EventAction
+	EntityID   any
+	EntityType EntityType
+	Action     EventAction
 
-	client Client
+	client         Client
+	previousEvents map[int]bool
 }
 
 // WaitForInstanceStatus waits for the Linode instance to reach the desired state
@@ -571,48 +571,61 @@ func (client Client) WaitForDatabaseStatus(
 	}
 }
 
-// InitializeEventPoller initializes a new Linode event poller. This should be run before the event is triggered as it stores
+// NewEventPoller initializes a new Linode event poller. This should be run before the event is triggered as it stores
 // the previous state of the entity's events.
-func (client Client) InitializeEventPoller(
+func (client Client) NewEventPoller(
 	ctx context.Context, id any, entityType EntityType, action EventAction,
 ) (*EventPoller, error) {
+	result := EventPoller{
+		EntityID:   id,
+		EntityType: entityType,
+		Action:     action,
+
+		client: client,
+	}
+
+	if err := result.PreTask(ctx); err != nil {
+		return nil, fmt.Errorf("failed to run pretask: %s", err)
+	}
+
+	return &result, nil
+}
+
+// PreTask stores all current events for the given entity to prevent them from being
+// processed on subsequent runs.
+func (p *EventPoller) PreTask(ctx context.Context) error {
 	f := Filter{
 		OrderBy: "created",
 		Order:   Descending,
 	}
-	f.AddField(Eq, "entity.type", entityType)
-	f.AddField(Eq, "entity.id", id)
-	f.AddField(Eq, "action", action)
+	f.AddField(Eq, "entity.type", p.EntityType)
+	f.AddField(Eq, "entity.id", p.EntityID)
+	f.AddField(Eq, "action", p.Action)
 
 	fBytes, err := f.MarshalJSON()
 	if err != nil {
-		return nil, err
+		return err
 	}
 
-	events, err := client.ListEvents(ctx, &ListOptions{
+	events, err := p.client.ListEvents(ctx, &ListOptions{
 		Filter:      string(fBytes),
 		PageOptions: &PageOptions{Page: 1},
 	})
 	if err != nil {
-		return nil, fmt.Errorf("failed to list events: %s", err)
+		return fmt.Errorf("failed to list events: %s", err)
 	}
 
-	eventIDs := make([]int, len(events))
-	for i, event := range events {
-		eventIDs[i] = event.ID
+	eventIDs := make(map[int]bool, len(events))
+	for _, event := range events {
+		eventIDs[event.ID] = true
 	}
 
-	return &EventPoller{
-		PreviousEvents: eventIDs,
-		EntityID:       id,
-		EntityType:     entityType,
-		Action:         action,
+	p.previousEvents = eventIDs
 
-		client: client,
-	}, nil
+	return nil
 }
 
-func (p EventPoller) WaitForLatestUnknownEvent(ctx context.Context) (*Event, error) {
+func (p *EventPoller) WaitForLatestUnknownEvent(ctx context.Context) (*Event, error) {
 	ticker := time.NewTicker(p.client.millisecondsPerPoll * time.Millisecond)
 	defer ticker.Stop()
 
@@ -643,18 +656,10 @@ func (p EventPoller) WaitForLatestUnknownEvent(ctx context.Context) (*Event, err
 			}
 
 			for _, event := range events {
-				isValid := true
-
-				for _, v := range p.PreviousEvents {
-					if event.ID == v {
-						isValid = false
-					}
-				}
-
-				if isValid {
+				if _, ok := p.previousEvents[event.ID]; !ok {
 					// Store this event so it is no longer picked up
 					// on subsequent jobs
-					p.PreviousEvents = append(p.PreviousEvents, event.ID)
+					p.previousEvents[event.ID] = true
 
 					return &event, nil
 				}
@@ -665,8 +670,8 @@ func (p EventPoller) WaitForLatestUnknownEvent(ctx context.Context) (*Event, err
 	}
 }
 
-// WaitForNewEventFinished waits for a new event to be finished.
-func (p EventPoller) WaitForNewEventFinished(
+// WaitForFinished waits for a new event to be finished.
+func (p *EventPoller) WaitForFinished(
 	ctx context.Context, timeoutSeconds int,
 ) (*Event, error) {
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)

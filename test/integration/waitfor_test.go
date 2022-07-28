@@ -14,7 +14,7 @@ func TestEventPoller_InstancePower(t *testing.T) {
 	}
 
 	// Wait for the instance to be booted
-	p, err := client.InitializeEventPoller(
+	p, err := client.NewEventPoller(
 		context.Background(), instance.ID, linodego.EntityLinode, linodego.ActionLinodeBoot)
 	if err != nil {
 		t.Fatal(err)
@@ -24,7 +24,7 @@ func TestEventPoller_InstancePower(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	event, err := p.WaitForNewEventFinished(context.Background(), 200)
+	event, err := p.WaitForFinished(context.Background(), 200)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -39,7 +39,7 @@ func TestEventPoller_InstancePower(t *testing.T) {
 	}
 
 	// Wait for the instance to be shut down
-	p, err = client.InitializeEventPoller(
+	p, err = client.NewEventPoller(
 		context.Background(), instance.ID, linodego.EntityLinode, linodego.ActionLinodeShutdown)
 	if err != nil {
 		t.Fatal(err)
@@ -49,7 +49,7 @@ func TestEventPoller_InstancePower(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	event, err = p.WaitForNewEventFinished(context.Background(), 200)
+	event, err = p.WaitForFinished(context.Background(), 200)
 	if err != nil {
 		t.Fatal(err)
 	}
