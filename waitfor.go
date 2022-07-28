@@ -652,6 +652,10 @@ func (p EventPoller) WaitForLatestUnknownEvent(ctx context.Context) (*Event, err
 				}
 
 				if isValid {
+					// Store this event so it is no longer picked up
+					// on subsequent jobs
+					p.PreviousEvents = append(p.PreviousEvents, event.ID)
+
 					return &event, nil
 				}
 			}
