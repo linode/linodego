@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -143,9 +144,14 @@ func (LKEClustersPagedResponse) endpoint(c *Client) string {
 	return endpoint
 }
 
-// appendData appends LKEClusters when processing paginated LKECluster responses
-func (resp *LKEClustersPagedResponse) appendData(r *LKEClustersPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *LKEClustersPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(LKEClustersPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*LKEClustersPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // endpoint gets the endpoint URL for LKEVersion
@@ -171,9 +177,14 @@ func (resp *LKEClusterAPIEndpointsPagedResponse) appendData(r *LKEClusterAPIEndp
 	resp.Data = append(resp.Data, r.Data...)
 }
 
-// appendData appends LKEVersions when processing paginated LKEVersion responses
-func (resp *LKEVersionsPagedResponse) appendData(r *LKEVersionsPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *LKEVersionsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(LKEVersionsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*LKEVersionsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListLKEClusters lists LKEClusters

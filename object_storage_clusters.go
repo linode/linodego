@@ -3,6 +3,8 @@ package linodego
 import (
 	"context"
 	"fmt"
+
+	"github.com/go-resty/resty/v2"
 )
 
 // ObjectStorageCluster represents a linode object storage cluster object
@@ -29,9 +31,14 @@ func (ObjectStorageClustersPagedResponse) endpoint(c *Client) string {
 	return endpoint
 }
 
-// appendData appends ObjectStorageClusters when processing paginated ObjectStorageCluster responses
-func (resp *ObjectStorageClustersPagedResponse) appendData(r *ObjectStorageClustersPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *ObjectStorageClustersPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(ObjectStorageClustersPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*ObjectStorageClustersPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListObjectStorageClusters lists ObjectStorageClusters

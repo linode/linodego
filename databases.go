@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -65,8 +66,14 @@ func (DatabasesPagedResponse) endpoint(c *Client) string {
 	return fmt.Sprintf("%s/instances", endpoint)
 }
 
-func (resp *DatabasesPagedResponse) appendData(r *DatabasesPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *DatabasesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(DatabasesPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*DatabasesPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 type DatabaseEnginesPagedResponse struct {
@@ -82,8 +89,14 @@ func (DatabaseEnginesPagedResponse) endpoint(c *Client) string {
 	return fmt.Sprintf("%s/engines", endpoint)
 }
 
-func (resp *DatabaseEnginesPagedResponse) appendData(r *DatabaseEnginesPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *DatabaseEnginesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(DatabaseEnginesPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*DatabaseEnginesPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 type DatabaseTypesPagedResponse struct {
@@ -99,8 +112,14 @@ func (DatabaseTypesPagedResponse) endpoint(c *Client) string {
 	return fmt.Sprintf("%s/types", endpoint)
 }
 
-func (resp *DatabaseTypesPagedResponse) appendData(r *DatabaseTypesPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *DatabaseTypesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(DatabaseTypesPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*DatabaseTypesPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // A Database is a instance of Linode Managed Databases

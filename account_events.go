@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/duration"
 	"github.com/linode/linodego/internal/parseabletime"
 )
@@ -237,9 +238,14 @@ func (i Event) endpointWithID(c *Client) string {
 	return endpoint
 }
 
-// appendData appends Events when processing paginated Event responses
-func (resp *EventsPagedResponse) appendData(r *EventsPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *EventsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(EventsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*EventsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListEvents gets a collection of Event objects representing actions taken

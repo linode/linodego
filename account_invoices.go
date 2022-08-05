@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -44,9 +45,14 @@ func (InvoicesPagedResponse) endpoint(c *Client) string {
 	return endpoint
 }
 
-// appendData appends Invoices when processing paginated Invoice responses
-func (resp *InvoicesPagedResponse) appendData(r *InvoicesPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *InvoicesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(InvoicesPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*InvoicesPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListInvoices gets a paginated list of Invoices against the Account

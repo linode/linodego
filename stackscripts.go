@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -125,9 +126,14 @@ func (StackscriptsPagedResponse) endpoint(c *Client) string {
 	return endpoint
 }
 
-// appendData appends Stackscripts when processing paginated Stackscript responses
-func (resp *StackscriptsPagedResponse) appendData(r *StackscriptsPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *StackscriptsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(StackscriptsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*StackscriptsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListStackscripts lists Stackscripts

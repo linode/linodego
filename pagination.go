@@ -75,7 +75,7 @@ func (c *Client) listHelper(ctx context.Context, pager PagedResponse, opts *List
 		if opts.Page == 0 {
 			for page := 2; page <= pages; page++ {
 				opts.Page = page
-				if err := c.newListHelper(ctx, pager, opts); err != nil {
+				if err := c.listHelper(ctx, pager, opts); err != nil {
 					return err
 				}
 			}
@@ -85,59 +85,13 @@ func (c *Client) listHelper(ctx context.Context, pager PagedResponse, opts *List
 	}
 	for page := 2; page <= pages; page++ {
 		newOpts := ListOptions{PageOptions: &PageOptions{Page: page}}
-		if err := c.newListHelper(ctx, pager, &newOpts); err != nil {
+		if err := c.listHelper(ctx, pager, &newOpts); err != nil {
 			return err
 		}
 	}
 
 	return nil
 }
-
-/**
-case *ImagesPagedResponse:
-case *StackscriptsPagedResponse:
-case *InstancesPagedResponse:
-case *RegionsPagedResponse:
-case *VolumesPagedResponse:
-case *DatabasesPagedResponse:
-case *DatabaseEnginesPagedResponse:
-case *DatabaseTypesPagedResponse:
-case *MySQLDatabasesPagedResponse:
-case *MongoDatabasesPagedResponse:
-case *PostgresDatabasesPagedResponse:
-case *DomainsPagedResponse:
-case *EventsPagedResponse:
-case *FirewallsPagedResponse:
-case *LKEClustersPagedResponse:
-case *LKEVersionsPagedResponse:
-case *LongviewSubscriptionsPagedResponse:
-case *LongviewClientsPagedResponse:
-case *IPAddressesPagedResponse:
-case *IPv6PoolsPagedResponse:
-case *IPv6RangesPagedResponse:
-case *SSHKeysPagedResponse:
-case *TicketsPagedResponse:
-case *InvoicesPagedResponse:
-case *NotificationsPagedResponse:
-case *OAuthClientsPagedResponse:
-case *PaymentsPagedResponse:
-case *NodeBalancersPagedResponse:
-case *TagsPagedResponse:
-case *TokensPagedResponse:
-case *UsersPagedResponse:
-case *ObjectStorageBucketsPagedResponse:
-case *ObjectStorageClustersPagedResponse:
-case *ObjectStorageKeysPagedResponse:
-case *VLANsPagedResponse:
-
-case ProfileAppsPagedResponse:
-case ProfileWhitelistPagedResponse:
-case ManagedContactsPagedResponse:
-case ManagedCredentialsPagedResponse:
-case ManagedIssuesPagedResponse:
-case ManagedLinodeSettingsPagedResponse:
-case ManagedServicesPagedResponse:
-**/
 
 // listHelperWithID abstracts fetching and pagination for GET endpoints that
 // require an Id (second level endpoints).
@@ -328,7 +282,7 @@ func (c *Client) listHelperWithTwoIDs(ctx context.Context, i interface{}, firstI
 
 	if opts == nil {
 		for page := 2; page <= pages; page++ {
-			if err := c.listHelper(ctx, i, &ListOptions{PageOptions: &PageOptions{Page: page}}); err != nil {
+			if err := c.listHelperWithTwoIDs(ctx, i, firstID, secondID, &ListOptions{PageOptions: &PageOptions{Page: page}}); err != nil {
 				return err
 			}
 		}

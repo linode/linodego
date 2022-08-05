@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+
+	"github.com/go-resty/resty/v2"
 )
 
 // Tag represents a Tag object
@@ -82,9 +84,14 @@ func (TaggedObjectsPagedResponse) endpointWithID(c *Client, id string) string {
 	return endpoint
 }
 
-// appendData appends Tags when processing paginated Tag responses
-func (resp *TagsPagedResponse) appendData(r *TagsPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *TagsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(TagsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*TagsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // appendData appends TaggedObjects when processing paginated TaggedObjects responses

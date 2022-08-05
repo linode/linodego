@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -49,8 +50,14 @@ func (VLANsPagedResponse) endpoint(c *Client) string {
 	return endpoint
 }
 
-func (resp *VLANsPagedResponse) appendData(r *VLANsPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *VLANsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(VLANsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*VLANsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListVLANs returns a paginated list of VLANs
