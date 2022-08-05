@@ -3,6 +3,8 @@ package linodego
 import (
 	"context"
 	"fmt"
+
+	"github.com/go-resty/resty/v2"
 )
 
 // LinodeKernel represents a Linode Instance kernel object
@@ -41,8 +43,14 @@ func (LinodeKernelsPagedResponse) endpoint(c *Client) string {
 	return endpoint
 }
 
-func (resp *LinodeKernelsPagedResponse) appendData(r *LinodeKernelsPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *LinodeKernelsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(LinodeKernelsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*LinodeKernelsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // GetKernel gets the kernel with the provided ID

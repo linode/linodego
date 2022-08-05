@@ -49,287 +49,33 @@ func applyListOptionsToRequest(opts *ListOptions, req *resty.Request) {
 	}
 }
 
+type PagedResponse interface {
+	endpoint(*Client) string
+	castResult(*resty.Request, string) (int, int, error)
+}
+
 // listHelper abstracts fetching and pagination for GET endpoints that
 // do not require any Ids (top level endpoints).
 // When opts (or opts.Page) is nil, all pages will be fetched and
 // returned in a single (endpoint-specific)PagedResponse
 // opts.results and opts.pages will be updated from the API response
 // nolint
-func (c *Client) listHelper(ctx context.Context, i interface{}, opts *ListOptions) error {
-	var (
-		err     error
-		pages   int
-		results int
-		r       *resty.Response
-	)
-
+func (c *Client) listHelper(ctx context.Context, pager PagedResponse, opts *ListOptions) error {
 	req := c.R(ctx)
 	applyListOptionsToRequest(opts, req)
 
-	switch v := i.(type) {
-	case *LinodeKernelsPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(LinodeKernelsPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*LinodeKernelsPagedResponse).Pages
-			results = r.Result().(*LinodeKernelsPagedResponse).Results
-			v.appendData(r.Result().(*LinodeKernelsPagedResponse))
-		}
-	case *LinodeTypesPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(LinodeTypesPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*LinodeTypesPagedResponse).Pages
-			results = r.Result().(*LinodeTypesPagedResponse).Results
-			v.appendData(r.Result().(*LinodeTypesPagedResponse))
-		}
-	case *ImagesPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(ImagesPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*ImagesPagedResponse).Pages
-			results = r.Result().(*ImagesPagedResponse).Results
-			v.appendData(r.Result().(*ImagesPagedResponse))
-		}
-	case *StackscriptsPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(StackscriptsPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*StackscriptsPagedResponse).Pages
-			results = r.Result().(*StackscriptsPagedResponse).Results
-			v.appendData(r.Result().(*StackscriptsPagedResponse))
-		}
-	case *InstancesPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(InstancesPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*InstancesPagedResponse).Pages
-			results = r.Result().(*InstancesPagedResponse).Results
-			v.appendData(r.Result().(*InstancesPagedResponse))
-		}
-	case *RegionsPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(RegionsPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*RegionsPagedResponse).Pages
-			results = r.Result().(*RegionsPagedResponse).Results
-			v.appendData(r.Result().(*RegionsPagedResponse))
-		}
-	case *VolumesPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(VolumesPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*VolumesPagedResponse).Pages
-			results = r.Result().(*VolumesPagedResponse).Results
-			v.appendData(r.Result().(*VolumesPagedResponse))
-		}
-	case *DatabasesPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(DatabasesPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*DatabasesPagedResponse).Pages
-			results = r.Result().(*DatabasesPagedResponse).Results
-			v.appendData(r.Result().(*DatabasesPagedResponse))
-		}
-	case *DatabaseEnginesPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(DatabaseEnginesPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*DatabaseEnginesPagedResponse).Pages
-			results = r.Result().(*DatabaseEnginesPagedResponse).Results
-			v.appendData(r.Result().(*DatabaseEnginesPagedResponse))
-		}
-	case *DatabaseTypesPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(DatabaseTypesPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*DatabaseTypesPagedResponse).Pages
-			results = r.Result().(*DatabaseTypesPagedResponse).Results
-			v.appendData(r.Result().(*DatabaseTypesPagedResponse))
-		}
-	case *MySQLDatabasesPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(MySQLDatabasesPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*MySQLDatabasesPagedResponse).Pages
-			results = r.Result().(*MySQLDatabasesPagedResponse).Results
-			v.appendData(r.Result().(*MySQLDatabasesPagedResponse))
-		}
-	case *MongoDatabasesPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(MongoDatabasesPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*MongoDatabasesPagedResponse).Pages
-			results = r.Result().(*MongoDatabasesPagedResponse).Results
-			v.appendData(r.Result().(*MongoDatabasesPagedResponse))
-		}
-	case *PostgresDatabasesPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(PostgresDatabasesPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*PostgresDatabasesPagedResponse).Pages
-			results = r.Result().(*PostgresDatabasesPagedResponse).Results
-			v.appendData(r.Result().(*PostgresDatabasesPagedResponse))
-		}
-	case *DomainsPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(DomainsPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			response, ok := r.Result().(*DomainsPagedResponse)
-			if !ok {
-				return fmt.Errorf("response is not a *DomainsPagedResponse")
-			}
-			pages = response.Pages
-			results = response.Results
-			v.appendData(response)
-		}
-	case *EventsPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(EventsPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*EventsPagedResponse).Pages
-			results = r.Result().(*EventsPagedResponse).Results
-			v.appendData(r.Result().(*EventsPagedResponse))
-		}
-	case *FirewallsPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(FirewallsPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*FirewallsPagedResponse).Pages
-			results = r.Result().(*FirewallsPagedResponse).Results
-			v.appendData(r.Result().(*FirewallsPagedResponse))
-		}
-	case *LKEClustersPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(LKEClustersPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*LKEClustersPagedResponse).Pages
-			results = r.Result().(*LKEClustersPagedResponse).Results
-			v.appendData(r.Result().(*LKEClustersPagedResponse))
-		}
-	case *LKEVersionsPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(LKEVersionsPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*LKEVersionsPagedResponse).Pages
-			results = r.Result().(*LKEVersionsPagedResponse).Results
-			v.appendData(r.Result().(*LKEVersionsPagedResponse))
-		}
-	case *LongviewSubscriptionsPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(LongviewSubscriptionsPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*LongviewSubscriptionsPagedResponse).Pages
-			results = r.Result().(*LongviewSubscriptionsPagedResponse).Results
-			v.appendData(r.Result().(*LongviewSubscriptionsPagedResponse))
-		}
-	case *LongviewClientsPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(LongviewClientsPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*LongviewClientsPagedResponse).Pages
-			results = r.Result().(*LongviewClientsPagedResponse).Results
-			v.appendData(r.Result().(*LongviewClientsPagedResponse))
-		}
-	case *IPAddressesPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(IPAddressesPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*IPAddressesPagedResponse).Pages
-			results = r.Result().(*IPAddressesPagedResponse).Results
-			v.appendData(r.Result().(*IPAddressesPagedResponse))
-		}
-	case *IPv6PoolsPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(IPv6PoolsPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*IPv6PoolsPagedResponse).Pages
-			results = r.Result().(*IPv6PoolsPagedResponse).Results
-			v.appendData(r.Result().(*IPv6PoolsPagedResponse))
-		}
-	case *IPv6RangesPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(IPv6RangesPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*IPv6RangesPagedResponse).Pages
-			results = r.Result().(*IPv6RangesPagedResponse).Results
-			v.appendData(r.Result().(*IPv6RangesPagedResponse))
-			// @TODO consolidate this type with IPv6PoolsPagedResponse?
-		}
-	case *SSHKeysPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(SSHKeysPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			response, ok := r.Result().(*SSHKeysPagedResponse)
-			if !ok {
-				return fmt.Errorf("response is not a *SSHKeysPagedResponse")
-			}
-			pages = response.Pages
-			results = response.Results
-			v.appendData(response)
-		}
-	case *TicketsPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(TicketsPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*TicketsPagedResponse).Pages
-			results = r.Result().(*TicketsPagedResponse).Results
-			v.appendData(r.Result().(*TicketsPagedResponse))
-		}
-	case *InvoicesPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(InvoicesPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*InvoicesPagedResponse).Pages
-			results = r.Result().(*InvoicesPagedResponse).Results
-			v.appendData(r.Result().(*InvoicesPagedResponse))
-		}
-	case *NotificationsPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(NotificationsPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*NotificationsPagedResponse).Pages
-			results = r.Result().(*NotificationsPagedResponse).Results
-			v.appendData(r.Result().(*NotificationsPagedResponse))
-		}
-	case *OAuthClientsPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(OAuthClientsPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*OAuthClientsPagedResponse).Pages
-			results = r.Result().(*OAuthClientsPagedResponse).Results
-			v.appendData(r.Result().(*OAuthClientsPagedResponse))
-		}
-	case *PaymentsPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(PaymentsPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*PaymentsPagedResponse).Pages
-			results = r.Result().(*PaymentsPagedResponse).Results
-			v.appendData(r.Result().(*PaymentsPagedResponse))
-		}
-	case *NodeBalancersPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(NodeBalancersPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*NodeBalancersPagedResponse).Pages
-			results = r.Result().(*NodeBalancersPagedResponse).Results
-			v.appendData(r.Result().(*NodeBalancersPagedResponse))
-		}
-	case *TagsPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(TagsPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*TagsPagedResponse).Pages
-			results = r.Result().(*TagsPagedResponse).Results
-			v.appendData(r.Result().(*TagsPagedResponse))
-		}
-	case *TokensPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(TokensPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*TokensPagedResponse).Pages
-			results = r.Result().(*TokensPagedResponse).Results
-			v.appendData(r.Result().(*TokensPagedResponse))
-		}
-	case *UsersPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(UsersPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*UsersPagedResponse).Pages
-			results = r.Result().(*UsersPagedResponse).Results
-			v.appendData(r.Result().(*UsersPagedResponse))
-		}
-	case *ObjectStorageBucketsPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(ObjectStorageBucketsPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*ObjectStorageBucketsPagedResponse).Pages
-			results = r.Result().(*ObjectStorageBucketsPagedResponse).Results
-			v.appendData(r.Result().(*ObjectStorageBucketsPagedResponse))
-		}
-	case *ObjectStorageClustersPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(ObjectStorageClustersPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*ObjectStorageClustersPagedResponse).Pages
-			results = r.Result().(*ObjectStorageClustersPagedResponse).Results
-			v.appendData(r.Result().(*ObjectStorageClustersPagedResponse))
-		}
-	case *ObjectStorageKeysPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(ObjectStorageKeysPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*ObjectStorageKeysPagedResponse).Pages
-			results = r.Result().(*ObjectStorageKeysPagedResponse).Results
-			v.appendData(r.Result().(*ObjectStorageKeysPagedResponse))
-		}
-	case *VLANsPagedResponse:
-		if r, err = coupleAPIErrors(req.SetResult(VLANsPagedResponse{}).Get(v.endpoint(c))); err == nil {
-			pages = r.Result().(*VLANsPagedResponse).Pages
-			results = r.Result().(*VLANsPagedResponse).Results
-			v.appendData(r.Result().(*VLANsPagedResponse))
-		}
-	/**
-	case ProfileAppsPagedResponse:
-	case ProfileWhitelistPagedResponse:
-	case ManagedContactsPagedResponse:
-	case ManagedCredentialsPagedResponse:
-	case ManagedIssuesPagedResponse:
-	case ManagedLinodeSettingsPagedResponse:
-	case ManagedServicesPagedResponse:
-	**/
-	default:
-		log.Fatalf("listHelper interface{} %+v used", i)
-	}
-
+	pages, results, err := pager.castResult(req, pager.endpoint(c))
 	if err != nil {
 		return err
 	}
-
-	if opts == nil {
-		for page := 2; page <= pages; page++ {
-			if err := c.listHelper(ctx, i, &ListOptions{PageOptions: &PageOptions{Page: page}}); err != nil {
-				return err
-			}
-		}
-	} else {
+	if opts != nil {
 		if opts.PageOptions == nil {
 			opts.PageOptions = &PageOptions{}
 		}
-
 		if opts.Page == 0 {
 			for page := 2; page <= pages; page++ {
 				opts.Page = page
-				if err := c.listHelper(ctx, i, opts); err != nil {
+				if err := c.newListHelper(ctx, pager, opts); err != nil {
 					return err
 				}
 			}
@@ -337,9 +83,61 @@ func (c *Client) listHelper(ctx context.Context, i interface{}, opts *ListOption
 		opts.Results = results
 		opts.Pages = pages
 	}
+	for page := 2; page <= pages; page++ {
+		newOpts := ListOptions{PageOptions: &PageOptions{Page: page}}
+		if err := c.newListHelper(ctx, pager, &newOpts); err != nil {
+			return err
+		}
+	}
 
 	return nil
 }
+
+/**
+case *ImagesPagedResponse:
+case *StackscriptsPagedResponse:
+case *InstancesPagedResponse:
+case *RegionsPagedResponse:
+case *VolumesPagedResponse:
+case *DatabasesPagedResponse:
+case *DatabaseEnginesPagedResponse:
+case *DatabaseTypesPagedResponse:
+case *MySQLDatabasesPagedResponse:
+case *MongoDatabasesPagedResponse:
+case *PostgresDatabasesPagedResponse:
+case *DomainsPagedResponse:
+case *EventsPagedResponse:
+case *FirewallsPagedResponse:
+case *LKEClustersPagedResponse:
+case *LKEVersionsPagedResponse:
+case *LongviewSubscriptionsPagedResponse:
+case *LongviewClientsPagedResponse:
+case *IPAddressesPagedResponse:
+case *IPv6PoolsPagedResponse:
+case *IPv6RangesPagedResponse:
+case *SSHKeysPagedResponse:
+case *TicketsPagedResponse:
+case *InvoicesPagedResponse:
+case *NotificationsPagedResponse:
+case *OAuthClientsPagedResponse:
+case *PaymentsPagedResponse:
+case *NodeBalancersPagedResponse:
+case *TagsPagedResponse:
+case *TokensPagedResponse:
+case *UsersPagedResponse:
+case *ObjectStorageBucketsPagedResponse:
+case *ObjectStorageClustersPagedResponse:
+case *ObjectStorageKeysPagedResponse:
+case *VLANsPagedResponse:
+
+case ProfileAppsPagedResponse:
+case ProfileWhitelistPagedResponse:
+case ManagedContactsPagedResponse:
+case ManagedCredentialsPagedResponse:
+case ManagedIssuesPagedResponse:
+case ManagedLinodeSettingsPagedResponse:
+case ManagedServicesPagedResponse:
+**/
 
 // listHelperWithID abstracts fetching and pagination for GET endpoints that
 // require an Id (second level endpoints).
