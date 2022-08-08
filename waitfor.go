@@ -591,6 +591,26 @@ func (client Client) NewEventPoller(
 	return &result, nil
 }
 
+// NewEventPollerWithoutEntity initializes a new Linode event poller without a target entity ID.
+// This is useful for create events where the ID of the entity is not yet known.
+// For example:
+// p, _ := client.NewEventPollerWithoutEntity(...)
+// inst, _ := client.CreateInstance(...)
+// p.EntityID = inst.ID
+// ...
+func (client Client) NewEventPollerWithoutEntity(entityType EntityType, action EventAction) (*EventPoller, error) {
+	result := EventPoller{
+		EntityType:     entityType,
+		Action:         action,
+		EntityID:       0,
+		previousEvents: make(map[int]bool, 0),
+
+		client: client,
+	}
+
+	return &result, nil
+}
+
 // PreTask stores all current events for the given entity to prevent them from being
 // processed on subsequent runs.
 func (p *EventPoller) PreTask(ctx context.Context) error {
