@@ -48,18 +48,8 @@ func applyListOptionsToRequest(opts *ListOptions, req *resty.Request) {
 }
 
 type PagedResponse interface {
-	*PageOptions
-	endpoint(*Client, ...any) string
-}
-
-func processPage[P PagedResponse](r *resty.Request, p P, e string) (int, int, error) {
-	res, err := coupleAPIErrors(r.SetResult(P{}).Get(e))
-	if err != nil {
-		return 0, 0, err
-	}
-	cast := res.Result().(*P)
-	p.Data = append(resp.Data, cast.Data)
-	return cast.Pages, cast.Results, nil
+	endpoint(*Client, ...interface{}) string
+	castResult(*resty.Request, string) (int, int, error)
 }
 
 // listHelper abstracts fetching and pagination for GET endpoints that
@@ -67,11 +57,12 @@ func processPage[P PagedResponse](r *resty.Request, p P, e string) (int, int, er
 // When opts (or opts.Page) is nil, all pages will be fetched and
 // returned in a single (endpoint-specific)PagedResponse
 // opts.results and opts.pages will be updated from the API response
-func (c *Client) listHelper(ctx context.Context, pager PagedResponse, opts *ListOptions, ids ...interface{}) error {
+func (c *Client) listHelper(ctx context.Context, pager PagedResponse, opts *ListOptions,
+	ids ...interface{}) error {
 	req := c.R(ctx)
 	applyListOptionsToRequest(opts, req)
 
-	pages, results, err := processPage(req, pager, pager.endpoint(c, ids...))
+	pages, results, err := pager.castResult(req, pager.endpoint(c, ids...))
 	if err != nil {
 		return err
 	}

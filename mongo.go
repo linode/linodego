@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -112,12 +113,22 @@ type MongoDatabasesPagedResponse struct {
 	Data []MongoDatabase `json:"data"`
 }
 
-func (MongoDatabasesPagedResponse) endpoint(c *Client, _ ...any) string {
+func (MongoDatabasesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.DatabaseMongoInstances.Endpoint()
 	if err != nil {
 		panic(err)
 	}
 	return endpoint
+}
+
+func (resp *MongoDatabasesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(MongoDatabasesPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*MongoDatabasesPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListMongoDatabases lists all Mongo Databases associated with the account
@@ -169,13 +180,23 @@ type MongoDatabaseBackupsPagedResponse struct {
 	Data []MongoDatabaseBackup `json:"data"`
 }
 
-func (MongoDatabaseBackupsPagedResponse) endpoint(c *Client, ids ...any) string {
+func (MongoDatabaseBackupsPagedResponse) endpointWithID(c *Client, ids ...interface{}) string {
 	id := ids[0].(int)
 	endpoint, err := c.DatabaseMongoInstances.Endpoint()
 	if err != nil {
 		panic(err)
 	}
 	return fmt.Sprintf("%s/%d/backups", endpoint, id)
+}
+
+func (resp *MongoDatabaseBackupsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(MongoDatabaseBackupsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*MongoDatabaseBackupsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListMongoDatabaseBackups lists all Mongo Database Backups associated with the given Mongo Database

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -71,14 +72,24 @@ type InstanceDiskUpdateOptions struct {
 	ReadOnly bool   `json:"read_only"`
 }
 
-// endpoint gets the endpoint URL for InstanceDisks of a given Instance
-func (InstanceDisksPagedResponse) endpoint(c *Client, ids ...any) string {
+// endpointWithID gets the endpoint URL for InstanceDisks of a given Instance
+func (InstanceDisksPagedResponse) endpointWithID(c *Client, ids ...interface{}) string {
 	id := ids[0].(int)
 	endpoint, err := c.InstanceDisks.endpointWithParams(id)
 	if err != nil {
 		panic(err)
 	}
 	return endpoint
+}
+
+func (resp *InstanceDisksPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(InstanceDisksPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*InstanceDisksPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListInstanceDisks lists InstanceDisks
@@ -196,7 +207,7 @@ func (c *Client) ResizeInstanceDisk(ctx context.Context, linodeID int, diskID in
 	e = fmt.Sprintf("%s/%d/resize", e, diskID)
 
 	req := c.R(ctx).SetResult(&InstanceDisk{})
-	updateOpts := map[string]any{
+	updateOpts := map[string]interface{}{
 		"size": size,
 	}
 
@@ -223,7 +234,7 @@ func (c *Client) PasswordResetInstanceDisk(ctx context.Context, linodeID int, di
 	e = fmt.Sprintf("%s/%d/password", e, diskID)
 
 	req := c.R(ctx).SetResult(&InstanceDisk{})
-	updateOpts := map[string]any{
+	updateOpts := map[string]interface{}{
 		"password": password,
 	}
 

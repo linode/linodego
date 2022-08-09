@@ -20,6 +20,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/go-resty/resty/v2"
 )
 
 // Template represents a Template object
@@ -56,12 +58,22 @@ type TemplatesPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Template
-func (TemplatesPagedResponse) endpoint(c *Client, _ ...any) string {
+func (TemplatesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.Templates.Endpoint()
 	if err != nil {
 		panic(err)
 	}
 	return endpoint
+}
+
+func (resp *TemplatesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(TemplatesPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*TemplatesPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListTemplates lists Templates

@@ -14,9 +14,9 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 37939854, "label": "linodego-test-instance-wo-disk", "group": "",
+    body: '{"id": 36364261, "label": "linodego-test-instance-wo-disk", "group": "",
       "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["139.144.61.212"], "ipv6": "2600:3c02::f03c:93ff:feeb:711e/128",
+      "type": "g6-nanode-1", "ipv4": ["170.187.203.77"], "ipv6": "1234::5678/128",
       "image": null, "region": "us-southeast", "specs": {"disk": 25600, "memory":
       1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
@@ -73,10 +73,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/37939854/configs
+    url: https://api.linode.com/v4beta/linode/instances/36364261/configs
     method: POST
   response:
-    body: '{"id": 40412484, "label": "linodego-test-config", "helpers": {"updatedb_disabled":
+    body: '{"id": 38714818, "label": "linodego-test-config", "helpers": {"updatedb_disabled":
       true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
       true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
@@ -134,12 +134,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/37939854
+    url: https://api.linode.com/v4beta/linode/instances/36364261
     method: GET
   response:
-    body: '{"id": 37939854, "label": "linodego-test-instance-wo-disk", "group": "",
+    body: '{"id": 36364261, "label": "linodego-test-instance-wo-disk", "group": "",
       "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["139.144.61.212"], "ipv6": "2600:3c02::f03c:93ff:feeb:711e/128",
+      "type": "g6-nanode-1", "ipv4": ["170.187.203.77"], "ipv6": "1234::5678/128",
       "image": null, "region": "us-southeast", "specs": {"disk": 25600, "memory":
       1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
@@ -198,7 +198,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/37939854
+    url: https://api.linode.com/v4beta/linode/instances/36364261
     method: DELETE
   response:
     body: '{}'

@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+
+	"github.com/go-resty/resty/v2"
 )
 
 // Tag represents a Tag object
@@ -16,7 +18,7 @@ type Tag struct {
 type TaggedObject struct {
 	Type    string          `json:"type"`
 	RawData json.RawMessage `json:"data"`
-	Data    any             `json:"-"`
+	Data    interface{}     `json:"-"`
 }
 
 // SortedObjects currently only includes Instances
@@ -58,12 +60,22 @@ type TagsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Tag
-func (TagsPagedResponse) endpoint(c *Client, _ ...any) string {
+func (TagsPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.Tags.Endpoint()
 	if err != nil {
 		panic(err)
 	}
 	return endpoint
+}
+
+func (resp *TagsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(TagsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*TagsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // TaggedObjectsPagedResponse represents a paginated Tag API response
@@ -73,7 +85,7 @@ type TaggedObjectsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Tag
-func (TaggedObjectsPagedResponse) endpoint(c *Client, ids ...any) string {
+func (TaggedObjectsPagedResponse) endpoint(c *Client, ids ...interface{}) string {
 	id := ids[0].(string)
 	endpoint, err := c.Tags.Endpoint()
 	if err != nil {
@@ -81,6 +93,16 @@ func (TaggedObjectsPagedResponse) endpoint(c *Client, ids ...any) string {
 	}
 	endpoint = fmt.Sprintf("%s/%s", endpoint, id)
 	return endpoint
+}
+
+func (resp *TaggedObjectsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(TaggedObjectsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*TaggedObjectsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListTags lists Tags

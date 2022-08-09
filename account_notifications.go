@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
+	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -63,13 +64,23 @@ type NotificationsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Notification
-func (NotificationsPagedResponse) endpoint(c *Client, _ ...any) string {
+func (NotificationsPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.Notifications.Endpoint()
 	if err != nil {
 		panic(err)
 	}
 
 	return endpoint
+}
+
+func (resp *NotificationsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(NotificationsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*NotificationsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListNotifications gets a collection of Notification objects representing important,

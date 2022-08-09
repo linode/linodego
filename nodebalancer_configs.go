@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/go-resty/resty/v2"
 )
 
 // NodeBalancerConfig objects allow a NodeBalancer to accept traffic on a new port
@@ -210,13 +212,23 @@ type NodeBalancerConfigsPagedResponse struct {
 }
 
 // endpointWithID gets the endpoint URL for NodeBalancerConfig
-func (NodeBalancerConfigsPagedResponse) endpoint(c *Client, ids ...any) string {
+func (NodeBalancerConfigsPagedResponse) endpoint(c *Client, ids ...interface{}) string {
 	id := ids[0].(int)
 	endpoint, err := c.NodeBalancerConfigs.endpointWithParams(id)
 	if err != nil {
 		panic(err)
 	}
 	return endpoint
+}
+
+func (resp *NodeBalancerConfigsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(NodeBalancerConfigsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*NodeBalancerConfigsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListNodeBalancerConfigs lists NodeBalancerConfigs

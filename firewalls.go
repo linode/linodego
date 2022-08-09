@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -87,12 +88,22 @@ type FirewallsPagedResponse struct {
 	Data []Firewall `json:"data"`
 }
 
-func (FirewallsPagedResponse) endpoint(c *Client, _ ...any) string {
+func (FirewallsPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.Firewalls.Endpoint()
 	if err != nil {
 		panic(err)
 	}
 	return endpoint
+}
+
+func (resp *FirewallsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(FirewallsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*FirewallsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListFirewalls returns a paginated list of Cloud Firewalls

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -116,12 +117,22 @@ type MySQLDatabasesPagedResponse struct {
 	Data []MySQLDatabase `json:"data"`
 }
 
-func (MySQLDatabasesPagedResponse) endpoint(c *Client, _ ...any) string {
+func (MySQLDatabasesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.DatabaseMySQLInstances.Endpoint()
 	if err != nil {
 		panic(err)
 	}
 	return endpoint
+}
+
+func (resp *MySQLDatabasesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(MySQLDatabasesPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*MySQLDatabasesPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // MySQLDatabaseCredential is the Root Credentials to access the Linode Managed Database
@@ -152,13 +163,23 @@ type MySQLDatabaseBackupsPagedResponse struct {
 	Data []MySQLDatabaseBackup `json:"data"`
 }
 
-func (MySQLDatabaseBackupsPagedResponse) endpoint(c *Client, ids ...any) string {
+func (MySQLDatabaseBackupsPagedResponse) endpointWithID(c *Client, ids ...interface{}) string {
 	id := ids[0].(int)
 	endpoint, err := c.DatabaseMySQLInstances.Endpoint()
 	if err != nil {
 		panic(err)
 	}
 	return fmt.Sprintf("%s/%d/backups", endpoint, id)
+}
+
+func (resp *MySQLDatabaseBackupsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(MySQLDatabaseBackupsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*MySQLDatabaseBackupsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListMySQLDatabaseBackups lists all MySQL Database Backups associated with the given MySQL Database

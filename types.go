@@ -3,6 +3,8 @@ package linodego
 import (
 	"context"
 	"fmt"
+
+	"github.com/go-resty/resty/v2"
 )
 
 // LinodeType represents a linode type object
@@ -52,12 +54,22 @@ type LinodeTypesPagedResponse struct {
 	Data []LinodeType `json:"data"`
 }
 
-func (*LinodeTypesPagedResponse) endpoint(c *Client, _ ...any) string {
+func (*LinodeTypesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.Types.Endpoint()
 	if err != nil {
 		panic(err)
 	}
 	return endpoint
+}
+
+func (resp *LinodeTypesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(LinodeTypesPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*LinodeTypesPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListTypes lists linode types

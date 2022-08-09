@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -168,13 +169,23 @@ func (i InstanceConfig) GetUpdateOptions() InstanceConfigUpdateOptions {
 }
 
 // endpointWithID gets the endpoint URL for InstanceConfigs of a given Instance
-func (InstanceConfigsPagedResponse) endpoint(c *Client, ids ...any) string {
+func (InstanceConfigsPagedResponse) endpoint(c *Client, ids ...interface{}) string {
 	id := ids[0].(int)
 	endpoint, err := c.InstanceConfigs.endpointWithParams(id)
 	if err != nil {
 		panic(err)
 	}
 	return endpoint
+}
+
+func (resp *InstanceConfigsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(InstanceConfigsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*InstanceConfigsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListInstanceConfigs lists InstanceConfigs
