@@ -7,14 +7,42 @@ import (
 )
 
 func TestEventPoller_InstancePower(t *testing.T) {
-	client, instance, teardown, err := setupInstance(t, "fixtures/TestEventPoller_InstancePower")
-	defer teardown()
+	client, fixtureTeardown := createTestClient(t, "fixtures/TestEventPoller_InstancePower")
+	t.Cleanup(fixtureTeardown)
+
+	p, err := client.NewEventPollerWithoutEntity(linodego.EntityLinode, linodego.ActionLinodeCreate)
 	if err != nil {
-		t.Error(err)
+		t.Fatalf("failed to initialize event poller: %s", err)
+	}
+
+	booted := false
+
+	instance, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
+		Region:   "us-southeast",
+		Type:     "g6-nanode-1",
+		Image:    "linode/ubuntu22.04",
+		RootPass: "c00lp@ss!",
+		Label:    "linodego-test-eventpoller-instancepower",
+		Booted:   &booted,
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Cleanup(func() {
+		if err := client.DeleteInstance(context.Background(), instance.ID); err != nil {
+			t.Error(err)
+		}
+	})
+
+	p.EntityID = instance.ID
+
+	if _, err := p.WaitForFinished(context.Background(), 120); err != nil {
+		t.Fatal(err)
 	}
 
 	// Wait for the instance to be booted
-	p, err := client.NewEventPoller(
+	p, err = client.NewEventPoller(
 		context.Background(), instance.ID, linodego.EntityLinode, linodego.ActionLinodeBoot)
 	if err != nil {
 		t.Fatal(err)
