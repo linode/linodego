@@ -123,20 +123,8 @@ type LKEClustersPagedResponse struct {
 	Data []LKECluster `json:"data"`
 }
 
-// LKEClusterAPIEndpointsPagedResponse represents a paginated LKEClusterAPIEndpoints API response
-type LKEClusterAPIEndpointsPagedResponse struct {
-	*PageOptions
-	Data []LKEClusterAPIEndpoint `json:"data"`
-}
-
-// LKEVersionsPagedResponse represents a paginated LKEVersion API response
-type LKEVersionsPagedResponse struct {
-	*PageOptions
-	Data []LKEVersion `json:"data"`
-}
-
 // endpoint gets the endpoint URL for LKECluster
-func (LKEClustersPagedResponse) endpoint(c *Client) string {
+func (LKEClustersPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.LKEClusters.Endpoint()
 	if err != nil {
 		panic(err)
@@ -154,27 +142,19 @@ func (resp *LKEClustersPagedResponse) castResult(r *resty.Request, e string) (in
 	return castedRes.Pages, castedRes.Results, nil
 }
 
+// LKEVersionsPagedResponse represents a paginated LKEVersion API response
+type LKEVersionsPagedResponse struct {
+	*PageOptions
+	Data []LKEVersion `json:"data"`
+}
+
 // endpoint gets the endpoint URL for LKEVersion
-func (LKEVersionsPagedResponse) endpoint(c *Client) string {
+func (LKEVersionsPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.LKEVersions.Endpoint()
 	if err != nil {
 		panic(err)
 	}
 	return endpoint
-}
-
-// endpoint gets the endpoint URL for LKEClusterAPIEndpoints
-func (LKEClusterAPIEndpointsPagedResponse) endpointWithID(c *Client, id int) string {
-	endpoint, err := c.LKEClusterAPIEndpoints.endpointWithParams(id)
-	if err != nil {
-		panic(err)
-	}
-	return endpoint
-}
-
-// appendData appends LKEClusterAPIEndpoints when processing paginated LKEClusterAPIEndpoints responses
-func (resp *LKEClusterAPIEndpointsPagedResponse) appendData(r *LKEClusterAPIEndpointsPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
 }
 
 func (resp *LKEVersionsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
@@ -183,6 +163,32 @@ func (resp *LKEVersionsPagedResponse) castResult(r *resty.Request, e string) (in
 		return 0, 0, err
 	}
 	castedRes := res.Result().(*LKEVersionsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
+}
+
+// LKEClusterAPIEndpointsPagedResponse represents a paginated LKEClusterAPIEndpoints API response
+type LKEClusterAPIEndpointsPagedResponse struct {
+	*PageOptions
+	Data []LKEClusterAPIEndpoint `json:"data"`
+}
+
+// endpoint gets the endpoint URL for LKEClusterAPIEndpointsPagedResponse
+func (LKEClusterAPIEndpointsPagedResponse) endpoint(c *Client, ids ...interface{}) string {
+	id := ids[0].(int)
+	endpoint, err := c.LKEClusterAPIEndpoints.endpointWithParams(id)
+	if err != nil {
+		panic(err)
+	}
+	return endpoint
+}
+
+func (resp *LKEClusterAPIEndpointsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(LKEClusterAPIEndpointsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*LKEClusterAPIEndpointsPagedResponse)
 	resp.Data = append(resp.Data, castedRes.Data...)
 	return castedRes.Pages, castedRes.Results, nil
 }

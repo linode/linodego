@@ -78,7 +78,7 @@ type ObjectStorageBucketsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for ObjectStorageBucket
-func (ObjectStorageBucketsPagedResponse) endpoint(c *Client) string {
+func (ObjectStorageBucketsPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.ObjectStorageBuckets.Endpoint()
 	if err != nil {
 		panic(err)

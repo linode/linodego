@@ -115,7 +115,7 @@ func (v Volume) GetCreateOptions() (createOpts VolumeCreateOptions) {
 }
 
 // endpoint gets the endpoint URL for Volume
-func (VolumesPagedResponse) endpoint(c *Client) string {
+func (VolumesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.Volumes.Endpoint()
 	if err != nil {
 		panic(err)

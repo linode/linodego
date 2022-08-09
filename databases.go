@@ -58,7 +58,7 @@ type DatabasesPagedResponse struct {
 	Data []Database `json:"data"`
 }
 
-func (DatabasesPagedResponse) endpoint(c *Client) string {
+func (DatabasesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.Databases.Endpoint()
 	if err != nil {
 		panic(err)
@@ -81,7 +81,7 @@ type DatabaseEnginesPagedResponse struct {
 	Data []DatabaseEngine `json:"data"`
 }
 
-func (DatabaseEnginesPagedResponse) endpoint(c *Client) string {
+func (DatabaseEnginesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.Databases.Endpoint()
 	if err != nil {
 		panic(err)
@@ -104,7 +104,7 @@ type DatabaseTypesPagedResponse struct {
 	Data []DatabaseType `json:"data"`
 }
 
-func (DatabaseTypesPagedResponse) endpoint(c *Client) string {
+func (DatabaseTypesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.Databases.Endpoint()
 	if err != nil {
 		panic(err)

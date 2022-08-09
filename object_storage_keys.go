@@ -43,7 +43,7 @@ type ObjectStorageKeysPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Object Storage keys
-func (ObjectStorageKeysPagedResponse) endpoint(c *Client) string {
+func (ObjectStorageKeysPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.ObjectStorageKeys.Endpoint()
 	if err != nil {
 		panic(err)

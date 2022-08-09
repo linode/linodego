@@ -106,16 +106,12 @@ type ImagesPagedResponse struct {
 	Data []Image `json:"data"`
 }
 
-func (ImagesPagedResponse) endpoint(c *Client) string {
+func (ImagesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.Images.Endpoint()
 	if err != nil {
 		panic(err)
 	}
 	return endpoint
-}
-
-func (resp *ImagesPagedResponse) appendData(r *ImagesPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
 }
 
 func (resp *ImagesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {

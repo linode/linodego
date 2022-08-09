@@ -90,24 +90,3 @@ func (c *Client) listHelper(ctx context.Context, pager PagedResponse, opts *List
 
 	return nil
 }
-
-/**
-case *DomainRecordsPagedResponse:
-case *FirewallDevicesPagedResponse:
-case *InstanceConfigsPagedResponse:
-case *InstanceDisksPagedResponse:
-case *InstanceVolumesPagedResponse:
-case *InvoiceItemsPagedResponse:
-case *LKEClusterAPIEndpointsPagedResponse:
-case *LKENodePoolsPagedResponse:
-case *MySQLDatabaseBackupsPagedResponse:
-case *MongoDatabaseBackupsPagedResponse:
-case *PostgresDatabaseBackupsPagedResponse:
-case *NodeBalancerConfigsPagedResponse:
-case *TaggedObjectsPagedResponse:
-    idStr := idRaw.(string)
-case TicketAttachmentsPagedResponse:
-case TicketRepliesPagedResponse:
-case *NodeBalancerNodesPagedResponse:
-    two ids
-**/

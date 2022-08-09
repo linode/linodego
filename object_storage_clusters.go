@@ -23,7 +23,7 @@ type ObjectStorageClustersPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for ObjectStorageCluster
-func (ObjectStorageClustersPagedResponse) endpoint(c *Client) string {
+func (ObjectStorageClustersPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.ObjectStorageClusters.Endpoint()
 	if err != nil {
 		panic(err)

@@ -36,7 +36,7 @@ type InvoicesPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Invoice
-func (InvoicesPagedResponse) endpoint(c *Client) string {
+func (InvoicesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.Invoices.Endpoint()
 	if err != nil {
 		panic(err)
@@ -131,7 +131,8 @@ type InvoiceItemsPagedResponse struct {
 }
 
 // endpointWithID gets the endpoint URL for InvoiceItems associated with a specific Invoice
-func (InvoiceItemsPagedResponse) endpointWithID(c *Client, id int) string {
+func (InvoiceItemsPagedResponse) endpoint(c *Client, ids ...interface{}) string {
+	id := ids[0].(int)
 	endpoint, err := c.InvoiceItems.endpointWithParams(id)
 	if err != nil {
 		panic(err)
@@ -140,15 +141,20 @@ func (InvoiceItemsPagedResponse) endpointWithID(c *Client, id int) string {
 	return endpoint
 }
 
-// appendData appends InvoiceItems when processing paginated Invoice Item responses
-func (resp *InvoiceItemsPagedResponse) appendData(r *InvoiceItemsPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *InvoiceItemsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(InvoiceItemsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*InvoiceItemsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListInvoiceItems gets the invoice items associated with a specific Invoice
 func (c *Client) ListInvoiceItems(ctx context.Context, id int, opts *ListOptions) ([]InvoiceItem, error) {
 	response := InvoiceItemsPagedResponse{}
-	err := c.listHelperWithID(ctx, &response, id, opts)
+	err := c.listHelper(ctx, &response, opts, id)
 	if err != nil {
 		return nil, err
 	}

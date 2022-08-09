@@ -113,7 +113,7 @@ type MongoDatabasesPagedResponse struct {
 	Data []MongoDatabase `json:"data"`
 }
 
-func (MongoDatabasesPagedResponse) endpoint(c *Client) string {
+func (MongoDatabasesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.DatabaseMongoInstances.Endpoint()
 	if err != nil {
 		panic(err)
@@ -180,7 +180,8 @@ type MongoDatabaseBackupsPagedResponse struct {
 	Data []MongoDatabaseBackup `json:"data"`
 }
 
-func (MongoDatabaseBackupsPagedResponse) endpointWithID(c *Client, id int) string {
+func (MongoDatabaseBackupsPagedResponse) endpointWithID(c *Client, ids ...interface{}) string {
+	id := ids[0].(int)
 	endpoint, err := c.DatabaseMongoInstances.Endpoint()
 	if err != nil {
 		panic(err)
@@ -188,15 +189,21 @@ func (MongoDatabaseBackupsPagedResponse) endpointWithID(c *Client, id int) strin
 	return fmt.Sprintf("%s/%d/backups", endpoint, id)
 }
 
-func (resp *MongoDatabaseBackupsPagedResponse) appendData(r *MongoDatabaseBackupsPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *MongoDatabaseBackupsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(MongoDatabaseBackupsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*MongoDatabaseBackupsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListMongoDatabaseBackups lists all Mongo Database Backups associated with the given Mongo Database
 func (c *Client) ListMongoDatabaseBackups(ctx context.Context, databaseID int, opts *ListOptions) ([]MongoDatabaseBackup, error) {
 	response := MongoDatabaseBackupsPagedResponse{}
 
-	err := c.listHelperWithID(ctx, &response, databaseID, opts)
+	err := c.listHelper(ctx, &response, opts, databaseID)
 	if err != nil {
 		return nil, err
 	}

@@ -54,7 +54,7 @@ type LinodeTypesPagedResponse struct {
 	Data []LinodeType `json:"data"`
 }
 
-func (*LinodeTypesPagedResponse) endpoint(c *Client) string {
+func (*LinodeTypesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.Types.Endpoint()
 	if err != nil {
 		panic(err)

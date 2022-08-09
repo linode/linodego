@@ -46,7 +46,7 @@ func (i InstanceIP) GetUpdateOptions() (o IPAddressUpdateOptions) {
 }
 
 // endpoint gets the endpoint URL for IPAddress
-func (IPAddressesPagedResponse) endpoint(c *Client) string {
+func (IPAddressesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.IPAddresses.Endpoint()
 	if err != nil {
 		panic(err)

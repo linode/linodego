@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -72,7 +73,8 @@ type InstanceDiskUpdateOptions struct {
 }
 
 // endpointWithID gets the endpoint URL for InstanceDisks of a given Instance
-func (InstanceDisksPagedResponse) endpointWithID(c *Client, id int) string {
+func (InstanceDisksPagedResponse) endpointWithID(c *Client, ids ...interface{}) string {
+	id := ids[0].(int)
 	endpoint, err := c.InstanceDisks.endpointWithParams(id)
 	if err != nil {
 		panic(err)
@@ -80,15 +82,20 @@ func (InstanceDisksPagedResponse) endpointWithID(c *Client, id int) string {
 	return endpoint
 }
 
-// appendData appends InstanceDisks when processing paginated InstanceDisk responses
-func (resp *InstanceDisksPagedResponse) appendData(r *InstanceDisksPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *InstanceDisksPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(InstanceDisksPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*InstanceDisksPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListInstanceDisks lists InstanceDisks
 func (c *Client) ListInstanceDisks(ctx context.Context, linodeID int, opts *ListOptions) ([]InstanceDisk, error) {
 	response := InstanceDisksPagedResponse{}
-	err := c.listHelperWithID(ctx, &response, linodeID, opts)
+	err := c.listHelper(ctx, &response, opts, linodeID)
 	if err != nil {
 		return nil, err
 	}

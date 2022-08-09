@@ -54,7 +54,7 @@ type UsersPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for User
-func (UsersPagedResponse) endpoint(c *Client) string {
+func (UsersPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.Users.Endpoint()
 	if err != nil {
 		panic(err)

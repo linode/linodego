@@ -53,12 +53,6 @@ func (i Tag) GetCreateOptions() (o TagCreateOptions) {
 	return
 }
 
-// TaggedObjectsPagedResponse represents a paginated Tag API response
-type TaggedObjectsPagedResponse struct {
-	*PageOptions
-	Data []TaggedObject `json:"data"`
-}
-
 // TagsPagedResponse represents a paginated Tag API response
 type TagsPagedResponse struct {
 	*PageOptions
@@ -66,21 +60,11 @@ type TagsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Tag
-func (TagsPagedResponse) endpoint(c *Client) string {
+func (TagsPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.Tags.Endpoint()
 	if err != nil {
 		panic(err)
 	}
-	return endpoint
-}
-
-// endpoint gets the endpoint URL for Tag
-func (TaggedObjectsPagedResponse) endpointWithID(c *Client, id string) string {
-	endpoint, err := c.Tags.Endpoint()
-	if err != nil {
-		panic(err)
-	}
-	endpoint = fmt.Sprintf("%s/%s", endpoint, id)
 	return endpoint
 }
 
@@ -94,9 +78,31 @@ func (resp *TagsPagedResponse) castResult(r *resty.Request, e string) (int, int,
 	return castedRes.Pages, castedRes.Results, nil
 }
 
-// appendData appends TaggedObjects when processing paginated TaggedObjects responses
-func (resp *TaggedObjectsPagedResponse) appendData(r *TaggedObjectsPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+// TaggedObjectsPagedResponse represents a paginated Tag API response
+type TaggedObjectsPagedResponse struct {
+	*PageOptions
+	Data []TaggedObject `json:"data"`
+}
+
+// endpoint gets the endpoint URL for Tag
+func (TaggedObjectsPagedResponse) endpoint(c *Client, ids ...interface{}) string {
+	id := ids[0].(string)
+	endpoint, err := c.Tags.Endpoint()
+	if err != nil {
+		panic(err)
+	}
+	endpoint = fmt.Sprintf("%s/%s", endpoint, id)
+	return endpoint
+}
+
+func (resp *TaggedObjectsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(TaggedObjectsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*TaggedObjectsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListTags lists Tags
@@ -150,7 +156,7 @@ func (i *TaggedObject) fixData() (*TaggedObject, error) {
 // ListTaggedObjects lists Tagged Objects
 func (c *Client) ListTaggedObjects(ctx context.Context, label string, opts *ListOptions) (TaggedObjectList, error) {
 	response := TaggedObjectsPagedResponse{}
-	err := c.listHelperWithID(ctx, &response, label, opts)
+	err := c.listHelper(ctx, &response, opts, label)
 	if err != nil {
 		return nil, err
 	}

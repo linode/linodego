@@ -22,7 +22,7 @@ type IPv6RangeCreateOptions struct {
 }
 
 // endpoint gets the endpoint URL for IPv6Range
-func (IPv6RangesPagedResponse) endpoint(c *Client) string {
+func (IPv6RangesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.IPv6Ranges.Endpoint()
 	if err != nil {
 		panic(err)

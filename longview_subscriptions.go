@@ -24,7 +24,7 @@ type LongviewSubscriptionsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for LongviewSubscription
-func (LongviewSubscriptionsPagedResponse) endpoint(c *Client) string {
+func (LongviewSubscriptionsPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.LongviewSubscriptions.Endpoint()
 	if err != nil {
 		panic(err)

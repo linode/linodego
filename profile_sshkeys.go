@@ -69,7 +69,7 @@ type SSHKeysPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for SSHKey
-func (SSHKeysPagedResponse) endpoint(c *Client) string {
+func (SSHKeysPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.SSHKeys.Endpoint()
 	if err != nil {
 		panic(err)

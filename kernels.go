@@ -25,7 +25,7 @@ type LinodeKernelsPagedResponse struct {
 	Data []LinodeKernel `json:"data"`
 }
 
-func (LinodeKernelsPagedResponse) endpoint(c *Client) string {
+func (LinodeKernelsPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.Kernels.Endpoint()
 	if err != nil {
 		panic(err)

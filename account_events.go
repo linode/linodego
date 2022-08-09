@@ -195,7 +195,7 @@ type EventsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Event
-func (EventsPagedResponse) endpoint(c *Client) string {
+func (EventsPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.Events.Endpoint()
 	if err != nil {
 		panic(err)

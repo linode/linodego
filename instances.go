@@ -189,7 +189,7 @@ type InstancesPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Instance
-func (InstancesPagedResponse) endpoint(c *Client) string {
+func (InstancesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	endpoint, err := c.Instances.Endpoint()
 	if err != nil {
 		panic(err)
