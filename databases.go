@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -58,7 +57,7 @@ type DatabasesPagedResponse struct {
 	Data []Database `json:"data"`
 }
 
-func (DatabasesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (DatabasesPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Databases.Endpoint()
 	if err != nil {
 		panic(err)
@@ -66,22 +65,12 @@ func (DatabasesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
 	return fmt.Sprintf("%s/instances", endpoint)
 }
 
-func (resp *DatabasesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
-	res, err := coupleAPIErrors(r.SetResult(DatabasesPagedResponse{}).Get(e))
-	if err != nil {
-		return 0, 0, err
-	}
-	castedRes := res.Result().(*DatabasesPagedResponse)
-	resp.Data = append(resp.Data, castedRes.Data...)
-	return castedRes.Pages, castedRes.Results, nil
-}
-
 type DatabaseEnginesPagedResponse struct {
 	*PageOptions
 	Data []DatabaseEngine `json:"data"`
 }
 
-func (DatabaseEnginesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (DatabaseEnginesPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Databases.Endpoint()
 	if err != nil {
 		panic(err)
@@ -89,37 +78,17 @@ func (DatabaseEnginesPagedResponse) endpoint(c *Client, _ ...interface{}) string
 	return fmt.Sprintf("%s/engines", endpoint)
 }
 
-func (resp *DatabaseEnginesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
-	res, err := coupleAPIErrors(r.SetResult(DatabaseEnginesPagedResponse{}).Get(e))
-	if err != nil {
-		return 0, 0, err
-	}
-	castedRes := res.Result().(*DatabaseEnginesPagedResponse)
-	resp.Data = append(resp.Data, castedRes.Data...)
-	return castedRes.Pages, castedRes.Results, nil
-}
-
 type DatabaseTypesPagedResponse struct {
 	*PageOptions
 	Data []DatabaseType `json:"data"`
 }
 
-func (DatabaseTypesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (DatabaseTypesPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Databases.Endpoint()
 	if err != nil {
 		panic(err)
 	}
 	return fmt.Sprintf("%s/types", endpoint)
-}
-
-func (resp *DatabaseTypesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
-	res, err := coupleAPIErrors(r.SetResult(DatabaseTypesPagedResponse{}).Get(e))
-	if err != nil {
-		return 0, 0, err
-	}
-	castedRes := res.Result().(*DatabaseTypesPagedResponse)
-	resp.Data = append(resp.Data, castedRes.Data...)
-	return castedRes.Pages, castedRes.Results, nil
 }
 
 // A Database is a instance of Linode Managed Databases

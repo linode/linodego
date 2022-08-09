@@ -4,8 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-
-	"github.com/go-resty/resty/v2"
 )
 
 // NodeBalancerNode objects represent a backend that can accept traffic for a NodeBalancer Config
@@ -80,7 +78,7 @@ type NodeBalancerNodesPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for NodeBalancerNode
-func (NodeBalancerNodesPagedResponse) endpoint(c *Client, ids ...interface{}) string {
+func (NodeBalancerNodesPagedResponse) endpoint(c *Client, ids ...any) string {
 	nodebalancerID := ids[0].(int)
 	configID := ids[1].(int)
 	endpoint, err := c.NodeBalancerNodes.endpointWithParams(nodebalancerID, configID)
@@ -88,16 +86,6 @@ func (NodeBalancerNodesPagedResponse) endpoint(c *Client, ids ...interface{}) st
 		panic(err)
 	}
 	return endpoint
-}
-
-func (resp *NodeBalancerNodesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
-	res, err := coupleAPIErrors(r.SetResult(NodeBalancerNodesPagedResponse{}).Get(e))
-	if err != nil {
-		return 0, 0, err
-	}
-	castedRes := res.Result().(*NodeBalancerNodesPagedResponse)
-	resp.Data = append(resp.Data, castedRes.Data...)
-	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListNodeBalancerNodes lists NodeBalancerNodes

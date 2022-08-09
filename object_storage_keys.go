@@ -4,8 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-
-	"github.com/go-resty/resty/v2"
 )
 
 // ObjectStorageKey represents a linode object storage key object
@@ -43,22 +41,12 @@ type ObjectStorageKeysPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Object Storage keys
-func (ObjectStorageKeysPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (ObjectStorageKeysPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.ObjectStorageKeys.Endpoint()
 	if err != nil {
 		panic(err)
 	}
 	return endpoint
-}
-
-func (resp *ObjectStorageKeysPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
-	res, err := coupleAPIErrors(r.SetResult(ObjectStorageKeysPagedResponse{}).Get(e))
-	if err != nil {
-		return 0, 0, err
-	}
-	castedRes := res.Result().(*ObjectStorageKeysPagedResponse)
-	resp.Data = append(resp.Data, castedRes.Data...)
-	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListObjectStorageKeys lists ObjectStorageKeys

@@ -4,8 +4,6 @@ import (
 	"context"
 	"fmt"
 	"time"
-
-	"github.com/go-resty/resty/v2"
 )
 
 // Ticket represents a support ticket object
@@ -48,22 +46,12 @@ type TicketsPagedResponse struct {
 	Data []Ticket `json:"data"`
 }
 
-func (TicketsPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (TicketsPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Tickets.Endpoint()
 	if err != nil {
 		panic(err)
 	}
 	return endpoint
-}
-
-func (resp *TicketsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
-	res, err := coupleAPIErrors(r.SetResult(TicketsPagedResponse{}).Get(e))
-	if err != nil {
-		return 0, 0, err
-	}
-	castedRes := res.Result().(*TicketsPagedResponse)
-	resp.Data = append(resp.Data, castedRes.Data...)
-	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListTickets returns a collection of Support Tickets on the Account. Support Tickets

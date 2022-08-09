@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/duration"
 	"github.com/linode/linodego/internal/parseabletime"
 )
@@ -181,27 +180,11 @@ const (
 // can be used to access it.
 type EventEntity struct {
 	// ID may be a string or int, it depends on the EntityType
-	ID     interface{} `json:"id"`
-	Label  string      `json:"label"`
-	Type   EntityType  `json:"type"`
-	Status string      `json:"status"`
-	URL    string      `json:"url"`
-}
-
-// EventsPagedResponse represents a paginated Events API response
-type EventsPagedResponse struct {
-	*PageOptions
-	Data []Event `json:"data"`
-}
-
-// endpoint gets the endpoint URL for Event
-func (EventsPagedResponse) endpoint(c *Client, _ ...interface{}) string {
-	endpoint, err := c.Events.Endpoint()
-	if err != nil {
-		panic(err)
-	}
-
-	return endpoint
+	ID     any        `json:"id"`
+	Label  string     `json:"label"`
+	Type   EntityType `json:"type"`
+	Status string     `json:"status"`
+	URL    string     `json:"url"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
@@ -238,14 +221,20 @@ func (i Event) endpointWithID(c *Client) string {
 	return endpoint
 }
 
-func (resp *EventsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
-	res, err := coupleAPIErrors(r.SetResult(EventsPagedResponse{}).Get(e))
+// EventsPagedResponse represents a paginated Events API response
+type EventsPagedResponse struct {
+	*PageOptions
+	Data []Event `json:"data"`
+}
+
+// endpoint gets the endpoint URL for Event
+func (EventsPagedResponse) endpoint(c *Client, _ ...any) string {
+	endpoint, err := c.Events.Endpoint()
 	if err != nil {
-		return 0, 0, err
+		panic(err)
 	}
-	castedRes := res.Result().(*EventsPagedResponse)
-	resp.Data = append(resp.Data, castedRes.Data...)
-	return castedRes.Pages, castedRes.Results, nil
+
+	return endpoint
 }
 
 // ListEvents gets a collection of Event objects representing actions taken

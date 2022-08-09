@@ -4,8 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-
-	"github.com/go-resty/resty/v2"
 )
 
 // DomainRecord represents a DomainRecord object
@@ -90,7 +88,7 @@ type DomainRecordsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for InstanceConfig
-func (DomainRecordsPagedResponse) endpoint(c *Client, ids ...interface{}) string {
+func (DomainRecordsPagedResponse) endpoint(c *Client, ids ...any) string {
 	id, _ := ids[0].(int)
 	endpoint, err := c.DomainRecords.endpointWithParams(id)
 	if err != nil {
@@ -98,16 +96,6 @@ func (DomainRecordsPagedResponse) endpoint(c *Client, ids ...interface{}) string
 	}
 
 	return endpoint
-}
-
-func (resp *DomainRecordsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
-	res, err := coupleAPIErrors(r.SetResult(DomainRecordsPagedResponse{}).Get(e))
-	if err != nil {
-		return 0, 0, err
-	}
-	castedRes := res.Result().(*DomainRecordsPagedResponse)
-	resp.Data = append(resp.Data, castedRes.Data...)
-	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListDomainRecords lists DomainRecords

@@ -14,8 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/lke/versions
     method: GET
   response:
-    body: '{"data": [{"id": "1.23"}, {"id": "1.22"}], "page": 1, "pages": 1, "results":
-      2}'
+    body: '{"data": [{"id": "1.23"}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -31,7 +30,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "79"
+      - "63"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:

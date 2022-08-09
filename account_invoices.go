@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -36,23 +35,13 @@ type InvoicesPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Invoice
-func (InvoicesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (InvoicesPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Invoices.Endpoint()
 	if err != nil {
 		panic(err)
 	}
 
 	return endpoint
-}
-
-func (resp *InvoicesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
-	res, err := coupleAPIErrors(r.SetResult(InvoicesPagedResponse{}).Get(e))
-	if err != nil {
-		return 0, 0, err
-	}
-	castedRes := res.Result().(*InvoicesPagedResponse)
-	resp.Data = append(resp.Data, castedRes.Data...)
-	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListInvoices gets a paginated list of Invoices against the Account
@@ -131,7 +120,7 @@ type InvoiceItemsPagedResponse struct {
 }
 
 // endpointWithID gets the endpoint URL for InvoiceItems associated with a specific Invoice
-func (InvoiceItemsPagedResponse) endpoint(c *Client, ids ...interface{}) string {
+func (InvoiceItemsPagedResponse) endpoint(c *Client, ids ...any) string {
 	id := ids[0].(int)
 	endpoint, err := c.InvoiceItems.endpointWithParams(id)
 	if err != nil {
@@ -139,16 +128,6 @@ func (InvoiceItemsPagedResponse) endpoint(c *Client, ids ...interface{}) string 
 	}
 
 	return endpoint
-}
-
-func (resp *InvoiceItemsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
-	res, err := coupleAPIErrors(r.SetResult(InvoiceItemsPagedResponse{}).Get(e))
-	if err != nil {
-		return 0, 0, err
-	}
-	castedRes := res.Result().(*InvoiceItemsPagedResponse)
-	resp.Data = append(resp.Data, castedRes.Data...)
-	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListInvoiceItems gets the invoice items associated with a specific Invoice

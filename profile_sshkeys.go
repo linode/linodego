@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -69,22 +68,12 @@ type SSHKeysPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for SSHKey
-func (SSHKeysPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (SSHKeysPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.SSHKeys.Endpoint()
 	if err != nil {
 		panic(err)
 	}
 	return endpoint
-}
-
-func (resp *SSHKeysPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
-	res, err := coupleAPIErrors(r.SetResult(SSHKeysPagedResponse{}).Get(e))
-	if err != nil {
-		return 0, 0, err
-	}
-	castedRes := res.Result().(*SSHKeysPagedResponse)
-	resp.Data = append(resp.Data, castedRes.Data...)
-	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListSSHKeys lists SSHKeys

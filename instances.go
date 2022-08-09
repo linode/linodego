@@ -7,7 +7,6 @@ import (
 	"net"
 	"time"
 
-	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -189,22 +188,12 @@ type InstancesPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Instance
-func (InstancesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (InstancesPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Instances.Endpoint()
 	if err != nil {
 		panic(err)
 	}
 	return endpoint
-}
-
-func (resp *InstancesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
-	res, err := coupleAPIErrors(r.SetResult(InstancesPagedResponse{}).Get(e))
-	if err != nil {
-		return 0, 0, err
-	}
-	castedRes := res.Result().(*InstancesPagedResponse)
-	resp.Data = append(resp.Data, castedRes.Data...)
-	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListInstances lists linode instances

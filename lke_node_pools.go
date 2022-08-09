@@ -4,8 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-
-	"github.com/go-resty/resty/v2"
 )
 
 // LKELinodeStatus constants start with LKELinode and include
@@ -92,23 +90,13 @@ type LKENodePoolsPagedResponse struct {
 }
 
 // endpointWithID gets the endpoint URL for InstanceConfigs of a given Instance
-func (LKENodePoolsPagedResponse) endpoint(c *Client, ids ...interface{}) string {
+func (LKENodePoolsPagedResponse) endpoint(c *Client, ids ...any) string {
 	id := ids[0].(int)
 	endpoint, err := c.LKENodePools.endpointWithParams(id)
 	if err != nil {
 		panic(err)
 	}
 	return endpoint
-}
-
-func (resp *LKENodePoolsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
-	res, err := coupleAPIErrors(r.SetResult(LKENodePoolsPagedResponse{}).Get(e))
-	if err != nil {
-		return 0, 0, err
-	}
-	castedRes := res.Result().(*LKENodePoolsPagedResponse)
-	resp.Data = append(resp.Data, castedRes.Data...)
-	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListLKENodePools lists LKENodePools
