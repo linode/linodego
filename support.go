@@ -48,7 +48,7 @@ type TicketsPagedResponse struct {
 	Data []Ticket `json:"data"`
 }
 
-func (TicketsPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (TicketsPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Tickets.Endpoint()
 	if err != nil {
 		panic(err)

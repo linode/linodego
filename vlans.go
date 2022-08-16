@@ -42,7 +42,7 @@ type VLANsPagedResponse struct {
 	Data []VLAN `json:"data"`
 }
 
-func (VLANsPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (VLANsPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.VLANs.Endpoint()
 	if err != nil {
 		panic(err)

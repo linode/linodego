@@ -88,7 +88,7 @@ type FirewallsPagedResponse struct {
 	Data []Firewall `json:"data"`
 }
 
-func (FirewallsPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (FirewallsPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Firewalls.Endpoint()
 	if err != nil {
 		panic(err)

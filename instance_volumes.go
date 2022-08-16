@@ -13,7 +13,7 @@ type InstanceVolumesPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for InstanceVolume
-func (InstanceVolumesPagedResponse) endpoint(c *Client, ids ...interface{}) string {
+func (InstanceVolumesPagedResponse) endpoint(c *Client, ids ...any) string {
 	id := ids[0].(int)
 	endpoint, err := c.InstanceVolumes.endpointWithParams(id)
 	if err != nil {

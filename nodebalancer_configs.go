@@ -212,7 +212,7 @@ type NodeBalancerConfigsPagedResponse struct {
 }
 
 // endpointWithID gets the endpoint URL for NodeBalancerConfig
-func (NodeBalancerConfigsPagedResponse) endpoint(c *Client, ids ...interface{}) string {
+func (NodeBalancerConfigsPagedResponse) endpoint(c *Client, ids ...any) string {
 	id := ids[0].(int)
 	endpoint, err := c.NodeBalancerConfigs.endpointWithParams(id)
 	if err != nil {

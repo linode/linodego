@@ -169,7 +169,7 @@ func (i InstanceConfig) GetUpdateOptions() InstanceConfigUpdateOptions {
 }
 
 // endpointWithID gets the endpoint URL for InstanceConfigs of a given Instance
-func (InstanceConfigsPagedResponse) endpoint(c *Client, ids ...interface{}) string {
+func (InstanceConfigsPagedResponse) endpoint(c *Client, ids ...any) string {
 	id := ids[0].(int)
 	endpoint, err := c.InstanceConfigs.endpointWithParams(id)
 	if err != nil {

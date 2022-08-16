@@ -11,14 +11,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/volumes/330001
+    url: https://api.linode.com/v4beta/volumes/467342
     method: GET
   response:
-    body: '{"id": 330001, "status": "active", "label": "linodego-test-volume-4cn6vd19",
+    body: '{"id": 467342, "status": "active", "label": "linodego-test-volume-39pfjz33",
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
-      "/dev/disk/by-id/scsi-0Linode_Volume_linodego-test-volume-4cn6vd19", "size":
-      20, "linode_id": 36182641, "linode_label": "linodego-test-instance", "region":
-      "us-southeast", "tags": [], "hardware_type": "nvme"}'
+      "/dev/disk/by-id/scsi-0Linode_Volume_linodego-test-volume-39pfjz33", "size":
+      20, "linode_id": 38095390, "linode_label": "1304elxfx7s3-linodego-test-instance",
+      "region": "us-west", "tags": [], "hardware_type": "hdd"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -34,7 +34,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "372"
+      - "379"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:

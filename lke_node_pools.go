@@ -92,7 +92,7 @@ type LKENodePoolsPagedResponse struct {
 }
 
 // endpointWithID gets the endpoint URL for InstanceConfigs of a given Instance
-func (LKENodePoolsPagedResponse) endpoint(c *Client, ids ...interface{}) string {
+func (LKENodePoolsPagedResponse) endpoint(c *Client, ids ...any) string {
 	id := ids[0].(int)
 	endpoint, err := c.LKENodePools.endpointWithParams(id)
 	if err != nil {

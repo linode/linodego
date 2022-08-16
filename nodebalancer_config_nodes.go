@@ -80,7 +80,7 @@ type NodeBalancerNodesPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for NodeBalancerNode
-func (NodeBalancerNodesPagedResponse) endpoint(c *Client, ids ...interface{}) string {
+func (NodeBalancerNodesPagedResponse) endpoint(c *Client, ids ...any) string {
 	nodebalancerID := ids[0].(int)
 	configID := ids[1].(int)
 	endpoint, err := c.NodeBalancerNodes.endpointWithParams(nodebalancerID, configID)

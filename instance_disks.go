@@ -73,7 +73,7 @@ type InstanceDiskUpdateOptions struct {
 }
 
 // endpointWithID gets the endpoint URL for InstanceDisks of a given Instance
-func (InstanceDisksPagedResponse) endpointWithID(c *Client, ids ...interface{}) string {
+func (InstanceDisksPagedResponse) endpoint(c *Client, ids ...any) string {
 	id := ids[0].(int)
 	endpoint, err := c.InstanceDisks.endpointWithParams(id)
 	if err != nil {
@@ -207,7 +207,7 @@ func (c *Client) ResizeInstanceDisk(ctx context.Context, linodeID int, diskID in
 	e = fmt.Sprintf("%s/%d/resize", e, diskID)
 
 	req := c.R(ctx).SetResult(&InstanceDisk{})
-	updateOpts := map[string]interface{}{
+	updateOpts := map[string]any{
 		"size": size,
 	}
 
@@ -234,7 +234,7 @@ func (c *Client) PasswordResetInstanceDisk(ctx context.Context, linodeID int, di
 	e = fmt.Sprintf("%s/%d/password", e, diskID)
 
 	req := c.R(ctx).SetResult(&InstanceDisk{})
-	updateOpts := map[string]interface{}{
+	updateOpts := map[string]any{
 		"password": password,
 	}
 

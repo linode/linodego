@@ -14,7 +14,7 @@ type IPv6PoolsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for IPv6Pool
-func (IPv6PoolsPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (IPv6PoolsPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.IPv6Pools.Endpoint()
 	if err != nil {
 		panic(err)

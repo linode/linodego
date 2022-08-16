@@ -195,7 +195,7 @@ type DomainsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Domain
-func (DomainsPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (DomainsPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Domains.Endpoint()
 	if err != nil {
 		panic(err)

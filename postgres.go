@@ -114,7 +114,7 @@ type PostgresDatabasesPagedResponse struct {
 	Data []PostgresDatabase `json:"data"`
 }
 
-func (PostgresDatabasesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (PostgresDatabasesPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.DatabasePostgresInstances.Endpoint()
 	if err != nil {
 		panic(err)
@@ -181,7 +181,7 @@ type PostgresDatabaseBackupsPagedResponse struct {
 	Data []PostgresDatabaseBackup `json:"data"`
 }
 
-func (PostgresDatabaseBackupsPagedResponse) endpoint(c *Client, ids ...interface{}) string {
+func (PostgresDatabaseBackupsPagedResponse) endpoint(c *Client, ids ...any) string {
 	id := ids[0].(int)
 	endpoint, err := c.DatabasePostgresInstances.Endpoint()
 	if err != nil {

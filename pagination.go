@@ -48,7 +48,7 @@ func applyListOptionsToRequest(opts *ListOptions, req *resty.Request) {
 }
 
 type PagedResponse interface {
-	endpoint(*Client, ...interface{}) string
+	endpoint(*Client, ...any) string
 	castResult(*resty.Request, string) (int, int, error)
 }
 
@@ -57,8 +57,7 @@ type PagedResponse interface {
 // When opts (or opts.Page) is nil, all pages will be fetched and
 // returned in a single (endpoint-specific)PagedResponse
 // opts.results and opts.pages will be updated from the API response
-func (c *Client) listHelper(ctx context.Context, pager PagedResponse, opts *ListOptions,
-	ids ...interface{}) error {
+func (c *Client) listHelper(ctx context.Context, pager PagedResponse, opts *ListOptions, ids ...any) error {
 	req := c.R(ctx)
 	applyListOptionsToRequest(opts, req)
 
@@ -66,27 +65,22 @@ func (c *Client) listHelper(ctx context.Context, pager PagedResponse, opts *List
 	if err != nil {
 		return err
 	}
-	if opts != nil {
-		if opts.PageOptions == nil {
-			opts.PageOptions = &PageOptions{}
-		}
-		if opts.Page == 0 {
-			for page := 2; page <= pages; page++ {
-				opts.Page = page
-				if err := c.listHelper(ctx, pager, opts, ids...); err != nil {
-					return err
-				}
-			}
-		}
-		opts.Results = results
-		opts.Pages = pages
+	if opts == nil {
+		opts = &ListOptions{PageOptions: &PageOptions{Page: 0}}
 	}
-	for page := 2; page <= pages; page++ {
-		newOpts := ListOptions{PageOptions: &PageOptions{Page: page}}
-		if err := c.listHelper(ctx, pager, &newOpts, ids...); err != nil {
-			return err
+	if opts.PageOptions == nil {
+		opts.PageOptions = &PageOptions{Page: 0}
+	}
+	if opts.Page == 0 {
+		for page := 2; page <= pages; page++ {
+			opts.Page = page
+			if err := c.listHelper(ctx, pager, opts, ids...); err != nil {
+				return err
+			}
 		}
 	}
 
+	opts.Results = results
+	opts.Pages = pages
 	return nil
 }

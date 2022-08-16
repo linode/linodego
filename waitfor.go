@@ -271,7 +271,7 @@ func (client Client) WaitForLKEClusterConditions(
 // before returning. It will timeout with an error after timeoutSeconds.
 // If the event indicates a failure both the failed event and the error will be returned.
 // nolint
-func (client Client) WaitForEventFinished(ctx context.Context, id interface{}, entityType EntityType, action EventAction, minStart time.Time, timeoutSeconds int) (*Event, error) {
+func (client Client) WaitForEventFinished(ctx context.Context, id any, entityType EntityType, action EventAction, minStart time.Time, timeoutSeconds int) (*Event, error) {
 	titledEntityType := strings.Title(string(entityType))
 	filter := Filter{
 		Order:   Descending,

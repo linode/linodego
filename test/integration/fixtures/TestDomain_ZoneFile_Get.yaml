@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"domain":"078il30zhm2pbj5p90m489gj5h1b16sa-linodego-testing.com","type":"master","soa_email":"example@example.com","master_ips":null,"axfr_ips":null,"tags":null}'
+    body: '{"domain":"p2q4j426017anizqw90i6a058am2zzn0-linodego-testing.com","type":"master","soa_email":"example@example.com","master_ips":null,"axfr_ips":null,"tags":null}'
     form: {}
     headers:
       Accept:
@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/domains
     method: POST
   response:
-    body: '{"id": 1836712, "type": "master", "domain": "078il30zhm2pbj5p90m489gj5h1b16sa-linodego-testing.com",
+    body: '{"id": 1875310, "type": "master", "domain": "p2q4j426017anizqw90i6a058am2zzn0-linodego-testing.com",
       "tags": [], "group": "", "status": "active", "errors": "", "description": "",
       "soa_email": "example@example.com", "retry_sec": 0, "master_ips": [], "axfr_ips":
       [], "expire_sec": 0, "refresh_sec": 0, "ttl_sec": 0, "created": "2018-01-02T03:04:05",
@@ -70,7 +70,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/domains/1836712/zone-file
+    url: https://api.linode.com/v4beta/domains/1875310/zone-file
     method: GET
   response:
     body: '{"zone_file": []}'
@@ -127,7 +127,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/domains/1836712
+    url: https://api.linode.com/v4beta/domains/1875310
     method: DELETE
   response:
     body: '{}'

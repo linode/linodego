@@ -106,7 +106,7 @@ type ImagesPagedResponse struct {
 	Data []Image `json:"data"`
 }
 
-func (ImagesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (ImagesPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Images.Endpoint()
 	if err != nil {
 		panic(err)

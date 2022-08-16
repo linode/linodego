@@ -58,7 +58,7 @@ type TemplatesPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Template
-func (TemplatesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (TemplatesPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Templates.Endpoint()
 	if err != nil {
 		panic(err)

@@ -69,7 +69,7 @@ type FirewallDevicesPagedResponse struct {
 }
 
 // endpointWithID gets the endpoint URL for FirewallDevices of a given Firewall
-func (FirewallDevicesPagedResponse) endpoint(c *Client, ids ...interface{}) string {
+func (FirewallDevicesPagedResponse) endpoint(c *Client, ids ...any) string {
 	id, _ := ids[0].(int)
 	endpoint, err := c.FirewallDevices.endpointWithParams(id)
 	if err != nil {

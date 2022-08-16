@@ -90,7 +90,7 @@ type DomainRecordsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for InstanceConfig
-func (DomainRecordsPagedResponse) endpoint(c *Client, ids ...interface{}) string {
+func (DomainRecordsPagedResponse) endpoint(c *Client, ids ...any) string {
 	id, _ := ids[0].(int)
 	endpoint, err := c.DomainRecords.endpointWithParams(id)
 	if err != nil {

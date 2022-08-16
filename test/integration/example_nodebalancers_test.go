@@ -70,14 +70,15 @@ func ExampleClient_CreateNodeBalancerConfig() {
 	createOpts := linodego.NodeBalancerConfigCreateOptions{
 		Port: 80,
 		/*
-			Protocol:      linodego.ProtocolHTTP,
-			Algorithm:     linodego.AlgorithmLeastConn,
-			Stickiness:    linodego.StickinessHTTPCookie,
-			Check:         linodego.CheckHTTP,
-			CheckInterval: 30,
-			CheckAttempts: 5,
-			CipherSuite:   linodego.CipherRecommended,
+		   Protocol:      linodego.ProtocolHTTP,
+		   Algorithm:     linodego.AlgorithmLeastConn,
+		   Stickiness:    linodego.StickinessHTTPCookie,
+		   Check:         linodego.CheckHTTP,
+		   CipherSuite:   linodego.CipherRecommended,
 		*/
+		CheckTimeout:  5,
+		CheckInterval: 30,
+		CheckAttempts: 5,
 	}
 	nbc, err := linodeClient.CreateNodeBalancerConfig(context.Background(), nb.ID, createOpts)
 	if err != nil {

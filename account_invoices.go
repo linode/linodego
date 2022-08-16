@@ -36,7 +36,7 @@ type InvoicesPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Invoice
-func (InvoicesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (InvoicesPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Invoices.Endpoint()
 	if err != nil {
 		panic(err)
@@ -131,7 +131,7 @@ type InvoiceItemsPagedResponse struct {
 }
 
 // endpointWithID gets the endpoint URL for InvoiceItems associated with a specific Invoice
-func (InvoiceItemsPagedResponse) endpoint(c *Client, ids ...interface{}) string {
+func (InvoiceItemsPagedResponse) endpoint(c *Client, ids ...any) string {
 	id := ids[0].(int)
 	endpoint, err := c.InvoiceItems.endpointWithParams(id)
 	if err != nil {

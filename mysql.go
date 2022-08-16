@@ -117,7 +117,7 @@ type MySQLDatabasesPagedResponse struct {
 	Data []MySQLDatabase `json:"data"`
 }
 
-func (MySQLDatabasesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (MySQLDatabasesPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.DatabaseMySQLInstances.Endpoint()
 	if err != nil {
 		panic(err)
@@ -163,7 +163,7 @@ type MySQLDatabaseBackupsPagedResponse struct {
 	Data []MySQLDatabaseBackup `json:"data"`
 }
 
-func (MySQLDatabaseBackupsPagedResponse) endpointWithID(c *Client, ids ...interface{}) string {
+func (MySQLDatabaseBackupsPagedResponse) endpoint(c *Client, ids ...any) string {
 	id := ids[0].(int)
 	endpoint, err := c.DatabaseMySQLInstances.Endpoint()
 	if err != nil {

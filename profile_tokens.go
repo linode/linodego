@@ -93,7 +93,7 @@ type TokensPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Token
-func (TokensPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (TokensPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Tokens.Endpoint()
 	if err != nil {
 		panic(err)

@@ -30,6 +30,7 @@ var testMySQLCreateOpts = linodego.MySQLCreateOptions{
 }
 
 func TestDatabase_MySQL_Suite(t *testing.T) {
+	t.Skip("dbaas is currently having issues provisioning")
 	client, database, teardown, err := setupMySQLDatabase(t, nil, "fixtures/TestDatabase_MySQL_Suite")
 	if err != nil {
 		t.Error(err)

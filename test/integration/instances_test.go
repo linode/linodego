@@ -265,7 +265,7 @@ func TestInstance_ConfigInterfaces_Update(t *testing.T) {
 		"fixtures/TestInstance_ConfigInterfaces_Update",
 		func(opts *linodego.InstanceCreateOptions) {
 			// Ensure we're in a region that supports VLANs
-			opts.Region = "us-southeast"
+			opts.Region = "us-west"
 		})
 	defer teardown()
 	if err != nil {
@@ -376,9 +376,9 @@ func createInstance(t *testing.T, client *linodego.Client, modifiers ...instance
 
 	booted := false
 	createOpts := linodego.InstanceCreateOptions{
-		Label:    "linodego-test-instance",
+		Label:    randString(12, lowerBytes, digits) + "-linodego-test-instance",
 		RootPass: "R34lBAdP455",
-		Region:   "us-southeast",
+		Region:   "us-west",
 		Type:     "g6-nanode-1",
 		Image:    "linode/debian9",
 		Booted:   &booted,
@@ -418,7 +418,7 @@ func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string, modifiers ...i
 	falseBool := false
 	createOpts := linodego.InstanceCreateOptions{
 		Label:  "linodego-test-instance-wo-disk",
-		Region: "us-southeast",
+		Region: "us-west",
 		Type:   "g6-nanode-1",
 		Booted: &falseBool,
 	}

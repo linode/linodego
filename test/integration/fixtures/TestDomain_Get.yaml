@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"domain":"xdtiw8963eld70i94r94fm5h32w9gc28-linodego-testing.com","type":"master","soa_email":"example@example.com","master_ips":null,"axfr_ips":null,"tags":null}'
+    body: '{"domain":"3q50jv8ldw520zo3a4d88c4z70y27xfk-linodego-testing.com","type":"master","soa_email":"example@example.com","master_ips":null,"axfr_ips":null,"tags":null}'
     form: {}
     headers:
       Accept:
@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/domains
     method: POST
   response:
-    body: '{"id": 1836711, "type": "master", "domain": "xdtiw8963eld70i94r94fm5h32w9gc28-linodego-testing.com",
+    body: '{"id": 1875309, "type": "master", "domain": "3q50jv8ldw520zo3a4d88c4z70y27xfk-linodego-testing.com",
       "tags": [], "group": "", "status": "active", "errors": "", "description": "",
       "soa_email": "example@example.com", "retry_sec": 0, "master_ips": [], "axfr_ips":
       [], "expire_sec": 0, "refresh_sec": 0, "ttl_sec": 0, "created": "2018-01-02T03:04:05",
@@ -70,10 +70,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/domains/1836711
+    url: https://api.linode.com/v4beta/domains/1875309
     method: GET
   response:
-    body: '{"id": 1836711, "type": "master", "domain": "xdtiw8963eld70i94r94fm5h32w9gc28-linodego-testing.com",
+    body: '{"id": 1875309, "type": "master", "domain": "3q50jv8ldw520zo3a4d88c4z70y27xfk-linodego-testing.com",
       "tags": [], "group": "", "status": "active", "errors": "", "description": "",
       "soa_email": "example@example.com", "retry_sec": 0, "master_ips": [], "axfr_ips":
       [], "expire_sec": 0, "refresh_sec": 0, "ttl_sec": 0, "created": "2018-01-02T03:04:05",
@@ -131,7 +131,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/domains/1836711
+    url: https://api.linode.com/v4beta/domains/1875309
     method: DELETE
   response:
     body: '{}'

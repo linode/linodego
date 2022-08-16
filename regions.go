@@ -29,7 +29,7 @@ type RegionsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Region
-func (RegionsPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (RegionsPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Regions.Endpoint()
 	if err != nil {
 		panic(err)

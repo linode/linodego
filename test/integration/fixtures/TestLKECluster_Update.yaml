@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"]}],"label":"05hpnez8t641-linodego-testing","region":"us-southeast","k8s_version":"1.23","tags":["testing"]}'
+    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"]}],"label":"2581t8ckij5q-linodego-testing","region":"us-southeast","k8s_version":"1.23","tags":["testing"]}'
     form: {}
     headers:
       Accept:
@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 61110, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "label": "05hpnez8t641-linodego-testing", "region": "us-southeast",
+    body: '{"id": 69098, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "label": "2581t8ckij5q-linodego-testing", "region": "us-southeast",
       "k8s_version": "1.23", "control_plane": {"high_availability": false}, "tags":
       ["testing"]}'
     headers:
@@ -60,7 +60,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"k8s_version":"1.23","label":"new05hpnez8t641-linodego-testing","tags":["test=true"],"control_plane":{"high_availability":true}}'
+    body: '{"k8s_version":"1.23","label":"new2581t8ckij5q-linodego-testing","tags":["test=true"],"control_plane":{"high_availability":true}}'
     form: {}
     headers:
       Accept:
@@ -69,11 +69,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/61110
+    url: https://api.linode.com/v4beta/lke/clusters/69098
     method: PUT
   response:
-    body: '{"id": 61110, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "label": "new05hpnez8t641-linodego-testing", "region":
+    body: '{"id": 69098, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "label": "new2581t8ckij5q-linodego-testing", "region":
       "us-southeast", "k8s_version": "1.23", "control_plane": {"high_availability":
       true}, "tags": ["test=true"]}'
     headers:
@@ -127,7 +127,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/61110
+    url: https://api.linode.com/v4beta/lke/clusters/69098
     method: DELETE
   response:
     body: '{}'

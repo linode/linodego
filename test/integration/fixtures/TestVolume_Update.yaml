@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"linodego-test-volume-w5wb95s3","region":"us-southeast","tags":null}'
+    body: '{"label":"linodego-test-volume-xto3402x","region":"us-southeast","tags":null}'
     form: {}
     headers:
       Accept:
@@ -14,9 +14,9 @@ interactions:
     url: https://api.linode.com/v4beta/volumes
     method: POST
   response:
-    body: '{"id": 330002, "status": "creating", "label": "linodego-test-volume-w5wb95s3",
+    body: '{"id": 467327, "status": "creating", "label": "linodego-test-volume-xto3402x",
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
-      "/dev/disk/by-id/scsi-0Linode_Volume_linodego-test-volume-w5wb95s3", "size":
+      "/dev/disk/by-id/scsi-0Linode_Volume_linodego-test-volume-xto3402x", "size":
       20, "linode_id": null, "linode_label": null, "region": "us-southeast", "tags":
       [], "hardware_type": "nvme"}'
     headers:
@@ -70,10 +70,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/volumes/330002
+    url: https://api.linode.com/v4beta/volumes/467327
     method: PUT
   response:
-    body: '{"id": 330002, "status": "creating", "label": "our-testing-volume", "created":
+    body: '{"id": 467327, "status": "creating", "label": "our-testing-volume", "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
       "/dev/disk/by-id/scsi-0Linode_Volume_our-testing-volume", "size": 20, "linode_id":
       null, "linode_label": null, "region": "us-southeast", "tags": [], "hardware_type":
@@ -129,7 +129,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/volumes/330002
+    url: https://api.linode.com/v4beta/volumes/467327
     method: DELETE
   response:
     body: '{}'

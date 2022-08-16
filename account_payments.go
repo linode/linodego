@@ -64,7 +64,7 @@ type PaymentsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Payment
-func (PaymentsPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (PaymentsPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Payments.Endpoint()
 	if err != nil {
 		panic(err)

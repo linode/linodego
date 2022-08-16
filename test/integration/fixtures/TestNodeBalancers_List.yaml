@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"bzi7l8090x1m-linodego-testing","region":"us-southeast","client_conn_throttle":20,"tags":null}'
+    body: '{"label":"bzi7l8090x1m-linodego-testing","region":"us-west","client_conn_throttle":20,"tags":null}'
     form: {}
     headers:
       Accept:
@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 217043, "label": "bzi7l8090x1m-linodego-testing", "region": "us-southeast",
-      "hostname": "45-79-244-11.ip.linodeusercontent.com", "ipv4": "45.79.244.11",
+    body: '{"id": 243788, "label": "bzi7l8090x1m-linodego-testing", "region": "us-west",
+      "hostname": "45-79-230-90.ip.linodeusercontent.com", "ipv4": "45.79.230.90",
       "ipv6": "1234::5678", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "client_conn_throttle": 20, "tags": [], "transfer": {"in":
       null, "out": null, "total": null}}'
@@ -33,7 +33,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "355"
+      - "350"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -73,12 +73,11 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: GET
   response:
-    body: '{"data": [{"id": 217043, "label": "bzi7l8090x1m-linodego-testing", "region":
-      "us-southeast", "hostname": "45-79-244-11.ip.linodeusercontent.com", "ipv4":
-      "45.79.244.11", "ipv6": "1234::5678", "created": "2018-01-02T03:04:05",
-      "updated": "2018-01-02T03:04:05", "client_conn_throttle": 20, "tags": [], "transfer":
-      {"in": null, "out": null, "total": null}}], "page": 1, "pages": 1, "results":
-      1}'
+    body: '{"data": [{"id": 243788, "label": "bzi7l8090x1m-linodego-testing", "region":
+      "us-west", "hostname": "45-79-230-90.ip.linodeusercontent.com", "ipv4": "45.79.230.90",
+      "ipv6": "1234::5678", "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "client_conn_throttle": 20, "tags": [], "transfer": {"in":
+      null, "out": null, "total": null}}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -94,7 +93,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "404"
+      - "399"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -132,7 +131,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/217043
+    url: https://api.linode.com/v4beta/nodebalancers/243788
     method: DELETE
   response:
     body: '{}'

@@ -113,7 +113,7 @@ type MongoDatabasesPagedResponse struct {
 	Data []MongoDatabase `json:"data"`
 }
 
-func (MongoDatabasesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (MongoDatabasesPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.DatabaseMongoInstances.Endpoint()
 	if err != nil {
 		panic(err)
@@ -180,7 +180,7 @@ type MongoDatabaseBackupsPagedResponse struct {
 	Data []MongoDatabaseBackup `json:"data"`
 }
 
-func (MongoDatabaseBackupsPagedResponse) endpointWithID(c *Client, ids ...interface{}) string {
+func (MongoDatabaseBackupsPagedResponse) endpoint(c *Client, ids ...any) string {
 	id := ids[0].(int)
 	endpoint, err := c.DatabaseMongoInstances.Endpoint()
 	if err != nil {

@@ -118,7 +118,7 @@ type StackscriptsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Stackscript
-func (StackscriptsPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (StackscriptsPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.StackScripts.Endpoint()
 	if err != nil {
 		panic(err)

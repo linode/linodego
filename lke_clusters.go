@@ -124,7 +124,7 @@ type LKEClustersPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for LKECluster
-func (LKEClustersPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (LKEClustersPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.LKEClusters.Endpoint()
 	if err != nil {
 		panic(err)
@@ -149,7 +149,7 @@ type LKEVersionsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for LKEVersion
-func (LKEVersionsPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (LKEVersionsPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.LKEVersions.Endpoint()
 	if err != nil {
 		panic(err)
@@ -167,6 +167,16 @@ func (resp *LKEVersionsPagedResponse) castResult(r *resty.Request, e string) (in
 	return castedRes.Pages, castedRes.Results, nil
 }
 
+// ListLKEClusters lists LKEClusters
+func (c *Client) ListLKEClusters(ctx context.Context, opts *ListOptions) ([]LKECluster, error) {
+	response := LKEClustersPagedResponse{}
+	err := c.listHelper(ctx, &response, opts)
+	if err != nil {
+		return nil, err
+	}
+	return response.Data, nil
+}
+
 // LKEClusterAPIEndpointsPagedResponse represents a paginated LKEClusterAPIEndpoints API response
 type LKEClusterAPIEndpointsPagedResponse struct {
 	*PageOptions
@@ -174,7 +184,7 @@ type LKEClusterAPIEndpointsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for LKEClusterAPIEndpointsPagedResponse
-func (LKEClusterAPIEndpointsPagedResponse) endpoint(c *Client, ids ...interface{}) string {
+func (LKEClusterAPIEndpointsPagedResponse) endpoint(c *Client, ids ...any) string {
 	id := ids[0].(int)
 	endpoint, err := c.LKEClusterAPIEndpoints.endpointWithParams(id)
 	if err != nil {
@@ -193,10 +203,10 @@ func (resp *LKEClusterAPIEndpointsPagedResponse) castResult(r *resty.Request, e 
 	return castedRes.Pages, castedRes.Results, nil
 }
 
-// ListLKEClusters lists LKEClusters
-func (c *Client) ListLKEClusters(ctx context.Context, opts *ListOptions) ([]LKECluster, error) {
-	response := LKEClustersPagedResponse{}
-	err := c.listHelper(ctx, &response, opts)
+// ListLKEClusterAPIEndpoints gets the API Endpoint for the LKE Cluster specified
+func (c *Client) ListLKEClusterAPIEndpoints(ctx context.Context, clusterID int, opts *ListOptions) ([]LKEClusterAPIEndpoint, error) {
+	response := LKEClusterAPIEndpointsPagedResponse{}
+	err := c.listHelper(ctx, &response, opts, clusterID)
 	if err != nil {
 		return nil, err
 	}
@@ -278,16 +288,6 @@ func (c *Client) DeleteLKECluster(ctx context.Context, id int) error {
 
 	_, err = coupleAPIErrors(c.R(ctx).Delete(e))
 	return err
-}
-
-// ListLKEClusterAPIEndpoints gets the API Endpoint for the LKE Cluster specified
-func (c *Client) ListLKEClusterAPIEndpoints(ctx context.Context, clusterID int, opts *ListOptions) ([]LKEClusterAPIEndpoint, error) {
-	response := LKEClusterAPIEndpointsPagedResponse{}
-	err := c.listHelperWithID(ctx, &response, clusterID, opts)
-	if err != nil {
-		return nil, err
-	}
-	return response.Data, nil
 }
 
 // GetLKEClusterKubeconfig gets the Kubeconfig for the LKE Cluster specified

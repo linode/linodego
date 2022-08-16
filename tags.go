@@ -18,7 +18,7 @@ type Tag struct {
 type TaggedObject struct {
 	Type    string          `json:"type"`
 	RawData json.RawMessage `json:"data"`
-	Data    interface{}     `json:"-"`
+	Data    any     `json:"-"`
 }
 
 // SortedObjects currently only includes Instances
@@ -60,7 +60,7 @@ type TagsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Tag
-func (TagsPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (TagsPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Tags.Endpoint()
 	if err != nil {
 		panic(err)
@@ -85,7 +85,7 @@ type TaggedObjectsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Tag
-func (TaggedObjectsPagedResponse) endpoint(c *Client, ids ...interface{}) string {
+func (TaggedObjectsPagedResponse) endpoint(c *Client, ids ...any) string {
 	id := ids[0].(string)
 	endpoint, err := c.Tags.Endpoint()
 	if err != nil {

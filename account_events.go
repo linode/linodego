@@ -181,7 +181,7 @@ const (
 // can be used to access it.
 type EventEntity struct {
 	// ID may be a string or int, it depends on the EntityType
-	ID     interface{} `json:"id"`
+	ID     any `json:"id"`
 	Label  string      `json:"label"`
 	Type   EntityType  `json:"type"`
 	Status string      `json:"status"`
@@ -195,7 +195,7 @@ type EventsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Event
-func (EventsPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (EventsPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Events.Endpoint()
 	if err != nil {
 		panic(err)

@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"]}],"label":"c050t18grzo9-linodego-testing","region":"us-southeast","k8s_version":"1.23","tags":["testing"]}'
+    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"]}],"label":"v414jcp7w9v3-linodego-testing","region":"us-southeast","k8s_version":"1.23","tags":["testing"]}'
     form: {}
     headers:
       Accept:
@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 59833, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "label": "c050t18grzo9-linodego-testing", "region": "us-southeast",
+    body: '{"id": 69103, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "label": "v414jcp7w9v3-linodego-testing", "region": "us-southeast",
       "k8s_version": "1.23", "control_plane": {"high_availability": false}, "tags":
       ["testing"]}'
     headers:
@@ -72,8 +72,8 @@ interactions:
     url: https://api.linode.com/v4beta/lke/clusters
     method: GET
   response:
-    body: '{"data": [{"id": 59833, "status": "ready", "created": "2018-01-02T03:04:05",
-      "updated": "2018-01-02T03:04:05", "label": "c050t18grzo9-linodego-testing",
+    body: '{"data": [{"id": 69103, "status": "ready", "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "label": "v414jcp7w9v3-linodego-testing",
       "region": "us-southeast", "k8s_version": "1.23", "control_plane": {"high_availability":
       false}, "tags": ["testing"]}], "page": 1, "pages": 1, "results": 1}'
     headers:
@@ -129,7 +129,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/59833
+    url: https://api.linode.com/v4beta/lke/clusters/69103
     method: DELETE
   response:
     body: '{}'

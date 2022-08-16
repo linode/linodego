@@ -109,7 +109,7 @@ type NodeBalancersPagedResponse struct {
 	Data []NodeBalancer `json:"data"`
 }
 
-func (*NodeBalancersPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (*NodeBalancersPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.NodeBalancers.Endpoint()
 	if err != nil {
 		panic(err)

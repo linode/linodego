@@ -75,7 +75,7 @@ type InstanceAlert struct {
 // InstanceBackup represents backup settings for an instance
 type InstanceBackup struct {
 	Enabled  bool `json:"enabled,omitempty"`
-	Schedule struct {
+	Schedule *struct {
 		Day    string `json:"day,omitempty"`
 		Window string `json:"window,omitempty"`
 	} `json:"schedule,omitempty"`
@@ -189,7 +189,7 @@ type InstancesPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Instance
-func (InstancesPagedResponse) endpoint(c *Client, _ ...interface{}) string {
+func (InstancesPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Instances.Endpoint()
 	if err != nil {
 		panic(err)
