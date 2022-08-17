@@ -714,11 +714,11 @@ func (p *EventPoller) WaitForFinished(
 			}
 
 			switch event.Status {
-			case EventFinished, EventNotification:
+			case EventFinished:
 				return event, nil
 			case EventFailed:
 				return nil, fmt.Errorf("event %d has failed", event.ID)
-			case EventScheduled, EventStarted:
+			case EventScheduled, EventStarted, EventNotification:
 				continue
 			}
 		case <-ctx.Done():
