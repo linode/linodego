@@ -181,11 +181,11 @@ const (
 // can be used to access it.
 type EventEntity struct {
 	// ID may be a string or int, it depends on the EntityType
-	ID     any `json:"id"`
-	Label  string      `json:"label"`
-	Type   EntityType  `json:"type"`
-	Status string      `json:"status"`
-	URL    string      `json:"url"`
+	ID     any        `json:"id"`
+	Label  string     `json:"label"`
+	Type   EntityType `json:"type"`
+	Status string     `json:"status"`
+	URL    string     `json:"url"`
 }
 
 // EventsPagedResponse represents a paginated Events API response

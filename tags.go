@@ -18,7 +18,7 @@ type Tag struct {
 type TaggedObject struct {
 	Type    string          `json:"type"`
 	RawData json.RawMessage `json:"data"`
-	Data    any     `json:"-"`
+	Data    any             `json:"-"`
 }
 
 // SortedObjects currently only includes Instances
