@@ -265,7 +265,7 @@ func TestInstance_ConfigInterfaces_Update(t *testing.T) {
 		"fixtures/TestInstance_ConfigInterfaces_Update",
 		func(opts *linodego.InstanceCreateOptions) {
 			// Ensure we're in a region that supports VLANs
-			opts.Region = "us-west"
+			opts.Region = "us-southeast"
 		})
 	defer teardown()
 	if err != nil {
