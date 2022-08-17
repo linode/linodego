@@ -29,7 +29,6 @@ var testMongoCreateOpts = linodego.MongoCreateOptions{
 }
 
 func TestDatabase_Mongo_Suite(t *testing.T) {
-	t.Skip("dbaas is currently having issues provisioning")
 	client, database, teardown, err := setupMongoDatabase(t, nil, "fixtures/TestDatabase_Mongo_Suite")
 	if err != nil {
 		t.Error(err)

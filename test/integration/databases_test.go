@@ -66,7 +66,6 @@ func TestDatabase_Type(t *testing.T) {
 }
 
 func TestDatabase_List(t *testing.T) {
-	t.Skip("dbaas is currently having issues provisioning")
 	client, database, teardown, err := setupMongoDatabase(t, nil, "fixtures/TestDatabase_List")
 	if err != nil {
 		t.Error(err)

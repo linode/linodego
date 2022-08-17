@@ -30,7 +30,6 @@ var testPostgresCreateOpts = linodego.PostgresCreateOptions{
 }
 
 func TestDatabase_Postgres_Suite(t *testing.T) {
-	t.Skip("dbaas is currently having issues provisioning")
 	client, database, teardown, err := setupPostgresDatabase(t, nil, "fixtures/TestDatabase_Postgres_Suite")
 	if err != nil {
 		t.Error(err)
