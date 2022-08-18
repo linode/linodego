@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -92,7 +93,7 @@ type TokensPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Token
-func (TokensPagedResponse) endpoint(c *Client) string {
+func (TokensPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Tokens.Endpoint()
 	if err != nil {
 		panic(err)
@@ -100,9 +101,14 @@ func (TokensPagedResponse) endpoint(c *Client) string {
 	return endpoint
 }
 
-// appendData appends Tokens when processing paginated Token responses
-func (resp *TokensPagedResponse) appendData(r *TokensPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *TokensPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(TokensPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*TokensPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListTokens lists Tokens

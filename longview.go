@@ -3,6 +3,8 @@ package linodego
 import (
 	"context"
 	"fmt"
+
+	"github.com/go-resty/resty/v2"
 )
 
 // LongviewClient represents a LongviewClient object
@@ -19,7 +21,7 @@ type LongviewClientsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for LongviewClient
-func (LongviewClientsPagedResponse) endpoint(c *Client) string {
+func (LongviewClientsPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.LongviewClients.Endpoint()
 	if err != nil {
 		panic(err)
@@ -27,9 +29,14 @@ func (LongviewClientsPagedResponse) endpoint(c *Client) string {
 	return endpoint
 }
 
-// appendData appends LongviewClients when processing paginated LongviewClient responses
-func (resp *LongviewClientsPagedResponse) appendData(r *LongviewClientsPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *LongviewClientsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(LongviewClientsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*LongviewClientsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListLongviewClients lists LongviewClients

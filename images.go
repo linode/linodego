@@ -106,7 +106,7 @@ type ImagesPagedResponse struct {
 	Data []Image `json:"data"`
 }
 
-func (ImagesPagedResponse) endpoint(c *Client) string {
+func (ImagesPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Images.Endpoint()
 	if err != nil {
 		panic(err)
@@ -114,8 +114,14 @@ func (ImagesPagedResponse) endpoint(c *Client) string {
 	return endpoint
 }
 
-func (resp *ImagesPagedResponse) appendData(r *ImagesPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *ImagesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(ImagesPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*ImagesPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListImages lists Images

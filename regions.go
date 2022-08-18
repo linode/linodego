@@ -3,6 +3,8 @@ package linodego
 import (
 	"context"
 	"fmt"
+
+	"github.com/go-resty/resty/v2"
 )
 
 // Region represents a linode region object
@@ -27,7 +29,7 @@ type RegionsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Region
-func (RegionsPagedResponse) endpoint(c *Client) string {
+func (RegionsPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Regions.Endpoint()
 	if err != nil {
 		panic(err)
@@ -35,9 +37,14 @@ func (RegionsPagedResponse) endpoint(c *Client) string {
 	return endpoint
 }
 
-// appendData appends Regions when processing paginated Region responses
-func (resp *RegionsPagedResponse) appendData(r *RegionsPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *RegionsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(RegionsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*RegionsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListRegions lists Regions

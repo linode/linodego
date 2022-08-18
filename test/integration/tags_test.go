@@ -24,6 +24,7 @@ func TestTag_Create(t *testing.T) {
 	}
 	newTags := append(*updateOpts.Tags, "linodego-test-bar")
 	updateOpts.Tags = &newTags
+	updateOpts.Backups = nil
 	instance, err = client.UpdateInstance(context.Background(), instance.ID, updateOpts)
 	if err != nil {
 		t.Errorf("should have updated instance tags, got %q", err)

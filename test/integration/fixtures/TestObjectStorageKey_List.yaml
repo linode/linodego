@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/keys
     method: POST
   response:
-    body: '{"id": 310645, "label": "bzi7l8090x1m-linodego-testing", "access_key":
+    body: '{"id": 339054, "label": "bzi7l8090x1m-linodego-testing", "access_key":
       "[SANITIZED]", "secret_key": "[SANITIZED]", "limited": false, "bucket_access":
       null}'
     headers:
@@ -71,36 +71,9 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/keys
     method: GET
   response:
-    body: '{"data": [{"id": 221110, "label": "", "access_key": "[SANITIZED]", "secret_key":
-      "[REDACTED]", "limited": false, "bucket_access": null}, {"id": 221111, "label":
-      "", "access_key": "[SANITIZED]", "secret_key": "[REDACTED]", "limited": false,
-      "bucket_access": null}, {"id": 221112, "label": "", "access_key": "[SANITIZED]",
-      "secret_key": "[REDACTED]", "limited": false, "bucket_access": null}, {"id":
-      221113, "label": "", "access_key": "[SANITIZED]", "secret_key": "[REDACTED]",
-      "limited": false, "bucket_access": null}, {"id": 221114, "label": "", "access_key":
+    body: '{"data": [{"id": 339054, "label": "bzi7l8090x1m-linodego-testing", "access_key":
       "[SANITIZED]", "secret_key": "[REDACTED]", "limited": false, "bucket_access":
-      null}, {"id": 221115, "label": "", "access_key": "[SANITIZED]", "secret_key":
-      "[REDACTED]", "limited": false, "bucket_access": null}, {"id": 221116, "label":
-      "", "access_key": "[SANITIZED]", "secret_key": "[REDACTED]", "limited": false,
-      "bucket_access": null}, {"id": 221117, "label": "", "access_key": "[SANITIZED]",
-      "secret_key": "[REDACTED]", "limited": false, "bucket_access": null}, {"id":
-      221118, "label": "", "access_key": "[SANITIZED]", "secret_key": "[REDACTED]",
-      "limited": false, "bucket_access": null}, {"id": 221119, "label": "", "access_key":
-      "[SANITIZED]", "secret_key": "[REDACTED]", "limited": false, "bucket_access":
-      null}, {"id": 221120, "label": "", "access_key": "[SANITIZED]", "secret_key":
-      "[REDACTED]", "limited": false, "bucket_access": null}, {"id": 228932, "label":
-      "", "access_key": "[SANITIZED]", "secret_key": "[REDACTED]", "limited": false,
-      "bucket_access": null}, {"id": 228933, "label": "", "access_key": "[SANITIZED]",
-      "secret_key": "[REDACTED]", "limited": false, "bucket_access": null}, {"id":
-      228929, "label": "", "access_key": "[SANITIZED]", "secret_key": "[REDACTED]",
-      "limited": false, "bucket_access": null}, {"id": 228930, "label": "", "access_key":
-      "[SANITIZED]", "secret_key": "[REDACTED]", "limited": false, "bucket_access":
-      null}, {"id": 228931, "label": "", "access_key": "[SANITIZED]", "secret_key":
-      "[REDACTED]", "limited": false, "bucket_access": null}, {"id": 235969, "label":
-      "", "access_key": "[SANITIZED]", "secret_key": "[REDACTED]", "limited": false,
-      "bucket_access": null}, {"id": 310645, "label": "bzi7l8090x1m-linodego-testing",
-      "access_key": "[SANITIZED]", "secret_key": "[REDACTED]", "limited": false, "bucket_access":
-      null}], "page": 1, "pages": 1, "results": 18}'
+      null}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -115,6 +88,8 @@ interactions:
       Cache-Control:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "212"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -152,7 +127,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/310645
+    url: https://api.linode.com/v4beta/object-storage/keys/339054
     method: DELETE
   response:
     body: '{}'

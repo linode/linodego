@@ -15,7 +15,8 @@ interactions:
     method: POST
   response:
     body: '{"username": "linodegotest-getuser", "email": "linodegotest-getuser@example.com",
-      "restricted": true, "ssh_keys": [], "tfa_enabled": false}'
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -30,7 +31,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "139"
+      - "170"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -71,7 +72,8 @@ interactions:
     method: GET
   response:
     body: '{"username": "linodegotest-getuser", "email": "linodegotest-getuser@example.com",
-      "restricted": true, "ssh_keys": [], "tfa_enabled": false}'
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -87,7 +89,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "139"
+      - "170"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:

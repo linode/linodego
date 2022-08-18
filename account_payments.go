@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -63,7 +64,7 @@ type PaymentsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Payment
-func (PaymentsPagedResponse) endpoint(c *Client) string {
+func (PaymentsPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Payments.Endpoint()
 	if err != nil {
 		panic(err)
@@ -72,9 +73,14 @@ func (PaymentsPagedResponse) endpoint(c *Client) string {
 	return endpoint
 }
 
-// appendData appends Payments when processing paginated Payment responses
-func (resp *PaymentsPagedResponse) appendData(r *PaymentsPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *PaymentsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(PaymentsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*PaymentsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListPayments lists Payments

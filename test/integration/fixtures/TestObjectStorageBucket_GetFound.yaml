@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"cluster":"us-east-1","label":"linodego-test-bucket-1652723978403166804"}'
+    body: '{"cluster":"us-east-1","label":"linodego-test-bucket-1660630790586226803"}'
     form: {}
     headers:
       Accept:
@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/buckets
     method: POST
   response:
-    body: '{"hostname": "linodego-test-bucket-1652723978403166804.us-east-1.linodeobjects.com",
-      "label": "linodego-test-bucket-1652723978403166804", "created": "2018-01-02T03:04:05",
+    body: '{"hostname": "linodego-test-bucket-1660630790586226803.us-east-1.linodeobjects.com",
+      "label": "linodego-test-bucket-1660630790586226803", "created": "2018-01-02T03:04:05",
       "cluster": "us-east-1", "size": 0, "objects": 0}'
     headers:
       Access-Control-Allow-Credentials:
@@ -68,11 +68,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linodego-test-bucket-1652723978403166804
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linodego-test-bucket-1660630790586226803
     method: GET
   response:
-    body: '{"hostname": "linodego-test-bucket-1652723978403166804.us-east-1.linodeobjects.com",
-      "label": "linodego-test-bucket-1652723978403166804", "created": "2018-01-02T03:04:05",
+    body: '{"hostname": "linodego-test-bucket-1660630790586226803.us-east-1.linodeobjects.com",
+      "label": "linodego-test-bucket-1660630790586226803", "created": "2018-01-02T03:04:05",
       "cluster": "us-east-1", "size": 0, "objects": 0}'
     headers:
       Access-Control-Allow-Credentials:
@@ -127,7 +127,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linodego-test-bucket-1652723978403166804
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linodego-test-bucket-1660630790586226803
     method: DELETE
   response:
     body: '{}'

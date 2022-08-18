@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/go-resty/resty/v2"
 )
 
 // IPAddressesPagedResponse represents a paginated IPAddress API response
@@ -44,7 +46,7 @@ func (i InstanceIP) GetUpdateOptions() (o IPAddressUpdateOptions) {
 }
 
 // endpoint gets the endpoint URL for IPAddress
-func (IPAddressesPagedResponse) endpoint(c *Client) string {
+func (IPAddressesPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.IPAddresses.Endpoint()
 	if err != nil {
 		panic(err)
@@ -52,9 +54,14 @@ func (IPAddressesPagedResponse) endpoint(c *Client) string {
 	return endpoint
 }
 
-// appendData appends IPAddresses when processing paginated InstanceIPAddress responses
-func (resp *IPAddressesPagedResponse) appendData(r *IPAddressesPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *IPAddressesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(IPAddressesPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*IPAddressesPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListIPAddresses lists IPAddresses

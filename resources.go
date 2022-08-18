@@ -150,7 +150,7 @@ type Resource struct {
 }
 
 // NewResource is the factory to create a new Resource struct. If it has a template string the useTemplate bool must be set.
-func NewResource(client *Client, name string, endpoint string, useTemplate bool, singleType interface{}, pagedType interface{}) *Resource {
+func NewResource(client *Client, name string, endpoint string, useTemplate bool, singleType any, pagedType any) *Resource {
 	var tmpl *template.Template
 
 	if useTemplate {
@@ -168,22 +168,22 @@ func NewResource(client *Client, name string, endpoint string, useTemplate bool,
 	return &Resource{name, endpoint, useTemplate, tmpl, r, pr}
 }
 
-func (r Resource) render(data ...interface{}) (string, error) {
+func (r Resource) render(data ...any) (string, error) {
 	if data == nil {
 		return "", NewError("Cannot template endpoint with <nil> data")
 	}
 	out := ""
 	buf := bytes.NewBufferString(out)
 
-	var substitutions interface{}
+	var substitutions any
 
 	switch len(data) {
 	case 1:
-		substitutions = struct{ ID interface{} }{data[0]}
+		substitutions = struct{ ID any }{data[0]}
 	case 2:
 		substitutions = struct {
-			ID       interface{}
-			SecondID interface{}
+			ID       any
+			SecondID any
 		}{data[0], data[1]}
 	default:
 		return "", NewError("Too many arguments to render template (expected 1 or 2)")
@@ -196,7 +196,7 @@ func (r Resource) render(data ...interface{}) (string, error) {
 }
 
 // endpointWithParams will return the rendered endpoint string for the resource with provided parameters
-func (r Resource) endpointWithParams(params ...interface{}) (string, error) {
+func (r Resource) endpointWithParams(params ...any) (string, error) {
 	if !r.isTemplate {
 		return r.endpoint, nil
 	}

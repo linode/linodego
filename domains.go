@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/go-resty/resty/v2"
 )
 
 // Domain represents a Domain object
@@ -193,7 +195,7 @@ type DomainsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Domain
-func (DomainsPagedResponse) endpoint(c *Client) string {
+func (DomainsPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Domains.Endpoint()
 	if err != nil {
 		panic(err)
@@ -202,9 +204,14 @@ func (DomainsPagedResponse) endpoint(c *Client) string {
 	return endpoint
 }
 
-// appendData appends Domains when processing paginated Domain responses
-func (resp *DomainsPagedResponse) appendData(r *DomainsPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *DomainsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(DomainsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*DomainsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListDomains lists Domains

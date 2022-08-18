@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -113,7 +114,7 @@ type PostgresDatabasesPagedResponse struct {
 	Data []PostgresDatabase `json:"data"`
 }
 
-func (PostgresDatabasesPagedResponse) endpoint(c *Client) string {
+func (PostgresDatabasesPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.DatabasePostgresInstances.Endpoint()
 	if err != nil {
 		panic(err)
@@ -121,8 +122,14 @@ func (PostgresDatabasesPagedResponse) endpoint(c *Client) string {
 	return endpoint
 }
 
-func (resp *PostgresDatabasesPagedResponse) appendData(r *PostgresDatabasesPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *PostgresDatabasesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(PostgresDatabasesPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*PostgresDatabasesPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListPostgresDatabases lists all Postgres Databases associated with the account
@@ -174,7 +181,8 @@ type PostgresDatabaseBackupsPagedResponse struct {
 	Data []PostgresDatabaseBackup `json:"data"`
 }
 
-func (PostgresDatabaseBackupsPagedResponse) endpointWithID(c *Client, id int) string {
+func (PostgresDatabaseBackupsPagedResponse) endpoint(c *Client, ids ...any) string {
+	id := ids[0].(int)
 	endpoint, err := c.DatabasePostgresInstances.Endpoint()
 	if err != nil {
 		panic(err)
@@ -182,15 +190,21 @@ func (PostgresDatabaseBackupsPagedResponse) endpointWithID(c *Client, id int) st
 	return fmt.Sprintf("%s/%d/backups", endpoint, id)
 }
 
-func (resp *PostgresDatabaseBackupsPagedResponse) appendData(r *PostgresDatabaseBackupsPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *PostgresDatabaseBackupsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(PostgresDatabaseBackupsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*PostgresDatabaseBackupsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListPostgresDatabaseBackups lists all Postgres Database Backups associated with the given Postgres Database
 func (c *Client) ListPostgresDatabaseBackups(ctx context.Context, databaseID int, opts *ListOptions) ([]PostgresDatabaseBackup, error) {
 	response := PostgresDatabaseBackupsPagedResponse{}
 
-	err := c.listHelperWithID(ctx, &response, databaseID, opts)
+	err := c.listHelper(ctx, &response, opts, databaseID)
 	if err != nil {
 		return nil, err
 	}

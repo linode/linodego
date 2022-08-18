@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"bzi7l8090x1m-linodego-testing","region":"us-southeast","client_conn_throttle":20,"tags":null}'
+    body: '{"label":"bzi7l8090x1m-linodego-testing","region":"us-west","client_conn_throttle":20,"tags":null}'
     form: {}
     headers:
       Accept:
@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 217040, "label": "bzi7l8090x1m-linodego-testing", "region": "us-southeast",
-      "hostname": "45-79-245-19.ip.linodeusercontent.com", "ipv4": "45.79.245.19",
+    body: '{"id": 243785, "label": "bzi7l8090x1m-linodego-testing", "region": "us-west",
+      "hostname": "96-126-99-17.ip.linodeusercontent.com", "ipv4": "96.126.99.17",
       "ipv6": "1234::5678", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "client_conn_throttle": 20, "tags": [], "transfer": {"in":
       null, "out": null, "total": null}}'
@@ -33,7 +33,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "355"
+      - "350"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -70,7 +70,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/217040/stats
+    url: https://api.linode.com/v4beta/nodebalancers/243785/stats
     method: GET
   response:
     body: '{"errors": [{"reason": "Stats are unavailable at this time."}]}'
@@ -112,7 +112,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/217040
+    url: https://api.linode.com/v4beta/nodebalancers/243785
     method: DELETE
   response:
     body: '{}'

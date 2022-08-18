@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"linodego-test-volume-ev17i41c","region":"us-southeast","tags":null}'
+    body: '{"label":"linodego-test-volume-buq1a234","region":"us-southeast","tags":null}'
     form: {}
     headers:
       Accept:
@@ -14,9 +14,9 @@ interactions:
     url: https://api.linode.com/v4beta/volumes
     method: POST
   response:
-    body: '{"id": 329998, "status": "creating", "label": "linodego-test-volume-ev17i41c",
+    body: '{"id": 467323, "status": "creating", "label": "linodego-test-volume-buq1a234",
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
-      "/dev/disk/by-id/scsi-0Linode_Volume_linodego-test-volume-ev17i41c", "size":
+      "/dev/disk/by-id/scsi-0Linode_Volume_linodego-test-volume-buq1a234", "size":
       20, "linode_id": null, "linode_label": null, "region": "us-southeast", "tags":
       [], "hardware_type": "nvme"}'
     headers:
@@ -73,9 +73,9 @@ interactions:
     url: https://api.linode.com/v4beta/volumes
     method: GET
   response:
-    body: '{"data": [{"id": 329998, "status": "creating", "label": "linodego-test-volume-ev17i41c",
+    body: '{"data": [{"id": 467323, "status": "creating", "label": "linodego-test-volume-buq1a234",
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
-      "/dev/disk/by-id/scsi-0Linode_Volume_linodego-test-volume-ev17i41c", "size":
+      "/dev/disk/by-id/scsi-0Linode_Volume_linodego-test-volume-buq1a234", "size":
       20, "linode_id": null, "linode_label": null, "region": "us-southeast", "tags":
       [], "hardware_type": "nvme"}], "page": 1, "pages": 1, "results": 1}'
     headers:
@@ -131,7 +131,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/volumes/329998
+    url: https://api.linode.com/v4beta/volumes/467323
     method: DELETE
   response:
     body: '{}'

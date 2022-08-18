@@ -13,7 +13,7 @@ var (
 	label                      = randString(12, lowerBytes, digits) + "-linodego-testing"
 	testNodeBalancerCreateOpts = linodego.NodeBalancerCreateOptions{
 		Label:              &label,
-		Region:             "us-southeast",
+		Region:             "us-west",
 		ClientConnThrottle: &clientConnThrottle,
 	}
 )

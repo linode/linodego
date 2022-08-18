@@ -15,7 +15,8 @@ interactions:
     method: POST
   response:
     body: '{"username": "linodegotest-updateusergrants", "email": "linodegotest-updateusergrants@example.com",
-      "restricted": true, "ssh_keys": [], "tfa_enabled": false}'
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -30,7 +31,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "157"
+      - "188"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -72,10 +73,12 @@ interactions:
   response:
     body: '{"linode": [{"id": 29745916, "label": "workdev", "permissions": null}],
       "nodebalancer": [], "domain": [], "stackscript": [], "longview": [], "image":
-      [], "volume": [], "firewall": [], "global": {"add_domains": false, "add_linodes":
-      false, "add_longview": true, "longview_subscription": false, "add_stackscripts":
-      true, "add_nodebalancers": false, "add_images": true, "add_volumes": true, "add_firewalls":
-      true, "account_access": "read_only", "cancel_account": false}}'
+      [], "volume": [], "firewall": [], "database": [{"id": 6824, "label": "linodego-test-mongo-database",
+      "permissions": null}], "global": {"add_domains": false, "add_linodes": false,
+      "add_longview": true, "longview_subscription": false, "add_stackscripts": true,
+      "add_nodebalancers": false, "add_images": true, "add_volumes": true, "add_firewalls":
+      true, "add_databases": false, "account_access": "read_only", "cancel_account":
+      false}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -90,7 +93,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "467"
+      - "581"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
