@@ -3,6 +3,8 @@ package linodego
 import (
 	"context"
 	"fmt"
+
+	"github.com/go-resty/resty/v2"
 )
 
 // LinodeKernel represents a Linode Instance kernel object
@@ -23,6 +25,24 @@ type LinodeKernelsPagedResponse struct {
 	Data []LinodeKernel `json:"data"`
 }
 
+func (LinodeKernelsPagedResponse) endpoint(c *Client, _ ...any) string {
+	endpoint, err := c.Kernels.Endpoint()
+	if err != nil {
+		panic(err)
+	}
+	return endpoint
+}
+
+func (resp *LinodeKernelsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(LinodeKernelsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*LinodeKernelsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
+}
+
 // ListKernels lists linode kernels
 func (c *Client) ListKernels(ctx context.Context, opts *ListOptions) ([]LinodeKernel, error) {
 	response := LinodeKernelsPagedResponse{}
@@ -31,18 +51,6 @@ func (c *Client) ListKernels(ctx context.Context, opts *ListOptions) ([]LinodeKe
 		return nil, err
 	}
 	return response.Data, nil
-}
-
-func (LinodeKernelsPagedResponse) endpoint(c *Client) string {
-	endpoint, err := c.Kernels.Endpoint()
-	if err != nil {
-		panic(err)
-	}
-	return endpoint
-}
-
-func (resp *LinodeKernelsPagedResponse) appendData(r *LinodeKernelsPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
 }
 
 // GetKernel gets the kernel with the provided ID

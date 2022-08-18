@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"domain":"8c894s4rysz09yv13a33s8zs0t5xr2o0-linodego-testing.com","type":"master","soa_email":"example@example.com","master_ips":null,"axfr_ips":null,"tags":null}'
+    body: '{"domain":"4z6sp09s2ii2tvo0633qpul2956nz0z7-linodego-testing.com","type":"master","soa_email":"example@example.com","master_ips":null,"axfr_ips":null,"tags":null}'
     form: {}
     headers:
       Accept:
@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/domains
     method: POST
   response:
-    body: '{"id": 1836705, "type": "master", "domain": "8c894s4rysz09yv13a33s8zs0t5xr2o0-linodego-testing.com",
+    body: '{"id": 1875303, "type": "master", "domain": "4z6sp09s2ii2tvo0633qpul2956nz0z7-linodego-testing.com",
       "tags": [], "group": "", "status": "active", "errors": "", "description": "",
       "soa_email": "example@example.com", "retry_sec": 0, "master_ips": [], "axfr_ips":
       [], "expire_sec": 0, "refresh_sec": 0, "ttl_sec": 0, "created": "2018-01-02T03:04:05",
@@ -70,10 +70,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/domains/1836705/records
+    url: https://api.linode.com/v4beta/domains/1875303/records
     method: POST
   response:
-    body: '{"id": 21356524, "type": "A", "name": "a", "target": "127.0.0.1", "priority":
+    body: '{"id": 21876171, "type": "A", "name": "a", "target": "127.0.0.1", "priority":
       0, "weight": 0, "port": 0, "service": null, "protocol": null, "ttl_sec": 0,
       "tag": null, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
     headers:
@@ -129,10 +129,10 @@ interactions:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
       - '{"name":"a"}'
-    url: https://api.linode.com/v4beta/domains/1836705/records
+    url: https://api.linode.com/v4beta/domains/1875303/records
     method: GET
   response:
-    body: '{"data": [{"id": 21356524, "type": "A", "name": "a", "target": "127.0.0.1",
+    body: '{"data": [{"id": 21876171, "type": "A", "name": "a", "target": "127.0.0.1",
       "priority": 0, "weight": 0, "port": 0, "service": null, "protocol": null, "ttl_sec":
       0, "tag": null, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}],
       "page": 1, "pages": 1, "results": 1}'
@@ -189,7 +189,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/domains/1836705/records/21356524
+    url: https://api.linode.com/v4beta/domains/1875303/records/21876171
     method: DELETE
   response:
     body: '{}'
@@ -244,7 +244,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/domains/1836705
+    url: https://api.linode.com/v4beta/domains/1875303
     method: DELETE
   response:
     body: '{}'

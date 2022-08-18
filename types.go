@@ -3,6 +3,8 @@ package linodego
 import (
 	"context"
 	"fmt"
+
+	"github.com/go-resty/resty/v2"
 )
 
 // LinodeType represents a linode type object
@@ -52,7 +54,7 @@ type LinodeTypesPagedResponse struct {
 	Data []LinodeType `json:"data"`
 }
 
-func (LinodeTypesPagedResponse) endpoint(c *Client) string {
+func (*LinodeTypesPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Types.Endpoint()
 	if err != nil {
 		panic(err)
@@ -60,17 +62,25 @@ func (LinodeTypesPagedResponse) endpoint(c *Client) string {
 	return endpoint
 }
 
-func (resp *LinodeTypesPagedResponse) appendData(r *LinodeTypesPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *LinodeTypesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(LinodeTypesPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*LinodeTypesPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListTypes lists linode types
 func (c *Client) ListTypes(ctx context.Context, opts *ListOptions) ([]LinodeType, error) {
 	response := LinodeTypesPagedResponse{}
+
 	err := c.listHelper(ctx, &response, opts)
 	if err != nil {
 		return nil, err
 	}
+
 	return response.Data, nil
 }
 

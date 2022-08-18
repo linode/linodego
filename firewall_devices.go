@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -68,7 +69,8 @@ type FirewallDevicesPagedResponse struct {
 }
 
 // endpointWithID gets the endpoint URL for FirewallDevices of a given Firewall
-func (FirewallDevicesPagedResponse) endpointWithID(c *Client, id int) string {
+func (FirewallDevicesPagedResponse) endpoint(c *Client, ids ...any) string {
+	id, _ := ids[0].(int)
 	endpoint, err := c.FirewallDevices.endpointWithParams(id)
 	if err != nil {
 		panic(err)
@@ -76,14 +78,20 @@ func (FirewallDevicesPagedResponse) endpointWithID(c *Client, id int) string {
 	return endpoint
 }
 
-func (resp *FirewallDevicesPagedResponse) appendData(r *FirewallDevicesPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *FirewallDevicesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(FirewallDevicesPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*FirewallDevicesPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListFirewallDevices get devices associated with a given Firewall
 func (c *Client) ListFirewallDevices(ctx context.Context, firewallID int, opts *ListOptions) ([]FirewallDevice, error) {
 	response := FirewallDevicesPagedResponse{}
-	err := c.listHelperWithID(ctx, &response, firewallID, opts)
+	err := c.listHelper(ctx, &response, opts, firewallID)
 	if err != nil {
 		return nil, err
 	}

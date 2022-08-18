@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/go-resty/resty/v2"
 )
 
 // IPv6RangesPagedResponse represents a paginated IPv6Range API response
@@ -20,7 +22,7 @@ type IPv6RangeCreateOptions struct {
 }
 
 // endpoint gets the endpoint URL for IPv6Range
-func (IPv6RangesPagedResponse) endpoint(c *Client) string {
+func (IPv6RangesPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.IPv6Ranges.Endpoint()
 	if err != nil {
 		panic(err)
@@ -28,9 +30,14 @@ func (IPv6RangesPagedResponse) endpoint(c *Client) string {
 	return endpoint
 }
 
-// appendData appends IPv6Ranges when processing paginated IPv6Range responses
-func (resp *IPv6RangesPagedResponse) appendData(r *IPv6RangesPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *IPv6RangesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(IPv6RangesPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*IPv6RangesPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListIPv6Ranges lists IPv6Ranges

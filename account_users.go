@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/go-resty/resty/v2"
 )
 
 // User represents a User object
@@ -52,7 +54,7 @@ type UsersPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for User
-func (UsersPagedResponse) endpoint(c *Client) string {
+func (UsersPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Users.Endpoint()
 	if err != nil {
 		panic(err)
@@ -61,9 +63,14 @@ func (UsersPagedResponse) endpoint(c *Client) string {
 	return endpoint
 }
 
-// appendData appends Users when processing paginated User responses
-func (resp *UsersPagedResponse) appendData(r *UsersPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *UsersPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(UsersPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*UsersPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListUsers lists Users on the account

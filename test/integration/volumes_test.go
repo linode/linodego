@@ -173,7 +173,7 @@ func setupVolume(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := linodego.VolumeCreateOptions{
 		Label:  "linodego-test-volume-" + randString(8, lowerBytes, digits),
-		Region: "us-southeast",
+		Region: "us-west",
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
 	if err != nil {

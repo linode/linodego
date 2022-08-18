@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -114,7 +115,7 @@ func (v Volume) GetCreateOptions() (createOpts VolumeCreateOptions) {
 }
 
 // endpoint gets the endpoint URL for Volume
-func (VolumesPagedResponse) endpoint(c *Client) string {
+func (VolumesPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Volumes.Endpoint()
 	if err != nil {
 		panic(err)
@@ -122,9 +123,14 @@ func (VolumesPagedResponse) endpoint(c *Client) string {
 	return endpoint
 }
 
-// appendData appends Volumes when processing paginated Volume responses
-func (resp *VolumesPagedResponse) appendData(r *VolumesPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *VolumesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(VolumesPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*VolumesPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListVolumes lists Volumes

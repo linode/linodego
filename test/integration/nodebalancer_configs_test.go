@@ -8,9 +8,10 @@ import (
 )
 
 var testNodeBalancerConfigCreateOpts = linodego.NodeBalancerConfigCreateOptions{
-	Port:      80,
-	Protocol:  linodego.ProtocolHTTP,
-	Algorithm: linodego.AlgorithmRoundRobin,
+	Port:          80,
+	Protocol:      linodego.ProtocolHTTP,
+	Algorithm:     linodego.AlgorithmRoundRobin,
+	CheckInterval: 60,
 }
 
 func TestNodeBalancerConfig_Create(t *testing.T) {

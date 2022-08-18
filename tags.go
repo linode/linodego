@@ -5,6 +5,8 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+
+	"github.com/go-resty/resty/v2"
 )
 
 // Tag represents a Tag object
@@ -16,7 +18,7 @@ type Tag struct {
 type TaggedObject struct {
 	Type    string          `json:"type"`
 	RawData json.RawMessage `json:"data"`
-	Data    interface{}     `json:"-"`
+	Data    any             `json:"-"`
 }
 
 // SortedObjects currently only includes Instances
@@ -51,12 +53,6 @@ func (i Tag) GetCreateOptions() (o TagCreateOptions) {
 	return
 }
 
-// TaggedObjectsPagedResponse represents a paginated Tag API response
-type TaggedObjectsPagedResponse struct {
-	*PageOptions
-	Data []TaggedObject `json:"data"`
-}
-
 // TagsPagedResponse represents a paginated Tag API response
 type TagsPagedResponse struct {
 	*PageOptions
@@ -64,7 +60,7 @@ type TagsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Tag
-func (TagsPagedResponse) endpoint(c *Client) string {
+func (TagsPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.Tags.Endpoint()
 	if err != nil {
 		panic(err)
@@ -72,8 +68,25 @@ func (TagsPagedResponse) endpoint(c *Client) string {
 	return endpoint
 }
 
+func (resp *TagsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(TagsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*TagsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
+}
+
+// TaggedObjectsPagedResponse represents a paginated Tag API response
+type TaggedObjectsPagedResponse struct {
+	*PageOptions
+	Data []TaggedObject `json:"data"`
+}
+
 // endpoint gets the endpoint URL for Tag
-func (TaggedObjectsPagedResponse) endpointWithID(c *Client, id string) string {
+func (TaggedObjectsPagedResponse) endpoint(c *Client, ids ...any) string {
+	id := ids[0].(string)
 	endpoint, err := c.Tags.Endpoint()
 	if err != nil {
 		panic(err)
@@ -82,14 +95,14 @@ func (TaggedObjectsPagedResponse) endpointWithID(c *Client, id string) string {
 	return endpoint
 }
 
-// appendData appends Tags when processing paginated Tag responses
-func (resp *TagsPagedResponse) appendData(r *TagsPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
-}
-
-// appendData appends TaggedObjects when processing paginated TaggedObjects responses
-func (resp *TaggedObjectsPagedResponse) appendData(r *TaggedObjectsPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *TaggedObjectsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(TaggedObjectsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*TaggedObjectsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListTags lists Tags
@@ -143,7 +156,7 @@ func (i *TaggedObject) fixData() (*TaggedObject, error) {
 // ListTaggedObjects lists Tagged Objects
 func (c *Client) ListTaggedObjects(ctx context.Context, label string, opts *ListOptions) (TaggedObjectList, error) {
 	response := TaggedObjectsPagedResponse{}
-	err := c.listHelperWithID(ctx, &response, label, opts)
+	err := c.listHelper(ctx, &response, opts, label)
 	if err != nil {
 		return nil, err
 	}

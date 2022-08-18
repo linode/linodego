@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"domain":"7bq050mme06e6ytn34z2b6lv0435ano1-linodego-testing.com","type":"master","soa_email":"example@example.com","master_ips":null,"axfr_ips":null,"tags":null}'
+    body: '{"domain":"2nfp5bm04ycxb4iv879016m66vd0f04y-linodego-testing.com","type":"master","soa_email":"example@example.com","master_ips":null,"axfr_ips":null,"tags":null}'
     form: {}
     headers:
       Accept:
@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/domains
     method: POST
   response:
-    body: '{"id": 1836710, "type": "master", "domain": "7bq050mme06e6ytn34z2b6lv0435ano1-linodego-testing.com",
+    body: '{"id": 1875308, "type": "master", "domain": "2nfp5bm04ycxb4iv879016m66vd0f04y-linodego-testing.com",
       "tags": [], "group": "", "status": "active", "errors": "", "description": "",
       "soa_email": "example@example.com", "retry_sec": 0, "master_ips": [], "axfr_ips":
       [], "expire_sec": 0, "refresh_sec": 0, "ttl_sec": 0, "created": "2018-01-02T03:04:05",
@@ -73,7 +73,7 @@ interactions:
     url: https://api.linode.com/v4beta/domains
     method: GET
   response:
-    body: '{"data": [{"id": 1836710, "type": "master", "domain": "7bq050mme06e6ytn34z2b6lv0435ano1-linodego-testing.com",
+    body: '{"data": [{"id": 1875308, "type": "master", "domain": "2nfp5bm04ycxb4iv879016m66vd0f04y-linodego-testing.com",
       "tags": [], "group": "", "status": "active", "errors": "", "description": "",
       "soa_email": "example@example.com", "retry_sec": 0, "master_ips": [], "axfr_ips":
       [], "expire_sec": 0, "refresh_sec": 0, "ttl_sec": 0, "created": "2018-01-02T03:04:05",
@@ -131,7 +131,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/domains/1836710
+    url: https://api.linode.com/v4beta/domains/1875308
     method: DELETE
   response:
     body: '{}'

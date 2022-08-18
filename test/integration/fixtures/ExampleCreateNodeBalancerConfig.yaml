@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 217046, "label": "balancer217046", "region": "us-southeast", "hostname":
-      "45-79-245-26.ip.linodeusercontent.com", "ipv4": "45.79.245.26", "ipv6": "1234::5678",
+    body: '{"id": 243795, "label": "balancer243795", "region": "us-southeast", "hostname":
+      "45-79-245-201.ip.linodeusercontent.com", "ipv4": "45.79.245.201", "ipv6": "1234::5678",
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "client_conn_throttle":
       20, "tags": [], "transfer": {"in": null, "out": null, "total": null}}'
     headers:
@@ -32,7 +32,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "340"
+      - "342"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -60,7 +60,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"port":80}'
+    body: '{"port":80,"check_interval":30,"check_attempts":5,"check_timeout":5}'
     form: {}
     headers:
       Accept:
@@ -69,14 +69,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/217046/configs
+    url: https://api.linode.com/v4beta/nodebalancers/243795/configs
     method: POST
   response:
-    body: '{"id": 317820, "port": 80, "protocol": "http", "algorithm": "roundrobin",
-      "stickiness": "none", "check": "none", "check_interval": 0, "check_timeout":
-      30, "check_attempts": 3, "check_path": "", "check_body": "", "check_passive":
+    body: '{"id": 360221, "port": 80, "protocol": "http", "algorithm": "roundrobin",
+      "stickiness": "none", "check": "none", "check_interval": 30, "check_timeout":
+      5, "check_attempts": 5, "check_path": "", "check_body": "", "check_passive":
       true, "proxy_protocol": "none", "cipher_suite": "recommended", "nodebalancer_id":
-      217046, "ssl_commonname": "", "ssl_fingerprint": "", "ssl_cert": null, "ssl_key":
+      243795, "ssl_commonname": "", "ssl_fingerprint": "", "ssl_cert": null, "ssl_key":
       null, "nodes_status": {"up": 0, "down": 0}}'
     headers:
       Access-Control-Allow-Credentials:
@@ -120,7 +120,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"port":8080,"protocol":"http","proxy_protocol":"none","algorithm":"roundrobin","stickiness":"none","check":"none","check_attempts":3,"check_passive":true,"check_timeout":30,"cipher_suite":"recommended"}'
+    body: '{"port":8080,"protocol":"http","proxy_protocol":"none","algorithm":"roundrobin","stickiness":"none","check":"none","check_interval":30,"check_attempts":5,"check_passive":true,"check_timeout":5,"cipher_suite":"recommended"}'
     form: {}
     headers:
       Accept:
@@ -129,14 +129,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/217046/configs/317820
+    url: https://api.linode.com/v4beta/nodebalancers/243795/configs/360221
     method: PUT
   response:
-    body: '{"id": 317820, "port": 8080, "protocol": "http", "algorithm": "roundrobin",
-      "stickiness": "none", "check": "none", "check_interval": 0, "check_timeout":
-      30, "check_attempts": 3, "check_path": "", "check_body": "", "check_passive":
+    body: '{"id": 360221, "port": 8080, "protocol": "http", "algorithm": "roundrobin",
+      "stickiness": "none", "check": "none", "check_interval": 30, "check_timeout":
+      5, "check_attempts": 5, "check_path": "", "check_body": "", "check_passive":
       true, "proxy_protocol": "none", "cipher_suite": "recommended", "nodebalancer_id":
-      217046, "ssl_commonname": "", "ssl_fingerprint": "", "ssl_cert": null, "ssl_key":
+      243795, "ssl_commonname": "", "ssl_fingerprint": "", "ssl_cert": null, "ssl_key":
       null, "nodes_status": {"up": 0, "down": 0}}'
     headers:
       Access-Control-Allow-Credentials:
@@ -189,14 +189,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/217046/configs
+    url: https://api.linode.com/v4beta/nodebalancers/243795/configs
     method: GET
   response:
-    body: '{"data": [{"id": 317820, "port": 8080, "protocol": "http", "algorithm":
-      "roundrobin", "stickiness": "none", "check": "none", "check_interval": 0, "check_timeout":
-      30, "check_attempts": 3, "check_path": "", "check_body": "", "check_passive":
+    body: '{"data": [{"id": 360221, "port": 8080, "protocol": "http", "algorithm":
+      "roundrobin", "stickiness": "none", "check": "none", "check_interval": 30, "check_timeout":
+      5, "check_attempts": 5, "check_path": "", "check_body": "", "check_passive":
       true, "proxy_protocol": "none", "cipher_suite": "recommended", "nodebalancer_id":
-      217046, "ssl_commonname": "", "ssl_fingerprint": "", "ssl_cert": null, "ssl_key":
+      243795, "ssl_commonname": "", "ssl_fingerprint": "", "ssl_cert": null, "ssl_key":
       null, "nodes_status": {"up": 0, "down": 0}}], "page": 1, "pages": 1, "results":
       1}'
     headers:
@@ -252,14 +252,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/217046/configs/317820
+    url: https://api.linode.com/v4beta/nodebalancers/243795/configs/360221
     method: GET
   response:
-    body: '{"id": 317820, "port": 8080, "protocol": "http", "algorithm": "roundrobin",
-      "stickiness": "none", "check": "none", "check_interval": 0, "check_timeout":
-      30, "check_attempts": 3, "check_path": "", "check_body": "", "check_passive":
+    body: '{"id": 360221, "port": 8080, "protocol": "http", "algorithm": "roundrobin",
+      "stickiness": "none", "check": "none", "check_interval": 30, "check_timeout":
+      5, "check_attempts": 5, "check_path": "", "check_body": "", "check_passive":
       true, "proxy_protocol": "none", "cipher_suite": "recommended", "nodebalancer_id":
-      217046, "ssl_commonname": "", "ssl_fingerprint": "", "ssl_cert": null, "ssl_key":
+      243795, "ssl_commonname": "", "ssl_fingerprint": "", "ssl_cert": null, "ssl_key":
       null, "nodes_status": {"up": 0, "down": 0}}'
     headers:
       Access-Control-Allow-Credentials:
@@ -314,7 +314,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/217046/configs/317820
+    url: https://api.linode.com/v4beta/nodebalancers/243795/configs/360221
     method: DELETE
   response:
     body: '{}'
@@ -369,7 +369,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/217046
+    url: https://api.linode.com/v4beta/nodebalancers/243795
     method: DELETE
   response:
     body: '{}'

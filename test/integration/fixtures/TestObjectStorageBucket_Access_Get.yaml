@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"cluster":"us-east-1","label":"linodego-test-bucket-1652723978403166804","acl":"authenticated-read","cors_enabled":false}'
+    body: '{"cluster":"us-east-1","label":"linodego-test-bucket-1660630790586226803","acl":"authenticated-read","cors_enabled":false}'
     form: {}
     headers:
       Accept:
@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/buckets
     method: POST
   response:
-    body: '{"hostname": "linodego-test-bucket-1652723978403166804.us-east-1.linodeobjects.com",
-      "label": "linodego-test-bucket-1652723978403166804", "created": "2018-01-02T03:04:05",
+    body: '{"hostname": "linodego-test-bucket-1660630790586226803.us-east-1.linodeobjects.com",
+      "label": "linodego-test-bucket-1660630790586226803", "created": "2018-01-02T03:04:05",
       "cluster": "us-east-1", "size": 0, "objects": 0}'
     headers:
       Access-Control-Allow-Credentials:
@@ -68,12 +68,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linodego-test-bucket-1652723978403166804/access
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linodego-test-bucket-1660630790586226803/access
     method: GET
   response:
-    body: '{"acl": "authenticated-read", "acl_xml": "<AccessControlPolicy xmlns=\"http://s3.amazonaws.com/doc/2006-03-01/\"><Owner><ID>ee86d510-a82a-4fad-8850-ac239eb1bec2</ID><DisplayName>ee86d510-a82a-4fad-8850-ac239eb1bec2</DisplayName></Owner><AccessControlList><Grant><Grantee
+    body: '{"acl": "authenticated-read", "acl_xml": "<AccessControlPolicy xmlns=\"http://s3.amazonaws.com/doc/2006-03-01/\"><Owner><ID>c3308a55-a228-4cad-81e8-1fdfbced4e50</ID><DisplayName>c3308a55-a228-4cad-81e8-1fdfbced4e50</DisplayName></Owner><AccessControlList><Grant><Grantee
       xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"Group\"><URI>http://acs.amazonaws.com/groups/global/AuthenticatedUsers</URI></Grantee><Permission>READ</Permission></Grant><Grant><Grantee
-      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"CanonicalUser\"><ID>ee86d510-a82a-4fad-8850-ac239eb1bec2</ID><DisplayName>ee86d510-a82a-4fad-8850-ac239eb1bec2</DisplayName></Grantee><Permission>FULL_CONTROL</Permission></Grant></AccessControlList></AccessControlPolicy>",
+      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"CanonicalUser\"><ID>c3308a55-a228-4cad-81e8-1fdfbced4e50</ID><DisplayName>c3308a55-a228-4cad-81e8-1fdfbced4e50</DisplayName></Grantee><Permission>FULL_CONTROL</Permission></Grant></AccessControlList></AccessControlPolicy>",
       "cors_enabled": false, "cors_xml": null}'
     headers:
       Access-Control-Allow-Credentials:
@@ -128,7 +128,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linodego-test-bucket-1652723978403166804
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linodego-test-bucket-1660630790586226803
     method: DELETE
   response:
     body: '{}'

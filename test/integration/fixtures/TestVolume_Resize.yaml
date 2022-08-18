@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"linodego-test-volume-858xxd7q","region":"us-southeast","tags":null}'
+    body: '{"label":"linodego-test-volume-0y56afq7","region":"us-southeast","tags":null}'
     form: {}
     headers:
       Accept:
@@ -14,9 +14,9 @@ interactions:
     url: https://api.linode.com/v4beta/volumes
     method: POST
   response:
-    body: '{"id": 330004, "status": "creating", "label": "linodego-test-volume-858xxd7q",
+    body: '{"id": 467322, "status": "creating", "label": "linodego-test-volume-0y56afq7",
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
-      "/dev/disk/by-id/scsi-0Linode_Volume_linodego-test-volume-858xxd7q", "size":
+      "/dev/disk/by-id/scsi-0Linode_Volume_linodego-test-volume-0y56afq7", "size":
       20, "linode_id": null, "linode_label": null, "region": "us-southeast", "tags":
       [], "hardware_type": "nvme"}'
     headers:
@@ -70,12 +70,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/volumes/330004
+    url: https://api.linode.com/v4beta/volumes/467322
     method: GET
   response:
-    body: '{"id": 330004, "status": "active", "label": "linodego-test-volume-858xxd7q",
+    body: '{"id": 467322, "status": "active", "label": "linodego-test-volume-0y56afq7",
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
-      "/dev/disk/by-id/scsi-0Linode_Volume_linodego-test-volume-858xxd7q", "size":
+      "/dev/disk/by-id/scsi-0Linode_Volume_linodego-test-volume-0y56afq7", "size":
       20, "linode_id": null, "linode_label": null, "region": "us-southeast", "tags":
       [], "hardware_type": "nvme"}'
     headers:
@@ -131,12 +131,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/volumes/330004/resize
+    url: https://api.linode.com/v4beta/volumes/467322/resize
     method: POST
   response:
-    body: '{"id": 330004, "status": "resizing", "label": "linodego-test-volume-858xxd7q",
+    body: '{"id": 467322, "status": "resizing", "label": "linodego-test-volume-0y56afq7",
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
-      "/dev/disk/by-id/scsi-0Linode_Volume_linodego-test-volume-858xxd7q", "size":
+      "/dev/disk/by-id/scsi-0Linode_Volume_linodego-test-volume-0y56afq7", "size":
       21, "linode_id": null, "linode_label": null, "region": "us-southeast", "tags":
       [], "hardware_type": "nvme"}'
     headers:
@@ -190,7 +190,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/volumes/330004
+    url: https://api.linode.com/v4beta/volumes/467322
     method: DELETE
   response:
     body: '{}'

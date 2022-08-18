@@ -4,6 +4,8 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+
+	"github.com/go-resty/resty/v2"
 )
 
 // OAuthClientStatus constants start with OAuthClient and include Linode API Instance Status values
@@ -89,7 +91,7 @@ type OAuthClientsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for OAuthClient
-func (OAuthClientsPagedResponse) endpoint(c *Client) string {
+func (OAuthClientsPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.OAuthClients.Endpoint()
 	if err != nil {
 		panic(err)
@@ -98,9 +100,14 @@ func (OAuthClientsPagedResponse) endpoint(c *Client) string {
 	return endpoint
 }
 
-// appendData appends OAuthClients when processing paginated OAuthClient responses
-func (resp *OAuthClientsPagedResponse) appendData(r *OAuthClientsPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *OAuthClientsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(OAuthClientsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*OAuthClientsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListOAuthClients lists OAuthClients

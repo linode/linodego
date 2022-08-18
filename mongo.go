@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -112,7 +113,7 @@ type MongoDatabasesPagedResponse struct {
 	Data []MongoDatabase `json:"data"`
 }
 
-func (MongoDatabasesPagedResponse) endpoint(c *Client) string {
+func (MongoDatabasesPagedResponse) endpoint(c *Client, _ ...any) string {
 	endpoint, err := c.DatabaseMongoInstances.Endpoint()
 	if err != nil {
 		panic(err)
@@ -120,8 +121,14 @@ func (MongoDatabasesPagedResponse) endpoint(c *Client) string {
 	return endpoint
 }
 
-func (resp *MongoDatabasesPagedResponse) appendData(r *MongoDatabasesPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *MongoDatabasesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(MongoDatabasesPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*MongoDatabasesPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListMongoDatabases lists all Mongo Databases associated with the account
@@ -173,7 +180,8 @@ type MongoDatabaseBackupsPagedResponse struct {
 	Data []MongoDatabaseBackup `json:"data"`
 }
 
-func (MongoDatabaseBackupsPagedResponse) endpointWithID(c *Client, id int) string {
+func (MongoDatabaseBackupsPagedResponse) endpoint(c *Client, ids ...any) string {
+	id := ids[0].(int)
 	endpoint, err := c.DatabaseMongoInstances.Endpoint()
 	if err != nil {
 		panic(err)
@@ -181,15 +189,21 @@ func (MongoDatabaseBackupsPagedResponse) endpointWithID(c *Client, id int) strin
 	return fmt.Sprintf("%s/%d/backups", endpoint, id)
 }
 
-func (resp *MongoDatabaseBackupsPagedResponse) appendData(r *MongoDatabaseBackupsPagedResponse) {
-	resp.Data = append(resp.Data, r.Data...)
+func (resp *MongoDatabaseBackupsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(MongoDatabaseBackupsPagedResponse{}).Get(e))
+	if err != nil {
+		return 0, 0, err
+	}
+	castedRes := res.Result().(*MongoDatabaseBackupsPagedResponse)
+	resp.Data = append(resp.Data, castedRes.Data...)
+	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListMongoDatabaseBackups lists all Mongo Database Backups associated with the given Mongo Database
 func (c *Client) ListMongoDatabaseBackups(ctx context.Context, databaseID int, opts *ListOptions) ([]MongoDatabaseBackup, error) {
 	response := MongoDatabaseBackupsPagedResponse{}
 
-	err := c.listHelperWithID(ctx, &response, databaseID, opts)
+	err := c.listHelper(ctx, &response, opts, databaseID)
 	if err != nil {
 		return nil, err
 	}

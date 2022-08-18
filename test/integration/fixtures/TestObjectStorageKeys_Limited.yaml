@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"bzi7l8090x1m-linodego-testing","bucket_access":[{"cluster":"us-east-1","bucket_name":"linodego-test-bucket-1652723978403166804","permissions":"read_only"},{"cluster":"us-east-1","bucket_name":"linodego-test-bucket-1652723978403166804","permissions":"read_write"}]}'
+    body: '{"label":"bzi7l8090x1m-linodego-testing","bucket_access":[{"cluster":"us-east-1","bucket_name":"linodego-test-bucket-1660630790586226803","permissions":"read_only"},{"cluster":"us-east-1","bucket_name":"linodego-test-bucket-1660630790586226803","permissions":"read_write"}]}'
     form: {}
     headers:
       Accept:
@@ -14,10 +14,10 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/keys
     method: POST
   response:
-    body: '{"id": 310646, "label": "bzi7l8090x1m-linodego-testing", "access_key":
+    body: '{"id": 339055, "label": "bzi7l8090x1m-linodego-testing", "access_key":
       "[SANITIZED]", "secret_key": "[SANITIZED]", "limited": true, "bucket_access":
-      [{"cluster": "us-east-1", "bucket_name": "linodego-test-bucket-1652723978403166804",
-      "permissions": "read_only"}, {"cluster": "us-east-1", "bucket_name": "linodego-test-bucket-1652723978403166804",
+      [{"cluster": "us-east-1", "bucket_name": "linodego-test-bucket-1660630790586226803",
+      "permissions": "read_only"}, {"cluster": "us-east-1", "bucket_name": "linodego-test-bucket-1660630790586226803",
       "permissions": "read_write"}]}'
     headers:
       Access-Control-Allow-Credentials:
@@ -70,7 +70,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/310646
+    url: https://api.linode.com/v4beta/object-storage/keys/339055
     method: DELETE
   response:
     body: '{}'

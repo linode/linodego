@@ -14,7 +14,7 @@ import (
 
 const (
 	testMongoBackupLabel = "reallycoolbackup"
-	testMongoDBLabel     = "linodego-test-mongo-database"
+	testMongoDBLabel     = "linodego-test-mongodb-database"
 )
 
 var testMongoCreateOpts = linodego.MongoCreateOptions{
