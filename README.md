@@ -14,12 +14,6 @@ Go client for [Linode REST v4 API](https://developers.linode.com/api/v4)
 go get -u github.com/linode/linodego
 ```
 
-## API Support
-
-Check [API_SUPPORT.md](API_SUPPORT.md) for current support of the Linode `v4` API endpoints.
-
-** Note: This project will change and break until we release a v1.0.0 tagged version. Breaking changes in v0.x.x will be denoted with a minor version bump (v0.2.4 -> v0.3.0) **
-
 ## Documentation
 
 See [godoc](https://godoc.org/github.com/linode/linodego) for a complete reference.
