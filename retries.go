@@ -74,6 +74,10 @@ func requestTimeoutRetryCondition(r *resty.Response, _ error) bool {
 	return r.StatusCode() == http.StatusRequestTimeout
 }
 
+func requestNGINXRetryCondition(r *resty.Response, _ error) bool {
+	return r.StatusCode() == http.StatusBadRequest && r.Header().Get("server") == "nginx"
+}
+
 func respectRetryAfter(client *resty.Client, resp *resty.Response) (time.Duration, error) {
 	retryAfterStr := resp.Header().Get(retryAfterHeaderName)
 	if retryAfterStr == "" {
