@@ -36,12 +36,10 @@ func TestClient_NGINXRetry(t *testing.T) {
 
 	// Recreate the NGINX LB error
 	nginxErrorFunc := func(request *http.Request) (*http.Response, error) {
-		resp, err := httpmock.NewJsonResponse(400, nil)
-		if err != nil {
-			return nil, err
-		}
+		resp := httpmock.NewStringResponse(400, "")
 
 		resp.Header.Add("Server", "nginx")
+		resp.Header.Set("Content-Type", "text/html")
 
 		return resp, nil
 	}
@@ -51,11 +49,11 @@ func TestClient_NGINXRetry(t *testing.T) {
 	httpmock.RegisterRegexpResponder("PUT",
 		mockRequestURL(t, "/profile"), func(request *http.Request) (*http.Response, error) {
 			if step == 0 {
-				step = 1
+				step++
 				return nginxErrorFunc(request)
 			}
 
-			step = 2
+			step++
 			return httpmock.NewJsonResponse(200, nil)
 		})
 
