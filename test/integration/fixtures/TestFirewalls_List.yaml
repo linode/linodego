@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"kyTfOSKLcNkd-linodego-testing","rules":{"inbound":[{"action":"ACCEPT","label":"test-label","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":[{"action":"ACCEPT","label":"test-label","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
+    body: '{"label":"kyTfOSKLcNkd-linodego-testing","rules":{"inbound":[{"action":"ACCEPT","label":"test-label","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["::0/0"]}}],"inbound_policy":"ACCEPT","outbound":[{"action":"ACCEPT","label":"test-label","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["::0/0"]}}],"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
     form: {}
     headers:
       Accept:
@@ -14,12 +14,12 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 79974, "label": "kyTfOSKLcNkd-linodego-testing", "created": "2018-01-02T03:04:05",
+    body: '{"id": 84383, "label": "kyTfOSKLcNkd-linodego-testing", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"action": "ACCEPT", "label": "test-label", "ports": "22", "protocol": "TCP",
-      "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy":
+      "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["::/0"]}}], "inbound_policy":
       "ACCEPT", "outbound": [{"action": "ACCEPT", "label": "test-label", "ports":
-      "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}],
+      "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["::/0"]}}],
       "outbound_policy": "ACCEPT"}, "tags": ["testing"]}'
     headers:
       Access-Control-Allow-Credentials:
@@ -75,13 +75,13 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: GET
   response:
-    body: '{"data": [{"id": 79974, "label": "kyTfOSKLcNkd-linodego-testing", "created":
+    body: '{"data": [{"id": 84383, "label": "kyTfOSKLcNkd-linodego-testing", "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "status": "enabled",
       "rules": {"inbound": [{"action": "ACCEPT", "label": "test-label", "ports": "22",
-      "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}],
+      "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["::/0"]}}],
       "inbound_policy": "ACCEPT", "outbound": [{"action": "ACCEPT", "label": "test-label",
       "ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6":
-      ["1234::5678/0"]}}], "outbound_policy": "ACCEPT"}, "tags": ["testing"]}], "page": 1,
+      ["::/0"]}}], "outbound_policy": "ACCEPT"}, "tags": ["testing"]}], "page": 1,
       "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -136,7 +136,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/79974
+    url: https://api.linode.com/v4beta/networking/firewalls/84383
     method: DELETE
   response:
     body: '{}'

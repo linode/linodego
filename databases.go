@@ -58,12 +58,8 @@ type DatabasesPagedResponse struct {
 	Data []Database `json:"data"`
 }
 
-func (DatabasesPagedResponse) endpoint(c *Client, _ ...any) string {
-	endpoint, err := c.Databases.Endpoint()
-	if err != nil {
-		panic(err)
-	}
-	return fmt.Sprintf("%s/instances", endpoint)
+func (DatabasesPagedResponse) endpoint(_ ...any) string {
+	return "databases/instances"
 }
 
 func (resp *DatabasesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
@@ -81,12 +77,8 @@ type DatabaseEnginesPagedResponse struct {
 	Data []DatabaseEngine `json:"data"`
 }
 
-func (DatabaseEnginesPagedResponse) endpoint(c *Client, _ ...any) string {
-	endpoint, err := c.Databases.Endpoint()
-	if err != nil {
-		panic(err)
-	}
-	return fmt.Sprintf("%s/engines", endpoint)
+func (DatabaseEnginesPagedResponse) endpoint(_ ...any) string {
+	return "databases/engines"
 }
 
 func (resp *DatabaseEnginesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
@@ -104,12 +96,8 @@ type DatabaseTypesPagedResponse struct {
 	Data []DatabaseType `json:"data"`
 }
 
-func (DatabaseTypesPagedResponse) endpoint(c *Client, _ ...any) string {
-	endpoint, err := c.Databases.Endpoint()
-	if err != nil {
-		panic(err)
-	}
-	return fmt.Sprintf("%s/types", endpoint)
+func (DatabaseTypesPagedResponse) endpoint(_ ...any) string {
+	return "databases/types"
 }
 
 func (resp *DatabaseTypesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
@@ -237,16 +225,10 @@ func (c *Client) ListDatabaseEngines(ctx context.Context, opts *ListOptions) ([]
 }
 
 // GetDatabaseEngine returns a specific Database Engine
-func (c *Client) GetDatabaseEngine(ctx context.Context, opts *ListOptions, id string) (*DatabaseEngine, error) {
-	e, err := c.Databases.Endpoint()
-	if err != nil {
-		return nil, err
-	}
-
-	req := c.R(ctx)
-
-	e = fmt.Sprintf("%s/engines/%s", e, id)
-	r, err := coupleAPIErrors(req.SetResult(&DatabaseEngine{}).Get(e))
+func (c *Client) GetDatabaseEngine(ctx context.Context, opts *ListOptions, engineID string) (*DatabaseEngine, error) {
+	e := fmt.Sprintf("databases/engines/%s", engineID)
+	req := c.R(ctx).SetResult(&DatabaseEngine{})
+	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
 		return nil, err
 	}
@@ -267,16 +249,10 @@ func (c *Client) ListDatabaseTypes(ctx context.Context, opts *ListOptions) ([]Da
 }
 
 // GetDatabaseType returns a specific Database Type
-func (c *Client) GetDatabaseType(ctx context.Context, opts *ListOptions, id string) (*DatabaseType, error) {
-	e, err := c.Databases.Endpoint()
-	if err != nil {
-		return nil, err
-	}
-
-	req := c.R(ctx)
-
-	e = fmt.Sprintf("%s/types/%s", e, id)
-	r, err := coupleAPIErrors(req.SetResult(&DatabaseType{}).Get(e))
+func (c *Client) GetDatabaseType(ctx context.Context, opts *ListOptions, typeID string) (*DatabaseType, error) {
+	e := fmt.Sprintf("databases/types/%s", typeID)
+	req := c.R(ctx).SetResult(&DatabaseType{})
+	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
 		return nil, err
 	}

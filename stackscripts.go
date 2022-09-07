@@ -118,12 +118,8 @@ type StackscriptsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Stackscript
-func (StackscriptsPagedResponse) endpoint(c *Client, _ ...any) string {
-	endpoint, err := c.StackScripts.Endpoint()
-	if err != nil {
-		panic(err)
-	}
-	return endpoint
+func (StackscriptsPagedResponse) endpoint(_ ...any) string {
+	return "linode/stackscripts"
 }
 
 func (resp *StackscriptsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
@@ -147,15 +143,10 @@ func (c *Client) ListStackscripts(ctx context.Context, opts *ListOptions) ([]Sta
 }
 
 // GetStackscript gets the Stackscript with the provided ID
-func (c *Client) GetStackscript(ctx context.Context, id int) (*Stackscript, error) {
-	e, err := c.StackScripts.Endpoint()
-	if err != nil {
-		return nil, err
-	}
-	e = fmt.Sprintf("%s/%d", e, id)
-	r, err := coupleAPIErrors(c.R(ctx).
-		SetResult(&Stackscript{}).
-		Get(e))
+func (c *Client) GetStackscript(ctx context.Context, scriptID int) (*Stackscript, error) {
+	e := fmt.Sprintf("linode/stackscripts/%d", scriptID)
+	req := c.R(ctx).SetResult(&Stackscript{})
+	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
 		return nil, err
 	}
@@ -163,24 +154,15 @@ func (c *Client) GetStackscript(ctx context.Context, id int) (*Stackscript, erro
 }
 
 // CreateStackscript creates a StackScript
-func (c *Client) CreateStackscript(ctx context.Context, createOpts StackscriptCreateOptions) (*Stackscript, error) {
-	var body string
-	e, err := c.StackScripts.Endpoint()
+func (c *Client) CreateStackscript(ctx context.Context, opts StackscriptCreateOptions) (*Stackscript, error) {
+	body, err := json.Marshal(opts)
 	if err != nil {
 		return nil, err
 	}
 
-	req := c.R(ctx).SetResult(&Stackscript{})
-
-	if bodyData, err := json.Marshal(createOpts); err == nil {
-		body = string(bodyData)
-	} else {
-		return nil, NewError(err)
-	}
-
-	r, err := coupleAPIErrors(req.
-		SetBody(body).
-		Post(e))
+	e := "linode/stackscripts"
+	req := c.R(ctx).SetResult(&Stackscript{}).SetBody(string(body))
+	r, err := coupleAPIErrors(req.Post(e))
 	if err != nil {
 		return nil, err
 	}
@@ -188,25 +170,15 @@ func (c *Client) CreateStackscript(ctx context.Context, createOpts StackscriptCr
 }
 
 // UpdateStackscript updates the StackScript with the specified id
-func (c *Client) UpdateStackscript(ctx context.Context, id int, updateOpts StackscriptUpdateOptions) (*Stackscript, error) {
-	var body string
-	e, err := c.StackScripts.Endpoint()
+func (c *Client) UpdateStackscript(ctx context.Context, scriptID int, opts StackscriptUpdateOptions) (*Stackscript, error) {
+	body, err := json.Marshal(opts)
 	if err != nil {
 		return nil, err
 	}
-	e = fmt.Sprintf("%s/%d", e, id)
 
-	req := c.R(ctx).SetResult(&Stackscript{})
-
-	if bodyData, err := json.Marshal(updateOpts); err == nil {
-		body = string(bodyData)
-	} else {
-		return nil, NewError(err)
-	}
-
-	r, err := coupleAPIErrors(req.
-		SetBody(body).
-		Put(e))
+	req := c.R(ctx).SetResult(&Stackscript{}).SetBody(string(body))
+	e := fmt.Sprintf("linode/stackscripts/%d", scriptID)
+	r, err := coupleAPIErrors(req.Put(e))
 	if err != nil {
 		return nil, err
 	}
@@ -214,13 +186,8 @@ func (c *Client) UpdateStackscript(ctx context.Context, id int, updateOpts Stack
 }
 
 // DeleteStackscript deletes the StackScript with the specified id
-func (c *Client) DeleteStackscript(ctx context.Context, id int) error {
-	e, err := c.StackScripts.Endpoint()
-	if err != nil {
-		return err
-	}
-	e = fmt.Sprintf("%s/%d", e, id)
-
-	_, err = coupleAPIErrors(c.R(ctx).Delete(e))
+func (c *Client) DeleteStackscript(ctx context.Context, scriptID int) error {
+	e := fmt.Sprintf("linode/stackscripts/%d", scriptID)
+	_, err := coupleAPIErrors(c.R(ctx).Delete(e))
 	return err
 }

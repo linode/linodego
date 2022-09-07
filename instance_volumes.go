@@ -2,6 +2,7 @@ package linodego
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/go-resty/resty/v2"
 )
@@ -13,13 +14,9 @@ type InstanceVolumesPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for InstanceVolume
-func (InstanceVolumesPagedResponse) endpoint(c *Client, ids ...any) string {
+func (InstanceVolumesPagedResponse) endpoint(ids ...any) string {
 	id := ids[0].(int)
-	endpoint, err := c.InstanceVolumes.endpointWithParams(id)
-	if err != nil {
-		panic(err)
-	}
-	return endpoint
+	return fmt.Sprintf("linode/instances/%d/volumes", id)
 }
 
 func (resp *InstanceVolumesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {

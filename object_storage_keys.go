@@ -43,12 +43,8 @@ type ObjectStorageKeysPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Object Storage keys
-func (ObjectStorageKeysPagedResponse) endpoint(c *Client, _ ...any) string {
-	endpoint, err := c.ObjectStorageKeys.Endpoint()
-	if err != nil {
-		panic(err)
-	}
-	return endpoint
+func (ObjectStorageKeysPagedResponse) endpoint(_ ...any) string {
+	return "object-storage/keys"
 }
 
 func (resp *ObjectStorageKeysPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
@@ -72,24 +68,15 @@ func (c *Client) ListObjectStorageKeys(ctx context.Context, opts *ListOptions) (
 }
 
 // CreateObjectStorageKey creates a ObjectStorageKey
-func (c *Client) CreateObjectStorageKey(ctx context.Context, createOpts ObjectStorageKeyCreateOptions) (*ObjectStorageKey, error) {
-	var body string
-	e, err := c.ObjectStorageKeys.Endpoint()
+func (c *Client) CreateObjectStorageKey(ctx context.Context, opts ObjectStorageKeyCreateOptions) (*ObjectStorageKey, error) {
+	body, err := json.Marshal(opts)
 	if err != nil {
-		return nil, err
-	}
-
-	req := c.R(ctx).SetResult(&ObjectStorageKey{})
-
-	if bodyData, err := json.Marshal(createOpts); err == nil {
-		body = string(bodyData)
-	} else {
 		return nil, NewError(err)
 	}
 
-	r, err := coupleAPIErrors(req.
-		SetBody(body).
-		Post(e))
+	e := "object-storage/keys"
+	req := c.R(ctx).SetResult(&ObjectStorageKey{}).SetBody(string(body))
+	r, err := coupleAPIErrors(req.Post(e))
 	if err != nil {
 		return nil, err
 	}
@@ -97,13 +84,10 @@ func (c *Client) CreateObjectStorageKey(ctx context.Context, createOpts ObjectSt
 }
 
 // GetObjectStorageKey gets the object storage key with the provided ID
-func (c *Client) GetObjectStorageKey(ctx context.Context, id int) (*ObjectStorageKey, error) {
-	e, err := c.ObjectStorageKeys.Endpoint()
-	if err != nil {
-		return nil, err
-	}
-	e = fmt.Sprintf("%s/%d", e, id)
-	r, err := coupleAPIErrors(c.R(ctx).SetResult(&ObjectStorageKey{}).Get(e))
+func (c *Client) GetObjectStorageKey(ctx context.Context, keyID int) (*ObjectStorageKey, error) {
+	e := fmt.Sprintf("object-storage/keys/%d", keyID)
+	req := c.R(ctx).SetResult(&ObjectStorageKey{})
+	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
 		return nil, err
 	}
@@ -111,25 +95,15 @@ func (c *Client) GetObjectStorageKey(ctx context.Context, id int) (*ObjectStorag
 }
 
 // UpdateObjectStorageKey updates the object storage key with the specified id
-func (c *Client) UpdateObjectStorageKey(ctx context.Context, id int, updateOpts ObjectStorageKeyUpdateOptions) (*ObjectStorageKey, error) {
-	var body string
-	e, err := c.ObjectStorageKeys.Endpoint()
+func (c *Client) UpdateObjectStorageKey(ctx context.Context, keyID int, opts ObjectStorageKeyUpdateOptions) (*ObjectStorageKey, error) {
+	body, err := json.Marshal(opts)
 	if err != nil {
 		return nil, err
 	}
-	e = fmt.Sprintf("%s/%d", e, id)
 
-	req := c.R(ctx).SetResult(&ObjectStorageKey{})
-
-	if bodyData, err := json.Marshal(updateOpts); err == nil {
-		body = string(bodyData)
-	} else {
-		return nil, NewError(err)
-	}
-
-	r, err := coupleAPIErrors(req.
-		SetBody(body).
-		Put(e))
+	e := fmt.Sprintf("object-storage/keys/%d", keyID)
+	req := c.R(ctx).SetResult(&ObjectStorageKey{}).SetBody(string(body))
+	r, err := coupleAPIErrors(req.Put(e))
 	if err != nil {
 		return nil, err
 	}
@@ -137,13 +111,8 @@ func (c *Client) UpdateObjectStorageKey(ctx context.Context, id int, updateOpts 
 }
 
 // DeleteObjectStorageKey deletes the ObjectStorageKey with the specified id
-func (c *Client) DeleteObjectStorageKey(ctx context.Context, id int) error {
-	e, err := c.ObjectStorageKeys.Endpoint()
-	if err != nil {
-		return err
-	}
-	e = fmt.Sprintf("%s/%d", e, id)
-
-	_, err = coupleAPIErrors(c.R(ctx).Delete(e))
+func (c *Client) DeleteObjectStorageKey(ctx context.Context, keyID int) error {
+	e := fmt.Sprintf("object-storage/keys/%d", keyID)
+	_, err := coupleAPIErrors(c.R(ctx).Delete(e))
 	return err
 }

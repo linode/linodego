@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-west","type":"g6-nanode-1","label":"792aogs6f7y9-linodego-test-instance","root_pass":"R34lBAdP455","image":"linode/debian9","booted":false}'
+    body: '{"region":"us-west","type":"g6-nanode-1","label":"5n5lxn8931co-linodego-test-instance","root_pass":"R34lBAdP455","image":"linode/debian9","booted":false}'
     form: {}
     headers:
       Accept:
@@ -14,9 +14,9 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 38094945, "label": "792aogs6f7y9-linodego-test-instance", "group":
+    body: '{"id": 38380527, "label": "5n5lxn8931co-linodego-test-instance", "group":
       "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["45.33.111.85"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["45.56.88.135"], "ipv6": "1234::5678/128",
       "image": "linode/debian9", "region": "us-west", "specs": {"disk": 25600, "memory":
       1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
@@ -73,11 +73,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/38094945/ips
+    url: https://api.linode.com/v4beta/linode/instances/38380527/ips
     method: POST
   response:
-    body: '{"address": "192.168.204.227", "gateway": null, "subnet_mask": "255.255.128.0",
-      "prefix": 17, "type": "ipv4", "public": false, "rdns": null, "linode_id": 38094945,
+    body: '{"address": "192.168.193.7", "gateway": null, "subnet_mask": "255.255.128.0",
+      "prefix": 17, "type": "ipv4", "public": false, "rdns": null, "linode_id": 38380527,
       "region": "us-west"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -93,7 +93,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "184"
+      - "182"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -121,7 +121,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"address":"192.168.204.227:8080","label":"test-label","weight":10,"mode":"accept"}'
+    body: '{"address":"192.168.193.7:8080","label":"test-label","weight":10,"mode":"accept"}'
     form: {}
     headers:
       Accept:
@@ -130,12 +130,69 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/243775/configs/360206/nodes
+    url: https://api.linode.com/v4beta/nodebalancers/246823/configs/365587/nodes
     method: POST
   response:
-    body: '{"id": 59114548, "address": "192.168.204.227:8080", "label": "test-label",
-      "status": "Unknown", "weight": 10, "mode": "accept", "config_id": 360206, "nodebalancer_id":
-      243775}'
+    body: '{"id": 60674348, "address": "192.168.193.7:8080", "label": "test-label",
+      "status": "Unknown", "weight": 10, "mode": "accept", "config_id": 365587, "nodebalancer_id":
+      246823}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "173"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - nodebalancers:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"label":"test-label_r","weight":100,"mode":"drain"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/nodebalancers/246823/configs/365587/nodes/60674348
+    method: PUT
+  response:
+    body: '{"id": 60674348, "address": "192.168.193.7:8080", "label": "test-label_r",
+      "status": "Unknown", "weight": 100, "mode": "drain", "config_id": 365587, "nodebalancer_id":
+      246823}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -178,63 +235,6 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"test-label_r","weight":100,"mode":"drain"}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/243775/configs/360206/nodes/59114548
-    method: PUT
-  response:
-    body: '{"id": 59114548, "address": "192.168.204.227:8080", "label": "test-label_r",
-      "status": "Unknown", "weight": 100, "mode": "drain", "config_id": 360206, "nodebalancer_id":
-      243775}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Cache-Control:
-      - private, max-age=60, s-maxage=60
-      Content-Length:
-      - "177"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - nodebalancers:read_write
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "800"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
     body: ""
     form: {}
     headers:
@@ -244,7 +244,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/243775/configs/360206/nodes/59114548
+    url: https://api.linode.com/v4beta/nodebalancers/246823/configs/365587/nodes/60674348
     method: DELETE
   response:
     body: '{}'
@@ -299,7 +299,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/38094945
+    url: https://api.linode.com/v4beta/linode/instances/38380527
     method: DELETE
   response:
     body: '{}'

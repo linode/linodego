@@ -54,12 +54,8 @@ type LinodeTypesPagedResponse struct {
 	Data []LinodeType `json:"data"`
 }
 
-func (*LinodeTypesPagedResponse) endpoint(c *Client, _ ...any) string {
-	endpoint, err := c.Types.Endpoint()
-	if err != nil {
-		panic(err)
-	}
-	return endpoint
+func (*LinodeTypesPagedResponse) endpoint(_ ...any) string {
+	return "linode/types"
 }
 
 func (resp *LinodeTypesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
@@ -86,13 +82,9 @@ func (c *Client) ListTypes(ctx context.Context, opts *ListOptions) ([]LinodeType
 
 // GetType gets the type with the provided ID
 func (c *Client) GetType(ctx context.Context, typeID string) (*LinodeType, error) {
-	e, err := c.Types.Endpoint()
-	if err != nil {
-		return nil, err
-	}
-	e = fmt.Sprintf("%s/%s", e, typeID)
-
-	r, err := coupleAPIErrors(c.Types.R(ctx).Get(e))
+	e := fmt.Sprintf("linode/types/%s", typeID)
+	req := c.R(ctx).SetResult(LinodeType{})
+	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
 		return nil, err
 	}

@@ -29,12 +29,8 @@ type RegionsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Region
-func (RegionsPagedResponse) endpoint(c *Client, _ ...any) string {
-	endpoint, err := c.Regions.Endpoint()
-	if err != nil {
-		panic(err)
-	}
-	return endpoint
+func (RegionsPagedResponse) endpoint(_ ...any) string {
+	return "regions"
 }
 
 func (resp *RegionsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
@@ -58,13 +54,10 @@ func (c *Client) ListRegions(ctx context.Context, opts *ListOptions) ([]Region, 
 }
 
 // GetRegion gets the template with the provided ID
-func (c *Client) GetRegion(ctx context.Context, id string) (*Region, error) {
-	e, err := c.Regions.Endpoint()
-	if err != nil {
-		return nil, err
-	}
-	e = fmt.Sprintf("%s/%s", e, id)
-	r, err := coupleAPIErrors(c.R(ctx).SetResult(&Region{}).Get(e))
+func (c *Client) GetRegion(ctx context.Context, regionID string) (*Region, error) {
+	e := fmt.Sprintf("regions/%s", regionID)
+	req := c.R(ctx).SetResult(&Region{})
+	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
 		return nil, err
 	}

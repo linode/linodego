@@ -71,7 +71,8 @@ interactions:
     url: https://api.linode.com/v4beta/account/users/linodegotest-updateusergrantsna/grants
     method: PUT
   response:
-    body: '{"linode": [{"id": 29745916, "label": "workdev", "permissions": null}],
+    body: '{"linode": [{"id": 29745916, "label": "workdev", "permissions": null},
+      {"id": 38571675, "label": "linodego-test-instance-wo-disk", "permissions": null}],
       "nodebalancer": [], "domain": [], "stackscript": [], "longview": [], "image":
       [], "volume": [], "firewall": [], "database": [{"id": 6824, "label": "linodego-test-mongo-database",
       "permissions": null}], "global": {"add_domains": false, "add_linodes": false,
@@ -92,7 +93,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "579"
+      - "661"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
