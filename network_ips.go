@@ -105,7 +105,7 @@ func (c *Client) InstancesAssignIPs(ctx context.Context, opts LinodesAssignIPsOp
 		return err
 	}
 
-	e := fmt.Sprintf("networking/ips/assign")
+	e := "networking/ips/assign"
 	req := c.R(ctx).SetBody(string(body))
 	_, err = coupleAPIErrors(req.Post(e))
 	return err
@@ -119,7 +119,7 @@ func (c *Client) ShareIPAddresses(ctx context.Context, opts IPAddressesShareOpti
 		return err
 	}
 
-	e := fmt.Sprintf("networking/ips/share")
+	e := "networking/ips/share"
 	req := c.R(ctx).SetBody(string(body))
 	_, err = coupleAPIErrors(req.Post(e))
 	return err
