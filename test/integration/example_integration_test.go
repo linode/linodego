@@ -357,5 +357,5 @@ func randPassword() string {
 }
 
 func randLabel() string {
-	return randString(32, lowerBytes, digits)
+	return randString(12, lowerBytes, digits)
 }

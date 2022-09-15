@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"linodego-test-token","scopes":"linodes:read_only","expiry":null}'
+    body: '{"label":"go-token-test-n24i0n24y4ro","scopes":"linodes:read_only","expiry":null}'
     form: {}
     headers:
       Accept:
@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/profile/tokens
     method: POST
   response:
-    body: '{"id": 39817133, "scopes": "linodes:read_only", "created": "2018-01-02T03:04:05",
-      "label": "linodego-test-token", "token": "009b701cfe3eb6fa936d2fdcd23ba6e581fd8234b6ad547b620e7881fa3859bb",
+    body: '{"id": 40563738, "scopes": "linodes:read_only", "created": "2018-01-02T03:04:05",
+      "label": "go-token-test-n24i0n24y4ro", "token": "764142e2a71854521ec9420df64db6f0b52e2ece8ecdda9578578f28b34fad62",
       "expiry": "2999-12-12T05:00:00"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -31,7 +31,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "223"
+      - "230"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -68,11 +68,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/profile/tokens/39817133
+    url: https://api.linode.com/v4beta/profile/tokens/40563738
     method: GET
   response:
-    body: '{"id": 39817133, "scopes": "linodes:read_only", "created": "2018-01-02T03:04:05",
-      "label": "linodego-test-token", "token": "009b701cfe3eb6fa", "expiry": "2999-12-12T05:00:00"}'
+    body: '{"id": 40563738, "scopes": "linodes:read_only", "created": "2018-01-02T03:04:05",
+      "label": "go-token-test-n24i0n24y4ro", "token": "764142e2a7185452", "expiry":
+      "2999-12-12T05:00:00"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -88,7 +89,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "175"
+      - "182"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -126,7 +127,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/profile/tokens/39817133
+    url: https://api.linode.com/v4beta/profile/tokens/40563738
     method: DELETE
   response:
     body: '{}'

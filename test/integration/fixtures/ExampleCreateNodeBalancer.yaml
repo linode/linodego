@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 243792, "label": "balancer243792", "region": "us-southeast", "hostname":
-      "45-79-245-33.ip.linodeusercontent.com", "ipv4": "45.79.245.33", "ipv6": "1234::5678",
+    body: '{"id": 252045, "label": "balancer252045", "region": "us-southeast", "hostname":
+      "45-79-245-210.ip.linodeusercontent.com", "ipv4": "45.79.245.210", "ipv6": "1234::5678",
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "client_conn_throttle":
       20, "tags": [], "transfer": {"in": null, "out": null, "total": null}}'
     headers:
@@ -32,7 +32,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "340"
+      - "342"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -69,11 +69,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/243792
+    url: https://api.linode.com/v4beta/nodebalancers/252045
     method: GET
   response:
-    body: '{"id": 243792, "label": "balancer243792", "region": "us-southeast", "hostname":
-      "45-79-245-33.ip.linodeusercontent.com", "ipv4": "45.79.245.33", "ipv6": "1234::5678",
+    body: '{"id": 252045, "label": "balancer252045", "region": "us-southeast", "hostname":
+      "45-79-245-210.ip.linodeusercontent.com", "ipv4": "45.79.245.210", "ipv6": "1234::5678",
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "client_conn_throttle":
       20, "tags": [], "transfer": {"in": null, "out": null, "total": null}}'
     headers:
@@ -91,7 +91,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "340"
+      - "342"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -120,7 +120,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"balancer243792_renamed","client_conn_throttle":20,"tags":[]}'
+    body: '{"label":"balancer252045_renamed","client_conn_throttle":20,"tags":[]}'
     form: {}
     headers:
       Accept:
@@ -129,11 +129,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/243792
+    url: https://api.linode.com/v4beta/nodebalancers/252045
     method: PUT
   response:
-    body: '{"id": 243792, "label": "balancer243792_renamed", "region": "us-southeast",
-      "hostname": "45-79-245-33.ip.linodeusercontent.com", "ipv4": "45.79.245.33",
+    body: '{"id": 252045, "label": "balancer252045_renamed", "region": "us-southeast",
+      "hostname": "45-79-245-210.ip.linodeusercontent.com", "ipv4": "45.79.245.210",
       "ipv6": "1234::5678", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "client_conn_throttle": 20, "tags": [], "transfer": {"in":
       null, "out": null, "total": null}}'
@@ -151,7 +151,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "348"
+      - "350"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -188,7 +188,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/243792
+    url: https://api.linode.com/v4beta/nodebalancers/252045
     method: DELETE
   response:
     body: '{}'

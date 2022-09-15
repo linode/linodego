@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-west","type":"g6-nanode-1","label":"linodego-test-instance-wo-disk","booted":false}'
+    body: '{"region":"us-west","type":"g6-nanode-1","label":"go-test-ins-wo-disk-04q79qtu4vp6","booted":false}'
     form: {}
     headers:
       Accept:
@@ -14,9 +14,9 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 38094913, "label": "linodego-test-instance-wo-disk", "group": "",
-      "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["173.255.213.220"], "ipv6": "1234::5678/128",
+    body: '{"id": 38777479, "label": "go-test-ins-wo-disk-04q79qtu4vp6", "group":
+      "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "type": "g6-nanode-1", "ipv4": ["45.79.75.24"], "ipv6": "1234::5678/128",
       "image": null, "region": "us-west", "specs": {"disk": 25600, "memory": 1024,
       "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
@@ -36,7 +36,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "636"
+      - "634"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -64,7 +64,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"linodego-test-config","devices":{},"interfaces":null}'
+    body: '{"label":"go-test-conf-ma68r0a6m31a","devices":{},"interfaces":null}'
     form: {}
     headers:
       Accept:
@@ -73,10 +73,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/38094913/configs
+    url: https://api.linode.com/v4beta/linode/instances/38777479/configs
     method: POST
   response:
-    body: '{"id": 40576441, "label": "linodego-test-config", "helpers": {"updatedb_disabled":
+    body: '{"id": 41303264, "label": "go-test-conf-ma68r0a6m31a", "helpers": {"updatedb_disabled":
       true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
       true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
@@ -97,7 +97,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "534"
+      - "539"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -135,22 +135,137 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"linode_id":38094913}'
+      - '{"linode_id":38777479}'
     url: https://api.linode.com/v4beta/networking/ips
     method: GET
   response:
-    body: '{"page": 1, "pages": 1, "results": 4, "data": [{"address": "139.177.207.51",
+    body: '{"page": 1, "pages": 1, "results": 49, "data": [{"address": "139.177.207.51",
       "gateway": "139.177.207.1", "subnet_mask": "255.255.255.0", "prefix": 24, "type":
       "ipv4", "public": true, "rdns": "li2289-51.members.linode.com", "linode_id":
-      29745916, "region": "us-southeast"}, {"address": "173.255.213.220", "gateway":
-      "173.255.213.1", "subnet_mask": "255.255.255.0", "prefix": 24, "type": "ipv4",
-      "public": true, "rdns": "173-255-213-220.ip.linodeusercontent.com", "linode_id":
-      38094913, "region": "us-west"}, {"address": "1234::5678",
+      29745916, "region": "us-southeast"}, {"address": "139.144.20.203", "gateway":
+      "139.144.20.1", "subnet_mask": "255.255.255.0", "prefix": 24, "type": "ipv4",
+      "public": true, "rdns": "139-144-20-203.ip.linodeusercontent.com", "linode_id":
+      38777426, "region": "us-southeast"}, {"address": "192.168.237.122", "gateway":
+      null, "subnet_mask": "255.255.128.0", "prefix": 17, "type": "ipv4", "public":
+      false, "rdns": null, "linode_id": 38777426, "region": "us-southeast"}, {"address":
+      "139.144.20.211", "gateway": "139.144.20.1", "subnet_mask": "255.255.255.0",
+      "prefix": 24, "type": "ipv4", "public": true, "rdns": "139-144-20-211.ip.linodeusercontent.com",
+      "linode_id": 38777438, "region": "us-southeast"}, {"address": "192.168.237.171",
+      "gateway": null, "subnet_mask": "255.255.128.0", "prefix": 17, "type": "ipv4",
+      "public": false, "rdns": null, "linode_id": 38777438, "region": "us-southeast"},
+      {"address": "139.144.20.221", "gateway": "139.144.20.1", "subnet_mask": "255.255.255.0",
+      "prefix": 24, "type": "ipv4", "public": true, "rdns": "139-144-20-221.ip.linodeusercontent.com",
+      "linode_id": 38777446, "region": "us-southeast"}, {"address": "192.168.237.152",
+      "gateway": null, "subnet_mask": "255.255.128.0", "prefix": 17, "type": "ipv4",
+      "public": false, "rdns": null, "linode_id": 38777446, "region": "us-southeast"},
+      {"address": "139.144.20.224", "gateway": "139.144.20.1", "subnet_mask": "255.255.255.0",
+      "prefix": 24, "type": "ipv4", "public": true, "rdns": "139-144-20-224.ip.linodeusercontent.com",
+      "linode_id": 38777451, "region": "us-southeast"}, {"address": "192.168.237.127",
+      "gateway": null, "subnet_mask": "255.255.128.0", "prefix": 17, "type": "ipv4",
+      "public": false, "rdns": null, "linode_id": 38777451, "region": "us-southeast"},
+      {"address": "139.144.20.225", "gateway": "139.144.20.1", "subnet_mask": "255.255.255.0",
+      "prefix": 24, "type": "ipv4", "public": true, "rdns": "139-144-20-225.ip.linodeusercontent.com",
+      "linode_id": 38777453, "region": "us-southeast"}, {"address": "192.168.237.117",
+      "gateway": null, "subnet_mask": "255.255.128.0", "prefix": 17, "type": "ipv4",
+      "public": false, "rdns": null, "linode_id": 38777453, "region": "us-southeast"},
+      {"address": "139.144.20.226", "gateway": "139.144.20.1", "subnet_mask": "255.255.255.0",
+      "prefix": 24, "type": "ipv4", "public": true, "rdns": "139-144-20-226.ip.linodeusercontent.com",
+      "linode_id": 38777455, "region": "us-southeast"}, {"address": "192.168.237.141",
+      "gateway": null, "subnet_mask": "255.255.128.0", "prefix": 17, "type": "ipv4",
+      "public": false, "rdns": null, "linode_id": 38777455, "region": "us-southeast"},
+      {"address": "139.144.20.228", "gateway": "139.144.20.1", "subnet_mask": "255.255.255.0",
+      "prefix": 24, "type": "ipv4", "public": true, "rdns": "139-144-20-228.ip.linodeusercontent.com",
+      "linode_id": 38777460, "region": "us-southeast"}, {"address": "192.168.237.150",
+      "gateway": null, "subnet_mask": "255.255.128.0", "prefix": 17, "type": "ipv4",
+      "public": false, "rdns": null, "linode_id": 38777460, "region": "us-southeast"},
+      {"address": "139.144.20.229", "gateway": "139.144.20.1", "subnet_mask": "255.255.255.0",
+      "prefix": 24, "type": "ipv4", "public": true, "rdns": "139-144-20-229.ip.linodeusercontent.com",
+      "linode_id": 38777461, "region": "us-southeast"}, {"address": "192.168.237.118",
+      "gateway": null, "subnet_mask": "255.255.128.0", "prefix": 17, "type": "ipv4",
+      "public": false, "rdns": null, "linode_id": 38777461, "region": "us-southeast"},
+      {"address": "139.144.20.237", "gateway": "139.144.20.1", "subnet_mask": "255.255.255.0",
+      "prefix": 24, "type": "ipv4", "public": true, "rdns": "139-144-20-237.ip.linodeusercontent.com",
+      "linode_id": 38777462, "region": "us-southeast"}, {"address": "192.168.237.89",
+      "gateway": null, "subnet_mask": "255.255.128.0", "prefix": 17, "type": "ipv4",
+      "public": false, "rdns": null, "linode_id": 38777462, "region": "us-southeast"},
+      {"address": "139.144.20.238", "gateway": "139.144.20.1", "subnet_mask": "255.255.255.0",
+      "prefix": 24, "type": "ipv4", "public": true, "rdns": "139-144-20-238.ip.linodeusercontent.com",
+      "linode_id": 38777466, "region": "us-southeast"}, {"address": "192.168.237.97",
+      "gateway": null, "subnet_mask": "255.255.128.0", "prefix": 17, "type": "ipv4",
+      "public": false, "rdns": null, "linode_id": 38777466, "region": "us-southeast"},
+      {"address": "139.144.20.240", "gateway": "139.144.20.1", "subnet_mask": "255.255.255.0",
+      "prefix": 24, "type": "ipv4", "public": true, "rdns": "139-144-20-240.ip.linodeusercontent.com",
+      "linode_id": 38777469, "region": "us-southeast"}, {"address": "192.168.237.99",
+      "gateway": null, "subnet_mask": "255.255.128.0", "prefix": 17, "type": "ipv4",
+      "public": false, "rdns": null, "linode_id": 38777469, "region": "us-southeast"},
+      {"address": "139.144.20.241", "gateway": "139.144.20.1", "subnet_mask": "255.255.255.0",
+      "prefix": 24, "type": "ipv4", "public": true, "rdns": "139-144-20-241.ip.linodeusercontent.com",
+      "linode_id": 38777471, "region": "us-southeast"}, {"address": "192.168.237.114",
+      "gateway": null, "subnet_mask": "255.255.128.0", "prefix": 17, "type": "ipv4",
+      "public": false, "rdns": null, "linode_id": 38777471, "region": "us-southeast"},
+      {"address": "139.144.20.242", "gateway": "139.144.20.1", "subnet_mask": "255.255.255.0",
+      "prefix": 24, "type": "ipv4", "public": true, "rdns": "139-144-20-242.ip.linodeusercontent.com",
+      "linode_id": 38777473, "region": "us-southeast"}, {"address": "192.168.237.134",
+      "gateway": null, "subnet_mask": "255.255.128.0", "prefix": 17, "type": "ipv4",
+      "public": false, "rdns": null, "linode_id": 38777473, "region": "us-southeast"},
+      {"address": "139.144.20.102", "gateway": "139.144.20.1", "subnet_mask": "255.255.255.0",
+      "prefix": 24, "type": "ipv4", "public": true, "rdns": "139-144-20-102.ip.linodeusercontent.com",
+      "linode_id": 38777475, "region": "us-southeast"}, {"address": "192.168.237.135",
+      "gateway": null, "subnet_mask": "255.255.128.0", "prefix": 17, "type": "ipv4",
+      "public": false, "rdns": null, "linode_id": 38777475, "region": "us-southeast"},
+      {"address": "139.144.20.6", "gateway": "139.144.20.1", "subnet_mask": "255.255.255.0",
+      "prefix": 24, "type": "ipv4", "public": true, "rdns": "139-144-20-6.ip.linodeusercontent.com",
+      "linode_id": 38777478, "region": "us-southeast"}, {"address": "192.168.237.137",
+      "gateway": null, "subnet_mask": "255.255.128.0", "prefix": 17, "type": "ipv4",
+      "public": false, "rdns": null, "linode_id": 38777478, "region": "us-southeast"},
+      {"address": "45.79.75.24", "gateway": "45.79.75.1", "subnet_mask": "255.255.255.0",
+      "prefix": 24, "type": "ipv4", "public": true, "rdns": "45-79-75-24.ip.linodeusercontent.com",
+      "linode_id": 38777479, "region": "us-west"}, {"address": "1234::5678",
       "gateway": "1234::5678", "subnet_mask": "1234::5678", "prefix": 64,
       "type": "ipv6", "rdns": null, "linode_id": 29745916, "region": "us-southeast",
       "public": true}, {"address": "1234::5678", "gateway": "1234::5678",
       "subnet_mask": "1234::5678", "prefix": 64, "type": "ipv6", "rdns":
-      null, "linode_id": 38094913, "region": "us-west", "public": true}]}'
+      null, "linode_id": 38777426, "region": "us-southeast", "public": true}, {"address":
+      "1234::5678", "gateway": "1234::5678", "subnet_mask": "1234::5678",
+      "prefix": 64, "type": "ipv6", "rdns": null, "linode_id": 38777438, "region":
+      "us-southeast", "public": true}, {"address": "1234::5678",
+      "gateway": "1234::5678", "subnet_mask": "1234::5678", "prefix": 64,
+      "type": "ipv6", "rdns": null, "linode_id": 38777446, "region": "us-southeast",
+      "public": true}, {"address": "1234::5678", "gateway": "1234::5678",
+      "subnet_mask": "1234::5678", "prefix": 64, "type": "ipv6", "rdns":
+      null, "linode_id": 38777451, "region": "us-southeast", "public": true}, {"address":
+      "1234::5678", "gateway": "1234::5678", "subnet_mask": "1234::5678",
+      "prefix": 64, "type": "ipv6", "rdns": null, "linode_id": 38777453, "region":
+      "us-southeast", "public": true}, {"address": "1234::5678",
+      "gateway": "1234::5678", "subnet_mask": "1234::5678", "prefix": 64,
+      "type": "ipv6", "rdns": null, "linode_id": 38777455, "region": "us-southeast",
+      "public": true}, {"address": "1234::5678", "gateway": "1234::5678",
+      "subnet_mask": "1234::5678", "prefix": 64, "type": "ipv6", "rdns":
+      null, "linode_id": 38777460, "region": "us-southeast", "public": true}, {"address":
+      "1234::5678", "gateway": "1234::5678", "subnet_mask": "1234::5678",
+      "prefix": 64, "type": "ipv6", "rdns": null, "linode_id": 38777461, "region":
+      "us-southeast", "public": true}, {"address": "1234::5678",
+      "gateway": "1234::5678", "subnet_mask": "1234::5678", "prefix": 64,
+      "type": "ipv6", "rdns": null, "linode_id": 38777462, "region": "us-southeast",
+      "public": true}, {"address": "1234::5678", "gateway": "1234::5678",
+      "subnet_mask": "1234::5678", "prefix": 64, "type": "ipv6", "rdns":
+      null, "linode_id": 38777466, "region": "us-southeast", "public": true}, {"address":
+      "1234::5678", "gateway": "1234::5678", "subnet_mask": "1234::5678",
+      "prefix": 64, "type": "ipv6", "rdns": null, "linode_id": 38777469, "region":
+      "us-southeast", "public": true}, {"address": "1234::5678",
+      "gateway": "1234::5678", "subnet_mask": "1234::5678", "prefix": 64,
+      "type": "ipv6", "rdns": null, "linode_id": 38777471, "region": "us-southeast",
+      "public": true}, {"address": "1234::5678", "gateway": "1234::5678",
+      "subnet_mask": "1234::5678", "prefix": 64, "type": "ipv6", "rdns":
+      null, "linode_id": 38777473, "region": "us-southeast", "public": true}, {"address":
+      "1234::5678", "gateway": "1234::5678", "subnet_mask": "1234::5678",
+      "prefix": 64, "type": "ipv6", "rdns": null, "linode_id": 38777475, "region":
+      "us-southeast", "public": true}, {"address": "1234::5678",
+      "gateway": "1234::5678", "subnet_mask": "1234::5678", "prefix": 64,
+      "type": "ipv6", "rdns": null, "linode_id": 38777478, "region": "us-southeast",
+      "public": true}, {"address": "1234::5678", "gateway": "1234::5678",
+      "subnet_mask": "1234::5678", "prefix": 64, "type": "ipv6", "rdns":
+      null, "linode_id": 38777479, "region": "us-west", "public": true}]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -165,8 +280,6 @@ interactions:
       Cache-Control:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
-      Content-Length:
-      - "938"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -204,7 +317,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/38094913
+    url: https://api.linode.com/v4beta/linode/instances/38777479
     method: DELETE
   response:
     body: '{}'

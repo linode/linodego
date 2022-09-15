@@ -188,7 +188,7 @@ func (c *Client) ListMySQLDatabaseBackups(ctx context.Context, databaseID int, o
 
 // GetMySQLDatabase returns a single MySQL Database matching the id
 func (c *Client) GetMySQLDatabase(ctx context.Context, databaseID int) (*MySQLDatabase, error) {
-	e := fmt.Sprintf("databases/mysql/instances/%d/backups", databaseID)
+	e := fmt.Sprintf("databases/mysql/instances/%d", databaseID)
 	req := c.R(ctx).SetResult(&MySQLDatabase{})
 	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {

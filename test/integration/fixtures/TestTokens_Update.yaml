@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"linodego-test-token","scopes":"linodes:read_only","expiry":"2022-08-16T06:49:40"}'
+    body: '{"label":"go-token-test-t2b5l63wa1z2","scopes":"linodes:read_only","expiry":"2022-09-15T19:53:08"}'
     form: {}
     headers:
       Accept:
@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/profile/tokens
     method: POST
   response:
-    body: '{"id": 39817134, "scopes": "linodes:read_only", "created": "2018-01-02T03:04:05",
-      "label": "linodego-test-token", "token": "0f354b95058ac49b8e9d6c57f87eaa44239eb5e35e288cc814ad1d028553b717",
+    body: '{"id": 40563740, "scopes": "linodes:read_only", "created": "2018-01-02T03:04:05",
+      "label": "go-token-test-t2b5l63wa1z2", "token": "4d92f4b43740e621a3105be7a4f289e2c7216fdf952b233da6f5a1218aab6395",
       "expiry": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -31,7 +31,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "223"
+      - "230"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -59,7 +59,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"linodego-test-token_renamed"}'
+    body: '{"label":"go-token-test-t2b5l63wa1z2_renamed"}'
     form: {}
     headers:
       Accept:
@@ -68,12 +68,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/profile/tokens/39817134
+    url: https://api.linode.com/v4beta/profile/tokens/40563740
     method: PUT
   response:
-    body: '{"id": 39817134, "scopes": "linodes:read_only", "created": "2018-01-02T03:04:05",
-      "label": "linodego-test-token_renamed", "token": "0f354b95058ac49b", "expiry":
-      "2018-01-02T03:04:05"}'
+    body: '{"id": 40563740, "scopes": "linodes:read_only", "created": "2018-01-02T03:04:05",
+      "label": "go-token-test-t2b5l63wa1z2_renamed", "token": "4d92f4b43740e621",
+      "expiry": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -88,7 +88,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "183"
+      - "190"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -125,7 +125,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/profile/tokens/39817134
+    url: https://api.linode.com/v4beta/profile/tokens/40563740
     method: DELETE
   response:
     body: '{}'

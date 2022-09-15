@@ -2,16 +2,14 @@ package integration
 
 import (
 	"context"
-	"fmt"
 	"testing"
-	"time"
 
 	. "github.com/linode/linodego"
 )
 
 var testObjectStorageBucketCreateOpts = ObjectStorageBucketCreateOptions{
 	Cluster: "us-east-1",
-	Label:   fmt.Sprintf("linodego-test-bucket-%d", time.Now().UnixNano()),
+	Label:   "go-bucket-test-" + randLabel(),
 }
 
 func TestObjectStorageBucket_Create(t *testing.T) {

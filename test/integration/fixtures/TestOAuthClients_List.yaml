@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"redirect_uri":"https://example.com","label":"test-client","public":true}'
+    body: '{"redirect_uri":"https://example.com","label":"go-client-test-71j5m7ak0jt1","public":true}'
     form: {}
     headers:
       Accept:
@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/account/oauth-clients
     method: POST
   response:
-    body: '{"id": "45097ae700ea7857c3dc", "redirect_uri": "https://example.com", "label":
-      "test-client", "status": "active", "secret": "697a3f90bb37c6fe895d7d242f0ce320cc66b4b359c6e479d7ebc24b8ac00047",
+    body: '{"id": "4d1e68942cc945c6707f", "redirect_uri": "https://example.com", "label":
+      "go-client-test-71j5m7ak0jt1", "status": "active", "secret": "96dd4ecd88b72c690f4c82f138e2038e99b179acb9a118b6d2940682fae6d426",
       "thumbnail_url": null, "public": true}'
     headers:
       Access-Control-Allow-Credentials:
@@ -31,7 +31,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "230"
+      - "246"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -71,9 +71,9 @@ interactions:
     url: https://api.linode.com/v4beta/account/oauth-clients
     method: GET
   response:
-    body: '{"data": [{"id": "45097ae700ea7857c3dc", "redirect_uri": "https://example.com",
-      "label": "test-client", "status": "active", "secret": "<REDACTED>", "thumbnail_url":
-      null, "public": true}], "page": 1, "pages": 1, "results": 1}'
+    body: '{"data": [{"id": "4d1e68942cc945c6707f", "redirect_uri": "https://example.com",
+      "label": "go-client-test-71j5m7ak0jt1", "status": "active", "secret": "<REDACTED>",
+      "thumbnail_url": null, "public": true}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -89,7 +89,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "225"
+      - "241"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -127,7 +127,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/oauth-clients/45097ae700ea7857c3dc
+    url: https://api.linode.com/v4beta/account/oauth-clients/4d1e68942cc945c6707f
     method: DELETE
   response:
     body: '{}'

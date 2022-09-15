@@ -134,7 +134,7 @@ func setupProfileToken(t *testing.T, fixturesYaml string, ttl *time.Time) (*Clie
 	limitedTestScope := "linodes:read_only"
 
 	createOpts := TokenCreateOptions{
-		Label:  "linodego-test-token",
+		Label:  "go-token-test-" + randLabel(),
 		Expiry: ttl,
 		Scopes: limitedTestScope,
 	}

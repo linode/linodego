@@ -10,7 +10,7 @@ import (
 
 var (
 	clientConnThrottle         = 20
-	label                      = randString(12, lowerBytes, digits) + "-linodego-testing"
+	label                      = "go-test-" + randLabel()
 	testNodeBalancerCreateOpts = linodego.NodeBalancerCreateOptions{
 		Label:              &label,
 		Region:             "us-west",
