@@ -277,7 +277,7 @@ func TestInstance_ConfigInterfaces_Update(t *testing.T) {
 			},
 			{
 				Purpose: linodego.InterfacePurposeVLAN,
-				Label:   "go-vlan-test-" + randLabel(),
+				Label:   instance.Label + "-r",
 			},
 		},
 	}

@@ -10,7 +10,7 @@ import (
 )
 
 var testFirewallCreateOpts = linodego.FirewallCreateOptions{
-	Label: "label",
+	Label: "go-fw-test-" + randLabel(),
 	Rules: testFirewallRuleSet, // borrowed from firewall_rules.test.go
 	Tags:  []string{"testing"},
 }
@@ -48,7 +48,7 @@ func TestFirewall_Get(t *testing.T) {
 	rules := linodego.FirewallRuleSet{
 		Inbound: []linodego.FirewallRule{
 			{
-				Label:    "go-fwrule-test" + randLabel(),
+				Label:    "go-fwrule-test-" + randLabel(),
 				Action:   "DROP",
 				Protocol: linodego.ICMP,
 				Addresses: linodego.NetworkAddresses{
