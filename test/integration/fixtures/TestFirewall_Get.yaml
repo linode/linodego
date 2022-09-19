@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"go-fw-test-0z842az72lil","rules":{"inbound":[{"action":"DROP","label":"go-fwrule-test8j591za0m4in","protocol":"ICMP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":null,"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
+    body: '{"label":"go-fw-test-7tlp60vs2i66","rules":{"inbound":[{"action":"DROP","label":"go-fwrule-test5s90z08vrz2a","protocol":"ICMP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":null,"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
     form: {}
     headers:
       Accept:
@@ -14,9 +14,9 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 85999, "label": "go-fw-test-0z842az72lil", "created": "2018-01-02T03:04:05",
+    body: '{"id": 86589, "label": "go-fw-test-7tlp60vs2i66", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
-      [{"action": "DROP", "label": "go-fwrule-test8j591za0m4in", "protocol": "ICMP",
+      [{"action": "DROP", "label": "go-fwrule-test5s90z08vrz2a", "protocol": "ICMP",
       "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy":
       "ACCEPT", "outbound": null, "outbound_policy": "ACCEPT"}, "tags": ["testing"]}'
     headers:
@@ -70,12 +70,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/85999
+    url: https://api.linode.com/v4beta/networking/firewalls/86589
     method: GET
   response:
-    body: '{"id": 85999, "label": "go-fw-test-0z842az72lil", "created": "2018-01-02T03:04:05",
+    body: '{"id": 86589, "label": "go-fw-test-7tlp60vs2i66", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
-      [{"action": "DROP", "label": "go-fwrule-test8j591za0m4in", "protocol": "ICMP",
+      [{"action": "DROP", "label": "go-fwrule-test5s90z08vrz2a", "protocol": "ICMP",
       "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy":
       "ACCEPT", "outbound": null, "outbound_policy": "ACCEPT"}, "tags": ["testing"]}'
     headers:
@@ -131,7 +131,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/85999
+    url: https://api.linode.com/v4beta/networking/firewalls/86589
     method: DELETE
   response:
     body: '{}'

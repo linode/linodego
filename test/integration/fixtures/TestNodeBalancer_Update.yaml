@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 252042, "label": "go-test-h71e8x50rb3w", "region": "us-west", "hostname":
-      "23-239-6-41.ip.linodeusercontent.com", "ipv4": "23.239.6.41", "ipv6": "1234::5678",
+    body: '{"id": 253480, "label": "go-test-h71e8x50rb3w", "region": "us-west", "hostname":
+      "104-200-27-86.ip.linodeusercontent.com", "ipv4": "104.200.27.86", "ipv6": "1234::5678",
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "client_conn_throttle":
       20, "tags": [], "transfer": {"in": null, "out": null, "total": null}}'
     headers:
@@ -32,7 +32,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "339"
+      - "343"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -69,14 +69,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/252042
+    url: https://api.linode.com/v4beta/nodebalancers/253480
     method: PUT
   response:
-    body: '{"id": 252042, "label": "go-test-h71e8x50rb3w_r", "region": "us-west",
-      "hostname": "23-239-6-41.ip.linodeusercontent.com", "ipv4": "23.239.6.41", "ipv6":
-      "1234::5678", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "client_conn_throttle": 20, "tags": [], "transfer": {"in": null, "out": null,
-      "total": null}}'
+    body: '{"id": 253480, "label": "go-test-h71e8x50rb3w_r", "region": "us-west",
+      "hostname": "104-200-27-86.ip.linodeusercontent.com", "ipv4": "104.200.27.86",
+      "ipv6": "1234::5678", "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "client_conn_throttle": 20, "tags": [], "transfer": {"in":
+      null, "out": null, "total": null}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -91,7 +91,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "341"
+      - "345"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -128,7 +128,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/252042
+    url: https://api.linode.com/v4beta/nodebalancers/253480
     method: DELETE
   response:
     body: '{}'
