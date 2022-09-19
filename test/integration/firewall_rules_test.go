@@ -56,7 +56,7 @@ func TestFirewallRules_Update(t *testing.T) {
 	newRules := linodego.FirewallRuleSet{
 		Inbound: []linodego.FirewallRule{
 			{
-				Label:    "go-fwrule-test-" + randLabel(),
+				Label:    testFirewallRule.Label + "_r",
 				Action:   "DROP",
 				Ports:    "22",
 				Protocol: "TCP",
