@@ -10,9 +10,10 @@ type NetworkProtocol string
 
 // NetworkProtocol enum values
 const (
-	TCP  NetworkProtocol = "TCP"
-	UDP  NetworkProtocol = "UDP"
-	ICMP NetworkProtocol = "ICMP"
+	TCP     NetworkProtocol = "TCP"
+	UDP     NetworkProtocol = "UDP"
+	ICMP    NetworkProtocol = "ICMP"
+	IPENCAP NetworkProtocol = "IPENCAP"
 )
 
 // NetworkAddresses are arrays of ipv4 and v6 addresses
