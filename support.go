@@ -48,12 +48,8 @@ type TicketsPagedResponse struct {
 	Data []Ticket `json:"data"`
 }
 
-func (TicketsPagedResponse) endpoint(c *Client, _ ...any) string {
-	endpoint, err := c.Tickets.Endpoint()
-	if err != nil {
-		panic(err)
-	}
-	return endpoint
+func (TicketsPagedResponse) endpoint(_ ...any) string {
+	return "support/tickets"
 }
 
 func (resp *TicketsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
@@ -80,15 +76,10 @@ func (c *Client) ListTickets(ctx context.Context, opts *ListOptions) ([]Ticket, 
 }
 
 // GetTicket gets a Support Ticket on the Account with the specified ID
-func (c *Client) GetTicket(ctx context.Context, id int) (*Ticket, error) {
-	e, err := c.Tickets.Endpoint()
-	if err != nil {
-		return nil, err
-	}
-	e = fmt.Sprintf("%s/%d", e, id)
-	r, err := coupleAPIErrors(c.R(ctx).
-		SetResult(&Ticket{}).
-		Get(e))
+func (c *Client) GetTicket(ctx context.Context, ticketID int) (*Ticket, error) {
+	e := fmt.Sprintf("support/tickets/%d", ticketID)
+	req := c.R(ctx).SetResult(&Ticket{})
+	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
 		return nil, err
 	}

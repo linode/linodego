@@ -3,6 +3,7 @@ package linodego
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 )
 
 type GrantPermissionLevel string
@@ -64,12 +65,9 @@ type UserGrantsUpdateOptions struct {
 }
 
 func (c *Client) GetUserGrants(ctx context.Context, username string) (*UserGrants, error) {
-	e, err := c.UserGrants.endpointWithParams(username)
-	if err != nil {
-		return nil, err
-	}
-
-	r, err := coupleAPIErrors(c.R(ctx).SetResult(&UserGrants{}).Get(e))
+	e := fmt.Sprintf("account/users/%s/grants", username)
+	req := c.R(ctx).SetResult(&UserGrants{})
+	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
 		return nil, err
 	}
@@ -77,23 +75,15 @@ func (c *Client) GetUserGrants(ctx context.Context, username string) (*UserGrant
 	return r.Result().(*UserGrants), nil
 }
 
-func (c *Client) UpdateUserGrants(ctx context.Context, username string, updateOpts UserGrantsUpdateOptions) (*UserGrants, error) {
-	var body string
-
-	e, err := c.UserGrants.endpointWithParams(username)
+func (c *Client) UpdateUserGrants(ctx context.Context, username string, opts UserGrantsUpdateOptions) (*UserGrants, error) {
+	body, err := json.Marshal(opts)
 	if err != nil {
 		return nil, err
 	}
 
-	req := c.R(ctx).SetResult(&UserGrants{})
-
-	if bodyData, err := json.Marshal(updateOpts); err == nil {
-		body = string(bodyData)
-	} else {
-		return nil, NewError(err)
-	}
-
-	r, err := coupleAPIErrors(req.SetBody(body).Put(e))
+	e := fmt.Sprintf("account/users/%s/grants", username)
+	req := c.R(ctx).SetResult(&UserGrants{}).SetBody(string(body))
+	r, err := coupleAPIErrors(req.Put(e))
 	if err != nil {
 		return nil, err
 	}

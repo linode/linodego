@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"bzi7l8090x1m-linodego-testing","bucket_access":[]}'
+    body: '{"label":"go-test-def","bucket_access":[]}'
     form: {}
     headers:
       Accept:
@@ -14,9 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/keys
     method: POST
   response:
-    body: '{"id": 339056, "label": "bzi7l8090x1m-linodego-testing", "access_key":
-      "[SANITIZED]", "secret_key": "[SANITIZED]", "limited": true, "bucket_access":
-      []}'
+    body: '{"id": 358565, "label": "go-test-def", "access_key": "[SANITIZED]", "secret_key":
+      "[SANITIZED]", "limited": true, "bucket_access": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -31,7 +30,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "190"
+      - "172"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -68,7 +67,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/339056
+    url: https://api.linode.com/v4beta/object-storage/keys/358565
     method: DELETE
   response:
     body: '{}'

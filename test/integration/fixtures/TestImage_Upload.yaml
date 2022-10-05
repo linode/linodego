@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-southeast","label":"linodego-test-image-58","description":"An
+    body: '{"region":"us-southeast","label":"linodego-image-test","description":"An
       image that does stuff."}'
     form: {}
     headers:
@@ -15,8 +15,8 @@ interactions:
     url: https://api.linode.com/v4beta/images/upload
     method: POST
   response:
-    body: '{"upload_to": "https://us-southeast-1.linodeobjects.com:443/linode-production-machine-images-uploads/17025855?Signature=ry4%2B5GRZn4ItcVU590Xc1avgI9A%3D&Expires=1660717259&AWSAccessKeyID=SANITIZED",
-      "image": {"id": "private/17025855", "label": "linodego-test-image-58", "description":
+    body: '{"upload_to": "https://us-southeast-1.linodeobjects.com:443/linode-production-machine-images-uploads/17508264?Signature=eKA42vGumRDNGI92mlB4%2B9BUMQ0%3D&Expires=1664980380&AWSAccessKeyID=SANITIZED",
+      "image": {"id": "private/17508264", "label": "linodego-image-test", "description":
       "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "size": 0, "created_by": "jriddle-dev", "type": "manual", "is_public": false,
       "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
@@ -35,7 +35,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "565"
+      - "562"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -72,10 +72,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private/17025855
+    url: https://api.linode.com/v4beta/images/private/17508264
     method: GET
   response:
-    body: '{"id": "private/17025855", "label": "linodego-test-image-58", "description":
+    body: '{"id": "private/17508264", "label": "linodego-image-test", "description":
       "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "size": 0, "created_by": "jriddle-dev", "type": "manual", "is_public": false,
       "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
@@ -95,7 +95,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "345"
+      - "342"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -133,10 +133,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private/17025855
+    url: https://api.linode.com/v4beta/images/private/17508264
     method: GET
   response:
-    body: '{"id": "private/17025855", "label": "linodego-test-image-58", "description":
+    body: '{"id": "private/17508264", "label": "linodego-image-test", "description":
       "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "size": 0, "created_by": "jriddle-dev", "type": "manual", "is_public": false,
       "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
@@ -156,7 +156,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "345"
+      - "342"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -194,10 +194,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private/17025855
+    url: https://api.linode.com/v4beta/images/private/17508264
     method: GET
   response:
-    body: '{"id": "private/17025855", "label": "linodego-test-image-58", "description":
+    body: '{"id": "private/17508264", "label": "linodego-image-test", "description":
       "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "size": 0, "created_by": "jriddle-dev", "type": "manual", "is_public": false,
       "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
@@ -217,7 +217,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "345"
+      - "342"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -255,10 +255,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private/17025855
+    url: https://api.linode.com/v4beta/images/private/17508264
     method: GET
   response:
-    body: '{"id": "private/17025855", "label": "linodego-test-image-58", "description":
+    body: '{"id": "private/17508264", "label": "linodego-image-test", "description":
       "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "size": 0, "created_by": "jriddle-dev", "type": "manual", "is_public": false,
       "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
@@ -278,7 +278,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "345"
+      - "342"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -316,10 +316,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private/17025855
+    url: https://api.linode.com/v4beta/images/private/17508264
     method: GET
   response:
-    body: '{"id": "private/17025855", "label": "linodego-test-image-58", "description":
+    body: '{"id": "private/17508264", "label": "linodego-image-test", "description":
       "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "size": 1, "created_by": "jriddle-dev", "type": "manual", "is_public": false,
       "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
@@ -339,7 +339,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "340"
+      - "337"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -377,7 +377,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private/17025855
+    url: https://api.linode.com/v4beta/images/private/17508264
     method: DELETE
   response:
     body: '{}'

@@ -10,8 +10,8 @@ import (
 )
 
 func TestVLANs_List(t *testing.T) {
-	instancePrefix := "linodego-testing-vlans-list"
-	vlanName := "linodego-really-cool-vlan-list"
+	vlanName := "go-vlan-test-list"
+	instancePrefix := "go-ins-test-list"
 
 	client, fixturesTeardown := createTestClient(t, "fixtures/TestVLANs_List")
 	defer fixturesTeardown()
@@ -52,8 +52,8 @@ func TestVLANs_List(t *testing.T) {
 }
 
 func TestVLANs_GetIPAMAddress(t *testing.T) {
-	instancePrefix := "linodego-testing-vlan-ipamaddress"
-	vlanName := "linodego-really-cool-vlan-ipamaddress"
+	vlanName := "go-vlan-test-ipam"
+	instancePrefix := "go-ins-test-ipam"
 
 	client, fixturesTeardown := createTestClient(t, "fixtures/TestVLANs_GetIPAMAddress")
 	defer fixturesTeardown()

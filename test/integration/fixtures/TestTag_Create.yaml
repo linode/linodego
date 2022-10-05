@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-southeast","type":"g6-nanode-1","label":"linodego-test-instance","tags":["linodego-test"]}'
+    body: '{"region":"us-southeast","type":"g6-nanode-1","label":"go-ins-test-tag","tags":["go-tag-test"]}'
     form: {}
     headers:
       Accept:
@@ -14,14 +14,14 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 38094970, "label": "linodego-test-instance", "group": "", "status":
-      "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["139.144.54.235"], "ipv6": "1234::5678/128",
+    body: '{"id": 39241070, "label": "go-ins-test-tag", "group": "", "status": "provisioning",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "type":
+      "g6-nanode-1", "ipv4": ["45.56.116.40"], "ipv6": "1234::5678/128",
       "image": null, "region": "us-southeast", "specs": {"disk": 25600, "memory":
       1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
       false, "schedule": {"day": null, "window": null}, "last_successful": null},
-      "hypervisor": "kvm", "watchdog_enabled": true, "tags": ["linodego-test"]}'
+      "hypervisor": "kvm", "watchdog_enabled": true, "tags": ["go-tag-test"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -36,7 +36,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "647"
+      - "636"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -64,7 +64,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"linodego-test-instance","alerts":{"cpu":90,"io":10000,"network_in":10,"network_out":10,"transfer_quota":80},"watchdog_enabled":true,"tags":["linodego-test","linodego-test-bar"]}'
+    body: '{"label":"go-ins-test-tag","alerts":{"cpu":90,"io":10000,"network_in":10,"network_out":10,"transfer_quota":80},"watchdog_enabled":true,"tags":["go-tag-test","go-tag-test-bar"]}'
     form: {}
     headers:
       Accept:
@@ -73,17 +73,17 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/38094970
+    url: https://api.linode.com/v4beta/linode/instances/39241070
     method: PUT
   response:
-    body: '{"id": 38094970, "label": "linodego-test-instance", "group": "", "status":
-      "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["139.144.54.235"], "ipv6": "1234::5678/128",
+    body: '{"id": 39241070, "label": "go-ins-test-tag", "group": "", "status": "provisioning",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "type":
+      "g6-nanode-1", "ipv4": ["45.56.116.40"], "ipv6": "1234::5678/128",
       "image": null, "region": "us-southeast", "specs": {"disk": 25600, "memory":
       1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
       false, "schedule": {"day": null, "window": null}, "last_successful": null},
-      "hypervisor": "kvm", "watchdog_enabled": true, "tags": ["linodego-test", "linodego-test-bar"]}'
+      "hypervisor": "kvm", "watchdog_enabled": true, "tags": ["go-tag-test", "go-tag-test-bar"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -98,7 +98,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "668"
+      - "655"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -126,7 +126,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"linodego-test-foo","linodes":[38094970]}'
+    body: '{"label":"go-tag-test-foo","linodes":[39241070]}'
     form: {}
     headers:
       Accept:
@@ -138,7 +138,7 @@ interactions:
     url: https://api.linode.com/v4beta/tags
     method: POST
   response:
-    body: '{"label": "linodego-test-foo"}'
+    body: '{"label": "go-tag-test-foo"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -153,7 +153,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "30"
+      - "28"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -193,8 +193,8 @@ interactions:
     url: https://api.linode.com/v4beta/tags
     method: GET
   response:
-    body: '{"data": [{"label": "bar"}, {"label": "foo"}, {"label": "linodego-test"},
-      {"label": "linodego-test-bar"}, {"label": "linodego-test-foo"}, {"label": "linuke-keep"},
+    body: '{"data": [{"label": "bar"}, {"label": "foo"}, {"label": "go-tag-test"},
+      {"label": "go-tag-test-bar"}, {"label": "go-tag-test-foo"}, {"label": "linuke-keep"},
       {"label": "test"}, {"label": "test=true"}, {"label": "testing"}], "page": 1,
       "pages": 1, "results": 9}'
     headers:
@@ -212,7 +212,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "266"
+      - "260"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -250,19 +250,19 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/tags/linodego-test
+    url: https://api.linode.com/v4beta/tags/go-tag-test
     method: GET
   response:
     body: '{"page": 1, "pages": 1, "results": 1, "data": [{"type": "linode", "data":
-      {"id": 38094970, "label": "linodego-test-instance", "group": "", "status": "offline",
+      {"id": 39241070, "label": "go-ins-test-tag", "group": "", "status": "offline",
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "type":
-      "g6-nanode-1", "ipv4": ["139.144.54.235"], "ipv6": "1234::5678/128",
+      "g6-nanode-1", "ipv4": ["45.56.116.40"], "ipv6": "1234::5678/128",
       "image": null, "region": "us-southeast", "specs": {"disk": 25600, "memory":
       1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
       false, "schedule": {"day": null, "window": null}, "last_successful": null},
-      "hypervisor": "kvm", "watchdog_enabled": true, "tags": ["linodego-test", "linodego-test-bar",
-      "linodego-test-foo"]}}]}'
+      "hypervisor": "kvm", "watchdog_enabled": true, "tags": ["go-tag-test", "go-tag-test-bar",
+      "go-tag-test-foo"]}}]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -278,7 +278,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "761"
+      - "746"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -316,7 +316,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/tags/linodego-test
+    url: https://api.linode.com/v4beta/tags/go-tag-test
     method: DELETE
   response:
     body: '{}'
@@ -371,7 +371,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/tags/linodego-test-foo
+    url: https://api.linode.com/v4beta/tags/go-tag-test-foo
     method: DELETE
   response:
     body: '{}'
@@ -426,7 +426,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/tags/linodego-test-bar
+    url: https://api.linode.com/v4beta/tags/go-tag-test-bar
     method: DELETE
   response:
     body: '{}'
@@ -481,7 +481,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/38094970
+    url: https://api.linode.com/v4beta/linode/instances/39241070
     method: DELETE
   response:
     body: '{}'

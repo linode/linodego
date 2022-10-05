@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-southeast","type":"g6-nanode-1","label":"linodego-test-eventpoller-instancepower","root_pass":"c00lp@ss!","image":"linode/ubuntu22.04","booted":false}'
+    body: '{"region":"us-southeast","type":"g6-nanode-1","label":"go-ins-poll-test","root_pass":"c00lp@ss!","image":"linode/ubuntu22.04","booted":false}'
     form: {}
     headers:
       Accept:
@@ -14,9 +14,9 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 38095075, "label": "linodego-test-eventpoller-instancepower", "group":
-      "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["139.144.54.13"], "ipv6": "1234::5678/128",
+    body: '{"id": 39241161, "label": "go-ins-poll-test", "group": "", "status": "provisioning",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "type":
+      "g6-nanode-1", "ipv4": ["45.79.252.253"], "ipv6": "1234::5678/128",
       "image": "linode/ubuntu22.04", "region": "us-southeast", "specs": {"disk": 25600,
       "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu":
       90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io": 10000},
@@ -36,7 +36,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "664"
+      - "641"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -74,18 +74,17 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_create","entity.id":38095075,"entity.type":"linode"}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_create","entity.id":39241161,"entity.type":"linode"}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 349418300, "created": "2018-01-02T03:04:05", "seen": false,
-      "read": false, "percent_complete": 51, "time_remaining": null, "rate": null,
-      "duration": 17.010937, "action": "linode_create", "username": "jriddle-dev",
-      "entity": {"label": "linodego-test-eventpoller-instancepower", "id": 38095075,
-      "type": "linode", "url": "/v4/linode/instances/38095075"}, "status": "started",
-      "secondary_entity": {"id": "linode/ubuntu22.04", "type": "image", "label": "Ubuntu
-      22.04 LTS", "url": "/v4/images/linode/ubuntu22.04"}, "message": ""}], "page":
-      1, "pages": 1, "results": 1}'
+    body: '{"data": [{"id": 370475698, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": 40, "time_remaining": null, "rate": null,
+      "duration": 21.767183, "action": "linode_create", "username": "jriddle-dev",
+      "entity": {"label": "go-ins-poll-test", "id": 39241161, "type": "linode", "url":
+      "/v4/linode/instances/39241161"}, "status": "started", "secondary_entity": {"id":
+      "linode/ubuntu22.04", "type": "image", "label": "Ubuntu 22.04 LTS", "url": "/v4/images/linode/ubuntu22.04"},
+      "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -101,7 +100,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "579"
+      - "556"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -139,16 +138,16 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/events/349418300
+    url: https://api.linode.com/v4beta/account/events/370475698
     method: GET
   response:
-    body: '{"id": 349418300, "created": "2018-01-02T03:04:05", "seen": false, "read":
-      false, "percent_complete": 51, "time_remaining": null, "rate": null, "duration":
-      17.094316, "action": "linode_create", "username": "jriddle-dev", "entity": {"label":
-      "linodego-test-eventpoller-instancepower", "id": 38095075, "type": "linode",
-      "url": "/v4/linode/instances/38095075"}, "status": "started", "secondary_entity":
-      {"id": "linode/ubuntu22.04", "type": "image", "label": "Ubuntu 22.04 LTS", "url":
-      "/v4/images/linode/ubuntu22.04"}, "message": ""}'
+    body: '{"id": 370475698, "created": "2018-01-02T03:04:05", "seen": false, "read":
+      false, "percent_complete": 40, "time_remaining": null, "rate": null, "duration":
+      21.840654, "action": "linode_create", "username": "jriddle-dev", "entity": {"label":
+      "go-ins-poll-test", "id": 39241161, "type": "linode", "url": "/v4/linode/instances/39241161"},
+      "status": "started", "secondary_entity": {"id": "linode/ubuntu22.04", "type":
+      "image", "label": "Ubuntu 22.04 LTS", "url": "/v4/images/linode/ubuntu22.04"},
+      "message": ""}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -164,7 +163,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "530"
+      - "507"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -202,16 +201,16 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/events/349418300
+    url: https://api.linode.com/v4beta/account/events/370475698
     method: GET
   response:
-    body: '{"id": 349418300, "created": "2018-01-02T03:04:05", "seen": false, "read":
-      false, "percent_complete": 59, "time_remaining": null, "rate": null, "duration":
-      31.990231, "action": "linode_create", "username": "jriddle-dev", "entity": {"label":
-      "linodego-test-eventpoller-instancepower", "id": 38095075, "type": "linode",
-      "url": "/v4/linode/instances/38095075"}, "status": "started", "secondary_entity":
-      {"id": "linode/ubuntu22.04", "type": "image", "label": "Ubuntu 22.04 LTS", "url":
-      "/v4/images/linode/ubuntu22.04"}, "message": ""}'
+    body: '{"id": 370475698, "created": "2018-01-02T03:04:05", "seen": false, "read":
+      false, "percent_complete": 56, "time_remaining": null, "rate": null, "duration":
+      36.738828, "action": "linode_create", "username": "jriddle-dev", "entity": {"label":
+      "go-ins-poll-test", "id": 39241161, "type": "linode", "url": "/v4/linode/instances/39241161"},
+      "status": "started", "secondary_entity": {"id": "linode/ubuntu22.04", "type":
+      "image", "label": "Ubuntu 22.04 LTS", "url": "/v4/images/linode/ubuntu22.04"},
+      "message": ""}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -227,7 +226,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "530"
+      - "507"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -265,16 +264,16 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/events/349418300
+    url: https://api.linode.com/v4beta/account/events/370475698
     method: GET
   response:
-    body: '{"id": 349418300, "created": "2018-01-02T03:04:05", "seen": false, "read":
+    body: '{"id": 370475698, "created": "2018-01-02T03:04:05", "seen": false, "read":
       false, "percent_complete": 100, "time_remaining": 0, "rate": null, "duration":
-      43.0, "action": "linode_create", "username": "jriddle-dev", "entity": {"label":
-      "linodego-test-eventpoller-instancepower", "id": 38095075, "type": "linode",
-      "url": "/v4/linode/instances/38095075"}, "status": "finished", "secondary_entity":
-      {"id": "linode/ubuntu22.04", "type": "image", "label": "Ubuntu 22.04 LTS", "url":
-      "/v4/images/linode/ubuntu22.04"}, "message": ""}'
+      47.0, "action": "linode_create", "username": "jriddle-dev", "entity": {"label":
+      "go-ins-poll-test", "id": 39241161, "type": "linode", "url": "/v4/linode/instances/39241161"},
+      "status": "finished", "secondary_entity": {"id": "linode/ubuntu22.04", "type":
+      "image", "label": "Ubuntu 22.04 LTS", "url": "/v4/images/linode/ubuntu22.04"},
+      "message": ""}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -290,7 +289,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "524"
+      - "501"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -329,7 +328,7 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_boot","entity.id":38095075,"entity.type":"linode"}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_boot","entity.id":39241161,"entity.type":"linode"}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
@@ -387,7 +386,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/38095075/boot
+    url: https://api.linode.com/v4beta/linode/instances/39241161/boot
     method: POST
   response:
     body: '{}'
@@ -443,18 +442,17 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_boot","entity.id":38095075,"entity.type":"linode"}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_boot","entity.id":39241161,"entity.type":"linode"}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 349418509, "created": "2018-01-02T03:04:05", "seen": false,
-      "read": false, "percent_complete": 41, "time_remaining": null, "rate": null,
-      "duration": 15.307611, "action": "linode_boot", "username": "jriddle-dev", "entity":
-      {"label": "linodego-test-eventpoller-instancepower", "id": 38095075, "type":
-      "linode", "url": "/v4/linode/instances/38095075"}, "status": "started", "secondary_entity":
-      {"id": 40576576, "type": "linode_config", "label": "My Ubuntu 22.04 LTS Disk
-      Profile", "url": "/v4/linode/instances/38095075/configs/40576576"}, "message":
-      ""}], "page": 1, "pages": 1, "results": 1}'
+    body: '{"data": [{"id": 370476079, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": 100, "time_remaining": 0, "rate": null, "duration":
+      14.0, "action": "linode_boot", "username": "jriddle-dev", "entity": {"label":
+      "go-ins-poll-test", "id": 39241161, "type": "linode", "url": "/v4/linode/instances/39241161"},
+      "status": "finished", "secondary_entity": {"id": 41782436, "type": "linode_config",
+      "label": "My Ubuntu 22.04 LTS Disk Profile", "url": "/v4/linode/instances/39241161/configs/41782436"},
+      "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -470,7 +468,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "606"
+      - "577"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -508,81 +506,16 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/events/349418509
+    url: https://api.linode.com/v4beta/account/events/370476079
     method: GET
   response:
-    body: '{"id": 349418509, "created": "2018-01-02T03:04:05", "seen": false, "read":
-      false, "percent_complete": 41, "time_remaining": null, "rate": null, "duration":
-      15.383489, "action": "linode_boot", "username": "jriddle-dev", "entity": {"label":
-      "linodego-test-eventpoller-instancepower", "id": 38095075, "type": "linode",
-      "url": "/v4/linode/instances/38095075"}, "status": "started", "secondary_entity":
-      {"id": 40576576, "type": "linode_config", "label": "My Ubuntu 22.04 LTS Disk
-      Profile", "url": "/v4/linode/instances/38095075/configs/40576576"}, "message":
-      ""}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
-      Content-Length:
-      - "557"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - events:read_only
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "800"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/events/349418509
-    method: GET
-  response:
-    body: '{"id": 349418509, "created": "2018-01-02T03:04:05", "seen": false, "read":
+    body: '{"id": 370476079, "created": "2018-01-02T03:04:05", "seen": false, "read":
       false, "percent_complete": 100, "time_remaining": 0, "rate": null, "duration":
-      18.0, "action": "linode_boot", "username": "jriddle-dev", "entity": {"label":
-      "linodego-test-eventpoller-instancepower", "id": 38095075, "type": "linode",
-      "url": "/v4/linode/instances/38095075"}, "status": "finished", "secondary_entity":
-      {"id": 40576576, "type": "linode_config", "label": "My Ubuntu 22.04 LTS Disk
-      Profile", "url": "/v4/linode/instances/38095075/configs/40576576"}, "message":
-      ""}'
+      14.0, "action": "linode_boot", "username": "jriddle-dev", "entity": {"label":
+      "go-ins-poll-test", "id": 39241161, "type": "linode", "url": "/v4/linode/instances/39241161"},
+      "status": "finished", "secondary_entity": {"id": 41782436, "type": "linode_config",
+      "label": "My Ubuntu 22.04 LTS Disk Profile", "url": "/v4/linode/instances/39241161/configs/41782436"},
+      "message": ""}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -598,7 +531,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "551"
+      - "528"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -636,12 +569,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/38095075
+    url: https://api.linode.com/v4beta/linode/instances/39241161
     method: GET
   response:
-    body: '{"id": 38095075, "label": "linodego-test-eventpoller-instancepower", "group":
-      "", "status": "running", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["139.144.54.13"], "ipv6": "1234::5678/128",
+    body: '{"id": 39241161, "label": "go-ins-poll-test", "group": "", "status": "running",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "type":
+      "g6-nanode-1", "ipv4": ["45.79.252.253"], "ipv6": "1234::5678/128",
       "image": "linode/ubuntu22.04", "region": "us-southeast", "specs": {"disk": 25600,
       "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu":
       90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io": 10000},
@@ -662,7 +595,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "659"
+      - "636"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -701,7 +634,7 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_shutdown","entity.id":38095075,"entity.type":"linode"}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_shutdown","entity.id":39241161,"entity.type":"linode"}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
@@ -759,7 +692,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/38095075/shutdown
+    url: https://api.linode.com/v4beta/linode/instances/39241161/shutdown
     method: POST
   response:
     body: '{}'
@@ -815,17 +748,16 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_shutdown","entity.id":38095075,"entity.type":"linode"}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_shutdown","entity.id":39241161,"entity.type":"linode"}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 349418637, "created": "2018-01-02T03:04:05", "seen": false,
-      "read": false, "percent_complete": 55, "time_remaining": null, "rate": null,
-      "duration": 14.718789, "action": "linode_shutdown", "username": "jriddle-dev",
-      "entity": {"label": "linodego-test-eventpoller-instancepower", "id": 38095075,
-      "type": "linode", "url": "/v4/linode/instances/38095075"}, "status": "started",
-      "secondary_entity": null, "message": ""}], "page": 1, "pages": 1, "results":
-      1}'
+    body: '{"data": [{"id": 370476139, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": 100, "time_remaining": 0, "rate": null, "duration":
+      9.0, "action": "linode_shutdown", "username": "jriddle-dev", "entity": {"label":
+      "go-ins-poll-test", "id": 39241161, "type": "linode", "url": "/v4/linode/instances/39241161"},
+      "status": "finished", "secondary_entity": null, "message": ""}], "page": 1,
+      "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -841,7 +773,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "471"
+      - "441"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -879,77 +811,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/events/349418637
+    url: https://api.linode.com/v4beta/account/events/370476139
     method: GET
   response:
-    body: '{"id": 349418637, "created": "2018-01-02T03:04:05", "seen": false, "read":
-      false, "percent_complete": 55, "time_remaining": null, "rate": null, "duration":
-      14.837491, "action": "linode_shutdown", "username": "jriddle-dev", "entity":
-      {"label": "linodego-test-eventpoller-instancepower", "id": 38095075, "type":
-      "linode", "url": "/v4/linode/instances/38095075"}, "status": "started", "secondary_entity":
-      null, "message": ""}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
-      Content-Length:
-      - "422"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - events:read_only
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "800"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/events/349418637
-    method: GET
-  response:
-    body: '{"id": 349418637, "created": "2018-01-02T03:04:05", "seen": false, "read":
+    body: '{"id": 370476139, "created": "2018-01-02T03:04:05", "seen": false, "read":
       false, "percent_complete": 100, "time_remaining": 0, "rate": null, "duration":
-      19.0, "action": "linode_shutdown", "username": "jriddle-dev", "entity": {"label":
-      "linodego-test-eventpoller-instancepower", "id": 38095075, "type": "linode",
-      "url": "/v4/linode/instances/38095075"}, "status": "finished", "secondary_entity":
-      null, "message": ""}'
+      9.0, "action": "linode_shutdown", "username": "jriddle-dev", "entity": {"label":
+      "go-ins-poll-test", "id": 39241161, "type": "linode", "url": "/v4/linode/instances/39241161"},
+      "status": "finished", "secondary_entity": null, "message": ""}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -965,7 +834,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "416"
+      - "392"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -1003,12 +872,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/38095075
+    url: https://api.linode.com/v4beta/linode/instances/39241161
     method: GET
   response:
-    body: '{"id": 38095075, "label": "linodego-test-eventpoller-instancepower", "group":
-      "", "status": "offline", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["139.144.54.13"], "ipv6": "1234::5678/128",
+    body: '{"id": 39241161, "label": "go-ins-poll-test", "group": "", "status": "offline",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "type":
+      "g6-nanode-1", "ipv4": ["45.79.252.253"], "ipv6": "1234::5678/128",
       "image": "linode/ubuntu22.04", "region": "us-southeast", "specs": {"disk": 25600,
       "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu":
       90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io": 10000},
@@ -1029,7 +898,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "659"
+      - "636"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -1067,7 +936,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/38095075
+    url: https://api.linode.com/v4beta/linode/instances/39241161
     method: DELETE
   response:
     body: '{}'

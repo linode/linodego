@@ -65,7 +65,7 @@ func TestIPv6Range_Share(t *testing.T) {
 	}
 
 	inst, err := createInstance(t, client, func(inst *InstanceCreateOptions) {
-		inst.Label = "linodego-test-ipv6range-1"
+		inst.Label = "go-ins-test-share6"
 		inst.Region = origInst.Region
 	})
 	if err != nil {
@@ -152,7 +152,7 @@ func setupIPv6RangeInstance(t *testing.T, ipv6RangeModifiers []ipv6RangeModifier
 	t.Cleanup(fixtureTeardown)
 
 	instance, err := createInstance(t, client, func(inst *InstanceCreateOptions) {
-		inst.Label = "linodego-test-ipv6range"
+		inst.Label = "go-ins-test-range6"
 		inst.Region = "eu-west"
 	})
 	if err != nil {

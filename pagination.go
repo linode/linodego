@@ -48,7 +48,7 @@ func applyListOptionsToRequest(opts *ListOptions, req *resty.Request) {
 }
 
 type PagedResponse interface {
-	endpoint(*Client, ...any) string
+	endpoint(...any) string
 	castResult(*resty.Request, string) (int, int, error)
 }
 
@@ -61,7 +61,7 @@ func (c *Client) listHelper(ctx context.Context, pager PagedResponse, opts *List
 	req := c.R(ctx)
 	applyListOptionsToRequest(opts, req)
 
-	pages, results, err := pager.castResult(req, pager.endpoint(c, ids...))
+	pages, results, err := pager.castResult(req, pager.endpoint(ids...))
 	if err != nil {
 		return err
 	}

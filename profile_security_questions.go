@@ -26,13 +26,8 @@ type SecurityQuestionsAnswerOptions struct {
 
 // SecurityQuestionsList returns a collection of security questions and their responses, if any, for your User Profile.
 func (c *Client) SecurityQuestionsList(ctx context.Context) (*SecurityQuestionsListResponse, error) {
-	e, err := c.ProfileSecurityQuestions.Endpoint()
-	if err != nil {
-		return nil, err
-	}
-
+	e := "profile/security-questions"
 	req := c.R(ctx).SetResult(&SecurityQuestionsListResponse{})
-
 	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
 		return nil, err
@@ -42,24 +37,13 @@ func (c *Client) SecurityQuestionsList(ctx context.Context) (*SecurityQuestionsL
 
 // SecurityQuestionsAnswer adds security question responses for your User.
 func (c *Client) SecurityQuestionsAnswer(ctx context.Context, opts SecurityQuestionsAnswerOptions) error {
-	var body string
-	e, err := c.ProfileSecurityQuestions.Endpoint()
+	body, err := json.Marshal(opts)
 	if err != nil {
 		return err
 	}
 
-	req := c.R(ctx)
-
-	if bodyData, err := json.Marshal(opts); err == nil {
-		body = string(bodyData)
-	} else {
-		return NewError(err)
-	}
-
-	if _, err := coupleAPIErrors(req.
-		SetBody(body).
-		Post(e)); err != nil {
-		return err
-	}
-	return nil
+	e := "profile/security-questions"
+	req := c.R(ctx).SetBody(string(body))
+	_, err = coupleAPIErrors(req.Post(e))
+	return err
 }

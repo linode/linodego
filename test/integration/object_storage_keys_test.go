@@ -72,7 +72,7 @@ func TestObjectStorageKey_Update(t *testing.T) {
 		t.Errorf("Error renaming objectStorageKey, %s", err)
 	}
 
-	if !strings.Contains(objectStorageKey.Label, "-linodego-testing_r") {
+	if !strings.Contains(objectStorageKey.Label, renamedLabel) {
 		t.Errorf("objectStorageKey returned does not match objectStorageKey update request, %v", objectStorageKey)
 	}
 	if objectStorageKey.BucketAccess != nil || objectStorageKey.Limited {

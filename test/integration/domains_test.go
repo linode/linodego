@@ -2,7 +2,6 @@ package integration
 
 import (
 	"context"
-	"fmt"
 	"testing"
 
 	"github.com/linode/linodego"
@@ -93,7 +92,7 @@ func setupDomain(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 
 	createOpts := testDomainCreateOpts
-	createOpts.Domain = fmt.Sprintf("%s-linodego-testing.com", randLabel())
+	createOpts.Domain = "linodego-blue-test.com"
 
 	domain, err := client.CreateDomain(context.Background(), createOpts)
 	if err != nil {

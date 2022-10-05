@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-west","type":"g6-nanode-1","label":"31e65zg3maa9-linodego-test-instance","root_pass":"R34lBAdP455","image":"linode/debian9","booted":false}'
+    body: '{"region":"us-west","type":"g6-nanode-1","label":"go-test-ins-db13p0789jsv","root_pass":"R34lBAdP455","image":"linode/debian9","booted":false}'
     form: {}
     headers:
       Accept:
@@ -14,9 +14,9 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 38094356, "label": "31e65zg3maa9-linodego-test-instance", "group":
-      "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["173.255.209.138"], "ipv6": "1234::5678/128",
+    body: '{"id": 39240472, "label": "go-test-ins-db13p0789jsv", "group": "", "status":
+      "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "type": "g6-nanode-1", "ipv4": ["104.200.25.51"], "ipv6": "1234::5678/128",
       "image": "linode/debian9", "region": "us-west", "specs": {"disk": 25600, "memory":
       1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
@@ -36,7 +36,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "653"
+      - "640"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -64,7 +64,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"label","rules":{"inbound":[{"action":"ACCEPT","label":"test-label","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":[{"action":"ACCEPT","label":"test-label","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
+    body: '{"label":"linodego-fw-test","rules":{"inbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
     form: {}
     headers:
       Accept:
@@ -76,13 +76,13 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 79972, "label": "label", "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound": [{"action":
-      "ACCEPT", "label": "test-label", "ports": "22", "protocol": "TCP", "addresses":
-      {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy": "ACCEPT", "outbound":
-      [{"action": "ACCEPT", "label": "test-label", "ports": "22", "protocol": "TCP",
-      "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "outbound_policy":
-      "ACCEPT"}, "tags": ["testing"]}'
+    body: '{"id": 89716, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
+      [{"action": "ACCEPT", "label": "go-fwrule-test", "ports": "22", "protocol":
+      "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy":
+      "ACCEPT", "outbound": [{"action": "ACCEPT", "label": "go-fwrule-test", "ports":
+      "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}],
+      "outbound_policy": "ACCEPT"}, "tags": ["testing"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -97,7 +97,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "506"
+      - "525"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -125,7 +125,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"id":38094356,"type":"linode"}'
+    body: '{"id":39240472,"type":"linode"}'
     form: {}
     headers:
       Accept:
@@ -134,12 +134,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/79972/devices
+    url: https://api.linode.com/v4beta/networking/firewalls/89716/devices
     method: POST
   response:
-    body: '{"id": 147752, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "entity": {"id": 38094356, "type": "linode", "label": "31e65zg3maa9-linodego-test-instance",
-      "url": "/v4/linode/instances/38094356"}}'
+    body: '{"id": 170441, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "entity": {"id": 39240472, "type": "linode", "label": "go-test-ins-db13p0789jsv",
+      "url": "/v4/linode/instances/39240472"}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -154,7 +154,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "216"
+      - "205"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -191,12 +191,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/79972/devices/147752
+    url: https://api.linode.com/v4beta/networking/firewalls/89716/devices/170441
     method: GET
   response:
-    body: '{"id": 147752, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "entity": {"id": 38094356, "type": "linode", "label": "31e65zg3maa9-linodego-test-instance",
-      "url": "/v4/linode/instances/38094356"}}'
+    body: '{"id": 170441, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "entity": {"id": 39240472, "type": "linode", "label": "go-test-ins-db13p0789jsv",
+      "url": "/v4/linode/instances/39240472"}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -212,7 +212,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "216"
+      - "205"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -250,7 +250,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/79972
+    url: https://api.linode.com/v4beta/networking/firewalls/89716
     method: DELETE
   response:
     body: '{}'
@@ -305,7 +305,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/38094356
+    url: https://api.linode.com/v4beta/linode/instances/39240472
     method: DELETE
   response:
     body: '{}'

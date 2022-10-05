@@ -66,7 +66,7 @@ func TestDatabase_Type(t *testing.T) {
 }
 
 func TestDatabase_List(t *testing.T) {
-	client, database, teardown, err := setupMongoDatabase(t, nil, "fixtures/TestDatabase_List")
+	client, database, teardown, err := setupPostgresDatabase(t, nil, "fixtures/TestDatabase_List")
 	if err != nil {
 		t.Error(err)
 	}

@@ -195,13 +195,8 @@ type EventsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Event
-func (EventsPagedResponse) endpoint(c *Client, _ ...any) string {
-	endpoint, err := c.Events.Endpoint()
-	if err != nil {
-		panic(err)
-	}
-
-	return endpoint
+func (EventsPagedResponse) endpoint(_ ...any) string {
+	return "account/events"
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
@@ -224,18 +219,6 @@ func (i *Event) UnmarshalJSON(b []byte) error {
 	i.TimeRemaining = duration.UnmarshalTimeRemaining(p.TimeRemaining)
 
 	return nil
-}
-
-// endpointWithID gets the endpoint URL for a specific Event
-func (i Event) endpointWithID(c *Client) string {
-	endpoint, err := c.Events.Endpoint()
-	if err != nil {
-		panic(err)
-	}
-
-	endpoint = fmt.Sprintf("%s/%d", endpoint, i.ID)
-
-	return endpoint
 }
 
 func (resp *EventsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
@@ -262,14 +245,10 @@ func (c *Client) ListEvents(ctx context.Context, opts *ListOptions) ([]Event, er
 }
 
 // GetEvent gets the Event with the Event ID
-func (c *Client) GetEvent(ctx context.Context, id int) (*Event, error) {
-	e, err := c.Events.Endpoint()
-	if err != nil {
-		return nil, err
-	}
-
-	e = fmt.Sprintf("%s/%d", e, id)
-	r, err := c.R(ctx).SetResult(&Event{}).Get(e)
+func (c *Client) GetEvent(ctx context.Context, eventID int) (*Event, error) {
+	req := c.R(ctx).SetResult(&Event{})
+	e := fmt.Sprintf("account/events/%d", eventID)
+	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
 		return nil, err
 	}
@@ -279,20 +258,14 @@ func (c *Client) GetEvent(ctx context.Context, id int) (*Event, error) {
 
 // MarkEventRead marks a single Event as read.
 func (c *Client) MarkEventRead(ctx context.Context, event *Event) error {
-	e := event.endpointWithID(c)
-	e = fmt.Sprintf("%s/read", e)
-
+	e := fmt.Sprintf("account/events/%d/read", event.ID)
 	_, err := coupleAPIErrors(c.R(ctx).Post(e))
-
 	return err
 }
 
 // MarkEventsSeen marks all Events up to and including this Event by ID as seen.
 func (c *Client) MarkEventsSeen(ctx context.Context, event *Event) error {
-	e := event.endpointWithID(c)
-	e = fmt.Sprintf("%s/seen", e)
-
+	e := fmt.Sprintf("account/events/%d/seen", event.ID)
 	_, err := coupleAPIErrors(c.R(ctx).Post(e))
-
 	return err
 }

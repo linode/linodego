@@ -2,7 +2,6 @@ package integration
 
 import (
 	"context"
-	"fmt"
 	"testing"
 	"time"
 
@@ -53,6 +52,8 @@ func TestInstanceBackups_List(t *testing.T) {
 		Overwrite: true,
 	}
 
+	now := time.Now()
+
 	err = client.RestoreInstanceBackup(context.Background(), instance.ID, backup.ID, restoreOpts)
 	if err != nil {
 		t.Errorf("Error restoring backup: %v", err)
@@ -61,6 +62,12 @@ func TestInstanceBackups_List(t *testing.T) {
 	err = client.CancelInstanceBackups(context.Background(), instance.ID)
 	if err != nil {
 		t.Errorf("Error cancelling backups: %v", err)
+	}
+
+	// wait for instnace to restore
+	_, err = client.WaitForEventFinished(context.Background(), instance.ID, linodego.EntityLinode, linodego.ActionBackupsRestore, now, 360)
+	if err != nil {
+		t.Errorf("Error waiting for snapshot to complete: %v", err)
 	}
 }
 
@@ -74,7 +81,7 @@ func setupInstanceBackup(t *testing.T, fixturesYaml string) (*linodego.Client, *
 	client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceOffline, 180)
 	createOpts := linodego.InstanceDiskCreateOptions{
 		Size:       10,
-		Label:      fmt.Sprintf("linodego-test-snap-%.d", time.Now().Second()),
+		Label:      "linodego-disk-test",
 		Filesystem: "ext4",
 	}
 	disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, createOpts)

@@ -38,7 +38,7 @@ func TestLKECluster_GetMissing(t *testing.T) {
 
 func TestLKECluster_WaitForReady(t *testing.T) {
 	client, cluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
-		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
+		createOpts.Label = "go-lke-test-wait"
 		createOpts.NodePools = []linodego.LKENodePoolCreateOptions{
 			{Count: 3, Type: "g6-standard-2"},
 		}
@@ -59,7 +59,7 @@ func TestLKECluster_WaitForReady(t *testing.T) {
 
 func TestLKECluster_GetFound(t *testing.T) {
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
-		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
+		createOpts.Label = "go-lke-test-found"
 	}}, "fixtures/TestLKECluster_GetFound")
 	defer teardown()
 	i, err := client.GetLKECluster(context.Background(), lkeCluster.ID)
@@ -73,7 +73,7 @@ func TestLKECluster_GetFound(t *testing.T) {
 
 func TestLKECluster_Update(t *testing.T) {
 	client, cluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
-		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
+		createOpts.Label = "go-lke-test-update"
 	}}, "fixtures/TestLKECluster_Update")
 	defer teardown()
 	if err != nil {
@@ -81,7 +81,7 @@ func TestLKECluster_Update(t *testing.T) {
 	}
 
 	updatedTags := []string{"test=true"}
-	updatedLabel := "new" + cluster.Label
+	updatedLabel := cluster.Label + "-updated"
 	updatedK8sVersion := "1.23"
 	updatedControlPlane := &linodego.LKEClusterControlPlane{HighAvailability: true}
 	updatedCluster, err := client.UpdateLKECluster(context.TODO(), cluster.ID, linodego.LKEClusterUpdateOptions{
@@ -113,7 +113,7 @@ func TestLKECluster_Update(t *testing.T) {
 
 func TestLKECluster_Nodes_Recycle(t *testing.T) {
 	client, cluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
-		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
+		createOpts.Label = "go-lke-test-recycle"
 	}}, "fixtures/TestLKECluster_Nodes_Recycle")
 	defer teardown()
 	if err != nil {
@@ -128,7 +128,7 @@ func TestLKECluster_Nodes_Recycle(t *testing.T) {
 
 func TestLKECluster_APIEndpoints_List(t *testing.T) {
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
-		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
+		createOpts.Label = "go-lke-test-apiend"
 	}}, "fixtures/TestLKECluster_APIEndpoints_List")
 	defer teardown()
 
@@ -147,7 +147,7 @@ func TestLKECluster_APIEndpoints_List(t *testing.T) {
 
 func TestLKECluster_Kubeconfig_Get(t *testing.T) {
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
-		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
+		createOpts.Label = "go-lke-test-kube-get"
 	}}, "fixtures/TestLKECluster_Kubeconfig_Get")
 	defer teardown()
 
@@ -166,7 +166,7 @@ func TestLKECluster_Kubeconfig_Get(t *testing.T) {
 
 func TestLKECluster_Dashboard_Get(t *testing.T) {
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
-		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
+		createOpts.Label = "go-lke-test-dash"
 	}}, "fixtures/TestLKECluster_Dashboard_Get")
 	defer teardown()
 
@@ -190,7 +190,7 @@ func TestLKECluster_Dashboard_Get(t *testing.T) {
 
 func TestLKEClusters_List(t *testing.T) {
 	client, _, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
-		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
+		createOpts.Label = "go-lke-test-list"
 	}}, "fixtures/TestLKEClusters_List")
 	if err != nil {
 		t.Error(err)

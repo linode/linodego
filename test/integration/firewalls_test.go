@@ -10,7 +10,7 @@ import (
 )
 
 var testFirewallCreateOpts = linodego.FirewallCreateOptions{
-	Label: "label",
+	Label: "linodego-fw-test",
 	Rules: testFirewallRuleSet, // borrowed from firewall_rules.test.go
 	Tags:  []string{"testing"},
 }
@@ -26,7 +26,7 @@ var ignoreFirewallTimestamps = cmpopts.IgnoreFields(linodego.Firewall{}, "Create
 func TestFirewalls_List(t *testing.T) {
 	client, _, teardown, err := setupFirewall(t, []firewallModifier{
 		func(createOpts *linodego.FirewallCreateOptions) {
-			createOpts.Label = randString(12, lowerBytes, upperBytes) + "-linodego-testing"
+			createOpts.Label = "linodego-fw-test"
 		},
 	}, "fixtures/TestFirewalls_List")
 	if err != nil {
@@ -45,11 +45,10 @@ func TestFirewalls_List(t *testing.T) {
 }
 
 func TestFirewall_Get(t *testing.T) {
-	label := randString(12, lowerBytes, upperBytes) + "-linodego-testing"
 	rules := linodego.FirewallRuleSet{
 		Inbound: []linodego.FirewallRule{
 			{
-				Label:    "test-label",
+				Label:    "linodego-fwrule-test",
 				Action:   "DROP",
 				Protocol: linodego.ICMP,
 				Addresses: linodego.NetworkAddresses{
@@ -63,7 +62,7 @@ func TestFirewall_Get(t *testing.T) {
 	}
 	client, created, teardown, err := setupFirewall(t, []firewallModifier{
 		func(createOpts *linodego.FirewallCreateOptions) {
-			createOpts.Label = label
+			createOpts.Label = "linodego-fw-test"
 			createOpts.Rules = rules
 		},
 	}, "fixtures/TestFirewall_Get")
@@ -83,12 +82,11 @@ func TestFirewall_Get(t *testing.T) {
 }
 
 func TestFirewall_Update(t *testing.T) {
-	label := randString(12, lowerBytes, upperBytes) + "-linodego-testing"
 	rules := linodego.FirewallRuleSet{
 		InboundPolicy: "ACCEPT",
 		Inbound: []linodego.FirewallRule{
 			{
-				Label:    "test-label",
+				Label:    "linodego-fwrule-test",
 				Action:   "DROP",
 				Protocol: linodego.ICMP,
 				Addresses: linodego.NetworkAddresses{
@@ -101,7 +99,7 @@ func TestFirewall_Update(t *testing.T) {
 
 	client, firewall, teardown, err := setupFirewall(t, []firewallModifier{
 		func(createOpts *linodego.FirewallCreateOptions) {
-			createOpts.Label = label
+			createOpts.Label = "linodego-fw-test"
 			createOpts.Rules = rules
 			createOpts.Tags = []string{"test"}
 		},
@@ -113,7 +111,7 @@ func TestFirewall_Update(t *testing.T) {
 
 	updateOpts := firewall.GetUpdateOptions()
 	updateOpts.Status = linodego.FirewallDisabled
-	updateOpts.Label = "updatedFirewallLabel"
+	updateOpts.Label = firewall.Label + "-updated"
 	updateOpts.Tags = &[]string{}
 
 	updated, err := client.UpdateFirewall(context.Background(), firewall.ID, updateOpts)
