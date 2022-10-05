@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"bzi7l8090x1m-linodego-testing","bucket_access":null}'
+    body: '{"label":"go-test-def","bucket_access":null}'
     form: {}
     headers:
       Accept:
@@ -14,9 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/keys
     method: POST
   response:
-    body: '{"id": 339053, "label": "bzi7l8090x1m-linodego-testing", "access_key":
-      "[SANITIZED]", "secret_key": "[SANITIZED]", "limited": false, "bucket_access":
-      null}'
+    body: '{"id": 358562, "label": "go-test-def", "access_key": "[SANITIZED]", "secret_key":
+      "[SANITIZED]", "limited": false, "bucket_access": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -31,7 +30,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "193"
+      - "175"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -59,7 +58,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"bzi7l8090x1m-linodego-testing_r"}'
+    body: '{"label":"go-test-def_r"}'
     form: {}
     headers:
       Accept:
@@ -68,12 +67,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/339053
+    url: https://api.linode.com/v4beta/object-storage/keys/358562
     method: PUT
   response:
-    body: '{"id": 339053, "label": "bzi7l8090x1m-linodego-testing_r", "access_key":
-      "[SANITIZED]", "secret_key": "[REDACTED]", "limited": false, "bucket_access":
-      null}'
+    body: '{"id": 358562, "label": "go-test-def_r", "access_key": "[SANITIZED]", "secret_key":
+      "[REDACTED]", "limited": false, "bucket_access": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -88,7 +86,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "165"
+      - "147"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -125,7 +123,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/339053
+    url: https://api.linode.com/v4beta/object-storage/keys/358562
     method: DELETE
   response:
     body: '{}'

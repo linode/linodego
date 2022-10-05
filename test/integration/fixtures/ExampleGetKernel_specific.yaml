@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/linode/kernels/linode/latest-32bit
     method: GET
   response:
-    body: '{"id": "linode/latest-32bit", "label": "Latest 32 bit (5.16.13-x86-linode173)",
-      "version": "5.16.13", "kvm": true, "architecture": "i386", "pvops": true, "deprecated":
+    body: '{"id": "linode/latest-32bit", "label": "Latest 32 bit (5.19.2-x86-linode176)",
+      "version": "5.19.2", "kvm": true, "architecture": "i386", "pvops": true, "deprecated":
       false, "built": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -32,7 +32,7 @@ interactions:
       - private, max-age=900
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "206"
+      - "204"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -73,9 +73,9 @@ interactions:
     url: https://api.linode.com/v4beta/linode/kernels/linode/latest-64bit
     method: GET
   response:
-    body: '{"id": "linode/latest-64bit", "label": "Latest 64 bit (5.16.13-x86_64-linode153)",
-      "version": "5.16.13", "kvm": true, "architecture": "x86_64", "pvops": true,
-      "deprecated": false, "built": "2018-01-02T03:04:05"}'
+    body: '{"id": "linode/latest-64bit", "label": "Latest 64 bit (5.19.2-x86_64-linode156)",
+      "version": "5.19.2", "kvm": true, "architecture": "x86_64", "pvops": true, "deprecated":
+      false, "built": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -91,7 +91,7 @@ interactions:
       - private, max-age=900
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "211"
+      - "209"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:

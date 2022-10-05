@@ -30,7 +30,7 @@ func TestOAuthClient_GetFound(t *testing.T) {
 	createOpts := linodego.OAuthClientCreateOptions{
 		Public:      true,
 		RedirectURI: "https://example.com",
-		Label:       "test-client",
+		Label:       "go-client-test",
 	}
 
 	client, oauthClient, teardown, err := setupOAuthClient(t, createOpts, "fixtures/TestOAuthClient_GetFound")
@@ -52,7 +52,7 @@ func TestOAuthClients_List(t *testing.T) {
 	createOpts := linodego.OAuthClientCreateOptions{
 		Public:      true,
 		RedirectURI: "https://example.com",
-		Label:       "test-client",
+		Label:       "go-client-test",
 	}
 	client, _, teardown, err := setupOAuthClient(t, createOpts, "fixtures/TestOAuthClients_List")
 	defer teardown()

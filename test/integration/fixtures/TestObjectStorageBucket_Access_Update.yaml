@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"cluster":"us-east-1","label":"linodego-test-bucket-1660630790586226803"}'
+    body: '{"cluster":"us-east-1","label":"go-bucket-test-def"}'
     form: {}
     headers:
       Accept:
@@ -14,9 +14,9 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/buckets
     method: POST
   response:
-    body: '{"hostname": "linodego-test-bucket-1660630790586226803.us-east-1.linodeobjects.com",
-      "label": "linodego-test-bucket-1660630790586226803", "created": "2018-01-02T03:04:05",
-      "cluster": "us-east-1", "size": 0, "objects": 0}'
+    body: '{"hostname": "go-bucket-test-def.us-east-1.linodeobjects.com", "label":
+      "go-bucket-test-def", "created": "2018-01-02T03:04:05", "cluster": "us-east-1",
+      "size": 0, "objects": 0}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -31,7 +31,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "220"
+      - "176"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -68,7 +68,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linodego-test-bucket-1660630790586226803/access
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/go-bucket-test-def/access
     method: POST
   response:
     body: '{}'
@@ -123,7 +123,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linodego-test-bucket-1660630790586226803/access
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/go-bucket-test-def/access
     method: GET
   response:
     body: '{"acl": "private", "acl_xml": "<AccessControlPolicy xmlns=\"http://s3.amazonaws.com/doc/2006-03-01/\"><Owner><ID>c3308a55-a228-4cad-81e8-1fdfbced4e50</ID><DisplayName>c3308a55-a228-4cad-81e8-1fdfbced4e50</DisplayName></Owner><AccessControlList><Grant><Grantee
@@ -182,7 +182,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/linodego-test-bucket-1660630790586226803
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/go-bucket-test-def
     method: DELETE
   response:
     body: '{}'

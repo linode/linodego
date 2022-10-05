@@ -60,12 +60,8 @@ type TagsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Tag
-func (TagsPagedResponse) endpoint(c *Client, _ ...any) string {
-	endpoint, err := c.Tags.Endpoint()
-	if err != nil {
-		panic(err)
-	}
-	return endpoint
+func (TagsPagedResponse) endpoint(_ ...any) string {
+	return "tags"
 }
 
 func (resp *TagsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
@@ -85,14 +81,9 @@ type TaggedObjectsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Tag
-func (TaggedObjectsPagedResponse) endpoint(c *Client, ids ...any) string {
+func (TaggedObjectsPagedResponse) endpoint(ids ...any) string {
 	id := ids[0].(string)
-	endpoint, err := c.Tags.Endpoint()
-	if err != nil {
-		panic(err)
-	}
-	endpoint = fmt.Sprintf("%s/%s", endpoint, id)
-	return endpoint
+	return fmt.Sprintf("tags/%s", id)
 }
 
 func (resp *TaggedObjectsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
@@ -211,24 +202,15 @@ func (t TaggedObjectList) SortedObjects() (SortedObjects, error) {
 }
 
 // CreateTag creates a Tag
-func (c *Client) CreateTag(ctx context.Context, createOpts TagCreateOptions) (*Tag, error) {
-	var body string
-	e, err := c.Tags.Endpoint()
+func (c *Client) CreateTag(ctx context.Context, opts TagCreateOptions) (*Tag, error) {
+	body, err := json.Marshal(opts)
 	if err != nil {
 		return nil, err
 	}
 
-	req := c.R(ctx).SetResult(&Tag{})
-
-	if bodyData, err := json.Marshal(createOpts); err == nil {
-		body = string(bodyData)
-	} else {
-		return nil, NewError(err)
-	}
-
-	r, err := coupleAPIErrors(req.
-		SetBody(body).
-		Post(e))
+	e := "tags"
+	req := c.R(ctx).SetResult(&Tag{}).SetBody(string(body))
+	r, err := coupleAPIErrors(req.Post(e))
 	if err != nil {
 		return nil, err
 	}
@@ -237,12 +219,7 @@ func (c *Client) CreateTag(ctx context.Context, createOpts TagCreateOptions) (*T
 
 // DeleteTag deletes the Tag with the specified id
 func (c *Client) DeleteTag(ctx context.Context, label string) error {
-	e, err := c.Tags.Endpoint()
-	if err != nil {
-		return err
-	}
-	e = fmt.Sprintf("%s/%s", e, label)
-
-	_, err = coupleAPIErrors(c.R(ctx).Delete(e))
+	e := fmt.Sprintf("tags/%s", label)
+	_, err := coupleAPIErrors(c.R(ctx).Delete(e))
 	return err
 }

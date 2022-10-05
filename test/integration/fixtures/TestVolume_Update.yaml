@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"linodego-test-volume-xto3402x","region":"us-southeast","tags":null}'
+    body: '{"label":"go-vol-test-def","region":"us-west","tags":null}'
     form: {}
     headers:
       Accept:
@@ -14,11 +14,11 @@ interactions:
     url: https://api.linode.com/v4beta/volumes
     method: POST
   response:
-    body: '{"id": 467327, "status": "creating", "label": "linodego-test-volume-xto3402x",
-      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
-      "/dev/disk/by-id/scsi-0Linode_Volume_linodego-test-volume-xto3402x", "size":
-      20, "linode_id": null, "linode_label": null, "region": "us-southeast", "tags":
-      [], "hardware_type": "nvme"}'
+    body: '{"id": 554555, "status": "creating", "label": "go-vol-test-def", "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
+      "/dev/disk/by-id/scsi-0Linode_Volume_go-vol-test-def", "size": 20, "linode_id":
+      null, "linode_label": null, "region": "us-west", "tags": [], "hardware_type":
+      "hdd"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -33,7 +33,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "350"
+      - "316"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -61,7 +61,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"our-testing-volume"}'
+    body: '{"label":"go-vol-test-def-updated"}'
     form: {}
     headers:
       Accept:
@@ -70,14 +70,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/volumes/467327
+    url: https://api.linode.com/v4beta/volumes/554555
     method: PUT
   response:
-    body: '{"id": 467327, "status": "creating", "label": "our-testing-volume", "created":
-      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
-      "/dev/disk/by-id/scsi-0Linode_Volume_our-testing-volume", "size": 20, "linode_id":
-      null, "linode_label": null, "region": "us-southeast", "tags": [], "hardware_type":
-      "nvme"}'
+    body: '{"id": 554555, "status": "creating", "label": "go-vol-test-def-updated",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
+      "/dev/disk/by-id/scsi-0Linode_Volume_go-vol-test-def-updated", "size": 20, "linode_id":
+      null, "linode_label": null, "region": "us-west", "tags": [], "hardware_type":
+      "hdd"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -92,7 +92,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "328"
+      - "332"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -129,7 +129,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/volumes/467327
+    url: https://api.linode.com/v4beta/volumes/554555
     method: DELETE
   response:
     body: '{}'

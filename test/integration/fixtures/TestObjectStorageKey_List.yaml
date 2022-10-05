@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"bzi7l8090x1m-linodego-testing","bucket_access":null}'
+    body: '{"label":"go-test-def","bucket_access":null}'
     form: {}
     headers:
       Accept:
@@ -14,9 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/keys
     method: POST
   response:
-    body: '{"id": 339054, "label": "bzi7l8090x1m-linodego-testing", "access_key":
-      "[SANITIZED]", "secret_key": "[SANITIZED]", "limited": false, "bucket_access":
-      null}'
+    body: '{"id": 358563, "label": "go-test-def", "access_key": "[SANITIZED]", "secret_key":
+      "[SANITIZED]", "limited": false, "bucket_access": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -31,7 +30,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "193"
+      - "175"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -71,9 +70,9 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/keys
     method: GET
   response:
-    body: '{"data": [{"id": 339054, "label": "bzi7l8090x1m-linodego-testing", "access_key":
-      "[SANITIZED]", "secret_key": "[REDACTED]", "limited": false, "bucket_access":
-      null}], "page": 1, "pages": 1, "results": 1}'
+    body: '{"data": [{"id": 358563, "label": "go-test-def", "access_key": "[SANITIZED]",
+      "secret_key": "[REDACTED]", "limited": false, "bucket_access": null}], "page":
+      1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -89,7 +88,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "212"
+      - "194"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -127,7 +126,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/339054
+    url: https://api.linode.com/v4beta/object-storage/keys/358563
     method: DELETE
   response:
     body: '{}'

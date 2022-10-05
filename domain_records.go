@@ -90,14 +90,9 @@ type DomainRecordsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for InstanceConfig
-func (DomainRecordsPagedResponse) endpoint(c *Client, ids ...any) string {
+func (DomainRecordsPagedResponse) endpoint(ids ...any) string {
 	id, _ := ids[0].(int)
-	endpoint, err := c.DomainRecords.endpointWithParams(id)
-	if err != nil {
-		panic(err)
-	}
-
-	return endpoint
+	return fmt.Sprintf("domains/%d/records", id)
 }
 
 func (resp *DomainRecordsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
@@ -117,47 +112,30 @@ func (c *Client) ListDomainRecords(ctx context.Context, domainID int, opts *List
 	if err != nil {
 		return nil, err
 	}
-
 	return response.Data, nil
 }
 
 // GetDomainRecord gets the domainrecord with the provided ID
-func (c *Client) GetDomainRecord(ctx context.Context, domainID int, id int) (*DomainRecord, error) {
-	e, err := c.DomainRecords.endpointWithParams(domainID)
+func (c *Client) GetDomainRecord(ctx context.Context, domainID int, recordID int) (*DomainRecord, error) {
+	req := c.R(ctx).SetResult(&DomainRecord{})
+	e := fmt.Sprintf("domains/%d/records/%d", domainID, recordID)
+	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
 		return nil, err
 	}
-
-	e = fmt.Sprintf("%s/%d", e, id)
-	r, err := coupleAPIErrors(c.R(ctx).SetResult(&DomainRecord{}).Get(e))
-	if err != nil {
-		return nil, err
-	}
-
 	return r.Result().(*DomainRecord), nil
 }
 
 // CreateDomainRecord creates a DomainRecord
-func (c *Client) CreateDomainRecord(ctx context.Context, domainID int, domainrecord DomainRecordCreateOptions) (*DomainRecord, error) {
-	var body string
-
-	e, err := c.DomainRecords.endpointWithParams(domainID)
+func (c *Client) CreateDomainRecord(ctx context.Context, domainID int, opts DomainRecordCreateOptions) (*DomainRecord, error) {
+	body, err := json.Marshal(opts)
 	if err != nil {
 		return nil, err
 	}
 
-	req := c.R(ctx).SetResult(&DomainRecord{})
-
-	bodyData, err := json.Marshal(domainrecord)
-	if err != nil {
-		return nil, NewError(err)
-	}
-
-	body = string(bodyData)
-
-	r, err := coupleAPIErrors(req.
-		SetBody(body).
-		Post(e))
+	e := fmt.Sprintf("domains/%d/records", domainID)
+	req := c.R(ctx).SetResult(&DomainRecord{}).SetBody(string(body))
+	r, err := coupleAPIErrors(req.Post(e))
 	if err != nil {
 		return nil, err
 	}
@@ -166,27 +144,15 @@ func (c *Client) CreateDomainRecord(ctx context.Context, domainID int, domainrec
 }
 
 // UpdateDomainRecord updates the DomainRecord with the specified id
-func (c *Client) UpdateDomainRecord(ctx context.Context, domainID int, id int, domainrecord DomainRecordUpdateOptions) (*DomainRecord, error) {
-	var body string
-
-	e, err := c.DomainRecords.endpointWithParams(domainID)
+func (c *Client) UpdateDomainRecord(ctx context.Context, domainID int, recordID int, opts DomainRecordUpdateOptions) (*DomainRecord, error) {
+	body, err := json.Marshal(opts)
 	if err != nil {
 		return nil, err
 	}
 
-	e = fmt.Sprintf("%s/%d", e, id)
-
-	req := c.R(ctx).SetResult(&DomainRecord{})
-
-	if bodyData, err := json.Marshal(domainrecord); err == nil {
-		body = string(bodyData)
-	} else {
-		return nil, NewError(err)
-	}
-
-	r, err := coupleAPIErrors(req.
-		SetBody(body).
-		Put(e))
+	e := fmt.Sprintf("domains/%d/records/%d", domainID, recordID)
+	req := c.R(ctx).SetResult(&DomainRecord{}).SetBody(string(body))
+	r, err := coupleAPIErrors(req.Put(e))
 	if err != nil {
 		return nil, err
 	}
@@ -195,15 +161,8 @@ func (c *Client) UpdateDomainRecord(ctx context.Context, domainID int, id int, d
 }
 
 // DeleteDomainRecord deletes the DomainRecord with the specified id
-func (c *Client) DeleteDomainRecord(ctx context.Context, domainID int, id int) error {
-	e, err := c.DomainRecords.endpointWithParams(domainID)
-	if err != nil {
-		return err
-	}
-
-	e = fmt.Sprintf("%s/%d", e, id)
-
-	_, err = coupleAPIErrors(c.R(ctx).Delete(e))
-
+func (c *Client) DeleteDomainRecord(ctx context.Context, domainID int, recordID int) error {
+	e := fmt.Sprintf("domains/%d/records/%d", domainID, recordID)
+	_, err := coupleAPIErrors(c.R(ctx).Delete(e))
 	return err
 }

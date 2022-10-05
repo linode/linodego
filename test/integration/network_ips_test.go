@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"testing"
-	"time"
 
 	. "github.com/linode/linodego"
 )
@@ -144,7 +143,7 @@ func TestIPAddress_Instance_Assign(t *testing.T) {
 	}
 
 	newInstance, err := createInstance(t, client, func(options *InstanceCreateOptions) {
-		options.Label = fmt.Sprintf("linodego-%d", time.Now().UnixNano())
+		options.Label = "go-ins-test-assign"
 		options.Region = instance.Region
 	})
 
@@ -206,7 +205,7 @@ func TestIPAddress_Instance_Share(t *testing.T) {
 	}
 
 	newInstance, err := createInstance(t, client, func(options *InstanceCreateOptions) {
-		options.Label = fmt.Sprintf("linodego-%d", time.Now().UnixNano())
+		options.Label = "go-ins-test-share"
 		options.Region = instance.Region
 	})
 

@@ -2,11 +2,9 @@ package integration
 
 import (
 	"context"
-	"fmt"
 	"reflect"
 	"strconv"
 	"testing"
-	"time"
 
 	"github.com/linode/linodego"
 )
@@ -87,7 +85,7 @@ func TestInstance_Disk_Resize(t *testing.T) {
 	}
 
 	disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
-		Label:      "test",
+		Label:      "disk-test-" + randLabel(),
 		Filesystem: "ext4",
 		Size:       2000,
 	})
@@ -132,7 +130,7 @@ func TestInstance_Disk_ListMultiple(t *testing.T) {
 		t.Errorf("Error waiting for disk readiness: %s", err)
 	}
 
-	imageLabel := fmt.Sprintf("linodego-test-image-%.d", time.Now().Second())
+	imageLabel := "go-test-image-" + randLabel()
 	imageCreateOptions := linodego.ImageCreateOptions{Label: imageLabel, DiskID: disk.ID}
 	image, err := client.CreateImage(context.Background(), imageCreateOptions)
 
@@ -157,7 +155,7 @@ func TestInstance_Disk_ListMultiple(t *testing.T) {
 	}
 
 	_, err = client.CreateInstanceDisk(context.Background(), instance2.ID, linodego.InstanceDiskCreateOptions{
-		Label:    "linodego-test-instancedisk",
+		Label:    "go-disk-test-" + randLabel(),
 		Image:    image.ID,
 		RootPass: "R34lBAdP455",
 		Size:     2000,
@@ -167,7 +165,7 @@ func TestInstance_Disk_ListMultiple(t *testing.T) {
 	}
 
 	disk, err = client.CreateInstanceDisk(context.Background(), instance2.ID, linodego.InstanceDiskCreateOptions{
-		Label: "linodego-test-2",
+		Label: "go-disk-test-" + randLabel(),
 		Size:  2000,
 	})
 
@@ -197,7 +195,7 @@ func TestInstance_Disk_ResetPassword(t *testing.T) {
 	}
 
 	disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
-		Label:      "test",
+		Label:      "go-disk-test-" + randLabel(),
 		Filesystem: "ext4",
 		Image:      "linode/debian9",
 		RootPass:   "b4d_p455",
@@ -249,7 +247,7 @@ func TestInstance_Config_Update(t *testing.T) {
 	}
 
 	updateConfigOpts := linodego.InstanceConfigUpdateOptions{
-		Label:      "bar",
+		Label:      "go-conf-test-" + randLabel(),
 		Devices:    &linodego.InstanceConfigDeviceMap{},
 		RootDevice: "/dev/root",
 	}
@@ -279,7 +277,7 @@ func TestInstance_ConfigInterfaces_Update(t *testing.T) {
 			},
 			{
 				Purpose: linodego.InterfacePurposeVLAN,
-				Label:   "linodego-cool-vlan",
+				Label:   instance.Label + "-r",
 			},
 		},
 	}
@@ -323,7 +321,7 @@ func TestInstance_Volumes_List(t *testing.T) {
 	}
 
 	configOpts := linodego.InstanceConfigUpdateOptions{
-		Label: "volume-test",
+		Label: "go-vol-test" + randLabel(),
 		Devices: &linodego.InstanceConfigDeviceMap{
 			SDA: &linodego.InstanceConfigDevice{
 				VolumeID: volume.ID,
@@ -376,7 +374,7 @@ func createInstance(t *testing.T, client *linodego.Client, modifiers ...instance
 
 	booted := false
 	createOpts := linodego.InstanceCreateOptions{
-		Label:    randString(12, lowerBytes, digits) + "-linodego-test-instance",
+		Label:    "go-test-ins-" + randLabel(),
 		RootPass: "R34lBAdP455",
 		Region:   "us-west",
 		Type:     "g6-nanode-1",
@@ -417,7 +415,7 @@ func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string, modifiers ...i
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	falseBool := false
 	createOpts := linodego.InstanceCreateOptions{
-		Label:  "linodego-test-instance-wo-disk",
+		Label:  "go-test-ins-wo-disk-" + randLabel(),
 		Region: "us-west",
 		Type:   "g6-nanode-1",
 		Booted: &falseBool,
@@ -433,7 +431,7 @@ func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string, modifiers ...i
 		return nil, nil, nil, fixtureTeardown, err
 	}
 	configOpts := linodego.InstanceConfigCreateOptions{
-		Label: "linodego-test-config",
+		Label: "go-test-conf-" + randLabel(),
 	}
 	config, err := client.CreateInstanceConfig(context.Background(), instance.ID, configOpts)
 	if err != nil {

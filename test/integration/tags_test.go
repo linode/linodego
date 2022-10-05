@@ -14,7 +14,7 @@ func TestTag_Create(t *testing.T) {
 		t.Errorf("Error creating test Instance: %s", err)
 	}
 
-	if instance.Tags[0] != "linodego-test" {
+	if instance.Tags[0] != "go-tag-test" {
 		t.Errorf("should have created a tagged instance, got %v", instance.Tags)
 	}
 
@@ -22,7 +22,7 @@ func TestTag_Create(t *testing.T) {
 	if updateOpts.Tags == nil {
 		updateOpts.Tags = new([]string)
 	}
-	newTags := append(*updateOpts.Tags, "linodego-test-bar")
+	newTags := append(*updateOpts.Tags, "go-tag-test-bar")
 	updateOpts.Tags = &newTags
 	updateOpts.Backups = nil
 	instance, err = client.UpdateInstance(context.Background(), instance.ID, updateOpts)
@@ -30,7 +30,7 @@ func TestTag_Create(t *testing.T) {
 		t.Errorf("should have updated instance tags, got %q", err)
 	}
 
-	tag, err := client.CreateTag(context.Background(), TagCreateOptions{Label: "linodego-test-foo", Linodes: []int{instance.ID}})
+	tag, err := client.CreateTag(context.Background(), TagCreateOptions{Label: "go-tag-test-foo", Linodes: []int{instance.ID}})
 	if err != nil {
 		t.Errorf("should have created a tag, got %q", err)
 	}
@@ -48,7 +48,7 @@ func TestTag_Create(t *testing.T) {
 	if !found {
 		t.Errorf("should have found created tag, %q", tag.Label)
 	}
-	x, err := client.ListTaggedObjects(context.Background(), "linodego-test", nil)
+	x, err := client.ListTaggedObjects(context.Background(), "go-tag-test", nil)
 	if err != nil {
 		t.Errorf("should have listed tagged objects, got %q", err)
 	}
@@ -65,7 +65,7 @@ func TestTag_Create(t *testing.T) {
 		t.Errorf("should have found instance in sorted tagged objects list, got %v", so)
 	}
 
-	for _, tag := range []string{"linodego-test", "linodego-test-foo", "linodego-test-bar"} {
+	for _, tag := range []string{"go-tag-test", "go-tag-test-foo", "go-tag-test-bar"} {
 		if err := client.DeleteTag(context.Background(), tag); err != nil {
 			t.Error(err)
 		}
@@ -94,10 +94,10 @@ func setupTaggedInstance(t *testing.T, fixturesYaml string) (*Client, *Instance,
 	t.Helper()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := InstanceCreateOptions{
-		Label:  "linodego-test-instance",
+		Label:  "go-ins-test-tag",
 		Region: "us-southeast",
 		Type:   "g6-nanode-1",
-		Tags:   []string{"linodego-test"},
+		Tags:   []string{"go-tag-test"},
 	}
 	instance, err := client.CreateInstance(context.Background(), createOpts)
 	if err != nil {

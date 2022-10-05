@@ -64,13 +64,8 @@ type NotificationsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Notification
-func (NotificationsPagedResponse) endpoint(c *Client, _ ...any) string {
-	endpoint, err := c.Notifications.Endpoint()
-	if err != nil {
-		panic(err)
-	}
-
-	return endpoint
+func (NotificationsPagedResponse) endpoint(_ ...any) string {
+	return "account/notifications"
 }
 
 func (resp *NotificationsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {

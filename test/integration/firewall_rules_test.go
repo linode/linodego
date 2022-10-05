@@ -10,7 +10,7 @@ import (
 
 var (
 	testFirewallRule = linodego.FirewallRule{
-		Label:    "test-label",
+		Label:    "go-fwrule-test",
 		Action:   "ACCEPT",
 		Ports:    "22",
 		Protocol: "TCP",
@@ -56,7 +56,7 @@ func TestFirewallRules_Update(t *testing.T) {
 	newRules := linodego.FirewallRuleSet{
 		Inbound: []linodego.FirewallRule{
 			{
-				Label:    "test-label",
+				Label:    testFirewallRule.Label + "_r",
 				Action:   "DROP",
 				Ports:    "22",
 				Protocol: "TCP",

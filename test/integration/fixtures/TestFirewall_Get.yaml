@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"AaEujXaQHxAd-linodego-testing","rules":{"inbound":[{"action":"DROP","label":"test-label","protocol":"ICMP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":null,"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
+    body: '{"label":"linodego-fw-test","rules":{"inbound":[{"action":"DROP","label":"linodego-fwrule-test","protocol":"ICMP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":null,"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
     form: {}
     headers:
       Accept:
@@ -14,9 +14,9 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 79975, "label": "AaEujXaQHxAd-linodego-testing", "created": "2018-01-02T03:04:05",
+    body: '{"id": 89719, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
-      [{"action": "DROP", "label": "test-label", "protocol": "ICMP", "addresses":
+      [{"action": "DROP", "label": "linodego-fwrule-test", "protocol": "ICMP", "addresses":
       {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy": "ACCEPT", "outbound":
       null, "outbound_policy": "ACCEPT"}, "tags": ["testing"]}'
     headers:
@@ -33,7 +33,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "383"
+      - "380"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -70,12 +70,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/79975
+    url: https://api.linode.com/v4beta/networking/firewalls/89719
     method: GET
   response:
-    body: '{"id": 79975, "label": "AaEujXaQHxAd-linodego-testing", "created": "2018-01-02T03:04:05",
+    body: '{"id": 89719, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
-      [{"action": "DROP", "label": "test-label", "protocol": "ICMP", "addresses":
+      [{"action": "DROP", "label": "linodego-fwrule-test", "protocol": "ICMP", "addresses":
       {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy": "ACCEPT", "outbound":
       null, "outbound_policy": "ACCEPT"}, "tags": ["testing"]}'
     headers:
@@ -93,7 +93,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "383"
+      - "380"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -131,7 +131,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/79975
+    url: https://api.linode.com/v4beta/networking/firewalls/89719
     method: DELETE
   response:
     body: '{}'

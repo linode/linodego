@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"linodego-test-token","scopes":"linodes:read_only","expiry":"2022-08-16T06:49:40"}'
+    body: '{"label":"linodego-token-test","scopes":"linodes:read_only","expiry":"2022-10-04T14:59:13"}'
     form: {}
     headers:
       Accept:
@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/profile/tokens
     method: POST
   response:
-    body: '{"id": 39817134, "scopes": "linodes:read_only", "created": "2018-01-02T03:04:05",
-      "label": "linodego-test-token", "token": "0f354b95058ac49b8e9d6c57f87eaa44239eb5e35e288cc814ad1d028553b717",
+    body: '{"id": 41023746, "scopes": "linodes:read_only", "created": "2018-01-02T03:04:05",
+      "label": "linodego-token-test", "token": "32a26b5ea6317e6e8c3b4c0e1d394ca2ea58400783c4b7b213b7c111db1a422b",
       "expiry": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -59,7 +59,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"linodego-test-token_renamed"}'
+    body: '{"label":"linodego-token-test_renamed"}'
     form: {}
     headers:
       Accept:
@@ -68,11 +68,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/profile/tokens/39817134
+    url: https://api.linode.com/v4beta/profile/tokens/41023746
     method: PUT
   response:
-    body: '{"id": 39817134, "scopes": "linodes:read_only", "created": "2018-01-02T03:04:05",
-      "label": "linodego-test-token_renamed", "token": "0f354b95058ac49b", "expiry":
+    body: '{"id": 41023746, "scopes": "linodes:read_only", "created": "2018-01-02T03:04:05",
+      "label": "linodego-token-test_renamed", "token": "32a26b5ea6317e6e", "expiry":
       "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -125,7 +125,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/profile/tokens/39817134
+    url: https://api.linode.com/v4beta/profile/tokens/41023746
     method: DELETE
   response:
     body: '{}'

@@ -2,7 +2,6 @@ package integration
 
 import (
 	"context"
-	"fmt"
 	"reflect"
 	"testing"
 	"time"
@@ -12,13 +11,8 @@ import (
 	"github.com/linode/linodego"
 )
 
-const (
-	testMongoBackupLabel = "reallycoolbackup"
-	testMongoDBLabel     = "linodego-test-mongodb-database"
-)
-
 var testMongoCreateOpts = linodego.MongoCreateOptions{
-	Label:         testMongoDBLabel,
+	Label:         "go-mongo-test-def",
 	Region:        "us-east",
 	Type:          "g6-nanode-1",
 	Engine:        "mongodb/4.4.10",
@@ -29,6 +23,7 @@ var testMongoCreateOpts = linodego.MongoCreateOptions{
 }
 
 func TestDatabase_Mongo_Suite(t *testing.T) {
+	t.Skip("POST /mongodb currently disabled")
 	client, database, teardown, err := setupMongoDatabase(t, nil, "fixtures/TestDatabase_Mongo_Suite")
 	if err != nil {
 		t.Error(err)
@@ -72,9 +67,10 @@ func TestDatabase_Mongo_Suite(t *testing.T) {
 
 	allowList := []string{"128.173.205.21", "123.177.200.20"}
 
+	updatedLabel := database.Label + "-updated"
 	opts := linodego.MongoUpdateOptions{
 		AllowList: &allowList,
-		Label:     fmt.Sprintf("%s-updated", database.Label),
+		Label:     updatedLabel,
 		Updates:   &updatedWindow,
 	}
 	db, err = client.UpdateMongoDatabase(context.Background(), database.ID, opts)
@@ -87,7 +83,7 @@ func TestDatabase_Mongo_Suite(t *testing.T) {
 	if db.ID != database.ID {
 		t.Errorf("updated db does not match original id")
 	}
-	if db.Label != fmt.Sprintf("%s-updated", database.Label) {
+	if db.Label != updatedLabel {
 		t.Errorf("label not updated for db")
 	}
 
@@ -151,8 +147,9 @@ func TestDatabase_Mongo_Suite(t *testing.T) {
 		t.Fatalf("failed to wait for database updating: %s", err)
 	}
 
+	backupLabel := "mongobackupforlinodego"
 	backupOptions := linodego.MongoBackupCreateOptions{
-		Label:  testMongoBackupLabel,
+		Label:  backupLabel,
 		Target: linodego.MongoDatabaseTargetPrimary,
 	}
 
@@ -160,13 +157,13 @@ func TestDatabase_Mongo_Suite(t *testing.T) {
 		t.Errorf("failed to create db backup: %v", err)
 	}
 
-	backup, err := client.WaitForMongoDatabaseBackup(context.Background(), database.ID, testMongoBackupLabel, 1200)
+	backup, err := client.WaitForMongoDatabaseBackup(context.Background(), database.ID, backupLabel, 1200)
 	if err != nil {
 		t.Fatalf("failed to wait for backup: %s", err)
 	}
 
-	if backup.Label != testMongoBackupLabel {
-		t.Fatalf("backup label mismatch: %v != %v", testMongoBackupLabel, backup.Label)
+	if backup.Label != backupLabel {
+		t.Fatalf("backup label mismatch: %v != %v", backupLabel, backup.Label)
 	}
 
 	backup, err = client.GetMongoDatabaseBackup(context.Background(), database.ID, backup.ID)
@@ -174,8 +171,8 @@ func TestDatabase_Mongo_Suite(t *testing.T) {
 		t.Errorf("failed to get backup %d for db: %v", backup.ID, err)
 	}
 
-	if backup.Label != testMongoBackupLabel {
-		t.Fatalf("backup label mismatch: %v != %v", testMongoBackupLabel, backup.Label)
+	if backup.Label != backupLabel {
+		t.Fatalf("backup label mismatch: %v != %v", backupLabel, backup.Label)
 	}
 
 	if backup.Created == nil {

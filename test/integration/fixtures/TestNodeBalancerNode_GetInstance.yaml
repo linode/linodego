@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-west","type":"g6-nanode-1","label":"t895lj7l4z4x-linodego-test-instance","root_pass":"R34lBAdP455","image":"linode/debian9","booted":false}'
+    body: '{"region":"us-west","type":"g6-nanode-1","label":"go-test-ins-34111ut4khza","root_pass":"R34lBAdP455","image":"linode/debian9","booted":false}'
     form: {}
     headers:
       Accept:
@@ -14,9 +14,9 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 38094949, "label": "t895lj7l4z4x-linodego-test-instance", "group":
-      "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["45.33.111.180"], "ipv6": "1234::5678/128",
+    body: '{"id": 39241040, "label": "go-test-ins-34111ut4khza", "group": "", "status":
+      "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "type": "g6-nanode-1", "ipv4": ["173.255.218.44"], "ipv6": "1234::5678/128",
       "image": "linode/debian9", "region": "us-west", "specs": {"disk": 25600, "memory":
       1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
@@ -36,7 +36,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "651"
+      - "641"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -73,11 +73,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/38094949/ips
+    url: https://api.linode.com/v4beta/linode/instances/39241040/ips
     method: POST
   response:
-    body: '{"address": "192.168.204.216", "gateway": null, "subnet_mask": "255.255.128.0",
-      "prefix": 17, "type": "ipv4", "public": false, "rdns": null, "linode_id": 38094949,
+    body: '{"address": "192.168.202.253", "gateway": null, "subnet_mask": "255.255.128.0",
+      "prefix": 17, "type": "ipv4", "public": false, "rdns": null, "linode_id": 39241040,
       "region": "us-west"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -121,7 +121,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"address":"192.168.204.216:8080","label":"test-label","weight":10,"mode":"accept"}'
+    body: '{"address":"192.168.202.253:8080","label":"go-node-test-def","weight":10,"mode":"accept"}'
     form: {}
     headers:
       Accept:
@@ -130,12 +130,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/243778/configs/360209/nodes
+    url: https://api.linode.com/v4beta/nodebalancers/258004/configs/384572/nodes
     method: POST
   response:
-    body: '{"id": 59114559, "address": "192.168.204.216:8080", "label": "test-label",
-      "status": "Unknown", "weight": 10, "mode": "accept", "config_id": 360209, "nodebalancer_id":
-      243778}'
+    body: '{"id": 67533039, "address": "192.168.202.253:8080", "label": "go-node-test-def",
+      "status": "Unknown", "weight": 10, "mode": "accept", "config_id": 384572, "nodebalancer_id":
+      258004}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -150,7 +150,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "175"
+      - "181"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -187,12 +187,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/243778/configs/360209/nodes/59114559
+    url: https://api.linode.com/v4beta/nodebalancers/258004/configs/384572/nodes/67533039
     method: GET
   response:
-    body: '{"id": 59114559, "address": "192.168.204.216:8080", "label": "test-label",
-      "status": "Unknown", "weight": 10, "mode": "accept", "config_id": 360209, "nodebalancer_id":
-      243778}'
+    body: '{"id": 67533039, "address": "192.168.202.253:8080", "label": "go-node-test-def",
+      "status": "Unknown", "weight": 10, "mode": "accept", "config_id": 384572, "nodebalancer_id":
+      258004}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -208,7 +208,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "175"
+      - "181"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -246,7 +246,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/243778/configs/360209/nodes/59114559
+    url: https://api.linode.com/v4beta/nodebalancers/258004/configs/384572/nodes/67533039
     method: DELETE
   response:
     body: '{}'
@@ -301,7 +301,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/38094949
+    url: https://api.linode.com/v4beta/linode/instances/39241040
     method: DELETE
   response:
     body: '{}'

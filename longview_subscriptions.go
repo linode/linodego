@@ -24,12 +24,8 @@ type LongviewSubscriptionsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for LongviewSubscription
-func (LongviewSubscriptionsPagedResponse) endpoint(c *Client, _ ...any) string {
-	endpoint, err := c.LongviewSubscriptions.Endpoint()
-	if err != nil {
-		panic(err)
-	}
-	return endpoint
+func (LongviewSubscriptionsPagedResponse) endpoint(_ ...any) string {
+	return "longview/subscriptions"
 }
 
 func (resp *LongviewSubscriptionsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
@@ -53,13 +49,10 @@ func (c *Client) ListLongviewSubscriptions(ctx context.Context, opts *ListOption
 }
 
 // GetLongviewSubscription gets the template with the provided ID
-func (c *Client) GetLongviewSubscription(ctx context.Context, id string) (*LongviewSubscription, error) {
-	e, err := c.LongviewSubscriptions.Endpoint()
-	if err != nil {
-		return nil, err
-	}
-	e = fmt.Sprintf("%s/%s", e, id)
-	r, err := c.R(ctx).SetResult(&LongviewSubscription{}).Get(e)
+func (c *Client) GetLongviewSubscription(ctx context.Context, templateID string) (*LongviewSubscription, error) {
+	e := fmt.Sprintf("longview/subscriptions/%s", templateID)
+	req := c.R(ctx).SetResult(&LongviewSubscription{})
+	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
 		return nil, err
 	}

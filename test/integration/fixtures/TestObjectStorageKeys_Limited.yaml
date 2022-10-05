@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"bzi7l8090x1m-linodego-testing","bucket_access":[{"cluster":"us-east-1","bucket_name":"linodego-test-bucket-1660630790586226803","permissions":"read_only"},{"cluster":"us-east-1","bucket_name":"linodego-test-bucket-1660630790586226803","permissions":"read_write"}]}'
+    body: '{"label":"go-test-def","bucket_access":[{"cluster":"us-east-1","bucket_name":"go-bucket-test-def","permissions":"read_only"},{"cluster":"us-east-1","bucket_name":"go-bucket-test-def","permissions":"read_write"}]}'
     form: {}
     headers:
       Accept:
@@ -14,11 +14,10 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/keys
     method: POST
   response:
-    body: '{"id": 339055, "label": "bzi7l8090x1m-linodego-testing", "access_key":
-      "[SANITIZED]", "secret_key": "[SANITIZED]", "limited": true, "bucket_access":
-      [{"cluster": "us-east-1", "bucket_name": "linodego-test-bucket-1660630790586226803",
-      "permissions": "read_only"}, {"cluster": "us-east-1", "bucket_name": "linodego-test-bucket-1660630790586226803",
-      "permissions": "read_write"}]}'
+    body: '{"id": 358564, "label": "go-test-def", "access_key": "[SANITIZED]", "secret_key":
+      "[SANITIZED]", "limited": true, "bucket_access": [{"cluster": "us-east-1", "bucket_name":
+      "go-bucket-test-def", "permissions": "read_only"}, {"cluster": "us-east-1",
+      "bucket_name": "go-bucket-test-def", "permissions": "read_write"}]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -33,7 +32,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "415"
+      - "353"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -70,7 +69,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/339055
+    url: https://api.linode.com/v4beta/object-storage/keys/358564
     method: DELETE
   response:
     body: '{}'

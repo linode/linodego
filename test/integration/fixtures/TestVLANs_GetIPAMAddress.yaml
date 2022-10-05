@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-southeast","type":"g6-nanode-1","label":"linodego-testing-vlan-ipamaddress","root_pass":"R34lBAdP455","image":"linode/debian9","interfaces":[{"ipam_address":"10.0.0.1/24","label":"linodego-really-cool-vlan-ipamaddress","purpose":"vlan"}],"booted":true}'
+    body: '{"region":"us-southeast","type":"g6-nanode-1","label":"go-ins-test-ipam","root_pass":"R34lBAdP455","image":"linode/debian9","interfaces":[{"ipam_address":"10.0.0.1/24","label":"go-vlan-test-ipam","purpose":"vlan"}],"booted":true}'
     form: {}
     headers:
       Accept:
@@ -14,9 +14,9 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 38095000, "label": "linodego-testing-vlan-ipamaddress", "group":
-      "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["139.144.54.4"], "ipv6": "1234::5678/128",
+    body: '{"id": 39241092, "label": "go-ins-test-ipam", "group": "", "status": "provisioning",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "type":
+      "g6-nanode-1", "ipv4": ["139.177.205.185"], "ipv6": "1234::5678/128",
       "image": "linode/debian9", "region": "us-southeast", "specs": {"disk": 25600,
       "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu":
       90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io": 10000},
@@ -36,7 +36,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "653"
+      - "639"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -73,12 +73,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/38095000
+    url: https://api.linode.com/v4beta/linode/instances/39241092
     method: GET
   response:
-    body: '{"id": 38095000, "label": "linodego-testing-vlan-ipamaddress", "group":
-      "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["139.144.54.4"], "ipv6": "1234::5678/128",
+    body: '{"id": 39241092, "label": "go-ins-test-ipam", "group": "", "status": "booting",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "type":
+      "g6-nanode-1", "ipv4": ["139.177.205.185"], "ipv6": "1234::5678/128",
       "image": "linode/debian9", "region": "us-southeast", "specs": {"disk": 25600,
       "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu":
       90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io": 10000},
@@ -99,7 +99,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "653"
+      - "634"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -137,12 +137,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/38095000
+    url: https://api.linode.com/v4beta/linode/instances/39241092
     method: GET
   response:
-    body: '{"id": 38095000, "label": "linodego-testing-vlan-ipamaddress", "group":
-      "", "status": "running", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["139.144.54.4"], "ipv6": "1234::5678/128",
+    body: '{"id": 39241092, "label": "go-ins-test-ipam", "group": "", "status": "running",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "type":
+      "g6-nanode-1", "ipv4": ["139.177.205.185"], "ipv6": "1234::5678/128",
       "image": "linode/debian9", "region": "us-southeast", "specs": {"disk": 25600,
       "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu":
       90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io": 10000},
@@ -163,7 +163,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "648"
+      - "634"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -202,20 +202,20 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"interfaces":"linodego-really-cool-vlan-ipamaddress"}'
-    url: https://api.linode.com/v4beta/linode/instances/38095000/configs
+      - '{"interfaces":"go-vlan-test-ipam"}'
+    url: https://api.linode.com/v4beta/linode/instances/39241092/configs
     method: GET
   response:
-    body: '{"data": [{"id": 40576524, "label": "My Debian 9 Disk Profile", "helpers":
+    body: '{"data": [{"id": 41782373, "label": "My Debian 9 Disk Profile", "helpers":
       {"updatedb_disabled": true, "distro": true, "modules_dep": true, "network":
       true, "devtmpfs_automount": true}, "kernel": "linode/grub2", "comments": "",
       "memory_limit": 0, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "root_device": "/dev/sda", "devices": {"sda": {"disk_id": 76428890, "volume_id":
-      null}, "sdb": {"disk_id": 76428891, "volume_id": null}, "sdc": null, "sdd":
+      "root_device": "/dev/sda", "devices": {"sda": {"disk_id": 78660917, "volume_id":
+      null}, "sdb": {"disk_id": 78660918, "volume_id": null}, "sdc": null, "sdd":
       null, "sde": null, "sdf": null, "sdg": null, "sdh": null}, "initrd": null, "run_level":
       "default", "virt_mode": "paravirt", "interfaces": [{"purpose": "vlan", "ipam_address":
-      "10.0.0.1/24", "label": "linodego-really-cool-vlan-ipamaddress"}]}], "page":
-      1, "pages": 1, "results": 1}'
+      "10.0.0.1/24", "label": "go-vlan-test-ipam"}]}], "page": 1, "pages": 1, "results":
+      1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -231,7 +231,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "752"
+      - "732"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -269,7 +269,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/38095000
+    url: https://api.linode.com/v4beta/linode/instances/39241092
     method: DELETE
   response:
     body: '{}'

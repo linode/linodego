@@ -163,7 +163,7 @@ func setupLKENodePool(t *testing.T, fixturesYaml string) (*linodego.Client, *lin
 	t.Helper()
 	var fixtureTeardown func()
 	client, lkeCluster, fixtureTeardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
-		createOpts.Label = randString(12, lowerBytes, digits) + "-linodego-testing"
+		createOpts.Label = "go-lke-test-def"
 	}}, fixturesYaml)
 	if err != nil {
 		t.Errorf("Error creating lkeCluster, got error %v", err)

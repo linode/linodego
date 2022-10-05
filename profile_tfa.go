@@ -3,7 +3,6 @@ package linodego
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"time"
 
 	"github.com/linode/linodego/internal/parseabletime"
@@ -46,17 +45,9 @@ func (s *TwoFactorSecret) UnmarshalJSON(b []byte) error {
 
 // CreateTwoFactorSecret generates a Two Factor secret for your User.
 func (c *Client) CreateTwoFactorSecret(ctx context.Context) (*TwoFactorSecret, error) {
-	e, err := c.Profile.Endpoint()
-	if err != nil {
-		return nil, err
-	}
-
-	e = fmt.Sprintf("%s/tfa-enable", e)
-
+	e := "profile/tfa-enable"
 	req := c.R(ctx).SetResult(&TwoFactorSecret{})
-
-	r, err := coupleAPIErrors(req.
-		Post(e))
+	r, err := coupleAPIErrors(req.Post(e))
 	if err != nil {
 		return nil, err
 	}
@@ -66,46 +57,21 @@ func (c *Client) CreateTwoFactorSecret(ctx context.Context) (*TwoFactorSecret, e
 
 // DisableTwoFactor disables Two Factor Authentication for your User.
 func (c *Client) DisableTwoFactor(ctx context.Context) error {
-	e, err := c.Profile.Endpoint()
-	if err != nil {
-		return err
-	}
-
-	e = fmt.Sprintf("%s/tfa-disable", e)
-
-	req := c.R(ctx)
-
-	_, err = coupleAPIErrors(req.
-		Post(e))
-	if err != nil {
-		return err
-	}
-
-	return nil
+	e := "profile/tfa-disable"
+	_, err := coupleAPIErrors(c.R(ctx).Post(e))
+	return err
 }
 
 // ConfirmTwoFactor confirms that you can successfully generate Two Factor codes and enables TFA on your Account.
 func (c *Client) ConfirmTwoFactor(ctx context.Context, opts ConfirmTwoFactorOptions) (*ConfirmTwoFactorResponse, error) {
-	var body string
-
-	e, err := c.Profile.Endpoint()
+	body, err := json.Marshal(opts)
 	if err != nil {
 		return nil, err
 	}
 
-	e = fmt.Sprintf("%s/tfa-enable-confirm", e)
-
-	if bodyData, err := json.Marshal(opts); err == nil {
-		body = string(bodyData)
-	} else {
-		return nil, NewError(err)
-	}
-
-	req := c.R(ctx).SetResult(&ConfirmTwoFactorResponse{})
-
-	r, err := coupleAPIErrors(req.
-		SetBody(body).
-		Post(e))
+	e := "profile/tfa-enable-confirm"
+	req := c.R(ctx).SetResult(&ConfirmTwoFactorResponse{}).SetBody(string(body))
+	r, err := coupleAPIErrors(req.Post(e))
 	if err != nil {
 		return nil, err
 	}

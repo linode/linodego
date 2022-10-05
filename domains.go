@@ -195,13 +195,8 @@ type DomainsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Domain
-func (DomainsPagedResponse) endpoint(c *Client, _ ...any) string {
-	endpoint, err := c.Domains.Endpoint()
-	if err != nil {
-		panic(err)
-	}
-
-	return endpoint
+func (DomainsPagedResponse) endpoint(_ ...any) string {
+	return "domains"
 }
 
 func (resp *DomainsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
@@ -226,14 +221,10 @@ func (c *Client) ListDomains(ctx context.Context, opts *ListOptions) ([]Domain, 
 }
 
 // GetDomain gets the domain with the provided ID
-func (c *Client) GetDomain(ctx context.Context, id int) (*Domain, error) {
-	e, err := c.Domains.Endpoint()
-	if err != nil {
-		return nil, err
-	}
-
-	e = fmt.Sprintf("%s/%d", e, id)
-	r, err := coupleAPIErrors(c.R(ctx).SetResult(&Domain{}).Get(e))
+func (c *Client) GetDomain(ctx context.Context, domainID int) (*Domain, error) {
+	req := c.R(ctx).SetResult(&Domain{})
+	e := fmt.Sprintf("domains/%d", domainID)
+	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
 		return nil, err
 	}
@@ -242,26 +233,15 @@ func (c *Client) GetDomain(ctx context.Context, id int) (*Domain, error) {
 }
 
 // CreateDomain creates a Domain
-func (c *Client) CreateDomain(ctx context.Context, domain DomainCreateOptions) (*Domain, error) {
-	var body string
-
-	e, err := c.Domains.Endpoint()
+func (c *Client) CreateDomain(ctx context.Context, opts DomainCreateOptions) (*Domain, error) {
+	body, err := json.Marshal(opts)
 	if err != nil {
 		return nil, err
 	}
 
-	req := c.R(ctx).SetResult(&Domain{})
-
-	bodyData, err := json.Marshal(domain)
-	if err != nil {
-		return nil, NewError(err)
-	}
-
-	body = string(bodyData)
-
-	r, err := coupleAPIErrors(req.
-		SetBody(body).
-		Post(e))
+	req := c.R(ctx).SetResult(&Domain{}).SetBody(string(body))
+	e := "domains"
+	r, err := coupleAPIErrors(req.Post(e))
 	if err != nil {
 		return nil, err
 	}
@@ -270,27 +250,15 @@ func (c *Client) CreateDomain(ctx context.Context, domain DomainCreateOptions) (
 }
 
 // UpdateDomain updates the Domain with the specified id
-func (c *Client) UpdateDomain(ctx context.Context, id int, domain DomainUpdateOptions) (*Domain, error) {
-	var body string
-
-	e, err := c.Domains.Endpoint()
+func (c *Client) UpdateDomain(ctx context.Context, domainID int, opts DomainUpdateOptions) (*Domain, error) {
+	body, err := json.Marshal(opts)
 	if err != nil {
 		return nil, err
 	}
 
-	e = fmt.Sprintf("%s/%d", e, id)
-
-	req := c.R(ctx).SetResult(&Domain{})
-
-	if bodyData, err := json.Marshal(domain); err == nil {
-		body = string(bodyData)
-	} else {
-		return nil, NewError(err)
-	}
-
-	r, err := coupleAPIErrors(req.
-		SetBody(body).
-		Put(e))
+	e := fmt.Sprintf("domains/%d", domainID)
+	req := c.R(ctx).SetResult(&Domain{}).SetBody(string(body))
+	r, err := coupleAPIErrors(req.Put(e))
 	if err != nil {
 		return nil, err
 	}
@@ -299,29 +267,17 @@ func (c *Client) UpdateDomain(ctx context.Context, id int, domain DomainUpdateOp
 }
 
 // DeleteDomain deletes the Domain with the specified id
-func (c *Client) DeleteDomain(ctx context.Context, id int) error {
-	e, err := c.Domains.Endpoint()
-	if err != nil {
-		return err
-	}
-
-	e = fmt.Sprintf("%s/%d", e, id)
-
-	_, err = coupleAPIErrors(c.R(ctx).Delete(e))
-
+func (c *Client) DeleteDomain(ctx context.Context, domainID int) error {
+	e := fmt.Sprintf("domains/%d", domainID)
+	_, err := coupleAPIErrors(c.R(ctx).Delete(e))
 	return err
 }
 
 // GetDomainZoneFile gets the zone file for the last rendered zone for the specified domain.
 func (c *Client) GetDomainZoneFile(ctx context.Context, domainID int) (*DomainZoneFile, error) {
-	e, err := c.Domains.Endpoint()
-	if err != nil {
-		return nil, err
-	}
-
-	e = fmt.Sprintf("%s/%d/zone-file", e, domainID)
-
-	resp, err := coupleAPIErrors(c.R(ctx).SetResult(&DomainZoneFile{}).Get(e))
+	e := fmt.Sprintf("domains/%d/zone-file", domainID)
+	req := c.R(ctx).SetResult(&DomainZoneFile{})
+	resp, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
 		return nil, err
 	}

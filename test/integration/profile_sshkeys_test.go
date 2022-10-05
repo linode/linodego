@@ -73,7 +73,7 @@ func TestSSHKey_Update(t *testing.T) {
 		t.Errorf("Error renaming sshkey, %s", err)
 	}
 
-	if !strings.Contains(sshkey.Label, "-linodego-testing_r") {
+	if !strings.Contains(sshkey.Label, renamedLabel) {
 		t.Errorf("sshkey returned does not match sshkey update request")
 	}
 }

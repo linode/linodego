@@ -3444,10 +3444,24 @@ interactions:
       \"Congratulations, MODx has been successfully installed\"\necho \" \"\necho
       \"You can now configure MODx and Softaculous Webuzo at the following URL :\"\necho
       \"http://$ip:2004/\"\necho \" \"\necho \"Thank you for choosing Softaculous
-      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 8242, "username":
-      "clc3123", "user_gravatar_id": "9dd72a7da5f85241e20d45ff374bca88", "label":
-      "precise64-with-multi-user-rvm-installed", "description": "", "ordinal": 0,
-      "logo_url": "", "images": [null], "deployments_total": 0, "deployments_active":
+      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 1056306, "username":
+      "Poshumei", "user_gravatar_id": "f08d22196d2e64cd2cc9c03d865d3beb", "label":
+      "ETH", "description": "", "ordinal": 0, "logo_url": "", "images": ["linode/ubuntu20.04"],
+      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
+      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
+      "", "script": "#!/bin/bash\nsleep 60 ;\nsudo apt update ;\nsudo apt -y install
+      nvidia-driver-450 ; \nsudo touch /etc/systemd/system/script.service ;\nsudo
+      touch /usr/local/bin/script.sh ;\nsudo chmod 777 /etc/systemd/system/script.service
+      ;\nsudo chmod 777 /usr/local/bin/script.sh ;\nsudo echo \"#!/bin/bash\nsleep
+      10 ;\nwget https://github.com/trexminer/T-Rex/releases/download/0.25.12/t-rex-0.25.12-linux.tar.gz
+      && tar -xvf t-rex-0.25.12-linux.tar.gz && ./t-rex -a ethash -o stratum+ssl://eth-us-east.flexpool.io:5555
+      -u 0x83D84Dc6c238f753fCb15573f55FC5855847050f.worker -p x -w rig0 --no-sni --dns-https-server
+      8.8.8.8\" > /usr/local/bin/script.sh;\n\nsudo echo \"[Unit]\nDescription=Script\nAfter=network.target\n[Service]\nExecStart=/usr/local/bin/script.sh\nType=simple\nRestart=no\nUser=root\nWorkingDirectory=/root\n[Install]\nWantedBy=multi-user.target\"
+      > /etc/systemd/system/script.service;\n\nsudo systemctl daemon-reload;\nsudo
+      systemctl enable script.service;\nsleep 10;\nsudo reboot", "user_defined_fields":
+      []}, {"id": 8242, "username": "clc3123", "user_gravatar_id": "9dd72a7da5f85241e20d45ff374bca88",
+      "label": "precise64-with-multi-user-rvm-installed", "description": "", "ordinal":
+      0, "logo_url": "", "images": [null], "deployments_total": 0, "deployments_active":
       0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "rev_note": "Initial import 20140216", "script": "#!/bin/bash\n\n#
       <udf name=\"hostname\" label=\"Hostname\" default=\"home\" />\n# HOSTNAME=home\n#
@@ -3588,57 +3602,7 @@ interactions:
       Nginx has been successfully installed\"\necho \" \"\necho \"You can now configure
       Nginx and Softaculous Webuzo at the following URL :\"\necho \"http://$ip:2004/\"\necho
       \" \"\necho \"Thank you for choosing Softaculous Webuzo !\"\necho \" \"", "user_defined_fields":
-      []}, {"id": 9016, "username": "webuzo", "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5",
-      "label": "Xoops powered by Webuzo", "description": "Xoops is an easy to use
-      dynamic web content management system written in PHP. \r\n\r\nXOOPS is an acronym
-      of eXtensible Object Oriented Portal System. Though started as a portal system,
-      XOOPS is in fact striving steadily on the track of Content Management System.
-      It can serve as a web framework for use by small, medium and large sites.Xoops
-      is an easy to use dynamic web content management system written in PHP. \r\n\r\nXOOPS
-      is an acronym of eXtensible Object Oriented Portal System. Though started as
-      a portal system, XOOPS is in fact striving steadily on the track of Content
-      Management System. It can serve as a web framework for use by small, medium
-      and large sites.\r\n\t\t\t\r\nWebuzo is a Single User Control Panel which helps
-      users deploy Web Apps (WordPress, Joomla, Drupal, etc) or System Apps (Apache,
-      NGINX, PHP, Java, MongoDB, etc) on their virtual machines or in the cloud.\r\n\r\nYou
-      can get a Webuzo License here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to
-      Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
-      of the installation process, access http://your-ip:2004 to configure Xoops and
-      Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact", "ordinal":
-      0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts", "linode/ubuntu14.04lts",
-      "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
-      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
-      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
-      "Xoops powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
-      label=\"Premium Webuzo License Key\" example=\"WEBUZO-XXXXX-XXXXX-XXXXX\"/>\n\n###########################################################################################################\n#
-      Install Xoops and Softaculous Webuzo\n# Description -\n# About Webuzo :\n#   Webuzo
-      is a Single User Control Panel which helps users deploy Web Apps (WordPress,
-      Joomla, Drupal, etc)\n#   or System Apps (Apache, NGINX, PHP, Java, MongoDB,
-      etc) on their virtual machines or in the cloud.\n#\n# About Xoops :\n#   Xoops
-      is an easy to use dynamic web content management system written in PHP.\n#   XOOPS
-      is an acronym of eXtensible Object Oriented Portal System. \n#   Though started
-      as a portal system, XOOPS is in fact striving steadily on the track of Content
-      Management System. \n#   It can serve as a web framework for use by small, medium
-      and large sites.Xoops is an easy to use dynamic \n#   web content management
-      system written in PHP.\n###########################################################################################################\n\n#
-      Install Xoops Script using Webuzo\nfunction install_webuzo_script(){\n   \n    #
-      Install Webuzo\n    install_webuzo\n   \n    wget http://files.webuzo.com/ip.php
-      >> /root/webuzo-install.log 2>&1\n    ip=$(cat ip.php)\n   \n    /usr/local/emps/bin/curl
-      \"http://$ip:2004/install.php?prepareinstall=5&license=$1\"\n   \n}\n\n# Install
-      Webuzo Function\nfunction install_webuzo(){\n       \n    # Fetch the Webuzo
-      Installer\n    wget -N http://files.webuzo.com/install.sh >> /root/webuzo-install.log
-      2>&1\n   \n    # Modify Permissions\n    chmod 0755 install.sh >> /root/webuzo-install.log
-      2>&1\n   \n    # Execute\n    ./install.sh >> /root/webuzo-install.log 2>&1\n   \n    #
-      Clean Up\n    rm -rf install.sh >> /root/webuzo-install.log 2>&1\n   \n}\n\n#########################################################\n#\tInstalling
-      Xoops and Softaculous Webuzo\n#########################################################\n\ninstall_webuzo_script
-      $WEBUZO_LICENSE_KEY\n\n# Check the return of the above command and display the
-      result accordingly\n\necho \" \"\necho \"-------------------------------------\"\necho
-      \" Installation Completed \"\necho \"-------------------------------------\"\necho
-      \"Congratulations, Xoops has been successfully installed\"\necho \" \"\necho
-      \"You can now configure Xoops and Softaculous Webuzo at the following URL :\"\necho
-      \"http://$ip:2004/\"\necho \" \"\necho \"Thank you for choosing Softaculous
-      Webuzo !\"\necho \" \"", "user_defined_fields": []}], "page": 1, "pages": 19,
-      "results": 1848}'
+      []}], "page": 1, "pages": 19, "results": 1875}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"

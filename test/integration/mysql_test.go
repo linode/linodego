@@ -2,7 +2,6 @@ package integration
 
 import (
 	"context"
-	"fmt"
 	"reflect"
 	"testing"
 	"time"
@@ -12,13 +11,8 @@ import (
 	"github.com/linode/linodego"
 )
 
-const (
-	testMySQLBackupLabel = "reallycoolbackup"
-	testMySQLDBLabel     = "linodego-test-mysql-database"
-)
-
 var testMySQLCreateOpts = linodego.MySQLCreateOptions{
-	Label:           testMySQLDBLabel,
+	Label:           "go-mysql-test-def",
 	Region:          "us-east",
 	Type:            "g6-nanode-1",
 	Engine:          "mysql/8.0.26",
@@ -73,9 +67,10 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 
 	allowList := []string{"128.173.205.21", "123.177.200.20"}
 
+	updatedLabel := database.Label + "-updated"
 	opts := linodego.MySQLUpdateOptions{
 		AllowList: &allowList,
-		Label:     fmt.Sprintf("%s-updated", database.Label),
+		Label:     updatedLabel,
 		Updates:   &updatedWindow,
 	}
 	db, err = client.UpdateMySQLDatabase(context.Background(), database.ID, opts)
@@ -88,7 +83,7 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 	if db.ID != database.ID {
 		t.Errorf("updated db does not match original id")
 	}
-	if db.Label != fmt.Sprintf("%s-updated", database.Label) {
+	if db.Label != updatedLabel {
 		t.Errorf("label not updated for db")
 	}
 
@@ -148,8 +143,9 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 		t.Fatalf("failed to wait for database updating: %s", err)
 	}
 
+	backupLabel := "mysqlbackupforlinodego"
 	backupOptions := linodego.MySQLBackupCreateOptions{
-		Label:  testMySQLBackupLabel,
+		Label:  backupLabel,
 		Target: linodego.MySQLDatabaseTargetPrimary,
 	}
 
@@ -157,13 +153,13 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 		t.Errorf("failed to create db backup: %v", err)
 	}
 
-	backup, err := client.WaitForMySQLDatabaseBackup(context.Background(), database.ID, testMySQLBackupLabel, 1200)
+	backup, err := client.WaitForMySQLDatabaseBackup(context.Background(), database.ID, backupLabel, 1200)
 	if err != nil {
 		t.Fatalf("failed to wait for backup: %s", err)
 	}
 
-	if backup.Label != testMySQLBackupLabel {
-		t.Fatalf("backup label mismatch: %v != %v", testMySQLBackupLabel, backup.Label)
+	if backup.Label != backupLabel {
+		t.Fatalf("backup label mismatch: %v != %v", backupLabel, backup.Label)
 	}
 
 	backup, err = client.GetMySQLDatabaseBackup(context.Background(), database.ID, backup.ID)
@@ -171,8 +167,8 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 		t.Errorf("failed to get backup %d for db: %v", backup.ID, err)
 	}
 
-	if backup.Label != testMySQLBackupLabel {
-		t.Fatalf("backup label mismatch: %v != %v", testMySQLBackupLabel, backup.Label)
+	if backup.Label != backupLabel {
+		t.Fatalf("backup label mismatch: %v != %v", backupLabel, backup.Label)
 	}
 
 	if backup.Created == nil {

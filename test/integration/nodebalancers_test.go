@@ -10,7 +10,7 @@ import (
 
 var (
 	clientConnThrottle         = 20
-	label                      = randString(12, lowerBytes, digits) + "-linodego-testing"
+	label                      = "go-test-def"
 	testNodeBalancerCreateOpts = linodego.NodeBalancerCreateOptions{
 		Label:              &label,
 		Region:             "us-west",
@@ -27,7 +27,7 @@ func TestNodeBalancer_Create(t *testing.T) {
 	}
 
 	// when comparing fixtures to random value Label will differ, compare the known suffix
-	if !strings.Contains(*nodebalancer.Label, "-linodego-testing") {
+	if !strings.Contains(*nodebalancer.Label, label) {
 		t.Errorf("nodebalancer returned does not match nodebalancer create request")
 	}
 
@@ -52,7 +52,7 @@ func TestNodeBalancer_Update(t *testing.T) {
 		t.Errorf("Error renaming nodebalancer, %s", err)
 	}
 
-	if !strings.Contains(*nodebalancer.Label, "-linodego-testing_r") {
+	if !strings.Contains(*nodebalancer.Label, renamedLabel) {
 		t.Errorf("nodebalancer returned does not match nodebalancer create request")
 	}
 }

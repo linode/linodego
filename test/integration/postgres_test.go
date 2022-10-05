@@ -2,7 +2,6 @@ package integration
 
 import (
 	"context"
-	"fmt"
 	"reflect"
 	"testing"
 	"time"
@@ -12,13 +11,8 @@ import (
 	"github.com/linode/linodego"
 )
 
-const (
-	testPostgresBackupLabel = "reallycoolbackup"
-	testPostgresDBLabel     = "linodego-test-postgres-database"
-)
-
 var testPostgresCreateOpts = linodego.PostgresCreateOptions{
-	Label:           testPostgresDBLabel,
+	Label:           "go-postgres-testing-def",
 	Region:          "us-east",
 	Type:            "g6-nanode-1",
 	Engine:          "postgresql/10.14",
@@ -73,9 +67,10 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 
 	allowList := []string{"128.173.205.21", "123.177.200.20"}
 
+	updatedLabel := database.Label + "-updated"
 	opts := linodego.PostgresUpdateOptions{
 		AllowList: &allowList,
-		Label:     fmt.Sprintf("%s-updated", database.Label),
+		Label:     updatedLabel,
 		Updates:   &updatedWindow,
 	}
 	db, err = client.UpdatePostgresDatabase(context.Background(), database.ID, opts)
@@ -88,7 +83,7 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 	if db.ID != database.ID {
 		t.Errorf("updated db does not match original id")
 	}
-	if db.Label != fmt.Sprintf("%s-updated", database.Label) {
+	if db.Label != updatedLabel {
 		t.Errorf("label not updated for db")
 	}
 
@@ -152,8 +147,9 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 		t.Fatalf("failed to wait for database updating: %s", err)
 	}
 
+	backupLabel := "postgresbackupforlinodego"
 	backupOptions := linodego.PostgresBackupCreateOptions{
-		Label:  testPostgresBackupLabel,
+		Label:  backupLabel,
 		Target: linodego.PostgresDatabaseTargetPrimary,
 	}
 
@@ -161,13 +157,13 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 		t.Errorf("failed to create db backup: %v", err)
 	}
 
-	backup, err := client.WaitForPostgresDatabaseBackup(context.Background(), database.ID, testPostgresBackupLabel, 1200)
+	backup, err := client.WaitForPostgresDatabaseBackup(context.Background(), database.ID, backupLabel, 1200)
 	if err != nil {
 		t.Fatalf("failed to wait for backup: %s", err)
 	}
 
-	if backup.Label != testPostgresBackupLabel {
-		t.Fatalf("backup label mismatch: %v != %v", testPostgresBackupLabel, backup.Label)
+	if backup.Label != backupLabel {
+		t.Fatalf("backup label mismatch: %v != %v", backupLabel, backup.Label)
 	}
 
 	backup, err = client.GetPostgresDatabaseBackup(context.Background(), database.ID, backup.ID)
@@ -175,8 +171,8 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 		t.Errorf("failed to get backup %d for db: %v", backup.ID, err)
 	}
 
-	if backup.Label != testPostgresBackupLabel {
-		t.Fatalf("backup label mismatch: %v != %v", testPostgresBackupLabel, backup.Label)
+	if backup.Label != backupLabel {
+		t.Fatalf("backup label mismatch: %v != %v", backupLabel, backup.Label)
 	}
 
 	// Wait for the DB to re-enter active status before final deletion

@@ -13,7 +13,7 @@ func TestVolume_Create(t *testing.T) {
 	defer teardown()
 
 	createOpts := linodego.VolumeCreateOptions{
-		Label:  "linodego-test-volume-" + randString(8, lowerBytes, digits),
+		Label:  "go-vol-test-create",
 		Region: "us-southeast",
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
@@ -109,7 +109,7 @@ func TestVolume_WaitForLinodeID(t *testing.T) {
 	defer teardownInstance()
 
 	createConfigOpts := linodego.InstanceConfigCreateOptions{
-		Label:   "test-instance-volume-" + randString(8, lowerBytes, digits),
+		Label:   "go-config-test-wait",
 		Devices: linodego.InstanceConfigDeviceMap{},
 	}
 	config, errConfig := client.CreateInstanceConfig(context.Background(), instance.ID, createConfigOpts)
@@ -150,8 +150,9 @@ func TestVolume_Update(t *testing.T) {
 		t.Errorf("Error setting up volume test, %s", err)
 	}
 	defer teardown()
+	updatedLabel := volume.Label + "-updated"
 	updateOpts := linodego.VolumeUpdateOptions{
-		Label: "our-testing-volume",
+		Label: updatedLabel,
 	}
 	volume, err = client.UpdateVolume(context.Background(), volume.ID, updateOpts)
 	if err != nil {
@@ -160,7 +161,7 @@ func TestVolume_Update(t *testing.T) {
 	if volume.ID == 0 {
 		t.Errorf("Expected a volumes id, but got 0")
 	}
-	if volume.Label != "our-testing-volume" {
+	if volume.Label != updatedLabel {
 		t.Errorf("Expected volume label to be equal to updated volume label")
 	}
 	assertDateSet(t, volume.Created)
@@ -172,7 +173,7 @@ func setupVolume(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := linodego.VolumeCreateOptions{
-		Label:  "linodego-test-volume-" + randString(8, lowerBytes, digits),
+		Label:  "go-vol-test-def",
 		Region: "us-west",
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)

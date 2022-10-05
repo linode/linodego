@@ -9,7 +9,7 @@ import (
 
 var (
 	testNodePort                   = "8080"
-	testNodeLabel                  = "test-label"
+	testNodeLabel                  = "go-node-test-def"
 	testNodeWeight                 = 10
 	testNodeBalancerNodeCreateOpts = linodego.NodeBalancerNodeCreateOptions{
 		Label:  testNodeLabel,

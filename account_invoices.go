@@ -36,13 +36,8 @@ type InvoicesPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for Invoice
-func (InvoicesPagedResponse) endpoint(c *Client, _ ...any) string {
-	endpoint, err := c.Invoices.Endpoint()
-	if err != nil {
-		panic(err)
-	}
-
-	return endpoint
+func (InvoicesPagedResponse) endpoint(_ ...any) string {
+	return "account/invoices"
 }
 
 func (resp *InvoicesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
@@ -109,14 +104,10 @@ func (i *InvoiceItem) UnmarshalJSON(b []byte) error {
 }
 
 // GetInvoice gets the a single Invoice matching the provided ID
-func (c *Client) GetInvoice(ctx context.Context, id int) (*Invoice, error) {
-	e, err := c.Invoices.Endpoint()
-	if err != nil {
-		return nil, err
-	}
-
-	e = fmt.Sprintf("%s/%d", e, id)
-	r, err := coupleAPIErrors(c.R(ctx).SetResult(&Invoice{}).Get(e))
+func (c *Client) GetInvoice(ctx context.Context, invoiceID int) (*Invoice, error) {
+	req := c.R(ctx).SetResult(&Invoice{})
+	e := fmt.Sprintf("account/invoices/%d", invoiceID)
+	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
 		return nil, err
 	}
@@ -130,15 +121,10 @@ type InvoiceItemsPagedResponse struct {
 	Data []InvoiceItem `json:"data"`
 }
 
-// endpointWithID gets the endpoint URL for InvoiceItems associated with a specific Invoice
-func (InvoiceItemsPagedResponse) endpoint(c *Client, ids ...any) string {
+// endpoint gets the endpoint URL for InvoiceItems associated with a specific Invoice
+func (InvoiceItemsPagedResponse) endpoint(ids ...any) string {
 	id := ids[0].(int)
-	endpoint, err := c.InvoiceItems.endpointWithParams(id)
-	if err != nil {
-		panic(err)
-	}
-
-	return endpoint
+	return fmt.Sprintf("account/invoices/%d/items", id)
 }
 
 func (resp *InvoiceItemsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
@@ -152,9 +138,9 @@ func (resp *InvoiceItemsPagedResponse) castResult(r *resty.Request, e string) (i
 }
 
 // ListInvoiceItems gets the invoice items associated with a specific Invoice
-func (c *Client) ListInvoiceItems(ctx context.Context, id int, opts *ListOptions) ([]InvoiceItem, error) {
+func (c *Client) ListInvoiceItems(ctx context.Context, invoiceID int, opts *ListOptions) ([]InvoiceItem, error) {
 	response := InvoiceItemsPagedResponse{}
-	err := c.listHelper(ctx, &response, opts, id)
+	err := c.listHelper(ctx, &response, opts, invoiceID)
 	if err != nil {
 		return nil, err
 	}
