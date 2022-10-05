@@ -92,7 +92,7 @@ func setupDomain(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 
 	createOpts := testDomainCreateOpts
-	createOpts.Domain = randLabel() + "-go-test.com"
+	createOpts.Domain = "linodego-blue-test.com"
 
 	domain, err := client.CreateDomain(context.Background(), createOpts)
 	if err != nil {

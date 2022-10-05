@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-southeast","type":"g6-nanode-1","label":"go-ins-test-8u8y0pcv302i","tags":["go-tag-test"]}'
+    body: '{"region":"us-southeast","type":"g6-nanode-1","label":"go-ins-test-tag","tags":["go-tag-test"]}'
     form: {}
     headers:
       Accept:
@@ -14,9 +14,9 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 38777540, "label": "go-ins-test-8u8y0pcv302i", "group": "", "status":
-      "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["139.144.20.26"], "ipv6": "1234::5678/128",
+    body: '{"id": 39241070, "label": "go-ins-test-tag", "group": "", "status": "provisioning",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "type":
+      "g6-nanode-1", "ipv4": ["45.56.116.40"], "ipv6": "1234::5678/128",
       "image": null, "region": "us-southeast", "specs": {"disk": 25600, "memory":
       1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
@@ -36,7 +36,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "646"
+      - "636"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -64,7 +64,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-ins-test-8u8y0pcv302i","alerts":{"cpu":90,"io":10000,"network_in":10,"network_out":10,"transfer_quota":80},"watchdog_enabled":true,"tags":["go-tag-test","go-tag-test-bar"]}'
+    body: '{"label":"go-ins-test-tag","alerts":{"cpu":90,"io":10000,"network_in":10,"network_out":10,"transfer_quota":80},"watchdog_enabled":true,"tags":["go-tag-test","go-tag-test-bar"]}'
     form: {}
     headers:
       Accept:
@@ -73,12 +73,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/38777540
+    url: https://api.linode.com/v4beta/linode/instances/39241070
     method: PUT
   response:
-    body: '{"id": 38777540, "label": "go-ins-test-8u8y0pcv302i", "group": "", "status":
-      "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["139.144.20.26"], "ipv6": "1234::5678/128",
+    body: '{"id": 39241070, "label": "go-ins-test-tag", "group": "", "status": "provisioning",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "type":
+      "g6-nanode-1", "ipv4": ["45.56.116.40"], "ipv6": "1234::5678/128",
       "image": null, "region": "us-southeast", "specs": {"disk": 25600, "memory":
       1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
@@ -98,7 +98,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "665"
+      - "655"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -126,7 +126,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-tag-test-foo","linodes":[38777540]}'
+    body: '{"label":"go-tag-test-foo","linodes":[39241070]}'
     form: {}
     headers:
       Accept:
@@ -254,9 +254,9 @@ interactions:
     method: GET
   response:
     body: '{"page": 1, "pages": 1, "results": 1, "data": [{"type": "linode", "data":
-      {"id": 38777540, "label": "go-ins-test-8u8y0pcv302i", "group": "", "status":
-      "offline", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["139.144.20.26"], "ipv6": "1234::5678/128",
+      {"id": 39241070, "label": "go-ins-test-tag", "group": "", "status": "offline",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "type":
+      "g6-nanode-1", "ipv4": ["45.56.116.40"], "ipv6": "1234::5678/128",
       "image": null, "region": "us-southeast", "specs": {"disk": 25600, "memory":
       1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
@@ -278,7 +278,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "756"
+      - "746"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -481,7 +481,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/38777540
+    url: https://api.linode.com/v4beta/linode/instances/39241070
     method: DELETE
   response:
     body: '{}'

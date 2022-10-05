@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"go-vol-testta8209nr4c9c","region":"us-west","tags":null}'
+    body: '{"label":"go-vol-test-def","region":"us-west","tags":null}'
     form: {}
     headers:
       Accept:
@@ -14,9 +14,9 @@ interactions:
     url: https://api.linode.com/v4beta/volumes
     method: POST
   response:
-    body: '{"id": 518615, "status": "creating", "label": "go-vol-testta8209nr4c9c",
-      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
-      "/dev/disk/by-id/scsi-0Linode_Volume_go-vol-testta8209nr4c9c", "size": 20, "linode_id":
+    body: '{"id": 554554, "status": "creating", "label": "go-vol-test-def", "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
+      "/dev/disk/by-id/scsi-0Linode_Volume_go-vol-test-def", "size": 20, "linode_id":
       null, "linode_label": null, "region": "us-west", "tags": [], "hardware_type":
       "hdd"}'
     headers:
@@ -33,7 +33,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "332"
+      - "316"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -61,7 +61,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"linode_id":38777571,"config_id":41303361}'
+    body: '{"linode_id":39241125,"config_id":41782406}'
     form: {}
     headers:
       Accept:
@@ -70,13 +70,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/volumes/518615/attach
+    url: https://api.linode.com/v4beta/volumes/554554/attach
     method: POST
   response:
-    body: '{"id": 518615, "status": "creating", "label": "go-vol-testta8209nr4c9c",
-      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
-      "/dev/disk/by-id/scsi-0Linode_Volume_go-vol-testta8209nr4c9c", "size": 20, "linode_id":
-      38777571, "linode_label": "go-test-ins-2p3v12nfmy50", "region": "us-west", "tags":
+    body: '{"id": 554554, "status": "creating", "label": "go-vol-test-def", "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
+      "/dev/disk/by-id/scsi-0Linode_Volume_go-vol-test-def", "size": 20, "linode_id":
+      39241125, "linode_label": "go-test-ins-8xlpp90z4p35", "region": "us-west", "tags":
       [], "hardware_type": "hdd"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -92,7 +92,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "358"
+      - "342"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -129,13 +129,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/volumes/518615
+    url: https://api.linode.com/v4beta/volumes/554554
     method: GET
   response:
-    body: '{"id": 518615, "status": "active", "label": "go-vol-testta8209nr4c9c",
-      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
-      "/dev/disk/by-id/scsi-0Linode_Volume_go-vol-testta8209nr4c9c", "size": 20, "linode_id":
-      38777571, "linode_label": "go-test-ins-2p3v12nfmy50", "region": "us-west", "tags":
+    body: '{"id": 554554, "status": "active", "label": "go-vol-test-def", "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
+      "/dev/disk/by-id/scsi-0Linode_Volume_go-vol-test-def", "size": 20, "linode_id":
+      39241125, "linode_label": "go-test-ins-8xlpp90z4p35", "region": "us-west", "tags":
       [], "hardware_type": "hdd"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -152,7 +152,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "356"
+      - "340"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -190,7 +190,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/volumes/518615
+    url: https://api.linode.com/v4beta/volumes/554554
     method: DELETE
   response:
     body: '{}'

@@ -23,7 +23,7 @@ func TestEventPoller_InstancePower(t *testing.T) {
 		Type:     "g6-nanode-1",
 		Image:    "linode/ubuntu22.04",
 		RootPass: "c00lp@ss!",
-		Label:    "go-ins-poll-test-" + randLabel(),
+		Label:    "go-ins-poll-test",
 		Booted:   &booted,
 	})
 	if err != nil {

@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"go-test-h71e8x50rb3w","region":"us-west","client_conn_throttle":20,"tags":null}'
+    body: '{"label":"go-test-def","region":"us-west","client_conn_throttle":20,"tags":null}'
     form: {}
     headers:
       Accept:
@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 253480, "label": "go-test-h71e8x50rb3w", "region": "us-west", "hostname":
-      "104-200-27-86.ip.linodeusercontent.com", "ipv4": "104.200.27.86", "ipv6": "1234::5678",
+    body: '{"id": 258013, "label": "go-test-def", "region": "us-west", "hostname":
+      "45-79-230-213.ip.linodeusercontent.com", "ipv4": "45.79.230.213", "ipv6": "1234::5678",
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "client_conn_throttle":
       20, "tags": [], "transfer": {"in": null, "out": null, "total": null}}'
     headers:
@@ -32,7 +32,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "343"
+      - "334"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -60,7 +60,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-h71e8x50rb3w_r"}'
+    body: '{"label":"go-test-def_r"}'
     form: {}
     headers:
       Accept:
@@ -69,14 +69,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/253480
+    url: https://api.linode.com/v4beta/nodebalancers/258013
     method: PUT
   response:
-    body: '{"id": 253480, "label": "go-test-h71e8x50rb3w_r", "region": "us-west",
-      "hostname": "104-200-27-86.ip.linodeusercontent.com", "ipv4": "104.200.27.86",
-      "ipv6": "1234::5678", "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "client_conn_throttle": 20, "tags": [], "transfer": {"in":
-      null, "out": null, "total": null}}'
+    body: '{"id": 258013, "label": "go-test-def_r", "region": "us-west", "hostname":
+      "45-79-230-213.ip.linodeusercontent.com", "ipv4": "45.79.230.213", "ipv6": "1234::5678",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "client_conn_throttle":
+      20, "tags": [], "transfer": {"in": null, "out": null, "total": null}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -91,7 +90,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "345"
+      - "336"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -128,7 +127,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/253480
+    url: https://api.linode.com/v4beta/nodebalancers/258013
     method: DELETE
   response:
     body: '{}'

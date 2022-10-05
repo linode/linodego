@@ -12,7 +12,7 @@ import (
 )
 
 var testMySQLCreateOpts = linodego.MySQLCreateOptions{
-	Label:           "go-mysql-test-" + randLabel(),
+	Label:           "go-mysql-test-def",
 	Region:          "us-east",
 	Type:            "g6-nanode-1",
 	Engine:          "mysql/8.0.26",
@@ -143,7 +143,7 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 		t.Fatalf("failed to wait for database updating: %s", err)
 	}
 
-	backupLabel := "mysqlbackup" + randLabel()
+	backupLabel := "mysqlbackupforlinodego"
 	backupOptions := linodego.MySQLBackupCreateOptions{
 		Label:  backupLabel,
 		Target: linodego.MySQLDatabaseTargetPrimary,

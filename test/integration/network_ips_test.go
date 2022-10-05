@@ -143,7 +143,7 @@ func TestIPAddress_Instance_Assign(t *testing.T) {
 	}
 
 	newInstance, err := createInstance(t, client, func(options *InstanceCreateOptions) {
-		options.Label = "go-ins-test-" + randLabel()
+		options.Label = "go-ins-test-assign"
 		options.Region = instance.Region
 	})
 
@@ -205,7 +205,7 @@ func TestIPAddress_Instance_Share(t *testing.T) {
 	}
 
 	newInstance, err := createInstance(t, client, func(options *InstanceCreateOptions) {
-		options.Label = "go-ins-test-" + randLabel()
+		options.Label = "go-ins-test-share"
 		options.Region = instance.Region
 	})
 

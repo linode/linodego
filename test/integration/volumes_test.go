@@ -13,7 +13,7 @@ func TestVolume_Create(t *testing.T) {
 	defer teardown()
 
 	createOpts := linodego.VolumeCreateOptions{
-		Label:  "go-vol-test-" + randLabel(),
+		Label:  "go-vol-test-create",
 		Region: "us-southeast",
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
@@ -109,7 +109,7 @@ func TestVolume_WaitForLinodeID(t *testing.T) {
 	defer teardownInstance()
 
 	createConfigOpts := linodego.InstanceConfigCreateOptions{
-		Label:   "go-config-test-" + randLabel(),
+		Label:   "go-config-test-wait",
 		Devices: linodego.InstanceConfigDeviceMap{},
 	}
 	config, errConfig := client.CreateInstanceConfig(context.Background(), instance.ID, createConfigOpts)
@@ -173,7 +173,7 @@ func setupVolume(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := linodego.VolumeCreateOptions{
-		Label:  "go-vol-test" + randLabel(),
+		Label:  "go-vol-test-def",
 		Region: "us-west",
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)

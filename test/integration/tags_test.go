@@ -94,7 +94,7 @@ func setupTaggedInstance(t *testing.T, fixturesYaml string) (*Client, *Instance,
 	t.Helper()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := InstanceCreateOptions{
-		Label:  "go-ins-test-" + randLabel(),
+		Label:  "go-ins-test-tag",
 		Region: "us-southeast",
 		Type:   "g6-nanode-1",
 		Tags:   []string{"go-tag-test"},

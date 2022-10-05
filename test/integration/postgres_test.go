@@ -12,7 +12,7 @@ import (
 )
 
 var testPostgresCreateOpts = linodego.PostgresCreateOptions{
-	Label:           "go-postgres-test-" + randLabel(),
+	Label:           "go-postgres-testing-def",
 	Region:          "us-east",
 	Type:            "g6-nanode-1",
 	Engine:          "postgresql/10.14",
@@ -147,7 +147,7 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 		t.Fatalf("failed to wait for database updating: %s", err)
 	}
 
-	backupLabel := "postgresbackup" + randLabel()
+	backupLabel := "postgresbackupforlinodego"
 	backupOptions := linodego.PostgresBackupCreateOptions{
 		Label:  backupLabel,
 		Target: linodego.PostgresDatabaseTargetPrimary,

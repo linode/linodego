@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"go-test-h71e8x50rb3w","bucket_access":[{"cluster":"us-east-1","bucket_name":"go-bucket-test-x90c52z1a6je","permissions":"read_only"},{"cluster":"us-east-1","bucket_name":"go-bucket-test-x90c52z1a6je","permissions":"read_write"}]}'
+    body: '{"label":"go-test-def","bucket_access":[{"cluster":"us-east-1","bucket_name":"go-bucket-test-def","permissions":"read_only"},{"cluster":"us-east-1","bucket_name":"go-bucket-test-def","permissions":"read_write"}]}'
     form: {}
     headers:
       Accept:
@@ -14,11 +14,10 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/keys
     method: POST
   response:
-    body: '{"id": 350703, "label": "go-test-h71e8x50rb3w", "access_key": "[SANITIZED]",
-      "secret_key": "[SANITIZED]", "limited": true, "bucket_access": [{"cluster":
-      "us-east-1", "bucket_name": "go-bucket-test-x90c52z1a6je", "permissions": "read_only"},
-      {"cluster": "us-east-1", "bucket_name": "go-bucket-test-x90c52z1a6je", "permissions":
-      "read_write"}]}'
+    body: '{"id": 358564, "label": "go-test-def", "access_key": "[SANITIZED]", "secret_key":
+      "[SANITIZED]", "limited": true, "bucket_access": [{"cluster": "us-east-1", "bucket_name":
+      "go-bucket-test-def", "permissions": "read_only"}, {"cluster": "us-east-1",
+      "bucket_name": "go-bucket-test-def", "permissions": "read_write"}]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -33,7 +32,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "380"
+      - "353"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -70,7 +69,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/350703
+    url: https://api.linode.com/v4beta/object-storage/keys/358564
     method: DELETE
   response:
     body: '{}'

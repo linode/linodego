@@ -2218,27 +2218,12 @@ interactions:
       "Initial import", "script": "#!/bin/bash\n##\n# Installs the Sensu omnibus package\n#\n#
       This package contains all of the different Sensu components. Use specific scripts\n#
       to configure each component on different nodes.\n##\nset -eux\n\nsource env.sh\n\n$BASE_PATH/configure-repo-sensu.sh\n\napt-get
-      install -yq sensu", "user_defined_fields": []}, {"id": 1050651, "username":
-      "surojith123", "user_gravatar_id": "8f1e67167ba83643c61e0e9aa11a057d", "label":
-      "aaPanel", "description": "This StackScript installs and configures aaPanel",
-      "ordinal": 0, "logo_url": "", "images": ["linode/ubuntu18.04", "linode/ubuntu16.04lts"],
-      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
-      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
-      "aaPanel Installation", "script": "#!/bin/bash\nexec 1> >(tee -a \"/var/log/stackscript.log\")
-      2>&1\n# updates\napt-get -o Acquir1234::5678orceIPv4=true update -y\nsudo DEBIAN_FRONTEND=noninteractive
-      apt-get -y -o DPkg1234::5678options1234::5678=\"--force-confdef\" -o DPkg1234::5678options1234::5678=\"--force-confold\"  install
-      grub-pc\napt-get -o Acquir1234::5678orceIPv4=true update -y\n# hostname\nIP=`hostname
-      -I | awk ''{print$1}''`\nHOSTNAME=`dnsdomainname -A`\nhostnamectl set-hostname
-      $HOSTNAME\necho $IP $HOSTNAME  >> /etc/hosts\n#install\napt-get install -y wget\nwget
-      -O install.sh http://www.aapanel.com/script/install-ubuntu_6.0_en.sh && sudo
-      bash install.sh\necho ''Acquir1234::5678orceIPv4 \"true\";'' > /etc/apt/apt.conf.d/99force-ipv4\nexport
-      DEBIAN_FRONTEND=noninteractive \napt-get upgrade -y\necho \"Installation complete!\"",
-      "user_defined_fields": []}, {"id": 9243, "username": "webuzo", "user_gravatar_id":
-      "cf0348f835d60e6d133040f49bb36ec5", "label": "Little Software Stats powered
-      by Webuzo", "description": "Little Software Stats is a web application that
-      allows users to monitor their software.\r\n\r\nLittle Software Stats is the
-      first runtime intelligence software released as open source and free. It is
-      designed and developed through MySQL and PHP which will allow most web servers
+      install -yq sensu", "user_defined_fields": []}, {"id": 9243, "username": "webuzo",
+      "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5", "label": "Little Software
+      Stats powered by Webuzo", "description": "Little Software Stats is a web application
+      that allows users to monitor their software.\r\n\r\nLittle Software Stats is
+      the first runtime intelligence software released as open source and free. It
+      is designed and developed through MySQL and PHP which will allow most web servers
       to run it. Little Software Stats allows users to collect information including
       executions, installations, exceptions, and geographical location.\r\n\r\nWebuzo
       is a Single User Control Panel which helps users deploy Web Apps (WordPress,
@@ -3581,8 +3566,43 @@ interactions:
       ["linode/debian7"], "deployments_total": 0, "deployments_active": 0, "is_public":
       true, "mine": false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "rev_note": "Initial import", "script": "#!/bin/bash\ncurl -s https://lv.linode.com/gzkA
-      | sudo bash", "user_defined_fields": []}], "page": 1, "pages": 19, "results":
-      1863}'
+      | sudo bash", "user_defined_fields": []}, {"id": 9271, "username": "webuzo",
+      "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5", "label": "Nginx powered
+      by Webuzo", "description": "Nginx does mot rely on threads to handle requests.
+      Instead it uses a much more scalable event-driven (asynchronous) architecture.
+      This architecture uses small, but more importantly, predictable amounts of memory
+      under load.\r\n\t\t\t\r\nWebuzo is a Single User Control Panel which helps users
+      deploy Web Apps (WordPress, Joomla, Drupal, etc) or System Apps (Apache, NGINX,
+      PHP, Java, MongoDB, etc) on their virtual machines or in the cloud.\r\n\r\nPath
+      to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
+      of the installation process, access http://your-ip:2004 to configure Softaculous
+      Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact", "ordinal": 0,
+      "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts", "linode/ubuntu14.04lts",
+      "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
+      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
+      "Nginx powered by Webuzo", "script": "#!/bin/bash\n\n###########################################################################################################\n#
+      Install Nginx and Softaculous Webuzo\n# Description -\n# About Webuzo :\n#   Webuzo
+      is a Single User Control Panel which helps users deploy Web Apps (WordPress,
+      Joomla, Drupal, etc)\n#   or System Apps (Apache, NGINX, PHP, Java, MongoDB,
+      etc) on their virtual machines or in the cloud.\n#\n# About Nginx :\n#   Nginx
+      does mot rely on threads to handle requests. Instead it uses a much more scalable
+      \n#   event-driven (asynchronous) architecture. This architecture uses small,
+      but more importantly, \n#   predictable amounts of memory under load.\n###########################################################################################################\n\n#
+      Install Nginx application using Webuzo\nfunction install_webuzo(){\n       \n    #
+      Fetch the Webuzo Installer\n    wget -N http://files.webuzo.com/install.sh >>
+      /root/webuzo-install.log 2>&1\n   \n    # Modify Permissions\n    chmod 0755
+      install.sh >> /root/webuzo-install.log 2>&1\n   \n    # Execute\n    ./install.sh
+      --install=nginx >> /root/webuzo-install.log 2>&1\n   \n    # Clean Up\n    rm
+      -rf install.sh >> /root/webuzo-install.log 2>&1\n   \n}\n\n#########################################################\n#\tInstalling
+      Nginx using Softaculous Webuzo\n#########################################################\n\ninstall_webuzo\n\n#
+      Check the return of the above command and display the result accordingly\n\necho
+      \" \"\necho \"-------------------------------------\"\necho \" Installation
+      Completed \"\necho \"-------------------------------------\"\necho \"Congratulations,
+      Nginx has been successfully installed\"\necho \" \"\necho \"You can now configure
+      Nginx and Softaculous Webuzo at the following URL :\"\necho \"http://$ip:2004/\"\necho
+      \" \"\necho \"Thank you for choosing Softaculous Webuzo !\"\necho \" \"", "user_defined_fields":
+      []}], "page": 1, "pages": 19, "results": 1875}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"

@@ -18,7 +18,7 @@ func (c *Client) CancelObjectStorage(ctx context.Context) error {
 
 // GetObjectStorageTransfer returns the amount of outbound data transferred used by the Account
 func (c *Client) GetObjectStorageTransfer(ctx context.Context) (*ObjectStorageTransfer, error) {
-	e := "object-storage/cancel/transfer"
+	e := "object-storage/transfer"
 	req := c.R(ctx).SetResult(&ObjectStorageTransfer{})
 	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {

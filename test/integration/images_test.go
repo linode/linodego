@@ -67,7 +67,7 @@ func TestImage_Upload(t *testing.T) {
 
 	image, uploadURL, err := client.CreateImageUpload(context.Background(), ImageCreateUploadOptions{
 		Region:      "us-southeast",
-		Label:       "go-image-test-" + randLabel(),
+		Label:       "linodego-image-test",
 		Description: "An image that does stuff.",
 	})
 	if err != nil {

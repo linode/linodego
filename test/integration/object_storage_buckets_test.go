@@ -9,7 +9,7 @@ import (
 
 var testObjectStorageBucketCreateOpts = ObjectStorageBucketCreateOptions{
 	Cluster: "us-east-1",
-	Label:   "go-bucket-test-" + randLabel(),
+	Label:   "go-bucket-test-def",
 }
 
 func TestObjectStorageBucket_Create(t *testing.T) {
@@ -25,7 +25,7 @@ func TestObjectStorageBucket_Create(t *testing.T) {
 	expected := testObjectStorageBucketCreateOpts
 
 	// when comparing fixtures to random value Label will differ, compare the known prefix
-	if bucket.Label[:22] != expected.Label[:22] ||
+	if bucket.Label != expected.Label ||
 		bucket.Cluster != expected.Cluster {
 		t.Errorf("Object Storage Bucket did not match CreateOptions")
 	}
@@ -75,7 +75,7 @@ func TestObjectStorageBucket_GetFound(t *testing.T) {
 	expected := testObjectStorageBucketCreateOpts
 
 	// when comparing fixtures to random value Label will differ, compare the known prefix
-	if bucket.Label[:22] != expected.Label[:22] ||
+	if bucket.Label != expected.Label ||
 		bucket.Cluster != expected.Cluster {
 		t.Errorf("Object Storage Bucket did not match CreateOptions")
 	}

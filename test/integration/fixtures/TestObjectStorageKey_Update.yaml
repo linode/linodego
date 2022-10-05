@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"go-test-h71e8x50rb3w","bucket_access":null}'
+    body: '{"label":"go-test-def","bucket_access":null}'
     form: {}
     headers:
       Accept:
@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/keys
     method: POST
   response:
-    body: '{"id": 350739, "label": "go-test-h71e8x50rb3w", "access_key": "[SANITIZED]",
-      "secret_key": "[SANITIZED]", "limited": false, "bucket_access": null}'
+    body: '{"id": 358562, "label": "go-test-def", "access_key": "[SANITIZED]", "secret_key":
+      "[SANITIZED]", "limited": false, "bucket_access": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -30,7 +30,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "184"
+      - "175"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -58,7 +58,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-h71e8x50rb3w_r"}'
+    body: '{"label":"go-test-def_r"}'
     form: {}
     headers:
       Accept:
@@ -67,11 +67,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/350739
+    url: https://api.linode.com/v4beta/object-storage/keys/358562
     method: PUT
   response:
-    body: '{"id": 350739, "label": "go-test-h71e8x50rb3w_r", "access_key": "[SANITIZED]",
-      "secret_key": "[REDACTED]", "limited": false, "bucket_access": null}'
+    body: '{"id": 358562, "label": "go-test-def_r", "access_key": "[SANITIZED]", "secret_key":
+      "[REDACTED]", "limited": false, "bucket_access": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -86,7 +86,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "156"
+      - "147"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -123,7 +123,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/350739
+    url: https://api.linode.com/v4beta/object-storage/keys/358562
     method: DELETE
   response:
     body: '{}'

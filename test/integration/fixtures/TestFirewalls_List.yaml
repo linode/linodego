@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"go-fw-test-g01b9hl06pb3","rules":{"inbound":[{"action":"ACCEPT","label":"go-fwrule-test-bzi7l8090x1m","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":[{"action":"ACCEPT","label":"go-fwrule-test-bzi7l8090x1m","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
+    body: '{"label":"linodego-fw-test","rules":{"inbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
     form: {}
     headers:
       Accept:
@@ -14,13 +14,13 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 85998, "label": "go-fw-test-g01b9hl06pb3", "created": "2018-01-02T03:04:05",
+    body: '{"id": 89718, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
-      [{"action": "ACCEPT", "label": "go-fwrule-test-bzi7l8090x1m", "ports": "22",
-      "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}],
-      "inbound_policy": "ACCEPT", "outbound": [{"action": "ACCEPT", "label": "go-fwrule-test-bzi7l8090x1m",
-      "ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6":
-      ["1234::5678/0"]}}], "outbound_policy": "ACCEPT"}, "tags": ["testing"]}'
+      [{"action": "ACCEPT", "label": "go-fwrule-test", "ports": "22", "protocol":
+      "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy":
+      "ACCEPT", "outbound": [{"action": "ACCEPT", "label": "go-fwrule-test", "ports":
+      "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}],
+      "outbound_policy": "ACCEPT"}, "tags": ["testing"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -35,7 +35,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "558"
+      - "525"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -75,14 +75,14 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: GET
   response:
-    body: '{"data": [{"id": 85998, "label": "go-fw-test-g01b9hl06pb3", "created":
-      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "status": "enabled",
-      "rules": {"inbound": [{"action": "ACCEPT", "label": "go-fwrule-test-bzi7l8090x1m",
-      "ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6":
-      ["1234::5678/0"]}}], "inbound_policy": "ACCEPT", "outbound": [{"action": "ACCEPT", "label":
-      "go-fwrule-test-bzi7l8090x1m", "ports": "22", "protocol": "TCP", "addresses":
-      {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "outbound_policy": "ACCEPT"}, "tags":
-      ["testing"]}], "page": 1, "pages": 1, "results": 1}'
+    body: '{"data": [{"id": 89718, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
+      [{"action": "ACCEPT", "label": "go-fwrule-test", "ports": "22", "protocol":
+      "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy":
+      "ACCEPT", "outbound": [{"action": "ACCEPT", "label": "go-fwrule-test", "ports":
+      "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}],
+      "outbound_policy": "ACCEPT"}, "tags": ["testing"]}], "page": 1, "pages": 1,
+      "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -98,7 +98,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "607"
+      - "574"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -136,7 +136,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/85998
+    url: https://api.linode.com/v4beta/networking/firewalls/89718
     method: DELETE
   response:
     body: '{}'

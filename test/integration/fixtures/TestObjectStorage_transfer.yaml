@@ -11,33 +11,50 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/cancel/transfer
+    url: https://api.linode.com/v4beta/object-storage/transfer
     method: GET
   response:
-    body: '{"errors": [{"reason": "Not found"}]}'
+    body: '{"used": 0}'
     headers:
+      Access-Control-Allow-Credentials:
+      - "true"
       Access-Control-Allow-Headers:
       - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
       Access-Control-Allow-Methods:
       - HEAD, GET, OPTIONS, POST, PUT, DELETE
       Access-Control-Allow-Origin:
       - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
       Content-Length:
-      - "37"
+      - "11"
+      Content-Security-Policy:
+      - default-src 'none'
       Content-Type:
       - application/json
       Server:
       - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
       Vary:
       - Authorization, X-Filter
+      - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - '*'
+      - object_storage:read_only
+      X-Content-Type-Options:
+      - nosniff
       X-Frame-Options:
       - DENY
+      - DENY
       X-Oauth-Scopes:
-      - unknown
-    status: 404 Not Found
-    code: 404
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
     duration: ""

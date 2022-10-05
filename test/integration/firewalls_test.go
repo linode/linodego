@@ -10,7 +10,7 @@ import (
 )
 
 var testFirewallCreateOpts = linodego.FirewallCreateOptions{
-	Label: "go-fw-test-" + randLabel(),
+	Label: "linodego-fw-test",
 	Rules: testFirewallRuleSet, // borrowed from firewall_rules.test.go
 	Tags:  []string{"testing"},
 }
@@ -26,7 +26,7 @@ var ignoreFirewallTimestamps = cmpopts.IgnoreFields(linodego.Firewall{}, "Create
 func TestFirewalls_List(t *testing.T) {
 	client, _, teardown, err := setupFirewall(t, []firewallModifier{
 		func(createOpts *linodego.FirewallCreateOptions) {
-			createOpts.Label = "go-fw-test-" + randLabel()
+			createOpts.Label = "linodego-fw-test"
 		},
 	}, "fixtures/TestFirewalls_List")
 	if err != nil {
@@ -48,7 +48,7 @@ func TestFirewall_Get(t *testing.T) {
 	rules := linodego.FirewallRuleSet{
 		Inbound: []linodego.FirewallRule{
 			{
-				Label:    "go-fwrule-test-" + randLabel(),
+				Label:    "linodego-fwrule-test",
 				Action:   "DROP",
 				Protocol: linodego.ICMP,
 				Addresses: linodego.NetworkAddresses{
@@ -62,7 +62,7 @@ func TestFirewall_Get(t *testing.T) {
 	}
 	client, created, teardown, err := setupFirewall(t, []firewallModifier{
 		func(createOpts *linodego.FirewallCreateOptions) {
-			createOpts.Label = "go-fw-test-" + randLabel()
+			createOpts.Label = "linodego-fw-test"
 			createOpts.Rules = rules
 		},
 	}, "fixtures/TestFirewall_Get")
@@ -86,7 +86,7 @@ func TestFirewall_Update(t *testing.T) {
 		InboundPolicy: "ACCEPT",
 		Inbound: []linodego.FirewallRule{
 			{
-				Label:    "go-fwrule-test-" + randLabel(),
+				Label:    "linodego-fwrule-test",
 				Action:   "DROP",
 				Protocol: linodego.ICMP,
 				Addresses: linodego.NetworkAddresses{
@@ -99,7 +99,7 @@ func TestFirewall_Update(t *testing.T) {
 
 	client, firewall, teardown, err := setupFirewall(t, []firewallModifier{
 		func(createOpts *linodego.FirewallCreateOptions) {
-			createOpts.Label = "go-fw-test-" + randLabel()
+			createOpts.Label = "linodego-fw-test"
 			createOpts.Rules = rules
 			createOpts.Tags = []string{"test"}
 		},

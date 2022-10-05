@@ -10,7 +10,7 @@ import (
 
 var (
 	testFirewallRule = linodego.FirewallRule{
-		Label:    "go-fwrule-test-" + randLabel(),
+		Label:    "go-fwrule-test",
 		Action:   "ACCEPT",
 		Ports:    "22",
 		Protocol: "TCP",

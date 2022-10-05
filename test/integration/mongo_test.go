@@ -12,7 +12,7 @@ import (
 )
 
 var testMongoCreateOpts = linodego.MongoCreateOptions{
-	Label:         "go-mongo-test-" + randLabel(),
+	Label:         "go-mongo-test-def",
 	Region:        "us-east",
 	Type:          "g6-nanode-1",
 	Engine:        "mongodb/4.4.10",
@@ -147,7 +147,7 @@ func TestDatabase_Mongo_Suite(t *testing.T) {
 		t.Fatalf("failed to wait for database updating: %s", err)
 	}
 
-	backupLabel := "mongobackup" + randLabel()
+	backupLabel := "mongobackupforlinodego"
 	backupOptions := linodego.MongoBackupCreateOptions{
 		Label:  backupLabel,
 		Target: linodego.MongoDatabaseTargetPrimary,

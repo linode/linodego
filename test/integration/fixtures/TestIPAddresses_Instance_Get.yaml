@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-west","type":"g6-nanode-1","label":"go-test-ins-wo-disk-oz8s0zw693c7","booted":false}'
+    body: '{"region":"us-west","type":"g6-nanode-1","label":"go-test-ins-wo-disk-51fx6148jctu","booted":false}'
     form: {}
     headers:
       Accept:
@@ -14,9 +14,9 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 38777480, "label": "go-test-ins-wo-disk-oz8s0zw693c7", "group":
+    body: '{"id": 39240992, "label": "go-test-ins-wo-disk-51fx6148jctu", "group":
       "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["45.79.75.33"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["45.56.87.241"], "ipv6": "1234::5678/128",
       "image": null, "region": "us-west", "specs": {"disk": 25600, "memory": 1024,
       "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
@@ -36,7 +36,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "634"
+      - "635"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -64,7 +64,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-conf-5ass6kk5609u","devices":{},"interfaces":null}'
+    body: '{"label":"go-test-conf-d70wuta282j9","devices":{},"interfaces":null}'
     form: {}
     headers:
       Accept:
@@ -73,10 +73,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/38777480/configs
+    url: https://api.linode.com/v4beta/linode/instances/39240992/configs
     method: POST
   response:
-    body: '{"id": 41303265, "label": "go-test-conf-5ass6kk5609u", "helpers": {"updatedb_disabled":
+    body: '{"id": 41782280, "label": "go-test-conf-d70wuta282j9", "helpers": {"updatedb_disabled":
       true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
       true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
@@ -134,18 +134,18 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/38777480/ips
+    url: https://api.linode.com/v4beta/linode/instances/39240992/ips
     method: GET
   response:
-    body: '{"ipv4": {"public": [{"address": "45.79.75.33", "gateway": "45.79.75.1",
+    body: '{"ipv4": {"public": [{"address": "45.56.87.241", "gateway": "45.56.87.1",
       "subnet_mask": "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true,
-      "rdns": "45-79-75-33.ip.linodeusercontent.com", "linode_id": 38777480, "region":
+      "rdns": "45-56-87-241.ip.linodeusercontent.com", "linode_id": 39240992, "region":
       "us-west"}], "private": [], "shared": [], "reserved": []}, "ipv6": {"slaac":
       {"address": "1234::5678", "gateway": "1234::5678", "subnet_mask":
       "1234::5678", "prefix": 64, "type": "ipv6", "rdns": null, "linode_id":
-      38777480, "region": "us-west", "public": true}, "link_local": {"address": "1234::5678",
+      39240992, "region": "us-west", "public": true}, "link_local": {"address": "1234::5678",
       "gateway": "1234::5678", "subnet_mask": "1234::5678", "prefix": 64,
-      "type": "ipv6", "rdns": null, "linode_id": 38777480, "region": "us-west", "public":
+      "type": "ipv6", "rdns": null, "linode_id": 39240992, "region": "us-west", "public":
       false}, "global": []}}'
     headers:
       Access-Control-Allow-Credentials:
@@ -162,7 +162,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "759"
+      - "761"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -200,7 +200,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/38777480
+    url: https://api.linode.com/v4beta/linode/instances/39240992
     method: DELETE
   response:
     body: '{}'

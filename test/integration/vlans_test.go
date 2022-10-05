@@ -10,8 +10,8 @@ import (
 )
 
 func TestVLANs_List(t *testing.T) {
-	vlanName := "go-vlan-test-" + randLabel()
-	instancePrefix := "go-ins-test-" + randLabel()
+	vlanName := "go-vlan-test-list"
+	instancePrefix := "go-ins-test-list"
 
 	client, fixturesTeardown := createTestClient(t, "fixtures/TestVLANs_List")
 	defer fixturesTeardown()
@@ -52,8 +52,8 @@ func TestVLANs_List(t *testing.T) {
 }
 
 func TestVLANs_GetIPAMAddress(t *testing.T) {
-	vlanName := "go-vlan-test-" + randLabel()
-	instancePrefix := "go-ins-test-" + randLabel()
+	vlanName := "go-vlan-test-ipam"
+	instancePrefix := "go-ins-test-ipam"
 
 	client, fixturesTeardown := createTestClient(t, "fixtures/TestVLANs_GetIPAMAddress")
 	defer fixturesTeardown()

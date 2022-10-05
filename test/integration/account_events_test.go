@@ -14,7 +14,7 @@ func TestAccountEvents_List(t *testing.T) {
 		t.Error(err)
 	}
 	configOpts := linodego.InstanceConfigCreateOptions{
-		Label: "go-conf-test-" + randLabel(),
+		Label: "test-config",
 	}
 	instanceConfig, err := client.CreateInstanceConfig(context.Background(), instance.ID, configOpts)
 	if err != nil {
