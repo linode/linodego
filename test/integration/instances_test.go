@@ -9,7 +9,7 @@ import (
 	"github.com/linode/linodego"
 )
 
-type instanceModifier func(*linodego.InstanceCreateOptions)
+type instanceModifier func(*linodego.Client, *linodego.InstanceCreateOptions)
 
 func TestInstances_List(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstances_List")
@@ -261,9 +261,9 @@ func TestInstance_Config_Update(t *testing.T) {
 func TestInstance_ConfigInterfaces_Update(t *testing.T) {
 	client, instance, config, teardown, err := setupInstanceWithoutDisks(t,
 		"fixtures/TestInstance_ConfigInterfaces_Update",
-		func(opts *linodego.InstanceCreateOptions) {
+		func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
 			// Ensure we're in a region that supports VLANs
-			opts.Region = "us-southeast"
+			opts.Region = getRegionsWithCaps(t, client, []string{"vlans"})[0]
 		})
 	defer teardown()
 	if err != nil {
@@ -376,14 +376,14 @@ func createInstance(t *testing.T, client *linodego.Client, modifiers ...instance
 	createOpts := linodego.InstanceCreateOptions{
 		Label:    "go-test-ins-" + randLabel(),
 		RootPass: "R34lBAdP455",
-		Region:   "us-west",
+		Region:   getRegionsWithCaps(t, client, []string{"linodes"})[0],
 		Type:     "g6-nanode-1",
 		Image:    "linode/debian9",
 		Booted:   &booted,
 	}
 
 	for _, modifier := range modifiers {
-		modifier(&createOpts)
+		modifier(client, &createOpts)
 	}
 	return client.CreateInstance(context.Background(), createOpts)
 }
@@ -416,13 +416,13 @@ func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string, modifiers ...i
 	falseBool := false
 	createOpts := linodego.InstanceCreateOptions{
 		Label:  "go-test-ins-wo-disk-" + randLabel(),
-		Region: "us-west",
+		Region: getRegionsWithCaps(t, client, []string{"linodes"})[0],
 		Type:   "g6-nanode-1",
 		Booted: &falseBool,
 	}
 
 	for _, modifier := range modifiers {
-		modifier(&createOpts)
+		modifier(client, &createOpts)
 	}
 
 	instance, err := client.CreateInstance(context.Background(), createOpts)

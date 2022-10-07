@@ -11,11 +11,6 @@ import (
 var (
 	clientConnThrottle         = 20
 	label                      = "go-test-def"
-	testNodeBalancerCreateOpts = linodego.NodeBalancerCreateOptions{
-		Label:              &label,
-		Region:             "us-west",
-		ClientConnThrottle: &clientConnThrottle,
-	}
 )
 
 func TestNodeBalancer_Create(t *testing.T) {
@@ -90,7 +85,11 @@ func setupNodeBalancer(t *testing.T, fixturesYaml string) (*linodego.Client, *li
 	t.Helper()
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
-	createOpts := testNodeBalancerCreateOpts
+	createOpts := linodego.NodeBalancerCreateOptions{
+		Label:              &label,
+		Region:             getRegionsWithCaps(t, client, []string{"NodeBalancers"})[0],
+		ClientConnThrottle: &clientConnThrottle,
+	}
 	nodebalancer, err := client.CreateNodeBalancer(context.Background(), createOpts)
 	if err != nil {
 		t.Fatalf("Error listing nodebalancers, expected struct, got error %v", err)

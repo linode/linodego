@@ -11,18 +11,6 @@ import (
 	"github.com/linode/linodego"
 )
 
-var testPostgresCreateOpts = linodego.PostgresCreateOptions{
-	Label:           "go-postgres-testing-def",
-	Region:          "us-east",
-	Type:            "g6-nanode-1",
-	Engine:          "postgresql/10.14",
-	Encrypted:       false,
-	SSLConnection:   false,
-	ClusterSize:     3,
-	ReplicationType: linodego.PostgresReplicationAsynch,
-	AllowList:       []string{"203.0.113.1", "192.0.1.0/24"},
-}
-
 func TestDatabase_Postgres_Suite(t *testing.T) {
 	client, database, teardown, err := setupPostgresDatabase(t, nil, "fixtures/TestDatabase_Postgres_Suite")
 	if err != nil {
@@ -190,7 +178,17 @@ func createPostgresDatabase(t *testing.T, client *linodego.Client,
 ) (*linodego.PostgresDatabase, func(), error) {
 	t.Helper()
 
-	createOpts := testPostgresCreateOpts
+	createOpts := linodego.PostgresCreateOptions{
+		Label:           "go-postgres-testing-def",
+		Region:          getRegionsWithCaps(t, client, []string{"Managed Databases"})[0],
+		Type:            "g6-nanode-1",
+		Engine:          "postgresql/10.14",
+		Encrypted:       false,
+		SSLConnection:   false,
+		ClusterSize:     3,
+		ReplicationType: linodego.PostgresReplicationAsynch,
+		AllowList:       []string{"203.0.113.1", "192.0.1.0/24"},
+	}
 	for _, modifier := range databaseMofidiers {
 		modifier(&createOpts)
 	}

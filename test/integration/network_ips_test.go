@@ -142,7 +142,7 @@ func TestIPAddress_Instance_Assign(t *testing.T) {
 		t.Error(err)
 	}
 
-	newInstance, err := createInstance(t, client, func(options *InstanceCreateOptions) {
+	newInstance, err := createInstance(t, client, func(client *Client, options *InstanceCreateOptions) {
 		options.Label = "go-ins-test-assign"
 		options.Region = instance.Region
 	})
@@ -196,7 +196,9 @@ func TestIPAddress_Instance_Assign(t *testing.T) {
 }
 
 func TestIPAddress_Instance_Share(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddress_Instance_Share", func(options *InstanceCreateOptions) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddress_Instance_Share", func(client *Client, options *InstanceCreateOptions) {
+		// This should stay hardcoded at the moment as the
+		// IP sharing rollout does not have a corresponding capability.
 		options.Region = "us-west"
 	})
 	defer teardown()
@@ -204,7 +206,7 @@ func TestIPAddress_Instance_Share(t *testing.T) {
 		t.Error(err)
 	}
 
-	newInstance, err := createInstance(t, client, func(options *InstanceCreateOptions) {
+	newInstance, err := createInstance(t, client, func(client *Client, options *InstanceCreateOptions) {
 		options.Label = "go-ins-test-share"
 		options.Region = instance.Region
 	})

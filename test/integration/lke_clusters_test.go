@@ -10,14 +10,6 @@ import (
 	k8scondition "github.com/linode/linodego/k8s/pkg/condition"
 )
 
-var testLKEClusterCreateOpts = linodego.LKEClusterCreateOptions{
-	Label:      label,
-	Region:     "us-southeast",
-	K8sVersion: "1.23",
-	Tags:       []string{"testing"},
-	NodePools:  []linodego.LKENodePoolCreateOptions{{Count: 1, Type: "g6-standard-2", Tags: []string{"test"}}},
-}
-
 func TestLKECluster_GetMissing(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestLKECluster_GetMissing")
 	defer teardown()
@@ -258,7 +250,15 @@ func setupLKECluster(t *testing.T, clusterModifiers []clusterModifier, fixturesY
 	t.Helper()
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
-	createOpts := testLKEClusterCreateOpts
+
+	createOpts := linodego.LKEClusterCreateOptions{
+		Label:      label,
+		Region: getRegionsWithCaps(t, client, []string{"Kubernetes"})[0],
+		K8sVersion: "1.23",
+		Tags:       []string{"testing"},
+		NodePools:  []linodego.LKENodePoolCreateOptions{{Count: 1, Type: "g6-standard-2", Tags: []string{"test"}}},
+	}
+
 	for _, modifier := range clusterModifiers {
 		modifier(&createOpts)
 	}
