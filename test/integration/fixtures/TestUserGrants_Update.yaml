@@ -71,14 +71,27 @@ interactions:
     url: https://api.linode.com/v4beta/account/users/linodegotest-updateusergrants/grants
     method: PUT
   response:
-    body: '{"linode": [{"id": 29745916, "label": "workdev", "permissions": null}],
-      "nodebalancer": [], "domain": [], "stackscript": [], "longview": [], "image":
-      [], "volume": [], "firewall": [], "database": [{"id": 6824, "label": "linodego-test-mongo-database",
-      "permissions": null}, {"id": 9782, "label": "go-postgres-test-def", "permissions":
-      null}], "global": {"add_domains": false, "add_linodes": false, "add_longview":
-      true, "longview_subscription": false, "add_stackscripts": true, "add_nodebalancers":
-      false, "add_images": true, "add_volumes": true, "add_firewalls": true, "add_databases":
-      false, "account_access": "read_only", "cancel_account": false}}'
+    body: '{"linode": [], "nodebalancer": [], "domain": [], "stackscript": [], "longview":
+      [], "image": [{"id": 17578292, "label": "nspa - Alpine 3.16 Disk", "permissions":
+      null}, {"id": 17578295, "label": "linode39245136 - Restore 294571 - Alpine 3.16
+      Disk", "permissions": null}, {"id": 17578299, "label": "lke75477-117333-63408e2c748a
+      - Boot Disk", "permissions": null}, {"id": 17578301, "label": "lke75476-117332-63408dedda63
+      - Boot Disk", "permissions": null}, {"id": 17578303, "label": "lke75476-117332-63408ded6fe5
+      - Boot Disk", "permissions": null}, {"id": 17578305, "label": "lke75476-117332-63408ded0595
+      - Boot Disk", "permissions": null}, {"id": 17578309, "label": "lke75477-117333-63408e2ba8de
+      - Boot Disk", "permissions": null}, {"id": 17578318, "label": "lke75477-117333-63408e2add48
+      - Boot Disk", "permissions": null}], "volume": [{"id": 267442, "label": "tf_test-7708312883518347230",
+      "permissions": null}, {"id": 271109, "label": "linodego-test-volume", "permissions":
+      null}, {"id": 299657, "label": "tf_test-2637196695129364155", "permissions":
+      null}, {"id": 388103, "label": "cool-cloned", "permissions": null}], "firewall":
+      [], "database": [{"id": 522, "label": "scalegridgoestojapanpt2", "permissions":
+      null}, {"id": 6806, "label": "tf_test-6495208472049336246", "permissions": null},
+      {"id": 6807, "label": "tf_test-6874476732250362643", "permissions": null}, {"id":
+      6808, "label": "tf_test-3486893335994149933", "permissions": null}], "global":
+      {"add_domains": false, "add_linodes": false, "add_longview": true, "longview_subscription":
+      false, "add_stackscripts": true, "add_nodebalancers": false, "add_images": true,
+      "add_volumes": true, "add_firewalls": true, "add_databases": false, "account_access":
+      "read_only", "cancel_account": false}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -92,8 +105,6 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
-      Content-Length:
-      - "649"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:

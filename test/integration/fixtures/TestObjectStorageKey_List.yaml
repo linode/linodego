@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/keys
     method: POST
   response:
-    body: '{"id": 358563, "label": "go-test-def", "access_key": "[SANITIZED]", "secret_key":
+    body: '{"id": 360686, "label": "go-test-def", "access_key": "[SANITIZED]", "secret_key":
       "[SANITIZED]", "limited": false, "bucket_access": null}'
     headers:
       Access-Control-Allow-Credentials:
@@ -70,7 +70,7 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/keys
     method: GET
   response:
-    body: '{"data": [{"id": 358563, "label": "go-test-def", "access_key": "[SANITIZED]",
+    body: '{"data": [{"id": 360686, "label": "go-test-def", "access_key": "[SANITIZED]",
       "secret_key": "[REDACTED]", "limited": false, "bucket_access": null}], "page":
       1, "pages": 1, "results": 1}'
     headers:
@@ -126,7 +126,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/358563
+    url: https://api.linode.com/v4beta/object-storage/keys/360686
     method: DELETE
   response:
     body: '{}'

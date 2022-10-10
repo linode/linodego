@@ -14,8 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/account/payments
     method: GET
   response:
-    body: '{"data": [{"id": 12065587, "date": "2018-01-02T03:04:05", "usd": 25.0}],
-      "page": 1, "pages": 1, "results": 1}'
+    body: '{"data": [], "page": 1, "pages": 1, "results": 0}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -31,7 +30,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "109"
+      - "49"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:

@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/account/oauth-clients
     method: POST
   response:
-    body: '{"id": "8fe83cbc22fc628c1d31", "redirect_uri": "https://example.com", "label":
-      "go-client-test", "status": "active", "secret": "e40323eac37f167fbdcd231690a1892495237d09dd03a733fba59095de7e1fa3",
+    body: '{"id": "4564958b19566e4ff3ba", "redirect_uri": "https://example.com", "label":
+      "go-client-test", "status": "active", "secret": "c0ea72902eace380721236c58a749b621db1476e15c45833017ae11487f9c383",
       "thumbnail_url": null, "public": true}'
     headers:
       Access-Control-Allow-Credentials:
@@ -71,9 +71,11 @@ interactions:
     url: https://api.linode.com/v4beta/account/oauth-clients
     method: GET
   response:
-    body: '{"data": [{"id": "8fe83cbc22fc628c1d31", "redirect_uri": "https://example.com",
+    body: '{"data": [{"id": "4ccb3f776916c3d32071", "redirect_uri": "http://localhost:3000/oauth/callback",
+      "label": "fdg", "status": "active", "secret": "<REDACTED>", "thumbnail_url":
+      null, "public": true}, {"id": "4564958b19566e4ff3ba", "redirect_uri": "https://example.com",
       "label": "go-client-test", "status": "active", "secret": "<REDACTED>", "thumbnail_url":
-      null, "public": true}], "page": 1, "pages": 1, "results": 1}'
+      null, "public": true}], "page": 1, "pages": 1, "results": 2}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -89,7 +91,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "228"
+      - "415"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -127,7 +129,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/oauth-clients/8fe83cbc22fc628c1d31
+    url: https://api.linode.com/v4beta/account/oauth-clients/4564958b19566e4ff3ba
     method: DELETE
   response:
     body: '{}'
