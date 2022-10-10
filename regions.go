@@ -46,20 +46,39 @@ func (resp *RegionsPagedResponse) castResult(r *resty.Request, e string) (int, i
 // ListRegions lists Regions
 func (c *Client) ListRegions(ctx context.Context, opts *ListOptions) ([]Region, error) {
 	response := RegionsPagedResponse{}
+
+	if result := c.getCachedResponse(response.endpoint()); result != nil {
+		return result.([]Region), nil
+	}
+
 	err := c.listHelper(ctx, &response, opts)
 	if err != nil {
 		return nil, err
 	}
+
+	c.addCachedResponse(response.endpoint(), response.Data)
+
 	return response.Data, nil
 }
 
 // GetRegion gets the template with the provided ID
 func (c *Client) GetRegion(ctx context.Context, regionID string) (*Region, error) {
 	e := fmt.Sprintf("regions/%s", regionID)
+
+	if result := c.getCachedResponse(e); result != nil {
+		result := result.(Region)
+		return &result, nil
+	}
+
 	req := c.R(ctx).SetResult(&Region{})
 	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
 		return nil, err
 	}
+
+	if r.Result().(*Region) != nil {
+		c.addCachedResponse(e, *r.Result().(*Region))
+	}
+
 	return r.Result().(*Region), nil
 }

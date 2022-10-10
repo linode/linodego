@@ -10,6 +10,7 @@ import (
 	"os"
 	"path"
 	"strconv"
+	"sync"
 	"time"
 
 	"github.com/go-resty/resty/v2"
@@ -58,6 +59,11 @@ type Client struct {
 	loadedProfile   string
 
 	configProfiles map[string]ConfigProfile
+
+	// Fields for caching endpoint responses
+	shouldCache     bool
+	cachedEndpoints map[string]any
+	cacheLock       *sync.RWMutex
 }
 
 type EnvDefaults struct {
@@ -189,6 +195,46 @@ func (c *Client) addRetryConditional(retryConditional RetryConditional) *Client 
 	return c
 }
 
+func (c *Client) addCachedResponse(endpoint string, response any) {
+	if !c.shouldCache {
+		return
+	}
+
+	c.cacheLock.Lock()
+	defer c.cacheLock.Unlock()
+
+	c.cachedEndpoints[endpoint] = response
+}
+
+func (c *Client) getCachedResponse(endpoint string) any {
+	if !c.shouldCache {
+		return nil
+	}
+
+	c.cacheLock.RLock()
+	defer c.cacheLock.RUnlock()
+
+	if _, ok := c.cachedEndpoints[endpoint]; !ok {
+		return nil
+	}
+
+	return c.cachedEndpoints[endpoint]
+}
+
+// ClearCache clears all cached responses for all endpoints.
+func (c *Client) ClearCache() {
+	c.cacheLock.Lock()
+	defer c.cacheLock.Unlock()
+
+	// GC will handle the old map
+	c.cachedEndpoints = make(map[string]any)
+}
+
+// UseCache sets whether response caching should be used
+func (c *Client) UseCache(value bool) {
+	c.shouldCache = value
+}
+
 // SetRetryMaxWaitTime sets the maximum delay before retrying a request.
 func (c *Client) SetRetryMaxWaitTime(max time.Duration) *Client {
 	c.resty.SetRetryMaxWaitTime(max)
@@ -234,6 +280,10 @@ func NewClient(hc *http.Client) (client Client) {
 	} else {
 		client.resty = resty.New()
 	}
+
+	client.cachedEndpoints = make(map[string]any)
+	client.cacheLock = &sync.RWMutex{}
+	client.shouldCache = true
 
 	client.SetUserAgent(DefaultUserAgent)
 

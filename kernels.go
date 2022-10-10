@@ -42,20 +42,39 @@ func (resp *LinodeKernelsPagedResponse) castResult(r *resty.Request, e string) (
 // ListKernels lists linode kernels
 func (c *Client) ListKernels(ctx context.Context, opts *ListOptions) ([]LinodeKernel, error) {
 	response := LinodeKernelsPagedResponse{}
+
+	if result := c.getCachedResponse(response.endpoint()); result != nil {
+		return result.([]LinodeKernel), nil
+	}
+
 	err := c.listHelper(ctx, &response, opts)
 	if err != nil {
 		return nil, err
 	}
+
+	c.addCachedResponse(response.endpoint(), response.Data)
+
 	return response.Data, nil
 }
 
 // GetKernel gets the kernel with the provided ID
 func (c *Client) GetKernel(ctx context.Context, kernelID string) (*LinodeKernel, error) {
 	e := fmt.Sprintf("linode/kernels/%s", kernelID)
+
+	if result := c.getCachedResponse(e); result != nil {
+		result := result.(LinodeKernel)
+		return &result, nil
+	}
+
 	req := c.R(ctx).SetResult(&LinodeKernel{})
 	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
 		return nil, err
 	}
+
+	if r.Result() != nil {
+		c.addCachedResponse(e, *r.Result().(*LinodeKernel))
+	}
+
 	return r.Result().(*LinodeKernel), nil
 }
