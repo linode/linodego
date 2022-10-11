@@ -3,9 +3,12 @@ package linodego
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/go-resty/resty/v2"
 )
+
+var cacheExpiryTime = time.Minute
 
 // Region represents a linode region object
 type Region struct {
@@ -47,7 +50,9 @@ func (resp *RegionsPagedResponse) castResult(r *resty.Request, e string) (int, i
 func (c *Client) ListRegions(ctx context.Context, opts *ListOptions) ([]Region, error) {
 	response := RegionsPagedResponse{}
 
-	if result := c.getCachedResponse(response.endpoint()); result != nil {
+	if result, err := c.getCachedResponse(response.endpoint()); err != nil {
+		return nil, err
+	} else if result != nil {
 		return result.([]Region), nil
 	}
 
@@ -56,7 +61,9 @@ func (c *Client) ListRegions(ctx context.Context, opts *ListOptions) ([]Region, 
 		return nil, err
 	}
 
-	c.addCachedResponse(response.endpoint(), response.Data)
+	if err := c.addCachedResponse(response.endpoint(), response.Data, &cacheExpiryTime); err != nil {
+		return nil, err
+	}
 
 	return response.Data, nil
 }
@@ -65,7 +72,9 @@ func (c *Client) ListRegions(ctx context.Context, opts *ListOptions) ([]Region, 
 func (c *Client) GetRegion(ctx context.Context, regionID string) (*Region, error) {
 	e := fmt.Sprintf("regions/%s", regionID)
 
-	if result := c.getCachedResponse(e); result != nil {
+	if result, err := c.getCachedResponse(e); err != nil {
+		return nil, err
+	} else if result != nil {
 		result := result.(Region)
 		return &result, nil
 	}
@@ -76,8 +85,8 @@ func (c *Client) GetRegion(ctx context.Context, regionID string) (*Region, error
 		return nil, err
 	}
 
-	if r.Result().(*Region) != nil {
-		c.addCachedResponse(e, *r.Result().(*Region))
+	if err := c.addCachedResponse(e, r.Result(), &cacheExpiryTime); err != nil {
+		return nil, err
 	}
 
 	return r.Result().(*Region), nil

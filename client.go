@@ -9,6 +9,7 @@ import (
 	"net/url"
 	"os"
 	"path"
+	"reflect"
 	"strconv"
 	"sync"
 	"time"
@@ -62,13 +63,22 @@ type Client struct {
 
 	// Fields for caching endpoint responses
 	shouldCache     bool
-	cachedEndpoints map[string]any
-	cacheLock       *sync.RWMutex
+	cacheExpiration time.Duration
+	cachedEntries   map[string]clientCacheEntry
+	cachedEntryLock *sync.RWMutex
 }
 
 type EnvDefaults struct {
 	Token   string
 	Profile string
+}
+
+type clientCacheEntry struct {
+	Created time.Time
+	Data    any
+	// If != nil, use this instead of the
+	// global expiry
+	ExpiryOverride *time.Duration
 }
 
 type Request = resty.Request
@@ -195,39 +205,116 @@ func (c *Client) addRetryConditional(retryConditional RetryConditional) *Client 
 	return c
 }
 
-func (c *Client) addCachedResponse(endpoint string, response any) {
-	if !c.shouldCache {
-		return
-	}
-
-	c.cacheLock.Lock()
-	defer c.cacheLock.Unlock()
-
-	c.cachedEndpoints[endpoint] = response
-}
-
-func (c *Client) getCachedResponse(endpoint string) any {
+func (c *Client) addCachedResponse(endpoint string, response any, expiry *time.Duration) error {
 	if !c.shouldCache {
 		return nil
 	}
 
-	c.cacheLock.RLock()
-	defer c.cacheLock.RUnlock()
-
-	if _, ok := c.cachedEndpoints[endpoint]; !ok {
-		return nil
+	u, err := url.Parse(endpoint)
+	if err != nil {
+		return fmt.Errorf("failed to parse URL for caching: %s", err)
 	}
 
-	return c.cachedEndpoints[endpoint]
+	responseValue := reflect.ValueOf(response)
+
+	c.cachedEntryLock.Lock()
+	defer c.cachedEntryLock.Unlock()
+
+	entry := clientCacheEntry{
+		Created: time.Now(),
+	}
+
+	switch responseValue.Kind() {
+	case reflect.Ptr:
+		// We want to automatically deref pointers to
+		// avoid caching mutable data.
+		entry.Data = responseValue.Elem().Interface()
+	default:
+		entry.Data = response
+	}
+
+	entry.ExpiryOverride = expiry
+
+	c.cachedEntries[u.Path] = entry
+
+	return nil
 }
 
-// ClearCache clears all cached responses for all endpoints.
-func (c *Client) ClearCache() {
-	c.cacheLock.Lock()
-	defer c.cacheLock.Unlock()
+func (c *Client) getCachedResponse(endpoint string) (any, error) {
+	if !c.shouldCache {
+		return nil, nil
+	}
+
+	u, err := url.Parse(endpoint)
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse URL for caching: %s", err)
+	}
+
+	c.cachedEntryLock.RLock()
+
+	// Hacky logic to dynamically RUnlock
+	// only if it is still locked by the
+	// end of the function.
+	// This is necessary as we take write
+	// access if the entry has expired.
+	rLocked := true
+	defer func() {
+		if rLocked {
+			c.cachedEntryLock.RUnlock()
+		}
+	}()
+
+	entry, ok := c.cachedEntries[u.Path]
+	if !ok {
+		return nil, nil
+	}
+
+	// Handle expired entries
+	elapsedTime := time.Since(entry.Created)
+
+	if (entry.ExpiryOverride != nil && elapsedTime > *entry.ExpiryOverride) || elapsedTime > c.cacheExpiration {
+		// We to give up our read access and request read-write access
+		c.cachedEntryLock.RUnlock()
+		rLocked = false
+
+		c.cachedEntryLock.Lock()
+		defer c.cachedEntryLock.Unlock()
+
+		delete(c.cachedEntries, u.Path)
+		return nil, nil
+	}
+
+	return c.cachedEntries[u.Path].Data, nil
+}
+
+// InvalidateCache clears all cached responses for all endpoints.
+func (c *Client) InvalidateCache() {
+	c.cachedEntryLock.Lock()
+	defer c.cachedEntryLock.Unlock()
 
 	// GC will handle the old map
-	c.cachedEndpoints = make(map[string]any)
+	c.cachedEntries = make(map[string]clientCacheEntry)
+}
+
+// InvalidateCacheEndpoint invalidates a single cached endpoint.
+func (c *Client) InvalidateCacheEndpoint(endpoint string) error {
+	u, err := url.Parse(endpoint)
+	if err != nil {
+		return fmt.Errorf("failed to parse URL for caching: %s", err)
+	}
+
+	c.cachedEntryLock.Lock()
+	defer c.cachedEntryLock.Unlock()
+
+	delete(c.cachedEntries, u.Path)
+
+	return nil
+}
+
+// SetCacheExpiration sets the desired time for any cached response
+// to be valid for.
+func (c *Client) SetCacheExpiration(expiryTime time.Duration) {
+	c.cacheExpiration = expiryTime
 }
 
 // UseCache sets whether response caching should be used
@@ -281,9 +368,10 @@ func NewClient(hc *http.Client) (client Client) {
 		client.resty = resty.New()
 	}
 
-	client.cachedEndpoints = make(map[string]any)
-	client.cacheLock = &sync.RWMutex{}
 	client.shouldCache = true
+	client.cacheExpiration = time.Hour
+	client.cachedEntries = make(map[string]clientCacheEntry)
+	client.cachedEntryLock = &sync.RWMutex{}
 
 	client.SetUserAgent(DefaultUserAgent)
 
