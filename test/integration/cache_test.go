@@ -31,6 +31,10 @@ func TestCache_RegionList(t *testing.T) {
 			return nil
 		}
 
+		if request.QueryParam.Has("page") {
+			return nil
+		}
+
 		atomic.AddInt64(&totalRequests, 1)
 		return nil
 	})
@@ -69,13 +73,13 @@ func TestCache_RegionList(t *testing.T) {
 }
 
 func TestCache_Expiration(t *testing.T) {
-	validateResult := func(r []linodego.Region, err error) {
+	validateResult := func(r []linodego.LinodeKernel, err error) {
 		if err != nil {
 			t.Fatal(err)
 		}
 
 		if len(r) == 0 {
-			t.Fatalf("expected a list of regions - %v", r)
+			t.Fatalf("expected a list of kernels - %v", r)
 		}
 	}
 
@@ -86,7 +90,7 @@ func TestCache_Expiration(t *testing.T) {
 	totalRequests := int64(0)
 
 	client.OnBeforeRequest(func(request *linodego.Request) error {
-		if !strings.Contains(request.URL, "regions") {
+		if !strings.Contains(request.URL, "kernels") || request.QueryParam.Has("page") {
 			return nil
 		}
 
@@ -95,22 +99,22 @@ func TestCache_Expiration(t *testing.T) {
 	})
 
 	// First request (no cache)
-	validateResult(client.ListRegions(context.Background(), nil))
+	validateResult(client.ListKernels(context.Background(), nil))
 
 	// Second request (cached)
-	validateResult(client.ListRegions(context.Background(), nil))
+	validateResult(client.ListKernels(context.Background(), nil))
 
 	// Entries should expire immediately
 	client.SetCacheExpiration(0)
 
 	// Third request (non-cached)
-	validateResult(client.ListRegions(context.Background(), nil))
+	validateResult(client.ListKernels(context.Background(), nil))
 
 	// Entries shouldn't expire
 	client.SetCacheExpiration(time.Hour)
 
 	// Fourth request (cached)
-	validateResult(client.ListRegions(context.Background(), nil))
+	validateResult(client.ListKernels(context.Background(), nil))
 
 	// Validate request count
 	if totalRequests != 2 {
