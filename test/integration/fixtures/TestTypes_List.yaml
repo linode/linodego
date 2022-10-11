@@ -119,7 +119,23 @@ interactions:
       "price": {"hourly": 6.0, "monthly": 4000.0}, "addons": {"backups": {"price":
       {"hourly": 0.24, "monthly": 160.0}}}, "memory": 131072, "disk": 2621440, "transfer":
       20000, "vcpus": 24, "gpus": 4, "network_out": 10000, "class": "gpu", "successor":
-      null}], "page": 1, "pages": 1, "results": 28}'
+      null}, {"id": "g1-metal-b1", "label": "Bare Metal - Tier B Level 1", "price":
+      {"hourly": 0.05, "monthly": 30.0}, "addons": {"backups": {"price": {"hourly":
+      null, "monthly": null}}}, "memory": 8192, "disk": 262144, "transfer": 10000,
+      "vcpus": 8, "gpus": 0, "network_out": 6000, "class": "metal", "successor": null},
+      {"id": "g1-metal-b2", "label": "Bare Metal - Tier B Level 2", "price": {"hourly":
+      0.06, "monthly": 40.0}, "addons": {"backups": {"price": {"hourly": null, "monthly":
+      null}}}, "memory": 16384, "disk": 524288, "transfer": 10000, "vcpus": 16, "gpus":
+      0, "network_out": 6000, "class": "metal", "successor": null}, {"id": "g1-metal-c1",
+      "label": "Bare Metal - Tier C Level 1", "price": {"hourly": 0.09, "monthly":
+      60.0}, "addons": {"backups": {"price": {"hourly": null, "monthly": null}}},
+      "memory": 32768, "disk": 983040, "transfer": 10000, "vcpus": 16, "gpus": 0,
+      "network_out": 6000, "class": "metal", "successor": null}, {"id": "g1-metal-c2",
+      "label": "Bare Metal - Tier C Level 2", "price": {"hourly": 0.12, "monthly":
+      80.0}, "addons": {"backups": {"price": {"hourly": null, "monthly": null}}},
+      "memory": 65536, "disk": 983040, "transfer": 10000, "vcpus": 32, "gpus": 0,
+      "network_out": 6000, "class": "metal", "successor": null}], "page": 1, "pages":
+      1, "results": 32}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"

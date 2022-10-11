@@ -216,8 +216,18 @@ func (c *Client) ListDatabases(ctx context.Context, opts *ListOptions) ([]Databa
 func (c *Client) ListDatabaseEngines(ctx context.Context, opts *ListOptions) ([]DatabaseEngine, error) {
 	response := DatabaseEnginesPagedResponse{}
 
+	if result, err := c.getCachedResponse(response.endpoint()); err != nil {
+		return nil, err
+	} else if result != nil {
+		return result.([]DatabaseEngine), nil
+	}
+
 	err := c.listHelper(ctx, &response, opts)
 	if err != nil {
+		return nil, err
+	}
+
+	if err := c.addCachedResponse(response.endpoint(), response.Data, &cacheExpiryTime); err != nil {
 		return nil, err
 	}
 
@@ -227,9 +237,21 @@ func (c *Client) ListDatabaseEngines(ctx context.Context, opts *ListOptions) ([]
 // GetDatabaseEngine returns a specific Database Engine
 func (c *Client) GetDatabaseEngine(ctx context.Context, opts *ListOptions, engineID string) (*DatabaseEngine, error) {
 	e := fmt.Sprintf("databases/engines/%s", engineID)
+
+	if result, err := c.getCachedResponse(e); err != nil {
+		return nil, err
+	} else if result != nil {
+		result := result.(DatabaseEngine)
+		return &result, nil
+	}
+
 	req := c.R(ctx).SetResult(&DatabaseEngine{})
 	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
+		return nil, err
+	}
+
+	if err := c.addCachedResponse(e, r.Result(), &cacheExpiryTime); err != nil {
 		return nil, err
 	}
 
@@ -240,8 +262,18 @@ func (c *Client) GetDatabaseEngine(ctx context.Context, opts *ListOptions, engin
 func (c *Client) ListDatabaseTypes(ctx context.Context, opts *ListOptions) ([]DatabaseType, error) {
 	response := DatabaseTypesPagedResponse{}
 
+	if result, err := c.getCachedResponse(response.endpoint()); err != nil {
+		return nil, err
+	} else if result != nil {
+		return result.([]DatabaseType), nil
+	}
+
 	err := c.listHelper(ctx, &response, opts)
 	if err != nil {
+		return nil, err
+	}
+
+	if err := c.addCachedResponse(response.endpoint(), response.Data, &cacheExpiryTime); err != nil {
 		return nil, err
 	}
 
@@ -251,9 +283,21 @@ func (c *Client) ListDatabaseTypes(ctx context.Context, opts *ListOptions) ([]Da
 // GetDatabaseType returns a specific Database Type
 func (c *Client) GetDatabaseType(ctx context.Context, opts *ListOptions, typeID string) (*DatabaseType, error) {
 	e := fmt.Sprintf("databases/types/%s", typeID)
+
+	if result, err := c.getCachedResponse(e); err != nil {
+		return nil, err
+	} else if result != nil {
+		result := result.(DatabaseType)
+		return &result, nil
+	}
+
 	req := c.R(ctx).SetResult(&DatabaseType{})
 	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
+		return nil, err
+	}
+
+	if err := c.addCachedResponse(e, r.Result(), &cacheExpiryTime); err != nil {
 		return nil, err
 	}
 

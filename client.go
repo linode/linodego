@@ -373,7 +373,7 @@ func NewClient(hc *http.Client) (client Client) {
 	}
 
 	client.shouldCache = true
-	client.cacheExpiration = time.Hour
+	client.cacheExpiration = time.Minute * 15
 	client.cachedEntries = make(map[string]clientCacheEntry)
 	client.cachedEntryLock = &sync.RWMutex{}
 
