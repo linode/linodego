@@ -217,11 +217,9 @@ func (c *Client) addCachedResponse(endpoint string, response any, expiry *time.D
 
 	responseValue := reflect.ValueOf(response)
 
-	c.cachedEntryLock.Lock()
-	defer c.cachedEntryLock.Unlock()
-
 	entry := clientCacheEntry{
-		Created: time.Now(),
+		Created:        time.Now(),
+		ExpiryOverride: expiry,
 	}
 
 	switch responseValue.Kind() {
@@ -233,7 +231,8 @@ func (c *Client) addCachedResponse(endpoint string, response any, expiry *time.D
 		entry.Data = response
 	}
 
-	entry.ExpiryOverride = expiry
+	c.cachedEntryLock.Lock()
+	defer c.cachedEntryLock.Unlock()
 
 	c.cachedEntries[u.Path] = entry
 
