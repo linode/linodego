@@ -277,7 +277,7 @@ func (c *Client) getCachedResponse(endpoint string) (any, error) {
 	}
 
 	if shouldExpire {
-		// We to give up our read access and request read-write access
+		// We need to give up our read access and request read-write access
 		c.cachedEntryLock.RUnlock()
 		rLocked = false
 
