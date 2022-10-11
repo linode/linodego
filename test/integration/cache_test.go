@@ -39,6 +39,9 @@ func TestCache_RegionList(t *testing.T) {
 		return nil
 	})
 
+	// Ensure that overrides work as intended
+	client.SetGlobalCacheExpiration(0)
+
 	// First request (no cache)
 	validateResult(client.ListRegions(context.Background(), nil))
 
@@ -105,13 +108,13 @@ func TestCache_Expiration(t *testing.T) {
 	validateResult(client.ListKernels(context.Background(), nil))
 
 	// Entries should expire immediately
-	client.SetCacheExpiration(0)
+	client.SetGlobalCacheExpiration(0)
 
 	// Third request (non-cached)
 	validateResult(client.ListKernels(context.Background(), nil))
 
 	// Entries shouldn't expire
-	client.SetCacheExpiration(time.Hour)
+	client.SetGlobalCacheExpiration(time.Hour)
 
 	// Fourth request (cached)
 	validateResult(client.ListKernels(context.Background(), nil))

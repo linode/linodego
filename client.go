@@ -315,9 +315,9 @@ func (c *Client) InvalidateCacheEndpoint(endpoint string) error {
 	return nil
 }
 
-// SetCacheExpiration sets the desired time for any cached response
+// SetGlobalCacheExpiration sets the desired time for any cached response
 // to be valid for.
-func (c *Client) SetCacheExpiration(expiryTime time.Duration) {
+func (c *Client) SetGlobalCacheExpiration(expiryTime time.Duration) {
 	c.cacheExpiration = expiryTime
 }
 
