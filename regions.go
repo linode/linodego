@@ -8,6 +8,8 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
+// Region-related endpoints have a custom expiry time as the
+// `status` field may update for database outages.
 var cacheExpiryTime = time.Minute
 
 // Region represents a linode region object

@@ -271,12 +271,12 @@ func (c *Client) getCachedResponse(endpoint string) (any, error) {
 	// Handle expired entries
 	elapsedTime := time.Since(entry.Created)
 
-	shouldExpire := elapsedTime > c.cacheExpiration
+	hasExpired := elapsedTime > c.cacheExpiration
 	if entry.ExpiryOverride != nil {
-		shouldExpire = elapsedTime > *entry.ExpiryOverride
+		hasExpired = elapsedTime > *entry.ExpiryOverride
 	}
 
-	if shouldExpire {
+	if hasExpired {
 		// We need to give up our read access and request read-write access
 		c.cachedEntryLock.RUnlock()
 		rLocked = false
