@@ -68,7 +68,7 @@ func (resp *LinodeTypesPagedResponse) castResult(r *resty.Request, e string) (in
 	return castedRes.Pages, castedRes.Results, nil
 }
 
-// ListTypes lists linode types
+// ListTypes lists linode types. This endpoint is cached by default.
 func (c *Client) ListTypes(ctx context.Context, opts *ListOptions) ([]LinodeType, error) {
 	response := LinodeTypesPagedResponse{}
 
@@ -90,7 +90,7 @@ func (c *Client) ListTypes(ctx context.Context, opts *ListOptions) ([]LinodeType
 	return response.Data, nil
 }
 
-// GetType gets the type with the provided ID
+// GetType gets the type with the provided ID. This endpoint is cached by default.
 func (c *Client) GetType(ctx context.Context, typeID string) (*LinodeType, error) {
 	e := fmt.Sprintf("linode/types/%s", typeID)
 

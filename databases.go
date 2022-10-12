@@ -212,7 +212,7 @@ func (c *Client) ListDatabases(ctx context.Context, opts *ListOptions) ([]Databa
 	return response.Data, nil
 }
 
-// ListDatabaseEngines lists all Database Engines
+// ListDatabaseEngines lists all Database Engines. This endpoint is cached by default.
 func (c *Client) ListDatabaseEngines(ctx context.Context, opts *ListOptions) ([]DatabaseEngine, error) {
 	response := DatabaseEnginesPagedResponse{}
 
@@ -234,7 +234,7 @@ func (c *Client) ListDatabaseEngines(ctx context.Context, opts *ListOptions) ([]
 	return response.Data, nil
 }
 
-// GetDatabaseEngine returns a specific Database Engine
+// GetDatabaseEngine returns a specific Database Engine. This endpoint is cached by default.
 func (c *Client) GetDatabaseEngine(ctx context.Context, opts *ListOptions, engineID string) (*DatabaseEngine, error) {
 	e := fmt.Sprintf("databases/engines/%s", engineID)
 
@@ -258,7 +258,7 @@ func (c *Client) GetDatabaseEngine(ctx context.Context, opts *ListOptions, engin
 	return r.Result().(*DatabaseEngine), nil
 }
 
-// ListDatabaseTypes lists all Types of Database provided in Linode Managed Databases
+// ListDatabaseTypes lists all Types of Database provided in Linode Managed Databases. This endpoint is cached by default.
 func (c *Client) ListDatabaseTypes(ctx context.Context, opts *ListOptions) ([]DatabaseType, error) {
 	response := DatabaseTypesPagedResponse{}
 
@@ -280,7 +280,7 @@ func (c *Client) ListDatabaseTypes(ctx context.Context, opts *ListOptions) ([]Da
 	return response.Data, nil
 }
 
-// GetDatabaseType returns a specific Database Type
+// GetDatabaseType returns a specific Database Type. This endpoint is cached by default.
 func (c *Client) GetDatabaseType(ctx context.Context, opts *ListOptions, typeID string) (*DatabaseType, error) {
 	e := fmt.Sprintf("databases/types/%s", typeID)
 

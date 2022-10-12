@@ -48,7 +48,7 @@ func (resp *RegionsPagedResponse) castResult(r *resty.Request, e string) (int, i
 	return castedRes.Pages, castedRes.Results, nil
 }
 
-// ListRegions lists Regions
+// ListRegions lists Regions. This endpoint is cached by default.
 func (c *Client) ListRegions(ctx context.Context, opts *ListOptions) ([]Region, error) {
 	response := RegionsPagedResponse{}
 
@@ -70,7 +70,7 @@ func (c *Client) ListRegions(ctx context.Context, opts *ListOptions) ([]Region, 
 	return response.Data, nil
 }
 
-// GetRegion gets the template with the provided ID
+// GetRegion gets the template with the provided ID. This endpoint is cached by default.
 func (c *Client) GetRegion(ctx context.Context, regionID string) (*Region, error) {
 	e := fmt.Sprintf("regions/%s", regionID)
 

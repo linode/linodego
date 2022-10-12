@@ -39,7 +39,7 @@ func (resp *LinodeKernelsPagedResponse) castResult(r *resty.Request, e string) (
 	return castedRes.Pages, castedRes.Results, nil
 }
 
-// ListKernels lists linode kernels
+// ListKernels lists linode kernels. This endpoint is cached by default.
 func (c *Client) ListKernels(ctx context.Context, opts *ListOptions) ([]LinodeKernel, error) {
 	response := LinodeKernelsPagedResponse{}
 
@@ -61,7 +61,7 @@ func (c *Client) ListKernels(ctx context.Context, opts *ListOptions) ([]LinodeKe
 	return response.Data, nil
 }
 
-// GetKernel gets the kernel with the provided ID
+// GetKernel gets the kernel with the provided ID. This endpoint is cached by default.
 func (c *Client) GetKernel(ctx context.Context, kernelID string) (*LinodeKernel, error) {
 	e := fmt.Sprintf("linode/kernels/%s", kernelID)
 

@@ -138,7 +138,7 @@ func (resp *LKEVersionsPagedResponse) castResult(r *resty.Request, e string) (in
 	return castedRes.Pages, castedRes.Results, nil
 }
 
-// ListLKEVersions lists the Kubernetes versions available through LKE
+// ListLKEVersions lists the Kubernetes versions available through LKE. This endpoint is cached by default.
 func (c *Client) ListLKEVersions(ctx context.Context, opts *ListOptions) ([]LKEVersion, error) {
 	response := LKEVersionsPagedResponse{}
 
@@ -160,7 +160,7 @@ func (c *Client) ListLKEVersions(ctx context.Context, opts *ListOptions) ([]LKEV
 	return response.Data, nil
 }
 
-// GetLKEVersion gets details about a specific LKE Version
+// GetLKEVersion gets details about a specific LKE Version. This endpoint is cached by default.
 func (c *Client) GetLKEVersion(ctx context.Context, version string) (*LKEVersion, error) {
 	e := fmt.Sprintf("lke/versions/%s", version)
 

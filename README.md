@@ -143,6 +143,18 @@ linodes, err := linodego.ListInstances(context.Background(), linodego.NewListOpt
 // err = nil
 ```
 
+### Response Caching
+
+By default, certain endpoints with static responses will be cached into memory. 
+Endpoints with cached responses are identified in their [accompanying documentation](https://pkg.go.dev/github.com/linode/linodego?utm_source=godoc).
+
+The default cache entry expiry time is `15` minutes. Certain endpoints may override this value to allow for more frequent refreshes (e.g. `client.GetRegion(...)`).
+The global cache expiry time can be customized using the `client.SetGlobalCacheExpiration(...)` method.
+
+Response caching can be globally disabled or enabled for a client using the `client.UseCache(...)` method.
+
+If the currently stored cache is out of date, it can be cleared using the `client.InvalidateCache()` method.
+
 ### Writes
 
 When performing a `POST` or `PUT` request, multiple field related errors will be returned as a single error, currently like:
