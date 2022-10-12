@@ -153,7 +153,7 @@ The global cache expiry time can be customized using the `client.SetGlobalCacheE
 
 Response caching can be globally disabled or enabled for a client using the `client.UseCache(...)` method.
 
-If the currently stored cache is out of date, it can be cleared using the `client.InvalidateCache()` method.
+The global cache can be cleared and refreshed using the `client.InvalidateCache()` method.
 
 ### Writes
 
