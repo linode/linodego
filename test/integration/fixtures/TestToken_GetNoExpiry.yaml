@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/profile/tokens
     method: POST
   response:
-    body: '{"id": 41023745, "scopes": "linodes:read_only", "created": "2018-01-02T03:04:05",
-      "label": "linodego-token-test", "token": "d39d5ac24becc72531b51792b51c69f5a07eb8f3259dbb9a66279dddc322c939",
+    body: '{"id": 41180271, "scopes": "linodes:read_only", "created": "2018-01-02T03:04:05",
+      "label": "linodego-token-test", "token": "2efb8b52324b06c948e89e2f593dfbbc764306077f91ff20c57c5e843541dc9e",
       "expiry": "2999-12-12T05:00:00"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -68,11 +68,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/profile/tokens/41023745
+    url: https://api.linode.com/v4beta/profile/tokens/41180271
     method: GET
   response:
-    body: '{"id": 41023745, "scopes": "linodes:read_only", "created": "2018-01-02T03:04:05",
-      "label": "linodego-token-test", "token": "d39d5ac24becc725", "expiry": "2999-12-12T05:00:00"}'
+    body: '{"id": 41180271, "scopes": "linodes:read_only", "created": "2018-01-02T03:04:05",
+      "label": "linodego-token-test", "token": "2efb8b52324b06c9", "expiry": "2999-12-12T05:00:00"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -126,7 +126,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/profile/tokens/41023745
+    url: https://api.linode.com/v4beta/profile/tokens/41180271
     method: DELETE
   response:
     body: '{}'

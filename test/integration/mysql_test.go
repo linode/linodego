@@ -11,18 +11,6 @@ import (
 	"github.com/linode/linodego"
 )
 
-var testMySQLCreateOpts = linodego.MySQLCreateOptions{
-	Label:           "go-mysql-test-def",
-	Region:          "us-east",
-	Type:            "g6-nanode-1",
-	Engine:          "mysql/8.0.26",
-	Encrypted:       false,
-	ClusterSize:     3,
-	ReplicationType: "semi_synch",
-	SSLConnection:   false,
-	AllowList:       []string{"203.0.113.1", "192.0.1.0/24"},
-}
-
 func TestDatabase_MySQL_Suite(t *testing.T) {
 	client, database, teardown, err := setupMySQLDatabase(t, nil, "fixtures/TestDatabase_MySQL_Suite")
 	if err != nil {
@@ -190,7 +178,18 @@ func createMySQLDatabase(t *testing.T, client *linodego.Client,
 ) (*linodego.MySQLDatabase, func(), error) {
 	t.Helper()
 
-	createOpts := testMySQLCreateOpts
+	createOpts := linodego.MySQLCreateOptions{
+		Label:           "go-mysql-test-def",
+		Region:          getRegionsWithCaps(t, client, []string{"Managed Databases"})[0],
+		Type:            "g6-nanode-1",
+		Engine:          "mysql/8.0.26",
+		Encrypted:       false,
+		ClusterSize:     3,
+		ReplicationType: "semi_synch",
+		SSLConnection:   false,
+		AllowList:       []string{"203.0.113.1", "192.0.1.0/24"},
+	}
+
 	for _, modifier := range databaseMofidiers {
 		modifier(&createOpts)
 	}

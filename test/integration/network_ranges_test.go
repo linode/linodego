@@ -64,7 +64,7 @@ func TestIPv6Range_Share(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	inst, err := createInstance(t, client, func(inst *InstanceCreateOptions) {
+	inst, err := createInstance(t, client, func(client *Client, inst *InstanceCreateOptions) {
 		inst.Label = "go-ins-test-share6"
 		inst.Region = origInst.Region
 	})
@@ -151,8 +151,11 @@ func setupIPv6RangeInstance(t *testing.T, ipv6RangeModifiers []ipv6RangeModifier
 
 	t.Cleanup(fixtureTeardown)
 
-	instance, err := createInstance(t, client, func(inst *InstanceCreateOptions) {
+	instance, err := createInstance(t, client, func(client *Client, inst *InstanceCreateOptions) {
 		inst.Label = "go-ins-test-range6"
+
+		// This should stay hard-coded until IPv6 sharing has a
+		// corresponding capability.
 		inst.Region = "eu-west"
 	})
 	if err != nil {

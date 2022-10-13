@@ -11,17 +11,6 @@ import (
 	"github.com/linode/linodego"
 )
 
-var testMongoCreateOpts = linodego.MongoCreateOptions{
-	Label:         "go-mongo-test-def",
-	Region:        "us-east",
-	Type:          "g6-nanode-1",
-	Engine:        "mongodb/4.4.10",
-	Encrypted:     false,
-	ClusterSize:   3,
-	SSLConnection: false,
-	AllowList:     []string{"203.0.113.1", "192.0.1.0/24"},
-}
-
 func TestDatabase_Mongo_Suite(t *testing.T) {
 	t.Skip("POST /mongodb currently disabled")
 	client, database, teardown, err := setupMongoDatabase(t, nil, "fixtures/TestDatabase_Mongo_Suite")
@@ -194,7 +183,17 @@ func createMongoDatabase(t *testing.T, client *linodego.Client,
 ) (*linodego.MongoDatabase, func(), error) {
 	t.Helper()
 
-	createOpts := testMongoCreateOpts
+	createOpts := linodego.MongoCreateOptions{
+		Label:         "go-mongo-test-def",
+		Region:        getRegionsWithCaps(t, client, []string{"Managed Databases"})[0],
+		Type:          "g6-nanode-1",
+		Engine:        "mongodb/4.4.10",
+		Encrypted:     false,
+		ClusterSize:   3,
+		SSLConnection: false,
+		AllowList:     []string{"203.0.113.1", "192.0.1.0/24"},
+	}
+
 	for _, modifier := range databaseMofidiers {
 		modifier(&createOpts)
 	}

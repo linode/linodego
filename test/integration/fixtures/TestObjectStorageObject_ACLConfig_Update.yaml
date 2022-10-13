@@ -71,7 +71,7 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/go-bucket-test-def/object-url
     method: POST
   response:
-    body: '{"url": "https://us-east-1.linodeobjects.com:443/go-bucket-test-def/test?Signature=heY3k3Xhd7TQvGIST03ICqXvHg8%3D&Expires=1664895788&AWSAccessKeyID=SANITIZED",
+    body: '{"url": "https://us-east-1.linodeobjects.com:443/go-bucket-test-def/test?Signature=3geZra6WVkB26O%2FV8W4ukrJabqM%3D&Expires=1665425929&AWSAccessKeyID=SANITIZED",
       "exists": false}'
     headers:
       Access-Control-Allow-Credentials:
@@ -87,7 +87,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "187"
+      - "189"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -127,8 +127,8 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/go-bucket-test-def/object-acl?name=test
     method: GET
   response:
-    body: '{"acl": "private", "acl_xml": "<AccessControlPolicy xmlns=\"http://s3.amazonaws.com/doc/2006-03-01/\"><Owner><ID>c3308a55-a228-4cad-81e8-1fdfbced4e50</ID><DisplayName>c3308a55-a228-4cad-81e8-1fdfbced4e50</DisplayName></Owner><AccessControlList><Grant><Grantee
-      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"CanonicalUser\"><ID>c3308a55-a228-4cad-81e8-1fdfbced4e50</ID><DisplayName>c3308a55-a228-4cad-81e8-1fdfbced4e50</DisplayName></Grantee><Permission>FULL_CONTROL</Permission></Grant></AccessControlList></AccessControlPolicy>"}'
+    body: '{"acl": "private", "acl_xml": "<AccessControlPolicy xmlns=\"http://s3.amazonaws.com/doc/2006-03-01/\"><Owner><ID>247335f1-a59c-4323-8805-d64c5770d936</ID><DisplayName>247335f1-a59c-4323-8805-d64c5770d936</DisplayName></Owner><AccessControlList><Grant><Grantee
+      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"CanonicalUser\"><ID>247335f1-a59c-4323-8805-d64c5770d936</ID><DisplayName>247335f1-a59c-4323-8805-d64c5770d936</DisplayName></Grantee><Permission>FULL_CONTROL</Permission></Grant></AccessControlList></AccessControlPolicy>"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -240,9 +240,9 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/go-bucket-test-def/object-acl?name=test
     method: GET
   response:
-    body: '{"acl": "public-read", "acl_xml": "<AccessControlPolicy xmlns=\"http://s3.amazonaws.com/doc/2006-03-01/\"><Owner><ID>c3308a55-a228-4cad-81e8-1fdfbced4e50</ID><DisplayName>c3308a55-a228-4cad-81e8-1fdfbced4e50</DisplayName></Owner><AccessControlList><Grant><Grantee
+    body: '{"acl": "public-read", "acl_xml": "<AccessControlPolicy xmlns=\"http://s3.amazonaws.com/doc/2006-03-01/\"><Owner><ID>247335f1-a59c-4323-8805-d64c5770d936</ID><DisplayName>247335f1-a59c-4323-8805-d64c5770d936</DisplayName></Owner><AccessControlList><Grant><Grantee
       xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"Group\"><URI>http://acs.amazonaws.com/groups/global/AllUsers</URI></Grantee><Permission>READ</Permission></Grant><Grant><Grantee
-      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"CanonicalUser\"><ID>c3308a55-a228-4cad-81e8-1fdfbced4e50</ID><DisplayName>c3308a55-a228-4cad-81e8-1fdfbced4e50</DisplayName></Grantee><Permission>FULL_CONTROL</Permission></Grant></AccessControlList></AccessControlPolicy>"}'
+      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"CanonicalUser\"><ID>247335f1-a59c-4323-8805-d64c5770d936</ID><DisplayName>247335f1-a59c-4323-8805-d64c5770d936</DisplayName></Grantee><Permission>FULL_CONTROL</Permission></Grant></AccessControlList></AccessControlPolicy>"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -299,7 +299,7 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/go-bucket-test-def/object-url
     method: POST
   response:
-    body: '{"url": "https://us-east-1.linodeobjects.com:443/go-bucket-test-def/test?Signature=TyvNjZ3gIWZBYtvMbCW4FcX4ixY%3D&Expires=1664895790&AWSAccessKeyID=SANITIZED",
+    body: '{"url": "https://us-east-1.linodeobjects.com:443/go-bucket-test-def/test?Signature=L41EAtaiqaDrjNdOcA7ubkWG03k%3D&Expires=1665425931&AWSAccessKeyID=SANITIZED",
       "exists": true}'
     headers:
       Access-Control-Allow-Credentials:

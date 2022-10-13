@@ -19,7 +19,7 @@ func TestEventPoller_InstancePower(t *testing.T) {
 	booted := false
 
 	instance, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
-		Region:   "us-southeast",
+		Region:   getRegionsWithCaps(t, client, []string{"Linodes"})[0],
 		Type:     "g6-nanode-1",
 		Image:    "linode/ubuntu22.04",
 		RootPass: "c00lp@ss!",
