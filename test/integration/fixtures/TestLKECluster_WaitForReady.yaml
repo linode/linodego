@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 75912, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+    body: '{"id": 76147, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "label": "go-lke-test-wait", "region": "us-southeast",
       "k8s_version": "1.23", "control_plane": {"high_availability": false}, "tags":
       ["testing"]}'
@@ -69,7 +69,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75912/kubeconfig
+    url: https://api.linode.com/v4beta/lke/clusters/76147/kubeconfig
     method: GET
   response:
     body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
@@ -110,7 +110,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75912/kubeconfig
+    url: https://api.linode.com/v4beta/lke/clusters/76147/kubeconfig
     method: GET
   response:
     body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
@@ -151,7 +151,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75912/kubeconfig
+    url: https://api.linode.com/v4beta/lke/clusters/76147/kubeconfig
     method: GET
   response:
     body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
@@ -192,7 +192,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75912/kubeconfig
+    url: https://api.linode.com/v4beta/lke/clusters/76147/kubeconfig
     method: GET
   response:
     body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
@@ -233,7 +233,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75912/kubeconfig
+    url: https://api.linode.com/v4beta/lke/clusters/76147/kubeconfig
     method: GET
   response:
     body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
@@ -274,7 +274,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75912/kubeconfig
+    url: https://api.linode.com/v4beta/lke/clusters/76147/kubeconfig
     method: GET
   response:
     body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
@@ -315,7 +315,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75912/kubeconfig
+    url: https://api.linode.com/v4beta/lke/clusters/76147/kubeconfig
     method: GET
   response:
     body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
@@ -356,7 +356,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75912/kubeconfig
+    url: https://api.linode.com/v4beta/lke/clusters/76147/kubeconfig
     method: GET
   response:
     body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
@@ -397,7 +397,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75912/kubeconfig
+    url: https://api.linode.com/v4beta/lke/clusters/76147/kubeconfig
     method: GET
   response:
     body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
@@ -438,92 +438,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75912/kubeconfig
+    url: https://api.linode.com/v4beta/lke/clusters/76147/kubeconfig
     method: GET
   response:
-    body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
-      try again later."}]}'
-    headers:
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Content-Length:
-      - "92"
-      Content-Type:
-      - application/json
-      Server:
-      - nginx
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - lke:read_write
-      X-Frame-Options:
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "800"
-    status: 503 Service Unavailable
-    code: 503
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75912/kubeconfig
-    method: GET
-  response:
-    body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
-      try again later."}]}'
-    headers:
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Content-Length:
-      - "92"
-      Content-Type:
-      - application/json
-      Server:
-      - nginx
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - lke:read_write
-      X-Frame-Options:
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "800"
-    status: 503 Service Unavailable
-    code: 503
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75912/kubeconfig
-    method: GET
-  response:
-    body: '{"kubeconfig": "CmFwaVZlcnNpb246IHYxCmtpbmQ6IENvbmZpZwpwcmVmZXJlbmNlczoge30KCmNsdXN0ZXJzOgotIGNsdXN0ZXI6CiAgICBjZXJ0aWZpY2F0ZS1hdXRob3JpdHktZGF0YTogTFMwdExTMUNSVWRKVGlCRFJWSlVTVVpKUTBGVVJTMHRMUzB0Q2sxSlNVTXZha05EUVdWaFowRjNTVUpCWjBsQ1FVUkJUa0puYTNGb2EybEhPWGN3UWtGUmMwWkJSRUZXVFZKTmQwVlJXVVJXVVZGRVJYZHdjbVJYU213S1kyMDFiR1JIVm5wTlFqUllSRlJKZVUxVVFYaE5WRVV6VFhwTmVFMHhiMWhFVkUxNVRWUkJkMDlFUlROTmVrMTRUVEZ2ZDBaVVJWUk5Ra1ZIUVRGVlJRcEJlRTFMWVROV2FWcFlTblZhV0ZKc1kzcERRMEZUU1hkRVVWbEtTMjlhU1doMlkwNUJVVVZDUWxGQlJHZG5SVkJCUkVORFFWRnZRMmRuUlVKQlRXbGxDbFJKVUdadlRqTnFXRlk1TVZCSU5XNVBZbFZMYTNCWlJqVllaakExYlRWSGNtMUVjbmhGWldzMU1GRlpka0pCV2tsd1FrMXRZbGx6VVdoQmJtTmtVMklLVVRoNFRETk9ielIzT0RWWFdWWjVTaXRGUkd0TmVXZGlSVzkzYWxsQlJUQnZOVzE1YUV4VlYwdERZVll3WVhBeWRsVmpjakZPWlhKellUTlRZakpzTVFwRmNVcEpVRmxyUm5JM2VXNXpiVVF4ZEVwRVVtMVZOME5xVTFKaEsycFFaMGRUYVM5RlRHWjJVMHB5WnpJMFRuRXZSRlF2TVV0eEt6RlBPVmc0V1ZKVENsTkNlblZzWVRGMFNGZGpVR05JUkVoNmNFcDVVVUZ0T1hSdWRrcFpaRWd2Y0dRclJua3dZVFIxU0RnMVZ6UnViME50UkROTGRVWXdVVTVRVjFGSldtb0tURVp1VUU5a1RGQnphMmRISzFKeWRVMVNaM2gyWkZWbVJtUXZhR1J4S3poeVZtbFlhMG92ZEdJMmNEQlJkSFJrZDNwNWVVSkVaVWRpUkZwbVlYWlZMd3BtUm5sb1EyRjJOVXR5WlRWYVJrTlRaMlZyUTBGM1JVRkJZVTVhVFVaamQwUm5XVVJXVWpCUVFWRklMMEpCVVVSQlowdHJUVUU0UjBFeFZXUkZkMFZDQ2k5M1VVWk5RVTFDUVdZNGQwaFJXVVJXVWpCUFFrSlpSVVpEVjBNckwwZHZSbnBCVHpNd01Xa3hhM2xVYzJ0SFZpdFBhSGROUWxWSFFURlZaRVZSVVU4S1RVRjVRME50ZERGWmJWWjVZbTFXTUZwWVRYZEVVVmxLUzI5YVNXaDJZMDVCVVVWTVFsRkJSR2RuUlVKQlIxbFZPREZwZGxwTU9FdG9SM2MwVDBOc1ZncFVZMDV2ZUhsSWJGWmFSME5GWTJoTGNUSXphblJZVm14RFpEZDZNMnBhYjFKRFF6WTJkWFJQWlZBNGRFZFpSMmxSWlU0MlVGSXhZVzFXYzFSTlZWQjFDa2wzTUd4M1kySnVRMWh0VkM5cU5HZHNVa2h5WW5oU2NGaEdNRGc1TVVwR05tZ3dSa3RKVjJ0TlRWaG5ha1ZwUXpsQ2N5OUdOamxSTTNCWFFWcEZhVk1LYUUwd1dtcEtOV2Q2YkZCNVl6UXJlVUl4WkhOM1IyVndja1F2TDNGTmFua3pjVVZPZFU5dk5FOTFUaTh6VFhWNGRreE9jbmRZYjFORVUyMVJhekY2VkFwRk1uQnNhbHBhWkZwSFZuVXhPVFUxUlhNdlkwaElSekJVTWpaNkswczVOV1p4VUdwYWVUWnpNbVpsZW1wc1FYUk1jbGRMY21KSlVYSlBkazlEVlhCa0NsUjVRVk51ZFM5TFRDdENha2gzT1RWSE5USlpTRzR5VjA1VFpYWmtUV2RxVGpCa04yWnhUalJGVUROQk5qbFVXVXBpT0dOMmRrOHhkMDl6ZVN0UmNHMEtTMVpCUFFvdExTMHRMVVZPUkNCRFJWSlVTVVpKUTBGVVJTMHRMUzB0Q2c9PQogICAgc2VydmVyOiBodHRwczovLzg4ZTFkOTcyLTc3NzItNDU5OC04NDMxLTFiZjdlOTBkYWY3Ni51cy1zb3V0aGVhc3QtMS5saW5vZGVsa2UubmV0OjQ0MwogIG5hbWU6IGxrZTc1OTEyCgp1c2VyczoKLSBuYW1lOiBsa2U3NTkxMi1hZG1pbgogIHVzZXI6CiAgICBhcy11c2VyLWV4dHJhOiB7fQogICAgdG9rZW46IGV5SmhiR2NpT2lKU1V6STFOaUlzSW10cFpDSTZJbVZETjNWR1kxWnZObkk1Wmxjd2Iwa3hNMkZzVURsM09FZHdWVGMxTlV4Q1dsWnNTWFIxTWpCWlEwVWlmUS5leUpwYzNNaU9pSnJkV0psY201bGRHVnpMM05sY25acFkyVmhZMk52ZFc1MElpd2lhM1ZpWlhKdVpYUmxjeTVwYnk5elpYSjJhV05sWVdOamIzVnVkQzl1WVcxbGMzQmhZMlVpT2lKcmRXSmxMWE41YzNSbGJTSXNJbXQxWW1WeWJtVjBaWE11YVc4dmMyVnlkbWxqWldGalkyOTFiblF2YzJWamNtVjBMbTVoYldVaU9pSnNhMlV0WVdSdGFXNHRkRzlyWlc0dE9YSm9OelFpTENKcmRXSmxjbTVsZEdWekxtbHZMM05sY25acFkyVmhZMk52ZFc1MEwzTmxjblpwWTJVdFlXTmpiM1Z1ZEM1dVlXMWxJam9pYkd0bExXRmtiV2x1SWl3aWEzVmlaWEp1WlhSbGN5NXBieTl6WlhKMmFXTmxZV05qYjNWdWRDOXpaWEoyYVdObExXRmpZMjkxYm5RdWRXbGtJam9pWlRJMk0yVmlNMlF0TmpnMlpDMDBaREF4TFRsbE5UY3ROVFkwTURJeU1UQTBZalF4SWl3aWMzVmlJam9pYzNsemRHVnRPbk5sY25acFkyVmhZMk52ZFc1ME9tdDFZbVV0YzNsemRHVnRPbXhyWlMxaFpHMXBiaUo5LmZoajNGZXFoMTZVTGZEXzctWVFScGV3UlkzZTJDRTgxaVRZNHJYdldHMC11eDdOei1vajdiZFdiMW5QVnRTZUZuakhneFRKZGJzMDVLUTRSUmZhV0tMajVjVWptSG4zbDFwOWc1ZXFjUlZ0bk5Ha2prRHYtRHJ3LXpkRmJReE9FV29ZWWltSWNqMXNGWnB0dkhKM1VvdkcwdmY0eHRuRWFWZDFlS2pVcEtURVZxZ0g3RDQ5RkI2SDZQbURITGdCVzhpOUlxbDl3Q2w4YzJfZ0VhMkM2bXQ2N3kxNEtSNkhuVUg4YS1kRzliQkg3UDZGbzRhNjd1X1cwWmpQMXh0WldyaEItTEdrRnFuWG5PUndDTGM5ZV9nbmI5c1Rpcy1RTVhvT0ZfLTNEdjVZT1hoelRkdGZXUHQ1c0p4Wl9UQjF5ODNuQmhhTE9TRGtDakJXdUZ4XzVOQQoKY29udGV4dHM6Ci0gY29udGV4dDoKICAgIGNsdXN0ZXI6IGxrZTc1OTEyCiAgICBuYW1lc3BhY2U6IGRlZmF1bHQKICAgIHVzZXI6IGxrZTc1OTEyLWFkbWluCiAgbmFtZTogbGtlNzU5MTItY3R4CgpjdXJyZW50LWNvbnRleHQ6IGxrZTc1OTEyLWN0eAo="}'
+    body: '{"kubeconfig": "CmFwaVZlcnNpb246IHYxCmtpbmQ6IENvbmZpZwpwcmVmZXJlbmNlczoge30KCmNsdXN0ZXJzOgotIGNsdXN0ZXI6CiAgICBjZXJ0aWZpY2F0ZS1hdXRob3JpdHktZGF0YTogTFMwdExTMUNSVWRKVGlCRFJWSlVTVVpKUTBGVVJTMHRMUzB0Q2sxSlNVTXZha05EUVdWaFowRjNTVUpCWjBsQ1FVUkJUa0puYTNGb2EybEhPWGN3UWtGUmMwWkJSRUZXVFZKTmQwVlJXVVJXVVZGRVJYZHdjbVJYU213S1kyMDFiR1JIVm5wTlFqUllSRlJKZVUxVVFYaE5la1V4VGtSWk1FMUdiMWhFVkUxNVRWUkJlRTFFUlRGT1JGa3dUVVp2ZDBaVVJWUk5Ra1ZIUVRGVlJRcEJlRTFMWVROV2FWcFlTblZhV0ZKc1kzcERRMEZUU1hkRVVWbEtTMjlhU1doMlkwNUJVVVZDUWxGQlJHZG5SVkJCUkVORFFWRnZRMmRuUlVKQlMyRmxDbk16UTFKRllVSkdUV3h2Tms5UWRFOXdVMVJ4TW1KQk5IUlFUR1F2UmxGb1lWZFRkMkk0YkhSd1VFRlJhMlJCT1d4Q1FuTmhVamhvUTFsdFMxWlhLeThLY2tvNGVqQjBiakVyVkdwdVRVZHpRbE52T1ZCUWRXVjVia3h5UlhSclRHOHZkRnBxT0daRFQydGFVbFpSVVhCR05WRk1ZMmR0Y1c1ak9HNUlkbUptYndwTFRtdEdWVTgwVlRJMWExZHdWa05pZWpoTVQyMTZhekpSYVdOeFIwaDFNRTVCV0dwVFdVaFZaazVUTjBReVRHOVlkMEp4YmtkTmFHcGhPQ3MwWW1OQ0NubHVZa1V3UlVrMFZqZzVRU3RDSzNaRWVIa3lWa2xPV25KdVEyYzJNa3RPY1VWd1dYbHRUalZIVEZwNFZGTnFOR041YjJkWU1XUnlhRTlSTm1SVlNGVUtZVVJEZFVoWVQwdG9XakJNTW1KeE1ITmhjVVlyV0RKR2RqWlFiR3hXTDNsUVJVTk9lVmREYmtGdk5FRlpUbXhUWXpKc1drMXlUV2RMVmpKSlkwUTVPUXAwSzFCYVJITkRjamxOWlhkR1NYbGpNVFU0UTBGM1JVRkJZVTVhVFVaamQwUm5XVVJXVWpCUVFWRklMMEpCVVVSQlowdHJUVUU0UjBFeFZXUkZkMFZDQ2k5M1VVWk5RVTFDUVdZNGQwaFJXVVJXVWpCUFFrSlpSVVpQUTFaVVVWVktla1Y0UlZoUU9UZE9ObXBtTUd4SVVFeEpORlpOUWxWSFFURlZaRVZSVVU4S1RVRjVRME50ZERGWmJWWjVZbTFXTUZwWVRYZEVVVmxLUzI5YVNXaDJZMDVCVVVWTVFsRkJSR2RuUlVKQlIySTRTRnBoYW1oV05IcFBUR3BDYW1sYVdRcGlTVWQwU21kRmNHbGpPVU53U1hNNGNVOTBlVlprU1dWYVIwbDBlRVV4Ym1wT1IxVnZkbWgzTjFkSVNVcHlTM00xY1V0TVVFWkViekpxTDBsd1ZFaEpDbTVJUjJJdmEwRlFOekJvSzFsRGFUZGFTQ3RZY0hKNmN6Wm9lVEkyUTFkRFZrbFBRMFJzZVRWQ01uWmhkbVF2YjJKM1oySjRTMWN3YUUxa1oxUTViVFVLUlZSRWNFbEJNSEp1WTNVMGRUQktiVXh3WnpGaFVqUjZPRXBJYldoTFVqTk5SRGcyWTNseGVsSnlZM1kyYzNsSFNsb3JTbVZZVWxSeWFVTmpablIyVXdwVGIwdENkVVJxVXpWTVdWUXpZM05RY0hsUlFTOXpVbWRUU2pWbFpHRkJRbXcyYjFrM1RHaHBMMmRrU2xONFNVRnhiRkpZYmprclNWZzVabFpGWTBaMENrMVRhRFZ3ZUc1WmJsSlpMM1Z4VHpONFJWTnFWRVpUTjIxQmNuTkNPSEY2TDA0NVlsVk1ZVkJwU21aSlJHVnRaWEowYTJoUWR6TkJTbU5EWjJscFkzTUtlVUU0UFFvdExTMHRMVVZPUkNCRFJWSlVTVVpKUTBGVVJTMHRMUzB0Q2c9PQogICAgc2VydmVyOiBodHRwczovL2E4YzllOTAxLWJjM2QtNDczNi04NTBkLTkzOWM4ZDA3NWJlZC51cy1zb3V0aGVhc3QtMi5saW5vZGVsa2UubmV0OjQ0MwogIG5hbWU6IGxrZTc2MTQ3Cgp1c2VyczoKLSBuYW1lOiBsa2U3NjE0Ny1hZG1pbgogIHVzZXI6CiAgICBhcy11c2VyLWV4dHJhOiB7fQogICAgdG9rZW46IGV5SmhiR2NpT2lKU1V6STFOaUlzSW10cFpDSTZJakprZFVKR1dGTXhVblpUY0VJMU0xaDJaSG96ZEZaNFdGb3dWVE10ZWtJNFpuRnNja0Y0TlZSbFlXc2lmUS5leUpwYzNNaU9pSnJkV0psY201bGRHVnpMM05sY25acFkyVmhZMk52ZFc1MElpd2lhM1ZpWlhKdVpYUmxjeTVwYnk5elpYSjJhV05sWVdOamIzVnVkQzl1WVcxbGMzQmhZMlVpT2lKcmRXSmxMWE41YzNSbGJTSXNJbXQxWW1WeWJtVjBaWE11YVc4dmMyVnlkbWxqWldGalkyOTFiblF2YzJWamNtVjBMbTVoYldVaU9pSnNhMlV0WVdSdGFXNHRkRzlyWlc0dGNYRnpPRElpTENKcmRXSmxjbTVsZEdWekxtbHZMM05sY25acFkyVmhZMk52ZFc1MEwzTmxjblpwWTJVdFlXTmpiM1Z1ZEM1dVlXMWxJam9pYkd0bExXRmtiV2x1SWl3aWEzVmlaWEp1WlhSbGN5NXBieTl6WlhKMmFXTmxZV05qYjNWdWRDOXpaWEoyYVdObExXRmpZMjkxYm5RdWRXbGtJam9pTW1ZNFlUVTNNV1l0TmpsbE55MDBZV05tTFRreE16Y3ROR0ppTXpZME56WTVaV013SWl3aWMzVmlJam9pYzNsemRHVnRPbk5sY25acFkyVmhZMk52ZFc1ME9tdDFZbVV0YzNsemRHVnRPbXhyWlMxaFpHMXBiaUo5LmJIc3ZOWnlzRFRlc01RVm5DbkNVdkozbjhMRm9GM2JrYWthOVZrWE5nZU1YbXNtaWJJaHFfTU5mNERDcUNsbGZadGRHVWlkamFwYy1MLVlKaUl3RzlHdm15RVNISHpnSmhWVUlkOVh0MHAwRDQybE5mcXRyQUVCdXM2V3JrVWR6UGRIc2ZiM2pIZDlwa0J1dVp2N25kN0JxbWxuM0c4cjg5OXZ5ZnR2R3kwd2JBdHV5SDVseEk1UmU1RUNhMnBaVEN2Z1l0QVZxQ0VTMHNJZVEzekw1RWxQRVNVS1RyX0Q5X2h3OXh5Y09BVVVzSkNFOVBVSjN0TDV0Nm1UbVhQZ2kwelBkVVVCTldQcTYtdTFxbDc4SjhicGV6RndGeVMxQ0duV1lhQXlGdGFfdjJyZi1qd21HUnJDSmdsajBwd0Z3T1ZFV0l5eXV4QkxLN1d5dzZVUm4ydwoKY29udGV4dHM6Ci0gY29udGV4dDoKICAgIGNsdXN0ZXI6IGxrZTc2MTQ3CiAgICBuYW1lc3BhY2U6IGRlZmF1bHQKICAgIHVzZXI6IGxrZTc2MTQ3LWFkbWluCiAgbmFtZTogbGtlNzYxNDctY3R4CgpjdXJyZW50LWNvbnRleHQ6IGxrZTc2MTQ3LWN0eAo="}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -575,7 +493,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75912
+    url: https://api.linode.com/v4beta/lke/clusters/76147
     method: DELETE
   response:
     body: '{}'

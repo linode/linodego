@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 75927, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+    body: '{"id": 76153, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "label": "go-lke-test-apiend", "region": "us-southeast",
       "k8s_version": "1.23", "control_plane": {"high_availability": false}, "tags":
       ["testing"]}'
@@ -69,7 +69,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75927/api-endpoints
+    url: https://api.linode.com/v4beta/lke/clusters/76153/api-endpoints
     method: GET
   response:
     body: '{"errors": [{"reason": "Cluster API Endpoints are not yet available. Please
@@ -110,7 +110,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75927/api-endpoints
+    url: https://api.linode.com/v4beta/lke/clusters/76153/api-endpoints
     method: GET
   response:
     body: '{"errors": [{"reason": "Cluster API Endpoints are not yet available. Please
@@ -151,7 +151,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75927/api-endpoints
+    url: https://api.linode.com/v4beta/lke/clusters/76153/api-endpoints
     method: GET
   response:
     body: '{"errors": [{"reason": "Cluster API Endpoints are not yet available. Please
@@ -192,12 +192,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75927/api-endpoints
+    url: https://api.linode.com/v4beta/lke/clusters/76153/api-endpoints
     method: GET
   response:
-    body: '{"page": 1, "pages": 1, "results": 4, "data": [{"endpoint": "https://3c580c6c-308f-4e16-82ce-6acf432a3dbc.us-southeast-1.linodelke.net:443"},
-      {"endpoint": "https://3c580c6c-308f-4e16-82ce-6acf432a3dbc.us-southeast-1.linodelke.net:6443"},
-      {"endpoint": "https://45.79.245.86:443"}, {"endpoint": "https://45.79.245.86:6443"}]}'
+    body: '{"page": 1, "pages": 1, "results": 4, "data": [{"endpoint": "https://1c40eb09-e183-445f-9b2c-bf294a0e7696.us-southeast-2.linodelke.net:443"},
+      {"endpoint": "https://1c40eb09-e183-445f-9b2c-bf294a0e7696.us-southeast-2.linodelke.net:6443"},
+      {"endpoint": "https://139.144.164.187:443"}, {"endpoint": "https://139.144.164.187:6443"}]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -213,7 +213,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "323"
+      - "329"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -251,7 +251,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75927
+    url: https://api.linode.com/v4beta/lke/clusters/76153
     method: DELETE
   response:
     body: '{}'
