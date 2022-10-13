@@ -14,10 +14,10 @@ interactions:
     url: https://api.linode.com/v4beta/account
     method: GET
   response:
-    body: '{"company": "Linode", "email": "jriddle@linode.com", "first_name": "REDACTED",
-      "last_name": "REDACTED", "address_1": "REDACTED", "address_2": "Unit E", "city":
-      "Mooresville", "state": "REDACTED", "zip": "REDACTED", "country": "US", "phone": "REDACTED",
-      "balance": -24.28, "tax_id": "", "billing_source": "linode", "credit_card":
+    body: '{"company": "Linode", "email": "REDACTED", "first_name": "REDACTED",
+      "last_name": "REDACTED", "address_1": "REDACTED", "address_2": "NA",
+      "city": "REDACTED", "state": "REDACTED", "zip": "REDACTED", "country": "US", "phone":
+      "REDACTED", "balance": 0.0, "tax_id": "", "billing_source": "linode", "credit_card":
       {"last_four": "REDACTED", "expiry": "REDACTED"}, "balance_uninvoiced": 0.0, "active_since":
       "2018-01-02T03:04:05", "capabilities": ["Linodes", "NodeBalancers", "Block Storage",
       "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans", "LKE HA Control Planes",
@@ -37,7 +37,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "688"
+      - "687"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:

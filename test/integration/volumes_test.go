@@ -14,7 +14,7 @@ func TestVolume_Create(t *testing.T) {
 
 	createOpts := linodego.VolumeCreateOptions{
 		Label:  "go-vol-test-create",
-		Region: "us-southeast",
+		Region: getRegionsWithCaps(t, client, []string{"Linodes"})[0],
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
 	if err != nil {
@@ -174,7 +174,7 @@ func setupVolume(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := linodego.VolumeCreateOptions{
 		Label:  "go-vol-test-def",
-		Region: "us-west",
+		Region: getRegionsWithCaps(t, client, []string{"Linodes"})[0],
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
 	if err != nil {

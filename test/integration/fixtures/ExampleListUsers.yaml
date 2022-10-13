@@ -14,8 +14,9 @@ interactions:
     url: https://api.linode.com/v4beta/account/users
     method: GET
   response:
-    body: '{"data": [{"username": "jriddle-dev", "email": "jriddle@linode.com", "restricted":
-      false, "ssh_keys": ["linode-laptop"], "tfa_enabled": false, "verified_phone_number":
+    body: '{"data": [{"username": "lgarber-dev", "email": "REDACTED", "restricted":
+      false, "ssh_keys": ["tf_test_authorized_keys", "main", "tf_test_authorized_keys",
+      "dev-server-rsa", "tf_test_authorized_keys"], "tfa_enabled": true, "verified_phone_number":
       null}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -32,7 +33,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "212"
+      - "301"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:

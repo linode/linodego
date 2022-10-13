@@ -1,11 +1,13 @@
 package integration
 
 import (
+	"context"
 	"log"
 	"net/http"
 	"os"
 	"regexp"
 	"strconv"
+	"strings"
 	"testing"
 	"time"
 
@@ -180,4 +182,40 @@ func transportRecorderWrapper(t *testing.T, fixtureYaml string) (transport.Wrapp
 		rec.SetTransport(r)
 		return rec
 	}, teardown
+}
+
+// getRegionsWithCaps returns a list of regions that support the given capabilities.
+func getRegionsWithCaps(t *testing.T, client *linodego.Client, capabilities []string) []string {
+	result := make([]string, 0)
+
+	regions, err := client.ListRegions(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	regionHasCaps := func(r linodego.Region) bool {
+		capsMap := make(map[string]bool)
+
+		for _, c := range r.Capabilities {
+			capsMap[strings.ToUpper(c)] = true
+		}
+
+		for _, c := range capabilities {
+			if _, ok := capsMap[strings.ToUpper(c)]; !ok {
+				return false
+			}
+		}
+
+		return true
+	}
+
+	for _, region := range regions {
+		if region.Status != "ok" || !regionHasCaps(region) {
+			continue
+		}
+
+		result = append(result, region.ID)
+	}
+
+	return result
 }
