@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/keys
     method: POST
   response:
-    body: '{"id": 358564, "label": "go-test-def", "access_key": "[SANITIZED]", "secret_key":
+    body: '{"id": 360687, "label": "go-test-def", "access_key": "[SANITIZED]", "secret_key":
       "[SANITIZED]", "limited": true, "bucket_access": [{"cluster": "us-east-1", "bucket_name":
       "go-bucket-test-def", "permissions": "read_only"}, {"cluster": "us-east-1",
       "bucket_name": "go-bucket-test-def", "permissions": "read_write"}]}'
@@ -69,7 +69,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/358564
+    url: https://api.linode.com/v4beta/object-storage/keys/360687
     method: DELETE
   response:
     body: '{}'

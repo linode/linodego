@@ -85,7 +85,7 @@ func createVLANInstance(t *testing.T, client *linodego.Client, instanceName, vla
 
 	trueBool := true
 
-	instance, err := createInstance(t, client, func(opts *linodego.InstanceCreateOptions) {
+	instance, err := createInstance(t, client, func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
 		opts.Interfaces = []linodego.InstanceConfigInterface{
 			{
 				Label:       vlanName,
@@ -96,7 +96,7 @@ func createVLANInstance(t *testing.T, client *linodego.Client, instanceName, vla
 
 		opts.Booted = &trueBool
 		opts.Label = instanceName
-		opts.Region = "us-southeast"
+		opts.Region = getRegionsWithCaps(t, client, []string{"Vlans"})[0]
 	})
 	if err != nil {
 		return nil, nil, err

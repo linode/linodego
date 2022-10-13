@@ -66,7 +66,7 @@ func TestImage_Upload(t *testing.T) {
 	defer teardown()
 
 	image, uploadURL, err := client.CreateImageUpload(context.Background(), ImageCreateUploadOptions{
-		Region:      "us-southeast",
+		Region:      getRegionsWithCaps(t, client, []string{"Linodes"})[0],
 		Label:       "linodego-image-test",
 		Description: "An image that does stuff.",
 	})

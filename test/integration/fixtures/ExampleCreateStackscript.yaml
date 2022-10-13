@@ -2,8 +2,8 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"example stackscript 2022-10-04 15:02:32.526084039 +0000 UTC m=+1856.372010536","description":"description
-      for example stackscript 2022-10-04 15:02:32.526037208 +0000 UTC m=+1856.371963695","images":["linode/debian9","linode/ubuntu18.04"],"is_public":false,"rev_note":"revision
+    body: '{"label":"example stackscript 2022-10-10 16:10:36.04733161 -0400 EDT m=+9.216397383","description":"description
+      for example stackscript 2022-10-10 16:10:36.04732714 -0400 EDT m=+9.216392933","images":["linode/debian9","linode/ubuntu18.04"],"is_public":false,"rev_note":"revision
       1","script":"#!/bin/bash\n"}'
     form: {}
     headers:
@@ -16,10 +16,10 @@ interactions:
     url: https://api.linode.com/v4beta/linode/stackscripts
     method: POST
   response:
-    body: '{"id": 1068912, "username": "jriddle-dev", "user_gravatar_id": "d3270279f01c3808197f56f0e8bf9f42",
-      "label": "example stackscript 2022-10-04 15:02:32.526084039 +0000 UTC m=+1856.372010536",
-      "description": "description for example stackscript 2022-10-04 15:02:32.526037208
-      +0000 UTC m=+1856.371963695", "ordinal": 0, "logo_url": "", "images": ["linode/debian9",
+    body: '{"id": 1071542, "username": "lgarber-dev", "user_gravatar_id": "0cb09f223e7ea849a635f016355fba33",
+      "label": "example stackscript 2022-10-10 16:10:36.04733161 -0400 EDT m=+9.216397383",
+      "description": "description for example stackscript 2022-10-10 16:10:36.04732714
+      -0400 EDT m=+9.216392933", "ordinal": 0, "logo_url": "", "images": ["linode/debian9",
       "linode/ubuntu18.04"], "deployments_total": 0, "deployments_active": 0, "is_public":
       false, "mine": true, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "rev_note": "revision 1", "script": "#!/bin/bash\n", "user_defined_fields":
@@ -38,7 +38,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "613"
+      - "605"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -66,9 +66,9 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"2 example stackscript 2022-10-04 15:02:32.526084039 +0000 UTC
-      m=+1856.372010536","description":"description for example stackscript 2022-10-04
-      15:02:32.526037208 +0000 UTC m=+1856.371963695","images":["linode/debian9","linode/ubuntu18.04"],"is_public":false,"rev_note":"revision
+    body: '{"label":"2 example stackscript 2022-10-10 16:10:36.04733161 -0400 EDT
+      m=+9.216397383","description":"description for example stackscript 2022-10-10
+      16:10:36.04732714 -0400 EDT m=+9.216392933","images":["linode/debian9","linode/ubuntu18.04"],"is_public":false,"rev_note":"revision
       2","script":"#!/bin/bash\necho 2\n"}'
     form: {}
     headers:
@@ -78,13 +78,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/stackscripts/1068912
+    url: https://api.linode.com/v4beta/linode/stackscripts/1071542
     method: PUT
   response:
-    body: '{"id": 1068912, "username": "jriddle-dev", "user_gravatar_id": "d3270279f01c3808197f56f0e8bf9f42",
-      "label": "2 example stackscript 2022-10-04 15:02:32.526084039 +0000 UTC m=+1856.372010536",
-      "description": "description for example stackscript 2022-10-04 15:02:32.526037208
-      +0000 UTC m=+1856.371963695", "ordinal": 0, "logo_url": "", "images": ["linode/debian9",
+    body: '{"id": 1071542, "username": "lgarber-dev", "user_gravatar_id": "0cb09f223e7ea849a635f016355fba33",
+      "label": "2 example stackscript 2022-10-10 16:10:36.04733161 -0400 EDT m=+9.216397383",
+      "description": "description for example stackscript 2022-10-10 16:10:36.04732714
+      -0400 EDT m=+9.216392933", "ordinal": 0, "logo_url": "", "images": ["linode/debian9",
       "linode/ubuntu18.04"], "deployments_total": 0, "deployments_active": 0, "is_public":
       false, "mine": true, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "rev_note": "revision 2", "script": "#!/bin/bash\necho 2\n", "user_defined_fields":
@@ -103,7 +103,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "623"
+      - "615"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -131,9 +131,9 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"3 2 example stackscript 2022-10-04 15:02:32.526084039 +0000 UTC
-      m=+1856.372010536","description":"description for example stackscript 2022-10-04
-      15:02:32.526037208 +0000 UTC m=+1856.371963695","images":["linode/debian9","linode/ubuntu18.04"],"is_public":false,"rev_note":"revision
+    body: '{"label":"3 2 example stackscript 2022-10-10 16:10:36.04733161 -0400 EDT
+      m=+9.216397383","description":"description for example stackscript 2022-10-10
+      16:10:36.04732714 -0400 EDT m=+9.216392933","images":["linode/debian9","linode/ubuntu18.04"],"is_public":false,"rev_note":"revision
       3","script":"#!/bin/bash\necho 2\necho 3\n"}'
     form: {}
     headers:
@@ -143,13 +143,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/stackscripts/1068912
+    url: https://api.linode.com/v4beta/linode/stackscripts/1071542
     method: PUT
   response:
-    body: '{"id": 1068912, "username": "jriddle-dev", "user_gravatar_id": "d3270279f01c3808197f56f0e8bf9f42",
-      "label": "3 2 example stackscript 2022-10-04 15:02:32.526084039 +0000 UTC m=+1856.372010536",
-      "description": "description for example stackscript 2022-10-04 15:02:32.526037208
-      +0000 UTC m=+1856.371963695", "ordinal": 0, "logo_url": "", "images": ["linode/debian9",
+    body: '{"id": 1071542, "username": "lgarber-dev", "user_gravatar_id": "0cb09f223e7ea849a635f016355fba33",
+      "label": "3 2 example stackscript 2022-10-10 16:10:36.04733161 -0400 EDT m=+9.216397383",
+      "description": "description for example stackscript 2022-10-10 16:10:36.04732714
+      -0400 EDT m=+9.216392933", "ordinal": 0, "logo_url": "", "images": ["linode/debian9",
       "linode/ubuntu18.04"], "deployments_total": 0, "deployments_active": 0, "is_public":
       false, "mine": true, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "rev_note": "revision 3", "script": "#!/bin/bash\necho 2\necho 3\n", "user_defined_fields":
@@ -168,7 +168,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "633"
+      - "625"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -205,13 +205,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/stackscripts/1068912
+    url: https://api.linode.com/v4beta/linode/stackscripts/1071542
     method: GET
   response:
-    body: '{"id": 1068912, "username": "jriddle-dev", "user_gravatar_id": "d3270279f01c3808197f56f0e8bf9f42",
-      "label": "3 2 example stackscript 2022-10-04 15:02:32.526084039 +0000 UTC m=+1856.372010536",
-      "description": "description for example stackscript 2022-10-04 15:02:32.526037208
-      +0000 UTC m=+1856.371963695", "ordinal": 0, "logo_url": "", "images": ["linode/debian9",
+    body: '{"id": 1071542, "username": "lgarber-dev", "user_gravatar_id": "0cb09f223e7ea849a635f016355fba33",
+      "label": "3 2 example stackscript 2022-10-10 16:10:36.04733161 -0400 EDT m=+9.216397383",
+      "description": "description for example stackscript 2022-10-10 16:10:36.04732714
+      -0400 EDT m=+9.216392933", "ordinal": 0, "logo_url": "", "images": ["linode/debian9",
       "linode/ubuntu18.04"], "deployments_total": 0, "deployments_active": 0, "is_public":
       false, "mine": true, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "rev_note": "revision 3", "script": "#!/bin/bash\necho 2\necho 3\n", "user_defined_fields":
@@ -231,7 +231,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "633"
+      - "625"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -269,7 +269,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/stackscripts/1068912
+    url: https://api.linode.com/v4beta/linode/stackscripts/1071542
     method: DELETE
   response:
     body: '{}'
