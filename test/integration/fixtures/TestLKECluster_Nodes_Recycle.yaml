@@ -118,7 +118,7 @@ interactions:
     url: https://api.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 75769, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+    body: '{"id": 76165, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "label": "go-lke-test-recycle", "region": "ap-west",
       "k8s_version": "1.23", "control_plane": {"high_availability": false}, "tags":
       ["testing"]}'
@@ -173,7 +173,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75769/recycle
+    url: https://api.linode.com/v4beta/lke/clusters/76165/recycle
     method: POST
   response:
     body: '{}'
@@ -228,7 +228,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75769
+    url: https://api.linode.com/v4beta/lke/clusters/76165
     method: DELETE
   response:
     body: '{}'
