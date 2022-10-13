@@ -9,7 +9,9 @@ import (
 	"net/url"
 	"os"
 	"path"
+	"reflect"
 	"strconv"
+	"sync"
 	"time"
 
 	"github.com/go-resty/resty/v2"
@@ -58,11 +60,25 @@ type Client struct {
 	loadedProfile   string
 
 	configProfiles map[string]ConfigProfile
+
+	// Fields for caching endpoint responses
+	shouldCache     bool
+	cacheExpiration time.Duration
+	cachedEntries   map[string]clientCacheEntry
+	cachedEntryLock *sync.RWMutex
 }
 
 type EnvDefaults struct {
 	Token   string
 	Profile string
+}
+
+type clientCacheEntry struct {
+	Created time.Time
+	Data    any
+	// If != nil, use this instead of the
+	// global expiry
+	ExpiryOverride *time.Duration
 }
 
 type Request = resty.Request
@@ -189,6 +205,127 @@ func (c *Client) addRetryConditional(retryConditional RetryConditional) *Client 
 	return c
 }
 
+func (c *Client) addCachedResponse(endpoint string, response any, expiry *time.Duration) error {
+	if !c.shouldCache {
+		return nil
+	}
+
+	u, err := url.Parse(endpoint)
+	if err != nil {
+		return fmt.Errorf("failed to parse URL for caching: %s", err)
+	}
+
+	responseValue := reflect.ValueOf(response)
+
+	entry := clientCacheEntry{
+		Created:        time.Now(),
+		ExpiryOverride: expiry,
+	}
+
+	switch responseValue.Kind() {
+	case reflect.Ptr:
+		// We want to automatically deref pointers to
+		// avoid caching mutable data.
+		entry.Data = responseValue.Elem().Interface()
+	default:
+		entry.Data = response
+	}
+
+	c.cachedEntryLock.Lock()
+	defer c.cachedEntryLock.Unlock()
+
+	c.cachedEntries[u.Path] = entry
+
+	return nil
+}
+
+func (c *Client) getCachedResponse(endpoint string) (any, error) {
+	if !c.shouldCache {
+		return nil, nil
+	}
+
+	u, err := url.Parse(endpoint)
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse URL for caching: %s", err)
+	}
+
+	c.cachedEntryLock.RLock()
+
+	// Hacky logic to dynamically RUnlock
+	// only if it is still locked by the
+	// end of the function.
+	// This is necessary as we take write
+	// access if the entry has expired.
+	rLocked := true
+	defer func() {
+		if rLocked {
+			c.cachedEntryLock.RUnlock()
+		}
+	}()
+
+	entry, ok := c.cachedEntries[u.Path]
+	if !ok {
+		return nil, nil
+	}
+
+	// Handle expired entries
+	elapsedTime := time.Since(entry.Created)
+
+	hasExpired := elapsedTime > c.cacheExpiration
+	if entry.ExpiryOverride != nil {
+		hasExpired = elapsedTime > *entry.ExpiryOverride
+	}
+
+	if hasExpired {
+		// We need to give up our read access and request read-write access
+		c.cachedEntryLock.RUnlock()
+		rLocked = false
+
+		c.cachedEntryLock.Lock()
+		defer c.cachedEntryLock.Unlock()
+
+		delete(c.cachedEntries, u.Path)
+		return nil, nil
+	}
+
+	return c.cachedEntries[u.Path].Data, nil
+}
+
+// InvalidateCache clears all cached responses for all endpoints.
+func (c *Client) InvalidateCache() {
+	c.cachedEntryLock.Lock()
+	defer c.cachedEntryLock.Unlock()
+
+	// GC will handle the old map
+	c.cachedEntries = make(map[string]clientCacheEntry)
+}
+
+// InvalidateCacheEndpoint invalidates a single cached endpoint.
+func (c *Client) InvalidateCacheEndpoint(endpoint string) error {
+	u, err := url.Parse(endpoint)
+	if err != nil {
+		return fmt.Errorf("failed to parse URL for caching: %s", err)
+	}
+
+	c.cachedEntryLock.Lock()
+	defer c.cachedEntryLock.Unlock()
+
+	delete(c.cachedEntries, u.Path)
+
+	return nil
+}
+
+// SetGlobalCacheExpiration sets the desired time for any cached response
+// to be valid for.
+func (c *Client) SetGlobalCacheExpiration(expiryTime time.Duration) {
+	c.cacheExpiration = expiryTime
+}
+
+// UseCache sets whether response caching should be used
+func (c *Client) UseCache(value bool) {
+	c.shouldCache = value
+}
+
 // SetRetryMaxWaitTime sets the maximum delay before retrying a request.
 func (c *Client) SetRetryMaxWaitTime(max time.Duration) *Client {
 	c.resty.SetRetryMaxWaitTime(max)
@@ -234,6 +371,11 @@ func NewClient(hc *http.Client) (client Client) {
 	} else {
 		client.resty = resty.New()
 	}
+
+	client.shouldCache = true
+	client.cacheExpiration = time.Minute * 15
+	client.cachedEntries = make(map[string]clientCacheEntry)
+	client.cachedEntryLock = &sync.RWMutex{}
 
 	client.SetUserAgent(DefaultUserAgent)
 

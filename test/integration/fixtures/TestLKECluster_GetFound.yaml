@@ -118,7 +118,7 @@ interactions:
     url: https://api.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 75767, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+    body: '{"id": 76163, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "label": "go-lke-test-found", "region": "ap-west", "k8s_version":
       "1.23", "control_plane": {"high_availability": false}, "tags": ["testing"]}'
     headers:
@@ -172,10 +172,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75767
+    url: https://api.linode.com/v4beta/lke/clusters/76163
     method: GET
   response:
-    body: '{"id": 75767, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+    body: '{"id": 76163, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "label": "go-lke-test-found", "region": "ap-west", "k8s_version":
       "1.23", "control_plane": {"high_availability": false}, "tags": ["testing"]}'
     headers:
@@ -231,7 +231,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75767
+    url: https://api.linode.com/v4beta/lke/clusters/76163
     method: DELETE
   response:
     body: '{}'

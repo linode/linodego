@@ -68,25 +68,48 @@ func (resp *LinodeTypesPagedResponse) castResult(r *resty.Request, e string) (in
 	return castedRes.Pages, castedRes.Results, nil
 }
 
-// ListTypes lists linode types
+// ListTypes lists linode types. This endpoint is cached by default.
 func (c *Client) ListTypes(ctx context.Context, opts *ListOptions) ([]LinodeType, error) {
 	response := LinodeTypesPagedResponse{}
+
+	if result, err := c.getCachedResponse(response.endpoint()); err != nil {
+		return nil, err
+	} else if result != nil {
+		return result.([]LinodeType), nil
+	}
 
 	err := c.listHelper(ctx, &response, opts)
 	if err != nil {
 		return nil, err
 	}
 
+	if err := c.addCachedResponse(response.endpoint(), response.Data, &cacheExpiryTime); err != nil {
+		return nil, err
+	}
+
 	return response.Data, nil
 }
 
-// GetType gets the type with the provided ID
+// GetType gets the type with the provided ID. This endpoint is cached by default.
 func (c *Client) GetType(ctx context.Context, typeID string) (*LinodeType, error) {
 	e := fmt.Sprintf("linode/types/%s", typeID)
+
+	if result, err := c.getCachedResponse(e); err != nil {
+		return nil, err
+	} else if result != nil {
+		result := result.(LinodeType)
+		return &result, nil
+	}
+
 	req := c.R(ctx).SetResult(LinodeType{})
 	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
 		return nil, err
 	}
+
+	if err := c.addCachedResponse(e, r.Result(), &cacheExpiryTime); err != nil {
+		return nil, err
+	}
+
 	return r.Result().(*LinodeType), nil
 }

@@ -118,7 +118,7 @@ interactions:
     url: https://api.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 75775, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+    body: '{"id": 76171, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "label": "go-lke-test-def", "region": "ap-west", "k8s_version":
       "1.23", "control_plane": {"high_availability": false}, "tags": ["testing"]}'
     headers:
@@ -172,11 +172,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75775/pools
+    url: https://api.linode.com/v4beta/lke/clusters/76171/pools
     method: POST
   response:
-    body: '{"id": 117764, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "117764-634448cccc97",
-      "instance_id": null, "status": "not_ready"}, {"id": "117764-634448cd9c00", "instance_id":
+    body: '{"id": 118360, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "118360-63483a7a95f3",
+      "instance_id": null, "status": "not_ready"}, {"id": "118360-63483a7b6526", "instance_id":
       null, "status": "not_ready"}], "disks": [{"size": 1000, "type": "ext4"}], "autoscaler":
       {"enabled": false, "min": 2, "max": 2}, "tags": ["testing"]}'
     headers:
@@ -230,17 +230,17 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75775/pools
+    url: https://api.linode.com/v4beta/lke/clusters/76171/pools
     method: GET
   response:
-    body: '{"data": [{"id": 117763, "type": "g6-standard-2", "count": 1, "nodes":
-      [{"id": "117763-634448cbd1a5", "instance_id": null, "status": "not_ready"}],
+    body: '{"data": [{"id": 118359, "type": "g6-standard-2", "count": 1, "nodes":
+      [{"id": "118359-63483a79a0e4", "instance_id": 39523208, "status": "not_ready"}],
       "disks": [], "autoscaler": {"enabled": false, "min": 1, "max": 1}, "tags": ["test"]},
-      {"id": 117764, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "117764-634448cccc97",
-      "instance_id": null, "status": "not_ready"}, {"id": "117764-634448cd9c00", "instance_id":
-      null, "status": "not_ready"}], "disks": [{"size": 1000, "type": "ext4"}], "autoscaler":
-      {"enabled": false, "min": 2, "max": 2}, "tags": ["testing"]}], "page": 1, "pages":
-      1, "results": 2}'
+      {"id": 118360, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "118360-63483a7a95f3",
+      "instance_id": 39523209, "status": "not_ready"}, {"id": "118360-63483a7b6526",
+      "instance_id": null, "status": "not_ready"}], "disks": [{"size": 1000, "type":
+      "ext4"}], "autoscaler": {"enabled": false, "min": 2, "max": 2}, "tags": ["testing"]}],
+      "page": 1, "pages": 1, "results": 2}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -256,7 +256,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "603"
+      - "611"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -294,7 +294,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75775/pools/117764
+    url: https://api.linode.com/v4beta/lke/clusters/76171/pools/118360
     method: DELETE
   response:
     body: '{}'
@@ -349,7 +349,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/75775
+    url: https://api.linode.com/v4beta/lke/clusters/76171
     method: DELETE
   response:
     body: '{}'

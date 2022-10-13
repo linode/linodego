@@ -39,23 +39,48 @@ func (resp *LinodeKernelsPagedResponse) castResult(r *resty.Request, e string) (
 	return castedRes.Pages, castedRes.Results, nil
 }
 
-// ListKernels lists linode kernels
+// ListKernels lists linode kernels. This endpoint is cached by default.
 func (c *Client) ListKernels(ctx context.Context, opts *ListOptions) ([]LinodeKernel, error) {
 	response := LinodeKernelsPagedResponse{}
+
+	if result, err := c.getCachedResponse(response.endpoint()); err != nil {
+		return nil, err
+	} else if result != nil {
+		return result.([]LinodeKernel), nil
+	}
+
 	err := c.listHelper(ctx, &response, opts)
 	if err != nil {
 		return nil, err
 	}
+
+	if err := c.addCachedResponse(response.endpoint(), response.Data, nil); err != nil {
+		return nil, err
+	}
+
 	return response.Data, nil
 }
 
-// GetKernel gets the kernel with the provided ID
+// GetKernel gets the kernel with the provided ID. This endpoint is cached by default.
 func (c *Client) GetKernel(ctx context.Context, kernelID string) (*LinodeKernel, error) {
 	e := fmt.Sprintf("linode/kernels/%s", kernelID)
+
+	if result, err := c.getCachedResponse(e); err != nil {
+		return nil, err
+	} else if result != nil {
+		result := result.(LinodeKernel)
+		return &result, nil
+	}
+
 	req := c.R(ctx).SetResult(&LinodeKernel{})
 	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
 		return nil, err
 	}
+
+	if err := c.addCachedResponse(e, r.Result(), nil); err != nil {
+		return nil, err
+	}
+
 	return r.Result().(*LinodeKernel), nil
 }

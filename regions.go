@@ -3,9 +3,14 @@ package linodego
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"github.com/go-resty/resty/v2"
 )
+
+// Region-related endpoints have a custom expiry time as the
+// `status` field may update for database outages.
+var cacheExpiryTime = time.Minute
 
 // Region represents a linode region object
 type Region struct {
@@ -43,23 +48,48 @@ func (resp *RegionsPagedResponse) castResult(r *resty.Request, e string) (int, i
 	return castedRes.Pages, castedRes.Results, nil
 }
 
-// ListRegions lists Regions
+// ListRegions lists Regions. This endpoint is cached by default.
 func (c *Client) ListRegions(ctx context.Context, opts *ListOptions) ([]Region, error) {
 	response := RegionsPagedResponse{}
+
+	if result, err := c.getCachedResponse(response.endpoint()); err != nil {
+		return nil, err
+	} else if result != nil {
+		return result.([]Region), nil
+	}
+
 	err := c.listHelper(ctx, &response, opts)
 	if err != nil {
 		return nil, err
 	}
+
+	if err := c.addCachedResponse(response.endpoint(), response.Data, &cacheExpiryTime); err != nil {
+		return nil, err
+	}
+
 	return response.Data, nil
 }
 
-// GetRegion gets the template with the provided ID
+// GetRegion gets the template with the provided ID. This endpoint is cached by default.
 func (c *Client) GetRegion(ctx context.Context, regionID string) (*Region, error) {
 	e := fmt.Sprintf("regions/%s", regionID)
+
+	if result, err := c.getCachedResponse(e); err != nil {
+		return nil, err
+	} else if result != nil {
+		result := result.(Region)
+		return &result, nil
+	}
+
 	req := c.R(ctx).SetResult(&Region{})
 	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
 		return nil, err
 	}
+
+	if err := c.addCachedResponse(e, r.Result(), &cacheExpiryTime); err != nil {
+		return nil, err
+	}
+
 	return r.Result().(*Region), nil
 }

@@ -138,24 +138,49 @@ func (resp *LKEVersionsPagedResponse) castResult(r *resty.Request, e string) (in
 	return castedRes.Pages, castedRes.Results, nil
 }
 
-// ListLKEVersions lists the Kubernetes versions available through LKE
+// ListLKEVersions lists the Kubernetes versions available through LKE. This endpoint is cached by default.
 func (c *Client) ListLKEVersions(ctx context.Context, opts *ListOptions) ([]LKEVersion, error) {
 	response := LKEVersionsPagedResponse{}
+
+	if result, err := c.getCachedResponse(response.endpoint()); err != nil {
+		return nil, err
+	} else if result != nil {
+		return result.([]LKEVersion), nil
+	}
+
 	err := c.listHelper(ctx, &response, opts)
 	if err != nil {
 		return nil, err
 	}
+
+	if err := c.addCachedResponse(response.endpoint(), response.Data, &cacheExpiryTime); err != nil {
+		return nil, err
+	}
+
 	return response.Data, nil
 }
 
-// GetLKEVersion gets details about a specific LKE Version
+// GetLKEVersion gets details about a specific LKE Version. This endpoint is cached by default.
 func (c *Client) GetLKEVersion(ctx context.Context, version string) (*LKEVersion, error) {
 	e := fmt.Sprintf("lke/versions/%s", version)
+
+	if result, err := c.getCachedResponse(e); err != nil {
+		return nil, err
+	} else if result != nil {
+		result := result.(LKEVersion)
+		return &result, nil
+	}
+
 	req := c.R(ctx).SetResult(&LKEVersion{})
 	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
 		return nil, err
 	}
+
+	if err := c.addCachedResponse(e, r.Result(), &cacheExpiryTime); err != nil {
+		return nil, err
+	}
+
 	return r.Result().(*LKEVersion), nil
 }
 
