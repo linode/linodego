@@ -50,6 +50,7 @@ type Instance struct {
 	Type            string          `json:"type"`
 	Status          InstanceStatus  `json:"status"`
 	Hypervisor      string          `json:"hypervisor"`
+	HostUUID        string          `json:"host_uuid"`
 	Specs           *InstanceSpec   `json:"specs"`
 	WatchdogEnabled bool            `json:"watchdog_enabled"`
 	Tags            []string        `json:"tags"`
