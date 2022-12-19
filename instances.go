@@ -75,8 +75,9 @@ type InstanceAlert struct {
 
 // InstanceBackup represents backup settings for an instance
 type InstanceBackup struct {
-	Enabled  bool `json:"enabled,omitempty"`
-	Schedule struct {
+	Available bool `json:"available,omitempty"` // read-only
+	Enabled   bool `json:"enabled,omitempty"`   // read-only
+	Schedule  struct {
 		Day    string `json:"day,omitempty"`
 		Window string `json:"window,omitempty"`
 	} `json:"schedule,omitempty"`

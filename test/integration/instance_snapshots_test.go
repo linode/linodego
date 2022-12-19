@@ -24,6 +24,16 @@ func TestInstanceBackups_List(t *testing.T) {
 		t.Errorf("Error getting backup, Labels dont match")
 	}
 
+	// Get updated instance info
+	instance, err = client.GetInstance(context.Background(), instance.ID)
+	if err != nil {
+		t.Fatalf("failed to get instance: %s", err)
+	}
+
+	if !instance.Backups.Available {
+		t.Fatalf("expected Backups.Available to be true, got false")
+	}
+
 	assertDateSet(t, backupGotten.Created)
 	assertDateSet(t, backupGotten.Updated)
 
@@ -42,9 +52,13 @@ func TestInstanceBackups_List(t *testing.T) {
 		t.Errorf("Expected snapshot did not match current snapshot: %v", backups.Snapshot.Current)
 	}
 
-	_, err = client.WaitForSnapshotStatus(context.Background(), instance.ID, backup.ID, linodego.SnapshotSuccessful, 360)
+	backup, err = client.WaitForSnapshotStatus(context.Background(), instance.ID, backup.ID, linodego.SnapshotSuccessful, 360)
 	if err != nil {
 		t.Errorf("Error waiting for snapshot: %v", err)
+	}
+
+	if !backup.Available {
+		t.Fatal("expected backup to be available")
 	}
 
 	restoreOpts := linodego.RestoreInstanceOptions{
