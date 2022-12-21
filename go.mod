@@ -7,7 +7,10 @@ require (
 	gopkg.in/ini.v1 v1.66.6
 )
 
-require golang.org/x/net v0.0.0-20190628185345-da137c7871d7 // indirect
+require (
+	golang.org/x/net v0.0.0-20190628185345-da137c7871d7
+	golang.org/x/text v0.3.0 // indirect
+)
 
 go 1.18
 

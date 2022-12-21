@@ -189,6 +189,7 @@ func (c *Client) SetRetries() *Client {
 		addRetryConditional(tooManyRequestsRetryCondition).
 		addRetryConditional(serviceUnavailableRetryCondition).
 		addRetryConditional(requestTimeoutRetryCondition).
+		addRetryConditional(requestGOAWAYRetryCondition).
 		addRetryConditional(requestNGINXRetryCondition).
 		SetRetryMaxWaitTime(APIRetryMaxWaitTime)
 	configureRetries(c)
