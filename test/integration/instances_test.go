@@ -31,6 +31,10 @@ func TestInstances_List(t *testing.T) {
 	if linodes[0].ID != instance.ID {
 		t.Errorf("Expected list of instances to include test instance, but got %v", linodes)
 	}
+
+	if linodes[0].HostUUID == "" {
+		t.Errorf("failed to get instance HostUUID")
+	}
 }
 
 func TestInstance_Get(t *testing.T) {
@@ -50,6 +54,10 @@ func TestInstance_Get(t *testing.T) {
 
 	if instance.Specs.Disk <= 0 {
 		t.Errorf("Error parsing instance spec for disk size: %v", instance.Specs)
+	}
+
+	if instance.HostUUID == "" {
+		t.Errorf("failed to get instance HostUUID")
 	}
 
 	assertDateSet(t, instance.Created)
