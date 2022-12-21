@@ -51,7 +51,7 @@ interactions:
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"}},
       {"id": "ap-south", "country": "sg", "capabilities": ["Linodes", "NodeBalancers",
       "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
-      "Block Storage Migrations", "Managed Databases"], "status": "ok", "resolvers":
+      "Vlans", "Block Storage Migrations", "Managed Databases"], "status": "ok", "resolvers":
       {"ipv4": "139.162.11.5,139.162.13.5,139.162.14.5,139.162.15.5,139.162.16.5,139.162.21.5,139.162.27.5,103.3.60.18,103.3.60.19,103.3.60.20",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"}},
       {"id": "eu-central", "country": "de", "capabilities": ["Linodes", "NodeBalancers",
@@ -106,7 +106,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"ap-west","type":"g6-nanode-1","label":"go-test-ins-wo-disk-iej10n40ja51","booted":false}'
+    body: '{"region":"ap-west","type":"g6-nanode-1","label":"go-test-ins-wo-disk-bzi7l8090x1m","booted":false}'
     form: {}
     headers:
       Accept:
@@ -118,14 +118,15 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 39422967, "label": "go-test-ins-wo-disk-iej10n40ja51", "group":
+    body: '{"id": 40725646, "label": "go-test-ins-wo-disk-bzi7l8090x1m", "group":
       "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["139.144.0.4"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["172.105.35.236"], "ipv6": "1234::5678/128",
       "image": null, "region": "ap-west", "specs": {"disk": 25600, "memory": 1024,
       "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
-      false, "schedule": {"day": null, "window": null}, "last_successful": null},
-      "hypervisor": "kvm", "watchdog_enabled": true, "tags": []}'
+      false, "available": false, "schedule": {"day": null, "window": null}, "last_successful":
+      null}, "hypervisor": "kvm", "watchdog_enabled": true, "tags": [], "host_uuid":
+      "d3bbe2b35c3ee3d3fa2468566386d78e5d0c0f66"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -140,7 +141,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "634"
+      - "714"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -168,7 +169,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-conf-4u6mo0sf751b","devices":{},"interfaces":null}'
+    body: '{"label":"go-test-conf-xf886ld17qx5","devices":{},"interfaces":null}'
     form: {}
     headers:
       Accept:
@@ -177,10 +178,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/39422967/configs
+    url: https://api.linode.com/v4beta/linode/instances/40725646/configs
     method: POST
   response:
-    body: '{"id": 41968368, "label": "go-test-conf-4u6mo0sf751b", "helpers": {"updatedb_disabled":
+    body: '{"id": 43326228, "label": "go-test-conf-xf886ld17qx5", "helpers": {"updatedb_disabled":
       true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
       true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
@@ -239,19 +240,20 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"id": 39422967}'
+      - '{"id": 40725646}'
     url: https://api.linode.com/v4beta/linode/instances?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 39422967, "label": "go-test-ins-wo-disk-iej10n40ja51",
+    body: '{"data": [{"id": 40725646, "label": "go-test-ins-wo-disk-bzi7l8090x1m",
       "group": "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "type": "g6-nanode-1", "ipv4": ["139.144.0.4"], "ipv6":
+      "2018-01-02T03:04:05", "type": "g6-nanode-1", "ipv4": ["172.105.35.236"], "ipv6":
       "1234::5678/128", "image": null, "region": "ap-west", "specs":
       {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts":
       {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io":
-      10000}, "backups": {"enabled": false, "schedule": {"day": null, "window": null},
-      "last_successful": null}, "hypervisor": "kvm", "watchdog_enabled": true, "tags":
-      []}], "page": 1, "pages": 1, "results": 1}'
+      10000}, "backups": {"enabled": false, "available": false, "schedule": {"day":
+      null, "window": null}, "last_successful": null}, "hypervisor": "kvm", "watchdog_enabled":
+      true, "tags": [], "host_uuid": "d3bbe2b35c3ee3d3fa2468566386d78e5d0c0f66"}],
+      "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -267,7 +269,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "683"
+      - "763"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -305,7 +307,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/39422967
+    url: https://api.linode.com/v4beta/linode/instances/40725646
     method: DELETE
   response:
     body: '{}'
