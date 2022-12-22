@@ -9,8 +9,8 @@ import (
 )
 
 var (
-	clientConnThrottle         = 20
-	label                      = "go-test-def"
+	clientConnThrottle = 20
+	label              = "go-test-def"
 )
 
 func TestNodeBalancer_Create(t *testing.T) {
