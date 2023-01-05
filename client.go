@@ -207,14 +207,9 @@ func (c *Client) addRetryConditional(retryConditional RetryConditional) *Client 
 	return c
 }
 
-func (c *Client) addCachedResponse(endpoint string, response any, expiry *time.Duration) error {
+func (c *Client) addCachedResponse(endpoint string, response any, expiry *time.Duration) {
 	if !c.shouldCache {
-		return nil
-	}
-
-	u, err := url.Parse(endpoint)
-	if err != nil {
-		return fmt.Errorf("failed to parse URL for caching: %s", err)
+		return
 	}
 
 	responseValue := reflect.ValueOf(response)
@@ -236,19 +231,12 @@ func (c *Client) addCachedResponse(endpoint string, response any, expiry *time.D
 	c.cachedEntryLock.Lock()
 	defer c.cachedEntryLock.Unlock()
 
-	c.cachedEntries[u.Path] = entry
-
-	return nil
+	c.cachedEntries[endpoint] = entry
 }
 
-func (c *Client) getCachedResponse(endpoint string) (any, error) {
+func (c *Client) getCachedResponse(endpoint string) any {
 	if !c.shouldCache {
-		return nil, nil
-	}
-
-	u, err := url.Parse(endpoint)
-	if err != nil {
-		return nil, fmt.Errorf("failed to parse URL for caching: %s", err)
+		return nil
 	}
 
 	c.cachedEntryLock.RLock()
@@ -265,9 +253,9 @@ func (c *Client) getCachedResponse(endpoint string) (any, error) {
 		}
 	}()
 
-	entry, ok := c.cachedEntries[u.Path]
+	entry, ok := c.cachedEntries[endpoint]
 	if !ok {
-		return nil, nil
+		return nil
 	}
 
 	// Handle expired entries
@@ -286,11 +274,11 @@ func (c *Client) getCachedResponse(endpoint string) (any, error) {
 		c.cachedEntryLock.Lock()
 		defer c.cachedEntryLock.Unlock()
 
-		delete(c.cachedEntries, u.Path)
-		return nil, nil
+		delete(c.cachedEntries, endpoint)
+		return nil
 	}
 
-	return c.cachedEntries[u.Path].Data, nil
+	return c.cachedEntries[endpoint].Data
 }
 
 // InvalidateCache clears all cached responses for all endpoints.
@@ -522,4 +510,17 @@ func copyTime(tPtr *time.Time) *time.Time {
 	t := *tPtr
 
 	return &t
+}
+
+func generateListCacheURL(endpoint string, opts *ListOptions) (string, error) {
+	if opts == nil {
+		return "", nil
+	}
+
+	hashedOpts, err := opts.Hash()
+	if err != nil {
+		return "", err
+	}
+
+	return fmt.Sprintf("%s:%s", endpoint, hashedOpts), nil
 }
