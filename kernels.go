@@ -43,20 +43,21 @@ func (resp *LinodeKernelsPagedResponse) castResult(r *resty.Request, e string) (
 func (c *Client) ListKernels(ctx context.Context, opts *ListOptions) ([]LinodeKernel, error) {
 	response := LinodeKernelsPagedResponse{}
 
-	if result, err := c.getCachedResponse(response.endpoint()); err != nil {
-		return nil, err
-	} else if result != nil {
-		return result.([]LinodeKernel), nil
-	}
-
-	err := c.listHelper(ctx, &response, opts)
+	endpoint, err := generateListCacheURL(response.endpoint(), opts)
 	if err != nil {
 		return nil, err
 	}
 
-	if err := c.addCachedResponse(response.endpoint(), response.Data, nil); err != nil {
+	if result := c.getCachedResponse(endpoint); result != nil {
+		return result.([]LinodeKernel), nil
+	}
+
+	err = c.listHelper(ctx, &response, opts)
+	if err != nil {
 		return nil, err
 	}
+
+	c.addCachedResponse(endpoint, response.Data, nil)
 
 	return response.Data, nil
 }
@@ -65,9 +66,7 @@ func (c *Client) ListKernels(ctx context.Context, opts *ListOptions) ([]LinodeKe
 func (c *Client) GetKernel(ctx context.Context, kernelID string) (*LinodeKernel, error) {
 	e := fmt.Sprintf("linode/kernels/%s", kernelID)
 
-	if result, err := c.getCachedResponse(e); err != nil {
-		return nil, err
-	} else if result != nil {
+	if result := c.getCachedResponse(e); result != nil {
 		result := result.(LinodeKernel)
 		return &result, nil
 	}
@@ -78,9 +77,7 @@ func (c *Client) GetKernel(ctx context.Context, kernelID string) (*LinodeKernel,
 		return nil, err
 	}
 
-	if err := c.addCachedResponse(e, r.Result(), nil); err != nil {
-		return nil, err
-	}
+	c.addCachedResponse(e, r.Result(), nil)
 
 	return r.Result().(*LinodeKernel), nil
 }
