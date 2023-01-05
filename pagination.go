@@ -6,6 +6,9 @@ package linodego
 
 import (
 	"context"
+	"crypto/sha256"
+	"encoding/json"
+	"fmt"
 	"strconv"
 
 	"github.com/go-resty/resty/v2"
@@ -29,6 +32,19 @@ type ListOptions struct {
 // the two writable properties, Page and Filter
 func NewListOptions(page int, filter string) *ListOptions {
 	return &ListOptions{PageOptions: &PageOptions{Page: page}, Filter: filter}
+}
+
+// Hash returns the sha256 hash of the provided ListOptions.
+// This is necessary for caching purposes.
+func (l ListOptions) Hash() (string, error) {
+	data, err := json.Marshal(l)
+	if err != nil {
+		return "", fmt.Errorf("failed to cache ListOptions: %s", err)
+	}
+
+	h := sha256.New()
+
+	return string(h.Sum(data)), nil
 }
 
 func applyListOptionsToRequest(opts *ListOptions, req *resty.Request) {

@@ -72,20 +72,21 @@ func (resp *LinodeTypesPagedResponse) castResult(r *resty.Request, e string) (in
 func (c *Client) ListTypes(ctx context.Context, opts *ListOptions) ([]LinodeType, error) {
 	response := LinodeTypesPagedResponse{}
 
-	if result, err := c.getCachedResponse(response.endpoint()); err != nil {
-		return nil, err
-	} else if result != nil {
-		return result.([]LinodeType), nil
-	}
-
-	err := c.listHelper(ctx, &response, opts)
+	endpoint, err := generateListCacheURL(response.endpoint(), opts)
 	if err != nil {
 		return nil, err
 	}
 
-	if err := c.addCachedResponse(response.endpoint(), response.Data, &cacheExpiryTime); err != nil {
+	if result := c.getCachedResponse(endpoint); result != nil {
+		return result.([]LinodeType), nil
+	}
+
+	err = c.listHelper(ctx, &response, opts)
+	if err != nil {
 		return nil, err
 	}
+
+	c.addCachedResponse(endpoint, response.Data, &cacheExpiryTime)
 
 	return response.Data, nil
 }
@@ -94,9 +95,7 @@ func (c *Client) ListTypes(ctx context.Context, opts *ListOptions) ([]LinodeType
 func (c *Client) GetType(ctx context.Context, typeID string) (*LinodeType, error) {
 	e := fmt.Sprintf("linode/types/%s", typeID)
 
-	if result, err := c.getCachedResponse(e); err != nil {
-		return nil, err
-	} else if result != nil {
+	if result := c.getCachedResponse(e); result != nil {
 		result := result.(LinodeType)
 		return &result, nil
 	}
@@ -107,9 +106,7 @@ func (c *Client) GetType(ctx context.Context, typeID string) (*LinodeType, error
 		return nil, err
 	}
 
-	if err := c.addCachedResponse(e, r.Result(), &cacheExpiryTime); err != nil {
-		return nil, err
-	}
+	c.addCachedResponse(e, r.Result(), &cacheExpiryTime)
 
 	return r.Result().(*LinodeType), nil
 }

@@ -142,20 +142,21 @@ func (resp *LKEVersionsPagedResponse) castResult(r *resty.Request, e string) (in
 func (c *Client) ListLKEVersions(ctx context.Context, opts *ListOptions) ([]LKEVersion, error) {
 	response := LKEVersionsPagedResponse{}
 
-	if result, err := c.getCachedResponse(response.endpoint()); err != nil {
-		return nil, err
-	} else if result != nil {
-		return result.([]LKEVersion), nil
-	}
-
-	err := c.listHelper(ctx, &response, opts)
+	endpoint, err := generateListCacheURL(response.endpoint(), opts)
 	if err != nil {
 		return nil, err
 	}
 
-	if err := c.addCachedResponse(response.endpoint(), response.Data, &cacheExpiryTime); err != nil {
+	if result := c.getCachedResponse(endpoint); result != nil {
+		return result.([]LKEVersion), nil
+	}
+
+	err = c.listHelper(ctx, &response, opts)
+	if err != nil {
 		return nil, err
 	}
+
+	c.addCachedResponse(endpoint, response.Data, &cacheExpiryTime)
 
 	return response.Data, nil
 }
@@ -164,9 +165,7 @@ func (c *Client) ListLKEVersions(ctx context.Context, opts *ListOptions) ([]LKEV
 func (c *Client) GetLKEVersion(ctx context.Context, version string) (*LKEVersion, error) {
 	e := fmt.Sprintf("lke/versions/%s", version)
 
-	if result, err := c.getCachedResponse(e); err != nil {
-		return nil, err
-	} else if result != nil {
+	if result := c.getCachedResponse(e); result != nil {
 		result := result.(LKEVersion)
 		return &result, nil
 	}
@@ -177,9 +176,7 @@ func (c *Client) GetLKEVersion(ctx context.Context, version string) (*LKEVersion
 		return nil, err
 	}
 
-	if err := c.addCachedResponse(e, r.Result(), &cacheExpiryTime); err != nil {
-		return nil, err
-	}
+	c.addCachedResponse(e, r.Result(), &cacheExpiryTime)
 
 	return r.Result().(*LKEVersion), nil
 }
