@@ -44,7 +44,9 @@ func (l ListOptions) Hash() (string, error) {
 
 	h := sha256.New()
 
-	return string(h.Sum(data)), nil
+	h.Write(data)
+
+	return fmt.Sprintf("%x", h.Sum(nil)), nil
 }
 
 func applyListOptionsToRequest(opts *ListOptions, req *resty.Request) {
