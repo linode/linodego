@@ -1,0 +1,235 @@
+---
+version: 1
+interactions:
+  - request:
+      body: ""
+      form: {}
+      headers:
+        Accept:
+          - application/json
+        Content-Type:
+          - application/json
+        User-Agent:
+          - linodego/dev https://github.com/linode/linodego
+      url: https://api.linode.com/v4beta/account/logins
+      method: GET
+    response:
+      body:
+        '{"data": [{"id": 1563764434, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+        "username": "jcallahan-akamai", "restricted": false}, {"id": 1563766105, "datetime":
+        "2018-01-02T03:04:05", "ip": "1234::5678", "username":
+        "jcallahan-akamai", "restricted": false}, {"id": 1563766117, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563766137, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563766144, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563766178, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563766223, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563767269, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563767285, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563767367, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563768248, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563768690, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563768714, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563768738, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563768843, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563768877, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563768895, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563768903, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563768932, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563768964, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563769090, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563769181, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563769187, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563769197, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563769203, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563769212, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563769269, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563769345, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563769542, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563769553, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563769590, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563769598, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563769637, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563769643, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563769670, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563769682, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563769733, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563780234, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563782760, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai", "restricted": false}, {"id":
+        1563783100, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678", "username":
+        "jcallahan-akamai", "restricted": false}, {"id": 1563783225, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai", "restricted": false}, {"id":
+        1563861195, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678", "username":
+        "jcallahan-akamai", "restricted": false}, {"id": 1563880170, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563880322, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563884474, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai", "restricted": false}, {"id":
+        1563884499, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678", "username":
+        "jcallahan-akamai", "restricted": false}, {"id": 1563884546, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai", "restricted": false}, {"id":
+        1563898248, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+        "username": "jcallahan-akamai", "restricted": false}, {"id": 1563947199, "datetime":
+        "2018-01-02T03:04:05", "ip": "172.104.2.4", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563948262, "datetime": "2018-01-02T03:04:05",
+        "ip": "172.104.2.4", "username": "jcallahan-akamai", "restricted": false}, {"id":
+        1563961039, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678", "username":
+        "jcallahan-akamai", "restricted": false}, {"id": 1563961386, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai", "restricted": false}, {"id":
+        1563966007, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+        "username": "jcallahan-akamai", "restricted": false}, {"id": 1563977382, "datetime":
+        "2018-01-02T03:04:05", "ip": "172.104.2.4", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1563996063, "datetime": "2018-01-02T03:04:05",
+        "ip": "172.104.2.4", "username": "jcallahan-akamai", "restricted": false}, {"id":
+        1563998765, "datetime": "2018-01-02T03:04:05", "ip": "172.104.2.4", "username":
+        "jcallahan-akamai", "restricted": false}, {"id": 1563998782, "datetime": "2018-01-02T03:04:05",
+        "ip": "172.104.2.4", "username": "jcallahan-akamai", "restricted": false}, {"id":
+        1563998798, "datetime": "2018-01-02T03:04:05", "ip": "172.104.2.4", "username":
+        "jcallahan-akamai", "restricted": false}, {"id": 1563998931, "datetime": "2018-01-02T03:04:05",
+        "ip": "172.104.2.4", "username": "jcallahan-akamai", "restricted": false}, {"id":
+        1563998958, "datetime": "2018-01-02T03:04:05", "ip": "172.104.2.4", "username":
+        "jcallahan-akamai", "restricted": false}, {"id": 1563998998, "datetime": "2018-01-02T03:04:05",
+        "ip": "172.104.2.4", "username": "jcallahan-akamai", "restricted": false}, {"id":
+        1564000367, "datetime": "2018-01-02T03:04:05", "ip": "172.104.2.4", "username":
+        "jcallahan-akamai", "restricted": false}, {"id": 1564003326, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai",
+        "restricted": false}, {"id": 1564037775, "datetime": "2018-01-02T03:04:05",
+        "ip": "1234::5678", "username": "jcallahan-akamai", "restricted": false}],
+        "page": 1, "pages": 1, "results": 64}'
+      headers:
+        Access-Control-Allow-Credentials:
+          - "true"
+        Access-Control-Allow-Headers:
+          - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+        Access-Control-Allow-Methods:
+          - HEAD, GET, OPTIONS, POST, PUT, DELETE
+        Access-Control-Allow-Origin:
+          - "*"
+        Access-Control-Expose-Headers:
+          - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+        Cache-Control:
+          - private, max-age=0, s-maxage=0, no-cache, no-store
+          - private, max-age=60, s-maxage=60
+        Content-Security-Policy:
+          - default-src 'none'
+        Content-Type:
+          - application/json
+        Server:
+          - nginx
+        Strict-Transport-Security:
+          - max-age=31536000
+        Vary:
+          - Authorization, X-Filter
+          - Authorization, X-Filter
+        X-Accepted-Oauth-Scopes:
+          - account:read_only
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - DENY
+          - DENY
+        X-Oauth-Scopes:
+          - "*"
+        X-Ratelimit-Limit:
+          - "800"
+        X-Xss-Protection:
+          - 1; mode=block
+      status: 200 OK
+      code: 200
+      duration: ""
+  - request:
+      body: ""
+      form: {}
+      headers:
+        Accept:
+          - application/json
+        Content-Type:
+          - application/json
+        User-Agent:
+          - linodego/dev https://github.com/linode/linodego
+      url: https://api.linode.com/v4beta/account/logins/1563764434
+      method: GET
+    response:
+      body:
+        '{"id": 1563764434, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+        "username": "jcallahan-akamai", "restricted": false}'
+      headers:
+        Access-Control-Allow-Credentials:
+          - "true"
+        Access-Control-Allow-Headers:
+          - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+        Access-Control-Allow-Methods:
+          - HEAD, GET, OPTIONS, POST, PUT, DELETE
+        Access-Control-Allow-Origin:
+          - "*"
+        Access-Control-Expose-Headers:
+          - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+        Cache-Control:
+          - private, max-age=0, s-maxage=0, no-cache, no-store
+          - private, max-age=60, s-maxage=60
+        Content-Length:
+          - "153"
+        Content-Security-Policy:
+          - default-src 'none'
+        Content-Type:
+          - application/json
+        Server:
+          - nginx
+        Strict-Transport-Security:
+          - max-age=31536000
+        Vary:
+          - Authorization, X-Filter
+          - Authorization, X-Filter
+        X-Accepted-Oauth-Scopes:
+          - account:read_only
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - DENY
+          - DENY
+        X-Oauth-Scopes:
+          - "*"
+        X-Ratelimit-Limit:
+          - "800"
+        X-Xss-Protection:
+          - 1; mode=block
+      status: 200 OK
+      code: 200
+      duration: ""
