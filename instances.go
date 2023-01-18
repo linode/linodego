@@ -302,7 +302,6 @@ func (c *Client) BootInstance(ctx context.Context, linodeID int, configID int) e
 // CloneInstance clone an existing Instances Disks and Configuration profiles to another Linode Instance
 func (c *Client) CloneInstance(ctx context.Context, linodeID int, opts InstanceCloneOptions) (*Instance, error) {
 	body, err := json.Marshal(opts)
-	fmt.Printf("%v", body)
 	if err != nil {
 		return nil, err
 	}
