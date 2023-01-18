@@ -174,7 +174,7 @@ type InstanceCloneOptions struct {
 	BackupsEnabled bool   `json:"backups_enabled"`
 	Disks          []int  `json:"disks,omitempty"`
 	Configs        []int  `json:"configs,omitempty"`
-	PrivateIP	   bool   `json:"private_ip,omitempty"`
+	PrivateIP      bool   `json:"private_ip,omitempty"`
 }
 
 // InstanceResizeOptions is an options struct used when resizing an instance
