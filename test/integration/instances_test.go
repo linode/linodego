@@ -375,6 +375,54 @@ func TestInstance_Rebuild(t *testing.T) {
 	}
 }
 
+func TestInstance_Clone(t *testing.T) {
+	client, instance, teardown, err := setupInstance(t, "fixtures/TestInstance_Clone")
+	defer teardown()
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	_, err = client.WaitForEventFinished(
+		context.Background(),
+		instance.ID,
+		linodego.EntityLinode,
+		linodego.ActionLinodeCreate,
+		*instance.Created,
+		180,
+	)
+
+	if err != nil {
+		t.Errorf("Error waiting for instance created: %s", err)
+	}
+
+	cloneOpts := linodego.InstanceCloneOptions{
+        Region: "ap-west",
+        Type: "g6-nanode-1",
+		PrivateIP: true,
+    }
+	cloned_instance, err := client.CloneInstance(context.Background(), instance.ID, cloneOpts)
+	if err != nil {
+		t.Error(err)
+	}
+
+	_, err = client.WaitForEventFinished(
+		context.Background(),
+		instance.ID,
+		linodego.EntityLinode,
+		linodego.ActionLinodeClone,
+		*cloned_instance.Created,
+		240,
+	)
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	// clean up
+	client.DeleteInstance(context.Background(), cloned_instance.ID)
+}
+
 func createInstance(t *testing.T, client *linodego.Client, modifiers ...instanceModifier) (*linodego.Instance, error) {
 	if t != nil {
 		t.Helper()
