@@ -419,6 +419,23 @@ func TestInstance_Clone(t *testing.T) {
 		t.Error(err)
 	}
 
+	if cloned_instance.Image != instance.Image {
+		t.Error("Clone instance image mismatched.")
+	}
+
+	cloned_instance_ips, err := client.GetInstanceIPAddresses(
+		context.Background(),
+		cloned_instance.ID,
+	)
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	if len(cloned_instance_ips.IPv4.Private) == 0 {
+		t.Error("No private IPv4 assigned to the cloned instance.")
+	}
+
 	// clean up
 	client.DeleteInstance(context.Background(), cloned_instance.ID)
 }
