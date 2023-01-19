@@ -118,9 +118,9 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 41852592, "label": "go-test-ins-bzi7l8090x1m", "group": "", "status":
+    body: '{"id": 41855753, "label": "go-test-ins-bzi7l8090x1m", "group": "", "status":
       "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["139.144.1.28"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["45.79.117.66"], "ipv6": "1234::5678/128",
       "image": "linode/debian9", "region": "ap-west", "specs": {"disk": 25600, "memory":
       1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
@@ -179,15 +179,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_create","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":41852592,"entity.type":"linode"}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_create","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":41855753,"entity.type":"linode"}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 417592062, "created": "2018-01-02T03:04:05", "seen": false,
-      "read": false, "percent_complete": 38, "time_remaining": null, "rate": null,
-      "duration": 15.485303, "action": "linode_create", "username": "zliang27", "entity":
-      {"label": "go-test-ins-bzi7l8090x1m", "id": 41852592, "type": "linode", "url":
-      "/v4/linode/instances/41852592"}, "status": "started", "secondary_entity": {"id":
+    body: '{"data": [{"id": 417630111, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": 69, "time_remaining": null, "rate": null,
+      "duration": 15.113282, "action": "linode_create", "username": "zliang27", "entity":
+      {"label": "go-test-ins-bzi7l8090x1m", "id": 41855753, "type": "linode", "url":
+      "/v4/linode/instances/41855753"}, "status": "started", "secondary_entity": {"id":
       "linode/debian9", "type": "image", "label": "Debian 9", "url": "/v4/images/linode/debian9"},
       "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
@@ -244,14 +244,14 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_create","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":41852592,"entity.type":"linode","id":{"+gte":417592062}}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_create","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":41855753,"entity.type":"linode","id":{"+gte":417630111}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 417592062, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 417630111, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 100, "time_remaining": 0, "rate": null, "duration":
-      25.0, "action": "linode_create", "username": "zliang27", "entity": {"label":
-      "go-test-ins-bzi7l8090x1m", "id": 41852592, "type": "linode", "url": "/v4/linode/instances/41852592"},
+      15.0, "action": "linode_create", "username": "zliang27", "entity": {"label":
+      "go-test-ins-bzi7l8090x1m", "id": 41855753, "type": "linode", "url": "/v4/linode/instances/41855753"},
       "status": "finished", "secondary_entity": {"id": "linode/debian9", "type": "image",
       "label": "Debian 9", "url": "/v4/images/linode/debian9"}, "message": ""}], "page":
       1, "pages": 1, "results": 1}'
@@ -308,18 +308,18 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/41852592/clone
+    url: https://api.linode.com/v4beta/linode/instances/41855753/clone
     method: POST
   response:
-    body: '{"id": 41852608, "label": "linode41852608", "group": "", "status": "offline",
+    body: '{"id": 41855764, "label": "linode41855764", "group": "", "status": "offline",
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "type":
-      "g6-nanode-1", "ipv4": ["139.144.1.84", "192.168.143.135"], "ipv6": "1234::5678/128",
+      "g6-nanode-1", "ipv4": ["45.79.117.205", "192.168.137.107"], "ipv6": "1234::5678/128",
       "image": "linode/debian9", "region": "ap-west", "specs": {"disk": 25600, "memory":
       1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
       false, "available": false, "schedule": {"day": null, "window": null}, "last_successful":
       null}, "hypervisor": "kvm", "watchdog_enabled": true, "tags": [], "host_uuid":
-      "0346babe1bc45d9259a93fb78b6b7858acaf41c4"}'
+      "26f6fdb8e6729aef2574dc39ca9330636bbe5724"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -334,7 +334,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "720"
+      - "721"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -372,16 +372,16 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_clone","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":41852592,"entity.type":"linode"}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_clone","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":41855753,"entity.type":"linode"}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 417592276, "created": "2018-01-02T03:04:05", "seen": false,
-      "read": false, "percent_complete": 37, "time_remaining": "0:0:50", "rate": "460.00
-      MB/s", "duration": 15.73493, "action": "linode_clone", "username": "zliang27",
-      "entity": {"label": "go-test-ins-bzi7l8090x1m", "id": 41852592, "type": "linode",
-      "url": "/v4/linode/instances/41852592"}, "status": "started", "secondary_entity":
-      {"id": 41852608, "type": "linode", "label": "linode41852608", "url": "/v4/linode/instances/41852608"},
+    body: '{"data": [{"id": 417630279, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": 0, "time_remaining": null, "rate": null,
+      "duration": null, "action": "linode_clone", "username": "zliang27", "entity":
+      {"label": "go-test-ins-bzi7l8090x1m", "id": 41855753, "type": "linode", "url":
+      "/v4/linode/instances/41855753"}, "status": "scheduled", "secondary_entity":
+      {"id": 41855764, "type": "linode", "label": "linode41855764", "url": "/v4/linode/instances/41855764"},
       "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -398,7 +398,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "559"
+      - "543"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -437,16 +437,16 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_clone","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":41852592,"entity.type":"linode","id":{"+gte":417592276}}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_clone","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":41855753,"entity.type":"linode","id":{"+gte":417630279}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 417592276, "created": "2018-01-02T03:04:05", "seen": false,
-      "read": false, "percent_complete": 37, "time_remaining": "0:0:50", "rate": "460.00
-      MB/s", "duration": 30.733872, "action": "linode_clone", "username": "zliang27",
-      "entity": {"label": "go-test-ins-bzi7l8090x1m", "id": 41852592, "type": "linode",
-      "url": "/v4/linode/instances/41852592"}, "status": "started", "secondary_entity":
-      {"id": 41852608, "type": "linode", "label": "linode41852608", "url": "/v4/linode/instances/41852608"},
+    body: '{"data": [{"id": 417630279, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": 35, "time_remaining": "0:2:51", "rate": "148.00
+      MB/s", "duration": 30.556942, "action": "linode_clone", "username": "zliang27",
+      "entity": {"label": "go-test-ins-bzi7l8090x1m", "id": 41855753, "type": "linode",
+      "url": "/v4/linode/instances/41855753"}, "status": "started", "secondary_entity":
+      {"id": 41855764, "type": "linode", "label": "linode41855764", "url": "/v4/linode/instances/41855764"},
       "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -502,16 +502,16 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_clone","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":41852592,"entity.type":"linode","id":{"+gte":417592276}}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_clone","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":41855753,"entity.type":"linode","id":{"+gte":417630279}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 417592276, "created": "2018-01-02T03:04:05", "seen": false,
-      "read": false, "percent_complete": 63, "time_remaining": "0:0:4", "rate": "648.00
-      MB/s", "duration": 45.729686, "action": "linode_clone", "username": "zliang27",
-      "entity": {"label": "go-test-ins-bzi7l8090x1m", "id": 41852592, "type": "linode",
-      "url": "/v4/linode/instances/41852592"}, "status": "started", "secondary_entity":
-      {"id": 41852608, "type": "linode", "label": "linode41852608", "url": "/v4/linode/instances/41852608"},
+    body: '{"data": [{"id": 417630279, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": 35, "time_remaining": "0:2:51", "rate": "148.00
+      MB/s", "duration": 45.643679, "action": "linode_clone", "username": "zliang27",
+      "entity": {"label": "go-test-ins-bzi7l8090x1m", "id": 41855753, "type": "linode",
+      "url": "/v4/linode/instances/41855753"}, "status": "started", "secondary_entity":
+      {"id": 41855764, "type": "linode", "label": "linode41855764", "url": "/v4/linode/instances/41855764"},
       "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -528,7 +528,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "559"
+      - "560"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -567,16 +567,16 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_clone","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":41852592,"entity.type":"linode","id":{"+gte":417592276}}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_clone","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":41855753,"entity.type":"linode","id":{"+gte":417630279}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 417592276, "created": "2018-01-02T03:04:05", "seen": false,
-      "read": false, "percent_complete": 67, "time_remaining": null, "rate": null,
-      "duration": 60.731729, "action": "linode_clone", "username": "zliang27", "entity":
-      {"label": "go-test-ins-bzi7l8090x1m", "id": 41852592, "type": "linode", "url":
-      "/v4/linode/instances/41852592"}, "status": "started", "secondary_entity": {"id":
-      41852608, "type": "linode", "label": "linode41852608", "url": "/v4/linode/instances/41852608"},
+    body: '{"data": [{"id": 417630279, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": 58, "time_remaining": "0:0:13", "rate": "528.00
+      MB/s", "duration": 60.619827, "action": "linode_clone", "username": "zliang27",
+      "entity": {"label": "go-test-ins-bzi7l8090x1m", "id": 41855753, "type": "linode",
+      "url": "/v4/linode/instances/41855753"}, "status": "started", "secondary_entity":
+      {"id": 41855764, "type": "linode", "label": "linode41855764", "url": "/v4/linode/instances/41855764"},
       "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -593,7 +593,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "547"
+      - "560"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -632,16 +632,81 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_clone","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":41852592,"entity.type":"linode","id":{"+gte":417592276}}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_clone","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":41855753,"entity.type":"linode","id":{"+gte":417630279}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 417592276, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 417630279, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": 58, "time_remaining": "0:0:13", "rate": "528.00
+      MB/s", "duration": 75.587197, "action": "linode_clone", "username": "zliang27",
+      "entity": {"label": "go-test-ins-bzi7l8090x1m", "id": 41855753, "type": "linode",
+      "url": "/v4/linode/instances/41855753"}, "status": "started", "secondary_entity":
+      {"id": 41855764, "type": "linode", "label": "linode41855764", "url": "/v4/linode/instances/41855764"},
+      "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "560"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"linode_clone","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":41855753,"entity.type":"linode","id":{"+gte":417630279}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 417630279, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 100, "time_remaining": 0, "rate": null, "duration":
-      63.0, "action": "linode_clone", "username": "zliang27", "entity": {"label":
-      "go-test-ins-bzi7l8090x1m", "id": 41852592, "type": "linode", "url": "/v4/linode/instances/41852592"},
-      "status": "finished", "secondary_entity": {"id": 41852608, "type": "linode",
-      "label": "linode41852608", "url": "/v4/linode/instances/41852608"}, "message":
+      85.0, "action": "linode_clone", "username": "zliang27", "entity": {"label":
+      "go-test-ins-bzi7l8090x1m", "id": 41855753, "type": "linode", "url": "/v4/linode/instances/41855753"},
+      "status": "finished", "secondary_entity": {"id": 41855764, "type": "linode",
+      "label": "linode41855764", "url": "/v4/linode/instances/41855764"}, "message":
       ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -696,21 +761,21 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/41852608/ips
+    url: https://api.linode.com/v4beta/linode/instances/41855764/ips
     method: GET
   response:
-    body: '{"ipv4": {"public": [{"address": "139.144.1.84", "gateway": "139.144.1.1",
+    body: '{"ipv4": {"public": [{"address": "45.79.117.205", "gateway": "45.79.117.1",
       "subnet_mask": "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true,
-      "rdns": "139-144-1-84.ip.linodeusercontent.com", "linode_id": 41852608, "region":
-      "ap-west"}], "private": [{"address": "192.168.143.135", "gateway": null, "subnet_mask":
+      "rdns": "45-79-117-205.ip.linodeusercontent.com", "linode_id": 41855764, "region":
+      "ap-west"}], "private": [{"address": "192.168.137.107", "gateway": null, "subnet_mask":
       "255.255.128.0", "prefix": 17, "type": "ipv4", "public": false, "rdns": null,
-      "linode_id": 41852608, "region": "ap-west"}], "shared": [], "reserved": []},
+      "linode_id": 41855764, "region": "ap-west"}], "shared": [], "reserved": []},
       "ipv6": {"slaac": {"address": "1234::5678", "gateway": "1234::5678",
       "subnet_mask": "1234::5678", "prefix": 64, "type": "ipv6", "rdns":
-      null, "linode_id": 41852608, "region": "ap-west", "public": true}, "link_local":
+      null, "linode_id": 41855764, "region": "ap-west", "public": true}, "link_local":
       {"address": "1234::5678", "gateway": "1234::5678", "subnet_mask":
       "1234::5678", "prefix": 64, "type": "ipv6", "rdns": null, "linode_id":
-      41852608, "region": "ap-west", "public": false}, "global": []}}'
+      41855764, "region": "ap-west", "public": false}, "global": []}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -726,7 +791,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "946"
+      - "948"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -764,7 +829,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/41852608
+    url: https://api.linode.com/v4beta/linode/instances/41855764
     method: DELETE
   response:
     body: '{}'
@@ -819,7 +884,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/41852592
+    url: https://api.linode.com/v4beta/linode/instances/41855753
     method: DELETE
   response:
     body: '{}'
