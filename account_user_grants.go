@@ -16,6 +16,7 @@ const (
 type GlobalUserGrants struct {
 	AccountAccess        *GrantPermissionLevel `json:"account_access"`
 	AddDomains           bool                  `json:"add_domains"`
+	AddDatabases         bool                  `json:"add_databases"`
 	AddFirewalls         bool                  `json:"add_firewalls"`
 	AddImages            bool                  `json:"add_images"`
 	AddLinodes           bool                  `json:"add_linodes"`
