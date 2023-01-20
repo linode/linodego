@@ -25,6 +25,7 @@ func TestUserGrants_Update(t *testing.T) {
 	globalGrants := linodego.GlobalUserGrants{
 		AccountAccess:    &accessLevel,
 		AddDomains:       false,
+		AddDatabases:     true,
 		AddFirewalls:     true,
 		AddImages:        true,
 		AddLinodes:       false,
