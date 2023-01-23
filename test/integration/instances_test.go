@@ -375,6 +375,74 @@ func TestInstance_Rebuild(t *testing.T) {
 	}
 }
 
+func TestInstance_Clone(t *testing.T) {
+	client, instance, teardownOriginalLinode, err := setupInstance(t, "fixtures/TestInstance_Clone")
+	defer teardownOriginalLinode()
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	_, err = client.WaitForEventFinished(
+		context.Background(),
+		instance.ID,
+		linodego.EntityLinode,
+		linodego.ActionLinodeCreate,
+		*instance.Created,
+		180,
+	)
+
+	if err != nil {
+		t.Errorf("Error waiting for instance created: %s", err)
+	}
+
+	cloneOpts := linodego.InstanceCloneOptions{
+		Region:    "ap-west",
+		Type:      "g6-nanode-1",
+		PrivateIP: true,
+	}
+	clonedInstance, err := client.CloneInstance(context.Background(), instance.ID, cloneOpts)
+
+	teardownClonedLinode := func() {
+		client.DeleteInstance(context.Background(), clonedInstance.ID)
+	}
+	defer teardownClonedLinode()
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	_, err = client.WaitForEventFinished(
+		context.Background(),
+		instance.ID,
+		linodego.EntityLinode,
+		linodego.ActionLinodeClone,
+		*clonedInstance.Created,
+		240,
+	)
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	if clonedInstance.Image != instance.Image {
+		t.Error("Clone instance image mismatched.")
+	}
+
+	clonedInstanceIPs, err := client.GetInstanceIPAddresses(
+		context.Background(),
+		clonedInstance.ID,
+	)
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	if len(clonedInstanceIPs.IPv4.Private) == 0 {
+		t.Error("No private IPv4 assigned to the cloned instance.")
+	}
+}
+
 func createInstance(t *testing.T, client *linodego.Client, modifiers ...instanceModifier) (*linodego.Instance, error) {
 	if t != nil {
 		t.Helper()
