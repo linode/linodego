@@ -59,7 +59,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"global":{"account_access":null,"add_domains":false,"add_firewalls":false,"add_images":false,"add_linodes":false,"add_longview":false,"add_nodebalancers":false,"add_stackscripts":false,"add_volumes":false,"cancel_account":false,"longview_subscription":false}}'
+    body: '{"global":{"account_access":null,"add_domains":false,"add_databases":false,"add_firewalls":false,"add_images":false,"add_linodes":false,"add_longview":false,"add_nodebalancers":false,"add_stackscripts":false,"add_volumes":false,"cancel_account":false,"longview_subscription":false}}'
     form: {}
     headers:
       Accept:
@@ -71,27 +71,50 @@ interactions:
     url: https://api.linode.com/v4beta/account/users/linodegotest-updateusergrantsna/grants
     method: PUT
   response:
-    body: '{"linode": [], "nodebalancer": [], "domain": [], "stackscript": [], "longview":
-      [], "image": [{"id": 17578292, "label": "nspa - Alpine 3.16 Disk", "permissions":
-      null}, {"id": 17578295, "label": "linode39245136 - Restore 294571 - Alpine 3.16
-      Disk", "permissions": null}, {"id": 17578299, "label": "lke75477-117333-63408e2c748a
-      - Boot Disk", "permissions": null}, {"id": 17578301, "label": "lke75476-117332-63408dedda63
-      - Boot Disk", "permissions": null}, {"id": 17578303, "label": "lke75476-117332-63408ded6fe5
-      - Boot Disk", "permissions": null}, {"id": 17578305, "label": "lke75476-117332-63408ded0595
-      - Boot Disk", "permissions": null}, {"id": 17578309, "label": "lke75477-117333-63408e2ba8de
-      - Boot Disk", "permissions": null}, {"id": 17578318, "label": "lke75477-117333-63408e2add48
-      - Boot Disk", "permissions": null}], "volume": [{"id": 267442, "label": "tf_test-7708312883518347230",
-      "permissions": null}, {"id": 271109, "label": "linodego-test-volume", "permissions":
-      null}, {"id": 299657, "label": "tf_test-2637196695129364155", "permissions":
-      null}, {"id": 388103, "label": "cool-cloned", "permissions": null}], "firewall":
-      [], "database": [{"id": 522, "label": "scalegridgoestojapanpt2", "permissions":
-      null}, {"id": 6806, "label": "tf_test-6495208472049336246", "permissions": null},
-      {"id": 6807, "label": "tf_test-6874476732250362643", "permissions": null}, {"id":
-      6808, "label": "tf_test-3486893335994149933", "permissions": null}], "global":
-      {"add_domains": false, "add_linodes": false, "add_longview": false, "longview_subscription":
-      false, "add_stackscripts": false, "add_nodebalancers": false, "add_images":
-      false, "add_volumes": false, "add_firewalls": false, "add_databases": false,
-      "account_access": null, "cancel_account": false}}'
+    body: '{"linode": [{"id": 41591158, "label": "ansible-test-inventory", "permissions":
+      null}, {"id": 41658354, "label": "tf_test-5934556314800509826", "permissions":
+      null}, {"id": 41658415, "label": "tf_test-9137808634680747348", "permissions":
+      null}, {"id": 41658417, "label": "tf_test-6820438710173430308", "permissions":
+      null}, {"id": 41658428, "label": "tf_test-7984198885518639651", "permissions":
+      null}, {"id": 41658616, "label": "tf_test-7823563263536727759", "permissions":
+      null}, {"id": 41658675, "label": "tf_test-7500823998336775767", "permissions":
+      null}, {"id": 41658677, "label": "tf_test-9039857053321143333", "permissions":
+      null}, {"id": 41658694, "label": "tf_test-958893655126211430", "permissions":
+      null}, {"id": 41823145, "label": "ubuntu-us-east-testing", "permissions": null}],
+      "nodebalancer": [], "domain": [], "stackscript": [{"id": 1110207, "label": "ansible-test-197619451",
+      "permissions": null}], "longview": [], "image": [{"id": 18529728, "label": "tf_test-6820438710173430308",
+      "permissions": null}, {"id": 18529729, "label": "tf_test-2510365653812729564",
+      "permissions": null}, {"id": 18529730, "label": "tf_test-9137808634680747348",
+      "permissions": null}, {"id": 18529737, "label": "tf_test-7984198885518639651",
+      "permissions": null}, {"id": 18529738, "label": "tf_test-7984198885518639651",
+      "permissions": null}, {"id": 18529812, "label": "tf_test-7500823998336775767",
+      "permissions": null}, {"id": 18529815, "label": "tf_test-9039857053321143333",
+      "permissions": null}, {"id": 18529816, "label": "tf_test-958893655126211430",
+      "permissions": null}, {"id": 18529817, "label": "tf_test-958893655126211430",
+      "permissions": null}], "volume": [], "firewall": [], "database": [{"id": 14637,
+      "label": "tf_test-563520466150203250", "permissions": null}, {"id": 14638, "label":
+      "tf_test-6390117349771558899", "permissions": null}, {"id": 14639, "label":
+      "tf_test-1374137760482804261", "permissions": null}, {"id": 14640, "label":
+      "tf_test-3347111867749673643", "permissions": null}, {"id": 14641, "label":
+      "tf_test-6859397732720482476", "permissions": null}, {"id": 14642, "label":
+      "tf_test-8291666874639770804", "permissions": null}, {"id": 14643, "label":
+      "tf_test-8193840941368456464", "permissions": null}, {"id": 14644, "label":
+      "tf_test-4799969768229110427", "permissions": null}, {"id": 14645, "label":
+      "tf_test-580262857426233267", "permissions": null}, {"id": 14646, "label": "tf_test-4469883573221458079",
+      "permissions": null}, {"id": 14647, "label": "tf_test-2509947882041115336",
+      "permissions": null}, {"id": 14648, "label": "tf_test-2870651309179209554",
+      "permissions": null}, {"id": 14649, "label": "tf_test-5837446087162928096",
+      "permissions": null}, {"id": 14650, "label": "tf_test-6665087439142600447",
+      "permissions": null}, {"id": 14651, "label": "tf_test-5999066805637904071",
+      "permissions": null}, {"id": 14652, "label": "tf_test-4281084641894890037",
+      "permissions": null}, {"id": 14653, "label": "tf_test-7554465936951395838",
+      "permissions": null}, {"id": 14654, "label": "tf_test-4133636875310411703",
+      "permissions": null}, {"id": 14655, "label": "tf_test-8469382010146043663",
+      "permissions": null}, {"id": 14656, "label": "tf_test-1209200813276963127",
+      "permissions": null}], "global": {"add_domains": false, "add_linodes": false,
+      "add_longview": false, "longview_subscription": false, "add_stackscripts": false,
+      "add_nodebalancers": false, "add_images": false, "add_volumes": false, "add_firewalls":
+      false, "add_databases": false, "account_access": null, "cancel_account": false}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
