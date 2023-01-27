@@ -3,6 +3,7 @@ package linodego
 import (
 	"context"
 	"encoding/json"
+	"log"
 )
 
 type GrantsListResponse = UserGrants
@@ -14,11 +15,15 @@ func (c *Client) GrantsList(ctx context.Context) (*GrantsListResponse, error) {
 		return nil, err
 	}
 
-	if r.StatusCode() == 204 {
-		return nil, nil
-	}
 	var result GrantsListResponse
-	err = json.Unmarshal(r.Body(), &result)
-
+	err = nil
+	if r.StatusCode() == 204 {
+		log.Printf(
+			"[WARN] The user has a full account access, " +
+				"the instance of the struct would be empty",
+		)
+	} else {
+		err = json.Unmarshal(r.Body(), &result)
+	}
 	return &result, err
 }
