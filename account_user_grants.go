@@ -40,6 +40,7 @@ type GrantedEntity struct {
 }
 
 type UserGrants struct {
+	Database     []GrantedEntity `json:"database"`
 	Domain       []GrantedEntity `json:"domain"`
 	Firewall     []GrantedEntity `json:"firewall"`
 	Image        []GrantedEntity `json:"image"`
@@ -48,7 +49,6 @@ type UserGrants struct {
 	NodeBalancer []GrantedEntity `json:"nodebalancer"`
 	StackScript  []GrantedEntity `json:"stackscript"`
 	Volume       []GrantedEntity `json:"volume"`
-	Database     []GrantedEntity `json:"database"`
 
 	Global GlobalUserGrants `json:"global"`
 }
