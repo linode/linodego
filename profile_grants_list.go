@@ -7,7 +7,6 @@ import (
 
 type GrantsListResponse = UserGrants
 
-
 func (c *Client) GrantsList(ctx context.Context) (*GrantsListResponse, error) {
 	e := "profile/grants"
 	r, err := coupleAPIErrors(c.R(ctx).Get(e))
