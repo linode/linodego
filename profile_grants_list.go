@@ -12,6 +12,5 @@ func (c *Client) GrantsList(ctx context.Context) (*GrantsListResponse, error) {
 	if err != nil {
 		return nil, err
 	}
-	// TODO: handle 204 empty content response
 	return r.Result().(*GrantsListResponse), err
 }

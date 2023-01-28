@@ -61,7 +61,7 @@ func coupleAPIErrors(r *resty.Response, err error) (*resty.Response, error) {
 			return nil, Error{Code: http.StatusBadGateway, Message: http.StatusText(http.StatusBadGateway)}
 		}
 
-		if responseContentType != expectedContentType {
+		if r.StatusCode() != 204 && responseContentType != expectedContentType {
 			msg := fmt.Sprintf(
 				"Unexpected Content-Type: Expected: %v, Received: %v\nResponse body: %s",
 				expectedContentType,
