@@ -15,8 +15,8 @@ const (
 
 type GlobalUserGrants struct {
 	AccountAccess        *GrantPermissionLevel `json:"account_access"`
-	AddDomains           bool                  `json:"add_domains"`
 	AddDatabases         bool                  `json:"add_databases"`
+	AddDomains           bool                  `json:"add_domains"`
 	AddFirewalls         bool                  `json:"add_firewalls"`
 	AddImages            bool                  `json:"add_images"`
 	AddLinodes           bool                  `json:"add_linodes"`
@@ -40,6 +40,7 @@ type GrantedEntity struct {
 }
 
 type UserGrants struct {
+	Database     []GrantedEntity `json:"database"`
 	Domain       []GrantedEntity `json:"domain"`
 	Firewall     []GrantedEntity `json:"firewall"`
 	Image        []GrantedEntity `json:"image"`
@@ -53,6 +54,7 @@ type UserGrants struct {
 }
 
 type UserGrantsUpdateOptions struct {
+	Database     []GrantedEntity   `json:"database,omitempty"`
 	Domain       []EntityUserGrant `json:"domain,omitempty"`
 	Firewall     []EntityUserGrant `json:"firewall,omitempty"`
 	Image        []EntityUserGrant `json:"image,omitempty"`
