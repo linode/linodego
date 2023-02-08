@@ -1,4 +1,4 @@
-module test
+module github.com/linode/linodego/test
 
 require (
 	github.com/dnaeon/go-vcr v1.1.0
