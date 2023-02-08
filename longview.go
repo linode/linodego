@@ -131,7 +131,7 @@ func (c *Client) UpdateLongviewClient(ctx context.Context, clientID int, opts Lo
 
 // GetLongviewPlan gets the template with the provided ID
 func (c *Client) GetLongviewPlan(ctx context.Context) (*LongviewPlan, error) {
-	e := fmt.Sprintf("longview/plan")
+	e := "longview/plan"
 	r, err := c.R(ctx).SetResult(&LongviewPlan{}).Get(e)
 	if err != nil {
 		return nil, err
@@ -146,7 +146,7 @@ func (c *Client) UpdateLongviewPlan(ctx context.Context, opts LongviewPlanUpdate
 		return nil, err
 	}
 
-	e := fmt.Sprintf("longview/plan")
+	e := "longview/plan"
 	req := c.R(ctx).SetResult(&LongviewPlan{}).SetBody(string(body))
 	r, err := coupleAPIErrors(req.Put(e))
 	if err != nil {
