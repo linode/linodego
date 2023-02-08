@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/longview/clients
     method: POST
   response:
-    body: '{"id": 297848, "label": "testing", "api_key": "6DED101F-DAF5-4712-BD33A7C21D54B05E",
-      "install_code": "2AEC48C4-C227-4BEF-B3A944C3223B1947", "apps": {"apache": 0,
+    body: '{"id": 297871, "label": "testing", "api_key": "64F57EAB-2537-4E1F-BCC9CF54C3F81509",
+      "install_code": "1ADE47BD-63B1-4088-859EE040850716AA", "apps": {"apache": 0,
       "nginx": 0, "mysql": 0}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -68,11 +68,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/longview/clients/297848
+    url: https://api.linode.com/v4beta/longview/clients/297871
     method: PUT
   response:
-    body: '{"id": 297848, "label": "testing_updated", "api_key": "6DED101F-DAF5-4712-BD33A7C21D54B05E",
-      "install_code": "2AEC48C4-C227-4BEF-B3A944C3223B1947", "apps": {"apache": false,
+    body: '{"id": 297871, "label": "testing_updated", "api_key": "64F57EAB-2537-4E1F-BCC9CF54C3F81509",
+      "install_code": "1ADE47BD-63B1-4088-859EE040850716AA", "apps": {"apache": false,
       "nginx": false, "mysql": false}, "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05"}'
     headers:
@@ -90,6 +90,61 @@ interactions:
       - private, max-age=60, s-maxage=60
       Content-Length:
       - "274"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - longview:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/longview/clients/297871
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "2"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:

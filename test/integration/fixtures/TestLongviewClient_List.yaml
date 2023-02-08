@@ -14,10 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/longview/clients
     method: GET
   response:
-    body: '{"data": [{"id": 297759, "label": "testing_updated", "api_key": "D3C3F4FD-4E01-47EE-92A5055CEE3116D9",
-      "install_code": "7C690D25-77C9-4207-A09693CCA51A4066", "apps": {"apache": false,
-      "nginx": false, "mysql": false}, "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05"}], "page": 1, "pages": 1, "results": 1}'
+    body: '{"data": [], "page": 1, "pages": 1, "results": 0}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -33,7 +30,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "323"
+      - "49"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:

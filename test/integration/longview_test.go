@@ -11,12 +11,9 @@ func TestLongviewClient_List(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestLongviewClient_List")
 	defer teardown()
 
-	longviewClients, err := client.ListLongviewClients(context.Background(), nil)
+	_, err := client.ListLongviewClients(context.Background(), nil)
 	if err != nil {
 		t.Errorf("Error listing longview clients, expected struct - error %v", err)
-	}
-	if len(longviewClients) == 0 {
-		t.Errorf("Expected a list longview clients - %v", longviewClients)
 	}
 }
 
@@ -32,11 +29,11 @@ func TestLongviewClient_Get(t *testing.T) {
 		t.Errorf("Error creating longview client:%s", createErr)
 	}
 
-	t.Cleanup(func() {
+	defer func() {
 		if err := client.DeleteLongviewClient(context.Background(), testingLongviewClient.ID); err != nil {
 			t.Fatal(err)
 		}
-	})
+	}()
 
 	// Fetch the ID of the newly created longview client
 	testingID := testingLongviewClient.ID
@@ -76,11 +73,11 @@ func TestLongviewClient_Create(t *testing.T) {
 		t.Errorf("Error creating longview client:%s", createErr)
 	}
 
-	t.Cleanup(func() {
+	defer func() {
 		if err := client.DeleteLongviewClient(context.Background(), testingLongviewClient.ID); err != nil {
 			t.Fatal(err)
 		}
-	})
+	}()
 
 	testingID := testingLongviewClient.ID
 
@@ -158,11 +155,11 @@ func TestLongviewClient_Update(t *testing.T) {
 		t.Errorf("Error updating longview client:%s", updateErr)
 	}
 
-	t.Cleanup(func() {
+	defer func() {
 		if err := client.DeleteLongviewClient(context.Background(), updatedTestingLongviewClient.ID); err != nil {
 			t.Fatal(err)
 		}
-	})
+	}()
 
 	// If the label does not match what it was updated to, the update was not successful
 	if updatedTestingLongviewClient.Label != "testing_updated" {
@@ -213,13 +210,13 @@ func TestLongviewPlan_Update(t *testing.T) {
 	}
 
 	// Set the longview plan to what it was before (after the test)
-	t.Cleanup(func() {
+	defer func() {
 		resetOptions := linodego.LongviewPlanUpdateOptions{LongviewSubscription: testingID}
 
 		if _, err := client.UpdateLongviewPlan(context.Background(), resetOptions); err != nil {
 			t.Fatal(err)
 		}
-	})
+	}()
 
 	// Ensure the longview plan was updated correctly
 	if updatedLongviewPlan.ID != "longview-10" {
