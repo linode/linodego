@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/longview/clients
     method: POST
   response:
-    body: '{"id": 297844, "label": "testing", "api_key": "A9DDA1AC-D5D8-4563-B7DF18B3DB7B8597",
-      "install_code": "E568782A-0AB6-4FF3-A187E83F2C99A8D0", "apps": {"apache": 0,
+    body: '{"id": 297870, "label": "testing", "api_key": "A499EE5E-CDAF-41FB-9EF0DBEE7B7ADED5",
+      "install_code": "56B9DBBB-EF00-4715-9E1BB3C129613918", "apps": {"apache": 0,
       "nginx": 0, "mysql": 0}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -68,11 +68,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/longview/clients/297844
+    url: https://api.linode.com/v4beta/longview/clients/297870
     method: GET
   response:
-    body: '{"id": 297844, "label": "testing", "api_key": "A9DDA1AC-D5D8-4563-B7DF18B3DB7B8597",
-      "install_code": "E568782A-0AB6-4FF3-A187E83F2C99A8D0", "apps": {"apache": false,
+    body: '{"id": 297870, "label": "testing", "api_key": "A499EE5E-CDAF-41FB-9EF0DBEE7B7ADED5",
+      "install_code": "56B9DBBB-EF00-4715-9E1BB3C129613918", "apps": {"apache": false,
       "nginx": false, "mysql": false}, "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05"}'
     headers:
@@ -128,7 +128,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/longview/clients/297844
+    url: https://api.linode.com/v4beta/longview/clients/297870
     method: DELETE
   response:
     body: '{}'
@@ -186,10 +186,7 @@ interactions:
     url: https://api.linode.com/v4beta/longview/clients
     method: GET
   response:
-    body: '{"data": [{"id": 297759, "label": "testing_updated", "api_key": "D3C3F4FD-4E01-47EE-92A5055CEE3116D9",
-      "install_code": "7C690D25-77C9-4207-A09693CCA51A4066", "apps": {"apache": false,
-      "nginx": false, "mysql": false}, "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05"}], "page": 1, "pages": 1, "results": 1}'
+    body: '{"data": [], "page": 1, "pages": 1, "results": 0}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -205,7 +202,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "323"
+      - "49"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
