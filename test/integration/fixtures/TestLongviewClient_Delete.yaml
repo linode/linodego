@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/longview/clients
     method: POST
   response:
-    body: '{"id": 297870, "label": "testing", "api_key": "A499EE5E-CDAF-41FB-9EF0DBEE7B7ADED5",
-      "install_code": "56B9DBBB-EF00-4715-9E1BB3C129613918", "apps": {"apache": 0,
+    body: '{"id": 297875, "label": "testing", "api_key": "2B2EB2AD-C41B-4722-853D15EBA92B191B",
+      "install_code": "82B4250B-86D5-4825-AAEFC9AB6A825052", "apps": {"apache": 0,
       "nginx": 0, "mysql": 0}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -68,11 +68,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/longview/clients/297870
+    url: https://api.linode.com/v4beta/longview/clients/297875
     method: GET
   response:
-    body: '{"id": 297870, "label": "testing", "api_key": "A499EE5E-CDAF-41FB-9EF0DBEE7B7ADED5",
-      "install_code": "56B9DBBB-EF00-4715-9E1BB3C129613918", "apps": {"apache": false,
+    body: '{"id": 297875, "label": "testing", "api_key": "2B2EB2AD-C41B-4722-853D15EBA92B191B",
+      "install_code": "82B4250B-86D5-4825-AAEFC9AB6A825052", "apps": {"apache": false,
       "nginx": false, "mysql": false}, "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05"}'
     headers:
@@ -128,7 +128,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/longview/clients/297870
+    url: https://api.linode.com/v4beta/longview/clients/297875
     method: DELETE
   response:
     body: '{}'

@@ -4,18 +4,20 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"time"
 
 	"github.com/go-resty/resty/v2"
+	"github.com/linode/linodego/internal/parseabletime"
 )
 
 // LongviewClient represents a LongviewClient object
 type LongviewClient struct {
-	ID          int    `json:"id"`
-	APIKey      string `json:"api_key"`
-	Created     string `json:"created"`
-	InstallCode string `json:"install_code"`
-	Label       string `json:"label"`
-	Updated     string `json:"updated"`
+	ID          int        `json:"id"`
+	APIKey      string     `json:"api_key"`
+	Created     *time.Time `json:"-"`
+	InstallCode string     `json:"install_code"`
+	Label       string     `json:"label"`
+	Updated     *time.Time `json:"-"`
 	Apps        struct {
 		Apache any `json:"apache"`
 		MySQL  any `json:"mysql"`
@@ -153,4 +155,26 @@ func (c *Client) UpdateLongviewPlan(ctx context.Context, opts LongviewPlanUpdate
 		return nil, err
 	}
 	return r.Result().(*LongviewPlan), nil
+}
+
+// UnmarshalJSON implements the json.Unmarshaler interface
+func (i *LongviewClient) UnmarshalJSON(b []byte) error {
+	type Mask LongviewClient
+
+	p := struct {
+		*Mask
+		Created *parseabletime.ParseableTime `json:"created"`
+		Updated *parseabletime.ParseableTime `json:"updated"`
+	}{
+		Mask: (*Mask)(i),
+	}
+
+	if err := json.Unmarshal(b, &p); err != nil {
+		return err
+	}
+
+	i.Created = (*time.Time)(p.Created)
+	i.Updated = (*time.Time)(p.Updated)
+
+	return nil
 }

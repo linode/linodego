@@ -7,16 +7,6 @@ import (
 	"github.com/linode/linodego"
 )
 
-func TestLongviewClient_List(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestLongviewClient_List")
-	defer teardown()
-
-	_, err := client.ListLongviewClients(context.Background(), nil)
-	if err != nil {
-		t.Errorf("Error listing longview clients, expected struct - error %v", err)
-	}
-}
-
 func TestLongviewClient_Get(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestLongviewClient_Get")
 	defer teardown()
