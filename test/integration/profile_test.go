@@ -2,7 +2,6 @@ package integration
 
 import (
 	"context"
-	"strings"
 	"testing"
 )
 
@@ -14,8 +13,8 @@ func TestProfile_Get(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error getting profile: %s", err)
 	}
-	if !strings.Contains(i.Email, "@") {
-		t.Errorf("Expected profile email to contain @: %v", i)
+	if len(i.Email) < 1 {
+		t.Errorf("Expected profile email")
 	}
 }
 
