@@ -9,9 +9,9 @@ import (
 type ObjectStorageObjectURLCreateOptions struct {
 	Name               string `json:"name"`
 	Method             string `json:"method"`
-	ContentType        string `json:"content_type,omit_empty"`
-	ContentDisposition string `json:"content_disposition,omit_empty"`
-	ExpiresIn          *int   `json:"expires_in,omit_empty"`
+	ContentType        string `json:"content_type,omitempty"`
+	ContentDisposition string `json:"content_disposition,omitempty"`
+	ExpiresIn          *int   `json:"expires_in,omitempty"`
 }
 
 type ObjectStorageObjectURL struct {
