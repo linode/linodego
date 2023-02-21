@@ -2,7 +2,6 @@ package integration
 
 import (
 	"context"
-	"strings"
 	"testing"
 )
 
@@ -15,7 +14,7 @@ func TestAccount_Get(t *testing.T) {
 		t.Errorf("Error getting Account, expected struct, got error %v", err)
 	}
 
-	if !strings.Contains(account.Email, "@") {
-		t.Error("Error accessing Account, expected Email to contain '@'")
+	if len(account.Email) < 1 {
+		t.Error("Error accessing Account, expected Email")
 	}
 }

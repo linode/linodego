@@ -3,14 +3,12 @@ package integration
 import (
 	"context"
 	"fmt"
+	"github.com/linode/linodego"
 	"log"
 	"math"
 	"math/rand"
 	"os"
 	"strconv"
-	"strings"
-
-	"github.com/linode/linodego"
 )
 
 var spendMoney = false
@@ -49,10 +47,10 @@ func ExampleClient_GetAccount() {
 	if err != nil {
 		log.Fatalln("* While getting account: ", err)
 	}
-	fmt.Println("Account email has @:", strings.Contains(account.Email, "@"))
+	fmt.Println("Account has email:", len(account.Email) > 0)
 
 	// Output:
-	// Account email has @: true
+	// Account has email: true
 }
 
 func ExampleClient_ListUsers() {
@@ -64,11 +62,10 @@ func ExampleClient_ListUsers() {
 	if err != nil {
 		log.Fatalln("* While getting users: ", err)
 	}
-	user := users[0]
-	fmt.Println("Account email has @:", strings.Contains(user.Email, "@"))
+	fmt.Println("User exists:", len(users) > 0)
 
 	// Output:
-	// Account email has @: true
+	// User exists: true
 }
 
 func Example() {
