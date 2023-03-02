@@ -53,7 +53,7 @@ func init() {
 			log.Printf("[INFO] LINODE_FIXTURE_MODE %s will be used for tests", envFixtureMode)
 			testingMode = recorder.ModeReplaying
 			testingPollDuration = 1
-			testingMaxRetryTime = time.Duration(1) * time.Nanosecond
+			testingMaxRetryTime = time.Duration(1) * time.Microsecond
 		}
 	}
 }
