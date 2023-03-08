@@ -2,15 +2,17 @@ package linodego
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"time"
 
 	"github.com/go-resty/resty/v2"
+	"github.com/linode/linodego/internal/parseabletime"
 )
 
 // Profile represents a Profile object
 type ProfileLogin struct {
-	Datetime   *time.Time `json:"_"`
+	Datetime   *time.Time `json:"datetime"`
 	ID         int        `json:"id"`
 	IP         string     `json:"ip"`
 	Restricted bool       `json:"restricted"`
@@ -35,6 +37,26 @@ func (resp *ProfileLoginsPagedResponse) castResult(r *resty.Request, e string) (
 	castedRes := res.Result().(*ProfileLoginsPagedResponse)
 	resp.Data = append(resp.Data, castedRes.Data...)
 	return castedRes.Pages, castedRes.Results, nil
+}
+
+// UnmarshalJSON implements the json.Unmarshaler interface
+func (i *ProfileLogin) UnmarshalJSON(b []byte) error {
+	type Mask ProfileLogin
+
+	l := struct {
+		*Mask
+		Datetime *parseabletime.ParseableTime `json:"datetime"`
+	}{
+		Mask: (*Mask)(i),
+	}
+
+	if err := json.Unmarshal(b, &l); err != nil {
+		return err
+	}
+
+	i.Datetime = (*time.Time)(l.Datetime)
+
+	return nil
 }
 
 // GetProfileLogin returns the Profile Login of the authenticated user
