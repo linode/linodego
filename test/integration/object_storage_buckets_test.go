@@ -99,6 +99,24 @@ func TestObjectStorageBuckets_List(t *testing.T) {
 	}
 }
 
+func TestObjectStorageBucketsInCluster_List(t *testing.T) {
+	client, bucket, teardown, err := setupObjectStorageBucket(t,
+        nil,
+        "fixtures/TestObjectStorageBucketsInCluster_List")
+    defer teardown()
+
+    i, err := client.ListObjectStorageBucketsInCluster(context.Background(), nil, bucket.Cluster)
+    if err!= nil {
+        t.Errorf("Error listing ObjectStorageBucketsInCluster, expected struct, got error %v", err)
+    }
+    if len(i) == 0 {
+        t.Errorf("Expected a list of ObjectStorageBucketsInCluster, but got none %v", i)
+    } else if i[0].Label == "" ||
+        i[0].Cluster == "" {
+        t.Errorf("Listed Object Storage Bucket in Cluster did not have attribuets %v", i)
+    }
+}
+
 func TestObjectStorageBucket_Access_Get(t *testing.T) {
 	corsEnabled := false
 

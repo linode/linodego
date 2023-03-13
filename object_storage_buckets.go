@@ -102,6 +102,16 @@ func (c *Client) ListObjectStorageBuckets(ctx context.Context, opts *ListOptions
 	return response.Data, nil
 }
 
+//ListObjectStorageBucketsInCluster lists all ObjectStorageBuckets of a cluster
+func (c *Client) ListObjectStorageBucketsInCluster(ctx context.Context, opts *ListOptions, clusterID string) ([]ObjectStorageBucket, error) {
+	response := ObjectStorageBucketsPagedResponse{}
+	err := c.listHelper(ctx, &response, opts, clusterID)
+	if err != nil {
+		return nil, err
+	}
+	return response.Data, nil
+}
+
 // GetObjectStorageBucket gets the ObjectStorageBucket with the provided label
 func (c *Client) GetObjectStorageBucket(ctx context.Context, clusterID, label string) (*ObjectStorageBucket, error) {
 	e := fmt.Sprintf("object-storage/buckets/%s/%s", clusterID, label)
