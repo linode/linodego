@@ -78,8 +78,12 @@ type ObjectStorageBucketsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for ObjectStorageBucket
-func (ObjectStorageBucketsPagedResponse) endpoint(_ ...any) string {
-	return "object-storage/buckets"
+func (ObjectStorageBucketsPagedResponse) endpoint(args ...any) string {
+	endpoint := "object-storage/buckets"
+	if len(args) > 0 {
+		endpoint = fmt.Sprintf(endpoint+"/%s", args[0])
+	}
+	return endpoint
 }
 
 func (resp *ObjectStorageBucketsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
