@@ -102,7 +102,7 @@ func (c *Client) ListObjectStorageBuckets(ctx context.Context, opts *ListOptions
 	return response.Data, nil
 }
 
-//ListObjectStorageBucketsInCluster lists all ObjectStorageBuckets of a cluster
+// ListObjectStorageBucketsInCluster lists all ObjectStorageBuckets of a cluster
 func (c *Client) ListObjectStorageBucketsInCluster(ctx context.Context, opts *ListOptions, clusterID string) ([]ObjectStorageBucket, error) {
 	response := ObjectStorageBucketsPagedResponse{}
 	err := c.listHelper(ctx, &response, opts, clusterID)
