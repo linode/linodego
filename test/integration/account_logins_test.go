@@ -29,4 +29,8 @@ func TestAccountLogins_List(t *testing.T) {
 	if response.Username != login.Username {
 		t.Fatal("Recieved Account Login Username does not match source")
 	}
+
+	if response.Status != "successful" && response.Status != "failed" {
+		t.Fatal("Recieved invalid Account Login Status")
+	}
 }
