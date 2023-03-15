@@ -78,8 +78,12 @@ type ObjectStorageBucketsPagedResponse struct {
 }
 
 // endpoint gets the endpoint URL for ObjectStorageBucket
-func (ObjectStorageBucketsPagedResponse) endpoint(_ ...any) string {
-	return "object-storage/buckets"
+func (ObjectStorageBucketsPagedResponse) endpoint(args ...any) string {
+	endpoint := "object-storage/buckets"
+	if len(args) > 0 {
+		endpoint = fmt.Sprintf(endpoint+"/%s", args[0])
+	}
+	return endpoint
 }
 
 func (resp *ObjectStorageBucketsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
@@ -96,6 +100,16 @@ func (resp *ObjectStorageBucketsPagedResponse) castResult(r *resty.Request, e st
 func (c *Client) ListObjectStorageBuckets(ctx context.Context, opts *ListOptions) ([]ObjectStorageBucket, error) {
 	response := ObjectStorageBucketsPagedResponse{}
 	err := c.listHelper(ctx, &response, opts)
+	if err != nil {
+		return nil, err
+	}
+	return response.Data, nil
+}
+
+// ListObjectStorageBucketsInCluster lists all ObjectStorageBuckets of a cluster
+func (c *Client) ListObjectStorageBucketsInCluster(ctx context.Context, opts *ListOptions, clusterID string) ([]ObjectStorageBucket, error) {
+	response := ObjectStorageBucketsPagedResponse{}
+	err := c.listHelper(ctx, &response, opts, clusterID)
 	if err != nil {
 		return nil, err
 	}
