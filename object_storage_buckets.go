@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"net/url"
 	"time"
 
 	"github.com/go-resty/resty/v2"
@@ -118,6 +119,7 @@ func (c *Client) ListObjectStorageBucketsInCluster(ctx context.Context, opts *Li
 
 // GetObjectStorageBucket gets the ObjectStorageBucket with the provided label
 func (c *Client) GetObjectStorageBucket(ctx context.Context, clusterID, label string) (*ObjectStorageBucket, error) {
+	label = url.PathEscape(label)
 	e := fmt.Sprintf("object-storage/buckets/%s/%s", clusterID, label)
 	req := c.R(ctx).SetResult(&ObjectStorageBucket{})
 	r, err := coupleAPIErrors(req.Get(e))
@@ -145,6 +147,7 @@ func (c *Client) CreateObjectStorageBucket(ctx context.Context, opts ObjectStora
 
 // GetObjectStorageBucketAccess gets the current access config for a bucket
 func (c *Client) GetObjectStorageBucketAccess(ctx context.Context, clusterID, label string) (*ObjectStorageBucketAccess, error) {
+	label = url.PathEscape(label)
 	e := fmt.Sprintf("object-storage/buckets/%s/%s/access", clusterID, label)
 	req := c.R(ctx).SetResult(&ObjectStorageBucketAccess{})
 	r, err := coupleAPIErrors(req.Get(e))
@@ -162,6 +165,7 @@ func (c *Client) UpdateObjectStorageBucketAccess(ctx context.Context, clusterID,
 		return err
 	}
 
+	label = url.PathEscape(label)
 	e := fmt.Sprintf("object-storage/buckets/%s/%s/access", clusterID, label)
 	_, err = coupleAPIErrors(c.R(ctx).SetBody(string(body)).Post(e))
 	if err != nil {
@@ -173,6 +177,7 @@ func (c *Client) UpdateObjectStorageBucketAccess(ctx context.Context, clusterID,
 
 // DeleteObjectStorageBucket deletes the ObjectStorageBucket with the specified label
 func (c *Client) DeleteObjectStorageBucket(ctx context.Context, clusterID, label string) error {
+	label = url.PathEscape(label)
 	e := fmt.Sprintf("object-storage/buckets/%s/%s", clusterID, label)
 	_, err := coupleAPIErrors(c.R(ctx).Delete(e))
 	return err
