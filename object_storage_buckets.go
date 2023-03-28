@@ -17,6 +17,8 @@ type ObjectStorageBucket struct {
 
 	Created  *time.Time `json:"-"`
 	Hostname string     `json:"hostname"`
+	Objects  int        `json:"objects"`
+	Size     int        `json:"size"`
 }
 
 // ObjectStorageBucketAccess holds Object Storage access info
