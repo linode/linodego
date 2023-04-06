@@ -726,3 +726,56 @@ func (p *EventPoller) WaitForFinished(
 		}
 	}
 }
+
+// WaitForResourceFree waits for a resource to have no running events.
+func (c *Client) WaitForResourceFree(
+	ctx context.Context, entityType EntityType, entityID any, timeoutSeconds int,
+) error {
+	apiFilter := Filter{
+		Order:   Descending,
+		OrderBy: "created",
+	}
+	apiFilter.AddField(Eq, "entity.id", entityID)
+	apiFilter.AddField(Eq, "entity.type", entityType)
+
+	filterStr, err := apiFilter.MarshalJSON()
+	if err != nil {
+		return fmt.Errorf("failed to create filter: %s", err)
+	}
+
+	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
+	defer cancel()
+
+	ticker := time.NewTicker(c.millisecondsPerPoll * time.Millisecond)
+	defer ticker.Stop()
+
+	// A helper function to determine whether a resource is busy
+	checkIsBusy := func(events []Event) bool {
+		for _, event := range events {
+			if event.Status == EventStarted || event.Status == EventScheduled {
+				return true
+			}
+		}
+
+		return false
+	}
+
+	for {
+		select {
+		case <-ticker.C:
+			events, err := c.ListEvents(ctx, &ListOptions{
+				Filter: string(filterStr),
+			})
+			if err != nil {
+				return fmt.Errorf("failed to list events: %s", err)
+			}
+
+			if !checkIsBusy(events) {
+				return nil
+			}
+
+		case <-ctx.Done():
+			return fmt.Errorf("failed to wait for resource free: %s", ctx.Err())
+		}
+	}
+}

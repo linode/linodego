@@ -96,3 +96,42 @@ func TestEventPoller_InstancePower(t *testing.T) {
 		t.Fatalf("instance expected to be offline, got %s", inst.Status)
 	}
 }
+
+func TestWaitForResourceFree(t *testing.T) {
+	client, fixtureTeardown := createTestClient(t, "fixtures/TestWaitForResourceFree")
+	t.Cleanup(fixtureTeardown)
+
+	// Create a booted instance
+	instance, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
+		Region:   getRegionsWithCaps(t, client, []string{"Linodes"})[0],
+		Type:     "g6-nanode-1",
+		Image:    "linode/ubuntu22.04",
+		RootPass: "c00lp@sgfdgregrhn$!!!!",
+		Label:    "linodego-waitforfree",
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Cleanup(func() {
+		if err := client.DeleteInstance(context.Background(), instance.ID); err != nil {
+			t.Error(err)
+		}
+	})
+
+	// Wait for the instance to be done with all events
+	err = client.WaitForResourceFree(context.Background(), linodego.EntityLinode, instance.ID, 240)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Check that the instance is no longer busy
+	instance, err = client.GetInstance(context.Background(), instance.ID)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if instance.Status == linodego.InstanceProvisioning {
+		t.Fatalf("expected instance to not be provisioning, got %s", instance.Status)
+	}
+}
