@@ -728,7 +728,7 @@ func (p *EventPoller) WaitForFinished(
 }
 
 // WaitForResourceFree waits for a resource to have no running events.
-func (client *Client) WaitForResourceFree(
+func (client Client) WaitForResourceFree(
 	ctx context.Context, entityType EntityType, entityID any, timeoutSeconds int,
 ) error {
 	apiFilter := Filter{
