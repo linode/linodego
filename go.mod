@@ -8,8 +8,8 @@ require (
 )
 
 require (
-	golang.org/x/net v0.8.0
-	golang.org/x/text v0.8.0 // indirect
+	golang.org/x/net v0.9.0
+	golang.org/x/text v0.9.0 // indirect
 )
 
 go 1.18
