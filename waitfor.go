@@ -728,7 +728,7 @@ func (p *EventPoller) WaitForFinished(
 }
 
 // WaitForResourceFree waits for a resource to have no running events.
-func (c *Client) WaitForResourceFree(
+func (client *Client) WaitForResourceFree(
 	ctx context.Context, entityType EntityType, entityID any, timeoutSeconds int,
 ) error {
 	apiFilter := Filter{
@@ -746,7 +746,7 @@ func (c *Client) WaitForResourceFree(
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
-	ticker := time.NewTicker(c.millisecondsPerPoll * time.Millisecond)
+	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
 	defer ticker.Stop()
 
 	// A helper function to determine whether a resource is busy
@@ -763,7 +763,7 @@ func (c *Client) WaitForResourceFree(
 	for {
 		select {
 		case <-ticker.C:
-			events, err := c.ListEvents(ctx, &ListOptions{
+			events, err := client.ListEvents(ctx, &ListOptions{
 				Filter: string(filterStr),
 			})
 			if err != nil {
