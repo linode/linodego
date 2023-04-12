@@ -20,12 +20,12 @@ func BuildClientsetFromConfig(
 ) (kubernetes.Interface, error) {
 	kubeConfigBytes, err := base64.StdEncoding.DecodeString(lkeKubeconfig.KubeConfig)
 	if err != nil {
-		return nil, fmt.Errorf("failed to decode kubeconfig: %s", err)
+		return nil, fmt.Errorf("failed to decode kubeconfig: %w", err)
 	}
 
 	restClientConfig, err := clientcmd.RESTConfigFromKubeConfig(kubeConfigBytes)
 	if err != nil {
-		return nil, fmt.Errorf("failed to parse LKE cluster kubeconfig: %s", err)
+		return nil, fmt.Errorf("failed to parse LKE cluster kubeconfig: %w", err)
 	}
 
 	if transportWrapper != nil {
@@ -34,7 +34,7 @@ func BuildClientsetFromConfig(
 
 	clientset, err := kubernetes.NewForConfig(restClientConfig)
 	if err != nil {
-		return nil, fmt.Errorf("failed to build k8s client from LKE cluster kubeconfig: %s", err)
+		return nil, fmt.Errorf("failed to build k8s client from LKE cluster kubeconfig: %w", err)
 	}
 	return clientset, nil
 }

@@ -20,7 +20,7 @@ func ClusterHasReadyNode(ctx context.Context, options linodego.ClusterConditionO
 
 	nodes, err := clientset.CoreV1().Nodes().List(ctx, v1.ListOptions{})
 	if err != nil {
-		return false, fmt.Errorf("failed to get nodes for cluster: %s", err)
+		return false, fmt.Errorf("failed to get nodes for cluster: %w", err)
 	}
 
 	for _, node := range nodes.Items {
