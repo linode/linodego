@@ -66,18 +66,18 @@ func TestImage_Upload(t *testing.T) {
 	defer teardown()
 
 	image, uploadURL, err := client.CreateImageUpload(context.Background(), ImageCreateUploadOptions{
-		Region:      getRegionsWithCaps(t, client, []string{"Linodes"})[0],
+		Region:      "us-east",
 		Label:       "linodego-image-test",
 		Description: "An image that does stuff.",
 	})
 	if err != nil {
 		t.Errorf("Failed to create image upload: %v", err)
 	}
-	defer func() {
+	t.Cleanup(func() {
 		if err := client.DeleteImage(context.Background(), image.ID); err != nil {
 			t.Errorf("Failed to delete image %s: %v", image.ID, err)
 		}
-	}()
+	})
 
 	if uploadURL == "" {
 		t.Errorf("Expected upload URL, got none")
@@ -97,4 +97,67 @@ func TestImage_Upload(t *testing.T) {
 	if _, err := client.WaitForImageStatus(context.Background(), image.ID, ImageStatusAvailable, 240); err != nil {
 		t.Errorf("Failed to wait for image available upload status: %v", err)
 	}
+}
+
+func TestImage_CreateUpload(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestImage_CreateUpload")
+	defer teardown()
+
+	image, uploadURL, err := client.CreateImageUpload(context.Background(), ImageCreateUploadOptions{
+		Region:      "us-east",
+		Label:       "linodego-image-create-upload",
+		Description: "An image that does stuff.",
+		CloudInit:   true,
+	})
+	if err != nil {
+		t.Errorf("Failed to create image upload: %v", err)
+	}
+	defer func() {
+		if err := client.DeleteImage(context.Background(), image.ID); err != nil {
+			t.Errorf("Failed to delete image %s: %v", image.ID, err)
+		}
+	}()
+
+	assertSliceContains(t, image.Capabilities, "cloud-init")
+
+	if uploadURL == "" {
+		t.Errorf("Expected upload URL, got none")
+	}
+}
+
+func TestImage_CloudInit(t *testing.T) {
+	client, instance, teardown, err := setupInstance(
+		t, "fixtures/TestImage_CloudInit",
+		func(client *Client, options *InstanceCreateOptions) {
+			options.Region = "eu-west"
+		})
+	if err != nil {
+		t.Fatal(err)
+	}
+	t.Cleanup(teardown)
+
+	instanceDisks, err := client.ListInstanceDisks(
+		context.Background(),
+		instance.ID,
+		nil,
+	)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	image, err := client.CreateImage(context.Background(), ImageCreateOptions{
+		DiskID:    instanceDisks[0].ID,
+		Label:     "linodego-test-cloud-init",
+		CloudInit: true,
+	})
+	if err != nil {
+		t.Errorf("Failed to create image upload: %v", err)
+	}
+	t.Cleanup(func() {
+		if err := client.DeleteImage(context.Background(), image.ID); err != nil {
+			t.Errorf("Failed to delete image %s: %v", image.ID, err)
+		}
+	})
+
+	assertSliceContains(t, image.Capabilities, "cloud-init")
 }

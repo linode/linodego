@@ -23,18 +23,19 @@ const (
 
 // Image represents a deployable Image object for use with Linode Instances
 type Image struct {
-	ID          string      `json:"id"`
-	CreatedBy   string      `json:"created_by"`
-	Label       string      `json:"label"`
-	Description string      `json:"description"`
-	Type        string      `json:"type"`
-	Vendor      string      `json:"vendor"`
-	Status      ImageStatus `json:"status"`
-	Size        int         `json:"size"`
-	IsPublic    bool        `json:"is_public"`
-	Deprecated  bool        `json:"deprecated"`
-	Created     *time.Time  `json:"-"`
-	Expiry      *time.Time  `json:"-"`
+	ID           string      `json:"id"`
+	CreatedBy    string      `json:"created_by"`
+	Capabilities []string    `json:"capabilities"`
+	Label        string      `json:"label"`
+	Description  string      `json:"description"`
+	Type         string      `json:"type"`
+	Vendor       string      `json:"vendor"`
+	Status       ImageStatus `json:"status"`
+	Size         int         `json:"size"`
+	IsPublic     bool        `json:"is_public"`
+	Deprecated   bool        `json:"deprecated"`
+	Created      *time.Time  `json:"-"`
+	Expiry       *time.Time  `json:"-"`
 }
 
 // ImageCreateOptions fields are those accepted by CreateImage
@@ -42,6 +43,7 @@ type ImageCreateOptions struct {
 	DiskID      int    `json:"disk_id"`
 	Label       string `json:"label"`
 	Description string `json:"description,omitempty"`
+	CloudInit   bool   `json:"cloud_init,omitempty"`
 }
 
 // ImageUpdateOptions fields are those accepted by UpdateImage
@@ -61,6 +63,7 @@ type ImageCreateUploadOptions struct {
 	Region      string `json:"region"`
 	Label       string `json:"label"`
 	Description string `json:"description,omitempty"`
+	CloudInit   bool   `json:"cloud_init,omitempty"`
 }
 
 // ImageUploadOptions fields are those accepted by UploadImage
@@ -68,6 +71,7 @@ type ImageUploadOptions struct {
 	Region      string `json:"region"`
 	Label       string `json:"label"`
 	Description string `json:"description,omitempty"`
+	CloudInit   bool   `json:"cloud_init"`
 	Image       io.Reader
 }
 
@@ -223,6 +227,7 @@ func (c *Client) UploadImage(ctx context.Context, opts ImageUploadOptions) (*Ima
 		Label:       opts.Label,
 		Region:      opts.Region,
 		Description: opts.Description,
+		CloudInit:   opts.CloudInit,
 	})
 	if err != nil {
 		return nil, err

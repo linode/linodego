@@ -2,6 +2,7 @@ package integration
 
 import (
 	"context"
+	"encoding/base64"
 	"reflect"
 	"strconv"
 	"testing"
@@ -12,7 +13,13 @@ import (
 type instanceModifier func(*linodego.Client, *linodego.InstanceCreateOptions)
 
 func TestInstances_List(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstances_List")
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(
+		t,
+		"fixtures/TestInstances_List",
+		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+			options.Region = "eu-west" // Override for metadata availability
+		},
+	)
 	defer teardown()
 
 	if err != nil {
@@ -34,6 +41,10 @@ func TestInstances_List(t *testing.T) {
 
 	if linodes[0].HostUUID == "" {
 		t.Errorf("failed to get instance HostUUID")
+	}
+
+	if linodes[0].HasUserData {
+		t.Errorf("expected instance.HasUserData to be false, got true")
 	}
 }
 
@@ -115,7 +126,7 @@ func TestInstance_Disk_Resize(t *testing.T) {
 func TestInstance_Disk_ListMultiple(t *testing.T) {
 	// This is a long running test
 	client, instance1, teardown1, err := setupInstance(t, "fixtures/TestInstance_Disk_ListMultiple_Primary")
-	defer teardown1()
+	t.Cleanup(teardown1)
 	if err != nil {
 		t.Error(err)
 	}
@@ -351,7 +362,13 @@ func TestInstance_Volumes_List(t *testing.T) {
 }
 
 func TestInstance_Rebuild(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Rebuild")
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(
+		t,
+		"fixtures/TestInstance_Rebuild",
+		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+			options.Region = "eu-west" // temporary override
+		},
+	)
 	defer teardown()
 
 	if err != nil {
@@ -366,22 +383,32 @@ func TestInstance_Rebuild(t *testing.T) {
 
 	rebuildOpts := linodego.InstanceRebuildOptions{
 		Image:    "linode/alpine3.15",
-		RootPass: "R34lBAdP455",
+		RootPass: "R34lBAdP455!!!!!",
+		Metadata: &linodego.InstanceMetadataOptions{
+			UserData: base64.StdEncoding.EncodeToString([]byte("cool")),
+		},
 	}
 	instance, err = client.RebuildInstance(context.Background(), instance.ID, rebuildOpts)
 
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
+	}
+
+	if !instance.HasUserData {
+		t.Fatal("expected instance.HasUserData to be true, got false")
 	}
 }
 
 func TestInstance_Clone(t *testing.T) {
-	client, instance, teardownOriginalLinode, err := setupInstance(t, "fixtures/TestInstance_Clone")
-	defer teardownOriginalLinode()
-
+	client, instance, teardownOriginalLinode, err := setupInstance(
+		t, "fixtures/TestInstance_Clone",
+		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+			options.Region = "eu-west"
+		})
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
+	t.Cleanup(teardownOriginalLinode)
 
 	_, err = client.WaitForEventFinished(
 		context.Background(),
@@ -397,16 +424,18 @@ func TestInstance_Clone(t *testing.T) {
 	}
 
 	cloneOpts := linodego.InstanceCloneOptions{
-		Region:    "ap-west",
+		Region:    "eu-west",
 		Type:      "g6-nanode-1",
 		PrivateIP: true,
+		Metadata: &linodego.InstanceMetadataOptions{
+			UserData: base64.StdEncoding.EncodeToString([]byte("reallycooluserdata")),
+		},
 	}
 	clonedInstance, err := client.CloneInstance(context.Background(), instance.ID, cloneOpts)
 
-	teardownClonedLinode := func() {
+	t.Cleanup(func() {
 		client.DeleteInstance(context.Background(), clonedInstance.ID)
-	}
-	defer teardownClonedLinode()
+	})
 
 	if err != nil {
 		t.Error(err)
@@ -422,11 +451,11 @@ func TestInstance_Clone(t *testing.T) {
 	)
 
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 
 	if clonedInstance.Image != instance.Image {
-		t.Error("Clone instance image mismatched.")
+		t.Fatal("Clone instance image mismatched.")
 	}
 
 	clonedInstanceIPs, err := client.GetInstanceIPAddresses(
@@ -435,11 +464,34 @@ func TestInstance_Clone(t *testing.T) {
 	)
 
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 
 	if len(clonedInstanceIPs.IPv4.Private) == 0 {
-		t.Error("No private IPv4 assigned to the cloned instance.")
+		t.Fatal("No private IPv4 assigned to the cloned instance.")
+	}
+
+	if !clonedInstance.HasUserData {
+		t.Fatal("expected instance.HasUserData to be true, got false")
+	}
+}
+
+func TestInstance_withMetadata(t *testing.T) {
+	_, inst, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_withMetadata",
+		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+			options.Metadata = &linodego.InstanceMetadataOptions{
+				UserData: base64.StdEncoding.EncodeToString([]byte("reallycoolmetadata")),
+			}
+			options.Region = "eu-west"
+		})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Cleanup(teardown)
+
+	if !inst.HasUserData {
+		t.Fatalf("expected instance.HasUserData to be true, got false")
 	}
 }
 
@@ -451,7 +503,7 @@ func createInstance(t *testing.T, client *linodego.Client, modifiers ...instance
 	booted := false
 	createOpts := linodego.InstanceCreateOptions{
 		Label:    "go-test-ins-" + randLabel(),
-		RootPass: "R34lBAdP455",
+		RootPass: "R34lBAdP455!!!!!!",
 		Region:   getRegionsWithCaps(t, client, []string{"linodes"})[0],
 		Type:     "g6-nanode-1",
 		Image:    "linode/debian9",
@@ -464,13 +516,13 @@ func createInstance(t *testing.T, client *linodego.Client, modifiers ...instance
 	return client.CreateInstance(context.Background(), createOpts)
 }
 
-func setupInstance(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.Instance, func(), error) {
+func setupInstance(t *testing.T, fixturesYaml string, modifiers ...instanceModifier) (*linodego.Client, *linodego.Instance, func(), error) {
 	if t != nil {
 		t.Helper()
 	}
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 
-	instance, err := createInstance(t, client)
+	instance, err := createInstance(t, client, modifiers...)
 	if err != nil {
 		t.Errorf("failed to create test instance: %s", err)
 	}

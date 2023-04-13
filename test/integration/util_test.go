@@ -56,3 +56,13 @@ func mockRequestBodyValidate(t *testing.T, expected interface{}, response interf
 func mockRequestURL(t *testing.T, path string) *regexp.Regexp {
 	return regexp.MustCompile(fmt.Sprintf("/[a-zA-Z0-9]+/%s", strings.TrimPrefix(path, "/")))
 }
+
+func assertSliceContains[T comparable](t *testing.T, slice []T, target T) {
+	for _, v := range slice {
+		if v == target {
+			return
+		}
+	}
+
+	t.Fatalf("value %v not found in slice", target)
+}
