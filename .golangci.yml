@@ -29,6 +29,13 @@ linters-settings:
 linters:
   enable-all: true
   disable:
+    # deprecated linters
+    - deadcode
+    - ifshort
+    - varcheck
+    - nosnakecase
+    ####################
+
     - bodyclose
     - contextcheck
     - nilerr
