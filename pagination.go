@@ -24,8 +24,8 @@ type PageOptions struct {
 // ListOptions are the pagination and filtering (TODO) parameters for endpoints
 type ListOptions struct {
 	*PageOptions
-	PageSize int
-	Filter   string
+	PageSize int    `json:"page_size"`
+	Filter   string `json:"filter"`
 }
 
 // NewListOptions simplified construction of ListOptions using only
