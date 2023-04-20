@@ -2,6 +2,11 @@ run:
   tests: false
 
 linters-settings:
+  revive:
+    rules:
+      - name: unused-parameter
+        severity: warning
+        disabled: true
   errcheck:
     check-type-assertions: true
     check-blank: true
