@@ -20,7 +20,7 @@ jobs:
           go-version: '1.18'
       - run: go version
       - uses: actions-ecosystem/action-regex-match@v2
-        id: validate-tests
+        id: disallowed-char-check
         with:
           text: ${{ github.event.client_payload.slash_command.tests }}
           regex: '[^a-z0-9_\/]'
@@ -33,12 +33,12 @@ jobs:
           ref: ${{ github.event.client_payload.slash_command.sha }}
 
       - run: make ARGS="-run ${{ github.event.client_payload.slash_command.tests }}" fixtures
-        if: ${{ github.event.client_payload.slash_command.tests != '' && steps.validate-tests.outputs.match == '' }}
+        if: ${{ github.event.client_payload.slash_command.tests != '' && steps.disallowed-char-check.outputs.match == '' }}
         env:
           LINODE_TOKEN: ${{ secrets.DX_LINODE_TOKEN }}
 
       - run: make fixtures
-        if: ${{ github.event.client_payload.slash_command.tests == '' && steps.validate-tests.outputs.match == '' }}
+        if: ${{ github.event.client_payload.slash_command.tests == '' && steps.disallowed-char-check.outputs.match == '' }}
         env:
           LINODE_TOKEN: ${{ secrets.DX_LINODE_TOKEN }}
 
