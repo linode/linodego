@@ -39,6 +39,12 @@ type IPAddressesShareOptions struct {
 	LinodeID int      `json:"linode_id"`
 }
 
+// ListIPAddressesQuery fields are those accepted as query params for the
+// ListIPAddresses function.
+type ListIPAddressesQuery struct {
+	SkipIPv6RDNS bool `query:"skip_ipv6_rdns"`
+}
+
 // GetUpdateOptions converts a IPAddress to IPAddressUpdateOptions for use in UpdateIPAddress
 func (i InstanceIP) GetUpdateOptions() (o IPAddressUpdateOptions) {
 	o.RDNS = copyString(&i.RDNS)

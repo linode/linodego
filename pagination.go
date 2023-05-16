@@ -9,6 +9,7 @@ import (
 	"crypto/sha256"
 	"encoding/json"
 	"fmt"
+	"reflect"
 	"strconv"
 
 	"github.com/go-resty/resty/v2"
@@ -26,7 +27,7 @@ type ListOptions struct {
 	*PageOptions
 	PageSize    int    `json:"page_size"`
 	Filter      string `json:"filter"`
-	QueryParams map[string]string
+	QueryParams any
 }
 
 // NewListOptions simplified construction of ListOptions using only
@@ -52,8 +53,9 @@ func (l ListOptions) Hash() (string, error) {
 
 func applyListOptionsToRequest(opts *ListOptions, req *resty.Request) {
 	if opts != nil {
-		if len(opts.QueryParams) > 0 {
-			req.SetQueryParams(opts.QueryParams)
+		if opts.QueryParams != nil {
+			params, _ := flattenQueryStruct(opts.QueryParams)
+			req.SetQueryParams(params)
 		}
 
 		if opts.PageOptions != nil && opts.Page > 0 {
@@ -106,4 +108,55 @@ func (c *Client) listHelper(ctx context.Context, pager PagedResponse, opts *List
 	opts.Results = results
 	opts.Pages = pages
 	return nil
+}
+
+// flattenQueryStruct flattens a structure into a Resty-compatible query param map.
+// Fields are mapped using the `query` struct tag.
+func flattenQueryStruct(val any) (map[string]string, error) {
+	result := make(map[string]string)
+
+	reflectVal := reflect.ValueOf(val)
+
+	// Deref pointer if necessary
+	if reflectVal.Kind() == reflect.Ptr {
+		reflectVal = reflect.Indirect(reflectVal)
+	}
+
+	valType := reflectVal.Type()
+
+	for i := 0; i < valType.NumField(); i++ {
+		currentField := valType.Field(i)
+
+		queryTag, ok := currentField.Tag.Lookup("query")
+		// Skip untagged fields
+		if !ok {
+			continue
+		}
+
+		valField := reflectVal.FieldByName(currentField.Name)
+		if !valField.IsValid() {
+			return nil, fmt.Errorf("invalid query param tag: %s", currentField.Name)
+		}
+
+		valFieldInterface := valField.Interface()
+
+		var resultField string
+
+		switch valFieldInterface.(type) {
+		case string:
+			resultField = valFieldInterface.(string)
+		case int:
+			resultField = strconv.Itoa(valFieldInterface.(int))
+		case int64:
+			resultField = strconv.FormatInt(valFieldInterface.(int64), 10)
+		case bool:
+			resultField = strconv.FormatBool(valFieldInterface.(bool))
+		default:
+			return nil, fmt.Errorf("unsupported query param type: %s", valField.Type().Name())
+		}
+
+		result[queryTag] = resultField
+	}
+
+	return result, nil
 }
