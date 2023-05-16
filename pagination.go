@@ -23,10 +23,15 @@ type PageOptions struct {
 }
 
 // ListOptions are the pagination and filtering (TODO) parameters for endpoints
+//nolint
 type ListOptions struct {
 	*PageOptions
-	PageSize    int    `json:"page_size"`
-	Filter      string `json:"filter"`
+	PageSize int    `json:"page_size"`
+	Filter   string `json:"filter"`
+
+	// QueryParams allows for specifying custom query parameters on list endpoint
+	// calls. QueryParams should be an instance of a struct containing fields with
+	// the `query` tag.
 	QueryParams any
 }
 
@@ -52,27 +57,29 @@ func (l ListOptions) Hash() (string, error) {
 }
 
 func applyListOptionsToRequest(opts *ListOptions, req *resty.Request) error {
-	if opts != nil {
-		if opts.QueryParams != nil {
-			params, err := flattenQueryStruct(opts.QueryParams)
-			if err != nil {
-				return fmt.Errorf("failed to apply list options: %w", err)
-			}
+	if opts == nil {
+		return nil
+	}
 
-			req.SetQueryParams(params)
+	if opts.QueryParams != nil {
+		params, err := flattenQueryStruct(opts.QueryParams)
+		if err != nil {
+			return fmt.Errorf("failed to apply list options: %w", err)
 		}
 
-		if opts.PageOptions != nil && opts.Page > 0 {
-			req.SetQueryParam("page", strconv.Itoa(opts.Page))
-		}
+		req.SetQueryParams(params)
+	}
 
-		if opts.PageSize > 0 {
-			req.SetQueryParam("page_size", strconv.Itoa(opts.PageSize))
-		}
+	if opts.PageOptions != nil && opts.Page > 0 {
+		req.SetQueryParam("page", strconv.Itoa(opts.Page))
+	}
 
-		if len(opts.Filter) > 0 {
-			req.SetHeader("X-Filter", opts.Filter)
-		}
+	if opts.PageSize > 0 {
+		req.SetQueryParam("page_size", strconv.Itoa(opts.PageSize))
+	}
+
+	if len(opts.Filter) > 0 {
+		req.SetHeader("X-Filter", opts.Filter)
 	}
 
 	return nil
