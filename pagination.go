@@ -24,8 +24,9 @@ type PageOptions struct {
 // ListOptions are the pagination and filtering (TODO) parameters for endpoints
 type ListOptions struct {
 	*PageOptions
-	PageSize int    `json:"page_size"`
-	Filter   string `json:"filter"`
+	PageSize    int    `json:"page_size"`
+	Filter      string `json:"filter"`
+	QueryParams map[string]string
 }
 
 // NewListOptions simplified construction of ListOptions using only
@@ -51,6 +52,10 @@ func (l ListOptions) Hash() (string, error) {
 
 func applyListOptionsToRequest(opts *ListOptions, req *resty.Request) {
 	if opts != nil {
+		if len(opts.QueryParams) > 0 {
+			req.SetQueryParams(opts.QueryParams)
+		}
+
 		if opts.PageOptions != nil && opts.Page > 0 {
 			req.SetQueryParam("page", strconv.Itoa(opts.Page))
 		}
