@@ -51,10 +51,14 @@ func (l ListOptions) Hash() (string, error) {
 	return fmt.Sprintf("%x", h.Sum(nil)), nil
 }
 
-func applyListOptionsToRequest(opts *ListOptions, req *resty.Request) {
+func applyListOptionsToRequest(opts *ListOptions, req *resty.Request) error {
 	if opts != nil {
 		if opts.QueryParams != nil {
-			params, _ := flattenQueryStruct(opts.QueryParams)
+			params, err := flattenQueryStruct(opts.QueryParams)
+			if err != nil {
+				return fmt.Errorf("failed to apply list options: %w", err)
+			}
+
 			req.SetQueryParams(params)
 		}
 
@@ -70,6 +74,8 @@ func applyListOptionsToRequest(opts *ListOptions, req *resty.Request) {
 			req.SetHeader("X-Filter", opts.Filter)
 		}
 	}
+
+	return nil
 }
 
 type PagedResponse interface {
@@ -84,7 +90,9 @@ type PagedResponse interface {
 // opts.results and opts.pages will be updated from the API response
 func (c *Client) listHelper(ctx context.Context, pager PagedResponse, opts *ListOptions, ids ...any) error {
 	req := c.R(ctx)
-	applyListOptionsToRequest(opts, req)
+	if err := applyListOptionsToRequest(opts, req); err != nil {
+		return err
+	}
 
 	pages, results, err := pager.castResult(req, pager.endpoint(ids...))
 	if err != nil {
