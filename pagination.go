@@ -146,19 +146,15 @@ func flattenQueryStruct(val any) (map[string]string, error) {
 			return nil, fmt.Errorf("invalid query param tag: %s", currentField.Name)
 		}
 
-		valFieldInterface := valField.Interface()
-
 		var resultField string
 
-		switch valFieldInterface.(type) {
+		switch valField.Interface().(type) {
 		case string:
-			resultField = valFieldInterface.(string)
-		case int:
-			resultField = strconv.Itoa(valFieldInterface.(int))
-		case int64:
-			resultField = strconv.FormatInt(valFieldInterface.(int64), 10)
+			resultField = valField.String()
+		case int64, int:
+			resultField = strconv.FormatInt(valField.Int(), 10)
 		case bool:
-			resultField = strconv.FormatBool(valFieldInterface.(bool))
+			resultField = strconv.FormatBool(valField.Bool())
 		default:
 			return nil, fmt.Errorf("unsupported query param type: %s", valField.Type().Name())
 		}

@@ -270,7 +270,7 @@ func (client Client) WaitForLKEClusterConditions(
 // WaitForEventFinished waits for an entity action to reach the 'finished' state
 // before returning. It will timeout with an error after timeoutSeconds.
 // If the event indicates a failure both the failed event and the error will be returned.
-//nolint
+// nolint
 func (client Client) WaitForEventFinished(
 	ctx context.Context,
 	id any,
