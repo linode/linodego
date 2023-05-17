@@ -153,6 +153,16 @@ func flattenQueryStruct(val any) (map[string]string, error) {
 			return nil, fmt.Errorf("invalid query param tag: %s", currentField.Name)
 		}
 
+		// Skip if it's a zero value
+		if valField.IsZero() {
+			continue
+		}
+
+		// Deref the pointer is necessary
+		if valField.Kind() == reflect.Ptr {
+			valField = reflect.Indirect(valField)
+		}
+
 		var resultField string
 
 		switch valField.Interface().(type) {
