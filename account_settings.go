@@ -28,6 +28,10 @@ type AccountSettingsUpdateOptions struct {
 	// The default backups enrollment status for all new Linodes for all users on the account.  When enabled, backups are mandatory per instance.
 	BackupsEnabled *bool `json:"backups_enabled,omitempty"`
 
+	// A plan name like "longview-3"..."longview-100", or a nil value for to cancel any existing subscription plan.
+	// DEPRECATED: Use PUT /longview/plan instead to update the LongviewSubscription
+	LongviewSubscription *string `json:"longview_subscription,omitempty"`
+
 	// The default network helper setting for all new Linodes and Linode Configs for all users on the account.
 	NetworkHelper *bool `json:"network_helper,omitempty"`
 }
