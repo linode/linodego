@@ -11,11 +11,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/kernels/linode/latest-32bit
+    url: https://api.linode.com/v4beta/linode/kernels/linode%2Flatest-32bit
     method: GET
   response:
-    body: '{"id": "linode/latest-32bit", "label": "Latest 32 bit (5.19.2-x86-linode176)",
-      "version": "5.19.2", "kvm": true, "architecture": "i386", "pvops": true, "deprecated":
+    body: '{"id": "linode/latest-32bit", "label": "Latest 32 bit (6.1.10-x86-linode179)",
+      "version": "6.1.10", "kvm": true, "architecture": "i386", "pvops": true, "deprecated":
       false, "built": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -70,11 +70,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/kernels/linode/latest-64bit
+    url: https://api.linode.com/v4beta/linode/kernels/linode%2Flatest-64bit
     method: GET
   response:
-    body: '{"id": "linode/latest-64bit", "label": "Latest 64 bit (5.19.2-x86_64-linode156)",
-      "version": "5.19.2", "kvm": true, "architecture": "x86_64", "pvops": true, "deprecated":
+    body: '{"id": "linode/latest-64bit", "label": "Latest 64 bit (6.1.10-x86_64-linode159)",
+      "version": "6.1.10", "kvm": true, "architecture": "x86_64", "pvops": true, "deprecated":
       false, "built": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:

@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"net/url"
 
 	"github.com/go-resty/resty/v2"
 )
@@ -72,6 +73,7 @@ func (c *Client) ListIPAddresses(ctx context.Context, opts *ListOptions) ([]Inst
 
 // GetIPAddress gets the template with the provided ID
 func (c *Client) GetIPAddress(ctx context.Context, id string) (*InstanceIP, error) {
+	id = url.PathEscape(id)
 	e := fmt.Sprintf("networking/ips/%s", id)
 	req := c.R(ctx).SetResult(&InstanceIP{})
 	r, err := coupleAPIErrors(req.Get(e))
@@ -88,6 +90,7 @@ func (c *Client) UpdateIPAddress(ctx context.Context, id string, opts IPAddressU
 		return nil, err
 	}
 
+	id = url.PathEscape(id)
 	e := fmt.Sprintf("networking/ips/%s", id)
 	req := c.R(ctx).SetResult(&InstanceIP{}).SetBody(string(body))
 	r, err := coupleAPIErrors(req.Put(e))

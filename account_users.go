@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"net/url"
 
 	"github.com/go-resty/resty/v2"
 )
@@ -81,6 +82,7 @@ func (c *Client) ListUsers(ctx context.Context, opts *ListOptions) ([]User, erro
 
 // GetUser gets the user with the provided ID
 func (c *Client) GetUser(ctx context.Context, userID string) (*User, error) {
+	userID = url.PathEscape(userID)
 	e := fmt.Sprintf("account/users/%s", userID)
 	req := c.R(ctx).SetResult(&User{})
 	r, err := coupleAPIErrors(req.Get(e))
@@ -116,6 +118,7 @@ func (c *Client) UpdateUser(ctx context.Context, userID string, opts UserUpdateO
 		return nil, err
 	}
 
+	userID = url.PathEscape(userID)
 	e := fmt.Sprintf("account/users/%s", userID)
 	req := c.R(ctx).SetResult(&User{}).SetBody(string(body))
 	r, err := coupleAPIErrors(req.Put(e))
@@ -128,6 +131,7 @@ func (c *Client) UpdateUser(ctx context.Context, userID string, opts UserUpdateO
 
 // DeleteUser deletes the User with the specified id
 func (c *Client) DeleteUser(ctx context.Context, userID string) error {
+	userID = url.PathEscape(userID)
 	e := fmt.Sprintf("account/users/%s", userID)
 	_, err := coupleAPIErrors(c.R(ctx).Delete(e))
 	return err
