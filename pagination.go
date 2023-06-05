@@ -169,7 +169,7 @@ func flattenQueryStruct(val any) (map[string]string, error) {
 		}
 
 		// Deref the pointer is necessary
-		if valField.Kind() == reflect.Ptr {
+		if valField.Kind() == reflect.Pointer {
 			valField = reflect.Indirect(valField)
 		}
 
