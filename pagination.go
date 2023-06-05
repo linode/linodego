@@ -133,7 +133,7 @@ func flattenQueryStruct(val any) (map[string]string, error) {
 	reflectVal := reflect.ValueOf(val)
 
 	// Deref pointer if necessary
-	if reflectVal.Kind() == reflect.Ptr {
+	if reflectVal.Kind() == reflect.Pointer {
 		if reflectVal.IsNil() {
 			return nil, fmt.Errorf("QueryParams is a nil pointer")
 		}
