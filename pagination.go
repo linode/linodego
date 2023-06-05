@@ -23,7 +23,7 @@ type PageOptions struct {
 }
 
 // ListOptions are the pagination and filtering (TODO) parameters for endpoints
-// nolint
+//nolint
 type ListOptions struct {
 	*PageOptions
 	PageSize int    `json:"page_size"`
@@ -173,21 +173,26 @@ func flattenQueryStruct(val any) (map[string]string, error) {
 			valField = reflect.Indirect(valField)
 		}
 
-		var resultField string
-
-		switch valField.Interface().(type) {
-		case string:
-			resultField = valField.String()
-		case int64, int:
-			resultField = strconv.FormatInt(valField.Int(), 10)
-		case bool:
-			resultField = strconv.FormatBool(valField.Bool())
-		default:
-			return nil, fmt.Errorf("unsupported query param type: %s", valField.Type().Name())
+		fieldString, err := queryFieldToString(valField)
+		if err != nil {
+			return nil, err
 		}
 
-		result[queryTag] = resultField
+		result[queryTag] = fieldString
 	}
 
 	return result, nil
+}
+
+func queryFieldToString(value reflect.Value) (string, error) {
+	switch value.Interface().(type) {
+	case string:
+		return value.String(), nil
+	case int64, int:
+		return strconv.FormatInt(value.Int(), 10), nil
+	case bool:
+		return strconv.FormatBool(value.Bool()), nil
+	default:
+		return "", fmt.Errorf("unsupported query param type: %s", value.Type().Name())
+	}
 }
