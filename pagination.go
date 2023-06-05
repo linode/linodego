@@ -16,9 +16,9 @@ import (
 
 // PageOptions are the pagination parameters for List endpoints
 type PageOptions struct {
-	Page    int `url:"page,omitempty"    json:"page"`
-	Pages   int `url:"pages,omitempty"   json:"pages"`
-	Results int `url:"results,omitempty" json:"results"`
+	Page    int `json:"page"    url:"page,omitempty"`
+	Pages   int `json:"pages"   url:"pages,omitempty"`
+	Results int `json:"results" url:"results,omitempty"`
 }
 
 // ListOptions are the pagination and filtering (TODO) parameters for endpoints
