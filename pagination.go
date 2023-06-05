@@ -140,6 +140,13 @@ func flattenQueryStruct(val any) (map[string]string, error) {
 		reflectVal = reflect.Indirect(reflectVal)
 	}
 
+	if reflectVal.Kind() != reflect.Struct {
+		return nil, fmt.Errorf(
+			"expected struct type for the QueryParams but got: %s",
+			reflectVal.Kind().String(),
+		)
+	}
+
 	valType := reflectVal.Type()
 
 	for i := 0; i < valType.NumField(); i++ {
