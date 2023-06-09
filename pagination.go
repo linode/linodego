@@ -185,12 +185,12 @@ func flattenQueryStruct(val any) (map[string]string, error) {
 }
 
 func queryFieldToString(value reflect.Value) (string, error) {
-	switch value.Interface().(type) {
-	case string:
+	switch value.Kind() {
+	case reflect.String:
 		return value.String(), nil
-	case int64, int:
+	case reflect.Int64, reflect.Int32, reflect.Int:
 		return strconv.FormatInt(value.Int(), 10), nil
-	case bool:
+	case reflect.Bool:
 		return strconv.FormatBool(value.Bool()), nil
 	default:
 		return "", fmt.Errorf("unsupported query param type: %s", value.Type().Name())
