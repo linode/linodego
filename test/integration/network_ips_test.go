@@ -3,6 +3,7 @@ package integration
 import (
 	"context"
 	"fmt"
+	"strings"
 	"testing"
 
 	. "github.com/linode/linodego"
@@ -58,6 +59,36 @@ func TestIPAddresses_List(t *testing.T) {
 	}
 	if len(i) == 0 {
 		t.Errorf("Expected a list of ipaddresses, but got none %v", i)
+	}
+
+	// Set the RDNS for the IPv6 addresses
+	for _, ip := range i {
+		if ip.Type == "ipv6" && ip.Public && ip.RDNS != "" {
+			rdns := fmt.Sprintf("%s.nip.io", ip.Address)
+			_, err = client.UpdateIPAddress(context.Background(), ip.Address, IPAddressUpdateOptions{
+				RDNS: &rdns,
+			})
+			if err != nil {
+				t.Fatalf("Failed to set RDNS for IPv6 address: %v", err)
+			}
+		}
+	}
+
+	// Retrieve the networking info without IPv6 RDNS
+	i, err = client.ListIPAddresses(context.Background(), &ListOptions{
+		QueryParams: ListIPAddressesQuery{
+			SkipIPv6RDNS: true,
+		},
+	})
+	if err != nil {
+		t.Errorf("Error listing ipaddresses, expected struct, got error %v", err)
+	}
+
+	// Validate that the IPv6 address RDNS field is not returned
+	for _, ip := range i {
+		if strings.Contains(string(ip.Type), "ipv6") && ip.RDNS != "" {
+			t.Fatalf("expected empty rdns for ipv6 address; got %s", ip.RDNS)
+		}
 	}
 }
 
