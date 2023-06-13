@@ -40,7 +40,7 @@ jobs:
         if: ${{ inputs.module != '' && steps.disallowed-char-check.outputs.match == '' }}
         env:
           LINODE_TOKEN: ${{ secrets.DX_LINODE_TOKEN }}
-      - run: make testacc
+      - run: make fixtures
         if: ${{ inputs.module != '' && steps.disallowed-char-check.outputs.match == '' }}
         env:
           LINODE_TOKEN: ${{ secrets.DX_LINODE_TOKEN }}
