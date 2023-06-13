@@ -41,7 +41,7 @@ jobs:
         env:
           LINODE_TOKEN: ${{ secrets.DX_LINODE_TOKEN }}
       - run: make fixtures
-        if: ${{ inputs.module != '' && steps.disallowed-char-check.outputs.match == '' }}
+        if: ${{ inputs.module == '' }}
         env:
           LINODE_TOKEN: ${{ secrets.DX_LINODE_TOKEN }}
       
