@@ -124,7 +124,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"ap-west","type":"g6-nanode-1","label":"go-test-ins-37t1x7lwm0b1","root_pass":"R34lBAdP455LONGLONGLONGLONG","image":"linode/debian9","booted":false}'
+    body: '{"region":"ap-west","type":"g6-nanode-1","label":"go-test-ins-5k0mfy94hi15","root_pass":"R34lBAdP455LONGLONGLONGLONG","image":"linode/debian9","booted":false}'
     form: {}
     headers:
       Accept:
@@ -136,15 +136,15 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 46933614, "label": "go-test-ins-37t1x7lwm0b1", "group": "", "status":
+    body: '{"id": 46936365, "label": "go-test-ins-5k0mfy94hi15", "group": "", "status":
       "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["45.79.125.118"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["194.195.119.209"], "ipv6": "1234::5678/128",
       "image": "linode/debian9", "region": "ap-west", "specs": {"disk": 25600, "memory":
       1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
       false, "available": false, "schedule": {"day": null, "window": null}, "last_successful":
       null}, "hypervisor": "kvm", "watchdog_enabled": true, "tags": [], "host_uuid":
-      "d50b6b90facab8d16b49441e3afecb43a499a486"}'
+      "5d091e7cd8be0eda03fd5427bc793e60b152a517"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -159,7 +159,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "717"
+      - "719"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -196,10 +196,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/46933614/configs
+    url: https://api.linode.com/v4beta/linode/instances/46936365/configs
     method: POST
   response:
-    body: '{"id": 49789037, "label": "test-config", "helpers": {"updatedb_disabled":
+    body: '{"id": 49791866, "label": "test-config", "helpers": {"updatedb_disabled":
       true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
       true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
@@ -258,16 +258,16 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"action":"linode_config_create","entity.id":46933614,"entity.type":"linode"}'
+      - '{"action":"linode_config_create","entity.id":46936365,"entity.type":"linode"}'
     url: https://api.linode.com/v4beta/account/events
     method: GET
   response:
-    body: '{"data": [{"id": 511027432, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 511080170, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "linode_config_create", "username": "zliang27",
-      "entity": {"label": "go-test-ins-37t1x7lwm0b1", "id": 46933614, "type": "linode",
-      "url": "/v4/linode/instances/46933614"}, "status": "notification", "secondary_entity":
-      {"id": 49789037, "type": "linode_config", "label": "test-config", "url": "/v4/linode/instances/46933614/configs/49789037"},
+      "entity": {"label": "go-test-ins-5k0mfy94hi15", "id": 46936365, "type": "linode",
+      "url": "/v4/linode/instances/46936365"}, "status": "notification", "secondary_entity":
+      {"id": 49791866, "type": "linode_config", "label": "test-config", "url": "/v4/linode/instances/46936365/configs/49791866"},
       "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -322,7 +322,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/46933614
+    url: https://api.linode.com/v4beta/linode/instances/46936365
     method: DELETE
   response:
     body: '{}'
