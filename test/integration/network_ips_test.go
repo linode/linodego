@@ -63,14 +63,16 @@ func TestIPAddresses_List(t *testing.T) {
 
 	// Set the RDNS for the IPv6 addresses
 	for _, ip := range i {
-		if ip.Type == "ipv6" && ip.Public && ip.RDNS != "" {
-			rdns := fmt.Sprintf("%s.nip.io", ip.Address)
-			_, err = client.UpdateIPAddress(context.Background(), ip.Address, IPAddressUpdateOptions{
-				RDNS: &rdns,
-			})
-			if err != nil {
-				t.Fatalf("Failed to set RDNS for IPv6 address: %v", err)
-			}
+		if ip.Type != "ipv6" || !ip.Public || ip.RDNS == "" {
+			continue
+		}
+
+		rdns := fmt.Sprintf("%s.nip.io", ip.Address)
+		_, err = client.UpdateIPAddress(context.Background(), ip.Address, IPAddressUpdateOptions{
+			RDNS: &rdns,
+		})
+		if err != nil {
+			t.Fatalf("Failed to set RDNS for IPv6 address: %v", err)
 		}
 	}
 
