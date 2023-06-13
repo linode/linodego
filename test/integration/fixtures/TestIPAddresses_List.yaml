@@ -136,15 +136,15 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 46939668, "label": "go-test-ins-wo-disk-bzi7l8090x1m", "group":
+    body: '{"id": 46939763, "label": "go-test-ins-wo-disk-bzi7l8090x1m", "group":
       "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.105.52.174"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["45.79.121.236"], "ipv6": "1234::5678/128",
       "image": null, "region": "ap-west", "specs": {"disk": 25600, "memory": 1024,
       "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
       false, "available": false, "schedule": {"day": null, "window": null}, "last_successful":
       null}, "hypervisor": "kvm", "watchdog_enabled": true, "tags": [], "host_uuid":
-      "ac644aa3319dc5c8ab4681fe9c2003f2655cbfca"}'
+      "88790c34691bcc0acb858c2e81c3bd1e6e6e91ac"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -159,7 +159,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "714"
+      - "713"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -196,10 +196,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/46939668/configs
+    url: https://api.linode.com/v4beta/linode/instances/46939763/configs
     method: POST
   response:
-    body: '{"id": 49795222, "label": "go-test-conf-xf886ld17qx5", "helpers": {"updatedb_disabled":
+    body: '{"id": 49795313, "label": "go-test-conf-xf886ld17qx5", "helpers": {"updatedb_disabled":
       true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
       true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
@@ -258,22 +258,22 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"linode_id":46939668}'
+      - '{"linode_id":46939763}'
     url: https://api.linode.com/v4beta/networking/ips
     method: GET
   response:
     body: '{"page": 1, "pages": 1, "results": 4, "data": [{"address": "45.79.195.237",
       "gateway": "45.79.195.1", "subnet_mask": "255.255.255.0", "prefix": 24, "type":
       "ipv4", "public": true, "rdns": "45-79-195-237.ip.linodeusercontent.com", "linode_id":
-      46939586, "region": "us-southeast"}, {"address": "172.105.52.174", "gateway":
-      "172.105.52.1", "subnet_mask": "255.255.255.0", "prefix": 24, "type": "ipv4",
-      "public": true, "rdns": "172-105-52-174.ip.linodeusercontent.com", "linode_id":
-      46939668, "region": "ap-west"}, {"address": "1234::5678",
+      46939586, "region": "us-southeast"}, {"address": "45.79.121.236", "gateway":
+      "45.79.121.1", "subnet_mask": "255.255.255.0", "prefix": 24, "type": "ipv4",
+      "public": true, "rdns": "45-79-121-236.ip.linodeusercontent.com", "linode_id":
+      46939763, "region": "ap-west"}, {"address": "1234::5678",
       "gateway": "1234::5678", "subnet_mask": "1234::5678", "prefix": 64,
       "type": "ipv6", "rdns": null, "linode_id": 46939586, "region": "us-southeast",
       "public": true}, {"address": "1234::5678", "gateway": "1234::5678",
       "subnet_mask": "1234::5678", "prefix": 64, "type": "ipv6", "rdns":
-      null, "linode_id": 46939668, "region": "ap-west", "public": true}]}'
+      null, "linode_id": 46939763, "region": "ap-west", "public": true}]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -289,7 +289,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "942"
+      - "939"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -333,15 +333,15 @@ interactions:
     body: '{"page": 1, "pages": 1, "results": 4, "data": [{"address": "45.79.195.237",
       "gateway": "45.79.195.1", "subnet_mask": "255.255.255.0", "prefix": 24, "type":
       "ipv4", "public": true, "rdns": "45-79-195-237.ip.linodeusercontent.com", "linode_id":
-      46939586, "region": "us-southeast"}, {"address": "172.105.52.174", "gateway":
-      "172.105.52.1", "subnet_mask": "255.255.255.0", "prefix": 24, "type": "ipv4",
-      "public": true, "rdns": "172-105-52-174.ip.linodeusercontent.com", "linode_id":
-      46939668, "region": "ap-west"}, {"address": "1234::5678",
+      46939586, "region": "us-southeast"}, {"address": "45.79.121.236", "gateway":
+      "45.79.121.1", "subnet_mask": "255.255.255.0", "prefix": 24, "type": "ipv4",
+      "public": true, "rdns": "45-79-121-236.ip.linodeusercontent.com", "linode_id":
+      46939763, "region": "ap-west"}, {"address": "1234::5678",
       "gateway": "1234::5678", "subnet_mask": "1234::5678", "prefix": 64,
       "type": "ipv6", "rdns": null, "linode_id": 46939586, "region": "us-southeast",
       "public": true}, {"address": "1234::5678", "gateway": "1234::5678",
       "subnet_mask": "1234::5678", "prefix": 64, "type": "ipv6", "rdns":
-      null, "linode_id": 46939668, "region": "ap-west", "public": true}]}'
+      null, "linode_id": 46939763, "region": "ap-west", "public": true}]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -357,7 +357,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "942"
+      - "939"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -395,7 +395,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/46939668
+    url: https://api.linode.com/v4beta/linode/instances/46939763
     method: DELETE
   response:
     body: '{}'
