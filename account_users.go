@@ -10,11 +10,13 @@ import (
 
 // User represents a User object
 type User struct {
-	Username   string   `json:"username"`
-	Email      string   `json:"email"`
-	Restricted bool     `json:"restricted"`
-	TFAEnabled bool     `json:"tfa_enabled"`
-	SSHKeys    []string `json:"ssh_keys"`
+	Username            string   `json:"username"`
+	Email               string   `json:"email"`
+	Restricted          bool     `json:"restricted"`
+	TFAEnabled          bool     `json:"tfa_enabled"`
+	SSHKeys             []string `json:"ssh_keys"`
+	PasswordCreated     string   `json:"password_created"`
+	VerifiedPhoneNumber string   `json:"verified_phone_number"`
 }
 
 // UserCreateOptions fields are those accepted by CreateUser
