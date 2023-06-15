@@ -58,6 +58,15 @@ func TestUser_Get(t *testing.T) {
 	if !user.Restricted {
 		t.Error("expected user to be restricted")
 	}
+	if user.TFAEnabled {
+		t.Error("expected TFA is disabled")
+	}
+	if user.PasswordCreated != "" {
+		t.Error("expected password is not set")
+	}
+	if user.VerifiedPhoneNumber != "" {
+		t.Error("expected phone number is not set")
+	}
 }
 
 func TestUser_Update(t *testing.T) {
@@ -134,6 +143,15 @@ func TestUsers_List(t *testing.T) {
 	}
 	if newUser.Restricted {
 		t.Error("expected user to not be restricted")
+	}
+	if newUser.TFAEnabled {
+		t.Error("expected TFA is disabled")
+	}
+	if newUser.PasswordCreated != "" {
+		t.Error("expected password is not set")
+	}
+	if newUser.VerifiedPhoneNumber != "" {
+		t.Error("expected phone number is not set")
 	}
 }
 
