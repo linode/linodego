@@ -4,19 +4,21 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"time"
 
 	"github.com/go-resty/resty/v2"
+	"github.com/linode/linodego/internal/parseabletime"
 )
 
 // User represents a User object
 type User struct {
-	Username            string   `json:"username"`
-	Email               string   `json:"email"`
-	Restricted          bool     `json:"restricted"`
-	TFAEnabled          bool     `json:"tfa_enabled"`
-	SSHKeys             []string `json:"ssh_keys"`
-	PasswordCreated     string   `json:"password_created"`
-	VerifiedPhoneNumber string   `json:"verified_phone_number"`
+	Username            string     `json:"username"`
+	Email               string     `json:"email"`
+	Restricted          bool       `json:"restricted"`
+	TFAEnabled          bool       `json:"tfa_enabled"`
+	SSHKeys             []string   `json:"ssh_keys"`
+	PasswordCreated     *time.Time `json:"-"`
+	VerifiedPhoneNumber string     `json:"verified_phone_number"`
 }
 
 // UserCreateOptions fields are those accepted by CreateUser
@@ -30,6 +32,26 @@ type UserCreateOptions struct {
 type UserUpdateOptions struct {
 	Username   string `json:"username,omitempty"`
 	Restricted *bool  `json:"restricted,omitempty"`
+}
+
+// UnmarshalJSON implements the json.Unmarshaler interface
+func (i *User) UnmarshalJSON(b []byte) error {
+	type Mask User
+
+	p := struct {
+		*Mask
+		PasswordCreated *parseabletime.ParseableTime `json:"password_created"`
+	}{
+		Mask: (*Mask)(i),
+	}
+
+	if err := json.Unmarshal(b, &p); err != nil {
+		return err
+	}
+
+	i.PasswordCreated = (*time.Time)(p.PasswordCreated)
+
+	return nil
 }
 
 // GetCreateOptions converts a User to UserCreateOptions for use in CreateUser
