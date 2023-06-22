@@ -64,7 +64,7 @@ func TestUser_Get(t *testing.T) {
 	if user.TFAEnabled {
 		t.Error("expected TFA is disabled")
 	}
-	if user.VerifiedPhoneNumber != "" {
+	if user.VerifiedPhoneNumber != nil {
 		t.Error("expected phone number is not set")
 	}
 }
@@ -147,7 +147,7 @@ func TestUsers_List(t *testing.T) {
 	if newUser.TFAEnabled {
 		t.Error("expected TFA is disabled")
 	}
-	if newUser.VerifiedPhoneNumber != "" {
+	if newUser.VerifiedPhoneNumber != nil {
 		t.Error("expected phone number is not set")
 	}
 }
