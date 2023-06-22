@@ -18,7 +18,7 @@ type User struct {
 	TFAEnabled          bool       `json:"tfa_enabled"`
 	SSHKeys             []string   `json:"ssh_keys"`
 	PasswordCreated     *time.Time `json:"-"`
-	VerifiedPhoneNumber string     `json:"verified_phone_number"`
+	VerifiedPhoneNumber *string    `json:"verified_phone_number"`
 }
 
 // UserCreateOptions fields are those accepted by CreateUser
