@@ -521,12 +521,12 @@ func copyTime(tPtr *time.Time) *time.Time {
 
 func generateListCacheURL(endpoint string, opts *ListOptions) (string, error) {
 	if opts == nil {
-		return "", nil
+		return endpoint, nil
 	}
 
 	hashedOpts, err := opts.Hash()
 	if err != nil {
-		return "", err
+		return endpoint, err
 	}
 
 	return fmt.Sprintf("%s:%s", endpoint, hashedOpts), nil
