@@ -14,7 +14,7 @@ var testNodeBalancerConfigCreateOpts = linodego.NodeBalancerConfigCreateOptions{
 	CheckInterval: 60,
 }
 
-func TestNodeBalancerConfig_Create(t *testing.T) {
+func TestNodeBalancerConfig_Create_smoke(t *testing.T) {
 	_, _, config, teardown, err := setupNodeBalancerConfig(t, "fixtures/TestNodeBalancerConfig_Create")
 	defer teardown()
 

@@ -12,7 +12,7 @@ var testDomainCreateOpts = linodego.DomainCreateOptions{
 	SOAEmail: "example@example.com",
 }
 
-func TestDomain_Create(t *testing.T) {
+func TestDomain_Create_smoke(t *testing.T) {
 	_, domain, teardown, err := setupDomain(t, "fixtures/TestDomain_Create")
 	defer teardown()
 
@@ -44,7 +44,7 @@ func TestDomain_Update(t *testing.T) {
 	}
 }
 
-func TestDomains_List(t *testing.T) {
+func TestDomains_List_smoke(t *testing.T) {
 	client, _, teardown, err := setupDomain(t, "fixtures/TestDomains_List")
 	defer teardown()
 	if err != nil {

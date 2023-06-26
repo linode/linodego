@@ -11,7 +11,7 @@ import (
 
 type instanceModifier func(*linodego.Client, *linodego.InstanceCreateOptions)
 
-func TestInstances_List(t *testing.T) {
+func TestInstances_List_smoke(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstances_List")
 	defer teardown()
 
@@ -37,7 +37,7 @@ func TestInstances_List(t *testing.T) {
 	}
 }
 
-func TestInstance_Get(t *testing.T) {
+func TestInstance_Get_smoke(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Get")
 	defer teardown()
 	if err != nil {

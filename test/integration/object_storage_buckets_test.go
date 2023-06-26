@@ -12,7 +12,7 @@ var testObjectStorageBucketCreateOpts = ObjectStorageBucketCreateOptions{
 	Label:   "go-bucket-test-def",
 }
 
-func TestObjectStorageBucket_Create(t *testing.T) {
+func TestObjectStorageBucket_Create_smoke(t *testing.T) {
 	_, bucket, teardown, err := setupObjectStorageBucket(t,
 		nil,
 		"fixtures/TestObjectStorageBucket_Create")
@@ -81,7 +81,7 @@ func TestObjectStorageBucket_GetFound(t *testing.T) {
 	}
 }
 
-func TestObjectStorageBuckets_List(t *testing.T) {
+func TestObjectStorageBuckets_List_smoke(t *testing.T) {
 	client, _, teardown, err := setupObjectStorageBucket(t,
 		nil,
 		"fixtures/TestObjectStorageBuckets_List")

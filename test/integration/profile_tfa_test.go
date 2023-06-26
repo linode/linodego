@@ -10,7 +10,7 @@ import (
 	"github.com/linode/linodego"
 )
 
-func TestTwoFactor_CreateSecret(t *testing.T) {
+func TestTwoFactor_CreateSecret_smoke(t *testing.T) {
 	client := createMockClient(t)
 
 	expectedResponse := linodego.TwoFactorSecret{
