@@ -52,7 +52,7 @@ type Client struct {
 	debug             bool
 	retryConditionals []RetryConditional
 
-	millisecondsPerPoll time.Duration
+	pollInterval time.Duration
 
 	baseURL         string
 	apiVersion      string
@@ -344,14 +344,14 @@ func (c *Client) SetRetryCount(count int) *Client {
 // SetPollDelay sets the number of milliseconds to wait between events or status polls.
 // Affects all WaitFor* functions and retries.
 func (c *Client) SetPollDelay(delay time.Duration) *Client {
-	c.millisecondsPerPoll = delay
+	c.pollInterval = delay
 	return c
 }
 
 // GetPollDelay gets the number of milliseconds to wait between events or status polls.
 // Affects all WaitFor* functions and retries.
 func (c *Client) GetPollDelay() time.Duration {
-	return c.millisecondsPerPoll
+	return c.pollInterval
 }
 
 // SetHeader sets a custom header to be used in all API requests made with the current
