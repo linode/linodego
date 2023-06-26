@@ -405,7 +405,7 @@ func NewClient(hc *http.Client) (client Client) {
 
 	client.
 		SetRetryWaitTime((1000 * APISecondsPerPoll) * time.Millisecond).
-		SetPollDelay(1000 * APISecondsPerPoll).
+		SetPollDelay(APISecondsPerPoll * time.Second).
 		SetRetries().
 		SetDebug(envDebug)
 
