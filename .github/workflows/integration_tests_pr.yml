@@ -1,28 +1,32 @@
 on:
   pull_request:
-  repository_dispatch:
-    types: [acctest-command]
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: 'The hash value of the commit.'
+        required: true
+      module:
+        description: 'The module to be tested.'
+        required: false
+      pull_request_number:
+        description: 'The number of the PR.'
+        required: false
 
-name: Integration tests
+name: Integration tests on PR
 
 jobs:
-  # Maintainer has commented /acctest on a pull request
   integration-fork:
     runs-on: ubuntu-latest
-    if:
-      github.event_name == 'repository_dispatch' &&
-      github.event.client_payload.slash_command.sha != '' &&
-      github.event.client_payload.pull_request.head.sha == github.event.client_payload.slash_command.sha
-
+    if: github.event_name == 'workflow_dispatch' && inputs.sha != ''
     steps:
       - uses: actions/setup-go@v4
         with:
-          go-version: '1.18'
+          go-version: '1.19'
       - run: go version
       - uses: actions-ecosystem/action-regex-match@v2
         id: disallowed-char-check
         with:
-          text: ${{ github.event.client_payload.slash_command.tests }}
+          text: ${{ inputs.module }}
           regex: '[^a-z0-9_\/]'
           flags: gi
 
@@ -30,23 +34,47 @@ jobs:
       - name: Checkout PR
         uses: actions/checkout@v3
         with:
-          ref: ${{ github.event.client_payload.slash_command.sha }}
+          ref: ${{ inputs.sha }}
 
-      - run: make ARGS="-run ${{ github.event.client_payload.slash_command.tests }}" fixtures
-        if: ${{ github.event.client_payload.slash_command.tests != '' && steps.disallowed-char-check.outputs.match == '' }}
+      - run: make ARGS="-run ${{ inputs.module }}" fixtures
+        if: ${{ inputs.module != '' && steps.disallowed-char-check.outputs.match == '' }}
         env:
           LINODE_TOKEN: ${{ secrets.DX_LINODE_TOKEN }}
-
       - run: make fixtures
-        if: ${{ github.event.client_payload.slash_command.tests == '' && steps.disallowed-char-check.outputs.match == '' }}
+        if: ${{ inputs.module == '' }}
         env:
           LINODE_TOKEN: ${{ secrets.DX_LINODE_TOKEN }}
+      
+      - name: Get the hash value of the latest commit from the PR branch
+        uses: octokit/graphql-action@v2.x
+        id: commit-hash
+        if: ${{ inputs.pull_request_number != '' }}
+        with:
+          query: |
+            query PRHeadCommitHash($owner: String!, $repo: String!, $pr_num: Int!) {
+              repository(owner:$owner, name:$repo) {
+                pullRequest(number: $pr_num) {
+                  headRef {
+                    target {
+                      ... on Commit {
+                        oid
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          owner: ${{ github.event.repository.owner.login }}
+          repo: ${{ github.event.repository.name }}
+          pr_num: ${{ fromJSON(inputs.pull_request_number) }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: actions/github-script@v6
         id: update-check-run
-        if: ${{ always() }}
+        if: ${{ inputs.pull_request_number != '' && fromJson(steps.commit-hash.outputs.data).repository.pullRequest.headRef.target.oid == inputs.sha }}
         env:
-          number: ${{ github.event.client_payload.pull_request.number }}
+          number: ${{ inputs.pull_request_number }}
           job: ${{ github.job }}
           conclusion: ${{ job.status }}
         with:

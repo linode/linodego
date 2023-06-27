@@ -361,6 +361,13 @@ func (c *Client) GetPollDelay() time.Duration {
 	return c.millisecondsPerPoll
 }
 
+// SetHeader sets a custom header to be used in all API requests made with the current
+// client.
+// NOTE: Some headers may be overridden by the individual request functions.
+func (c *Client) SetHeader(name, value string) {
+	c.resty.SetHeader(name, value)
+}
+
 // NewClient factory to create new Client struct
 func NewClient(hc *http.Client) (client Client) {
 	if hc != nil {
