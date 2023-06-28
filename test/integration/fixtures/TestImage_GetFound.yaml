@@ -11,14 +11,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/linode/ubuntu16.04lts
+    url: https://api.linode.com/v4beta/images/linode%2Fubuntu16.04lts
     method: GET
   response:
     body: '{"id": "linode/ubuntu16.04lts", "label": "Ubuntu 16.04 LTS", "deprecated":
       false, "size": 2700, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "description": "", "created_by": "linode", "type": "manual", "is_public": true,
       "vendor": "Ubuntu", "expiry": null, "eol": "2018-01-02T03:04:05", "status":
-      "available"}'
+      "available", "capabilities": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -34,7 +34,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "332"
+      - "352"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:

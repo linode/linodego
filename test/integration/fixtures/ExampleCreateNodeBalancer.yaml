@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 259599, "label": "balancer259599", "region": "us-southeast", "hostname":
-      "139-144-164-54.ip.linodeusercontent.com", "ipv4": "139.144.164.54", "ipv6":
+    body: '{"id": 357846, "label": "balancer357846", "region": "us-southeast", "hostname":
+      "139-144-255-40.ip.linodeusercontent.com", "ipv4": "139.144.255.40", "ipv6":
       "1234::5678", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "client_conn_throttle": 20, "tags": [], "transfer": {"in": null, "out": null,
       "total": null}}'
@@ -70,11 +70,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/259599
+    url: https://api.linode.com/v4beta/nodebalancers/357846
     method: GET
   response:
-    body: '{"id": 259599, "label": "balancer259599", "region": "us-southeast", "hostname":
-      "139-144-164-54.ip.linodeusercontent.com", "ipv4": "139.144.164.54", "ipv6":
+    body: '{"id": 357846, "label": "balancer357846", "region": "us-southeast", "hostname":
+      "139-144-255-40.ip.linodeusercontent.com", "ipv4": "139.144.255.40", "ipv6":
       "1234::5678", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "client_conn_throttle": 20, "tags": [], "transfer": {"in": null, "out": null,
       "total": null}}'
@@ -122,7 +122,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"balancer259599_renamed","client_conn_throttle":20,"tags":[]}'
+    body: '{"label":"balancer357846_renamed","client_conn_throttle":20,"tags":[]}'
     form: {}
     headers:
       Accept:
@@ -131,11 +131,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/259599
+    url: https://api.linode.com/v4beta/nodebalancers/357846
     method: PUT
   response:
-    body: '{"id": 259599, "label": "balancer259599_renamed", "region": "us-southeast",
-      "hostname": "139-144-164-54.ip.linodeusercontent.com", "ipv4": "139.144.164.54",
+    body: '{"id": 357846, "label": "balancer357846_renamed", "region": "us-southeast",
+      "hostname": "139-144-255-40.ip.linodeusercontent.com", "ipv4": "139.144.255.40",
       "ipv6": "1234::5678", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "client_conn_throttle": 20, "tags": [], "transfer": {"in":
       null, "out": null, "total": null}}'
@@ -190,7 +190,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/259599
+    url: https://api.linode.com/v4beta/nodebalancers/357846
     method: DELETE
   response:
     body: '{}'
