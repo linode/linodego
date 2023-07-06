@@ -14,7 +14,7 @@ var testDomainRecordCreateOpts = linodego.DomainRecordCreateOptions{
 	Name:   "a",
 }
 
-func TestDomainRecord_Create(t *testing.T) {
+func TestDomainRecord_Create_smoke(t *testing.T) {
 	_, _, record, teardown, err := setupDomainRecord(t, "fixtures/TestDomainRecord_Create")
 	defer teardown()
 

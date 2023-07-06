@@ -45,7 +45,7 @@ func TestIPAddress_GetFound(t *testing.T) {
 	}
 }
 
-func TestIPAddresses_List(t *testing.T) {
+func TestIPAddresses_List_smoke(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddresses_List")
 	defer teardown()
 	if err != nil {

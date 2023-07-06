@@ -65,7 +65,7 @@ func TestDatabase_Type(t *testing.T) {
 	}
 }
 
-func TestDatabase_List(t *testing.T) {
+func TestDatabase_List_smoke(t *testing.T) {
 	client, database, teardown, err := setupPostgresDatabase(t, nil, "fixtures/TestDatabase_List")
 	if err != nil {
 		t.Error(err)

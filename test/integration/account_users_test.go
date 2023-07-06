@@ -33,7 +33,7 @@ func TestUser_GetMissing(t *testing.T) {
 	}
 }
 
-func TestUser_Get(t *testing.T) {
+func TestUser_Get_smoke(t *testing.T) {
 	username := usernamePrefix + "getuser"
 	email := usernamePrefix + "getuser@example.com"
 	restricted := true

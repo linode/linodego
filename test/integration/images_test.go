@@ -48,7 +48,7 @@ func TestImage_GetFound(t *testing.T) {
 	}
 }
 
-func TestImages_List(t *testing.T) {
+func TestImages_List_smoke(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestImages_List")
 	defer teardown()
 

@@ -8,7 +8,7 @@ import (
 	"github.com/linode/linodego"
 )
 
-func TestVolume_Create(t *testing.T) {
+func TestVolume_Create_smoke(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestVolume_Create")
 	defer teardown()
 
@@ -52,7 +52,7 @@ func TestVolume_Resize(t *testing.T) {
 	}
 }
 
-func TestVolumes_List(t *testing.T) {
+func TestVolumes_List_smoke(t *testing.T) {
 	client, volume, teardown, err := setupVolume(t, "fixtures/TestVolume_List")
 	defer teardown()
 

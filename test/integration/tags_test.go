@@ -7,7 +7,7 @@ import (
 	. "github.com/linode/linodego"
 )
 
-func TestTag_Create(t *testing.T) {
+func TestTag_Create_create(t *testing.T) {
 	client, instance, teardown, err := setupTaggedInstance(t, "fixtures/TestTag_Create")
 	defer teardown()
 	if err != nil {

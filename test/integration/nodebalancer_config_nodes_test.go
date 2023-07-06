@@ -18,7 +18,7 @@ var (
 	}
 )
 
-func TestNodeBalancerNode_Create(t *testing.T) {
+func TestNodeBalancerNode_Create_smoke(t *testing.T) {
 	_, _, _, node, teardown, err := setupNodeBalancerNode(t, "fixtures/TestNodeBalancerNode_Create")
 	defer teardown()
 
