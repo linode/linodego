@@ -13,7 +13,7 @@ var (
 	label              = "go-test-def"
 )
 
-func TestNodeBalancer_Create(t *testing.T) {
+func TestNodeBalancer_Create_create(t *testing.T) {
 	_, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancer_Create")
 	defer teardown()
 
@@ -52,7 +52,7 @@ func TestNodeBalancer_Update(t *testing.T) {
 	}
 }
 
-func TestNodeBalancers_List(t *testing.T) {
+func TestNodeBalancers_List_smoke(t *testing.T) {
 	client, _, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancers_List")
 	defer teardown()
 	if err != nil {

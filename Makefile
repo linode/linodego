@@ -29,6 +29,9 @@ testunit:
 testint:
 	cd test && make test
 
+smoketest:
+	cd test && make smoketest
+
 build: vet lint
 	go build ./...
 	cd k8s && go build ./...

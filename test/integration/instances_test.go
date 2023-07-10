@@ -20,6 +20,7 @@ func TestInstances_List(t *testing.T) {
 			options.Region = "eu-west" // Override for metadata availability
 		},
 	)
+
 	defer teardown()
 
 	if err != nil {
@@ -48,7 +49,7 @@ func TestInstances_List(t *testing.T) {
 	}
 }
 
-func TestInstance_Get(t *testing.T) {
+func TestInstance_Get_smoke(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Get")
 	defer teardown()
 	if err != nil {
@@ -126,7 +127,7 @@ func TestInstance_Disk_Resize(t *testing.T) {
 func TestInstance_Disk_ListMultiple(t *testing.T) {
 	// This is a long running test
 	client, instance1, teardown1, err := setupInstance(t, "fixtures/TestInstance_Disk_ListMultiple_Primary")
-	t.Cleanup(teardown1)
+	defer teardown1()
 	if err != nil {
 		t.Error(err)
 	}
@@ -176,7 +177,7 @@ func TestInstance_Disk_ListMultiple(t *testing.T) {
 	_, err = client.CreateInstanceDisk(context.Background(), instance2.ID, linodego.InstanceDiskCreateOptions{
 		Label:    "go-disk-test-" + randLabel(),
 		Image:    image.ID,
-		RootPass: "R34lBAdP455",
+		RootPass: "R34lBAdP455LONGLONGLONGLONG",
 		Size:     2000,
 	})
 	if err != nil {
@@ -217,7 +218,7 @@ func TestInstance_Disk_ResetPassword(t *testing.T) {
 		Label:      "go-disk-test-" + randLabel(),
 		Filesystem: "ext4",
 		Image:      "linode/debian9",
-		RootPass:   "b4d_p455",
+		RootPass:   "R34lBAdP455LONGLONGLONGLONG",
 		Size:       2000,
 	})
 	if err != nil {
@@ -382,11 +383,11 @@ func TestInstance_Rebuild(t *testing.T) {
 	}
 
 	rebuildOpts := linodego.InstanceRebuildOptions{
-		Image:    "linode/alpine3.15",
-		RootPass: "R34lBAdP455!!!!!",
+		Image: "linode/alpine3.15",
 		Metadata: &linodego.InstanceMetadataOptions{
 			UserData: base64.StdEncoding.EncodeToString([]byte("cool")),
 		},
+		RootPass: "R34lBAdP455LONGLONGLONGLONG",
 	}
 	instance, err = client.RebuildInstance(context.Background(), instance.ID, rebuildOpts)
 
@@ -503,7 +504,7 @@ func createInstance(t *testing.T, client *linodego.Client, modifiers ...instance
 	booted := false
 	createOpts := linodego.InstanceCreateOptions{
 		Label:    "go-test-ins-" + randLabel(),
-		RootPass: "R34lBAdP455!!!!!!",
+		RootPass: "R34lBAdP455LONGLONGLONGLONG",
 		Region:   getRegionsWithCaps(t, client, []string{"linodes"})[0],
 		Type:     "g6-nanode-1",
 		Image:    "linode/debian9",

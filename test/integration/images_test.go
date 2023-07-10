@@ -48,7 +48,7 @@ func TestImage_GetFound(t *testing.T) {
 	}
 }
 
-func TestImages_List(t *testing.T) {
+func TestImages_List_smoke(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestImages_List")
 	defer teardown()
 
@@ -73,11 +73,11 @@ func TestImage_Upload(t *testing.T) {
 	if err != nil {
 		t.Errorf("Failed to create image upload: %v", err)
 	}
-	t.Cleanup(func() {
+	defer func() {
 		if err := client.DeleteImage(context.Background(), image.ID); err != nil {
 			t.Errorf("Failed to delete image %s: %v", image.ID, err)
 		}
-	})
+	}()
 
 	if uploadURL == "" {
 		t.Errorf("Expected upload URL, got none")

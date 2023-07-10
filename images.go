@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"net/url"
 	"time"
 
 	"github.com/go-resty/resty/v2"
@@ -136,6 +137,8 @@ func (c *Client) ListImages(ctx context.Context, opts *ListOptions) ([]Image, er
 
 // GetImage gets the Image with the provided ID
 func (c *Client) GetImage(ctx context.Context, imageID string) (*Image, error) {
+	imageID = url.PathEscape(imageID)
+
 	e := fmt.Sprintf("images/%s", imageID)
 	req := c.R(ctx).SetResult(&Image{})
 	r, err := coupleAPIErrors(req.Get(e))
@@ -168,6 +171,8 @@ func (c *Client) UpdateImage(ctx context.Context, imageID string, opts ImageUpda
 		return nil, err
 	}
 
+	imageID = url.PathEscape(imageID)
+
 	e := fmt.Sprintf("images/%s", imageID)
 	req := c.R(ctx).SetResult(&Image{}).SetBody(string(body))
 	r, err := coupleAPIErrors(req.Put(e))
@@ -179,6 +184,7 @@ func (c *Client) UpdateImage(ctx context.Context, imageID string, opts ImageUpda
 
 // DeleteImage deletes the Image with the specified id
 func (c *Client) DeleteImage(ctx context.Context, imageID string) error {
+	imageID = url.PathEscape(imageID)
 	e := fmt.Sprintf("images/%s", imageID)
 	_, err := coupleAPIErrors(c.R(ctx).Delete(e))
 	return err

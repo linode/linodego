@@ -23,7 +23,7 @@ var ignoreNetworkAddresses = cmpopts.IgnoreFields(linodego.FirewallRule{}, "Addr
 // fixture sanitization, these addresses will be changed to bogus values when running tests.
 var ignoreFirewallTimestamps = cmpopts.IgnoreFields(linodego.Firewall{}, "Created", "Updated")
 
-func TestFirewalls_List(t *testing.T) {
+func TestFirewalls_List_smoke(t *testing.T) {
 	client, _, teardown, err := setupFirewall(t, []firewallModifier{
 		func(createOpts *linodego.FirewallCreateOptions) {
 			createOpts.Label = "linodego-fw-test"

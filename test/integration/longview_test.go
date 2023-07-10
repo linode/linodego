@@ -51,7 +51,7 @@ func TestLongviewClient_Get(t *testing.T) {
 	}
 }
 
-func TestLongviewClient_Create(t *testing.T) {
+func TestLongviewClient_Create_smoke(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestLongviewClient_Create")
 	defer teardown()
 

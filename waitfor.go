@@ -25,7 +25,7 @@ func (client Client) WaitForInstanceStatus(ctx context.Context, instanceID int, 
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
-	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
+	ticker := time.NewTicker(client.pollInterval)
 	defer ticker.Stop()
 
 	for {
@@ -52,7 +52,7 @@ func (client Client) WaitForInstanceDiskStatus(ctx context.Context, instanceID i
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
-	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
+	ticker := time.NewTicker(client.pollInterval)
 	defer ticker.Stop()
 
 	for {
@@ -88,7 +88,7 @@ func (client Client) WaitForVolumeStatus(ctx context.Context, volumeID int, stat
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
-	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
+	ticker := time.NewTicker(client.pollInterval)
 	defer ticker.Stop()
 
 	for {
@@ -115,7 +115,7 @@ func (client Client) WaitForSnapshotStatus(ctx context.Context, instanceID int, 
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
-	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
+	ticker := time.NewTicker(client.pollInterval)
 	defer ticker.Stop()
 
 	for {
@@ -144,7 +144,7 @@ func (client Client) WaitForVolumeLinodeID(ctx context.Context, volumeID int, li
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
-	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
+	ticker := time.NewTicker(client.pollInterval)
 	defer ticker.Stop()
 
 	for {
@@ -175,7 +175,7 @@ func (client Client) WaitForLKEClusterStatus(ctx context.Context, clusterID int,
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
-	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
+	ticker := time.NewTicker(client.pollInterval)
 	defer ticker.Stop()
 
 	for {
@@ -237,7 +237,7 @@ func (client Client) WaitForLKEClusterConditions(
 		return fmt.Errorf("failed to get Kubeconfig for LKE cluster %d: %w", clusterID, err)
 	}
 
-	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
+	ticker := time.NewTicker(client.pollInterval)
 	defer ticker.Stop()
 
 	conditionOptions := ClusterConditionOptions{LKEClusterKubeconfig: lkeKubeConfig, TransportWrapper: options.TransportWrapper}
@@ -313,7 +313,7 @@ func (client Client) WaitForEventFinished(
 		log.Printf("[INFO] Waiting %d seconds for %s events since %v for %s %v", int(duration.Seconds()), action, minStart, titledEntityType, id)
 	}
 
-	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
+	ticker := time.NewTicker(client.pollInterval)
 
 	// avoid repeating log messages
 	nextLog := ""
@@ -412,7 +412,7 @@ func (client Client) WaitForImageStatus(ctx context.Context, imageID string, sta
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
-	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
+	ticker := time.NewTicker(client.pollInterval)
 	defer ticker.Stop()
 
 	for {
@@ -438,7 +438,7 @@ func (client Client) WaitForMySQLDatabaseBackup(ctx context.Context, dbID int, l
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
-	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
+	ticker := time.NewTicker(client.pollInterval)
 	defer ticker.Stop()
 
 	for {
@@ -465,7 +465,7 @@ func (client Client) WaitForPostgresDatabaseBackup(ctx context.Context, dbID int
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
-	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
+	ticker := time.NewTicker(client.pollInterval)
 	defer ticker.Stop()
 
 	for {
@@ -515,7 +515,7 @@ func (client Client) WaitForDatabaseStatus(
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
-	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
+	ticker := time.NewTicker(client.pollInterval)
 	defer ticker.Stop()
 
 	for {
@@ -615,7 +615,7 @@ func (p *EventPoller) PreTask(ctx context.Context) error {
 }
 
 func (p *EventPoller) WaitForLatestUnknownEvent(ctx context.Context) (*Event, error) {
-	ticker := time.NewTicker(p.client.millisecondsPerPoll * time.Millisecond)
+	ticker := time.NewTicker(p.client.pollInterval)
 	defer ticker.Stop()
 
 	f := Filter{
@@ -666,7 +666,7 @@ func (p *EventPoller) WaitForFinished(
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
-	ticker := time.NewTicker(p.client.millisecondsPerPoll * time.Millisecond)
+	ticker := time.NewTicker(p.client.pollInterval)
 	defer ticker.Stop()
 
 	event, err := p.WaitForLatestUnknownEvent(ctx)
@@ -715,7 +715,7 @@ func (client Client) WaitForResourceFree(
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
-	ticker := time.NewTicker(client.millisecondsPerPoll * time.Millisecond)
+	ticker := time.NewTicker(client.pollInterval)
 	defer ticker.Stop()
 
 	// A helper function to determine whether a resource is busy
