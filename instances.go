@@ -50,6 +50,7 @@ type Instance struct {
 	Label           string          `json:"label"`
 	Type            string          `json:"type"`
 	Status          InstanceStatus  `json:"status"`
+	HasUserData     bool            `json:"has_user_data"`
 	Hypervisor      string          `json:"hypervisor"`
 	HostUUID        string          `json:"host_uuid"`
 	Specs           *InstanceSpec   `json:"specs"`
@@ -96,6 +97,13 @@ type InstanceTransfer struct {
 	Quota int `json:"quota"`
 }
 
+// InstanceMetadataOptions specifies various Instance creation fields
+// that relate to the Linode Metadata service.
+type InstanceMetadataOptions struct {
+	// UserData expects a Base64-encoded string
+	UserData string `json:"user_data,omitempty"`
+}
+
 // InstanceCreateOptions require only Region and Type
 type InstanceCreateOptions struct {
 	Region          string                    `json:"region"`
@@ -113,6 +121,7 @@ type InstanceCreateOptions struct {
 	BackupsEnabled  bool                      `json:"backups_enabled,omitempty"`
 	PrivateIP       bool                      `json:"private_ip,omitempty"`
 	Tags            []string                  `json:"tags,omitempty"`
+	Metadata        *InstanceMetadataOptions  `json:"metadata,omitempty"`
 
 	// Creation fields that need to be set explicitly false, "", or 0 use pointers
 	SwapSize *int  `json:"swap_size,omitempty"`
@@ -169,13 +178,14 @@ type InstanceCloneOptions struct {
 	Type   string `json:"type,omitempty"`
 
 	// LinodeID is an optional existing instance to use as the target of the clone
-	LinodeID       int    `json:"linode_id,omitempty"`
-	Label          string `json:"label,omitempty"`
-	Group          string `json:"group,omitempty"`
-	BackupsEnabled bool   `json:"backups_enabled"`
-	Disks          []int  `json:"disks,omitempty"`
-	Configs        []int  `json:"configs,omitempty"`
-	PrivateIP      bool   `json:"private_ip,omitempty"`
+	LinodeID       int                      `json:"linode_id,omitempty"`
+	Label          string                   `json:"label,omitempty"`
+	Group          string                   `json:"group,omitempty"`
+	BackupsEnabled bool                     `json:"backups_enabled"`
+	Disks          []int                    `json:"disks,omitempty"`
+	Configs        []int                    `json:"configs,omitempty"`
+	PrivateIP      bool                     `json:"private_ip,omitempty"`
+	Metadata       *InstanceMetadataOptions `json:"metadata,omitempty"`
 }
 
 // InstanceResizeOptions is an options struct used when resizing an instance
@@ -337,13 +347,14 @@ func (c *Client) RebootInstance(ctx context.Context, linodeID int, configID int)
 
 // InstanceRebuildOptions is a struct representing the options to send to the rebuild linode endpoint
 type InstanceRebuildOptions struct {
-	Image           string            `json:"image,omitempty"`
-	RootPass        string            `json:"root_pass,omitempty"`
-	AuthorizedKeys  []string          `json:"authorized_keys,omitempty"`
-	AuthorizedUsers []string          `json:"authorized_users,omitempty"`
-	StackScriptID   int               `json:"stackscript_id,omitempty"`
-	StackScriptData map[string]string `json:"stackscript_data,omitempty"`
-	Booted          *bool             `json:"booted,omitempty"`
+	Image           string                   `json:"image,omitempty"`
+	RootPass        string                   `json:"root_pass,omitempty"`
+	AuthorizedKeys  []string                 `json:"authorized_keys,omitempty"`
+	AuthorizedUsers []string                 `json:"authorized_users,omitempty"`
+	StackScriptID   int                      `json:"stackscript_id,omitempty"`
+	StackScriptData map[string]string        `json:"stackscript_data,omitempty"`
+	Booted          *bool                    `json:"booted,omitempty"`
+	Metadata        *InstanceMetadataOptions `json:"metadata,omitempty"`
 }
 
 // RebuildInstance Deletes all Disks and Configs on this Linode,

@@ -14,29 +14,24 @@ interactions:
     url: https://api.linode.com/v4beta/images
     method: GET
   response:
-    body: '{"pages": 1, "data": [{"id": "private/20403225", "label": "splunk-build
-      - Alpine 3.17 Disk", "description": "", "created": "2018-01-02T03:04:05", "updated":
-      null, "size": 5463, "created_by": null, "type": "automatic", "is_public": false,
-      "deprecated": false, "vendor": null, "expiry": "2018-01-02T03:04:05", "eol":
-      null, "status": "available", "capabilities": []}, {"id": "linode/almalinux8",
-      "label": "AlmaLinux 8", "deprecated": false, "size": 1700, "created": "2018-01-02T03:04:05",
-      "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
-      "type": "manual", "is_public": true, "vendor": "AlmaLinux", "expiry": null,
-      "eol": "2018-01-02T03:04:05", "status": "available", "capabilities": []}, {"id":
-      "linode/almalinux9", "label": "AlmaLinux 9", "deprecated": false, "size": 1700,
-      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description":
-      "", "created_by": "linode", "type": "manual", "is_public": true, "vendor": "AlmaLinux",
-      "expiry": null, "eol": "2018-01-02T03:04:05", "status": "available", "capabilities":
-      []}, {"id": "linode/alpine3.14", "label": "Alpine 3.14", "deprecated": false,
-      "size": 400, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+    body: '{"data": [{"id": "linode/almalinux8", "label": "AlmaLinux 8", "deprecated":
+      false, "size": 1700, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "description": "", "created_by": "linode", "type": "manual", "is_public": true,
-      "vendor": "Alpine", "expiry": null, "eol": "2018-01-02T03:04:05", "status":
-      "available", "capabilities": []}, {"id": "linode/alpine3.15", "label": "Alpine
-      3.15", "deprecated": false, "size": 400, "created": "2018-01-02T03:04:05", "updated":
+      "vendor": "AlmaLinux", "expiry": null, "eol": "2018-01-02T03:04:05", "status":
+      "available", "capabilities": []}, {"id": "linode/almalinux9", "label": "AlmaLinux
+      9", "deprecated": false, "size": 1700, "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "description": "", "created_by": "linode", "type": "manual",
-      "is_public": true, "vendor": "Alpine", "expiry": null, "eol": "2018-01-02T03:04:05",
-      "status": "available", "capabilities": []}, {"id": "linode/alpine3.16", "label":
-      "Alpine 3.16", "deprecated": false, "size": 400, "created": "2018-01-02T03:04:05",
+      "is_public": true, "vendor": "AlmaLinux", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "status": "available", "capabilities": []}, {"id": "linode/alpine3.14", "label":
+      "Alpine 3.14", "deprecated": false, "size": 400, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
+      "type": "manual", "is_public": true, "vendor": "Alpine", "expiry": null, "eol":
+      "2018-01-02T03:04:05", "status": "available", "capabilities": []}, {"id": "linode/alpine3.15",
+      "label": "Alpine 3.15", "deprecated": false, "size": 400, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
+      "type": "manual", "is_public": true, "vendor": "Alpine", "expiry": null, "eol":
+      "2018-01-02T03:04:05", "status": "available", "capabilities": []}, {"id": "linode/alpine3.16",
+      "label": "Alpine 3.16", "deprecated": false, "size": 400, "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
       "type": "manual", "is_public": true, "vendor": "Alpine", "expiry": null, "eol":
       "2018-01-02T03:04:05", "status": "available", "capabilities": []}, {"id": "linode/alpine3.17",
@@ -69,6 +64,10 @@ interactions:
       "type": "manual", "is_public": true, "vendor": "Debian", "expiry": null, "eol":
       "2018-01-02T03:04:05", "status": "available", "capabilities": []}, {"id": "linode/debian11",
       "label": "Debian 11", "deprecated": false, "size": 1300, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
+      "type": "manual", "is_public": true, "vendor": "Debian", "expiry": null, "eol":
+      "2018-01-02T03:04:05", "status": "available", "capabilities": []}, {"id": "linode/debian12",
+      "label": "Debian 12", "deprecated": false, "size": 1500, "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
       "type": "manual", "is_public": true, "vendor": "Debian", "expiry": null, "eol":
       "2018-01-02T03:04:05", "status": "available", "capabilities": []}, {"id": "linode/fedora36",
@@ -113,33 +112,37 @@ interactions:
       "openSUSE Leap 15.4", "deprecated": false, "size": 1550, "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
       "type": "manual", "is_public": true, "vendor": "openSUSE", "expiry": null, "eol":
-      "2018-01-02T03:04:05", "status": "available", "capabilities": []}, {"id": "linode/rocky8",
-      "label": "Rocky Linux 8", "deprecated": false, "size": 2300, "created": "2018-01-02T03:04:05",
-      "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
-      "type": "manual", "is_public": true, "vendor": "Rocky", "expiry": null, "eol":
-      "2018-01-02T03:04:05", "status": "available", "capabilities": []}, {"id": "linode/rocky9",
-      "label": "Rocky Linux 9", "deprecated": false, "size": 2300, "created": "2018-01-02T03:04:05",
-      "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
-      "type": "manual", "is_public": true, "vendor": "Rocky", "expiry": null, "eol":
-      "2018-01-02T03:04:05", "status": "available", "capabilities": []}, {"id": "linode/slackware14.2",
-      "label": "Slackware 14.2", "deprecated": false, "size": 6000, "created": "2018-01-02T03:04:05",
+      "2018-01-02T03:04:05", "status": "available", "capabilities": []}, {"id": "linode/opensuse15.5",
+      "label": "openSUSE Leap 15.5", "deprecated": false, "size": 1550, "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description": "",
+      "created_by": "linode", "type": "manual", "is_public": true, "vendor": "openSUSE",
+      "expiry": null, "eol": "2018-01-02T03:04:05", "status": "available", "capabilities":
+      []}, {"id": "linode/rocky8", "label": "Rocky Linux 8", "deprecated": false,
+      "size": 2300, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "is_public": true,
+      "vendor": "Rocky", "expiry": null, "eol": "2018-01-02T03:04:05", "status": "available",
+      "capabilities": []}, {"id": "linode/rocky9", "label": "Rocky Linux 9", "deprecated":
+      false, "size": 2300, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "is_public": true,
+      "vendor": "Rocky", "expiry": null, "eol": "2018-01-02T03:04:05", "status": "available",
+      "capabilities": []}, {"id": "linode/slackware14.2", "label": "Slackware 14.2",
+      "deprecated": false, "size": 6000, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "description": "", "created_by": "linode", "type": "manual",
+      "is_public": true, "vendor": "Slackware", "expiry": null, "eol": "1970-01-01T05:00:00",
+      "status": "available", "capabilities": []}, {"id": "linode/slackware15.0", "label":
+      "Slackware 15.0", "deprecated": false, "size": 11000, "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
       "type": "manual", "is_public": true, "vendor": "Slackware", "expiry": null,
-      "eol": "1970-01-01T05:00:00", "status": "available", "capabilities": []}, {"id":
-      "linode/slackware15.0", "label": "Slackware 15.0", "deprecated": false, "size":
-      11000, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description":
-      "", "created_by": "linode", "type": "manual", "is_public": true, "vendor": "Slackware",
-      "expiry": null, "eol": null, "status": "available", "capabilities": []}, {"id":
-      "linode/ubuntu16.04lts", "label": "Ubuntu 16.04 LTS", "deprecated": false, "size":
-      2700, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description":
-      "", "created_by": "linode", "type": "manual", "is_public": true, "vendor": "Ubuntu",
-      "expiry": null, "eol": "2018-01-02T03:04:05", "status": "available", "capabilities":
-      []}, {"id": "linode/ubuntu18.04", "label": "Ubuntu 18.04 LTS", "deprecated":
-      false, "size": 2700, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "description": "", "created_by": "linode", "type": "manual", "is_public": true,
-      "vendor": "Ubuntu", "expiry": null, "eol": "2018-01-02T03:04:05", "status":
-      "available", "capabilities": []}, {"id": "linode/ubuntu20.04", "label": "Ubuntu
-      20.04 LTS", "deprecated": false, "size": 2000, "created": "2018-01-02T03:04:05",
+      "eol": null, "status": "available", "capabilities": []}, {"id": "linode/ubuntu16.04lts",
+      "label": "Ubuntu 16.04 LTS", "deprecated": false, "size": 2700, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
+      "type": "manual", "is_public": true, "vendor": "Ubuntu", "expiry": null, "eol":
+      "2018-01-02T03:04:05", "status": "available", "capabilities": []}, {"id": "linode/ubuntu18.04",
+      "label": "Ubuntu 18.04 LTS", "deprecated": false, "size": 2700, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
+      "type": "manual", "is_public": true, "vendor": "Ubuntu", "expiry": null, "eol":
+      "2018-01-02T03:04:05", "status": "available", "capabilities": []}, {"id": "linode/ubuntu20.04",
+      "label": "Ubuntu 20.04 LTS", "deprecated": false, "size": 2000, "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
       "type": "manual", "is_public": true, "vendor": "Ubuntu", "expiry": null, "eol":
       "2018-01-02T03:04:05", "status": "available", "capabilities": []}, {"id": "linode/ubuntu22.04",
@@ -162,8 +165,8 @@ interactions:
       "label": "Slackware 14.1", "deprecated": true, "size": 1000, "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "description": null, "created_by": "linode",
       "type": "manual", "is_public": true, "vendor": "Slackware", "expiry": null,
-      "eol": null, "status": "available", "capabilities": []}], "results": 36, "page":
-      1}'
+      "eol": null, "status": "available", "capabilities": []}], "page": 1, "pages":
+      1, "results": 37}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
