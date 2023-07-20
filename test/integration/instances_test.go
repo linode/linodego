@@ -47,6 +47,10 @@ func TestInstances_List(t *testing.T) {
 	if linodes[0].HasUserData {
 		t.Errorf("expected instance.HasUserData to be false, got true")
 	}
+
+	if linodes[0].Specs.GPUs < 0 {
+		t.Errorf("failed to retrieve number of GPUs")
+	}
 }
 
 func TestInstance_Get_smoke(t *testing.T) {
