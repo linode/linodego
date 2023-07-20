@@ -64,6 +64,7 @@ type InstanceSpec struct {
 	Memory   int `json:"memory"`
 	VCPUs    int `json:"vcpus"`
 	Transfer int `json:"transfer"`
+	GPUs     int `json:"gpus"`
 }
 
 // InstanceAlert represents a metric alert
