@@ -275,7 +275,7 @@ func (client Client) WaitForLKEClusterConditions(
 // WaitForEventFinished waits for an entity action to reach the 'finished' state
 // before returning. It will timeout with an error after timeoutSeconds.
 // If the event indicates a failure both the failed event and the error will be returned.
-// nolint
+//nolint
 func (client Client) WaitForEventFinished(
 	ctx context.Context,
 	id any,
@@ -656,26 +656,6 @@ func (p *EventPoller) WaitForLatestUnknownEvent(ctx context.Context) (*Event, er
 		PageOptions: &PageOptions{Page: 1},
 	}
 
-	// Returns whether the given event's secondary entity
-	// matches the configured secondary ID.
-	// This logic has been broken out to improve readability.
-	eventMatchesSecondary := func(e Event) bool {
-		// Always return true if the user is not filtering
-		// on a secondary ID.
-		if p.SecondaryEntityID == nil {
-			return true
-		}
-
-		secondaryID := e.SecondaryEntity.ID
-
-		// Evil hack to correct IDs parsed as floats
-		if value, ok := secondaryID.(float64); ok {
-			secondaryID = int(value)
-		}
-
-		return secondaryID == p.SecondaryEntityID
-	}
-
 	for {
 		select {
 		case <-ticker.C:
@@ -685,7 +665,7 @@ func (p *EventPoller) WaitForLatestUnknownEvent(ctx context.Context) (*Event, er
 			}
 
 			for _, event := range events {
-				if !eventMatchesSecondary(event) {
+				if !eventMatchesSecondary(p.SecondaryEntityID, event) {
 					continue
 				}
 
@@ -791,4 +771,24 @@ func (client Client) WaitForResourceFree(
 			return fmt.Errorf("failed to wait for resource free: %s", ctx.Err())
 		}
 	}
+}
+
+// eventMatchesSecondary returns whether the given event's secondary entity
+// matches the configured secondary ID.
+// This logic has been broken out to improve readability.
+func eventMatchesSecondary(configuredID any, e Event) bool {
+	// Always return true if the user is not filtering
+	// on a secondary ID.
+	if configuredID == nil {
+		return true
+	}
+
+	secondaryID := e.SecondaryEntity.ID
+
+	// Evil hack to correct IDs parsed as floats
+	if value, ok := secondaryID.(float64); ok {
+		secondaryID = int(value)
+	}
+
+	return secondaryID == configuredID
 }
