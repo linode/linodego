@@ -2,9 +2,10 @@ package integration
 
 import (
 	"context"
-	"testing"
-
+	"fmt"
 	"github.com/linode/linodego"
+	"strings"
+	"testing"
 )
 
 func TestEventPoller_InstancePower(t *testing.T) {
@@ -133,5 +134,90 @@ func TestWaitForResourceFree(t *testing.T) {
 
 	if instance.Status == linodego.InstanceProvisioning {
 		t.Fatalf("expected instance to not be provisioning, got %s", instance.Status)
+	}
+}
+
+func TestEventPoller_Secondary(t *testing.T) {
+	client, fixtureTeardown := createTestClient(t, "fixtures/TestEventPoller_Secondary")
+	t.Cleanup(fixtureTeardown)
+
+	createPoller, err := client.NewEventPollerWithoutEntity(linodego.EntityLinode, linodego.ActionLinodeCreate)
+	if err != nil {
+		t.Fatalf("failed to initialize event poller: %s", err)
+	}
+
+	booted := false
+
+	instance, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
+		Region: getRegionsWithCaps(t, client, []string{"Linodes"})[0],
+		Type:   "g6-nanode-1",
+		Label:  "go-ins-poll-test",
+		Booted: &booted,
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	defer func() {
+		if err := client.DeleteInstance(context.Background(), instance.ID); err != nil {
+			t.Error(err)
+		}
+	}()
+
+	createPoller.EntityID = instance.ID
+
+	if _, err := createPoller.WaitForFinished(context.Background(), 120); err != nil {
+		t.Fatal(err)
+	}
+
+	// Create two instance disks
+	disks := make([]*linodego.InstanceDisk, 2)
+
+	for i := 0; i < 2; i++ {
+		disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
+			Label: fmt.Sprintf("disk-%d", i),
+			Size:  512,
+		})
+		if err != nil {
+			t.Fatalf("failed to create instance disk: %s", err)
+		}
+
+		disks[i] = disk
+	}
+
+	// Poll for the first disk to be deleted
+	diskPoller, err := client.NewEventPollerWithSecondary(
+		context.Background(),
+		instance.ID,
+		linodego.EntityLinode,
+		disks[0].ID,
+		linodego.ActionDiskDelete)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Delete the second disk
+	if err := client.DeleteInstanceDisk(context.Background(), instance.ID, disks[1].ID); err != nil {
+		t.Fatal(err)
+	}
+
+	// Attempt to wait for the event with a small timeout; expect error
+	_, err = diskPoller.WaitForFinished(context.Background(), 5)
+	if err == nil {
+		t.Fatal("expected nil, got error")
+	}
+
+	if err != nil && !strings.Contains(err.Error(), "failed to wait for event:") {
+		t.Fatalf("expected no event to be resolved; got %s", err)
+	}
+
+	// Delete the first disk
+	if err := client.DeleteInstanceDisk(context.Background(), instance.ID, disks[0].ID); err != nil {
+		t.Fatal(err)
+	}
+
+	// Attempt to wait for the first disk to be deleted; expect success
+	if _, err := diskPoller.WaitForFinished(context.Background(), 60); err != nil {
+		t.Fatal(err)
 	}
 }

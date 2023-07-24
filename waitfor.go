@@ -13,7 +13,12 @@ import (
 type EventPoller struct {
 	EntityID   any
 	EntityType EntityType
-	Action     EventAction
+
+	// Type is excluded here because it is implicitly determined
+	// by the event action.
+	SecondaryEntityID any
+
+	Action EventAction
 
 	client         Client
 	previousEvents map[int]bool
@@ -270,7 +275,7 @@ func (client Client) WaitForLKEClusterConditions(
 // WaitForEventFinished waits for an entity action to reach the 'finished' state
 // before returning. It will timeout with an error after timeoutSeconds.
 // If the event indicates a failure both the failed event and the error will be returned.
-//nolint
+// nolint
 func (client Client) WaitForEventFinished(
 	ctx context.Context,
 	id any,
@@ -560,6 +565,21 @@ func (client Client) NewEventPoller(
 	return &result, nil
 }
 
+// NewEventPollerWithSecondary initializes a new Linode event poller with for events with a
+// specific secondary entity.
+func (client Client) NewEventPollerWithSecondary(
+	ctx context.Context, id any, primaryEntityType EntityType, secondaryID int, action EventAction,
+) (*EventPoller, error) {
+	poller, err := client.NewEventPoller(ctx, id, primaryEntityType, action)
+	if err != nil {
+		return nil, err
+	}
+
+	poller.SecondaryEntityID = secondaryID
+
+	return poller, nil
+}
+
 // NewEventPollerWithoutEntity initializes a new Linode event poller without a target entity ID.
 // This is useful for create events where the ID of the entity is not yet known.
 // For example:
@@ -636,6 +656,26 @@ func (p *EventPoller) WaitForLatestUnknownEvent(ctx context.Context) (*Event, er
 		PageOptions: &PageOptions{Page: 1},
 	}
 
+	// Returns whether the given event's secondary entity
+	// matches the configured secondary ID.
+	// This logic has been broken out to improve readability.
+	eventMatchesSecondary := func(e Event) bool {
+		// Always return true if the user is not filtering
+		// on a secondary ID.
+		if p.SecondaryEntityID == nil {
+			return true
+		}
+
+		secondaryID := e.SecondaryEntity.ID
+
+		// Evil hack to correct IDs parsed as floats
+		if value, ok := secondaryID.(float64); ok {
+			secondaryID = int(value)
+		}
+
+		return secondaryID == p.SecondaryEntityID
+	}
+
 	for {
 		select {
 		case <-ticker.C:
@@ -645,6 +685,10 @@ func (p *EventPoller) WaitForLatestUnknownEvent(ctx context.Context) (*Event, er
 			}
 
 			for _, event := range events {
+				if !eventMatchesSecondary(event) {
+					continue
+				}
+
 				if _, ok := p.previousEvents[event.ID]; !ok {
 					// Store this event so it is no longer picked up
 					// on subsequent jobs
@@ -691,7 +735,7 @@ func (p *EventPoller) WaitForFinished(
 				continue
 			}
 		case <-ctx.Done():
-			return nil, fmt.Errorf("failed to wait for event: %w", ctx.Err())
+			return nil, fmt.Errorf("failed to wait for event finished: %w", ctx.Err())
 		}
 	}
 }
