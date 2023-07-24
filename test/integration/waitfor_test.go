@@ -4,7 +4,6 @@ import (
 	"context"
 	"fmt"
 	"github.com/linode/linodego"
-	"strings"
 	"testing"
 )
 
@@ -139,7 +138,7 @@ func TestWaitForResourceFree(t *testing.T) {
 
 func TestEventPoller_Secondary(t *testing.T) {
 	client, fixtureTeardown := createTestClient(t, "fixtures/TestEventPoller_Secondary")
-	t.Cleanup(fixtureTeardown)
+	defer fixtureTeardown()
 
 	createPoller, err := client.NewEventPollerWithoutEntity(linodego.EntityLinode, linodego.ActionLinodeCreate)
 	if err != nil {
@@ -196,28 +195,28 @@ func TestEventPoller_Secondary(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	// Delete the second disk
-	if err := client.DeleteInstanceDisk(context.Background(), instance.ID, disks[1].ID); err != nil {
+	// Delete the disks
+	for _, d := range disks {
+		if err := client.DeleteInstanceDisk(context.Background(), instance.ID, d.ID); err != nil {
+			t.Fatal(err)
+		}
+	}
+
+	// Wait for the first disk to be deleted
+	disk, err := diskPoller.WaitForFinished(context.Background(), 60)
+	if err != nil {
 		t.Fatal(err)
 	}
 
-	// Attempt to wait for the event with a small timeout; expect error
-	_, err = diskPoller.WaitForFinished(context.Background(), 5)
-	if err == nil {
-		t.Fatal("expected nil, got error")
+	entityID := disk.SecondaryEntity.ID
+
+	// Sometimes the JSON unmarshaler will
+	// parse IDs as floats rather than ints.
+	if value, ok := entityID.(float64); ok {
+		entityID = int(value)
 	}
 
-	if err != nil && !strings.Contains(err.Error(), "failed to wait for event:") {
-		t.Fatalf("expected no event to be resolved; got %s", err)
-	}
-
-	// Delete the first disk
-	if err := client.DeleteInstanceDisk(context.Background(), instance.ID, disks[0].ID); err != nil {
-		t.Fatal(err)
-	}
-
-	// Attempt to wait for the first disk to be deleted; expect success
-	if _, err := diskPoller.WaitForFinished(context.Background(), 60); err != nil {
-		t.Fatal(err)
+	if entityID != disks[0].ID {
+		t.Fatalf("expected event and first disk id to match; got %v", disk.SecondaryEntity.ID)
 	}
 }
