@@ -392,6 +392,7 @@ func TestInstance_Rebuild(t *testing.T) {
 			UserData: base64.StdEncoding.EncodeToString([]byte("cool")),
 		},
 		RootPass: "R34lBAdP455LONGLONGLONGLONG",
+		//Type: "g6-standard-2",
 	}
 	instance, err = client.RebuildInstance(context.Background(), instance.ID, rebuildOpts)
 
