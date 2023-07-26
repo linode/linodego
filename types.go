@@ -21,6 +21,7 @@ type LinodeType struct {
 	Transfer   int             `json:"transfer"`
 	VCPUs      int             `json:"vcpus"`
 	GPUs       int             `json:"gpus"`
+	Successor  string          `json:"successor"`
 }
 
 // LinodePrice represents a linode type price object
