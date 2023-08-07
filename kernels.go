@@ -2,10 +2,10 @@ package linodego
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"net/url"
 	"time"
-	"encoding/json"
 
 	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
