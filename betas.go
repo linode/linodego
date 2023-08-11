@@ -89,8 +89,8 @@ func (c *Client) ListBetaPrograms(ctx context.Context, opts *ListOptions) ([]Bet
 func (c *Client) GetBetaProgram(ctx context.Context, betaID string) (*BetaProgram, error) {
 	req := c.R(ctx).SetResult(&BetaProgram{})
 	betaID = url.PathEscape(betaID)
-	e := fmt.Sprintf("betas/%s", betaID)
-	r, err := coupleAPIErrors(req.Get(e))
+	b := fmt.Sprintf("betas/%s", betaID)
+	r, err := coupleAPIErrors(req.Get(b))
 	if err != nil {
 		return nil, err
 	}

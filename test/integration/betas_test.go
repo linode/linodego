@@ -13,7 +13,7 @@ func TestBetaPrograms_List(t *testing.T) {
 
 	betas, err := client.ListBetaPrograms(context.Background(), &linodego.ListOptions{})
 	if err != nil {
-		t.Errorf("Error getting Events, expected struct, got error %v", err)
+		t.Errorf("Error getting Beta programs, expected struct, got error %v", err)
 	}
 
 	// TODO: assert data after actual data can be retrieved from API.
