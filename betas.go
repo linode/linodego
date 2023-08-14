@@ -19,10 +19,10 @@ type BetaProgram struct {
 	Description string `json:"description"`
 
 	// Start date of the beta program.
-	StartDT *time.Time `json"-"`
+	StartDT *time.Time `json:"-"`
 
 	// End date of the beta program.
-	EndDT *time.Time `json"-"`
+	EndDT *time.Time `json:"-"`
 
 	// Greenlight is a program that allows customers to gain access to
 	// certain beta programs and to collect direct feedback from those customers.
