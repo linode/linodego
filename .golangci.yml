@@ -36,6 +36,9 @@ linters:
     - nosnakecase
     ####################
 
+    # workaround to avoid linter failures of getting malformed json
+    - musttag
+
     - bodyclose
     - contextcheck
     - nilerr
