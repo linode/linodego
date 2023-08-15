@@ -26,6 +26,8 @@ type NodeBalancer struct {
 	IPv6 *string `json:"ipv6"`
 	// Throttle connections per second (0-20). Set to 0 (zero) to disable throttling.
 	ClientConnThrottle int `json:"client_conn_throttle"`
+	// Optional firewall association
+	FirewallID *int `json:"firewall_id"`
 	// Information about the amount of transfer this NodeBalancer has had so far this month.
 	Transfer NodeBalancerTransfer `json:"transfer"`
 
@@ -51,6 +53,7 @@ type NodeBalancerCreateOptions struct {
 	Label              *string                            `json:"label,omitempty"`
 	Region             string                             `json:"region,omitempty"`
 	ClientConnThrottle *int                               `json:"client_conn_throttle,omitempty"`
+	FirewallID         *int                               `json:"firewall_id,omitempty"`
 	Configs            []*NodeBalancerConfigCreateOptions `json:"configs,omitempty"`
 	Tags               []string                           `json:"tags"`
 }
