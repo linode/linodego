@@ -19,10 +19,10 @@ type BetaProgram struct {
 	Description string `json:"description"`
 
 	// Start date of the beta program.
-	StartDT *time.Time `json:"-"`
+	Started *time.Time `json:"-"`
 
 	// End date of the beta program.
-	EndDT *time.Time `json:"-"`
+	Ended *time.Time `json:"-"`
 
 	// Greenlight is a program that allows customers to gain access to
 	// certain beta programs and to collect direct feedback from those customers.
@@ -49,8 +49,8 @@ func (beta *BetaProgram) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
-		StartDT *parseabletime.ParseableTime `json:"start_dt"`
-		EndDT   *parseabletime.ParseableTime `json:"end_dt"`
+		Started *parseabletime.ParseableTime `json:"started"`
+		Ended   *parseabletime.ParseableTime `json:"ended"`
 	}{
 		Mask: (*Mask)(beta),
 	}
@@ -59,8 +59,8 @@ func (beta *BetaProgram) UnmarshalJSON(b []byte) error {
 		return err
 	}
 
-	beta.StartDT = (*time.Time)(p.StartDT)
-	beta.EndDT = (*time.Time)(p.EndDT)
+	beta.Started = (*time.Time)(p.Started)
+	beta.Ended = (*time.Time)(p.Ended)
 
 	return nil
 }
