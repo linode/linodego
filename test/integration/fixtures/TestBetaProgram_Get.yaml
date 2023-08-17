@@ -11,15 +11,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.dev.linode.com/v4beta/betas
+    url: https://api.dev.linode.com/v4beta/betas/active_closed
     method: GET
   response:
-    body: '{"data": [{"id": "active_closed", "label": "active closed beta", 
-    "description": "An active closed beta", "started": "2023-07-19T15:23:43", 
-    "ended": null, "greenlight_only": true, "more_info": "a link with even more info"}, 
-    {"id": "limited", "label": "limited beta", "description": "An active limited beta", 
-    "started": "2023-07-19T15:23:43", "ended": null, "greenlight_only": false, 
-    "more_info": "a link with even more info"}], "page": 1, "pages": 1, "results": 2}'
+    body: '{"id": "active_closed", "label": "active closed beta", "description": "An
+      active closed beta", "started": "2018-01-02T03:04:05", "ended": null, "greenlight_only":
+      true, "more_info": "a link with even more info"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -34,6 +31,8 @@ interactions:
       Cache-Control:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "211"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -43,7 +42,6 @@ interactions:
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
-      - Accept-Encoding
       - Authorization, X-Filter
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
