@@ -60,7 +60,7 @@ func TestVolumes_List_smoke(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error listing volumes, expected struct, got error %v", err)
 	}
-	found := true
+	found := false
 	for _, v := range volumes {
 		if v.ID == volume.ID {
 			found = true
