@@ -11,7 +11,7 @@ GOLANGCILINT      := golangci-lint
 GOLANGCILINT_IMG  := golangci/golangci-lint:latest
 GOLANGCILINT_ARGS := run
 
-LINODE_URL := https://api.linode.com/
+LINODE_URL ?= https://api.linode.com/
 
 PACKAGES := $(shell go list ./... | grep -v integration)
 
