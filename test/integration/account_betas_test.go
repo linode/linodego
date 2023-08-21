@@ -7,40 +7,40 @@ import (
 	"github.com/linode/linodego"
 )
 
-func TestCustomerBetaPrograms_List(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestCustomerBetaPrograms_List")
+func TestAccountBetaPrograms_List(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestAccountBetaPrograms_List")
 	defer teardown()
 
-	betas, err := client.ListCustomerBetaPrograms(context.Background(), &linodego.ListOptions{})
+	betas, err := client.ListAccountBetaPrograms(context.Background(), &linodego.ListOptions{})
 	if err != nil {
-		t.Errorf("Error getting Customer Beta programs, expected struct, got error %v", err)
+		t.Errorf("Error getting Account Beta programs, expected struct, got error %v", err)
 	}
 
 	if len(betas) == 0 {
-		t.Errorf("Expected to see customer beta program returned.")
+		t.Errorf("Expected to see account beta program returned.")
 	} else {
 		assertDateSet(t, betas[0].Enrolled)
 	}
 }
 
-func TestCustomerBetaProgram_Get(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestCustomerBetaProgram_Get")
+func TestAccountBetaProgram_Get(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestAccountBetaProgram_Get")
 	defer teardown()
 
 	betaID := "cool-beta"
 
-	// Enroll the customer into a beta program.
-	createOpts := linodego.CustomerBetaProgramCreateOpts{ID: betaID}
+	// Enroll the account into a beta program.
+	createOpts := linodego.AccountBetaProgramCreateOpts{ID: betaID}
 
-	_, err := client.CreateCustomerBetaProgram(context.Background(), createOpts)
+	_, err := client.JoinBetaProgram(context.Background(), createOpts)
 	if err != nil {
-		t.Errorf("Error creating Customer Beta program, expected struct, got error %v", err)
+		t.Errorf("Error joining a Beta program, expected struct, got error %v", err)
 	}
 
-	beta, err := client.GetCustomerBetaProgram(context.Background(), betaID)
+	beta, err := client.GetAccountBetaProgram(context.Background(), betaID)
 
 	if err != nil {
-		t.Errorf("Error getting Customer Beta program, expected struct, got error %v", err)
+		t.Errorf("Error getting an Account Beta program, expected struct, got error %v", err)
 	}
 
 	if beta.ID != betaID {

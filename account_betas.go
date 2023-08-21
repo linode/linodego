@@ -11,37 +11,37 @@ import (
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
-// The details and enrollment information of a Beta program that a customer is enrolled in.
-type CustomerBetaProgram struct {
+// The details and enrollment information of a Beta program that an account is enrolled in.
+type AccountBetaProgram struct {
 	Label       string     `json:"label"`
 	ID          string     `json:"id"`
 	Description string     `json:"description"`
 	Started     *time.Time `json:"-"`
 	Ended       *time.Time `json:"-"`
 
-	// Date the customer was enrolled in the beta program.
+	// Date the account was enrolled in the beta program
 	Enrolled *time.Time `json:"-"`
 }
 
-// CustomerBetaProgramCreateOpts fields are those accepted by CreateCustomerBetaProgram
-type CustomerBetaProgramCreateOpts struct {
+// AccountBetaProgramCreateOpts fields are those accepted by JoinBetaProgram
+type AccountBetaProgramCreateOpts struct {
 	ID string `json:"id"`
 }
 
-// CustomerBetasPagedResponse represents a paginated Customer Beta Programs API response
-type CustomerBetasPagedResponse struct {
+// AccountBetasPagedResponse represents a paginated Account Beta Programs API response
+type AccountBetasPagedResponse struct {
 	*PageOptions
-	Data []CustomerBetaProgram `json:"data"`
+	Data []AccountBetaProgram `json:"data"`
 }
 
-// endpoint gets the endpoint URL for CustomerBetaProgram
-func (CustomerBetasPagedResponse) endpoint(_ ...any) string {
+// endpoint gets the endpoint URL for AccountBetaProgram
+func (AccountBetasPagedResponse) endpoint(_ ...any) string {
 	return "/account/betas"
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
-func (cBeta *CustomerBetaProgram) UnmarshalJSON(b []byte) error {
-	type Mask CustomerBetaProgram
+func (cBeta *AccountBetaProgram) UnmarshalJSON(b []byte) error {
+	type Mask AccountBetaProgram
 
 	p := struct {
 		*Mask
@@ -63,19 +63,19 @@ func (cBeta *CustomerBetaProgram) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-func (resp *CustomerBetasPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
-	res, err := coupleAPIErrors(r.SetResult(CustomerBetasPagedResponse{}).Get(e))
+func (resp *AccountBetasPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
+	res, err := coupleAPIErrors(r.SetResult(AccountBetasPagedResponse{}).Get(e))
 	if err != nil {
 		return 0, 0, err
 	}
-	castedRes := res.Result().(*CustomerBetasPagedResponse)
+	castedRes := res.Result().(*AccountBetasPagedResponse)
 	resp.Data = append(resp.Data, castedRes.Data...)
 	return castedRes.Pages, castedRes.Results, nil
 }
 
-// ListCustomerBetaPrograms lists all beta programs a customer is enrolled in.
-func (c *Client) ListCustomerBetaPrograms(ctx context.Context, opts *ListOptions) ([]CustomerBetaProgram, error) {
-	response := CustomerBetasPagedResponse{}
+// ListAccountBetaPrograms lists all beta programs an account is enrolled in.
+func (c *Client) ListAccountBetaPrograms(ctx context.Context, opts *ListOptions) ([]AccountBetaProgram, error) {
+	response := AccountBetasPagedResponse{}
 	err := c.listHelper(ctx, &response, opts)
 	if err != nil {
 		return nil, err
@@ -83,9 +83,9 @@ func (c *Client) ListCustomerBetaPrograms(ctx context.Context, opts *ListOptions
 	return response.Data, nil
 }
 
-// GetCustomerBetaProgram gets the details of a beta program a customer is enrolled in.
-func (c *Client) GetCustomerBetaProgram(ctx context.Context, betaID string) (*CustomerBetaProgram, error) {
-	req := c.R(ctx).SetResult(&CustomerBetaProgram{})
+// GetAccountBetaProgram gets the details of a beta program an account is enrolled in.
+func (c *Client) GetAccountBetaProgram(ctx context.Context, betaID string) (*AccountBetaProgram, error) {
+	req := c.R(ctx).SetResult(&AccountBetaProgram{})
 	betaID = url.PathEscape(betaID)
 	b := fmt.Sprintf("/account/betas/%s", betaID)
 	r, err := coupleAPIErrors(req.Get(b))
@@ -93,22 +93,22 @@ func (c *Client) GetCustomerBetaProgram(ctx context.Context, betaID string) (*Cu
 		return nil, err
 	}
 
-	return r.Result().(*CustomerBetaProgram), nil
+	return r.Result().(*AccountBetaProgram), nil
 }
 
-// CreateCustomerBetaProgram enrolls a customer in a beta program.
-func (c *Client) CreateCustomerBetaProgram(ctx context.Context, opts CustomerBetaProgramCreateOpts) (*CustomerBetaProgram, error) {
+// JoinBetaProgram enrolls an account into a beta program.
+func (c *Client) JoinBetaProgram(ctx context.Context, opts AccountBetaProgramCreateOpts) (*AccountBetaProgram, error) {
 	body, err := json.Marshal(opts)
 	if err != nil {
 		return nil, err
 	}
 
 	e := "account/betas"
-	req := c.R(ctx).SetResult(&CustomerBetaProgram{}).SetBody(string(body))
+	req := c.R(ctx).SetResult(&AccountBetaProgram{}).SetBody(string(body))
 	r, err := coupleAPIErrors(req.Post(e))
 	if err != nil {
 		return nil, err
 	}
 
-	return r.Result().(*CustomerBetaProgram), nil
+	return r.Result().(*AccountBetaProgram), nil
 }
