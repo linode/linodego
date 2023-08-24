@@ -11,10 +11,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.dev.linode.com/v4beta/networking/firewalls
+    url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 7424, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
+    body: '{"id": 7573, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"action": "ACCEPT", "label": "go-fwrule-test", "ports": "22", "protocol":
       "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy":
@@ -71,7 +71,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.dev.linode.com/v4beta/regions
+    url: https://api.linode.com/v4beta/regions
     method: GET
   response:
     body: '{"data": [{"id": "ap-west", "label": "Mumbai, India", "country": "in",
@@ -160,7 +160,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-def","region":"us-east","client_conn_throttle":20,"tags":null,"firewall_id":7424}'
+    body: '{"label":"go-test-def","region":"us-east","client_conn_throttle":20,"tags":null,"firewall_id":7573}'
     form: {}
     headers:
       Accept:
@@ -169,12 +169,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.dev.linode.com/v4beta/nodebalancers
+    url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 178044, "label": "go-test-def", "region": "us-east", "hostname":
-      "172-234-1-21.ip.linodeusercontent.com", "ipv4": "172.234.1.21", "ipv6": null,
-      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "client_conn_throttle":
+    body: '{"id": 178574, "label": "go-test-def", "region": "us-east", "hostname":
+      "143-42-177-123.ip.linodeusercontent.com", "ipv4": "143.42.177.123", "ipv6":
+      null, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "client_conn_throttle":
       20, "tags": [], "transfer": {"in": null, "out": null, "total": null}}'
     headers:
       Access-Control-Allow-Credentials:
@@ -226,7 +226,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.dev.linode.com/v4beta/networking/firewalls/7424
+    url: https://api.linode.com/v4beta/networking/firewalls/7573
     method: DELETE
   response:
     body: '{}'
