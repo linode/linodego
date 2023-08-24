@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"reflect"
 	"regexp"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -65,4 +66,16 @@ func assertSliceContains[T comparable](t *testing.T, slice []T, target T) {
 	}
 
 	t.Fatalf("value %v not found in slice", target)
+}
+
+func minInt(a, b int) int {
+    if a < b {
+        return a
+    }
+    return b
+}
+
+// return the current nanosecond in string type as a unique text.
+func getUniqueText() string {
+	return strconv.FormatInt(time.Now().UnixNano(), 10)
 }

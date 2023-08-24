@@ -123,6 +123,7 @@ type InstanceCreateOptions struct {
 	PrivateIP       bool                      `json:"private_ip,omitempty"`
 	Tags            []string                  `json:"tags,omitempty"`
 	Metadata        *InstanceMetadataOptions  `json:"metadata,omitempty"`
+	Firewall        int                       `json:"firewall"`
 
 	// Creation fields that need to be set explicitly false, "", or 0 use pointers
 	SwapSize *int  `json:"swap_size,omitempty"`

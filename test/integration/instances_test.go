@@ -3,7 +3,6 @@ package integration
 import (
 	"context"
 	"encoding/base64"
-	"reflect"
 	"strconv"
 	"testing"
 
@@ -188,7 +187,7 @@ func TestInstance_Disk_ListMultiple(t *testing.T) {
 		t.Errorf("Error creating disk from private image: %s", err)
 	}
 
-	disk, err = client.CreateInstanceDisk(context.Background(), instance2.ID, linodego.InstanceDiskCreateOptions{
+	_, err = client.CreateInstanceDisk(context.Background(), instance2.ID, linodego.InstanceDiskCreateOptions{
 		Label: "go-disk-test-" + randLabel(),
 		Size:  2000,
 	})
@@ -241,93 +240,6 @@ func TestInstance_Disk_ResetPassword(t *testing.T) {
 	err = client.PasswordResetInstanceDisk(context.Background(), instance.ID, disk.ID, "r34!_b4d_p455")
 	if err != nil {
 		t.Errorf("Error reseting password on instance disk: %s", err)
-	}
-}
-
-func TestInstance_Configs_List(t *testing.T) {
-	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Configs_List")
-	defer teardown()
-	if err != nil {
-		t.Error(err)
-	}
-
-	configs, err := client.ListInstanceConfigs(context.Background(), instance.ID, nil)
-	if err != nil {
-		t.Errorf("Error listing instance configs, expected struct, got error %v", err)
-	}
-	if len(configs) == 0 {
-		t.Errorf("Expected a list of instance configs, but got %v", configs)
-	}
-	if configs[0].ID != config.ID {
-		t.Errorf("Expected config id %d, got %d", configs[0].ID, config.ID)
-	}
-}
-
-func TestInstance_Config_Update(t *testing.T) {
-	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Config_Update")
-	defer teardown()
-	if err != nil {
-		t.Error(err)
-	}
-
-	updateConfigOpts := linodego.InstanceConfigUpdateOptions{
-		Label:      "go-conf-test-" + randLabel(),
-		Devices:    &linodego.InstanceConfigDeviceMap{},
-		RootDevice: "/dev/root",
-	}
-
-	_, err = client.UpdateInstanceConfig(context.Background(), instance.ID, config.ID, updateConfigOpts)
-	if err != nil {
-		t.Error(err)
-	}
-}
-
-func TestInstance_ConfigInterfaces_Update(t *testing.T) {
-	client, instance, config, teardown, err := setupInstanceWithoutDisks(t,
-		"fixtures/TestInstance_ConfigInterfaces_Update",
-		func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
-			// Ensure we're in a region that supports VLANs
-			opts.Region = getRegionsWithCaps(t, client, []string{"vlans"})[0]
-		})
-	defer teardown()
-	if err != nil {
-		t.Error(err)
-	}
-
-	updateConfigOpts := linodego.InstanceConfigUpdateOptions{
-		Interfaces: []linodego.InstanceConfigInterface{
-			{
-				Purpose: linodego.InterfacePurposePublic,
-			},
-			{
-				Purpose: linodego.InterfacePurposeVLAN,
-				Label:   instance.Label + "-r",
-			},
-		},
-	}
-
-	_, err = client.UpdateInstanceConfig(context.Background(), instance.ID, config.ID, updateConfigOpts)
-	if err != nil {
-		t.Error(err)
-	}
-
-	result, err := client.GetInstanceConfig(context.Background(), instance.ID, config.ID)
-	if err != nil {
-		t.Error(err)
-	}
-
-	if !reflect.DeepEqual(result.Interfaces, updateConfigOpts.Interfaces) {
-		t.Error("failed to update linode interfaces: configs do not match")
-	}
-
-	// Ensure that a nil value will not update interfaces
-	_, err = client.UpdateInstanceConfig(context.Background(), instance.ID, config.ID, linodego.InstanceConfigUpdateOptions{})
-	if err != nil {
-		t.Error(err)
-	}
-
-	if !reflect.DeepEqual(result.Interfaces, updateConfigOpts.Interfaces) {
-		t.Error("failed to update linode interfaces: configs do not match")
 	}
 }
 
