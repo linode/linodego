@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 7573, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
+    body: '{"id": 7592, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"action": "ACCEPT", "label": "go-fwrule-test", "ports": "22", "protocol":
       "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy":
@@ -160,7 +160,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-def","region":"us-east","client_conn_throttle":20,"tags":null,"firewall_id":7573}'
+    body: '{"label":"go-test-def","region":"us-east","client_conn_throttle":20,"tags":null,"firewall_id":7592}'
     form: {}
     headers:
       Accept:
@@ -172,9 +172,9 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 178574, "label": "go-test-def", "region": "us-east", "hostname":
-      "143-42-177-123.ip.linodeusercontent.com", "ipv4": "143.42.177.123", "ipv6":
-      null, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "client_conn_throttle":
+    body: '{"id": 178669, "label": "go-test-def", "region": "us-east", "hostname":
+      "207-192-68-73.ip.linodeusercontent.com", "ipv4": "207.192.68.73", "ipv6": null,
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "client_conn_throttle":
       20, "tags": [], "transfer": {"in": null, "out": null, "total": null}}'
     headers:
       Access-Control-Allow-Credentials:
@@ -226,7 +226,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/7573
+    url: https://api.linode.com/v4beta/networking/firewalls/7592
     method: DELETE
   response:
     body: '{}'
@@ -257,6 +257,61 @@ interactions:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
       - firewall:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1200"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/nodebalancers/178669
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - nodebalancers:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:

@@ -11,7 +11,6 @@ import (
 var (
 	clientConnThrottle = 20
 	label              = "go-test-def"
-	firewall_id        = 91088
 )
 
 func TestNodeBalancer_Create_create(t *testing.T) {
@@ -86,7 +85,7 @@ func setupNodeBalancer(t *testing.T, fixturesYaml string) (*linodego.Client, *li
 	t.Helper()
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
-	client, firewall, firewallTeardown, err := setupFirewall(t, []firewallModifier{}, "fixtures/TestNodeBalancer_Create")
+	firewall, firewallTeardown, err := createFirewall(t, client)
 	createOpts := linodego.NodeBalancerCreateOptions{
 		Label:              &label,
 		Region:             getRegionsWithCaps(t, client, []string{"NodeBalancers"})[6],
