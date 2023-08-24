@@ -371,7 +371,7 @@ func TestInstance_Rebuild(t *testing.T) {
 		t,
 		"fixtures/TestInstance_Rebuild",
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-			options.Region = "eu-west" // temporary override
+			options.Region = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
 		},
 	)
 	defer teardown()
