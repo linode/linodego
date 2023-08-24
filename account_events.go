@@ -147,7 +147,7 @@ const (
 	ActionNodebalancerNodeUpdate                  EventAction = "nodebalancer_node_update"
 	ActionOAuthClientCreate                       EventAction = "oauth_client_create"
 	ActionOAuthClientDelete                       EventAction = "oauth_client_delete"
-	ActionOAuthClientSecretReset                  EventAction = "oauth_client_secret_reset"
+	ActionOAuthClientSecretReset                  EventAction = "oauth_client_secret_reset" //#nosec G101
 	ActionOAuthClientUpdate                       EventAction = "oauth_client_update"
 	ActionPaymentMethodAdd                        EventAction = "payment_method_add"
 	ActionPaymentSubmitted                        EventAction = "payment_submitted"
