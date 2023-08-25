@@ -32,9 +32,6 @@ type NodeBalancer struct {
 	// An array of tags applied to this object. Tags are for organizational purposes only.
 	Tags []string `json:"tags"`
 
-	// The ID of an associated firewall with this NodeBalancer.
-	FirewallID int `json:"firewall_id"`
-
 	Created *time.Time `json:"-"`
 	Updated *time.Time `json:"-"`
 }
