@@ -203,7 +203,6 @@ func TestInstance_ConfigInterfaces_AppendDelete(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	t.Logf("%v, %v", len(updatedInterfaces), interfacesLength)
 	if len(updatedInterfaces) > interfacesLength {
 		t.Errorf(
 			"failed to delete interface %v of config %v of instance %v",
@@ -338,11 +337,6 @@ func TestInstance_ConfigInterfaces_Update(t *testing.T) {
 	for index, configInterface := range result.Interfaces {
 		interfaceOptsList[index] = configInterface.GetCreateOptions()
 	}
-
-	t.Logf("%v, %v, %v", interfaceOptsList[0], interfaceOptsList[1], interfaceOptsList[2])
-	t.Logf("%v, %v, %v", updateConfigOpts.Interfaces[0], updateConfigOpts.Interfaces[1], updateConfigOpts.Interfaces[2])
-
-	t.Logf("%v", reflect.DeepEqual(updateConfigOpts.Interfaces[2], interfaceOptsList[2]))
 
 	if !reflect.DeepEqual(
 		interfaceOptsList,
