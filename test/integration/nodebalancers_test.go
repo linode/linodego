@@ -88,7 +88,7 @@ func setupNodeBalancer(t *testing.T, fixturesYaml string) (*linodego.Client, *li
 	firewall, firewallTeardown, err := createFirewall(t, client)
 	createOpts := linodego.NodeBalancerCreateOptions{
 		Label:              &label,
-		Region:             getRegionsWithCaps(t, client, []string{"NodeBalancers"})[6],
+		Region:             getRegionsWithCaps(t, client, []string{"NodeBalancers"})[0],
 		ClientConnThrottle: &clientConnThrottle,
 		FirewallID:         firewall.ID,
 	}
