@@ -85,13 +85,13 @@ func setupNodeBalancer(t *testing.T, fixturesYaml string) (*linodego.Client, *li
 	t.Helper()
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
-	//firewall, firewallTeardown, err := createFirewall(t, client)
-	//defer firewallTeardown()
+	firewall, firewallTeardown, err := createFirewall(t, client)
+	defer firewallTeardown()
 	createOpts := linodego.NodeBalancerCreateOptions{
 		Label:              &label,
-		Region:             getRegionsWithCaps(t, client, []string{"NodeBalancers"})[0],
+		Region:             getRegionsWithCaps(t, client, []string{"NodeBalancers"})[6],
 		ClientConnThrottle: &clientConnThrottle,
-		//FirewallID:         firewall.ID,
+		FirewallID:         firewall.ID,
 	}
 
 	nodebalancer, err := client.CreateNodeBalancer(context.Background(), createOpts)
