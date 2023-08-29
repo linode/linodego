@@ -16,8 +16,8 @@ type VPC struct {
 	Description string      `json:"description"`
 	Region      string      `json:"region"`
 	Subnets     []VPCSubnet `json:"subnets"`
-	Created     *time.Time  `json:"created"`
-	Updated     *time.Time  `json:"updated"`
+	Created     *time.Time  `json:"-"`
+	Updated     *time.Time  `json:"-"`
 }
 
 type VPCCreateOptions struct {
