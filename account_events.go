@@ -181,14 +181,14 @@ const (
 	ActionVolumeUpdate                  EventAction = "volume_update"
 	ActionVolumeDetach                  EventAction = "volume_detach"
 	ActionVolumeResize                  EventAction = "volume_resize"
-  ActionVPCCreate                     EventAction = "vpc_create"
+	ActionVPCCreate                     EventAction = "vpc_create"
 	ActionVPCDelete                     EventAction = "vpc_delete"
 	ActionVPCUpdate                     EventAction = "vpc_update"
 	ActionVPCSubnetCreate               EventAction = "subnet_create"
 	ActionVPCSubnetDelete               EventAction = "subnet_delete"
 	ActionVPCSubnetUpdate               EventAction = "subnet_update"
 
-  // deprecated due to incorrect spelling,
+	// deprecated due to incorrect spelling,
 	// to be removed in the next major version release.
 	ActionVolumeDelte EventAction = "volume_delete"
 )
