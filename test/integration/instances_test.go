@@ -278,6 +278,32 @@ func TestInstance_Volumes_List(t *testing.T) {
 	}
 }
 
+func TestInstance_CreateUnderFirewall(t *testing.T) {
+
+	client, firewall, firewallTeardown, err := setupFirewall(
+		t,
+		[]firewallModifier{},
+		"fixtures/TestInstance_CreateUnderFirewall",
+	)
+	defer firewallTeardown()
+
+	if err != nil {
+		t.Error(err)
+	}
+	_, _, teardownInstance, err := createInstanceWithoutDisks(
+		t,
+		client,
+		func(_ *linodego.Client, options *linodego.InstanceCreateOptions) {
+			options.FirewallID = firewall.ID
+		},
+	)
+	defer teardownInstance()
+
+	if err != nil {
+		t.Error(err)
+	}
+}
+
 func TestInstance_Rebuild(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(
 		t,
@@ -462,9 +488,13 @@ func setupInstance(t *testing.T, fixturesYaml string, modifiers ...instanceModif
 	return client, instance, teardown, err
 }
 
-func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string, modifiers ...instanceModifier) (*linodego.Client, *linodego.Instance, *linodego.InstanceConfig, func(), error) {
+func createInstanceWithoutDisks(
+	t *testing.T,
+	client *linodego.Client,
+	modifiers ...instanceModifier,
+) (*linodego.Instance, *linodego.InstanceConfig, func(), error) {
 	t.Helper()
-	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+
 	falseBool := false
 	createOpts := linodego.InstanceCreateOptions{
 		Label:  "go-test-ins-wo-disk-" + randLabel(),
@@ -480,7 +510,7 @@ func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string, modifiers ...i
 	instance, err := client.CreateInstance(context.Background(), createOpts)
 	if err != nil {
 		t.Errorf("Error creating test Instance: %s", err)
-		return nil, nil, nil, fixtureTeardown, err
+		return nil, nil, func(){}, err
 	}
 	configOpts := linodego.InstanceConfigCreateOptions{
 		Label: "go-test-conf-" + randLabel(),
@@ -488,13 +518,27 @@ func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string, modifiers ...i
 	config, err := client.CreateInstanceConfig(context.Background(), instance.ID, configOpts)
 	if err != nil {
 		t.Errorf("Error creating config: %s", err)
-		return nil, nil, nil, fixtureTeardown, err
+		return nil, nil, func(){}, err
 	}
 
 	teardown := func() {
 		if terr := client.DeleteInstance(context.Background(), instance.ID); terr != nil {
 			t.Errorf("Error deleting test Instance: %s", terr)
 		}
+	}
+	return instance, config, teardown, err
+}
+
+func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string, modifiers ...instanceModifier) (*linodego.Client, *linodego.Instance, *linodego.InstanceConfig, func(), error) {
+	t.Helper()
+	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+	instance, config, instanceTeardown, err := createInstanceWithoutDisks(t, client)
+
+	teardown := func() {
+		if terr := client.DeleteInstance(context.Background(), instance.ID); terr != nil {
+			t.Errorf("Error deleting test Instance: %s", terr)
+		}
+		instanceTeardown()
 		fixtureTeardown()
 	}
 	return client, instance, config, teardown, err
