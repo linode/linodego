@@ -71,7 +71,41 @@ func vpcSubnetUpdateOptionsCheck(
 	}
 }
 
-func setupVPCSubnet(
+func createVPCWithSubnet(t *testing.T, client *linodego.Client) (
+	*linodego.VPC,
+	*linodego.VPCSubnet,
+	func(),
+	error,
+) {
+	t.Helper()
+	vpc, vpcTeardown, err := createVPC(t, client)
+	if err != nil {
+		if vpcTeardown != nil {
+			vpcTeardown()
+		}
+		t.Fatal(err)
+	}
+	createOpts := linodego.VPCSubnetCreateOptions{
+		Label: "linodego-vpc-test-" + getUniqueText(),
+		IPv4:  TestSubnet,
+	}
+	vpcSubnet, err := client.CreateVPCSubnet(context.Background(), createOpts, vpc.ID)
+	if err != nil {
+		vpcTeardown()
+		t.Fatal(formatVPCSubnetError(err, "creating", &vpc.ID, nil))
+	}
+
+	teardown := func() {
+		err = client.DeleteVPCSubnet(context.Background(), vpc.ID, vpcSubnet.ID)
+		if err != nil {
+			t.Error(formatVPCSubnetError(err, "deleting", &vpc.ID, &vpcSubnet.ID))
+		}
+		vpcTeardown()
+	}
+	return vpc, vpcSubnet, teardown, err
+}
+
+func setupVPCWithSubnet(
 	t *testing.T,
 	fixturesYaml string,
 ) (
@@ -82,35 +116,25 @@ func setupVPCSubnet(
 	error,
 ) {
 	t.Helper()
-	client, vpc, fixtureTeardown, err := setupVPC(t, fixturesYaml)
+	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+
+	vpc, vpcSubnet, vpcSubnetTeardown, err := createVPCWithSubnet(t, client)
 	if err != nil {
-		if fixtureTeardown != nil {
-			fixtureTeardown()
+		if vpcSubnetTeardown != nil {
+			vpcSubnetTeardown()
 		}
+		fixtureTeardown()
 		t.Fatal(err)
 	}
-	createOpts := linodego.VPCSubnetCreateOptions{
-		Label: "linodego-vpc-test-" + getUniqueText(),
-		IPv4:  TestSubnet,
-	}
-	vpcSubnet, err := client.CreateVPCSubnet(context.Background(), createOpts, vpc.ID)
-	if err != nil {
-		fixtureTeardown()
-		t.Fatal(formatVPCSubnetError(err, "creating", &vpc.ID, nil))
-	}
-
 	teardown := func() {
-		err = client.DeleteVPCSubnet(context.Background(), vpc.ID, vpcSubnet.ID)
-		if err != nil {
-			t.Error(formatVPCSubnetError(err, "deleting", &vpc.ID, &vpcSubnet.ID))
-		}
+		vpcSubnetTeardown()
 		fixtureTeardown()
 	}
 	return client, vpc, vpcSubnet, teardown, err
 }
 
 func TestVPC_Subnet_Create(t *testing.T) {
-	_, _, vpcSubnet, teardown, err := setupVPCSubnet(t, "fixtures/TestVPC_Subnet_Create")
+	_, _, vpcSubnet, teardown, err := setupVPCWithSubnet(t, "fixtures/TestVPC_Subnet_Create")
 	defer teardown()
 	if err != nil {
 		t.Error(formatVPCSubnetError(err, "setting up", nil, nil))
@@ -121,7 +145,7 @@ func TestVPC_Subnet_Create(t *testing.T) {
 }
 
 func TestVPC_Subnet_Update(t *testing.T) {
-	client, vpc, vpcSubnet, teardown, err := setupVPCSubnet(t, "fixtures/TestVPC_Subnet_Update")
+	client, vpc, vpcSubnet, teardown, err := setupVPCWithSubnet(t, "fixtures/TestVPC_Subnet_Update")
 	defer teardown()
 	if err != nil {
 		t.Error(formatVPCSubnetError(err, "setting up", nil, nil))
@@ -145,7 +169,7 @@ func TestVPC_Subnet_Update(t *testing.T) {
 }
 
 func TestVPC_Subnet_List(t *testing.T) {
-	client, vpc, vpcSubnet, teardown, err := setupVPCSubnet(t, "fixtures/TestVPC_Subnet_List")
+	client, vpc, vpcSubnet, teardown, err := setupVPCWithSubnet(t, "fixtures/TestVPC_Subnet_List")
 	defer teardown()
 	if err != nil {
 		t.Error(formatVPCSubnetError(err, "setting up", nil, nil))

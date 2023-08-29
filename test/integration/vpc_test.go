@@ -27,14 +27,8 @@ func formatVPCError(err error, action string, vpcID *int) error {
 	)
 }
 
-func setupVPC(t *testing.T, fixturesYaml string) (
-	*linodego.Client,
-	*linodego.VPC,
-	func(),
-	error,
-) {
+func createVPC(t *testing.T, client *linodego.Client) (*linodego.VPC, func(), error) {
 	t.Helper()
-	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := linodego.VPCCreateOptions{
 		Label:  "go-test-vpc-" + getUniqueText(),
 		Region: getRegionsWithCaps(t, client, []string{"VPCs"})[0],
@@ -48,6 +42,23 @@ func setupVPC(t *testing.T, fixturesYaml string) (
 		if err := client.DeleteVPC(context.Background(), vpc.ID); err != nil {
 			t.Error(formatVPCError(err, "deleting", &vpc.ID))
 		}
+	}
+	return vpc, teardown, err
+}
+
+func setupVPC(t *testing.T, fixturesYaml string) (
+	*linodego.Client,
+	*linodego.VPC,
+	func(),
+	error,
+) {
+	t.Helper()
+	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+
+	vpc, vpcTeardown, err := createVPC(t, client)
+
+	teardown := func() {
+		vpcTeardown()
 		fixtureTeardown()
 	}
 	return client, vpc, teardown, err

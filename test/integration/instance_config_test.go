@@ -8,7 +8,7 @@ import (
 	. "github.com/linode/linodego"
 )
 
-func setupVPCSubnetWithInstance(
+func setupVPCWithSubnetWithInstance(
 	t *testing.T,
 	fixturesYaml string,
 	modifiers ...instanceModifier,
@@ -34,45 +34,16 @@ func setupVPCSubnetWithInstance(
 		t.Fatal(err)
 	}
 
-	vpcCreateOpts := VPCCreateOptions{
-		Label:  "go-test-vpc-" + getUniqueText(),
-		Region: getRegionsWithCaps(t, client, []string{"VPCs"})[0],
-	}
-	vpc, err := client.CreateVPC(context.Background(), vpcCreateOpts)
+	vpc, vpcSubnet, vpcWithSubnetTeardown, err := createVPCWithSubnet(t, client)
 	if err != nil {
+		t.Error(err)
 		instanceTeardown()
-		t.Fatal(formatVPCError(err, "creating", nil))
-	}
-
-	vpcTeardown := func() {
-		err = client.DeleteVPC(context.Background(), vpc.ID)
-		if err != nil {
-			t.Error(formatVPCError(err, "deleting", &vpc.ID))
-		}
-	}
-
-	subnetCreateOpts := VPCSubnetCreateOptions{
-		Label: "linodego-vpc-test-" + getUniqueText(),
-		IPv4:  TestSubnet,
-	}
-	vpcSubnet, err := client.CreateVPCSubnet(
-		context.Background(),
-		subnetCreateOpts,
-		vpc.ID,
-	)
-	if err != nil {
-		t.Error(formatVPCSubnetError(err, "creating", &vpc.ID, nil))
-		instanceTeardown()
-		vpcTeardown()
+		vpcWithSubnetTeardown()
 	}
 
 	teardownAll := func() {
 		instanceTeardown()
-		err = client.DeleteVPCSubnet(context.Background(), vpc.ID, vpcSubnet.ID)
-		if err != nil {
-			t.Error(formatVPCSubnetError(err, "deleting", &vpc.ID, &vpcSubnet.ID))
-		}
-		vpcTeardown()
+		vpcWithSubnetTeardown()
 	}
 	return client, vpc, vpcSubnet, instance, instanceConfig, teardownAll, err
 }
@@ -87,15 +58,13 @@ func setupInstanceWith3Interfaces(t *testing.T, fixturesYaml string) (
 	error,
 ) {
 	t.Helper()
-	client, vpc, vpcSubnet, instance, config, teardown, err := setupVPCSubnetWithInstance(
+	client, vpc, vpcSubnet, instance, config, teardown, err := setupVPCWithSubnetWithInstance(
 		t,
 		fixturesYaml,
 		func(client *Client, opts *InstanceCreateOptions) {
-			// Ensure we're in a region that supports VLANs
 			opts.Region = getRegionsWithCaps(t, client, []string{"vlans", "VPCs"})[0]
 		},
 	)
-	//defer teardown()
 	if err != nil {
 		if teardown != nil {
 			teardown()
@@ -136,7 +105,7 @@ func setupInstanceWith3Interfaces(t *testing.T, fixturesYaml string) (
 }
 
 func TestInstance_ConfigInterfaces_AppendDelete(t *testing.T) {
-	client, _, subnet, instance, config, teardown, err := setupVPCSubnetWithInstance(
+	client, _, subnet, instance, config, teardown, err := setupVPCWithSubnetWithInstance(
 		t,
 		"fixtures/TestInstance_ConfigInterfaces_AppendDelete",
 		func(client *Client, opts *InstanceCreateOptions) {
@@ -164,9 +133,9 @@ func TestInstance_ConfigInterfaces_AppendDelete(t *testing.T) {
 		t.Error(err)
 	}
 
-	if (intfc.ID == 0 ||
+	if intfc.ID == 0 ||
 		appednOpts.Purpose != intfc.Purpose ||
-		*appednOpts.SubnetID != *intfc.SubnetID) {
+		*appednOpts.SubnetID != *intfc.SubnetID {
 		t.Errorf(
 			"failed to append an interface to instance %v config %v",
 			instance.ID,
@@ -294,7 +263,7 @@ func TestInstance_ConfigInterfaces_List(t *testing.T) {
 
 // testing config interfaces update via config API
 func TestInstance_ConfigInterfaces_Update(t *testing.T) {
-	client, _, vpcSubnet, instance, config, teardown, err := setupVPCSubnetWithInstance(
+	client, _, vpcSubnet, instance, config, teardown, err := setupVPCWithSubnetWithInstance(
 		t,
 		"fixtures/TestInstance_ConfigInterfaces_Update",
 		func(client *Client, opts *InstanceCreateOptions) {
@@ -365,7 +334,7 @@ func TestInstance_ConfigInterfaces_Update(t *testing.T) {
 
 // testing config interface update via interfaces API
 func TestInstance_ConfigInterface_Update(t *testing.T) {
-	client, _, vpcSubnet, instance, config, teardown, err := setupVPCSubnetWithInstance(
+	client, _, vpcSubnet, instance, config, teardown, err := setupVPCWithSubnetWithInstance(
 		t,
 		"fixtures/TestInstance_ConfigInterface_Update",
 		func(client *Client, opts *InstanceCreateOptions) {
