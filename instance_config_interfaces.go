@@ -20,8 +20,8 @@ type InstanceConfigInterface struct {
 }
 
 type VPCIPv4 struct {
-	VPC   string `json:"vpc"`
-	NAT11 string `json:"nat_1_1"`
+	VPC     string `json:"vpc"`
+	NAT1To1 string `json:"nat_1_1"`
 }
 
 type InstanceConfigInterfaceCreateOptions struct {
@@ -67,10 +67,10 @@ func (i InstanceConfigInterface) GetCreateOptions() InstanceConfigInterfaceCreat
 	}
 
 	if i.Purpose == InterfacePurposeVPC &&
-		i.IPv4.NAT11 != "" && i.IPv4.VPC != "" {
+		i.IPv4.NAT1To1 != "" && i.IPv4.VPC != "" {
 		opts.IPv4 = &VPCIPv4{
-			VPC:   i.IPv4.VPC,
-			NAT11: i.IPv4.NAT11,
+			VPC:     i.IPv4.VPC,
+			NAT1To1: i.IPv4.NAT1To1,
 		}
 	}
 
@@ -91,8 +91,8 @@ func (i InstanceConfigInterface) GetUpdateOptions() InstanceConfigInterfaceUpdat
 
 	if i.Purpose == InterfacePurposeVPC {
 		opts.IPv4 = &VPCIPv4{
-			VPC:   i.IPv4.VPC,
-			NAT11: i.IPv4.NAT11,
+			VPC:     i.IPv4.VPC,
+			NAT1To1: i.IPv4.NAT1To1,
 		}
 	}
 

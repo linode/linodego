@@ -379,8 +379,8 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 	}
 
 	updateOpts.IPv4 = &VPCIPv4{
-		VPC:   "192.168.0.10",
-		NAT11: "any",
+		VPC:     "192.168.0.10",
+		NAT1To1: "any",
 	}
 
 	updatedIntfc, err = client.UpdateInstanceConfigInterface(
