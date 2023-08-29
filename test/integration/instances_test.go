@@ -309,7 +309,7 @@ func TestInstance_Rebuild(t *testing.T) {
 		t,
 		"fixtures/TestInstance_Rebuild",
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-			options.Region = "eu-west" // temporary override
+			options.Region = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
 		},
 	)
 	defer teardown()
@@ -338,10 +338,9 @@ func TestInstance_Rebuild(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	// instance.HasUserData will fail until metadata is released
-	//if !instance.HasUserData {
-	//	t.Fatal("expected instance.HasUserData to be true, got false")
-	//}
+	if !instance.HasUserData {
+		t.Fatal("expected instance.HasUserData to be true, got false")
+	}
 }
 
 func TestInstance_Clone(t *testing.T) {
@@ -419,14 +418,14 @@ func TestInstance_Clone(t *testing.T) {
 	if len(clonedInstanceIPs.IPv4.Private) == 0 {
 		t.Fatal("No private IPv4 assigned to the cloned instance.")
 	}
-	// instance.HasUserData will fail until metadata is released
-	//if !clonedInstance.HasUserData {
-	//	t.Fatal("expected instance.HasUserData to be true, got false")
-	//}
+
+	if !clonedInstance.HasUserData {
+		t.Fatal("expected instance.HasUserData to be true, got false")
+	}
 }
 
 func TestInstance_withMetadata(t *testing.T) {
-	_, _, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_withMetadata",
+	_, inst, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_withMetadata",
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
 			options.Metadata = &linodego.InstanceMetadataOptions{
 				UserData: base64.StdEncoding.EncodeToString([]byte("reallycoolmetadata")),
@@ -439,10 +438,9 @@ func TestInstance_withMetadata(t *testing.T) {
 
 	t.Cleanup(teardown)
 
-	// instance.HasUserData will fail until metadata is released
-	//if !inst.HasUserData {
-	//	t.Fatalf("expected instance.HasUserData to be true, got false")
-	//}
+	if !inst.HasUserData {
+		t.Fatalf("expected instance.HasUserData to be true, got false")
+	}
 }
 
 func createInstance(t *testing.T, client *linodego.Client, modifiers ...instanceModifier) (*linodego.Instance, error) {
