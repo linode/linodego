@@ -508,7 +508,7 @@ func createInstanceWithoutDisks(
 	instance, err := client.CreateInstance(context.Background(), createOpts)
 	if err != nil {
 		t.Errorf("Error creating test Instance: %s", err)
-		return nil, nil, func(){}, err
+		return nil, nil, func() {}, err
 	}
 	configOpts := linodego.InstanceConfigCreateOptions{
 		Label: "go-test-conf-" + randLabel(),
@@ -516,7 +516,7 @@ func createInstanceWithoutDisks(
 	config, err := client.CreateInstanceConfig(context.Background(), instance.ID, configOpts)
 	if err != nil {
 		t.Errorf("Error creating config: %s", err)
-		return nil, nil, func(){}, err
+		return nil, nil, func() {}, err
 	}
 
 	teardown := func() {
