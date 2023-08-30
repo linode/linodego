@@ -533,9 +533,6 @@ func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string, modifiers ...i
 	instance, config, instanceTeardown, err := createInstanceWithoutDisks(t, client)
 
 	teardown := func() {
-		if terr := client.DeleteInstance(context.Background(), instance.ID); terr != nil {
-			t.Errorf("Error deleting test Instance: %s", terr)
-		}
 		instanceTeardown()
 		fixtureTeardown()
 	}
