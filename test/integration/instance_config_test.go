@@ -37,8 +37,6 @@ func setupVPCWithSubnetWithInstance(
 	vpc, vpcSubnet, vpcWithSubnetTeardown, err := createVPCWithSubnet(t, client)
 	if err != nil {
 		t.Error(err)
-		instanceTeardown()
-		vpcWithSubnetTeardown()
 	}
 
 	teardownAll := func() {

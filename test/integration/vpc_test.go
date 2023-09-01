@@ -157,7 +157,7 @@ func TestVPC_List(t *testing.T) {
 			found = true
 		}
 	}
-	
+
 	if !found {
 		t.Errorf("vpc %v not found in list", vpc.ID)
 	}
