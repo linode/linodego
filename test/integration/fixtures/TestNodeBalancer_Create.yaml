@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 228188, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
+    body: '{"id": 228223, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"action": "ACCEPT", "label": "go-fwrule-test", "ports": "22", "protocol":
       "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy":
@@ -288,7 +288,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-def","region":"ap-west","client_conn_throttle":20,"tags":null,"firewall_id":228188}'
+    body: '{"label":"go-test-def","region":"ap-west","client_conn_throttle":20,"tags":null,"firewall_id":228223}'
     form: {}
     headers:
       Accept:
@@ -300,8 +300,8 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 441105, "label": "go-test-def", "region": "ap-west", "hostname":
-      "172-232-86-57.ip.linodeusercontent.com", "ipv4": "172.232.86.57", "ipv6": "1234::5678",
+    body: '{"id": 441134, "label": "go-test-def", "region": "ap-west", "hostname":
+      "172-232-86-41.ip.linodeusercontent.com", "ipv4": "172.232.86.41", "ipv6": "1234::5678",
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "client_conn_throttle":
       20, "tags": [], "transfer": {"in": null, "out": null, "total": null}}'
     headers:
@@ -355,7 +355,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/441105
+    url: https://api.linode.com/v4beta/nodebalancers/441134
     method: DELETE
   response:
     body: '{}'
@@ -410,7 +410,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/228188
+    url: https://api.linode.com/v4beta/networking/firewalls/228223
     method: DELETE
   response:
     body: '{}'

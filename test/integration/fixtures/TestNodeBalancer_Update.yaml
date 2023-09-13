@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 7593, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
+    body: '{"id": 228224, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"action": "ACCEPT", "label": "go-fwrule-test", "ports": "22", "protocol":
       "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy":
@@ -34,6 +34,8 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "526"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -43,7 +45,6 @@ interactions:
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
-      - Accept-Encoding
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
       - firewall:read_write
@@ -55,7 +56,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1200"
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -74,49 +75,177 @@ interactions:
     url: https://api.linode.com/v4beta/regions
     method: GET
   response:
-    body: '{"data": [{"id": "ap-west", "label": "Mumbai, India", "country": "in",
-      "capabilities": ["Linodes", "NodeBalancers", "Vlans", "VPCs"], "status": "ok",
-      "resolvers": {"ipv4": "172.105.34.5,172.105.35.5,172.105.36.5,172.105.37.5,172.105.38.5,172.105.39.5,172.105.40.5,172.105.41.5,172.105.42.5,172.105.43.5",
-      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"}},
-      {"id": "ca-central", "label": "Toronto, Ontario, CAN", "country": "ca", "capabilities":
-      ["Linodes", "NodeBalancers", "Vlans", "VPCs"], "status": "ok", "resolvers":
-      {"ipv4": "172.105.0.5,172.105.3.5,172.105.4.5,172.105.5.5,172.105.6.5,172.105.7.5,172.105.8.5,172.105.9.5,172.105.10.5,172.105.11.5",
-      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"}},
-      {"id": "ap-southeast", "label": "Sydney, NSW, Australia", "country": "au", "capabilities":
-      ["Linodes", "NodeBalancers", "Vlans", "VPCs"], "status": "ok", "resolvers":
-      {"ipv4": "172.105.166.5,172.105.169.5,172.105.168.5,172.105.172.5,172.105.162.5,172.105.170.5,172.105.167.5,172.105.171.5,172.105.181.5,172.105.161.5",
-      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"}},
-      {"id": "us-central", "label": "Dallas, TX, USA", "country": "us", "capabilities":
-      ["Linodes", "NodeBalancers"], "status": "ok", "resolvers": {"ipv4": "72.14.179.5,72.14.188.5,173.255.199.5,66.228.53.5,96.126.122.5,96.126.124.5,96.126.127.5,198.58.107.5,198.58.111.5,23.239.24.5",
-      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"}},
-      {"id": "us-west", "label": "Fremont, CA, USA", "country": "us", "capabilities":
-      ["Linodes", "NodeBalancers"], "status": "ok", "resolvers": {"ipv4": "173.230.145.5,173.230.147.5,173.230.155.5,173.255.212.5,173.255.219.5,173.255.241.5,173.255.243.5,173.255.244.5,74.207.241.5,74.207.242.5",
-      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"}},
-      {"id": "us-southeast", "label": "Atlanta, GA, USA", "country": "us", "capabilities":
-      ["Linodes", "NodeBalancers"], "status": "ok", "resolvers": {"ipv4": "74.207.231.5,173.230.128.5,173.230.129.5,173.230.136.5,173.230.140.5,66.228.59.5,66.228.62.5,50.116.35.5,50.116.41.5,23.239.18.5",
-      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"}},
-      {"id": "us-east", "label": "Newark, NJ, USA", "country": "us", "capabilities":
-      ["Linodes", "NodeBalancers", "Block Storage", "Object Storage", "GPU Linodes",
-      "Kubernetes", "Cloud Firewall", "Bare Metal", "Vlans", "VPCs", "Block Storage
-      Migrations", "Managed Databases", "Metadata"], "status": "ok", "resolvers":
-      {"ipv4": "66.228.42.5,96.126.106.5,50.116.53.5,50.116.58.5,50.116.61.5,50.116.62.5,66.175.211.5,97.107.133.4,207.192.69.4,207.192.69.5",
-      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"}},
-      {"id": "eu-west", "label": "London, England, UK", "country": "uk", "capabilities":
-      ["Linodes", "NodeBalancers", "Cloud Firewall", "Vlans", "VPCs", "Metadata"],
-      "status": "ok", "resolvers": {"ipv4": "178.79.182.5,176.58.107.5,176.58.116.5,176.58.121.5,151.236.220.5,212.71.252.5,212.71.253.5,109.74.192.20,109.74.193.20,109.74.194.20",
-      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"}},
+    body: '{"data": [{"id": "ap-west", "label": "Mumbai, IN", "country": "in", "capabilities":
+      ["Linodes", "NodeBalancers", "Block Storage", "GPU Linodes", "Kubernetes", "Cloud
+      Firewall", "Vlans", "Block Storage Migrations", "Managed Databases"], "status":
+      "ok", "resolvers": {"ipv4": "172.105.34.5, 172.105.35.5, 172.105.36.5, 172.105.37.5,
+      172.105.38.5, 172.105.39.5, 172.105.40.5, 172.105.41.5, 172.105.42.5, 172.105.43.5",
+      "ipv6": "1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678"}}, {"id": "ca-central", "label": "Toronto, CA",
+      "country": "ca", "capabilities": ["Linodes", "NodeBalancers", "Block Storage",
+      "Kubernetes", "Cloud Firewall", "Vlans", "Block Storage Migrations", "Managed
+      Databases"], "status": "ok", "resolvers": {"ipv4": "172.105.0.5, 172.105.3.5,
+      172.105.4.5, 172.105.5.5, 172.105.6.5, 172.105.7.5, 172.105.8.5, 172.105.9.5,
+      172.105.10.5, 172.105.11.5", "ipv6": "1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678"}}, {"id": "ap-southeast",
+      "label": "Sydney, AU", "country": "au", "capabilities": ["Linodes", "NodeBalancers",
+      "Block Storage", "Kubernetes", "Cloud Firewall", "Vlans", "Block Storage Migrations",
+      "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "172.105.166.5,
+      172.105.169.5, 172.105.168.5, 172.105.172.5, 172.105.162.5, 172.105.170.5, 172.105.167.5,
+      172.105.171.5, 172.105.181.5, 172.105.161.5", "ipv6": "1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678"}},
+      {"id": "us-iad", "label": "Washington, DC", "country": "us", "capabilities":
+      ["Linodes", "NodeBalancers", "Block Storage", "Object Storage", "Kubernetes",
+      "Cloud Firewall", "Vlans", "Managed Databases", "Metadata", "Premium Plans"],
+      "status": "ok", "resolvers": {"ipv4": "139.144.192.62,   139.144.192.60,   139.144.192.61,   139.144.192.53,   139.144.192.54,   139.144.192.67,   139.144.192.69,    139.144.192.66,   139.144.192.52,   139.144.192.68",
+      "ipv6": "1234::5678,   1234::5678,   1234::5678,   1234::5678,   1234::5678,   1234::5678,   1234::5678,   1234::5678,   1234::5678,   1234::5678"}},
+      {"id": "us-ord", "label": "Chicago, IL", "country": "us", "capabilities": ["Linodes",
+      "NodeBalancers", "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall",
+      "Vlans", "Managed Databases", "Premium Plans"], "status": "ok", "resolvers":
+      {"ipv4": "172.232.0.17,   172.232.0.16,   172.232.0.21,   172.232.0.13,   172.232.0.22,   172.232.0.9,   172.232.0.19,   172.232.0.20,   172.232.0.15,   172.232.0.18",
+      "ipv6": "1234::5678,   1234::5678,   1234::5678,   1234::5678,   1234::5678,   1234::5678,   1234::5678,   1234::5678,   1234::5678,   1234::5678"}},
+      {"id": "fr-par", "label": "Paris, FR", "country": "fr", "capabilities": ["Linodes",
+      "NodeBalancers", "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall",
+      "Vlans", "Managed Databases", "Metadata", "Premium Plans"], "status": "ok",
+      "resolvers": {"ipv4": "172.232.32.21,  172.232.32.23,  172.232.32.17,  172.232.32.18,  172.232.32.16,  172.232.32.22,  172.232.32.20,  172.232.32.14,  172.232.32.11,  172.232.32.12",
+      "ipv6": "1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678"}},
+      {"id": "us-sea", "label": "Seattle, WA", "country": "us", "capabilities": ["Linodes",
+      "NodeBalancers", "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall",
+      "Vlans", "Premium Plans"], "status": "ok", "resolvers": {"ipv4": "172.232.160.19,
+      172.232.160.21, 172.232.160.17, 172.232.160.15, 172.232.160.18, 172.232.160.8,
+      172.232.160.12, 172.232.160.11, 172.232.160.14, 172.232.160.16", "ipv6": "1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678"}},
+      {"id": "br-gru", "label": "Sao Paulo, BR", "country": "br", "capabilities":
+      ["Linodes", "NodeBalancers", "Block Storage", "Object Storage", "Kubernetes",
+      "Cloud Firewall", "Vlans", "Premium Plans"], "status": "ok", "resolvers": {"ipv4":
+      "172.233.0.4, 172.233.0.9, 172.233.0.7, 172.233.0.12, 172.233.0.5, 172.233.0.13,
+      172.233.0.10, 172.233.0.6, 172.233.0.8, 172.233.0.11", "ipv6": "1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678"}},
+      {"id": "nl-ams", "label": "Amsterdam, NL", "country": "nl", "capabilities":
+      ["Linodes", "NodeBalancers", "Block Storage", "Object Storage", "Kubernetes",
+      "Cloud Firewall", "Vlans", "Premium Plans"], "status": "ok", "resolvers": {"ipv4":
+      "172.233.33.36, 172.233.33.38, 172.233.33.35, 172.233.33.39, 172.233.33.34,
+      172.233.33.33, 172.233.33.31, 172.233.33.30, 172.233.33.37, 172.233.33.32",
+      "ipv6": "1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678"}}, {"id": "se-sto", "label": "Stockholm, SE",
+      "country": "se", "capabilities": ["Linodes", "NodeBalancers", "Block Storage",
+      "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans", "Premium Plans"],
+      "status": "ok", "resolvers": {"ipv4": "172.232.128.24, 172.232.128.26, 172.232.128.20,
+      172.232.128.22, 172.232.128.25, 172.232.128.19, 172.232.128.23, 172.232.128.18,
+      172.232.128.21, 172.232.128.27", "ipv6": "1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678"}}, {"id": "in-maa",
+      "label": "Chennai, IN", "country": "in", "capabilities": ["Linodes", "NodeBalancers",
+      "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans",
+      "Premium Plans"], "status": "ok", "resolvers": {"ipv4": "172.232.96.17,  172.232.96.26,  172.232.96.19,  172.232.96.20,  172.232.96.25,  172.232.96.21,  172.232.96.18,  172.232.96.22,  172.232.96.23,  172.232.96.24",
+      "ipv6": "1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678"}},
+      {"id": "jp-osa", "label": "Osaka, JP", "country": "jp", "capabilities": ["Linodes",
+      "NodeBalancers", "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall",
+      "Vlans", "Premium Plans"], "status": "ok", "resolvers": {"ipv4": "172.233.64.44,
+      172.233.64.43, 172.233.64.37, 172.233.64.40, 172.233.64.46, 172.233.64.41, 172.233.64.39,
+      172.233.64.42, 172.233.64.45, 172.233.64.38", "ipv6": "1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678"}},
+      {"id": "it-mil", "label": "Milan, IT", "country": "it", "capabilities": ["Linodes",
+      "NodeBalancers", "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall",
+      "Vlans", "Premium Plans"], "status": "ok", "resolvers": {"ipv4": "172.232.192.19,
+      172.232.192.18, 172.232.192.16, 172.232.192.20, 172.232.192.24, 172.232.192.21,
+      172.232.192.22, 172.232.192.17, 172.232.192.15, 172.232.192.23", "ipv6": "1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678"}},
+      {"id": "us-mia", "label": "Miami, FL", "country": "us", "capabilities": ["Linodes",
+      "NodeBalancers", "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall",
+      "Vlans", "Premium Plans"], "status": "ok", "resolvers": {"ipv4": "172.233.160.34,
+      172.233.160.27, 172.233.160.30, 172.233.160.29, 172.233.160.32, 172.233.160.28,
+      172.233.160.33, 172.233.160.26, 172.233.160.25, 172.233.160.31", "ipv6": "1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678"}},
+      {"id": "id-cgk", "label": "Jakarta, ID", "country": "id", "capabilities": ["Linodes",
+      "NodeBalancers", "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall",
+      "Vlans", "Premium Plans"], "status": "ok", "resolvers": {"ipv4": "172.232.224.23,
+      172.232.224.32, 172.232.224.26, 172.232.224.27, 172.232.224.21, 172.232.224.24,
+      172.232.224.22, 172.232.224.20, 172.232.224.31, 172.232.224.28", "ipv6": "1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678"}},
+      {"id": "us-lax", "label": "Los Angeles, CA", "country": "us", "capabilities":
+      ["Linodes", "NodeBalancers", "Block Storage", "Object Storage", "Kubernetes",
+      "Cloud Firewall", "Vlans", "Premium Plans"], "status": "ok", "resolvers": {"ipv4":
+      "172.233.128.45, 172.233.128.38, 172.233.128.53, 172.233.128.37, 172.233.128.34,
+      172.233.128.36, 172.233.128.33, 172.233.128.39, 172.233.128.43, 172.233.128.44",
+      "ipv6": "1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678"}}, {"id": "us-central", "label": "Dallas, TX",
+      "country": "us", "capabilities": ["Linodes", "NodeBalancers", "Block Storage",
+      "Kubernetes", "Cloud Firewall", "Block Storage Migrations", "Managed Databases"],
+      "status": "ok", "resolvers": {"ipv4": "72.14.179.5, 72.14.188.5, 173.255.199.5,
+      66.228.53.5, 96.126.122.5, 96.126.124.5, 96.126.127.5, 198.58.107.5, 198.58.111.5,
+      23.239.24.5", "ipv6": "1234::5678, 1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678"}},
+      {"id": "us-west", "label": "Fremont, CA", "country": "us", "capabilities": ["Linodes",
+      "NodeBalancers", "Block Storage", "Kubernetes", "Cloud Firewall", "Block Storage
+      Migrations", "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "173.230.145.5,
+      173.230.147.5, 173.230.155.5, 173.255.212.5, 173.255.219.5, 173.255.241.5, 173.255.243.5,
+      173.255.244.5, 74.207.241.5, 74.207.242.5", "ipv6": "1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678"}}, {"id": "us-southeast", "label": "Atlanta, GA",
+      "country": "us", "capabilities": ["Linodes", "NodeBalancers", "Block Storage",
+      "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall", "Vlans", "Block
+      Storage Migrations", "Managed Databases"], "status": "ok", "resolvers": {"ipv4":
+      "74.207.231.5, 173.230.128.5, 173.230.129.5, 173.230.136.5, 173.230.140.5, 66.228.59.5,
+      66.228.62.5, 50.116.35.5, 50.116.41.5, 23.239.18.5", "ipv6": "1234::5678,
+      1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678"}}, {"id": "us-east", "label": "Newark,
+      NJ", "country": "us", "capabilities": ["Linodes", "NodeBalancers", "Block Storage",
+      "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall", "Bare Metal",
+      "Vlans", "Block Storage Migrations", "Managed Databases"], "status": "ok", "resolvers":
+      {"ipv4": "66.228.42.5, 96.126.106.5, 50.116.53.5, 50.116.58.5, 50.116.61.5,
+      50.116.62.5, 66.175.211.5, 97.107.133.4, 207.192.69.4, 207.192.69.5", "ipv6":
+      "1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678, 1234::5678"}}, {"id": "eu-west",
+      "label": "London, UK", "country": "gb", "capabilities": ["Linodes", "NodeBalancers",
+      "Block Storage", "Kubernetes", "Cloud Firewall", "Vlans", "Block Storage Migrations",
+      "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "178.79.182.5,  176.58.107.5,  176.58.116.5,  176.58.121.5,  151.236.220.5,  212.71.252.5,  212.71.253.5,  109.74.192.20,  109.74.193.20,  109.74.194.20",
+      "ipv6": "1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678"}},
       {"id": "ap-south", "label": "Singapore, SG", "country": "sg", "capabilities":
-      ["Linodes", "NodeBalancers", "Object Storage"], "status": "ok", "resolvers":
-      {"ipv4": "139.162.11.5,139.162.13.5,139.162.14.5,139.162.15.5,139.162.16.5,139.162.21.5,139.162.27.5,103.3.60.18,103.3.60.19,103.3.60.20",
-      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"}},
-      {"id": "eu-central", "label": "Frankfurt, DE", "country": "de", "capabilities":
-      ["Linodes", "NodeBalancers", "Object Storage"], "status": "ok", "resolvers":
-      {"ipv4": "139.162.130.5,139.162.131.5,139.162.132.5,139.162.133.5,139.162.134.5,139.162.135.5,139.162.136.5,139.162.137.5,139.162.138.5,139.162.139.5",
-      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"}},
-      {"id": "ap-northeast", "label": "Tokyo 2, JP", "country": "jp", "capabilities":
-      ["Linodes", "NodeBalancers"], "status": "ok", "resolvers": {"ipv4": "139.162.66.5,139.162.67.5,139.162.68.5,139.162.69.5,139.162.70.5,139.162.71.5,139.162.72.5,139.162.73.5,139.162.74.5,139.162.75.5",
-      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"}}],
-      "page": 1, "pages": 1, "results": 11}'
+      ["Linodes", "NodeBalancers", "Block Storage", "Object Storage", "GPU Linodes",
+      "Kubernetes", "Cloud Firewall", "Vlans", "Block Storage Migrations", "Managed
+      Databases"], "status": "ok", "resolvers": {"ipv4": "139.162.11.5, 139.162.13.5,
+      139.162.14.5, 139.162.15.5, 139.162.16.5, 139.162.21.5, 139.162.27.5, 103.3.60.18,
+      103.3.60.19, 103.3.60.20", "ipv6": "1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678,
+      1234::5678"}}, {"id": "eu-central", "label": "Frankfurt, DE", "country": "de",
+      "capabilities": ["Linodes", "NodeBalancers", "Block Storage", "Object Storage",
+      "GPU Linodes", "Kubernetes", "Cloud Firewall", "Vlans", "Block Storage Migrations",
+      "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "139.162.130.5,
+      139.162.131.5, 139.162.132.5, 139.162.133.5, 139.162.134.5, 139.162.135.5, 139.162.136.5,
+      139.162.137.5, 139.162.138.5, 139.162.139.5", "ipv6": "1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678"}}, {"id": "ap-northeast", "label": "Tokyo, JP",
+      "country": "jp", "capabilities": ["Linodes", "NodeBalancers", "Block Storage",
+      "Kubernetes", "Cloud Firewall", "Block Storage Migrations", "Managed Databases"],
+      "status": "ok", "resolvers": {"ipv4": "139.162.66.5, 139.162.67.5, 139.162.68.5,
+      139.162.69.5, 139.162.70.5, 139.162.71.5, 139.162.72.5, 139.162.73.5, 139.162.74.5,
+      139.162.75.5", "ipv6": "1234::5678, 1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678"}}],
+      "page": 1, "pages": 1, "results": 24}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -140,7 +269,6 @@ interactions:
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
-      - Accept-Encoding
       - Authorization, X-Filter
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
@@ -153,14 +281,14 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1200"
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-def","region":"us-east","client_conn_throttle":20,"tags":null,"firewall_id":7593}'
+    body: '{"label":"go-test-def","region":"ap-west","client_conn_throttle":20,"tags":null,"firewall_id":228224}'
     form: {}
     headers:
       Accept:
@@ -172,8 +300,8 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 178670, "label": "go-test-def", "region": "us-east", "hostname":
-      "143-42-177-98.ip.linodeusercontent.com", "ipv4": "143.42.177.98", "ipv6": null,
+    body: '{"id": 441135, "label": "go-test-def", "region": "ap-west", "hostname":
+      "172-232-87-37.ip.linodeusercontent.com", "ipv4": "172.232.87.37", "ipv6": "1234::5678",
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "client_conn_throttle":
       20, "tags": [], "transfer": {"in": null, "out": null, "total": null}}'
     headers:
@@ -189,6 +317,8 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "334"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -198,7 +328,6 @@ interactions:
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
-      - Accept-Encoding
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
       - nodebalancers:read_write
@@ -210,7 +339,65 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1200"
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"label":"go-test-def_r"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/nodebalancers/441135
+    method: PUT
+  response:
+    body: '{"id": 441135, "label": "go-test-def_r", "region": "ap-west", "hostname":
+      "172-232-87-37.ip.linodeusercontent.com", "ipv4": "172.232.87.37", "ipv6": "1234::5678",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "client_conn_throttle":
+      20, "tags": [], "transfer": {"in": null, "out": null, "total": null}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "336"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - nodebalancers:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -226,7 +413,62 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/7593
+    url: https://api.linode.com/v4beta/nodebalancers/441135
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - nodebalancers:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/firewalls/228224
     method: DELETE
   response:
     body: '{}'
@@ -265,119 +507,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1200"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: '{"label":"go-test-def_r"}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/178670
-    method: PUT
-  response:
-    body: '{"id": 178670, "label": "go-test-def_r", "region": "us-east", "hostname":
-      "143-42-177-98.ip.linodeusercontent.com", "ipv4": "143.42.177.98", "ipv6": null,
-      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "client_conn_throttle":
-      20, "tags": [], "transfer": {"in": null, "out": null, "total": null}}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Cache-Control:
-      - private, max-age=60, s-maxage=60
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Accept-Encoding
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - nodebalancers:read_write
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "1200"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/178670
-    method: DELETE
-  response:
-    body: '{}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Cache-Control:
-      - private, max-age=60, s-maxage=60
-      Content-Length:
-      - "2"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - nodebalancers:read_write
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "1200"
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
