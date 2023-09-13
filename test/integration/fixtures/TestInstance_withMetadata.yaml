@@ -55,31 +55,50 @@ interactions:
       "resolvers": {"ipv4": "172.232.32.21,  172.232.32.23,  172.232.32.17,  172.232.32.18,  172.232.32.16,  172.232.32.22,  172.232.32.20,  172.232.32.14,  172.232.32.11,  172.232.32.12",
       "ipv6": "1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678"}},
       {"id": "us-sea", "label": "Seattle, WA", "country": "us", "capabilities": ["Linodes",
-      "NodeBalancers", "Block Storage", "Object Storage", "Cloud Firewall", "Vlans",
-      "Premium Plans"], "status": "ok", "resolvers": {"ipv4": "172.232.160.19, 172.232.160.21,
-      172.232.160.17, 172.232.160.15, 172.232.160.18, 172.232.160.8, 172.232.160.12,
-      172.232.160.11, 172.232.160.14, 172.232.160.16", "ipv6": "1234::5678,
+      "NodeBalancers", "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall",
+      "Vlans", "Premium Plans"], "status": "ok", "resolvers": {"ipv4": "172.232.160.19,
+      172.232.160.21, 172.232.160.17, 172.232.160.15, 172.232.160.18, 172.232.160.8,
+      172.232.160.12, 172.232.160.11, 172.232.160.14, 172.232.160.16", "ipv6": "1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678"}},
+      {"id": "br-gru", "label": "Sao Paulo, BR", "country": "br", "capabilities":
+      ["Linodes", "NodeBalancers", "Block Storage", "Object Storage", "Kubernetes",
+      "Cloud Firewall", "Vlans", "Premium Plans"], "status": "ok", "resolvers": {"ipv4":
+      "172.233.0.4, 172.233.0.9, 172.233.0.7, 172.233.0.12, 172.233.0.5, 172.233.0.13,
+      172.233.0.10, 172.233.0.6, 172.233.0.8, 172.233.0.11", "ipv6": "1234::5678,
       1234::5678, 1234::5678, 1234::5678,
       1234::5678, 1234::5678, 1234::5678,
       1234::5678, 1234::5678, 1234::5678"}},
       {"id": "se-sto", "label": "Stockholm, SE", "country": "se", "capabilities":
       ["Linodes", "NodeBalancers", "Block Storage", "Object Storage", "Kubernetes",
-      "Cloud Firewall", "Vlans", "Managed Databases", "Premium Plans"], "status":
-      "ok", "resolvers": {"ipv4": "172.232.128.24, 172.232.128.26, 172.232.128.20,
-      172.232.128.22, 172.232.128.25, 172.232.128.19, 172.232.128.23, 172.232.128.18,
-      172.232.128.21, 172.232.128.27", "ipv6": "1234::5678, 1234::5678,
+      "Cloud Firewall", "Vlans", "Premium Plans"], "status": "ok", "resolvers": {"ipv4":
+      "172.232.128.24, 172.232.128.26, 172.232.128.20, 172.232.128.22, 172.232.128.25,
+      172.232.128.19, 172.232.128.23, 172.232.128.18, 172.232.128.21, 172.232.128.27",
+      "ipv6": "1234::5678, 1234::5678, 1234::5678,
       1234::5678, 1234::5678, 1234::5678,
       1234::5678, 1234::5678, 1234::5678,
-      1234::5678, 1234::5678"}}, {"id": "in-maa",
-      "label": "Chennai, IN", "country": "in", "capabilities": ["Linodes", "NodeBalancers",
-      "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans",
-      "Managed Databases", "Premium Plans"], "status": "ok", "resolvers": {"ipv4":
-      "172.232.96.17,  172.232.96.26,  172.232.96.19,  172.232.96.20,  172.232.96.25,  172.232.96.21,  172.232.96.18,  172.232.96.22,  172.232.96.23,  172.232.96.24",
+      1234::5678"}}, {"id": "in-maa", "label": "Chennai, IN",
+      "country": "in", "capabilities": ["Linodes", "NodeBalancers", "Block Storage",
+      "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans", "Premium Plans"],
+      "status": "ok", "resolvers": {"ipv4": "172.232.96.17,  172.232.96.26,  172.232.96.19,  172.232.96.20,  172.232.96.25,  172.232.96.21,  172.232.96.18,  172.232.96.22,  172.232.96.23,  172.232.96.24",
       "ipv6": "1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678"}},
+      {"id": "jp-osa", "label": "Osaka, JP", "country": "jp", "capabilities": ["Linodes",
+      "NodeBalancers", "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall",
+      "Vlans", "Premium Plans"], "status": "ok", "resolvers": {"ipv4": "172.233.64.44,
+      172.233.64.43, 172.233.64.37, 172.233.64.40, 172.233.64.46, 172.233.64.41, 172.233.64.39,
+      172.233.64.42, 172.233.64.45, 172.233.64.38", "ipv6": "1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678"}},
       {"id": "it-mil", "label": "Milan, IT", "country": "it", "capabilities": ["Linodes",
-      "NodeBalancers", "Block Storage", "Object Storage", "Cloud Firewall", "Vlans",
-      "Premium Plans"], "status": "ok", "resolvers": {"ipv4": "172.232.192.19,  172.232.192.18,  172.232.192.16,  172.232.192.20,  172.232.192.24,  172.232.192.21,  172.232.192.22,  172.232.192.17,  172.232.192.15,  172.232.192.23",
-      "ipv6": "1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678,  1234::5678"}},
+      "NodeBalancers", "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall",
+      "Vlans", "Premium Plans"], "status": "ok", "resolvers": {"ipv4": "172.232.192.19,
+      172.232.192.18, 172.232.192.16, 172.232.192.20, 172.232.192.24, 172.232.192.21,
+      172.232.192.22, 172.232.192.17, 172.232.192.15, 172.232.192.23", "ipv6": "1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678"}},
       {"id": "id-cgk", "label": "Jakarta, ID", "country": "id", "capabilities": ["Linodes",
       "NodeBalancers", "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall",
       "Vlans", "Premium Plans"], "status": "ok", "resolvers": {"ipv4": "172.232.224.23,  172.232.224.32,  172.232.224.26,  172.232.224.27,  172.232.224.21,  172.232.224.24,  172.232.224.22,  172.232.224.20,  172.232.224.31,  172.232.224.28",
@@ -137,7 +156,7 @@ interactions:
       139.162.69.5, 139.162.70.5, 139.162.71.5, 139.162.72.5, 139.162.73.5, 139.162.74.5,
       139.162.75.5", "ipv6": "1234::5678, 1234::5678, 1234::5678, 1234::5678,
       1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678"}}],
-      "page": 1, "pages": 1, "results": 19}'
+      "page": 1, "pages": 1, "results": 21}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -180,7 +199,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"us-iad","type":"g6-nanode-1","label":"go-test-ins-wo-disk-5j2795nuvyj6","metadata":{"user_data":"cmVhbGx5Y29vbG1ldGFkYXRh"},"booted":false}'
+    body: '{"region":"us-iad","type":"g6-nanode-1","label":"go-test-ins-wo-disk-g2m34g3z3eq8","metadata":{"user_data":"cmVhbGx5Y29vbG1ldGFkYXRh"},"booted":false}'
     form: {}
     headers:
       Accept:
@@ -192,15 +211,15 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 48318087, "label": "go-test-ins-wo-disk-5j2795nuvyj6", "group":
+    body: '{"id": 49042447, "label": "go-test-ins-wo-disk-g2m34g3z3eq8", "group":
       "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["139.144.220.115"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["172.233.228.248"], "ipv6": "1234::5678/128",
       "image": null, "region": "us-iad", "specs": {"disk": 25600, "memory": 1024,
       "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
       false, "available": false, "schedule": {"day": null, "window": null}, "last_successful":
       null}, "hypervisor": "kvm", "watchdog_enabled": true, "tags": [], "host_uuid":
-      "7d3c9de561086c52e5a75d9ec858fc6b4a37bc90"}'
+      "bc08ba475869cf09b04de3864a3e3cc60925d063", "has_user_data": true}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -215,7 +234,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "714"
+      - "737"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -243,7 +262,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-conf-n296g4zhk7s8","devices":{},"interfaces":null}'
+    body: '{"label":"go-test-conf-i4swa18m648d","devices":{},"interfaces":null}'
     form: {}
     headers:
       Accept:
@@ -252,10 +271,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/48318087/configs
+    url: https://api.linode.com/v4beta/linode/instances/49042447/configs
     method: POST
   response:
-    body: '{"id": 51222408, "label": "go-test-conf-n296g4zhk7s8", "helpers": {"updatedb_disabled":
+    body: '{"id": 51958149, "label": "go-test-conf-i4swa18m648d", "helpers": {"updatedb_disabled":
       true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
       true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
@@ -313,7 +332,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/48318087
+    url: https://api.linode.com/v4beta/linode/instances/49042447
     method: DELETE
   response:
     body: '{}'

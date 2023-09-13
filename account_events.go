@@ -183,6 +183,10 @@ const (
 	ActionVolumeUpdate                            EventAction = "volume_update"
 	ActionVolumeDetach                            EventAction = "volume_detach"
 	ActionVolumeResize                            EventAction = "volume_resize"
+
+	// deprecated due to incorrect spelling,
+	// to be removed in the next major version release.
+	ActionVolumeDelte EventAction = "volume_delete"
 )
 
 // EntityType constants start with Entity and include Linode API Event Entity Types
