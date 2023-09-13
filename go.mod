@@ -12,6 +12,6 @@ require (
 	golang.org/x/text v0.12.0 // indirect
 )
 
-go 1.18
+go 1.20
 
 retract v1.0.0 // Accidental branch push
