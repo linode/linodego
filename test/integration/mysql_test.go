@@ -182,7 +182,7 @@ func createMySQLDatabase(t *testing.T, client *linodego.Client,
 		Label:           "go-mysql-test-def",
 		Region:          getRegionsWithCaps(t, client, []string{"Managed Databases"})[0],
 		Type:            "g6-nanode-1",
-		Engine:          "mysql/8.0.26",
+		Engine:          "mysql/8.0.30",
 		Encrypted:       false,
 		ClusterSize:     3,
 		ReplicationType: "semi_synch",
@@ -204,7 +204,7 @@ func createMySQLDatabase(t *testing.T, client *linodego.Client,
 		ctx, cancel := context.WithTimeout(context.Background(), 180*time.Second)
 		defer cancel()
 
-		ticker := time.NewTicker(client.GetPollDelay() * time.Millisecond)
+		ticker := time.NewTicker(client.GetPollDelay())
 		defer ticker.Stop()
 
 		for {
