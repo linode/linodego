@@ -179,7 +179,7 @@ const (
 	ActionVolumeAttach                            EventAction = "volume_attach"
 	ActionVolumeClone                             EventAction = "volume_clone"
 	ActionVolumeCreate                            EventAction = "volume_create"
-	ActionVolumeDelte                             EventAction = "volume_delete"
+	ActionVolumeDelete                            EventAction = "volume_delete"
 	ActionVolumeUpdate                            EventAction = "volume_update"
 	ActionVolumeDetach                            EventAction = "volume_detach"
 	ActionVolumeResize                            EventAction = "volume_resize"
