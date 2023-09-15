@@ -11,6 +11,7 @@ linode_obj_config = {
     "aws_access_key_id": ACCESS_KEY,
     "aws_secret_access_key": SECRET_KEY,
     "endpoint_url": "https://us-southeast-1.linodeobjects.com",
+    "region_name": "us-southeast-1",
 }
 
 
