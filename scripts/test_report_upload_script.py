@@ -5,7 +5,7 @@ from botocore.exceptions import NoCredentialsError
 
 ACCESS_KEY = os.environ.get('LINODE_CLI_OBJ_ACCESS_KEY')
 SECRET_KEY = os.environ.get('LINODE_CLI_OBJ_SECRET_KEY')
-BUCKET_NAME = 'sdk_tests'
+BUCKET_NAME = 'test_reports'
 
 linode_obj_config = {
     "aws_access_key_id": ACCESS_KEY,
