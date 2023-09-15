@@ -5,12 +5,12 @@ from botocore.exceptions import NoCredentialsError
 
 ACCESS_KEY = os.environ.get('LINODE_CLI_OBJ_ACCESS_KEY')
 SECRET_KEY = os.environ.get('LINODE_CLI_OBJ_SECRET_KEY')
-BUCKET_NAME = 'test_reports'
+BUCKET_NAME = 'dx-test-results'
 
 linode_obj_config = {
     "aws_access_key_id": ACCESS_KEY,
     "aws_secret_access_key": SECRET_KEY,
-    "endpoint_url": "https://dx-test-results.us-southeast-1.linodeobjects.com",
+    "endpoint_url": "https://us-southeast-1.linodeobjects.com",
 }
 
 
