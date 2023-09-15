@@ -37,6 +37,9 @@ jobs:
       - name: Install Python deps
         run: pip install requests wheel boto3
 
+      - name: Set release version env
+        run: echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+
       - name: Run tests and save json report
         run: |
           timestamp=$(date +'%Y%m%d%H%M')
