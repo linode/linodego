@@ -52,7 +52,7 @@ require (
 	sigs.k8s.io/yaml v1.3.0 // indirect
 )
 
-go 1.18
+go 1.20
 
 replace github.com/linode/linodego => ../
 
