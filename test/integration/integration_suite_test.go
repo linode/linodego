@@ -27,8 +27,8 @@ var (
 )
 
 var (
-	testingPollDuration = time.Duration(15000)
-	testingMaxRetryTime = time.Duration(30) * time.Second
+	testingPollDuration = 15 * time.Second
+	testingMaxRetryTime = 30 * time.Second
 )
 
 func init() {
