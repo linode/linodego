@@ -76,8 +76,11 @@ func TestTypes_RegionSpecific(t *testing.T) {
 
 	var targetType *linodego.LinodeType
 	for _, t := range types {
-		if t.RegionPrices != nil && len(t.RegionPrices) > 0 {
+		if t.RegionPrices != nil &&
+			len(t.RegionPrices) > 0 &&
+			t.RegionPrices[0].Hourly > 0 {
 			targetType = &t
+			break
 		}
 	}
 
