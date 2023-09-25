@@ -182,7 +182,7 @@ func createPostgresDatabase(t *testing.T, client *linodego.Client,
 		Label:           "go-postgres-testing-def",
 		Region:          getRegionsWithCaps(t, client, []string{"Managed Databases"})[0],
 		Type:            "g6-nanode-1",
-		Engine:          "postgresql/10.14",
+		Engine:          "postgresql/14.6",
 		Encrypted:       false,
 		SSLConnection:   false,
 		ClusterSize:     3,
@@ -203,7 +203,7 @@ func createPostgresDatabase(t *testing.T, client *linodego.Client,
 		ctx, cancel := context.WithTimeout(context.Background(), 180*time.Second)
 		defer cancel()
 
-		ticker := time.NewTicker(client.GetPollDelay() * time.Millisecond)
+		ticker := time.NewTicker(client.GetPollDelay())
 		defer ticker.Stop()
 
 		for {

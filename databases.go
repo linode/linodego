@@ -19,13 +19,13 @@ type (
 )
 
 const (
-	DatabaseMaintenanceDaySunday DatabaseDayOfWeek = iota + 1
-	DatabaseMaintenanceDayMonday
+	DatabaseMaintenanceDayMonday DatabaseDayOfWeek = iota + 1
 	DatabaseMaintenanceDayTuesday
 	DatabaseMaintenanceDayWednesday
 	DatabaseMaintenanceDayThursday
 	DatabaseMaintenanceDayFriday
 	DatabaseMaintenanceDaySaturday
+	DatabaseMaintenanceDaySunday
 )
 
 const (
