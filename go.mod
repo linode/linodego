@@ -1,7 +1,7 @@
 module github.com/linode/linodego
 
 require (
-	github.com/go-resty/resty/v2 v2.7.0
+	github.com/go-resty/resty/v2 v2.8.0
 	github.com/google/go-cmp v0.5.7
 	golang.org/x/net v0.15.0
 	gopkg.in/ini.v1 v1.66.6
