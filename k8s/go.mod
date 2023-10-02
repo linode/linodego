@@ -51,4 +51,4 @@ require (
 
 replace github.com/linode/linodego => ../
 
-go 1.18
+go 1.20
