@@ -83,6 +83,7 @@ type clientCacheEntry struct {
 }
 
 type Request = resty.Request
+type Logger = resty.Logger
 
 func init() {
 	// Wether or not we will enable Resty debugging output
@@ -117,6 +118,14 @@ func (c *Client) R(ctx context.Context) *resty.Request {
 func (c *Client) SetDebug(debug bool) *Client {
 	c.debug = debug
 	c.resty.SetDebug(debug)
+
+	return c
+}
+
+// SetLogger allows the user to override the output
+// logger for debug logs.
+func (c *Client) SetLogger(logger Logger) *Client {
+	c.resty.SetLogger(logger)
 
 	return c
 }
