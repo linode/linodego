@@ -3,7 +3,7 @@ package integration
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"reflect"
 	"regexp"
@@ -29,7 +29,7 @@ func mockRequestBodyValidate(t *testing.T, expected interface{}, response interf
 
 		i := result.Interface()
 
-		data, err := ioutil.ReadAll(request.Body)
+		data, err := io.ReadAll(request.Body)
 		if err != nil {
 			t.Fatal(err)
 		}

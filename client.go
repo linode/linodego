@@ -3,7 +3,6 @@ package linodego
 import (
 	"context"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
@@ -166,7 +165,7 @@ func (c *Client) updateHostURL() {
 		apiProto = c.apiProto
 	}
 
-	c.resty.SetHostURL(
+	c.resty.SetBaseURL(
 		fmt.Sprintf(
 			"%s://%s/%s",
 			apiProto,
@@ -183,7 +182,7 @@ func (c *Client) SetRootCertificate(path string) *Client {
 }
 
 // SetToken sets the API token for all requests from this client
-// Only necessary if you haven't already provided an http client to NewClient() configured with the token.
+// Only necessary if you haven't already provided the http client to NewClient() configured with the token.
 func (c *Client) SetToken(token string) *Client {
 	c.resty.SetHeader("Authorization", fmt.Sprintf("Bearer %s", token))
 	return c
@@ -398,7 +397,7 @@ func NewClient(hc *http.Client) (client Client) {
 	certPath, certPathExists := os.LookupEnv(APIHostCert)
 
 	if certPathExists {
-		cert, err := ioutil.ReadFile(filepath.Clean(certPath))
+		cert, err := os.ReadFile(filepath.Clean(certPath))
 		if err != nil {
 			log.Fatalf("[ERROR] Error when reading cert at %s: %s\n", certPath, err.Error())
 		}
