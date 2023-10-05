@@ -87,6 +87,7 @@ jobs:
           --xmlfile "${filename}"
 
       - name: Upload test results to bucket
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         env:
           LINODE_CLI_OBJ_ACCESS_KEY: ${{ secrets.LINODE_CLI_OBJ_ACCESS_KEY }}
           LINODE_CLI_OBJ_SECRET_KEY: ${{ secrets.LINODE_CLI_OBJ_SECRET_KEY }}
