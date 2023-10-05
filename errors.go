@@ -2,20 +2,21 @@ package linodego
 
 import (
 	"fmt"
-	"log"
 	"net/http"
+	"reflect"
 	"strings"
 
 	"github.com/go-resty/resty/v2"
 )
 
 const (
+	ErrorUnsupported = iota
 	// ErrorFromString is the Code identifying Errors created by string types
-	ErrorFromString = 1
+	ErrorFromString
 	// ErrorFromError is the Code identifying Errors created by error types
-	ErrorFromError = 2
+	ErrorFromError
 	// ErrorFromStringer is the Code identifying Errors created by fmt.Stringer types
-	ErrorFromStringer = 3
+	ErrorFromStringer
 )
 
 // Error wraps the LinodeGo error with the relevant http.Response
@@ -113,7 +114,7 @@ func NewError(err any) *Error {
 		apiError, ok := e.Error().(*APIError)
 
 		if !ok {
-			log.Fatalln("Unexpected Resty Error Response")
+			return &Error{Code: ErrorUnsupported, Message: "Unexpected Resty Error Response, no error"}
 		}
 
 		return &Error{
@@ -128,7 +129,6 @@ func NewError(err any) *Error {
 	case fmt.Stringer:
 		return &Error{Code: ErrorFromStringer, Message: e.String()}
 	default:
-		log.Fatalln("Unsupported type to linodego.NewError")
-		panic(err)
+		return &Error{Code: ErrorUnsupported, Message: fmt.Sprintf("Unsupported type to linodego.NewError: %s", reflect.TypeOf(e))}
 	}
 }
