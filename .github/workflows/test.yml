@@ -59,6 +59,7 @@ jobs:
           SKIP_LINT: 1
 
       - name: Convert JSON Report to XML
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
           filename=$(ls | grep -E '^[0-9]{12}_linodego_test_report\.json')
 
@@ -76,6 +77,7 @@ jobs:
           GO111MODULE: on
 
       - name: Add additional information to XML report
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
           filename=$(ls | grep -E '^[0-9]{12}_linodego_test_report\.xml$') 
           python scripts/add_to_xml_test_report.py \
@@ -85,6 +87,7 @@ jobs:
           --xmlfile "${filename}"
 
       - name: Upload test results to bucket
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         env:
           LINODE_CLI_OBJ_ACCESS_KEY: ${{ secrets.LINODE_CLI_OBJ_ACCESS_KEY }}
           LINODE_CLI_OBJ_SECRET_KEY: ${{ secrets.LINODE_CLI_OBJ_SECRET_KEY }}
