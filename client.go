@@ -82,8 +82,10 @@ type clientCacheEntry struct {
 	ExpiryOverride *time.Duration
 }
 
-type Request = resty.Request
-type Logger = resty.Logger
+type (
+	Request = resty.Request
+	Logger  = resty.Logger
+)
 
 func init() {
 	// Wether or not we will enable Resty debugging output
