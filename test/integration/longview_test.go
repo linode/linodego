@@ -99,7 +99,7 @@ func TestLongviewClient_Delete(t *testing.T) {
 		t.Errorf("Error getting longview client:%s", getErr)
 	}
 
-	// If there is no error, the longview client was delete properly
+	// If there is no error, the longview client was deleted properly
 	if err := client.DeleteLongviewClient(context.Background(), testingLongviewClient.ID); err != nil {
 		t.Fatal(err)
 	}

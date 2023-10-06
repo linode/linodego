@@ -2,7 +2,6 @@ package linodego
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"testing"
 )
@@ -43,8 +42,8 @@ func TestConfig_LoadWithDefaults(t *testing.T) {
 
 	expectedURL := "https://api.cool.linode.com/v4beta"
 
-	if client.resty.HostURL != expectedURL {
-		t.Fatalf("mismatched host url: %s != %s", client.resty.HostURL, expectedURL)
+	if client.resty.BaseURL != expectedURL {
+		t.Fatalf("mismatched host url: %s != %s", client.resty.BaseURL, expectedURL)
 	}
 
 	if client.resty.Header.Get("Authorization") != "Bearer "+p.APIToken {
@@ -89,8 +88,8 @@ func TestConfig_OverrideDefaults(t *testing.T) {
 
 	expectedURL := "https://api.cool.linode.com/v4"
 
-	if client.resty.HostURL != expectedURL {
-		t.Fatalf("mismatched host url: %s != %s", client.resty.HostURL, expectedURL)
+	if client.resty.BaseURL != expectedURL {
+		t.Fatalf("mismatched host url: %s != %s", client.resty.BaseURL, expectedURL)
 	}
 
 	if client.resty.Header.Get("Authorization") != "Bearer "+p.APIToken {
@@ -131,7 +130,7 @@ func TestConfig_NoDefaults(t *testing.T) {
 }
 
 func createTestConfig(t *testing.T, conf string) *os.File {
-	file, err := ioutil.TempFile("", "linode")
+	file, err := os.CreateTemp("", "linode")
 	if err != nil {
 		t.Fatal(err)
 	}

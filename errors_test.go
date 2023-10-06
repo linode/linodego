@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"context"
 	"errors"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -114,7 +114,7 @@ func TestCoupleAPIErrors_badGatewayError(t *testing.T) {
 <hr><center>nginx</center>
 </body>
 </html>`)
-	buf := ioutil.NopCloser(bytes.NewBuffer(rawResponse))
+	buf := io.NopCloser(bytes.NewBuffer(rawResponse))
 
 	resp := &resty.Response{
 		Request: &resty.Request{
