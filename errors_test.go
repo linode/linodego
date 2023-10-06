@@ -13,6 +13,58 @@ import (
 	"github.com/google/go-cmp/cmp"
 )
 
+type tstringer string
+
+func (t tstringer) String() string {
+	return string(t)
+}
+
+func TestNewError(t *testing.T) {
+	if NewError(nil) != nil {
+		t.Errorf("nil error should return nil")
+	}
+	if NewError(struct{}{}).Code != ErrorUnsupported {
+		t.Error("empty struct should return unsupported error type")
+	}
+	err := errors.New("test")
+	newErr := NewError(&err)
+	if newErr.Message == err.Error() && newErr.Code == ErrorFromError {
+		t.Error("nil error should return nil")
+	}
+
+	if err := NewError(&resty.Response{Request: &resty.Request{}}); err.Message != "Unexpected Resty Error Response, no error" {
+		t.Error("Unexpected Resty Error Response, no error")
+	}
+
+	rerr := &resty.Response{
+		RawResponse: &http.Response{
+			StatusCode: 500,
+		},
+		Request: &resty.Request{
+			Error: &APIError{
+				[]APIErrorReason{
+					{
+						Reason: "testreason",
+						Field:  "testfield",
+					},
+				},
+			},
+		},
+	}
+
+	if err := NewError(rerr); err.Message != "[testfield] testreason" {
+		t.Error("rest response error should should be set")
+	}
+
+	if err := NewError("stringerror"); err.Message != "stringerror" || err.Code != ErrorFromString {
+		t.Errorf("string error should be set")
+	}
+
+	if err := NewError(tstringer("teststringer")); err.Message != "teststringer" || err.Code != ErrorFromStringer {
+		t.Errorf("stringer error should be set")
+	}
+}
+
 func createTestServer(method, route, contentType, body string, statusCode int) (*httptest.Server, *Client) {
 	h := http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
 		if r.Method == method && r.URL.Path == route {
