@@ -58,7 +58,7 @@ else
 	docker run --rm -v $(shell pwd):/app -w /app $(GOLANGCILINT_IMG) $(GOLANGCILINT) $(GOLANGCILINT_ARGS)
 endif
 
-clean: clean-fixtures clean-cov
+clean: clean-cov
 
 clean-cov:
 	@-rm -f coverage.txt
