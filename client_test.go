@@ -24,39 +24,39 @@ func TestClient_SetAPIVersion(t *testing.T) {
 
 	client := NewClient(nil)
 
-	if client.resty.HostURL != defaultURL {
-		t.Fatal(cmp.Diff(client.resty.HostURL, defaultURL))
+	if client.resty.BaseURL != defaultURL {
+		t.Fatal(cmp.Diff(client.resty.BaseURL, defaultURL))
 	}
 
 	client.SetBaseURL(baseURL)
 	client.SetAPIVersion(apiVersion)
 
-	if client.resty.HostURL != expectedHost {
-		t.Fatal(cmp.Diff(client.resty.HostURL, expectedHost))
+	if client.resty.BaseURL != expectedHost {
+		t.Fatal(cmp.Diff(client.resty.BaseURL, expectedHost))
 	}
 
 	// Ensure setting twice does not cause conflicts
 	client.SetBaseURL(updatedBaseURL)
 	client.SetAPIVersion(updatedAPIVersion)
 
-	if client.resty.HostURL != updatedExpectedHost {
-		t.Fatal(cmp.Diff(client.resty.HostURL, updatedExpectedHost))
+	if client.resty.BaseURL != updatedExpectedHost {
+		t.Fatal(cmp.Diff(client.resty.BaseURL, updatedExpectedHost))
 	}
 
 	// Revert
 	client.SetBaseURL(baseURL)
 	client.SetAPIVersion(apiVersion)
 
-	if client.resty.HostURL != expectedHost {
-		t.Fatal(cmp.Diff(client.resty.HostURL, expectedHost))
+	if client.resty.BaseURL != expectedHost {
+		t.Fatal(cmp.Diff(client.resty.BaseURL, expectedHost))
 	}
 
 	// Custom protocol
 	client.SetBaseURL(protocolBaseURL)
 	client.SetAPIVersion(protocolAPIVersion)
 
-	if client.resty.HostURL != protocolExpectedHost {
-		t.Fatal(cmp.Diff(client.resty.HostURL, expectedHost))
+	if client.resty.BaseURL != protocolExpectedHost {
+		t.Fatal(cmp.Diff(client.resty.BaseURL, expectedHost))
 	}
 }
 
