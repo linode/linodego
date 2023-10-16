@@ -240,8 +240,7 @@ func TestVPC_Subnet_Update_Invalid_data(t *testing.T) {
 	vpcSubnetUpdateOptionsCheck(&opts, vpcSubnet, t)
 
 	opts.Label = "invalid_label"
-	opts.
-		_, err = client.UpdateVPCSubnet(
+	_, err = client.UpdateVPCSubnet(
 		context.Background(),
 		vpc.ID,
 		vpcSubnet.ID,
