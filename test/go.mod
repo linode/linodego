@@ -6,7 +6,7 @@ require (
 	github.com/jarcoal/httpmock v1.2.0
 	github.com/linode/linodego v0.20.1
 	github.com/linode/linodego/k8s v0.0.0-00010101000000-000000000000
-	golang.org/x/net v0.16.0
+	golang.org/x/net v0.17.0
 	golang.org/x/oauth2 v0.8.0
 	k8s.io/client-go v0.28.1
 )
