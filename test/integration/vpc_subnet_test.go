@@ -107,7 +107,7 @@ func createVPCWithSubnet(t *testing.T, client *linodego.Client) (
 	return vpc, vpcSubnet, teardown, err
 }
 
-func createVPCWithSubnetInvaidLabel(t *testing.T, client *linodego.Client) error {
+func createVPCWithSubnetInvalidLabel(t *testing.T, client *linodego.Client) error {
 	t.Helper()
 	vpc, vpcTeardown, err := createVPC(t, client)
 	if err != nil {
@@ -215,7 +215,7 @@ func TestVPC_Subnet_List(t *testing.T) {
 func TestVPC_Subnet_Create_Invalid_data(t *testing.T) {
 	client, _ := createTestClient(t, "fixtures/TestVPC_Subnet_Create_Invalid_Label")
 
-	err := createVPCWithSubnetInvaidLabel(t, client)
+	err := createVPCWithSubnetInvalidLabel(t, client)
 
 	e, _ := err.(*Error)
 
