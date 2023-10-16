@@ -3,9 +3,11 @@ package integration
 import (
 	"context"
 	"fmt"
+	"strings"
 	"testing"
 
 	"github.com/linode/linodego"
+	. "github.com/linode/linodego"
 )
 
 const (
@@ -105,6 +107,24 @@ func createVPCWithSubnet(t *testing.T, client *linodego.Client) (
 	return vpc, vpcSubnet, teardown, err
 }
 
+func createVPCWithSubnetInvalidLabel(t *testing.T, client *linodego.Client) error {
+	t.Helper()
+	vpc, vpcTeardown, err := createVPC(t, client)
+	if err != nil {
+		if vpcTeardown != nil {
+			vpcTeardown()
+		}
+		t.Fatal(err)
+	}
+	createOpts := linodego.VPCSubnetCreateOptions{
+		Label: "linodego-vpc-test_invalid_label" + getUniqueText(),
+		IPv4:  TestSubnet,
+	}
+	_, err = client.CreateVPCSubnet(context.Background(), createOpts, vpc.ID)
+
+	return err
+}
+
 func setupVPCWithSubnet(
 	t *testing.T,
 	fixturesYaml string,
@@ -189,5 +209,51 @@ func TestVPC_Subnet_List(t *testing.T) {
 
 	if !found {
 		t.Errorf("the VPC %v subnet %v not found in list", vpc.ID, vpcSubnet.ID)
+	}
+}
+
+func TestVPC_Subnet_Create_Invalid_data(t *testing.T) {
+	client, _ := createTestClient(t, "fixtures/TestVPC_Subnet_Create_Invalid_Label")
+
+	err := createVPCWithSubnetInvalidLabel(t, client)
+
+	e, _ := err.(*Error)
+
+	if e.Code != 400 {
+		t.Errorf("should have received a 400 Code with invalid label, got %v", e.Code)
+	}
+	expectedErrorMessage := "Label must include only ASCII letters, numbers, and dashes"
+	if !strings.Contains(e.Message, expectedErrorMessage) {
+		t.Errorf("Wrong error message displayed should have contained, %s", expectedErrorMessage)
+	}
+}
+
+func TestVPC_Subnet_Update_Invalid_data(t *testing.T) {
+	client, vpc, vpcSubnet, teardown, err := setupVPCWithSubnet(t, "fixtures/TestVPC_Subnet_Update_Invalid_Label")
+	defer teardown()
+	if err != nil {
+		t.Error(formatVPCSubnetError(err, "setting up", nil, nil))
+	}
+	vpcSubnetCheck(vpcSubnet, t)
+
+	opts := vpcSubnet.GetUpdateOptions()
+	vpcSubnetUpdateOptionsCheck(&opts, vpcSubnet, t)
+
+	opts.Label = "invalid_label"
+	_, err = client.UpdateVPCSubnet(
+		context.Background(),
+		vpc.ID,
+		vpcSubnet.ID,
+		opts,
+	)
+
+	e, _ := err.(*Error)
+
+	if e.Code != 400 {
+		t.Errorf("should have received a 400 Code with invalid label, got %v", e.Code)
+	}
+	expectedErrorMessage := "Label must include only ASCII letters, numbers, and dashes"
+	if !strings.Contains(e.Message, expectedErrorMessage) {
+		t.Errorf("Wrong error message displayed should have contained, %s", expectedErrorMessage)
 	}
 }

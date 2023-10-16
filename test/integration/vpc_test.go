@@ -3,9 +3,11 @@ package integration
 import (
 	"context"
 	"fmt"
+	"strings"
 	"testing"
 
 	"github.com/linode/linodego"
+	. "github.com/linode/linodego"
 )
 
 func formatVPCError(err error, action string, vpcID *int) error {
@@ -44,6 +46,17 @@ func createVPC(t *testing.T, client *linodego.Client) (*linodego.VPC, func(), er
 		}
 	}
 	return vpc, teardown, err
+}
+
+func createVPC_invalid_label(t *testing.T, client *linodego.Client) error {
+	t.Helper()
+	createOpts := linodego.VPCCreateOptions{
+		Label:  "gotest_vpc_invalid_label" + getUniqueText(),
+		Region: getRegionsWithCaps(t, client, []string{"VPCs"})[0],
+	}
+	_, err := client.CreateVPC(context.Background(), createOpts)
+
+	return err
 }
 
 func setupVPC(t *testing.T, fixturesYaml string) (
@@ -160,5 +173,50 @@ func TestVPC_List(t *testing.T) {
 
 	if !found {
 		t.Errorf("vpc %v not found in list", vpc.ID)
+	}
+}
+
+func TestVPC_Create_Invalid_data(t *testing.T) {
+	client, _ := createTestClient(t, "fixtures/TestVPC_Create_Invalid")
+	err := createVPC_invalid_label(t, client)
+
+	e, _ := err.(*Error)
+
+	if e.Code != 400 {
+		t.Errorf("should have received a 400 Code with invalid label, got %v", e.Code)
+	}
+	expectedErrorMessage := "Label must include only ASCII letters, numbers, and dashes"
+	if !strings.Contains(e.Message, expectedErrorMessage) {
+		t.Errorf("Wrong error message displayed should have contained, %s", expectedErrorMessage)
+	}
+}
+
+func TestVPC_Update_Invalid_data(t *testing.T) {
+	client, vpc, teardown, err := setupVPC(t, "fixtures/TestVPC_Update_Invalid")
+	defer teardown()
+	if err != nil {
+		t.Error(formatVPCError(err, "setting up", nil))
+	}
+	vpcCheck(vpc, t)
+
+	opts := vpc.GetUpdateOptions()
+	vpcUpdateOptionsCheck(&opts, vpc, t)
+
+	updatedDescription := "updated description"
+	updatedLabel := "updated_invalid_label"
+
+	opts.Description = updatedDescription
+	opts.Label = updatedLabel
+
+	_, err = client.UpdateVPC(context.Background(), vpc.ID, opts)
+
+	e, _ := err.(*Error)
+
+	if e.Code != 400 {
+		t.Errorf("should have received a 400 Code with invalid label, got %v", e.Code)
+	}
+	expectedErrorMessage := "Label must include only ASCII letters, numbers, and dashes"
+	if !strings.Contains(e.Message, expectedErrorMessage) {
+		t.Errorf("Wrong error message displayed should have contained, %s", expectedErrorMessage)
 	}
 }
