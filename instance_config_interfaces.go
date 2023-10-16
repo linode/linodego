@@ -20,8 +20,8 @@ type InstanceConfigInterface struct {
 }
 
 type VPCIPv4 struct {
-	VPC     string `json:"vpc"`
-	NAT1To1 string `json:"nat_1_1"`
+	VPC     string `json:"vpc,omitempty"`
+	NAT1To1 string `json:"nat_1_1,omitempty"`
 }
 
 type InstanceConfigInterfaceCreateOptions struct {
