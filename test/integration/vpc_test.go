@@ -117,8 +117,9 @@ func vpcUpdateOptionsCheck(
 	}
 }
 
-func TestVPC_Create(t *testing.T) {
-	_, vpc, teardown, err := setupVPC(t, "fixtures/TestVPC_Create")
+
+func TestVPC_CreateGet(t *testing.T) {
+	client, vpc, teardown, err := setupVPC(t, "fixtures/TestVPC_CreateGet")
 	defer teardown()
 	if err != nil {
 		t.Error(formatVPCError(err, "setting up", nil))
@@ -126,6 +127,7 @@ func TestVPC_Create(t *testing.T) {
 	vpcCheck(vpc, t)
 	opts := vpc.GetCreateOptions()
 	vpcCreateOptionsCheck(&opts, vpc, t)
+	client.GetVPC(context.TODO(), vpc.ID)
 }
 
 func TestVPC_Update(t *testing.T) {
