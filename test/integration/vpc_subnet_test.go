@@ -107,23 +107,6 @@ func createVPCWithSubnet(t *testing.T, client *linodego.Client) (
 	return vpc, vpcSubnet, teardown, err
 }
 
-func createVPCWithSubnetInvalidLabel(t *testing.T, client *linodego.Client) error {
-	t.Helper()
-	vpc, vpcTeardown, err := createVPC(t, client)
-	if err != nil {
-		if vpcTeardown != nil {
-			vpcTeardown()
-		}
-		t.Fatal(err)
-	}
-	createOpts := linodego.VPCSubnetCreateOptions{
-		Label: "linodego-vpc-test_invalid_label" + getUniqueText(),
-		IPv4:  TestSubnet,
-	}
-	_, err = client.CreateVPCSubnet(context.Background(), createOpts, vpc.ID)
-
-	return err
-}
 
 func setupVPCWithSubnet(
 	t *testing.T,
@@ -213,10 +196,17 @@ func TestVPC_Subnet_List(t *testing.T) {
 }
 
 func TestVPC_Subnet_Create_Invalid_data(t *testing.T) {
-	client, _ := createTestClient(t, "fixtures/TestVPC_Subnet_Create_Invalid_Label")
+	client, vpc, teardown, err := setupVPC(t, "fixtures/TestVPC_Subnet_Create_Invalid_data")
+	defer teardown()
+	if err != nil {
+		t.Error(formatVPCSubnetError(err, "setting up", nil, nil))
+	}
 
-	err := createVPCWithSubnetInvalidLabel(t, client)
-
+	createOpts := linodego.VPCSubnetCreateOptions{
+		Label: "linodego-vpc-test_invalid_label" + getUniqueText(),
+		IPv4:  TestSubnet,
+	}
+	_, err = client.CreateVPCSubnet(context.Background(), createOpts, vpc.ID)
 	e, _ := err.(*Error)
 
 	if e.Code != 400 {
