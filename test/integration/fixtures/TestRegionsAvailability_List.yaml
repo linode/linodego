@@ -1,0 +1,421 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/regions/availability
+    method: GET
+  response:
+    body: '{"data": [{"region": "us-central", "plan": "gpu-rtx6000-1.1", "available":
+      false}, {"region": "us-central", "plan": "gpu-rtx6000-2.1", "available": false},
+      {"region": "us-central", "plan": "gpu-rtx6000-3.1", "available": false}, {"region":
+      "us-central", "plan": "gpu-rtx6000-4.1", "available": false}, {"region": "us-central",
+      "plan": "premium131072.7", "available": false}, {"region": "us-central", "plan":
+      "premium16384.7", "available": false}, {"region": "us-central", "plan": "premium262144.7",
+      "available": false}, {"region": "us-central", "plan": "premium32768.7", "available":
+      false}, {"region": "us-central", "plan": "premium4096.7", "available": false},
+      {"region": "us-central", "plan": "premium524288.7", "available": false}, {"region":
+      "us-central", "plan": "premium65536.7", "available": false}, {"region": "us-central",
+      "plan": "premium8192.7", "available": false}, {"region": "us-central", "plan":
+      "premium98304.7", "available": false}, {"region": "us-west", "plan": "gpu-rtx6000-1.1",
+      "available": false}, {"region": "us-west", "plan": "gpu-rtx6000-2.1", "available":
+      false}, {"region": "us-west", "plan": "gpu-rtx6000-3.1", "available": false},
+      {"region": "us-west", "plan": "gpu-rtx6000-4.1", "available": false}, {"region":
+      "us-west", "plan": "premium131072.7", "available": false}, {"region": "us-west",
+      "plan": "premium16384.7", "available": false}, {"region": "us-west", "plan":
+      "premium262144.7", "available": false}, {"region": "us-west", "plan": "premium32768.7",
+      "available": false}, {"region": "us-west", "plan": "premium4096.7", "available":
+      false}, {"region": "us-west", "plan": "premium524288.7", "available": false},
+      {"region": "us-west", "plan": "premium65536.7", "available": false}, {"region":
+      "us-west", "plan": "premium8192.7", "available": false}, {"region": "us-west",
+      "plan": "premium98304.7", "available": false}, {"region": "us-southeast", "plan":
+      "gpu-rtx6000-1.1", "available": false}, {"region": "us-southeast", "plan": "gpu-rtx6000-2.1",
+      "available": false}, {"region": "us-southeast", "plan": "gpu-rtx6000-3.1", "available":
+      false}, {"region": "us-southeast", "plan": "gpu-rtx6000-4.1", "available": false},
+      {"region": "us-southeast", "plan": "premium131072.7", "available": false}, {"region":
+      "us-southeast", "plan": "premium16384.7", "available": false}, {"region": "us-southeast",
+      "plan": "premium262144.7", "available": false}, {"region": "us-southeast", "plan":
+      "premium32768.7", "available": false}, {"region": "us-southeast", "plan": "premium4096.7",
+      "available": false}, {"region": "us-southeast", "plan": "premium524288.7", "available":
+      false}, {"region": "us-southeast", "plan": "premium65536.7", "available": false},
+      {"region": "us-southeast", "plan": "premium8192.7", "available": false}, {"region":
+      "us-southeast", "plan": "premium98304.7", "available": false}, {"region": "us-east",
+      "plan": "gpu-rtx6000-1.1", "available": true}, {"region": "us-east", "plan":
+      "gpu-rtx6000-2.1", "available": false}, {"region": "us-east", "plan": "gpu-rtx6000-3.1",
+      "available": false}, {"region": "us-east", "plan": "gpu-rtx6000-4.1", "available":
+      false}, {"region": "us-east", "plan": "premium131072.7", "available": false},
+      {"region": "us-east", "plan": "premium16384.7", "available": false}, {"region":
+      "us-east", "plan": "premium262144.7", "available": false}, {"region": "us-east",
+      "plan": "premium32768.7", "available": false}, {"region": "us-east", "plan":
+      "premium4096.7", "available": false}, {"region": "us-east", "plan": "premium524288.7",
+      "available": false}, {"region": "us-east", "plan": "premium65536.7", "available":
+      false}, {"region": "us-east", "plan": "premium8192.7", "available": false},
+      {"region": "us-east", "plan": "premium98304.7", "available": false}, {"region":
+      "eu-west", "plan": "gpu-rtx6000-1.1", "available": false}, {"region": "eu-west",
+      "plan": "gpu-rtx6000-2.1", "available": false}, {"region": "eu-west", "plan":
+      "gpu-rtx6000-3.1", "available": false}, {"region": "eu-west", "plan": "gpu-rtx6000-4.1",
+      "available": false}, {"region": "eu-west", "plan": "premium131072.7", "available":
+      false}, {"region": "eu-west", "plan": "premium16384.7", "available": false},
+      {"region": "eu-west", "plan": "premium262144.7", "available": false}, {"region":
+      "eu-west", "plan": "premium32768.7", "available": false}, {"region": "eu-west",
+      "plan": "premium4096.7", "available": false}, {"region": "eu-west", "plan":
+      "premium524288.7", "available": false}, {"region": "eu-west", "plan": "premium65536.7",
+      "available": false}, {"region": "eu-west", "plan": "premium8192.7", "available":
+      false}, {"region": "eu-west", "plan": "premium98304.7", "available": false},
+      {"region": "ap-south", "plan": "gpu-rtx6000-1.1", "available": false}, {"region":
+      "ap-south", "plan": "gpu-rtx6000-2.1", "available": false}, {"region": "ap-south",
+      "plan": "gpu-rtx6000-3.1", "available": false}, {"region": "ap-south", "plan":
+      "gpu-rtx6000-4.1", "available": false}, {"region": "ap-south", "plan": "premium131072.7",
+      "available": false}, {"region": "ap-south", "plan": "premium16384.7", "available":
+      false}, {"region": "ap-south", "plan": "premium262144.7", "available": false},
+      {"region": "ap-south", "plan": "premium32768.7", "available": false}, {"region":
+      "ap-south", "plan": "premium4096.7", "available": false}, {"region": "ap-south",
+      "plan": "premium524288.7", "available": false}, {"region": "ap-south", "plan":
+      "premium65536.7", "available": false}, {"region": "ap-south", "plan": "premium8192.7",
+      "available": false}, {"region": "ap-south", "plan": "premium98304.7", "available":
+      false}, {"region": "eu-central", "plan": "gpu-rtx6000-1.1", "available": false},
+      {"region": "eu-central", "plan": "gpu-rtx6000-2.1", "available": false}, {"region":
+      "eu-central", "plan": "gpu-rtx6000-3.1", "available": false}, {"region": "eu-central",
+      "plan": "gpu-rtx6000-4.1", "available": false}, {"region": "eu-central", "plan":
+      "premium131072.7", "available": false}, {"region": "eu-central", "plan": "premium16384.7",
+      "available": false}, {"region": "eu-central", "plan": "premium262144.7", "available":
+      false}, {"region": "eu-central", "plan": "premium32768.7", "available": false},
+      {"region": "eu-central", "plan": "premium4096.7", "available": false}, {"region":
+      "eu-central", "plan": "premium524288.7", "available": false}, {"region": "eu-central",
+      "plan": "premium65536.7", "available": false}, {"region": "eu-central", "plan":
+      "premium8192.7", "available": false}, {"region": "eu-central", "plan": "premium98304.7",
+      "available": false}, {"region": "ap-west", "plan": "gpu-rtx6000-1.1", "available":
+      false}, {"region": "ap-west", "plan": "gpu-rtx6000-2.1", "available": false},
+      {"region": "ap-west", "plan": "gpu-rtx6000-3.1", "available": false}, {"region":
+      "ap-west", "plan": "gpu-rtx6000-4.1", "available": false}, {"region": "ap-west",
+      "plan": "premium131072.7", "available": false}, {"region": "ap-west", "plan":
+      "premium16384.7", "available": false}, {"region": "ap-west", "plan": "premium262144.7",
+      "available": false}, {"region": "ap-west", "plan": "premium32768.7", "available":
+      false}, {"region": "ap-west", "plan": "premium4096.7", "available": false}],
+      "page": 1, "pages": 3, "results": 299}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=900
+      - private, max-age=60, s-maxage=60
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/regions/availability?page=2
+    method: GET
+  response:
+    body: '{"data": [{"region": "ap-west", "plan": "premium524288.7", "available":
+      false}, {"region": "ap-west", "plan": "premium65536.7", "available": false},
+      {"region": "ap-west", "plan": "premium8192.7", "available": false}, {"region":
+      "ap-west", "plan": "premium98304.7", "available": false}, {"region": "ca-central",
+      "plan": "gpu-rtx6000-1.1", "available": false}, {"region": "ca-central", "plan":
+      "gpu-rtx6000-2.1", "available": false}, {"region": "ca-central", "plan": "gpu-rtx6000-3.1",
+      "available": false}, {"region": "ca-central", "plan": "gpu-rtx6000-4.1", "available":
+      false}, {"region": "ca-central", "plan": "premium131072.7", "available": false},
+      {"region": "ca-central", "plan": "premium16384.7", "available": false}, {"region":
+      "ca-central", "plan": "premium262144.7", "available": false}, {"region": "ca-central",
+      "plan": "premium32768.7", "available": false}, {"region": "ca-central", "plan":
+      "premium4096.7", "available": false}, {"region": "ca-central", "plan": "premium524288.7",
+      "available": false}, {"region": "ca-central", "plan": "premium65536.7", "available":
+      false}, {"region": "ca-central", "plan": "premium8192.7", "available": false},
+      {"region": "ca-central", "plan": "premium98304.7", "available": false}, {"region":
+      "ap-southeast", "plan": "gpu-rtx6000-1.1", "available": false}, {"region": "ap-southeast",
+      "plan": "gpu-rtx6000-2.1", "available": false}, {"region": "ap-southeast", "plan":
+      "gpu-rtx6000-3.1", "available": false}, {"region": "ap-southeast", "plan": "gpu-rtx6000-4.1",
+      "available": false}, {"region": "ap-southeast", "plan": "premium131072.7", "available":
+      false}, {"region": "ap-southeast", "plan": "premium16384.7", "available": false},
+      {"region": "ap-southeast", "plan": "premium262144.7", "available": false}, {"region":
+      "ap-southeast", "plan": "premium32768.7", "available": false}, {"region": "ap-southeast",
+      "plan": "premium4096.7", "available": false}, {"region": "ap-southeast", "plan":
+      "premium524288.7", "available": false}, {"region": "ap-southeast", "plan": "premium65536.7",
+      "available": false}, {"region": "ap-southeast", "plan": "premium8192.7", "available":
+      false}, {"region": "ap-southeast", "plan": "premium98304.7", "available": false},
+      {"region": "us-iad", "plan": "gpu-rtx6000-1.1", "available": false}, {"region":
+      "us-iad", "plan": "gpu-rtx6000-2.1", "available": false}, {"region": "us-iad",
+      "plan": "gpu-rtx6000-3.1", "available": false}, {"region": "us-iad", "plan":
+      "gpu-rtx6000-4.1", "available": false}, {"region": "us-iad", "plan": "premium131072.7",
+      "available": true}, {"region": "us-iad", "plan": "premium16384.7", "available":
+      true}, {"region": "us-iad", "plan": "premium262144.7", "available": true}, {"region":
+      "us-iad", "plan": "premium32768.7", "available": true}, {"region": "us-iad",
+      "plan": "premium4096.7", "available": true}, {"region": "us-iad", "plan": "premium524288.7",
+      "available": true}, {"region": "us-iad", "plan": "premium65536.7", "available":
+      true}, {"region": "us-iad", "plan": "premium8192.7", "available": true}, {"region":
+      "us-iad", "plan": "premium98304.7", "available": true}, {"region": "us-ord",
+      "plan": "gpu-rtx6000-1.1", "available": false}, {"region": "us-ord", "plan":
+      "gpu-rtx6000-2.1", "available": false}, {"region": "us-ord", "plan": "gpu-rtx6000-3.1",
+      "available": false}, {"region": "us-ord", "plan": "gpu-rtx6000-4.1", "available":
+      false}, {"region": "us-ord", "plan": "premium131072.7", "available": true},
+      {"region": "us-ord", "plan": "premium16384.7", "available": true}, {"region":
+      "us-ord", "plan": "premium262144.7", "available": true}, {"region": "us-ord",
+      "plan": "premium32768.7", "available": true}, {"region": "us-ord", "plan": "premium4096.7",
+      "available": true}, {"region": "us-ord", "plan": "premium524288.7", "available":
+      true}, {"region": "us-ord", "plan": "premium65536.7", "available": true}, {"region":
+      "us-ord", "plan": "premium8192.7", "available": true}, {"region": "us-ord",
+      "plan": "premium98304.7", "available": true}, {"region": "fr-par", "plan": "gpu-rtx6000-1.1",
+      "available": false}, {"region": "fr-par", "plan": "gpu-rtx6000-2.1", "available":
+      false}, {"region": "fr-par", "plan": "gpu-rtx6000-3.1", "available": false},
+      {"region": "fr-par", "plan": "gpu-rtx6000-4.1", "available": false}, {"region":
+      "fr-par", "plan": "premium131072.7", "available": true}, {"region": "fr-par",
+      "plan": "premium16384.7", "available": true}, {"region": "fr-par", "plan": "premium262144.7",
+      "available": true}, {"region": "fr-par", "plan": "premium32768.7", "available":
+      true}, {"region": "fr-par", "plan": "premium4096.7", "available": true}, {"region":
+      "fr-par", "plan": "premium524288.7", "available": true}, {"region": "fr-par",
+      "plan": "premium65536.7", "available": true}, {"region": "fr-par", "plan": "premium8192.7",
+      "available": true}, {"region": "fr-par", "plan": "premium98304.7", "available":
+      true}, {"region": "us-sea", "plan": "gpu-rtx6000-1.1", "available": false},
+      {"region": "us-sea", "plan": "gpu-rtx6000-2.1", "available": false}, {"region":
+      "us-sea", "plan": "gpu-rtx6000-3.1", "available": false}, {"region": "us-sea",
+      "plan": "gpu-rtx6000-4.1", "available": false}, {"region": "us-sea", "plan":
+      "premium131072.7", "available": true}, {"region": "us-sea", "plan": "premium16384.7",
+      "available": true}, {"region": "us-sea", "plan": "premium262144.7", "available":
+      true}, {"region": "us-sea", "plan": "premium32768.7", "available": true}, {"region":
+      "us-sea", "plan": "premium4096.7", "available": true}, {"region": "us-sea",
+      "plan": "premium524288.7", "available": true}, {"region": "us-sea", "plan":
+      "premium65536.7", "available": true}, {"region": "us-sea", "plan": "premium8192.7",
+      "available": true}, {"region": "us-sea", "plan": "premium98304.7", "available":
+      true}, {"region": "br-gru", "plan": "gpu-rtx6000-1.1", "available": false},
+      {"region": "br-gru", "plan": "gpu-rtx6000-2.1", "available": false}, {"region":
+      "br-gru", "plan": "gpu-rtx6000-3.1", "available": false}, {"region": "br-gru",
+      "plan": "gpu-rtx6000-4.1", "available": false}, {"region": "br-gru", "plan":
+      "premium131072.7", "available": true}, {"region": "br-gru", "plan": "premium16384.7",
+      "available": true}, {"region": "br-gru", "plan": "premium262144.7", "available":
+      true}, {"region": "br-gru", "plan": "premium32768.7", "available": true}, {"region":
+      "br-gru", "plan": "premium4096.7", "available": true}, {"region": "br-gru",
+      "plan": "premium524288.7", "available": true}, {"region": "br-gru", "plan":
+      "premium65536.7", "available": true}, {"region": "br-gru", "plan": "premium8192.7",
+      "available": true}, {"region": "br-gru", "plan": "premium98304.7", "available":
+      true}, {"region": "nl-ams", "plan": "gpu-rtx6000-1.1", "available": false},
+      {"region": "nl-ams", "plan": "gpu-rtx6000-2.1", "available": false}, {"region":
+      "nl-ams", "plan": "gpu-rtx6000-3.1", "available": false}, {"region": "nl-ams",
+      "plan": "gpu-rtx6000-4.1", "available": false}, {"region": "nl-ams", "plan":
+      "premium131072.7", "available": true}], "page": 2, "pages": 3, "results": 299}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=900
+      - private, max-age=60, s-maxage=60
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/regions/availability?page=3
+    method: GET
+  response:
+    body: '{"data": [{"region": "nl-ams", "plan": "premium16384.7", "available": true},
+      {"region": "nl-ams", "plan": "premium262144.7", "available": true}, {"region":
+      "nl-ams", "plan": "premium32768.7", "available": true}, {"region": "nl-ams",
+      "plan": "premium4096.7", "available": true}, {"region": "nl-ams", "plan": "premium524288.7",
+      "available": true}, {"region": "nl-ams", "plan": "premium65536.7", "available":
+      true}, {"region": "nl-ams", "plan": "premium8192.7", "available": true}, {"region":
+      "nl-ams", "plan": "premium98304.7", "available": true}, {"region": "se-sto",
+      "plan": "gpu-rtx6000-1.1", "available": false}, {"region": "se-sto", "plan":
+      "gpu-rtx6000-2.1", "available": false}, {"region": "se-sto", "plan": "gpu-rtx6000-3.1",
+      "available": false}, {"region": "se-sto", "plan": "gpu-rtx6000-4.1", "available":
+      false}, {"region": "se-sto", "plan": "premium131072.7", "available": true},
+      {"region": "se-sto", "plan": "premium16384.7", "available": true}, {"region":
+      "se-sto", "plan": "premium262144.7", "available": true}, {"region": "se-sto",
+      "plan": "premium32768.7", "available": true}, {"region": "se-sto", "plan": "premium4096.7",
+      "available": true}, {"region": "se-sto", "plan": "premium524288.7", "available":
+      true}, {"region": "se-sto", "plan": "premium65536.7", "available": true}, {"region":
+      "se-sto", "plan": "premium8192.7", "available": true}, {"region": "se-sto",
+      "plan": "premium98304.7", "available": true}, {"region": "in-maa", "plan": "gpu-rtx6000-1.1",
+      "available": false}, {"region": "in-maa", "plan": "gpu-rtx6000-2.1", "available":
+      false}, {"region": "in-maa", "plan": "gpu-rtx6000-3.1", "available": false},
+      {"region": "in-maa", "plan": "gpu-rtx6000-4.1", "available": false}, {"region":
+      "in-maa", "plan": "premium131072.7", "available": true}, {"region": "in-maa",
+      "plan": "premium16384.7", "available": true}, {"region": "in-maa", "plan": "premium262144.7",
+      "available": true}, {"region": "in-maa", "plan": "premium32768.7", "available":
+      true}, {"region": "in-maa", "plan": "premium4096.7", "available": true}, {"region":
+      "in-maa", "plan": "premium524288.7", "available": true}, {"region": "in-maa",
+      "plan": "premium65536.7", "available": true}, {"region": "in-maa", "plan": "premium8192.7",
+      "available": true}, {"region": "in-maa", "plan": "premium98304.7", "available":
+      true}, {"region": "jp-osa", "plan": "gpu-rtx6000-1.1", "available": false},
+      {"region": "jp-osa", "plan": "gpu-rtx6000-2.1", "available": false}, {"region":
+      "jp-osa", "plan": "gpu-rtx6000-3.1", "available": false}, {"region": "jp-osa",
+      "plan": "gpu-rtx6000-4.1", "available": false}, {"region": "jp-osa", "plan":
+      "premium131072.7", "available": true}, {"region": "jp-osa", "plan": "premium16384.7",
+      "available": true}, {"region": "jp-osa", "plan": "premium262144.7", "available":
+      true}, {"region": "jp-osa", "plan": "premium32768.7", "available": true}, {"region":
+      "jp-osa", "plan": "premium4096.7", "available": true}, {"region": "jp-osa",
+      "plan": "premium524288.7", "available": true}, {"region": "jp-osa", "plan":
+      "premium65536.7", "available": true}, {"region": "jp-osa", "plan": "premium8192.7",
+      "available": true}, {"region": "jp-osa", "plan": "premium98304.7", "available":
+      true}, {"region": "it-mil", "plan": "gpu-rtx6000-1.1", "available": false},
+      {"region": "it-mil", "plan": "gpu-rtx6000-2.1", "available": false}, {"region":
+      "it-mil", "plan": "gpu-rtx6000-3.1", "available": false}, {"region": "it-mil",
+      "plan": "gpu-rtx6000-4.1", "available": false}, {"region": "it-mil", "plan":
+      "premium131072.7", "available": true}, {"region": "it-mil", "plan": "premium16384.7",
+      "available": true}, {"region": "it-mil", "plan": "premium262144.7", "available":
+      true}, {"region": "it-mil", "plan": "premium32768.7", "available": true}, {"region":
+      "it-mil", "plan": "premium4096.7", "available": true}, {"region": "it-mil",
+      "plan": "premium524288.7", "available": true}, {"region": "it-mil", "plan":
+      "premium65536.7", "available": true}, {"region": "it-mil", "plan": "premium8192.7",
+      "available": true}, {"region": "it-mil", "plan": "premium98304.7", "available":
+      true}, {"region": "us-mia", "plan": "gpu-rtx6000-1.1", "available": false},
+      {"region": "us-mia", "plan": "gpu-rtx6000-2.1", "available": false}, {"region":
+      "us-mia", "plan": "gpu-rtx6000-3.1", "available": false}, {"region": "us-mia",
+      "plan": "gpu-rtx6000-4.1", "available": false}, {"region": "us-mia", "plan":
+      "premium131072.7", "available": true}, {"region": "us-mia", "plan": "premium16384.7",
+      "available": true}, {"region": "us-mia", "plan": "premium262144.7", "available":
+      true}, {"region": "us-mia", "plan": "premium32768.7", "available": true}, {"region":
+      "us-mia", "plan": "premium4096.7", "available": true}, {"region": "us-mia",
+      "plan": "premium524288.7", "available": true}, {"region": "us-mia", "plan":
+      "premium65536.7", "available": true}, {"region": "us-mia", "plan": "premium8192.7",
+      "available": true}, {"region": "us-mia", "plan": "premium98304.7", "available":
+      true}, {"region": "id-cgk", "plan": "gpu-rtx6000-1.1", "available": false},
+      {"region": "id-cgk", "plan": "gpu-rtx6000-2.1", "available": false}, {"region":
+      "id-cgk", "plan": "gpu-rtx6000-3.1", "available": false}, {"region": "id-cgk",
+      "plan": "gpu-rtx6000-4.1", "available": false}, {"region": "id-cgk", "plan":
+      "premium131072.7", "available": true}, {"region": "id-cgk", "plan": "premium16384.7",
+      "available": true}, {"region": "id-cgk", "plan": "premium262144.7", "available":
+      true}, {"region": "id-cgk", "plan": "premium32768.7", "available": true}, {"region":
+      "id-cgk", "plan": "premium4096.7", "available": true}, {"region": "id-cgk",
+      "plan": "premium524288.7", "available": true}, {"region": "id-cgk", "plan":
+      "premium65536.7", "available": true}, {"region": "id-cgk", "plan": "premium8192.7",
+      "available": true}, {"region": "id-cgk", "plan": "premium98304.7", "available":
+      true}, {"region": "us-lax", "plan": "gpu-rtx6000-1.1", "available": false},
+      {"region": "us-lax", "plan": "gpu-rtx6000-2.1", "available": false}, {"region":
+      "us-lax", "plan": "gpu-rtx6000-3.1", "available": false}, {"region": "us-lax",
+      "plan": "gpu-rtx6000-4.1", "available": false}, {"region": "us-lax", "plan":
+      "premium131072.7", "available": true}, {"region": "us-lax", "plan": "premium16384.7",
+      "available": true}, {"region": "us-lax", "plan": "premium262144.7", "available":
+      true}, {"region": "us-lax", "plan": "premium32768.7", "available": true}, {"region":
+      "us-lax", "plan": "premium4096.7", "available": true}, {"region": "us-lax",
+      "plan": "premium524288.7", "available": true}, {"region": "us-lax", "plan":
+      "premium65536.7", "available": true}, {"region": "us-lax", "plan": "premium8192.7",
+      "available": true}, {"region": "us-lax", "plan": "premium98304.7", "available":
+      true}], "page": 3, "pages": 3, "results": 299}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=900
+      - private, max-age=60, s-maxage=60
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
