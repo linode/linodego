@@ -47,41 +47,45 @@ type APIError struct {
 
 func coupleAPIErrors(r *resty.Response, err error) (*resty.Response, error) {
 	if err != nil {
+		// an error was raised in go code, no need to check the resty Response
 		return nil, NewError(err)
 	}
 
-	if r.Error() != nil {
-		// Check that response is of the correct content-type before unmarshalling
-		expectedContentType := r.Request.Header.Get("Accept")
-		responseContentType := r.Header().Get("Content-Type")
-
-		// If the upstream Linode API server being fronted fails to respond to the request,
-		// the http server will respond with a default "Bad Gateway" page with Content-Type
-		// "text/html".
-		if r.StatusCode() == http.StatusBadGateway && responseContentType == "text/html" {
-			return nil, Error{Code: http.StatusBadGateway, Message: http.StatusText(http.StatusBadGateway)}
-		}
-
-		if responseContentType != expectedContentType {
-			msg := fmt.Sprintf(
-				"Unexpected Content-Type: Expected: %v, Received: %v\nResponse body: %s",
-				expectedContentType,
-				responseContentType,
-				string(r.Body()),
-			)
-
-			return nil, Error{Code: r.StatusCode(), Message: msg}
-		}
-
-		apiError, ok := r.Error().(*APIError)
-		if !ok || (ok && len(apiError.Errors) == 0) {
-			return r, nil
-		}
-
-		return nil, NewError(r)
+	if r.Error() == nil {
+		// no error in the resty Response
+		return r, nil
 	}
 
-	return r, nil
+	// handle the resty Response errors
+
+	// Check that response is of the correct content-type before unmarshalling
+	expectedContentType := r.Request.Header.Get("Accept")
+	responseContentType := r.Header().Get("Content-Type")
+
+	// If the upstream Linode API server being fronted fails to respond to the request,
+	// the http server will respond with a default "Bad Gateway" page with Content-Type
+	// "text/html".
+	if r.StatusCode() == http.StatusBadGateway && responseContentType == "text/html" {
+		return nil, Error{Code: http.StatusBadGateway, Message: http.StatusText(http.StatusBadGateway)}
+	}
+
+	if responseContentType != expectedContentType {
+		msg := fmt.Sprintf(
+			"Unexpected Content-Type: Expected: %v, Received: %v\nResponse body: %s",
+			expectedContentType,
+			responseContentType,
+			string(r.Body()),
+		)
+
+		return nil, Error{Code: r.StatusCode(), Message: msg}
+	}
+
+	apiError, ok := r.Error().(*APIError)
+	if !ok || (ok && len(apiError.Errors) == 0) {
+		return r, nil
+	}
+
+	return nil, NewError(r)
 }
 
 func (e APIError) Error() string {

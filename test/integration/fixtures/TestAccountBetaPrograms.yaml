@@ -1,0 +1,283 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/betas?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": "vpc_beta", "label": "Virtual Private Cloud (VPC) Pre-Registration",
+      "description": "VPC is coming to beta in select data centers soon! Virtual Private
+      Cloud (VPC) solution. A VPC is an isolated network that enables cloud resources
+      to privately communicate with each other and selectively gate access to the
+      public internet or other private networks. VPC will be available at no additional
+      cost both during the beta and when it enters general availability.\r\n\r\nPlease
+      note: VPC is not currently available in beta testing. By signing up to participate
+      in this beta when it becomes available, you consent to be subscribed to receive
+      emails from Akamai cloud computing services marketing and be contacted via email
+      when VPC is available.", "started": "2018-01-02T03:04:05", "ended": null, "greenlight_only":
+      false, "more_info": "https://www.linode.com/green-light/"}, {"id": "global_load_balancer_beta",
+      "label": "Akamai Global Load Balancer Pre-Registration", "description": "The
+      Akamai Global Load Balancer (AGLB) is a layer 4 and 7 load balancer that distributes
+      traffic based on performance, weight, and content (HTTP headers, query strings,
+      etc.). The AGLB is a multi-region, multicloud, independent of Akamai Delivery,
+      and built for East-West and North-South traffic. Key features include multi-region
+      load balancing and method selection. Beta for this product is coming soon\u2013
+      sign up to be contacted first when AGLB is available.\r\n\r\nPlease note: Akamai
+      Global Load Balancer is not currently available in beta testing. By signing
+      up to participate in this beta when it becomes available, you consent to be
+      subscribed to receive emails from Akamai cloud computing services marketing
+      and be contacted via email when the beta period begins.", "started": "2018-01-02T03:04:05",
+      "ended": null, "greenlight_only": false, "more_info": "https://www.linode.com/green-light/"}],
+      "page": 1, "pages": 1, "results": 2}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"id":"vpc_beta"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/account/betas
+    method: POST
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - account:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/account/betas
+    method: GET
+  response:
+    body: '{"data": [{"id": "global_load_balancer_beta", "label": "Akamai Global Load
+      Balancer Pre-Registration", "enrolled": "2018-01-02T03:04:05", "description":
+      "The Akamai Global Load Balancer (AGLB) is a layer 4 and 7 load balancer that
+      distributes traffic based on performance, weight, and content (HTTP headers,
+      query strings, etc.). The AGLB is a multi-region, multicloud, independent of
+      Akamai Delivery, and built for East-West and North-South traffic. Key features
+      include multi-region load balancing and method selection. Beta for this product
+      is coming soon\u2013 sign up to be contacted first when AGLB is available.\r\n\r\nPlease
+      note: Akamai Global Load Balancer is not currently available in beta testing.
+      By signing up to participate in this beta when it becomes available, you consent
+      to be subscribed to receive emails from Akamai cloud computing services marketing
+      and be contacted via email when the beta period begins.", "started": "2018-01-02T03:04:05",
+      "ended": null}, {"id": "vpc_beta", "label": "Virtual Private Cloud (VPC) Pre-Registration",
+      "enrolled": "2018-01-02T03:04:05", "description": "VPC is coming to beta in
+      select data centers soon! Virtual Private Cloud (VPC) solution. A VPC is an
+      isolated network that enables cloud resources to privately communicate with
+      each other and selectively gate access to the public internet or other private
+      networks. VPC will be available at no additional cost both during the beta and
+      when it enters general availability.\r\n\r\nPlease note: VPC is not currently
+      available in beta testing. By signing up to participate in this beta when it
+      becomes available, you consent to be subscribed to receive emails from Akamai
+      cloud computing services marketing and be contacted via email when VPC is available.",
+      "started": "2018-01-02T03:04:05", "ended": null}], "page": 1, "pages": 1, "results":
+      2}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - account:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/account/betas/global_load_balancer_beta
+    method: GET
+  response:
+    body: '{"id": "global_load_balancer_beta", "label": "Akamai Global Load Balancer
+      Pre-Registration", "enrolled": "2018-01-02T03:04:05", "description": "The Akamai
+      Global Load Balancer (AGLB) is a layer 4 and 7 load balancer that distributes
+      traffic based on performance, weight, and content (HTTP headers, query strings,
+      etc.). The AGLB is a multi-region, multicloud, independent of Akamai Delivery,
+      and built for East-West and North-South traffic. Key features include multi-region
+      load balancing and method selection. Beta for this product is coming soon\u2013
+      sign up to be contacted first when AGLB is available.\r\n\r\nPlease note: Akamai
+      Global Load Balancer is not currently available in beta testing. By signing
+      up to participate in this beta when it becomes available, you consent to be
+      subscribed to receive emails from Akamai cloud computing services marketing
+      and be contacted via email when the beta period begins.", "started": "2018-01-02T03:04:05",
+      "ended": null}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "970"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - account:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
