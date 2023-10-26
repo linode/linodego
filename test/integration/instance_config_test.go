@@ -34,7 +34,13 @@ func setupVPCWithSubnetWithInstance(
 		t.Fatal(err)
 	}
 
-	vpc, vpcSubnet, vpcWithSubnetTeardown, err := createVPCWithSubnet(t, client)
+	vpc, vpcSubnet, vpcWithSubnetTeardown, err := createVPCWithSubnet(
+		t,
+		client,
+		func(client *Client, options *VPCCreateOptions) {
+			options.Region = instance.Region
+		},
+	)
 	if err != nil {
 		t.Error(err)
 	}
@@ -53,14 +59,13 @@ func setupInstanceWith3Interfaces(t *testing.T, fixturesYaml string) (
 	*Instance,
 	*InstanceConfig,
 	func(),
-	error,
 ) {
 	t.Helper()
 	client, vpc, vpcSubnet, instance, config, teardown, err := setupVPCWithSubnetWithInstance(
 		t,
 		fixturesYaml,
 		func(client *Client, opts *InstanceCreateOptions) {
-			opts.Region = getRegionsWithCaps(t, client, []string{"vlans", "VPCs"})[0]
+			opts.Region = getRegionsWithCaps(t, client, []string{"VPCs"})[0]
 		},
 	)
 	if err != nil {
@@ -68,7 +73,6 @@ func setupInstanceWith3Interfaces(t *testing.T, fixturesYaml string) (
 			teardown()
 		}
 		t.Fatal(err)
-		return nil, nil, nil, nil, nil, nil, err
 	}
 
 	updateConfigOpts := config.GetUpdateOptions()
@@ -85,21 +89,13 @@ func setupInstanceWith3Interfaces(t *testing.T, fixturesYaml string) (
 			SubnetID: &vpcSubnet.ID,
 		},
 	}
-	_, err = client.UpdateInstanceConfig(context.Background(), instance.ID, config.ID, updateConfigOpts)
+	config, err = client.UpdateInstanceConfig(context.Background(), instance.ID, config.ID, updateConfigOpts)
 	if err != nil {
 		teardown()
 		t.Fatal(err)
-		return nil, nil, nil, nil, nil, nil, err
 	}
 
-	config, err = client.GetInstanceConfig(context.Background(), instance.ID, config.ID)
-	if err != nil {
-		teardown()
-		t.Fatal(err)
-		return nil, nil, nil, nil, nil, nil, err
-	}
-
-	return client, vpc, vpcSubnet, instance, config, teardown, err
+	return client, vpc, vpcSubnet, instance, config, teardown
 }
 
 func TestInstance_ConfigInterfaces_AppendDelete(t *testing.T) {
@@ -182,21 +178,18 @@ func TestInstance_ConfigInterfaces_AppendDelete(t *testing.T) {
 
 func TestInstance_ConfigInterfaces_Reorder(t *testing.T) {
 
-	client, _, _, instance, config, teardown, err := setupInstanceWith3Interfaces(
+	client, _, _, instance, config, teardown := setupInstanceWith3Interfaces(
 		t,
 		"fixtures/TestInstance_ConfigInterfaces_Reorder",
 	)
 	defer teardown()
-	if err != nil {
-		t.Fatal(err)
-	}
 
 	desiredIDs := []int{
 		config.Interfaces[1].ID,
 		config.Interfaces[0].ID,
 		config.Interfaces[2].ID,
 	}
-	err = client.ReorderInstanceConfigInterfaces(
+	err := client.ReorderInstanceConfigInterfaces(
 		context.Background(),
 		instance.ID,
 		config.ID,
@@ -232,14 +225,11 @@ func TestInstance_ConfigInterfaces_Reorder(t *testing.T) {
 }
 
 func TestInstance_ConfigInterfaces_List(t *testing.T) {
-	client, _, _, instance, config, teardown, err := setupInstanceWith3Interfaces(
+	client, _, _, instance, config, teardown := setupInstanceWith3Interfaces(
 		t,
 		"fixtures/TestInstance_ConfigInterfaces_List",
 	)
 	defer teardown()
-	if err != nil {
-		t.Fatal(err)
-	}
 
 	interfaces, err := client.ListInstanceConfigInterfaces(
 		context.Background(),

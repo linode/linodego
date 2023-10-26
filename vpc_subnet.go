@@ -10,13 +10,26 @@ import (
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
+// VPCSubnetLinodeInterface represents an interface on a Linode that is currently
+// assigned to this VPC subnet.
+type VPCSubnetLinodeInterface struct {
+	ID     int  `json:"id"`
+	Active bool `json:"active"`
+}
+
+// VPCSubnetLinode represents a Linode currently assigned to a VPC subnet.
+type VPCSubnetLinode struct {
+	ID         int                        `json:"id"`
+	Interfaces []VPCSubnetLinodeInterface `json:"interfaces"`
+}
+
 type VPCSubnet struct {
-	ID      int        `json:"id"`
-	Label   string     `json:"label"`
-	IPv4    string     `json:"ipv4"`
-	Linodes []int      `json:"linodes"`
-	Created *time.Time `json:"-"`
-	Updated *time.Time `json:"-"`
+	ID      int               `json:"id"`
+	Label   string            `json:"label"`
+	IPv4    string            `json:"ipv4"`
+	Linodes []VPCSubnetLinode `json:"linodes"`
+	Created *time.Time        `json:"-"`
+	Updated *time.Time        `json:"-"`
 }
 
 type VPCSubnetCreateOptions struct {
