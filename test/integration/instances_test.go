@@ -530,7 +530,7 @@ func createInstanceWithoutDisks(
 func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string, modifiers ...instanceModifier) (*linodego.Client, *linodego.Instance, *linodego.InstanceConfig, func(), error) {
 	t.Helper()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
-	instance, config, instanceTeardown, err := createInstanceWithoutDisks(t, client)
+	instance, config, instanceTeardown, err := createInstanceWithoutDisks(t, client, modifiers...)
 
 	teardown := func() {
 		instanceTeardown()

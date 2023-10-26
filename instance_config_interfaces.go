@@ -13,6 +13,7 @@ type InstanceConfigInterface struct {
 	Label       string                 `json:"label"`
 	Purpose     ConfigInterfacePurpose `json:"purpose"`
 	Primary     bool                   `json:"primary"`
+	Active      bool                   `json:"active"`
 	VPCID       *int                   `json:"vpc_id"`
 	SubnetID    *int                   `json:"subnet_id"`
 	IPv4        VPCIPv4                `json:"ipv4"`
