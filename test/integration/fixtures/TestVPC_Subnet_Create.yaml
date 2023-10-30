@@ -104,7 +104,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-vpc-1698329227789347000","region":"ap-west"}'
+    body: '{"label":"go-test-vpc-1698681847034738000","region":"ap-west"}'
     form: {}
     headers:
       Accept:
@@ -116,7 +116,7 @@ interactions:
     url: https://api.linode.com/v4beta/vpcs
     method: POST
   response:
-    body: '{"id": 1161, "label": "go-test-vpc-1698329227789347000", "description":
+    body: '{"id": 1257, "label": "go-test-vpc-1698681847034738000", "description":
       "", "region": "ap-west", "subnets": [], "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05"}'
     headers:
@@ -161,7 +161,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"linodego-vpc-test-1698329229464798000","ipv4":"192.168.0.0/25"}'
+    body: '{"label":"linodego-vpc-test-1698681849092337000","ipv4":"192.168.0.0/25"}'
     form: {}
     headers:
       Accept:
@@ -170,11 +170,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/vpcs/1161/subnets
+    url: https://api.linode.com/v4beta/vpcs/1257/subnets
     method: POST
   response:
-    body: '{"id": 983, "label": "linodego-vpc-test-1698329229464798000", "ipv4": "192.168.0.0/25",
-      "linodes": [], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
+    body: '{"id": 1035, "label": "linodego-vpc-test-1698681849092337000", "ipv4":
+      "192.168.0.0/25", "linodes": [], "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -189,7 +190,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "170"
+      - "171"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -226,7 +227,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/vpcs/1161/subnets/983
+    url: https://api.linode.com/v4beta/vpcs/1257/subnets/1035
     method: DELETE
   response:
     body: '{}'
@@ -281,7 +282,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/vpcs/1161
+    url: https://api.linode.com/v4beta/vpcs/1257
     method: DELETE
   response:
     body: '{}'

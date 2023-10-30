@@ -104,7 +104,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-vpc-1698329234463583000","region":"ap-west"}'
+    body: '{"label":"go-test-vpc-1698681854416264000","region":"ap-west"}'
     form: {}
     headers:
       Accept:
@@ -116,7 +116,7 @@ interactions:
     url: https://api.linode.com/v4beta/vpcs
     method: POST
   response:
-    body: '{"id": 1164, "label": "go-test-vpc-1698329234463583000", "description":
+    body: '{"id": 1260, "label": "go-test-vpc-1698681854416264000", "description":
       "", "region": "ap-west", "subnets": [], "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05"}'
     headers:
@@ -161,7 +161,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"linodego-vpc-test_invalid_label1698329235096690000","ipv4":"192.168.0.0/25"}'
+    body: '{"label":"linodego-vpc-test_invalid_label1698681855027744000","ipv4":"192.168.0.0/25"}'
     form: {}
     headers:
       Accept:
@@ -170,7 +170,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/vpcs/1164/subnets
+    url: https://api.linode.com/v4beta/vpcs/1260/subnets
     method: POST
   response:
     body: '{"errors": [{"reason": "Label must include only ASCII letters, numbers,
@@ -209,7 +209,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/vpcs/1164
+    url: https://api.linode.com/v4beta/vpcs/1260
     method: DELETE
   response:
     body: '{}'

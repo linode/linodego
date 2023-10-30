@@ -104,7 +104,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-vpc-1698329244440138000","region":"ap-west"}'
+    body: '{"label":"go-test-vpc-1698681865031604000","region":"ap-west"}'
     form: {}
     headers:
       Accept:
@@ -116,7 +116,7 @@ interactions:
     url: https://api.linode.com/v4beta/vpcs
     method: POST
   response:
-    body: '{"id": 1169, "label": "go-test-vpc-1698329244440138000", "description":
+    body: '{"id": 1265, "label": "go-test-vpc-1698681865031604000", "description":
       "", "region": "ap-west", "subnets": [], "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05"}'
     headers:
@@ -179,21 +179,21 @@ interactions:
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}, {"id":
       857, "label": "tf-test-4174786333703849653", "description": "", "region": "us-east",
       "subnets": [{"id": 974, "label": "sdfdsf", "ipv4": "10.0.4.0/24", "linodes":
-      [], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}], "created":
-      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}, {"id": 858, "label":
-      "tf-test-1159384121895044619", "description": "", "region": "ap-west", "subnets":
-      [], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}, {"id":
-      859, "label": "tf-test-2692305176810463845", "description": "", "region": "ap-southeast",
-      "subnets": [{"id": 973, "label": "asdsdada", "ipv4": "10.0.4.0/24", "linodes":
-      [], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}], "created":
-      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}, {"id": 860, "label":
-      "tf-test-3942788347846915781", "description": "", "region": "ca-central", "subnets":
-      [], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}, {"id":
-      897, "label": "go-test-vpc-1697469333118728000", "description": "", "region":
-      "ap-west", "subnets": [], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"},
-      {"id": 1169, "label": "go-test-vpc-1698329244440138000", "description": "",
-      "region": "ap-west", "subnets": [], "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05"}], "page": 1, "pages": 1, "results": 7}'
+      [{"id": 24952029, "interfaces": [{"id": 14830, "active": false}]}], "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}], "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05"}, {"id": 858, "label": "tf-test-1159384121895044619",
+      "description": "", "region": "ap-west", "subnets": [], "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05"}, {"id": 859, "label": "tf-test-2692305176810463845",
+      "description": "", "region": "ap-southeast", "subnets": [{"id": 973, "label":
+      "asdsdada", "ipv4": "10.0.4.0/24", "linodes": [], "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05"}], "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05"}, {"id": 860, "label": "tf-test-3942788347846915781",
+      "description": "", "region": "ca-central", "subnets": [], "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05"}, {"id": 897, "label": "go-test-vpc-1697469333118728000",
+      "description": "", "region": "ap-west", "subnets": [], "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05"}, {"id": 1265, "label": "go-test-vpc-1698681865031604000",
+      "description": "", "region": "ap-west", "subnets": [], "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05"}], "page": 1, "pages": 1, "results": 7}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -246,7 +246,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/vpcs/1169
+    url: https://api.linode.com/v4beta/vpcs/1265
     method: DELETE
   response:
     body: '{}'

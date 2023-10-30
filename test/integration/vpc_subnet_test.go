@@ -275,4 +275,29 @@ func TestVPC_Subnet_WithInstance(t *testing.T) {
 	if targetInterface.ID != config.Interfaces[2].ID {
 		t.Fatalf("interface ID mismatch, expected %d for %d", config.Interfaces[2].ID, targetInterface.ID)
 	}
+
+	// Ensure the NAT 1:1 information is reflected in the IP configuration of this instance
+	networking, err := client.GetInstanceIPAddresses(context.Background(), inst.ID)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	nat1To1 := networking.IPv4.Public[0].VPCNAT1To1
+
+	if nat1To1 == nil {
+		t.Fatalf("expected VPCNAT1To1 to contain data, got nil")
+	}
+
+	if nat1To1.SubnetID != refreshedSubnet.ID {
+		t.Fatal("IP/subnet id mismatch")
+	}
+
+	if nat1To1.VPCID != vpc.ID {
+		t.Fatal("IP/VPC id mismatch")
+	}
+
+	if nat1To1.Address != config.Interfaces[2].IPv4.VPC {
+		t.Fatalf("nat_1_1 subnet IP mismatch")
+	}
+
 }

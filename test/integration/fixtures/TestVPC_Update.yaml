@@ -104,7 +104,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-vpc-1698329243179959000","region":"ap-west"}'
+    body: '{"label":"go-test-vpc-1698681863614065000","region":"ap-west"}'
     form: {}
     headers:
       Accept:
@@ -116,7 +116,7 @@ interactions:
     url: https://api.linode.com/v4beta/vpcs
     method: POST
   response:
-    body: '{"id": 1168, "label": "go-test-vpc-1698329243179959000", "description":
+    body: '{"id": 1264, "label": "go-test-vpc-1698681863614065000", "description":
       "", "region": "ap-west", "subnets": [], "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05"}'
     headers:
@@ -170,10 +170,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/vpcs/1168
+    url: https://api.linode.com/v4beta/vpcs/1264
     method: PUT
   response:
-    body: '{"id": 1168, "label": "updated-label", "description": "updated description",
+    body: '{"id": 1264, "label": "updated-label", "description": "updated description",
       "region": "ap-west", "subnets": [], "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05"}'
     headers:
@@ -227,7 +227,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/vpcs/1168
+    url: https://api.linode.com/v4beta/vpcs/1264
     method: DELETE
   response:
     body: '{}'
