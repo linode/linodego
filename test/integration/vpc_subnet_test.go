@@ -73,14 +73,14 @@ func vpcSubnetUpdateOptionsCheck(
 	}
 }
 
-func createVPCWithSubnet(t *testing.T, client *linodego.Client) (
+func createVPCWithSubnet(t *testing.T, client *linodego.Client, vpcModifier ...vpcModifier) (
 	*linodego.VPC,
 	*linodego.VPCSubnet,
 	func(),
 	error,
 ) {
 	t.Helper()
-	vpc, vpcTeardown, err := createVPC(t, client)
+	vpc, vpcTeardown, err := createVPC(t, client, vpcModifier...)
 	if err != nil {
 		if vpcTeardown != nil {
 			vpcTeardown()
@@ -106,7 +106,6 @@ func createVPCWithSubnet(t *testing.T, client *linodego.Client) (
 	}
 	return vpc, vpcSubnet, teardown, err
 }
-
 
 func setupVPCWithSubnet(
 	t *testing.T,
@@ -245,5 +244,35 @@ func TestVPC_Subnet_Update_Invalid_data(t *testing.T) {
 	expectedErrorMessage := "Label must include only ASCII letters, numbers, and dashes"
 	if !strings.Contains(e.Message, expectedErrorMessage) {
 		t.Errorf("Wrong error message displayed should have contained, %s", expectedErrorMessage)
+	}
+}
+
+func TestVPC_Subnet_WithInstance(t *testing.T) {
+	client, vpc, vpcSubnet, inst, config, teardown := setupInstanceWith3Interfaces(t, "fixtures/TestVPC_Subnet_WithInstance")
+	defer teardown()
+
+	// Refresh the subnet to show the assigned instance/interface
+	refreshedSubnet, err := client.GetVPCSubnet(context.Background(), vpc.ID, vpcSubnet.ID)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if len(refreshedSubnet.Linodes) != 1 {
+		t.Fatalf("expected 1 assigned linode, got %d", len(refreshedSubnet.Linodes))
+	}
+
+	targetLinode := refreshedSubnet.Linodes[0]
+	if targetLinode.ID != inst.ID {
+		t.Fatalf("expected assigned instance to have id %d, got %d", inst.ID, targetLinode.ID)
+	}
+
+	if len(targetLinode.Interfaces) != 1 {
+		t.Fatalf("expected 1 assigned interface, got %d", len(targetLinode.Interfaces))
+	}
+
+	targetInterface := targetLinode.Interfaces[0]
+
+	if targetInterface.ID != config.Interfaces[2].ID {
+		t.Fatalf("interface ID mismatch, expected %d for %d", config.Interfaces[2].ID, targetInterface.ID)
 	}
 }

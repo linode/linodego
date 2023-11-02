@@ -10,6 +10,8 @@ import (
 	. "github.com/linode/linodego"
 )
 
+type vpcModifier func(*linodego.Client, *linodego.VPCCreateOptions)
+
 func formatVPCError(err error, action string, vpcID *int) error {
 	if err == nil {
 		return nil
@@ -29,12 +31,17 @@ func formatVPCError(err error, action string, vpcID *int) error {
 	)
 }
 
-func createVPC(t *testing.T, client *linodego.Client) (*linodego.VPC, func(), error) {
+func createVPC(t *testing.T, client *linodego.Client, vpcModifier ...vpcModifier) (*linodego.VPC, func(), error) {
 	t.Helper()
 	createOpts := linodego.VPCCreateOptions{
 		Label:  "go-test-vpc-" + getUniqueText(),
 		Region: getRegionsWithCaps(t, client, []string{"VPCs"})[0],
 	}
+
+	for _, mod := range vpcModifier {
+		mod(client, &createOpts)
+	}
+
 	vpc, err := client.CreateVPC(context.Background(), createOpts)
 	if err != nil {
 		t.Fatal(formatVPCError(err, "creating", nil))
@@ -116,7 +123,6 @@ func vpcUpdateOptionsCheck(
 		t.Error("the VPC instance and VPC Update Options instance are mismatched")
 	}
 }
-
 
 func TestVPC_CreateGet(t *testing.T) {
 	client, vpc, teardown, err := setupVPC(t, "fixtures/TestVPC_CreateGet")
