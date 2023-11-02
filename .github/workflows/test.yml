@@ -72,7 +72,7 @@ jobs:
             go_junit_report_dir=$(go env GOPATH)/bin
             export PATH="$PATH:$go_junit_report_dir"
             xml_filename=$(echo "$filename" | sed 's/\.log/.xml/')
-            go-junit-report < "$filename" > "$xml_filename"
+            go-junit-report -in "$filename" -iocopy -out "$xml_filename"
             echo "Conversion from log to XML completed successfully."
           else
             echo "test report file not found."
