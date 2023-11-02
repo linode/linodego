@@ -65,7 +65,7 @@ func setupInstanceWith3Interfaces(t *testing.T, fixturesYaml string) (
 		t,
 		fixturesYaml,
 		func(client *Client, opts *InstanceCreateOptions) {
-			opts.Region = "us-east"
+			opts.Region = getRegionsWithCaps(t, client, []string{"VPCs"})[0]
 		},
 	)
 	if err != nil {
