@@ -87,6 +87,9 @@ func setupInstanceWith3Interfaces(t *testing.T, fixturesYaml string) (
 		{
 			Purpose:  InterfacePurposeVPC,
 			SubnetID: &vpcSubnet.ID,
+			IPv4: &VPCIPv4{
+				NAT1To1: "any",
+			},
 		},
 	}
 	config, err = client.UpdateInstanceConfig(context.Background(), instance.ID, config.ID, updateConfigOpts)
