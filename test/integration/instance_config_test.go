@@ -46,8 +46,8 @@ func setupVPCWithSubnetWithInstance(
 	}
 
 	teardownAll := func() {
-		instanceTeardown()
 		vpcWithSubnetTeardown()
+		instanceTeardown()
 	}
 	return client, vpc, vpcSubnet, instance, instanceConfig, teardownAll, err
 }

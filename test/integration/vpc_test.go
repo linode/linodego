@@ -185,7 +185,8 @@ func TestVPC_List(t *testing.T) {
 }
 
 func TestVPC_Create_Invalid_data(t *testing.T) {
-	client, _ := createTestClient(t, "fixtures/TestVPC_Create_Invalid")
+	client, teardown := createTestClient(t, "fixtures/TestVPC_Create_Invalid")
+	defer teardown()
 	err := createVPC_invalid_label(t, client)
 
 	e, _ := err.(*Error)
