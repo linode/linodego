@@ -22,9 +22,10 @@ func setupVPCWithSubnetWithInstance(
 	error,
 ) {
 	t.Helper()
-	client, instance, instanceConfig, instanceTeardown, err := setupInstanceWithoutDisks(
+	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+	instance, instanceConfig, instanceTeardown, err := createInstanceWithoutDisks(
 		t,
-		fixturesYaml,
+		client,
 		modifiers...,
 	)
 	if err != nil {
@@ -46,8 +47,9 @@ func setupVPCWithSubnetWithInstance(
 	}
 
 	teardownAll := func() {
-		vpcWithSubnetTeardown()
 		instanceTeardown()
+		vpcWithSubnetTeardown()		
+		fixtureTeardown()
 	}
 	return client, vpc, vpcSubnet, instance, instanceConfig, teardownAll, err
 }
