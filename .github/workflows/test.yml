@@ -10,6 +10,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      EXIT_STATUS: 0
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v4
@@ -49,28 +51,31 @@ jobs:
       - name: Install go-junit-report
         run: go install github.com/jstemmer/go-junit-report/v2@latest
 
-      - name: Run tests and save json report
+      - name: Run tests and save test report
         run: |
           timestamp=$(date +'%Y%m%d%H%M')
-          report_filename="${timestamp}_linodego_test_report.json"
+          report_filename="${timestamp}_linodego_test_report.log"
 
-          make test ARGS="-json" | tee "$report_filename"
+          if ! make ARGS="2>&1" testacc > "$report_filename"; then
+            echo "EXIT_STATUS=1" >> $GITHUB_ENV
+          fi
+          cat "$report_filename"
         env:
           SKIP_LINT: 1
 
-      - name: Convert JSON Report to XML
+      - name: Convert to XML Report
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: |
-          filename=$(ls | grep -E '^[0-9]{12}_linodego_test_report\.json')
+          filename=$(ls | grep -E '^[0-9]{12}_linodego_test_report\.log')
 
           if [ -f "$filename" ]; then
             go_junit_report_dir=$(go env GOPATH)/bin
             export PATH="$PATH:$go_junit_report_dir"
-            xml_filename=$(echo "$filename" | sed 's/\.json$/.xml/')
-            go-junit-report < "$filename" > "$xml_filename"
-            echo "Conversion from JSON to XML completed successfully."
+            xml_filename=$(echo "$filename" | sed 's/\.log/.xml/')
+            go-junit-report -in "$filename" -iocopy -out "$xml_filename"
+            echo "Conversion from log to XML completed successfully."
           else
-            echo "JSON test report file not found."
+            echo "test report file not found."
             exit 1
           fi
         env:
@@ -94,3 +99,12 @@ jobs:
         run: |
           report_filename=$(ls | grep -E '^[0-9]{12}_linodego_test_report\.xml$')
           python3 scripts/test_report_upload_script.py "${report_filename}"
+
+      - name: Test Execution Status Handler
+        run: |
+          if [[ "$EXIT_STATUS" != 0 ]]; then
+            echo "Test execution contains failure(s)"
+            exit $EXIT_STATUS 
+          else
+            echo "Tests passed!"
+          fi
