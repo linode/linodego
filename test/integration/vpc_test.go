@@ -167,7 +167,7 @@ func TestVPC_List(t *testing.T) {
 	}
 	vpcCheck(vpc, t)
 
-	vpcs, err := client.ListVPC(context.Background(), nil)
+	vpcs, err := client.ListVPCs(context.Background(), nil)
 	if err != nil {
 		t.Error(formatVPCError(err, "listing", nil))
 	}
