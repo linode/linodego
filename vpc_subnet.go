@@ -129,7 +129,7 @@ func (c *Client) GetVPCSubnet(
 	return r.Result().(*VPCSubnet), nil
 }
 
-func (c *Client) ListVPCSubnet(
+func (c *Client) ListVPCSubnets(
 	ctx context.Context,
 	vpcID int,
 	opts *ListOptions,

@@ -180,7 +180,7 @@ func TestVPC_Subnet_List(t *testing.T) {
 	opts := vpcSubnet.GetCreateOptions()
 	vpcSubnetCreateOptionsCheck(&opts, vpcSubnet, t)
 
-	vpcSubnets, err := client.ListVPCSubnet(context.Background(), vpc.ID, nil)
+	vpcSubnets, err := client.ListVPCSubnets(context.Background(), vpc.ID, nil)
 
 	found := false
 	for _, v := range vpcSubnets {
