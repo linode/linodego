@@ -119,7 +119,7 @@ func (c *Client) GetVPC(ctx context.Context, vpcID int) (*VPC, error) {
 	return r.Result().(*VPC), nil
 }
 
-func (c *Client) ListVPC(ctx context.Context, opts *ListOptions) ([]VPC, error) {
+func (c *Client) ListVPCs(ctx context.Context, opts *ListOptions) ([]VPC, error) {
 	response := VPCsPagedResponse{}
 	err := c.listHelper(ctx, &response, opts)
 	if err != nil {
