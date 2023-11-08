@@ -4,7 +4,7 @@ require (
 	github.com/dnaeon/go-vcr v1.1.0
 	github.com/google/go-cmp v0.6.0
 	github.com/jarcoal/httpmock v1.2.0
-	github.com/linode/linodego v0.20.1
+	github.com/linode/linodego v1.25.0
 	github.com/linode/linodego/k8s v0.0.0-00010101000000-000000000000
 	golang.org/x/net v0.17.0
 	golang.org/x/oauth2 v0.8.0
@@ -18,7 +18,7 @@ require (
 	github.com/go-openapi/jsonpointer v0.19.6 // indirect
 	github.com/go-openapi/jsonreference v0.20.2 // indirect
 	github.com/go-openapi/swag v0.22.3 // indirect
-	github.com/go-resty/resty/v2 v2.10.0 // indirect
+	github.com/go-resty/resty/v2 v2.9.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/gnostic-models v0.6.8 // indirect
