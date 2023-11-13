@@ -3,7 +3,6 @@ package integration
 import (
 	"context"
 	"encoding/base64"
-	"reflect"
 	"strconv"
 	"testing"
 
@@ -188,7 +187,7 @@ func TestInstance_Disk_ListMultiple(t *testing.T) {
 		t.Errorf("Error creating disk from private image: %s", err)
 	}
 
-	disk, err = client.CreateInstanceDisk(context.Background(), instance2.ID, linodego.InstanceDiskCreateOptions{
+	_, err = client.CreateInstanceDisk(context.Background(), instance2.ID, linodego.InstanceDiskCreateOptions{
 		Label: "go-disk-test-" + randLabel(),
 		Size:  2000,
 	})
@@ -244,93 +243,6 @@ func TestInstance_Disk_ResetPassword(t *testing.T) {
 	}
 }
 
-func TestInstance_Configs_List(t *testing.T) {
-	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Configs_List")
-	defer teardown()
-	if err != nil {
-		t.Error(err)
-	}
-
-	configs, err := client.ListInstanceConfigs(context.Background(), instance.ID, nil)
-	if err != nil {
-		t.Errorf("Error listing instance configs, expected struct, got error %v", err)
-	}
-	if len(configs) == 0 {
-		t.Errorf("Expected a list of instance configs, but got %v", configs)
-	}
-	if configs[0].ID != config.ID {
-		t.Errorf("Expected config id %d, got %d", configs[0].ID, config.ID)
-	}
-}
-
-func TestInstance_Config_Update(t *testing.T) {
-	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Config_Update")
-	defer teardown()
-	if err != nil {
-		t.Error(err)
-	}
-
-	updateConfigOpts := linodego.InstanceConfigUpdateOptions{
-		Label:      "go-conf-test-" + randLabel(),
-		Devices:    &linodego.InstanceConfigDeviceMap{},
-		RootDevice: "/dev/root",
-	}
-
-	_, err = client.UpdateInstanceConfig(context.Background(), instance.ID, config.ID, updateConfigOpts)
-	if err != nil {
-		t.Error(err)
-	}
-}
-
-func TestInstance_ConfigInterfaces_Update(t *testing.T) {
-	client, instance, config, teardown, err := setupInstanceWithoutDisks(t,
-		"fixtures/TestInstance_ConfigInterfaces_Update",
-		func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
-			// Ensure we're in a region that supports VLANs
-			opts.Region = getRegionsWithCaps(t, client, []string{"vlans"})[0]
-		})
-	defer teardown()
-	if err != nil {
-		t.Error(err)
-	}
-
-	updateConfigOpts := linodego.InstanceConfigUpdateOptions{
-		Interfaces: []linodego.InstanceConfigInterface{
-			{
-				Purpose: linodego.InterfacePurposePublic,
-			},
-			{
-				Purpose: linodego.InterfacePurposeVLAN,
-				Label:   instance.Label + "-r",
-			},
-		},
-	}
-
-	_, err = client.UpdateInstanceConfig(context.Background(), instance.ID, config.ID, updateConfigOpts)
-	if err != nil {
-		t.Error(err)
-	}
-
-	result, err := client.GetInstanceConfig(context.Background(), instance.ID, config.ID)
-	if err != nil {
-		t.Error(err)
-	}
-
-	if !reflect.DeepEqual(result.Interfaces, updateConfigOpts.Interfaces) {
-		t.Error("failed to update linode interfaces: configs do not match")
-	}
-
-	// Ensure that a nil value will not update interfaces
-	_, err = client.UpdateInstanceConfig(context.Background(), instance.ID, config.ID, linodego.InstanceConfigUpdateOptions{})
-	if err != nil {
-		t.Error(err)
-	}
-
-	if !reflect.DeepEqual(result.Interfaces, updateConfigOpts.Interfaces) {
-		t.Error("failed to update linode interfaces: configs do not match")
-	}
-}
-
 func TestInstance_Volumes_List(t *testing.T) {
 	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Volumes_List_Instance")
 	defer teardown()
@@ -363,6 +275,32 @@ func TestInstance_Volumes_List(t *testing.T) {
 	}
 	if len(volumes) == 0 {
 		t.Errorf("Expected an list of instance volumes, but got %v", volumes)
+	}
+}
+
+func TestInstance_CreateUnderFirewall(t *testing.T) {
+
+	client, firewall, firewallTeardown, err := setupFirewall(
+		t,
+		[]firewallModifier{},
+		"fixtures/TestInstance_CreateUnderFirewall",
+	)
+	defer firewallTeardown()
+
+	if err != nil {
+		t.Error(err)
+	}
+	_, _, teardownInstance, err := createInstanceWithoutDisks(
+		t,
+		client,
+		func(_ *linodego.Client, options *linodego.InstanceCreateOptions) {
+			options.FirewallID = firewall.ID
+		},
+	)
+	defer teardownInstance()
+
+	if err != nil {
+		t.Error(err)
 	}
 }
 
@@ -548,9 +486,13 @@ func setupInstance(t *testing.T, fixturesYaml string, modifiers ...instanceModif
 	return client, instance, teardown, err
 }
 
-func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string, modifiers ...instanceModifier) (*linodego.Client, *linodego.Instance, *linodego.InstanceConfig, func(), error) {
+func createInstanceWithoutDisks(
+	t *testing.T,
+	client *linodego.Client,
+	modifiers ...instanceModifier,
+) (*linodego.Instance, *linodego.InstanceConfig, func(), error) {
 	t.Helper()
-	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+
 	falseBool := false
 	createOpts := linodego.InstanceCreateOptions{
 		Label:  "go-test-ins-wo-disk-" + randLabel(),
@@ -566,7 +508,7 @@ func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string, modifiers ...i
 	instance, err := client.CreateInstance(context.Background(), createOpts)
 	if err != nil {
 		t.Errorf("Error creating test Instance: %s", err)
-		return nil, nil, nil, fixtureTeardown, err
+		return nil, nil, func() {}, err
 	}
 	configOpts := linodego.InstanceConfigCreateOptions{
 		Label: "go-test-conf-" + randLabel(),
@@ -574,13 +516,24 @@ func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string, modifiers ...i
 	config, err := client.CreateInstanceConfig(context.Background(), instance.ID, configOpts)
 	if err != nil {
 		t.Errorf("Error creating config: %s", err)
-		return nil, nil, nil, fixtureTeardown, err
+		return nil, nil, func() {}, err
 	}
 
 	teardown := func() {
 		if terr := client.DeleteInstance(context.Background(), instance.ID); terr != nil {
 			t.Errorf("Error deleting test Instance: %s", terr)
 		}
+	}
+	return instance, config, teardown, err
+}
+
+func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string, modifiers ...instanceModifier) (*linodego.Client, *linodego.Instance, *linodego.InstanceConfig, func(), error) {
+	t.Helper()
+	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+	instance, config, instanceTeardown, err := createInstanceWithoutDisks(t, client, modifiers...)
+
+	teardown := func() {
+		instanceTeardown()
 		fixtureTeardown()
 	}
 	return client, instance, config, teardown, err

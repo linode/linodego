@@ -3,10 +3,11 @@ package integration
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"reflect"
 	"regexp"
+	"strconv"
 	"strings"
 	"testing"
 	"time"
@@ -29,7 +30,7 @@ func mockRequestBodyValidate(t *testing.T, expected interface{}, response interf
 
 		i := result.Interface()
 
-		data, err := ioutil.ReadAll(request.Body)
+		data, err := io.ReadAll(request.Body)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -65,4 +66,16 @@ func assertSliceContains[T comparable](t *testing.T, slice []T, target T) {
 	}
 
 	t.Fatalf("value %v not found in slice", target)
+}
+
+func minInt(a, b int) int {
+    if a < b {
+        return a
+    }
+    return b
+}
+
+// return the current nanosecond in string type as a unique text.
+func getUniqueText() string {
+	return strconv.FormatInt(time.Now().UnixNano(), 10)
 }

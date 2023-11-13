@@ -50,3 +50,50 @@ func TestTypes_List(t *testing.T) {
 		t.Errorf("Expected a list of images, but got none %v", i)
 	}
 }
+
+func TestTypes_RegionSpecific(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestTypes_RegionSpecific")
+	defer teardown()
+
+	validateOverride := func(override linodego.LinodeRegionPrice) {
+		if override.ID == "" {
+			t.Fatal("Expected region; got nil")
+		}
+
+		if override.Monthly <= 0 {
+			t.Fatalf("Expected monthly cost; got %f", override.Monthly)
+		}
+
+		if override.Hourly <= 0 {
+			t.Fatalf("Expected hourly cost; got %f", override.Hourly)
+		}
+	}
+
+	types, err := client.ListTypes(context.Background(), nil)
+	if err != nil {
+		t.Errorf("Error listing images, expected struct, got error %v", err)
+	}
+
+	var targetType *linodego.LinodeType
+	for _, t := range types {
+		if t.RegionPrices != nil &&
+			len(t.RegionPrices) > 0 &&
+			t.RegionPrices[0].Hourly > 0 {
+			targetType = &t
+			break
+		}
+	}
+
+	if targetType == nil {
+		t.Fatal("expected type with region override, got none")
+	}
+
+	// Validate overrides
+	for _, override := range targetType.RegionPrices {
+		validateOverride(override)
+	}
+
+	for _, override := range targetType.Addons.Backups.RegionPrices {
+		validateOverride(override)
+	}
+}
