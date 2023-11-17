@@ -2,52 +2,49 @@ package integration
 
 import (
 	"context"
+	"reflect"
 	"testing"
-	"time"
+
+	"github.com/google/go-cmp/cmp"
+	"github.com/jarcoal/httpmock"
+	"github.com/linode/linodego"
 )
 
 func TestInstanceStats_Get(t *testing.T) {
-	// Skip on normal runs due to long-running test
-	t.Skip()
+	client := createMockClient(t)
 
-	client, instance, teardown, err := setupInstance(t, "fixtures/TestInstanceStats_Get")
-	defer teardown()
-	if err != nil {
-		t.Error(err)
+	desiredResponse := linodego.InstanceStats{
+		Title: "test_title",
+		Data: linodego.InstanceStatsData{
+			CPU: [][]float64{},
+			IO: linodego.StatsIO{
+				IO: [][]float64{{1.2, 2.3}, {3.4, 4.5}},
+				Swap: [][]float64{{14, 2.3}, {34, 4.5}},
+			},
+			NetV4: linodego.StatsNet{
+				In: [][]float64{{1.2, 2.3}, {3.4, 4.5}},
+				Out: [][]float64{{1, 2}, {3, 4}},
+				PrivateIn: [][]float64{{2, 3}, {4, 5}},
+				PrivateOut: [][]float64{{12.1, 2.33}, {4.4, 4.5}},
+			},
+			NetV6: linodego.StatsNet{
+				In: [][]float64{{1.2, .3}, {3.4, .5}},
+				Out: [][]float64{{0, 2.3}, {3, 4.55}},
+				PrivateIn: [][]float64{{1.24, 3}, {3, 5}},
+				PrivateOut: [][]float64{{1, 6}, {7, 8}},
+			},
+		},
 	}
 
-	err = client.BootInstance(context.Background(), instance.ID, 0)
+	httpmock.RegisterRegexpResponder("GET", mockRequestURL(t, "/instances/36183732/stats"),
+		httpmock.NewJsonResponderOrPanic(200, &desiredResponse))
+
+	questions, err := client.GetInstanceStats(context.Background(), 36183732)
 	if err != nil {
-		t.Error(err)
+		t.Fatal(err)
 	}
 
-	ticker := time.NewTicker(10 * time.Second)
-	timer := time.NewTimer(570 * time.Second)
-	defer ticker.Stop()
-
-	// Test GetInstanceStats
-poll:
-	for {
-		select {
-		case <-ticker.C:
-			_, err = client.GetInstanceStats(context.Background(), instance.ID)
-			if err == nil { // stats are now returning
-				break poll
-			}
-		case <-timer.C:
-			t.Fatal("Error getting stats, polling timed out")
-		}
-	}
-
-	// test GetInstanceStatsByDate
-	// No need to poll, since we know that if we get to this point,
-	// the instance is returning stats
-	currentTime := instance.Created
-	currentYear := currentTime.Year()
-	currentMonth := int(currentTime.Month())
-	_, err = client.GetInstanceStatsByDate(
-		context.Background(), instance.ID, currentYear, currentMonth)
-	if err != nil {
-		t.Errorf("Error getting stats by date, expected struct, got error %v", err)
+	if !reflect.DeepEqual(*questions, desiredResponse) {
+		t.Fatalf("actual response does not equal desired response: %s", cmp.Diff(questions, desiredResponse))
 	}
 }
