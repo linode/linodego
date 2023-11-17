@@ -79,6 +79,45 @@ func TestInstance_Get_smoke(t *testing.T) {
 	assertDateSet(t, instance.Updated)
 }
 
+func TestInstance_Resize(t *testing.T) {
+	client, instance, teardown, err := setupInstance(
+		t,
+		"fixtures/TestInstance_Resize",
+		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+			boot := true
+			options.Type = "g6-nanode-1"
+			options.Booted = &boot
+		},
+	)
+	
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	instance, err = client.WaitForInstanceStatus(
+		context.Background(),
+		instance.ID,
+		linodego.InstanceRunning,
+		180,
+	)
+	if err != nil {
+		t.Errorf("Error waiting for instance readiness for resize: %s", err.Error())
+	}
+
+	err = client.ResizeInstance(
+		context.Background(),
+		instance.ID,
+		linodego.InstanceResizeOptions{
+			Type: "g6-standard-1",
+			MigrationType: "warm",
+		},
+	)
+	if err != nil {
+		t.Errorf("failed to resize instance %d: %v", instance.ID, err.Error())
+	}
+}
+
 func TestInstance_Disks_List(t *testing.T) {
 	client, instance, teardown, err := setupInstance(t, "fixtures/TestInstance_Disks_List")
 	defer teardown()
