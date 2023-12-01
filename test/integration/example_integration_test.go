@@ -347,8 +347,6 @@ func randString(length int, characterClasses ...string) string {
 	return string(b)
 }
 
-// randPassword generates a password sufficient to pass the Linode API standards,
-// don't use it outside of this example script where the Linode is immediately destroyed.
 func randPassword() string {
 	return randString(64, lowerBytes, upperBytes, digits, symbols)
 }
