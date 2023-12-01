@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -199,4 +200,97 @@ func TestCoupleAPIErrors(t *testing.T) {
 			t.Errorf("expected error %#v to match error %#v", err, expectedError)
 		}
 	})
+}
+
+func TestErrorIs(t *testing.T) {
+	t.Parallel()
+
+	defaultError := &Error{
+		Message: "default error",
+		Code:    http.StatusInternalServerError,
+	}
+
+	for _, tc := range []struct {
+		testName       string
+		err1           error
+		err2           error
+		expectedResult bool
+	}{
+		{
+			testName:       "base errors.Is comparision",
+			err1:           defaultError,
+			err2:           defaultError,
+			expectedResult: true,
+		},
+		{
+			testName:       "wrapped default",
+			err1:           fmt.Errorf("test wrap: %w", defaultError),
+			err2:           defaultError,
+			expectedResult: true,
+		},
+		{
+			testName:       "deeply wrapped error",
+			err1:           fmt.Errorf("wrap 1: %w", fmt.Errorf("wrap 2: %w", defaultError)),
+			err2:           defaultError,
+			expectedResult: true,
+		},
+		{
+			testName:       "default and Error from empty resty error",
+			err1:           NewError(restyError("", "")),
+			err2:           defaultError,
+			expectedResult: true,
+		},
+		{
+			testName:       "default and Error from resty error with field",
+			err1:           NewError(restyError("", "test field")),
+			err2:           defaultError,
+			expectedResult: true,
+		},
+		{
+			testName:       "default and Error from resty error with field and reason",
+			err1:           NewError(restyError("test reason", "test field")),
+			err2:           defaultError,
+			expectedResult: true,
+		},
+		{
+			testName:       "default and Error from resty error with reason",
+			err1:           NewError(restyError("test reason", "")),
+			err2:           defaultError,
+			expectedResult: true,
+		},
+		{
+			testName:       "error and nil",
+			err1:           defaultError,
+			err2:           nil,
+			expectedResult: false,
+		},
+		{
+			testName:       "wrapped nil",
+			err1:           fmt.Errorf("test wrap: %w", nil),
+			err2:           defaultError,
+			expectedResult: false,
+		},
+		{
+			testName:       "both errors are different nil", // NOTE: nils of different types are never equal
+			err1:           nil,
+			err2:           (*Error)(nil),
+			expectedResult: false,
+		},
+		{
+			testName:       "different error types",
+			err1:           errors.New("different error type"),
+			err2:           defaultError,
+			expectedResult: false,
+		},
+	} {
+		tc := tc
+
+		t.Run(tc.testName, func(t *testing.T) {
+			t.Parallel()
+
+			if errors.Is(tc.err1, tc.err2) != tc.expectedResult {
+				t.Errorf("expected %+#v to be equal %+#v", tc.err1, tc.err2)
+			}
+		})
+	}
 }
