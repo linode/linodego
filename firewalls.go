@@ -88,12 +88,8 @@ type FirewallsPagedResponse struct {
 	Data []Firewall `json:"data"`
 }
 
-func (FirewallsPagedResponse) endpoint(ids ...any) string {
-	id := ids[0].(int)
-	if id == 0 {
-		return "networking/firewalls"
-	}
-	return fmt.Sprintf("networking/%d/firewalls", id)
+func (FirewallsPagedResponse) endpoint(_ ...any) string {
+	return "networking/firewalls"
 }
 
 func (resp *FirewallsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
@@ -110,31 +106,7 @@ func (resp *FirewallsPagedResponse) castResult(r *resty.Request, e string) (int,
 func (c *Client) ListFirewalls(ctx context.Context, opts *ListOptions) ([]Firewall, error) {
 	response := FirewallsPagedResponse{}
 
-	err := c.listHelper(ctx, &response, opts, 0)
-	if err != nil {
-		return nil, err
-	}
-
-	return response.Data, nil
-}
-
-// ListInstanceFirewalls returns a paginated list of Cloud Firewalls for linodeID
-func (c *Client) ListInstanceFirewalls(ctx context.Context, opts *ListOptions, linodeID int) ([]Firewall, error) {
-	response := FirewallsPagedResponse{}
-
-	err := c.listHelper(ctx, &response, opts, linodeID)
-	if err != nil {
-		return nil, err
-	}
-
-	return response.Data, nil
-}
-
-// ListNodeBalancerFirewalls returns a paginated list of Cloud Firewalls for nodebalancerID
-func (c *Client) ListNodeBalancerFirewalls(ctx context.Context, opts *ListOptions, nodebalancerID int) ([]Firewall, error) {
-	response := FirewallsPagedResponse{}
-
-	err := c.listHelper(ctx, &response, opts, nodebalancerID)
+	err := c.listHelper(ctx, &response, opts)
 	if err != nil {
 		return nil, err
 	}
