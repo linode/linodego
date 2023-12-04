@@ -3,8 +3,9 @@ package linodego
 import (
 	"context"
 	"fmt"
-	"github.com/go-resty/resty/v2"
 	"net/url"
+
+	"github.com/go-resty/resty/v2"
 )
 
 // AccountAvailability returns the resources information in a region which are NOT available to an account.
