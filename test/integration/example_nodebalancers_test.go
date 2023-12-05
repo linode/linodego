@@ -154,7 +154,7 @@ func ExampleClient_CreateNodeBalancerNode() {
 	booted := false
 	instanceOpts := linodego.InstanceCreateOptions{
 		Label:    "nodebalancer-example-instance",
-		RootPass: "R34lBAdP455!!!",
+		RootPass: randPassword(),
 		Region:   "us-southeast",
 		Type:     "g6-nanode-1",
 		Image:    "linode/debian9",
