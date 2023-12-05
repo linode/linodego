@@ -15,7 +15,7 @@ type InstanceFirewallsPagedResponse struct {
 
 func (InstanceFirewallsPagedResponse) endpoint(ids ...any) string {
 	id := ids[0].(int)
-	return fmt.Sprintf("instances/%d/firewalls", id)
+	return fmt.Sprintf("linode/instances/%d/firewalls", id)
 }
 
 func (resp *InstanceFirewallsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
