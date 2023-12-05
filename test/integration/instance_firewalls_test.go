@@ -2,7 +2,6 @@ package integration
 
 import (
 	"context"
-	"fmt"
 	"testing"
 
 	"github.com/linode/linodego"
@@ -35,14 +34,12 @@ func setupInstanceFirewall(t *testing.T, firewallModifiers []firewallModifier, f
 		func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
 			opts.Label = "linodego-fw-inst-test"
 		})
-	fmt.Println(instance.ID)
 	device := linodego.DevicesCreationOptions{Linodes: []int{instance.ID}}
 	firewallModifiers = append(firewallModifiers,
 		func(createOpts *linodego.FirewallCreateOptions) {
 			createOpts.Devices = device
 		})
 	firewall, firewallTeardown, err := createFirewall(t, client, firewallModifiers...)
-	fmt.Println(firewall.ID)
 
 	teardown := func() {
 		instanceTeardown()
