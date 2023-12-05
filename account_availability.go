@@ -11,7 +11,7 @@ import (
 // AccountAvailability returns the resources information in a region which are NOT available to an account.
 type AccountAvailability struct {
 	// region id
-	DC string `json:"dc"`
+	Region string `json:"region"`
 
 	// the unavailable resources in a region to the customer
 	Unavailable []string `json:"unavailable"`

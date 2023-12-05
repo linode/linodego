@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/account/availability/us-east
     method: GET
   response:
-    body: '{"dc": "us-east", "unavailable": []}'
+    body: '{"region": "us-east", "unavailable": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -30,7 +30,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "36"
+      - "40"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:

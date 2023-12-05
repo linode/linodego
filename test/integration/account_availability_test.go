@@ -32,7 +32,7 @@ func TestAccountAvailability_Get(t *testing.T) {
 		t.Errorf("Error getting Account Availability, expected struct, got error %v", err)
 	}
 
-	if availability.DC != regionID {
-		t.Errorf("expected region ID to be %s; got %s", regionID, availability.DC)
+	if availability.Region != regionID {
+		t.Errorf("expected region ID to be %s; got %s", regionID, availability.Region)
 	}
 }

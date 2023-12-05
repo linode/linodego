@@ -14,13 +14,13 @@ interactions:
     url: https://api.linode.com/v4beta/account/availability
     method: GET
   response:
-    body: '{"data": [{"dc": "ap-west", "unavailable": []}, {"dc": "ca-central", "unavailable":
-      []}, {"dc": "ap-southeast", "unavailable": []}, {"dc": "us-central", "unavailable":
-      []}, {"dc": "us-west", "unavailable": []}, {"dc": "us-southeast", "unavailable":
-      []}, {"dc": "us-east", "unavailable": []}, {"dc": "eu-west", "unavailable":
-      []}, {"dc": "ap-south", "unavailable": []}, {"dc": "eu-central", "unavailable":
-      []}, {"dc": "ap-northeast", "unavailable": []}], "page": 1, "pages": 1, "results":
-      11}'
+    body: '{"data": [{"region": "ap-west", "unavailable": []}, {"region": "ca-central",
+      "unavailable": []}, {"region": "ap-southeast", "unavailable": []}, {"region":
+      "us-central", "unavailable": []}, {"region": "us-west", "unavailable": []},
+      {"region": "us-southeast", "unavailable": []}, {"region": "us-east", "unavailable":
+      []}, {"region": "eu-west", "unavailable": []}, {"region": "ap-south", "unavailable":
+      []}, {"region": "eu-central", "unavailable": []}, {"region": "ap-northeast",
+      "unavailable": []}], "page": 1, "pages": 1, "results": 11}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
