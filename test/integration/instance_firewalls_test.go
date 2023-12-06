@@ -42,8 +42,8 @@ func setupInstanceFirewall(t *testing.T, firewallModifiers []firewallModifier, f
 	firewall, firewallTeardown, err := createFirewall(t, client, firewallModifiers...)
 
 	teardown := func() {
-		instanceTeardown()
 		firewallTeardown()
+		instanceTeardown()
 	}
 	return client, instance, firewall, teardown, err
 }
