@@ -29,7 +29,7 @@ func (resp *InstanceFirewallsPagedResponse) castResult(r *resty.Request, e strin
 }
 
 // ListInstanceFirewalls returns a paginated list of Cloud Firewalls for linodeID
-func (c *Client) ListInstanceFirewalls(ctx context.Context, opts *ListOptions, linodeID int) ([]Firewall, error) {
+func (c *Client) ListInstanceFirewalls(ctx context.Context, linodeID int, opts *ListOptions) ([]Firewall, error) {
 	response := InstanceFirewallsPagedResponse{}
 
 	err := c.listHelper(ctx, &response, opts, linodeID)

@@ -251,15 +251,15 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 52694893, "label": "linodego-fw-inst-test", "group": "", "status":
+    body: '{"id": 52733363, "label": "linodego-fw-inst-test", "group": "", "status":
       "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.105.48.111"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["172.105.41.60"], "ipv6": "1234::5678/128",
       "image": "linode/debian9", "region": "ap-west", "specs": {"disk": 25600, "memory":
       1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
       false, "available": false, "schedule": {"day": null, "window": null}, "last_successful":
       null}, "hypervisor": "kvm", "watchdog_enabled": true, "tags": [], "host_uuid":
-      "d33f497aa1cc27824ae1ad0b23fb07978a5f9ab8", "has_user_data": false}'
+      "5fdc396f0b8d2512b9411b8a814e30ccf4816250", "has_user_data": false}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -276,7 +276,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "739"
+      - "738"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -304,7 +304,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"linodego-fw-ins-test","rules":{"inbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{"linodes":[52694893]}}'
+    body: '{"label":"linodego-fw-ins-test","rules":{"inbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{"linodes":[52733363]}}'
     form: {}
     headers:
       Accept:
@@ -316,7 +316,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 285013, "label": "linodego-fw-ins-test", "created": "2018-01-02T03:04:05",
+    body: '{"id": 285864, "label": "linodego-fw-ins-test", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"action": "ACCEPT", "label": "go-fwrule-test", "ports": "22", "protocol":
       "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy":
@@ -376,10 +376,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/52694893/firewalls
+    url: https://api.linode.com/v4beta/linode/instances/52733363/firewalls
     method: GET
   response:
-    body: '{"data": [{"id": 285013, "label": "linodego-fw-ins-test", "created": "2018-01-02T03:04:05",
+    body: '{"data": [{"id": 285864, "label": "linodego-fw-ins-test", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"action": "ACCEPT", "label": "go-fwrule-test", "ports": "22", "protocol":
       "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy":
@@ -442,7 +442,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/52694893
+    url: https://api.linode.com/v4beta/linode/instances/52733363
     method: DELETE
   response:
     body: '{}'

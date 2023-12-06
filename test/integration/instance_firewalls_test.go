@@ -18,7 +18,7 @@ func TestInstanceFirewalls_List(t *testing.T) {
 	}
 	defer teardown()
 
-	result, err := client.ListInstanceFirewalls(context.Background(), nil, instance.ID)
+	result, err := client.ListInstanceFirewalls(context.Background(), instance.ID, nil)
 	if err != nil {
 		t.Errorf("Error listing Firewalls, expected struct, got error %v", err)
 	}
