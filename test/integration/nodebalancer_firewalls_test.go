@@ -13,7 +13,7 @@ func TestNodeBalancerFirewalls_List(t *testing.T) {
 	}
 	defer teardown()
 
-	result, err := client.ListNodeBalancerFirewalls(context.Background(), nil, nodebalancer.ID)
+	result, err := client.ListNodeBalancerFirewalls(context.Background(), nodebalancer.ID, nil)
 	if err != nil {
 		t.Errorf("Error listing Firewalls, expected struct, got error %v", err)
 	}

@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 285050, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
+    body: '{"id": 285860, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"action": "ACCEPT", "label": "go-fwrule-test", "ports": "22", "protocol":
       "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy":
@@ -302,7 +302,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-def","region":"ap-west","client_conn_throttle":20,"tags":null,"firewall_id":285050}'
+    body: '{"label":"go-test-def","region":"ap-west","client_conn_throttle":20,"tags":null,"firewall_id":285860}'
     form: {}
     headers:
       Accept:
@@ -314,8 +314,8 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 492367, "label": "go-test-def", "region": "ap-west", "hostname":
-      "172-232-86-193.ip.linodeusercontent.com", "ipv4": "172.232.86.193", "ipv6":
+    body: '{"id": 492998, "label": "go-test-def", "region": "ap-west", "hostname":
+      "172-105-45-110.ip.linodeusercontent.com", "ipv4": "172.105.45.110", "ipv6":
       "1234::5678", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "client_conn_throttle": 20, "tags": [], "transfer": {"in": null, "out": null,
       "total": null}}'
@@ -372,10 +372,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/492367/firewalls
+    url: https://api.linode.com/v4beta/nodebalancers/492998/firewalls
     method: GET
   response:
-    body: '{"data": [{"id": 285050, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
+    body: '{"data": [{"id": 285860, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"action": "ACCEPT", "label": "go-fwrule-test", "ports": "22", "protocol":
       "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy":
@@ -438,7 +438,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/492367
+    url: https://api.linode.com/v4beta/nodebalancers/492998
     method: DELETE
   response:
     body: '{}'
@@ -495,7 +495,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/285050
+    url: https://api.linode.com/v4beta/networking/firewalls/285860
     method: DELETE
   response:
     body: '{}'

@@ -28,8 +28,8 @@ func (resp *NodeBalancerFirewallsPagedResponse) castResult(r *resty.Request, e s
 	return castedRes.Pages, castedRes.Results, nil
 }
 
-// ListNodeaBalancerFirewalls returns a paginated list of Cloud Firewalls for nodebalancerID
-func (c *Client) ListNodeBalancerFirewalls(ctx context.Context, opts *ListOptions, nodebalancerID int) ([]Firewall, error) {
+// ListNodeBalancerFirewalls returns a paginated list of Cloud Firewalls for nodebalancerID
+func (c *Client) ListNodeBalancerFirewalls(ctx context.Context, nodebalancerID int, opts *ListOptions) ([]Firewall, error) {
 	response := NodeBalancerFirewallsPagedResponse{}
 
 	err := c.listHelper(ctx, &response, opts, nodebalancerID)
