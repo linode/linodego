@@ -47,6 +47,12 @@ def change_xml_report_to_tod_acceptable_version(file_name):
     try:
         new_tree = ET.ElementTree(new_testsuites)
         new_tree.write(file_name, encoding="UTF-8", xml_declaration=True)
+        new_root = new_tree.getroot()
+        new_root.append(root.get('branch_name'))
+        new_root.append(root.get('gha_run_id'))
+        new_root.append(root.get('gha_run_number'))
+        new_root.append(root.get('release_tag'))
+
         print("XML content successfully over-written to " + file_name)
 
     except Exception as e:
@@ -75,4 +81,5 @@ if __name__ == '__main__':
         print('Error: The provided file name is empty or invalid.')
         sys.exit(1)
 
+    change_xml_report_to_tod_acceptable_version(file_name)
     upload_to_linode_object_storage(file_name)
