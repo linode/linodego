@@ -80,20 +80,52 @@ func createVPCWithSubnet(t *testing.T, client *linodego.Client, vpcModifier ...v
 	error,
 ) {
 	t.Helper()
-	vpc, vpcTeardown, err := createVPC(t, client, vpcModifier...)
-	if err != nil {
-		if vpcTeardown != nil {
-			vpcTeardown()
-		}
-		t.Fatal(err)
+	createOpts := linodego.VPCCreateOptions{
+		Label:  "go-test-vpc-" + getUniqueText(),
+		Region: getRegionsWithCaps(t, client, []string{"VPCs"})[0],
+		Subnets: []VPCSubnetCreateOptions{
+			{
+				Label: "linodego-vpc-test-" + getUniqueText(),
+				IPv4:  TestSubnet,
+			},
+		},
 	}
+
+	for _, mod := range vpcModifier {
+		mod(client, &createOpts)
+	}
+
+	vpc, err := client.CreateVPC(context.Background(), createOpts)
+	if err != nil {
+		t.Fatal(formatVPCError(err, "creating", nil))
+	}
+
+	teardown := func() {
+		if err := client.DeleteVPC(context.Background(), vpc.ID); err != nil {
+			t.Error(formatVPCError(err, "deleting", &vpc.ID))
+		}
+	}
+	return vpc, &vpc.Subnets[0], teardown, err
+}
+
+func createSubnetInVPC(
+	t *testing.T,
+	client *linodego.Client,
+	vpc linodego.VPC,
+	vpcModifier ...vpcModifier,
+) (
+	*linodego.VPCSubnet,
+	func(),
+	error,
+) {
+
+	t.Helper()
 	createOpts := linodego.VPCSubnetCreateOptions{
 		Label: "linodego-vpc-test-" + getUniqueText(),
 		IPv4:  TestSubnet,
 	}
 	vpcSubnet, err := client.CreateVPCSubnet(context.Background(), createOpts, vpc.ID)
 	if err != nil {
-		vpcTeardown()
 		t.Fatal(formatVPCSubnetError(err, "creating", &vpc.ID, nil))
 	}
 
@@ -102,9 +134,8 @@ func createVPCWithSubnet(t *testing.T, client *linodego.Client, vpcModifier ...v
 		if err != nil {
 			t.Error(formatVPCSubnetError(err, "deleting", &vpc.ID, &vpcSubnet.ID))
 		}
-		vpcTeardown()
 	}
-	return vpc, vpcSubnet, teardown, err
+	return vpcSubnet, teardown, err
 }
 
 func setupVPCWithSubnet(

@@ -23,10 +23,10 @@ def change_xml_report_to_tod_acceptable_version(file_name):
     testsuites_element = root
 
     # total
-    total_tests = int(testsuites_element.get('tests'))
-    total_failures = int(testsuites_element.get('failures'))
-    total_errors = int(testsuites_element.get('errors'))
-    total_skipped = int(testsuites_element.get('skipped'))
+    total_tests = int(testsuites_element.get('tests')) if testsuites_element.get('tests') is not None else 0
+    total_failures = int(testsuites_element.get('failures')) if testsuites_element.get('failures') is not None else 0
+    total_errors = int(testsuites_element.get('errors')) if testsuites_element.get('errors') is not None else 0
+    total_skipped = int(testsuites_element.get('skipped')) if testsuites_element.get('skipped') is not None else 0
 
     # Create a new <testsuites> element with aggregated values
     new_testsuites = ET.Element("testsuites")
@@ -43,10 +43,21 @@ def change_xml_report_to_tod_acceptable_version(file_name):
         for child in testcase:
             new_testcase.append(child)
 
+    branch_name = ET.SubElement(new_testsuite, branch_name)
+    branch_name.text = root.find('branch_name').text
+    gha_run_id = ET.SubElement(new_testsuite, gha_run_id)
+    gha_run_id.text = root.find('gha_run_id').text
+    gha_run_number = ET.SubElement(new_testsuite, gha_run_number)
+    gha_run_number.text = root.find('gha_run_number').text
+    release_tag = ET.SubElement(new_testsuite, release_tag)
+    release_tag.text = root.find('release_tag').text
+
     # Save the new XML to a file
     try:
         new_tree = ET.ElementTree(new_testsuites)
+
         new_tree.write(file_name, encoding="UTF-8", xml_declaration=True)
+
         print("XML content successfully over-written to " + file_name)
 
     except Exception as e:
@@ -75,4 +86,5 @@ if __name__ == '__main__':
         print('Error: The provided file name is empty or invalid.')
         sys.exit(1)
 
+    change_xml_report_to_tod_acceptable_version(file_name)
     upload_to_linode_object_storage(file_name)

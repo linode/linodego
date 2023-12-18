@@ -22,7 +22,7 @@ func TestEventPoller_InstancePower(t *testing.T) {
 		Region:   getRegionsWithCaps(t, client, []string{"Linodes"})[0],
 		Type:     "g6-nanode-1",
 		Image:    "linode/ubuntu22.04",
-		RootPass: "R34lBAdP455LONGLONGLONGLONG",
+		RootPass: randPassword(),
 		Label:    "go-ins-poll-test",
 		Booted:   &booted,
 	})
@@ -106,7 +106,7 @@ func TestWaitForResourceFree(t *testing.T) {
 		Region:   getRegionsWithCaps(t, client, []string{"Linodes"})[0],
 		Type:     "g6-nanode-1",
 		Image:    "linode/ubuntu22.04",
-		RootPass: "c00lp@sgfdgregrhn$!!!!",
+		RootPass: randPassword(),
 		Label:    "linodego-waitforfree",
 	})
 	if err != nil {
