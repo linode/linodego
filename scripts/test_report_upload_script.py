@@ -43,14 +43,18 @@ def change_xml_report_to_tod_acceptable_version(file_name):
         for child in testcase:
             new_testcase.append(child)
 
+    branch_name = ET.SubElement(new_testsuite, branch_name)
+    branch_name.text = root.find('branch_name').text
+    gha_run_id = ET.SubElement(new_testsuite, gha_run_id)
+    gha_run_id.text = root.find('gha_run_id').text
+    gha_run_number = ET.SubElement(new_testsuite, gha_run_number)
+    gha_run_number.text = root.find('gha_run_number').text
+    release_tag = ET.SubElement(new_testsuite, release_tag)
+    release_tag.text = root.find('release_tag').text
+
     # Save the new XML to a file
     try:
         new_tree = ET.ElementTree(new_testsuites)
-        new_root = new_tree.getroot()
-        new_root.append(root.get('branch_name'))
-        new_root.append(root.get('gha_run_id'))
-        new_root.append(root.get('gha_run_number'))
-        new_root.append(root.get('release_tag'))
 
         new_tree.write(file_name, encoding="UTF-8", xml_declaration=True)
 

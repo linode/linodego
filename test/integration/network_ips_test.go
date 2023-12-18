@@ -232,7 +232,7 @@ func TestIPAddress_Instance_Share(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddress_Instance_Share", func(client *Client, options *InstanceCreateOptions) {
 		// This should stay hardcoded at the moment as the
 		// IP sharing rollout does not have a corresponding capability.
-		options.Region = "us-west"
+		options.Region = "us-ord"
 	})
 	defer teardown()
 	if err != nil {
