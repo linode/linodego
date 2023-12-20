@@ -171,7 +171,7 @@ func TestEventPoller_Secondary(t *testing.T) {
 	}
 
 	// Create two instance disks
-	disks := make([]*linodego.InstanceDisk, 2)
+	disks := make([]*linodego.InstanceDisk, 3)
 
 	for i := 0; i < 3; i++ {
 		disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
