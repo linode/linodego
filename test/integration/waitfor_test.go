@@ -3,9 +3,8 @@ package integration
 import (
 	"context"
 	"fmt"
-	"testing"
-
 	"github.com/linode/linodego"
+	"testing"
 )
 
 func TestEventPoller_InstancePower(t *testing.T) {
@@ -171,26 +170,37 @@ func TestEventPoller_Secondary(t *testing.T) {
 	}
 
 	// Create two instance disks
-	disks := make([]*linodego.InstanceDisk, 3)
+	disks := make([]*linodego.InstanceDisk, 2)
 
-	for i := 0; i < 3; i++ {
+	for i := 0; i < 2; i++ {
 		disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
-			Label: fmt.Sprintf("disk-%d", i),
+			Label: fmt.Sprintf("deleteEvent-%d", i),
 			Size:  512,
 		})
 		if err != nil {
-			t.Fatalf("failed to create instance disk: %s", err)
+			t.Fatalf("failed to create instance deleteEvent: %s", err)
 		}
 
 		disks[i] = disk
 	}
 
-	// Poll for the first disk to be deleted
+	// Poll for the first deleteEvent to be deleted
 	diskPoller, err := client.NewEventPollerWithSecondary(
 		context.Background(),
 		instance.ID,
 		linodego.EntityLinode,
 		disks[0].ID,
+		linodego.ActionDiskDelete)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Poll for the second deleteEvent to be deleted
+	diskPoller2, err := client.NewEventPollerWithSecondary(
+		context.Background(),
+		instance.ID,
+		linodego.EntityLinode,
+		disks[1].ID,
 		linodego.ActionDiskDelete)
 	if err != nil {
 		t.Fatal(err)
@@ -203,13 +213,20 @@ func TestEventPoller_Secondary(t *testing.T) {
 		}
 	}
 
-	// Wait for the first disk to be deleted
-	disk, err := diskPoller.WaitForFinished(context.Background(), 60)
+	// Wait for the first deleteEvent to be deleted
+	deleteEvent, err := diskPoller.WaitForFinished(context.Background(), 60)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	entityID := disk.SecondaryEntity.ID
+	// Poll for the second disk to be deleted.
+	// This is necessary to cover an edge case that triggers a panic
+	// when other deletion events with a null SecondaryEntity are discovered.
+	if _, err := diskPoller2.WaitForFinished(context.Background(), 60); err != nil {
+		t.Fatal(err)
+	}
+
+	entityID := deleteEvent.SecondaryEntity.ID
 
 	// Sometimes the JSON unmarshaler will
 	// parse IDs as floats rather than ints.
@@ -218,27 +235,6 @@ func TestEventPoller_Secondary(t *testing.T) {
 	}
 
 	if entityID != disks[0].ID {
-		t.Fatalf("expected event and first disk id to match; got %v", disk.SecondaryEntity.ID)
-	}
-
-	// Delete the third disk and poll.
-	// This is to handle an edge case where previous disk deletion events would cause a panic.
-	diskPoller, err = client.NewEventPollerWithSecondary(
-		context.Background(),
-		instance.ID,
-		linodego.EntityLinode,
-		disks[2].ID,
-		linodego.ActionDiskDelete)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	if err := client.DeleteInstanceDisk(context.Background(), instance.ID, disks[2].ID); err != nil {
-		t.Fatal(err)
-	}
-
-	// Wait for the first disk to be deleted
-	if _, err := diskPoller.WaitForFinished(context.Background(), 60); err != nil {
-		t.Fatal(err)
+		t.Fatalf("expected event and first deleteEvent id to match; got %v", deleteEvent.SecondaryEntity.ID)
 	}
 }
