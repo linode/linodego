@@ -787,6 +787,12 @@ func eventMatchesSecondary(configuredID any, e Event) bool {
 		return true
 	}
 
+	// We should return false if the event has no secondary entity.
+	// e.g. A previous disk deletion has completed.
+	if e.SecondaryEntity == nil {
+		return false
+	}
+
 	secondaryID := e.SecondaryEntity.ID
 
 	// Evil hack to correct IDs parsed as floats
