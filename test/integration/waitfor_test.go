@@ -174,17 +174,17 @@ func TestEventPoller_Secondary(t *testing.T) {
 
 	for i := 0; i < 2; i++ {
 		disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
-			Label: fmt.Sprintf("deleteEvent-%d", i),
+			Label: fmt.Sprintf("test-disk-%d", i),
 			Size:  512,
 		})
 		if err != nil {
-			t.Fatalf("failed to create instance deleteEvent: %s", err)
+			t.Fatalf("failed to create instance disk: %s", err)
 		}
 
 		disks[i] = disk
 	}
 
-	// Poll for the first deleteEvent to be deleted
+	// Poll for the first disk to be deleted
 	diskPoller, err := client.NewEventPollerWithSecondary(
 		context.Background(),
 		instance.ID,
@@ -195,7 +195,7 @@ func TestEventPoller_Secondary(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	// Poll for the second deleteEvent to be deleted
+	// Poll for the second disk to be deleted
 	diskPoller2, err := client.NewEventPollerWithSecondary(
 		context.Background(),
 		instance.ID,
@@ -213,7 +213,7 @@ func TestEventPoller_Secondary(t *testing.T) {
 		}
 	}
 
-	// Wait for the first deleteEvent to be deleted
+	// Wait for the first disk to be deleted
 	deleteEvent, err := diskPoller.WaitForFinished(context.Background(), 60)
 	if err != nil {
 		t.Fatal(err)
