@@ -174,7 +174,7 @@ func TestEventPoller_Secondary(t *testing.T) {
 
 	for i := 0; i < 2; i++ {
 		disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
-			Label: fmt.Sprintf("disk-%d", i),
+			Label: fmt.Sprintf("test-disk-%d", i),
 			Size:  512,
 		})
 		if err != nil {
@@ -195,20 +195,38 @@ func TestEventPoller_Secondary(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	// Delete the disks
-	for _, d := range disks {
-		if err := client.DeleteInstanceDisk(context.Background(), instance.ID, d.ID); err != nil {
+	// Poll for the second disk to be deleted
+	diskPoller2, err := client.NewEventPollerWithSecondary(
+		context.Background(),
+		instance.ID,
+		linodego.EntityLinode,
+		disks[1].ID,
+		linodego.ActionDiskDelete)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	// Delete the first two disks
+	for i := 0; i < 2; i++ {
+		if err := client.DeleteInstanceDisk(context.Background(), instance.ID, disks[i].ID); err != nil {
 			t.Fatal(err)
 		}
 	}
 
 	// Wait for the first disk to be deleted
-	disk, err := diskPoller.WaitForFinished(context.Background(), 60)
+	deleteEvent, err := diskPoller.WaitForFinished(context.Background(), 60)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	entityID := disk.SecondaryEntity.ID
+	// Poll for the second disk to be deleted.
+	// This is necessary to cover an edge case that triggers a panic
+	// when other deletion events with a null SecondaryEntity are discovered.
+	if _, err := diskPoller2.WaitForFinished(context.Background(), 60); err != nil {
+		t.Fatal(err)
+	}
+
+	entityID := deleteEvent.SecondaryEntity.ID
 
 	// Sometimes the JSON unmarshaler will
 	// parse IDs as floats rather than ints.
@@ -217,6 +235,6 @@ func TestEventPoller_Secondary(t *testing.T) {
 	}
 
 	if entityID != disks[0].ID {
-		t.Fatalf("expected event and first disk id to match; got %v", disk.SecondaryEntity.ID)
+		t.Fatalf("expected event and first deleteEvent id to match; got %v", deleteEvent.SecondaryEntity.ID)
 	}
 }
