@@ -30,6 +30,7 @@ type InstanceConfigInterfaceCreateOptions struct {
 	Label       string                 `json:"label,omitempty"`
 	Purpose     ConfigInterfacePurpose `json:"purpose,omitempty"`
 	Primary     bool                   `json:"primary,omitempty"`
+	VPCID       *int                   `json:"vpc_id,omitempty"`
 	SubnetID    *int                   `json:"subnet_id,omitempty"`
 	IPv4        *VPCIPv4               `json:"ipv4,omitempty"`
 	IPRanges    []string               `json:"ip_ranges,omitempty"`
@@ -61,6 +62,7 @@ func (i InstanceConfigInterface) GetCreateOptions() InstanceConfigInterfaceCreat
 		Purpose:  i.Purpose,
 		Primary:  i.Primary,
 		SubnetID: i.SubnetID,
+		VPCID:    i.VPCID,
 	}
 
 	if len(i.IPRanges) > 0 {
