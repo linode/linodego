@@ -48,7 +48,7 @@ func setupVPCWithSubnetWithInstance(
 
 	teardownAll := func() {
 		instanceTeardown()
-		vpcWithSubnetTeardown()		
+		vpcWithSubnetTeardown()
 		fixtureTeardown()
 	}
 	return client, vpc, vpcSubnet, instance, instanceConfig, teardownAll, err
@@ -256,7 +256,7 @@ func TestInstance_ConfigInterfaces_List(t *testing.T) {
 
 // testing config interfaces update via config API
 func TestInstance_ConfigInterfaces_Update(t *testing.T) {
-	client, _, vpcSubnet, instance, config, teardown, err := setupVPCWithSubnetWithInstance(
+	client, vpc, vpcSubnet, instance, config, teardown, err := setupVPCWithSubnetWithInstance(
 		t,
 		"fixtures/TestInstance_ConfigInterfaces_Update",
 		func(client *Client, opts *InstanceCreateOptions) {
@@ -281,6 +281,7 @@ func TestInstance_ConfigInterfaces_Update(t *testing.T) {
 		},
 		{
 			Purpose:  InterfacePurposeVPC,
+			VPCID:    &vpc.ID,
 			SubnetID: &vpcSubnet.ID,
 		},
 	}
