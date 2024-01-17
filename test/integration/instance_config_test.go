@@ -78,6 +78,7 @@ func setupInstanceWith3Interfaces(t *testing.T, fixturesYaml string) (
 	}
 
 	updateConfigOpts := config.GetUpdateOptions()
+	NAT1To1Any := "any"
 	updateConfigOpts.Interfaces = []InstanceConfigInterfaceCreateOptions{
 		{
 			Purpose: InterfacePurposePublic,
@@ -90,7 +91,7 @@ func setupInstanceWith3Interfaces(t *testing.T, fixturesYaml string) (
 			Purpose:  InterfacePurposeVPC,
 			SubnetID: &vpcSubnet.ID,
 			IPv4: &VPCIPv4{
-				NAT1To1: "any",
+				NAT1To1: &NAT1To1Any,
 			},
 		},
 	}
@@ -282,6 +283,9 @@ func TestInstance_ConfigInterfaces_Update(t *testing.T) {
 		{
 			Purpose:  InterfacePurposeVPC,
 			SubnetID: &vpcSubnet.ID,
+			IPv4: &VPCIPv4{
+				VPC: "192.168.0.87",
+			},
 		},
 	}
 
@@ -370,10 +374,10 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 	if !(updatedIntfc.Primary == updateOpts.Primary) {
 		t.Errorf("updating interface %v didn't succeed", intfc.ID)
 	}
-
+	NAT1To1Any := "any"
 	updateOpts.IPv4 = &VPCIPv4{
 		VPC:     "192.168.0.10",
-		NAT1To1: "any",
+		NAT1To1: &NAT1To1Any,
 	}
 
 	updatedIntfc, err = client.UpdateInstanceConfigInterface(
