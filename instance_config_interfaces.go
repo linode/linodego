@@ -16,13 +16,13 @@ type InstanceConfigInterface struct {
 	Active      bool                   `json:"active"`
 	VPCID       *int                   `json:"vpc_id"`
 	SubnetID    *int                   `json:"subnet_id"`
-	IPv4        VPCIPv4                `json:"ipv4"`
+	IPv4        *VPCIPv4               `json:"ipv4"`
 	IPRanges    []string               `json:"ip_ranges"`
 }
 
 type VPCIPv4 struct {
-	VPC     string `json:"vpc,omitempty"`
-	NAT1To1 string `json:"nat_1_1,omitempty"`
+	VPC     string  `json:"vpc,omitempty"`
+	NAT1To1 *string `json:"nat_1_1,omitempty"`
 }
 
 type InstanceConfigInterfaceCreateOptions struct {
@@ -67,20 +67,14 @@ func (i InstanceConfigInterface) GetCreateOptions() InstanceConfigInterfaceCreat
 		opts.IPRanges = i.IPRanges
 	}
 
-	if i.Purpose == InterfacePurposeVPC &&
-		i.IPv4.NAT1To1 != "" && i.IPv4.VPC != "" {
+	if i.Purpose == InterfacePurposeVPC && i.IPv4 != nil {
 		opts.IPv4 = &VPCIPv4{
 			VPC:     i.IPv4.VPC,
 			NAT1To1: i.IPv4.NAT1To1,
 		}
 	}
 
-	// workaround for API issue
-	if i.IPAMAddress == "222" {
-		opts.IPAMAddress = ""
-	} else {
-		opts.IPAMAddress = i.IPAMAddress
-	}
+	opts.IPAMAddress = i.IPAMAddress
 
 	return opts
 }
@@ -90,7 +84,7 @@ func (i InstanceConfigInterface) GetUpdateOptions() InstanceConfigInterfaceUpdat
 		Primary: i.Primary,
 	}
 
-	if i.Purpose == InterfacePurposeVPC {
+	if i.Purpose == InterfacePurposeVPC && i.IPv4 != nil {
 		opts.IPv4 = &VPCIPv4{
 			VPC:     i.IPv4.VPC,
 			NAT1To1: i.IPv4.NAT1To1,
