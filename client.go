@@ -133,7 +133,7 @@ func (c *Client) SetLogger(logger Logger) *Client {
 
 // OnBeforeRequest adds a handler to the request body to run before the request is sent
 func (c *Client) OnBeforeRequest(m func(request *Request) error) {
-	c.resty.OnBeforeRequest(func(client *resty.Client, req *resty.Request) error {
+	c.resty.OnBeforeRequest(func(_ *resty.Client, req *resty.Request) error {
 		return m(req)
 	})
 }
@@ -483,7 +483,7 @@ func (c *Client) preLoadConfig(configPath string) error {
 	}
 
 	// We don't want to load the profile until the user is actually making requests
-	c.OnBeforeRequest(func(request *Request) error {
+	c.OnBeforeRequest(func(_ *Request) error {
 		if c.loadedProfile != c.selectedProfile {
 			if err := c.UseProfile(c.selectedProfile); err != nil {
 				return err
