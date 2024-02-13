@@ -3,8 +3,9 @@ package linodego
 import (
 	"context"
 	"fmt"
-	"github.com/go-resty/resty/v2"
 	"net/url"
+
+	"github.com/go-resty/resty/v2"
 )
 
 // ChildAccount represents an account under the current account.
