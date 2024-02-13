@@ -138,21 +138,9 @@ func (c *Client) DeleteImage(ctx context.Context, imageID string) error {
 
 // CreateImageUpload creates an Image and an upload URL
 func (c *Client) CreateImageUpload(ctx context.Context, opts ImageCreateUploadOptions) (*Image, string, error) {
-	body, err := json.Marshal(opts)
+	result, err := doPOSTRequest[ImageCreateUploadResponse](ctx, c, "images/upload", opts)
 	if err != nil {
 		return nil, "", err
-	}
-
-	e := "images/upload"
-	req := c.R(ctx).SetResult(&ImageCreateUploadResponse{}).SetBody(string(body))
-	r, err := coupleAPIErrors(req.Post(e))
-	if err != nil {
-		return nil, "", err
-	}
-
-	result, ok := r.Result().(*ImageCreateUploadResponse)
-	if !ok {
-		return nil, "", fmt.Errorf("failed to parse result")
 	}
 
 	return result.Image, result.UploadTo, nil
