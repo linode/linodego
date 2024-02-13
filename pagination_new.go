@@ -1,6 +1,9 @@
 package linodego
 
-import "context"
+import (
+	"context"
+	"strconv"
+)
 
 type PaginationResponse[T any] struct {
 	Page    int `json:"page"    url:"page,omitempty"`
@@ -38,6 +41,8 @@ func aggregatePaginatedResults[T any](
 	// Makes a request to a particular page and
 	// appends the response to the result
 	handlePage := func(page int) error {
+		req.SetQueryParam("page", strconv.Itoa(page))
+
 		res, err := coupleAPIErrors(req.Get(endpoint))
 		if err != nil {
 			return err
