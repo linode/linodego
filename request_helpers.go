@@ -2,6 +2,7 @@ package linodego
 
 import (
 	"context"
+	"encoding/json"
 	"strconv"
 )
 
@@ -85,4 +86,74 @@ func aggregatePaginatedResults[T any](
 	}
 
 	return result, nil
+}
+
+func doGETRequest[T any](
+	ctx context.Context,
+	client *Client,
+	endpoint string,
+) (*T, error) {
+	var resultType T
+
+	req := client.R(ctx).SetResult(&resultType)
+	r, err := coupleAPIErrors(req.Get(endpoint))
+	if err != nil {
+		return nil, err
+	}
+
+	return r.Result().(*T), nil
+}
+
+func doPOSTRequest[T, O any](
+	ctx context.Context,
+	client *Client,
+	endpoint string,
+	options O,
+) (*T, error) {
+	var resultType T
+
+	body, err := json.Marshal(options)
+	if err != nil {
+		return nil, err
+	}
+
+	req := client.R(ctx).SetResult(&resultType).SetBody(string(body))
+	r, err := coupleAPIErrors(req.Post(endpoint))
+	if err != nil {
+		return nil, err
+	}
+
+	return r.Result().(*T), nil
+}
+
+func doPUTRequest[T, O any](
+	ctx context.Context,
+	client *Client,
+	endpoint string,
+	options O,
+) (*T, error) {
+	var resultType T
+
+	body, err := json.Marshal(options)
+	if err != nil {
+		return nil, err
+	}
+
+	req := client.R(ctx).SetResult(&resultType).SetBody(string(body))
+	r, err := coupleAPIErrors(req.Put(endpoint))
+	if err != nil {
+		return nil, err
+	}
+
+	return r.Result().(*T), nil
+}
+
+func doDELETERequest(
+	ctx context.Context,
+	client *Client,
+	endpoint string,
+) error {
+	req := client.R(ctx)
+	_, err := coupleAPIErrors(req.Delete(endpoint))
+	return err
 }
