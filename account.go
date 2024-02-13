@@ -1,6 +1,11 @@
 package linodego
 
-import "context"
+import (
+	"context"
+	"encoding/json"
+	"github.com/linode/linodego/internal/parseabletime"
+	"time"
+)
 
 // Account associated with the token in use.
 type Account struct {
@@ -20,6 +25,29 @@ type Account struct {
 	Phone             string      `json:"phone"`
 	CreditCard        *CreditCard `json:"credit_card"`
 	EUUID             string      `json:"euuid"`
+	BillingSource     string      `json:"billing_source"`
+	Capabilities      []string    `json:"capabilities"`
+	ActiveSince       *time.Time  `json:"active_since"`
+}
+
+// UnmarshalJSON implements the json.Unmarshaler interface
+func (account *Account) UnmarshalJSON(b []byte) error {
+	type Mask Account
+
+	p := struct {
+		*Mask
+		ActiveSince *parseabletime.ParseableTime `json:"active_since"`
+	}{
+		Mask: (*Mask)(account),
+	}
+
+	if err := json.Unmarshal(b, &p); err != nil {
+		return err
+	}
+
+	account.ActiveSince = (*time.Time)(p.ActiveSince)
+
+	return nil
 }
 
 // CreditCard information associated with the Account.

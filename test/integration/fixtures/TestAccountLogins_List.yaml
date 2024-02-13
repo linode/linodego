@@ -14,16 +14,16 @@ interactions:
     url: https://api.linode.com/v4beta/account/logins
     method: GET
   response:
-    body: '{"data": [{"id": 1563948056, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
-      "username": "ErikZilber", "status": "successful", "restricted": false}, {"id":
-      1563982298, "datetime": "2018-01-02T03:04:05", "ip": "24.63.69.52", "username":
-      "ErikZilber", "status": "successful", "restricted": false}, {"id": 1564542275,
-      "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
-      "username": "ErikZilber", "status": "failed", "restricted": false}, {"id": 1564542300,
-      "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
-      "username": "ErikZilber", "status": "successful", "restricted": false}, {"id":
-      1564542307, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
-      "username": "ErikZilber", "status": "successful", "restricted": false}], "page":
+    body: '{"data": [{"id": 1568954245, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+      "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
+      1569235189, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+      "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
+      1569637840, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+      "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
+      1569835290, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+      "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
+      1569852953, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+      "username": "lgarber-dev", "status": "successful", "restricted": false}], "page":
       1, "pages": 1, "results": 5}'
     headers:
       Access-Control-Allow-Credentials:
@@ -37,21 +37,23 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
-      Content-Length:
-      - "878"
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Tue, 13 Feb 2024 18:57:41 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
       - Authorization, X-Filter
+      - Accept-Encoding
       X-Accepted-Oauth-Scopes:
       - account:read_only
       X-Content-Type-Options:
@@ -62,7 +64,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -78,11 +80,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/logins/1563948056
+    url: https://api.linode.com/v4beta/account/logins/1568954245
     method: GET
   response:
-    body: '{"id": 1563948056, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
-      "username": "ErikZilber", "status": "successful", "restricted": false}'
+    body: '{"id": 1568954245, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+      "username": "lgarber-dev", "status": "successful", "restricted": false}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -95,16 +97,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
-      - "170"
+      - "174"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Tue, 13 Feb 2024 18:57:41 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -120,7 +125,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

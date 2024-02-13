@@ -14,13 +14,22 @@ interactions:
     url: https://api.linode.com/v4beta/account/availability
     method: GET
   response:
-    body: '{"data": [{"region": "ap-west", "unavailable": []}, {"region": "ca-central",
-      "unavailable": []}, {"region": "ap-southeast", "unavailable": []}, {"region":
-      "us-central", "unavailable": []}, {"region": "us-west", "unavailable": []},
-      {"region": "us-southeast", "unavailable": []}, {"region": "us-east", "unavailable":
-      []}, {"region": "eu-west", "unavailable": []}, {"region": "ap-south", "unavailable":
-      []}, {"region": "eu-central", "unavailable": []}, {"region": "ap-northeast",
-      "unavailable": []}], "page": 1, "pages": 1, "results": 11}'
+    body: '{"data": [{"region": "us-central", "unavailable": []}, {"region": "us-west",
+      "unavailable": []}, {"region": "us-southeast", "unavailable": []}, {"region":
+      "us-east", "unavailable": []}, {"region": "eu-west", "unavailable": []}, {"region":
+      "ap-south", "unavailable": []}, {"region": "eu-central", "unavailable": []},
+      {"region": "ap-northeast", "unavailable": ["Linodes", "NodeBalancers", "Block
+      Storage", "Kubernetes"]}, {"region": "ap-west", "unavailable": []}, {"region":
+      "ca-central", "unavailable": []}, {"region": "ap-southeast", "unavailable":
+      []}, {"region": "us-iad", "unavailable": ["NodeBalancers", "Block Storage"]},
+      {"region": "us-ord", "unavailable": []}, {"region": "fr-par", "unavailable":
+      []}, {"region": "us-sea", "unavailable": []}, {"region": "br-gru", "unavailable":
+      []}, {"region": "nl-ams", "unavailable": []}, {"region": "se-sto", "unavailable":
+      []}, {"region": "es-mad", "unavailable": []}, {"region": "in-maa", "unavailable":
+      []}, {"region": "jp-osa", "unavailable": []}, {"region": "it-mil", "unavailable":
+      []}, {"region": "us-mia", "unavailable": []}, {"region": "id-cgk", "unavailable":
+      []}, {"region": "us-lax", "unavailable": []}], "page": 1, "pages": 1, "results":
+      25}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -33,20 +42,23 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Tue, 13 Feb 2024 18:57:39 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
       - Accept-Encoding
-      - Authorization, X-Filter
-      - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
       - account:read_only
       X-Content-Type-Options:
@@ -57,7 +69,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1200"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
