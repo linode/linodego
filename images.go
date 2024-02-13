@@ -105,34 +105,9 @@ func (i Image) GetUpdateOptions() (iu ImageUpdateOptions) {
 	return
 }
 
-// ImagesPagedResponse represents a linode API response for listing of images
-type ImagesPagedResponse struct {
-	*PageOptions
-	Data []Image `json:"data"`
-}
-
-func (ImagesPagedResponse) endpoint(_ ...any) string {
-	return "images"
-}
-
-func (resp *ImagesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
-	res, err := coupleAPIErrors(r.SetResult(ImagesPagedResponse{}).Get(e))
-	if err != nil {
-		return 0, 0, err
-	}
-	castedRes := res.Result().(*ImagesPagedResponse)
-	resp.Data = append(resp.Data, castedRes.Data...)
-	return castedRes.Pages, castedRes.Results, nil
-}
-
 // ListImages lists Images
 func (c *Client) ListImages(ctx context.Context, opts *ListOptions) ([]Image, error) {
-	response := ImagesPagedResponse{}
-	err := c.listHelper(ctx, &response, opts)
-	if err != nil {
-		return nil, err
-	}
-	return response.Data, nil
+	return aggregatePaginatedResults[Image](ctx, c, "images", opts)
 }
 
 // GetImage gets the Image with the provided ID
