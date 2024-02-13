@@ -190,7 +190,7 @@ const (
 	ActionVPCSubnetDelete                         EventAction = "subnet_delete"
 	ActionVPCSubnetUpdate                         EventAction = "subnet_update"
 
-	// deprecated due to incorrect spelling,
+	// Deprecated: incorrect spelling,
 	// to be removed in the next major version release.
 	ActionVolumeDelte EventAction = "volume_delete"
 )
