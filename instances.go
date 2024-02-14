@@ -148,7 +148,7 @@ type InstanceUpdateOptions struct {
 	Tags            *[]string       `json:"tags,omitempty"`
 
 	// Deprecated: group is a deprecated property denoting a group label for the Linode.
-	Group string `json:"group"`
+	Group *string `json:"group,omitempty"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
@@ -175,9 +175,10 @@ func (i *Instance) UnmarshalJSON(b []byte) error {
 
 // GetUpdateOptions converts an Instance to InstanceUpdateOptions for use in UpdateInstance
 func (i *Instance) GetUpdateOptions() InstanceUpdateOptions {
+	group := i.Group
 	return InstanceUpdateOptions{
 		Label:           i.Label,
-		Group:           i.Group,
+		Group:           &group,
 		Backups:         i.Backups,
 		Alerts:          i.Alerts,
 		WatchdogEnabled: &i.WatchdogEnabled,
