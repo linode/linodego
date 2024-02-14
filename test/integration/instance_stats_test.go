@@ -18,19 +18,19 @@ func TestInstanceStats_Get(t *testing.T) {
 		Data: linodego.InstanceStatsData{
 			CPU: [][]float64{},
 			IO: linodego.StatsIO{
-				IO: [][]float64{{1.2, 2.3}, {3.4, 4.5}},
+				IO:   [][]float64{{1.2, 2.3}, {3.4, 4.5}},
 				Swap: [][]float64{{14, 2.3}, {34, 4.5}},
 			},
 			NetV4: linodego.StatsNet{
-				In: [][]float64{{1.2, 2.3}, {3.4, 4.5}},
-				Out: [][]float64{{1, 2}, {3, 4}},
-				PrivateIn: [][]float64{{2, 3}, {4, 5}},
+				In:         [][]float64{{1.2, 2.3}, {3.4, 4.5}},
+				Out:        [][]float64{{1, 2}, {3, 4}},
+				PrivateIn:  [][]float64{{2, 3}, {4, 5}},
 				PrivateOut: [][]float64{{12.1, 2.33}, {4.4, 4.5}},
 			},
 			NetV6: linodego.StatsNet{
-				In: [][]float64{{1.2, .3}, {3.4, .5}},
-				Out: [][]float64{{0, 2.3}, {3, 4.55}},
-				PrivateIn: [][]float64{{1.24, 3}, {3, 5}},
+				In:         [][]float64{{1.2, .3}, {3.4, .5}},
+				Out:        [][]float64{{0, 2.3}, {3, 4.55}},
+				PrivateIn:  [][]float64{{1.24, 3}, {3, 5}},
 				PrivateOut: [][]float64{{1, 6}, {7, 8}},
 			},
 		},

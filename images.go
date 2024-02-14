@@ -124,7 +124,12 @@ func (c *Client) GetImage(ctx context.Context, imageID string) (*Image, error) {
 
 // CreateImage creates an Image
 func (c *Client) CreateImage(ctx context.Context, opts ImageCreateOptions) (*Image, error) {
-	return doPOSTRequest[Image](ctx, c, "images", opts)
+	return doPOSTRequest[Image](
+		ctx,
+		c,
+		"images",
+		opts,
+	)
 }
 
 // UpdateImage updates the Image with the specified id
