@@ -74,7 +74,7 @@ func aggregatePaginatedResults[T any](
 
 	// If the user has explicitly specified a page, we don't
 	// need to get any other pages.
-	if startingPage > 1 {
+	if startingPage > 0 {
 		return result, nil
 	}
 
