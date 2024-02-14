@@ -67,9 +67,10 @@ func aggregatePaginatedResults[T any](
 	}
 
 	// This helps simplify the logic below
-	startingPage := 0
+	startingPage := 1
+	pageDefined := options.PageOptions != nil && options.PageOptions.Page > 0
 
-	if options.PageOptions != nil && options.PageOptions.Page > 0 {
+	if pageDefined {
 		startingPage = options.PageOptions.Page
 	}
 
@@ -80,7 +81,7 @@ func aggregatePaginatedResults[T any](
 
 	// If the user has explicitly specified a page, we don't
 	// need to get any other pages.
-	if startingPage > 0 {
+	if pageDefined {
 		return result, nil
 	}
 
