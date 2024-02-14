@@ -3,23 +3,29 @@ package linodego
 import (
 	"context"
 	"encoding/json"
+	"fmt"
+	"net/url"
 	"strconv"
 )
 
-type PaginationResponse[T any] struct {
+// paginatedResponse represents a single response from a paginated
+// endpoint.
+type paginatedResponse[T any] struct {
 	Page    int `json:"page"    url:"page,omitempty"`
 	Pages   int `json:"pages"   url:"pages,omitempty"`
 	Results int `json:"results" url:"results,omitempty"`
 	Data    []T `json:"data"`
 }
 
+// aggregatePaginatedResults aggregates results from the given
+// paginated endpoint using the provided ListOptions.
 func aggregatePaginatedResults[T any](
 	ctx context.Context,
 	client *Client,
 	endpoint string,
 	opts *ListOptions,
 ) ([]T, error) {
-	var resultType PaginationResponse[T]
+	var resultType paginatedResponse[T]
 
 	result := make([]T, 0)
 
@@ -49,7 +55,7 @@ func aggregatePaginatedResults[T any](
 			return err
 		}
 
-		response := res.Result().(*PaginationResponse[T])
+		response := res.Result().(*paginatedResponse[T])
 
 		// Only update the number of pages if it hasn't been set yet
 		if numPages == 0 {
@@ -88,6 +94,8 @@ func aggregatePaginatedResults[T any](
 	return result, nil
 }
 
+// doGETRequest runs a GET request using the given client and API endpoint,
+// and returns the result
 func doGETRequest[T any](
 	ctx context.Context,
 	client *Client,
@@ -104,6 +112,8 @@ func doGETRequest[T any](
 	return r.Result().(*T), nil
 }
 
+// doPOSTRequest runs a PUT request using the given client, API endpoint,
+// and options/body.
 func doPOSTRequest[T, O any](
 	ctx context.Context,
 	client *Client,
@@ -126,6 +136,8 @@ func doPOSTRequest[T, O any](
 	return r.Result().(*T), nil
 }
 
+// doPUTRequest runs a PUT request using the given client, API endpoint,
+// and options/body.
 func doPUTRequest[T, O any](
 	ctx context.Context,
 	client *Client,
@@ -148,6 +160,8 @@ func doPUTRequest[T, O any](
 	return r.Result().(*T), nil
 }
 
+// doDELETERequest runs a DELETE request using the given client
+// and API endpoint.
 func doDELETERequest(
 	ctx context.Context,
 	client *Client,
@@ -156,4 +170,18 @@ func doDELETERequest(
 	req := client.R(ctx)
 	_, err := coupleAPIErrors(req.Delete(endpoint))
 	return err
+}
+
+// formatAPIPath allows us to safely build an API request with path escaping
+func formatAPIPath(format string, args ...any) string {
+	escapedArgs := make([]any, len(args))
+	for i, arg := range args {
+		if typeStr, ok := arg.(string); ok {
+			arg = url.PathEscape(typeStr)
+		}
+
+		escapedArgs[i] = arg
+	}
+
+	return fmt.Sprintf(format, escapedArgs...)
 }

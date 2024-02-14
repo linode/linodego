@@ -3,9 +3,7 @@ package linodego
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"io"
-	"net/url"
 	"time"
 
 	"github.com/go-resty/resty/v2"
@@ -107,14 +105,21 @@ func (i Image) GetUpdateOptions() (iu ImageUpdateOptions) {
 
 // ListImages lists Images
 func (c *Client) ListImages(ctx context.Context, opts *ListOptions) ([]Image, error) {
-	return aggregatePaginatedResults[Image](ctx, c, "images", opts)
+	return aggregatePaginatedResults[Image](
+		ctx,
+		c,
+		"images",
+		opts,
+	)
 }
 
 // GetImage gets the Image with the provided ID
 func (c *Client) GetImage(ctx context.Context, imageID string) (*Image, error) {
-	imageID = url.PathEscape(imageID)
-
-	return doGETRequest[Image](ctx, c, fmt.Sprintf("images/%s", imageID))
+	return doGETRequest[Image](
+		ctx,
+		c,
+		formatAPIPath("images/%s", imageID),
+	)
 }
 
 // CreateImage creates an Image
@@ -124,21 +129,31 @@ func (c *Client) CreateImage(ctx context.Context, opts ImageCreateOptions) (*Ima
 
 // UpdateImage updates the Image with the specified id
 func (c *Client) UpdateImage(ctx context.Context, imageID string, opts ImageUpdateOptions) (*Image, error) {
-	imageID = url.PathEscape(imageID)
-
-	return doPUTRequest[Image](ctx, c, fmt.Sprintf("images/%s", imageID), opts)
+	return doPUTRequest[Image](
+		ctx,
+		c,
+		formatAPIPath("images/%s", imageID),
+		opts,
+	)
 }
 
 // DeleteImage deletes the Image with the specified id
 func (c *Client) DeleteImage(ctx context.Context, imageID string) error {
-	imageID = url.PathEscape(imageID)
-
-	return doDELETERequest(ctx, c, fmt.Sprintf("images/%s", imageID))
+	return doDELETERequest(
+		ctx,
+		c,
+		formatAPIPath("images/%s", imageID),
+	)
 }
 
 // CreateImageUpload creates an Image and an upload URL
 func (c *Client) CreateImageUpload(ctx context.Context, opts ImageCreateUploadOptions) (*Image, string, error) {
-	result, err := doPOSTRequest[ImageCreateUploadResponse](ctx, c, "images/upload", opts)
+	result, err := doPOSTRequest[ImageCreateUploadResponse](
+		ctx,
+		c,
+		"images/upload",
+		opts,
+	)
 	if err != nil {
 		return nil, "", err
 	}
