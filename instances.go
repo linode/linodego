@@ -148,7 +148,7 @@ type InstanceUpdateOptions struct {
 	Tags            *[]string       `json:"tags,omitempty"`
 
 	// Deprecated: group is a deprecated property denoting a group label for the Linode.
-	Group string `json:"group,omitempty"`
+	Group string `json:"group"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
