@@ -1,22 +1,23 @@
-package linodego
+package testutil
 
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/google/go-cmp/cmp"
-	"github.com/jarcoal/httpmock"
-	"golang.org/x/oauth2"
 	"io"
 	"net/http"
 	"reflect"
 	"regexp"
 	"strings"
 	"testing"
+
+	"github.com/google/go-cmp/cmp"
+	"github.com/jarcoal/httpmock"
+	"golang.org/x/oauth2"
 )
 
 var validTestAPIKey = "NOTANAPIKEY"
 
-func MockRequestURL(t *testing.T, path string) *regexp.Regexp {
+func MockRequestURL(path string) *regexp.Regexp {
 	return regexp.MustCompile(fmt.Sprintf("/[a-zA-Z0-9]+/%s", strings.TrimPrefix(path, "/")))
 }
 
@@ -51,7 +52,9 @@ func MockRequestBodyValidate(t *testing.T, expected interface{}, response interf
 	}
 }
 
-func CreateMockClient(t *testing.T) *Client {
+// CreateMockClient is generic because importing the linodego package will result
+// in a cyclic dependency. This pattern isn't ideal but works for now.
+func CreateMockClient[T any](t *testing.T, createFunc func(*http.Client) T) *T {
 	tokenSource := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: validTestAPIKey})
 
 	client := &http.Client{
@@ -65,6 +68,6 @@ func CreateMockClient(t *testing.T) *Client {
 		httpmock.DeactivateAndReset()
 	})
 
-	c := NewClient(client)
-	return &c
+	result := createFunc(client)
+	return &result
 }

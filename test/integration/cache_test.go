@@ -2,11 +2,12 @@ package integration
 
 import (
 	"context"
-	"github.com/linode/linodego"
 	"strings"
 	"sync/atomic"
 	"testing"
 	"time"
+
+	"github.com/linode/linodego"
 )
 
 func TestCache_RegionList(t *testing.T) {

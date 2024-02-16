@@ -11,11 +11,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/jarcoal/httpmock"
-
 	"github.com/dnaeon/go-vcr/cassette"
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/linode/linodego"
+	"github.com/linode/linodego/internal/testutil"
 	"golang.org/x/oauth2"
 	"k8s.io/client-go/transport"
 )
@@ -155,21 +154,7 @@ func createTestClient(t *testing.T, fixturesYaml string) (*linodego.Client, func
 }
 
 func createMockClient(t *testing.T) *linodego.Client {
-	tokenSource := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: validTestAPIKey})
-
-	client := &http.Client{
-		Transport: &oauth2.Transport{
-			Source: tokenSource,
-		},
-	}
-	httpmock.ActivateNonDefault(client)
-
-	t.Cleanup(func() {
-		httpmock.DeactivateAndReset()
-	})
-
-	c := linodego.NewClient(client)
-	return &c
+	return testutil.CreateMockClient(t, linodego.NewClient)
 }
 
 // transportRecordWrapper returns a tranport.WrapperFunc which provides the test

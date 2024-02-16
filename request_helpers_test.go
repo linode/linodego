@@ -8,6 +8,8 @@ import (
 	"strconv"
 	"testing"
 
+	"github.com/linode/linodego/internal/testutil"
+
 	"github.com/google/go-cmp/cmp"
 	"github.com/jarcoal/httpmock"
 )
@@ -33,9 +35,9 @@ var testResponse = testResultType{
 }
 
 func TestRequestHelpers_get(t *testing.T) {
-	client := CreateMockClient(t)
+	client := testutil.CreateMockClient(t, NewClient)
 
-	httpmock.RegisterRegexpResponder("GET", MockRequestURL(t, "/foo/bar"),
+	httpmock.RegisterRegexpResponder("GET", testutil.MockRequestURL("/foo/bar"),
 		httpmock.NewJsonResponderOrPanic(200, &testResponse))
 
 	result, err := doGETRequest[testResultType](
@@ -53,10 +55,10 @@ func TestRequestHelpers_get(t *testing.T) {
 }
 
 func TestRequestHelpers_post(t *testing.T) {
-	client := CreateMockClient(t)
+	client := testutil.CreateMockClient(t, NewClient)
 
-	httpmock.RegisterRegexpResponder("POST", MockRequestURL(t, "/foo/bar"),
-		MockRequestBodyValidate(t, testResponse, testResponse))
+	httpmock.RegisterRegexpResponder("POST", testutil.MockRequestURL("/foo/bar"),
+		testutil.MockRequestBodyValidate(t, testResponse, testResponse))
 
 	result, err := doPOSTRequest[testResultType](
 		context.Background(),
@@ -74,10 +76,10 @@ func TestRequestHelpers_post(t *testing.T) {
 }
 
 func TestRequestHelpers_put(t *testing.T) {
-	client := CreateMockClient(t)
+	client := testutil.CreateMockClient(t, NewClient)
 
-	httpmock.RegisterRegexpResponder("PUT", MockRequestURL(t, "/foo/bar"),
-		MockRequestBodyValidate(t, testResponse, testResponse))
+	httpmock.RegisterRegexpResponder("PUT", testutil.MockRequestURL("/foo/bar"),
+		testutil.MockRequestBodyValidate(t, testResponse, testResponse))
 
 	result, err := doPUTRequest[testResultType](
 		context.Background(),
@@ -95,11 +97,11 @@ func TestRequestHelpers_put(t *testing.T) {
 }
 
 func TestRequestHelpers_delete(t *testing.T) {
-	client := CreateMockClient(t)
+	client := testutil.CreateMockClient(t, NewClient)
 
 	httpmock.RegisterRegexpResponder(
 		"DELETE",
-		MockRequestURL(t, "/foo/bar/foo%20bar"),
+		testutil.MockRequestURL("/foo/bar/foo%20bar"),
 		httpmock.NewStringResponder(200, "{}"),
 	)
 
@@ -113,13 +115,13 @@ func TestRequestHelpers_delete(t *testing.T) {
 }
 
 func TestRequestHelpers_paginateAll(t *testing.T) {
-	client := CreateMockClient(t)
+	client := testutil.CreateMockClient(t, NewClient)
 
 	numRequests := 0
 
 	httpmock.RegisterRegexpResponder(
 		"GET",
-		MockRequestURL(t, "/foo/bar"),
+		testutil.MockRequestURL("/foo/bar"),
 		mockPaginatedResponse(
 			buildPaginatedEntries(12),
 			&numRequests,
@@ -156,13 +158,13 @@ func TestRequestHelpers_paginateAll(t *testing.T) {
 }
 
 func TestRequestHelpers_paginateSingle(t *testing.T) {
-	client := CreateMockClient(t)
+	client := testutil.CreateMockClient(t, NewClient)
 
 	numRequests := 0
 
 	httpmock.RegisterRegexpResponder(
 		"GET",
-		MockRequestURL(t, "/foo/bar"),
+		testutil.MockRequestURL("/foo/bar"),
 		mockPaginatedResponse(
 			buildPaginatedEntries(12),
 			&numRequests,

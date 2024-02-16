@@ -1,9 +1,10 @@
 package linodego
 
 import (
-	"github.com/google/go-cmp/cmp"
 	"reflect"
 	"testing"
+
+	"github.com/google/go-cmp/cmp"
 )
 
 func TestFlattenQueryStruct(t *testing.T) {
