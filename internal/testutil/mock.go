@@ -22,6 +22,8 @@ func MockRequestURL(path string) *regexp.Regexp {
 }
 
 func MockRequestBodyValidate(t *testing.T, expected interface{}, response interface{}) httpmock.Responder {
+	t.Helper()
+
 	return func(request *http.Request) (*http.Response, error) {
 		eType := reflect.TypeOf(expected)
 		result := reflect.New(eType)
@@ -55,6 +57,8 @@ func MockRequestBodyValidate(t *testing.T, expected interface{}, response interf
 // CreateMockClient is generic because importing the linodego package will result
 // in a cyclic dependency. This pattern isn't ideal but works for now.
 func CreateMockClient[T any](t *testing.T, createFunc func(*http.Client) T) *T {
+	t.Helper()
+
 	tokenSource := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: validTestAPIKey})
 
 	client := &http.Client{
