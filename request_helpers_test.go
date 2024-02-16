@@ -128,7 +128,7 @@ func TestRequestHelpers_paginateAll(t *testing.T) {
 		),
 	)
 
-	response, err := aggregatePaginatedResults[testResultType](
+	response, err := getPaginatedResults[testResultType](
 		context.Background(),
 		client,
 		"/foo/bar",
@@ -171,7 +171,7 @@ func TestRequestHelpers_paginateSingle(t *testing.T) {
 		),
 	)
 
-	response, err := aggregatePaginatedResults[testResultType](
+	response, err := getPaginatedResults[testResultType](
 		context.Background(),
 		client,
 		"/foo/bar",

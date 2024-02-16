@@ -17,9 +17,9 @@ type paginatedResponse[T any] struct {
 	Data    []T `json:"data"`
 }
 
-// aggregatePaginatedResults aggregates results from the given
+// getPaginatedResults aggregates results from the given
 // paginated endpoint using the provided ListOptions.
-func aggregatePaginatedResults[T any](
+func getPaginatedResults[T any](
 	ctx context.Context,
 	client *Client,
 	endpoint string,

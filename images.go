@@ -105,7 +105,7 @@ func (i Image) GetUpdateOptions() (iu ImageUpdateOptions) {
 
 // ListImages lists Images
 func (c *Client) ListImages(ctx context.Context, opts *ListOptions) ([]Image, error) {
-	return aggregatePaginatedResults[Image](
+	return getPaginatedResults[Image](
 		ctx,
 		c,
 		"images",
