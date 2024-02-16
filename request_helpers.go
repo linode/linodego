@@ -63,6 +63,16 @@ func getPaginatedResults[T any](
 			numPages = response.Pages
 		}
 
+		// This is necessary to allow users to
+		// access the number of pages/results
+		// for a list request.
+		// This pattern isn't ideal, but we need to keep it
+		// for backwards compatibility.
+		if opts != nil {
+			opts.Pages = response.Pages
+			opts.Results = response.Results
+		}
+
 		result = append(result, response.Data...)
 		return nil
 	}
