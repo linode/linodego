@@ -24,7 +24,7 @@ func getPaginatedResults[T any](
 	client *Client,
 	endpoint string,
 	opts *ListOptions,
-) ([]T, error) {
+) ([]T, error) { // nolint:funlen
 	var resultType paginatedResponse[T]
 
 	result := make([]T, 0)
