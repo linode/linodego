@@ -32,19 +32,18 @@ func getPaginatedResults[T any](
 
 	req := client.R(ctx).SetResult(resultType)
 
-	var options ListOptions
-
-	// Apply all user-provided list options to the request
-	// if applicable
-	if opts != nil {
-		options = *opts
-
-		if err := applyListOptionsToRequest(&options, req); err != nil {
-			return nil, err
-		}
+	if opts == nil {
+		opts = &ListOptions{PageOptions: &PageOptions{Page: 0}}
 	}
 
-	numPages := 0
+	if opts.PageOptions == nil {
+		opts.PageOptions = &PageOptions{Page: 0}
+	}
+
+	// Apply all user-provided list options to the base request
+	if err := applyListOptionsToRequest(opts, req); err != nil {
+		return nil, err
+	}
 
 	// Makes a request to a particular page and
 	// appends the response to the result
@@ -58,20 +57,9 @@ func getPaginatedResults[T any](
 
 		response := res.Result().(*paginatedResponse[T])
 
-		// Only update the number of pages if it hasn't been set yet
-		if numPages == 0 {
-			numPages = response.Pages
-		}
-
-		// This is necessary to allow users to
-		// access the number of pages/results
-		// for a list request.
-		// This pattern isn't ideal, but we need to keep it
-		// for backwards compatibility.
-		if opts != nil {
-			opts.Pages = response.Pages
-			opts.Results = response.Results
-		}
+		opts.Page = page
+		opts.Pages = response.Pages
+		opts.Results = response.Results
 
 		result = append(result, response.Data...)
 		return nil
@@ -79,10 +67,10 @@ func getPaginatedResults[T any](
 
 	// This helps simplify the logic below
 	startingPage := 1
-	pageDefined := options.PageOptions != nil && options.PageOptions.Page > 0
+	pageDefined := opts.Page > 0
 
 	if pageDefined {
-		startingPage = options.PageOptions.Page
+		startingPage = opts.Page
 	}
 
 	// Get the first page
@@ -97,7 +85,7 @@ func getPaginatedResults[T any](
 	}
 
 	// Get the rest of the pages
-	for page := 2; page <= numPages; page++ {
+	for page := 2; page <= opts.Pages; page++ {
 		if err := handlePage(page); err != nil {
 			return nil, err
 		}
