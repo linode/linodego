@@ -24,7 +24,7 @@ type ChildAccountsPagedResponse struct {
 	Data []ChildAccount `json:"data"`
 }
 
-// endpoint gets the endpoint URL for Instance
+// endpoint returns the URL of this paginated endpoint
 func (ChildAccountsPagedResponse) endpoint(_ ...any) string {
 	return "account/child-accounts"
 }
