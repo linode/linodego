@@ -175,10 +175,9 @@ func (i *Instance) UnmarshalJSON(b []byte) error {
 
 // GetUpdateOptions converts an Instance to InstanceUpdateOptions for use in UpdateInstance
 func (i *Instance) GetUpdateOptions() InstanceUpdateOptions {
-	group := i.Group
 	return InstanceUpdateOptions{
 		Label:           i.Label,
-		Group:           &group,
+		Group:           &i.Group,
 		Backups:         i.Backups,
 		Alerts:          i.Alerts,
 		WatchdogEnabled: &i.WatchdogEnabled,
