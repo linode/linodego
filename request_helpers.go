@@ -19,12 +19,13 @@ type paginatedResponse[T any] struct {
 
 // getPaginatedResults aggregates results from the given
 // paginated endpoint using the provided ListOptions.
+// nolint:funlen
 func getPaginatedResults[T any](
 	ctx context.Context,
 	client *Client,
 	endpoint string,
 	opts *ListOptions,
-) ([]T, error) { // nolint:funlen
+) ([]T, error) {
 	var resultType paginatedResponse[T]
 
 	result := make([]T, 0)
