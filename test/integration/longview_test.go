@@ -212,7 +212,6 @@ func TestLongviewPlan_Update(t *testing.T) {
 	if updatedLongviewPlan.ID != "longview-10" {
 		t.Errorf("Longview plan not updated")
 	}
-
 }
 
 func contains(arr []string, elem string) bool {

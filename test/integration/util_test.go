@@ -1,18 +1,13 @@
 package integration
 
 import (
-	"encoding/json"
-	"fmt"
-	"io"
-	"net/http"
-	"reflect"
 	"regexp"
 	"strconv"
-	"strings"
 	"testing"
 	"time"
 
-	"github.com/google/go-cmp/cmp"
+	"github.com/linode/linodego/internal/testutil"
+
 	"github.com/jarcoal/httpmock"
 )
 
@@ -24,38 +19,11 @@ func assertDateSet(t *testing.T, compared *time.Time) {
 }
 
 func mockRequestBodyValidate(t *testing.T, expected interface{}, response interface{}) httpmock.Responder {
-	return func(request *http.Request) (*http.Response, error) {
-		eType := reflect.TypeOf(expected)
-		result := reflect.New(eType)
-
-		i := result.Interface()
-
-		data, err := io.ReadAll(request.Body)
-		if err != nil {
-			t.Fatal(err)
-		}
-
-		if err := json.Unmarshal(data, &i); err != nil {
-			t.Fatal(err)
-		}
-
-		// Deref the pointer if necessary
-		if result.Kind() == reflect.Pointer {
-			result = result.Elem()
-		}
-
-		resultValue := result.Interface()
-
-		if !reflect.DeepEqual(expected, resultValue) {
-			t.Fatalf("request body does not match request options: %s", cmp.Diff(expected, resultValue))
-		}
-
-		return httpmock.NewJsonResponse(200, response)
-	}
+	return testutil.MockRequestBodyValidate(t, expected, response)
 }
 
 func mockRequestURL(t *testing.T, path string) *regexp.Regexp {
-	return regexp.MustCompile(fmt.Sprintf("/[a-zA-Z0-9]+/%s", strings.TrimPrefix(path, "/")))
+	return testutil.MockRequestURL(path)
 }
 
 func assertSliceContains[T comparable](t *testing.T, slice []T, target T) {
@@ -69,10 +37,10 @@ func assertSliceContains[T comparable](t *testing.T, slice []T, target T) {
 }
 
 func minInt(a, b int) int {
-    if a < b {
-        return a
-    }
-    return b
+	if a < b {
+		return a
+	}
+	return b
 }
 
 // return the current nanosecond in string type as a unique text.
