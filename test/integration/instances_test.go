@@ -89,7 +89,7 @@ func TestInstance_Resize(t *testing.T) {
 			options.Booted = &boot
 		},
 	)
-	
+
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -109,7 +109,7 @@ func TestInstance_Resize(t *testing.T) {
 		context.Background(),
 		instance.ID,
 		linodego.InstanceResizeOptions{
-			Type: "g6-standard-1",
+			Type:          "g6-standard-1",
 			MigrationType: "warm",
 		},
 	)
@@ -318,7 +318,6 @@ func TestInstance_Volumes_List(t *testing.T) {
 }
 
 func TestInstance_CreateUnderFirewall(t *testing.T) {
-
 	client, firewall, firewallTeardown, err := setupFirewall(
 		t,
 		[]firewallModifier{},
@@ -449,7 +448,6 @@ func TestInstance_Clone(t *testing.T) {
 		context.Background(),
 		clonedInstance.ID,
 	)
-
 	if err != nil {
 		t.Fatal(err)
 	}

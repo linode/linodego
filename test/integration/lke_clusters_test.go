@@ -244,6 +244,7 @@ func TestLKECluster_DeleteServiceToken(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
 func TestLKEVersion_GetFound(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestLKEVersion_GetFound")
 	defer teardown()

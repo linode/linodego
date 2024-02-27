@@ -29,7 +29,6 @@ func TestBetaProgram_Get(t *testing.T) {
 
 	betaID := "active_closed"
 	beta, err := client.GetBetaProgram(context.Background(), betaID)
-
 	if err != nil {
 		t.Errorf("Error getting Beta program, expected struct, got error %v", err)
 	}
@@ -37,5 +36,4 @@ func TestBetaProgram_Get(t *testing.T) {
 	if beta.ID != betaID {
 		t.Errorf("expected beta ID to be %s; got %s", betaID, beta.ID)
 	}
-
 }

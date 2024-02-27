@@ -3,12 +3,13 @@ package integration
 import (
 	"context"
 	"fmt"
-	"github.com/linode/linodego"
 	"log"
 	"math"
 	"math/rand"
 	"os"
 	"strconv"
+
+	"github.com/linode/linodego"
 )
 
 var spendMoney = false

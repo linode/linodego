@@ -2,15 +2,16 @@ package integration
 
 import (
 	"context"
+	"reflect"
+	"testing"
+
 	"github.com/google/go-cmp/cmp"
 	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"
-	"reflect"
-	"testing"
 )
 
 func TestGrantsList(t *testing.T) {
-	//username := usernamePrefix + "grantslist"
+	// username := usernamePrefix + "grantslist"
 	client := createMockClient(t)
 	accessLevel := linodego.AccessLevelReadOnly
 	desiredResponse := linodego.GrantsListResponse{
@@ -100,7 +101,6 @@ func TestGrantsList(t *testing.T) {
 		httpmock.NewJsonResponderOrPanic(200, &desiredResponse),
 	)
 	grants, err := client.GrantsList(context.Background())
-
 	if err != nil {
 		t.Fatal(err)
 	}

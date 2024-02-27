@@ -117,7 +117,6 @@ type InstanceCreateOptions struct {
 	Region          string                                 `json:"region"`
 	Type            string                                 `json:"type"`
 	Label           string                                 `json:"label,omitempty"`
-	Group           string                                 `json:"group,omitempty"`
 	RootPass        string                                 `json:"root_pass,omitempty"`
 	AuthorizedKeys  []string                               `json:"authorized_keys,omitempty"`
 	AuthorizedUsers []string                               `json:"authorized_users,omitempty"`
@@ -135,16 +134,21 @@ type InstanceCreateOptions struct {
 	// Creation fields that need to be set explicitly false, "", or 0 use pointers
 	SwapSize *int  `json:"swap_size,omitempty"`
 	Booted   *bool `json:"booted,omitempty"`
+
+	// Deprecated: group is a deprecated property denoting a group label for the Linode.
+	Group string `json:"group,omitempty"`
 }
 
 // InstanceUpdateOptions is an options struct used when Updating an Instance
 type InstanceUpdateOptions struct {
 	Label           string          `json:"label,omitempty"`
-	Group           string          `json:"group,omitempty"`
 	Backups         *InstanceBackup `json:"backups,omitempty"`
 	Alerts          *InstanceAlert  `json:"alerts,omitempty"`
 	WatchdogEnabled *bool           `json:"watchdog_enabled,omitempty"`
 	Tags            *[]string       `json:"tags,omitempty"`
+
+	// Deprecated: group is a deprecated property denoting a group label for the Linode.
+	Group *string `json:"group,omitempty"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
@@ -173,7 +177,7 @@ func (i *Instance) UnmarshalJSON(b []byte) error {
 func (i *Instance) GetUpdateOptions() InstanceUpdateOptions {
 	return InstanceUpdateOptions{
 		Label:           i.Label,
-		Group:           i.Group,
+		Group:           &i.Group,
 		Backups:         i.Backups,
 		Alerts:          i.Alerts,
 		WatchdogEnabled: &i.WatchdogEnabled,
@@ -189,12 +193,14 @@ type InstanceCloneOptions struct {
 	// LinodeID is an optional existing instance to use as the target of the clone
 	LinodeID       int                      `json:"linode_id,omitempty"`
 	Label          string                   `json:"label,omitempty"`
-	Group          string                   `json:"group,omitempty"`
 	BackupsEnabled bool                     `json:"backups_enabled"`
 	Disks          []int                    `json:"disks,omitempty"`
 	Configs        []int                    `json:"configs,omitempty"`
 	PrivateIP      bool                     `json:"private_ip,omitempty"`
 	Metadata       *InstanceMetadataOptions `json:"metadata,omitempty"`
+
+	// Deprecated: group is a deprecated property denoting a group label for the Linode.
+	Group string `json:"group,omitempty"`
 }
 
 // InstanceResizeOptions is an options struct used when resizing an instance

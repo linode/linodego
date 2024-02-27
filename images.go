@@ -3,9 +3,7 @@ package linodego
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"io"
-	"net/url"
 	"time"
 
 	"github.com/go-resty/resty/v2"
@@ -105,108 +103,64 @@ func (i Image) GetUpdateOptions() (iu ImageUpdateOptions) {
 	return
 }
 
-// ImagesPagedResponse represents a linode API response for listing of images
-type ImagesPagedResponse struct {
-	*PageOptions
-	Data []Image `json:"data"`
-}
-
-func (ImagesPagedResponse) endpoint(_ ...any) string {
-	return "images"
-}
-
-func (resp *ImagesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
-	res, err := coupleAPIErrors(r.SetResult(ImagesPagedResponse{}).Get(e))
-	if err != nil {
-		return 0, 0, err
-	}
-	castedRes := res.Result().(*ImagesPagedResponse)
-	resp.Data = append(resp.Data, castedRes.Data...)
-	return castedRes.Pages, castedRes.Results, nil
-}
-
 // ListImages lists Images
 func (c *Client) ListImages(ctx context.Context, opts *ListOptions) ([]Image, error) {
-	response := ImagesPagedResponse{}
-	err := c.listHelper(ctx, &response, opts)
-	if err != nil {
-		return nil, err
-	}
-	return response.Data, nil
+	return getPaginatedResults[Image](
+		ctx,
+		c,
+		"images",
+		opts,
+	)
 }
 
 // GetImage gets the Image with the provided ID
 func (c *Client) GetImage(ctx context.Context, imageID string) (*Image, error) {
-	imageID = url.PathEscape(imageID)
-
-	e := fmt.Sprintf("images/%s", imageID)
-	req := c.R(ctx).SetResult(&Image{})
-	r, err := coupleAPIErrors(req.Get(e))
-	if err != nil {
-		return nil, err
-	}
-	return r.Result().(*Image), nil
+	return doGETRequest[Image](
+		ctx,
+		c,
+		formatAPIPath("images/%s", imageID),
+	)
 }
 
 // CreateImage creates an Image
 func (c *Client) CreateImage(ctx context.Context, opts ImageCreateOptions) (*Image, error) {
-	body, err := json.Marshal(opts)
-	if err != nil {
-		return nil, err
-	}
-
-	e := "images"
-	req := c.R(ctx).SetResult(&Image{}).SetBody(string(body))
-	r, err := coupleAPIErrors(req.Post(e))
-	if err != nil {
-		return nil, err
-	}
-	return r.Result().(*Image), nil
+	return doPOSTRequest[Image](
+		ctx,
+		c,
+		"images",
+		opts,
+	)
 }
 
 // UpdateImage updates the Image with the specified id
 func (c *Client) UpdateImage(ctx context.Context, imageID string, opts ImageUpdateOptions) (*Image, error) {
-	body, err := json.Marshal(opts)
-	if err != nil {
-		return nil, err
-	}
-
-	imageID = url.PathEscape(imageID)
-
-	e := fmt.Sprintf("images/%s", imageID)
-	req := c.R(ctx).SetResult(&Image{}).SetBody(string(body))
-	r, err := coupleAPIErrors(req.Put(e))
-	if err != nil {
-		return nil, err
-	}
-	return r.Result().(*Image), nil
+	return doPUTRequest[Image](
+		ctx,
+		c,
+		formatAPIPath("images/%s", imageID),
+		opts,
+	)
 }
 
 // DeleteImage deletes the Image with the specified id
 func (c *Client) DeleteImage(ctx context.Context, imageID string) error {
-	imageID = url.PathEscape(imageID)
-	e := fmt.Sprintf("images/%s", imageID)
-	_, err := coupleAPIErrors(c.R(ctx).Delete(e))
-	return err
+	return doDELETERequest(
+		ctx,
+		c,
+		formatAPIPath("images/%s", imageID),
+	)
 }
 
 // CreateImageUpload creates an Image and an upload URL
 func (c *Client) CreateImageUpload(ctx context.Context, opts ImageCreateUploadOptions) (*Image, string, error) {
-	body, err := json.Marshal(opts)
+	result, err := doPOSTRequest[ImageCreateUploadResponse](
+		ctx,
+		c,
+		"images/upload",
+		opts,
+	)
 	if err != nil {
 		return nil, "", err
-	}
-
-	e := "images/upload"
-	req := c.R(ctx).SetResult(&ImageCreateUploadResponse{}).SetBody(string(body))
-	r, err := coupleAPIErrors(req.Post(e))
-	if err != nil {
-		return nil, "", err
-	}
-
-	result, ok := r.Result().(*ImageCreateUploadResponse)
-	if !ok {
-		return nil, "", fmt.Errorf("failed to parse result")
 	}
 
 	return result.Image, result.UploadTo, nil

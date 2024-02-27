@@ -10,7 +10,6 @@ func TestAccountLogins_List(t *testing.T) {
 	defer teardown()
 
 	logins, err := client.ListLogins(context.Background(), nil)
-
 	if err != nil {
 		t.Errorf("Error getting Account Logins, expected struct, got error %v", err)
 	}
