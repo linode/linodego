@@ -204,3 +204,8 @@ func getRegionsWithCaps(t *testing.T, client *linodego.Client, capabilities []st
 
 	return result
 }
+
+func optInFixture(t *testing.T) {
+	t.Helper()
+
+}

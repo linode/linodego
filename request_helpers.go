@@ -118,16 +118,22 @@ func doPOSTRequest[T, O any](
 	ctx context.Context,
 	client *Client,
 	endpoint string,
-	options O,
+	options *O,
 ) (*T, error) {
 	var resultType T
 
-	body, err := json.Marshal(options)
-	if err != nil {
-		return nil, err
+	req := client.R(ctx).SetResult(&resultType)
+
+	// `null` is not accepted by the API
+	if options != nil {
+		body, err := json.Marshal(options)
+		if err != nil {
+			return nil, err
+		}
+
+		req = req.SetBody(body)
 	}
 
-	req := client.R(ctx).SetResult(&resultType).SetBody(string(body))
 	r, err := coupleAPIErrors(req.Post(endpoint))
 	if err != nil {
 		return nil, err
@@ -142,16 +148,22 @@ func doPUTRequest[T, O any](
 	ctx context.Context,
 	client *Client,
 	endpoint string,
-	options O,
+	options *O,
 ) (*T, error) {
 	var resultType T
 
-	body, err := json.Marshal(options)
-	if err != nil {
-		return nil, err
+	req := client.R(ctx).SetResult(&resultType)
+
+	// `null` is not accepted by the API
+	if options != nil {
+		body, err := json.Marshal(options)
+		if err != nil {
+			return nil, err
+		}
+
+		req = req.SetBody(body)
 	}
 
-	req := client.R(ctx).SetResult(&resultType).SetBody(string(body))
 	r, err := coupleAPIErrors(req.Put(endpoint))
 	if err != nil {
 		return nil, err

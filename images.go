@@ -128,7 +128,7 @@ func (c *Client) CreateImage(ctx context.Context, opts ImageCreateOptions) (*Ima
 		ctx,
 		c,
 		"images",
-		opts,
+		&opts,
 	)
 }
 
@@ -138,7 +138,7 @@ func (c *Client) UpdateImage(ctx context.Context, imageID string, opts ImageUpda
 		ctx,
 		c,
 		formatAPIPath("images/%s", imageID),
-		opts,
+		&opts,
 	)
 }
 
@@ -157,7 +157,7 @@ func (c *Client) CreateImageUpload(ctx context.Context, opts ImageCreateUploadOp
 		ctx,
 		c,
 		"images/upload",
-		opts,
+		&opts,
 	)
 	if err != nil {
 		return nil, "", err
