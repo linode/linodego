@@ -9,6 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+// NOTE: These fixtures are expected to be run under a parent account.
 func TestAccountChild_basic(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestAccountChild_basic")
 	defer teardown()
