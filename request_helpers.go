@@ -118,14 +118,14 @@ func doPOSTRequest[T, O any](
 	ctx context.Context,
 	client *Client,
 	endpoint string,
-	options *O,
+	options ...O,
 ) (*T, error) {
 	var resultType T
 
 	req := client.R(ctx).SetResult(&resultType)
 
 	// `null` is not accepted by the API
-	if options != nil {
+	if len(options) > 1 && options[0] != nil {
 		body, err := json.Marshal(options)
 		if err != nil {
 			return nil, err
@@ -148,14 +148,14 @@ func doPUTRequest[T, O any](
 	ctx context.Context,
 	client *Client,
 	endpoint string,
-	options *O,
+	options ...O,
 ) (*T, error) {
 	var resultType T
 
 	req := client.R(ctx).SetResult(&resultType)
 
 	// `null` is not accepted by the API
-	if options != nil {
+	if len(options) > 1 && options[0] != nil {
 		body, err := json.Marshal(options)
 		if err != nil {
 			return nil, err

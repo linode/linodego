@@ -40,6 +40,5 @@ func (c *Client) CreateChildAccountToken(ctx context.Context, euuid string) (*Ch
 		ctx,
 		c,
 		formatAPIPath("account/child-accounts/%s/token", euuid),
-		nil,
 	)
 }
