@@ -125,7 +125,7 @@ func doPOSTRequest[T, O any](
 	req := client.R(ctx).SetResult(&resultType)
 
 	// `null` is not accepted by the API
-	if len(options) > 1 && options[0] != nil {
+	if len(options) > 0 {
 		body, err := json.Marshal(options)
 		if err != nil {
 			return nil, err
@@ -155,7 +155,7 @@ func doPUTRequest[T, O any](
 	req := client.R(ctx).SetResult(&resultType)
 
 	// `null` is not accepted by the API
-	if len(options) > 1 && options[0] != nil {
+	if len(options) > 0 {
 		body, err := json.Marshal(options)
 		if err != nil {
 			return nil, err
