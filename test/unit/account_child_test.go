@@ -1,17 +1,16 @@
-package integration
+package unit
 
 import (
 	"context"
 	"fmt"
+	"reflect"
+	"testing"
+
 	"github.com/google/go-cmp/cmp"
 	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"
-	"reflect"
-	"testing"
+	"github.com/linode/linodego/internal/testutil"
 )
-
-// NOTE: The tests in this file are not implemented as E2E tests because
-// child accounts are not currently self-serve.
 
 var testChildAccount = linodego.ChildAccount{
 	Address1:          "123 Main Street",
@@ -44,24 +43,27 @@ var testChildAccount = linodego.ChildAccount{
 func TestAccountChild_list(t *testing.T) {
 	client := createMockClient(t)
 
-	desiredResponse := linodego.ChildAccountsPagedResponse{
-		PageOptions: &linodego.PageOptions{
-			Page:    1,
-			Pages:   1,
-			Results: 1,
+	desiredResponse := map[string]any{
+		"page":    1,
+		"pages":   1,
+		"results": 1,
+		"data": []linodego.ChildAccount{
+			testChildAccount,
 		},
-		Data: []linodego.ChildAccount{testChildAccount},
 	}
 
-	httpmock.RegisterRegexpResponder("GET", mockRequestURL(t, "/account/child-accounts"),
-		httpmock.NewJsonResponderOrPanic(200, &desiredResponse))
+	httpmock.RegisterRegexpResponder(
+		"GET",
+		testutil.MockRequestURL("/account/child-accounts"),
+		httpmock.NewJsonResponderOrPanic(200, &desiredResponse),
+	)
 
 	accounts, err := client.ListChildAccounts(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
 	}
 
-	if !reflect.DeepEqual(accounts, desiredResponse.Data) {
+	if !reflect.DeepEqual(accounts, desiredResponse["data"]) {
 		t.Fatalf("actual response does not equal desired response: %s", cmp.Diff(accounts, desiredResponse))
 	}
 }
@@ -71,7 +73,7 @@ func TestAccountChild_get(t *testing.T) {
 
 	httpmock.RegisterRegexpResponder(
 		"GET",
-		mockRequestURL(t, fmt.Sprintf("/account/child-accounts/%s", testChildAccount.EUUID)),
+		testutil.MockRequestURL(fmt.Sprintf("/account/child-accounts/%s", testChildAccount.EUUID)),
 		httpmock.NewJsonResponderOrPanic(200, &testChildAccount),
 	)
 
@@ -96,8 +98,7 @@ func TestAccountChild_createToken(t *testing.T) {
 
 	httpmock.RegisterRegexpResponder(
 		"POST",
-		mockRequestURL(
-			t,
+		testutil.MockRequestURL(
 			fmt.Sprintf("/account/child-accounts/%s/token", testChildAccount.EUUID),
 		),
 		httpmock.NewJsonResponderOrPanic(200, &desiredResponse),

@@ -25,6 +25,7 @@ citest: lint test
 
 testunit:
 	go test -v $(PACKAGES) $(ARGS)
+	cd test && make unit-test
 
 testint:
 	cd test && make test

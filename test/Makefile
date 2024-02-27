@@ -15,3 +15,8 @@ smoketest:
 	LINODE_API_VERSION="v4beta" \
 	GO111MODULE="on" \
 	go test -v -run smoke ./integration/...
+
+
+.PHONY: unit-test
+unit-test:
+	go test -v ./unit $(ARGS)
