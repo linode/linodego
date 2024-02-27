@@ -6,10 +6,10 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/google/go-cmp/cmp"
 	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"
 	"github.com/linode/linodego/internal/testutil"
+	"github.com/stretchr/testify/require"
 )
 
 var testChildAccount = linodego.ChildAccount{
@@ -59,13 +59,9 @@ func TestAccountChild_list(t *testing.T) {
 	)
 
 	accounts, err := client.ListChildAccounts(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
-	if !reflect.DeepEqual(accounts, desiredResponse["data"]) {
-		t.Fatalf("actual response does not equal desired response: %s", cmp.Diff(accounts, desiredResponse))
-	}
+	require.True(t, reflect.DeepEqual(accounts, desiredResponse["data"]))
 }
 
 func TestAccountChild_get(t *testing.T) {
@@ -78,13 +74,9 @@ func TestAccountChild_get(t *testing.T) {
 	)
 
 	account, err := client.GetChildAccount(context.Background(), testChildAccount.EUUID)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
-	if !reflect.DeepEqual(*account, testChildAccount) {
-		t.Fatalf("actual response does not equal desired response: %s", cmp.Diff(account, testChildAccount))
-	}
+	require.True(t, reflect.DeepEqual(*account, testChildAccount))
 }
 
 func TestAccountChild_createToken(t *testing.T) {
@@ -105,11 +97,7 @@ func TestAccountChild_createToken(t *testing.T) {
 	)
 
 	token, err := client.CreateChildAccountToken(context.Background(), testChildAccount.EUUID)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
-	if !reflect.DeepEqual(*token, desiredResponse) {
-		t.Fatalf("actual response does not equal desired response: %s", cmp.Diff(token, desiredResponse))
-	}
+	require.True(t, reflect.DeepEqual(*token, desiredResponse))
 }
