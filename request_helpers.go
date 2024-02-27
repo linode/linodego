@@ -126,7 +126,7 @@ func doPOSTRequest[T, O any](
 
 	// `null` is not accepted by the API
 	if len(options) > 0 {
-		body, err := json.Marshal(options)
+		body, err := json.Marshal(options[0])
 		if err != nil {
 			return nil, err
 		}
@@ -156,7 +156,7 @@ func doPUTRequest[T, O any](
 
 	// `null` is not accepted by the API
 	if len(options) > 0 {
-		body, err := json.Marshal(options)
+		body, err := json.Marshal(options[0])
 		if err != nil {
 			return nil, err
 		}
