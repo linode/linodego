@@ -11,7 +11,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.dev.linode.com/v4beta/account/child-accounts?page=1
+    url: https://api.linode.com/v4beta/account/child-accounts?page=1
     method: GET
   response:
     body: '{"data": [{"company": "DX Child Account", "email": "dl-linode-dev-dx@akamai.com",
@@ -75,7 +75,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.dev.linode.com/v4beta/account/child-accounts/E89C475E-7476-4B95-95EA82BB4EE866E3
+    url: https://api.linode.com/v4beta/account/child-accounts/E89C475E-7476-4B95-95EA82BB4EE866E3
     method: GET
   response:
     body: '{"company": "DX Child Account", "email": "dl-linode-dev-dx@akamai.com",
@@ -138,7 +138,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.dev.linode.com/v4beta/account/child-accounts/E89C475E-7476-4B95-95EA82BB4EE866E3/token
+    url: https://api.linode.com/v4beta/account/child-accounts/E89C475E-7476-4B95-95EA82BB4EE866E3/token
     method: POST
   response:
     body: '{"id": 118940, "scopes": "*", "created": "2018-01-02T03:04:05", "label":
