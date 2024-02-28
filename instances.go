@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net"
-	"net/url"
 	"time"
 
 	"github.com/go-resty/resty/v2"
@@ -450,8 +449,10 @@ func (c *Client) MigrateInstance(ctx context.Context, linodeID int, opts Instanc
 // simpleInstanceAction is a helper for Instance actions that take no parameters
 // and return empty responses `{}` unless they return a standard error
 func (c *Client) simpleInstanceAction(ctx context.Context, action string, linodeID int) error {
-	action = url.PathEscape(action)
-	e := fmt.Sprintf("linode/instances/%d/%s", linodeID, action)
-	_, err := coupleAPIErrors(c.R(ctx).Post(e))
+	_, err := doPOSTRequest[any, any](
+		ctx,
+		c,
+		fmt.Sprintf("linode/instances/%d/%s", linodeID, action),
+	)
 	return err
 }
