@@ -8,6 +8,8 @@ import (
 )
 
 func TestAccountNotifications_List(t *testing.T) {
+	optInTest(t)
+
 	client, fixtureTeardown := createTestClient(t, "fixtures/TestAccountNotifications_List")
 	defer fixtureTeardown()
 

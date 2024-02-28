@@ -8,6 +8,8 @@ import (
 )
 
 func TestAccountBetaPrograms(t *testing.T) {
+	optInTest(t)
+
 	client, teardown := createTestClient(t, "fixtures/TestAccountBetaPrograms")
 	defer teardown()
 

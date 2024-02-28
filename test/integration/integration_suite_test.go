@@ -20,6 +20,8 @@ import (
 )
 
 var (
+	optInTestPrefixes []string
+
 	testingMode     = recorder.ModeDisabled
 	debugAPI        = false
 	validTestAPIKey = "NOTANAPIKEY"
@@ -54,6 +56,13 @@ func init() {
 			testingPollDuration = 1
 			testingMaxRetryTime = time.Duration(1) * time.Microsecond
 		}
+	}
+
+	if tests, ok := os.LookupEnv("LINODE_OPT_IN_TESTS"); ok {
+		optInTestPrefixes = strings.Split(
+			strings.ReplaceAll(tests, " ", ""),
+			",",
+		)
 	}
 }
 
@@ -205,7 +214,33 @@ func getRegionsWithCaps(t *testing.T, client *linodego.Client, capabilities []st
 	return result
 }
 
-func optInFixture(t *testing.T) {
+// optInTests signifies a test that should be skipped unless
+// its name/prefix is specified in the LINODE_OPT_IN_TESTS
+// environment variable.
+//
+// These tests are only skipped when recording fixtures
+// and will always run in playback mode.
+//
+// This is useful for tests that might require a unique
+// testing environment (e.g. parent/child accounts) or
+// may store sensitive data that we do not want to run
+// alongside the rest of the fixture suite.
+func optInTest(t *testing.T) {
 	t.Helper()
 
+	if testingMode == recorder.ModeReplaying {
+		return
+	}
+
+	for _, v := range optInTestPrefixes {
+		if strings.HasPrefix(t.Name(), v) {
+			return
+		}
+	}
+
+	t.Skipf(
+		"Generating fixtures for %s requires opting in "+
+			"using the LINODE_OPT_IN_TESTS environment variable.",
+		t.Name(),
+	)
 }

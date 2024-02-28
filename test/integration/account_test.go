@@ -6,6 +6,8 @@ import (
 )
 
 func TestAccount_Get(t *testing.T) {
+	optInTest(t)
+
 	client, teardown := createTestClient(t, "fixtures/TestAccount_Get")
 	defer teardown()
 
