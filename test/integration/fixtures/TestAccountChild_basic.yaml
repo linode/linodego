@@ -14,174 +14,34 @@ interactions:
     url: https://api.linode.com/v4beta/account/child-accounts?page=1
     method: GET
   response:
-    body: '{"data": [{"company": "DX Child Account", "email": "dl-linode-dev-dx@akamai.com",
-      "first_name": "DX-Child", "last_name": "Team", "address_1": "", "address_2":
-      "", "city": "", "state": "", "zip": "", "country": "", "phone": "", "balance":
-      0.0, "tax_id": "", "billing_source": "akamai", "credit_card": {"last_four":
-      null, "expiry": null}, "balance_uninvoiced": 0.0, "active_since": "2018-01-02T03:04:05",
-      "capabilities": ["Linodes", "NodeBalancers", "Block Storage", "Object Storage",
-      "Kubernetes", "Cloud Firewall", "Vlans", "LKE HA Control Planes", "Machine Images",
-      "VPCs"], "active_promotions": [], "euuid": "E89C475E-7476-4B95-95EA82BB4EE866E3"}],
-      "page": 1, "pages": 1, "results": 1}'
+    body: '{"errors": [{"reason": "Unauthorized"}]}'
     headers:
-      Access-Control-Allow-Credentials:
-      - "true"
       Access-Control-Allow-Headers:
       - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
       Access-Control-Allow-Methods:
       - HEAD, GET, OPTIONS, POST, PUT, DELETE
       Access-Control-Allow-Origin:
       - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Accept-Encoding
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - child_account:read_only
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "1200"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/child-accounts/E89C475E-7476-4B95-95EA82BB4EE866E3
-    method: GET
-  response:
-    body: '{"company": "DX Child Account", "email": "dl-linode-dev-dx@akamai.com",
-      "first_name": "DX-Child", "last_name": "Team", "address_1": "", "address_2":
-      "", "city": "", "state": "", "zip": "", "country": "", "phone": "", "balance":
-      0.0, "tax_id": "", "billing_source": "akamai", "credit_card": {"last_four":
-      null, "expiry": null}, "balance_uninvoiced": 0.0, "active_since": "2018-01-02T03:04:05",
-      "capabilities": ["Linodes", "NodeBalancers", "Block Storage", "Object Storage",
-      "Kubernetes", "Cloud Firewall", "Vlans", "LKE HA Control Planes", "Machine Images",
-      "VPCs"], "active_promotions": [], "euuid": "E89C475E-7476-4B95-95EA82BB4EE866E3"}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Accept-Encoding
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - child_account:read_only
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "1200"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/child-accounts/E89C475E-7476-4B95-95EA82BB4EE866E3/token
-    method: POST
-  response:
-    body: '{"id": 118004, "scopes": "*", "created": "2018-01-02T03:04:05", "label":
-      "dx-parent-account_411983_1709054360", "token": "db2d8f40da05fba684005d3262015237c80f0638a37df67e67e24f576e1e3c7b",
-      "expiry": "2018-01-02T03:04:05"}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
-      - "221"
-      Content-Security-Policy:
-      - default-src 'none'
+      - "40"
       Content-Type:
       - application/json
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000
+      Expires:
+      - Wed, 28 Feb 2024 15:45:11 GMT
+      Pragma:
+      - no-cache
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - child_account:read_write
-      X-Content-Type-Options:
-      - nosniff
+      - child_account:read_only
       X-Frame-Options:
-      - DENY
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "1200"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
+    status: 403 Forbidden
+    code: 403
     duration: ""

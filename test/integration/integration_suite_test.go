@@ -19,6 +19,13 @@ import (
 	"k8s.io/client-go/transport"
 )
 
+const (
+	envOptInTests  = "LINODE_OPT_IN_TESTS"
+	envToken       = "LINODE_TOKEN"
+	envDebug       = "LINODE_DEBUG"
+	envFixtureMode = "LINODE_FIXTURE_MODE"
+)
+
 var (
 	optInTestPrefixes []string
 
@@ -33,11 +40,11 @@ var (
 )
 
 func init() {
-	if apiToken, ok := os.LookupEnv("LINODE_TOKEN"); ok {
+	if apiToken, ok := os.LookupEnv(envToken); ok {
 		validTestAPIKey = apiToken
 	}
 
-	if apiDebug, ok := os.LookupEnv("LINODE_DEBUG"); ok {
+	if apiDebug, ok := os.LookupEnv(envDebug); ok {
 		if parsed, err := strconv.ParseBool(apiDebug); err == nil {
 			debugAPI = parsed
 			log.Println("[INFO] LINODE_DEBUG being set to", debugAPI)
@@ -46,7 +53,7 @@ func init() {
 		}
 	}
 
-	if envFixtureMode, ok := os.LookupEnv("LINODE_FIXTURE_MODE"); ok {
+	if envFixtureMode, ok := os.LookupEnv(envFixtureMode); ok {
 		if envFixtureMode == "record" {
 			log.Printf("[INFO] LINODE_FIXTURE_MODE %s will be used for tests", envFixtureMode)
 			testingMode = recorder.ModeRecording
@@ -58,7 +65,7 @@ func init() {
 		}
 	}
 
-	if tests, ok := os.LookupEnv("LINODE_OPT_IN_TESTS"); ok {
+	if tests, ok := os.LookupEnv(envOptInTests); ok {
 		optInTestPrefixes = strings.Split(
 			strings.ReplaceAll(tests, " ", ""),
 			",",
@@ -240,7 +247,8 @@ func optInTest(t *testing.T) {
 
 	t.Skipf(
 		"Generating fixtures for %s requires opting in "+
-			"using the LINODE_OPT_IN_TESTS environment variable.",
+			"using the %s environment variable.",
 		t.Name(),
+		envOptInTests,
 	)
 }

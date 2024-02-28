@@ -174,6 +174,9 @@ dates, but no automated sanitization will be performed against `fixtures/*Accoun
 
 To prevent disrupting unaffected fixtures, target fixture generation like so: `make ARGS="-run TestListVolumes" fixtures`.
 
+Additionally, some fixtures may only be run when explicitly opted into using the `LINODE_OPT_IN_TESTS` environment
+variable (e.g. `export LINODE_OPT_IN_TESTS="TestAccountChild, TestAccountLogins"`).
+
 ## Discussion / Help
 
 Join us at [#linodego](https://gophers.slack.com/messages/CAG93EB2S) on the [gophers slack](https://gophers.slack.com)
