@@ -21,7 +21,7 @@ func MockRequestURL(path string) *regexp.Regexp {
 	return regexp.MustCompile(fmt.Sprintf("/[a-zA-Z0-9]+/%s", strings.TrimPrefix(path, "/")))
 }
 
-func MockRequestBodyValidate(t *testing.T, expected interface{}, response interface{}) httpmock.Responder {
+func MockRequestBodyValidate(t *testing.T, expected any, response any) httpmock.Responder {
 	t.Helper()
 
 	return func(request *http.Request) (*http.Response, error) {
@@ -48,6 +48,18 @@ func MockRequestBodyValidate(t *testing.T, expected interface{}, response interf
 
 		if !reflect.DeepEqual(expected, resultValue) {
 			t.Fatalf("request body does not match request options: %s", cmp.Diff(expected, resultValue))
+		}
+
+		return httpmock.NewJsonResponse(200, response)
+	}
+}
+
+func MockRequestBodyValidateNoBody(t *testing.T, response any) httpmock.Responder {
+	t.Helper()
+
+	return func(request *http.Request) (*http.Response, error) {
+		if request.Body != nil {
+			t.Fatal("got request body when no request body was expected")
 		}
 
 		return httpmock.NewJsonResponse(200, response)
