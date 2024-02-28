@@ -118,16 +118,27 @@ func doPOSTRequest[T, O any](
 	ctx context.Context,
 	client *Client,
 	endpoint string,
-	options O,
+	options ...O,
 ) (*T, error) {
 	var resultType T
 
-	body, err := json.Marshal(options)
-	if err != nil {
-		return nil, err
+	numOpts := len(options)
+
+	if numOpts > 1 {
+		return nil, fmt.Errorf("invalid number of options: %d", len(options))
 	}
 
-	req := client.R(ctx).SetResult(&resultType).SetBody(string(body))
+	req := client.R(ctx).SetResult(&resultType)
+
+	if numOpts > 0 {
+		body, err := json.Marshal(options[0])
+		if err != nil {
+			return nil, err
+		}
+
+		req.SetBody(string(body))
+	}
+
 	r, err := coupleAPIErrors(req.Post(endpoint))
 	if err != nil {
 		return nil, err
@@ -142,16 +153,27 @@ func doPUTRequest[T, O any](
 	ctx context.Context,
 	client *Client,
 	endpoint string,
-	options O,
+	options ...O,
 ) (*T, error) {
 	var resultType T
 
-	body, err := json.Marshal(options)
-	if err != nil {
-		return nil, err
+	numOpts := len(options)
+
+	if numOpts > 1 {
+		return nil, fmt.Errorf("invalid number of options: %d", len(options))
 	}
 
-	req := client.R(ctx).SetResult(&resultType).SetBody(string(body))
+	req := client.R(ctx).SetResult(&resultType)
+
+	if numOpts > 0 {
+		body, err := json.Marshal(options[0])
+		if err != nil {
+			return nil, err
+		}
+
+		req.SetBody(string(body))
+	}
+
 	r, err := coupleAPIErrors(req.Put(endpoint))
 	if err != nil {
 		return nil, err

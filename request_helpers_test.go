@@ -75,6 +75,29 @@ func TestRequestHelpers_post(t *testing.T) {
 	}
 }
 
+func TestRequestHelpers_postNoOptions(t *testing.T) {
+	client := testutil.CreateMockClient(t, NewClient)
+
+	httpmock.RegisterRegexpResponder(
+		"POST",
+		testutil.MockRequestURL("/foo/bar"),
+		testutil.MockRequestBodyValidateNoBody(t, testResponse),
+	)
+
+	result, err := doPOSTRequest[testResultType, any](
+		context.Background(),
+		client,
+		"/foo/bar",
+	)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !reflect.DeepEqual(*result, testResponse) {
+		t.Fatalf("actual response does not equal desired response: %s", cmp.Diff(result, testResponse))
+	}
+}
+
 func TestRequestHelpers_put(t *testing.T) {
 	client := testutil.CreateMockClient(t, NewClient)
 
@@ -86,6 +109,29 @@ func TestRequestHelpers_put(t *testing.T) {
 		client,
 		"/foo/bar",
 		testResponse,
+	)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if !reflect.DeepEqual(*result, testResponse) {
+		t.Fatalf("actual response does not equal desired response: %s", cmp.Diff(result, testResponse))
+	}
+}
+
+func TestRequestHelpers_putNoOptions(t *testing.T) {
+	client := testutil.CreateMockClient(t, NewClient)
+
+	httpmock.RegisterRegexpResponder(
+		"PUT",
+		testutil.MockRequestURL("/foo/bar"),
+		testutil.MockRequestBodyValidateNoBody(t, testResponse),
+	)
+
+	result, err := doPUTRequest[testResultType, any](
+		context.Background(),
+		client,
+		"/foo/bar",
 	)
 	if err != nil {
 		t.Fatal(err)
