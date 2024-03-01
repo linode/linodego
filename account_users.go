@@ -29,7 +29,6 @@ type User struct {
 	TFAEnabled          bool       `json:"tfa_enabled"`
 	SSHKeys             []string   `json:"ssh_keys"`
 	PasswordCreated     *time.Time `json:"-"`
-	LastLogin           *time.Time `json:"-"`
 	VerifiedPhoneNumber *string    `json:"verified_phone_number"`
 }
 
@@ -53,7 +52,6 @@ func (i *User) UnmarshalJSON(b []byte) error {
 	p := struct {
 		*Mask
 		PasswordCreated *parseabletime.ParseableTime `json:"password_created"`
-		LastLogin       *parseabletime.ParseableTime `json:"last_login""`
 	}{
 		Mask: (*Mask)(i),
 	}
@@ -63,7 +61,6 @@ func (i *User) UnmarshalJSON(b []byte) error {
 	}
 
 	i.PasswordCreated = (*time.Time)(p.PasswordCreated)
-	i.LastLogin = (*time.Time)(p.LastLogin)
 
 	return nil
 }
