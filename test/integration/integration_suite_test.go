@@ -19,13 +19,6 @@ import (
 	"k8s.io/client-go/transport"
 )
 
-const (
-	envOptInTests  = "LINODE_OPT_IN_TESTS"
-	envToken       = "LINODE_TOKEN"
-	envDebug       = "LINODE_DEBUG"
-	envFixtureMode = "LINODE_FIXTURE_MODE"
-)
-
 var (
 	optInTestPrefixes []string
 
@@ -40,11 +33,11 @@ var (
 )
 
 func init() {
-	if apiToken, ok := os.LookupEnv(envToken); ok {
+	if apiToken, ok := os.LookupEnv("LINODE_TOKEN"); ok {
 		validTestAPIKey = apiToken
 	}
 
-	if apiDebug, ok := os.LookupEnv(envDebug); ok {
+	if apiDebug, ok := os.LookupEnv("LINODE_DEBUG"); ok {
 		if parsed, err := strconv.ParseBool(apiDebug); err == nil {
 			debugAPI = parsed
 			log.Println("[INFO] LINODE_DEBUG being set to", debugAPI)
@@ -53,7 +46,7 @@ func init() {
 		}
 	}
 
-	if envFixtureMode, ok := os.LookupEnv(envFixtureMode); ok {
+	if envFixtureMode, ok := os.LookupEnv("LINODE_FIXTURE_MODE"); ok {
 		if envFixtureMode == "record" {
 			log.Printf("[INFO] LINODE_FIXTURE_MODE %s will be used for tests", envFixtureMode)
 			testingMode = recorder.ModeRecording
@@ -63,13 +56,6 @@ func init() {
 			testingPollDuration = 1
 			testingMaxRetryTime = time.Duration(1) * time.Microsecond
 		}
-	}
-
-	if tests, ok := os.LookupEnv(envOptInTests); ok {
-		optInTestPrefixes = strings.Split(
-			strings.ReplaceAll(tests, " ", ""),
-			",",
-		)
 	}
 }
 
@@ -219,36 +205,4 @@ func getRegionsWithCaps(t *testing.T, client *linodego.Client, capabilities []st
 	}
 
 	return result
-}
-
-// optInTests signifies a test that should be skipped unless
-// its name/prefix is specified in the LINODE_OPT_IN_TESTS
-// environment variable.
-//
-// These tests are only skipped when recording fixtures
-// and will always run in playback mode.
-//
-// This is useful for tests that might require a unique
-// testing environment (e.g. parent/child accounts) or
-// may store sensitive data that we do not want to run
-// alongside the rest of the fixture suite.
-func optInTest(t *testing.T) {
-	t.Helper()
-
-	if testingMode == recorder.ModeReplaying {
-		return
-	}
-
-	for _, v := range optInTestPrefixes {
-		if strings.HasPrefix(t.Name(), v) {
-			return
-		}
-	}
-
-	t.Skipf(
-		"Generating fixtures for %s requires opting in "+
-			"using the %s environment variable.",
-		t.Name(),
-		envOptInTests,
-	)
 }

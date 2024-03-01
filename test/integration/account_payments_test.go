@@ -8,8 +8,6 @@ import (
 )
 
 func TestPayment_GetMissing(t *testing.T) {
-	optInTest(t)
-
 	client, teardown := createTestClient(t, "fixtures/TestPayment_GetMissing")
 	defer teardown()
 
@@ -28,8 +26,6 @@ func TestPayment_GetMissing(t *testing.T) {
 }
 
 func TestPayment_GetFound(t *testing.T) {
-	optInTest(t)
-
 	client, teardown := createTestClient(t, "fixtures/TestPayment_GetFound")
 	defer teardown()
 
@@ -56,8 +52,6 @@ func TestPayment_GetFound(t *testing.T) {
 }
 
 func TestPayments_List(t *testing.T) {
-	optInTest(t)
-
 	client, teardown := createTestClient(t, "fixtures/TestPayments_List")
 	defer teardown()
 

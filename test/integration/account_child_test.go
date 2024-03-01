@@ -1,3 +1,5 @@
+//go:build parent_child
+
 package integration
 
 import (
@@ -11,8 +13,6 @@ import (
 
 // NOTE: These fixtures are expected to be run under a parent account.
 func TestAccountChild_basic(t *testing.T) {
-	optInTest(t)
-	
 	client, teardown := createTestClient(t, "fixtures/TestAccountChild_basic")
 	defer teardown()
 

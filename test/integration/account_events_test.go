@@ -8,8 +8,6 @@ import (
 )
 
 func TestAccountEvents_List(t *testing.T) {
-	optInTest(t)
-
 	client, instance, teardown, err := setupInstance(t, "fixtures/TestAccountEvents_List")
 	defer teardown()
 	if err != nil {

@@ -6,8 +6,6 @@ import (
 )
 
 func TestAccountLogins_List(t *testing.T) {
-	optInTest(t)
-
 	client, teardown := createTestClient(t, "fixtures/TestAccountLogins_List")
 	defer teardown()
 
