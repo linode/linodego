@@ -122,16 +122,21 @@ func doPOSTRequest[T, O any](
 ) (*T, error) {
 	var resultType T
 
+	numOpts := len(options)
+
+	if numOpts > 1 {
+		return nil, fmt.Errorf("invalid number of options: %d", len(options))
+	}
+
 	req := client.R(ctx).SetResult(&resultType)
 
-	// `null` is not accepted by the API
-	if len(options) > 0 {
+	if numOpts > 0 {
 		body, err := json.Marshal(options[0])
 		if err != nil {
 			return nil, err
 		}
 
-		req = req.SetBody(body)
+		req.SetBody(string(body))
 	}
 
 	r, err := coupleAPIErrors(req.Post(endpoint))
@@ -152,16 +157,21 @@ func doPUTRequest[T, O any](
 ) (*T, error) {
 	var resultType T
 
+	numOpts := len(options)
+
+	if numOpts > 1 {
+		return nil, fmt.Errorf("invalid number of options: %d", len(options))
+	}
+
 	req := client.R(ctx).SetResult(&resultType)
 
-	// `null` is not accepted by the API
-	if len(options) > 0 {
+	if numOpts > 0 {
 		body, err := json.Marshal(options[0])
 		if err != nil {
 			return nil, err
 		}
 
-		req = req.SetBody(body)
+		req.SetBody(string(body))
 	}
 
 	r, err := coupleAPIErrors(req.Put(endpoint))
