@@ -41,6 +41,27 @@ type InstanceConfigInterfaceUpdateOptions struct {
 	IPRanges []string `json:"ip_ranges,omitempty"`
 }
 
+// MarshalJSON implements the JSON marshal interface method for the interface update options.
+// This is a workaround for #462, allowing users to explicitly clear the ip_ranges field.
+func (opts InstanceConfigInterfaceUpdateOptions) MarshalJSON() ([]byte, error) {
+	type Mask InstanceConfigInterfaceUpdateOptions
+
+	// If IP ranges is nil, return the default
+	if opts.IPRanges == nil {
+		return json.Marshal(opts)
+	}
+
+	maskedOpts := &struct {
+		Mask
+		IPRanges []string `json:"ip_ranges"`
+	}{
+		Mask:     (Mask)(opts),
+		IPRanges: opts.IPRanges,
+	}
+
+	return json.Marshal(maskedOpts)
+}
+
 type InstanceConfigInterfacesReorderOptions struct {
 	IDs []int `json:"ids"`
 }
