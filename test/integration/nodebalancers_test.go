@@ -42,7 +42,6 @@ func TestNodeBalancer_Update(t *testing.T) {
 		Label: &renamedLabel,
 	}
 	nodebalancer, err = client.UpdateNodeBalancer(context.Background(), nodebalancer.ID, updateOpts)
-
 	if err != nil {
 		t.Errorf("Error renaming nodebalancer, %s", err)
 	}

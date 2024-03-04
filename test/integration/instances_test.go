@@ -230,7 +230,6 @@ func TestInstance_Disk_ListMultiple(t *testing.T) {
 		Label: "go-disk-test-" + randLabel(),
 		Size:  2000,
 	})
-
 	if err != nil {
 		t.Errorf("Error creating disk after a private image: %s", err)
 	}
@@ -357,7 +356,6 @@ func TestInstance_Rebuild(t *testing.T) {
 	}
 
 	_, err = client.WaitForEventFinished(context.Background(), instance.ID, linodego.EntityLinode, linodego.ActionLinodeCreate, *instance.Created, 180)
-
 	if err != nil {
 		t.Errorf("Error waiting for instance created: %s", err)
 	}
@@ -371,7 +369,6 @@ func TestInstance_Rebuild(t *testing.T) {
 		Type:     "g6-standard-2",
 	}
 	instance, err = client.RebuildInstance(context.Background(), instance.ID, rebuildOpts)
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -404,7 +401,6 @@ func TestInstance_Clone(t *testing.T) {
 		*instance.Created,
 		180,
 	)
-
 	if err != nil {
 		t.Errorf("Error waiting for instance created: %s", err)
 	}
@@ -435,7 +431,6 @@ func TestInstance_Clone(t *testing.T) {
 		*clonedInstance.Created,
 		240,
 	)
-
 	if err != nil {
 		t.Fatal(err)
 	}

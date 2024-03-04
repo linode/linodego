@@ -68,7 +68,6 @@ func TestSSHKey_Update(t *testing.T) {
 		Label: renamedLabel,
 	}
 	sshkey, err = client.UpdateSSHKey(context.Background(), sshkey.ID, updateOpts)
-
 	if err != nil {
 		t.Errorf("Error renaming sshkey, %s", err)
 	}
