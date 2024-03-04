@@ -25,6 +25,15 @@ jobs:
           go-version: 'stable'
       - run: go version
 
+      - name: Run tidy
+        run: make tidy
+
+      - name: Run fmt
+        run: go fmt ./...
+
+      - name: Fail if changes
+        run: git diff-index --exit-code HEAD
+
       - name: Update system packages
         run: sudo apt-get update -y
 
