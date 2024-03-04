@@ -118,7 +118,6 @@ func createSubnetInVPC(
 	func(),
 	error,
 ) {
-
 	t.Helper()
 	createOpts := linodego.VPCSubnetCreateOptions{
 		Label: "linodego-vpc-test-" + getUniqueText(),
@@ -330,5 +329,4 @@ func TestVPC_Subnet_WithInstance(t *testing.T) {
 	if nat1To1.Address != config.Interfaces[2].IPv4.VPC {
 		t.Fatalf("nat_1_1 subnet IP mismatch")
 	}
-
 }

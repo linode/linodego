@@ -123,11 +123,12 @@ func setupInstanceBackup(t *testing.T, fixturesYaml string) (*linodego.Client, *
 		t.Errorf("Error creating instance snapshot: %v", err)
 	}
 
-	event, err = client.WaitForEventFinished(context.Background(), instance.ID, linodego.EntityLinode, linodego.ActionLinodeSnapshot, *instance.Created, 240)
+	event, err = client.WaitForEventFinished(context.Background(), instance.ID, linodego.EntityLinode, linodego.ActionLinodeSnapshot, *instance.Created, 360)
 	if err != nil {
 		t.Errorf("Error waiting for instance snapshot: %v", err)
 	}
-	if event.Status == linodego.EventFailed {
+
+	if event != nil && event.Status == linodego.EventFailed {
 		t.Errorf("Error taking instance snapshot: Snapshot Failed")
 	}
 

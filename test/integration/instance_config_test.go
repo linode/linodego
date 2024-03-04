@@ -48,7 +48,7 @@ func setupVPCWithSubnetWithInstance(
 
 	teardownAll := func() {
 		instanceTeardown()
-		vpcWithSubnetTeardown()		
+		vpcWithSubnetTeardown()
 		fixtureTeardown()
 	}
 	return client, vpc, vpcSubnet, instance, instanceConfig, teardownAll, err
@@ -78,6 +78,7 @@ func setupInstanceWith3Interfaces(t *testing.T, fixturesYaml string) (
 	}
 
 	updateConfigOpts := config.GetUpdateOptions()
+	NAT1To1Any := "any"
 	updateConfigOpts.Interfaces = []InstanceConfigInterfaceCreateOptions{
 		{
 			Purpose: InterfacePurposePublic,
@@ -90,7 +91,7 @@ func setupInstanceWith3Interfaces(t *testing.T, fixturesYaml string) (
 			Purpose:  InterfacePurposeVPC,
 			SubnetID: &vpcSubnet.ID,
 			IPv4: &VPCIPv4{
-				NAT1To1: "any",
+				NAT1To1: &NAT1To1Any,
 			},
 		},
 	}
@@ -182,7 +183,6 @@ func TestInstance_ConfigInterfaces_AppendDelete(t *testing.T) {
 }
 
 func TestInstance_ConfigInterfaces_Reorder(t *testing.T) {
-
 	client, _, _, instance, config, teardown := setupInstanceWith3Interfaces(
 		t,
 		"fixtures/TestInstance_ConfigInterfaces_Reorder",
@@ -241,7 +241,6 @@ func TestInstance_ConfigInterfaces_List(t *testing.T) {
 		instance.ID,
 		config.ID,
 	)
-
 	if err != nil {
 		t.Error(err)
 	}
@@ -282,6 +281,9 @@ func TestInstance_ConfigInterfaces_Update(t *testing.T) {
 		{
 			Purpose:  InterfacePurposeVPC,
 			SubnetID: &vpcSubnet.ID,
+			IPv4: &VPCIPv4{
+				VPC: "192.168.0.87",
+			},
 		},
 	}
 
@@ -362,7 +364,6 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 		intfc.ID,
 		updateOpts,
 	)
-
 	if err != nil {
 		t.Errorf("an error occurs when updating an interface in config %v", config.ID)
 	}
@@ -370,10 +371,10 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 	if !(updatedIntfc.Primary == updateOpts.Primary) {
 		t.Errorf("updating interface %v didn't succeed", intfc.ID)
 	}
-
+	NAT1To1Any := "any"
 	updateOpts.IPv4 = &VPCIPv4{
 		VPC:     "192.168.0.10",
-		NAT1To1: "any",
+		NAT1To1: &NAT1To1Any,
 	}
 
 	updatedIntfc, err = client.UpdateInstanceConfigInterface(

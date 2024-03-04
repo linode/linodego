@@ -2,9 +2,10 @@ package integration
 
 import (
 	"context"
-	"golang.org/x/net/http2"
 	"net/http"
 	"testing"
+
+	"golang.org/x/net/http2"
 
 	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"

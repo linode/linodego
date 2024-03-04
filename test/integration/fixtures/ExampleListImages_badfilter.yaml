@@ -13,7 +13,7 @@ interactions:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
       - '{"foo":"bar"}'
-    url: https://api.linode.com/v4beta/images
+    url: https://api.linode.com/v4beta/images?page=1
     method: GET
   response:
     body: '{"errors": [{"reason": "Cannot filter on foo", "field": "X-Filter"}]}'
@@ -25,13 +25,17 @@ interactions:
       Access-Control-Allow-Origin:
       - '*'
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "69"
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Fri, 16 Feb 2024 17:56:11 GMT
+      Pragma:
+      - no-cache
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
@@ -41,7 +45,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "20"
     status: 400 Bad Request
     code: 400
     duration: ""

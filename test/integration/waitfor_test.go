@@ -3,8 +3,9 @@ package integration
 import (
 	"context"
 	"fmt"
-	"github.com/linode/linodego"
 	"testing"
+
+	"github.com/linode/linodego"
 )
 
 func TestEventPoller_InstancePower(t *testing.T) {

@@ -15,10 +15,10 @@ interactions:
     url: https://api.linode.com/v4beta/images/upload
     method: POST
   response:
-    body: '{"upload_to": "https://us-ord-1.linodeobjects.com:443/linode-production-machine-images-uploads/22961819?Signature=GRF9N7TR3tEl1JPipZFOT%2FKQd9g%3D&Expires=1702420468&AWSAccessKeyID=SANITIZED",
-      "image": {"id": "private/22961819", "label": "linodego-image-test", "description":
+    body: '{"upload_to": "https://us-ord-1.linodeobjects.com:443/linode-production-machine-images-uploads/23851696?Signature=Sv2YDjn0fC5o6oi2YBHDPIdLOz4%3D&Expires=1708192079&AWSAccessKeyID=SANITIZED",
+      "image": {"id": "private/23851696", "label": "linodego-image-test", "description":
       "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "size": 0, "created_by": "youjungk01", "type": "manual", "is_public": false,
+      "size": 0, "created_by": "lgarber-dev", "type": "manual", "is_public": false,
       "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
       "pending_upload", "capabilities": []}}'
     headers:
@@ -37,13 +37,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "575"
+      - "574"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 11 Dec 2023 22:34:28 GMT
+      - Fri, 16 Feb 2024 17:47:59 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -76,12 +76,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private%2F22961819
+    url: https://api.linode.com/v4beta/images/private%2F23851696
     method: GET
   response:
-    body: '{"id": "private/22961819", "label": "linodego-image-test", "description":
+    body: '{"id": "private/23851696", "label": "linodego-image-test", "description":
       "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "size": 0, "created_by": "youjungk01", "type": "manual", "is_public": false,
+      "size": 0, "created_by": "lgarber-dev", "type": "manual", "is_public": false,
       "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
       "pending_upload", "capabilities": []}'
     headers:
@@ -100,13 +100,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "361"
+      - "362"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 11 Dec 2023 22:34:43 GMT
+      - Fri, 16 Feb 2024 17:48:14 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -140,76 +140,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private%2F22961819
+    url: https://api.linode.com/v4beta/images/private%2F23851696
     method: GET
   response:
-    body: '{"id": "private/22961819", "label": "linodego-image-test", "description":
+    body: '{"id": "private/23851696", "label": "linodego-image-test", "description":
       "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "size": 0, "created_by": "youjungk01", "type": "manual", "is_public": false,
-      "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
-      "pending_upload", "capabilities": []}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "361"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Mon, 11 Dec 2023 22:34:59 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - images:read_only
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "400"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private%2F22961819
-    method: GET
-  response:
-    body: '{"id": "private/22961819", "label": "linodego-image-test", "description":
-      "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "size": 1, "created_by": "youjungk01", "type": "manual", "is_public": false,
+      "size": 1, "created_by": "lgarber-dev", "type": "manual", "is_public": false,
       "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
       "available", "capabilities": []}'
     headers:
@@ -228,13 +164,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "356"
+      - "357"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 11 Dec 2023 22:35:14 GMT
+      - Fri, 16 Feb 2024 17:48:29 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -268,7 +204,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private%2F22961819
+    url: https://api.linode.com/v4beta/images/private%2F23851696
     method: DELETE
   response:
     body: '{}'
@@ -294,7 +230,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 11 Dec 2023 22:35:14 GMT
+      - Fri, 16 Feb 2024 17:48:29 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

@@ -27,7 +27,6 @@ func TestAccountAvailability_Get(t *testing.T) {
 
 	regionID := "us-east"
 	availability, err := client.GetAccountAvailability(context.Background(), regionID)
-
 	if err != nil {
 		t.Errorf("Error getting Account Availability, expected struct, got error %v", err)
 	}
