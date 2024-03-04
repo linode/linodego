@@ -67,7 +67,7 @@ func setupInstanceWith3Interfaces(t *testing.T, fixturesYaml string) (
 		t,
 		fixturesYaml,
 		func(client *Client, opts *InstanceCreateOptions) {
-			opts.Region = getRegionsWithCaps(t, client, []string{"VPCs"})[0]
+			opts.Region = getRegionsWithCaps(t, client, []string{"Linodes", "VPCs"})[0]
 		},
 	)
 	if err != nil {
@@ -384,7 +384,6 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 		intfc.ID,
 		updateOpts,
 	)
-
 	if err != nil {
 		t.Errorf("an error occurs when updating an interface in config %v", config.ID)
 	}

@@ -95,18 +95,18 @@ func TestIPAddresses_List_smoke(t *testing.T) {
 }
 
 func TestIPAddresses_Instance_Get(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddresses_Instance_Get")
+	client, _, _, instance, config, teardown := setupInstanceWith3Interfaces(t, "fixtures/TestIPAddresses_Instance_Get")
 	defer teardown()
-	if err != nil {
-		t.Errorf("Error creating IPAddress test Instance, got error %v", err)
-	}
 
 	i, err := client.GetInstanceIPAddresses(context.Background(), instance.ID)
 	if err != nil {
 		t.Errorf("Error listing ipaddresses, expected struct, got error %v", err)
 	}
 	if i.IPv4.Public[0].Address != instance.IPv4[0].String() {
-		t.Errorf("Expected matching ipaddresses with GetInstanceIPAddress Instance IPAddress but got %v", i)
+		t.Errorf("Expected matching public IP ipaddresses with GetInstanceIPAddress Instance IPAddress but got %v", i)
+	}
+	if *i.IPv4.VPC[0].Address != config.Interfaces[2].IPv4.VPC {
+		t.Errorf("Expected matching VPC IP addresses with GetInstanceIPAddress Instance IPAddress but got %v", i)
 	}
 }
 
@@ -229,11 +229,7 @@ func TestIPAddress_Instance_Assign(t *testing.T) {
 }
 
 func TestIPAddress_Instance_Share(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddress_Instance_Share", func(client *Client, options *InstanceCreateOptions) {
-		// This should stay hardcoded at the moment as the
-		// IP sharing rollout does not have a corresponding capability.
-		options.Region = "us-ord"
-	})
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddress_Instance_Share")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
