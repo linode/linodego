@@ -36,30 +36,9 @@ type InstanceConfigInterfaceCreateOptions struct {
 }
 
 type InstanceConfigInterfaceUpdateOptions struct {
-	Primary  bool     `json:"primary,omitempty"`
-	IPv4     *VPCIPv4 `json:"ipv4,omitempty"`
-	IPRanges []string `json:"ip_ranges,omitempty"`
-}
-
-// MarshalJSON implements the JSON marshal interface method for the interface update options.
-// This is a workaround for #462, allowing users to explicitly clear the ip_ranges field.
-func (opts InstanceConfigInterfaceUpdateOptions) MarshalJSON() ([]byte, error) {
-	type Mask InstanceConfigInterfaceUpdateOptions
-
-	// If IP ranges is nil, return the default
-	if opts.IPRanges == nil {
-		return json.Marshal(opts)
-	}
-
-	maskedOpts := &struct {
-		Mask
-		IPRanges []string `json:"ip_ranges"`
-	}{
-		Mask:     (Mask)(opts),
-		IPRanges: opts.IPRanges,
-	}
-
-	return json.Marshal(maskedOpts)
+	Primary  bool      `json:"primary,omitempty"`
+	IPv4     *VPCIPv4  `json:"ipv4,omitempty"`
+	IPRanges *[]string `json:"ip_ranges,omitempty"`
 }
 
 type InstanceConfigInterfacesReorderOptions struct {
@@ -112,8 +91,13 @@ func (i InstanceConfigInterface) GetUpdateOptions() InstanceConfigInterfaceUpdat
 		}
 	}
 
-	if len(i.IPRanges) > 0 {
-		opts.IPRanges = i.IPRanges
+	if i.IPRanges != nil {
+		// Copy the slice to prevent accidental
+		// mutations
+		copiedIPRanges := make([]string, len(i.IPRanges))
+		copy(copiedIPRanges, i.IPRanges)
+
+		opts.IPRanges = &copiedIPRanges
 	}
 
 	return opts

@@ -382,7 +382,8 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 		VPC:     "192.168.0.10",
 		NAT1To1: &NAT1To1Any,
 	}
-	updateOpts.IPRanges = make([]string, 0)
+	newIPRanges := make([]string, 0)
+	updateOpts.IPRanges = &newIPRanges
 
 	updatedIntfc, err = client.UpdateInstanceConfigInterface(
 		context.Background(),
