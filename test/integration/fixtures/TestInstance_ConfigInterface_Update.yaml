@@ -228,7 +228,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 14 Feb 2024 18:09:14 GMT
+      - Mon, 04 Mar 2024 20:22:16 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -254,7 +254,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"us-iad","type":"g6-nanode-1","label":"go-test-ins-wo-disk-73be3u8uqn82","booted":false}'
+    body: '{"region":"us-iad","type":"g6-nanode-1","label":"go-test-ins-wo-disk-o27gv95tu35t","booted":false}'
     form: {}
     headers:
       Accept:
@@ -266,15 +266,15 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 54933555, "label": "go-test-ins-wo-disk-73be3u8uqn82", "group":
+    body: '{"id": 55633797, "label": "go-test-ins-wo-disk-o27gv95tu35t", "group":
       "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["139.144.202.63"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["172.233.196.252"], "ipv6": "1234::5678/128",
       "image": null, "region": "us-iad", "specs": {"disk": 25600, "memory": 1024,
       "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
       false, "available": false, "schedule": {"day": null, "window": null}, "last_successful":
       null}, "hypervisor": "kvm", "watchdog_enabled": true, "tags": [], "host_uuid":
-      "069a01c443a4c034edaff10aeecdf8fb95ec66ba", "has_user_data": false}'
+      "bf7a891314cca054680070d406f60283ad2477aa", "has_user_data": false}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -291,13 +291,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "737"
+      - "738"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Wed, 14 Feb 2024 18:09:15 GMT
+      - Mon, 04 Mar 2024 20:22:16 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -321,7 +321,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-conf-9iut07dbo832","devices":{},"interfaces":null}'
+    body: '{"label":"go-test-conf-tes2d3k1745m","devices":{},"interfaces":null}'
     form: {}
     headers:
       Accept:
@@ -330,10 +330,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/54933555/configs
+    url: https://api.linode.com/v4beta/linode/instances/55633797/configs
     method: POST
   response:
-    body: '{"id": 58037972, "label": "go-test-conf-9iut07dbo832", "helpers": {"updatedb_disabled":
+    body: '{"id": 58758984, "label": "go-test-conf-tes2d3k1745m", "helpers": {"updatedb_disabled":
       true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
       true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
@@ -362,7 +362,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 14 Feb 2024 18:09:15 GMT
+      - Mon, 04 Mar 2024 20:22:16 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -386,7 +386,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-vpc-1707934155274221000","region":"us-iad","subnets":[{"label":"linodego-vpc-test-1707934155274261000","ipv4":"192.168.0.0/25"}]}'
+    body: '{"label":"go-test-vpc-1709583736746076000","region":"us-iad","subnets":[{"label":"linodego-vpc-test-1709583736746145000","ipv4":"192.168.0.0/25"}]}'
     form: {}
     headers:
       Accept:
@@ -398,8 +398,8 @@ interactions:
     url: https://api.linode.com/v4beta/vpcs
     method: POST
   response:
-    body: '{"id": 22685, "label": "go-test-vpc-1707934155274221000", "description":
-      "", "region": "us-iad", "subnets": [{"id": 23564, "label": "linodego-vpc-test-1707934155274261000",
+    body: '{"id": 26498, "label": "go-test-vpc-1709583736746076000", "description":
+      "", "region": "us-iad", "subnets": [{"id": 26749, "label": "linodego-vpc-test-1709583736746145000",
       "ipv4": "192.168.0.0/25", "ipv6": null, "linodes": [], "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05"}], "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05"}'
@@ -425,7 +425,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 14 Feb 2024 18:09:15 GMT
+      - Mon, 04 Mar 2024 20:22:17 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -449,7 +449,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"purpose":"vpc","subnet_id":23564}'
+    body: '{"purpose":"vpc","subnet_id":26749,"ip_ranges":["192.168.0.5/32"]}'
     form: {}
     headers:
       Accept:
@@ -458,12 +458,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/54933555/configs/58037972/interfaces
+    url: https://api.linode.com/v4beta/linode/instances/55633797/configs/58758984/interfaces
     method: POST
   response:
-    body: '{"id": 1041200, "purpose": "vpc", "primary": false, "active": false, "ipam_address":
-      null, "label": null, "vpc_id": 22685, "subnet_id": 23564, "ipv4": {"vpc": "192.168.0.2",
-      "nat_1_1": null}, "ipv6": null, "ip_ranges": []}'
+    body: '{"id": 1149865, "purpose": "vpc", "primary": false, "active": false, "ipam_address":
+      null, "label": null, "vpc_id": 26498, "subnet_id": 26749, "ipv4": {"vpc": "192.168.0.2",
+      "nat_1_1": null}, "ipv6": null, "ip_ranges": ["192.168.0.5/32"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -480,13 +480,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "222"
+      - "238"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Wed, 14 Feb 2024 18:09:15 GMT
+      - Mon, 04 Mar 2024 20:22:17 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -510,7 +510,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"primary":true,"ipv4":{"vpc":"192.168.0.2"}}'
+    body: '{"primary":true,"ipv4":{"vpc":"192.168.0.2"},"ip_ranges":["192.168.0.5/32"]}'
     form: {}
     headers:
       Accept:
@@ -519,12 +519,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/54933555/configs/58037972/interfaces/1041200
+    url: https://api.linode.com/v4beta/linode/instances/55633797/configs/58758984/interfaces/1149865
     method: PUT
   response:
-    body: '{"id": 1041200, "purpose": "vpc", "primary": true, "active": false, "ipam_address":
-      null, "label": null, "vpc_id": 22685, "subnet_id": 23564, "ipv4": {"vpc": "192.168.0.2",
-      "nat_1_1": null}, "ipv6": null, "ip_ranges": []}'
+    body: '{"id": 1149865, "purpose": "vpc", "primary": true, "active": false, "ipam_address":
+      null, "label": null, "vpc_id": 26498, "subnet_id": 26749, "ipv4": {"vpc": "192.168.0.2",
+      "nat_1_1": null}, "ipv6": null, "ip_ranges": ["192.168.0.5/32"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -541,13 +541,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "221"
+      - "237"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Wed, 14 Feb 2024 18:09:15 GMT
+      - Mon, 04 Mar 2024 20:22:17 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -571,7 +571,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"primary":true,"ipv4":{"vpc":"192.168.0.10","nat_1_1":"any"}}'
+    body: '{"primary":true,"ipv4":{"vpc":"192.168.0.10","nat_1_1":"any"},"ip_ranges":[]}'
     form: {}
     headers:
       Accept:
@@ -580,12 +580,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/54933555/configs/58037972/interfaces/1041200
+    url: https://api.linode.com/v4beta/linode/instances/55633797/configs/58758984/interfaces/1149865
     method: PUT
   response:
-    body: '{"id": 1041200, "purpose": "vpc", "primary": true, "active": false, "ipam_address":
-      null, "label": null, "vpc_id": 22685, "subnet_id": 23564, "ipv4": {"vpc": "192.168.0.10",
-      "nat_1_1": "139.144.202.63"}, "ipv6": null, "ip_ranges": []}'
+    body: '{"id": 1149865, "purpose": "vpc", "primary": true, "active": false, "ipam_address":
+      null, "label": null, "vpc_id": 26498, "subnet_id": 26749, "ipv4": {"vpc": "192.168.0.10",
+      "nat_1_1": "172.233.196.252"}, "ipv6": null, "ip_ranges": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -602,13 +602,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "234"
+      - "235"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Wed, 14 Feb 2024 18:09:16 GMT
+      - Mon, 04 Mar 2024 20:22:17 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -641,7 +641,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/54933555
+    url: https://api.linode.com/v4beta/linode/instances/55633797
     method: DELETE
   response:
     body: '{}'
@@ -667,7 +667,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 14 Feb 2024 18:09:16 GMT
+      - Mon, 04 Mar 2024 20:22:18 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -700,7 +700,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/vpcs/22685
+    url: https://api.linode.com/v4beta/vpcs/26498
     method: DELETE
   response:
     body: '{}'
@@ -726,7 +726,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 14 Feb 2024 18:09:17 GMT
+      - Mon, 04 Mar 2024 20:22:18 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
