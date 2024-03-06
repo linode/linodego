@@ -36,9 +36,9 @@ type InstanceConfigInterfaceCreateOptions struct {
 }
 
 type InstanceConfigInterfaceUpdateOptions struct {
-	Primary  bool     `json:"primary,omitempty"`
-	IPv4     *VPCIPv4 `json:"ipv4,omitempty"`
-	IPRanges []string `json:"ip_ranges,omitempty"`
+	Primary  bool      `json:"primary,omitempty"`
+	IPv4     *VPCIPv4  `json:"ipv4,omitempty"`
+	IPRanges *[]string `json:"ip_ranges,omitempty"`
 }
 
 type InstanceConfigInterfacesReorderOptions struct {
@@ -91,8 +91,13 @@ func (i InstanceConfigInterface) GetUpdateOptions() InstanceConfigInterfaceUpdat
 		}
 	}
 
-	if len(i.IPRanges) > 0 {
-		opts.IPRanges = i.IPRanges
+	if i.IPRanges != nil {
+		// Copy the slice to prevent accidental
+		// mutations
+		copiedIPRanges := make([]string, len(i.IPRanges))
+		copy(copiedIPRanges, i.IPRanges)
+
+		opts.IPRanges = &copiedIPRanges
 	}
 
 	return opts

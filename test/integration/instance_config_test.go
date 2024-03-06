@@ -349,6 +349,7 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 		InstanceConfigInterfaceCreateOptions{
 			Purpose:  InterfacePurposeVPC,
 			SubnetID: &vpcSubnet.ID,
+			IPRanges: []string{"192.168.0.5/32"},
 		},
 	)
 	if err != nil {
@@ -371,11 +372,18 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 	if !(updatedIntfc.Primary == updateOpts.Primary) {
 		t.Errorf("updating interface %v didn't succeed", intfc.ID)
 	}
+
+	if updatedIntfc.IPRanges[0] != "192.168.0.5/32" {
+		t.Errorf("unexpected value for IPRanges: %s", updatedIntfc.IPRanges[0])
+	}
+
 	NAT1To1Any := "any"
 	updateOpts.IPv4 = &VPCIPv4{
 		VPC:     "192.168.0.10",
 		NAT1To1: &NAT1To1Any,
 	}
+	newIPRanges := make([]string, 0)
+	updateOpts.IPRanges = &newIPRanges
 
 	updatedIntfc, err = client.UpdateInstanceConfigInterface(
 		context.Background(),
@@ -384,7 +392,6 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 		intfc.ID,
 		updateOpts,
 	)
-
 	if err != nil {
 		t.Errorf("an error occurs when updating an interface in config %v", config.ID)
 	}
@@ -392,6 +399,10 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 	if !(updatedIntfc.Primary == updateOpts.Primary &&
 		updateOpts.IPv4.VPC == updatedIntfc.IPv4.VPC) {
 		t.Errorf("updating interface %v didn't succeed", intfc.ID)
+	}
+
+	if len(updatedIntfc.IPRanges) > 0 {
+		t.Errorf("expected IPRanges to be empty, got %d entries", len(updatedIntfc.IPRanges))
 	}
 }
 
