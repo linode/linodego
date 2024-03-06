@@ -25,6 +25,7 @@ citest: lint test
 
 testunit:
 	go test -v $(PACKAGES) $(ARGS)
+	cd test && make unit-test
 
 testint:
 	cd test && make test
@@ -76,7 +77,7 @@ run_fixtures:
 	LINODE_API_VERSION="v4beta" \
 	LINODE_URL="$(LINODE_URL)" \
 	GO111MODULE="on" \
-	go test -timeout=$(TEST_TIMEOUT) -v $(ARGS)
+	go test --tags $(TEST_TAGS) -timeout=$(TEST_TIMEOUT) -v $(ARGS)
 
 sanitize:
 	@echo "* Sanitizing fixtures"

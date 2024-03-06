@@ -20,6 +20,8 @@ import (
 )
 
 var (
+	optInTestPrefixes []string
+
 	testingMode     = recorder.ModeDisabled
 	debugAPI        = false
 	validTestAPIKey = "NOTANAPIKEY"
