@@ -54,6 +54,49 @@ func setupVPCWithSubnetWithInstance(
 	return client, vpc, vpcSubnet, instance, instanceConfig, teardownAll, err
 }
 
+func setupInstanceWithVPCAndNATOneToOne(t *testing.T, fixturesYaml string) (
+	*Client,
+	*VPC,
+	*VPCSubnet,
+	*Instance,
+	*InstanceConfig,
+	func(),
+) {
+	t.Helper()
+	client, vpc, vpcSubnet, instance, config, teardown, err := setupVPCWithSubnetWithInstance(
+		t,
+		fixturesYaml,
+		func(client *Client, opts *InstanceCreateOptions) {
+			opts.Region = getRegionsWithCaps(t, client, []string{"Linodes", "VPCs"})[0]
+		},
+	)
+	if err != nil {
+		if teardown != nil {
+			teardown()
+		}
+		t.Fatal(err)
+	}
+
+	updateConfigOpts := config.GetUpdateOptions()
+	NAT1To1Any := "any"
+	updateConfigOpts.Interfaces = []InstanceConfigInterfaceCreateOptions{
+		{
+			Purpose:  InterfacePurposeVPC,
+			SubnetID: &vpcSubnet.ID,
+			IPv4: &VPCIPv4{
+				NAT1To1: &NAT1To1Any,
+			},
+		},
+	}
+	config, err = client.UpdateInstanceConfig(context.Background(), instance.ID, config.ID, updateConfigOpts)
+	if err != nil {
+		teardown()
+		t.Fatal(err)
+	}
+
+	return client, vpc, vpcSubnet, instance, config, teardown
+}
+
 func setupInstanceWith3Interfaces(t *testing.T, fixturesYaml string) (
 	*Client,
 	*VPC,
