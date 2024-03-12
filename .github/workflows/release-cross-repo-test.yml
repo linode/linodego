@@ -21,9 +21,6 @@ jobs:
         with:
           go-version: 'stable'
       - run: go version
-      - run: |
-          cd .linode/terraform-provider-linode
-          make deps
 
       - name: Update system packages
         run: sudo apt-get update -y
