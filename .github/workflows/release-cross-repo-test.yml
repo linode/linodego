@@ -7,28 +7,28 @@ jobs:
   terraform_integration_test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout linodego repository
-        uses: actions/checkout@v4
-
       - name: checkout terraform repo
         uses: actions/checkout@v4
         with:
           repository: linode/terraform-provider-linode
-          path: .linode/terraform-provider-linode
 
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
           go-version: 'stable'
       - run: go version
-      - run: |        
-          curr_dir=$(pwd)
-          pwd
-          cd .linode/terraform-provider-linode
-          go mod edit -replace=github.com/linode/linodego=$curr_dir
-          
-          cd tools && go mod tidy
-          go mod tidy
+      - run: make deps
+
+      - name: Clone Repository
+        uses: actions/checkout@v4
+        with:
+            path: linodego
+
+      - name: Set up linodego
+        run: |
+          cd linodego
+          linodego_dir=$(pwd)
+          go mod edit -replace github.com/linode/linodego=$linodego_dir
 
       - name: Update system packages
         run: sudo apt-get update -y
@@ -38,11 +38,6 @@ jobs:
 
       - name: run tests
         run: |
-          cd .linode/terraform-provider-linode
-          TF_ACC=1 \
-          LINODE_API_VERSION="v4beta" \
-          RUN_LONG_TESTS="false" \
-          go test --tags=integration -v ./linode/ -count=1 -timeout=240m -parallel=10 -ldflags="-X=github.com/linode/terraform-provider-linode/v2/version.ProviderVersion=acc"
-
+          make int-test
         env:
           LINODE_TOKEN: ${{ secrets.DX_LINODE_TOKEN }}
