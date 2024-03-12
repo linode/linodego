@@ -10,7 +10,7 @@ jobs:
       - name: Checkout linodego repository
         uses: actions/checkout@v4
 
-      - name: checkout repo
+      - name: checkout terraform repo
         uses: actions/checkout@v4
         with:
           repository: linode/terraform-provider-linode
@@ -22,23 +22,23 @@ jobs:
           go-version: 'stable'
       - run: go version
       - run: |
+          go install github.com/bflad/tfproviderlint/cmd/tfproviderlint
+          go install github.com/golangci/golangci-lint/cmd/golangci-lint
+          go install mvdan.cc/gofumpt
+          
+          curr_dir=$(pwd)
+          pwd
           cd .linode/terraform-provider-linode
-          go install github.com/bflad/tfproviderlint/cmd/tfproviderlint@latest
-          go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-          go install golang.org/x/tools/cmd/goimports@latest
-          go install mvdan.cc/gofumpt@latest
+          go mod edit -replace=github.com/linode/linodego=$curr_dir
+          
+          cd tools && go mod tidy
+          go mod tidy
 
       - name: Update system packages
         run: sudo apt-get update -y
 
       - name: Install system deps
         run: sudo apt-get install -y build-essential
-
-      - name: Install linodego from source
-        run: |
-          curr_dir=$(pwd)
-          cd .linode/terraform-provider-linode
-          go mod edit -replace=github.com/linode/linodego=$curr_dir
 
       - name: run tests
         run: |
