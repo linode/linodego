@@ -21,6 +21,9 @@ jobs:
         with:
           go-version: 'stable'
       - run: go version
+      - run: |
+          cd .linode/terraform-provider-linode
+          go generate -tags tools ./tools/tools.go
 
       - name: Update system packages
         run: sudo apt-get update -y
