@@ -27,6 +27,7 @@ jobs:
       - name: Set up linodego
         run: |
           cd linodego
+          ls -ltrh
           linodego_dir=$(pwd)
           cd ..
           pwd
