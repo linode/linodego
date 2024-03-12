@@ -43,6 +43,9 @@ jobs:
       - name: run tests
         run: |
           cd .linode/terraform-provider-linode
-          make int-test
+          TF_ACC=1 \
+          LINODE_API_VERSION="v4beta" \
+          RUN_LONG_TESTS=$(RUN_LONG_TESTS) \
+          go test --tags=integration -v ./linode/... -count 1 -timeout 240m -parallel=10 -ldflags="-X=github.com/linode/terraform-provider-linode/v2/version.ProviderVersion=acc"
         env:
           LINODE_TOKEN: ${{ secrets.DX_LINODE_TOKEN }}
