@@ -1,0 +1,47 @@
+name: Release Terraform cross repository test
+
+on:
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  terraform_integration_test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout linodego repository
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: 'stable'
+      - run: go version
+
+      - name: Update system packages
+        run: sudo apt-get update -y
+
+      - name: Install system deps
+        run: sudo apt-get install -y build-essential
+
+      - name: checkout repo
+        uses: actions/checkout@v4
+        with:
+          repository: linode/terraform-provider-linode
+          path: .linode/terraform-provider-linode
+
+      - name: Install linodego from source
+        run: |
+          curr_dir=$(pwd)
+          cd .linode/terraform-provider-linode
+          go mod edit -replace=github.com/linode/linodego=$curr_dir
+
+      - name: install dependencies
+        run: |
+          cd .linode/terraform-provider-linode
+          make deps
+
+      - name: run tests
+        run: |
+          cd .linode/terraform-provider-linode
+          make int-test
+        env:
+          LINODE_TOKEN: ${{ secrets.DX_LINODE_TOKEN }}
