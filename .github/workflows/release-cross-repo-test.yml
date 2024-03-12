@@ -23,6 +23,7 @@ jobs:
       - run: go version
       - run: |
           cd .linode/terraform-provider-linode
+          go mod tidy
           make deps
 
       - name: Update system packages
