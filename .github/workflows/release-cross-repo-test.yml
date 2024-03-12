@@ -28,7 +28,11 @@ jobs:
         run: |
           cd linodego
           linodego_dir=$(pwd)
+          cd ..
+          pwd
+          echo $linodego_dir
           go mod edit -replace github.com/linode/linodego=$linodego_dir
+          go mod tidy
 
       - name: Update system packages
         run: sudo apt-get update -y
