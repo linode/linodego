@@ -10,11 +10,20 @@ jobs:
       - name: Checkout linodego repository
         uses: actions/checkout@v4
 
+      - name: checkout repo
+        uses: actions/checkout@v4
+        with:
+          repository: linode/terraform-provider-linode
+          path: .linode/terraform-provider-linode
+
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
           go-version: 'stable'
       - run: go version
+      - run: |
+          cd .linode/terraform-provider-linode
+          make deps
 
       - name: Update system packages
         run: sudo apt-get update -y
@@ -22,22 +31,11 @@ jobs:
       - name: Install system deps
         run: sudo apt-get install -y build-essential
 
-      - name: checkout repo
-        uses: actions/checkout@v4
-        with:
-          repository: linode/terraform-provider-linode
-          path: .linode/terraform-provider-linode
-
       - name: Install linodego from source
         run: |
           curr_dir=$(pwd)
           cd .linode/terraform-provider-linode
           go mod edit -replace=github.com/linode/linodego=$curr_dir
-
-      - name: install dependencies
-        run: |
-          cd .linode/terraform-provider-linode
-          make deps
 
       - name: run tests
         run: |
