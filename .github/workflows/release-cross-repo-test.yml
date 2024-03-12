@@ -27,11 +27,8 @@ jobs:
       - name: Set up linodego
         run: |
           cd linodego
-          ls -ltrh
           linodego_dir=$(pwd)
           cd ..
-          pwd
-          echo $linodego_dir
           go mod edit -replace github.com/linode/linodego=$linodego_dir
           go mod tidy
 
