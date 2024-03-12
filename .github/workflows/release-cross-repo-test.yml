@@ -21,7 +21,7 @@ jobs:
           go-version: 'stable'
       - run: go version
       - run: |
-          cd .linode/terraform-provider-linode
+#          cd .linode/terraform-provider-linode
           make deps
 
       - name: Update system packages
@@ -38,7 +38,7 @@ jobs:
 
       - name: run tests
         run: |
-          cd .linode/terraform-provider-linode
+#          cd .linode/terraform-provider-linode
           make int-test
         env:
           LINODE_TOKEN: ${{ secrets.DX_LINODE_TOKEN }}
