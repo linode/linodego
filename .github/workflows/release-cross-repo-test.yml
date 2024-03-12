@@ -21,11 +21,7 @@ jobs:
         with:
           go-version: 'stable'
       - run: go version
-      - run: |
-          go install github.com/bflad/tfproviderlint/cmd/tfproviderlint
-          go install github.com/golangci/golangci-lint/cmd/golangci-lint
-          go install mvdan.cc/gofumpt
-          
+      - run: |        
           curr_dir=$(pwd)
           pwd
           cd .linode/terraform-provider-linode
