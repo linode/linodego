@@ -87,7 +87,6 @@ func TestIPv6Range_Share(t *testing.T) {
 			strings.TrimSuffix(ipRange.Range, "/64"),
 		},
 	})
-
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -98,7 +97,6 @@ func TestIPv6Range_Share(t *testing.T) {
 			strings.TrimSuffix(ipRange.Range, "/64"),
 		},
 	})
-
 	if err != nil {
 		t.Fatal(err)
 	}
