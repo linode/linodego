@@ -120,22 +120,30 @@ type NodeBalancerConfigCreateOptions struct {
 
 // NodeBalancerConfigRebuildOptions used by RebuildNodeBalancerConfig
 type NodeBalancerConfigRebuildOptions struct {
-	Port          int                             `json:"port"`
-	Protocol      ConfigProtocol                  `json:"protocol,omitempty"`
-	ProxyProtocol ConfigProxyProtocol             `json:"proxy_protocol,omitempty"`
-	Algorithm     ConfigAlgorithm                 `json:"algorithm,omitempty"`
-	Stickiness    ConfigStickiness                `json:"stickiness,omitempty"`
-	Check         ConfigCheck                     `json:"check,omitempty"`
-	CheckInterval int                             `json:"check_interval,omitempty"`
-	CheckAttempts int                             `json:"check_attempts,omitempty"`
-	CheckPath     string                          `json:"check_path,omitempty"`
-	CheckBody     string                          `json:"check_body,omitempty"`
-	CheckPassive  *bool                           `json:"check_passive,omitempty"`
-	CheckTimeout  int                             `json:"check_timeout,omitempty"`
-	CipherSuite   ConfigCipher                    `json:"cipher_suite,omitempty"`
-	SSLCert       string                          `json:"ssl_cert,omitempty"`
-	SSLKey        string                          `json:"ssl_key,omitempty"`
-	Nodes         []NodeBalancerNodeCreateOptions `json:"nodes"`
+	Port          int                                    `json:"port"`
+	Protocol      ConfigProtocol                         `json:"protocol,omitempty"`
+	ProxyProtocol ConfigProxyProtocol                    `json:"proxy_protocol,omitempty"`
+	Algorithm     ConfigAlgorithm                        `json:"algorithm,omitempty"`
+	Stickiness    ConfigStickiness                       `json:"stickiness,omitempty"`
+	Check         ConfigCheck                            `json:"check,omitempty"`
+	CheckInterval int                                    `json:"check_interval,omitempty"`
+	CheckAttempts int                                    `json:"check_attempts,omitempty"`
+	CheckPath     string                                 `json:"check_path,omitempty"`
+	CheckBody     string                                 `json:"check_body,omitempty"`
+	CheckPassive  *bool                                  `json:"check_passive,omitempty"`
+	CheckTimeout  int                                    `json:"check_timeout,omitempty"`
+	CipherSuite   ConfigCipher                           `json:"cipher_suite,omitempty"`
+	SSLCert       string                                 `json:"ssl_cert,omitempty"`
+	SSLKey        string                                 `json:"ssl_key,omitempty"`
+	Nodes         []NodeBalancerConfigRebuildNodeOptions `json:"nodes"`
+}
+
+// NodeBalancerConfigRebuildNodeOptions represents a node defined when rebuilding a
+// NodeBalancer config.
+type NodeBalancerConfigRebuildNodeOptions struct {
+	NodeBalancerNodeCreateOptions
+
+	ID int `json:"id,omitempty"`
 }
 
 // NodeBalancerConfigUpdateOptions are permitted by UpdateNodeBalancerConfig
@@ -201,7 +209,7 @@ func (i NodeBalancerConfig) GetRebuildOptions() NodeBalancerConfigRebuildOptions
 		CipherSuite:   i.CipherSuite,
 		SSLCert:       i.SSLCert,
 		SSLKey:        i.SSLKey,
-		Nodes:         make([]NodeBalancerNodeCreateOptions, 0),
+		Nodes:         make([]NodeBalancerConfigRebuildNodeOptions, 0),
 	}
 }
 
