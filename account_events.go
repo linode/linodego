@@ -62,7 +62,7 @@ const (
 	ActionBackupsRestore                          EventAction = "backups_restore"
 	ActionCommunityQuestionReply                  EventAction = "community_question_reply"
 	ActionCommunityLike                           EventAction = "community_like"
-	ActionCreateCardUpdated                       EventAction = "credit_card_updated"
+	ActionCreditCardUpdated                       EventAction = "credit_card_updated"
 	ActionDatabaseCreate                          EventAction = "database_create"
 	ActionDatabaseDegraded                        EventAction = "database_degraded"
 	ActionDatabaseDelete                          EventAction = "database_delete"
@@ -149,6 +149,9 @@ const (
 	ActionOAuthClientDelete                       EventAction = "oauth_client_delete"
 	ActionOAuthClientSecretReset                  EventAction = "oauth_client_secret_reset" //#nosec G101
 	ActionOAuthClientUpdate                       EventAction = "oauth_client_update"
+	ActionOBJAccessKeyCreate                      EventAction = "obj_access_key_create"
+	ActionOBJAccessKeyDelete                      EventAction = "obj_access_key_delete"
+	ActionOBJAccessKeyUpdate                      EventAction = "obj_access_key_update"
 	ActionPaymentMethodAdd                        EventAction = "payment_method_add"
 	ActionPaymentSubmitted                        EventAction = "payment_submitted"
 	ActionPasswordReset                           EventAction = "password_reset"
@@ -193,6 +196,10 @@ const (
 	// Deprecated: incorrect spelling,
 	// to be removed in the next major version release.
 	ActionVolumeDelte EventAction = "volume_delete"
+
+	// Deprecated: incorrect spelling,
+	// to be removed in the next major version
+	ActionCreateCardUpdated = ActionCreditCardUpdated
 )
 
 // EntityType constants start with Entity and include Linode API Event Entity Types
