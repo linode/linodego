@@ -294,3 +294,78 @@ func TestErrorIs(t *testing.T) {
 		})
 	}
 }
+
+func TestIsNotFound(t *testing.T) {
+	tests := []struct {
+		code  int
+		match bool
+	}{
+		{code: http.StatusNotFound, match: true},
+		{code: http.StatusInternalServerError},
+		{code: http.StatusFound},
+		{code: http.StatusOK},
+	}
+
+	for _, tt := range tests {
+		name := http.StatusText(tt.code)
+		t.Run(name, func(t *testing.T) {
+			err := &Error{Code: tt.code}
+			if matches := IsNotFound(err); !matches && tt.match {
+				t.Errorf("should have matched %d", tt.code)
+			} else if matches && !tt.match {
+				t.Errorf("shoudl not have matched %d", tt.code)
+			}
+		})
+	}
+}
+
+func TestErrHasStatusCode(t *testing.T) {
+	tests := []struct {
+		name  string
+		err   error
+		codes []int
+		match bool
+	}{
+		{
+			name:  "NotFound",
+			err:   &Error{Code: http.StatusNotFound},
+			codes: []int{http.StatusNotFound},
+			match: true,
+		},
+		{
+			name: "NoCodes",
+			err:  &Error{Code: http.StatusInternalServerError},
+		},
+		{
+			name:  "MultipleCodes",
+			err:   &Error{Code: http.StatusTeapot},
+			codes: []int{http.StatusBadRequest, http.StatusTeapot, http.StatusUnavailableForLegalReasons},
+			match: true,
+		},
+		{
+			name:  "NotALinodeError",
+			err:   io.EOF,
+			codes: []int{http.StatusTeapot},
+		},
+		{
+			name:  "NoMatch",
+			err:   &Error{Code: http.StatusTooEarly},
+			codes: []int{http.StatusLocked, http.StatusTooManyRequests},
+		},
+		{
+			name:  "NilError",
+			codes: []int{http.StatusGone},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			got := ErrHasStatus(tt.err, tt.codes...)
+			if !got && tt.match {
+				t.Errorf("should have matched")
+			} else if got && !tt.match {
+				t.Errorf("should not have matched")
+			}
+		})
+	}
+}
