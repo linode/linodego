@@ -39,11 +39,14 @@ func TestImage_GetFound(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestImage_GetFound")
 	defer teardown()
 
-	i, err := client.GetImage(context.Background(), "linode/ubuntu16.04lts")
+	i, err := client.GetImage(context.Background(), "linode/ubuntu22.04")
+	if i.Created == nil || i.EOL == nil || i.Updated == nil {
+		t.Errorf("Error parsing time, %v, %v, %v", i.Created, i.EOL, i.Updated)
+	}
 	if err != nil {
 		t.Errorf("Error getting image, expected struct, got %v and error %v", i, err)
 	}
-	if i.ID != "linode/ubuntu16.04lts" {
+	if i.ID != "linode/ubuntu22.04" {
 		t.Errorf("Expected a specific image, but got a different one %v", i)
 	}
 }
