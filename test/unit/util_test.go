@@ -1,6 +1,7 @@
 package unit
 
 import (
+	"github.com/linode/linodego"
 	"github.com/linode/linodego/internal/testutil"
 	"regexp"
 	"testing"
@@ -14,4 +15,8 @@ func mockRequestBodyValidate(t *testing.T, expected interface{}, response interf
 
 func mockRequestURL(t *testing.T, path string) *regexp.Regexp {
 	return testutil.MockRequestURL(path)
+}
+
+func createMockClient(t *testing.T) *linodego.Client {
+	return testutil.CreateMockClient(t, linodego.NewClient)
 }
