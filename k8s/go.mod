@@ -1,10 +1,10 @@
 module github.com/linode/linodego/k8s
 
 require (
-	github.com/linode/linodego v1.25.0
-	k8s.io/api v0.28.1
-	k8s.io/apimachinery v0.28.1
-	k8s.io/client-go v0.28.1
+	github.com/linode/linodego v1.30.0
+	k8s.io/api v0.28.8
+	k8s.io/apimachinery v0.28.8
+	k8s.io/client-go v0.28.8
 )
 
 require (
@@ -16,7 +16,7 @@ require (
 	github.com/go-openapi/swag v0.22.3 // indirect
 	github.com/go-resty/resty/v2 v2.12.0 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
-	github.com/golang/protobuf v1.5.3 // indirect
+	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/google/gnostic-models v0.6.8 // indirect
 	github.com/google/go-cmp v0.6.0 // indirect
 	github.com/google/gofuzz v1.2.0 // indirect
@@ -51,4 +51,4 @@ require (
 
 replace github.com/linode/linodego => ../
 
-go 1.20
+go 1.21

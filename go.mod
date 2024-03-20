@@ -11,12 +11,12 @@ require (
 )
 
 require (
-	github.com/golang/protobuf v1.5.3 // indirect
-	github.com/stretchr/testify v1.8.4 // indirect
+	github.com/golang/protobuf v1.5.4 // indirect
+	github.com/stretchr/testify v1.9.0 // indirect
 	google.golang.org/appengine v1.6.7 // indirect
 	google.golang.org/protobuf v1.33.0 // indirect
 )
 
-go 1.20
+go 1.21
 
 retract v1.0.0 // Accidental branch push
