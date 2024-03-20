@@ -14,7 +14,6 @@ import (
 	"github.com/dnaeon/go-vcr/cassette"
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/linode/linodego"
-	"github.com/linode/linodego/internal/testutil"
 	"golang.org/x/oauth2"
 	"k8s.io/client-go/transport"
 )
@@ -151,10 +150,6 @@ func createTestClient(t *testing.T, fixturesYaml string) (*linodego.Client, func
 		SetRetryMaxWaitTime(testingMaxRetryTime)
 
 	return &c, recordStopper
-}
-
-func createMockClient(t *testing.T) *linodego.Client {
-	return testutil.CreateMockClient(t, linodego.NewClient)
 }
 
 // transportRecordWrapper returns a tranport.WrapperFunc which provides the test
