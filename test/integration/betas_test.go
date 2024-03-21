@@ -26,8 +26,15 @@ func TestBetaPrograms_List(t *testing.T) {
 func TestBetaProgram_Get(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestBetaProgram_Get")
 	defer teardown()
+	betaPrograms, err := client.ListBetaPrograms(context.Background(), linodego.NewListOptions(0, ""))
+	if err != nil {
+		t.Fatalf("error listing Beta program, %v", err)
+	}
+	if len(betaPrograms) == 0 {
+		t.Skip("no beta program is available, skipping getting beta program test.")
+	}
 
-	betaID := "active_closed"
+	betaID := betaPrograms[0].ID
 	beta, err := client.GetBetaProgram(context.Background(), betaID)
 	if err != nil {
 		t.Errorf("Error getting Beta program, expected struct, got error %v", err)
