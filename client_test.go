@@ -103,6 +103,34 @@ func TestClient_NewFromEnvToken(t *testing.T) {
 	}
 }
 
+func TestClient_UseURL(t *testing.T) {
+	client := NewClient(nil)
+
+	if _, err := client.UseURL("https://api.test1.linode.com/"); err != nil {
+		t.Fatal(err)
+	}
+
+	if client.baseURL != "api.test1.linode.com" {
+		t.Fatalf("mismatched base url: %s", client.baseURL)
+	}
+
+	if client.apiVersion != "v4" {
+		t.Fatalf("mismatched api version: %s", client.apiVersion)
+	}
+
+	if _, err := client.UseURL("https://api.test2.linode.com/v4beta"); err != nil {
+		t.Fatal(err)
+	}
+
+	if client.baseURL != "api.test2.linode.com" {
+		t.Fatalf("mismatched base url: %s", client.baseURL)
+	}
+
+	if client.apiVersion != "v4beta" {
+		t.Fatalf("mismatched api version: %s", client.apiVersion)
+	}
+}
+
 const configNewFromEnv = `
 [default]
 api_url = api.cool.linode.com
