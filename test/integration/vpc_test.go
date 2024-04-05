@@ -230,12 +230,41 @@ func TestVPC_Update_Invalid_data(t *testing.T) {
 	}
 }
 
+func TestVPC_ListAllIPAddresses(t *testing.T) {
+	client, _, _, instance, config, teardown := setupInstanceWithVPCAndNATOneToOne(
+		t, "fixtures/TestVPC_ListAllIPAddresses",
+	)
+	defer teardown()
+
+	vpcIPs, err := client.ListAllVPCIPAddresses(
+		context.Background(),
+		linodego.NewListOptions(1, fmt.Sprintf("{\"linode_id\": %d}", instance.ID)),
+	)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if len(vpcIPs) == 0 {
+		t.Fatal("expecting 1 VPC IP address, but got 0")
+	}
+
+	if *vpcIPs[0].Address != config.Interfaces[0].IPv4.VPC {
+		t.Fatalf(
+			"expecting VPC IP address on Linode %d to be %q, but got %q",
+			instance.ID, *vpcIPs[0].Address, config.Interfaces[0].IPv4.VPC,
+		)
+	}
+}
+
 func TestVPC_ListIPAddresses(t *testing.T) {
-	client, _, _, instance, config, teardown := setupInstanceWithVPCAndNATOneToOne(t, "fixtures/TestVPC_ListIPAddresses")
+	client, vpc, _, instance, config, teardown := setupInstanceWithVPCAndNATOneToOne(
+		t, "fixtures/TestVPC_ListIPAddresses",
+	)
 	defer teardown()
 
 	vpcIPs, err := client.ListVPCIPAddresses(
 		context.Background(),
+		vpc.ID,
 		linodego.NewListOptions(1, fmt.Sprintf("{\"linode_id\": %d}", instance.ID)),
 	)
 	if err != nil {
