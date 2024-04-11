@@ -2,7 +2,9 @@ package integration
 
 import (
 	"context"
+	"fmt"
 	"github.com/stretchr/testify/require"
+	"reflect"
 	"testing"
 
 	"github.com/linode/linodego"
@@ -14,9 +16,7 @@ func TestPlacementGroup_basic(t *testing.T) {
 	client, clientTeardown := createTestClient(t, "fixtures/TestPlacementGroup_basic")
 
 	pg, pgTeardown, err := createPlacementGroup(t, client)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
 	defer func() {
 		pgTeardown()
@@ -29,18 +29,28 @@ func TestPlacementGroup_basic(t *testing.T) {
 	require.Equal(t, pg.AffinityType, linodego.AffinityTypeAntiAffinityLocal)
 	require.Equal(t, pg.IsStrict, false)
 
+	updatedLabel := pg.Label + "-updated"
+
 	pg, err = client.UpdatePlacementGroup(
 		context.Background(),
 		pg.ID,
 		linodego.PlacementGroupUpdateOptions{
-			Label: pg.Label + "-updated",
+			Label: updatedLabel,
 		},
 	)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
+	require.Equal(t, pg.Label, updatedLabel)
 
-	require.Equal(t, t, pg.Label, pg.Label+"-updated")
+	refreshedPG, err := client.GetPlacementGroup(context.Background(), pg.ID)
+	require.NoError(t, err)
+	require.True(t, reflect.DeepEqual(refreshedPG, pg))
+
+	listedPGs, err := client.ListPlacementGroups(context.Background(), &linodego.ListOptions{
+		Filter: fmt.Sprintf("{\"id\": %d}", pg.ID),
+	})
+	require.NoError(t, err)
+	require.NotEmpty(t, listedPGs)
+	require.True(t, reflect.DeepEqual(listedPGs[0], *pg))
 }
 
 func createPlacementGroup(
