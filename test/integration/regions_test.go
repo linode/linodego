@@ -2,7 +2,11 @@ package integration
 
 import (
 	"context"
+	"slices"
 	"testing"
+
+	"github.com/linode/linodego"
+	"github.com/stretchr/testify/require"
 )
 
 func TestRegions_List(t *testing.T) {
@@ -20,4 +24,24 @@ func TestRegions_List(t *testing.T) {
 	}
 
 	retryStatement(t, 3, testFunc)
+}
+
+func TestRegions_pgLimits(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestRegions_pgLimits")
+	defer teardown()
+
+	regions, err := client.ListRegions(context.Background(), nil)
+	require.NoError(t, err)
+
+	// Filtering is not currently supported on capabilities
+	regionIdx := slices.IndexFunc(regions, func(region linodego.Region) bool {
+		return slices.Contains(region.Capabilities, "Placement Group")
+	})
+	require.NotZero(t, regionIdx)
+
+	region := regions[regionIdx]
+
+	require.NotNil(t, region.PlacementGroupLimits)
+	require.NotZero(t, region.PlacementGroupLimits.MaximumLinodesPerPG)
+	require.NotZero(t, region.PlacementGroupLimits.MaximumPGsPerCustomer)
 }

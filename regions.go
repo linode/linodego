@@ -22,8 +22,8 @@ type Region struct {
 	Label        string   `json:"label"`
 	SiteType     string   `json:"site_type"`
 
-	Resolvers            RegionResolvers            `json:"resolvers"`
-	PlacementGroupLimits RegionPlacementGroupLimits `json:"placement_group_limits"`
+	Resolvers            RegionResolvers             `json:"resolvers"`
+	PlacementGroupLimits *RegionPlacementGroupLimits `json:"placement_group_limits"`
 }
 
 // RegionResolvers contains the DNS resolvers of a region
