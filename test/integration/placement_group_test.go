@@ -3,9 +3,10 @@ package integration
 import (
 	"context"
 	"fmt"
-	"github.com/stretchr/testify/require"
 	"reflect"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 
 	"github.com/linode/linodego"
 )
@@ -15,6 +16,7 @@ type placementGroupModifier func(*linodego.Client, *linodego.PlacementGroupCreat
 func TestPlacementGroup_basic(t *testing.T) {
 	client, clientTeardown := createTestClient(t, "fixtures/TestPlacementGroup_basic")
 
+	// Create a PG
 	pg, pgTeardown, err := createPlacementGroup(t, client)
 	require.NoError(t, err)
 
@@ -28,9 +30,11 @@ func TestPlacementGroup_basic(t *testing.T) {
 	require.NotEmpty(t, pg.Label)
 	require.Equal(t, pg.AffinityType, linodego.AffinityTypeAntiAffinityLocal)
 	require.Equal(t, pg.IsStrict, false)
+	require.Len(t, pg.Members, 0)
 
 	updatedLabel := pg.Label + "-updated"
 
+	// Test that the PG can be updated
 	pg, err = client.UpdatePlacementGroup(
 		context.Background(),
 		pg.ID,
@@ -41,16 +45,73 @@ func TestPlacementGroup_basic(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, pg.Label, updatedLabel)
 
+	// Test that the PG can be retrieved from the get endpoint
 	refreshedPG, err := client.GetPlacementGroup(context.Background(), pg.ID)
 	require.NoError(t, err)
 	require.True(t, reflect.DeepEqual(refreshedPG, pg))
 
+	// Test that the PG can be retrieved from the list endpoint
 	listedPGs, err := client.ListPlacementGroups(context.Background(), &linodego.ListOptions{
 		Filter: fmt.Sprintf("{\"id\": %d}", pg.ID),
 	})
 	require.NoError(t, err)
 	require.NotEmpty(t, listedPGs)
 	require.True(t, reflect.DeepEqual(listedPGs[0], *pg))
+}
+
+func TestPlacementGroup_assignment(t *testing.T) {
+	client, clientTeardown := createTestClient(t, "fixtures/TestPlacementGroup_assignment")
+
+	pg, pgTeardown, err := createPlacementGroup(t, client)
+	require.NoError(t, err)
+
+	// Create an instance to assign to the PG
+	inst, err := createInstance(t, client, func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+		options.Region = pg.Region
+	})
+	require.NoError(t, err)
+
+	defer func() {
+		// client.DeleteInstance(context.Background(), inst.ID)
+		pgTeardown()
+		clientTeardown()
+	}()
+
+	// Ensure assignment works as expected
+	pg, err = client.AssignPlacementGroupLinodes(
+		context.Background(),
+		pg.ID,
+		linodego.PlacementGroupAssignOptions{
+			Linodes: []int{
+				inst.ID,
+			},
+		},
+	)
+	require.NoError(t, err)
+	require.Len(t, pg.Members, 1)
+	require.Equal(t, pg.Members[0].LinodeID, inst.ID)
+
+	// Refresh the instance to ensure the assignment has completed
+	inst, err = client.GetInstance(context.Background(), inst.ID)
+	require.NoError(t, err)
+	require.NotNil(t, inst.PlacementGroup)
+	require.Equal(t, inst.PlacementGroup.ID, pg.ID)
+	require.Equal(t, inst.PlacementGroup.Label, pg.Label)
+	require.Equal(t, inst.PlacementGroup.IsStrict, pg.IsStrict)
+	require.Equal(t, inst.PlacementGroup.AffinityType, pg.AffinityType)
+
+	// Ensure unassignment works as expected
+	pg, err = client.UnAssignPlacementGroupLinodes(
+		context.Background(),
+		pg.ID,
+		linodego.PlacementGroupUnAssignOptions{
+			Linodes: []int{
+				inst.ID,
+			},
+		},
+	)
+	require.NoError(t, err)
+	require.Len(t, pg.Members, 0)
 }
 
 func createPlacementGroup(

@@ -25,6 +25,7 @@ type PlacementGroup struct {
 	AffinityType PlacementGroupAffinityType `json:"affinity_type"`
 	IsCompliant  bool                       `json:"is_compliant"`
 	IsStrict     bool                       `json:"is_strict"`
+	Members      []PlacementGroupMember     `json:"members"`
 }
 
 // PlacementGroupCreateOptions represents the options to use
@@ -133,7 +134,7 @@ func (c *Client) UnAssignPlacementGroupLinodes(
 	return doPOSTRequest[PlacementGroup](
 		ctx,
 		c,
-		formatAPIPath("placement/groups/%d/assign", id),
+		formatAPIPath("placement/groups/%d/unassign", id),
 		options,
 	)
 }
