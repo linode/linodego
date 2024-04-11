@@ -46,7 +46,7 @@ type PlacementGroupUpdateOptions struct {
 // assigning Linodes to a placement group.
 type PlacementGroupAssignOptions struct {
 	Linodes       []int `json:"linodes"`
-	CompliantOnly bool  `json:"compliant_only,omitempty"`
+	CompliantOnly *bool `json:"compliant_only,omitempty"`
 }
 
 // PlacementGroupUnAssignOptions represents options used when
