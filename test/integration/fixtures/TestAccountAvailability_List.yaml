@@ -14,13 +14,24 @@ interactions:
     url: https://api.linode.com/v4beta/account/availability
     method: GET
   response:
-    body: '{"data": [{"region": "ap-west", "unavailable": []}, {"region": "ca-central",
-      "unavailable": []}, {"region": "ap-southeast", "unavailable": []}, {"region":
-      "us-central", "unavailable": []}, {"region": "us-west", "unavailable": []},
-      {"region": "us-southeast", "unavailable": []}, {"region": "us-east", "unavailable":
-      []}, {"region": "eu-west", "unavailable": []}, {"region": "ap-south", "unavailable":
-      []}, {"region": "eu-central", "unavailable": []}, {"region": "ap-northeast",
-      "unavailable": []}], "page": 1, "pages": 1, "results": 11}'
+    body: '{"data": [{"region": "us-central", "available": ["Linodes", "NodeBalancers",
+      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "us-west", "available":
+      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
+      []}, {"region": "us-southeast", "available": ["Linodes", "NodeBalancers", "Block
+      Storage", "Kubernetes"], "unavailable": []}, {"region": "us-east", "available":
+      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
+      []}, {"region": "eu-west", "available": ["Linodes", "NodeBalancers", "Block
+      Storage", "Kubernetes"], "unavailable": []}, {"region": "ap-south", "available":
+      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
+      []}, {"region": "eu-central", "available": ["Linodes", "NodeBalancers", "Block
+      Storage", "Kubernetes"], "unavailable": []}, {"region": "ap-northeast", "available":
+      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
+      []}, {"region": "ap-west", "available": ["Linodes", "NodeBalancers", "Block
+      Storage", "Kubernetes"], "unavailable": []}, {"region": "ca-central", "available":
+      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
+      []}, {"region": "ap-southeast", "available": ["Linodes", "NodeBalancers", "Block
+      Storage", "Kubernetes"], "unavailable": []}], "page": 1, "pages": 1, "results":
+      11}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -35,6 +46,10 @@ interactions:
       Cache-Control:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "1349"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -44,7 +59,6 @@ interactions:
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
-      - Accept-Encoding
       - Authorization, X-Filter
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
@@ -57,7 +71,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1200"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

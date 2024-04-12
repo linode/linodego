@@ -14,7 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/account/availability/us-east
     method: GET
   response:
-    body: '{"region": "us-east", "unavailable": []}'
+    body: '{"region": "us-east", "available": ["Linodes", "NodeBalancers", "Block
+      Storage", "Kubernetes"], "unavailable": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -29,8 +30,10 @@ interactions:
       Cache-Control:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
       Content-Length:
-      - "40"
+      - "114"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -52,7 +55,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1200"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
