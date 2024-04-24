@@ -8,6 +8,27 @@ on:
   pull_request: null
 
 jobs:
+  lint-tidy:
+    name: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: stable
+          cache: false
+
+      - name: golangci-lint
+        uses: golangci/golangci-lint-action@v4
+        with:
+          version: latest
+
+      - name: Run tidy
+        run: make tidy
+
+      - name: Fail if changes
+        run: git diff-index --exit-code HEAD
+  
   test:
     runs-on: ubuntu-latest
     env:
@@ -24,12 +45,6 @@ jobs:
         with:
           go-version: 'stable'
       - run: go version
-
-      - name: Update system packages
-        run: sudo apt-get update -y
-
-      - name: Install system deps
-        run: sudo apt-get install -y build-essential
 
       - name: Setup Python
         uses: actions/setup-python@v5
