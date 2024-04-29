@@ -75,7 +75,10 @@ func TestLKECluster_Update(t *testing.T) {
 	updatedTags := []string{"test=true"}
 	updatedLabel := cluster.Label + "-updated"
 	updatedK8sVersion := "1.23"
-	updatedControlPlane := &linodego.LKEClusterControlPlane{HighAvailability: true}
+	isHA := true
+
+	updatedControlPlane := &linodego.LKEClusterControlPlaneOptions{HighAvailability: &isHA}
+
 	updatedCluster, err := client.UpdateLKECluster(context.TODO(), cluster.ID, linodego.LKEClusterUpdateOptions{
 		Tags:         &updatedTags,
 		Label:        updatedLabel,

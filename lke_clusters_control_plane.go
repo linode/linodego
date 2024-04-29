@@ -2,6 +2,11 @@ package linodego
 
 import "context"
 
+// LKEClusterControlPlane fields contained within the `control_plane` attribute of an LKE cluster.
+type LKEClusterControlPlane struct {
+	HighAvailability bool `json:"high_availability"`
+}
+
 // LKEClusterControlPlaneACLAddresses describes the
 // allowed IP ranges for an LKE cluster's control plane.
 type LKEClusterControlPlaneACLAddresses struct {
@@ -12,21 +17,35 @@ type LKEClusterControlPlaneACLAddresses struct {
 // LKEClusterControlPlaneACL describes the ACL configuration
 // for an LKE cluster's control plane.
 type LKEClusterControlPlaneACL struct {
-	Enabled   *bool                               `json:"enabled,omitempty"`
-	Addresses *LKEClusterControlPlaneACLAddresses `json:"addresses,omitempty"`
-}
-
-// LKEClusterControlPlaneACLUpdateOptions represents the options
-// available when updating the ACL configuration of an LKE cluster's
-// control plane.
-type LKEClusterControlPlaneACLUpdateOptions struct {
-	ACL LKEClusterControlPlaneACL `json:"acl"`
+	Enabled   bool                                `json:"enabled"`
+	Addresses *LKEClusterControlPlaneACLAddresses `json:"addresses"`
 }
 
 // LKEClusterControlPlaneACLResponse represents the response structure
 // for the Client.GetLKEClusterControlPlaneACL(...) method.
 type LKEClusterControlPlaneACLResponse struct {
 	ACL LKEClusterControlPlaneACL `json:"acl"`
+}
+
+// LKEClusterControlPlaneACLOptions represents the options used when
+// configuring an LKE cluster's control plane ACL policy.
+type LKEClusterControlPlaneACLOptions struct {
+	Enabled   *bool                               `json:"enabled,omitempty"`
+	Addresses *LKEClusterControlPlaneACLAddresses `json:"addresses,omitempty"`
+}
+
+// LKEClusterControlPlaneOptions represents the options used when
+// configuring an LKE cluster's control plane.
+type LKEClusterControlPlaneOptions struct {
+	HighAvailability *bool                             `json:"high_availability,omitempty"`
+	ACL              *LKEClusterControlPlaneACLOptions `json:"acl,omitempty"`
+}
+
+// LKEClusterControlPlaneACLUpdateOptions represents the options
+// available when updating the ACL configuration of an LKE cluster's
+// control plane.
+type LKEClusterControlPlaneACLUpdateOptions struct {
+	ACL LKEClusterControlPlaneACLOptions `json:"acl"`
 }
 
 // GetLKEClusterControlPlaneACL gets the ACL configuration for the
