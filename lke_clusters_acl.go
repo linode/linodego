@@ -5,15 +5,15 @@ import "context"
 // LKEClusterControlPlaneACLAddresses describes the
 // allowed IP ranges for an LKE cluster's control plane.
 type LKEClusterControlPlaneACLAddresses struct {
-	IPv4 []string `json:"ipv4"`
-	IPv6 []string `json:"ipv6"`
+	IPv4 []string `json:"ipv4,omitempty"`
+	IPv6 []string `json:"ipv6,omitempty"`
 }
 
 // LKEClusterControlPlaneACL describes the ACL configuration
 // for an LKE cluster's control plane.
 type LKEClusterControlPlaneACL struct {
-	Enabled   bool                               `json:"enabled"`
-	Addresses LKEClusterControlPlaneACLAddresses `json:"addresses"`
+	Enabled   bool                               `json:"enabled,omitempty"`
+	Addresses LKEClusterControlPlaneACLAddresses `json:"addresses,omitempty"`
 }
 
 // LKEClusterControlPlaneACLUpdateOptions represents the options
