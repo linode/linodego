@@ -20,13 +20,19 @@ type LKEClusterControlPlaneACL struct {
 // available when updating the ACL configuration of an LKE cluster's
 // control plane.
 type LKEClusterControlPlaneACLUpdateOptions struct {
-	ACL *LKEClusterControlPlaneACL `json:"acl"`
+	ACL LKEClusterControlPlaneACL `json:"acl"`
+}
+
+// LKEClusterControlPlaneACLResponse represents the response structure
+// for the Client.GetLKEClusterControlPlaneACL(...) method.
+type LKEClusterControlPlaneACLResponse struct {
+	ACL LKEClusterControlPlaneACL `json:"acl"`
 }
 
 // GetLKEClusterControlPlaneACL gets the ACL configuration for the
 // given cluster's control plane.
-func (c *Client) GetLKEClusterControlPlaneACL(ctx context.Context, clusterID int) (*LKEClusterControlPlaneACL, error) {
-	return doGETRequest[LKEClusterControlPlaneACL](
+func (c *Client) GetLKEClusterControlPlaneACL(ctx context.Context, clusterID int) (*LKEClusterControlPlaneACLResponse, error) {
+	return doGETRequest[LKEClusterControlPlaneACLResponse](
 		ctx,
 		c,
 		formatAPIPath("lke/clusters/%d/control_plane_acl", clusterID),
@@ -39,8 +45,8 @@ func (c *Client) UpdateLKEClusterControlPlaneACL(
 	ctx context.Context,
 	clusterID int,
 	opts LKEClusterControlPlaneACLUpdateOptions,
-) (*LKEClusterControlPlaneACL, error) {
-	return doPUTRequest[LKEClusterControlPlaneACL](
+) (*LKEClusterControlPlaneACLResponse, error) {
+	return doPUTRequest[LKEClusterControlPlaneACLResponse](
 		ctx,
 		c,
 		formatAPIPath("lke/clusters/%d/control_plane_acl", clusterID),
