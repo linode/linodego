@@ -269,7 +269,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 29 Apr 2024 16:31:26 GMT
+      - Mon, 29 Apr 2024 16:51:45 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -295,7 +295,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"]}],"label":"go-test-def","region":"ap-west","k8s_version":"1.29","tags":["testing"],"control_plane":{"acl":{"enabled":true,"addresses":{"ipv4":["10.0.0.1/32"],"ipv6":["1234::5678/64"]}}}}'
+    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"]}],"label":"go-test-def","region":"ap-west","k8s_version":"1.29","tags":["testing"],"control_plane":{"acl":{"enabled":true,"addresses":{"ipv4":["10.0.0.1/32"],"ipv6":["1234::5678"]}}}}'
     form: {}
     headers:
       Accept:
@@ -307,7 +307,7 @@ interactions:
     url: https://api.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 173757, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+    body: '{"id": 173778, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "label": "go-test-def", "region": "ap-west", "k8s_version":
       "1.29", "control_plane": {"high_availability": false}, "tags": ["testing"]}'
     headers:
@@ -332,7 +332,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 29 Apr 2024 16:31:54 GMT
+      - Mon, 29 Apr 2024 16:52:13 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -365,11 +365,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/173757/control_plane_acl
+    url: https://api.linode.com/v4beta/lke/clusters/173778/control_plane_acl
     method: GET
   response:
     body: '{"acl": {"enabled": true, "addresses": {"ipv4": ["10.0.0.1/32"], "ipv6":
-      ["1234::5678/64"]}}}'
+      ["1234::5678/128"]}}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -386,13 +386,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "103"
+      - "94"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 29 Apr 2024 16:31:55 GMT
+      - Mon, 29 Apr 2024 16:52:13 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -417,7 +417,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"acl":{"enabled":true,"addresses":{"ipv4":["10.0.0.2/32"],"ipv6":["1234::5678/64"]}}}'
+    body: '{"acl":{"enabled":true,"addresses":{"ipv4":["10.0.0.2/32"],"ipv6":["1234::5678"]}}}'
     form: {}
     headers:
       Accept:
@@ -426,11 +426,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/173757/control_plane_acl
+    url: https://api.linode.com/v4beta/lke/clusters/173778/control_plane_acl
     method: PUT
   response:
     body: '{"acl": {"enabled": true, "addresses": {"ipv4": ["10.0.0.2/32"], "ipv6":
-      ["1234::5678/64"]}}}'
+      ["1234::5678/128"]}}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -447,13 +447,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "103"
+      - "94"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 29 Apr 2024 16:31:58 GMT
+      - Mon, 29 Apr 2024 16:52:17 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -486,7 +486,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/173757/control_plane_acl
+    url: https://api.linode.com/v4beta/lke/clusters/173778/control_plane_acl
     method: DELETE
   response:
     body: '{}'
@@ -512,7 +512,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 29 Apr 2024 16:32:00 GMT
+      - Mon, 29 Apr 2024 16:52:19 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -545,7 +545,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/173757/control_plane_acl
+    url: https://api.linode.com/v4beta/lke/clusters/173778/control_plane_acl
     method: GET
   response:
     body: '{"acl": {"enabled": false, "addresses": null}}'
@@ -571,7 +571,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 29 Apr 2024 16:32:01 GMT
+      - Mon, 29 Apr 2024 16:52:20 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -605,7 +605,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/173757
+    url: https://api.linode.com/v4beta/lke/clusters/173778
     method: DELETE
   response:
     body: '{}'
@@ -631,7 +631,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 29 Apr 2024 16:32:23 GMT
+      - Mon, 29 Apr 2024 16:52:42 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

@@ -20,7 +20,7 @@ func TestLKECluster_withACL(t *testing.T) {
 						Enabled: true,
 						Addresses: linodego.LKEClusterControlPlaneACLAddresses{
 							IPv4: []string{"10.0.0.1/32"},
-							IPv6: []string{"2001:db8:1234:abcd::/64"},
+							IPv6: []string{"1234::5678"},
 						},
 					},
 				}
@@ -34,14 +34,14 @@ func TestLKECluster_withACL(t *testing.T) {
 	// TODO: Not currently populated in response, uncomment when available
 	// require.Equal(t, true, cluster.ControlPlane.ACL.Enabled)
 	// require.Equal(t, "10.0.0.1/32", cluster.ControlPlane.ACL.Addresses.IPv4[0])
-	// require.Equal(t, "2001:db8:1234:abcd::/64", cluster.ControlPlane.ACL.Addresses.IPv6[0])
+	// require.Equal(t, "1234::5678", cluster.ControlPlane.ACL.Addresses.IPv6[0])
 
 	acl, err := client.GetLKEClusterControlPlaneACL(context.Background(), cluster.ID)
 	assert.NoError(t, err)
 
 	require.Equal(t, true, acl.ACL.Enabled)
 	require.Equal(t, "10.0.0.1/32", acl.ACL.Addresses.IPv4[0])
-	require.Equal(t, "2001:db8:1234:abcd::/64", acl.ACL.Addresses.IPv6[0])
+	require.Equal(t, "1234::5678/128", acl.ACL.Addresses.IPv6[0])
 
 	acl, err = client.UpdateLKEClusterControlPlaneACL(
 		context.Background(),
@@ -51,7 +51,7 @@ func TestLKECluster_withACL(t *testing.T) {
 				Enabled: true,
 				Addresses: linodego.LKEClusterControlPlaneACLAddresses{
 					IPv4: []string{"10.0.0.2/32"},
-					IPv6: []string{"2002:db8:1234:abcd::/64"},
+					IPv6: []string{"1235::5678"},
 				},
 			},
 		},
@@ -60,7 +60,7 @@ func TestLKECluster_withACL(t *testing.T) {
 
 	require.Equal(t, true, acl.ACL.Enabled)
 	require.Equal(t, "10.0.0.2/32", acl.ACL.Addresses.IPv4[0])
-	require.Equal(t, "2002:db8:1234:abcd::/64", acl.ACL.Addresses.IPv6[0])
+	require.Equal(t, "1235::5678/128", acl.ACL.Addresses.IPv6[0])
 
 	err = client.DeleteLKEClusterControlPlaneACL(context.Background(), cluster.ID)
 	require.NoError(t, err)
