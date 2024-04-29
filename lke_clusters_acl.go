@@ -12,7 +12,7 @@ type LKEClusterControlPlaneACLAddresses struct {
 // LKEClusterControlPlaneACL describes the ACL configuration
 // for an LKE cluster's control plane.
 type LKEClusterControlPlaneACL struct {
-	Enabled   bool                                `json:"enabled,omitempty"`
+	Enabled   *bool                               `json:"enabled,omitempty"`
 	Addresses *LKEClusterControlPlaneACLAddresses `json:"addresses,omitempty"`
 }
 
