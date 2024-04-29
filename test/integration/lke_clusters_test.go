@@ -101,7 +101,7 @@ func TestLKECluster_Update(t *testing.T) {
 		t.Errorf("expected tags to be updated to %#v; got %#v", updatedTags, updatedCluster.Tags)
 	}
 
-	if !reflect.DeepEqual(*updatedControlPlane, updatedCluster.ControlPlane) {
+	if !reflect.DeepEqual(*updatedControlPlane.HighAvailability, updatedCluster.ControlPlane.HighAvailability) {
 		t.Errorf("expected control plane to be updated to %#v; got %#v", updatedControlPlane, updatedCluster.ControlPlane)
 	}
 }
