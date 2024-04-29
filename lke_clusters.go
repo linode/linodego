@@ -68,8 +68,8 @@ type LKEClusterDashboard struct {
 
 // LKEClusterControlPlane fields contained within the `control_plane` attribute of an LKE cluster.
 type LKEClusterControlPlane struct {
-	HighAvailability bool                       `json:"high_availability"`
-	ACL              *LKEClusterControlPlaneACL `json:"acl"`
+	HighAvailability bool                       `json:"high_availability,omitempty"`
+	ACL              *LKEClusterControlPlaneACL `json:"acl,omitempty"`
 }
 
 // LKEVersion fields are those returned by GetLKEVersion
