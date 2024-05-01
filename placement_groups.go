@@ -124,9 +124,9 @@ func (c *Client) AssignPlacementGroupLinodes(
 	)
 }
 
-// UnAssignPlacementGroupLinodes un-assigns the specified Linodes from the given
+// UnassignPlacementGroupLinodes un-assigns the specified Linodes from the given
 // placement group.
-func (c *Client) UnAssignPlacementGroupLinodes(
+func (c *Client) UnassignPlacementGroupLinodes(
 	ctx context.Context,
 	id int,
 	options PlacementGroupUnAssignOptions,

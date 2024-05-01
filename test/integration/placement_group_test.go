@@ -101,7 +101,7 @@ func TestPlacementGroup_assignment(t *testing.T) {
 	require.Equal(t, inst.PlacementGroup.AffinityType, pg.AffinityType)
 
 	// Ensure unassignment works as expected
-	pg, err = client.UnAssignPlacementGroupLinodes(
+	pg, err = client.UnassignPlacementGroupLinodes(
 		context.Background(),
 		pg.ID,
 		linodego.PlacementGroupUnAssignOptions{
