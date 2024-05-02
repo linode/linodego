@@ -10,8 +10,8 @@ type LKEClusterControlPlane struct {
 // LKEClusterControlPlaneACLAddresses describes the
 // allowed IP ranges for an LKE cluster's control plane.
 type LKEClusterControlPlaneACLAddresses struct {
-	IPv4 []string `json:"ipv4,omitempty"`
-	IPv6 []string `json:"ipv6,omitempty"`
+	IPv4 []string `json:"ipv4"`
+	IPv6 []string `json:"ipv6"`
 }
 
 // LKEClusterControlPlaneACL describes the ACL configuration
@@ -27,11 +27,18 @@ type LKEClusterControlPlaneACLResponse struct {
 	ACL LKEClusterControlPlaneACL `json:"acl"`
 }
 
+// LKEClusterControlPlaneACLAddressesOptions are the options used to
+// specify the allowed IP ranges for an LKE cluster's control plane.
+type LKEClusterControlPlaneACLAddressesOptions struct {
+	IPv4 *[]string `json:"ipv4,omitempty"`
+	IPv6 *[]string `json:"ipv6,omitempty"`
+}
+
 // LKEClusterControlPlaneACLOptions represents the options used when
 // configuring an LKE cluster's control plane ACL policy.
 type LKEClusterControlPlaneACLOptions struct {
-	Enabled   *bool                               `json:"enabled,omitempty"`
-	Addresses *LKEClusterControlPlaneACLAddresses `json:"addresses,omitempty"`
+	Enabled   *bool                                      `json:"enabled,omitempty"`
+	Addresses *LKEClusterControlPlaneACLAddressesOptions `json:"addresses,omitempty"`
 }
 
 // LKEClusterControlPlaneOptions represents the options used when
