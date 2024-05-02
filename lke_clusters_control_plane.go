@@ -21,12 +21,6 @@ type LKEClusterControlPlaneACL struct {
 	Addresses *LKEClusterControlPlaneACLAddresses `json:"addresses"`
 }
 
-// LKEClusterControlPlaneACLResponse represents the response structure
-// for the Client.GetLKEClusterControlPlaneACL(...) method.
-type LKEClusterControlPlaneACLResponse struct {
-	ACL LKEClusterControlPlaneACL `json:"acl"`
-}
-
 // LKEClusterControlPlaneACLAddressesOptions are the options used to
 // specify the allowed IP ranges for an LKE cluster's control plane.
 type LKEClusterControlPlaneACLAddressesOptions struct {
@@ -53,6 +47,12 @@ type LKEClusterControlPlaneOptions struct {
 // control plane.
 type LKEClusterControlPlaneACLUpdateOptions struct {
 	ACL LKEClusterControlPlaneACLOptions `json:"acl"`
+}
+
+// LKEClusterControlPlaneACLResponse represents the response structure
+// for the Client.GetLKEClusterControlPlaneACL(...) method.
+type LKEClusterControlPlaneACLResponse struct {
+	ACL LKEClusterControlPlaneACL `json:"acl"`
 }
 
 // GetLKEClusterControlPlaneACL gets the ACL configuration for the
