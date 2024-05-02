@@ -1,10 +1,11 @@
 package unit
 
 import (
-	"github.com/linode/linodego"
-	"github.com/linode/linodego/internal/testutil"
 	"regexp"
 	"testing"
+
+	"github.com/linode/linodego"
+	"github.com/linode/linodego/internal/testutil"
 
 	"github.com/jarcoal/httpmock"
 )

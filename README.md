@@ -1,6 +1,6 @@
 # linodego
 
-![Tests](https://img.shields.io/github/actions/workflow/status/linode/linodego/test.yml?branch=main)
+![Tests](https://img.shields.io/github/actions/workflow/status/linode/linodego/ci.yml?branch=main)
 [![Release](https://img.shields.io/github/v/release/linode/linodego)](https://github.com/linode/linodego/releases/latest)
 [![GoDoc](https://godoc.org/github.com/linode/linodego?status.svg)](https://godoc.org/github.com/linode/linodego)
 [![Go Report Card](https://goreportcard.com/badge/github.com/linode/linodego)](https://goreportcard.com/report/github.com/linode/linodego)
