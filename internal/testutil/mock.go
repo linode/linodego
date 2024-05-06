@@ -50,7 +50,7 @@ func MockRequestBodyValidate(t *testing.T, expected any, response any) httpmock.
 			t.Fatalf("request body does not match request options: %s", cmp.Diff(expected, resultValue))
 		}
 
-		return httpmock.NewJsonResponse(200, response)
+		return httpmock.NewJsonResponse(http.StatusOK, response)
 	}
 }
 
@@ -62,7 +62,7 @@ func MockRequestBodyValidateNoBody(t *testing.T, response any) httpmock.Responde
 			t.Fatal("got request body when no request body was expected")
 		}
 
-		return httpmock.NewJsonResponse(200, response)
+		return httpmock.NewJsonResponse(http.StatusOK, response)
 	}
 }
 
