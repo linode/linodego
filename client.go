@@ -41,7 +41,8 @@ const (
 	// APISecondsPerPoll how frequently to poll for new Events or Status in WaitFor functions
 	APISecondsPerPoll = 3
 	// Maximum wait time for retries
-	APIRetryMaxWaitTime = time.Duration(30) * time.Second
+	APIRetryMaxWaitTime       = time.Duration(30) * time.Second
+	APIDefaultCacheExpiration = time.Minute * 15
 )
 
 var envDebug = false
@@ -420,7 +421,7 @@ func NewClient(hc *http.Client) (client Client) {
 	}
 
 	client.shouldCache = true
-	client.cacheExpiration = time.Minute * 15
+	client.cacheExpiration = APIDefaultCacheExpiration
 	client.cachedEntries = make(map[string]clientCacheEntry)
 	client.cachedEntryLock = &sync.RWMutex{}
 
@@ -454,7 +455,7 @@ func NewClient(hc *http.Client) (client Client) {
 	}
 
 	client.
-		SetRetryWaitTime((1000 * APISecondsPerPoll) * time.Millisecond).
+		SetRetryWaitTime(APISecondsPerPoll * time.Second).
 		SetPollDelay(APISecondsPerPoll * time.Second).
 		SetRetries().
 		SetDebug(envDebug)
