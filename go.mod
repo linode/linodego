@@ -6,7 +6,7 @@ require (
 	github.com/jarcoal/httpmock v1.3.1
 	golang.org/x/net v0.24.0
 	golang.org/x/oauth2 v0.19.0
-	golang.org/x/text v0.14.0
+	golang.org/x/text v0.15.0
 	gopkg.in/ini.v1 v1.66.6
 )
 
