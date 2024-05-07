@@ -4,7 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
+	"os"
 	"reflect"
 	"regexp"
 	"strings"
@@ -86,4 +88,41 @@ func CreateMockClient[T any](t *testing.T, createFunc func(*http.Client) T) *T {
 
 	result := createFunc(client)
 	return &result
+}
+
+type Logger interface {
+	Errorf(format string, v ...interface{})
+	Warnf(format string, v ...interface{})
+	Debugf(format string, v ...interface{})
+}
+
+func CreateLogger() *TestLogger {
+	l := &TestLogger{L: log.New(os.Stderr, "", log.Ldate|log.Lmicroseconds)}
+	return l
+}
+
+var _ Logger = (*TestLogger)(nil)
+
+type TestLogger struct {
+	L *log.Logger
+}
+
+func (l *TestLogger) Errorf(format string, v ...interface{}) {
+	l.output("ERROR RESTY "+format, v...)
+}
+
+func (l *TestLogger) Warnf(format string, v ...interface{}) {
+	l.output("WARN RESTY "+format, v...)
+}
+
+func (l *TestLogger) Debugf(format string, v ...interface{}) {
+	l.output("DEBUG RESTY "+format, v...)
+}
+
+func (l *TestLogger) output(format string, v ...interface{}) {
+	if len(v) == 0 {
+		l.L.Print(format)
+		return
+	}
+	l.L.Printf(format, v...)
 }

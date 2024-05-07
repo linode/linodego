@@ -90,7 +90,7 @@ type (
 )
 
 func init() {
-	// Wether or not we will enable Resty debugging output
+	// Whether we will enable Resty debugging output
 	if apiDebug, ok := os.LookupEnv("LINODE_DEBUG"); ok {
 		if parsed, err := strconv.ParseBool(apiDebug); err == nil {
 			envDebug = parsed
@@ -122,6 +122,8 @@ func (c *Client) R(ctx context.Context) *resty.Request {
 func (c *Client) SetDebug(debug bool) *Client {
 	c.debug = debug
 	c.resty.SetDebug(debug)
+	// this ensures that if there is an Authorization header present, the value is sanitized/masked
+	c.SanitizeAuthorizationHeader()
 
 	return c
 }
@@ -410,6 +412,14 @@ func (c *Client) GetPollDelay() time.Duration {
 // NOTE: Some headers may be overridden by the individual request functions.
 func (c *Client) SetHeader(name, value string) {
 	c.resty.SetHeader(name, value)
+}
+
+func (c *Client) SanitizeAuthorizationHeader() {
+	c.resty.OnRequestLog(func(r *resty.RequestLog) error {
+		// masking authorization header
+		r.Header.Set("Authorization", "Bearer *******************************")
+		return nil
+	})
 }
 
 // NewClient factory to create new Client struct
