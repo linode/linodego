@@ -66,9 +66,6 @@ jobs:
 
       - name: Upload test results to bucket
         if: always()
-        env:
-          LINODE_CLI_OBJ_ACCESS_KEY: ${{ secrets.LINODE_CLI_OBJ_ACCESS_KEY }}
-          LINODE_CLI_OBJ_SECRET_KEY: ${{ secrets.LINODE_CLI_OBJ_SECRET_KEY }}
         run: |
           python tod_scripts/add_to_xml_test_report.py \
           --branch_name "${GITHUB_REF#refs/*/}" \
@@ -77,3 +74,6 @@ jobs:
           --xmlfile "$REPORT_FILENAME"
           sync
           python tod_scripts/test_report_upload_script.py "$REPORT_FILENAME"
+        env:
+          LINODE_CLI_OBJ_ACCESS_KEY: ${{ secrets.LINODE_CLI_OBJ_ACCESS_KEY }}
+          LINODE_CLI_OBJ_SECRET_KEY: ${{ secrets.LINODE_CLI_OBJ_SECRET_KEY }}
