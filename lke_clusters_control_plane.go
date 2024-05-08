@@ -65,7 +65,7 @@ func (c *Client) GetLKEClusterControlPlaneACL(ctx context.Context, clusterID int
 	)
 }
 
-// UpdateLKEClusterControlPlaneACL gets the ACL configuration for the
+// UpdateLKEClusterControlPlaneACL updates the ACL configuration for the
 // given cluster's control plane.
 func (c *Client) UpdateLKEClusterControlPlaneACL(
 	ctx context.Context,
