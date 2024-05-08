@@ -47,7 +47,8 @@ type LKENodePool struct {
 	Linodes []LKENodePoolLinode `json:"nodes"`
 	Tags    []string            `json:"tags"`
 
-	Autoscaler LKENodePoolAutoscaler `json:"autoscaler"`
+	Autoscaler     LKENodePoolAutoscaler   `json:"autoscaler"`
+	DiskEncryption *instanceDiskEncryption `json:"disk_encryption,omitempty"`
 }
 
 // LKENodePoolCreateOptions fields are those accepted by CreateLKENodePool
@@ -57,7 +58,8 @@ type LKENodePoolCreateOptions struct {
 	Disks []LKENodePoolDisk `json:"disks"`
 	Tags  []string          `json:"tags"`
 
-	Autoscaler *LKENodePoolAutoscaler `json:"autoscaler,omitempty"`
+	Autoscaler     *LKENodePoolAutoscaler  `json:"autoscaler,omitempty"`
+	DiskEncryption *instanceDiskEncryption `json:"disk_encryption,omitempty"`
 }
 
 // LKENodePoolUpdateOptions fields are those accepted by UpdateLKENodePoolUpdate
@@ -75,6 +77,7 @@ func (l LKENodePool) GetCreateOptions() (o LKENodePoolCreateOptions) {
 	o.Disks = l.Disks
 	o.Tags = l.Tags
 	o.Autoscaler = &l.Autoscaler
+	o.DiskEncryption = l.DiskEncryption
 	return
 }
 
