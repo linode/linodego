@@ -43,25 +43,26 @@ const (
 
 // Instance represents a linode object
 type Instance struct {
-	ID              int             `json:"id"`
-	Created         *time.Time      `json:"-"`
-	Updated         *time.Time      `json:"-"`
-	Region          string          `json:"region"`
-	Alerts          *InstanceAlert  `json:"alerts"`
-	Backups         *InstanceBackup `json:"backups"`
-	Image           string          `json:"image"`
-	Group           string          `json:"group"`
-	IPv4            []*net.IP       `json:"ipv4"`
-	IPv6            string          `json:"ipv6"`
-	Label           string          `json:"label"`
-	Type            string          `json:"type"`
-	Status          InstanceStatus  `json:"status"`
-	HasUserData     bool            `json:"has_user_data"`
-	Hypervisor      string          `json:"hypervisor"`
-	HostUUID        string          `json:"host_uuid"`
-	Specs           *InstanceSpec   `json:"specs"`
-	WatchdogEnabled bool            `json:"watchdog_enabled"`
-	Tags            []string        `json:"tags"`
+	ID              int                     `json:"id"`
+	Created         *time.Time              `json:"-"`
+	Updated         *time.Time              `json:"-"`
+	Region          string                  `json:"region"`
+	Alerts          *InstanceAlert          `json:"alerts"`
+	Backups         *InstanceBackup         `json:"backups"`
+	Image           string                  `json:"image"`
+	Group           string                  `json:"group"`
+	IPv4            []*net.IP               `json:"ipv4"`
+	IPv6            string                  `json:"ipv6"`
+	Label           string                  `json:"label"`
+	Type            string                  `json:"type"`
+	Status          InstanceStatus          `json:"status"`
+	HasUserData     bool                    `json:"has_user_data"`
+	Hypervisor      string                  `json:"hypervisor"`
+	HostUUID        string                  `json:"host_uuid"`
+	Specs           *InstanceSpec           `json:"specs"`
+	WatchdogEnabled bool                    `json:"watchdog_enabled"`
+	Tags            []string                `json:"tags"`
+	DiskEncryption  *instanceDiskEncryption `json:"disk_encryption"`
 }
 
 // InstanceSpec represents a linode spec
@@ -91,6 +92,17 @@ type InstanceBackup struct {
 		Window string `json:"window,omitempty"`
 	} `json:"schedule,omitempty"`
 }
+
+type instanceDiskEncryption string
+
+func (i *instanceDiskEncryption) String() string {
+	return string(*i)
+}
+
+var (
+	InstanceDiskEncryptionEnabled  instanceDiskEncryption = "enabled"
+	InstanceDiskEncryptionDisabled instanceDiskEncryption = "disabled"
+)
 
 // InstanceTransfer pool stats for a Linode Instance during the current billing month
 type InstanceTransfer struct {
@@ -131,8 +143,9 @@ type InstanceCreateOptions struct {
 	FirewallID      int                                    `json:"firewall_id,omitempty"`
 
 	// Creation fields that need to be set explicitly false, "", or 0 use pointers
-	SwapSize *int  `json:"swap_size,omitempty"`
-	Booted   *bool `json:"booted,omitempty"`
+	SwapSize       *int                    `json:"swap_size,omitempty"`
+	Booted         *bool                   `json:"booted,omitempty"`
+	DiskEncryption *instanceDiskEncryption `json:"disk_encryption"`
 
 	// Deprecated: group is a deprecated property denoting a group label for the Linode.
 	Group string `json:"group,omitempty"`
