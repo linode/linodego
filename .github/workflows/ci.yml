@@ -65,7 +65,7 @@ jobs:
           SKIP_LINT: 1
 
       - name: Upload test results to bucket
-        if: always()
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push' && always()
         run: |
           python tod_scripts/add_to_xml_test_report.py \
           --branch_name "${GITHUB_REF#refs/*/}" \
