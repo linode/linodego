@@ -475,6 +475,22 @@ func TestInstance_withMetadata(t *testing.T) {
 	}
 }
 
+func TestInstance_DiskEncryption(t *testing.T) {
+	_, inst, teardown, err := setupInstance(t, "fixtures/TestInstance_DiskEncryption", func(c *linodego.Client, ico *linodego.InstanceCreateOptions) {
+		ico.DiskEncryption = linodego.InstanceDiskEncryptionEnabled
+		ico.Region = "us-east"
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Cleanup(teardown)
+
+	if inst.DiskEncryption != linodego.InstanceDiskEncryptionEnabled {
+		t.Fatalf("expected instance to have disk encryption enabled, got: %s, want: %s", inst.DiskEncryption, linodego.InstanceDiskEncryptionEnabled)
+	}
+}
+
 func createInstance(t *testing.T, client *linodego.Client, modifiers ...instanceModifier) (*linodego.Instance, error) {
 	if t != nil {
 		t.Helper()
