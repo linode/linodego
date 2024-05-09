@@ -11,7 +11,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.dev.linode.com/v4beta/regions
+    url: https://api.linode.com/v4beta/regions
     method: GET
   response:
     body: '{"data": [{"id": "ap-west", "label": "Mumbai, India", "country": "in",
@@ -131,7 +131,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.dev.linode.com/v4beta/linode/instances
+    url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
     body: '{"id": 25161592, "label": "go-test-ins-72053mvwvvd0", "group": "", "status":
@@ -200,7 +200,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.dev.linode.com/v4beta/linode/instances/25161592
+    url: https://api.linode.com/v4beta/linode/instances/25161592
     method: DELETE
   response:
     body: '{}'

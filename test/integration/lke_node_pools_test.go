@@ -69,6 +69,10 @@ func TestLKENodePool_GetFound(t *testing.T) {
 	if diff := cmp.Diff([]string{"testing"}, i.Tags); diff != "" {
 		t.Errorf("unexpected tags:\n%s", diff)
 	}
+
+	if i.DiskEncryption != linodego.InstanceDiskEncryptionEnabled {
+		t.Errorf("DiskEncryption not enabled, got: %s, want: %s", i.DiskEncryption, linodego.InstanceDiskEncryptionEnabled)
+	}
 }
 
 func TestLKENodePools_List(t *testing.T) {
