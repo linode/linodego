@@ -123,7 +123,7 @@ func (c *Client) SetDebug(debug bool) *Client {
 	c.debug = debug
 	c.resty.SetDebug(debug)
 	// this ensures that if there is an Authorization header present, the value is sanitized/masked
-	c.SanitizeAuthorizationHeader()
+	c.sanitizeAuthorizationHeader()
 
 	return c
 }
@@ -414,7 +414,7 @@ func (c *Client) SetHeader(name, value string) {
 	c.resty.SetHeader(name, value)
 }
 
-func (c *Client) SanitizeAuthorizationHeader() {
+func (c *Client) sanitizeAuthorizationHeader() {
 	c.resty.OnRequestLog(func(r *resty.RequestLog) error {
 		// masking authorization header
 		r.Header.Set("Authorization", "Bearer *******************************")
