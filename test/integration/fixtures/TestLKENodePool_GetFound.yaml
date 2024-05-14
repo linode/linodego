@@ -11,7 +11,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/regions
+    url: https://api.dev.linode.com/v4beta/regions
     method: GET
   response:
     body: '{"data": [{"id": "ap-west", "label": "Mumbai, India", "country": "in",
@@ -122,7 +122,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"]}],"label":"go-lke-test-def","region":"us-central","k8s_version":"1.29","tags":["testing"]}'
+    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"]}],"label":"go-lke-test-def","region":"us-east","k8s_version":"1.29","tags":["testing"]}'
     form: {}
     headers:
       Accept:
@@ -131,11 +131,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters
+    url: https://api.dev.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 7288, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "label": "go-lke-test-def", "region": "us-central", "k8s_version":
+    body: '{"id": 7289, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "label": "go-lke-test-def", "region": "us-east", "k8s_version":
       "1.29", "control_plane": {"high_availability": false}, "tags": ["testing"]}'
     headers:
       Access-Control-Allow-Credentials:
@@ -153,7 +153,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "242"
+      - "239"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -193,14 +193,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7288/pools
+    url: https://api.dev.linode.com/v4beta/lke/clusters/7289/pools
     method: POST
   response:
-    body: '{"id": 7567, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "7567-017662250000",
-      "instance_id": null, "status": "not_ready"}, {"id": "7567-420b2aa10000", "instance_id":
+    body: '{"id": 7569, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "7569-37371b6c0000",
+      "instance_id": null, "status": "not_ready"}, {"id": "7569-3b1321000000", "instance_id":
       null, "status": "not_ready"}], "disks": [{"size": 1000, "type": "ext4"}], "autoscaler":
       {"enabled": false, "min": 2, "max": 2}, "tags": ["testing"], "disk_encryption":
-      "disabled"}'
+      "enabled"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -217,7 +217,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "355"
+      - "354"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -257,14 +257,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7288/pools/7567
+    url: https://api.dev.linode.com/v4beta/lke/clusters/7289/pools/7569
     method: GET
   response:
-    body: '{"id": 7567, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "7567-017662250000",
-      "instance_id": null, "status": "not_ready"}, {"id": "7567-420b2aa10000", "instance_id":
+    body: '{"id": 7569, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "7569-37371b6c0000",
+      "instance_id": null, "status": "not_ready"}, {"id": "7569-3b1321000000", "instance_id":
       null, "status": "not_ready"}], "disks": [{"size": 1000, "type": "ext4"}], "autoscaler":
       {"enabled": false, "min": 2, "max": 2}, "tags": ["testing"], "disk_encryption":
-      "disabled"}'
+      "enabled"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -282,7 +282,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "355"
+      - "354"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -323,7 +323,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7288/pools/7567
+    url: https://api.dev.linode.com/v4beta/lke/clusters/7289/pools/7569
     method: DELETE
   response:
     body: '{}'
@@ -383,7 +383,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7288
+    url: https://api.dev.linode.com/v4beta/lke/clusters/7289
     method: DELETE
   response:
     body: '{}'
