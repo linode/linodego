@@ -63,6 +63,7 @@ type Instance struct {
 	WatchdogEnabled bool                   `json:"watchdog_enabled"`
 	Tags            []string               `json:"tags"`
 	DiskEncryption  InstanceDiskEncryption `json:"disk_encryption"`
+	LKEClusterID    int                    `json:"lke_cluster_id"`
 }
 
 // InstanceSpec represents a linode spec

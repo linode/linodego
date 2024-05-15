@@ -73,6 +73,17 @@ func TestLKENodePool_GetFound(t *testing.T) {
 	if i.DiskEncryption != linodego.InstanceDiskEncryptionEnabled {
 		t.Errorf("DiskEncryption not enabled, got: %s, want: %s", i.DiskEncryption, linodego.InstanceDiskEncryptionEnabled)
 	}
+
+	for _, node := range i.Linodes {
+		instance, err := client.GetInstance(context.Background(), node.InstanceID)
+		if err != nil {
+			t.Errorf("failed to get Linode, got err: %v", err)
+		}
+
+		if instance.LKEClusterID != lkeCluster.ID {
+			t.Errorf("linode: %d is LKENodePool member but got linode LKEClusterID: %d, want: %d", instance.ID, instance.LKEClusterID, lkeCluster.ID)
+		}
+	}
 }
 
 func TestLKENodePools_List(t *testing.T) {
