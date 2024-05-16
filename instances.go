@@ -138,7 +138,7 @@ type InstanceCreateOptions struct {
 	Tags            []string                               `json:"tags,omitempty"`
 	Metadata        *InstanceMetadataOptions               `json:"metadata,omitempty"`
 	FirewallID      int                                    `json:"firewall_id,omitempty"`
-	DiskEncryption  InstanceDiskEncryption                 `json:"disk_encryption"`
+	DiskEncryption  InstanceDiskEncryption                 `json:"disk_encryption,omitempty"`
 
 	// Creation fields that need to be set explicitly false, "", or 0 use pointers
 	SwapSize *int  `json:"swap_size,omitempty"`
@@ -387,6 +387,7 @@ type InstanceRebuildOptions struct {
 	Booted          *bool                    `json:"booted,omitempty"`
 	Metadata        *InstanceMetadataOptions `json:"metadata,omitempty"`
 	Type            string                   `json:"type,omitempty"`
+	DiskEncryption  InstanceDiskEncryption   `json:"disk_encryption,omitempty"`
 }
 
 // RebuildInstance Deletes all Disks and Configs on this Linode,

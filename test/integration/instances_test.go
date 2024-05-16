@@ -134,6 +134,31 @@ func TestInstance_Disks_List(t *testing.T) {
 	}
 }
 
+func TestInstance_Disks_List_WithEncryption(t *testing.T) {
+	client, instance, teardown, err := setupInstance(t, "fixtures/TestInstance_Disks_List_WithEncryption", func(c *linodego.Client, ico *linodego.InstanceCreateOptions) {
+		ico.Region = getRegionsWithCaps(t, c, []string{"Disk Encryption"})[0]
+	})
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	disks, err := client.ListInstanceDisks(context.Background(), instance.ID, nil)
+	if err != nil {
+		t.Errorf("Error listing instance disks, expected struct, got error %v", err)
+	}
+	if len(disks) == 0 {
+		t.Errorf("Expected a list of instance disks, but got %v", disks)
+	}
+
+	// Disk Encryption should be enabled by default if not otherwise specified
+	for _, disk := range disks {
+		if disk.DiskEncryption != linodego.InstanceDiskEncryptionEnabled {
+			t.Fatalf("expected disk encryption status: %s, got :%s", linodego.InstanceDiskEncryptionEnabled, disk.DiskEncryption)
+		}
+	}
+}
+
 func TestInstance_Disk_Resize(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Disk_Resize")
 	defer teardown()
@@ -375,6 +400,42 @@ func TestInstance_Rebuild(t *testing.T) {
 
 	if !instance.HasUserData {
 		t.Fatal("expected instance.HasUserData to be true, got false")
+	}
+}
+
+func TestInstance_RebuildWithEncryption(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(
+		t,
+		"fixtures/TestInstance_RebuildWithEncryption",
+		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+			options.Region = getRegionsWithCaps(t, client, []string{"Disk Encryption"})[0]
+			options.DiskEncryption = linodego.InstanceDiskEncryptionEnabled
+		},
+	)
+	defer teardown()
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	_, err = client.WaitForEventFinished(context.Background(), instance.ID, linodego.EntityLinode, linodego.ActionLinodeCreate, *instance.Created, 180)
+	if err != nil {
+		t.Errorf("Error waiting for instance created: %s", err)
+	}
+
+	rebuildOpts := linodego.InstanceRebuildOptions{
+		Image:          "linode/alpine3.19",
+		RootPass:       randPassword(),
+		Type:           "g6-standard-2",
+		DiskEncryption: linodego.InstanceDiskEncryptionDisabled,
+	}
+	instance, err = client.RebuildInstance(context.Background(), instance.ID, rebuildOpts)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if instance.DiskEncryption != linodego.InstanceDiskEncryptionDisabled {
+		t.Fatalf("expected instance.DiskEncryption to be: %s, got: %s", linodego.InstanceDiskEncryptionDisabled, linodego.InstanceDiskEncryptionEnabled)
 	}
 }
 
