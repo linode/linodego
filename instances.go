@@ -43,25 +43,27 @@ const (
 
 // Instance represents a linode object
 type Instance struct {
-	ID              int             `json:"id"`
-	Created         *time.Time      `json:"-"`
-	Updated         *time.Time      `json:"-"`
-	Region          string          `json:"region"`
-	Alerts          *InstanceAlert  `json:"alerts"`
-	Backups         *InstanceBackup `json:"backups"`
-	Image           string          `json:"image"`
-	Group           string          `json:"group"`
-	IPv4            []*net.IP       `json:"ipv4"`
-	IPv6            string          `json:"ipv6"`
-	Label           string          `json:"label"`
-	Type            string          `json:"type"`
-	Status          InstanceStatus  `json:"status"`
-	HasUserData     bool            `json:"has_user_data"`
-	Hypervisor      string          `json:"hypervisor"`
-	HostUUID        string          `json:"host_uuid"`
-	Specs           *InstanceSpec   `json:"specs"`
-	WatchdogEnabled bool            `json:"watchdog_enabled"`
-	Tags            []string        `json:"tags"`
+	ID              int                    `json:"id"`
+	Created         *time.Time             `json:"-"`
+	Updated         *time.Time             `json:"-"`
+	Region          string                 `json:"region"`
+	Alerts          *InstanceAlert         `json:"alerts"`
+	Backups         *InstanceBackup        `json:"backups"`
+	Image           string                 `json:"image"`
+	Group           string                 `json:"group"`
+	IPv4            []*net.IP              `json:"ipv4"`
+	IPv6            string                 `json:"ipv6"`
+	Label           string                 `json:"label"`
+	Type            string                 `json:"type"`
+	Status          InstanceStatus         `json:"status"`
+	HasUserData     bool                   `json:"has_user_data"`
+	Hypervisor      string                 `json:"hypervisor"`
+	HostUUID        string                 `json:"host_uuid"`
+	Specs           *InstanceSpec          `json:"specs"`
+	WatchdogEnabled bool                   `json:"watchdog_enabled"`
+	Tags            []string               `json:"tags"`
+	DiskEncryption  InstanceDiskEncryption `json:"disk_encryption"`
+	LKEClusterID    int                    `json:"lke_cluster_id"`
 }
 
 // InstanceSpec represents a linode spec
@@ -91,6 +93,13 @@ type InstanceBackup struct {
 		Window string `json:"window,omitempty"`
 	} `json:"schedule,omitempty"`
 }
+
+type InstanceDiskEncryption string
+
+const (
+	InstanceDiskEncryptionEnabled  InstanceDiskEncryption = "enabled"
+	InstanceDiskEncryptionDisabled InstanceDiskEncryption = "disabled"
+)
 
 // InstanceTransfer pool stats for a Linode Instance during the current billing month
 type InstanceTransfer struct {
@@ -129,6 +138,7 @@ type InstanceCreateOptions struct {
 	Tags            []string                               `json:"tags,omitempty"`
 	Metadata        *InstanceMetadataOptions               `json:"metadata,omitempty"`
 	FirewallID      int                                    `json:"firewall_id,omitempty"`
+	DiskEncryption  InstanceDiskEncryption                 `json:"disk_encryption,omitempty"`
 
 	// Creation fields that need to be set explicitly false, "", or 0 use pointers
 	SwapSize *int  `json:"swap_size,omitempty"`
@@ -377,6 +387,7 @@ type InstanceRebuildOptions struct {
 	Booted          *bool                    `json:"booted,omitempty"`
 	Metadata        *InstanceMetadataOptions `json:"metadata,omitempty"`
 	Type            string                   `json:"type,omitempty"`
+	DiskEncryption  InstanceDiskEncryption   `json:"disk_encryption,omitempty"`
 }
 
 // RebuildInstance Deletes all Disks and Configs on this Linode,

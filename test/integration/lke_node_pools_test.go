@@ -69,6 +69,41 @@ func TestLKENodePool_GetFound(t *testing.T) {
 	if diff := cmp.Diff([]string{"testing"}, i.Tags); diff != "" {
 		t.Errorf("unexpected tags:\n%s", diff)
 	}
+
+	if i.DiskEncryption != linodego.InstanceDiskEncryptionEnabled {
+		t.Errorf("DiskEncryption not enabled, got: %s, want: %s", i.DiskEncryption, linodego.InstanceDiskEncryptionEnabled)
+	}
+
+	// TODO - This field is not yet implemented in dev
+	// We must wait for the k8s nodes to be ready as a proxy for waiting
+	// for the Linodes in the node pool to be ready. The inital pool is
+	// returned with instances that have no IDs
+	// wrapper, teardownClusterClient := transportRecorderWrapper(t, "fixtures/TestLKENodePool_GetFound")
+	// defer teardownClusterClient()
+
+	//if err := k8scondition.WaitForLKEClusterAndNodesReady(context.TODO(), *client, lkeCluster.ID, linodego.LKEClusterPollOptions{
+	//	Retry:            true,
+	//	TimeoutSeconds:   0,
+	//	TransportWrapper: wrapper,
+	//}); err != nil {
+	//	t.Fatalf("got err waiting for LKE cluster and nodes to be ready, err: %v", err)
+	//}
+
+	//i, err = client.GetLKENodePool(context.TODO(), lkeCluster.ID, pool.ID)
+	//if err != nil {
+	//	t.Fatalf("failed to get lke node pool, got err: %v", err)
+	//}
+
+	// for _, node := range i.Linodes {
+	//	instance, err := client.GetInstance(context.Background(), node.InstanceID)
+	//	if err != nil {
+	//		t.Errorf("failed to get Linode, got err: %v", err)
+	//	}
+
+	//	if instance.LKEClusterID != lkeCluster.ID {
+	//		t.Errorf("linode: %d is LKENodePool member but got linode LKEClusterID: %d, want: %d", instance.ID, instance.LKEClusterID, lkeCluster.ID)
+	//	}
+	//}
 }
 
 func TestLKENodePools_List(t *testing.T) {

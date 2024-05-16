@@ -14,56 +14,65 @@ interactions:
     url: https://api.linode.com/v4beta/regions
     method: GET
   response:
-    body: '{"data": [{"id": "ap-west", "country": "in", "capabilities": ["Linodes",
-      "NodeBalancers", "Block Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
-      "Vlans", "Block Storage Migrations", "Managed Databases"], "status": "ok", "resolvers":
-      {"ipv4": "172.105.34.5,172.105.35.5,172.105.36.5,172.105.37.5,172.105.38.5,172.105.39.5,172.105.40.5,172.105.41.5,172.105.42.5,172.105.43.5",
-      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"}},
-      {"id": "ca-central", "country": "ca", "capabilities": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes", "Cloud Firewall", "Vlans", "Block Storage Migrations",
-      "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "172.105.0.5,172.105.3.5,172.105.4.5,172.105.5.5,172.105.6.5,172.105.7.5,172.105.8.5,172.105.9.5,172.105.10.5,172.105.11.5",
-      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"}},
-      {"id": "ap-southeast", "country": "au", "capabilities": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes", "Cloud Firewall", "Vlans", "Block Storage Migrations",
-      "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "172.105.166.5,172.105.169.5,172.105.168.5,172.105.172.5,172.105.162.5,172.105.170.5,172.105.167.5,172.105.171.5,172.105.181.5,172.105.161.5",
-      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"}},
-      {"id": "us-central", "country": "us", "capabilities": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes", "Cloud Firewall", "Block Storage Migrations",
+    body: '{"data": [{"id": "ap-west", "label": "Mumbai, India", "country": "in",
+      "capabilities": ["Linodes", "Backups", "NodeBalancers", "Vlans", "VPCs", "Managed
+      Databases"], "status": "ok", "resolvers": {"ipv4": "172.105.34.5,172.105.35.5,172.105.36.5,172.105.37.5,172.105.38.5,172.105.39.5,172.105.40.5,172.105.41.5,172.105.42.5,172.105.43.5",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}, {"id": "ca-central", "label": "Toronto, Ontario, CAN",
+      "country": "ca", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Vlans",
+      "VPCs", "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "172.105.0.5,172.105.3.5,172.105.4.5,172.105.5.5,172.105.6.5,172.105.7.5,172.105.8.5,172.105.9.5,172.105.10.5,172.105.11.5",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}, {"id": "ap-southeast", "label": "Sydney, NSW, Australia",
+      "country": "au", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Vlans",
+      "VPCs", "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "172.105.166.5,172.105.169.5,172.105.168.5,172.105.172.5,172.105.162.5,172.105.170.5,172.105.167.5,172.105.171.5,172.105.181.5,172.105.161.5",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}, {"id": "us-central", "label": "Dallas, TX, USA", "country":
+      "us", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Kubernetes",
       "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "72.14.179.5,72.14.188.5,173.255.199.5,66.228.53.5,96.126.122.5,96.126.124.5,96.126.127.5,198.58.107.5,198.58.111.5,23.239.24.5",
-      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"}},
-      {"id": "us-west", "country": "us", "capabilities": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes", "Cloud Firewall", "Block Storage Migrations",
-      "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "173.230.145.5,173.230.147.5,173.230.155.5,173.255.212.5,173.255.219.5,173.255.241.5,173.255.243.5,173.255.244.5,74.207.241.5,74.207.242.5",
-      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"}},
-      {"id": "us-southeast", "country": "us", "capabilities": ["Linodes", "NodeBalancers",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}, {"id": "us-west", "label": "Fremont, CA, USA", "country":
+      "us", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Managed Databases"],
+      "status": "ok", "resolvers": {"ipv4": "173.230.145.5,173.230.147.5,173.230.155.5,173.255.212.5,173.255.219.5,173.255.241.5,173.255.243.5,173.255.244.5,74.207.241.5,74.207.242.5",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}, {"id": "us-southeast", "label": "Atlanta, GA, USA",
+      "country": "us", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Managed
+      Databases"], "status": "ok", "resolvers": {"ipv4": "74.207.231.5,173.230.128.5,173.230.129.5,173.230.136.5,173.230.140.5,66.228.59.5,66.228.62.5,50.116.35.5,50.116.41.5,23.239.18.5",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}, {"id": "us-east", "label": "Newark, NJ, USA", "country":
+      "us", "capabilities": ["Linodes", "Disk Encryption", "Backups", "NodeBalancers",
       "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
-      "Vlans", "Block Storage Migrations", "Managed Databases"], "status": "ok", "resolvers":
-      {"ipv4": "74.207.231.5,173.230.128.5,173.230.129.5,173.230.136.5,173.230.140.5,66.228.59.5,66.228.62.5,50.116.35.5,50.116.41.5,23.239.18.5",
-      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"}},
-      {"id": "us-east", "country": "us", "capabilities": ["Linodes", "NodeBalancers",
-      "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
-      "Bare Metal", "Block Storage Migrations", "Managed Databases"], "status": "ok",
-      "resolvers": {"ipv4": "66.228.42.5,96.126.106.5,50.116.53.5,50.116.58.5,50.116.61.5,50.116.62.5,66.175.211.5,97.107.133.4,207.192.69.4,207.192.69.5",
-      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"}},
-      {"id": "eu-west", "country": "uk", "capabilities": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes", "Cloud Firewall", "Vlans", "Block Storage Migrations",
-      "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "178.79.182.5,176.58.107.5,176.58.116.5,176.58.121.5,151.236.220.5,212.71.252.5,212.71.253.5,109.74.192.20,109.74.193.20,109.74.194.20",
-      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"}},
-      {"id": "ap-south", "country": "sg", "capabilities": ["Linodes", "NodeBalancers",
-      "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
-      "Block Storage Migrations", "Managed Databases"], "status": "ok", "resolvers":
-      {"ipv4": "139.162.11.5,139.162.13.5,139.162.14.5,139.162.15.5,139.162.16.5,139.162.21.5,139.162.27.5,103.3.60.18,103.3.60.19,103.3.60.20",
-      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"}},
-      {"id": "eu-central", "country": "de", "capabilities": ["Linodes", "NodeBalancers",
-      "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
-      "Vlans", "Block Storage Migrations", "Managed Databases"], "status": "ok", "resolvers":
-      {"ipv4": "139.162.130.5,139.162.131.5,139.162.132.5,139.162.133.5,139.162.134.5,139.162.135.5,139.162.136.5,139.162.137.5,139.162.138.5,139.162.139.5",
-      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"}},
-      {"id": "ap-northeast", "country": "jp", "capabilities": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes", "Cloud Firewall", "Block Storage Migrations",
-      "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "139.162.66.5,139.162.67.5,139.162.68.5,139.162.69.5,139.162.70.5,139.162.71.5,139.162.72.5,139.162.73.5,139.162.74.5,139.162.75.5",
-      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"}}],
-      "page": 1, "pages": 1, "results": 11}'
+      "Bare Metal", "Vlans", "VPCs", "Block Storage Migrations", "Managed Databases",
+      "Placement Group"], "status": "ok", "resolvers": {"ipv4": "66.228.42.5,96.126.106.5,50.116.53.5,50.116.58.5,50.116.61.5,50.116.62.5,66.175.211.5,97.107.133.4,207.192.69.4,207.192.69.5",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}, {"id": "eu-west", "label": "London, England, UK",
+      "country": "uk", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Cloud
+      Firewall", "Vlans", "VPCs", "Managed Databases", "Metadata", "Placement Group"],
+      "status": "ok", "resolvers": {"ipv4": "178.79.182.5,176.58.107.5,176.58.116.5,176.58.121.5,151.236.220.5,212.71.252.5,212.71.253.5,109.74.192.20,109.74.193.20,109.74.194.20",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}, {"id": "ap-south", "label": "Singapore, SG", "country":
+      "sg", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Object Storage",
+      "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "139.162.11.5,139.162.13.5,139.162.14.5,139.162.15.5,139.162.16.5,139.162.21.5,139.162.27.5,103.3.60.18,103.3.60.19,103.3.60.20",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}, {"id": "eu-central", "label": "Frankfurt, DE", "country":
+      "de", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Object Storage",
+      "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "139.162.130.5,139.162.131.5,139.162.132.5,139.162.133.5,139.162.134.5,139.162.135.5,139.162.136.5,139.162.137.5,139.162.138.5,139.162.139.5",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}, {"id": "ap-northeast", "label": "Tokyo 2, JP", "country":
+      "jp", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Managed Databases"],
+      "status": "ok", "resolvers": {"ipv4": "139.162.66.5,139.162.67.5,139.162.68.5,139.162.69.5,139.162.70.5,139.162.71.5,139.162.72.5,139.162.73.5,139.162.74.5,139.162.75.5",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}], "page": 1, "pages": 1, "results": 11}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -78,6 +87,10 @@ interactions:
       Cache-Control:
       - private, max-age=900
       - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "7192"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -99,14 +112,14 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"node_pools":[{"count":3,"type":"g6-standard-2","disks":null,"tags":null}],"label":"go-lke-test-wait","region":"ap-west","k8s_version":"1.23","tags":["testing"]}'
+    body: '{"node_pools":[{"count":3,"type":"g6-standard-2","disks":null,"tags":null}],"label":"go-lke-test-wait","region":"us-east","k8s_version":"1.28","tags":["testing"]}'
     form: {}
     headers:
       Accept:
@@ -118,9 +131,9 @@ interactions:
     url: https://api.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 76162, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "label": "go-lke-test-wait", "region": "ap-west", "k8s_version":
-      "1.23", "control_plane": {"high_availability": false}, "tags": ["testing"]}'
+    body: '{"id": 7332, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "label": "go-lke-test-wait", "region": "us-east", "k8s_version":
+      "1.28", "control_plane": {"high_availability": false}, "tags": ["testing"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -134,8 +147,10 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
       Content-Length:
-      - "241"
+      - "240"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -156,7 +171,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -172,7 +187,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/76162/kubeconfig
+    url: https://api.linode.com/v4beta/lke/clusters/7332/kubeconfig
     method: GET
   response:
     body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
@@ -184,6 +199,8 @@ interactions:
       - HEAD, GET, OPTIONS, POST, PUT, DELETE
       Access-Control-Allow-Origin:
       - '*'
+      Connection:
+      - keep-alive
       Content-Length:
       - "92"
       Content-Type:
@@ -199,8 +216,8 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
-    status: 503 Service Unavailable
+      - "400"
+    status: 503 SERVICE UNAVAILABLE
     code: 503
     duration: ""
 - request:
@@ -213,7 +230,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/76162/kubeconfig
+    url: https://api.linode.com/v4beta/lke/clusters/7332/kubeconfig
     method: GET
   response:
     body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
@@ -225,6 +242,8 @@ interactions:
       - HEAD, GET, OPTIONS, POST, PUT, DELETE
       Access-Control-Allow-Origin:
       - '*'
+      Connection:
+      - keep-alive
       Content-Length:
       - "92"
       Content-Type:
@@ -240,8 +259,8 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
-    status: 503 Service Unavailable
+      - "400"
+    status: 503 SERVICE UNAVAILABLE
     code: 503
     duration: ""
 - request:
@@ -254,7 +273,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/76162/kubeconfig
+    url: https://api.linode.com/v4beta/lke/clusters/7332/kubeconfig
     method: GET
   response:
     body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
@@ -266,6 +285,8 @@ interactions:
       - HEAD, GET, OPTIONS, POST, PUT, DELETE
       Access-Control-Allow-Origin:
       - '*'
+      Connection:
+      - keep-alive
       Content-Length:
       - "92"
       Content-Type:
@@ -281,8 +302,8 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
-    status: 503 Service Unavailable
+      - "400"
+    status: 503 SERVICE UNAVAILABLE
     code: 503
     duration: ""
 - request:
@@ -295,7 +316,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/76162/kubeconfig
+    url: https://api.linode.com/v4beta/lke/clusters/7332/kubeconfig
     method: GET
   response:
     body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
@@ -307,6 +328,8 @@ interactions:
       - HEAD, GET, OPTIONS, POST, PUT, DELETE
       Access-Control-Allow-Origin:
       - '*'
+      Connection:
+      - keep-alive
       Content-Length:
       - "92"
       Content-Type:
@@ -322,8 +345,8 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
-    status: 503 Service Unavailable
+      - "400"
+    status: 503 SERVICE UNAVAILABLE
     code: 503
     duration: ""
 - request:
@@ -336,7 +359,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/76162/kubeconfig
+    url: https://api.linode.com/v4beta/lke/clusters/7332/kubeconfig
     method: GET
   response:
     body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
@@ -348,6 +371,8 @@ interactions:
       - HEAD, GET, OPTIONS, POST, PUT, DELETE
       Access-Control-Allow-Origin:
       - '*'
+      Connection:
+      - keep-alive
       Content-Length:
       - "92"
       Content-Type:
@@ -363,8 +388,8 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
-    status: 503 Service Unavailable
+      - "400"
+    status: 503 SERVICE UNAVAILABLE
     code: 503
     duration: ""
 - request:
@@ -377,7 +402,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/76162/kubeconfig
+    url: https://api.linode.com/v4beta/lke/clusters/7332/kubeconfig
     method: GET
   response:
     body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
@@ -389,6 +414,8 @@ interactions:
       - HEAD, GET, OPTIONS, POST, PUT, DELETE
       Access-Control-Allow-Origin:
       - '*'
+      Connection:
+      - keep-alive
       Content-Length:
       - "92"
       Content-Type:
@@ -404,8 +431,8 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
-    status: 503 Service Unavailable
+      - "400"
+    status: 503 SERVICE UNAVAILABLE
     code: 503
     duration: ""
 - request:
@@ -418,133 +445,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/76162/kubeconfig
+    url: https://api.linode.com/v4beta/lke/clusters/7332/kubeconfig
     method: GET
   response:
-    body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
-      try again later."}]}'
-    headers:
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Content-Length:
-      - "92"
-      Content-Type:
-      - application/json
-      Server:
-      - nginx
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - lke:read_write
-      X-Frame-Options:
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "800"
-    status: 503 Service Unavailable
-    code: 503
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/76162/kubeconfig
-    method: GET
-  response:
-    body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
-      try again later."}]}'
-    headers:
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Content-Length:
-      - "92"
-      Content-Type:
-      - application/json
-      Server:
-      - nginx
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - lke:read_write
-      X-Frame-Options:
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "800"
-    status: 503 Service Unavailable
-    code: 503
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/76162/kubeconfig
-    method: GET
-  response:
-    body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
-      try again later."}]}'
-    headers:
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Content-Length:
-      - "92"
-      Content-Type:
-      - application/json
-      Server:
-      - nginx
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - lke:read_write
-      X-Frame-Options:
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "800"
-    status: 503 Service Unavailable
-    code: 503
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/76162/kubeconfig
-    method: GET
-  response:
-    body: '{"kubeconfig": "CmFwaVZlcnNpb246IHYxCmtpbmQ6IENvbmZpZwpwcmVmZXJlbmNlczoge30KCmNsdXN0ZXJzOgotIGNsdXN0ZXI6CiAgICBjZXJ0aWZpY2F0ZS1hdXRob3JpdHktZGF0YTogTFMwdExTMUNSVWRKVGlCRFJWSlVTVVpKUTBGVVJTMHRMUzB0Q2sxSlNVTXZha05EUVdWaFowRjNTVUpCWjBsQ1FVUkJUa0puYTNGb2EybEhPWGN3UWtGUmMwWkJSRUZXVFZKTmQwVlJXVVJXVVZGRVJYZHdjbVJYU213S1kyMDFiR1JIVm5wTlFqUllSRlJKZVUxVVFYaE5la1V5VFVSbmVrMUdiMWhFVkUxNVRWUkJlRTFFUlRKTlJHZDZUVVp2ZDBaVVJWUk5Ra1ZIUVRGVlJRcEJlRTFMWVROV2FWcFlTblZhV0ZKc1kzcERRMEZUU1hkRVVWbEtTMjlhU1doMlkwNUJVVVZDUWxGQlJHZG5SVkJCUkVORFFWRnZRMmRuUlVKQlRuVm1Da1JXZVRaQmNsUTFXbnA0VDB4UFRtbENVVEZRUVRZMlRqaEVVbGRyU2t0cVUwZEVhRUZ1VkVoc2VXWm5RMmd6TW1SbGRrOWhjMjVUVldKc1QxZzNlVThLVTFWTFYzQjBVRVl4VUZsNmEwUnZWakZwT1U1YU5FMTFNRW8yV1RsbFYyRTBkMjF4VDJSdlF6aFVaMlV5YlVKVVVHSmhZM0ZyUWxoV2RuQk5SaTlMWXdvM1dXMUpOMUZwWjNaaWFtSmFkWFI1UVdjNU5WZzVZazlaT0VWVGVXOXlUMGxzVUdkemVsTkJUbHBrYzNKU1dITjNiVGQ1UjFKR1pHcGllVmRyZG1wQkNqRkhURzF6VldkeWVERjJTM1ZsWkRaSlNrUlVia1ZUUVhkWE5IbFJXa1JCZGxwb1oxYzBZU3RaTkRoUldtMURjblZYT1doQ1RIcEdhV0pIYVZWWWExY0tTWFo0YmpKSGVIZzNSRWx2Y0dkck5HOWpTMFJMYUVad2FEbFRSRlZ5YzBoNFJVWTRSR1pwWVdwYVZEbE1ORUo1WjJ4VlpGWjRjVklyVjJWdFVFSk1kUXBPVFVWSllVRkRWazlRTUVwaGRVTXhaQzlqUTBGM1JVRkJZVTVhVFVaamQwUm5XVVJXVWpCUVFWRklMMEpCVVVSQlowdHJUVUU0UjBFeFZXUkZkMFZDQ2k5M1VVWk5RVTFDUVdZNGQwaFJXVVJXVWpCUFFrSlpSVVpOVVVFeVdsRXJSRVJwYTNkWWIwZDNiVkpqTkN0b1R6UllSM0pOUWxWSFFURlZaRVZSVVU4S1RVRjVRME50ZERGWmJWWjVZbTFXTUZwWVRYZEVVVmxLUzI5YVNXaDJZMDVCVVVWTVFsRkJSR2RuUlVKQlRHZHpaekpzU25ac2VqTnlZalUyT0ZsRUt3cFBkVlpKU0ZkV1IxTmhjemhRY1RWbWVVOHpSMGRIWWtreVpFTk1NQ3RQUVV4eGFWbExRWHBhYlZWeFRVVk9Talp2VVdselVYVkhWWG9yTjFKYVlsQnpDbE5IUW14T01ERnJVMGRzUXk5TmNVbENXR2hyY25WdWJsVkpXVGxWVmtKTVREaEtVRWhEUlhkd2J6RkVURGhqVjFSSU4xVlRVQzlqWjI5bGRIaFZjVm9LYjNGSVRUTlljRmhxY3prNWVVZFhTRzlEYjI1cVVrTmhiMFkzV1M4MlFVRnhkbWRXUkZwM2JUWlRSM1EyYm1odmNFcEVPVkJEVUZkMVppOTRkbU12UWdwRmJXTlVXVkpyU3pSTFJuVmFiVlZZZUZGbGVIUXljMGg2VmtWTGNIRnlWM05hVTNaeVkwZDRkbU4zVTA0MWF6WnNjRUZ3VjNSUFJ6a3dZMWxIY2s1eENtUm5URzExV1ZFMWNtOXVjbTl6VlVGaGRDOVpOR2QwVW5KQ01sUkhUMW81Y0VoNU9XNURNamxIVjJKclkwNWtLMmwwVkRKM2NWaGtaMEpTZWtOWmNuQUtjRW93UFFvdExTMHRMVVZPUkNCRFJWSlVTVVpKUTBGVVJTMHRMUzB0Q2c9PQogICAgc2VydmVyOiBodHRwczovLzE0NmQwZTI3LWNjM2YtNGMwOS1hNTBjLWExYjEzOGZhMDQzYi5hcC13ZXN0LTIubGlub2RlbGtlLm5ldDo0NDMKICBuYW1lOiBsa2U3NjE2MgoKdXNlcnM6Ci0gbmFtZTogbGtlNzYxNjItYWRtaW4KICB1c2VyOgogICAgYXMtdXNlci1leHRyYToge30KICAgIHRva2VuOiBleUpoYkdjaU9pSlNVekkxTmlJc0ltdHBaQ0k2SWpBM1ZWWXdYMVpUUVRFeVZtdE5OQzFZVW1aa0xWUnRMVlI1WlRWNlZqTXdTV1pqTTBJMGFVMTROVVVpZlEuZXlKcGMzTWlPaUpyZFdKbGNtNWxkR1Z6TDNObGNuWnBZMlZoWTJOdmRXNTBJaXdpYTNWaVpYSnVaWFJsY3k1cGJ5OXpaWEoyYVdObFlXTmpiM1Z1ZEM5dVlXMWxjM0JoWTJVaU9pSnJkV0psTFhONWMzUmxiU0lzSW10MVltVnlibVYwWlhNdWFXOHZjMlZ5ZG1salpXRmpZMjkxYm5RdmMyVmpjbVYwTG01aGJXVWlPaUpzYTJVdFlXUnRhVzR0ZEc5clpXNHRPVGxvYlRraUxDSnJkV0psY201bGRHVnpMbWx2TDNObGNuWnBZMlZoWTJOdmRXNTBMM05sY25acFkyVXRZV05qYjNWdWRDNXVZVzFsSWpvaWJHdGxMV0ZrYldsdUlpd2lhM1ZpWlhKdVpYUmxjeTVwYnk5elpYSjJhV05sWVdOamIzVnVkQzl6WlhKMmFXTmxMV0ZqWTI5MWJuUXVkV2xrSWpvaU5EVmhNak5oTkRndFpHVTFPQzAwWVdFMkxUbGpZVE10TXpabU9URXlOakV5WldFeElpd2ljM1ZpSWpvaWMzbHpkR1Z0T25ObGNuWnBZMlZoWTJOdmRXNTBPbXQxWW1VdGMzbHpkR1Z0T214clpTMWhaRzFwYmlKOS5DcDcxZlRCTlRVTUJOY2RINFk0RmtaZ2RRUV83dWktNlp2T2hYSU5KeWota3Jmb3VMZVNUdnl6d1ZTdDNTQlB3NmJYMmVrRVlWamRwb251TUREMnFyNmM4eTR6VWpkclpzdzR2TGd0WWJob1djN1V2YURlLWpMUjRhZ1p3RWlFem90ZDRNVVZEb1hfWEpVb2pTUV8yRWM4MTdlbktJSHVQMjFGdzloblpsNWUtY01HSUlBVTVqMzAxZ1B6cjFFVXJaSXVCTjJZRU1oNFVRcmlObVVtYTRRaFFzTDVlT1RlZG82SVBNa3o1MGdxc201STVZdFhReU1JTFQ4bjlpR3FWeFlZM0hqbENVRWVjSFdTNHVaVUhZc1B2OE1fVXdOSlBWdC1qcGVLYXdTNmMtMFBaX2w0Wm5ITHJibXBaTzktejQ5QzJmSW1vX0JFTmpEQ2N2T2FkT0EKCmNvbnRleHRzOgotIGNvbnRleHQ6CiAgICBjbHVzdGVyOiBsa2U3NjE2MgogICAgbmFtZXNwYWNlOiBkZWZhdWx0CiAgICB1c2VyOiBsa2U3NjE2Mi1hZG1pbgogIG5hbWU6IGxrZTc2MTYyLWN0eAoKY3VycmVudC1jb250ZXh0OiBsa2U3NjE2Mi1jdHgK"}'
+    body: '{"kubeconfig": "CmFwaVZlcnNpb246IHYxCmtpbmQ6IENvbmZpZwpwcmVmZXJlbmNlczoge30KCmNsdXN0ZXJzOgotIGNsdXN0ZXI6CiAgICBjZXJ0aWZpY2F0ZS1hdXRob3JpdHktZGF0YTogTFMwdExTMUNSVWRKVGlCRFJWSlVTVVpKUTBGVVJTMHRMUzB0Q2sxSlNVUkNWRU5EUVdVeVowRjNTVUpCWjBsSlV6TnJkRW9yY25kSGVVVjNSRkZaU2t0dldrbG9kbU5PUVZGRlRFSlJRWGRHVkVWVVRVSkZSMEV4VlVVS1FYaE5TMkV6Vm1sYVdFcDFXbGhTYkdONlFXVkdkekI1VGtSQk1VMVVVWGhQVkVsNVRWUkdZVVozTUhwT1JFRXhUVlJKZUU5VVNUTk5WRVpoVFVKVmVBcEZla0ZTUW1kT1ZrSkJUVlJEYlhReFdXMVdlV0p0VmpCYVdFMTNaMmRGYVUxQk1FZERVM0ZIVTBsaU0wUlJSVUpCVVZWQlFUUkpRa1IzUVhkblowVkxDa0Z2U1VKQlVVUnJLMHMxY0dzNVExWnBRbGRRYTA5M2RucENkbTVDTUhaV1JUUmlWM28wZG5OVmVIQTRUVVExU0ZWUWJucFlkVEV6ZHpFMFVtRnFVM2NLZDNkU05rMU5iR1I0UVhOWk1pOVBVbmc1VTFOR01WRXdTSGhuU2pCR2VIbGxTV3BwZVZnclRWSmxiMmxCV0M4MlpFTnZZVEJwZFZkNFNGaHlTRGRVWmdwRFkzY3lOekpOVTFCMmNDdHdWVmtyYWxCd2MxTlBMMlJNTUVsbk5URnhjVmxEYVhSMk4xbG9WRWQwVVVSWGExWkxRMEpZVFRKMWNGSmpTbU5qVldSWUNqVkxhV0ZZYTFaWlJVaFhhbmxRYjBkeWNHUlNVemhxVEZabEwzRXhha1JaSzJKRFVIRm9kVU0zZVV0aVEyUjNjelJPUVd0U05WQlhjMUJGWm5WSFVVd0tPVFZFY0hsUWVuSklUVkJoY2tsdlV5dGhUVU5FYzFKUFYwMUlNVTlyVjJwS1JEQkdWMVkwT0RZeVdEZGpNRzVCYVV0TU1FRkZORGxpYmxaSGNHUlVOQXBDUlZoU09ETTVUM0ZsYldwTFozVmFjME5oVXpKcGVHTnlPRzFvUVdkTlFrRkJSMnBYVkVKWVRVRTBSMEV4VldSRWQwVkNMM2RSUlVGM1NVTndSRUZRQ2tKblRsWklVazFDUVdZNFJVSlVRVVJCVVVndlRVSXdSMEV4VldSRVoxRlhRa0pUWTNkUGFEWTJlVFpXTlVZek5FeFVSbGwzV0dsRVprWmhMM0JxUVZZS1FtZE9Wa2hTUlVWRWFrRk5aMmR3Y21SWFNteGpiVFZzWkVkV2VrMUJNRWREVTNGSFUwbGlNMFJSUlVKRGQxVkJRVFJKUWtGUlFrNXNSSGh1TmtwM1pnb3lVV2QzWldwdlRqQklaRkphY0hFMmFUSnpNV1ZpTjNaVFVXUndTMW8zT0dSNU9XMHhZekZSV2toMlFUaHZUbTkyWVZKWk1rdG9ObEZwTmpoNGFEVmhDbEZWUVRoeVVHaGhUV1JvTWtGME56ZFpVQzlJVGsxeFFraEhZVzUxWTBSblJtbHBhVk13WTJsTVVHRlNPVkE1ZWsxTFdqZEpWRkYzVG5sMmQzUnJhR0lLTDNsMU1tMHZjbkpxZWtkUWFEaGlOV1pIYzJrd1FWaEhLM2R1UVRWMWJFOUhXVWxKUzFreVQyMVNUVTB3U0N0WVkwSTNWRXRYWmxGeFNtWldVVWRIYXdvMFFVRm1jV3hXU0RkMlJVTldSa1ppVmxWM04xcFBUMkZVU0RSQlRITnhWekp0VVdRMFdqSkxTRFY1ZWl0Vk1GcGhWRGs1VjJoUE5XMU1MMUJ1WVdsWUNtVm1VbmhGTkRSWVlXWlFSbTR6VjJkdU5qTTNaMGxwZGtkSlZpdHFOM0pPU1hkQ016bFhVVkJDTlVkMk1VUm1NMUJDTldSclRURkVWWGwyWkVFelF6WUtUalYwZEdobWJVeDVVVXAxQ2kwdExTMHRSVTVFSUVORlVsUkpSa2xEUVZSRkxTMHRMUzBLCiAgICBzZXJ2ZXI6IGh0dHBzOi8vZTNjNjcyZmEtZWRhNC00N2RjLTkwNzMtMjgyYTVjY2ZkYmMwLmNwYzEtY2pqMS10ZXN0aW5nLmxpbm9kZWxrZS5uZXQ6NDQzCiAgbmFtZTogbGtlNzMzMgoKdXNlcnM6Ci0gbmFtZTogbGtlNzMzMi1hZG1pbgogIHVzZXI6CiAgICBhcy11c2VyLWV4dHJhOiB7fQogICAgdG9rZW46IGV5SmhiR2NpT2lKU1V6STFOaUlzSW10cFpDSTZJa3MxVW5oM1RsZHNjVU5OUlhkTWMxaEVMVWhuTFVFMWIyUTVXR3BrZFZsV01td3lXbFJmUm10Zk5XTWlmUS5leUpwYzNNaU9pSnJkV0psY201bGRHVnpMM05sY25acFkyVmhZMk52ZFc1MElpd2lhM1ZpWlhKdVpYUmxjeTVwYnk5elpYSjJhV05sWVdOamIzVnVkQzl1WVcxbGMzQmhZMlVpT2lKcmRXSmxMWE41YzNSbGJTSXNJbXQxWW1WeWJtVjBaWE11YVc4dmMyVnlkbWxqWldGalkyOTFiblF2YzJWamNtVjBMbTVoYldVaU9pSnNhMlV0WVdSdGFXNHRkRzlyWlc0dGJXWjBjV01pTENKcmRXSmxjbTVsZEdWekxtbHZMM05sY25acFkyVmhZMk52ZFc1MEwzTmxjblpwWTJVdFlXTmpiM1Z1ZEM1dVlXMWxJam9pYkd0bExXRmtiV2x1SWl3aWEzVmlaWEp1WlhSbGN5NXBieTl6WlhKMmFXTmxZV05qYjNWdWRDOXpaWEoyYVdObExXRmpZMjkxYm5RdWRXbGtJam9pTTJRek1EaGxNMll0TVdJMU5DMDBaV1poTFdFMVlUVXROVEUwTVRRME5USmxPV1l3SWl3aWMzVmlJam9pYzNsemRHVnRPbk5sY25acFkyVmhZMk52ZFc1ME9tdDFZbVV0YzNsemRHVnRPbXhyWlMxaFpHMXBiaUo5LmxIbXEtWVo5U2ZHU0tqaFVsZWF4YVpwRTlVQ3JScnE0d0JOVWZlZlZYOFBhRnRRd0V1THVHX3NXRlZFUnVQc3k3QVdxX1h4aFJjSTVmdlNPN2IyRGVyWERncWF5SHU0bk1LcXdINk52cFpZblVTN0hkeWJMZ3dRSmlyclVFdzQ2YW5WSDNWTk9KOGIyQ3N1TE50MUFNZTdYNmQzSXU3MTVCOWU4ZjJkTVQ2dmd6R0h5YjBxN0Z6ZloxY3pKYjl5dHotWndVMUhpRzdSN1c5ZjY4OTBSZG1idnlKcXE5X3lxRElXbkUtSWJESG5uVGtqSXM5NWM0OTBWYnBwQlQ0QmtfSGNHNW50dmRCY0FYT3NlYXZKMGdqYlVmNG1OZk9BN3VSVkp4Um1wQ2dSc3NwaGxtX3lQSkVTSEhPWVJTLWdWRkVFc3FyYzhkel8wekNWanh2ZE5mZwoKY29udGV4dHM6Ci0gY29udGV4dDoKICAgIGNsdXN0ZXI6IGxrZTczMzIKICAgIG5hbWVzcGFjZTogZGVmYXVsdAogICAgdXNlcjogbGtlNzMzMi1hZG1pbgogIG5hbWU6IGxrZTczMzItY3R4CgpjdXJyZW50LWNvbnRleHQ6IGxrZTczMzItY3R4Cg=="}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -559,6 +463,10 @@ interactions:
       Cache-Control:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "3774"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -580,7 +488,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -596,7 +504,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/76162
+    url: https://api.linode.com/v4beta/lke/clusters/7332
     method: DELETE
   response:
     body: '{}'
@@ -613,6 +521,8 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
       Content-Length:
       - "2"
       Content-Security-Policy:
@@ -635,7 +545,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

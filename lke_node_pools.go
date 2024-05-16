@@ -47,7 +47,8 @@ type LKENodePool struct {
 	Linodes []LKENodePoolLinode `json:"nodes"`
 	Tags    []string            `json:"tags"`
 
-	Autoscaler LKENodePoolAutoscaler `json:"autoscaler"`
+	Autoscaler     LKENodePoolAutoscaler  `json:"autoscaler"`
+	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitempty"`
 }
 
 // LKENodePoolCreateOptions fields are those accepted by CreateLKENodePool
