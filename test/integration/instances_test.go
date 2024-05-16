@@ -386,7 +386,7 @@ func TestInstance_Rebuild(t *testing.T) {
 	}
 
 	rebuildOpts := linodego.InstanceRebuildOptions{
-		Image: "linode/alpine3.15",
+		Image: "linode/alpine3.19",
 		Metadata: &linodego.InstanceMetadataOptions{
 			UserData: base64.StdEncoding.EncodeToString([]byte("cool")),
 		},
