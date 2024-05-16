@@ -33,7 +33,7 @@ func ClusterHasReadyNode(ctx context.Context, options linodego.ClusterConditionO
 	return false, nil
 }
 
-// ClusterHasReadyNode is a ClusterConditionFunc which polls for at least one node to have the
+// ClusterNodesReady is a ClusterConditionFunc which polls for all nodes to have the
 // condition NodeReady=True.
 func ClusterNodesReady(ctx context.Context, options linodego.ClusterConditionOptions) (bool, error) {
 	clientset, err := k8s.BuildClientsetFromConfig(options.LKEClusterKubeconfig, options.TransportWrapper)
