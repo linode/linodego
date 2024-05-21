@@ -122,8 +122,6 @@ func (c *Client) R(ctx context.Context) *resty.Request {
 func (c *Client) SetDebug(debug bool) *Client {
 	c.debug = debug
 	c.resty.SetDebug(debug)
-	// this ensures that if there is an Authorization header present, the value is sanitized/masked
-	c.sanitizeAuthorizationHeader()
 
 	return c
 }
@@ -414,12 +412,14 @@ func (c *Client) SetHeader(name, value string) {
 	c.resty.SetHeader(name, value)
 }
 
-func (c *Client) sanitizeAuthorizationHeader() {
+func (c *Client) enableLogSanitization() *Client {
 	c.resty.OnRequestLog(func(r *resty.RequestLog) error {
 		// masking authorization header
 		r.Header.Set("Authorization", "Bearer *******************************")
 		return nil
 	})
+
+	return c
 }
 
 // NewClient factory to create new Client struct
@@ -468,7 +468,8 @@ func NewClient(hc *http.Client) (client Client) {
 		SetRetryWaitTime(APISecondsPerPoll * time.Second).
 		SetPollDelay(APISecondsPerPoll * time.Second).
 		SetRetries().
-		SetDebug(envDebug)
+		SetDebug(envDebug).
+		enableLogSanitization()
 
 	return
 }
