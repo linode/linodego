@@ -11,7 +11,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/regions
+    url: https://api.linode.com/v4/regions
     method: GET
   response:
     body: '{"data": [{"id": "ap-west", "label": "Mumbai, India", "country": "in",
@@ -119,7 +119,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"]}],"label":"go-lke-test-dash","region":"us-east","k8s_version":"1.28","tags":["testing"]}'
+    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"]}],"label":"go-lke-test-dash","region":"us-east","k8s_version":"1.29","tags":["testing"]}'
     form: {}
     headers:
       Accept:
@@ -128,12 +128,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters
+    url: https://api.linode.com/v4/lke/clusters
     method: POST
   response:
-    body: '{"id": 7325, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+    body: '{"id": 7458, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "label": "go-lke-test-dash", "region": "us-east", "k8s_version":
-      "1.28", "control_plane": {"high_availability": false}, "tags": ["testing"]}'
+      "1.29", "control_plane": {"high_availability": false}, "tags": ["testing"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -187,12 +187,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7325
+    url: https://api.linode.com/v4/lke/clusters/7458
     method: GET
   response:
-    body: '{"id": 7325, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+    body: '{"id": 7458, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "label": "go-lke-test-dash", "region": "us-east", "k8s_version":
-      "1.28", "control_plane": {"high_availability": false}, "tags": ["testing"]}'
+      "1.29", "control_plane": {"high_availability": false}, "tags": ["testing"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -248,10 +248,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7325/dashboard
+    url: https://api.linode.com/v4/lke/clusters/7458/dashboard
     method: GET
   response:
-    body: '{"url": "https://9808ce20-641e-45e2-8905-5bc8a3ee788a.dashboard.cpc1-cjj1-testing.linodelke.net"}'
+    body: '{"url": "https://5d026680-6439-49a1-9ca9-0408aba5f076.dashboard.cpc1-cjj1-testing.linodelke.net"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -307,7 +307,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7325
+    url: https://api.linode.com/v4/lke/clusters/7458
     method: DELETE
   response:
     body: '{}'

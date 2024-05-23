@@ -8,15 +8,15 @@ interactions:
       Accept:
       - application/json, */*
       User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
+      - integration.test/v0.0.0 (darwin/arm64) kubernetes/$Format
+    url: https://87c1b836-8fee-443c-bbbc-74ac84817189.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
     method: GET
   response:
     body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"459"},"items":[]}
+      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"460"},"items":[]}
     headers:
       Audit-Id:
-      - f62ac6df-94f2-428e-8229-d8be979f88b2
+      - 8a590d40-7b51-4373-bd06-12a752a7eafb
       Cache-Control:
       - no-cache, private
       Content-Length:
@@ -24,9 +24,9 @@ interactions:
       Content-Type:
       - application/json
       X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
+      - b58fbd26-116c-4d6a-983f-ed29537ff051
       X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
+      - f9f3481f-7557-47b1-bfce-e3741d1b4160
     status: 200 OK
     code: 200
     duration: ""
@@ -37,15 +37,15 @@ interactions:
       Accept:
       - application/json, */*
       User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
+      - integration.test/v0.0.0 (darwin/arm64) kubernetes/$Format
+    url: https://87c1b836-8fee-443c-bbbc-74ac84817189.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
     method: GET
   response:
     body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"464"},"items":[]}
+      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"470"},"items":[]}
     headers:
       Audit-Id:
-      - 44b9410f-d017-4e95-b667-1b92f15a837c
+      - c2463000-f9d6-403f-97d2-0ee558358343
       Cache-Control:
       - no-cache, private
       Content-Length:
@@ -53,9 +53,9 @@ interactions:
       Content-Type:
       - application/json
       X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
+      - b58fbd26-116c-4d6a-983f-ed29537ff051
       X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
+      - f9f3481f-7557-47b1-bfce-e3741d1b4160
     status: 200 OK
     code: 200
     duration: ""
@@ -66,15 +66,15 @@ interactions:
       Accept:
       - application/json, */*
       User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
+      - integration.test/v0.0.0 (darwin/arm64) kubernetes/$Format
+    url: https://87c1b836-8fee-443c-bbbc-74ac84817189.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
     method: GET
   response:
     body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"468"},"items":[]}
+      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"474"},"items":[]}
     headers:
       Audit-Id:
-      - dce0dbc3-43b5-4536-a343-a1b2a5ee54db
+      - df8030c6-9e17-406f-a4c1-527a2eda3d94
       Cache-Control:
       - no-cache, private
       Content-Length:
@@ -82,9 +82,9 @@ interactions:
       Content-Type:
       - application/json
       X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
+      - b58fbd26-116c-4d6a-983f-ed29537ff051
       X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
+      - f9f3481f-7557-47b1-bfce-e3741d1b4160
     status: 200 OK
     code: 200
     duration: ""
@@ -95,25 +95,23 @@ interactions:
       Accept:
       - application/json, */*
       User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
+      - integration.test/v0.0.0 (darwin/arm64) kubernetes/$Format
+    url: https://87c1b836-8fee-443c-bbbc-74ac84817189.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
     method: GET
   response:
     body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"473"},"items":[]}
+      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"569"},"items":[{"metadata":{"name":"lke7452-7765-1c8078110000","uid":"d013f3b4-3a04-4340-beb9-7aaac7afb4ff","resourceVersion":"553","creationTimestamp":"2018-01-02T03:04:05Z","labels":{"beta.kubernetes.io/arch":"amd64","beta.kubernetes.io/instance-type":"g6-standard-1","beta.kubernetes.io/os":"linux","failure-domain.beta.kubernetes.io/region":"us-east","kubernetes.io/arch":"amd64","kubernetes.io/hostname":"lke7452-7765-1c8078110000","kubernetes.io/os":"linux","node.k8s.linode.com/host-uuid":"6692378d1e034fbc92f8ef40e96caa3252726292","node.kubernetes.io/instance-type":"g6-standard-1","topology.kubernetes.io/region":"us-east"},"annotations":{"kubeadm.alpha.kubernetes.io/cri-socket":"unix:///run/containerd/containerd.sock","node.alpha.kubernetes.io/ttl":"0","volumes.kubernetes.io/controller-managed-attach-detach":"true"},"managedFields":[{"manager":"kube-controller-manager","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:node.alpha.kubernetes.io/ttl":{}}},"f:spec":{"f:podCIDR":{},"f:podCIDRs":{".":{},"v:\"10.2.0.128/25\"":{}}}}},{"manager":"kubeadm","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:kubeadm.alpha.kubernetes.io/cri-socket":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:volumes.kubernetes.io/controller-managed-attach-detach":{}},"f:labels":{".":{},"f:beta.kubernetes.io/arch":{},"f:beta.kubernetes.io/os":{},"f:kubernetes.io/arch":{},"f:kubernetes.io/hostname":{},"f:kubernetes.io/os":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:allocatable":{"f:ephemeral-storage":{}},"f:capacity":{"f:ephemeral-storage":{}},"f:conditions":{"k:{\"type\":\"Ready\"}":{"f:message":{}}}}},"subresource":"status"},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:beta.kubernetes.io/instance-type":{},"f:failure-domain.beta.kubernetes.io/region":{},"f:node.k8s.linode.com/host-uuid":{},"f:node.kubernetes.io/instance-type":{},"f:topology.kubernetes.io/region":{}}},"f:spec":{"f:providerID":{},"f:taints":{}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:addresses":{".":{},"k:{\"type\":\"ExternalIP\"}":{".":{},"f:address":{},"f:type":{}},"k:{\"type\":\"Hostname\"}":{".":{},"f:address":{},"f:type":{}},"k:{\"type\":\"InternalIP\"}":{".":{},"f:address":{},"f:type":{}}}}},"subresource":"status"}]},"spec":{"podCIDR":"10.2.0.128/25","podCIDRs":["10.2.0.128/25"],"providerID":"linode://25175283","taints":[{"key":"lke.linode.com/labels-taints","value":"waiting","effect":"NoSchedule"},{"key":"node.kubernetes.io/not-ready","effect":"NoSchedule"}]},"status":{"capacity":{"cpu":"1","ephemeral-storage":"51524172Ki","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"2031404Ki","pods":"110"},"allocatable":{"cpu":"1","ephemeral-storage":"47484676837","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"1929004Ki","pods":"110"},"conditions":[{"type":"MemoryPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientMemory","message":"kubelet has sufficient memory available"},{"type":"DiskPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasNoDiskPressure","message":"kubelet has no disk pressure"},{"type":"PIDPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientPID","message":"kubelet has sufficient PID available"},{"type":"Ready","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletNotReady","message":"[container runtime status check may not have completed yet, container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady message:Network plugin returns error: cni plugin not initialized, CSINode is not yet initialized]"}],"addresses":[{"type":"Hostname","address":"lke7452-7765-1c8078110000"},{"type":"ExternalIP","address":"97.107.143.243"},{"type":"InternalIP","address":"192.168.161.46"}],"daemonEndpoints":{"kubeletEndpoint":{"Port":10250}},"nodeInfo":{"machineID":"673fa8d4a8ed4380904b82d5ca502361","systemUUID":"673fa8d4a8ed4380904b82d5ca502361","bootID":"4d1bc812-552d-42bd-a2d7-809b35a40ab4","kernelVersion":"6.1.0-20-cloud-amd64","osImage":"Debian GNU/Linux 12 (bookworm)","containerRuntimeVersion":"containerd://1.6.31","kubeletVersion":"v1.29.2","kubeProxyVersion":"v1.29.2","operatingSystem":"linux","architecture":"amd64"}}},{"metadata":{"name":"lke7452-7765-32284d6a0000","uid":"172d09ff-b953-4b94-8735-fadf57bf3ac5","resourceVersion":"569","creationTimestamp":"2018-01-02T03:04:05Z","labels":{"beta.kubernetes.io/arch":"amd64","beta.kubernetes.io/instance-type":"g6-standard-1","beta.kubernetes.io/os":"linux","failure-domain.beta.kubernetes.io/region":"us-east","kubernetes.io/arch":"amd64","kubernetes.io/hostname":"lke7452-7765-32284d6a0000","kubernetes.io/os":"linux","lke.linode.com/pool-id":"7765","node.k8s.linode.com/host-uuid":"53257e56e7692e143036a5fbf7daaf92b5350bf3","node.kubernetes.io/instance-type":"g6-standard-1","topology.kubernetes.io/region":"us-east"},"annotations":{"kubeadm.alpha.kubernetes.io/cri-socket":"unix:///run/containerd/containerd.sock","lke.linode.com/wgip":"172.31.0.1","lke.linode.com/wgpub":"bO49S5DxAhZsV9ggnqyzdlJnp49gdQO/4Lni9zMu/3c=","node.alpha.kubernetes.io/ttl":"0","volumes.kubernetes.io/controller-managed-attach-detach":"true"},"managedFields":[{"manager":"kube-controller-manager","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:node.alpha.kubernetes.io/ttl":{}}},"f:spec":{"f:podCIDR":{},"f:podCIDRs":{".":{},"v:\"10.2.0.0/25\"":{}}}}},{"manager":"kubeadm","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:kubeadm.alpha.kubernetes.io/cri-socket":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:volumes.kubernetes.io/controller-managed-attach-detach":{}},"f:labels":{".":{},"f:beta.kubernetes.io/arch":{},"f:beta.kubernetes.io/os":{},"f:kubernetes.io/arch":{},"f:kubernetes.io/hostname":{},"f:kubernetes.io/os":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:allocatable":{"f:ephemeral-storage":{}}}},"subresource":"status"},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:beta.kubernetes.io/instance-type":{},"f:failure-domain.beta.kubernetes.io/region":{},"f:node.k8s.linode.com/host-uuid":{},"f:node.kubernetes.io/instance-type":{},"f:topology.kubernetes.io/region":{}}},"f:spec":{"f:providerID":{}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:addresses":{".":{},"k:{\"type\":\"ExternalIP\"}":{".":{},"f:address":{},"f:type":{}},"k:{\"type\":\"Hostname\"}":{".":{},"f:address":{},"f:type":{}},"k:{\"type\":\"InternalIP\"}":{".":{},"f:address":{},"f:type":{}}}}},"subresource":"status"},{"manager":"manager","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:taints":{}}}},{"manager":"kubectl-annotate","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:lke.linode.com/wgip":{},"f:lke.linode.com/wgpub":{}}}}},{"manager":"kubectl-label","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:lke.linode.com/pool-id":{}}}}}]},"spec":{"podCIDR":"10.2.0.0/25","podCIDRs":["10.2.0.0/25"],"providerID":"linode://25175282","taints":[{"key":"node.kubernetes.io/not-ready","effect":"NoSchedule"}]},"status":{"capacity":{"cpu":"1","ephemeral-storage":"51524172Ki","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"2031404Ki","pods":"110"},"allocatable":{"cpu":"1","ephemeral-storage":"47484676837","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"1929004Ki","pods":"110"},"conditions":[{"type":"MemoryPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientMemory","message":"kubelet has sufficient memory available"},{"type":"DiskPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasNoDiskPressure","message":"kubelet has no disk pressure"},{"type":"PIDPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientPID","message":"kubelet has sufficient PID available"},{"type":"Ready","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletNotReady","message":"[container runtime status check may not have completed yet, container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady message:Network plugin returns error: cni plugin not initialized, CSINode is not yet initialized]"}],"addresses":[{"type":"Hostname","address":"lke7452-7765-32284d6a0000"},{"type":"ExternalIP","address":"172.104.221.148"},{"type":"InternalIP","address":"192.168.191.83"}],"daemonEndpoints":{"kubeletEndpoint":{"Port":10250}},"nodeInfo":{"machineID":"4f62be35842046509b33d9ee54ca1450","systemUUID":"4f62be35842046509b33d9ee54ca1450","bootID":"a97f4eb6-4dac-4377-b4b4-d54696957779","kernelVersion":"6.1.0-20-cloud-amd64","osImage":"Debian GNU/Linux 12 (bookworm)","containerRuntimeVersion":"containerd://1.6.31","kubeletVersion":"v1.29.2","kubeProxyVersion":"v1.29.2","operatingSystem":"linux","architecture":"amd64"}}}]}
     headers:
       Audit-Id:
-      - 8820efd0-5e7c-4288-b195-ba9848770904
+      - 22a8aaea-93f8-457f-9ac8-36fdaeea3edd
       Cache-Control:
       - no-cache, private
-      Content-Length:
-      - "86"
       Content-Type:
       - application/json
       X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
+      - b58fbd26-116c-4d6a-983f-ed29537ff051
       X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
+      - f9f3481f-7557-47b1-bfce-e3741d1b4160
     status: 200 OK
     code: 200
     duration: ""
@@ -124,25 +122,23 @@ interactions:
       Accept:
       - application/json, */*
       User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
+      - integration.test/v0.0.0 (darwin/arm64) kubernetes/$Format
+    url: https://87c1b836-8fee-443c-bbbc-74ac84817189.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
     method: GET
   response:
     body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"476"},"items":[]}
+      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"689"},"items":[{"metadata":{"name":"lke7452-7765-0f042ccd0000","uid":"5d5db31a-7cc8-48ef-9048-9efb0f2dbed8","resourceVersion":"674","creationTimestamp":"2018-01-02T03:04:05Z","labels":{"beta.kubernetes.io/arch":"amd64","beta.kubernetes.io/instance-type":"g6-standard-1","beta.kubernetes.io/os":"linux","failure-domain.beta.kubernetes.io/region":"us-east","kubernetes.io/arch":"amd64","kubernetes.io/hostname":"lke7452-7765-0f042ccd0000","kubernetes.io/os":"linux","lke.linode.com/pool-id":"7765","node.k8s.linode.com/host-uuid":"74f496fb37d8896745525ddec6e2bb6e652509de","node.kubernetes.io/instance-type":"g6-standard-1","topology.kubernetes.io/region":"us-east"},"annotations":{"kubeadm.alpha.kubernetes.io/cri-socket":"unix:///run/containerd/containerd.sock","lke.linode.com/wgip":"172.31.0.3","lke.linode.com/wgpub":"lUNG/px/cKWMC8HAYHLuPuCGvykgpe/ZNEdRWKLAwRk=","node.alpha.kubernetes.io/ttl":"0","volumes.kubernetes.io/controller-managed-attach-detach":"true"},"managedFields":[{"manager":"kube-controller-manager","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:node.alpha.kubernetes.io/ttl":{}}},"f:spec":{"f:podCIDR":{},"f:podCIDRs":{".":{},"v:\"10.2.1.0/25\"":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:volumes.kubernetes.io/controller-managed-attach-detach":{}},"f:labels":{".":{},"f:beta.kubernetes.io/arch":{},"f:beta.kubernetes.io/os":{},"f:kubernetes.io/arch":{},"f:kubernetes.io/hostname":{},"f:kubernetes.io/os":{}}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:beta.kubernetes.io/instance-type":{},"f:failure-domain.beta.kubernetes.io/region":{},"f:node.k8s.linode.com/host-uuid":{},"f:node.kubernetes.io/instance-type":{},"f:topology.kubernetes.io/region":{}}},"f:spec":{"f:providerID":{},"f:taints":{}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:addresses":{".":{},"k:{\"type\":\"ExternalIP\"}":{".":{},"f:address":{},"f:type":{}},"k:{\"type\":\"Hostname\"}":{".":{},"f:address":{},"f:type":{}},"k:{\"type\":\"InternalIP\"}":{".":{},"f:address":{},"f:type":{}}}}},"subresource":"status"},{"manager":"kubeadm","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:kubeadm.alpha.kubernetes.io/cri-socket":{}}}}},{"manager":"kubectl-annotate","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:lke.linode.com/wgip":{},"f:lke.linode.com/wgpub":{}}}}},{"manager":"kubectl-label","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:lke.linode.com/pool-id":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:allocatable":{"f:ephemeral-storage":{}},"f:conditions":{"k:{\"type\":\"DiskPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"MemoryPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"PIDPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"Ready\"}":{"f:lastHeartbeatTime":{},"f:message":{}}},"f:images":{}}},"subresource":"status"}]},"spec":{"podCIDR":"10.2.1.0/25","podCIDRs":["10.2.1.0/25"],"providerID":"linode://25175284","taints":[{"key":"lke.linode.com/labels-taints","value":"waiting","effect":"NoSchedule"},{"key":"node.kubernetes.io/not-ready","effect":"NoSchedule"}]},"status":{"capacity":{"cpu":"1","ephemeral-storage":"51524172Ki","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"2031404Ki","pods":"110"},"allocatable":{"cpu":"1","ephemeral-storage":"47484676837","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"1929004Ki","pods":"110"},"conditions":[{"type":"MemoryPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientMemory","message":"kubelet has sufficient memory available"},{"type":"DiskPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasNoDiskPressure","message":"kubelet has no disk pressure"},{"type":"PIDPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientPID","message":"kubelet has sufficient PID available"},{"type":"Ready","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletNotReady","message":"container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady message:Network plugin returns error: cni plugin not initialized"}],"addresses":[{"type":"Hostname","address":"lke7452-7765-0f042ccd0000"},{"type":"ExternalIP","address":"97.107.143.131"},{"type":"InternalIP","address":"192.168.161.23"}],"daemonEndpoints":{"kubeletEndpoint":{"Port":10250}},"nodeInfo":{"machineID":"864736be2de54d7c84799ef60b81d401","systemUUID":"864736be2de54d7c84799ef60b81d401","bootID":"35d22e5e-2134-4415-9edf-ce3a6d6c7b8f","kernelVersion":"6.1.0-20-cloud-amd64","osImage":"Debian GNU/Linux 12 (bookworm)","containerRuntimeVersion":"containerd://1.6.31","kubeletVersion":"v1.29.2","kubeProxyVersion":"v1.29.2","operatingSystem":"linux","architecture":"amd64"},"images":[{"names":["registry.k8s.io/pause@sha256:1ff6c18fbef2045af6b9c16bf034cc421a29027b800e4f9b68ae9b1cb3e9ae07","registry.k8s.io/pause:3.5"],"sizeBytes":301416}]}},{"metadata":{"name":"lke7452-7765-1c8078110000","uid":"d013f3b4-3a04-4340-beb9-7aaac7afb4ff","resourceVersion":"687","creationTimestamp":"2018-01-02T03:04:05Z","labels":{"beta.kubernetes.io/arch":"amd64","beta.kubernetes.io/instance-type":"g6-standard-1","beta.kubernetes.io/os":"linux","failure-domain.beta.kubernetes.io/region":"us-east","kubernetes.io/arch":"amd64","kubernetes.io/hostname":"lke7452-7765-1c8078110000","kubernetes.io/os":"linux","lke.linode.com/pool-id":"7765","node.k8s.linode.com/host-uuid":"6692378d1e034fbc92f8ef40e96caa3252726292","node.kubernetes.io/instance-type":"g6-standard-1","topology.kubernetes.io/region":"us-east"},"annotations":{"kubeadm.alpha.kubernetes.io/cri-socket":"unix:///run/containerd/containerd.sock","lke.linode.com/wgip":"172.31.0.2","lke.linode.com/wgpub":"s9bXqp5hYFbsGxexYZoUCdbLjcKzszbof1Wk081g1EY=","node.alpha.kubernetes.io/ttl":"0","volumes.kubernetes.io/controller-managed-attach-detach":"true"},"managedFields":[{"manager":"kube-controller-manager","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:node.alpha.kubernetes.io/ttl":{}}},"f:spec":{"f:podCIDR":{},"f:podCIDRs":{".":{},"v:\"10.2.0.128/25\"":{}}}}},{"manager":"kubeadm","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:kubeadm.alpha.kubernetes.io/cri-socket":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:volumes.kubernetes.io/controller-managed-attach-detach":{}},"f:labels":{".":{},"f:beta.kubernetes.io/arch":{},"f:beta.kubernetes.io/os":{},"f:kubernetes.io/arch":{},"f:kubernetes.io/hostname":{},"f:kubernetes.io/os":{}}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:beta.kubernetes.io/instance-type":{},"f:failure-domain.beta.kubernetes.io/region":{},"f:node.k8s.linode.com/host-uuid":{},"f:node.kubernetes.io/instance-type":{},"f:topology.kubernetes.io/region":{}}},"f:spec":{"f:providerID":{}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:addresses":{".":{},"k:{\"type\":\"ExternalIP\"}":{".":{},"f:address":{},"f:type":{}},"k:{\"type\":\"Hostname\"}":{".":{},"f:address":{},"f:type":{}},"k:{\"type\":\"InternalIP\"}":{".":{},"f:address":{},"f:type":{}}}}},"subresource":"status"},{"manager":"kubectl-annotate","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:lke.linode.com/wgip":{},"f:lke.linode.com/wgpub":{}}}}},{"manager":"kubectl-label","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:lke.linode.com/pool-id":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:allocatable":{"f:ephemeral-storage":{}},"f:capacity":{"f:ephemeral-storage":{}},"f:conditions":{"k:{\"type\":\"DiskPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"MemoryPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"PIDPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"Ready\"}":{"f:lastHeartbeatTime":{},"f:message":{}}},"f:images":{}}},"subresource":"status"},{"manager":"manager","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:taints":{}}}}]},"spec":{"podCIDR":"10.2.0.128/25","podCIDRs":["10.2.0.128/25"],"providerID":"linode://25175283","taints":[{"key":"node.kubernetes.io/not-ready","effect":"NoSchedule"}]},"status":{"capacity":{"cpu":"1","ephemeral-storage":"51524172Ki","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"2031404Ki","pods":"110"},"allocatable":{"cpu":"1","ephemeral-storage":"47484676837","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"1929004Ki","pods":"110"},"conditions":[{"type":"MemoryPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientMemory","message":"kubelet has sufficient memory available"},{"type":"DiskPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasNoDiskPressure","message":"kubelet has no disk pressure"},{"type":"PIDPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientPID","message":"kubelet has sufficient PID available"},{"type":"Ready","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletNotReady","message":"container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady message:Network plugin returns error: cni plugin not initialized"}],"addresses":[{"type":"Hostname","address":"lke7452-7765-1c8078110000"},{"type":"ExternalIP","address":"97.107.143.243"},{"type":"InternalIP","address":"192.168.161.46"}],"daemonEndpoints":{"kubeletEndpoint":{"Port":10250}},"nodeInfo":{"machineID":"673fa8d4a8ed4380904b82d5ca502361","systemUUID":"673fa8d4a8ed4380904b82d5ca502361","bootID":"4d1bc812-552d-42bd-a2d7-809b35a40ab4","kernelVersion":"6.1.0-20-cloud-amd64","osImage":"Debian GNU/Linux 12 (bookworm)","containerRuntimeVersion":"containerd://1.6.31","kubeletVersion":"v1.29.2","kubeProxyVersion":"v1.29.2","operatingSystem":"linux","architecture":"amd64"},"images":[{"names":["registry.k8s.io/pause@sha256:1ff6c18fbef2045af6b9c16bf034cc421a29027b800e4f9b68ae9b1cb3e9ae07","registry.k8s.io/pause:3.5"],"sizeBytes":301416}]}},{"metadata":{"name":"lke7452-7765-32284d6a0000","uid":"172d09ff-b953-4b94-8735-fadf57bf3ac5","resourceVersion":"661","creationTimestamp":"2018-01-02T03:04:05Z","labels":{"beta.kubernetes.io/arch":"amd64","beta.kubernetes.io/instance-type":"g6-standard-1","beta.kubernetes.io/os":"linux","failure-domain.beta.kubernetes.io/region":"us-east","kubernetes.io/arch":"amd64","kubernetes.io/hostname":"lke7452-7765-32284d6a0000","kubernetes.io/os":"linux","lke.linode.com/pool-id":"7765","node.k8s.linode.com/host-uuid":"53257e56e7692e143036a5fbf7daaf92b5350bf3","node.kubernetes.io/instance-type":"g6-standard-1","topology.kubernetes.io/region":"us-east"},"annotations":{"kubeadm.alpha.kubernetes.io/cri-socket":"unix:///run/containerd/containerd.sock","lke.linode.com/wgip":"172.31.0.1","lke.linode.com/wgpub":"bO49S5DxAhZsV9ggnqyzdlJnp49gdQO/4Lni9zMu/3c=","node.alpha.kubernetes.io/ttl":"0","volumes.kubernetes.io/controller-managed-attach-detach":"true"},"managedFields":[{"manager":"kube-controller-manager","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:node.alpha.kubernetes.io/ttl":{}}},"f:spec":{"f:podCIDR":{},"f:podCIDRs":{".":{},"v:\"10.2.0.0/25\"":{}}}}},{"manager":"kubeadm","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:kubeadm.alpha.kubernetes.io/cri-socket":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:volumes.kubernetes.io/controller-managed-attach-detach":{}},"f:labels":{".":{},"f:beta.kubernetes.io/arch":{},"f:beta.kubernetes.io/os":{},"f:kubernetes.io/arch":{},"f:kubernetes.io/hostname":{},"f:kubernetes.io/os":{}}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:beta.kubernetes.io/instance-type":{},"f:failure-domain.beta.kubernetes.io/region":{},"f:node.k8s.linode.com/host-uuid":{},"f:node.kubernetes.io/instance-type":{},"f:topology.kubernetes.io/region":{}}},"f:spec":{"f:providerID":{}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:addresses":{".":{},"k:{\"type\":\"ExternalIP\"}":{".":{},"f:address":{},"f:type":{}},"k:{\"type\":\"Hostname\"}":{".":{},"f:address":{},"f:type":{}},"k:{\"type\":\"InternalIP\"}":{".":{},"f:address":{},"f:type":{}}}}},"subresource":"status"},{"manager":"manager","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:taints":{}}}},{"manager":"kubectl-annotate","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:lke.linode.com/wgip":{},"f:lke.linode.com/wgpub":{}}}}},{"manager":"kubectl-label","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:lke.linode.com/pool-id":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:allocatable":{"f:ephemeral-storage":{}},"f:conditions":{"k:{\"type\":\"DiskPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"MemoryPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"PIDPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"Ready\"}":{"f:lastHeartbeatTime":{},"f:message":{}}},"f:images":{}}},"subresource":"status"}]},"spec":{"podCIDR":"10.2.0.0/25","podCIDRs":["10.2.0.0/25"],"providerID":"linode://25175282","taints":[{"key":"node.kubernetes.io/not-ready","effect":"NoSchedule"}]},"status":{"capacity":{"cpu":"1","ephemeral-storage":"51524172Ki","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"2031404Ki","pods":"110"},"allocatable":{"cpu":"1","ephemeral-storage":"47484676837","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"1929004Ki","pods":"110"},"conditions":[{"type":"MemoryPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientMemory","message":"kubelet has sufficient memory available"},{"type":"DiskPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasNoDiskPressure","message":"kubelet has no disk pressure"},{"type":"PIDPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientPID","message":"kubelet has sufficient PID available"},{"type":"Ready","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletNotReady","message":"container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady message:Network plugin returns error: cni plugin not initialized"}],"addresses":[{"type":"Hostname","address":"lke7452-7765-32284d6a0000"},{"type":"ExternalIP","address":"172.104.221.148"},{"type":"InternalIP","address":"192.168.191.83"}],"daemonEndpoints":{"kubeletEndpoint":{"Port":10250}},"nodeInfo":{"machineID":"4f62be35842046509b33d9ee54ca1450","systemUUID":"4f62be35842046509b33d9ee54ca1450","bootID":"a97f4eb6-4dac-4377-b4b4-d54696957779","kernelVersion":"6.1.0-20-cloud-amd64","osImage":"Debian GNU/Linux 12 (bookworm)","containerRuntimeVersion":"containerd://1.6.31","kubeletVersion":"v1.29.2","kubeProxyVersion":"v1.29.2","operatingSystem":"linux","architecture":"amd64"},"images":[{"names":["registry.k8s.io/pause@sha256:1ff6c18fbef2045af6b9c16bf034cc421a29027b800e4f9b68ae9b1cb3e9ae07","registry.k8s.io/pause:3.5"],"sizeBytes":301416}]}}]}
     headers:
       Audit-Id:
-      - e8c2f6de-ce04-4251-beda-0adf63a54bf1
+      - 47c16aeb-cb8e-4bdb-8e81-891a7438e5e9
       Cache-Control:
       - no-cache, private
-      Content-Length:
-      - "86"
       Content-Type:
       - application/json
       X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
+      - b58fbd26-116c-4d6a-983f-ed29537ff051
       X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
+      - f9f3481f-7557-47b1-bfce-e3741d1b4160
     status: 200 OK
     code: 200
     duration: ""
@@ -153,628 +149,23 @@ interactions:
       Accept:
       - application/json, */*
       User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
+      - integration.test/v0.0.0 (darwin/arm64) kubernetes/$Format
+    url: https://87c1b836-8fee-443c-bbbc-74ac84817189.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
     method: GET
   response:
     body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"482"},"items":[]}
+      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"779"},"items":[{"metadata":{"name":"lke7452-7765-0f042ccd0000","uid":"5d5db31a-7cc8-48ef-9048-9efb0f2dbed8","resourceVersion":"751","creationTimestamp":"2018-01-02T03:04:05Z","labels":{"beta.kubernetes.io/arch":"amd64","beta.kubernetes.io/instance-type":"g6-standard-1","beta.kubernetes.io/os":"linux","failure-domain.beta.kubernetes.io/region":"us-east","kubernetes.io/arch":"amd64","kubernetes.io/hostname":"lke7452-7765-0f042ccd0000","kubernetes.io/os":"linux","lke.linode.com/pool-id":"7765","node.k8s.linode.com/host-uuid":"74f496fb37d8896745525ddec6e2bb6e652509de","node.kubernetes.io/instance-type":"g6-standard-1","topology.kubernetes.io/region":"us-east"},"annotations":{"kubeadm.alpha.kubernetes.io/cri-socket":"unix:///run/containerd/containerd.sock","lke.linode.com/wgip":"172.31.0.3","lke.linode.com/wgpub":"lUNG/px/cKWMC8HAYHLuPuCGvykgpe/ZNEdRWKLAwRk=","node.alpha.kubernetes.io/ttl":"0","volumes.kubernetes.io/controller-managed-attach-detach":"true"},"managedFields":[{"manager":"kube-controller-manager","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:node.alpha.kubernetes.io/ttl":{}}},"f:spec":{"f:podCIDR":{},"f:podCIDRs":{".":{},"v:\"10.2.1.0/25\"":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:volumes.kubernetes.io/controller-managed-attach-detach":{}},"f:labels":{".":{},"f:beta.kubernetes.io/arch":{},"f:beta.kubernetes.io/os":{},"f:kubernetes.io/arch":{},"f:kubernetes.io/hostname":{},"f:kubernetes.io/os":{}}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:beta.kubernetes.io/instance-type":{},"f:failure-domain.beta.kubernetes.io/region":{},"f:node.k8s.linode.com/host-uuid":{},"f:node.kubernetes.io/instance-type":{},"f:topology.kubernetes.io/region":{}}},"f:spec":{"f:providerID":{}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:addresses":{".":{},"k:{\"type\":\"ExternalIP\"}":{".":{},"f:address":{},"f:type":{}},"k:{\"type\":\"Hostname\"}":{".":{},"f:address":{},"f:type":{}},"k:{\"type\":\"InternalIP\"}":{".":{},"f:address":{},"f:type":{}}}}},"subresource":"status"},{"manager":"kubeadm","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:kubeadm.alpha.kubernetes.io/cri-socket":{}}}}},{"manager":"kubectl-annotate","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:lke.linode.com/wgip":{},"f:lke.linode.com/wgpub":{}}}}},{"manager":"kubectl-label","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:lke.linode.com/pool-id":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:allocatable":{"f:ephemeral-storage":{}},"f:conditions":{"k:{\"type\":\"DiskPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"MemoryPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"PIDPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"Ready\"}":{"f:lastHeartbeatTime":{},"f:message":{}}},"f:images":{}}},"subresource":"status"},{"manager":"manager","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:taints":{}}}}]},"spec":{"podCIDR":"10.2.1.0/25","podCIDRs":["10.2.1.0/25"],"providerID":"linode://25175284","taints":[{"key":"node.kubernetes.io/not-ready","effect":"NoSchedule"}]},"status":{"capacity":{"cpu":"1","ephemeral-storage":"51524172Ki","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"2031404Ki","pods":"110"},"allocatable":{"cpu":"1","ephemeral-storage":"47484676837","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"1929004Ki","pods":"110"},"conditions":[{"type":"MemoryPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientMemory","message":"kubelet has sufficient memory available"},{"type":"DiskPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasNoDiskPressure","message":"kubelet has no disk pressure"},{"type":"PIDPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientPID","message":"kubelet has sufficient PID available"},{"type":"Ready","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletNotReady","message":"container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady message:Network plugin returns error: cni plugin not initialized"}],"addresses":[{"type":"Hostname","address":"lke7452-7765-0f042ccd0000"},{"type":"ExternalIP","address":"97.107.143.131"},{"type":"InternalIP","address":"192.168.161.23"}],"daemonEndpoints":{"kubeletEndpoint":{"Port":10250}},"nodeInfo":{"machineID":"864736be2de54d7c84799ef60b81d401","systemUUID":"864736be2de54d7c84799ef60b81d401","bootID":"35d22e5e-2134-4415-9edf-ce3a6d6c7b8f","kernelVersion":"6.1.0-20-cloud-amd64","osImage":"Debian GNU/Linux 12 (bookworm)","containerRuntimeVersion":"containerd://1.6.31","kubeletVersion":"v1.29.2","kubeProxyVersion":"v1.29.2","operatingSystem":"linux","architecture":"amd64"},"images":[{"names":["registry.k8s.io/pause@sha256:1ff6c18fbef2045af6b9c16bf034cc421a29027b800e4f9b68ae9b1cb3e9ae07","registry.k8s.io/pause:3.5"],"sizeBytes":301416}]}},{"metadata":{"name":"lke7452-7765-1c8078110000","uid":"d013f3b4-3a04-4340-beb9-7aaac7afb4ff","resourceVersion":"778","creationTimestamp":"2018-01-02T03:04:05Z","labels":{"beta.kubernetes.io/arch":"amd64","beta.kubernetes.io/instance-type":"g6-standard-1","beta.kubernetes.io/os":"linux","failure-domain.beta.kubernetes.io/region":"us-east","kubernetes.io/arch":"amd64","kubernetes.io/hostname":"lke7452-7765-1c8078110000","kubernetes.io/os":"linux","lke.linode.com/pool-id":"7765","node.k8s.linode.com/host-uuid":"6692378d1e034fbc92f8ef40e96caa3252726292","node.kubernetes.io/instance-type":"g6-standard-1","topology.kubernetes.io/region":"us-east"},"annotations":{"kubeadm.alpha.kubernetes.io/cri-socket":"unix:///run/containerd/containerd.sock","lke.linode.com/wgip":"172.31.0.2","lke.linode.com/wgpub":"s9bXqp5hYFbsGxexYZoUCdbLjcKzszbof1Wk081g1EY=","node.alpha.kubernetes.io/ttl":"0","volumes.kubernetes.io/controller-managed-attach-detach":"true"},"managedFields":[{"manager":"kube-controller-manager","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:node.alpha.kubernetes.io/ttl":{}}},"f:spec":{"f:podCIDR":{},"f:podCIDRs":{".":{},"v:\"10.2.0.128/25\"":{}}}}},{"manager":"kubeadm","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:kubeadm.alpha.kubernetes.io/cri-socket":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:volumes.kubernetes.io/controller-managed-attach-detach":{}},"f:labels":{".":{},"f:beta.kubernetes.io/arch":{},"f:beta.kubernetes.io/os":{},"f:kubernetes.io/arch":{},"f:kubernetes.io/hostname":{},"f:kubernetes.io/os":{}}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:beta.kubernetes.io/instance-type":{},"f:failure-domain.beta.kubernetes.io/region":{},"f:node.k8s.linode.com/host-uuid":{},"f:node.kubernetes.io/instance-type":{},"f:topology.kubernetes.io/region":{}}},"f:spec":{"f:providerID":{}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:addresses":{".":{},"k:{\"type\":\"ExternalIP\"}":{".":{},"f:address":{},"f:type":{}},"k:{\"type\":\"Hostname\"}":{".":{},"f:address":{},"f:type":{}},"k:{\"type\":\"InternalIP\"}":{".":{},"f:address":{},"f:type":{}}}}},"subresource":"status"},{"manager":"kubectl-annotate","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:lke.linode.com/wgip":{},"f:lke.linode.com/wgpub":{}}}}},{"manager":"kubectl-label","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:lke.linode.com/pool-id":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:allocatable":{"f:ephemeral-storage":{}},"f:capacity":{"f:ephemeral-storage":{}},"f:conditions":{"k:{\"type\":\"DiskPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"MemoryPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"PIDPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"Ready\"}":{"f:lastHeartbeatTime":{},"f:lastTransitionTime":{},"f:message":{},"f:reason":{},"f:status":{}}},"f:images":{}}},"subresource":"status"}]},"spec":{"podCIDR":"10.2.0.128/25","podCIDRs":["10.2.0.128/25"],"providerID":"linode://25175283"},"status":{"capacity":{"cpu":"1","ephemeral-storage":"51524172Ki","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"2031404Ki","pods":"110"},"allocatable":{"cpu":"1","ephemeral-storage":"47484676837","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"1929004Ki","pods":"110"},"conditions":[{"type":"MemoryPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientMemory","message":"kubelet has sufficient memory available"},{"type":"DiskPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasNoDiskPressure","message":"kubelet has no disk pressure"},{"type":"PIDPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientPID","message":"kubelet has sufficient PID available"},{"type":"Ready","status":"True","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletReady","message":"kubelet is posting ready status. AppArmor enabled"}],"addresses":[{"type":"Hostname","address":"lke7452-7765-1c8078110000"},{"type":"ExternalIP","address":"97.107.143.243"},{"type":"InternalIP","address":"192.168.161.46"}],"daemonEndpoints":{"kubeletEndpoint":{"Port":10250}},"nodeInfo":{"machineID":"673fa8d4a8ed4380904b82d5ca502361","systemUUID":"673fa8d4a8ed4380904b82d5ca502361","bootID":"4d1bc812-552d-42bd-a2d7-809b35a40ab4","kernelVersion":"6.1.0-20-cloud-amd64","osImage":"Debian GNU/Linux 12 (bookworm)","containerRuntimeVersion":"containerd://1.6.31","kubeletVersion":"v1.29.2","kubeProxyVersion":"v1.29.2","operatingSystem":"linux","architecture":"amd64"},"images":[{"names":["docker.io/calico/cni@sha256:a38d53cb8688944eafede2f0eadc478b1b403cefeff7953da57fe9cd2d65e977","docker.io/calico/cni:v3.25.0"],"sizeBytes":87984941},{"names":["docker.io/bitnami/kubectl@sha256:c4a8d9c0cd9c5f903830ea64816c83adf307ff1d775bc3e5b77f1d49d3960205","docker.io/bitnami/kubectl:1.16.3-debian-10-r36"],"sizeBytes":65850129},{"names":["docker.io/linode/kube-proxy-amd64@sha256:64d1b8b0b99b1d199c88916feb2fb03e6b003e71a9f24e5e4b6d1dd116d595d6","docker.io/linode/kube-proxy-amd64:v1.29.4"],"sizeBytes":28405965},{"names":["docker.io/linode/csi-node-driver-registrar@sha256:9622c6a6dac7499a055a382930f4de82905a3c5735c0753f7094115c9c871309","docker.io/linode/csi-node-driver-registrar:v1.3.0"],"sizeBytes":7717137},{"names":["docker.io/calico/pod2daemon-flexvol@sha256:01ddd57d428787b3ac689daa685660defe4bd7810069544bd43a9103a7b0a789","docker.io/calico/pod2daemon-flexvol:v3.25.0"],"sizeBytes":7076045},{"names":["registry.k8s.io/pause@sha256:1ff6c18fbef2045af6b9c16bf034cc421a29027b800e4f9b68ae9b1cb3e9ae07","registry.k8s.io/pause:3.5"],"sizeBytes":301416}]}},{"metadata":{"name":"lke7452-7765-32284d6a0000","uid":"172d09ff-b953-4b94-8735-fadf57bf3ac5","resourceVersion":"735","creationTimestamp":"2018-01-02T03:04:05Z","labels":{"beta.kubernetes.io/arch":"amd64","beta.kubernetes.io/instance-type":"g6-standard-1","beta.kubernetes.io/os":"linux","failure-domain.beta.kubernetes.io/region":"us-east","kubernetes.io/arch":"amd64","kubernetes.io/hostname":"lke7452-7765-32284d6a0000","kubernetes.io/os":"linux","lke.linode.com/pool-id":"7765","node.k8s.linode.com/host-uuid":"53257e56e7692e143036a5fbf7daaf92b5350bf3","node.kubernetes.io/instance-type":"g6-standard-1","topology.kubernetes.io/region":"us-east"},"annotations":{"kubeadm.alpha.kubernetes.io/cri-socket":"unix:///run/containerd/containerd.sock","lke.linode.com/wgip":"172.31.0.1","lke.linode.com/wgpub":"bO49S5DxAhZsV9ggnqyzdlJnp49gdQO/4Lni9zMu/3c=","node.alpha.kubernetes.io/ttl":"0","volumes.kubernetes.io/controller-managed-attach-detach":"true"},"managedFields":[{"manager":"kube-controller-manager","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:node.alpha.kubernetes.io/ttl":{}}},"f:spec":{"f:podCIDR":{},"f:podCIDRs":{".":{},"v:\"10.2.0.0/25\"":{}}}}},{"manager":"kubeadm","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:kubeadm.alpha.kubernetes.io/cri-socket":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:volumes.kubernetes.io/controller-managed-attach-detach":{}},"f:labels":{".":{},"f:beta.kubernetes.io/arch":{},"f:beta.kubernetes.io/os":{},"f:kubernetes.io/arch":{},"f:kubernetes.io/hostname":{},"f:kubernetes.io/os":{}}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:beta.kubernetes.io/instance-type":{},"f:failure-domain.beta.kubernetes.io/region":{},"f:node.k8s.linode.com/host-uuid":{},"f:node.kubernetes.io/instance-type":{},"f:topology.kubernetes.io/region":{}}},"f:spec":{"f:providerID":{}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:addresses":{".":{},"k:{\"type\":\"ExternalIP\"}":{".":{},"f:address":{},"f:type":{}},"k:{\"type\":\"Hostname\"}":{".":{},"f:address":{},"f:type":{}},"k:{\"type\":\"InternalIP\"}":{".":{},"f:address":{},"f:type":{}}}}},"subresource":"status"},{"manager":"kubectl-annotate","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:lke.linode.com/wgip":{},"f:lke.linode.com/wgpub":{}}}}},{"manager":"kubectl-label","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:lke.linode.com/pool-id":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:allocatable":{"f:ephemeral-storage":{}},"f:conditions":{"k:{\"type\":\"DiskPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"MemoryPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"PIDPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"Ready\"}":{"f:lastHeartbeatTime":{},"f:lastTransitionTime":{},"f:message":{},"f:reason":{},"f:status":{}}},"f:images":{}}},"subresource":"status"}]},"spec":{"podCIDR":"10.2.0.0/25","podCIDRs":["10.2.0.0/25"],"providerID":"linode://25175282"},"status":{"capacity":{"cpu":"1","ephemeral-storage":"51524172Ki","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"2031404Ki","pods":"110"},"allocatable":{"cpu":"1","ephemeral-storage":"47484676837","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"1929004Ki","pods":"110"},"conditions":[{"type":"MemoryPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientMemory","message":"kubelet has sufficient memory available"},{"type":"DiskPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasNoDiskPressure","message":"kubelet has no disk pressure"},{"type":"PIDPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientPID","message":"kubelet has sufficient PID available"},{"type":"Ready","status":"True","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletReady","message":"kubelet is posting ready status. AppArmor enabled"}],"addresses":[{"type":"Hostname","address":"lke7452-7765-32284d6a0000"},{"type":"ExternalIP","address":"172.104.221.148"},{"type":"InternalIP","address":"192.168.191.83"}],"daemonEndpoints":{"kubeletEndpoint":{"Port":10250}},"nodeInfo":{"machineID":"4f62be35842046509b33d9ee54ca1450","systemUUID":"4f62be35842046509b33d9ee54ca1450","bootID":"a97f4eb6-4dac-4377-b4b4-d54696957779","kernelVersion":"6.1.0-20-cloud-amd64","osImage":"Debian GNU/Linux 12 (bookworm)","containerRuntimeVersion":"containerd://1.6.31","kubeletVersion":"v1.29.2","kubeProxyVersion":"v1.29.2","operatingSystem":"linux","architecture":"amd64"},"images":[{"names":["registry.k8s.io/pause@sha256:1ff6c18fbef2045af6b9c16bf034cc421a29027b800e4f9b68ae9b1cb3e9ae07","registry.k8s.io/pause:3.5"],"sizeBytes":301416}]}}]}
     headers:
       Audit-Id:
-      - d577a50f-cbfb-4166-bdc1-e8fc068bef1d
-      Cache-Control:
-      - no-cache, private
-      Content-Length:
-      - "86"
-      Content-Type:
-      - application/json
-      X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
-      X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json, */*
-      User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
-    method: GET
-  response:
-    body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"485"},"items":[]}
-    headers:
-      Audit-Id:
-      - 0fc31923-50e5-4d57-99bc-7c5953ae22d6
-      Cache-Control:
-      - no-cache, private
-      Content-Length:
-      - "86"
-      Content-Type:
-      - application/json
-      X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
-      X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json, */*
-      User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
-    method: GET
-  response:
-    body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"491"},"items":[]}
-    headers:
-      Audit-Id:
-      - e2c33679-0281-4185-a577-fefda3fababc
-      Cache-Control:
-      - no-cache, private
-      Content-Length:
-      - "86"
-      Content-Type:
-      - application/json
-      X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
-      X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json, */*
-      User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
-    method: GET
-  response:
-    body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"501"},"items":[]}
-    headers:
-      Audit-Id:
-      - 39b02dc2-0e01-4489-8913-06f864ac0021
-      Cache-Control:
-      - no-cache, private
-      Content-Length:
-      - "86"
-      Content-Type:
-      - application/json
-      X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
-      X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json, */*
-      User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
-    method: GET
-  response:
-    body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"504"},"items":[]}
-    headers:
-      Audit-Id:
-      - 388890ae-974f-4706-be7d-7743040edea1
-      Cache-Control:
-      - no-cache, private
-      Content-Length:
-      - "86"
-      Content-Type:
-      - application/json
-      X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
-      X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json, */*
-      User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
-    method: GET
-  response:
-    body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"518"},"items":[]}
-    headers:
-      Audit-Id:
-      - 0bf221d0-805d-4c82-8fd8-a2acae36649b
-      Cache-Control:
-      - no-cache, private
-      Content-Length:
-      - "86"
-      Content-Type:
-      - application/json
-      X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
-      X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json, */*
-      User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
-    method: GET
-  response:
-    body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"521"},"items":[]}
-    headers:
-      Audit-Id:
-      - b79259ea-1acb-449c-a53f-46da2dc830cf
-      Cache-Control:
-      - no-cache, private
-      Content-Length:
-      - "86"
-      Content-Type:
-      - application/json
-      X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
-      X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json, */*
-      User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
-    method: GET
-  response:
-    body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"527"},"items":[]}
-    headers:
-      Audit-Id:
-      - c22831e3-9541-40b7-a88a-dc70a07f8f4e
-      Cache-Control:
-      - no-cache, private
-      Content-Length:
-      - "86"
-      Content-Type:
-      - application/json
-      X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
-      X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json, */*
-      User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
-    method: GET
-  response:
-    body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"530"},"items":[]}
-    headers:
-      Audit-Id:
-      - 6ee13253-37cb-4122-8b9a-11cd0f6e8efb
-      Cache-Control:
-      - no-cache, private
-      Content-Length:
-      - "86"
-      Content-Type:
-      - application/json
-      X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
-      X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json, */*
-      User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
-    method: GET
-  response:
-    body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"536"},"items":[]}
-    headers:
-      Audit-Id:
-      - c2e609f4-f046-481d-b485-3eebc09955c8
-      Cache-Control:
-      - no-cache, private
-      Content-Length:
-      - "86"
-      Content-Type:
-      - application/json
-      X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
-      X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json, */*
-      User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
-    method: GET
-  response:
-    body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"539"},"items":[]}
-    headers:
-      Audit-Id:
-      - dc878b37-4fb4-430d-88ac-1199d0b7ce2d
-      Cache-Control:
-      - no-cache, private
-      Content-Length:
-      - "86"
-      Content-Type:
-      - application/json
-      X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
-      X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json, */*
-      User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
-    method: GET
-  response:
-    body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"545"},"items":[]}
-    headers:
-      Audit-Id:
-      - be4e1e02-cdfc-4ed7-9510-11207ad723a6
-      Cache-Control:
-      - no-cache, private
-      Content-Length:
-      - "86"
-      Content-Type:
-      - application/json
-      X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
-      X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json, */*
-      User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
-    method: GET
-  response:
-    body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"548"},"items":[]}
-    headers:
-      Audit-Id:
-      - cbcb96c1-c8f5-45d0-b8e1-4ef236ed2055
-      Cache-Control:
-      - no-cache, private
-      Content-Length:
-      - "86"
-      Content-Type:
-      - application/json
-      X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
-      X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json, */*
-      User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
-    method: GET
-  response:
-    body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"557"},"items":[]}
-    headers:
-      Audit-Id:
-      - 5a7b70bb-fd98-43d9-ab28-6250147888eb
-      Cache-Control:
-      - no-cache, private
-      Content-Length:
-      - "86"
-      Content-Type:
-      - application/json
-      X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
-      X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json, */*
-      User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
-    method: GET
-  response:
-    body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"561"},"items":[]}
-    headers:
-      Audit-Id:
-      - aa649de5-65ba-42db-8091-155808014cd2
-      Cache-Control:
-      - no-cache, private
-      Content-Length:
-      - "86"
-      Content-Type:
-      - application/json
-      X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
-      X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json, */*
-      User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
-    method: GET
-  response:
-    body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"572"},"items":[]}
-    headers:
-      Audit-Id:
-      - f635c3f2-d083-4a88-9f30-4ae48a7465af
-      Cache-Control:
-      - no-cache, private
-      Content-Length:
-      - "86"
-      Content-Type:
-      - application/json
-      X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
-      X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json, */*
-      User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
-    method: GET
-  response:
-    body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"576"},"items":[]}
-    headers:
-      Audit-Id:
-      - 458fe0ef-2880-4dd6-a274-025821aed876
-      Cache-Control:
-      - no-cache, private
-      Content-Length:
-      - "86"
-      Content-Type:
-      - application/json
-      X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
-      X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json, */*
-      User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
-    method: GET
-  response:
-    body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"580"},"items":[]}
-    headers:
-      Audit-Id:
-      - 084dd604-0f90-498c-a143-fa69090495ce
-      Cache-Control:
-      - no-cache, private
-      Content-Length:
-      - "86"
-      Content-Type:
-      - application/json
-      X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
-      X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json, */*
-      User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
-    method: GET
-  response:
-    body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"585"},"items":[]}
-    headers:
-      Audit-Id:
-      - 50940564-40f8-463e-b8a0-a9caa69c9efc
-      Cache-Control:
-      - no-cache, private
-      Content-Length:
-      - "86"
-      Content-Type:
-      - application/json
-      X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
-      X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json, */*
-      User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
-    method: GET
-  response:
-    body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"692"},"items":[{"metadata":{"name":"lke7332-7625-1d36641e0000","uid":"f8b1330f-9fa7-4a84-87bc-84b2543952c9","resourceVersion":"690","creationTimestamp":"2018-01-02T03:04:05Z","labels":{"beta.kubernetes.io/arch":"amd64","beta.kubernetes.io/instance-type":"g6-standard-2","beta.kubernetes.io/os":"linux","failure-domain.beta.kubernetes.io/region":"us-east","kubernetes.io/arch":"amd64","kubernetes.io/hostname":"lke7332-7625-1d36641e0000","kubernetes.io/os":"linux","lke.linode.com/pool-id":"7625","node.k8s.linode.com/host-uuid":"03530127a19b0fa7234dec4175db15f25a2adce1","node.kubernetes.io/instance-type":"g6-standard-2","topology.kubernetes.io/region":"us-east"},"annotations":{"kubeadm.alpha.kubernetes.io/cri-socket":"unix:///run/containerd/containerd.sock","lke.linode.com/wgip":"172.31.0.1","lke.linode.com/wgpub":"KUkgkub2ZfreyuEcAahFdlg2DIZSGo7M0dECXoc/SyQ=","node.alpha.kubernetes.io/ttl":"0","volumes.kubernetes.io/controller-managed-attach-detach":"true"},"managedFields":[{"manager":"kube-controller-manager","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:node.alpha.kubernetes.io/ttl":{}}},"f:spec":{"f:podCIDR":{},"f:podCIDRs":{".":{},"v:\"10.2.0.0/25\"":{}}}}},{"manager":"kubeadm","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:kubeadm.alpha.kubernetes.io/cri-socket":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:volumes.kubernetes.io/controller-managed-attach-detach":{}},"f:labels":{".":{},"f:beta.kubernetes.io/arch":{},"f:beta.kubernetes.io/os":{},"f:kubernetes.io/arch":{},"f:kubernetes.io/hostname":{},"f:kubernetes.io/os":{}}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:addresses":{"k:{\"type\":\"ExternalIP\"}":{".":{},"f:address":{},"f:type":{}},"k:{\"type\":\"InternalIP\"}":{"f:address":{}}}}},"subresource":"status"},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:beta.kubernetes.io/instance-type":{},"f:failure-domain.beta.kubernetes.io/region":{},"f:node.k8s.linode.com/host-uuid":{},"f:node.kubernetes.io/instance-type":{},"f:topology.kubernetes.io/region":{}}},"f:spec":{"f:providerID":{}}}},{"manager":"kubectl-annotate","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:lke.linode.com/wgip":{},"f:lke.linode.com/wgpub":{}}}}},{"manager":"kubectl-label","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:lke.linode.com/pool-id":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{"k:{\"type\":\"DiskPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"MemoryPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"PIDPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"Ready\"}":{"f:lastHeartbeatTime":{},"f:message":{}}}}},"subresource":"status"},{"manager":"manager","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:taints":{}}}}]},"spec":{"podCIDR":"10.2.0.0/25","podCIDRs":["10.2.0.0/25"],"providerID":"linode://25165073","taints":[{"key":"node.kubernetes.io/not-ready","effect":"NoSchedule"}]},"status":{"capacity":{"cpu":"2","ephemeral-storage":"82486728Ki","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"4026160Ki","pods":"110"},"allocatable":{"cpu":"2","ephemeral-storage":"76019768399","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"3923760Ki","pods":"110"},"conditions":[{"type":"MemoryPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientMemory","message":"kubelet has sufficient memory available"},{"type":"DiskPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasNoDiskPressure","message":"kubelet has no disk pressure"},{"type":"PIDPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientPID","message":"kubelet has sufficient PID available"},{"type":"Ready","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletNotReady","message":"container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady message:Network plugin returns error: cni plugin not initialized"}],"addresses":[{"type":"Hostname","address":"lke7332-7625-1d36641e0000"},{"type":"ExternalIP","address":"143.42.180.29"},{"type":"InternalIP","address":"192.168.242.142"}],"daemonEndpoints":{"kubeletEndpoint":{"Port":10250}},"nodeInfo":{"machineID":"48a14acdf6264f63af861d99d40ac5ef","systemUUID":"48a14acdf6264f63af861d99d40ac5ef","bootID":"cfba2c5c-478e-4e85-b799-303c4616fac6","kernelVersion":"6.1.0-20-cloud-amd64","osImage":"Debian GNU/Linux 12 (bookworm)","containerRuntimeVersion":"containerd://1.6.31","kubeletVersion":"v1.28.3","kubeProxyVersion":"v1.28.3","operatingSystem":"linux","architecture":"amd64"}}},{"metadata":{"name":"lke7332-7625-4527543a0000","uid":"516732da-143b-440c-8502-fc0268bb29c8","resourceVersion":"692","creationTimestamp":"2018-01-02T03:04:05Z","labels":{"beta.kubernetes.io/arch":"amd64","beta.kubernetes.io/instance-type":"g6-standard-2","beta.kubernetes.io/os":"linux","failure-domain.beta.kubernetes.io/region":"us-east","kubernetes.io/arch":"amd64","kubernetes.io/hostname":"lke7332-7625-4527543a0000","kubernetes.io/os":"linux","lke.linode.com/pool-id":"7625","node.k8s.linode.com/host-uuid":"53257e56e7692e143036a5fbf7daaf92b5350bf3","node.kubernetes.io/instance-type":"g6-standard-2","topology.kubernetes.io/region":"us-east"},"annotations":{"kubeadm.alpha.kubernetes.io/cri-socket":"unix:///run/containerd/containerd.sock","lke.linode.com/wgip":"172.31.0.2","lke.linode.com/wgpub":"j1OfGU8UZrb0sB9sOxAL5LQrbtLlw764KCTlKonJPkQ=","node.alpha.kubernetes.io/ttl":"0","volumes.kubernetes.io/controller-managed-attach-detach":"true"},"managedFields":[{"manager":"kube-controller-manager","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:node.alpha.kubernetes.io/ttl":{}}},"f:spec":{"f:podCIDR":{},"f:podCIDRs":{".":{},"v:\"10.2.0.128/25\"":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:volumes.kubernetes.io/controller-managed-attach-detach":{}},"f:labels":{".":{},"f:beta.kubernetes.io/arch":{},"f:beta.kubernetes.io/os":{},"f:kubernetes.io/arch":{},"f:kubernetes.io/hostname":{},"f:kubernetes.io/os":{}}}}},{"manager":"kubeadm","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:kubeadm.alpha.kubernetes.io/cri-socket":{}}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:beta.kubernetes.io/instance-type":{},"f:failure-domain.beta.kubernetes.io/region":{},"f:node.k8s.linode.com/host-uuid":{},"f:node.kubernetes.io/instance-type":{},"f:topology.kubernetes.io/region":{}}},"f:spec":{"f:providerID":{},"f:taints":{}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:addresses":{"k:{\"type\":\"ExternalIP\"}":{".":{},"f:address":{},"f:type":{}},"k:{\"type\":\"InternalIP\"}":{"f:address":{}}}}},"subresource":"status"},{"manager":"kubectl-annotate","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:lke.linode.com/wgip":{},"f:lke.linode.com/wgpub":{}}}}},{"manager":"kubectl-label","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:lke.linode.com/pool-id":{}}}}}]},"spec":{"podCIDR":"10.2.0.128/25","podCIDRs":["10.2.0.128/25"],"providerID":"linode://25165072","taints":[{"key":"lke.linode.com/labels-taints","value":"waiting","effect":"NoSchedule"},{"key":"node.kubernetes.io/not-ready","effect":"NoSchedule"}]},"status":{"capacity":{"cpu":"2","ephemeral-storage":"82486728Ki","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"4026160Ki","pods":"110"},"allocatable":{"cpu":"2","ephemeral-storage":"76019768399","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"3923760Ki","pods":"110"},"conditions":[{"type":"MemoryPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientMemory","message":"kubelet has sufficient memory available"},{"type":"DiskPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasNoDiskPressure","message":"kubelet has no disk pressure"},{"type":"PIDPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientPID","message":"kubelet has sufficient PID available"},{"type":"Ready","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletNotReady","message":"[container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady message:Network plugin returns error: cni plugin not initialized, CSINode is not yet initialized]"}],"addresses":[{"type":"Hostname","address":"lke7332-7625-4527543a0000"},{"type":"ExternalIP","address":"143.42.180.26"},{"type":"InternalIP","address":"192.168.242.133"}],"daemonEndpoints":{"kubeletEndpoint":{"Port":10250}},"nodeInfo":{"machineID":"4a8a5f365882450c998d4bab09f3d16d","systemUUID":"4a8a5f365882450c998d4bab09f3d16d","bootID":"51ee1328-0a18-43b8-afbe-f885df286956","kernelVersion":"6.1.0-20-cloud-amd64","osImage":"Debian GNU/Linux 12 (bookworm)","containerRuntimeVersion":"containerd://1.6.31","kubeletVersion":"v1.28.3","kubeProxyVersion":"v1.28.3","operatingSystem":"linux","architecture":"amd64"}}}]}
-    headers:
-      Audit-Id:
-      - 88e4558e-a0bc-4c3c-8f1c-389519382a3d
+      - e4a463be-5f2c-40e4-bc29-bdcdd6be94ae
       Cache-Control:
       - no-cache, private
       Content-Type:
       - application/json
       X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
+      - b58fbd26-116c-4d6a-983f-ed29537ff051
       X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json, */*
-      User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
-    method: GET
-  response:
-    body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"776"},"items":[{"metadata":{"name":"lke7332-7625-1d36641e0000","uid":"f8b1330f-9fa7-4a84-87bc-84b2543952c9","resourceVersion":"714","creationTimestamp":"2018-01-02T03:04:05Z","labels":{"beta.kubernetes.io/arch":"amd64","beta.kubernetes.io/instance-type":"g6-standard-2","beta.kubernetes.io/os":"linux","failure-domain.beta.kubernetes.io/region":"us-east","kubernetes.io/arch":"amd64","kubernetes.io/hostname":"lke7332-7625-1d36641e0000","kubernetes.io/os":"linux","lke.linode.com/pool-id":"7625","node.k8s.linode.com/host-uuid":"03530127a19b0fa7234dec4175db15f25a2adce1","node.kubernetes.io/instance-type":"g6-standard-2","topology.kubernetes.io/region":"us-east"},"annotations":{"kubeadm.alpha.kubernetes.io/cri-socket":"unix:///run/containerd/containerd.sock","lke.linode.com/wgip":"172.31.0.1","lke.linode.com/wgpub":"KUkgkub2ZfreyuEcAahFdlg2DIZSGo7M0dECXoc/SyQ=","node.alpha.kubernetes.io/ttl":"0","volumes.kubernetes.io/controller-managed-attach-detach":"true"},"managedFields":[{"manager":"kube-controller-manager","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:node.alpha.kubernetes.io/ttl":{}}},"f:spec":{"f:podCIDR":{},"f:podCIDRs":{".":{},"v:\"10.2.0.0/25\"":{}}}}},{"manager":"kubeadm","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:kubeadm.alpha.kubernetes.io/cri-socket":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:volumes.kubernetes.io/controller-managed-attach-detach":{}},"f:labels":{".":{},"f:beta.kubernetes.io/arch":{},"f:beta.kubernetes.io/os":{},"f:kubernetes.io/arch":{},"f:kubernetes.io/hostname":{},"f:kubernetes.io/os":{}}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:addresses":{"k:{\"type\":\"ExternalIP\"}":{".":{},"f:address":{},"f:type":{}},"k:{\"type\":\"InternalIP\"}":{"f:address":{}}}}},"subresource":"status"},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:beta.kubernetes.io/instance-type":{},"f:failure-domain.beta.kubernetes.io/region":{},"f:node.k8s.linode.com/host-uuid":{},"f:node.kubernetes.io/instance-type":{},"f:topology.kubernetes.io/region":{}}},"f:spec":{"f:providerID":{}}}},{"manager":"kubectl-annotate","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:lke.linode.com/wgip":{},"f:lke.linode.com/wgpub":{}}}}},{"manager":"kubectl-label","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:lke.linode.com/pool-id":{}}}}},{"manager":"manager","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:taints":{}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{"k:{\"type\":\"DiskPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"MemoryPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"PIDPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"Ready\"}":{"f:lastHeartbeatTime":{},"f:message":{}}}}},"subresource":"status"}]},"spec":{"podCIDR":"10.2.0.0/25","podCIDRs":["10.2.0.0/25"],"providerID":"linode://25165073","taints":[{"key":"node.kubernetes.io/not-ready","effect":"NoSchedule"}]},"status":{"capacity":{"cpu":"2","ephemeral-storage":"82486728Ki","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"4026160Ki","pods":"110"},"allocatable":{"cpu":"2","ephemeral-storage":"76019768399","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"3923760Ki","pods":"110"},"conditions":[{"type":"MemoryPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientMemory","message":"kubelet has sufficient memory available"},{"type":"DiskPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasNoDiskPressure","message":"kubelet has no disk pressure"},{"type":"PIDPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientPID","message":"kubelet has sufficient PID available"},{"type":"Ready","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletNotReady","message":"container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady message:Network plugin returns error: cni plugin not initialized"}],"addresses":[{"type":"Hostname","address":"lke7332-7625-1d36641e0000"},{"type":"ExternalIP","address":"143.42.180.29"},{"type":"InternalIP","address":"192.168.242.142"}],"daemonEndpoints":{"kubeletEndpoint":{"Port":10250}},"nodeInfo":{"machineID":"48a14acdf6264f63af861d99d40ac5ef","systemUUID":"48a14acdf6264f63af861d99d40ac5ef","bootID":"cfba2c5c-478e-4e85-b799-303c4616fac6","kernelVersion":"6.1.0-20-cloud-amd64","osImage":"Debian GNU/Linux 12 (bookworm)","containerRuntimeVersion":"containerd://1.6.31","kubeletVersion":"v1.28.3","kubeProxyVersion":"v1.28.3","operatingSystem":"linux","architecture":"amd64"}}},{"metadata":{"name":"lke7332-7625-4527543a0000","uid":"516732da-143b-440c-8502-fc0268bb29c8","resourceVersion":"729","creationTimestamp":"2018-01-02T03:04:05Z","labels":{"beta.kubernetes.io/arch":"amd64","beta.kubernetes.io/instance-type":"g6-standard-2","beta.kubernetes.io/os":"linux","failure-domain.beta.kubernetes.io/region":"us-east","kubernetes.io/arch":"amd64","kubernetes.io/hostname":"lke7332-7625-4527543a0000","kubernetes.io/os":"linux","lke.linode.com/pool-id":"7625","node.k8s.linode.com/host-uuid":"53257e56e7692e143036a5fbf7daaf92b5350bf3","node.kubernetes.io/instance-type":"g6-standard-2","topology.kubernetes.io/region":"us-east"},"annotations":{"kubeadm.alpha.kubernetes.io/cri-socket":"unix:///run/containerd/containerd.sock","lke.linode.com/wgip":"172.31.0.2","lke.linode.com/wgpub":"j1OfGU8UZrb0sB9sOxAL5LQrbtLlw764KCTlKonJPkQ=","node.alpha.kubernetes.io/ttl":"0","volumes.kubernetes.io/controller-managed-attach-detach":"true"},"managedFields":[{"manager":"kube-controller-manager","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:node.alpha.kubernetes.io/ttl":{}}},"f:spec":{"f:podCIDR":{},"f:podCIDRs":{".":{},"v:\"10.2.0.128/25\"":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:volumes.kubernetes.io/controller-managed-attach-detach":{}},"f:labels":{".":{},"f:beta.kubernetes.io/arch":{},"f:beta.kubernetes.io/os":{},"f:kubernetes.io/arch":{},"f:kubernetes.io/hostname":{},"f:kubernetes.io/os":{}}}}},{"manager":"kubeadm","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:kubeadm.alpha.kubernetes.io/cri-socket":{}}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:beta.kubernetes.io/instance-type":{},"f:failure-domain.beta.kubernetes.io/region":{},"f:node.k8s.linode.com/host-uuid":{},"f:node.kubernetes.io/instance-type":{},"f:topology.kubernetes.io/region":{}}},"f:spec":{"f:providerID":{}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:addresses":{"k:{\"type\":\"ExternalIP\"}":{".":{},"f:address":{},"f:type":{}},"k:{\"type\":\"InternalIP\"}":{"f:address":{}}}}},"subresource":"status"},{"manager":"kubectl-annotate","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:lke.linode.com/wgip":{},"f:lke.linode.com/wgpub":{}}}}},{"manager":"kubectl-label","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:lke.linode.com/pool-id":{}}}}},{"manager":"manager","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:taints":{}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{"k:{\"type\":\"DiskPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"MemoryPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"PIDPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"Ready\"}":{"f:lastHeartbeatTime":{},"f:message":{}}}}},"subresource":"status"}]},"spec":{"podCIDR":"10.2.0.128/25","podCIDRs":["10.2.0.128/25"],"providerID":"linode://25165072","taints":[{"key":"node.kubernetes.io/not-ready","effect":"NoSchedule"}]},"status":{"capacity":{"cpu":"2","ephemeral-storage":"82486728Ki","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"4026160Ki","pods":"110"},"allocatable":{"cpu":"2","ephemeral-storage":"76019768399","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"3923760Ki","pods":"110"},"conditions":[{"type":"MemoryPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientMemory","message":"kubelet has sufficient memory available"},{"type":"DiskPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasNoDiskPressure","message":"kubelet has no disk pressure"},{"type":"PIDPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientPID","message":"kubelet has sufficient PID available"},{"type":"Ready","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletNotReady","message":"container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady message:Network plugin returns error: cni plugin not initialized"}],"addresses":[{"type":"Hostname","address":"lke7332-7625-4527543a0000"},{"type":"ExternalIP","address":"143.42.180.26"},{"type":"InternalIP","address":"192.168.242.133"}],"daemonEndpoints":{"kubeletEndpoint":{"Port":10250}},"nodeInfo":{"machineID":"4a8a5f365882450c998d4bab09f3d16d","systemUUID":"4a8a5f365882450c998d4bab09f3d16d","bootID":"51ee1328-0a18-43b8-afbe-f885df286956","kernelVersion":"6.1.0-20-cloud-amd64","osImage":"Debian GNU/Linux 12 (bookworm)","containerRuntimeVersion":"containerd://1.6.31","kubeletVersion":"v1.28.3","kubeProxyVersion":"v1.28.3","operatingSystem":"linux","architecture":"amd64"}}},{"metadata":{"name":"lke7332-7625-4f06fd870000","uid":"e0b3532b-5c5a-46fe-8572-4242b2b03eab","resourceVersion":"760","creationTimestamp":"2018-01-02T03:04:05Z","labels":{"beta.kubernetes.io/arch":"amd64","beta.kubernetes.io/instance-type":"g6-standard-2","beta.kubernetes.io/os":"linux","failure-domain.beta.kubernetes.io/region":"us-east","kubernetes.io/arch":"amd64","kubernetes.io/hostname":"lke7332-7625-4f06fd870000","kubernetes.io/os":"linux","node.k8s.linode.com/host-uuid":"2e8c6f5e2c38ef3261c570ae22ac2b65435af20b","node.kubernetes.io/instance-type":"g6-standard-2","topology.kubernetes.io/region":"us-east"},"annotations":{"kubeadm.alpha.kubernetes.io/cri-socket":"unix:///run/containerd/containerd.sock","node.alpha.kubernetes.io/ttl":"0","volumes.kubernetes.io/controller-managed-attach-detach":"true"},"managedFields":[{"manager":"kube-controller-manager","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:node.alpha.kubernetes.io/ttl":{}}},"f:spec":{"f:podCIDR":{},"f:podCIDRs":{".":{},"v:\"10.2.1.0/25\"":{}}}}},{"manager":"kubeadm","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:kubeadm.alpha.kubernetes.io/cri-socket":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:volumes.kubernetes.io/controller-managed-attach-detach":{}},"f:labels":{".":{},"f:beta.kubernetes.io/arch":{},"f:beta.kubernetes.io/os":{},"f:kubernetes.io/arch":{},"f:kubernetes.io/hostname":{},"f:kubernetes.io/os":{}}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:beta.kubernetes.io/instance-type":{},"f:failure-domain.beta.kubernetes.io/region":{},"f:node.k8s.linode.com/host-uuid":{},"f:node.kubernetes.io/instance-type":{},"f:topology.kubernetes.io/region":{}}},"f:spec":{"f:providerID":{}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:addresses":{"k:{\"type\":\"ExternalIP\"}":{".":{},"f:address":{},"f:type":{}},"k:{\"type\":\"InternalIP\"}":{"f:address":{}}}}},"subresource":"status"},{"manager":"manager","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:taints":{}}}}]},"spec":{"podCIDR":"10.2.1.0/25","podCIDRs":["10.2.1.0/25"],"providerID":"linode://25165074","taints":[{"key":"node.kubernetes.io/not-ready","effect":"NoSchedule"}]},"status":{"capacity":{"cpu":"2","ephemeral-storage":"82486728Ki","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"4026152Ki","pods":"110"},"allocatable":{"cpu":"2","ephemeral-storage":"76019768399","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"3923752Ki","pods":"110"},"conditions":[{"type":"MemoryPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientMemory","message":"kubelet has sufficient memory available"},{"type":"DiskPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasNoDiskPressure","message":"kubelet has no disk pressure"},{"type":"PIDPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientPID","message":"kubelet has sufficient PID available"},{"type":"Ready","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletNotReady","message":"[container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady message:Network plugin returns error: cni plugin not initialized, CSINode is not yet initialized]"}],"addresses":[{"type":"Hostname","address":"lke7332-7625-4f06fd870000"},{"type":"ExternalIP","address":"143.42.180.43"},{"type":"InternalIP","address":"192.168.242.145"}],"daemonEndpoints":{"kubeletEndpoint":{"Port":10250}},"nodeInfo":{"machineID":"4074f1da59194890903e3b9edf941d4c","systemUUID":"4074f1da59194890903e3b9edf941d4c","bootID":"d3aeff59-4c5f-433a-91d4-179a46f17743","kernelVersion":"6.1.0-20-cloud-amd64","osImage":"Debian GNU/Linux 12 (bookworm)","containerRuntimeVersion":"containerd://1.6.31","kubeletVersion":"v1.28.3","kubeProxyVersion":"v1.28.3","operatingSystem":"linux","architecture":"amd64"}}}]}
-    headers:
-      Audit-Id:
-      - 97b041e7-0cae-4c35-b4c2-0dca54e5220e
-      Cache-Control:
-      - no-cache, private
-      Content-Type:
-      - application/json
-      X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
-      X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json, */*
-      User-Agent:
-      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
-    url: https://e3c672fa-eda4-47dc-9073-282a5ccfdbc0.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
-    method: GET
-  response:
-    body: |
-      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"894"},"items":[{"metadata":{"name":"lke7332-7625-1d36641e0000","uid":"f8b1330f-9fa7-4a84-87bc-84b2543952c9","resourceVersion":"892","creationTimestamp":"2018-01-02T03:04:05Z","labels":{"beta.kubernetes.io/arch":"amd64","beta.kubernetes.io/instance-type":"g6-standard-2","beta.kubernetes.io/os":"linux","failure-domain.beta.kubernetes.io/region":"us-east","kubernetes.io/arch":"amd64","kubernetes.io/hostname":"lke7332-7625-1d36641e0000","kubernetes.io/os":"linux","lke.linode.com/pool-id":"7625","node.k8s.linode.com/host-uuid":"03530127a19b0fa7234dec4175db15f25a2adce1","node.kubernetes.io/instance-type":"g6-standard-2","topology.kubernetes.io/region":"us-east","topology.linode.com/region":"us-east"},"annotations":{"csi.volume.kubernetes.io/nodeid":"{\"linodebs.csi.linode.com\":\"25165073\"}","kubeadm.alpha.kubernetes.io/cri-socket":"unix:///run/containerd/containerd.sock","lke.linode.com/wgip":"172.31.0.1","lke.linode.com/wgpub":"KUkgkub2ZfreyuEcAahFdlg2DIZSGo7M0dECXoc/SyQ=","node.alpha.kubernetes.io/ttl":"0","volumes.kubernetes.io/controller-managed-attach-detach":"true"},"managedFields":[{"manager":"kube-controller-manager","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:node.alpha.kubernetes.io/ttl":{}}},"f:spec":{"f:podCIDR":{},"f:podCIDRs":{".":{},"v:\"10.2.0.0/25\"":{}}}}},{"manager":"kubeadm","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:kubeadm.alpha.kubernetes.io/cri-socket":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:volumes.kubernetes.io/controller-managed-attach-detach":{}},"f:labels":{".":{},"f:beta.kubernetes.io/arch":{},"f:beta.kubernetes.io/os":{},"f:kubernetes.io/arch":{},"f:kubernetes.io/hostname":{},"f:kubernetes.io/os":{}}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:addresses":{"k:{\"type\":\"ExternalIP\"}":{".":{},"f:address":{},"f:type":{}},"k:{\"type\":\"InternalIP\"}":{"f:address":{}}}}},"subresource":"status"},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:beta.kubernetes.io/instance-type":{},"f:failure-domain.beta.kubernetes.io/region":{},"f:node.k8s.linode.com/host-uuid":{},"f:node.kubernetes.io/instance-type":{},"f:topology.kubernetes.io/region":{}}},"f:spec":{"f:providerID":{}}}},{"manager":"kubectl-annotate","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:lke.linode.com/wgip":{},"f:lke.linode.com/wgpub":{}}}}},{"manager":"kubectl-label","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:lke.linode.com/pool-id":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:csi.volume.kubernetes.io/nodeid":{}},"f:labels":{"f:topology.linode.com/region":{}}},"f:status":{"f:conditions":{"k:{\"type\":\"DiskPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"MemoryPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"PIDPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"Ready\"}":{"f:lastHeartbeatTime":{},"f:lastTransitionTime":{},"f:message":{},"f:reason":{},"f:status":{}}},"f:images":{}}},"subresource":"status"}]},"spec":{"podCIDR":"10.2.0.0/25","podCIDRs":["10.2.0.0/25"],"providerID":"linode://25165073"},"status":{"capacity":{"cpu":"2","ephemeral-storage":"82486728Ki","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"4026160Ki","pods":"110"},"allocatable":{"cpu":"2","ephemeral-storage":"76019768399","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"3923760Ki","pods":"110"},"conditions":[{"type":"MemoryPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientMemory","message":"kubelet has sufficient memory available"},{"type":"DiskPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasNoDiskPressure","message":"kubelet has no disk pressure"},{"type":"PIDPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientPID","message":"kubelet has sufficient PID available"},{"type":"Ready","status":"True","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletReady","message":"kubelet is posting ready status. AppArmor enabled"}],"addresses":[{"type":"Hostname","address":"lke7332-7625-1d36641e0000"},{"type":"ExternalIP","address":"143.42.180.29"},{"type":"InternalIP","address":"192.168.242.142"}],"daemonEndpoints":{"kubeletEndpoint":{"Port":10250}},"nodeInfo":{"machineID":"48a14acdf6264f63af861d99d40ac5ef","systemUUID":"48a14acdf6264f63af861d99d40ac5ef","bootID":"cfba2c5c-478e-4e85-b799-303c4616fac6","kernelVersion":"6.1.0-20-cloud-amd64","osImage":"Debian GNU/Linux 12 (bookworm)","containerRuntimeVersion":"containerd://1.6.31","kubeletVersion":"v1.28.3","kubeProxyVersion":"v1.28.3","operatingSystem":"linux","architecture":"amd64"},"images":[{"names":["docker.io/calico/cni@sha256:a38d53cb8688944eafede2f0eadc478b1b403cefeff7953da57fe9cd2d65e977","docker.io/calico/cni:v3.25.0"],"sizeBytes":87984941},{"names":["docker.io/bitnami/kubectl@sha256:c4a8d9c0cd9c5f903830ea64816c83adf307ff1d775bc3e5b77f1d49d3960205","docker.io/bitnami/kubectl:1.16.3-debian-10-r36"],"sizeBytes":65850129},{"names":["docker.io/linode/kube-proxy-amd64@sha256:1b0dd4309665fc3803e4a617cd777a8437fc7d18c4604988c6bd68176bbeb17a","docker.io/linode/kube-proxy-amd64:v1.28.9"],"sizeBytes":28114606},{"names":["docker.io/linode/linode-blockstorage-csi-driver@sha256:944e3e6351ca3186e5d8faf0a1b9765c4d759903617f7d5cc1086d58d7c7dd97"],"sizeBytes":13754364},{"names":["docker.io/linode/csi-node-driver-registrar@sha256:9622c6a6dac7499a055a382930f4de82905a3c5735c0753f7094115c9c871309","docker.io/linode/csi-node-driver-registrar:v1.3.0"],"sizeBytes":7717137},{"names":["docker.io/calico/pod2daemon-flexvol@sha256:01ddd57d428787b3ac689daa685660defe4bd7810069544bd43a9103a7b0a789","docker.io/calico/pod2daemon-flexvol:v3.25.0"],"sizeBytes":7076045},{"names":["registry.k8s.io/pause@sha256:1ff6c18fbef2045af6b9c16bf034cc421a29027b800e4f9b68ae9b1cb3e9ae07","registry.k8s.io/pause:3.5"],"sizeBytes":301416}]}},{"metadata":{"name":"lke7332-7625-4527543a0000","uid":"516732da-143b-440c-8502-fc0268bb29c8","resourceVersion":"838","creationTimestamp":"2018-01-02T03:04:05Z","labels":{"beta.kubernetes.io/arch":"amd64","beta.kubernetes.io/instance-type":"g6-standard-2","beta.kubernetes.io/os":"linux","failure-domain.beta.kubernetes.io/region":"us-east","kubernetes.io/arch":"amd64","kubernetes.io/hostname":"lke7332-7625-4527543a0000","kubernetes.io/os":"linux","lke.linode.com/pool-id":"7625","node.k8s.linode.com/host-uuid":"53257e56e7692e143036a5fbf7daaf92b5350bf3","node.kubernetes.io/instance-type":"g6-standard-2","topology.kubernetes.io/region":"us-east"},"annotations":{"kubeadm.alpha.kubernetes.io/cri-socket":"unix:///run/containerd/containerd.sock","lke.linode.com/wgip":"172.31.0.2","lke.linode.com/wgpub":"j1OfGU8UZrb0sB9sOxAL5LQrbtLlw764KCTlKonJPkQ=","node.alpha.kubernetes.io/ttl":"0","volumes.kubernetes.io/controller-managed-attach-detach":"true"},"managedFields":[{"manager":"kube-controller-manager","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:node.alpha.kubernetes.io/ttl":{}}},"f:spec":{"f:podCIDR":{},"f:podCIDRs":{".":{},"v:\"10.2.0.128/25\"":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:volumes.kubernetes.io/controller-managed-attach-detach":{}},"f:labels":{".":{},"f:beta.kubernetes.io/arch":{},"f:beta.kubernetes.io/os":{},"f:kubernetes.io/arch":{},"f:kubernetes.io/hostname":{},"f:kubernetes.io/os":{}}}}},{"manager":"kubeadm","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:kubeadm.alpha.kubernetes.io/cri-socket":{}}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:beta.kubernetes.io/instance-type":{},"f:failure-domain.beta.kubernetes.io/region":{},"f:node.k8s.linode.com/host-uuid":{},"f:node.kubernetes.io/instance-type":{},"f:topology.kubernetes.io/region":{}}},"f:spec":{"f:providerID":{}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:addresses":{"k:{\"type\":\"ExternalIP\"}":{".":{},"f:address":{},"f:type":{}},"k:{\"type\":\"InternalIP\"}":{"f:address":{}}}}},"subresource":"status"},{"manager":"kubectl-annotate","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:lke.linode.com/wgip":{},"f:lke.linode.com/wgpub":{}}}}},{"manager":"kubectl-label","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:lke.linode.com/pool-id":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{"k:{\"type\":\"DiskPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"MemoryPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"PIDPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"Ready\"}":{"f:lastHeartbeatTime":{},"f:lastTransitionTime":{},"f:message":{},"f:reason":{},"f:status":{}}}}},"subresource":"status"}]},"spec":{"podCIDR":"10.2.0.128/25","podCIDRs":["10.2.0.128/25"],"providerID":"linode://25165072"},"status":{"capacity":{"cpu":"2","ephemeral-storage":"82486728Ki","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"4026160Ki","pods":"110"},"allocatable":{"cpu":"2","ephemeral-storage":"76019768399","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"3923760Ki","pods":"110"},"conditions":[{"type":"MemoryPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientMemory","message":"kubelet has sufficient memory available"},{"type":"DiskPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasNoDiskPressure","message":"kubelet has no disk pressure"},{"type":"PIDPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientPID","message":"kubelet has sufficient PID available"},{"type":"Ready","status":"True","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletReady","message":"kubelet is posting ready status. AppArmor enabled"}],"addresses":[{"type":"Hostname","address":"lke7332-7625-4527543a0000"},{"type":"ExternalIP","address":"143.42.180.26"},{"type":"InternalIP","address":"192.168.242.133"}],"daemonEndpoints":{"kubeletEndpoint":{"Port":10250}},"nodeInfo":{"machineID":"4a8a5f365882450c998d4bab09f3d16d","systemUUID":"4a8a5f365882450c998d4bab09f3d16d","bootID":"51ee1328-0a18-43b8-afbe-f885df286956","kernelVersion":"6.1.0-20-cloud-amd64","osImage":"Debian GNU/Linux 12 (bookworm)","containerRuntimeVersion":"containerd://1.6.31","kubeletVersion":"v1.28.3","kubeProxyVersion":"v1.28.3","operatingSystem":"linux","architecture":"amd64"}}},{"metadata":{"name":"lke7332-7625-4f06fd870000","uid":"e0b3532b-5c5a-46fe-8572-4242b2b03eab","resourceVersion":"878","creationTimestamp":"2018-01-02T03:04:05Z","labels":{"beta.kubernetes.io/arch":"amd64","beta.kubernetes.io/instance-type":"g6-standard-2","beta.kubernetes.io/os":"linux","failure-domain.beta.kubernetes.io/region":"us-east","kubernetes.io/arch":"amd64","kubernetes.io/hostname":"lke7332-7625-4f06fd870000","kubernetes.io/os":"linux","lke.linode.com/pool-id":"7625","node.k8s.linode.com/host-uuid":"2e8c6f5e2c38ef3261c570ae22ac2b65435af20b","node.kubernetes.io/instance-type":"g6-standard-2","topology.kubernetes.io/region":"us-east"},"annotations":{"kubeadm.alpha.kubernetes.io/cri-socket":"unix:///run/containerd/containerd.sock","lke.linode.com/wgip":"172.31.0.3","lke.linode.com/wgpub":"A6JTx7Cd15edQ0VDt5m6lpfIh0Lky8mGq6O+dQan+2k=","node.alpha.kubernetes.io/ttl":"0","volumes.kubernetes.io/controller-managed-attach-detach":"true"},"managedFields":[{"manager":"kubeadm","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:kubeadm.alpha.kubernetes.io/cri-socket":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:volumes.kubernetes.io/controller-managed-attach-detach":{}},"f:labels":{".":{},"f:beta.kubernetes.io/arch":{},"f:beta.kubernetes.io/os":{},"f:kubernetes.io/arch":{},"f:kubernetes.io/hostname":{},"f:kubernetes.io/os":{}}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:beta.kubernetes.io/instance-type":{},"f:failure-domain.beta.kubernetes.io/region":{},"f:node.k8s.linode.com/host-uuid":{},"f:node.kubernetes.io/instance-type":{},"f:topology.kubernetes.io/region":{}}},"f:spec":{"f:providerID":{}}}},{"manager":"linode-cloud-controller-manager-linux","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:addresses":{"k:{\"type\":\"ExternalIP\"}":{".":{},"f:address":{},"f:type":{}},"k:{\"type\":\"InternalIP\"}":{"f:address":{}}}}},"subresource":"status"},{"manager":"kubectl-annotate","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:lke.linode.com/wgip":{},"f:lke.linode.com/wgpub":{}}}}},{"manager":"kubectl-label","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:labels":{"f:lke.linode.com/pool-id":{}}}}},{"manager":"kubelet","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:status":{"f:conditions":{"k:{\"type\":\"DiskPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"MemoryPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"PIDPressure\"}":{"f:lastHeartbeatTime":{}},"k:{\"type\":\"Ready\"}":{"f:lastHeartbeatTime":{},"f:message":{}}}}},"subresource":"status"},{"manager":"kube-controller-manager","operation":"Update","apiVersion":"v1","time":"2018-01-02T03:04:05Z","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:node.alpha.kubernetes.io/ttl":{}}},"f:spec":{"f:podCIDR":{},"f:podCIDRs":{".":{},"v:\"10.2.1.0/25\"":{}},"f:taints":{}}}}]},"spec":{"podCIDR":"10.2.1.0/25","podCIDRs":["10.2.1.0/25"],"providerID":"linode://25165074","taints":[{"key":"node.kubernetes.io/not-ready","effect":"NoSchedule"},{"key":"node.kubernetes.io/not-ready","effect":"NoExecute","timeAdded":"2018-01-02T03:04:05Z"}]},"status":{"capacity":{"cpu":"2","ephemeral-storage":"82486728Ki","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"4026152Ki","pods":"110"},"allocatable":{"cpu":"2","ephemeral-storage":"76019768399","hugepages-1Gi":"0","hugepages-2Mi":"0","memory":"3923752Ki","pods":"110"},"conditions":[{"type":"MemoryPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientMemory","message":"kubelet has sufficient memory available"},{"type":"DiskPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasNoDiskPressure","message":"kubelet has no disk pressure"},{"type":"PIDPressure","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletHasSufficientPID","message":"kubelet has sufficient PID available"},{"type":"Ready","status":"False","lastHeartbeatTime":"2018-01-02T03:04:05Z","lastTransitionTime":"2018-01-02T03:04:05Z","reason":"KubeletNotReady","message":"container runtime network not ready: NetworkReady=false reason:NetworkPluginNotReady message:Network plugin returns error: cni plugin not initialized"}],"addresses":[{"type":"Hostname","address":"lke7332-7625-4f06fd870000"},{"type":"ExternalIP","address":"143.42.180.43"},{"type":"InternalIP","address":"192.168.242.145"}],"daemonEndpoints":{"kubeletEndpoint":{"Port":10250}},"nodeInfo":{"machineID":"4074f1da59194890903e3b9edf941d4c","systemUUID":"4074f1da59194890903e3b9edf941d4c","bootID":"d3aeff59-4c5f-433a-91d4-179a46f17743","kernelVersion":"6.1.0-20-cloud-amd64","osImage":"Debian GNU/Linux 12 (bookworm)","containerRuntimeVersion":"containerd://1.6.31","kubeletVersion":"v1.28.3","kubeProxyVersion":"v1.28.3","operatingSystem":"linux","architecture":"amd64"}}}]}
-    headers:
-      Audit-Id:
-      - 725b3866-37c9-45f8-90ef-633f30782a96
-      Cache-Control:
-      - no-cache, private
-      Content-Type:
-      - application/json
-      X-Kubernetes-Pf-Flowschema-Uid:
-      - affd9597-fa49-4927-ac33-19f7f8bb16ea
-      X-Kubernetes-Pf-Prioritylevel-Uid:
-      - b4189e81-3f07-47e7-9092-805f9b1eb04b
+      - f9f3481f-7557-47b1-bfce-e3741d1b4160
     status: 200 OK
     code: 200
     duration: ""

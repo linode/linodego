@@ -11,7 +11,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/regions
+    url: https://api.linode.com/v4/regions
     method: GET
   response:
     body: '{"data": [{"id": "ap-west", "label": "Mumbai, India", "country": "in",
@@ -119,7 +119,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"]}],"label":"go-lke-test-found","region":"us-east","k8s_version":"1.28","tags":["testing"]}'
+    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"]}],"label":"go-lke-test-found","region":"us-east","k8s_version":"1.29","tags":["testing"]}'
     form: {}
     headers:
       Accept:
@@ -128,12 +128,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters
+    url: https://api.linode.com/v4/lke/clusters
     method: POST
   response:
-    body: '{"id": 7320, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+    body: '{"id": 7453, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "label": "go-lke-test-found", "region": "us-east", "k8s_version":
-      "1.28", "control_plane": {"high_availability": false}, "tags": ["testing"]}'
+      "1.29", "control_plane": {"high_availability": false}, "tags": ["testing"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -187,12 +187,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7320
+    url: https://api.linode.com/v4/lke/clusters/7453
     method: GET
   response:
-    body: '{"id": 7320, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+    body: '{"id": 7453, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "label": "go-lke-test-found", "region": "us-east", "k8s_version":
-      "1.28", "control_plane": {"high_availability": false}, "tags": ["testing"]}'
+      "1.29", "control_plane": {"high_availability": false}, "tags": ["testing"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -248,7 +248,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7320
+    url: https://api.linode.com/v4/lke/clusters/7453
     method: DELETE
   response:
     body: '{}'

@@ -32,7 +32,7 @@ func TestLKECluster_WaitForReady(t *testing.T) {
 	client, cluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = "go-lke-test-wait"
 		createOpts.NodePools = []linodego.LKENodePoolCreateOptions{
-			{Count: 3, Type: "g6-standard-2"},
+			{Count: 3, Type: "g6-standard-1"},
 		}
 	}}, "fixtures/TestLKECluster_WaitForReady")
 	defer teardown()
@@ -99,7 +99,8 @@ func TestLKECluster_Update(t *testing.T) {
 
 	// Update the LKE cluster to HA
 	// This needs to be done in a separate API request from the K8s version upgrade
-	updatedControlPlane := &linodego.LKEClusterControlPlane{HighAvailability: true}
+	isHA := true
+	updatedControlPlane := &linodego.LKEClusterControlPlaneOptions{HighAvailability: &isHA}
 
 	updatedCluster, err = client.UpdateLKECluster(context.Background(), cluster.ID, linodego.LKEClusterUpdateOptions{
 		ControlPlane: updatedControlPlane,
@@ -108,7 +109,7 @@ func TestLKECluster_Update(t *testing.T) {
 		t.Fatalf("failed to update LKE Cluster (%d): %s", cluster.ID, err)
 	}
 
-	if !reflect.DeepEqual(*updatedControlPlane, updatedCluster.ControlPlane) {
+	if !reflect.DeepEqual(*updatedControlPlane.HighAvailability, updatedCluster.ControlPlane.HighAvailability) {
 		t.Errorf("expected control plane to be updated to %#v; got %#v", updatedControlPlane, updatedCluster.ControlPlane)
 	}
 }
