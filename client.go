@@ -85,8 +85,9 @@ type clientCacheEntry struct {
 }
 
 type (
-	Request = resty.Request
-	Logger  = resty.Logger
+	Request  = resty.Request
+	Response = resty.Response
+	Logger   = resty.Logger
 )
 
 func init() {
