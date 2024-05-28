@@ -141,6 +141,13 @@ func (c *Client) OnBeforeRequest(m func(request *Request) error) {
 	})
 }
 
+// OnAfterResponse adds a handler to the request body to run before the request is sent
+func (c *Client) OnAfterResponse(m func(response *Response) error) {
+	c.resty.OnAfterResponse(func(_ *resty.Client, req *resty.Response) error {
+		return m(req)
+	})
+}
+
 // UseURL parses the individual components of the given API URL and configures the client
 // accordingly. For example, a valid URL.
 // For example:
