@@ -12,10 +12,15 @@ var testObjectStorageBucketCreateOpts = ObjectStorageBucketCreateOptions{
 	Label:   "go-bucket-test-def",
 }
 
+var testRegionalObjectStorageBucketCreateOpts = ObjectStorageBucketCreateOptions{
+	Region: "us-east",
+	Label:  "go-bucket-test-def",
+}
+
 func TestObjectStorageBucket_Create_smoke(t *testing.T) {
 	_, bucket, teardown, err := setupObjectStorageBucket(t,
 		nil,
-		"fixtures/TestObjectStorageBucket_Create")
+		"fixtures/TestObjectStorageBucket_Create", nil, nil)
 	defer teardown()
 
 	if err != nil {
@@ -33,10 +38,51 @@ func TestObjectStorageBucket_Create_smoke(t *testing.T) {
 	assertDateSet(t, bucket.Created)
 }
 
+func TestObjectStorageBucket_Regional(t *testing.T) {
+	t.Skip()
+	client, teardown := createTestClient(t, "fixtures/TestObjectStorageBucket_Regional")
+	regions := getRegionsWithCaps(t, client, []string{"Object Storage"})
+	if len(regions) < 1 {
+		t.Fatal("Can't get region with Object Storage capability")
+	}
+	region := regions[0]
+
+	client, bucket, teardown, err := setupObjectStorageBucket(t,
+		[]objectStorageBucketModifier{
+			func(opts *ObjectStorageBucketCreateOptions) {
+				opts.Cluster = ""
+				opts.Region = region
+			},
+		},
+		"fixtures/TestObjectStorageBucket_Regional",
+		client, teardown,
+	)
+	defer teardown()
+
+	if err != nil {
+		t.Errorf("Error creating Object Storage Bucket, got error %v", err)
+	}
+
+	expected := testObjectStorageBucketCreateOpts
+
+	// when comparing fixtures to random value Label will differ, compare the known prefix
+	if bucket.Label != expected.Label ||
+		bucket.Region != region {
+		t.Errorf("Object Storage Bucket did not match CreateOptions")
+	}
+
+	assertDateSet(t, bucket.Created)
+
+	bucket, err = client.GetObjectStorageBucket(context.Background(), region, expected.Label)
+	if err != nil {
+		t.Errorf("Error getting Object Storage Bucket, %v", err)
+	}
+}
+
 func TestObjectStorageBucket_GetMissing(t *testing.T) {
 	client, bucket, teardown, err := setupObjectStorageBucket(t,
 		nil,
-		"fixtures/TestObjectStorageBucket_GetMissing")
+		"fixtures/TestObjectStorageBucket_GetMissing", nil, nil)
 	defer teardown()
 
 	sameLabel := bucket.Label
@@ -59,7 +105,7 @@ func TestObjectStorageBucket_GetMissing(t *testing.T) {
 func TestObjectStorageBucket_GetFound(t *testing.T) {
 	client, bucket, teardown, err := setupObjectStorageBucket(t,
 		nil,
-		"fixtures/TestObjectStorageBucket_GetFound")
+		"fixtures/TestObjectStorageBucket_GetFound", nil, nil)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -84,7 +130,7 @@ func TestObjectStorageBucket_GetFound(t *testing.T) {
 func TestObjectStorageBuckets_List_smoke(t *testing.T) {
 	client, _, teardown, err := setupObjectStorageBucket(t,
 		nil,
-		"fixtures/TestObjectStorageBuckets_List")
+		"fixtures/TestObjectStorageBuckets_List", nil, nil)
 	defer teardown()
 
 	i, err := client.ListObjectStorageBuckets(context.Background(), nil)
@@ -102,7 +148,7 @@ func TestObjectStorageBuckets_List_smoke(t *testing.T) {
 func TestObjectStorageBucketsInCluster_List(t *testing.T) {
 	client, bucket, teardown, err := setupObjectStorageBucket(t,
 		nil,
-		"fixtures/TestObjectStorageBucketsInCluster_List")
+		"fixtures/TestObjectStorageBucketsInCluster_List", nil, nil)
 	defer teardown()
 
 	i, err := client.ListObjectStorageBucketsInCluster(context.Background(), nil, bucket.Cluster)
@@ -132,7 +178,7 @@ func TestObjectStorageBucket_Access_Get(t *testing.T) {
 				opts.CorsEnabled = createOpts.CorsEnabled
 			},
 		},
-		"fixtures/TestObjectStorageBucket_Access_Get")
+		"fixtures/TestObjectStorageBucket_Access_Get", nil, nil)
 	defer teardown()
 
 	newBucket, err := client.GetObjectStorageBucketAccess(context.Background(), bucket.Cluster, bucket.Label)
@@ -154,7 +200,7 @@ func TestObjectStorageBucket_Access_Get(t *testing.T) {
 func TestObjectStorageBucket_Access_Update(t *testing.T) {
 	client, bucket, teardown, err := setupObjectStorageBucket(t,
 		nil,
-		"fixtures/TestObjectStorageBucket_Access_Update")
+		"fixtures/TestObjectStorageBucket_Access_Update", nil, nil)
 	defer teardown()
 
 	corsEnabled := false
@@ -185,7 +231,7 @@ func TestObjectStorageBucket_Access_Update(t *testing.T) {
 
 type objectStorageBucketModifier func(*ObjectStorageBucketCreateOptions)
 
-func setupObjectStorageBucket(t *testing.T, bucketModifiers []objectStorageBucketModifier, fixturesYaml string) (*Client, *ObjectStorageBucket, func(), error) {
+func setupObjectStorageBucket(t *testing.T, bucketModifiers []objectStorageBucketModifier, fixturesYaml string, client *Client, teardown func()) (*Client, *ObjectStorageBucket, func(), error) {
 	t.Helper()
 
 	createOpts := testObjectStorageBucketCreateOpts
@@ -194,20 +240,30 @@ func setupObjectStorageBucket(t *testing.T, bucketModifiers []objectStorageBucke
 		modifier(&createOpts)
 	}
 
-	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+	if (client == nil) != (teardown == nil) {
+		t.Error(
+			"The client and fixtureTeardown variables must either both be nil or both " +
+				"have a value. They cannot have one set to nil and the other set to a non-nil value.",
+		)
+	}
+
+	if client == nil {
+		client, teardown = createTestClient(t, fixturesYaml)
+	}
+
 	bucket, err := client.CreateObjectStorageBucket(context.Background(), createOpts)
 	if err != nil {
 		t.Errorf("Error creating test Bucket: %s", err)
 	}
 
-	teardown := func() {
+	newTeardown := func() {
 		if err := client.DeleteObjectStorageBucket(context.Background(), bucket.Cluster, bucket.Label); err != nil {
 			if t != nil {
 				t.Errorf("Error deleting test Bucket: %s", err)
 			}
 		}
-		fixtureTeardown()
+		teardown()
 	}
 
-	return client, bucket, teardown, err
+	return client, bucket, newTeardown, err
 }

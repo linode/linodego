@@ -13,8 +13,14 @@ import (
 
 // ObjectStorageBucket represents a ObjectStorage object
 type ObjectStorageBucket struct {
-	Label   string `json:"label"`
+	Label string `json:"label"`
+
+	// Only one of Region or Cluster will be provided with a non-empty value,
+	// depending on your account.
 	Cluster string `json:"cluster"`
+	// Only one of Region or Cluster will be provided with a non-empty value,
+	// depending on your account.
+	Region string `json:"region"`
 
 	Created  *time.Time `json:"-"`
 	Hostname string     `json:"hostname"`
@@ -50,8 +56,12 @@ func (i *ObjectStorageBucket) UnmarshalJSON(b []byte) error {
 
 // ObjectStorageBucketCreateOptions fields are those accepted by CreateObjectStorageBucket
 type ObjectStorageBucketCreateOptions struct {
-	Cluster string `json:"cluster"`
-	Label   string `json:"label"`
+	// You may use either Region or Cluster, depending on your account details.
+	Region string `json:"region,omitempty"`
+	// You may use either Region or Cluster, depending on your account details.
+	Cluster string `json:"cluster,omitempty"`
+
+	Label string `json:"label"`
 
 	ACL         ObjectStorageACL `json:"acl,omitempty"`
 	CorsEnabled *bool            `json:"cors_enabled,omitempty"`
@@ -120,10 +130,10 @@ func (c *Client) ListObjectStorageBucketsInCluster(ctx context.Context, opts *Li
 }
 
 // GetObjectStorageBucket gets the ObjectStorageBucket with the provided label
-func (c *Client) GetObjectStorageBucket(ctx context.Context, clusterID, label string) (*ObjectStorageBucket, error) {
+func (c *Client) GetObjectStorageBucket(ctx context.Context, clusterOrRegionID, label string) (*ObjectStorageBucket, error) {
 	label = url.PathEscape(label)
-	clusterID = url.PathEscape(clusterID)
-	e := fmt.Sprintf("object-storage/buckets/%s/%s", clusterID, label)
+	clusterOrRegionID = url.PathEscape(clusterOrRegionID)
+	e := fmt.Sprintf("object-storage/buckets/%s/%s", clusterOrRegionID, label)
 	req := c.R(ctx).SetResult(&ObjectStorageBucket{})
 	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
