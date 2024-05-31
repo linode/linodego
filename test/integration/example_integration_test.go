@@ -311,11 +311,11 @@ func Example() {
 	// ## First Linode
 	// ### First Config: true
 	// ### First Disk: true
-	// ### No Auto Backups
+	// ### First Auto Backup
 	// ### Snapshots
 	// ### No Current Snapshot
 	// ### No Volumes
-	// ## Your Stackscripts: false
+	// ## Your Stackscripts: true
 }
 
 const (
