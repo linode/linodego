@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/account/oauth-clients
     method: POST
   response:
-    body: '{"id": "4564958b19566e4ff3ba", "redirect_uri": "https://example.com", "label":
-      "go-client-test", "status": "active", "secret": "c0ea72902eace380721236c58a749b621db1476e15c45833017ae11487f9c383",
+    body: '{"id": "b3418cf8e53201b4ee30", "redirect_uri": "https://example.com", "label":
+      "go-client-test", "status": "active", "secret": "9646fa9be07dc54d2b4870d051f6f5d051e3ab4884519c5c2308cd29ca82dc60",
       "thumbnail_url": null, "public": true}'
     headers:
       Access-Control-Allow-Credentials:
@@ -29,15 +29,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "233"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Thu, 30 May 2024 23:12:10 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -50,9 +54,12 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -71,11 +78,14 @@ interactions:
     url: https://api.linode.com/v4beta/account/oauth-clients
     method: GET
   response:
-    body: '{"data": [{"id": "4ccb3f776916c3d32071", "redirect_uri": "http://localhost:3000/oauth/callback",
-      "label": "fdg", "status": "active", "secret": "<REDACTED>", "thumbnail_url":
-      null, "public": true}, {"id": "4564958b19566e4ff3ba", "redirect_uri": "https://example.com",
-      "label": "go-client-test", "status": "active", "secret": "<REDACTED>", "thumbnail_url":
-      null, "public": true}], "page": 1, "pages": 1, "results": 2}'
+    body: '{"data": [{"id": "80178debe3621b53e09b", "redirect_uri": "http://localhost:5000/auth_callback",
+      "label": "oauth_test", "status": "active", "secret": "<REDACTED>", "thumbnail_url":
+      null, "public": false}, {"id": "662f47e526a88d728761", "redirect_uri": "https://localhost/oauth/callback",
+      "label": "test-oauth-client-3", "status": "active", "secret": "<REDACTED>",
+      "thumbnail_url": null, "public": true}, {"id": "b3418cf8e53201b4ee30", "redirect_uri":
+      "https://example.com", "label": "go-client-test", "status": "active", "secret":
+      "<REDACTED>", "thumbnail_url": null, "public": true}], "page": 1, "pages": 1,
+      "results": 3}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -88,16 +98,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
-      - "415"
+      - "621"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Thu, 30 May 2024 23:12:10 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -111,9 +124,12 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -129,7 +145,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/oauth-clients/4564958b19566e4ff3ba
+    url: https://api.linode.com/v4beta/account/oauth-clients/b3418cf8e53201b4ee30
     method: DELETE
   response:
     body: '{}'
@@ -145,15 +161,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "2"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Thu, 30 May 2024 23:12:10 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -166,9 +186,12 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

@@ -81,7 +81,7 @@ func Example() {
 	fmt.Println("### Error:", err)
 
 	if spendMoney {
-		linode, err = linodeClient.CreateInstance(context.Background(), linodego.InstanceCreateOptions{Region: "us-southeast", Type: "g5-nanode-1"})
+		linode, err = linodeClient.CreateInstance(context.Background(), linodego.InstanceCreateOptions{Region: "us-southeast", Type: "g5-nanode-1", FirewallID: GetFirewallID()})
 		if err != nil {
 			log.Fatalln("* While creating instance: ", err)
 		}

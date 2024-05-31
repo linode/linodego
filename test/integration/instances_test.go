@@ -14,7 +14,7 @@ type instanceModifier func(*linodego.Client, *linodego.InstanceCreateOptions)
 func TestInstances_List(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(
 		t,
-		"fixtures/TestInstances_List",
+		"fixtures/TestInstances_List", true,
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
 			options.Region = "eu-west" // Override for metadata availability
 		},
@@ -53,7 +53,7 @@ func TestInstances_List(t *testing.T) {
 }
 
 func TestInstance_Get_smoke(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Get")
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Get", true)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -82,7 +82,7 @@ func TestInstance_Get_smoke(t *testing.T) {
 func TestInstance_Resize(t *testing.T) {
 	client, instance, teardown, err := setupInstance(
 		t,
-		"fixtures/TestInstance_Resize",
+		"fixtures/TestInstance_Resize", true,
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
 			boot := true
 			options.Type = "g6-nanode-1"
@@ -119,7 +119,7 @@ func TestInstance_Resize(t *testing.T) {
 }
 
 func TestInstance_Disks_List(t *testing.T) {
-	client, instance, teardown, err := setupInstance(t, "fixtures/TestInstance_Disks_List")
+	client, instance, teardown, err := setupInstance(t, "fixtures/TestInstance_Disks_List", true)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -135,7 +135,7 @@ func TestInstance_Disks_List(t *testing.T) {
 }
 
 func TestInstance_Disk_Resize(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Disk_Resize")
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Disk_Resize", true)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -168,7 +168,7 @@ func TestInstance_Disk_Resize(t *testing.T) {
 
 func TestInstance_Disk_ListMultiple(t *testing.T) {
 	// This is a long running test
-	client, instance1, teardown1, err := setupInstance(t, "fixtures/TestInstance_Disk_ListMultiple_Primary")
+	client, instance1, teardown1, err := setupInstance(t, "fixtures/TestInstance_Disk_ListMultiple_Primary", true)
 	defer teardown1()
 	if err != nil {
 		t.Error(err)
@@ -201,7 +201,7 @@ func TestInstance_Disk_ListMultiple(t *testing.T) {
 		t.Error(err)
 	}
 
-	client, instance2, _, teardown2, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Disk_ListMultiple_Secondary")
+	client, instance2, _, teardown2, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Disk_ListMultiple_Secondary", true)
 	defer teardown2()
 	if err != nil {
 		t.Error(err)
@@ -244,7 +244,7 @@ func TestInstance_Disk_ListMultiple(t *testing.T) {
 }
 
 func TestInstance_Disk_ResetPassword(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Disk_ResetPassword")
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Disk_ResetPassword", true)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -282,7 +282,7 @@ func TestInstance_Disk_ResetPassword(t *testing.T) {
 }
 
 func TestInstance_Volumes_List(t *testing.T) {
-	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Volumes_List_Instance")
+	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Volumes_List_Instance", true)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -329,7 +329,7 @@ func TestInstance_CreateUnderFirewall(t *testing.T) {
 	}
 	_, _, teardownInstance, err := createInstanceWithoutDisks(
 		t,
-		client,
+		client, true,
 		func(_ *linodego.Client, options *linodego.InstanceCreateOptions) {
 			options.FirewallID = firewall.ID
 		},
@@ -344,7 +344,7 @@ func TestInstance_CreateUnderFirewall(t *testing.T) {
 func TestInstance_Rebuild(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(
 		t,
-		"fixtures/TestInstance_Rebuild",
+		"fixtures/TestInstance_Rebuild", true,
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
 			options.Region = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
 		},
@@ -382,7 +382,7 @@ func TestInstance_Clone(t *testing.T) {
 	var targetRegion string
 
 	client, instance, teardownOriginalLinode, err := setupInstance(
-		t, "fixtures/TestInstance_Clone",
+		t, "fixtures/TestInstance_Clone", true,
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
 			targetRegion = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
 
@@ -457,7 +457,7 @@ func TestInstance_Clone(t *testing.T) {
 }
 
 func TestInstance_withMetadata(t *testing.T) {
-	_, inst, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_withMetadata",
+	_, inst, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_withMetadata", true,
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
 			options.Metadata = &linodego.InstanceMetadataOptions{
 				UserData: base64.StdEncoding.EncodeToString([]byte("reallycoolmetadata")),
@@ -475,11 +475,10 @@ func TestInstance_withMetadata(t *testing.T) {
 	}
 }
 
-func createInstance(t *testing.T, client *linodego.Client, modifiers ...instanceModifier) (*linodego.Instance, error) {
+func createInstance(t *testing.T, client *linodego.Client, enableCloudFirewall bool, modifiers ...instanceModifier) (*linodego.Instance, error) {
 	if t != nil {
 		t.Helper()
 	}
-
 	booted := false
 	createOpts := linodego.InstanceCreateOptions{
 		Label:    "go-test-ins-" + randLabel(),
@@ -490,19 +489,23 @@ func createInstance(t *testing.T, client *linodego.Client, modifiers ...instance
 		Booted:   &booted,
 	}
 
+	if enableCloudFirewall {
+		createOpts.FirewallID = firewallID
+	}
+
 	for _, modifier := range modifiers {
 		modifier(client, &createOpts)
 	}
 	return client.CreateInstance(context.Background(), createOpts)
 }
 
-func setupInstance(t *testing.T, fixturesYaml string, modifiers ...instanceModifier) (*linodego.Client, *linodego.Instance, func(), error) {
+func setupInstance(t *testing.T, fixturesYaml string, EnableCloudFirewall bool, modifiers ...instanceModifier) (*linodego.Client, *linodego.Instance, func(), error) {
 	if t != nil {
 		t.Helper()
 	}
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 
-	instance, err := createInstance(t, client, modifiers...)
+	instance, err := createInstance(t, client, EnableCloudFirewall, modifiers...)
 	if err != nil {
 		t.Errorf("failed to create test instance: %s", err)
 	}
@@ -521,6 +524,7 @@ func setupInstance(t *testing.T, fixturesYaml string, modifiers ...instanceModif
 func createInstanceWithoutDisks(
 	t *testing.T,
 	client *linodego.Client,
+	enableCloudFirewall bool,
 	modifiers ...instanceModifier,
 ) (*linodego.Instance, *linodego.InstanceConfig, func(), error) {
 	t.Helper()
@@ -531,6 +535,10 @@ func createInstanceWithoutDisks(
 		Region: getRegionsWithCaps(t, client, []string{"linodes"})[0],
 		Type:   "g6-nanode-1",
 		Booted: &falseBool,
+	}
+
+	if enableCloudFirewall {
+		createOpts.FirewallID = GetFirewallID()
 	}
 
 	for _, modifier := range modifiers {
@@ -559,10 +567,10 @@ func createInstanceWithoutDisks(
 	return instance, config, teardown, err
 }
 
-func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string, modifiers ...instanceModifier) (*linodego.Client, *linodego.Instance, *linodego.InstanceConfig, func(), error) {
+func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string, enableCloudFirewall bool, modifiers ...instanceModifier) (*linodego.Client, *linodego.Instance, *linodego.InstanceConfig, func(), error) {
 	t.Helper()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
-	instance, config, instanceTeardown, err := createInstanceWithoutDisks(t, client, modifiers...)
+	instance, config, instanceTeardown, err := createInstanceWithoutDisks(t, client, enableCloudFirewall, modifiers...)
 
 	teardown := func() {
 		instanceTeardown()

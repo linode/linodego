@@ -30,7 +30,7 @@ func TestInstanceFirewalls_List(t *testing.T) {
 
 func setupInstanceFirewall(t *testing.T, firewallModifiers []firewallModifier, fixturesYaml string) (*linodego.Client, *linodego.Instance, *linodego.Firewall, func(), error) {
 	t.Helper()
-	client, instance, instanceTeardown, err := setupInstance(t, fixturesYaml,
+	client, instance, instanceTeardown, err := setupInstance(t, fixturesYaml, false,
 		func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
 			opts.Label = "linodego-fw-inst-test"
 		})
