@@ -120,9 +120,9 @@ func (c *Client) ListObjectStorageBuckets(ctx context.Context, opts *ListOptions
 }
 
 // ListObjectStorageBucketsInCluster lists all ObjectStorageBuckets of a cluster
-func (c *Client) ListObjectStorageBucketsInCluster(ctx context.Context, opts *ListOptions, clusterID string) ([]ObjectStorageBucket, error) {
+func (c *Client) ListObjectStorageBucketsInCluster(ctx context.Context, opts *ListOptions, clusterOrRegionID string) ([]ObjectStorageBucket, error) {
 	response := ObjectStorageBucketsPagedResponse{}
-	err := c.listHelper(ctx, &response, opts, clusterID)
+	err := c.listHelper(ctx, &response, opts, clusterOrRegionID)
 	if err != nil {
 		return nil, err
 	}
@@ -159,10 +159,10 @@ func (c *Client) CreateObjectStorageBucket(ctx context.Context, opts ObjectStora
 }
 
 // GetObjectStorageBucketAccess gets the current access config for a bucket
-func (c *Client) GetObjectStorageBucketAccess(ctx context.Context, clusterID, label string) (*ObjectStorageBucketAccess, error) {
+func (c *Client) GetObjectStorageBucketAccess(ctx context.Context, clusterOrRegionID, label string) (*ObjectStorageBucketAccess, error) {
 	label = url.PathEscape(label)
-	clusterID = url.PathEscape(clusterID)
-	e := fmt.Sprintf("object-storage/buckets/%s/%s/access", clusterID, label)
+	clusterOrRegionID = url.PathEscape(clusterOrRegionID)
+	e := fmt.Sprintf("object-storage/buckets/%s/%s/access", clusterOrRegionID, label)
 	req := c.R(ctx).SetResult(&ObjectStorageBucketAccess{})
 	r, err := coupleAPIErrors(req.Get(e))
 	if err != nil {
@@ -173,15 +173,15 @@ func (c *Client) GetObjectStorageBucketAccess(ctx context.Context, clusterID, la
 }
 
 // UpdateObjectStorageBucketAccess updates the access configuration for an ObjectStorageBucket
-func (c *Client) UpdateObjectStorageBucketAccess(ctx context.Context, clusterID, label string, opts ObjectStorageBucketUpdateAccessOptions) error {
+func (c *Client) UpdateObjectStorageBucketAccess(ctx context.Context, clusterOrRegionID, label string, opts ObjectStorageBucketUpdateAccessOptions) error {
 	body, err := json.Marshal(opts)
 	if err != nil {
 		return err
 	}
 
 	label = url.PathEscape(label)
-	clusterID = url.PathEscape(clusterID)
-	e := fmt.Sprintf("object-storage/buckets/%s/%s/access", clusterID, label)
+	clusterOrRegionID = url.PathEscape(clusterOrRegionID)
+	e := fmt.Sprintf("object-storage/buckets/%s/%s/access", clusterOrRegionID, label)
 	_, err = coupleAPIErrors(c.R(ctx).SetBody(string(body)).Post(e))
 	if err != nil {
 		return err
@@ -191,9 +191,9 @@ func (c *Client) UpdateObjectStorageBucketAccess(ctx context.Context, clusterID,
 }
 
 // DeleteObjectStorageBucket deletes the ObjectStorageBucket with the specified label
-func (c *Client) DeleteObjectStorageBucket(ctx context.Context, clusterID, label string) error {
+func (c *Client) DeleteObjectStorageBucket(ctx context.Context, clusterOrRegionID, label string) error {
 	label = url.PathEscape(label)
-	e := fmt.Sprintf("object-storage/buckets/%s/%s", clusterID, label)
+	e := fmt.Sprintf("object-storage/buckets/%s/%s", clusterOrRegionID, label)
 	_, err := coupleAPIErrors(c.R(ctx).Delete(e))
 	return err
 }
