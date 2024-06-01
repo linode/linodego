@@ -149,7 +149,7 @@ func TestObjectStorageKeys_Limited_NoAccess(t *testing.T) {
 }
 
 func TestObjectStorageKeys_Regional_Limited(t *testing.T) {
-	t.SkipNow()
+	// t.Skip("skipping region test before GA")
 	client, teardown := createTestClient(t, "fixtures/TestObjectStorageKeys_Regional_Limited")
 	regions := getRegionsWithCaps(t, client, []string{"Object Storage"})
 	if len(regions) < 1 {
@@ -175,15 +175,33 @@ func TestObjectStorageKeys_Regional_Limited(t *testing.T) {
 			Permissions: "read_only",
 		},
 	}
-	createOpts.Regions = []string{"us-east"}
+	initialRegion := "us-east"
+	createOpts.Regions = []string{initialRegion}
 	_, key, teardown, err := setupObjectStorageKey(t, createOpts, "fixtures/TestObjectStorageKeys_Regional_Limited", client, teardown)
 	defer teardown()
 	if err != nil {
-		t.Error(err)
+		t.Fatalf("error creating the obj regional key: %v", err)
 	}
 
 	if !key.Limited || key.BucketAccess == nil || len(*key.BucketAccess) == 0 {
 		t.Errorf("Regional limited Object Storage key returned access, %v, %v", key.Limited, key.BucketAccess)
+	}
+
+	if len(key.Regions) == 0 || key.Regions[0].ID != initialRegion {
+		t.Errorf("Unexpected key regions, expected regions: %v, actual regions: %v", createOpts.Regions, key.Regions)
+	}
+
+	updatedRegion := "us-east"
+	updateOpts := ObjectStorageKeyUpdateOptions{
+		Regions: []string{updatedRegion},
+	}
+	key, err = client.UpdateObjectStorageKey(context.Background(), key.ID, updateOpts)
+	if err != nil {
+		t.Fatalf("error updating the obj regional key: %v", err)
+	}
+
+	if len(key.Regions) == 0 || key.Regions[0].ID != updatedRegion {
+		t.Errorf("Unexpected key regions, expected regions: %v, actual regions: %v", updatedRegion, key.Regions[0].ID)
 	}
 }
 

@@ -119,7 +119,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"ap-west","label":"go-bucket-test-def"}'
+    body: '{"region":"us-east","label":"go-bucket-test-def"}'
     form: {}
     headers:
       Accept:
@@ -132,7 +132,7 @@ interactions:
     method: POST
   response:
     body: '{"hostname": "go-bucket-test-def.alpha.linodeobjects.com", "label": "go-bucket-test-def",
-      "created": "2018-01-02T03:04:05", "region": "ap-west", "cluster": "alpha", "size":
+      "created": "2018-01-02T03:04:05", "region": "us-east", "cluster": "alpha", "size":
       0, "objects": 0}'
     headers:
       Access-Control-Allow-Credentials:
@@ -178,7 +178,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-def","bucket_access":[{"region":"ap-west","bucket_name":"go-bucket-test-def","permissions":"read_only"}],"regions":["ap-west"]}'
+    body: '{"label":"go-test-def","bucket_access":[{"region":"us-east","bucket_name":"go-bucket-test-def","permissions":"read_only"}],"regions":["us-east"]}'
     form: {}
     headers:
       Accept:
@@ -190,10 +190,10 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/keys
     method: POST
   response:
-    body: '{"id": 90785, "label": "go-test-def", "access_key": "[SANITIZED]", "secret_key":
+    body: '{"id": 90889, "label": "go-test-def", "access_key": "[SANITIZED]", "secret_key":
       "[SANITIZED]", "limited": true, "bucket_access": [{"cluster": "alpha", "bucket_name":
-      "go-bucket-test-def", "permissions": "read_only", "region": "ap-west"}], "regions":
-      [{"id": "ap-west", "s3_endpoint": "alpha.linodeobjects.com"}]}'
+      "go-bucket-test-def", "permissions": "read_only", "region": "us-east"}], "regions":
+      [{"id": "us-east", "s3_endpoint": "alpha.linodeobjects.com"}]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -238,6 +238,66 @@ interactions:
     code: 200
     duration: ""
 - request:
+    body: '{"regions":["us-east"]}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/keys/90889
+    method: PUT
+  response:
+    body: '{"id": 90889, "label": "go-test-def", "access_key": "[SANITIZED]", "secret_key":
+      "[REDACTED]", "limited": true, "bucket_access": [{"cluster": "alpha", "bucket_name":
+      "go-bucket-test-def", "permissions": "read_only", "region": "us-east"}], "regions":
+      [{"id": "us-east", "s3_endpoint": "alpha.linodeobjects.com"}]}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "321"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
     body: ""
     form: {}
     headers:
@@ -247,7 +307,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/90785
+    url: https://api.linode.com/v4beta/object-storage/keys/90889
     method: DELETE
   response:
     body: '{}'

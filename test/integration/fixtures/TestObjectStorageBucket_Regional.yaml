@@ -119,7 +119,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"ap-west","label":"go-bucket-test-def"}'
+    body: '{"region":"us-east","label":"go-bucket-test-def"}'
     form: {}
     headers:
       Accept:
@@ -132,7 +132,7 @@ interactions:
     method: POST
   response:
     body: '{"hostname": "go-bucket-test-def.alpha.linodeobjects.com", "label": "go-bucket-test-def",
-      "created": "2018-01-02T03:04:05", "region": "ap-west", "cluster": "alpha", "size":
+      "created": "2018-01-02T03:04:05", "region": "us-east", "cluster": "alpha", "size":
       0, "objects": 0}'
     headers:
       Access-Control-Allow-Credentials:
@@ -187,11 +187,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/ap-west/go-bucket-test-def
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east/go-bucket-test-def
     method: GET
   response:
     body: '{"hostname": "go-bucket-test-def.alpha.linodeobjects.com", "label": "go-bucket-test-def",
-      "created": "2018-01-02T03:04:05", "region": "ap-west", "cluster": "alpha", "size":
+      "created": "2018-01-02T03:04:05", "region": "us-east", "cluster": "alpha", "size":
       0, "objects": 0}'
     headers:
       Access-Control-Allow-Credentials:
