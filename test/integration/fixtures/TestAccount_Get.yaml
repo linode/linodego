@@ -14,14 +14,14 @@ interactions:
     url: https://api.linode.com/v4beta/account
     method: GET
   response:
-    body: '{"company": "Linode", "email": "REDACTED", "first_name": "REDACTED",
-      "last_name": "REDACTED", "address_1": "REDACTED", "address_2": "NA",
-      "city": "REDACTED", "state": "REDACTED", "zip": "REDACTED", "country": "US", "phone":
-      "REDACTED", "balance": 0.0, "tax_id": "", "billing_source": "linode", "credit_card":
-      {"last_four": "REDACTED", "expiry": "REDACTED"}, "balance_uninvoiced": 0.0, "active_since":
+    body: '{"company": "Linode", "email": "foo@linode.com", "first_name": "foo",
+      "last_name": "bar", "address_1": "123 Street Street", "address_2": "NA",
+      "city": "Philadelphia", "state": "PA", "zip": "30000", "country": "US", "phone":
+      "1234567891", "balance": 0.0, "tax_id": "", "billing_source": "linode", "credit_card":
+      {"last_four": "1234", "expiry": "02/2020"}, "balance_uninvoiced": 0.0, "active_since":
       "2018-01-02T03:04:05", "capabilities": ["Linodes", "NodeBalancers", "Block Storage",
       "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans", "LKE HA Control Planes",
-      "Machine Images", "Managed Databases"], "active_promotions": [], "euuid": "REDACTED"}'
+      "Machine Images", "Managed Databases"], "active_promotions": [], "euuid": "FFFFFFFF-2E4D-47CE-FFFFFFFFFFFFFFFFF"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -34,16 +34,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
-      - "687"
+      - "695"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Tue, 13 Feb 2024 18:57:42 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -59,7 +62,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
