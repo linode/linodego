@@ -54,6 +54,49 @@ func setupVPCWithSubnetWithInstance(
 	return client, vpc, vpcSubnet, instance, instanceConfig, teardownAll, err
 }
 
+func setupInstanceWithVPCAndNATOneToOne(t *testing.T, fixturesYaml string) (
+	*Client,
+	*VPC,
+	*VPCSubnet,
+	*Instance,
+	*InstanceConfig,
+	func(),
+) {
+	t.Helper()
+	client, vpc, vpcSubnet, instance, config, teardown, err := setupVPCWithSubnetWithInstance(
+		t,
+		fixturesYaml,
+		func(client *Client, opts *InstanceCreateOptions) {
+			opts.Region = getRegionsWithCaps(t, client, []string{"Linodes", "VPCs"})[0]
+		},
+	)
+	if err != nil {
+		if teardown != nil {
+			teardown()
+		}
+		t.Fatal(err)
+	}
+
+	updateConfigOpts := config.GetUpdateOptions()
+	NAT1To1Any := "any"
+	updateConfigOpts.Interfaces = []InstanceConfigInterfaceCreateOptions{
+		{
+			Purpose:  InterfacePurposeVPC,
+			SubnetID: &vpcSubnet.ID,
+			IPv4: &VPCIPv4{
+				NAT1To1: &NAT1To1Any,
+			},
+		},
+	}
+	config, err = client.UpdateInstanceConfig(context.Background(), instance.ID, config.ID, updateConfigOpts)
+	if err != nil {
+		teardown()
+		t.Fatal(err)
+	}
+
+	return client, vpc, vpcSubnet, instance, config, teardown
+}
+
 func setupInstanceWith3Interfaces(t *testing.T, fixturesYaml string) (
 	*Client,
 	*VPC,
@@ -67,7 +110,7 @@ func setupInstanceWith3Interfaces(t *testing.T, fixturesYaml string) (
 		t,
 		fixturesYaml,
 		func(client *Client, opts *InstanceCreateOptions) {
-			opts.Region = getRegionsWithCaps(t, client, []string{"VPCs"})[0]
+			opts.Region = getRegionsWithCaps(t, client, []string{"Linodes", "VPCs"})[0]
 		},
 	)
 	if err != nil {
@@ -349,6 +392,7 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 		InstanceConfigInterfaceCreateOptions{
 			Purpose:  InterfacePurposeVPC,
 			SubnetID: &vpcSubnet.ID,
+			IPRanges: []string{"192.168.0.5/32"},
 		},
 	)
 	if err != nil {
@@ -371,11 +415,18 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 	if !(updatedIntfc.Primary == updateOpts.Primary) {
 		t.Errorf("updating interface %v didn't succeed", intfc.ID)
 	}
+
+	if updatedIntfc.IPRanges[0] != "192.168.0.5/32" {
+		t.Errorf("unexpected value for IPRanges: %s", updatedIntfc.IPRanges[0])
+	}
+
 	NAT1To1Any := "any"
 	updateOpts.IPv4 = &VPCIPv4{
 		VPC:     "192.168.0.10",
 		NAT1To1: &NAT1To1Any,
 	}
+	newIPRanges := make([]string, 0)
+	updateOpts.IPRanges = &newIPRanges
 
 	updatedIntfc, err = client.UpdateInstanceConfigInterface(
 		context.Background(),
@@ -384,7 +435,6 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 		intfc.ID,
 		updateOpts,
 	)
-
 	if err != nil {
 		t.Errorf("an error occurs when updating an interface in config %v", config.ID)
 	}
@@ -392,6 +442,10 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 	if !(updatedIntfc.Primary == updateOpts.Primary &&
 		updateOpts.IPv4.VPC == updatedIntfc.IPv4.VPC) {
 		t.Errorf("updating interface %v didn't succeed", intfc.ID)
+	}
+
+	if len(updatedIntfc.IPRanges) > 0 {
+		t.Errorf("expected IPRanges to be empty, got %d entries", len(updatedIntfc.IPRanges))
 	}
 }
 

@@ -94,7 +94,6 @@ func TestVolume_WaitForLinodeID_nil(t *testing.T) {
 		t.Errorf("Error setting up volume test, %s", err)
 	}
 	_, err = client.WaitForVolumeLinodeID(context.Background(), volume.ID, nil, 20)
-
 	if err != nil {
 		t.Errorf("Error getting volume %d, expected *LinodeVolume, got error %v", volume.ID, err)
 	}

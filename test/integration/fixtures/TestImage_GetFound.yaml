@@ -11,14 +11,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/linode%2Fubuntu16.04lts
+    url: https://api.linode.com/v4beta/images/linode%2Fubuntu22.04
     method: GET
   response:
-    body: '{"id": "linode/ubuntu16.04lts", "label": "Ubuntu 16.04 LTS", "deprecated":
-      true, "size": 2700, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+    body: '{"id": "linode/ubuntu22.04", "label": "Ubuntu 22.04 LTS", "deprecated":
+      false, "size": 3500, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "description": "", "created_by": "linode", "type": "manual", "is_public": true,
       "vendor": "Ubuntu", "expiry": null, "eol": "2018-01-02T03:04:05", "status":
-      "available", "capabilities": []}'
+      "available", "capabilities": ["cloud-init"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -35,13 +35,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "351"
+      - "361"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 16 Feb 2024 17:47:58 GMT
+      - Fri, 15 Mar 2024 18:43:24 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

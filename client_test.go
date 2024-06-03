@@ -1,10 +1,16 @@
 package linodego
 
 import (
+	"bytes"
+	"context"
 	"fmt"
+	"reflect"
+	"strings"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
+	"github.com/jarcoal/httpmock"
+	"github.com/linode/linodego/internal/testutil"
 )
 
 func TestClient_SetAPIVersion(t *testing.T) {
@@ -103,6 +109,34 @@ func TestClient_NewFromEnvToken(t *testing.T) {
 	}
 }
 
+func TestClient_UseURL(t *testing.T) {
+	client := NewClient(nil)
+
+	if _, err := client.UseURL("https://api.test1.linode.com/"); err != nil {
+		t.Fatal(err)
+	}
+
+	if client.baseURL != "api.test1.linode.com" {
+		t.Fatalf("mismatched base url: %s", client.baseURL)
+	}
+
+	if client.apiVersion != "v4" {
+		t.Fatalf("mismatched api version: %s", client.apiVersion)
+	}
+
+	if _, err := client.UseURL("https://api.test2.linode.com/v4beta"); err != nil {
+		t.Fatal(err)
+	}
+
+	if client.baseURL != "api.test2.linode.com" {
+		t.Fatalf("mismatched base url: %s", client.baseURL)
+	}
+
+	if client.apiVersion != "v4beta" {
+		t.Fatalf("mismatched api version: %s", client.apiVersion)
+	}
+}
+
 const configNewFromEnv = `
 [default]
 api_url = api.cool.linode.com
@@ -111,3 +145,56 @@ api_version = v4beta
 [cool]
 token = blah
 `
+
+func TestDebugLogSanitization(t *testing.T) {
+	type instanceResponse struct {
+		ID     int    `json:"id"`
+		Region string `json:"region"`
+		Label  string `json:"label"`
+	}
+
+	var testResp = instanceResponse{
+		ID:     100,
+		Region: "test-central",
+		Label:  "this-is-a-test-linode",
+	}
+	var lgr bytes.Buffer
+
+	plainTextToken := "NOTANAPIKEY"
+
+	mockClient := testutil.CreateMockClient(t, NewClient)
+	logger := testutil.CreateLogger()
+	mockClient.SetLogger(logger)
+	logger.L.SetOutput(&lgr)
+
+	mockClient.SetDebug(true)
+	if !mockClient.resty.Debug {
+		t.Fatal("debug should be enabled")
+	}
+	mockClient.SetHeader("Authorization", fmt.Sprintf("Bearer %s", plainTextToken))
+
+	if mockClient.resty.Header.Get("Authorization") != fmt.Sprintf("Bearer %s", plainTextToken) {
+		t.Fatal("token not found in auth header")
+	}
+
+	httpmock.RegisterRegexpResponder("GET", testutil.MockRequestURL("/linode/instances"),
+		httpmock.NewJsonResponderOrPanic(200, &testResp))
+
+	result, err := doGETRequest[instanceResponse](
+		context.Background(),
+		mockClient,
+		"/linode/instances",
+	)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	logInfo := lgr.String()
+	if !strings.Contains(logInfo, "Bearer *******************************") {
+		t.Fatal("sanitized bearer token was expected")
+	}
+
+	if !reflect.DeepEqual(*result, testResp) {
+		t.Fatalf("actual response does not equal desired response: %s", cmp.Diff(result, testResponse))
+	}
+}

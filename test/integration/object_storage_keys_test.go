@@ -67,7 +67,6 @@ func TestObjectStorageKey_Update(t *testing.T) {
 		Label: renamedLabel,
 	}
 	objectStorageKey, err = client.UpdateObjectStorageKey(context.Background(), objectStorageKey.ID, updateOpts)
-
 	if err != nil {
 		t.Errorf("Error renaming objectStorageKey, %s", err)
 	}

@@ -14,22 +14,43 @@ interactions:
     url: https://api.linode.com/v4beta/account/availability
     method: GET
   response:
-    body: '{"data": [{"region": "us-central", "unavailable": []}, {"region": "us-west",
-      "unavailable": []}, {"region": "us-southeast", "unavailable": []}, {"region":
-      "us-east", "unavailable": []}, {"region": "eu-west", "unavailable": []}, {"region":
-      "ap-south", "unavailable": []}, {"region": "eu-central", "unavailable": []},
-      {"region": "ap-northeast", "unavailable": ["Linodes", "NodeBalancers", "Block
-      Storage", "Kubernetes"]}, {"region": "ap-west", "unavailable": []}, {"region":
-      "ca-central", "unavailable": []}, {"region": "ap-southeast", "unavailable":
-      []}, {"region": "us-iad", "unavailable": ["NodeBalancers", "Block Storage"]},
-      {"region": "us-ord", "unavailable": []}, {"region": "fr-par", "unavailable":
-      []}, {"region": "us-sea", "unavailable": []}, {"region": "br-gru", "unavailable":
-      []}, {"region": "nl-ams", "unavailable": []}, {"region": "se-sto", "unavailable":
-      []}, {"region": "es-mad", "unavailable": []}, {"region": "in-maa", "unavailable":
-      []}, {"region": "jp-osa", "unavailable": []}, {"region": "it-mil", "unavailable":
-      []}, {"region": "us-mia", "unavailable": []}, {"region": "id-cgk", "unavailable":
-      []}, {"region": "us-lax", "unavailable": []}], "page": 1, "pages": 1, "results":
-      25}'
+    body: '{"data": [{"region": "us-central", "available": ["Linodes", "NodeBalancers",
+      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "us-west", "available":
+      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
+      []}, {"region": "us-southeast", "available": ["Linodes", "NodeBalancers", "Block
+      Storage", "Kubernetes"], "unavailable": []}, {"region": "us-east", "available":
+      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
+      []}, {"region": "eu-west", "available": ["Linodes", "NodeBalancers", "Block
+      Storage", "Kubernetes"], "unavailable": []}, {"region": "ap-south", "available":
+      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
+      []}, {"region": "eu-central", "available": ["Linodes", "NodeBalancers", "Block
+      Storage", "Kubernetes"], "unavailable": []}, {"region": "ap-northeast", "available":
+      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
+      []}, {"region": "ap-west", "available": ["Linodes", "NodeBalancers", "Block
+      Storage", "Kubernetes"], "unavailable": []}, {"region": "ca-central", "available":
+      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
+      []}, {"region": "ap-southeast", "available": ["Linodes", "NodeBalancers", "Block
+      Storage", "Kubernetes"], "unavailable": []}, {"region": "us-iad", "available":
+      ["Linodes", "NodeBalancers", "Block Storage"], "unavailable": ["Kubernetes"]},
+      {"region": "us-ord", "available": ["Linodes", "NodeBalancers", "Block Storage",
+      "Kubernetes"], "unavailable": []}, {"region": "fr-par", "available": ["Linodes",
+      "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable": []}, {"region":
+      "us-sea", "available": ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"],
+      "unavailable": []}, {"region": "br-gru", "available": ["Linodes", "NodeBalancers",
+      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "nl-ams", "available":
+      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
+      []}, {"region": "se-sto", "available": ["Linodes", "NodeBalancers", "Block Storage",
+      "Kubernetes"], "unavailable": []}, {"region": "es-mad", "available": ["Linodes",
+      "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable": []}, {"region":
+      "in-maa", "available": ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"],
+      "unavailable": []}, {"region": "jp-osa", "available": ["Linodes", "NodeBalancers",
+      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "it-mil", "available":
+      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
+      []}, {"region": "us-mia", "available": ["Linodes", "NodeBalancers", "Block Storage",
+      "Kubernetes"], "unavailable": []}, {"region": "id-cgk", "available": ["Linodes",
+      "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable": []}, {"region":
+      "us-lax", "available": ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"],
+      "unavailable": []}], "page": 1, "pages": 1, "results": 25}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -50,7 +71,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 13 Feb 2024 18:57:39 GMT
+      - Tue, 16 Apr 2024 20:58:12 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -67,7 +88,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:

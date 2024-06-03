@@ -114,20 +114,46 @@ func TestNodeBalancerNode_Get(t *testing.T) {
 }
 
 func TestNodeBalancer_Rebuild(t *testing.T) {
-	client, nodebalancer, config, _, teardown, err := setupNodeBalancerNode(t, "fixtures/TestNodeBalancer_Rebuild")
+	client, nodebalancer, config, node, teardown, err := setupNodeBalancerNode(t, "fixtures/TestNodeBalancer_Rebuild")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
 	}
 
 	nbcRebuildOpts := config.GetRebuildOptions()
+	nbcRebuildOpts.Nodes = append(
+		nbcRebuildOpts.Nodes,
+		linodego.NodeBalancerConfigRebuildNodeOptions{
+			NodeBalancerNodeCreateOptions: node.GetCreateOptions(),
+			ID:                            node.ID,
+		},
+	)
 
-	nbcGot, err := client.RebuildNodeBalancerConfig(context.Background(), nodebalancer.ID, config.ID, nbcRebuildOpts)
+	nbcGot, err := client.RebuildNodeBalancerConfig(
+		context.Background(),
+		nodebalancer.ID,
+		config.ID,
+		nbcRebuildOpts,
+	)
 	if err != nil {
 		t.Errorf("Error rebuilding nodebalancer config %d: %v", config.ID, err)
 	}
 	if nbcGot.Port != config.Port {
 		t.Errorf("RebuildNodeBalancerConfig did not return the expected port")
+	}
+
+	newNodes, err := client.ListNodeBalancerNodes(
+		context.Background(),
+		nodebalancer.ID,
+		nbcGot.ID,
+		nil,
+	)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if newNodes[0].ID != node.ID {
+		t.Fatalf("expected node ID to match; %d != %d", newNodes[0].ID, node.ID)
 	}
 }
 

@@ -6,7 +6,6 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"
 	k8scondition "github.com/linode/linodego/k8s/pkg/condition"
 )
@@ -76,7 +75,10 @@ func TestLKECluster_Update(t *testing.T) {
 	updatedTags := []string{"test=true"}
 	updatedLabel := cluster.Label + "-updated"
 	updatedK8sVersion := "1.23"
-	updatedControlPlane := &linodego.LKEClusterControlPlane{HighAvailability: true}
+	isHA := true
+
+	updatedControlPlane := &linodego.LKEClusterControlPlaneOptions{HighAvailability: &isHA}
+
 	updatedCluster, err := client.UpdateLKECluster(context.TODO(), cluster.ID, linodego.LKEClusterUpdateOptions{
 		Tags:         &updatedTags,
 		Label:        updatedLabel,
@@ -99,7 +101,7 @@ func TestLKECluster_Update(t *testing.T) {
 		t.Errorf("expected tags to be updated to %#v; got %#v", updatedTags, updatedCluster.Tags)
 	}
 
-	if !reflect.DeepEqual(*updatedControlPlane, updatedCluster.ControlPlane) {
+	if !reflect.DeepEqual(*updatedControlPlane.HighAvailability, updatedCluster.ControlPlane.HighAvailability) {
 		t.Errorf("expected control plane to be updated to %#v; got %#v", updatedControlPlane, updatedCluster.ControlPlane)
 	}
 }
@@ -219,32 +221,6 @@ func TestLKEVersion_GetMissing(t *testing.T) {
 	}
 }
 
-func TestLKECluster_Regenerate(t *testing.T) {
-	client := createMockClient(t)
-
-	requestData := linodego.LKEClusterRegenerateOptions{
-		KubeConfig:   true,
-		ServiceToken: false,
-	}
-
-	httpmock.RegisterRegexpResponder("POST", mockRequestURL(t, "clusters/1234/regenerate"),
-		mockRequestBodyValidate(t, requestData, nil))
-
-	if _, err := client.RegenerateLKECluster(context.Background(), 1234, requestData); err != nil {
-		t.Fatal(err)
-	}
-}
-
-func TestLKECluster_DeleteServiceToken(t *testing.T) {
-	client := createMockClient(t)
-
-	httpmock.RegisterRegexpResponder("DELETE", mockRequestURL(t, "clusters/1234/servicetoken"), httpmock.NewStringResponder(200, "{}"))
-
-	if err := client.DeleteLKEClusterServiceToken(context.Background(), 1234); err != nil {
-		t.Fatal(err)
-	}
-}
-
 func TestLKEVersion_GetFound(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestLKEVersion_GetFound")
 	defer teardown()
@@ -281,7 +257,7 @@ func setupLKECluster(t *testing.T, clusterModifiers []clusterModifier, fixturesY
 	createOpts := linodego.LKEClusterCreateOptions{
 		Label:      label,
 		Region:     getRegionsWithCaps(t, client, []string{"Kubernetes"})[0],
-		K8sVersion: "1.23",
+		K8sVersion: "1.29",
 		Tags:       []string{"testing"},
 		NodePools:  []linodego.LKENodePoolCreateOptions{{Count: 1, Type: "g6-standard-2", Tags: []string{"test"}}},
 	}

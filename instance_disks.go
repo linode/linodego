@@ -61,15 +61,13 @@ type InstanceDiskCreateOptions struct {
 	Filesystem      string            `json:"filesystem,omitempty"`
 	AuthorizedKeys  []string          `json:"authorized_keys,omitempty"`
 	AuthorizedUsers []string          `json:"authorized_users,omitempty"`
-	ReadOnly        bool              `json:"read_only,omitempty"`
 	StackscriptID   int               `json:"stackscript_id,omitempty"`
 	StackscriptData map[string]string `json:"stackscript_data,omitempty"`
 }
 
 // InstanceDiskUpdateOptions are InstanceDisk settings that can be used in updates
 type InstanceDiskUpdateOptions struct {
-	Label    string `json:"label"`
-	ReadOnly bool   `json:"read_only"`
+	Label string `json:"label"`
 }
 
 // endpoint gets the endpoint URL for InstanceDisks of a given Instance
