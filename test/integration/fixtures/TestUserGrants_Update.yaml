@@ -16,7 +16,7 @@ interactions:
   response:
     body: '{"username": "linodegotest-updateusergrants", "email": "linodegotest-updateusergrants@example.com",
       "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
-      null}'
+      null, "password_created": null, "last_login": null, "user_type": "default"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -29,15 +29,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
-      - "188"
+      - "258"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Tue, 13 Feb 2024 19:39:30 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -52,14 +56,14 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"global":{"account_access":"read_only","add_domains":false,"add_databases":true,"add_firewalls":true,"add_images":true,"add_linodes":false,"add_longview":true,"add_nodebalancers":false,"add_stackscripts":true,"add_volumes":true,"cancel_account":false,"longview_subscription":false}}'
+    body: '{"global":{"account_access":"read_only","add_databases":true,"add_domains":false,"add_firewalls":true,"add_images":true,"add_linodes":false,"add_longview":true,"add_nodebalancers":false,"add_stackscripts":true,"add_volumes":true,"cancel_account":false,"longview_subscription":false}}'
     form: {}
     headers:
       Accept:
@@ -71,51 +75,23 @@ interactions:
     url: https://api.linode.com/v4beta/account/users/linodegotest-updateusergrants/grants
     method: PUT
   response:
-    body: '{"linode": [{"id": 41591158, "label": "ansible-test-inventory", "permissions":
-      null}, {"id": 41658354, "label": "tf_test-5934556314800509826", "permissions":
-      null}, {"id": 41658415, "label": "tf_test-9137808634680747348", "permissions":
-      null}, {"id": 41658417, "label": "tf_test-6820438710173430308", "permissions":
-      null}, {"id": 41658428, "label": "tf_test-7984198885518639651", "permissions":
-      null}, {"id": 41658616, "label": "tf_test-7823563263536727759", "permissions":
-      null}, {"id": 41658675, "label": "tf_test-7500823998336775767", "permissions":
-      null}, {"id": 41658677, "label": "tf_test-9039857053321143333", "permissions":
-      null}, {"id": 41658694, "label": "tf_test-958893655126211430", "permissions":
-      null}, {"id": 41823145, "label": "ubuntu-us-east-testing", "permissions": null}],
-      "nodebalancer": [], "domain": [], "stackscript": [{"id": 1110207, "label": "ansible-test-197619451",
-      "permissions": null}], "longview": [], "image": [{"id": 18529728, "label": "tf_test-6820438710173430308",
-      "permissions": null}, {"id": 18529729, "label": "tf_test-2510365653812729564",
-      "permissions": null}, {"id": 18529730, "label": "tf_test-9137808634680747348",
-      "permissions": null}, {"id": 18529737, "label": "tf_test-7984198885518639651",
-      "permissions": null}, {"id": 18529738, "label": "tf_test-7984198885518639651",
-      "permissions": null}, {"id": 18529812, "label": "tf_test-7500823998336775767",
-      "permissions": null}, {"id": 18529815, "label": "tf_test-9039857053321143333",
-      "permissions": null}, {"id": 18529816, "label": "tf_test-958893655126211430",
-      "permissions": null}, {"id": 18529817, "label": "tf_test-958893655126211430",
-      "permissions": null}], "volume": [], "firewall": [], "database": [{"id": 14637,
-      "label": "tf_test-563520466150203250", "permissions": null}, {"id": 14638, "label":
-      "tf_test-6390117349771558899", "permissions": null}, {"id": 14639, "label":
-      "tf_test-1374137760482804261", "permissions": null}, {"id": 14640, "label":
-      "tf_test-3347111867749673643", "permissions": null}, {"id": 14641, "label":
-      "tf_test-6859397732720482476", "permissions": null}, {"id": 14642, "label":
-      "tf_test-8291666874639770804", "permissions": null}, {"id": 14643, "label":
-      "tf_test-8193840941368456464", "permissions": null}, {"id": 14644, "label":
-      "tf_test-4799969768229110427", "permissions": null}, {"id": 14645, "label":
-      "tf_test-580262857426233267", "permissions": null}, {"id": 14646, "label": "tf_test-4469883573221458079",
-      "permissions": null}, {"id": 14647, "label": "tf_test-2509947882041115336",
-      "permissions": null}, {"id": 14648, "label": "tf_test-2870651309179209554",
-      "permissions": null}, {"id": 14649, "label": "tf_test-5837446087162928096",
-      "permissions": null}, {"id": 14650, "label": "tf_test-6665087439142600447",
-      "permissions": null}, {"id": 14651, "label": "tf_test-5999066805637904071",
-      "permissions": null}, {"id": 14652, "label": "tf_test-4281084641894890037",
-      "permissions": null}, {"id": 14653, "label": "tf_test-7554465936951395838",
-      "permissions": null}, {"id": 14654, "label": "tf_test-4133636875310411703",
-      "permissions": null}, {"id": 14655, "label": "tf_test-8469382010146043663",
-      "permissions": null}, {"id": 14656, "label": "tf_test-1209200813276963127",
-      "permissions": null}], "global": {"add_domains": false, "add_linodes": false,
-      "add_longview": true, "longview_subscription": false, "add_stackscripts": true,
-      "add_nodebalancers": false, "add_images": true, "add_volumes": true, "add_firewalls":
-      true, "add_databases": true, "account_access": "read_only", "cancel_account":
-      false}}'
+    body: '{"linode": [{"id": 54772819, "label": "test-instance", "permissions": null},
+      {"id": 54779923, "label": "test-instance-2", "permissions": null}], "nodebalancer":
+      [], "domain": [], "stackscript": [{"id": 1173356, "label": "foo", "permissions":
+      null}], "longview": [], "image": [], "volume": [], "firewall": [{"id": 346984,
+      "label": "cool-firewall", "permissions": null}], "database": [{"id": 522, "label":
+      "scalegridgoestojapanpt2", "permissions": null}, {"id": 6806, "label": "tf_test-6495208472049336246",
+      "permissions": null}, {"id": 6807, "label": "tf_test-6874476732250362643", "permissions":
+      null}, {"id": 6808, "label": "tf_test-3486893335994149933", "permissions": null},
+      {"id": 22775, "label": "IntTestSDK_1686065805updatedSQLDB", "permissions": null}],
+      "vpc": [{"id": 21774, "label": "test", "permissions": null}, {"id": 21790, "label":
+      "1707494018673859000label", "permissions": null}, {"id": 21791, "label": "1707494037856246000label",
+      "permissions": null}, {"id": 21795, "label": "test-vpc", "permissions": null},
+      {"id": 21804, "label": "1707497046369793000label", "permissions": null}], "global":
+      {"add_volumes": true, "add_databases": true, "add_stackscripts": true, "add_domains":
+      false, "add_images": true, "add_firewalls": true, "longview_subscription": false,
+      "add_longview": true, "add_vpcs": false, "add_nodebalancers": false, "add_linodes":
+      false, "account_access": "read_only", "cancel_account": false}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -128,17 +104,22 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Tue, 13 Feb 2024 19:39:31 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
+      - Accept-Encoding
       X-Accepted-Oauth-Scopes:
       - account:read_write
       X-Content-Type-Options:
@@ -149,7 +130,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -181,15 +162,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "2"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Tue, 13 Feb 2024 19:39:31 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -204,7 +189,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
