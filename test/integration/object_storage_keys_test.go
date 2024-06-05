@@ -201,7 +201,7 @@ func TestObjectStorageKeys_Regional_Limited(t *testing.T) {
 	}
 
 	if len(key.Regions) == 0 || key.Regions[0].ID != updatedRegion {
-		t.Errorf("Unexpected key regions, expected regions: %v, actual regions: %v", updatedRegion, key.Regions[0].ID)
+		t.Errorf("Unexpected key regions, expected regions: %v, actual regions: %v", updateOpts.Regions, key.Regions)
 	}
 }
 
