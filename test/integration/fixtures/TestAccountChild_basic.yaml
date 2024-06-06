@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"username":"linodegotest-updateusergrantsna","email":"linodegotest-updateusergrants@example.com","restricted":true}'
+    body: ""
     form: {}
     headers:
       Accept:
@@ -11,12 +11,18 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/users
-    method: POST
+    url: https://api.linode.com/v4beta/account/child-accounts?page=1
+    method: GET
   response:
-    body: '{"username": "linodegotest-updateusergrantsna", "email": "linodegotest-updateusergrants@example.com",
-      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
-      null, "password_created": null, "last_login": null, "user_type": "default"}'
+    body: '{"data": [{"company": "DX Child Account", "email": "dl-linode-dev-dx@akamai.com",
+      "first_name": "DX-Child", "last_name": "Team", "address_1": "", "address_2":
+      "", "city": "", "state": "", "zip": "", "country": "", "phone": "", "balance":
+      0.0, "tax_id": "", "billing_source": "akamai", "credit_card": {"last_four":
+      null, "expiry": null}, "balance_uninvoiced": 0.0, "active_since": "2018-01-02T03:04:05",
+      "capabilities": ["Linodes", "NodeBalancers", "Block Storage", "Object Storage",
+      "Kubernetes", "Cloud Firewall", "Vlans", "LKE HA Control Planes", "Machine Images",
+      "VPCs"], "active_promotions": [], "euuid": "E89C475E-7476-4B95-95EA82BB4EE866E3"}],
+      "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -29,99 +35,22 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "260"
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Tue, 13 Feb 2024 19:39:32 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - account:read_write
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "400"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: '{"global":{"account_access":null,"add_databases":false,"add_domains":false,"add_firewalls":false,"add_images":false,"add_linodes":false,"add_longview":false,"add_nodebalancers":false,"add_stackscripts":false,"add_volumes":false,"cancel_account":false,"longview_subscription":false}}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/users/linodegotest-updateusergrantsna/grants
-    method: PUT
-  response:
-    body: '{"linode": [{"id": 54772819, "label": "test-instance", "permissions": null},
-      {"id": 54779923, "label": "test-instance-2", "permissions": null}], "nodebalancer":
-      [], "domain": [], "stackscript": [{"id": 1173356, "label": "foo", "permissions":
-      null}], "longview": [], "image": [], "volume": [], "firewall": [{"id": 346984,
-      "label": "cool-firewall", "permissions": null}], "database": [{"id": 522, "label":
-      "scalegridgoestojapanpt2", "permissions": null}, {"id": 6806, "label": "tf_test-6495208472049336246",
-      "permissions": null}, {"id": 6807, "label": "tf_test-6874476732250362643", "permissions":
-      null}, {"id": 6808, "label": "tf_test-3486893335994149933", "permissions": null},
-      {"id": 22775, "label": "IntTestSDK_1686065805updatedSQLDB", "permissions": null}],
-      "vpc": [{"id": 21774, "label": "test", "permissions": null}, {"id": 21790, "label":
-      "1707494018673859000label", "permissions": null}, {"id": 21791, "label": "1707494037856246000label",
-      "permissions": null}, {"id": 21795, "label": "test-vpc", "permissions": null},
-      {"id": 21804, "label": "1707497046369793000label", "permissions": null}], "global":
-      {"add_databases": false, "add_nodebalancers": false, "add_volumes": false, "add_firewalls":
-      false, "add_longview": false, "add_domains": false, "add_linodes": false, "add_vpcs":
-      false, "add_images": false, "add_stackscripts": false, "longview_subscription":
-      false, "account_access": null, "cancel_account": false}}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Tue, 13 Feb 2024 19:39:32 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
       - Accept-Encoding
+      - Authorization, X-Filter
+      - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - account:read_write
+      - child_account:read_only
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -130,7 +59,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1200"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -146,10 +75,17 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/users/linodegotest-updateusergrantsna
-    method: DELETE
+    url: https://api.linode.com/v4beta/account/child-accounts/E89C475E-7476-4B95-95EA82BB4EE866E3
+    method: GET
   response:
-    body: '{}'
+    body: '{"company": "DX Child Account", "email": "dl-linode-dev-dx@akamai.com",
+      "first_name": "DX-Child", "last_name": "Team", "address_1": "", "address_2":
+      "", "city": "", "state": "", "zip": "", "country": "", "phone": "", "balance":
+      0.0, "tax_id": "", "billing_source": "akamai", "credit_card": {"last_four":
+      null, "expiry": null}, "balance_uninvoiced": 0.0, "active_since": "2018-01-02T03:04:05",
+      "capabilities": ["Linodes", "NodeBalancers", "Block Storage", "Object Storage",
+      "Kubernetes", "Cloud Firewall", "Vlans", "LKE HA Control Planes", "Machine Images",
+      "VPCs"], "active_promotions": [], "euuid": "E89C475E-7476-4B95-95EA82BB4EE866E3"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -162,25 +98,22 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "2"
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Tue, 13 Feb 2024 19:39:32 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
+      - Accept-Encoding
+      - Authorization, X-Filter
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - account:read_write
+      - child_account:read_only
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -189,7 +122,64 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1200"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/account/child-accounts/E89C475E-7476-4B95-95EA82BB4EE866E3/token
+    method: POST
+  response:
+    body: '{"id": 118940, "scopes": "*", "created": "2018-01-02T03:04:05", "label":
+      "dx-parent-account_411983_1709135656", "token": "bc15402a4afa325689ed1c208607394f6f180121a52e53889e84bf28b2c0c5cd",
+      "expiry": "2018-01-02T03:04:05"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "221"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - child_account:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1200"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

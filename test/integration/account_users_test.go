@@ -67,6 +67,9 @@ func TestUser_Get_smoke(t *testing.T) {
 	if user.VerifiedPhoneNumber != nil {
 		t.Error("expected phone number is not set")
 	}
+	if user.UserType == "" {
+		t.Errorf("expected user type, got none")
+	}
 }
 
 func TestUser_Update(t *testing.T) {
@@ -149,6 +152,9 @@ func TestUsers_List(t *testing.T) {
 	}
 	if newUser.VerifiedPhoneNumber != nil {
 		t.Error("expected phone number is not set")
+	}
+	if newUser.UserType == "" {
+		t.Errorf("expected user type, got none")
 	}
 }
 
