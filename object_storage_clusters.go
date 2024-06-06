@@ -38,7 +38,7 @@ func (resp *ObjectStorageClustersPagedResponse) castResult(r *resty.Request, e s
 	return castedRes.Pages, castedRes.Results, nil
 }
 
-// Deprecated: ListObjectStorageClusters is a deprecated API.
+// Deprecated: ListObjectStorageClusters uses a deprecated API endpoint.
 // ListObjectStorageClusters lists ObjectStorageClusters
 func (c *Client) ListObjectStorageClusters(ctx context.Context, opts *ListOptions) ([]ObjectStorageCluster, error) {
 	response := ObjectStorageClustersPagedResponse{}
