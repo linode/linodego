@@ -49,7 +49,7 @@ func (c *Client) ListObjectStorageClusters(ctx context.Context, opts *ListOption
 	return response.Data, nil
 }
 
-// Deprecated: GetObjectStorageCluster is a deprecated API.
+// Deprecated: GetObjectStorageCluster uses a deprecated API endpoint.
 // GetObjectStorageCluster gets the template with the provided ID
 func (c *Client) GetObjectStorageCluster(ctx context.Context, clusterID string) (*ObjectStorageCluster, error) {
 	clusterID = url.PathEscape(clusterID)
