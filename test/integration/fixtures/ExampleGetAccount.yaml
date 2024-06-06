@@ -14,14 +14,14 @@ interactions:
     url: https://api.linode.com/v4beta/account
     method: GET
   response:
-    body: '{"company": "Akamai", "email": "ykim@akamai.com", "first_name": "Youjung",
-      "last_name": "Kim", "address_1": "", "address_2": "", "city": "", "state": "",
-      "zip": "", "country": "", "phone": "", "balance": 0.0, "tax_id": "", "billing_source":
-      "linode", "credit_card": {"last_four": null, "expiry": null}, "balance_uninvoiced":
-      0.0, "active_since": "2018-01-02T03:04:05", "capabilities": ["Linodes", "NodeBalancers",
-      "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans",
-      "LKE HA Control Planes", "Machine Images", "VPCs", "LKE Network Access Control
-      List (IP ACL)"], "active_promotions": [], "euuid": "F959AD74-9386-4827-A426975C90B4EBD5"}'
+    body: '{"company": "Linode", "email": "foo@linode.com", "first_name": "foo",
+      "last_name": "bar", "address_1": "123 Street Street", "address_2": "NA",
+      "city": "Philadelphia", "state": "PA", "zip": "30000", "country": "US", "phone":
+      "1234567891", "balance": 0.0, "tax_id": "", "billing_source": "linode", "credit_card":
+      {"last_four": "1234", "expiry": "02/2020"}, "balance_uninvoiced": 0.0, "active_since":
+      "2018-01-02T03:04:05", "capabilities": ["Linodes", "NodeBalancers", "Block Storage",
+      "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans", "LKE HA Control Planes",
+      "Machine Images", "Managed Databases"], "active_promotions": [], "euuid": "FFFFFFFF-2E4D-47CE-FFFFFFFFFFFFFFFFF"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
