@@ -4,9 +4,9 @@ require (
 	github.com/go-resty/resty/v2 v2.13.1
 	github.com/google/go-cmp v0.6.0
 	github.com/jarcoal/httpmock v1.3.1
-	golang.org/x/net v0.25.0
-	golang.org/x/oauth2 v0.20.0
-	golang.org/x/text v0.15.0
+	golang.org/x/net v0.26.0
+	golang.org/x/oauth2 v0.21.0
+	golang.org/x/text v0.16.0
 	gopkg.in/ini.v1 v1.66.6
 )
 
