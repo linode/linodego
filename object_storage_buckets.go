@@ -15,12 +15,11 @@ import (
 type ObjectStorageBucket struct {
 	Label string `json:"label"`
 
-	// Only one of Region or Cluster will be provided with a non-empty value,
-	// depending on your account.
+	// Deprecated: Cluster field has been deprecated.
+	// Please consider switching to use the 'Region' field.
+	// If your Cluster is `us-mia-1`, then the region would be `us-mia`.
 	Cluster string `json:"cluster"`
-	// Only one of Region or Cluster will be provided with a non-empty value,
-	// depending on your account.
-	Region string `json:"region"`
+	Region  string `json:"region"`
 
 	Created  *time.Time `json:"-"`
 	Hostname string     `json:"hostname"`
@@ -56,10 +55,11 @@ func (i *ObjectStorageBucket) UnmarshalJSON(b []byte) error {
 
 // ObjectStorageBucketCreateOptions fields are those accepted by CreateObjectStorageBucket
 type ObjectStorageBucketCreateOptions struct {
-	// You may use either Region or Cluster, depending on your account details.
-	Region string `json:"region,omitempty"`
-	// You may use either Region or Cluster, depending on your account details.
+	// Deprecated: Cluster field has been deprecated.
+	// Please consider switching to use the 'Region' field.
+	// If your Cluster is `us-mia-1`, then the region would be `us-mia`.
 	Cluster string `json:"cluster,omitempty"`
+	Region  string `json:"region,omitempty"`
 
 	Label string `json:"label"`
 
