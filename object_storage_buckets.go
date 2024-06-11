@@ -16,8 +16,14 @@ type ObjectStorageBucket struct {
 	Label string `json:"label"`
 
 	// Deprecated: Cluster field has been deprecated.
+	//
 	// Please consider switching to use the 'Region' field.
 	// If your Cluster is `us-mia-1`, then the region would be `us-mia`.
+	//
+	// The 'Cluster' field doesn't necessarily reflect the accurate cluster
+	// the bucket is in if there are multiple clusters in the region.
+	// It will always be `<REGION>-1` (e.g., `us-mia-1`) for backward
+	// compatibility purposes.
 	Cluster string `json:"cluster"`
 	Region  string `json:"region"`
 
