@@ -52,6 +52,14 @@ jobs:
       - name: Install Python deps
         run: pip3 install requests wheel boto3
 
+      - name: Download kubectl and calicoctl for LKE clusters
+        run: |
+          curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+          curl -LO "https://github.com/projectcalico/calico/releases/download/v3.25.0/calicoctl-linux-amd64"
+          chmod +x calicoctl-linux-amd64 kubectl
+          mv calicoctl-linux-amd64 /usr/local/bin/calicoctl
+          mv kubectl /usr/local/bin/kubectl
+
       - name: Install go-junit-report
         run: go install github.com/jstemmer/go-junit-report/v2@latest
 
@@ -63,6 +71,12 @@ jobs:
           make test | go-junit-report -set-exit-code -iocopy -out $REPORT_FILENAME
         env:
           SKIP_LINT: 1
+
+      - name: Apply Calico Rules to LKE
+        run: |
+          cd scripts && ./lke_calico_rules_e2e.sh
+        env:
+          LINODE_TOKEN: ${{ secrets.DX_LINODE_TOKEN }}
 
       - name: Upload test results to bucket
         if: github.ref == 'refs/heads/main' && github.event_name == 'push' && always()
