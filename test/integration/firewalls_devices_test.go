@@ -10,7 +10,7 @@ import (
 )
 
 func TestFirewallDevices_List(t *testing.T) {
-	client, instance, teardown, err := setupInstance(t, "fixtures/TestFirewallDevices_List")
+	client, instance, teardown, err := setupInstance(t, "fixtures/TestFirewallDevices_List", false)
 	if err != nil {
 		t.Error(err)
 	}
@@ -35,7 +35,7 @@ func TestFirewallDevices_List(t *testing.T) {
 }
 
 func TestFirewallDevice_Get(t *testing.T) {
-	client, instance, teardown, err := setupInstance(t, "fixtures/TestFirewallDevice_Get")
+	client, instance, teardown, err := setupInstance(t, "fixtures/TestFirewallDevice_Get", false)
 	if err != nil {
 		t.Error(err)
 	}
@@ -63,7 +63,7 @@ func TestFirewallDevice_Get(t *testing.T) {
 }
 
 func TestFirewallDevice_Delete(t *testing.T) {
-	client, instance, teardown, err := setupInstance(t, "fixtures/TestFirewallDevice_Delete")
+	client, instance, teardown, err := setupInstance(t, "fixtures/TestFirewallDevice_Delete", false)
 	if err != nil {
 		t.Error(err)
 	}

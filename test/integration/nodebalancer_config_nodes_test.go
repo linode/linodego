@@ -165,7 +165,7 @@ func setupNodeBalancerNode(t *testing.T, fixturesYaml string) (*linodego.Client,
 		t.Fatalf("Error creating nodebalancer config, got error %v", err)
 	}
 
-	client, instance, instanceTeardown, err := setupInstance(t, fixturesYaml+"Instance")
+	client, instance, instanceTeardown, err := setupInstance(t, fixturesYaml+"Instance", true)
 	if err != nil {
 		t.Fatal(err)
 	}

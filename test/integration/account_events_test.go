@@ -8,7 +8,7 @@ import (
 )
 
 func TestAccountEvents_List(t *testing.T) {
-	client, instance, teardown, err := setupInstance(t, "fixtures/TestAccountEvents_List")
+	client, instance, teardown, err := setupInstance(t, "fixtures/TestAccountEvents_List", true)
 	defer teardown()
 	if err != nil {
 		t.Error(err)

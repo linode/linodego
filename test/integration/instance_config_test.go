@@ -25,7 +25,7 @@ func setupVPCWithSubnetWithInstance(
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	instance, instanceConfig, instanceTeardown, err := createInstanceWithoutDisks(
 		t,
-		client,
+		client, true,
 		modifiers...,
 	)
 	if err != nil {
@@ -450,7 +450,7 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 }
 
 func TestInstance_Configs_List(t *testing.T) {
-	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Configs_List")
+	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Configs_List", true)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -469,7 +469,7 @@ func TestInstance_Configs_List(t *testing.T) {
 }
 
 func TestInstance_Config_Update(t *testing.T) {
-	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Config_Update")
+	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Config_Update", true)
 	defer teardown()
 	if err != nil {
 		t.Error(err)

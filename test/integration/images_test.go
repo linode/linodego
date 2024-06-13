@@ -130,7 +130,7 @@ func TestImage_CreateUpload(t *testing.T) {
 
 func TestImage_CloudInit(t *testing.T) {
 	client, instance, teardown, err := setupInstance(
-		t, "fixtures/TestImage_CloudInit",
+		t, "fixtures/TestImage_CloudInit", true,
 		func(client *Client, options *InstanceCreateOptions) {
 			options.Region = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
 		})
