@@ -3,7 +3,12 @@ package integration
 import (
 	"bytes"
 	"context"
+	"fmt"
+	"slices"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/dnaeon/go-vcr/recorder"
 	. "github.com/linode/linodego"
@@ -107,10 +112,14 @@ func TestImage_CreateUpload(t *testing.T) {
 	defer teardown()
 
 	image, uploadURL, err := client.CreateImageUpload(context.Background(), ImageCreateUploadOptions{
-		Region:      getRegionsWithCaps(t, client, []string{"Metadata"})[0],
+		// TODO: Uncomment before merging Images Gen. 2 support to main
+		//Region:      getRegionsWithCaps(t, client, []string{"Metadata"})[0],
+		Region: "us-east",
+
 		Label:       "linodego-image-create-upload",
 		Description: "An image that does stuff.",
 		CloudInit:   true,
+		Tags:        &[]string{"foo", "bar"},
 	})
 	if err != nil {
 		t.Errorf("Failed to create image upload: %v", err)
@@ -126,13 +135,17 @@ func TestImage_CreateUpload(t *testing.T) {
 	if uploadURL == "" {
 		t.Errorf("Expected upload URL, got none")
 	}
+
+	require.NotNil(t, image.Tags)
 }
 
 func TestImage_CloudInit(t *testing.T) {
 	client, instance, teardown, err := setupInstance(
 		t, "fixtures/TestImage_CloudInit", true,
 		func(client *Client, options *InstanceCreateOptions) {
-			options.Region = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
+			// TODO: Uncomment before merging Images Gen. 2 support to main
+			//options.Region = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
+			options.Region = "us-east"
 		})
 	if err != nil {
 		t.Fatal(err)
@@ -152,9 +165,10 @@ func TestImage_CloudInit(t *testing.T) {
 		DiskID:    instanceDisks[0].ID,
 		Label:     "linodego-test-cloud-init",
 		CloudInit: true,
+		Tags:      &[]string{"test1", "test2"},
 	})
 	if err != nil {
-		t.Errorf("Failed to create image upload: %v", err)
+		t.Errorf("Failed to create image: %v", err)
 	}
 	t.Cleanup(func() {
 		if err := client.DeleteImage(context.Background(), image.ID); err != nil {
@@ -163,4 +177,70 @@ func TestImage_CloudInit(t *testing.T) {
 	})
 
 	assertSliceContains(t, image.Capabilities, "cloud-init")
+
+	slices.Sort(image.Tags)
+	require.Equal(t, image.Tags, []string{"test1", "test2"})
+}
+
+func TestImage_Replicate(t *testing.T) {
+	// TODO: Remove when replication is available
+	t.Skip("Replication is not yet available")
+
+	var testRegion string
+	var availableRegions []string
+
+	client, instance, teardown, err := setupInstance(
+		t, "fixtures/TestImage_Replicate", true,
+		func(client *Client, options *InstanceCreateOptions) {
+			// TODO: Uncomment before merging Images Gen. 2 to main
+			// availableRegions = getRegionsWithCaps(t, client, []string{"Linodes"})
+			availableRegions = []string{"us-east", "us-central", "us-southeast"}
+
+			testRegion = availableRegions[0]
+			options.Region = testRegion
+		})
+	require.NoError(t, err)
+	t.Cleanup(teardown)
+
+	instanceDisks, err := client.ListInstanceDisks(
+		context.Background(),
+		instance.ID,
+		nil,
+	)
+	require.NoError(t, err)
+
+	image, err := client.CreateImage(context.Background(), ImageCreateOptions{
+		DiskID: instanceDisks[0].ID,
+		Label:  "linodego-test-replication",
+	})
+	require.NoError(t, err)
+	t.Cleanup(func() {
+		require.NoError(t, client.DeleteImage(context.Background(), image.ID))
+	})
+
+	image, err = client.WaitForImageStatus(context.Background(), image.ID, ImageStatusAvailable, 240)
+	require.NoError(t, err)
+	//
+	//require.Equal(t, testRegion, image.Regions[0].Region)
+	//require.NotZero(t, image.Regions[0].Status)
+
+	image, err = client.ReplicateImage(context.Background(), image.ID, ImageReplicateOptions{
+		Regions: availableRegions[1:],
+	})
+	require.NoError(t, err)
+
+	// Wait for the image to start replicating
+	image, err = client.WaitForImageStatus(context.Background(), image.ID, ImageStatusReplicating, 240)
+	require.NoError(t, err)
+
+	// Wait for the replication process to complete
+	image, err = client.WaitForImageStatus(context.Background(), image.ID, ImageStatusAvailable, 240)
+	require.NoError(t, err)
+
+	fmt.Println(image)
+
+	require.Len(t, image.Regions, len(availableRegions))
+	for _, region := range image.Regions {
+		assert.Contains(t, region.Region, availableRegions)
+	}
 }
