@@ -100,7 +100,7 @@ func TestVolume_WaitForLinodeID_nil(t *testing.T) {
 }
 
 func TestVolume_WaitForLinodeID(t *testing.T) {
-	client, instance, teardownInstance, errInstance := setupInstance(t, "fixtures/TestVolume_WaitForLinodeID_linode")
+	client, instance, teardownInstance, errInstance := setupInstance(t, "fixtures/TestVolume_WaitForLinodeID_linode", true)
 	if errInstance != nil {
 		t.Errorf("Error setting up instance for volume test, %s", errInstance)
 	}
