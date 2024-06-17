@@ -15,15 +15,13 @@ import (
 type ObjectStorageBucket struct {
 	Label string `json:"label"`
 
-	// Deprecated: Cluster field has been deprecated.
+	// Deprecated: The 'Cluster' field has been deprecated in favor of the 'Region' field.
+	// For example, a Cluster value of `us-mia-1` will translate to a Region value of `us-mia`.
 	//
-	// Please consider switching to use the 'Region' field.
-	// If your Cluster is `us-mia-1`, then the region would be `us-mia`.
+	// This is necessary because there are now multiple Object Storage clusters to a region.
 	//
-	// The 'Cluster' field doesn't necessarily reflect the accurate cluster
-	// the bucket is in if there are multiple clusters in the region.
-	// It will always be `<REGION>-1` (e.g., `us-mia-1`) for backward
-	// compatibility purposes.
+	// NOTE: The 'Cluster' field will always return a value similar to `<REGION>-1` (e.g., `us-mia-1`)
+	// for backward compatibility purposes.
 	Cluster string `json:"cluster"`
 	Region  string `json:"region"`
 
@@ -61,9 +59,11 @@ func (i *ObjectStorageBucket) UnmarshalJSON(b []byte) error {
 
 // ObjectStorageBucketCreateOptions fields are those accepted by CreateObjectStorageBucket
 type ObjectStorageBucketCreateOptions struct {
-	// Deprecated: Cluster field has been deprecated.
-	// Please consider switching to use the 'Region' field.
-	// If your Cluster is `us-mia-1`, then the region would be `us-mia`.
+	// Deprecated: The 'Cluster' field has been deprecated.
+	//
+	// Going forward, the 'Region' field will be the supported way to designate where an
+	// Object Storage Bucket should be created. For example, a 'Cluster' value of `us-mia-1`
+	// will translate to a Region value of `us-mia.
 	Cluster string `json:"cluster,omitempty"`
 	Region  string `json:"region,omitempty"`
 
