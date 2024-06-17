@@ -16,8 +16,8 @@ interactions:
   response:
     body: '{"id": "linode/ubuntu22.04", "label": "Ubuntu 22.04 LTS", "deprecated":
       false, "size": 3500, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "description": "", "created_by": "linode", "type": "manual", "is_public": true,
-      "vendor": "Ubuntu", "expiry": null, "eol": "2018-01-02T03:04:05", "status":
+      "description": "", "created_by": "linode", "type": "manual", "tags": [], "is_public":
+      true, "vendor": "Ubuntu", "expiry": null, "eol": "2018-01-02T03:04:05", "status":
       "available", "capabilities": ["cloud-init"]}'
     headers:
       Access-Control-Allow-Credentials:
@@ -35,13 +35,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "361"
+      - "373"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 15 Mar 2024 18:43:24 GMT
+      - Fri, 31 May 2024 17:08:36 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -57,7 +57,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
