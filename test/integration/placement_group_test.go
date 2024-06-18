@@ -66,7 +66,7 @@ func TestPlacementGroup_assignment(t *testing.T) {
 	require.NoError(t, err)
 
 	// Create an instance to assign to the PG
-	inst, err := createInstance(t, client, func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+	inst, err := createInstance(t, client, true, func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
 		options.Region = pg.Region
 	})
 	require.NoError(t, err)
