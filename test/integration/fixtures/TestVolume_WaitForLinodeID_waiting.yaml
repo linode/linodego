@@ -11,13 +11,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/volumes/566469
+    url: https://api.linode.com/v4beta/volumes/4210941
     method: GET
   response:
-    body: '{"id": 566469, "status": "active", "label": "go-vol-test-def", "created":
+    body: '{"id": 4210941, "status": "active", "label": "go-vol-test-def", "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
       "/dev/disk/by-id/scsi-0Linode_Volume_go-vol-test-def", "size": 20, "linode_id":
-      39430393, "linode_label": "go-test-ins-7i9d535p9kiz", "region": "ap-west", "tags":
+      59542537, "linode_label": "go-test-ins-5647vkb87baw", "region": "ap-west", "tags":
       [], "hardware_type": "nvme"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -31,16 +31,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
-      - "341"
+      - "342"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Fri, 31 May 2024 17:35:46 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -54,9 +57,12 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

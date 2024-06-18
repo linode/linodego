@@ -171,6 +171,7 @@ const (
 	ActionStackScriptUpdate                       EventAction = "stackscript_update"
 	ActionStackScriptPublicize                    EventAction = "stackscript_publicize"
 	ActionStackScriptRevise                       EventAction = "stackscript_revise"
+	ActionTaxIDInvalid                            EventAction = "tax_id_invalid"
 	ActionTagCreate                               EventAction = "tag_create"
 	ActionTagDelete                               EventAction = "tag_delete"
 	ActionTFADisabled                             EventAction = "tfa_disabled"
