@@ -15,11 +15,11 @@ interactions:
     url: https://api.linode.com/v4beta/images/upload
     method: POST
   response:
-    body: '{"upload_to": "https://us-ord-1.linodeobjects.com:443/linode-production-machine-images-uploads/23851696?Signature=Sv2YDjn0fC5o6oi2YBHDPIdLOz4%3D&Expires=1708192079&AWSAccessKeyID=SANITIZED",
-      "image": {"id": "private/23851696", "label": "linodego-image-test", "description":
+    body: '{"upload_to": "https://us-ord-1.linodeobjects.com:443/linode-production-machine-images-uploads/25476392?Signature=ZL7JALnUFwvCWqx7UIVT6HAgMh8%3D&Expires=1717261716&AWSAccessKeyID=SANITIZED",
+      "image": {"id": "private/25476392", "label": "linodego-image-test", "description":
       "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "size": 0, "created_by": "lgarber-dev", "type": "manual", "is_public": false,
-      "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
+      "size": 0, "created_by": "youjungk01", "type": "manual", "tags": [], "is_public":
+      false, "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
       "pending_upload", "capabilities": []}}'
     headers:
       Access-Control-Allow-Credentials:
@@ -37,13 +37,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "574"
+      - "585"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 16 Feb 2024 17:47:59 GMT
+      - Fri, 31 May 2024 17:08:37 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -58,7 +58,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -76,13 +79,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private%2F23851696
+    url: https://api.linode.com/v4beta/images/private%2F25476392
     method: GET
   response:
-    body: '{"id": "private/23851696", "label": "linodego-image-test", "description":
+    body: '{"id": "private/25476392", "label": "linodego-image-test", "description":
       "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "size": 0, "created_by": "lgarber-dev", "type": "manual", "is_public": false,
-      "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
+      "size": 0, "created_by": "youjungk01", "type": "manual", "tags": [], "is_public":
+      false, "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
       "pending_upload", "capabilities": []}'
     headers:
       Access-Control-Allow-Credentials:
@@ -100,13 +103,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "362"
+      - "373"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 16 Feb 2024 17:48:14 GMT
+      - Fri, 31 May 2024 17:08:52 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -122,7 +125,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -140,13 +146,147 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private%2F23851696
+    url: https://api.linode.com/v4beta/images/private%2F25476392
     method: GET
   response:
-    body: '{"id": "private/23851696", "label": "linodego-image-test", "description":
+    body: '{"id": "private/25476392", "label": "linodego-image-test", "description":
       "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "size": 1, "created_by": "lgarber-dev", "type": "manual", "is_public": false,
-      "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
+      "size": 0, "created_by": "youjungk01", "type": "manual", "tags": [], "is_public":
+      false, "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
+      "pending_upload", "capabilities": []}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "373"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Fri, 31 May 2024 17:09:08 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/private%2F25476392
+    method: GET
+  response:
+    body: '{"id": "private/25476392", "label": "linodego-image-test", "description":
+      "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "size": 0, "created_by": "youjungk01", "type": "manual", "tags": [], "is_public":
+      false, "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
+      "pending_upload", "capabilities": []}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "373"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Fri, 31 May 2024 17:09:23 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/private%2F25476392
+    method: GET
+  response:
+    body: '{"id": "private/25476392", "label": "linodego-image-test", "description":
+      "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "size": 1, "created_by": "youjungk01", "type": "manual", "tags": [], "is_public":
+      false, "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
       "available", "capabilities": []}'
     headers:
       Access-Control-Allow-Credentials:
@@ -164,13 +304,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "357"
+      - "368"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 16 Feb 2024 17:48:29 GMT
+      - Fri, 31 May 2024 17:09:38 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -186,7 +326,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -204,7 +347,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private%2F23851696
+    url: https://api.linode.com/v4beta/images/private%2F25476392
     method: DELETE
   response:
     body: '{}'
@@ -230,7 +373,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 16 Feb 2024 17:48:29 GMT
+      - Fri, 31 May 2024 17:09:38 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -245,7 +388,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:

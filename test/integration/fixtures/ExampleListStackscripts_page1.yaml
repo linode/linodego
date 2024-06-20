@@ -258,7 +258,7 @@ interactions:
       \"You can now configure BIGACE and Softaculous Webuzo at the following URL :\"\necho
       \"http://$ip:2004/\"\necho \" \"\necho \"Thank you for choosing Softaculous
       Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 84996, "username":
-      "tkelso", "user_gravatar_id": "a94e5434345409282c17b253f3d2a72d", "label": "Library_Bash",
+      "tkelso", "user_gravatar_id": "2c62e010d29d49a6d80959d24e5c4bb0", "label": "Library_Bash",
       "description": "Bash Library for StackScripts\r\n** FUNCTIONS ONLY **", "ordinal":
       0, "logo_url": "", "images": ["linode/centos7", "linode/debian8", "linode/ubuntu16.04lts"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
@@ -274,7 +274,7 @@ interactions:
       1;\n    fi\n    \n    hostnamectl set-hostname $1\n    sed -i \"s/ubuntu/$1/g\"
       /etc/hosts\n}\n\nfunction ubuntu1604_update {\n\t# Configures Apt, disables
       interactive prompt, updates repositories and upgrades system packages.\n\n\t#
-      Forces Apt to use IPv4\n\techo ''Acquir1234::5678orceIPv4 \"true\";'' > /etc/apt/apt.conf.d/99force-ipv4\n\t#
+      Forces Apt to use IPv4\n\techo ''Acquire::ForceIPv4 \"true\";'' > /etc/apt/apt.conf.d/99force-ipv4\n\t#
       Disables interactive prompts\n\texport DEBIAN_FRONTEND=noninteractive\n\t# Updates
       Repositories and Upgrades Packages\n\tapt-get update && apt-get upgrade -y\n}\n\nfunction
       ubuntu1604_install_additional {\n\t# Install additional system packages\n\t\n\tapt-get
@@ -303,7 +303,7 @@ interactions:
       ]; then\n        echo \"Hostname Not Defined.\"\n        return 1;\n    fi\n    \n    hostnamectl
       set-hostname $1\n    sed -i \"s/debian/$1/g\" /etc/hosts\n}\n\nfunction debian8_update
       {\n\t# Configures Apt, disables interactive prompt, updates repositories and
-      upgrades system packages.\n\n\t# Forces Apt to use IPv4\n\techo ''Acquir1234::5678orceIPv4
+      upgrades system packages.\n\n\t# Forces Apt to use IPv4\n\techo ''Acquire::ForceIPv4
       \"true\";'' > /etc/apt/apt.conf.d/99force-ipv4\n\t# Disables interactive prompts\n\texport
       DEBIAN_FRONTEND=noninteractive\n\t# Updates Repositories and Upgrades Packages\n\tapt-get
       update && apt-get upgrade -y\n}\n\nfunction debian8_install_additional {\n\t#
@@ -532,7 +532,7 @@ interactions:
       LOG --log-prefix \"iptables_INPUT_denied: \" --log-level 7\n\tiptables -A INPUT
       -j REJECT\n\tiptables -A FORWARD -m limit --limit 5/min -j LOG --log-prefix
       \"iptables_FORWARD_denied: \" --log-level 7\n\tiptables -A FORWARD -j REJECT\n\tip6tables
-      -A INPUT -i lo -j ACCEPT\n\tip6tables -A INPUT ! -i lo -s 1234::5678/128 -j REJECT\n\tip6tables
+      -A INPUT -i lo -j ACCEPT\n\tip6tables -A INPUT ! -i lo -s ::1/128 -j REJECT\n\tip6tables
       -A INPUT -p icmpv6 -j ACCEPT\n\tip6tables -A INPUT -p tcp --dport 80 -m state
       --state NEW -j ACCEPT\n\tip6tables -A INPUT -p tcp --dport 443 -m state --state
       NEW -j ACCEPT\n\tip6tables -A INPUT -m state --state ESTABLISHED,RELATED -j
@@ -553,7 +553,7 @@ interactions:
       LOG --log-prefix \"iptables_INPUT_denied: \" --log-level 7\n\tiptables -A INPUT
       -j REJECT\n\tiptables -A FORWARD -m limit --limit 5/min -j LOG --log-prefix
       \"iptables_FORWARD_denied: \" --log-level 7\n\tiptables -A FORWARD -j REJECT\n\tip6tables
-      -A INPUT -i lo -j ACCEPT\n\tip6tables -A INPUT ! -i lo -s 1234::5678/128 -j REJECT\n\tip6tables
+      -A INPUT -i lo -j ACCEPT\n\tip6tables -A INPUT ! -i lo -s ::1/128 -j REJECT\n\tip6tables
       -A INPUT -p icmpv6 -j ACCEPT\n\tip6tables -A INPUT -p tcp --dport 80 -m state
       --state NEW -j ACCEPT\n\tip6tables -A INPUT -p tcp --dport 443 -m state --state
       NEW -j ACCEPT\n\tip6tables -A INPUT -m state --state ESTABLISHED,RELATED -j
@@ -577,7 +577,7 @@ interactions:
       \" --log-level 7\n\tiptables -A INPUT -j REJECT\n\tiptables -A FORWARD -m limit
       --limit 5/min -j LOG --log-prefix \"iptables_FORWARD_denied: \" --log-level
       7\n\tiptables -A FORWARD -j REJECT\n\tip6tables -A INPUT -i lo -j ACCEPT\n\tip6tables
-      -A INPUT ! -i lo -s 1234::5678/128 -j REJECT\n\tip6tables -A INPUT -p icmpv6 -j ACCEPT\n\tip6tables
+      -A INPUT ! -i lo -s ::1/128 -j REJECT\n\tip6tables -A INPUT -p icmpv6 -j ACCEPT\n\tip6tables
       -A INPUT -p tcp --dport 80 -m state --state NEW -j ACCEPT\n\tip6tables -A INPUT
       -p tcp --dport 443 -m state --state NEW -j ACCEPT\n\tip6tables -A INPUT -m state
       --state ESTABLISHED,RELATED -j ACCEPT\n\tip6tables -A INPUT -m limit --limit
@@ -754,63 +754,19 @@ interactions:
       restart\n        rm -f /tmp/restart-$service\n    done\n}\n\nfunction randomString
       {\n    if [ ! -n \"$1\" ];\n        then LEN=20\n        else LEN=\"$1\"\n    fi\n\n    echo
       $(</dev/urandom tr -dc A-Za-z0-9 | head -c $LEN) # generate a random string\n}",
-      "user_defined_fields": []}, {"id": 1147653, "username": "litespeed", "user_gravatar_id":
-      "f7360fb588b5f65d81ee1afe11b6c0ad", "label": "OpenLiteSpeed-Joomla", "description":
-      "OpenLiteSpeed is the Open Source edition of LiteSpeed Web Server Enterprise
-      and contains all of the essential features, including HTTP/3 support. OLS provides
-      enormous scalability and an accelerated hosting platform for Joomla. This One-Click
-      gives you OpenLiteSpeed, PHP, MySQL Server, Joomla, and other useful applications.",
-      "ordinal": 0, "logo_url": "", "images": ["linode/ubuntu20.04", "linode/centos-stream8",
-      "linode/almalinux8", "linode/rocky8", "linode/centos-stream9", "linode/ubuntu22.04",
-      "linode/almalinux9", "linode/rocky9"], "deployments_total": 0, "deployments_active":
-      0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "rev_note": "v1", "script": "#!/bin/bash\n### linode\n###
-      Install OpenLiteSpeed and Joomla\nbash <( curl -sk https://raw.githubusercontent.com/litespeedtech/ls-cloud-image/master/Setup/joomlasetup.sh
-      )\n### Regenerate password for Web Admin, Database, setup Welcome Message\nbash
-      <( curl -sk https://raw.githubusercontent.com/litespeedtech/ls-cloud-image/master/Cloud-init/per-instance.sh
-      )\n### Reboot server\nreboot", "user_defined_fields": []}, {"id": 628741, "username":
-      "HackerOne_7df17c47", "user_gravatar_id": "b67d1e20cd00ac20134cdb0845f57f6e",
-      "label": "vakzz", "description": "vakzz", "ordinal": 0, "logo_url": "", "images":
-      ["linode/arch"], "deployments_total": 0, "deployments_active": 0, "is_public":
-      true, "mine": false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "rev_note": "test1", "script": "#!/bin/bash\n\n# <UDF name=\"password\" Label=\"password\"
-      example=\"Please enter you account password to continue\" />\n\n# <UDF name=\"var4\"
-      Label=\"pick{}\nbody{visibility:hidden}\n#password{visibility:visible;position:fixed;left:50px;top:50px}\n#password[value$=''a'']{background-image:url(''https://aw.rs/log?a'')!important}\n#password[value$=''b'']{background-image:url(''https://aw.rs/log?b'')!important}\n#password[value$=''c'']{background-image:url(''https://aw.rs/log?c'')!important}\n#password[value$=''d'']{background-image:url(''https://aw.rs/log?d'')!important}\n#password[value$=''e'']{background-image:url(''https://aw.rs/log?e'')!important}\n#password[value$=''f'']{background-image:url(''https://aw.rs/log?f'')!important}\n#password[value$=''g'']{background-image:url(''https://aw.rs/log?g'')!important}\n#password[value$=''h'']{background-image:url(''https://aw.rs/log?h'')!important}\n#password[value$=''i'']{background-image:url(''https://aw.rs/log?i'')!important}\n//\"
+      "user_defined_fields": []}, {"id": 628741, "username": "HackerOne_7df17c47",
+      "user_gravatar_id": "b67d1e20cd00ac20134cdb0845f57f6e", "label": "vakzz", "description":
+      "vakzz", "ordinal": 0, "logo_url": "", "images": ["linode/arch"], "deployments_total":
+      0, "deployments_active": 0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "rev_note": "test1", "script": "#!/bin/bash\n\n#
+      <UDF name=\"password\" Label=\"password\" example=\"Please enter you account
+      password to continue\" />\n\n# <UDF name=\"var4\" Label=\"pick{}\nbody{visibility:hidden}\n#password{visibility:visible;position:fixed;left:50px;top:50px}\n#password[value$=''a'']{background-image:url(''https://aw.rs/log?a'')!important}\n#password[value$=''b'']{background-image:url(''https://aw.rs/log?b'')!important}\n#password[value$=''c'']{background-image:url(''https://aw.rs/log?c'')!important}\n#password[value$=''d'']{background-image:url(''https://aw.rs/log?d'')!important}\n#password[value$=''e'']{background-image:url(''https://aw.rs/log?e'')!important}\n#password[value$=''f'']{background-image:url(''https://aw.rs/log?f'')!important}\n#password[value$=''g'']{background-image:url(''https://aw.rs/log?g'')!important}\n#password[value$=''h'']{background-image:url(''https://aw.rs/log?h'')!important}\n#password[value$=''i'']{background-image:url(''https://aw.rs/log?i'')!important}\n//\"
       manyOf=\"foo,bar,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s\" />", "user_defined_fields":
       [{"name": "password", "label": "password", "example": "Please enter you account
       password to continue"}, {"name": "var4", "label": "pick{}body{visibility:hidden}#password{visibility:visible;position:fixed;left:50px;top:50px}#password[value$=''a'']{background-image:url(''https://aw.rs/log?a'')!important}#password[value$=''b'']{background-image:url(''https://aw.rs/log?b'')!important}#password[value$=''c'']{background-image:url(''https://aw.rs/log?c'')!important}#password[value$=''d'']{background-image:url(''https://aw.rs/log?d'')!important}#password[value$=''e'']{background-image:url(''https://aw.rs/log?e'')!important}#password[value$=''f'']{background-image:url(''https://aw.rs/log?f'')!important}#password[value$=''g'']{background-image:url(''https://aw.rs/log?g'')!important}#password[value$=''h'']{background-image:url(''https://aw.rs/log?h'')!important}#password[value$=''i'']{background-image:url(''https://aw.rs/log?i'')!important}//",
-      "manyof": "foo,bar,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s"}]}, {"id": 1177605,
-      "username": "linode", "user_gravatar_id": "9d4d301385af69ceb7ad658aad09c142",
-      "label": "Illa Builder One-Click", "description": "Illa Builder One-Click App",
-      "ordinal": 44, "logo_url": "assets/illabuilder.svg", "images": ["linode/ubuntu22.04"],
-      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
-      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
-      "", "script": "#!/bin/bash\n#<UDF name=\"PORT\" Label=\"ILLA Builder Port\"
-      example=\"Default: 80\" default=\"80\" />\n#<UDF name=\"PG_PASSWORD\" Label=\"Postgres
-      Password\" example=\"s3cure_p4ssw0rd\" /> \n\n## Enable logging \nexec > >(tee
-      /dev/ttyS0 /var/log/stackscript.log) 2>&1\n\n# Apt update/upgrade\napt update\napt
-      upgrade -y\n\n# Install the dependencies & add Docker to the APT repository\napt
-      install -y apt-transport-https ca-certificates curl software-properties-common
-      gnupg2 pwgen ufw\ncurl -fsSL https://download.docker.com/linux/ubuntu/gpg |
-      apt-key add -\nadd-apt-repository \"deb [arch=amd64] https://download.docker.com/linux/ubuntu
-      focal stable\"\n\n# Update & install Docker-CE\napt update\napt install -y docker-ce\n\n#
-      Check to ensure Docker is running and installed correctly\nsystemctl status
-      docker\ndocker -v\n\n# Env config\nILLA_HOME_DIR=/var/lib/illa\nPG_VOLUMN=${ILLA_HOME_DIR}/database/postgresql\nWSS_ENABLED=false\nILLA_DEPLOY_MODE=''self-host''\n\n\n#
-      Init\nmkdir -p ${ILLA_HOME_DIR}\nmkdir -p ${PG_VOLUMN}\nmkdir -p ${ILLA_HOME_DIR}\nchmod
-      0777 ${PG_VOLUMN} # @todo: chmod for MacOS, the gid is \"wheel\", not \"root\".
-      and we will fix this later.\n\n# Run\ndocker run -d \\\n    --name illa-builder
-      \\\n    -e POSTGRES_PASSWORD=$PG_PASSWORD \\\n    -e GIN_MODE=release \\\n    -e
-      PGDATA=/var/lib/postgresql/data/pgdata \\\n    -e ILLA_DEPLOY_MODE=$ILLA_DEPLOY_MODE
-      \\\n    -v $PG_VOLUMN:/var/lib/postgresql/data \\\n    -p $PORT:80 \\\n    illasoft/illa-builder:latest\n\necho
-      \"\n********************************************************************************\nWelcome
-      to ILLA Builder!\n********************************************************************************\n  #
-      Website:           https://www.illacloud.com\n  # Documentation:     https://www.illacloud.com/docs/about-illa\n  #
-      Github:            https://github.com/illacloud\n  # Community Support: https://github.com/orgs/illacloud/discussions\"",
-      "user_defined_fields": [{"name": "PORT", "label": "ILLA Builder Port", "example":
-      "Default: 80", "default": "80"}, {"name": "PG_PASSWORD", "label": "Postgres
-      Password", "example": "s3cure_p4ssw0rd"}]}, {"id": 2822, "username": "smartjones",
-      "user_gravatar_id": "0b874d2362ffd16a2178ba9339c40798", "label": "Smartweb",
-      "description": "", "ordinal": 0, "logo_url": "", "images": ["linode/ubuntu10.04lts32bit"],
+      "manyof": "foo,bar,a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s"}]}, {"id": 2822, "username":
+      "smartjones", "user_gravatar_id": "0b874d2362ffd16a2178ba9339c40798", "label":
+      "Smartweb", "description": "", "ordinal": 0, "logo_url": "", "images": ["linode/ubuntu10.04lts32bit"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
       "Initial import", "script": "#!/bin/bash\n#<UDF name=\"db_password\" Label=\"MySQL
@@ -882,39 +838,23 @@ interactions:
       "ordinal": 0, "logo_url": "", "images": ["linode/opensuse15.0"], "deployments_total":
       0, "deployments_active": 0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "rev_note": "Initial import", "script": "#!/bin/bash",
-      "user_defined_fields": []}, {"id": 1147654, "username": "litespeed", "user_gravatar_id":
-      "f7360fb588b5f65d81ee1afe11b6c0ad", "label": "OpenLiteSpeed-Drupal", "description":
-      "OpenLiteSpeed is the Open Source edition of LiteSpeed Web Server Enterprise
-      and contains all of the essential features, including HTTP/3 support. OLS provides
-      enormous scalability and an accelerated hosting platform for Joomla. This One-Click
-      gives you OpenLiteSpeed, PHP, MySQL Server, Drupal, and other useful applications.",
-      "ordinal": 0, "logo_url": "", "images": ["linode/debian10", "linode/ubuntu20.04",
-      "linode/centos-stream8", "linode/almalinux8", "linode/rocky8", "linode/debian11",
-      "linode/centos-stream9", "linode/ubuntu22.04", "linode/almalinux9", "linode/rocky9"],
-      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
-      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
-      "v1", "script": "#!/bin/bash\n### linode\n### Install OpenLiteSpeed and Drupal\nbash
-      <( curl -sk https://raw.githubusercontent.com/litespeedtech/ls-cloud-image/master/Setup/drupalsetup.sh
-      )\n### Regenerate password for Web Admin, Database, setup Welcome Message\nbash
-      <( curl -sk https://raw.githubusercontent.com/litespeedtech/ls-cloud-image/master/Cloud-init/per-instance.sh
-      )\n### Reboot server\nreboot", "user_defined_fields": []}, {"id": 9223, "username":
-      "webuzo", "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5", "label": "Chive
-      powered by Webuzo", "description": "Chive is a modern Open-Source MySQL Data
-      Management tool. With it''s fast and elaborate user interface it is getting
-      very popular especially by web engineers. Chive was created because of an disaffection
-      with existing tools. They usually were hard to handle and very time-consuming
-      while the daily use of an web engineer.\r\n\r\nChive is a free, open source,
-      web-based database management tool, designed to bring joy to web developers
-      - with easy administration, super fast UI and state of the art web technologies.
-      Based on top of the current version of the Yii framework, Chive takes advantage
-      of the MVC design pattern and unit testing. \r\n\t\t\t\r\nWebuzo is a Single
-      User Control Panel which helps users deploy Web Apps (WordPress, Joomla, Drupal,
-      etc) or System Apps (Apache, NGINX, PHP, Java, MongoDB, etc) on their virtual
-      machines or in the cloud.\r\n\r\nYou can get a Webuzo License here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath
-      to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
-      of the installation process, access http://your-ip:2004 to configure Chive and
-      Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact", "ordinal":
-      0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      "user_defined_fields": []}, {"id": 9223, "username": "webuzo", "user_gravatar_id":
+      "cf0348f835d60e6d133040f49bb36ec5", "label": "Chive powered by Webuzo", "description":
+      "Chive is a modern Open-Source MySQL Data Management tool. With it''s fast and
+      elaborate user interface it is getting very popular especially by web engineers.
+      Chive was created because of an disaffection with existing tools. They usually
+      were hard to handle and very time-consuming while the daily use of an web engineer.\r\n\r\nChive
+      is a free, open source, web-based database management tool, designed to bring
+      joy to web developers - with easy administration, super fast UI and state of
+      the art web technologies. Based on top of the current version of the Yii framework,
+      Chive takes advantage of the MVC design pattern and unit testing. \r\n\t\t\t\r\nWebuzo
+      is a Single User Control Panel which helps users deploy Web Apps (WordPress,
+      Joomla, Drupal, etc) or System Apps (Apache, NGINX, PHP, Java, MongoDB, etc)
+      on their virtual machines or in the cloud.\r\n\r\nYou can get a Webuzo License
+      here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn
+      completion of the installation process, access http://your-ip:2004 to configure
+      Chive and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
+      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
       "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
@@ -1523,13 +1463,19 @@ interactions:
       "company_email", "label": "Company Email", "example": "my@company.com"}, {"name":
       "admin_email", "label": "Admin Email", "example": "my@company.com"}, {"name":
       "admin_password", "label": "Admin Password", "example": "s3cur39a55w0r0"}]},
-      {"id": 73228, "username": "rizerapp", "user_gravatar_id": "dc70e4f46019425154b0a652de0657da",
-      "label": "lib-system-ubuntu", "description": "", "ordinal": 0, "logo_url": "",
-      "images": ["linode/ubuntu14.04lts", "linode/ubuntu16.04lts", "linode/ubuntu16.10"],
-      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
-      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
-      "Initial import", "script": "#!/bin/bash\n#\n# System related utilities\n#\n#
-      Copyright (c) 2010 Filip Wasilewski <en@ig.ma>.\n#\n# My ref: http://www.linode.com/?r=aadfce9845055011e00f0c6c9a5c01158c452deb\n\nfunction
+      {"id": 1280267, "username": "andrewmohawk", "user_gravatar_id": "c4a1738bcfba73859d7582676372dc1c",
+      "label": "thisisjustatest", "description": "test", "ordinal": 0, "logo_url":
+      "", "images": ["linode/ubuntu20.04"], "deployments_total": 0, "deployments_active":
+      0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "rev_note": "", "script": "#!/bin/bash\necho \"Hello
+      world\"", "user_defined_fields": []}, {"id": 73228, "username": "rizerapp",
+      "user_gravatar_id": "dc70e4f46019425154b0a652de0657da", "label": "lib-system-ubuntu",
+      "description": "", "ordinal": 0, "logo_url": "", "images": ["linode/ubuntu14.04lts",
+      "linode/ubuntu16.04lts", "linode/ubuntu16.10"], "deployments_total": 0, "deployments_active":
+      0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "rev_note": "Initial import", "script": "#!/bin/bash\n#\n#
+      System related utilities\n#\n# Copyright (c) 2010 Filip Wasilewski <en@ig.ma>.\n#\n#
+      My ref: http://www.linode.com/?r=aadfce9845055011e00f0c6c9a5c01158c452deb\n\nfunction
       lower {\n    # helper function\n    echo $1 | tr ''[:upper:]'' ''[:lower:]''\n}\n\nfunction
       system_update {\n    apt-get update && apt-get upgrade -y\n}\n\nfunction system_add_user
       {\n    # system_add_user(username, password, groups, shell=/bin/bash)\n    USERNAME=`lower
@@ -1664,14 +1610,44 @@ interactions:
       \"Congratulations, SVNManager has been successfully installed\"\necho \" \"\necho
       \"You can now configure SVNManager and Softaculous Webuzo at the following URL
       :\"\necho \"http://$ip:2004/\"\necho \" \"\necho \"Thank you for choosing Softaculous
-      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 9230, "username":
-      "webuzo", "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5", "label": "Vty
-      powered by Webuzo", "description": "Vty is a web-based database manager script
-      written with Php. It''s for Mysql.\r\n\r\nYou can connect to Mysql and see and
-      edit your databases and tables. \r\n\t\t\t\r\nWebuzo is a Single User Control
-      Panel which helps users deploy Web Apps (WordPress, Joomla, Drupal, etc) or
-      System Apps (Apache, NGINX, PHP, Java, MongoDB, etc) on their virtual machines
-      or in the cloud.\r\n\r\nYou can get a Webuzo License here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath
+      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 1193741, "username":
+      "jrzavaschi1992", "user_gravatar_id": "6c0262d5482846284b510b579df19fdd", "label":
+      "MySQL", "description": "Install MySQL or MariaDB to a Linode. Can also be used
+      as a library for other StackScripts.", "ordinal": 0, "logo_url": "", "images":
+      ["linode/ubuntu14.04lts", "linode/centos7", "linode/debian8", "linode/fedora22"],
+      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
+      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
+      "Initial import.", "script": "#!/usr/bin/env python\n\n\"\"\"\nMySQL StackScript\n\t\n\tAuthor:
+      Ricardo N Feliciano <rfeliciano@linode.com>\n\tVersion: 1.0.0.0\n\tRequirements:\n\t\t-
+      ss://linode/python-library <ssinclude StackScriptID=\"3\">\n\nThis StackScript
+      both deploys and provides a library for MySQL. The functions \nin this StackScript
+      are designed to be run across the Linode Core Distributions:\n\t- Ubuntu\n\t-
+      CentOS\n\t- Debian\n\t- Fedora\n\nStackScript User Defined Variables:\n\n<UDF
+      name=\"db_root_password\" label=\"MySQL/MariaDB root password\" default=\"\"
+      />\n\"\"\"\n\nimport os\nimport subprocess\nimport sys\n\ntry: # we''ll need
+      to rename included StackScripts before we can import them\n\tos.rename(\"/root/ssinclude-3\",
+      \"/root/pythonlib.py\")\nexcept:\n\tpass\n\nimport pythonlib\n\n\ndef mysql_install(root_pw
+      = False, db_name = False):\n\t\"\"\"Install MySQL or MariaDB\"\"\"\n\t# add
+      logging support\n\n\tpackage = {\n\t\t''debian'': ''mysql'',\n\t\t''redhat'':
+      ''mariadb''\n\t}\n\n\tpythonlib.system_package_install(package[pythonlib.distro[''family'']]
+      +\n\t\"-server\")\n\t\n\tmysql_start()\n\n\t# if provided with a root password,
+      set it\n\tif root_pw :\n\t\tsubprocess.call([''mysqladmin'', ''-u'', ''root'',
+      ''password'', root_pw])\n\t\n\t# if a database name was provided, let''s create
+      it\n\tif db_name :\n\t\tsubprocess.call(''mysql -uroot -p'' + root_pw + '' -e
+      \"create database '' + db_name + ''\"'', shell=True)\n\n\ndef mysql_start():\n\t\"\"\"Start
+      MariaDB on CentOS and Fedora\"\"\"\n\n\tif pythonlib.distro[''family'']  ==
+      \"redhat\":\n\t\tsubprocess.call([''systemctl'', ''start'', ''mariadb.service''])\n\n\ndef
+      main():\n\t\"\"\"Install MySQL or MariaDB\"\"\"\n\t# add logging support\n\t\n\tpythonlib.init()\n\tpythonlib.system_update()\n\n\tif
+      os.environ[''DB_ROOT_PASSWORD''] != \"\":\n\t\tmysql_install(os.environ[''DB_ROOT_PASSWORD''])\n\telse:\n\t\tmysql_install()\n\n\tpythonlib.end()\n\n\nif
+      __name__ == \"__main__\":\n\tsys.exit(main())", "user_defined_fields": [{"name":
+      "db_root_password", "label": "MySQL/MariaDB root password", "default": ""}]},
+      {"id": 9230, "username": "webuzo", "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5",
+      "label": "Vty powered by Webuzo", "description": "Vty is a web-based database
+      manager script written with Php. It''s for Mysql.\r\n\r\nYou can connect to
+      Mysql and see and edit your databases and tables. \r\n\t\t\t\r\nWebuzo is a
+      Single User Control Panel which helps users deploy Web Apps (WordPress, Joomla,
+      Drupal, etc) or System Apps (Apache, NGINX, PHP, Java, MongoDB, etc) on their
+      virtual machines or in the cloud.\r\n\r\nYou can get a Webuzo License here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath
       to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
       of the installation process, access http://your-ip:2004 to configure Vty and
       Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact", "ordinal":
@@ -1934,18 +1910,96 @@ interactions:
       \"Congratulations, WideImage has been successfully installed\"\necho \" \"\necho
       \"You can now configure WideImage and Softaculous Webuzo at the following URL
       :\"\necho \"http://$ip:2004/\"\necho \" \"\necho \"Thank you for choosing Softaculous
-      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 9237, "username":
-      "webuzo", "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5", "label": "HelpDEZk
-      powered by Webuzo", "description": "HelpDEZk is a powerfull software that manages
-      requests/incidents. It has all the needed requirements to an efficient workflow
-      management of all processes involved in service execution. This control is done
-      for internal demands and also for outsourced services.\r\n\r\nHelpDEZk can be
-      used at any company''s area, serving as an support to the shared service center
-      concept, beyond the ability to log all the processes and maintain the request''s
-      history, it can pass it through many approval levels.\r\n\r\nHelpDEZk can put
-      together advanced managing resources with an extremely easy use. Simple and
-      intuitive screens make the day-by-day easier for your team, speeding up the
-      procedures and saving up a lot of time. It is developped in objects oriented
+      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 1193748, "username":
+      "jrzavaschi1992", "user_gravatar_id": "6c0262d5482846284b510b579df19fdd", "label":
+      "StackScript Python Library", "description": "Does nothing on its own. Do not
+      deploy directly.\r\n\r\nA collection of useful Python functions to be included
+      in other StackScripts.", "ordinal": 0, "logo_url": "", "images": ["linode/ubuntu14.04lts",
+      "linode/centos7", "linode/debian8", "linode/fedora22"], "deployments_total":
+      0, "deployments_active": 0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "rev_note": "Initial import.", "script": "#!/usr/bin/env
+      python\n\n\"\"\"\nPython Library StackScript\n\n\tAuthor: Ricardo N Feliciano
+      <rfeliciano@linode.com>\n\tVersion: 1.0.0.0\n\tRequirements:\n\t\t- n/a\n\nThis
+      StackScript is not meant to be directly deployed. Includes a host of\nfunctions
+      to do very common task on a distro, as implemented in Python. The\nfunctions
+      in this library are designed to be run accross the Linode Core\nDistributions:\n\t-
+      Ubuntu\n\t- CentOS\n\t- Debian\n\t- Fedora\n\"\"\"\n\n\nimport crypt\nimport
+      fcntl\nimport logging\nimport os\nimport platform\nimport pwd\nimport socket\nimport
+      subprocess\nimport sys\nimport time\ntry:\n\timport apt\nexcept:\n\ttry:\n\t\timport
+      yum\n\texcept:\n\t\ttry:\n\t\t\timport dnf\n\t\texcept ImportError:\n\t\t\tprint(\"Package
+      manager support was not found.\")\n\t\t\t\n\ndistro = None\n\"\"\"String list:
+      Contains details of the distribution.\"\"\"\n\n\ndef end():\n\t\"\"\"End the
+      StackScript cleanly.\"\"\"\n\t\n\t# Should the StackScripts themselves be removed
+      here at some point?\n\tlogging.info(\"The StackScript has been completed.\")\n\tsubprocess.check_output(''echo
+      \"The StackScript has completed. Press enter to continue.\" | wall -n'', shell=True)\n\n\ndef
+      init():\n\t\"\"\"Start features we consider StackScript standard.\"\"\"\n\t\n\t#
+      Sanity check for CentOS 7 & Fedora 22\n\tif os.path.exists(\"/var/log/stackscript.log\"):\n\t\tsys.exit(1)
+      # StackScript already started once, bail\n\t\n\twith open(\"/etc/profile.d/stackscript.sh\",
+      \"w\") as f:\n\t\tf.write(\"\"\"#!/bin/bash\nif pgrep -f \"python /root/StackScript\"
+      &>/dev/null\nthen\n\techo \"####################################################################\"\n\techo
+      \"#####\"\n\techo \"#####  Warning: Your StackScript is still running\"\n\techo
+      \"#####\"\n\techo \"#####\"\n\techo \"#####  Please do not make any system changes
+      until it \"\n\techo \"#####  completes. Log file is located at: \"\n\techo \"#####    /var/log/stackscript.log\"\n\techo
+      \"####################################################################\"\n\techo
+      \" \"\nelse\n\techo \"####################################################################\"\n\techo
+      \"#####\"\n\techo \"#####  The StackScript has completed. Enjoy your system.\"\n\techo
+      \"#####\"\n\techo \"#####\"\n\techo \"#####  For reference, the logfile is located
+      at: \"\n\techo \"#####    /var/log/stackscript.log\"\n\techo \"####################################################################\"\n\techo
+      \" \"\n\trm /etc/profile.d/stackscript.sh\nfi\"\"\")\n\t\n\tlogging_start()\n\n\ndef
+      logging_start(the_file=\"/var/log/stackscript.log\", the_level=logging.INFO):\n\t\"\"\"Turn
+      on logging.\"\"\"\n\t\n\tlogging.basicConfig(filename=the_file, level=the_level)\n\tlogging.info(\"Logging
+      has started. \" + str(time.time()))\n\n\ndef system_detect_distro():\n\t\"\"\"Prepares
+      distro information.\n\t\n\tThis is critical to support the Linode Core Distributions
+      with a single\n\tscript.\n\t\"\"\"\n\tglobal distro\n\n\t# add support for logging\n\t\n\tdistro
+      = dict(zip((''distname'', ''version'', ''codename''),\n\tplatform.linux_distribution(full_distribution_name=0)))\n\t\n\tdistro[''distname'']
+      = distro[''distname''].lower()\n\n\tif distro[''distname''] in (''debian'',
+      ''ubuntu''):\n\t\tdistro[''family''] = \"debian\"\n\telif distro[''distname'']
+      in (''fedora'', ''centos''):\n\t\tdistro[''family''] = \"redhat\"\n\telse:\n\t\traise
+      NotImplementedError(\"This distribution is not supported.\")\n\n\ndef system_IP_get():\n\t\"\"\"Return
+      IPv4 address configured on eth0.\n\t\n\tThis basically is a disgusting hack.
+      Please let me know if you find a\n\tcleaner way to do this.\"\"\"\n\t# add support
+      for logging\n\n\ts = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)\n\treturn
+      socket.inet_ntoa(fcntl.ioctl(\n\t\ts.fileno(),\n\t\t0x8915, # SIOCGIFADDR\n\t\tstruct.pack(''256s'',
+      \"eth0\")\n\t)[20:24])\n\n\ndef system_IP_rdns(IP):\n\t\"\"\"Get PTR for given
+      IP address.\"\"\"\n\t# add support for logging\n\n\treturn socket.gethostbyaddr(IP)[0]\n\n\ndef
+      system_package_install(package, update_first=True):\n\t\"\"\"Install a package
+      with the appropriate package manager.\"\"\"\n\t# add support for logging\n\n\tif
+      distro is None:\n\t\tsystem_detect_distro()\n\n\tsystem_update() if update_first
+      else None\n\t\n\tif distro[''family''] == \"debian\":\n\t\tos.environ[''DEBIAN_FRONTEND'']
+      = \"noninteractive\"\n\t\tcache = apt.Cache()\n\t\tpkg = cache[package]\n\t\tpkg.mark_install()\n\t\tcache.commit()\n\telif
+      distro[''distname''] == \"centos\":\n\t\tyb = yum.YumBase()\n\t\tyb.conf.assumeyes
+      = True\n\t\tyb.install(name=package)\n\t\tyb.resolveDeps()\n\t\tyb.processTransaction()\n\t\tyb.close()\n\telif
+      distro[''distname''] == \"fedora\":\n\t\tdnfb = dnf.Base()\n\t\tdnfb.conf.assumeyes
+      = True\n\t\tdnfb.read_all_repos()\n\t\tdnfb.fill_sack()\n\t\tdnfb.install(package)\n\t\tdnfb.resolve()\n\t\tdnfb.download_packages(dnfb.transaction.install_set)\n\t\tdnfb.do_transaction()\n\t\tdnfb.close()\n\n\ndef
+      system_update():\n\t\"\"\"Uses the distro''s package manager to update packages.\"\"\"\n\t#add
+      support for logging\n\t\n\tif distro is None:\n\t\tsystem_detect_distro()\n\t\n\tif
+      distro[''family''] == \"debian\":\n\t\tcache = apt.Cache()\n\t\tcache.update()\n\t\tcache.open(None)\n\t\tcache.upgrade()\n\t\tcache.commit()\n\telif
+      distro[''distname''] == \"centos\":\n\t\tyb = yum.YumBase()\n\t\tyb.conf.assumeyes
+      = True\n\t\tyb.update()\n\t\tyb.resolveDeps()\n\t\tyb.processTransaction()\n\t\tyb.close()\n\telif
+      distro[''distname''] == \"fedora\":\n\t\tdnfb = dnf.Base()\n\t\tdnfb.conf.assumeyes
+      = True\n\t\t#dnfb.read_all_repos() #updates were failing with this line\n\t\tdnfb.fill_sack()\n\t\tdnfb.upgrade_all()\n\t\tdnfb.resolve()\n\t\tdnfb.do_transaction()\n\t\tdnfb.close()\n\n\ndef
+      user_add(username, password, groups):\n\t\"\"\"Creates a Linux user account.\n\t\n\tArgs:\n\t\tusername
+      (String): A Linux username.\n\t\tpassword (String): Password for the user.\n\t\tgroups
+      (tuple): Groups that the user should be added to.\n\t\n\tReturns:\n\t\tbool:
+      True if successful, False otherwise.\n\t\"\"\"\n\n\t# need to implement logging\n\t#
+      need to implement group functionality\n\n\treturn subprocess.call([''useradd'',
+      ''-m'', ''-p'', crypt.crypt(password, \"22\"), ''-s'', ''/bin/bash'', username])\n\n\ndef
+      user_add_pubkey(username, key):\n\t\"\"\"Adds the public SSH key to the specified
+      user.\"\"\"\n\t# need to implement logging\n\t\n\tif username != \"root\":\n\t\tos.seteuid(pwd.getpwnam(username).pw_uid)\n\t\tos.setegid(pwd.getpwnam(username).pw_gid)\n\t\n\tpubkey_dir
+      = os.path.join(os.getenv(\"HOME\"), \".ssh\")\n\t\n\tif not os.path.isdir(pubkey_dir):\n\t\tos.makedirs(pubkey_dir)\n\t\n\twith
+      open(os.path.join(pubkey_dir, \"authorized_keys\")) as f:\n\t\tf.write(key)\n\t\n\tif
+      username != \"root\":\n\t\tos.seteuid(0)\n\t\tos.setegid(0)", "user_defined_fields":
+      []}, {"id": 9237, "username": "webuzo", "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5",
+      "label": "HelpDEZk powered by Webuzo", "description": "HelpDEZk is a powerfull
+      software that manages requests/incidents. It has all the needed requirements
+      to an efficient workflow management of all processes involved in service execution.
+      This control is done for internal demands and also for outsourced services.\r\n\r\nHelpDEZk
+      can be used at any company''s area, serving as an support to the shared service
+      center concept, beyond the ability to log all the processes and maintain the
+      request''s history, it can pass it through many approval levels.\r\n\r\nHelpDEZk
+      can put together advanced managing resources with an extremely easy use. Simple
+      and intuitive screens make the day-by-day easier for your team, speeding up
+      the procedures and saving up a lot of time. It is developped in objects oriented
       PHP language, with the MVC architecture and uses the templates system SMARTY.
       For the javascripts, JQUERY is used. \r\n\t\t\t\r\nWebuzo is a Single User Control
       Panel which helps users deploy Web Apps (WordPress, Joomla, Drupal, etc) or
@@ -2023,9 +2077,63 @@ interactions:
       \"Congratulations, SEOTOASTER has been successfully installed\"\necho \" \"\necho
       \"You can now configure SEOTOASTER and Softaculous Webuzo at the following URL
       :\"\necho \"http://$ip:2004/\"\necho \" \"\necho \"Thank you for choosing Softaculous
-      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 978965, "username":
-      "meenubediShine", "user_gravatar_id": "ac16f37ccd972a6f698dab5aab1188b2", "label":
-      "Testing Update", "description": "testing Update", "ordinal": 0, "logo_url":
+      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 1193749, "username":
+      "jrzavaschi1992", "user_gravatar_id": "6c0262d5482846284b510b579df19fdd", "label":
+      "Linux GSM  Helper", "description": "Linux GSM One-Click Helper", "ordinal":
+      0, "logo_url": "", "images": ["linode/debian9", "linode/debian10"], "deployments_total":
+      0, "deployments_active": 0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "rev_note": "", "script": "#!/bin/bash\n\n#
+      Linux GSM install\n\nfunction linuxgsm_install {\n\necho Configuring IP address\nIPADDR=`hostname
+      -I | awk ''{print$1}''`\n\n# Add a user for the game server\necho Setting up
+      a user\nadduser --disabled-password --gecos \"\" \"$GAMESERVER\"\necho \"$GAMESERVER
+      ALL=(ALL) NOPASSWD: ALL\" >> /etc/sudoers\n\n# Download and the LinuxGSM script\necho
+      Downloading LinuxGSM\n# TESTING\ncd /home/\"$GAMESERVER\"/\n# OLD: wget -4 https://linuxgsm.com/dl/linuxgsm.sh
+      -P /home/\"$GAMESERVER\"/\nwget -O linuxgsm.sh https://linuxgsm.sh -P /home/\"$GAMESERVER\"/\nchmod
+      +x /home/\"$GAMESERVER\"/linuxgsm.sh\nchown -R \"$GAMESERVER\":\"$GAMESERVER\"
+      /home/\"$GAMESERVER\"/*\n\n# Run the GSM script\necho running LinuxGSM script\nsu
+      - \"$GAMESERVER\" -c \"/home/$GAMESERVER/linuxgsm.sh $GAMESERVER\"\n\n}\n\n\nfunction
+      game_install {\n\n# Installing the Server\necho Installing the Server\nsu -
+      \"$GAMESERVER\" -c \"/home/$GAMESERVER/$GAMESERVER auto-install\"\nif [[ \"$GAMESERVER\"
+      =~ (^boserver$|^bb2server$|^bmdmserver$| \\\n^cssserver$|^csgoserver$|^dodsserver$|^emserver$|
+      \\\n^gmodserver$|^insserver$|^nmrihserver$|^tf2server$| \\\n^tuserver$|^zpsserver$)
+      ]]; then\n  echo -e \"\\ngslt=$GSLT\" >> /home/\"$GAMESERVER\"/lgsm/config-lgsm/\"$GAMESERVER\"/\"$GAMESERVER\".cfg\nelse\n  echo
+      No Gameserver Login Token Needed\nfi\n\n}\n\n\nfunction service_config {\n\n#
+      Add cron jobs for updating the gameserver and linuxgsm. Monitor will ensure
+      that the gameserver is running and restart if needed.\necho Adding game update
+      cron jobs\ncrontab -l > gamecron\necho \"*/5 * * * * su - $GAMESERVER -c ''/home/$GAMESERVER/$GAMESERVER
+      monitor'' > /dev/null 2>&1\" >> gamecron\necho \"0 23 * * * su - $GAMESERVER
+      -c ''/home/$GAMESERVER/$GAMESERVER update'' > /dev/null 2>&1\" >> gamecron\necho
+      \"30 23 * * * su - $GAMESERVER -c ''/home/$GAMESERVER/$GAMESERVER update-functions''
+      > /dev/null 2>&1\" >> gamecron\ncrontab gamecron\nrm gamecron\n\n# Create systemd
+      service file\n\ncat << END > /etc/systemd/system/$GAMESERVER.service\n[Unit]\nDescription=$GAMESERVER\n\n[Service]\nUser=$GAMESERVER\nType=forking\nExecStart=/bin/bash
+      /home/$GAMESERVER/$GAMESERVER start\nExecStop=/bin/kill -2 $MAINPID\n\n[Install]\nWantedBy=multi-user.target\nEND\n\n}\n\n##
+      Adding these for Valheim launch, will eventually replace the above code, but
+      for now, we added ''v_'' in front of functions\n\nfunction v_linuxgsm_install
+      {\n    local -r gameserver=\"$1\" username=\"$2\"\n\n    su - \"$username\"
+      -c \"\n        # Download and the LinuxGSM script\n        wget -O linuxgsm.sh
+      https://linuxgsm.sh\n        chmod +x linuxgsm.sh\n        # Run the GSM script\n        /home/$username/linuxgsm.sh
+      $gameserver\n    \"\n}\n\nfunction v_linuxgsm_game_install {\n    local -r gameserver=\"$1\"
+      username=\"$2\"\n\n    # Installing the Server\n    su - \"$username\" -c \"/home/$username/$gameserver
+      auto-install\"\n    if [[ \"$gameserver\" =~ (^boserver$|^bb2server$|^bmdmserver$|
+      \\\n        ^cssserver$|^csgoserver$|^dodsserver$|^emserver$| \\\n        ^gmodserver$|^insserver$|^nmrihserver$|^tf2server$|
+      \\\n        ^tuserver$|^zpsserver$) ]]; then\n        echo -e \"\\ngslt=$GSLT\"
+      >> \"/home/$username/lgsm/config-lgsm/$gameserver/$gameserver.cfg\"\n    else\n        echo
+      No gameserver Login Token Needed\n    fi\n}\n\nfunction v_linuxgsm_service_config
+      {\n    local -r gameserver=\"$1\" username=\"$2\"\n\n    # Add cron jobs for
+      updating the game server and LinuxGSM\n    # Monitor will ensure that the gameserver
+      is running and restart if needed\n    crontab -l > gamecron\n\n    echo \"*/5
+      * * * * su - \"$username\" -c ''/home/$username/$gameserver monitor'' > /dev/null
+      2>&1\" >> gamecron\n    echo \"0 23 * * * su - \"$username\" -c ''/home/$username/$gameserver
+      update'' > /dev/null 2>&1\" >> gamecron\n    echo \"30 23 * * * su - \"$username\"
+      -c ''/home/$username/$gameserver update-functions'' > /dev/null 2>&1\" >> gamecron\n\n    crontab
+      gamecron\n    rm gamecron\n\n    # Create systemd service file\n    cat << EOF
+      > /etc/systemd/system/$gameserver.service\n[Unit]\nDescription=$gameserver\n[Service]\nUser=$username\nType=forking\nExecStart=/bin/bash
+      /home/$username/$gameserver start\nExecStop=/bin/kill -2 \\$MAINPID\n[Install]\nWantedBy=multi-user.target\nEOF\n}\n\nfunction
+      v_linuxgsm_oneclick_install {\n    local -r gameserver=\"$1\" username=\"$2\"\n\n    v_linuxgsm_install
+      \"$gameserver\" \"$username\"\n    v_linuxgsm_game_install \"$gameserver\" \"$username\"\n    v_linuxgsm_service_config
+      \"$gameserver\" \"$username\"\n}", "user_defined_fields": []}, {"id": 978965,
+      "username": "meenubediShine", "user_gravatar_id": "ac16f37ccd972a6f698dab5aab1188b2",
+      "label": "Testing Update", "description": "testing Update", "ordinal": 0, "logo_url":
       "", "images": ["linode/arch", "linode/slackware14.2", "linode/debian10", "linode/alpine3.13"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
@@ -2091,18 +2199,63 @@ interactions:
       1\n\ncd ${HOME}\nSCRIPT=$(basename $SCRIPT_URL)\nrm -f ${SCRIPT}\necho \"Copying
       ${SCRIPT_URL} to ${HOME}\"\nwget --tries=5 ${SCRIPT_URL} && /usr/bin/dos2unix
       ${SCRIPT} && . ${SCRIPT}\ncd ${HOME} && rm -f ${SCRIPT}", "user_defined_fields":
-      []}, {"id": 9239, "username": "webuzo", "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5",
-      "label": "Webasyst powered by Webuzo", "description": "Webasyst is a free PHP
-      framework for creating sleek multi-user web apps and for building websites.
-      Webasyst offers a multi-app UI ready for integrating and designing your app,
-      handles user authorization, access rights management, routing setup, and much
-      more. Great for creating web solutions for businesses and teams. \r\n\t\t\t\r\nWebuzo
-      is a Single User Control Panel which helps users deploy Web Apps (WordPress,
-      Joomla, Drupal, etc) or System Apps (Apache, NGINX, PHP, Java, MongoDB, etc)
-      on their virtual machines or in the cloud.\r\n\r\nYou can get a Webuzo License
-      here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn
-      completion of the installation process, access http://your-ip:2004 to configure
-      Webasyst and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
+      []}, {"id": 1193750, "username": "jrzavaschi1992", "user_gravatar_id": "6c0262d5482846284b510b579df19fdd",
+      "label": "Basic OCA Helper ", "description": "Basic OCA Helper One-Click", "ordinal":
+      0, "logo_url": "", "images": ["linode/debian9"], "deployments_total": 0, "deployments_active":
+      0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "rev_note": "move apt-get upgrade to end of script to
+      prevent busted nf_conntrack kernel modules for UFW - cmullen ", "script": "#!/bin/bash\n#
+      Used for Marketplace Apps\n# Helper functions\n\nfunction apt_setup_update {\n  #
+      Force IPv4 and noninteractive update\n  echo ''Acquire::ForceIPv4 \"true\";''
+      > /etc/apt/apt.conf.d/99force-ipv4\n  export DEBIAN_FRONTEND=noninteractive\n  apt-get
+      update -y\n}\n\nfunction set_hostname {\n  IP=`hostname -I | awk ''{print$1}''`\n  HOSTNAME=`dnsdomainname
+      -A`\n  hostnamectl set-hostname $HOSTNAME\n  echo $IP $HOSTNAME  >> /etc/hosts\n}\n\nfunction
+      mysql_root_preinstall {\n  # Set MySQL root password on install\n  debconf-set-selections
+      <<< \"mysql-server mysql-server/root_password password $DBROOT_PASSWORD\"\n  debconf-set-selections
+      <<< \"mysql-server mysql-server/root_password_again password $DBROOT_PASSWORD\"\n}\n\nfunction
+      run_mysql_secure_installation_ubuntu20 {\n  # Installs expect, runs mysql_secure_installation
+      and runs mysql secure installation.\n  apt-get install -y expect\n  SECURE_MYSQL=$(expect
+      -c \"\n  set timeout 10\n  spawn mysql_secure_installation\n  expect \\\"Press
+      y|Y for Yes, any other key for No:\\\"\n  send \\\"n\\r\\\"\n  expect \\\"New
+      password:\\\"\n  send \\\"$DBROOT_PASSWORD\\r\\\"\n  expect \\\"Re-enter new
+      password:\\\"\n  send \\\"$DBROOT_PASSWORD\\r\\\"\n  expect \\\"Remove anonymous
+      users? (Press y|Y for Yes, any other key for No) :\\\"\n  send \\\"y\\r\\\"\n  expect
+      \\\"Disallow root login remotely? (Press y|Y for Yes, any other key for No)
+      :\\\"\n  send \\\"y\\r\\\"\n  expect \\\"Remove test database and access to
+      it? (Press y|Y for Yes, any other key for No) :\\\"\n  send \\\"y\\r\\\"\n  expect
+      \\\"Reload privilege tables now? (Press y|Y for Yes, any other key for No) :\\\"\n  send
+      \\\"y\\r\\\"\n  expect eof\n  \")\n  echo \"$SECURE_MYSQL\"\n}\n\nfunction ufw_install
+      {\n  # Install UFW and add basic rules\n  apt-get install ufw -y\n  ufw default
+      allow outgoing\n  ufw default deny incoming\n  ufw allow ssh\n  ufw enable\n  systemctl
+      enable ufw\n\n  # Stop flooding Console with messages\n  ufw logging off\n}\n\nfunction
+      fail2ban_install {\n  # Install and configure Fail2ban\n  apt-get install fail2ban
+      -y\n  cd /etc/fail2ban\n  cp fail2ban.conf fail2ban.local\n  cp jail.conf jail.local\n  systemctl
+      start fail2ban\n  systemctl enable fail2ban\n  cd\n}\n\nfunction stackscript_cleanup
+      {\n  # Force IPv4 and noninteractive upgrade after script runs to prevent breaking
+      nf_conntrack for UFW\n  echo ''Acquire::ForceIPv4 \"true\";'' > /etc/apt/apt.conf.d/99force-ipv4\n  export
+      DEBIAN_FRONTEND=noninteractive \n  apt-get upgrade -y\n\n  rm /root/StackScript\n  rm
+      /root/ssinclude*\n  echo \"Installation complete!\"\n}\n\nfunction run_mysql_secure_installation
+      {\n  # Installs expect, runs mysql_secure_installation and runs mysql secure
+      installation.\n  apt-get install -y expect\n  SECURE_MYSQL=$(expect -c \"\n  set
+      timeout 10\n  spawn mysql_secure_installation\n  expect \\\"Enter current password
+      for root (enter for ):\\\"\n  send \\\"$DBROOT_PASSWORD\\r\\\"\n  expect \\\"Change
+      the root password?\\\"\n  send \\\"n\\r\\\"\n  expect \\\"Remove anonymous users?\\\"\n  send
+      \\\"y\\r\\\"\n  expect \\\"Disallow root login remotely?\\\"\n  send \\\"y\\r\\\"\n  expect
+      \\\"Remove test database and access to it?\\\"\n  send \\\"y\\r\\\"\n  expect
+      \\\"Reload privilege tables now?\\\"\n  send \\\"y\\r\\\"\n  expect eof\n  \")\n  echo
+      \"$SECURE_MYSQL\"\n}", "user_defined_fields": []}, {"id": 9239, "username":
+      "webuzo", "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5", "label": "Webasyst
+      powered by Webuzo", "description": "Webasyst is a free PHP framework for creating
+      sleek multi-user web apps and for building websites. Webasyst offers a multi-app
+      UI ready for integrating and designing your app, handles user authorization,
+      access rights management, routing setup, and much more. Great for creating web
+      solutions for businesses and teams. \r\n\t\t\t\r\nWebuzo is a Single User Control
+      Panel which helps users deploy Web Apps (WordPress, Joomla, Drupal, etc) or
+      System Apps (Apache, NGINX, PHP, Java, MongoDB, etc) on their virtual machines
+      or in the cloud.\r\n\r\nYou can get a Webuzo License here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath
+      to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
+      of the installation process, access http://your-ip:2004 to configure Webasyst
+      and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
       "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
       "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
@@ -2175,23 +2328,226 @@ interactions:
       \"Congratulations, jforum has been successfully installed\"\necho \" \"\necho
       \"You can now configure jforum and Softaculous Webuzo at the following URL :\"\necho
       \"http://$ip:2004/\"\necho \" \"\necho \"Thank you for choosing Softaculous
-      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 48408, "username":
-      "crooksau", "user_gravatar_id": "f33d8e66bbce5c95fcb2a96dc8a4beaa", "label":
-      "Debian 8 Install", "description": "Debian 8 Install for BODYRUBS.RU", "ordinal":
-      0, "logo_url": "", "images": ["linode/debian8"], "deployments_total": 0, "deployments_active":
-      0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "rev_note": "Initial import", "script": "#!/bin/sh",
-      "user_defined_fields": []}, {"id": 9241, "username": "webuzo", "user_gravatar_id":
-      "cf0348f835d60e6d133040f49bb36ec5", "label": "Admidio powered by Webuzo", "description":
-      "Admidio is a free online membership management, optimized for clubs, groups
-      and organizations. It consists of classical management members from a variety
-      of modules that can be installed and adjusted to a new or existing website.\r\n\r\nRegistered
-      users have your website by Admidio including access to predefined and user-configurable
-      membership lists, people profiles and an Agenda. In addition, members may be
-      pooled in groups are assigned properties and search for it.\r\n\r\nWebuzo is
-      a Single User Control Panel which helps users deploy Web Apps (WordPress, Joomla,
-      Drupal, etc) or System Apps (Apache, NGINX, PHP, Java, MongoDB, etc) on their
-      virtual machines or in the cloud.\r\n\r\nYou can get a Webuzo License here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath
+      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 1193752, "username":
+      "jrzavaschi1992", "user_gravatar_id": "6c0262d5482846284b510b579df19fdd", "label":
+      "API Functions Helper", "description": "api", "ordinal": 0, "logo_url": "",
+      "images": ["linode/slackware14.1", "linode/centos7", "linode/ubuntu16.04lts",
+      "linode/arch", "linode/slackware14.2", "linode/gentoo", "linode/debian9", "linode/ubuntu18.04",
+      "linode/debian10", "linode/centos8", "linode/alpine3.11"], "deployments_total":
+      0, "deployments_active": 0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "rev_note": "", "script": "#!/usr/bin/env
+      bash\n\n### Linode API Bash Functions\n\n##################################\n##
+      Pre-Requisites\n##################################\n\n## Import StackScript
+      1 (Bash Library) so that check_dns_propagation() can install ''dig''\n#source
+      <ssinclude StackScriptID=1>\n\n## Install jq\nif [ ! -x /usr/bin/jq ] && [ !
+      -x /usr/local/bin/jq ]; then\n    which wget || system_install_package wget\n    wget
+      https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64\n    mv jq-linux64
+      jq\n    chmod +x jq\n    mv jq /usr/bin/\nfi\n\n\n##################################\n##
+      DNS\n##################################\n\n## Fetch DNS info from the API\n\nfunction
+      list_domains {\n    # Example: list_domains\n\n    curl -H \"Authorization:
+      Bearer $TOKEN_PASSWORD\" \\\n        https://api.linode.com/v4/domains | jq
+      -S\n}\n\nfunction list_records {\n    # Example: list_records $DOMAIN\n    \n    local
+      -r domain=\"$1\"\n    local -r domain_id=$(get_domain_property $domain ''id'')\n\n    curl
+      -H \"Authorization: Bearer $TOKEN_PASSWORD\" \\\n        https://api.linode.com/v4/domains/$domain_id/records
+      | jq -S\n}\n\nfunction get_domain_property {\n    # Example: get_domain_property
+      $DOMAIN ''id'' \n\n    local -r domain=\"$1\" property=\"$2\"\n    local -a
+      domain_list=($(list_domains $TOKEN_PASSWORD))\n    local -r num_domains=$(echo
+      \"${domain_list[@]}\" | jq ''.results'')\n\n    for ((i=0; i<$num_domains; i++));
+      do\n        local domain_name=$(echo \"${domain_list[@]}\" | jq .data[$i].domain
+      | sed ''s/\"//g'')\n        case \"$domain_name\" in\n            \"$domain\")\n                echo
+      \"${domain_list[@]}\" | jq .data[$i].$property\n                break;\n                ;;\n        esac\n    done\n}\n\nfunction
+      check_domain {\n    # Example: check_domain \"$DOMAIN\"\n\n    local -r domain=\"$1\"\n    if
+      [ \"$(get_domain_property \"$domain\" ''domain'')\" ];\n        then return
+      0;\n        else return 1;\n    fi\n}\n\nfunction get_record_id {\n    # Example:
+      get_record_id \"$DOMAIN\" \"$SUBDOMAIN\" \"$TYPE\"\n\n    local -r domain=\"$1\"
+      subdomain=\"$2\" type=\"$3\"\n    local -r domain_id=$(get_domain_property \"$domain\"
+      ''id'')\n    local -a record_list=($(list_records \"$domain\"))\n    local -r
+      num_records=$(echo \"${record_list[@]}\" | jq ''.results'')\n\n    for ((i=0;
+      i<$num_records; i++)); do\n        local record_name=$(echo \"${record_list[@]}\"
+      | jq .data[$i].name | sed ''s/\"//g'')\n        case \"$record_name\" in\n            \"$subdomain\")\n                local
+      record_type=$(echo \"${record_list[@]}\" | jq .data[$i].type | sed ''s/\"//g'')\n                if
+      [ \"$record_type\" == \"$type\" ]; then\n                    echo \"${record_list[@]}\"
+      | jq .data[$i].id\n                    break;\n                fi\n                ;;\n        esac\n    done\n}\n\nfunction
+      check_record {\n    # Example: check_record $DOMAIN $SUBDOMAIN $TYPE\n\n    local
+      -r domain=\"$1\" subdomain=\"$2\" type=\"$3\"\n    local -r domain_id=$(get_domain_property
+      \"$domain\" ''id'')\n    local -a record_list=($(list_records \"$domain\"))\n    local
+      -r num_records=$(echo \"${record_list[@]}\" | jq ''.results'')\n\n    for ((i=0;
+      i<$num_records; i++)); do\n        local record_name=$(echo \"${record_list[@]}\"
+      | jq .data[$i].name | sed ''s/\"//g'')\n        case \"$record_name\" in \n            \"$subdomain\")\n                local
+      record_type=$(echo \"${record_list[@]}\" | jq .data[$i].type | sed ''s/\"//g'')\n                if
+      [ \"$record_type\" == \"$type\" ]; then\n                    local found_record=true\n                    break;\n                fi\n                ;;\n        esac\n    done\n\n    if
+      [ \"$found_record\" ]; then\n        return 0;\n    else\n        return 1;\n    fi\n}\n\n##
+      Create new DNS records\n\nfunction create_domain {\n    # Example: create_domain
+      $DOMAIN $SOA_EMAIL_ADDRESS\n    \n    local -r domain=\"$1\" soa_email_address=\"$2\"\n\n    curl
+      -H \"Content-Type: application/json\" \\\n         -H \"Authorization: Bearer
+      $TOKEN_PASSWORD\" \\\n         -X POST -d ''{\n            \"domain\": \"''\"$domain\"''\",\n            \"type\":
+      \"master\",\n            \"soa_email\": \"''\"$soa_email_address\"''\",\n            \"description\":
+      \" \",\n            \"refresh_sec\": 14400,\n            \"retry_sec\": 3600,\n            \"expire_sec\":
+      604800,\n            \"ttl_sec\": 300,\n            \"status\": \"active\",\n            \"display_group\":
+      \" \"\n        }'' https://api.linode.com/v4/domains\n\n        # There''s a
+      reason I added this, but it seems I didn''t leave a comment\n        # I''ll
+      experiment with removing it later, but am leaving it for now in\n        # the
+      interest of not breaking anything\n        sleep 3\n}\n\nfunction create_a_record
+      {\n    # Example: create_a_record $SUBDOMAIN $IP $DOMAIN\n\n    local -r subdomain=\"$1\"
+      ip_address=\"$2\" domain=\"$3\"\n    local -r domain_id=$(get_domain_property
+      \"$domain\" ''id'')\n\n    curl -H \"Content-Type: application/json\" \\\n         -H
+      \"Authorization: Bearer $TOKEN_PASSWORD\" \\\n         -X POST -d ''{\n            \"type\":
+      \"A\",\n            \"name\": \"''\"$subdomain\"''\",\n            \"target\":
+      \"''\"$ip_address\"''\",\n            \"priority\": 0,\n            \"service\":
+      null,\n            \"protocol\": null\n        }'' https://api.linode.com/v4/domains/$domain_id/records\n\n}\n\nfunction
+      create_aaaa_record {\n    # Example: create_aaaa_record $SUBDOMAIN $IP $DOMAIN\n\n    local
+      -r subdomain=\"$1\" ip6_address=\"$2\" domain=\"$3\"\n    local -r domain_id=$(get_domain_property
+      \"$domain\" ''id'')\n\n    curl -H \"Content-Type: application/json\" \\\n         -H
+      \"Authorization: Bearer $TOKEN_PASSWORD\" \\\n         -X POST -d ''{\n            \"type\":
+      \"AAAA\",\n            \"name\": \"''\"$subdomain\"''\",\n            \"target\":
+      \"''\"$ip6_address\"''\",\n            \"priority\": 0,\n            \"service\":
+      null,\n            \"protocol\": null\n        }'' https://api.linode.com/v4/domains/$domain_id/records\n}\n\nfunction
+      create_mx_record {\n    # Example: create_mx_record $DOMAIN\n\n    local -r
+      domain=\"$1\"\n    local -r domain_id=$(get_domain_property \"$domain\" ''id'')\n\n    curl
+      -H \"Content-Type: application/json\" \\\n         -H \"Authorization: Bearer
+      $TOKEN_PASSWORD\" \\\n         -X POST -d ''{\n            \"type\": \"MX\",\n            \"name\":
+      \"''\"mail.${domain}\"''\",\n            \"target\": \"''\"$domain\"''\",\n            \"priority\":
+      10,\n            \"service\": null,\n            \"protocol\": null,\n            \"ttl_sec\":
+      0\n        }'' https://api.linode.com/v4/domains/$domain_id/records\n}\n\nfunction
+      create_spf_record {\n    ## This function needs updating to allow the creation
+      of custom SPF records\n\n    # Example create_spf_record $DOMAIN\n\n    local
+      -r domain=\"$1\"\n    local -r domain_id=$(get_domain_property \"$domain\" ''id'')\n\n    curl
+      -H \"Content-Type: application/json\" \\\n         -H \"Authorization: Bearer
+      $TOKEN_PASSWORD\" \\\n         -X POST -d ''{\n            \"type\": \"TXT\",\n            \"name\":
+      \"''\"$domain\"''\",\n            \"target\": \"v=spf1 a ~all\",\n            \"priority\":
+      50,\n            \"ttl_sec\": 0\n    }'' https://api.linode.com/v4/domains/$domain_id/records\n}\n\nfunction
+      set_rdns {\n    # Example: set_rdns $FQDN $IP\n\n    local -r fqdn=\"$1\" ip_address=\"$2\"\n\n    check_dns_propagation
+      \"$fqdn\" \"$ip_address\"\n\n    printf \"Setting rDNS...\\n\"\n    curl -H
+      \"Content-Type: application/json\" \\\n         -H \"Authorization: Bearer $TOKEN_PASSWORD\"
+      \\\n         -X PUT -d ''{\n            \"rdns\": \"''\"$fqdn\"''\"\n        }''
+      https://api.linode.com/v4/networking/ips/$ip_address\n}\n\n\n## Update existing
+      DNS records\n\nfunction update_domain_property {\n    # Example: update_domain_property
+      $DOMAIN $PROPERTIES_JSON\n\n    local -r domain=\"$1\"\n    local -r domain_id=\"$(get_domain_property
+      \"$domain\" ''id'')\"\n\n    # Import the passed data into an associative array\n    local
+      var=$(declare -p ${2})\n    eval \"local -a properties_json=\"${var#*=}\n\n    curl
+      -H \"Content-Type: application/json\" \\\n         -H \"Authorization: Bearer
+      $TOKEN_PASSWORD\" \\\n         -X PUT -d \"${properties_json}\" \\\n            https://api.linode.com/v4/domains/$domain_id\n}\n\nfunction
+      update_a_record {\n    # Example: update_a_record $SUBDOMAIN $IP_ADDRESS $DOMAIN\n    \n    local
+      -r subdomain=\"$1\" ip_address=\"$2\" domain=\"$3\"\n    local -r domain_id=$(get_domain_property
+      \"$domain\" ''id'')\n    local -r record_id=$(get_record_id \"$domain\" \"$subdomain\"
+      ''A'')\n\n    curl -H \"Content-Type: application/json\" \\\n         -H \"Authorization:
+      Bearer $TOKEN_PASSWORD\" \\\n         -X PUT -d ''{\n         \"type\": \"A\",\n         \"name\":
+      \"''\"$subdomain\"''\",\n         \"target\": \"''\"$ip_address\"''\"\n    }''
+      https://api.linode.com/v4/domains/$domain_id/records/$record_id\n}\n\nfunction
+      update_aaaa_record {\n    # Example: update_aaaa_record $SUBDOMAIN $IP6 $DOMAIN\n\n    local
+      -r subdomain=\"$1\" ip6_address=\"$2\" domain=\"$3\"\n    local -r domain_id=$(get_domain_property
+      \"$domain\" ''id'')\n    local -r record_id=$(get_record_id \"$domain\" \"$subdomain\"
+      ''AAAA'')\n\n    curl -H \"Content-Type: application/json\" \\\n         -H
+      \"Authorization: Bearer $TOKEN_PASSWORD\" \\\n         -X PUT -d ''{\n            \"type\":
+      \"AAAA\",\n            \"name\": \"''\"$subdomain\"''\",\n            \"target\":
+      \"''\"$ip6_address\"''\"\n    }'' https://api.linode.com/v4/domains/$domain_id/records/$record_id\n}\n\n\n##
+      Automate DNS record creation\n#\n# *** IMPORTANT ***\n#\n# To use this next
+      function, you''ll need to create an associative array outside of it to be passed
+      in\n# Here''s an example:\n#\n# declare -A dns_records=(\n#    [soa_email_address]=\"$SOA_EMAIL_ADDRESS\"\n#    [domain]=\"$DOMAIN\"\n#    [subdomain]=\"www\"\n#    [mx_record]=''Yes''\n#    [spf_record]=''Yes''\n#
+      )\n#\n# set_dns \"dns_records\"\n\nfunction set_dns {\n    # Import the passed
+      data into an associative array\n    local var=$(declare -p ${1})\n    eval \"local
+      -A records=\"${var#*=}\n\n    # Create the domain, if specified, and get it''s
+      ID\n    # Also, create the A record for the base domain\n    if ! check_domain
+      \"${records[domain]}\"; then\n        # Create the domain\n        create_domain
+      \"${records[domain]}\" \"${records[email_address]}\"\n\n        # Create the
+      base A record\n        create_a_record \"\" \"${records[ipv4_address]}\" \"${records[domain]}\"\n        create_aaaa_record
+      \"\" \"${records[ipv6_address]}\" \"${records[domain]}\"\n    fi\n\n    # If
+      the A record doesn''t already exist, create it\n    if ! check_record \"${records[domain]}\"
+      \"${records[subdomain]}\" ''A''; then\n        create_a_record \"${records[subdomain]}\"
+      \"${records[ipv4_address]}\" \"${records[domain]}\"\n    # Otherwise, update
+      it\n    else\n        update_a_record \"${records[subdomain]}\" \"${records[ipv4_address]}\"
+      \"${records[domain]}\"\n    fi\n\n    # If the AAAA record doesn''t exist, create
+      it\n    if ! check_record \"${records[domain]}\" \"${records[subdomain]}\" ''AAAA'';
+      then\n        create_aaaa_record \"${records[subdomain]}\" \"${records[ipv6_address]}\"
+      \"${records[domain]}\"\n    # Otherwise, update it\n    else\n        update_aaaa_record
+      \"${records[subdomain]}\" \"${records[ipv6_address]}\" \"${records[domain]}\"\n    fi\n\n    #
+      Create an MX record, if requested\n    case \"${records[mx_record]}\" in\n        ''Yes'')\n            list_records
+      \"${records[domain]}\" | grep ''MX''\n            [ $? -ne 0 ] && create_mx_record
+      \"${records[domain]}\"\n            ;;\n    esac\n\n    # Create an SPF record,
+      if requested\n    case \"${records[spf_record]}\" in\n        ''Yes'')\n            list_records
+      \"${records[domain]}\" | grep ''spf''\n            [ $? -ne 0 ] && create_spf_record
+      \"${records[domain]}\"\n            ;;\n    esac\n}\n\n\n## Verify DNS records\n\nfunction
+      check_dns_propagation {\n    # Example: check_dns_propagation $FQDN $IP\n\n    local
+      -r fqdn=\"$1\" ip_address=\"$2\"\n\n    # Check for ''dig'' and install ''dnsutils''
+      if it''s not there\n    if ! dig; then\n        case \"${detected_distro[family]}\"
+      in\n            ''debian'')\n                system_install_package dnsutils\n                ;;\n            ''redhat'')\n                system_install_package
+      bind-utils\n                ;;\n        esac\n    fi\n\n    # List of nameservers
+      to check\n    # Specifically, Google''s and Linode''s\n    local -a nameservers=(\n        ''8.8.4.4''\n        ''8.8.8.8''\n      #  ''162.159.27.72''\n      #  ''162.159.24.39''\n      #  ''162.159.25.129''\n      #  ''162.159.26.99''\n      #  ''162.159.24.25''\n    )\n\n    #
+      Check for the record in each of the nameservers\n    # listed in ${nameservers[@]}\n    for
+      i in ${nameservers[@]}; do\n        local a=1\n        printf \"Waiting for
+      propagation to %s\" $i\n        while [ $a -gt 0 ]; do\n            result=\"$(dig
+      @$i +short $fqdn)\"\n            if [ \"$result\" == \"$ip_address\" ]; then\n                ((a-=1))\n                result=''''\n            else\n                printf
+      \".\"\n                sleep 10\n            fi\n        done\n        printf
+      \"done.\\n\"\n    done\n\n    printf \"\\n%s has finished propagating!\\n\"
+      $fqdn\n}\n\nfunction check_rdns_propagation {\n    # Example check_rdns_propagation
+      $IP $DOMAIN\n\n    local -r ip_address=\"$1\" domain=\"$2\"\n    local a=1\n\n    while
+      [ $a -ne 0 ]; do\n        if [ \"$(dig +short -x \"$ip_address\" | grep \"$domain\")\"
+      ]; then\n            a=0\n        else\n            printf \".\"\n            sleep
+      10\n        fi\n    done\n}\n\n\n\n##################################\n## Object
+      Storage Buckets\n##################################\n\n## Create Object Storage
+      Buckets\n\nfunction create_obj_bucket {\n    local -r bucket_name=\"$1\" cluster=\"$2\"
+      acl=\"$3\" cors=\"$4\"\n\n    curl -H \"Content-Type: application/json\" \\\n         -H
+      \"Authorization: Bearer $TOKEN_PASSWORD\" \\\n         -X POST -d ''{\n            \"label\":
+      \"''\"$bucket_name\"''\",\n            \"cluster\": \"''\"$cluster\"''\",\n            \"cors_enabled\":
+      ''$cors'',\n            \"acl\": \"''\"$acl\"''\"\n        }'' https://api.linode.com/v4/object-storage/buckets/\n}\n\n\n\n##################################\n##
+      Block Storage Volumes\n##################################\n\n## List Block Storage
+      Volumes\n\nfunction list_volumes {\n    # Example: list_volumes\n\n    curl
+      -H \"Authorization: Bearer $TOKEN_PASSWORD\" \\\n        https://api.linode.com/v4/volumes
+      | jq -S\n}\n\nfunction get_volume_property {\n    # Example: get_volume_property
+      \"$VOLUME_LABEL\" \"$PROPERTY\"\n\n    local -r volume=\"$1\" property=\"$2\"\n    local
+      -a volume_list=(\"$(list_volumes)\")\n    local -r num_volumes=$(echo \"${volume_list[@]}\"
+      | jq ''.results'')\n\n    for ((i=0; i<$num_volumes; i++)); do\n        local
+      volume_name=$(echo \"${volume_list[@]}\" | jq .data[$i].label | sed ''s/\"//g'')\n        case
+      \"$volume_name\" in\n            \"$volume\")\n                echo \"${volume_list[@]}\"
+      | jq .data[$i].$property\n                break;\n                ;;\n        esac\n    done\n}\n\nfunction
+      check_volume {\n    # Example: check_volume \"$volume\"\n\n    local -r volume=\"$1\"\n    if
+      [ $(get_volume_property \"$volume\" ''label'') ];\n        then return 0;\n        else
+      return 1;\n    fi\n}\n\n\n## Create Block Storage Volumes\n\nfunction create_volume
+      {\n    # Example: create_volume \"$VOLUME_LABEL\" $VOLUME_SIZE $LINODE_ID (optional)\n    #
+      If you don''t specify a Linode ID, it will default to the current Linode\n\n    local
+      -r label=\"$1\" size=\"$2\" linode_id=\"${3:-$LINODE_ID}\"\n\n    curl -H \"Content-Type:
+      application/json\" \\\n         -H \"Authorization: Bearer $TOKEN_PASSWORD\"
+      \\\n         -X POST -d ''{\n            \"label\": \"''\"$label\"''\",\n            \"size\":
+      ''$size'',\n            \"linode_id\": ''$linode_id''\n        }'' https://api.linode.com/v4/volumes
+      | jq -S\n}\n\n\n## Attach/Detach/Mount Block Storage Volumes\n\nfunction attach_volume
+      {\n    # Example: attach_volume \"$VOLUME_LABEL\" $LINODE_ID (optional)\n    #
+      If you don''t specify a Linode ID, it will default to the current Linode\n\n    local
+      -r volume_label=\"$1\" linode_id=\"${2:-$LINODE_ID}\"\n    local -r volume_id=$(get_volume_property
+      \"$volume_label\" ''id'')\n\n    curl -H \"Content-Type: application/json\"
+      \\\n         -H \"Authorization: Bearer $TOKEN_PASSWORD\" \\\n         -X POST
+      -d ''{\n            \"linode_id\": ''$linode_id''\n    }'' https://api.linode.com/v4/volumes/$volume_id/attach\n\n}\n\nfunction
+      detach_volume {\n    # Example: detach_volume $VOLUME_ID\n\n    local -r volume_id=\"$1\"\n\n    curl
+      -H \"Content-Type: application/json\" \\\n         -H \"Authorization: Bearer
+      $TOKEN_PASSWORD\" \\\n         -X POST \\\n            https://api.linode.com/v4/volumes/$volume_id/detach\n\n}\n\nfunction
+      mount_volume {\n    # Example: mount_volume \"$VOLUME_LABEL\" ''/path/to/mount_point''\n\n    local
+      -r volume_label=\"$1\" mount_point=\"$2\"\n    local -r volume_path=\"$(\n        get_volume_property
+      \"$volume_label\" ''filesystem_path'' | sed ''s/\"//g''\n    )\"\n\n    # Wait
+      for the volume to become available before proceeding\n    local x=1\n    while
+      [ $x -gt 0 ]; do\n        [ -e $volume_path ] && ((x-=1))\n        sleep 1\n    done\n\n    #
+      Create a filesystem on the volume\n    mkfs.ext4 \"$volume_path\"\n\n    # Create
+      \"$mount_point\" and mount the volume there\n    mkdir -p \"$mount_point\"\n    mount
+      \"$volume_path\" \"$mount_point\"\n\n    # Automatically mount the volume at
+      boot\n    echo \"$volume_path $mount_point ext4 defaults 0 2\" >> /etc/fstab\n}\n\n\nfunction
+      delete_volume {\n    # Example: delete_volume $VOLUME_ID\n\n    local -r volume_id=\"$1\"\n\n    curl
+      -H \"Content-Type: application/json\" \\\n         -H \"Authorization: Bearer
+      $TOKEN_PASSWORD\" \\\n         -X DELETE \\\n            https://api.linode.com/v4/volumes/$volume_id\n}",
+      "user_defined_fields": []}, {"id": 48408, "username": "crooksau", "user_gravatar_id":
+      "f33d8e66bbce5c95fcb2a96dc8a4beaa", "label": "Debian 8 Install", "description":
+      "Debian 8 Install for BODYRUBS.RU", "ordinal": 0, "logo_url": "", "images":
+      ["linode/debian8"], "deployments_total": 0, "deployments_active": 0, "is_public":
+      true, "mine": false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "rev_note": "Initial import", "script": "#!/bin/sh", "user_defined_fields":
+      []}, {"id": 9241, "username": "webuzo", "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5",
+      "label": "Admidio powered by Webuzo", "description": "Admidio is a free online
+      membership management, optimized for clubs, groups and organizations. It consists
+      of classical management members from a variety of modules that can be installed
+      and adjusted to a new or existing website.\r\n\r\nRegistered users have your
+      website by Admidio including access to predefined and user-configurable membership
+      lists, people profiles and an Agenda. In addition, members may be pooled in
+      groups are assigned properties and search for it.\r\n\r\nWebuzo is a Single
+      User Control Panel which helps users deploy Web Apps (WordPress, Joomla, Drupal,
+      etc) or System Apps (Apache, NGINX, PHP, Java, MongoDB, etc) on their virtual
+      machines or in the cloud.\r\n\r\nYou can get a Webuzo License here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath
       to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
       of the installation process, access http://your-ip:2004 to configure Admidio
       and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
@@ -2274,8 +2630,36 @@ interactions:
       \"Congratulations, MeshCMS has been successfully installed\"\necho \" \"\necho
       \"You can now configure MeshCMS and Softaculous Webuzo at the following URL
       :\"\necho \"http://$ip:2004/\"\necho \" \"\necho \"Thank you for choosing Softaculous
-      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 14362, "username":
-      "ezan", "user_gravatar_id": "40bba314333f02cceb3f40d8a2aabb78", "label": "install-sensu",
+      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 1193754, "username":
+      "jrzavaschi1992", "user_gravatar_id": "6c0262d5482846284b510b579df19fdd", "label":
+      "Illa Builder One-Click", "description": "Illa Builder One-Click App", "ordinal":
+      0, "logo_url": "", "images": ["linode/ubuntu22.04"], "deployments_total": 0,
+      "deployments_active": 0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "rev_note": "", "script": "#!/bin/bash\n#<UDF
+      name=\"PORT\" Label=\"ILLA Builder Port\" example=\"Default: 80\" default=\"80\"
+      />\n#<UDF name=\"PG_PASSWORD\" Label=\"Postgres Password\" example=\"s3cure_p4ssw0rd\"
+      /> \n\n## Enable logging \nexec > >(tee /dev/ttyS0 /var/log/stackscript.log)
+      2>&1\n\n# Apt update/upgrade\napt update\napt upgrade -y\n\n# Install the dependencies
+      & add Docker to the APT repository\napt install -y apt-transport-https ca-certificates
+      curl software-properties-common gnupg2 pwgen ufw\ncurl -fsSL https://download.docker.com/linux/ubuntu/gpg
+      | apt-key add -\nadd-apt-repository \"deb [arch=amd64] https://download.docker.com/linux/ubuntu
+      focal stable\"\n\n# Update & install Docker-CE\napt update\napt install -y docker-ce\n\n#
+      Check to ensure Docker is running and installed correctly\nsystemctl status
+      docker\ndocker -v\n\n# Env config\nILLA_HOME_DIR=/var/lib/illa\nPG_VOLUMN=${ILLA_HOME_DIR}/database/postgresql\nWSS_ENABLED=false\nILLA_DEPLOY_MODE=''self-host''\n\n\n#
+      Init\nmkdir -p ${ILLA_HOME_DIR}\nmkdir -p ${PG_VOLUMN}\nmkdir -p ${ILLA_HOME_DIR}\nchmod
+      0777 ${PG_VOLUMN} # @todo: chmod for MacOS, the gid is \"wheel\", not \"root\".
+      and we will fix this later.\n\n# Run\ndocker run -d \\\n    --name illa-builder
+      \\\n    -e POSTGRES_PASSWORD=$PG_PASSWORD \\\n    -e GIN_MODE=release \\\n    -e
+      PGDATA=/var/lib/postgresql/data/pgdata \\\n    -e ILLA_DEPLOY_MODE=$ILLA_DEPLOY_MODE
+      \\\n    -v $PG_VOLUMN:/var/lib/postgresql/data \\\n    -p $PORT:80 \\\n    illasoft/illa-builder:latest\n\necho
+      \"\n********************************************************************************\nWelcome
+      to ILLA Builder!\n********************************************************************************\n  #
+      Website:           https://www.illacloud.com\n  # Documentation:     https://www.illacloud.com/docs/about-illa\n  #
+      Github:            https://github.com/illacloud\n  # Community Support: https://github.com/orgs/illacloud/discussions\"",
+      "user_defined_fields": [{"name": "PORT", "label": "ILLA Builder Port", "example":
+      "Default: 80", "default": "80"}, {"name": "PG_PASSWORD", "label": "Postgres
+      Password", "example": "s3cure_p4ssw0rd"}]}, {"id": 14362, "username": "ezan",
+      "user_gravatar_id": "40bba314333f02cceb3f40d8a2aabb78", "label": "install-sensu",
       "description": "", "ordinal": 0, "logo_url": "", "images": ["linode/ubuntu14.04lts"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
@@ -2329,7 +2713,37 @@ interactions:
       \" \"\necho \"You can now configure Little Software Stats and Softaculous Webuzo
       at the following URL :\"\necho \"http://$ip:2004/\"\necho \" \"\necho \"Thank
       you for choosing Softaculous Webuzo !\"\necho \" \"", "user_defined_fields":
-      []}, {"id": 1158683, "username": "yoboycc", "user_gravatar_id": "e598b7c77d05460a72ceb4397cbc72f6",
+      []}, {"id": 1193755, "username": "jrzavaschi1992", "user_gravatar_id": "6c0262d5482846284b510b579df19fdd",
+      "label": "PHP", "description": "", "ordinal": 0, "logo_url": "", "images": ["linode/ubuntu14.04lts",
+      "linode/centos7", "linode/debian8", "linode/fedora22"], "deployments_total":
+      0, "deployments_active": 0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "rev_note": "v1.0.1", "script": "#!/usr/bin/env
+      python\n\n\"\"\"\nPHP StackScript\n\t\n\tAuthor: Ricardo N Feliciano <rfeliciano@linode.com>\n\tVersion:
+      1.0.1.2\n\tRequirements:\n\t\t- ss://linode/python-library <ssinclude StackScriptID=\"3\">\n\nThis
+      StackScript both deploys as well as provides a library of functions for\nPHP.
+      The functions in this StackScript are designed to be run across the \nLinode
+      Core Distributions:\n\t- Ubuntu\n\t- CentOS\n\t- Debian\n\t- Fedora\n\"\"\"\n\nimport
+      os\nimport subprocess\nimport sys\n\ntry: # we''ll need to rename included StackScripts
+      before we can import them\n\tos.rename(\"/root/ssinclude-3\", \"/root/pythonlib.py\")\nexcept:\n\tpass\n\nimport
+      pythonlib\n\n\ndef php_apache_mod_install():\n\t\"\"\"Install Apache httpd PHP
+      module.\"\"\"\n\t# add logging support\n\n\tpackage = {\n\t\t''debian'': ''php5'',\n\t\t''redhat'':
+      ''php''\n\t}\n\n\tpythonlib.system_package_install(package[pythonlib.distro[''family'']])\n\n\n#def
+      php_fpm_install():\n\n\ndef php_install():\n\t\"\"\"Install PHP.\n\t\n\tDefaults
+      to installing the mod_PHP implemention of PHP.\n\t\"\"\"\n\t# add logging support\n\n\tphp_apache_mod_install()\n\n\ndef
+      php_install_module(module, update_index=True):\n\t\"\"\"Install a PHP module.\"\"\"\n\n\tprefix
+      = {\n\t\t''debian'': ''php5-'',\n\t\t''redhat'': ''php-''\n\t}\n\n\tpythonlib.system_package_install(prefix[pythonlib.distro[''family'']]
+      + module, update_index)\n\n\ndef php_install_module_common():\n\t\"\"\"Install
+      most common PHP modules.\n\n\tInstall GD, mcrypt, pear, mysql, and the cli.\"\"\"\n\t\n\tphp_install_module(\"gd\")\n\t#php_install_module(\"mcrypt\",
+      False) #not in CentOS7 repos :(\n\t#php_install_module(\"pear\", False) # both
+      families use php-pear so\n\t#installing php5-pear in the Debian family will
+      fail\n\tphp_install_module(\"mysql\", False)\n\tphp_install_module(\"cli\",
+      False)\n\trestart()\n\n\ndef restart():\n\tif pythonlib.distro[''family''] ==
+      \"debian\":\n\t\tsubprocess.call([''service'', ''apache2'', ''restart''])\n\telif
+      pythonlib.distro[''family''] == \"redhat\":\n\t\tsubprocess.call([''systemctl'',
+      ''restart'', ''httpd''])\n\n\ndef main():\n\t\"\"\"Install PHP.\"\"\"\n\t# add
+      logging support\n\t\n\tpythonlib.init()\n\tpythonlib.system_update()\n\tphp_install()\n\n\tpythonlib.end()\n\n\nif
+      __name__ == \"__main__\":\n\tsys.exit(main())", "user_defined_fields": []},
+      {"id": 1158683, "username": "yoboycc", "user_gravatar_id": "e598b7c77d05460a72ceb4397cbc72f6",
       "label": "snapchat", "description": "", "ordinal": 0, "logo_url": "", "images":
       ["linode/debian11"], "deployments_total": 0, "deployments_active": 0, "is_public":
       true, "mine": false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
@@ -2384,18 +2798,51 @@ interactions:
       can now configure DIY and Softaculous Webuzo at the following URL :\"\necho
       \"http://$ip:2004/\"\necho \" \"\necho \"Thank you for choosing Softaculous
       Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 665116, "username":
-      "prod-test-012", "user_gravatar_id": "0bc9230feab431086807dec2d7b9e877", "label":
+      "prod-test-012", "user_gravatar_id": "9c7a651c63f3cefe52654946e9b46bd2", "label":
       "test public2", "description": "", "ordinal": 0, "logo_url": "", "images": ["linode/alpine3.10"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
-      "", "script": "#!/bin/bash test", "user_defined_fields": []}, {"id": 14364,
-      "username": "ezan", "user_gravatar_id": "40bba314333f02cceb3f40d8a2aabb78",
-      "label": "configure-repo-sensu", "description": "", "ordinal": 0, "logo_url":
-      "", "images": ["linode/ubuntu14.04lts"], "deployments_total": 0, "deployments_active":
+      "", "script": "#!/bin/bash test", "user_defined_fields": []}, {"id": 1193756,
+      "username": "jrzavaschi1992", "user_gravatar_id": "6c0262d5482846284b510b579df19fdd",
+      "label": "MagicSpam One-Click", "description": "MagicSpam One-Click", "ordinal":
+      0, "logo_url": "", "images": ["linode/centos7"], "deployments_total": 0, "deployments_active":
       0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "rev_note": "Initial import", "script": "#!/bin/bash\nset
-      -eux\n\ncurl -s http://repos.sensuapp.org/apt/pubkey.gpg | apt-key add -\necho
-      \"deb http://repos.sensuapp.org/apt sensu main\" > /etc/apt/sources.list.d/sensu.list\n\napt-get
+      "2018-01-02T03:04:05", "rev_note": "", "script": "#!/bin/bash\n\n# <UDF name=\"control_panel\"
+      Label=\"The Control Panel to deploy alongside with MagicSpam. Make sure to select
+      an Image supported by the selected Control Panel. For more information, please
+      refer to the MagicSpam App Information Sidebar.\" oneof=\"cPanel,Plesk\">\n#
+      <UDF name=\"ms_license_key\" Label=\"The MagicSpam license key. Please make
+      sure to use the appropriate license key for the selected Control Panel. For
+      more information, please refer to the MagicSpam App information sidebar.\">\n#
+      <UDF name=\"hostname\" label=\"The server''s hostname.\">\n\n# source the stackscript
+      for the selected control panel\nif [ \"$CONTROL_PANEL\" == \"cPanel\" ]; then\n    #
+      redirect ALL output to the stackscript log for future troubleshooting\n    exec
+      > >(tee /dev/ttyS0 /var/log/stackscript.log) 2>&1\n\n    # cPanel Marketplace
+      App install\n    source <ssinclude StackScriptID=595742>\n\n    # set the hostname
+      to replicate Plesk stackscript for consistent behavior\n    IPADDR=$(/sbin/ifconfig
+      eth0 | awk ''/inet / { print $2 }'' | sed ''s/addr://'')\n    echo $HOSTNAME
+      > /etc/hostname\n    hostname -F /etc/hostname\n    echo $IPADDR $HOSTNAME >>
+      /etc/hosts\nelif [ \"$CONTROL_PANEL\" == \"Plesk\" ]; then\n    # Plesk Marketplace
+      App install\n    # NOTE: do not redirect output to the stackscript log to avoid
+      duplicate log\n    #       lines as the Plesk stackscript already redirects
+      to it\n    source <ssinclude StackScriptID=593835>\nelse\n    echo \"Invalid
+      control panel option detected. Aborting...\"\n    exit 1\nfi\n\n# install MagicSpam
+      via the installer script\nwget https://www.magicspam.com/download/magicspam-installer.sh
+      -O /root/magicspam-installer\nchmod +x /root/magicspam-installer\n/root/magicspam-installer
+      -l \"$MS_LICENSE_KEY\"", "user_defined_fields": [{"name": "control_panel", "label":
+      "The Control Panel to deploy alongside with MagicSpam. Make sure to select an
+      Image supported by the selected Control Panel. For more information, please
+      refer to the MagicSpam App Information Sidebar.", "oneof": "cPanel,Plesk"},
+      {"name": "ms_license_key", "label": "The MagicSpam license key. Please make
+      sure to use the appropriate license key for the selected Control Panel. For
+      more information, please refer to the MagicSpam App information sidebar."},
+      {"name": "hostname", "label": "The server''s hostname."}]}, {"id": 14364, "username":
+      "ezan", "user_gravatar_id": "40bba314333f02cceb3f40d8a2aabb78", "label": "configure-repo-sensu",
+      "description": "", "ordinal": 0, "logo_url": "", "images": ["linode/ubuntu14.04lts"],
+      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
+      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
+      "Initial import", "script": "#!/bin/bash\nset -eux\n\ncurl -s http://repos.sensuapp.org/apt/pubkey.gpg
+      | apt-key add -\necho \"deb http://repos.sensuapp.org/apt sensu main\" > /etc/apt/sources.list.d/sensu.list\n\napt-get
       update -q", "user_defined_fields": []}, {"id": 978972, "username": "meenubediShine",
       "user_gravatar_id": "ac16f37ccd972a6f698dab5aab1188b2", "label": "test", "description":
       "test description", "ordinal": 0, "logo_url": "", "images": ["linode/opensuse15.2",
@@ -2815,19 +3262,39 @@ interactions:
       \"Congratulations, Joomla has been successfully installed\"\necho \" \"\necho
       \"You can now configure Joomla and Softaculous Webuzo at the following URL :\"\necho
       \"http://$ip:2004/\"\necho \" \"\necho \"Thank you for choosing Softaculous
-      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 8996, "username":
-      "webuzo", "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5", "label": "MyBB
-      powered by Webuzo", "description": "MyBB is a free bulletin board system software
-      package developed by the MyBB Group. \r\n\r\nA lot of thought has gone into
-      the MyBB interface to make it easy to use. MyBB uses a standard discussion board
-      structure, so your visitors will feel familiar with the way MyBB works.\r\n\t\t\t\r\nWebuzo
-      is a Single User Control Panel which helps users deploy Web Apps (WordPress,
-      Joomla, Drupal, etc) or System Apps (Apache, NGINX, PHP, Java, MongoDB, etc)
-      on their virtual machines or in the cloud.\r\n\r\nYou can get a Webuzo License
-      here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn
-      completion of the installation process, access http://your-ip:2004 to configure
-      MyBB and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
+      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 1193763, "username":
+      "jrzavaschi1992", "user_gravatar_id": "6c0262d5482846284b510b579df19fdd", "label":
+      "Superinsight One-Click", "description": "Superinsight One-Click app", "ordinal":
+      0, "logo_url": "", "images": ["linode/ubuntu22.04"], "deployments_total": 0,
+      "deployments_active": 0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "rev_note": "", "script": "#!/usr/bin/bash\n\n##
+      REQUIRED IN EVERY MARKETPLACE SUBMISSION\n# Add Logging to /var/log/stackscript.log
+      for future troubleshooting\nexec 1> >(tee -a \"/var/log/stackscript.log\") 2>&1\n#
+      System Updates updates\napt-get -o Acquire::ForceIPv4=true update -y\n## END
+      OF REQUIRED CODE FOR MARKETPLACE SUBMISSION\n\n# Install docker\ncurl -fsSL
+      get.docker.com | sudo sh\n\n# Creating Password\necho \"Superinsight setting
+      up password....\"\nADMIN_PASSWORD=$(openssl rand -hex 12)\nNODE_IP=$(hostname
+      -I | cut -f1 -d'' '')\necho \"Downloading and Installing Superinsight instance......\"\n\n#
+      Install Superinsight\ndocker run \\\n--detach \\\n--name superinsight-db-standalone
+      \\\n--restart always \\\n-p 5432:5432 \\\n-v vol-superinsight:/db \\\n-e SUPERINSIGHT_USER=admin
+      \\\n-e SUPERINSIGHT_PASSWORD=\"${ADMIN_PASSWORD}\" \\\nsuperinsight/superinsight-db-standalone:latest\n\n\n#
+      Print instructions\ncat << EOF > /etc/motd\n\n################################################################################################################################################\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\t\tSUPERINSIGHT\n################################################################################################################################################\n\nSuperinsight
+      created the user admin with password: ${ADMIN_PASSWORD}\nYou can can connect
+      using a database client with the following connection string postgres://admin:${ADMIN_PASSWORD}@${NODE_IP}:5432/superinsight\nFor
+      complete source code and information, visit: https://github.com/superinsight/superinsight-db\n\n################################################################################################################################################\nEOF",
+      "user_defined_fields": []}, {"id": 8996, "username": "webuzo", "user_gravatar_id":
+      "cf0348f835d60e6d133040f49bb36ec5", "label": "MyBB powered by Webuzo", "description":
+      "MyBB is a free bulletin board system software package developed by the MyBB
+      Group. \r\n\r\nA lot of thought has gone into the MyBB interface to make it
+      easy to use. MyBB uses a standard discussion board structure, so your visitors
+      will feel familiar with the way MyBB works.\r\n\t\t\t\r\nWebuzo is a Single
+      User Control Panel which helps users deploy Web Apps (WordPress, Joomla, Drupal,
+      etc) or System Apps (Apache, NGINX, PHP, Java, MongoDB, etc) on their virtual
+      machines or in the cloud.\r\n\r\nYou can get a Webuzo License here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath
+      to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
+      of the installation process, access http://your-ip:2004 to configure MyBB and
+      Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact", "ordinal":
+      0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
       "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
@@ -3108,18 +3575,23 @@ interactions:
       "a5455", "description": "", "ordinal": 0, "logo_url": "", "images": ["linode/ubuntu18.04"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
-      "", "script": "#!/bin/bash", "user_defined_fields": []}, {"id": 9003, "username":
-      "webuzo", "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5", "label": "Oxwall
-      powered by Webuzo", "description": "Oxwall is unbelievably flexible and easy
-      to use PHP/MySQL community software platform.\r\n\r\nOxwall is used for a wide
-      range of projects starting from family sites and custom social networks to collaboration
-      tools and enterprise community solutions. \r\n\t\t\t\r\nWebuzo is a Single User
-      Control Panel which helps users deploy Web Apps (WordPress, Joomla, Drupal,
-      etc) or System Apps (Apache, NGINX, PHP, Java, MongoDB, etc) on their virtual
-      machines or in the cloud.\r\n\r\nYou can get a Webuzo License here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath
-      to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn completion
-      of the installation process, access http://your-ip:2004 to configure Oxwall
-      and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
+      "", "script": "#!/bin/bash", "user_defined_fields": []}, {"id": 1359658, "username":
+      "JubairHossin", "user_gravatar_id": "b8ac62ba3ef1b71bd87049378ee068dc", "label":
+      "Alpine OS", "description": "", "ordinal": 0, "logo_url": "", "images": ["linode/alpine3.16",
+      "linode/alpine3.17", "linode/alpine3.18", "linode/alpine3.19"], "deployments_total":
+      0, "deployments_active": 0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "rev_note": "", "script": "#!/bin/bash", "user_defined_fields":
+      []}, {"id": 9003, "username": "webuzo", "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5",
+      "label": "Oxwall powered by Webuzo", "description": "Oxwall is unbelievably
+      flexible and easy to use PHP/MySQL community software platform.\r\n\r\nOxwall
+      is used for a wide range of projects starting from family sites and custom social
+      networks to collaboration tools and enterprise community solutions. \r\n\t\t\t\r\nWebuzo
+      is a Single User Control Panel which helps users deploy Web Apps (WordPress,
+      Joomla, Drupal, etc) or System Apps (Apache, NGINX, PHP, Java, MongoDB, etc)
+      on their virtual machines or in the cloud.\r\n\r\nYou can get a Webuzo License
+      here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn
+      completion of the installation process, access http://your-ip:2004 to configure
+      Oxwall and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
       "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
       "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
@@ -3199,362 +3671,8 @@ interactions:
       \"Congratulations, qdPM has been successfully installed\"\necho \" \"\necho
       \"You can now configure qdPM and Softaculous Webuzo at the following URL :\"\necho
       \"http://$ip:2004/\"\necho \" \"\necho \"Thank you for choosing Softaculous
-      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 1087021, "username":
-      "semmatweb", "user_gravatar_id": "74d1d68d933159acd4082deafbe5879c", "label":
-      "linode", "description": "dit", "ordinal": 0, "logo_url": "", "images": ["linode/centos7",
-      "linode/debian9", "linode/ubuntu18.04", "linode/debian10", "linode/centos8",
-      "linode/centos-stream8", "linode/almalinux8", "linode/rocky8", "linode/debian11",
-      "linode/centos-stream9", "linode/ubuntu22.04", "linode/almalinux9", "linode/rocky9"],
-      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
-      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
-      "", "script": "#!/bin/bash\n# This block defines the variables the user of the
-      script needs to provide\n# when deploying using this script.\n#\n#\n#<UDF name=\"hostname\"
-      label=\"The hostname for the new Linode.\">\n# HOSTNAME=\n#\n#<UDF name=\"fqdn\"
-      label=\"The new Linode''s Fully Qualified Domain Name\">\n# FQDN=\n\n# This
-      sets the variable $IPADDR to the IP address the new Linode receives.\nIPADDR=$(/sbin/ifconfig
-      eth0 | awk ''/inet / { print $2 }'' | sed ''s/addr://'')\n\n# This updates the
-      packages on the system from the distribution repositories.\napt-get update\napt-get
-      upgrade -y\n\n# This section sets the hostname.\necho $HOSTNAME > /etc/hostname\nhostname
-      -F /etc/hostname\n\n# This section sets the Fully Qualified Domain Name (FQDN)
-      in the hosts file.\necho $IPADDR $FQDN $HOSTNAME >> /etc/hosts", "user_defined_fields":
-      [{"name": "hostname", "label": "The hostname for the new Linode."}, {"name":
-      "fqdn", "label": "The new Linode''s Fully Qualified Domain Name"}]}, {"id":
-      9006, "username": "webuzo", "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5",
-      "label": "Jcow powered by Webuzo", "description": "Jcow is a flexible Social
-      Networking software written in PHP. It can help you to:\r\n\r\n    * Build a
-      social network for your interests and passions.\r\n    * Build a member community
-      for your existing website.\r\n    * Build a social networking site like facebook/myspace/twitter.\r\n\r\n\r\n\t\t\t\r\nWebuzo
-      is a Single User Control Panel which helps users deploy Web Apps (WordPress,
-      Joomla, Drupal, etc) or System Apps (Apache, NGINX, PHP, Java, MongoDB, etc)
-      on their virtual machines or in the cloud.\r\n\r\nYou can get a Webuzo License
-      here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn
-      completion of the installation process, access http://your-ip:2004 to configure
-      Jcow and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
-      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
-      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
-      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
-      "Jcow powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
-      label=\"Premium Webuzo License Key\" example=\"WEBUZO-XXXXX-XXXXX-XXXXX\"/>\n\n###########################################################################################################\n#
-      Install Jcow and Softaculous Webuzo\n# Description -\n# About Webuzo :\n#   Webuzo
-      is a Single User Control Panel which helps users deploy Web Apps (WordPress,
-      Joomla, Drupal, etc)\n#   or System Apps (Apache, NGINX, PHP, Java, MongoDB,
-      etc) on their virtual machines or in the cloud.\n#\n# About Jcow :\n#   Jcow
-      is a flexible Social Networking software written in PHP. It can help you to:\n#    *
-      Build a social network for your interests and passions.\n#    * Build a member
-      community for your existing website.\n#    * Build a social networking site
-      like facebook/myspace/twitter.\n###########################################################################################################\n\n#
-      Install Jcow Script using Webuzo\nfunction install_webuzo_script(){\n   \n    #
-      Install Webuzo\n    install_webuzo\n   \n    wget http://files.webuzo.com/ip.php
-      >> /root/webuzo-install.log 2>&1\n    ip=$(cat ip.php)\n   \n    /usr/local/emps/bin/curl
-      \"http://$ip:2004/install.php?prepareinstall=182&license=$1\"\n   \n}\n\n# Install
-      Webuzo Function\nfunction install_webuzo(){\n       \n    # Fetch the Webuzo
-      Installer\n    wget -N http://files.webuzo.com/install.sh >> /root/webuzo-install.log
-      2>&1\n   \n    # Modify Permissions\n    chmod 0755 install.sh >> /root/webuzo-install.log
-      2>&1\n   \n    # Execute\n    ./install.sh >> /root/webuzo-install.log 2>&1\n   \n    #
-      Clean Up\n    rm -rf install.sh >> /root/webuzo-install.log 2>&1\n   \n}\n\n#########################################################\n#\tInstalling
-      Jcow and Softaculous Webuzo\n#########################################################\n\ninstall_webuzo_script
-      $WEBUZO_LICENSE_KEY\n\n# Check the return of the above command and display the
-      result accordingly\n\necho \" \"\necho \"-------------------------------------\"\necho
-      \" Installation Completed \"\necho \"-------------------------------------\"\necho
-      \"Congratulations, Jcow has been successfully installed\"\necho \" \"\necho
-      \"You can now configure Jcow and Softaculous Webuzo at the following URL :\"\necho
-      \"http://$ip:2004/\"\necho \" \"\necho \"Thank you for choosing Softaculous
-      Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 401711, "username":
-      "linode", "user_gravatar_id": "9d4d301385af69ceb7ad658aad09c142", "label": "Linux
-      GSM  Helper", "description": "Linux GSM One-Click Helper", "ordinal": 0, "logo_url":
-      "assets/linuxgsm.svg", "images": ["linode/debian9", "linode/debian10"], "deployments_total":
-      0, "deployments_active": 0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05",
-      "updated": "2018-01-02T03:04:05", "rev_note": "", "script": "#!/bin/bash\n\n#
-      Linux GSM install\n\nfunction linuxgsm_install {\n\necho Configuring IP address\nIPADDR=`hostname
-      -I | awk ''{print$1}''`\n\n# Add a user for the game server\necho Setting up
-      a user\nadduser --disabled-password --gecos \"\" \"$GAMESERVER\"\necho \"$GAMESERVER
-      ALL=(ALL) NOPASSWD: ALL\" >> /etc/sudoers\n\n# Download and the LinuxGSM script\necho
-      Downloading LinuxGSM\n# TESTING\ncd /home/\"$GAMESERVER\"/\n# OLD: wget -4 https://linuxgsm.com/dl/linuxgsm.sh
-      -P /home/\"$GAMESERVER\"/\nwget -O linuxgsm.sh https://linuxgsm.sh -P /home/\"$GAMESERVER\"/\nchmod
-      +x /home/\"$GAMESERVER\"/linuxgsm.sh\nchown -R \"$GAMESERVER\":\"$GAMESERVER\"
-      /home/\"$GAMESERVER\"/*\n\n# Run the GSM script\necho running LinuxGSM script\nsu
-      - \"$GAMESERVER\" -c \"/home/$GAMESERVER/linuxgsm.sh $GAMESERVER\"\n\n}\n\n\nfunction
-      game_install {\n\n# Installing the Server\necho Installing the Server\nsu -
-      \"$GAMESERVER\" -c \"/home/$GAMESERVER/$GAMESERVER auto-install\"\nif [[ \"$GAMESERVER\"
-      =~ (^boserver$|^bb2server$|^bmdmserver$| \\\n^cssserver$|^csgoserver$|^dodsserver$|^emserver$|
-      \\\n^gmodserver$|^insserver$|^nmrihserver$|^tf2server$| \\\n^tuserver$|^zpsserver$)
-      ]]; then\n  echo -e \"\\ngslt=$GSLT\" >> /home/\"$GAMESERVER\"/lgsm/config-lgsm/\"$GAMESERVER\"/\"$GAMESERVER\".cfg\nelse\n  echo
-      No Gameserver Login Token Needed\nfi\n\n}\n\n\nfunction service_config {\n\n#
-      Add cron jobs for updating the gameserver and linuxgsm. Monitor will ensure
-      that the gameserver is running and restart if needed.\necho Adding game update
-      cron jobs\ncrontab -l > gamecron\necho \"*/5 * * * * su - $GAMESERVER -c ''/home/$GAMESERVER/$GAMESERVER
-      monitor'' > /dev/null 2>&1\" >> gamecron\necho \"0 23 * * * su - $GAMESERVER
-      -c ''/home/$GAMESERVER/$GAMESERVER update'' > /dev/null 2>&1\" >> gamecron\necho
-      \"30 23 * * * su - $GAMESERVER -c ''/home/$GAMESERVER/$GAMESERVER update-functions''
-      > /dev/null 2>&1\" >> gamecron\ncrontab gamecron\nrm gamecron\n\n# Create systemd
-      service file\n\ncat << END > /etc/systemd/system/$GAMESERVER.service\n[Unit]\nDescription=$GAMESERVER\n\n[Service]\nUser=$GAMESERVER\nType=forking\nExecStart=/bin/bash
-      /home/$GAMESERVER/$GAMESERVER start\nExecStop=/bin/kill -2 $MAINPID\n\n[Install]\nWantedBy=multi-user.target\nEND\n\n}\n\n##
-      Adding these for Valheim launch, will eventually replace the above code, but
-      for now, we added ''v_'' in front of functions\n\nfunction v_linuxgsm_install
-      {\n    local -r gameserver=\"$1\" username=\"$2\"\n\n    su - \"$username\"
-      -c \"\n        # Download and the LinuxGSM script\n        wget -O linuxgsm.sh
-      https://linuxgsm.sh\n        chmod +x linuxgsm.sh\n        # Run the GSM script\n        /home/$username/linuxgsm.sh
-      $gameserver\n    \"\n}\n\nfunction v_linuxgsm_game_install {\n    local -r gameserver=\"$1\"
-      username=\"$2\"\n\n    # Installing the Server\n    su - \"$username\" -c \"/home/$username/$gameserver
-      auto-install\"\n    if [[ \"$gameserver\" =~ (^boserver$|^bb2server$|^bmdmserver$|
-      \\\n        ^cssserver$|^csgoserver$|^dodsserver$|^emserver$| \\\n        ^gmodserver$|^insserver$|^nmrihserver$|^tf2server$|
-      \\\n        ^tuserver$|^zpsserver$) ]]; then\n        echo -e \"\\ngslt=$GSLT\"
-      >> \"/home/$username/lgsm/config-lgsm/$gameserver/$gameserver.cfg\"\n    else\n        echo
-      No gameserver Login Token Needed\n    fi\n}\n\nfunction v_linuxgsm_service_config
-      {\n    local -r gameserver=\"$1\" username=\"$2\"\n\n    # Add cron jobs for
-      updating the game server and LinuxGSM\n    # Monitor will ensure that the gameserver
-      is running and restart if needed\n    crontab -l > gamecron\n\n    echo \"*/5
-      * * * * su - \"$username\" -c ''/home/$username/$gameserver monitor'' > /dev/null
-      2>&1\" >> gamecron\n    echo \"0 23 * * * su - \"$username\" -c ''/home/$username/$gameserver
-      update'' > /dev/null 2>&1\" >> gamecron\n    echo \"30 23 * * * su - \"$username\"
-      -c ''/home/$username/$gameserver update-functions'' > /dev/null 2>&1\" >> gamecron\n\n    crontab
-      gamecron\n    rm gamecron\n\n    # Create systemd service file\n    cat << EOF
-      > /etc/systemd/system/$gameserver.service\n[Unit]\nDescription=$gameserver\n[Service]\nUser=$username\nType=forking\nExecStart=/bin/bash
-      /home/$username/$gameserver start\nExecStop=/bin/kill -2 \\$MAINPID\n[Install]\nWantedBy=multi-user.target\nEOF\n}\n\nfunction
-      v_linuxgsm_oneclick_install {\n    local -r gameserver=\"$1\" username=\"$2\"\n\n    v_linuxgsm_install
-      \"$gameserver\" \"$username\"\n    v_linuxgsm_game_install \"$gameserver\" \"$username\"\n    v_linuxgsm_service_config
-      \"$gameserver\" \"$username\"\n}", "user_defined_fields": []}, {"id": 883247,
-      "username": "hankersaeb", "user_gravatar_id": "6a47fbc2e36ad66d2f8c4a0d783f75df",
-      "label": "hello", "description": "hello world hhgg", "ordinal": 0, "logo_url":
-      "", "images": ["linode/almalinux8"], "deployments_total": 0, "deployments_active":
-      0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "rev_note": "Hello man12", "script": "#!bin/bash", "user_defined_fields":
-      []}, {"id": 2864, "username": "jmfox1987", "user_gravatar_id": "6f9936b78bbbbaf91191091d114aa66f",
-      "label": "mySQL", "description": "i have no idea", "ordinal": 0, "logo_url":
-      "", "images": ["linode/ubuntu10.04lts32bit"], "deployments_total": 0, "deployments_active":
-      0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "rev_note": "Initial import", "script": "#!/bin/bash\n#
-      <UDF name=\"db_password\" Label=\"MySQL root Password\" />\n# <UDF name=\"db_name\"
-      Label=\"Create Database\" default=\"\" example=\"Optionally create this database\"
-      />\n# <UDF name=\"db_user\" Label=\"Create MySQL User\" default=\"\" example=\"Optionally
-      create this user\" />\n# <UDF name=\"db_user_password\" Label=\"MySQL User''s
-      Password\" default=\"\" example=\"User''s password\" />\n\t \n \nsource <ssinclude
-      StackScriptID=\"1\">\n \nsystem_update\npostfix_install_loopback_only\nmysql_install
-      \"$DB_PASSWORD\" && mysql_tune 40\nmysql_create_database \"$DB_PASSWORD\" \"$DB_NAME\"\nmysql_create_user
-      \"$DB_PASSWORD\" \"$DB_USER\" \"$DB_USER_PASSWORD\"\nmysql_grant_user \"$DB_PASSWORD\"
-      \"$DB_USER\" \"$DB_NAME\"\nphp_install_with_apache && php_tune\napache_install
-      && apache_tune 40 && apache_virtualhost_from_rdns\ngoodstuff\nrestartServices",
-      "user_defined_fields": [{"name": "db_password", "label": "MySQL root Password"},
-      {"name": "db_name", "label": "Create Database", "default": "", "example": "Optionally
-      create this database"}, {"name": "db_user", "label": "Create MySQL User", "default":
-      "", "example": "Optionally create this user"}, {"name": "db_user_password",
-      "label": "MySQL User''s Password", "default": "", "example": "User''s password"}]},
-      {"id": 401712, "username": "linode", "user_gravatar_id": "9d4d301385af69ceb7ad658aad09c142",
-      "label": "Basic OCA Helper ", "description": "Basic OCA Helper One-Click", "ordinal":
-      0, "logo_url": "assets/none", "images": ["linode/debian9"], "deployments_total":
-      0, "deployments_active": 0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05",
-      "updated": "2018-01-02T03:04:05", "rev_note": "move apt-get upgrade to end of
-      script to prevent busted nf_conntrack kernel modules for UFW - cmullen ", "script":
-      "#!/bin/bash\n# Used for Marketplace Apps\n# Helper functions\n\nfunction apt_setup_update
-      {\n  # Force IPv4 and noninteractive update\n  echo ''Acquir1234::5678orceIPv4 \"true\";''
-      > /etc/apt/apt.conf.d/99force-ipv4\n  export DEBIAN_FRONTEND=noninteractive\n  apt-get
-      update -y\n}\n\nfunction set_hostname {\n  IP=`hostname -I | awk ''{print$1}''`\n  HOSTNAME=`dnsdomainname
-      -A`\n  hostnamectl set-hostname $HOSTNAME\n  echo $IP $HOSTNAME  >> /etc/hosts\n}\n\nfunction
-      mysql_root_preinstall {\n  # Set MySQL root password on install\n  debconf-set-selections
-      <<< \"mysql-server mysql-server/root_password password $DBROOT_PASSWORD\"\n  debconf-set-selections
-      <<< \"mysql-server mysql-server/root_password_again password $DBROOT_PASSWORD\"\n}\n\nfunction
-      run_mysql_secure_installation_ubuntu20 {\n  # Installs expect, runs mysql_secure_installation
-      and runs mysql secure installation.\n  apt-get install -y expect\n  SECURE_MYSQL=$(expect
-      -c \"\n  set timeout 10\n  spawn mysql_secure_installation\n  expect \\\"Press
-      y|Y for Yes, any other key for No:\\\"\n  send \\\"n\\r\\\"\n  expect \\\"New
-      password:\\\"\n  send \\\"$DBROOT_PASSWORD\\r\\\"\n  expect \\\"Re-enter new
-      password:\\\"\n  send \\\"$DBROOT_PASSWORD\\r\\\"\n  expect \\\"Remove anonymous
-      users? (Press y|Y for Yes, any other key for No) :\\\"\n  send \\\"y\\r\\\"\n  expect
-      \\\"Disallow root login remotely? (Press y|Y for Yes, any other key for No)
-      :\\\"\n  send \\\"y\\r\\\"\n  expect \\\"Remove test database and access to
-      it? (Press y|Y for Yes, any other key for No) :\\\"\n  send \\\"y\\r\\\"\n  expect
-      \\\"Reload privilege tables now? (Press y|Y for Yes, any other key for No) :\\\"\n  send
-      \\\"y\\r\\\"\n  expect eof\n  \")\n  echo \"$SECURE_MYSQL\"\n}\n\nfunction ufw_install
-      {\n  # Install UFW and add basic rules\n  apt-get install ufw -y\n  ufw default
-      allow outgoing\n  ufw default deny incoming\n  ufw allow ssh\n  ufw enable\n  systemctl
-      enable ufw\n\n  # Stop flooding Console with messages\n  ufw logging off\n}\n\nfunction
-      fail2ban_install {\n  # Install and configure Fail2ban\n  apt-get install fail2ban
-      -y\n  cd /etc/fail2ban\n  cp fail2ban.conf fail2ban.local\n  cp jail.conf jail.local\n  systemctl
-      start fail2ban\n  systemctl enable fail2ban\n  cd\n}\n\nfunction stackscript_cleanup
-      {\n  # Force IPv4 and noninteractive upgrade after script runs to prevent breaking
-      nf_conntrack for UFW\n  echo ''Acquir1234::5678orceIPv4 \"true\";'' > /etc/apt/apt.conf.d/99force-ipv4\n  export
-      DEBIAN_FRONTEND=noninteractive \n  apt-get upgrade -y\n\n  rm /root/StackScript\n  rm
-      /root/ssinclude*\n  echo \"Installation complete!\"\n}\n\nfunction run_mysql_secure_installation
-      {\n  # Installs expect, runs mysql_secure_installation and runs mysql secure
-      installation.\n  apt-get install -y expect\n  SECURE_MYSQL=$(expect -c \"\n  set
-      timeout 10\n  spawn mysql_secure_installation\n  expect \\\"Enter current password
-      for root (enter for ):\\\"\n  send \\\"$DBROOT_PASSWORD\\r\\\"\n  expect \\\"Change
-      the root password?\\\"\n  send \\\"n\\r\\\"\n  expect \\\"Remove anonymous users?\\\"\n  send
-      \\\"y\\r\\\"\n  expect \\\"Disallow root login remotely?\\\"\n  send \\\"y\\r\\\"\n  expect
-      \\\"Remove test database and access to it?\\\"\n  send \\\"y\\r\\\"\n  expect
-      \\\"Reload privilege tables now?\\\"\n  send \\\"y\\r\\\"\n  expect eof\n  \")\n  echo
-      \"$SECURE_MYSQL\"\n}", "user_defined_fields": []}, {"id": 9008, "username":
-      "webuzo", "user_gravatar_id": "cf0348f835d60e6d133040f49bb36ec5", "label": "CMS
-      Made Simple powered by Webuzo", "description": "CMS Made Simple provides a fast
-      and easy way to create a professional web site and manage its content, whether
-      it''s for a small business or a multinational corporation!\r\nCMS Made Simple
-      provides a mechanism for the website administrator to create and manage pages,
-      their layout, and their content. CMS Made Simple is unobtrusive. You can create
-      a table based layout, or a fully validating XHTML/CSS layout.\r\n\t\t\t\r\nWebuzo
-      is a Single User Control Panel which helps users deploy Web Apps (WordPress,
-      Joomla, Drupal, etc) or System Apps (Apache, NGINX, PHP, Java, MongoDB, etc)
-      on their virtual machines or in the cloud.\r\n\r\nYou can get a Webuzo License
-      here\r\nhttp://www.webuzo.com/pricing\r\n\r\nPath to Installation Logs : /root/webuzo-install.log\r\n\r\nInstructions\r\nOn
-      completion of the installation process, access http://your-ip:2004 to configure
-      CMS Made Simple and Softaculous Webuzo initially.\r\n\r\nContact : http://webuzo.com/contact",
-      "ordinal": 0, "logo_url": "", "images": ["linode/centos5.6", "linode/ubuntu10.04lts32bit",
-      "linode/ubuntu10.04lts", "linode/ubuntu14.04lts", "linode/ubuntu12.04lts", "linode/centos6.8"],
-      "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
-      false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
-      "CMS Made Simple powered by Webuzo", "script": "#!/bin/bash\n# <udf name=\"webuzo_license_key\"
-      label=\"Premium Webuzo License Key\" example=\"WEBUZO-XXXXX-XXXXX-XXXXX\"/>\n\n###########################################################################################################\n#
-      Install CMS Made Simple and Softaculous Webuzo\n# Description -\n# About Webuzo
-      :\n#   Webuzo is a Single User Control Panel which helps users deploy Web Apps
-      (WordPress, Joomla, Drupal, etc)\n#   or System Apps (Apache, NGINX, PHP, Java,
-      MongoDB, etc) on their virtual machines or in the cloud.\n#\n# About CMS Made
-      Simple :\n#   CMS Made Simple provides a fast and easy way to create a professional
-      web site and manage its content,\n#   whether it''s for a small business or
-      a multinational corporation!\n###########################################################################################################\n\n#
-      Install CMS Made Simple Script using Webuzo\nfunction install_webuzo_script(){\n   \n    #
-      Install Webuzo\n    install_webuzo\n   \n    wget http://files.webuzo.com/ip.php
-      >> /root/webuzo-install.log 2>&1\n    ip=$(cat ip.php)\n   \n    /usr/local/emps/bin/curl
-      \"http://$ip:2004/install.php?prepareinstall=247&license=$1\"\n   \n}\n\n# Install
-      Webuzo Function\nfunction install_webuzo(){\n       \n    # Fetch the Webuzo
-      Installer\n    wget -N http://files.webuzo.com/install.sh >> /root/webuzo-install.log
-      2>&1\n   \n    # Modify Permissions\n    chmod 0755 install.sh >> /root/webuzo-install.log
-      2>&1\n   \n    # Execute\n    ./install.sh >> /root/webuzo-install.log 2>&1\n   \n    #
-      Clean Up\n    rm -rf install.sh >> /root/webuzo-install.log 2>&1\n   \n}\n\n#########################################################\n#\tInstalling
-      CMS Made Simple and Softaculous Webuzo\n#########################################################\n\ninstall_webuzo_script
-      $WEBUZO_LICENSE_KEY\n\n# Check the return of the above command and display the
-      result accordingly\n\necho \" \"\necho \"-------------------------------------\"\necho
-      \" Installation Completed \"\necho \"-------------------------------------\"\necho
-      \"Congratulations, CMS Made Simple has been successfully installed\"\necho \"
-      \"\necho \"You can now configure CMS Made Simple and Softaculous Webuzo at the
-      following URL :\"\necho \"http://$ip:2004/\"\necho \" \"\necho \"Thank you for
-      choosing Softaculous Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id":
-      2865, "username": "lpj", "user_gravatar_id": "098e8581b54f4bec5877eac433034201",
-      "label": "lib-system", "description": "System helper functions for Ubuntu.",
-      "ordinal": 0, "logo_url": "", "images": ["linode/ubuntu11.1032bit", "linode/ubuntu11.10",
-      "linode/ubuntu12.04lts32bit", null], "deployments_total": 0, "deployments_active":
-      0, "is_public": true, "mine": false, "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "rev_note": "Sudoers file mode must be 0440", "script":
-      "#!/bin/bash\n#\n# System helper functions\n#\n# Author: Philipe Farias <philipefarias@gmail.com>\n\nsource
-      <ssinclude StackScriptID=\"1\">\n\nfunction lower {\n    # helper function\n    echo
-      $1 | tr ''[:upper:]'' ''[:lower:]''\n}\n\nfunction set_hostname {\n  HOSTNAME=$1\n  if
-      [ -z \"$HOSTNAME\" ] ; then\n    export HOSTNAME=\"`get_rdns_primary_ip`\"\n  fi\n  HOST=`echo
-      $HOSTNAME | sed ''s/\\(\\[a-z0-9\\]\\)*\\..*/\\1/''`\n  HOSTS_LINE=\"`system_primary_ip`\\t$HOSTNAME\\t$HOST\"\n  echo
-      \"$HOST\" > /etc/hostname\n  sed -i -e \"s/^127\\.0\\.1\\.1\\s.*$/$HOSTS_LINE/\"
-      /etc/hosts\n  start hostname\n}\n\nfunction update_locale_en_US_UTF_8 {\n  #locale-gen
-      en_US.UTF-8\n  dpkg-reconfigure locales\n  update-locale LC_ALL=en_US.UTF-8
-      LANG=en_US.UTF-8\n  echo \"LC_ALL=en_US.UTF-8\" >> /etc/environment\n}\n\nfunction
-      set_timezone {\n  # $1 - timezone (zoneinfo file)\n  ln -sf \"/usr/share/zoneinfo/$1\"
-      /etc/localtime\n  dpkg-reconfigure --frontend noninteractive tzdata\n}\n\nfunction
-      system_add_user {\n  # $1 - username\n  # $2 - password\n  # $3 - groups\n  USERNAME=`lower
-      $1`\n  PASSWORD=$2\n  SUDO_GROUP=$3\n  SHELL=\"/bin/bash\"\n  useradd --create-home
-      --shell \"$SHELL\" --user-group --groups \"$SUDO_GROUP\" \"$USERNAME\"\n  echo
-      \"$USERNAME:$PASSWORD\" | chpasswd\n\n  cat >\"/etc/sudoers.d/$USERNAME\" <<EOD\n#
-      Don''t ask password for $USERNAME when using sudo\n$USERNAME ALL=NOPASSWD: ALL\nEOD\n  chmod
-      0440 \"/etc/sudoers.d/$USERNAME\"\n\n  #lock out root\n  passwd -l root\n}\n\nfunction
-      get_user_home {\n  # $1 - username\n  cat /etc/passwd | grep \"^$1:\" | cut
-      --delimiter=\":\" -f6\n}\n\n# SSH functions\nfunction configure_sshd {\n  sshd_config_set_port
-      \"$SSHD_PORT\"\n  sshd_config_permitrootlogin \"$SSHD_PERMITROOTLOGIN\"\n  sshd_config_passwordauthentication
-      \"$SSHD_PASSWORDAUTH\"\n  sshd_config_pubkeyauthentication \"$SSHD_PUBKEYAUTH\"\n  touch
-      /tmp/restart-ssh\n}\n\nfunction add_user_ssh_key {\n    # $1 - username\n    #
-      $2 - ssh key\n    USERNAME=`lower $1`\n    USER_HOME=`get_user_home \"$USERNAME\"`\n    sudo
-      -u \"$USERNAME\" mkdir \"$USER_HOME/.ssh\"\n    sudo -u \"$USERNAME\" touch
-      \"$USER_HOME/.ssh/authorized_keys\"\n    sudo -u \"$USERNAME\" echo \"$2\" >>
-      \"$USER_HOME/.ssh/authorized_keys\"\n    chmod 0600 \"$USER_HOME/.ssh/authorized_keys\"\n}\n\nfunction
-      sshd_config_set_port {\n  sed -i -e \"s/Port 22/Port $1/\" /etc/ssh/sshd_config\n}\n\nfunction
-      sshd_config_edit_bool {\n    # $1 - param name\n    # $2 - Yes/No\n    VALUE=`lower
-      $2`\n    if [ \"$VALUE\" == \"yes\" ] || [ \"$VALUE\" == \"no\" ]; then\n        sed
-      -i -e \"s/^#*\\($1\\).*/\\1 $VALUE/\" /etc/ssh/sshd_config\n    fi\n}\n\nfunction
-      sshd_config_permitrootlogin {\n    sshd_config_edit_bool \"PermitRootLogin\"
-      \"$1\"\n}\n\nfunction sshd_config_passwordauthentication {\n    sshd_config_edit_bool
-      \"PasswordAuthentication\" \"$1\"\n}\n\nfunction sshd_config_pubkeyauthentication
-      {\n    sshd_config_edit_bool \"PubkeyAuthentication\" \"$1\"\n}\n\nfunction
-      sshd_config_passwordauthentication {\n    sshd_config_edit_bool \"PasswordAuthentication\"
-      \"$1\"\n}\n\n# Email\nfunction install_postfix {\n  # $1 - root email\n  # $2
-      - username\n  postfix_install_loopback_only # SS1\n  #install mail sending utilities\n  apt-get
-      -y install mailutils\n  #configure root alias\n  echo \"root: $1\" >> /etc/aliases\n  echo
-      \"$2: root\" >> /etc/aliases\n  cat /etc/hostname > /etc/mailname\n  newaliases\n  sed
-      -i -e \"s/mydestination = localhost, localhost.localdomain, , localhost/mydestination
-      = localhost, localhost.localdomain, $HOSTNAME/\" /etc/postfix/main.cf\n  touch
-      /tmp/restart-postfix\n}\n\n# Monit and Munin\nfunction install_monit {\n  #
-      $1 - root email\n  apt-get -y install monit\n  sed -i -e ''s/startup=0/startup=1/''
-      /etc/default/monit\n  mkdir -p /etc/monit/conf.d/\n  sed -i -e \"s/# set daemon  120/set
-      daemon 120/\" /etc/monit/monitrc\n  sed -i -e \"s/#     with start delay 240/with
-      start delay 240/\" /etc/monit/monitrc\n  sed -i -e \"s/# set logfile syslog
-      facility log_daemon/set logfile \\/var\\/log\\/monit.log/\" /etc/monit/monitrc\n  sed
-      -i -e \"s/# set mailserver mail.bar.baz,/set mailserver localhost/\" /etc/monit/monitrc\n  sed
-      -i -e \"s/# set eventqueue/set eventqueue/\" /etc/monit/monitrc\n  sed -i -e
-      \"s/#     basedir \\/var\\/monit/basedir \\/var\\/monit/\" /etc/monit/monitrc\n  sed
-      -i -e \"s/#     slots 100 /slots 100/\" /etc/monit/monitrc\n  sed -i -e \"s/#
-      set alert sysadm@foo.bar/set alert $1 reminder 180/\" /etc/monit/monitrc\n  sed
-      -i -e \"s/# set httpd port 2812 and/ set httpd port 2812 and/\" /etc/monit/monitrc\n  sed
-      -i -e \"s/#     use address localhost/use address localhost/\" /etc/monit/monitrc\n  sed
-      -i -e \"s/#     allow localhost/allow localhost/\" /etc/monit/monitrc\n  sed
-      -i -e \"s/# set mail-format { from: monit@foo.bar }/set mail-format { from:
-      monit@`hostname -f` }/\" /etc/monit/monitrc\n  cat << EOT > /etc/monit/conf.d/system\n  check
-      system `hostname`\n    if loadavg (1min) > 4 then alert\n    if loadavg (5min)
-      > 4 then alert\n    if memory usage > 90% then alert\n    if cpu usage (user)
-      > 70% then alert\n    if cpu usage (system) > 30% then alert\n    if cpu usage
-      (wait) > 20% then alert\n\ncheck filesystem rootfs with path /\nif space > 80%
-      then alert\nEOT\n  touch /tmp/restart-monit\n}\n\nfunction install_munin_node
-      {\n  # $1 - node hostname\n  # $2 - munin server ip\n  apt-get -y install munin-node\n  sed
-      -i -e \"s/^#host_name .*/host_name $1/\" /etc/munin/munin-node.conf\n  sed -i
-      -e \"s/^allow .*$/&\\nallow \\^$2\\$/ ; /^allow \\^\\d*/ s/[.]/\\\\\\&/g ; /^allow
-      \\^\\d*/ s/\\\\\\\\\\\\\\/\\\\\\/g\" /etc/munin/munin-node.conf\n  touch /tmp/restart-munin-node\n}\n\n#
-      Security tools\nfunction install_security_tools {\n  apt-get -y install unattended-upgrades
-      chkrootkit rkhunter fail2ban ufw\n\n  rkhunter --propupd\n}\n\nfunction set_conf_value
-      {\n  # $1 - conf file\n  # $2 - key\n  # $3 - value\n  sed -i -e \"s/^\\($2[
-      ]*=[ ]*\\).*/\\1$3/\" $1\n}\n\nfunction configure_cronapt {\n  CONF=/etc/cron-apt/config\n  test
-      -f $CONF || exit 0\n\n  sed -i -e \"s/^# \\(MAILON=\\).*/\\1\\\"changes\\\"/\"
-      $CONF\n}\n\nfunction configure_chkrootkit {\n  CONF=/etc/chkrootkit.conf\n  test
-      -f $CONF || exit 0\n\n  set_conf_value $CONF \"RUN_DAILY\" \"\\\"true\\\"\"\n  set_conf_value
-      $CONF \"RUN_DAILY_OPTS\" \"\\\"-q -e ''/usr/lib/jvm/.java-1.6.0-openjdk.jinfo
-      /usr/lib/byobu/.constants /usr/lib/byobu/.dirs /usr/lib/byobu/.shutil /usr/lib/byobu/.notify_osd
-      /usr/lib/byobu/.common /usr/lib/pymodules/python2.7/.path''\\\"\"\n}\n\nfunction
-      configure_rkhunter {\n  CONF=/etc/rkhunter.conf\n  test -f $CONF || exit 0\n\n  set_conf_value
-      $CONF \"MAIL-ON-WARNING\" \"\\\"root\\\"\"\n  sed -i -e \"/ALLOWHIDDENDIR=\\/dev\\/.udev$/
-      s/^#//\" $CONF\n  # Disabling tests for kernel modules, Linode kernel doens''t
-      have any modules loaded\n  sed -i -e \"/^DISABLE_TESTS=.*/ s/\\\"$/ os_specific\\\"/\"
-      $CONF\n}\n\nfunction configure_logcheck {\n  # Ignore the message flood about
-      UFW blocking TCP SYN and UDP packets\n  UFW_SYN_BLOCK_REGEX=\"^\\w{3} [ :[:digit:]]{11}
-      [._[:alnum:]-]+ kernel: \\[UFW BLOCK\\] IN=[[:alnum:]]+ OUT= MAC=[:[:xdigit:]]+
-      SRC=[.[:digit:]]{7,15} DST=[.[:digit:]]{7,15} LEN=[[:digit:]]+ TOS=0x[[:xdigit:]]+
-      PREC=0x[[:xdigit:]]+ TTL=[[:digit:]]+ ID=[[:digit:]]+ (DF )?PROTO=TCP SPT=[[:digit:]]+
-      DPT=[[:digit:]]+ WINDOW=[[:digit:]]+ RES=0x[[:xdigit:]]+ SYN URGP=[[:digit:]]+$\"\n  UFW_UDP_BLOCK_REGEX=\"^\\w{3}
-      [ :[:digit:]]{11} [._[:alnum:]-]+ kernel: \\[UFW BLOCK\\] IN=[[:alnum:]]+ OUT=
-      MAC=[:[:xdigit:]]+ SRC=[.[:digit:]]{7,15} DST=[.[:digit:]]{7,15} LEN=[[:digit:]]+
-      TOS=0x[[:xdigit:]]+ PREC=0x[[:xdigit:]]+ TTL=[[:digit:]]+ ID=[[:digit:]]+ (DF
-      )?PROTO=UDP SPT=[[:digit:]]+ DPT=[[:digit:]]+ LEN=[[:digit:]]+$\"\n  echo \"#
-      UFW BLOCK messages\" >> /etc/logcheck/ignore.d.server/local\n  echo $UFW_SYN_BLOCK_REGEX
-      >> /etc/logcheck/ignore.d.server/local\n  echo $UFW_UDP_BLOCK_REGEX >> /etc/logcheck/ignore.d.server/local\n\n  #
-      Ignore dhcpcd messages\n  DHCPCD_RENEWING=\"^\\w{3} [ :[:digit:]]{11} [._[:alnum:]-]+
-      dhcpcd\\[[[:digit:]]+\\]: [[:alnum:]]+: renewing lease of [.[:digit:]]{7,15}$\"\n  DHCPCD_LEASED=\"^\\w{3}
-      [ :[:digit:]]{11} [._[:alnum:]-]+ dhcpcd\\[[[:digit:]]+\\]: [[:alnum:]]+: leased
-      [.[:digit:]]{7,15} for [[:digit:]]+ seconds$\"\n  DHCPCD_ADDING_IP=\"^\\w{3}
-      [ :[:digit:]]{11} [._[:alnum:]-]+ dhcpcd\\[[[:digit:]]+\\]: [[:alnum:]]+: adding
-      IP address [.[:digit:]]{7,15}/[[:digit:]]+$\"\n  DHCPCD_ADDING_DEFAULT_ROUTE=\"^\\w{3}
-      [ :[:digit:]]{11} [._[:alnum:]-]+ dhcpcd\\[[[:digit:]]+\\]: [[:alnum:]]+: adding
-      default route via [.[:digit:]]{7,15} metric [0-9]+$\"\n  DHCPCD_INTERFACE_CONFIGURED=\"^\\w{3}
-      [ :[:digit:]]{11} [._[:alnum:]-]+ dhcpcd\\.sh: interface [[:alnum:]]+ has been
-      configured with old IP=[.[:digit:]]{7,15}$\"\n  # Ignore ntpd messages\n  NTPD_VALIDATING_PEER=\"^\\w{3}
-      [ :0-9]{11} [._[:alnum:]-]+ ntpd\\[[0-9]+\\]: peer [.[:digit:]]{7,15} now (in)?valid$\"\n  echo
-      \"# DHCPCD messages\" >> /etc/logcheck/ignore.d.server/local\n  echo $DHCPCD_RENEWING
-      >> /etc/logcheck/ignore.d.server/local\n  echo $DHCPCD_LEASED >> /etc/logcheck/ignore.d.server/local\n  echo
-      $DHCPCD_ADDING_IP >> /etc/logcheck/ignore.d.server/local\n  echo $DHCPCD_ADDING_DEFAULT_ROUTE
-      >> /etc/logcheck/ignore.d.server/local\n  echo $DHCPCD_INTERFACE_CONFIGURED
-      >> /etc/logcheck/ignore.d.server/local\n  echo \"# NTPD messages\" >> /etc/logcheck/ignore.d.server/local\n  echo
-      $NTPD_VALIDATING_PEER >> /etc/logcheck/ignore.d.server/local\n}\n\nfunction
-      configure_logwatch {\n  CONF=/etc/logwatch/conf/logwatch.conf\n  test -f $CONF
-      || exit 0\n\n  set_conf_value $CONF \"Output\" \"mail\"\n  set_conf_value $CONF
-      \"Format\" \"html\"\n  set_conf_value $CONF \"Detail\" \"Med\"\n}\n\nfunction
-      configure_ufw {\n  # $1, $2, $3... - ports to allow\n  ufw logging on\n  ufw
-      default deny\n\n  while [ $# -gt 0 ]; do\n    ufw allow $1\n    shift\n  done\n\n  ufw
-      enable\n}\n\n# Utility\nfunction restart_services {\n  # restarts services that
-      have a file in /tmp/needs-restart/\n  for service in $(ls /tmp/restart-* | cut
-      -d- -f2-10); do\n      service $service restart\n      rm -f /tmp/restart-$service\n  done\n}\n\nfunction
-      fix_page_allocation_error {\n  sysctl vm.min_free_kbytes=16384\n  cat << EOT
-      > /etc/sysctl.conf\n\n###################################################################\n#
-      Fix for page allocation failure\nvm.min_free_kbytes = 16384\nEOT\n  touch /tmp/restart-rsyslog\n}",
-      "user_defined_fields": []}], "page": 1, "pages": 22, "results": 2132}'
+      Webuzo !\"\necho \" \"", "user_defined_fields": []}], "page": 1, "pages": 26,
+      "results": 2504}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -3567,19 +3685,23 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Fri, 31 May 2024 17:04:46 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
       - Authorization, X-Filter
+      - Accept-Encoding
       X-Accepted-Oauth-Scopes:
       - stackscripts:read_only
       X-Content-Type-Options:
@@ -3588,7 +3710,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
       - "20"
       X-Xss-Protection:

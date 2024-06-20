@@ -61,6 +61,7 @@ func ExampleClient_CreateNodeBalancerConfig() {
 	nb, err := linodeClient.CreateNodeBalancer(context.Background(), linodego.NodeBalancerCreateOptions{
 		ClientConnThrottle: &clientConnThrottle,
 		Region:             "us-southeast",
+		FirewallID:         GetFirewallID(),
 	})
 	if err != nil {
 		log.Fatal(err)
@@ -137,6 +138,7 @@ func ExampleClient_CreateNodeBalancerNode() {
 	nb, err := linodeClient.CreateNodeBalancer(context.Background(), linodego.NodeBalancerCreateOptions{
 		ClientConnThrottle: &clientConnThrottle,
 		Region:             "us-southeast",
+		FirewallID:         GetFirewallID(),
 	})
 	if err != nil {
 		log.Fatal(err)
@@ -153,12 +155,13 @@ func ExampleClient_CreateNodeBalancerNode() {
 
 	booted := false
 	instanceOpts := linodego.InstanceCreateOptions{
-		Label:    "nodebalancer-example-instance",
-		RootPass: randPassword(),
-		Region:   "us-southeast",
-		Type:     "g6-nanode-1",
-		Image:    "linode/debian9",
-		Booted:   &booted,
+		Label:      "nodebalancer-example-instance",
+		RootPass:   randPassword(),
+		Region:     "us-southeast",
+		Type:       "g6-nanode-1",
+		Image:      "linode/debian9",
+		Booted:     &booted,
+		FirewallID: GetFirewallID(),
 	}
 	instance, err := linodeClient.CreateInstance(context.Background(), instanceOpts)
 	if err != nil {

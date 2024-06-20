@@ -29,7 +29,7 @@ func TestIPAddress_GetMissing(t *testing.T) {
 }
 
 func TestIPAddress_GetFound(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddress_GetFound")
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddress_GetFound", true)
 	defer teardown()
 	if err != nil {
 		t.Errorf("Error creating IPAddress test Instance, got error %v", err)
@@ -46,7 +46,7 @@ func TestIPAddress_GetFound(t *testing.T) {
 }
 
 func TestIPAddresses_List_smoke(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddresses_List")
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddresses_List", true)
 	defer teardown()
 	if err != nil {
 		t.Errorf("Error creating IPAddress test Instance, got error %v", err)
@@ -111,7 +111,7 @@ func TestIPAddresses_Instance_Get(t *testing.T) {
 }
 
 func TestIPAddress_Update(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddress_Update")
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddress_Update", true)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -137,7 +137,7 @@ func TestIPAddress_Update(t *testing.T) {
 // TestIPAddress_Instance_Delete requires the customer account to have
 // default_IPMax set to at least 2 and default_InterfaceMax set to 3.
 func TestIPAddress_Instance_Delete(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddress_Instance_Delete")
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddress_Instance_Delete", true)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -169,13 +169,13 @@ func TestIPAddress_Instance_Delete(t *testing.T) {
 }
 
 func TestIPAddress_Instance_Assign(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddress_Instance_Assign")
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddress_Instance_Assign", true)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
 	}
 
-	newInstance, err := createInstance(t, client, func(client *Client, options *InstanceCreateOptions) {
+	newInstance, err := createInstance(t, client, true, func(client *Client, options *InstanceCreateOptions) {
 		options.Label = "go-ins-test-assign"
 		options.Region = instance.Region
 	})
@@ -229,13 +229,13 @@ func TestIPAddress_Instance_Assign(t *testing.T) {
 }
 
 func TestIPAddress_Instance_Share(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddress_Instance_Share")
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddress_Instance_Share", true)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
 	}
 
-	newInstance, err := createInstance(t, client, func(client *Client, options *InstanceCreateOptions) {
+	newInstance, err := createInstance(t, client, true, func(client *Client, options *InstanceCreateOptions) {
 		options.Label = "go-ins-test-share"
 		options.Region = instance.Region
 	})

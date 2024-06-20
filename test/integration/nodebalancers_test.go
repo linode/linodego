@@ -84,12 +84,11 @@ func setupNodeBalancer(t *testing.T, fixturesYaml string) (*linodego.Client, *li
 	t.Helper()
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
-	firewall, firewallTeardown, err := createFirewall(t, client)
 	createOpts := linodego.NodeBalancerCreateOptions{
 		Label:              &label,
 		Region:             getRegionsWithCaps(t, client, []string{"NodeBalancers"})[0],
 		ClientConnThrottle: &clientConnThrottle,
-		FirewallID:         firewall.ID,
+		FirewallID:         GetFirewallID(),
 	}
 
 	nodebalancer, err := client.CreateNodeBalancer(context.Background(), createOpts)
@@ -101,7 +100,6 @@ func setupNodeBalancer(t *testing.T, fixturesYaml string) (*linodego.Client, *li
 		if err := client.DeleteNodeBalancer(context.Background(), nodebalancer.ID); err != nil {
 			t.Errorf("Expected to delete a nodebalancer, but got %v", err)
 		}
-		firewallTeardown()
 		fixtureTeardown()
 	}
 	return client, nodebalancer, teardown, err
