@@ -11,7 +11,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/notifications
+    url: https://api.linode.com/v4beta/account/notifications?page=1
     method: GET
   response:
     body: '{"pages": 1, "page": 1, "results": 1, "data": [{"type": "notice", "entity":
@@ -41,7 +41,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 17 Jun 2024 15:46:55 GMT
+      - Mon, 17 Jun 2024 19:46:05 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
