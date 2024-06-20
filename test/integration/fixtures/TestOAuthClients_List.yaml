@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/account/oauth-clients
     method: POST
   response:
-    body: '{"id": "b3418cf8e53201b4ee30", "redirect_uri": "https://example.com", "label":
-      "go-client-test", "status": "active", "secret": "9646fa9be07dc54d2b4870d051f6f5d051e3ab4884519c5c2308cd29ca82dc60",
+    body: '{"id": "4a48ff5903b62d743bf0", "redirect_uri": "https://example.com", "label":
+      "go-client-test", "status": "active", "secret": "3e1d30e5a0a3e350ba7231cf4ba2c0863880007d62be38ebdf89fda9d2aadaff",
       "thumbnail_url": null, "public": true}'
     headers:
       Access-Control-Allow-Credentials:
@@ -39,7 +39,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 30 May 2024 23:12:10 GMT
+      - Mon, 17 Jun 2024 19:45:25 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -54,10 +54,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -75,17 +72,16 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/oauth-clients
+    url: https://api.linode.com/v4beta/account/oauth-clients?page=1
     method: GET
   response:
-    body: '{"data": [{"id": "80178debe3621b53e09b", "redirect_uri": "http://localhost:5000/auth_callback",
-      "label": "oauth_test", "status": "active", "secret": "<REDACTED>", "thumbnail_url":
-      null, "public": false}, {"id": "662f47e526a88d728761", "redirect_uri": "https://localhost/oauth/callback",
-      "label": "test-oauth-client-3", "status": "active", "secret": "<REDACTED>",
-      "thumbnail_url": null, "public": true}, {"id": "b3418cf8e53201b4ee30", "redirect_uri":
-      "https://example.com", "label": "go-client-test", "status": "active", "secret":
-      "<REDACTED>", "thumbnail_url": null, "public": true}], "page": 1, "pages": 1,
-      "results": 3}'
+    body: '{"data": [{"id": "644f910542377876eaab", "redirect_uri": "https://localhost",
+      "label": "asd", "status": "active", "secret": "<REDACTED>", "thumbnail_url":
+      null, "public": false}, {"id": "8839550c17ba6c006e90", "redirect_uri": "http://localhost:5000/auth_callback",
+      "label": "sdf", "status": "active", "secret": "<REDACTED>", "thumbnail_url":
+      null, "public": false}, {"id": "4a48ff5903b62d743bf0", "redirect_uri": "https://example.com",
+      "label": "go-client-test", "status": "active", "secret": "<REDACTED>", "thumbnail_url":
+      null, "public": true}], "page": 1, "pages": 1, "results": 3}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -102,13 +98,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "621"
+      - "584"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 30 May 2024 23:12:10 GMT
+      - Mon, 17 Jun 2024 19:45:26 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -124,10 +120,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -145,7 +138,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/oauth-clients/b3418cf8e53201b4ee30
+    url: https://api.linode.com/v4beta/account/oauth-clients/4a48ff5903b62d743bf0
     method: DELETE
   response:
     body: '{}'
@@ -171,7 +164,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 30 May 2024 23:12:10 GMT
+      - Mon, 17 Jun 2024 19:45:26 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -186,10 +179,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
