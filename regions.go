@@ -53,16 +53,25 @@ type Region struct {
 	// A List of enums from the above constants
 	Capabilities []string `json:"capabilities"`
 
-	Status    string          `json:"status"`
-	Resolvers RegionResolvers `json:"resolvers"`
-	Label     string          `json:"label"`
-	SiteType  string          `json:"site_type"`
+	Status   string `json:"status"`
+	Label    string `json:"label"`
+	SiteType string `json:"site_type"`
+
+	Resolvers            RegionResolvers             `json:"resolvers"`
+	PlacementGroupLimits *RegionPlacementGroupLimits `json:"placement_group_limits"`
 }
 
 // RegionResolvers contains the DNS resolvers of a region
 type RegionResolvers struct {
 	IPv4 string `json:"ipv4"`
 	IPv6 string `json:"ipv6"`
+}
+
+// RegionPlacementGroupLimits contains information about the
+// placement group limits for the current user in the current region.
+type RegionPlacementGroupLimits struct {
+	MaximumPGsPerCustomer int `json:"maximum_pgs_per_customer"`
+	MaximumLinodesPerPG   int `json:"maximum_linodes_per_pg"`
 }
 
 // RegionsPagedResponse represents a linode API response for listing
