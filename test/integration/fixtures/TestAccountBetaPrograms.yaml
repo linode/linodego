@@ -15,13 +15,14 @@ interactions:
     method: GET
   response:
     body: '{"data": [{"id": "global_load_balancer_beta", "label": "Akamai Global Load
-      Balancer Pre-Registration", "description": "The Akamai Global Load Balancer
-      (AGLB) is a layer 4 and 7 load balancer that distributes traffic based on performance,
-      weight, and content (HTTP headers, query strings, etc.). The AGLB is a multi-region,
-      multicloud, independent of Akamai Delivery, and built for East-West and North-South
-      traffic. Key features include multi-region load balancing and method selection.
-      Beta for this product is coming soon\u2013 sign up to be contacted first when
-      AGLB is available.\r\n\r\nPlease note: Akamai Global Load Balancer is not currently
+      Balancer Pre-Registration", "description": "The Akamai Cloud Load Balancer (ACLB)
+      (formerly referred to as Akamai Global Load Balancer) is a layer 4 and 7 load
+      balancer that distributes traffic based on performance, weight, and content
+      (HTTP headers, query strings, etc.). The ACLB is a multi-region, multicloud,
+      independent of Akamai Delivery, and built for East-West and North-South traffic.
+      Key features include multi-region load balancing and method selection. Beta
+      for this product is coming soon\u2013 sign up to be contacted first when ACLB
+      is available.\r\n\r\nPlease note: Akamai Cloud Load Balancer is not currently
       available in beta testing. By signing up to participate in this beta when it
       becomes available, you consent to be subscribed to receive emails from Akamai
       cloud computing services marketing and be contacted via email when the beta
@@ -48,7 +49,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 13 Feb 2024 18:57:39 GMT
+      - Mon, 17 Jun 2024 15:46:53 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -65,10 +66,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -112,7 +110,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 13 Feb 2024 18:57:39 GMT
+      - Mon, 17 Jun 2024 15:46:53 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -127,10 +125,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -148,26 +143,27 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/betas
+    url: https://api.linode.com/v4beta/account/betas?page=1
     method: GET
   response:
     body: '{"data": [{"id": "global_load_balancer_beta", "label": "Akamai Global Load
       Balancer Pre-Registration", "enrolled": "2018-01-02T03:04:05", "description":
-      "The Akamai Global Load Balancer (AGLB) is a layer 4 and 7 load balancer that
-      distributes traffic based on performance, weight, and content (HTTP headers,
-      query strings, etc.). The AGLB is a multi-region, multicloud, independent of
-      Akamai Delivery, and built for East-West and North-South traffic. Key features
-      include multi-region load balancing and method selection. Beta for this product
-      is coming soon\u2013 sign up to be contacted first when AGLB is available.\r\n\r\nPlease
-      note: Akamai Global Load Balancer is not currently available in beta testing.
-      By signing up to participate in this beta when it becomes available, you consent
-      to be subscribed to receive emails from Akamai cloud computing services marketing
-      and be contacted via email when the beta period begins.", "started": "2018-01-02T03:04:05",
-      "ended": null}, {"id": "vpc_beta", "label": "Virtual Private Cloud (VPC) Pre-Registration",
-      "enrolled": "2018-01-02T03:04:05", "description": "VPC is now available in open
-      beta for all customers. Select VPC in the side navigation to get started.",
-      "started": "2018-01-02T03:04:05", "ended": "2018-01-02T03:04:05"}], "page":
-      1, "pages": 1, "results": 2}'
+      "The Akamai Cloud Load Balancer (ACLB) (formerly referred to as Akamai Global
+      Load Balancer) is a layer 4 and 7 load balancer that distributes traffic based
+      on performance, weight, and content (HTTP headers, query strings, etc.). The
+      ACLB is a multi-region, multicloud, independent of Akamai Delivery, and built
+      for East-West and North-South traffic. Key features include multi-region load
+      balancing and method selection. Beta for this product is coming soon\u2013 sign
+      up to be contacted first when ACLB is available.\r\n\r\nPlease note: Akamai
+      Cloud Load Balancer is not currently available in beta testing. By signing up
+      to participate in this beta when it becomes available, you consent to be subscribed
+      to receive emails from Akamai cloud computing services marketing and be contacted
+      via email when the beta period begins.", "started": "2018-01-02T03:04:05", "ended":
+      null}, {"id": "vpc_beta", "label": "Virtual Private Cloud (VPC) Pre-Registration",
+      "enrolled": "2018-01-02T03:04:05", "description": "VPC is now generally available
+      for all customers. Select VPC in the side navigation to get started.", "started":
+      "2018-01-02T03:04:05", "ended": "2018-01-02T03:04:05"}], "page": 1, "pages":
+      1, "results": 2}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -188,7 +184,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 13 Feb 2024 18:57:39 GMT
+      - Mon, 17 Jun 2024 15:46:53 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -205,10 +201,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -262,7 +255,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 13 Feb 2024 18:57:39 GMT
+      - Mon, 17 Jun 2024 15:46:53 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -279,10 +272,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:

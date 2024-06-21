@@ -11,7 +11,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/availability
+    url: https://api.linode.com/v4beta/account/availability?page=1
     method: GET
   response:
     body: '{"data": [{"region": "us-central", "available": ["Linodes", "NodeBalancers",
@@ -50,7 +50,10 @@ interactions:
       "Kubernetes"], "unavailable": []}, {"region": "id-cgk", "available": ["Linodes",
       "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable": []}, {"region":
       "us-lax", "available": ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"],
-      "unavailable": []}], "page": 1, "pages": 1, "results": 25}'
+      "unavailable": []}, {"region": "gb-lon", "available": ["Linodes", "NodeBalancers",
+      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "au-mel", "available":
+      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
+      []}], "page": 1, "pages": 1, "results": 27}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -71,7 +74,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 30 May 2024 23:12:05 GMT
+      - Mon, 17 Jun 2024 15:46:53 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -88,10 +91,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
