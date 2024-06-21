@@ -63,7 +63,7 @@ type ObjectStorageBucketCreateOptions struct {
 	//
 	// Going forward, the 'Region' field will be the supported way to designate where an
 	// Object Storage Bucket should be created. For example, a 'Cluster' value of `us-mia-1`
-	// will translate to a Region value of `us-mia.
+	// will translate to a Region value of `us-mia`.
 	Cluster string `json:"cluster,omitempty"`
 	Region  string `json:"region,omitempty"`
 
