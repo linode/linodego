@@ -23,17 +23,13 @@ interactions:
       Access-Control-Allow-Origin:
       - '*'
       Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
+      - private, max-age=0, s-maxage=0, no-cache, no-store
       Content-Length:
       - "37"
       Content-Type:
       - application/json
-      Expires:
-      - Tue, 13 Feb 2024 19:39:32 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
