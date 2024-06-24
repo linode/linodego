@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"linodego-fw-test","rules":{"inbound":[{"action":"DROP","label":"linodego-fwrule-test","protocol":"ICMP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["::/0"]}}],"inbound_policy":"ACCEPT","outbound":null,"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
+    body: '{"label":"linodego-fw-test","rules":{"inbound":[{"action":"DROP","label":"linodego-fwrule-test","protocol":"ICMP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":null,"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
     form: {}
     headers:
       Accept:
@@ -14,10 +14,10 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 498952, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
+    body: '{"id": 34621, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"action": "DROP", "label": "linodego-fwrule-test", "protocol": "ICMP", "addresses":
-      {"ipv4": ["0.0.0.0/0"], "ipv6": ["::/0"]}}], "inbound_policy": "ACCEPT", "outbound":
+      {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy": "ACCEPT", "outbound":
       null, "outbound_policy": "ACCEPT", "version": 1, "fingerprint": "e026ab25"},
       "tags": ["testing"], "entities": []}'
     headers:
@@ -32,22 +32,17 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "438"
+      - private, max-age=60, s-maxage=60
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Fri, 31 May 2024 00:09:53 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
+      - Accept-Encoding
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
       - firewall:read_write
@@ -57,10 +52,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -78,13 +70,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/498952
+    url: https://api.linode.com/v4beta/networking/firewalls/34621
     method: GET
   response:
-    body: '{"id": 498952, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
+    body: '{"id": 34621, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"action": "DROP", "label": "linodego-fwrule-test", "protocol": "ICMP", "addresses":
-      {"ipv4": ["0.0.0.0/0"], "ipv6": ["::/0"]}}], "inbound_policy": "ACCEPT", "outbound":
+      {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy": "ACCEPT", "outbound":
       null, "outbound_policy": "ACCEPT", "version": 1, "fingerprint": "e026ab25"},
       "tags": ["testing"], "entities": []}'
     headers:
@@ -99,22 +91,18 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "438"
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Fri, 31 May 2024 00:09:53 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
+      - Accept-Encoding
       - Authorization, X-Filter
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
@@ -125,10 +113,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -146,7 +131,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/498952
+    url: https://api.linode.com/v4beta/networking/firewalls/34621
     method: DELETE
   response:
     body: '{}'
@@ -162,19 +147,15 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
+      - private, max-age=60, s-maxage=60
       Content-Length:
       - "2"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Fri, 31 May 2024 00:09:53 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -187,10 +168,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
