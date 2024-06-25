@@ -11,20 +11,34 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/logins
+    url: https://api.linode.com/v4beta/account/logins?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 1568954245, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+    body: '{"data": [{"id": 1570617688, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
       "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
-      1569235189, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+      1570661980, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
       "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
-      1569637840, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+      1570727356, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
       "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
-      1569835290, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+      1570740884, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
       "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
-      1569852953, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+      1570741777, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+      "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
+      1570925268, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+      "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
+      1571003920, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+      "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
+      1571045131, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+      "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
+      1571148324, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+      "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
+      1571641625, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+      "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
+      1571642229, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+      "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
+      1571656292, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
       "username": "lgarber-dev", "status": "successful", "restricted": false}], "page":
-      1, "pages": 1, "results": 5}'
+      1, "pages": 1, "results": 12}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -45,7 +59,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 13 Feb 2024 18:57:41 GMT
+      - Mon, 17 Jun 2024 15:46:55 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -62,10 +76,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -83,10 +94,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/logins/1568954245
+    url: https://api.linode.com/v4beta/account/logins/1570617688
     method: GET
   response:
-    body: '{"id": 1568954245, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+    body: '{"id": 1570617688, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
       "username": "lgarber-dev", "status": "successful", "restricted": false}'
     headers:
       Access-Control-Allow-Credentials:
@@ -110,7 +121,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 13 Feb 2024 18:57:41 GMT
+      - Mon, 17 Jun 2024 15:46:55 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -126,10 +137,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:

@@ -6,6 +6,8 @@ import (
 	"strconv"
 	"testing"
 
+	"github.com/stretchr/testify/require"
+
 	"github.com/linode/linodego"
 )
 
@@ -473,6 +475,34 @@ func TestInstance_withMetadata(t *testing.T) {
 	if !inst.HasUserData {
 		t.Fatalf("expected instance.HasUserData to be true, got false")
 	}
+}
+
+func TestInstance_withPG(t *testing.T) {
+	client, clientTeardown := createTestClient(t, "fixtures/TestInstance_withPG")
+
+	pg, pgTeardown, err := createPlacementGroup(t, client)
+	require.NoError(t, err)
+
+	// Create an instance to assign to the PG
+	inst, err := createInstance(t, client, true, func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+		options.Region = pg.Region
+		options.PlacementGroup = &linodego.InstanceCreatePlacementGroupOptions{
+			ID: pg.ID,
+		}
+	})
+	require.NoError(t, err)
+
+	defer func() {
+		client.DeleteInstance(context.Background(), inst.ID)
+		pgTeardown()
+		clientTeardown()
+	}()
+
+	require.NotNil(t, inst.PlacementGroup)
+	require.Equal(t, inst.PlacementGroup.ID, pg.ID)
+	require.Equal(t, inst.PlacementGroup.Label, pg.Label)
+	require.Equal(t, inst.PlacementGroup.AffinityType, pg.AffinityType)
+	require.Equal(t, inst.PlacementGroup.IsStrict, pg.IsStrict)
 }
 
 func createInstance(t *testing.T, client *linodego.Client, enableCloudFirewall bool, modifiers ...instanceModifier) (*linodego.Instance, error) {
