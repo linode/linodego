@@ -8,7 +8,7 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.linode.com/v4beta/account/invoices/123/items
+    url: https://api.linode.com/v4beta/account/invoices/123/items?page=1
     method: GET
   response:
     body: '{"data": [{"label": "Linode 2GB", "type": "linode", "unitprice": 10, "quantity": 1, "amount": 10, "tax": 0.6, "region": "us-east", "from": "2018-01-01T00:00:00", "to": "2018-01-31T23:59:59"}], "page": 1, "pages": 1, "results": 1}'
