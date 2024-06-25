@@ -11,23 +11,18 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/betas
+    url: https://api.linode.com/v4beta/betas?page=1
     method: GET
   response:
-    body: '{"data": [{"id": "global_load_balancer_beta", "label": "Akamai Global Load
-      Balancer Pre-Registration", "description": "The Akamai Global Load Balancer
-      (AGLB) is a layer 4 and 7 load balancer that distributes traffic based on performance,
-      weight, and content (HTTP headers, query strings, etc.). The AGLB is a multi-region,
-      multicloud, independent of Akamai Delivery, and built for East-West and North-South
-      traffic. Key features include multi-region load balancing and method selection.
-      Beta for this product is coming soon\u2013 sign up to be contacted first when
-      AGLB is available.\r\n\r\nPlease note: Akamai Global Load Balancer is not currently
-      available in beta testing. By signing up to participate in this beta when it
-      becomes available, you consent to be subscribed to receive emails from Akamai
-      cloud computing services marketing and be contacted via email when the beta
-      period begins.", "started": "2018-01-02T03:04:05", "ended": null, "greenlight_only":
-      false, "more_info": "https://www.linode.com/green-light/"}], "page": 1, "pages":
-      1, "results": 1}'
+    body: '{"data": [{"id": "future_open", "label": "future open beta", "description":
+      "An expired closed beta", "started": "2018-01-02T03:04:05", "ended": null, "greenlight_only":
+      true, "more_info": "https://linode.com"}, {"id": "active_closed", "label": "active
+      closed beta", "description": "An active closed beta", "started": "2018-01-02T03:04:05",
+      "ended": null, "greenlight_only": true, "more_info": "a link with even more
+      info"}, {"id": "limited", "label": "limited beta", "description": "An active
+      limited beta", "started": "2018-01-02T03:04:05", "ended": null, "greenlight_only":
+      false, "more_info": "a link with even more info"}], "page": 1, "pages": 1, "results":
+      3}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -40,23 +35,20 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Wed, 20 Mar 2024 20:58:58 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
       - Accept-Encoding
+      - Authorization, X-Filter
+      - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
       - '*'
       X-Content-Type-Options:
@@ -83,22 +75,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/betas/global_load_balancer_beta
+    url: https://api.linode.com/v4beta/betas/future_open
     method: GET
   response:
-    body: '{"id": "global_load_balancer_beta", "label": "Akamai Global Load Balancer
-      Pre-Registration", "description": "The Akamai Global Load Balancer (AGLB) is
-      a layer 4 and 7 load balancer that distributes traffic based on performance,
-      weight, and content (HTTP headers, query strings, etc.). The AGLB is a multi-region,
-      multicloud, independent of Akamai Delivery, and built for East-West and North-South
-      traffic. Key features include multi-region load balancing and method selection.
-      Beta for this product is coming soon\u2013 sign up to be contacted first when
-      AGLB is available.\r\n\r\nPlease note: Akamai Global Load Balancer is not currently
-      available in beta testing. By signing up to participate in this beta when it
-      becomes available, you consent to be subscribed to receive emails from Akamai
-      cloud computing services marketing and be contacted via email when the beta
-      period begins.", "started": "2018-01-02T03:04:05", "ended": null, "greenlight_only":
-      false, "more_info": "https://www.linode.com/green-light/"}'
+    body: '{"id": "future_open", "label": "future open beta", "description": "An expired
+      closed beta", "started": "2018-01-02T03:04:05", "ended": null, "greenlight_only":
+      true, "more_info": "https://linode.com"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -111,23 +93,21 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Content-Length:
+      - "200"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Wed, 20 Mar 2024 20:58:59 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
       - Authorization, X-Filter
-      - Accept-Encoding
       X-Accepted-Oauth-Scopes:
       - '*'
       X-Content-Type-Options:
