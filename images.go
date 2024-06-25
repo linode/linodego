@@ -92,10 +92,11 @@ type ImageCreateUploadOptions struct {
 
 // ImageUploadOptions fields are those accepted by UploadImage
 type ImageUploadOptions struct {
-	Region      string `json:"region"`
-	Label       string `json:"label"`
-	Description string `json:"description,omitempty"`
-	CloudInit   bool   `json:"cloud_init"`
+	Region      string    `json:"region"`
+	Label       string    `json:"label"`
+	Description string    `json:"description,omitempty"`
+	CloudInit   bool      `json:"cloud_init"`
+	Tags        *[]string `json:"tags,omitempty"`
 	Image       io.Reader
 }
 
@@ -227,6 +228,7 @@ func (c *Client) UploadImage(ctx context.Context, opts ImageUploadOptions) (*Ima
 		Region:      opts.Region,
 		Description: opts.Description,
 		CloudInit:   opts.CloudInit,
+		Tags:        opts.Tags,
 	})
 	if err != nil {
 		return nil, err
