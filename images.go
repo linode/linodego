@@ -15,19 +15,29 @@ type ImageStatus string
 
 // ImageStatus options start with ImageStatus and include all Image statuses
 const (
-	ImageStatusAvailable          ImageStatus = "available"
-	ImageStatusCreating           ImageStatus = "creating"
-	ImageStatusPending            ImageStatus = "pending"
-	ImageStatusPendingReplication ImageStatus = "pending replication"
-	ImageStatusPendingDeletion    ImageStatus = "pending deletion"
-	ImageStatusPendingUpload      ImageStatus = "pending_upload"
-	ImageStatusReplicating        ImageStatus = "replicating"
+	ImageStatusCreating      ImageStatus = "creating"
+	ImageStatusPendingUpload ImageStatus = "pending_upload"
+	ImageStatusAvailable     ImageStatus = "available"
+)
+
+// ImageRegionStatus represents the status of an Image's replication.
+type ImageRegionStatus string
+
+// ImageRegionStatus options start with ImageRegionStatus and
+// include all Image replication statuses
+const (
+	ImageRegionStatusAvailable          ImageRegionStatus = "available"
+	ImageRegionStatusCreating           ImageRegionStatus = "creating"
+	ImageRegionStatusPending            ImageRegionStatus = "pending"
+	ImageRegionStatusPendingReplication ImageRegionStatus = "pending replication"
+	ImageRegionStatusPendingDeletion    ImageRegionStatus = "pending deletion"
+	ImageRegionStatusReplicating        ImageRegionStatus = "replicating"
 )
 
 // ImageRegion represents the status of an Image object in a given Region.
 type ImageRegion struct {
-	Region string      `json:"region"`
-	Status ImageStatus `json:"status"`
+	Region string            `json:"region"`
+	Status ImageRegionStatus `json:"status"`
 }
 
 // Image represents a deployable Image object for use with Linode Instances
