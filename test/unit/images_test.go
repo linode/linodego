@@ -25,15 +25,15 @@ func TestImage_Replicate(t *testing.T) {
 		Regions: []linodego.ImageRegion{
 			{
 				Region: "us-iad",
-				Status: linodego.ImageStatusAvailable,
+				Status: linodego.ImageRegionStatusAvailable,
 			},
 			{
 				Region: "us-mia",
-				Status: linodego.ImageStatusReplicating,
+				Status: linodego.ImageRegionStatusReplicating,
 			},
 			{
 				Region: "us-ord",
-				Status: linodego.ImageStatusPendingReplication,
+				Status: linodego.ImageRegionStatusPendingReplication,
 			},
 		},
 	}
@@ -51,11 +51,11 @@ func TestImage_Replicate(t *testing.T) {
 	require.Equal(t, "test", image.Label)
 
 	require.EqualValues(t, "us-iad", image.Regions[0].Region)
-	require.EqualValues(t, linodego.ImageStatusAvailable, image.Regions[0].Status)
+	require.EqualValues(t, linodego.ImageRegionStatusAvailable, image.Regions[0].Status)
 
 	require.EqualValues(t, "us-mia", image.Regions[1].Region)
-	require.EqualValues(t, linodego.ImageStatusReplicating, image.Regions[1].Status)
+	require.EqualValues(t, linodego.ImageRegionStatusReplicating, image.Regions[1].Status)
 
 	require.EqualValues(t, "us-ord", image.Regions[2].Region)
-	require.EqualValues(t, linodego.ImageStatusPendingReplication, image.Regions[2].Status)
+	require.EqualValues(t, linodego.ImageRegionStatusPendingReplication, image.Regions[2].Status)
 }

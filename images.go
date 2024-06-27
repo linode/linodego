@@ -20,11 +20,11 @@ const (
 	ImageStatusAvailable     ImageStatus = "available"
 )
 
-// ImageRegionStatus represents the status of an Image's replication.
+// ImageRegionStatus represents the status of an Image's replica.
 type ImageRegionStatus string
 
 // ImageRegionStatus options start with ImageRegionStatus and
-// include all Image replication statuses
+// include all Image replica statuses
 const (
 	ImageRegionStatusAvailable          ImageRegionStatus = "available"
 	ImageRegionStatusCreating           ImageRegionStatus = "creating"

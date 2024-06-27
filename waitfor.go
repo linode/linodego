@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"slices"
 	"strconv"
 	"time"
 
@@ -436,6 +437,40 @@ func (client Client) WaitForImageStatus(ctx context.Context, imageID string, sta
 			if complete {
 				return image, nil
 			}
+		case <-ctx.Done():
+			return nil, fmt.Errorf("failed to wait for Image %s status %s: %w", imageID, status, ctx.Err())
+		}
+	}
+}
+
+// WaitForImageRegionStatus waits for an Image's replica to reach the desired state
+// before returning.
+func (client Client) WaitForImageRegionStatus(ctx context.Context, imageID, region string, status ImageRegionStatus) (*Image, error) {
+	ticker := time.NewTicker(client.pollInterval)
+	defer ticker.Stop()
+
+	for {
+		select {
+		case <-ticker.C:
+			image, err := client.GetImage(ctx, imageID)
+			if err != nil {
+				return image, err
+			}
+
+			replicaIdx := slices.IndexFunc(
+				image.Regions,
+				func(r ImageRegion) bool {
+					return r.Region == region
+				},
+			)
+
+			// If no replica was found or the status doesn't match, try again
+			if replicaIdx < 0 || image.Regions[replicaIdx].Status != status {
+				continue
+			}
+
+			return image, nil
+
 		case <-ctx.Done():
 			return nil, fmt.Errorf("failed to wait for Image %s status %s: %w", imageID, status, ctx.Err())
 		}

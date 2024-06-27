@@ -3,7 +3,6 @@ package integration
 import (
 	"bytes"
 	"context"
-	"fmt"
 	"slices"
 	"testing"
 
@@ -113,7 +112,7 @@ func TestImage_CreateUpload(t *testing.T) {
 
 	image, uploadURL, err := client.CreateImageUpload(context.Background(), ImageCreateUploadOptions{
 		// TODO: Uncomment before merging Images Gen. 2 support to main
-		//Region:      getRegionsWithCaps(t, client, []string{"Metadata"})[0],
+		// Region:      getRegionsWithCaps(t, client, []string{"Metadata"})[0],
 		Region: "us-east",
 
 		Label:       "linodego-image-create-upload",
@@ -144,7 +143,7 @@ func TestImage_CloudInit(t *testing.T) {
 		t, "fixtures/TestImage_CloudInit", true,
 		func(client *Client, options *InstanceCreateOptions) {
 			// TODO: Uncomment before merging Images Gen. 2 support to main
-			//options.Region = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
+			// options.Region = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
 			options.Region = "us-east"
 		})
 	if err != nil {
@@ -220,24 +219,20 @@ func TestImage_Replicate(t *testing.T) {
 
 	image, err = client.WaitForImageStatus(context.Background(), image.ID, ImageStatusAvailable, 240)
 	require.NoError(t, err)
-	//
-	//require.Equal(t, testRegion, image.Regions[0].Region)
-	//require.NotZero(t, image.Regions[0].Status)
+
+	replicaRegions := availableRegions[1:]
 
 	image, err = client.ReplicateImage(context.Background(), image.ID, ImageReplicateOptions{
-		Regions: availableRegions[1:],
+		Regions: replicaRegions,
 	})
 	require.NoError(t, err)
 
-	// Wait for the image to start replicating
-	image, err = client.WaitForImageStatus(context.Background(), image.ID, ImageStatusReplicating, 240)
-	require.NoError(t, err)
-
-	// Wait for the replication process to complete
-	image, err = client.WaitForImageStatus(context.Background(), image.ID, ImageStatusAvailable, 240)
-	require.NoError(t, err)
-
-	fmt.Println(image)
+	// Wait for all region replications to finish
+	for _, region := range replicaRegions {
+		image, err = client.WaitForImageRegionStatus(
+			context.Background(), image.ID, region, ImageRegionStatusAvailable,
+		)
+	}
 
 	require.Len(t, image.Regions, len(availableRegions))
 	for _, region := range image.Regions {
