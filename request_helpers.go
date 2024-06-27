@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
+	"reflect"
 	"strconv"
 )
 
@@ -130,12 +131,11 @@ func doPOSTRequest[T, O any](
 
 	req := client.R(ctx).SetResult(&resultType)
 
-	if numOpts > 0 {
+	if numOpts > 0 && !isNil(options[0]) {
 		body, err := json.Marshal(options[0])
 		if err != nil {
 			return nil, err
 		}
-
 		req.SetBody(string(body))
 	}
 
@@ -165,12 +165,11 @@ func doPUTRequest[T, O any](
 
 	req := client.R(ctx).SetResult(&resultType)
 
-	if numOpts > 0 {
+	if numOpts > 0 && !isNil(options[0]) {
 		body, err := json.Marshal(options[0])
 		if err != nil {
 			return nil, err
 		}
-
 		req.SetBody(string(body))
 	}
 
@@ -206,4 +205,14 @@ func formatAPIPath(format string, args ...any) string {
 	}
 
 	return fmt.Sprintf(format, escapedArgs...)
+}
+
+func isNil(i interface{}) bool {
+	if i == nil {
+		return true
+	}
+
+	// Check for nil pointers
+	v := reflect.ValueOf(i)
+	return v.Kind() == reflect.Ptr && v.IsNil()
 }

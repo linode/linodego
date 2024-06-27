@@ -124,14 +124,14 @@ func (c *Client) GetInstanceBackups(ctx context.Context, linodeID int) (*Instanc
 // EnableInstanceBackups Enables backups for the specified Linode.
 func (c *Client) EnableInstanceBackups(ctx context.Context, linodeID int) error {
 	e := formatAPIPath("linode/instances/%d/backups/enable", linodeID)
-	_, err := doPOSTRequest[InstanceBackup](ctx, c, e, []any{})
+	_, err := doPOSTRequest[InstanceBackup, any](ctx, c, e)
 	return err
 }
 
 // CancelInstanceBackups Cancels backups for the specified Linode.
 func (c *Client) CancelInstanceBackups(ctx context.Context, linodeID int) error {
 	e := formatAPIPath("linode/instances/%d/backups/cancel", linodeID)
-	_, err := doPOSTRequest[InstanceBackup](ctx, c, e, []any{})
+	_, err := doPOSTRequest[InstanceBackup, any](ctx, c, e)
 	return err
 }
 
