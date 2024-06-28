@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"linodego-fw-test","rules":{"inbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["::0/0"]}}],"inbound_policy":"ACCEPT","outbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["::0/0"]}}],"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
+    body: '{"label":"linodego-fw-test","rules":{"inbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
     form: {}
     headers:
       Accept:
@@ -17,9 +17,9 @@ interactions:
     body: '{"id": 498947, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"action": "ACCEPT", "label": "go-fwrule-test", "ports": "22", "protocol":
-      "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["::/0"]}}], "inbound_policy":
+      "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy":
       "ACCEPT", "outbound": [{"action": "ACCEPT", "label": "go-fwrule-test", "ports":
-      "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["::/0"]}}],
+      "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}],
       "outbound_policy": "ACCEPT", "version": 1, "fingerprint": "7bcc0f03"}, "tags":
       ["testing"], "entities": []}'
     headers:
@@ -71,7 +71,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"inbound":[{"action":"DROP","label":"go-fwrule-test_r","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["::0/0"]}}],"inbound_policy":"ACCEPT","outbound":null,"outbound_policy":"ACCEPT"}'
+    body: '{"inbound":[{"action":"DROP","label":"go-fwrule-test_r","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":null,"outbound_policy":"ACCEPT"}'
     form: {}
     headers:
       Accept:
@@ -84,7 +84,7 @@ interactions:
     method: PUT
   response:
     body: '{"inbound": [{"action": "DROP", "label": "go-fwrule-test_r", "ports": "22",
-      "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["::/0"]}}],
+      "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}],
       "inbound_policy": "ACCEPT", "outbound": null, "outbound_policy": "ACCEPT", "version":
       2, "fingerprint": "cddbc8f5"}'
     headers:
@@ -149,7 +149,7 @@ interactions:
     method: GET
   response:
     body: '{"inbound": [{"action": "DROP", "label": "go-fwrule-test_r", "ports": "22",
-      "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["::/0"]}}],
+      "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}],
       "inbound_policy": "ACCEPT", "outbound": null, "outbound_policy": "ACCEPT", "version":
       2, "fingerprint": "cddbc8f5"}'
     headers:
