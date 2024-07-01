@@ -2,8 +2,6 @@ package linodego
 
 import (
 	"context"
-	"fmt"
-	"net/url"
 
 	"github.com/go-resty/resty/v2"
 )
@@ -41,22 +39,21 @@ func (resp *LongviewSubscriptionsPagedResponse) castResult(r *resty.Request, e s
 
 // ListLongviewSubscriptions lists LongviewSubscriptions
 func (c *Client) ListLongviewSubscriptions(ctx context.Context, opts *ListOptions) ([]LongviewSubscription, error) {
-	response := LongviewSubscriptionsPagedResponse{}
-	err := c.listHelper(ctx, &response, opts)
+	response, err := getPaginatedResults[LongviewSubscription](ctx, c, "longview/subscriptions", opts)
 	if err != nil {
 		return nil, err
 	}
-	return response.Data, nil
+
+	return response, nil
 }
 
 // GetLongviewSubscription gets the template with the provided ID
 func (c *Client) GetLongviewSubscription(ctx context.Context, templateID string) (*LongviewSubscription, error) {
-	templateID = url.PathEscape(templateID)
-	e := fmt.Sprintf("longview/subscriptions/%s", templateID)
-	req := c.R(ctx).SetResult(&LongviewSubscription{})
-	r, err := coupleAPIErrors(req.Get(e))
+	e := formatAPIPath("longview/subscriptions/%s", templateID)
+	response, err := doGETRequest[LongviewSubscription](ctx, c, e)
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*LongviewSubscription), nil
+
+	return response, nil
 }
