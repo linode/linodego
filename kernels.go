@@ -43,10 +43,21 @@ func (i *LinodeKernel) UnmarshalJSON(b []byte) error {
 
 // ListKernels lists linode kernels. This endpoint is cached by default.
 func (c *Client) ListKernels(ctx context.Context, opts *ListOptions) ([]LinodeKernel, error) {
+	endpoint, err := generateListCacheURL("linode/kernels", opts)
+	if err != nil {
+		return nil, err
+	}
+
+	if result := c.getCachedResponse(endpoint); result != nil {
+		return result.([]LinodeKernel), nil
+	}
+
 	response, err := getPaginatedResults[LinodeKernel](ctx, c, "linode/kernels", opts)
 	if err != nil {
 		return nil, err
 	}
+
+	c.addCachedResponse(endpoint, response, nil)
 
 	return response, nil
 }
