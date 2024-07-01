@@ -34,7 +34,7 @@ func TestObjectStorageKey_GetMissing(t *testing.T) {
 }
 
 func TestObjectStorageKey_GetFound(t *testing.T) {
-	client, objectStorageKey, teardown, err := setupObjectStorageKey(t, testBasicObjectStorageKeyCreateOpts, "fixtures/TestObjectStorageKey_GetFound")
+	client, objectStorageKey, teardown, err := setupObjectStorageKey(t, testBasicObjectStorageKeyCreateOpts, "fixtures/TestObjectStorageKey_GetFound", nil, nil)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -56,7 +56,7 @@ func TestObjectStorageKey_GetFound(t *testing.T) {
 }
 
 func TestObjectStorageKey_Update(t *testing.T) {
-	client, objectStorageKey, teardown, err := setupObjectStorageKey(t, testBasicObjectStorageKeyCreateOpts, "fixtures/TestObjectStorageKey_Update")
+	client, objectStorageKey, teardown, err := setupObjectStorageKey(t, testBasicObjectStorageKeyCreateOpts, "fixtures/TestObjectStorageKey_Update", nil, nil)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -80,7 +80,7 @@ func TestObjectStorageKey_Update(t *testing.T) {
 }
 
 func TestObjectStorageKeys_List(t *testing.T) {
-	client, objkey, teardown, err := setupObjectStorageKey(t, testBasicObjectStorageKeyCreateOpts, "fixtures/TestObjectStorageKey_List")
+	client, objkey, teardown, err := setupObjectStorageKey(t, testBasicObjectStorageKeyCreateOpts, "fixtures/TestObjectStorageKey_List", nil, nil)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -106,7 +106,7 @@ func TestObjectStorageKeys_List(t *testing.T) {
 }
 
 func TestObjectStorageKeys_Limited(t *testing.T) {
-	_, bucket, teardown, err := setupObjectStorageBucket(t, nil, "fixtures/TestObjectStorageKeys_Limited_Bucket")
+	_, bucket, teardown, err := setupObjectStorageBucket(t, nil, "fixtures/TestObjectStorageKeys_Limited_Bucket", nil, nil)
 	defer teardown()
 
 	createOpts := testBasicObjectStorageKeyCreateOpts
@@ -123,7 +123,7 @@ func TestObjectStorageKeys_Limited(t *testing.T) {
 		},
 	}
 
-	_, objectStorageKey, teardown, err := setupObjectStorageKey(t, createOpts, "fixtures/TestObjectStorageKeys_Limited")
+	_, objectStorageKey, teardown, err := setupObjectStorageKey(t, createOpts, "fixtures/TestObjectStorageKeys_Limited", nil, nil)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -137,7 +137,7 @@ func TestObjectStorageKeys_Limited_NoAccess(t *testing.T) {
 	createOpts := testBasicObjectStorageKeyCreateOpts
 	createOpts.BucketAccess = &[]ObjectStorageKeyBucketAccess{}
 
-	_, objectStorageKey, teardown, err := setupObjectStorageKey(t, createOpts, "fixtures/TestObjectStorageKeys_Limited_NoAccess")
+	_, objectStorageKey, teardown, err := setupObjectStorageKey(t, createOpts, "fixtures/TestObjectStorageKeys_Limited_NoAccess", nil, nil)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -148,20 +148,87 @@ func TestObjectStorageKeys_Limited_NoAccess(t *testing.T) {
 	}
 }
 
-func setupObjectStorageKey(t *testing.T, createOpts ObjectStorageKeyCreateOptions, fixturesYaml string) (*Client, *ObjectStorageKey, func(), error) {
+func TestObjectStorageKeys_Regional_Limited(t *testing.T) {
+	// t.Skip("skipping region test before GA")
+	client, teardown := createTestClient(t, "fixtures/TestObjectStorageKeys_Regional_Limited")
+	regions := getRegionsWithCaps(t, client, []string{"Object Storage"})
+	if len(regions) < 1 {
+		t.Fatal("Can't get region with Object Storage capability")
+	}
+	region := regions[0]
+
+	client, bucket, teardown, err := setupObjectStorageBucket(t, []objectStorageBucketModifier{
+		func(createOpts *ObjectStorageBucketCreateOptions) {
+			createOpts.Cluster = ""
+			createOpts.Region = region
+		},
+	}, "fixtures/TestObjectStorageKeys_Regional_Limited", client, teardown)
+	if err != nil {
+		t.Error(err)
+	}
+
+	createOpts := testBasicObjectStorageKeyCreateOpts
+	createOpts.BucketAccess = &[]ObjectStorageKeyBucketAccess{
+		{
+			Region:      region,
+			BucketName:  bucket.Label,
+			Permissions: "read_only",
+		},
+	}
+	initialRegion := "us-east"
+	createOpts.Regions = []string{initialRegion}
+	_, key, teardown, err := setupObjectStorageKey(t, createOpts, "fixtures/TestObjectStorageKeys_Regional_Limited", client, teardown)
+	defer teardown()
+	if err != nil {
+		t.Fatalf("error creating the obj regional key: %v", err)
+	}
+
+	if !key.Limited || key.BucketAccess == nil || len(*key.BucketAccess) == 0 {
+		t.Errorf("Regional limited Object Storage key returned access, %v, %v", key.Limited, key.BucketAccess)
+	}
+
+	if len(key.Regions) == 0 || key.Regions[0].ID != initialRegion {
+		t.Errorf("Unexpected key regions, expected regions: %v, actual regions: %v", createOpts.Regions, key.Regions)
+	}
+
+	updatedRegion := "us-east"
+	updateOpts := ObjectStorageKeyUpdateOptions{
+		Regions: []string{updatedRegion},
+	}
+	key, err = client.UpdateObjectStorageKey(context.Background(), key.ID, updateOpts)
+	if err != nil {
+		t.Fatalf("error updating the obj regional key: %v", err)
+	}
+
+	if len(key.Regions) == 0 || key.Regions[0].ID != updatedRegion {
+		t.Errorf("Unexpected key regions, expected regions: %v, actual regions: %v", updateOpts.Regions, key.Regions)
+	}
+}
+
+func setupObjectStorageKey(t *testing.T, createOpts ObjectStorageKeyCreateOptions, fixturesYaml string, client *Client, teardown func()) (*Client, *ObjectStorageKey, func(), error) {
 	t.Helper()
-	var fixtureTeardown func()
-	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+
+	if (client == nil) != (teardown == nil) {
+		t.Error(
+			"The client and fixtureTeardown variables must either both be nil or both " +
+				"have a value. They cannot have one set to nil and the other set to a non-nil value.",
+		)
+	}
+
+	if client == nil {
+		client, teardown = createTestClient(t, fixturesYaml)
+	}
+
 	objectStorageKey, err := client.CreateObjectStorageKey(context.Background(), createOpts)
 	if err != nil {
 		t.Errorf("Error creating ObjectStorageKey: %v", err)
 	}
 
-	teardown := func() {
+	newTeardown := func() {
 		if err := client.DeleteObjectStorageKey(context.Background(), objectStorageKey.ID); err != nil {
 			t.Errorf("Expected to delete a objectStorageKey, but got %v", err)
 		}
-		fixtureTeardown()
+		teardown()
 	}
-	return client, objectStorageKey, teardown, err
+	return client, objectStorageKey, newTeardown, err
 }
