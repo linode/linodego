@@ -3,11 +3,9 @@ package linodego
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"net"
 	"time"
 
-	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -242,89 +240,58 @@ type InstanceMigrateOptions struct {
 	PlacementGroup *InstanceCreatePlacementGroupOptions `json:"placement_group,omitempty"`
 }
 
-// InstancesPagedResponse represents a linode API response for listing
-type InstancesPagedResponse struct {
-	*PageOptions
-	Data []Instance `json:"data"`
-}
-
-// endpoint gets the endpoint URL for Instance
-func (InstancesPagedResponse) endpoint(_ ...any) string {
-	return "linode/instances"
-}
-
-func (resp *InstancesPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
-	res, err := coupleAPIErrors(r.SetResult(InstancesPagedResponse{}).Get(e))
-	if err != nil {
-		return 0, 0, err
-	}
-	castedRes := res.Result().(*InstancesPagedResponse)
-	resp.Data = append(resp.Data, castedRes.Data...)
-	return castedRes.Pages, castedRes.Results, nil
-}
-
 // ListInstances lists linode instances
 func (c *Client) ListInstances(ctx context.Context, opts *ListOptions) ([]Instance, error) {
-	response := InstancesPagedResponse{}
-	err := c.listHelper(ctx, &response, opts)
+	response, err := getPaginatedResults[Instance](ctx, c, "linode/instances", opts)
 	if err != nil {
 		return nil, err
 	}
-	return response.Data, nil
+
+	return response, nil
 }
 
 // GetInstance gets the instance with the provided ID
 func (c *Client) GetInstance(ctx context.Context, linodeID int) (*Instance, error) {
-	e := fmt.Sprintf("linode/instances/%d", linodeID)
-	req := c.R(ctx).SetResult(Instance{})
-	r, err := coupleAPIErrors(req.Get(e))
+	e := formatAPIPath("linode/instances/%d", linodeID)
+	response, err := doGETRequest[Instance](ctx, c, e)
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*Instance), nil
+
+	return response, nil
 }
 
 // GetInstanceTransfer gets the instance with the provided ID
 func (c *Client) GetInstanceTransfer(ctx context.Context, linodeID int) (*InstanceTransfer, error) {
-	e := fmt.Sprintf("linode/instances/%d/transfer", linodeID)
-	req := c.R(ctx).SetResult(InstanceTransfer{})
-	r, err := coupleAPIErrors(req.Get(e))
+	e := formatAPIPath("linode/instances/%d/transfer", linodeID)
+	response, err := doGETRequest[InstanceTransfer](ctx, c, e)
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*InstanceTransfer), nil
+
+	return response, nil
 }
 
 // CreateInstance creates a Linode instance
 func (c *Client) CreateInstance(ctx context.Context, opts InstanceCreateOptions) (*Instance, error) {
-	body, err := json.Marshal(opts)
+	e := "linode/instances"
+	response, err := doPOSTRequest[Instance](ctx, c, e, opts)
 	if err != nil {
 		return nil, err
 	}
 
-	e := "linode/instances"
-	req := c.R(ctx).SetResult(&Instance{}).SetBody(string(body))
-	r, err := coupleAPIErrors(req.Post(e))
-	if err != nil {
-		return nil, err
-	}
-	return r.Result().(*Instance), nil
+	return response, nil
 }
 
 // UpdateInstance creates a Linode instance
 func (c *Client) UpdateInstance(ctx context.Context, linodeID int, opts InstanceUpdateOptions) (*Instance, error) {
-	body, err := json.Marshal(opts)
+	e := formatAPIPath("linode/instances/%d", linodeID)
+	response, err := doPUTRequest[Instance](ctx, c, e, opts)
 	if err != nil {
 		return nil, err
 	}
 
-	e := fmt.Sprintf("linode/instances/%d", linodeID)
-	req := c.R(ctx).SetResult(&Instance{}).SetBody(string(body))
-	r, err := coupleAPIErrors(req.Put(e))
-	if err != nil {
-		return nil, err
-	}
-	return r.Result().(*Instance), nil
+	return response, nil
 }
 
 // RenameInstance renames an Instance
@@ -334,60 +301,47 @@ func (c *Client) RenameInstance(ctx context.Context, linodeID int, label string)
 
 // DeleteInstance deletes a Linode instance
 func (c *Client) DeleteInstance(ctx context.Context, linodeID int) error {
-	e := fmt.Sprintf("linode/instances/%d", linodeID)
-	_, err := coupleAPIErrors(c.R(ctx).Delete(e))
+	e := formatAPIPath("linode/instances/%d", linodeID)
+	err := doDELETERequest(ctx, c, e)
 	return err
 }
 
 // BootInstance will boot a Linode instance
 // A configID of 0 will cause Linode to choose the last/best config
 func (c *Client) BootInstance(ctx context.Context, linodeID int, configID int) error {
-	var body string
+	opts := make(map[string]int)
+
 	if configID != 0 {
-		bodyMap := map[string]int{"config_id": configID}
-		bodyJSON, err := json.Marshal(bodyMap)
-		if err != nil {
-			return err
-		}
-		body = string(bodyJSON)
+		opts = map[string]int{"config_id": configID}
 	}
-	e := fmt.Sprintf("linode/instances/%d/boot", linodeID)
-	_, err := coupleAPIErrors(c.R(ctx).SetBody(body).Post(e))
+
+	e := formatAPIPath("linode/instances/%d/boot", linodeID)
+	_, err := doPOSTRequest[Instance](ctx, c, e, opts)
 	return err
 }
 
 // CloneInstance clone an existing Instances Disks and Configuration profiles to another Linode Instance
 func (c *Client) CloneInstance(ctx context.Context, linodeID int, opts InstanceCloneOptions) (*Instance, error) {
-	body, err := json.Marshal(opts)
+	e := formatAPIPath("linode/instances/%d/clone", linodeID)
+	response, err := doPOSTRequest[Instance](ctx, c, e, opts)
 	if err != nil {
 		return nil, err
 	}
 
-	req := c.R(ctx).SetResult(&Instance{}).SetBody(string(body))
-	e := fmt.Sprintf("linode/instances/%d/clone", linodeID)
-	r, err := coupleAPIErrors(req.Post(e))
-	if err != nil {
-		return nil, err
-	}
-
-	return r.Result().(*Instance), nil
+	return response, nil
 }
 
 // RebootInstance reboots a Linode instance
 // A configID of 0 will cause Linode to choose the last/best config
 func (c *Client) RebootInstance(ctx context.Context, linodeID int, configID int) error {
-	body := "{}"
+	opts := make(map[string]int)
 
 	if configID != 0 {
-		bodyMap := map[string]int{"config_id": configID}
-		bodyJSON, err := json.Marshal(bodyMap)
-		if err != nil {
-			return err
-		}
-		body = string(bodyJSON)
+		opts = map[string]int{"config_id": configID}
 	}
-	e := fmt.Sprintf("linode/instances/%d/reboot", linodeID)
-	_, err := coupleAPIErrors(c.R(ctx).SetBody(body).Post(e))
+
+	e := formatAPIPath("linode/instances/%d/reboot", linodeID)
+	_, err := doPOSTRequest[Instance](ctx, c, e, opts)
 	return err
 }
 
@@ -407,17 +361,13 @@ type InstanceRebuildOptions struct {
 // RebuildInstance Deletes all Disks and Configs on this Linode,
 // then deploys a new Image to this Linode with the given attributes.
 func (c *Client) RebuildInstance(ctx context.Context, linodeID int, opts InstanceRebuildOptions) (*Instance, error) {
-	body, err := json.Marshal(opts)
+	e := formatAPIPath("linode/instances/%d/rebuild", linodeID)
+	response, err := doPOSTRequest[Instance](ctx, c, e, opts)
 	if err != nil {
 		return nil, err
 	}
-	e := fmt.Sprintf("linode/instances/%d/rebuild", linodeID)
-	req := c.R(ctx).SetBody(string(body)).SetResult(&Instance{})
-	r, err := coupleAPIErrors(req.Post(e))
-	if err != nil {
-		return nil, err
-	}
-	return r.Result().(*Instance), nil
+
+	return response, nil
 }
 
 // InstanceRescueOptions fields are those accepted by RescueInstance
@@ -430,23 +380,15 @@ type InstanceRescueOptions struct {
 // You can also use Rescue Mode for tasks other than disaster recovery, such as formatting disks to use different filesystems,
 // copying data between disks, and downloading files from a disk via SSH and SFTP.
 func (c *Client) RescueInstance(ctx context.Context, linodeID int, opts InstanceRescueOptions) error {
-	body, err := json.Marshal(opts)
-	if err != nil {
-		return err
-	}
-	e := fmt.Sprintf("linode/instances/%d/rescue", linodeID)
-	_, err = coupleAPIErrors(c.R(ctx).SetBody(string(body)).Post(e))
+	e := formatAPIPath("linode/instances/%d/rescue", linodeID)
+	_, err := doPOSTRequest[Instance](ctx, c, e, opts)
 	return err
 }
 
 // ResizeInstance resizes an instance to new Linode type
 func (c *Client) ResizeInstance(ctx context.Context, linodeID int, opts InstanceResizeOptions) error {
-	body, err := json.Marshal(opts)
-	if err != nil {
-		return err
-	}
-	e := fmt.Sprintf("linode/instances/%d/resize", linodeID)
-	_, err = coupleAPIErrors(c.R(ctx).SetBody(string(body)).Post(e))
+	e := formatAPIPath("linode/instances/%d/resize", linodeID)
+	_, err := doPOSTRequest[Instance](ctx, c, e, opts)
 	return err
 }
 
@@ -462,12 +404,8 @@ func (c *Client) MutateInstance(ctx context.Context, id int) error {
 
 // MigrateInstance - Migrate an instance
 func (c *Client) MigrateInstance(ctx context.Context, linodeID int, opts InstanceMigrateOptions) error {
-	body, err := json.Marshal(opts)
-	if err != nil {
-		return err
-	}
-	e := fmt.Sprintf("linode/instances/%d/migrate", linodeID)
-	_, err = coupleAPIErrors(c.R(ctx).SetBody(string(body)).Post(e))
+	e := formatAPIPath("linode/instances/%d/migrate", linodeID)
+	_, err := doPOSTRequest[Instance](ctx, c, e, opts)
 	return err
 }
 
@@ -477,7 +415,7 @@ func (c *Client) simpleInstanceAction(ctx context.Context, action string, linode
 	_, err := doPOSTRequest[any, any](
 		ctx,
 		c,
-		fmt.Sprintf("linode/instances/%d/%s", linodeID, action),
+		formatAPIPath("linode/instances/%d/%s", linodeID, action),
 	)
 	return err
 }
