@@ -4,6 +4,7 @@ import (
     "context"
     "testing"
 
+    "github.com/stretchr/testify/require"
     "github.com/linode/linodego"
 )
 
@@ -12,29 +13,15 @@ func TestAccountSettings_Get(t *testing.T) {
     defer teardown()
 
     settings, err := client.GetAccountSettings(context.Background())
-    if err != nil {
-        t.Fatalf("Error getting Account Settings, expected struct, got error %v", err)
-    }
+    require.NoError(t, err, "Error getting Account Settings")
 
-    if settings.BackupsEnabled != true {
-        t.Fatalf("Expected BackupsEnabled to be true, got %v", settings.BackupsEnabled)
-    }
-
-    if settings.Managed != true {
-        t.Fatalf("Expected Managed to be true, got %v", settings.Managed)
-    }
-
-    if settings.NetworkHelper != true {
-        t.Fatalf("Expected NetworkHelper to be true, got %v", settings.NetworkHelper)
-    }
-
-    if settings.LongviewSubscription == nil || *settings.LongviewSubscription != "longview-3" {
-        t.Fatalf("Expected LongviewSubscription to be 'longview-3', got %v", settings.LongviewSubscription)
-    }
-
-    if settings.ObjectStorage == nil || *settings.ObjectStorage != "active" {
-        t.Fatalf("Expected ObjectStorage to be 'active', got %v", settings.ObjectStorage)
-    }
+    require.True(t, settings.BackupsEnabled, "Expected BackupsEnabled to be true")
+    require.True(t, settings.Managed, "Expected Managed to be true")
+    require.True(t, settings.NetworkHelper, "Expected NetworkHelper to be true")
+    require.NotNil(t, settings.LongviewSubscription, "Expected LongviewSubscription to be non-nil")
+    require.Equal(t, "longview-3", *settings.LongviewSubscription, "Expected LongviewSubscription to be 'longview-3'")
+    require.NotNil(t, settings.ObjectStorage, "Expected ObjectStorage to be non-nil")
+    require.Equal(t, "active", *settings.ObjectStorage, "Expected ObjectStorage to be 'active'")
 }
 
 func TestAccountSettings_Update(t *testing.T) {
@@ -48,21 +35,12 @@ func TestAccountSettings_Update(t *testing.T) {
     }
 
     settings, err := client.UpdateAccountSettings(context.Background(), opts)
-    if err != nil {
-        t.Fatalf("Error updating Account Settings, expected struct, got error %v", err)
-    }
+    require.NoError(t, err, "Error updating Account Settings")
 
-    if settings.BackupsEnabled != false {
-        t.Fatalf("Expected BackupsEnabled to be false, got %v", settings.BackupsEnabled)
-    }
-
-    if settings.NetworkHelper != false {
-        t.Fatalf("Expected NetworkHelper to be false, got %v", settings.NetworkHelper)
-    }
-
-    if settings.LongviewSubscription == nil || *settings.LongviewSubscription != "longview-10" {
-        t.Fatalf("Expected LongviewSubscription to be 'longview-10', got %v", settings.LongviewSubscription)
-    }
+    require.False(t, settings.BackupsEnabled, "Expected BackupsEnabled to be false")
+    require.False(t, settings.NetworkHelper, "Expected NetworkHelper to be false")
+    require.NotNil(t, settings.LongviewSubscription, "Expected LongviewSubscription to be non-nil")
+    require.Equal(t, "longview-10", *settings.LongviewSubscription, "Expected LongviewSubscription to be 'longview-10'")
 }
 
 func Bool(v bool) *bool { return &v }

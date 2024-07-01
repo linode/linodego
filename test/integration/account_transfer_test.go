@@ -3,6 +3,8 @@ package integration
 import (
     "context"
     "testing"
+
+    "github.com/stretchr/testify/require"
 )
 
 func TestAccountTransfer_Get(t *testing.T) {
@@ -10,24 +12,18 @@ func TestAccountTransfer_Get(t *testing.T) {
     defer teardown()
 
     transfer, err := client.GetAccountTransfer(context.Background())
-    if err != nil {
-        t.Fatalf("Error getting Account Transfer, expected struct, got error %v", err)
-    }
+    require.NoError(t, err, "Error getting Account Transfer, expected struct")
 
-    if transfer.Billable == 0 && transfer.Quota == 0 && transfer.Used == 0 {
-        t.Fatalf("Expected non-zero values for Billable, Quota, and Used.")
-    }
+    require.NotEqual(t, 0, transfer.Billable, "Expected non-zero value for Billable")
+    require.NotEqual(t, 0, transfer.Quota, "Expected non-zero value for Quota")
+    require.NotEqual(t, 0, transfer.Used, "Expected non-zero value for Used")
 
-    if len(transfer.RegionTransfers) == 0 {
-        t.Fatalf("Expected to see region transfers.")
-    }
+    require.NotEmpty(t, transfer.RegionTransfers, "Expected to see region transfers")
 
     for _, regionTransfer := range transfer.RegionTransfers {
-        if regionTransfer.ID == "" {
-            t.Errorf("Expected region ID to be non-empty.")
-        }
-        if regionTransfer.Billable == 0 && regionTransfer.Quota == 0 && regionTransfer.Used == 0 {
-            t.Errorf("Expected non-zero values for Billable, Quota, and Used in region %s.", regionTransfer.ID)
-        }
+        require.NotEmpty(t, regionTransfer.ID, "Expected region ID to be non-empty")
+        require.NotEqual(t, 0, regionTransfer.Billable, "Expected non-zero value for Billable in region %s", regionTransfer.ID)
+        require.NotEqual(t, 0, regionTransfer.Quota, "Expected non-zero value for Quota in region %s", regionTransfer.ID)
+        require.NotEqual(t, 0, regionTransfer.Used, "Expected non-zero value for Used in region %s", regionTransfer.ID)
     }
 }

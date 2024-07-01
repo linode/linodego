@@ -3,6 +3,8 @@ package integration
 import (
     "context"
     "testing"
+
+    "github.com/stretchr/testify/require"
 )
 
 func TestTicket_List(t *testing.T) {
@@ -10,17 +12,11 @@ func TestTicket_List(t *testing.T) {
     defer teardown()
 
     tickets, err := client.ListTickets(context.Background(), nil)
-    if err != nil {
-        t.Fatalf("Error getting Tickets, expected struct, got error %v", err)
-    }
+    require.NoError(t, err, "Error getting Tickets, expected struct")
 
-    if len(tickets) == 0 {
-        t.Fatalf("Expected to see tickets returned.")
-    }
+    require.NotEmpty(t, tickets, "Expected to see tickets returned")
 
-    if tickets[0].ID != 123 {
-        t.Fatalf("Expected ticket ID 123, got %d", tickets[0].ID)
-    }
+    require.Equal(t, 123, tickets[0].ID, "Expected ticket ID 123")
 }
 
 func TestTicket_Get(t *testing.T) {
@@ -28,15 +24,8 @@ func TestTicket_Get(t *testing.T) {
     defer teardown()
 
     ticket, err := client.GetTicket(context.Background(), 123)
-    if err != nil {
-        t.Fatalf("Error getting Ticket, expected struct, got error %v", err)
-    }
+    require.NoError(t, err, "Error getting Ticket, expected struct")
 
-    if ticket.ID != 123 {
-        t.Fatalf("Expected ticket ID 123, got %d", ticket.ID)
-    }
-
-    if ticket.Description != "Test description" {
-        t.Fatalf("Expected ticket description 'Test description', got %s", ticket.Description)
-    }
+    require.Equal(t, 123, ticket.ID, "Expected ticket ID 123")
+    require.Equal(t, "Test description", ticket.Description, "Expected ticket description 'Test description'")
 }

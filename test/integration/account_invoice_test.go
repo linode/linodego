@@ -3,6 +3,8 @@ package integration
 import (
     "context"
     "testing"
+
+    "github.com/stretchr/testify/require"
 )
 
 func TestInvoice_List(t *testing.T) {
@@ -10,13 +12,8 @@ func TestInvoice_List(t *testing.T) {
     defer teardown()
 
     invoices, err := client.ListInvoices(context.Background(), nil)
-    if err != nil {
-        t.Fatalf("Error getting Invoices, expected struct, got error %v", err)
-    }
-
-    if len(invoices) == 0 {
-        t.Fatalf("Expected to see invoices returned.")
-    }
+    require.NoError(t, err, "Error getting Invoices, expected struct")
+    require.NotEmpty(t, invoices, "Expected to see invoices returned")
 }
 
 func TestInvoice_Get(t *testing.T) {
@@ -24,21 +21,10 @@ func TestInvoice_Get(t *testing.T) {
     defer teardown()
 
     invoice, err := client.GetInvoice(context.Background(), 123)
-    if err != nil {
-        t.Fatalf("Error getting Invoice, expected struct, got error %v", err)
-    }
-
-    if invoice.ID != 123 {
-        t.Fatalf("Expected Invoice ID to be 123, got %v", invoice.ID)
-    }
-
-    if invoice.Label != "Invoice" {
-        t.Fatalf("Expected Invoice Label to be 'Invoice', got %v", invoice.Label)
-    }
-
-    if invoice.Total != 132.5 {
-        t.Fatalf("Expected Invoice Total to be 132.5, got %v", invoice.Total)
-    }
+    require.NoError(t, err, "Error getting Invoice, expected struct")
+    require.Equal(t, 123, invoice.ID, "Expected Invoice ID to be 123")
+    require.Equal(t, "Invoice", invoice.Label, "Expected Invoice Label to be 'Invoice'")
+    require.Equal(t, 132.5, float64(invoice.Total), "Expected Invoice Total to be 132.5")
 }
 
 func TestInvoiceItems_List(t *testing.T) {
@@ -46,20 +32,10 @@ func TestInvoiceItems_List(t *testing.T) {
     defer teardown()
 
     items, err := client.ListInvoiceItems(context.Background(), 123, nil)
-    if err != nil {
-        t.Fatalf("Error getting Invoice Items, expected struct, got error %v", err)
-    }
-
-    if len(items) == 0 {
-        t.Fatalf("Expected to see invoice items returned.")
-    }
+    require.NoError(t, err, "Error getting Invoice Items, expected struct")
+    require.NotEmpty(t, items, "Expected to see invoice items returned")
 
     item := items[0]
-    if item.Label != "Linode 2GB" {
-        t.Fatalf("Expected item label to be 'Linode 2GB', got %v", item.Label)
-    }
-
-    if item.Amount != 10 {
-        t.Fatalf("Expected item amount to be 10, got %v", item.Amount)
-    }
+    require.Equal(t, "Linode 2GB", item.Label, "Expected item label to be 'Linode 2GB'")
+    require.Equal(t, 10.0, float64(item.Amount), "Expected item amount to be 10")
 }
