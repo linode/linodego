@@ -291,7 +291,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 28 Jun 2024 21:11:54 GMT
+      - Mon, 01 Jul 2024 14:47:42 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -329,7 +329,7 @@ interactions:
     url: https://api.linode.com/v4beta/volumes
     method: POST
   response:
-    body: '{"id": 4769851, "status": "creating", "label": "go-vol-test-def", "created":
+    body: '{"id": 4811915, "status": "creating", "label": "go-vol-test-def", "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
       "/dev/disk/by-id/scsi-0Linode_Volume_go-vol-test-def", "size": 20, "linode_id":
       null, "linode_label": null, "region": "ap-west", "tags": [], "hardware_type":
@@ -356,7 +356,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 28 Jun 2024 21:11:55 GMT
+      - Mon, 01 Jul 2024 14:47:42 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -389,13 +389,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/60783431/volumes?page=1
+    url: https://api.linode.com/v4beta/linode/instances/60888843/volumes?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 4769851, "status": "creating", "label": "go-vol-test-def",
+    body: '{"data": [{"id": 4811915, "status": "creating", "label": "go-vol-test-def",
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
       "/dev/disk/by-id/scsi-0Linode_Volume_go-vol-test-def", "size": 20, "linode_id":
-      60783431, "linode_label": "go-test-ins-wo-disk-z81tln87f3c6", "region": "ap-west",
+      60888843, "linode_label": "go-test-ins-wo-disk-q375a8jf2r2a", "region": "ap-west",
       "tags": [], "hardware_type": "nvme"}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -419,7 +419,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 28 Jun 2024 21:11:55 GMT
+      - Mon, 01 Jul 2024 14:47:42 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -453,7 +453,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/volumes/4769851
+    url: https://api.linode.com/v4beta/volumes/4811915
     method: DELETE
   response:
     body: '{}'
@@ -479,7 +479,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 28 Jun 2024 21:12:00 GMT
+      - Mon, 01 Jul 2024 14:47:48 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

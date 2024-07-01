@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"net/url"
 	"reflect"
-	"strconv"
 )
 
 // paginatedResponse represents a single response from a paginated

@@ -13,7 +13,7 @@ interactions:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
       - '{"label":"5.17.5-x86_64-linode154"}'
-    url: https://api.linode.com/v4beta/linode/kernels
+    url: https://api.linode.com/v4beta/linode/kernels?page=1
     method: GET
   response:
     body: '{"data": [{"id": "linode/5.17.5-x86_64-linode154", "label": "5.17.5-x86_64-linode154",
@@ -41,7 +41,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:04:45 GMT
+      - Mon, 01 Jul 2024 14:36:58 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
