@@ -17,15 +17,13 @@ func TestEventPoller_InstancePower(t *testing.T) {
 		t.Fatalf("failed to initialize event poller: %s", err)
 	}
 
-	booted := false
-
 	instance, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
 		Region:   getRegionsWithCaps(t, client, []string{"Linodes"})[0],
 		Type:     "g6-nanode-1",
 		Image:    "linode/ubuntu22.04",
 		RootPass: randPassword(),
 		Label:    "go-ins-poll-test",
-		Booted:   &booted,
+		Booted:   linodego.Pointer(false),
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -146,13 +144,11 @@ func TestEventPoller_Secondary(t *testing.T) {
 		t.Fatalf("failed to initialize event poller: %s", err)
 	}
 
-	booted := false
-
 	instance, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
 		Region: getRegionsWithCaps(t, client, []string{"Linodes"})[0],
 		Type:   "g6-nanode-1",
 		Label:  "go-ins-poll-test",
-		Booted: &booted,
+		Booted: linodego.Pointer(false),
 	})
 	if err != nil {
 		t.Fatal(err)

@@ -153,14 +153,13 @@ func ExampleClient_CreateNodeBalancerNode() {
 		log.Fatal(err)
 	}
 
-	booted := false
 	instanceOpts := linodego.InstanceCreateOptions{
 		Label:      "nodebalancer-example-instance",
 		RootPass:   randPassword(),
 		Region:     "us-southeast",
 		Type:       "g6-nanode-1",
 		Image:      "linode/debian9",
-		Booted:     &booted,
+		Booted:     linodego.Pointer(false),
 		FirewallID: GetFirewallID(),
 	}
 	instance, err := linodeClient.CreateInstance(context.Background(), instanceOpts)
