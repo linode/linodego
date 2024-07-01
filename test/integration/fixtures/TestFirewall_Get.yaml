@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"linodego-fw-test","rules":{"inbound":[{"action":"DROP","label":"linodego-fwrule-test","protocol":"ICMP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["::/0"]}}],"inbound_policy":"ACCEPT","outbound":null,"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
+    body: '{"label":"linodego-fw-test","rules":{"inbound":[{"action":"DROP","label":"linodego-fwrule-test","protocol":"ICMP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":null,"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
     form: {}
     headers:
       Accept:
@@ -17,7 +17,7 @@ interactions:
     body: '{"id": 498952, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"action": "DROP", "label": "linodego-fwrule-test", "protocol": "ICMP", "addresses":
-      {"ipv4": ["0.0.0.0/0"], "ipv6": ["::/0"]}}], "inbound_policy": "ACCEPT", "outbound":
+      {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy": "ACCEPT", "outbound":
       null, "outbound_policy": "ACCEPT", "version": 1, "fingerprint": "e026ab25"},
       "tags": ["testing"], "entities": []}'
     headers:
@@ -84,7 +84,7 @@ interactions:
     body: '{"id": 498952, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"action": "DROP", "label": "linodego-fwrule-test", "protocol": "ICMP", "addresses":
-      {"ipv4": ["0.0.0.0/0"], "ipv6": ["::/0"]}}], "inbound_policy": "ACCEPT", "outbound":
+      {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy": "ACCEPT", "outbound":
       null, "outbound_policy": "ACCEPT", "version": 1, "fingerprint": "e026ab25"},
       "tags": ["testing"], "entities": []}'
     headers:
