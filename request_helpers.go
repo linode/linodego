@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/url"
-	"strconv"
 )
 
 // paginatedResponse represents a single response from a paginated
@@ -30,8 +29,6 @@ func getPaginatedResults[T any](
 
 	result := make([]T, 0)
 
-	req := client.R(ctx).SetResult(resultType)
-
 	if opts == nil {
 		opts = &ListOptions{PageOptions: &PageOptions{Page: 0}}
 	}
@@ -40,15 +37,20 @@ func getPaginatedResults[T any](
 		opts.PageOptions = &PageOptions{Page: 0}
 	}
 
-	// Apply all user-provided list options to the base request
-	if err := applyListOptionsToRequest(opts, req); err != nil {
-		return nil, err
-	}
-
 	// Makes a request to a particular page and
 	// appends the response to the result
 	handlePage := func(page int) error {
-		req.SetQueryParam("page", strconv.Itoa(page))
+		// Override the page to be applied in applyListOptionsToRequest(...)
+		opts.Page = page
+
+		// This request object cannot be reused for each page request
+		// because it can lead to possible data corruption
+		req := client.R(ctx).SetResult(resultType)
+
+		// Apply all user-provided list options to the request
+		if err := applyListOptionsToRequest(opts, req); err != nil {
+			return err
+		}
 
 		res, err := coupleAPIErrors(req.Get(endpoint))
 		if err != nil {

@@ -2,11 +2,14 @@ package linodego
 
 import (
 	"context"
+	"fmt"
 	"math"
 	"net/http"
 	"reflect"
 	"strconv"
 	"testing"
+
+	"github.com/stretchr/testify/require"
 
 	"github.com/linode/linodego/internal/testutil"
 
@@ -21,6 +24,7 @@ type testResultNestedType struct {
 
 type testResultType struct {
 	ID   int                  `json:"id"`
+	Bar  *string              `json:"bar"`
 	Foo  string               `json:"foo"`
 	Cool testResultNestedType `json:"cool"`
 }
@@ -161,6 +165,8 @@ func TestRequestHelpers_delete(t *testing.T) {
 }
 
 func TestRequestHelpers_paginateAll(t *testing.T) {
+	const totalResults = 4123
+
 	client := testutil.CreateMockClient(t, NewClient)
 
 	numRequests := 0
@@ -169,7 +175,7 @@ func TestRequestHelpers_paginateAll(t *testing.T) {
 		"GET",
 		testutil.MockRequestURL("/foo/bar"),
 		mockPaginatedResponse(
-			buildPaginatedEntries(12),
+			buildPaginatedEntries(totalResults),
 			&numRequests,
 		),
 	)
@@ -179,27 +185,20 @@ func TestRequestHelpers_paginateAll(t *testing.T) {
 		client,
 		"/foo/bar",
 		&ListOptions{
-			PageSize: 4,
+			PageSize: 500,
 			Filter:   "{\"foo\": \"bar\"}",
 		},
 	)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
-	if numRequests != 3 {
-		t.Fatalf("expected 3 requests, got %d", numRequests)
-	}
+	require.Equal(t, 9, numRequests)
+	require.Len(t, response, totalResults)
 
-	if len(response) != 12 {
-		t.Fatalf("expected 12 results, got %d", len(response))
-	}
-
-	for i := 0; i < 12; i++ {
+	for i := 0; i < totalResults; i++ {
 		entry := response[i]
-		if entry.ID != i {
-			t.Fatalf("expected id %d, got %d", i, entry.ID)
-		}
+
+		require.Equal(t, i, entry.ID)
+		require.Equal(t, fmt.Sprintf("test-%d", i), *entry.Bar)
 	}
 }
 
@@ -252,7 +251,9 @@ func buildPaginatedEntries(numEntries int) []testResultType {
 	result := make([]testResultType, numEntries)
 
 	for i := 0; i < numEntries; i++ {
+		bar := fmt.Sprintf("test-%d", i)
 		result[i] = testResultType{
+			Bar: &bar,
 			Foo: "foo",
 			ID:  i,
 		}
@@ -282,13 +283,19 @@ func mockPaginatedResponse(
 			}
 		}
 
+		// Clamp the top index to prevent out of bounds issues
+		lastEntryIdx := pageSize * page
+		if lastEntryIdx > len(entries) {
+			lastEntryIdx = len(entries)
+		}
+
 		return httpmock.NewJsonResponse(
 			200,
 			paginatedResponse[testResultType]{
 				Page:    page,
 				Pages:   int(math.Ceil(float64(len(entries)) / float64(pageSize))),
 				Results: pageSize,
-				Data:    entries[pageSize*(page-1) : pageSize*page],
+				Data:    entries[pageSize*(page-1) : lastEntryIdx],
 			},
 		)
 	}

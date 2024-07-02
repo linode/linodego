@@ -57,10 +57,10 @@ interactions:
       5}, "site_type": "core"}, {"id": "us-ord", "label": "Chicago, IL", "country":
       "us", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Block Storage",
       "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall", "Vlans", "VPCs",
-      "Managed Databases", "Metadata", "Premium Plans", "Placement Group"], "status":
-      "ok", "resolvers": {"ipv4": "172.232.0.17, 172.232.0.16, 172.232.0.21, 172.232.0.13,
-      172.232.0.22, 172.232.0.9, 172.232.0.19, 172.232.0.20, 172.232.0.15, 172.232.0.18",
-      "ipv6": "1234::5678, 1234::5678, 1234::5678,
+      "Managed Databases", "Metadata", "Premium Plans"], "status": "ok", "resolvers":
+      {"ipv4": "172.232.0.17, 172.232.0.16, 172.232.0.21, 172.232.0.13, 172.232.0.22,
+      172.232.0.9, 172.232.0.19, 172.232.0.20, 172.232.0.15, 172.232.0.18", "ipv6":
+      "1234::5678, 1234::5678, 1234::5678,
       1234::5678, 1234::5678, 1234::5678,
       1234::5678, 1234::5678, 1234::5678,
       1234::5678"}, "placement_group_limits": {"maximum_pgs_per_customer":
@@ -179,25 +179,6 @@ interactions:
       "VPCs", "Metadata", "Premium Plans"], "status": "ok", "resolvers": {"ipv4":
       "172.233.128.45, 172.233.128.38, 172.233.128.53, 172.233.128.37, 172.233.128.34,
       172.233.128.36, 172.233.128.33, 172.233.128.39, 172.233.128.43, 172.233.128.44",
-      "ipv6": "1234::5678, 1234::5678, 1234::5678,
-      1234::5678, 1234::5678, 1234::5678,
-      1234::5678, 1234::5678, 1234::5678,
-      1234::5678"}, "placement_group_limits": {"maximum_pgs_per_customer":
-      100, "maximum_linodes_per_pg": 5}, "site_type": "core"}, {"id": "gb-lon", "label":
-      "London 2, UK", "country": "gb", "capabilities": ["Linodes", "Backups", "NodeBalancers",
-      "Block Storage", "Kubernetes", "Cloud Firewall", "Vlans", "VPCs", "Metadata",
-      "Premium Plans"], "status": "ok", "resolvers": {"ipv4": "172.236.0.46, 172.236.0.50,
-      172.236.0.47, 172.236.0.53, 172.236.0.52, 172.236.0.45, 172.236.0.49, 172.236.0.51,
-      172.236.0.54, 172.236.0.48", "ipv6": "1234::5678, 1234::5678,
-      1234::5678, 1234::5678, 1234::5678,
-      1234::5678, 1234::5678, 1234::5678,
-      1234::5678, 1234::5678"}, "placement_group_limits":
-      {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg": 5}, "site_type":
-      "core"}, {"id": "au-mel", "label": "Melbourne, AU", "country": "au", "capabilities":
-      ["Linodes", "Backups", "NodeBalancers", "Block Storage", "Cloud Firewall", "Vlans",
-      "VPCs", "Metadata", "Premium Plans"], "status": "ok", "resolvers": {"ipv4":
-      "172.236.32.23, 172.236.32.35, 172.236.32.30, 172.236.32.28, 172.236.32.32,
-      172.236.32.33, 172.236.32.27, 172.236.32.37, 172.236.32.29, 172.236.32.34",
       "ipv6": "1234::5678, 1234::5678, 1234::5678,
       1234::5678, 1234::5678, 1234::5678,
       1234::5678, 1234::5678, 1234::5678,
@@ -331,7 +312,7 @@ interactions:
   response:
     body: '{"id": 60716238, "label": "go-test-ins-ha7nci1a7675", "group": "", "status":
       "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.104.206.233"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["45.79.125.26"], "ipv6": "1234::5678/128",
       "image": "linode/debian9", "region": "ap-west", "specs": {"disk": 25600, "memory":
       1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":

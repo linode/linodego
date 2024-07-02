@@ -274,7 +274,7 @@ interactions:
       1;\n    fi\n    \n    hostnamectl set-hostname $1\n    sed -i \"s/ubuntu/$1/g\"
       /etc/hosts\n}\n\nfunction ubuntu1604_update {\n\t# Configures Apt, disables
       interactive prompt, updates repositories and upgrades system packages.\n\n\t#
-      Forces Apt to use IPv4\n\techo ''Acquire::ForceIPv4 \"true\";'' > /etc/apt/apt.conf.d/99force-ipv4\n\t#
+      Forces Apt to use IPv4\n\techo ''Acquir1234::5678orceIPv4 \"true\";'' > /etc/apt/apt.conf.d/99force-ipv4\n\t#
       Disables interactive prompts\n\texport DEBIAN_FRONTEND=noninteractive\n\t# Updates
       Repositories and Upgrades Packages\n\tapt-get update && apt-get upgrade -y\n}\n\nfunction
       ubuntu1604_install_additional {\n\t# Install additional system packages\n\t\n\tapt-get
@@ -303,7 +303,7 @@ interactions:
       ]; then\n        echo \"Hostname Not Defined.\"\n        return 1;\n    fi\n    \n    hostnamectl
       set-hostname $1\n    sed -i \"s/debian/$1/g\" /etc/hosts\n}\n\nfunction debian8_update
       {\n\t# Configures Apt, disables interactive prompt, updates repositories and
-      upgrades system packages.\n\n\t# Forces Apt to use IPv4\n\techo ''Acquire::ForceIPv4
+      upgrades system packages.\n\n\t# Forces Apt to use IPv4\n\techo ''Acquir1234::5678orceIPv4
       \"true\";'' > /etc/apt/apt.conf.d/99force-ipv4\n\t# Disables interactive prompts\n\texport
       DEBIAN_FRONTEND=noninteractive\n\t# Updates Repositories and Upgrades Packages\n\tapt-get
       update && apt-get upgrade -y\n}\n\nfunction debian8_install_additional {\n\t#
@@ -532,7 +532,7 @@ interactions:
       LOG --log-prefix \"iptables_INPUT_denied: \" --log-level 7\n\tiptables -A INPUT
       -j REJECT\n\tiptables -A FORWARD -m limit --limit 5/min -j LOG --log-prefix
       \"iptables_FORWARD_denied: \" --log-level 7\n\tiptables -A FORWARD -j REJECT\n\tip6tables
-      -A INPUT -i lo -j ACCEPT\n\tip6tables -A INPUT ! -i lo -s ::1/128 -j REJECT\n\tip6tables
+      -A INPUT -i lo -j ACCEPT\n\tip6tables -A INPUT ! -i lo -s 1234::5678/128 -j REJECT\n\tip6tables
       -A INPUT -p icmpv6 -j ACCEPT\n\tip6tables -A INPUT -p tcp --dport 80 -m state
       --state NEW -j ACCEPT\n\tip6tables -A INPUT -p tcp --dport 443 -m state --state
       NEW -j ACCEPT\n\tip6tables -A INPUT -m state --state ESTABLISHED,RELATED -j
@@ -553,7 +553,7 @@ interactions:
       LOG --log-prefix \"iptables_INPUT_denied: \" --log-level 7\n\tiptables -A INPUT
       -j REJECT\n\tiptables -A FORWARD -m limit --limit 5/min -j LOG --log-prefix
       \"iptables_FORWARD_denied: \" --log-level 7\n\tiptables -A FORWARD -j REJECT\n\tip6tables
-      -A INPUT -i lo -j ACCEPT\n\tip6tables -A INPUT ! -i lo -s ::1/128 -j REJECT\n\tip6tables
+      -A INPUT -i lo -j ACCEPT\n\tip6tables -A INPUT ! -i lo -s 1234::5678/128 -j REJECT\n\tip6tables
       -A INPUT -p icmpv6 -j ACCEPT\n\tip6tables -A INPUT -p tcp --dport 80 -m state
       --state NEW -j ACCEPT\n\tip6tables -A INPUT -p tcp --dport 443 -m state --state
       NEW -j ACCEPT\n\tip6tables -A INPUT -m state --state ESTABLISHED,RELATED -j
@@ -577,7 +577,7 @@ interactions:
       \" --log-level 7\n\tiptables -A INPUT -j REJECT\n\tiptables -A FORWARD -m limit
       --limit 5/min -j LOG --log-prefix \"iptables_FORWARD_denied: \" --log-level
       7\n\tiptables -A FORWARD -j REJECT\n\tip6tables -A INPUT -i lo -j ACCEPT\n\tip6tables
-      -A INPUT ! -i lo -s ::1/128 -j REJECT\n\tip6tables -A INPUT -p icmpv6 -j ACCEPT\n\tip6tables
+      -A INPUT ! -i lo -s 1234::5678/128 -j REJECT\n\tip6tables -A INPUT -p icmpv6 -j ACCEPT\n\tip6tables
       -A INPUT -p tcp --dport 80 -m state --state NEW -j ACCEPT\n\tip6tables -A INPUT
       -p tcp --dport 443 -m state --state NEW -j ACCEPT\n\tip6tables -A INPUT -m state
       --state ESTABLISHED,RELATED -j ACCEPT\n\tip6tables -A INPUT -m limit --limit
@@ -2206,7 +2206,7 @@ interactions:
       "2018-01-02T03:04:05", "rev_note": "move apt-get upgrade to end of script to
       prevent busted nf_conntrack kernel modules for UFW - cmullen ", "script": "#!/bin/bash\n#
       Used for Marketplace Apps\n# Helper functions\n\nfunction apt_setup_update {\n  #
-      Force IPv4 and noninteractive update\n  echo ''Acquire::ForceIPv4 \"true\";''
+      Force IPv4 and noninteractive update\n  echo ''Acquir1234::5678orceIPv4 \"true\";''
       > /etc/apt/apt.conf.d/99force-ipv4\n  export DEBIAN_FRONTEND=noninteractive\n  apt-get
       update -y\n}\n\nfunction set_hostname {\n  IP=`hostname -I | awk ''{print$1}''`\n  HOSTNAME=`dnsdomainname
       -A`\n  hostnamectl set-hostname $HOSTNAME\n  echo $IP $HOSTNAME  >> /etc/hosts\n}\n\nfunction
@@ -2232,7 +2232,7 @@ interactions:
       -y\n  cd /etc/fail2ban\n  cp fail2ban.conf fail2ban.local\n  cp jail.conf jail.local\n  systemctl
       start fail2ban\n  systemctl enable fail2ban\n  cd\n}\n\nfunction stackscript_cleanup
       {\n  # Force IPv4 and noninteractive upgrade after script runs to prevent breaking
-      nf_conntrack for UFW\n  echo ''Acquire::ForceIPv4 \"true\";'' > /etc/apt/apt.conf.d/99force-ipv4\n  export
+      nf_conntrack for UFW\n  echo ''Acquir1234::5678orceIPv4 \"true\";'' > /etc/apt/apt.conf.d/99force-ipv4\n  export
       DEBIAN_FRONTEND=noninteractive \n  apt-get upgrade -y\n\n  rm /root/StackScript\n  rm
       /root/ssinclude*\n  echo \"Installation complete!\"\n}\n\nfunction run_mysql_secure_installation
       {\n  # Installs expect, runs mysql_secure_installation and runs mysql secure
@@ -3270,7 +3270,7 @@ interactions:
       "updated": "2018-01-02T03:04:05", "rev_note": "", "script": "#!/usr/bin/bash\n\n##
       REQUIRED IN EVERY MARKETPLACE SUBMISSION\n# Add Logging to /var/log/stackscript.log
       for future troubleshooting\nexec 1> >(tee -a \"/var/log/stackscript.log\") 2>&1\n#
-      System Updates updates\napt-get -o Acquire::ForceIPv4=true update -y\n## END
+      System Updates updates\napt-get -o Acquir1234::5678orceIPv4=true update -y\n## END
       OF REQUIRED CODE FOR MARKETPLACE SUBMISSION\n\n# Install docker\ncurl -fsSL
       get.docker.com | sudo sh\n\n# Creating Password\necho \"Superinsight setting
       up password....\"\nADMIN_PASSWORD=$(openssl rand -hex 12)\nNODE_IP=$(hostname
