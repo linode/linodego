@@ -156,8 +156,8 @@ interactions:
       100, "maximum_linodes_per_pg": 5}, "site_type": "core"}, {"id": "us-mia", "label":
       "Miami, FL", "country": "us", "capabilities": ["Linodes", "Backups", "NodeBalancers",
       "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans",
-      "VPCs", "Metadata", "Premium Plans"], "status": "ok", "resolvers": {"ipv4":
-      "172.233.160.34, 172.233.160.27, 172.233.160.30, 172.233.160.29, 172.233.160.32,
+      "VPCs", "Metadata", "Premium Plans", "Placement Group"], "status": "ok", "resolvers":
+      {"ipv4": "172.233.160.34, 172.233.160.27, 172.233.160.30, 172.233.160.29, 172.233.160.32,
       172.233.160.28, 172.233.160.33, 172.233.160.26, 172.233.160.25, 172.233.160.31",
       "ipv6": "1234::5678, 1234::5678, 1234::5678,
       1234::5678, 1234::5678, 1234::5678,
@@ -251,7 +251,7 @@ interactions:
       "1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678,
       1234::5678, 1234::5678, 1234::5678, 1234::5678"}, "placement_group_limits":
       {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg": 5}, "site_type":
-      "core"}], "page": 1, "pages": 1, "results": 25}'
+      "core"}], "page": 1, "pages": 1, "results": 27}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -272,7 +272,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 18:19:05 GMT
+      - Thu, 27 Jun 2024 13:11:36 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -289,10 +289,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -301,7 +298,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"us-iad","type":"g6-nanode-1","label":"go-test-ins-wo-disk-89gsa114u6ru","firewall_id":501582,"booted":false}'
+    body: '{"region":"us-iad","type":"g6-nanode-1","label":"go-test-ins-wo-disk-a3gp79f61cf1","firewall_id":605230,"booted":false}'
     form: {}
     headers:
       Accept:
@@ -313,7 +310,7 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 59544170, "label": "go-test-ins-wo-disk-89gsa114u6ru", "group":
+    body: '{"id": 60714775, "label": "go-test-ins-wo-disk-a3gp79f61cf1", "group":
       "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "type": "g6-nanode-1", "ipv4": ["172.233.194.115"], "ipv6": "1234::5678/128",
       "image": null, "region": "us-iad", "specs": {"disk": 25600, "memory": 1024,
@@ -321,8 +318,8 @@ interactions:
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
       true, "available": false, "schedule": {"day": null, "window": null}, "last_successful":
       null}, "hypervisor": "kvm", "watchdog_enabled": true, "tags": [], "host_uuid":
-      "fd4fc8c27644288806281ff46f10a1f3afe5cb08", "has_user_data": false, "placement_group":
-      null}'
+      "c00102518f534d7527027944805c3afa4da4b35d", "has_user_data": false, "placement_group":
+      null, "lke_cluster_id": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -339,13 +336,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "762"
+      - "785"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 18:19:06 GMT
+      - Thu, 27 Jun 2024 13:11:37 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -360,10 +357,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "10"
       X-Xss-Protection:
@@ -372,7 +366,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-conf-ea1d546nw5c9","devices":{},"interfaces":null}'
+    body: '{"label":"go-test-conf-m6v6664jr8nb","devices":{},"interfaces":null}'
     form: {}
     headers:
       Accept:
@@ -381,10 +375,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/59544170/configs
+    url: https://api.linode.com/v4beta/linode/instances/60714775/configs
     method: POST
   response:
-    body: '{"id": 62730806, "label": "go-test-conf-ea1d546nw5c9", "helpers": {"updatedb_disabled":
+    body: '{"id": 63921817, "label": "go-test-conf-m6v6664jr8nb", "helpers": {"updatedb_disabled":
       true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
       true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
@@ -413,7 +407,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 18:19:06 GMT
+      - Thu, 27 Jun 2024 13:11:37 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -428,10 +422,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -440,7 +431,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-vpc-1717179546636453000","region":"us-iad","subnets":[{"label":"linodego-vpc-test-1717179546636583000","ipv4":"192.168.0.0/25"}]}'
+    body: '{"label":"go-test-vpc-1719493897851091000","region":"us-iad","subnets":[{"label":"linodego-vpc-test-1719493897851287000","ipv4":"192.168.0.0/25"}]}'
     form: {}
     headers:
       Accept:
@@ -452,8 +443,8 @@ interactions:
     url: https://api.linode.com/v4beta/vpcs
     method: POST
   response:
-    body: '{"id": 64440, "label": "go-test-vpc-1717179546636453000", "description":
-      "", "region": "us-iad", "subnets": [{"id": 62998, "label": "linodego-vpc-test-1717179546636583000",
+    body: '{"id": 70776, "label": "go-test-vpc-1719493897851091000", "description":
+      "", "region": "us-iad", "subnets": [{"id": 68947, "label": "linodego-vpc-test-1719493897851287000",
       "ipv4": "192.168.0.0/25", "ipv6": null, "linodes": [], "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05"}], "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05"}'
@@ -479,7 +470,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 18:19:06 GMT
+      - Thu, 27 Jun 2024 13:11:38 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -494,10 +485,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -506,7 +494,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-conf-ea1d546nw5c9","comments":"","devices":{},"helpers":{"updatedb_disabled":true,"distro":true,"modules_dep":true,"network":true,"devtmpfs_automount":true},"interfaces":[{"purpose":"public"},{"label":"testvlan","purpose":"vlan"},{"purpose":"vpc","subnet_id":62998,"ipv4":{"nat_1_1":"any"}}],"memory_limit":0,"kernel":"linode/latest-64bit","init_rd":null,"root_device":"/dev/sda","run_level":"default","virt_mode":"paravirt"}'
+    body: '{"label":"go-test-conf-m6v6664jr8nb","comments":"","devices":{},"helpers":{"updatedb_disabled":true,"distro":true,"modules_dep":true,"network":true,"devtmpfs_automount":true},"interfaces":[{"purpose":"public"},{"label":"testvlan","purpose":"vlan"},{"purpose":"vpc","subnet_id":68947,"ipv4":{"nat_1_1":"any"}}],"memory_limit":0,"kernel":"linode/latest-64bit","init_rd":null,"root_device":"/dev/sda","run_level":"default","virt_mode":"paravirt"}'
     form: {}
     headers:
       Accept:
@@ -515,23 +503,23 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/59544170/configs/62730806
+    url: https://api.linode.com/v4beta/linode/instances/60714775/configs/63921817
     method: PUT
   response:
-    body: '{"id": 62730806, "label": "go-test-conf-ea1d546nw5c9", "helpers": {"updatedb_disabled":
+    body: '{"id": 63921817, "label": "go-test-conf-m6v6664jr8nb", "helpers": {"updatedb_disabled":
       true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
       true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
       "devices": {"sda": null, "sdb": null, "sdc": null, "sdd": null, "sde": null,
       "sdf": null, "sdg": null, "sdh": null}, "initrd": null, "run_level": "default",
-      "virt_mode": "paravirt", "interfaces": [{"id": 1598962, "purpose": "public",
+      "virt_mode": "paravirt", "interfaces": [{"id": 1832252, "purpose": "public",
       "primary": false, "active": false, "ipam_address": null, "label": null, "vpc_id":
       null, "subnet_id": null, "ipv4": null, "ipv6": null, "ip_ranges": null}, {"id":
-      1598963, "purpose": "vlan", "primary": false, "active": false, "ipam_address":
+      1832253, "purpose": "vlan", "primary": false, "active": false, "ipam_address":
       "", "label": "testvlan", "vpc_id": null, "subnet_id": null, "ipv4": null, "ipv6":
-      null, "ip_ranges": null}, {"id": 1598964, "purpose": "vpc", "primary": false,
-      "active": false, "ipam_address": null, "label": null, "vpc_id": 64440, "subnet_id":
-      62998, "ipv4": {"vpc": "192.168.0.2", "nat_1_1": "172.233.194.115"}, "ipv6":
+      null, "ip_ranges": null}, {"id": 1832254, "purpose": "vpc", "primary": false,
+      "active": false, "ipam_address": null, "label": null, "vpc_id": 70776, "subnet_id":
+      68947, "ipv4": {"vpc": "192.168.0.2", "nat_1_1": "172.234.128.54"}, "ipv6":
       null, "ip_ranges": []}]}'
     headers:
       Access-Control-Allow-Credentials:
@@ -553,7 +541,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 18:19:07 GMT
+      - Thu, 27 Jun 2024 13:11:38 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -569,10 +557,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -581,7 +566,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"ids":[1598963,1598962,1598964]}'
+    body: '{"ids":[1832253,1832252,1832254]}'
     form: {}
     headers:
       Accept:
@@ -590,7 +575,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/59544170/configs/62730806/interfaces/order
+    url: https://api.linode.com/v4beta/linode/instances/60714775/configs/63921817/interfaces/order
     method: POST
   response:
     body: '{}'
@@ -616,7 +601,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 18:19:07 GMT
+      - Thu, 27 Jun 2024 13:11:38 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -631,10 +616,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -652,24 +634,24 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/59544170/configs/62730806
+    url: https://api.linode.com/v4beta/linode/instances/60714775/configs/63921817
     method: GET
   response:
-    body: '{"id": 62730806, "label": "go-test-conf-ea1d546nw5c9", "helpers": {"updatedb_disabled":
+    body: '{"id": 63921817, "label": "go-test-conf-m6v6664jr8nb", "helpers": {"updatedb_disabled":
       true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
       true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
       "devices": {"sda": null, "sdb": null, "sdc": null, "sdd": null, "sde": null,
       "sdf": null, "sdg": null, "sdh": null}, "initrd": null, "run_level": "default",
-      "virt_mode": "paravirt", "interfaces": [{"id": 1598963, "purpose": "vlan", "primary":
+      "virt_mode": "paravirt", "interfaces": [{"id": 1832253, "purpose": "vlan", "primary":
       false, "active": false, "ipam_address": "", "label": "testvlan", "vpc_id": null,
-      "subnet_id": null, "ipv4": null, "ipv6": null, "ip_ranges": null}, {"id": 1598962,
+      "subnet_id": null, "ipv4": null, "ipv6": null, "ip_ranges": null}, {"id": 1832252,
       "purpose": "public", "primary": false, "active": false, "ipam_address": null,
       "label": null, "vpc_id": null, "subnet_id": null, "ipv4": null, "ipv6": null,
-      "ip_ranges": null}, {"id": 1598964, "purpose": "vpc", "primary": false, "active":
-      false, "ipam_address": null, "label": null, "vpc_id": 64440, "subnet_id": 62998,
-      "ipv4": {"vpc": "192.168.0.2", "nat_1_1": "172.233.194.115"}, "ipv6": null,
-      "ip_ranges": []}]}'
+      "ip_ranges": null}, {"id": 1832254, "purpose": "vpc", "primary": false, "active":
+      false, "ipam_address": null, "label": null, "vpc_id": 70776, "subnet_id": 68947,
+      "ipv4": {"vpc": "192.168.0.2", "nat_1_1": "172.234.128.54"}, "ipv6": null, "ip_ranges":
+      []}]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -690,7 +672,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 18:19:07 GMT
+      - Thu, 27 Jun 2024 13:11:38 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -707,10 +689,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -728,7 +707,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/59544170
+    url: https://api.linode.com/v4beta/linode/instances/60714775
     method: DELETE
   response:
     body: '{}'
@@ -754,7 +733,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 18:19:08 GMT
+      - Thu, 27 Jun 2024 13:11:38 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -769,10 +748,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -790,7 +766,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/vpcs/64440
+    url: https://api.linode.com/v4beta/vpcs/70776
     method: DELETE
   response:
     body: '{}'
@@ -816,7 +792,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 18:19:08 GMT
+      - Thu, 27 Jun 2024 13:11:39 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -831,10 +807,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
