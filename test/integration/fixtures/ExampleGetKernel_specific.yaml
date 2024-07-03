@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/linode/kernels/linode%2Flatest-32bit
     method: GET
   response:
-    body: '{"id": "linode/latest-32bit", "label": "Latest 32 bit (6.1.10-x86-linode179)",
-      "version": "6.1.10", "kvm": true, "architecture": "i386", "pvops": true, "deprecated":
+    body: '{"id": "linode/latest-32bit", "label": "Latest 32 bit (6.8.9-x86-linode184)",
+      "version": "6.8.9", "kvm": true, "architecture": "i386", "pvops": true, "deprecated":
       false, "built": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -29,16 +29,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=900
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
-      - "204"
+      - "202"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Fri, 31 May 2024 17:04:45 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -54,7 +57,7 @@ interactions:
       X-Oauth-Scopes:
       - unknown
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -73,8 +76,8 @@ interactions:
     url: https://api.linode.com/v4beta/linode/kernels/linode%2Flatest-64bit
     method: GET
   response:
-    body: '{"id": "linode/latest-64bit", "label": "Latest 64 bit (6.1.10-x86_64-linode159)",
-      "version": "6.1.10", "kvm": true, "architecture": "x86_64", "pvops": true, "deprecated":
+    body: '{"id": "linode/latest-64bit", "label": "Latest 64 bit (6.8.9-x86_64-linode164)",
+      "version": "6.8.9", "kvm": true, "architecture": "x86_64", "pvops": true, "deprecated":
       false, "built": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -88,16 +91,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=900
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
-      - "209"
+      - "207"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Fri, 31 May 2024 17:04:45 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -113,7 +119,7 @@ interactions:
       X-Oauth-Scopes:
       - unknown
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

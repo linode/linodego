@@ -43,27 +43,28 @@ const (
 
 // Instance represents a linode object
 type Instance struct {
-	ID              int                    `json:"id"`
-	Created         *time.Time             `json:"-"`
-	Updated         *time.Time             `json:"-"`
-	Region          string                 `json:"region"`
-	Alerts          *InstanceAlert         `json:"alerts"`
-	Backups         *InstanceBackup        `json:"backups"`
-	Image           string                 `json:"image"`
-	Group           string                 `json:"group"`
-	IPv4            []*net.IP              `json:"ipv4"`
-	IPv6            string                 `json:"ipv6"`
-	Label           string                 `json:"label"`
-	Type            string                 `json:"type"`
-	Status          InstanceStatus         `json:"status"`
-	HasUserData     bool                   `json:"has_user_data"`
-	Hypervisor      string                 `json:"hypervisor"`
-	HostUUID        string                 `json:"host_uuid"`
-	Specs           *InstanceSpec          `json:"specs"`
-	WatchdogEnabled bool                   `json:"watchdog_enabled"`
-	Tags            []string               `json:"tags"`
-	DiskEncryption  InstanceDiskEncryption `json:"disk_encryption"`
-	LKEClusterID    int                    `json:"lke_cluster_id"`
+	ID              int             `json:"id"`
+	Created         *time.Time      `json:"-"`
+	Updated         *time.Time      `json:"-"`
+	Region          string          `json:"region"`
+	Alerts          *InstanceAlert  `json:"alerts"`
+	Backups         *InstanceBackup `json:"backups"`
+	Image           string          `json:"image"`
+	Group           string          `json:"group"`
+	IPv4            []*net.IP       `json:"ipv4"`
+	IPv6            string          `json:"ipv6"`
+	Label           string          `json:"label"`
+	Type            string          `json:"type"`
+	Status          InstanceStatus  `json:"status"`
+	HasUserData     bool            `json:"has_user_data"`
+	Hypervisor      string          `json:"hypervisor"`
+	HostUUID        string          `json:"host_uuid"`
+	Specs           *InstanceSpec   `json:"specs"`
+	WatchdogEnabled bool            `json:"watchdog_enabled"`
+	Tags            []string        `json:"tags"`
+
+	// NOTE: Placement Groups may not currently be available to all users.
+	PlacementGroup *InstancePlacementGroup `json:"placement_group"`
 }
 
 // InstanceSpec represents a linode spec
@@ -113,6 +114,15 @@ type InstanceTransfer struct {
 	Quota int `json:"quota"`
 }
 
+// InstancePlacementGroup represents information about the placement group
+// this Linode is a part of.
+type InstancePlacementGroup struct {
+	ID           int                        `json:"id"`
+	Label        string                     `json:"label"`
+	AffinityType PlacementGroupAffinityType `json:"affinity_type"`
+	IsStrict     bool                       `json:"is_strict"`
+}
+
 // InstanceMetadataOptions specifies various Instance creation fields
 // that relate to the Linode Metadata service.
 type InstanceMetadataOptions struct {
@@ -140,12 +150,22 @@ type InstanceCreateOptions struct {
 	FirewallID      int                                    `json:"firewall_id,omitempty"`
 	DiskEncryption  InstanceDiskEncryption                 `json:"disk_encryption,omitempty"`
 
+	// NOTE: Placement Groups may not currently be available to all users.
+	PlacementGroup *InstanceCreatePlacementGroupOptions `json:"placement_group,omitempty"`
+
 	// Creation fields that need to be set explicitly false, "", or 0 use pointers
 	SwapSize *int  `json:"swap_size,omitempty"`
 	Booted   *bool `json:"booted,omitempty"`
 
 	// Deprecated: group is a deprecated property denoting a group label for the Linode.
 	Group string `json:"group,omitempty"`
+}
+
+// InstanceCreatePlacementGroupOptions represents the placement group
+// to create this Linode under.
+type InstanceCreatePlacementGroupOptions struct {
+	ID            int   `json:"id"`
+	CompliantOnly *bool `json:"compliant_only,omitempty"`
 }
 
 // InstanceUpdateOptions is an options struct used when Updating an Instance
@@ -200,13 +220,14 @@ type InstanceCloneOptions struct {
 	Type   string `json:"type,omitempty"`
 
 	// LinodeID is an optional existing instance to use as the target of the clone
-	LinodeID       int                      `json:"linode_id,omitempty"`
-	Label          string                   `json:"label,omitempty"`
-	BackupsEnabled bool                     `json:"backups_enabled"`
-	Disks          []int                    `json:"disks,omitempty"`
-	Configs        []int                    `json:"configs,omitempty"`
-	PrivateIP      bool                     `json:"private_ip,omitempty"`
-	Metadata       *InstanceMetadataOptions `json:"metadata,omitempty"`
+	LinodeID       int                                  `json:"linode_id,omitempty"`
+	Label          string                               `json:"label,omitempty"`
+	BackupsEnabled bool                                 `json:"backups_enabled"`
+	Disks          []int                                `json:"disks,omitempty"`
+	Configs        []int                                `json:"configs,omitempty"`
+	PrivateIP      bool                                 `json:"private_ip,omitempty"`
+	Metadata       *InstanceMetadataOptions             `json:"metadata,omitempty"`
+	PlacementGroup *InstanceCreatePlacementGroupOptions `json:"placement_group,omitempty"`
 
 	// Deprecated: group is a deprecated property denoting a group label for the Linode.
 	Group string `json:"group,omitempty"`
@@ -221,10 +242,12 @@ type InstanceResizeOptions struct {
 	AllowAutoDiskResize *bool `json:"allow_auto_disk_resize,omitempty"`
 }
 
-// InstanceResizeOptions is an options struct used when resizing an instance
+// InstanceMigrateOptions is an options struct used when migrating an instance
 type InstanceMigrateOptions struct {
 	Type   InstanceMigrationType `json:"type,omitempty"`
 	Region string                `json:"region,omitempty"`
+
+	PlacementGroup *InstanceCreatePlacementGroupOptions `json:"placement_group,omitempty"`
 }
 
 // InstancesPagedResponse represents a linode API response for listing

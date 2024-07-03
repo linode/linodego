@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/account/oauth-clients
     method: POST
   response:
-    body: '{"id": "4564958b19566e4ff3ba", "redirect_uri": "https://example.com", "label":
-      "go-client-test", "status": "active", "secret": "c0ea72902eace380721236c58a749b621db1476e15c45833017ae11487f9c383",
+    body: '{"id": "4a48ff5903b62d743bf0", "redirect_uri": "https://example.com", "label":
+      "go-client-test", "status": "active", "secret": "3e1d30e5a0a3e350ba7231cf4ba2c0863880007d62be38ebdf89fda9d2aadaff",
       "thumbnail_url": null, "public": true}'
     headers:
       Access-Control-Allow-Credentials:
@@ -29,15 +29,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "233"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Mon, 17 Jun 2024 19:45:25 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -52,7 +56,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -68,14 +72,16 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/oauth-clients
+    url: https://api.linode.com/v4beta/account/oauth-clients?page=1
     method: GET
   response:
-    body: '{"data": [{"id": "4ccb3f776916c3d32071", "redirect_uri": "http://localhost:3000/oauth/callback",
-      "label": "fdg", "status": "active", "secret": "<REDACTED>", "thumbnail_url":
-      null, "public": true}, {"id": "4564958b19566e4ff3ba", "redirect_uri": "https://example.com",
+    body: '{"data": [{"id": "644f910542377876eaab", "redirect_uri": "https://localhost",
+      "label": "asd", "status": "active", "secret": "<REDACTED>", "thumbnail_url":
+      null, "public": false}, {"id": "8839550c17ba6c006e90", "redirect_uri": "http://localhost:5000/auth_callback",
+      "label": "sdf", "status": "active", "secret": "<REDACTED>", "thumbnail_url":
+      null, "public": false}, {"id": "4a48ff5903b62d743bf0", "redirect_uri": "https://example.com",
       "label": "go-client-test", "status": "active", "secret": "<REDACTED>", "thumbnail_url":
-      null, "public": true}], "page": 1, "pages": 1, "results": 2}'
+      null, "public": true}], "page": 1, "pages": 1, "results": 3}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -88,16 +94,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
-      - "415"
+      - "584"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Mon, 17 Jun 2024 19:45:26 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -113,7 +122,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -129,7 +138,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/oauth-clients/4564958b19566e4ff3ba
+    url: https://api.linode.com/v4beta/account/oauth-clients/4a48ff5903b62d743bf0
     method: DELETE
   response:
     body: '{}'
@@ -145,15 +154,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "2"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Mon, 17 Jun 2024 19:45:26 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -168,7 +181,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

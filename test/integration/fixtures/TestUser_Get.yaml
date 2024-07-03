@@ -16,7 +16,7 @@ interactions:
   response:
     body: '{"username": "linodegotest-getuser", "email": "linodegotest-getuser@example.com",
       "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
-      null, "password_created": null}'
+      null, "password_created": null, "last_login": null, "user_type": "default"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -31,7 +31,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "196"
+      - "240"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -52,7 +52,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -73,7 +73,7 @@ interactions:
   response:
     body: '{"username": "linodegotest-getuser", "email": "linodegotest-getuser@example.com",
       "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
-      null, "password_created": null}'
+      null, "password_created": null, "last_login": null, "user_type": "default"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -89,7 +89,7 @@ interactions:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "196"
+      - "240"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -111,7 +111,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -166,7 +166,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

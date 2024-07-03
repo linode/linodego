@@ -11,13 +11,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/users
+    url: https://api.linode.com/v4beta/account/users?page=1
     method: GET
   response:
-    body: '{"data": [{"username": "lgarber-dev", "email": "lgarber@akamai.com", "restricted":
-      false, "ssh_keys": ["tf_test_authorized_keys", "main", "tf_test_authorized_keys",
-      "dev-server-rsa", "tf_test_authorized_keys"], "tfa_enabled": true, "verified_phone_number":
-      null, "password_created": null}], "page": 1, "pages": 1, "results": 1}'
+    body: '{"data": [{"username": "ErikZilber", "email": "ezilber@akamai.com", "restricted":
+      false, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number": "+11234567890",
+      "password_created": "2018-01-02T03:04:05", "last_login": {"login_datetime":
+      "2018-01-02T03:04:05", "status": "successful"}, "user_type": "default"}], "page":
+      1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -32,8 +33,6 @@ interactions:
       Cache-Control:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
-      Content-Length:
-      - "327"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -43,6 +42,7 @@ interactions:
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
+      - Accept-Encoding
       - Authorization, X-Filter
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
@@ -55,7 +55,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
