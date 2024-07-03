@@ -2,8 +2,6 @@ package linodego
 
 import (
 	"context"
-
-	"github.com/go-resty/resty/v2"
 )
 
 // LongviewSubscription represents a LongviewSubscription object
@@ -14,27 +12,6 @@ type LongviewSubscription struct {
 	Price           *LinodePrice `json:"price"`
 	// UpdatedStr string `json:"updated"`
 	// Updated *time.Time `json:"-"`
-}
-
-// LongviewSubscriptionsPagedResponse represents a paginated LongviewSubscription API response
-type LongviewSubscriptionsPagedResponse struct {
-	*PageOptions
-	Data []LongviewSubscription `json:"data"`
-}
-
-// endpoint gets the endpoint URL for LongviewSubscription
-func (LongviewSubscriptionsPagedResponse) endpoint(_ ...any) string {
-	return "longview/subscriptions"
-}
-
-func (resp *LongviewSubscriptionsPagedResponse) castResult(r *resty.Request, e string) (int, int, error) {
-	res, err := coupleAPIErrors(r.SetResult(LongviewSubscriptionsPagedResponse{}).Get(e))
-	if err != nil {
-		return 0, 0, err
-	}
-	castedRes := res.Result().(*LongviewSubscriptionsPagedResponse)
-	resp.Data = append(resp.Data, castedRes.Data...)
-	return castedRes.Pages, castedRes.Results, nil
 }
 
 // ListLongviewSubscriptions lists LongviewSubscriptions

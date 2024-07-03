@@ -141,7 +141,7 @@ func (c *Client) ListLKEVersions(ctx context.Context, opts *ListOptions) ([]LKEV
 		return result.([]LKEVersion), nil
 	}
 
-	response, err := getPaginatedResults[LKEVersion](ctx, c, "linode/versions", opts)
+	response, err := getPaginatedResults[LKEVersion](ctx, c, "lke/versions", opts)
 	if err != nil {
 		return nil, err
 	}
@@ -168,12 +168,6 @@ func (c *Client) GetLKEVersion(ctx context.Context, version string) (*LKEVersion
 	c.addCachedResponse(e, response, &cacheExpiryTime)
 
 	return response, nil
-}
-
-// LKEClusterAPIEndpointsPagedResponse represents a paginated LKEClusterAPIEndpoints API response
-type LKEClusterAPIEndpointsPagedResponse struct {
-	*PageOptions
-	Data []LKEClusterAPIEndpoint `json:"data"`
 }
 
 // ListLKEClusterAPIEndpoints gets the API Endpoint for the LKE Cluster specified
@@ -263,7 +257,6 @@ func (c *Client) RecycleLKEClusterNodes(ctx context.Context, clusterID int) erro
 	e := formatAPIPath("lke/clusters/%d/recycle", clusterID)
 	_, err := doPOSTRequest[LKECluster, any](ctx, c, e)
 	return err
-
 }
 
 // RegenerateLKECluster regenerates the Kubeconfig file and/or the service account token for the specified LKE Cluster.
