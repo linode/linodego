@@ -11,7 +11,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4/regions
+    url: https://api.linode.com/v4beta/regions
     method: GET
   response:
     body: '{"data": [{"id": "ap-west", "label": "Mumbai, India", "country": "in",
@@ -28,6 +28,14 @@ interactions:
       "country": "au", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Vlans",
       "VPCs", "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "172.105.166.5,172.105.169.5,172.105.168.5,172.105.172.5,172.105.162.5,172.105.170.5,172.105.167.5,172.105.171.5,172.105.181.5,172.105.161.5",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}, {"id": "fake-cph-4", "label": "Fake CPH 4, DK", "country":
+      "dk", "capabilities": ["Linodes", "Metadata"], "status": "ok", "resolvers":
+      {"ipv4": "8.8.8.8,1.1.1.1,1.0.0.1,8.8.4.4", "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}, {"id": "fake-cph-5", "label": "Fake CPH 5, DK", "country":
+      "dk", "capabilities": ["Linodes", "Metadata"], "status": "ok", "resolvers":
+      {"ipv4": "8.8.8.8,1.1.1.1,1.0.0.1,8.8.4.4", "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
       5}, "site_type": "core"}, {"id": "us-central", "label": "Dallas, TX, USA", "country":
       "us", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Kubernetes",
@@ -58,13 +66,13 @@ interactions:
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
       5}, "site_type": "core"}, {"id": "ap-south", "label": "Singapore, SG", "country":
-      "sg", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Object Storage",
-      "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "139.162.11.5,139.162.13.5,139.162.14.5,139.162.15.5,139.162.16.5,139.162.21.5,139.162.27.5,103.3.60.18,103.3.60.19,103.3.60.20",
+      "sg", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Managed Databases"],
+      "status": "ok", "resolvers": {"ipv4": "139.162.11.5,139.162.13.5,139.162.14.5,139.162.15.5,139.162.16.5,139.162.21.5,139.162.27.5,103.3.60.18,103.3.60.19,103.3.60.20",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
       5}, "site_type": "core"}, {"id": "eu-central", "label": "Frankfurt, DE", "country":
-      "de", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Object Storage",
-      "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "139.162.130.5,139.162.131.5,139.162.132.5,139.162.133.5,139.162.134.5,139.162.135.5,139.162.136.5,139.162.137.5,139.162.138.5,139.162.139.5",
+      "de", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Managed Databases"],
+      "status": "ok", "resolvers": {"ipv4": "139.162.130.5,139.162.131.5,139.162.132.5,139.162.133.5,139.162.134.5,139.162.135.5,139.162.136.5,139.162.137.5,139.162.138.5,139.162.139.5",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
       5}, "site_type": "core"}, {"id": "ap-northeast", "label": "Tokyo 2, JP", "country":
@@ -72,7 +80,7 @@ interactions:
       "status": "ok", "resolvers": {"ipv4": "139.162.66.5,139.162.67.5,139.162.68.5,139.162.69.5,139.162.70.5,139.162.71.5,139.162.72.5,139.162.73.5,139.162.74.5,139.162.75.5",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
-      5}, "site_type": "core"}], "page": 1, "pages": 1, "results": 11}'
+      5}, "site_type": "core"}], "page": 1, "pages": 1, "results": 13}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -87,10 +95,6 @@ interactions:
       Cache-Control:
       - private, max-age=900
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "7192"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -100,6 +104,7 @@ interactions:
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
+      - Accept-Encoding
       - Authorization, X-Filter
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
@@ -128,10 +133,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4/lke/clusters
+    url: https://api.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 7454, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+    body: '{"id": 7871, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "label": "go-lke-test-update", "region": "us-east", "k8s_version":
       "1.29", "control_plane": {"high_availability": false}, "tags": ["testing"]}'
     headers:
@@ -147,8 +152,6 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
       - "242"
       Content-Security-Policy:
@@ -187,10 +190,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4/lke/clusters/7454
+    url: https://api.linode.com/v4beta/lke/clusters/7871
     method: PUT
   response:
-    body: '{"id": 7454, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+    body: '{"id": 7871, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "label": "go-lke-test-update-updated", "region": "us-east",
       "k8s_version": "1.29", "control_plane": {"high_availability": false}, "tags":
       ["test=true"]}'
@@ -207,8 +210,6 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
       - "252"
       Content-Security-Policy:
@@ -247,10 +248,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4/lke/clusters/7454
+    url: https://api.linode.com/v4beta/lke/clusters/7871
     method: PUT
   response:
-    body: '{"id": 7454, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+    body: '{"id": 7871, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "label": "go-lke-test-update-updated", "region": "us-east",
       "k8s_version": "1.29", "control_plane": {"high_availability": true}, "tags":
       ["test=true"]}'
@@ -267,8 +268,6 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
       - "251"
       Content-Security-Policy:
@@ -307,7 +306,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4/lke/clusters/7454
+    url: https://api.linode.com/v4beta/lke/clusters/7871
     method: DELETE
   response:
     body: '{}'
@@ -324,8 +323,6 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
       - "2"
       Content-Security-Policy:

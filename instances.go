@@ -65,6 +65,9 @@ type Instance struct {
 
 	// NOTE: Placement Groups may not currently be available to all users.
 	PlacementGroup *InstancePlacementGroup `json:"placement_group"`
+
+	DiskEncryption InstanceDiskEncryption `json:"disk_encryption"`
+	LKEClusterID   int                    `json:"lke_cluster_id"`
 }
 
 // InstanceSpec represents a linode spec

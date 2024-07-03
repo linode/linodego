@@ -29,6 +29,14 @@ interactions:
       "VPCs", "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "172.105.166.5,172.105.169.5,172.105.168.5,172.105.172.5,172.105.162.5,172.105.170.5,172.105.167.5,172.105.171.5,172.105.181.5,172.105.161.5",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}, {"id": "fake-cph-4", "label": "Fake CPH 4, DK", "country":
+      "dk", "capabilities": ["Linodes", "Metadata"], "status": "ok", "resolvers":
+      {"ipv4": "8.8.8.8,1.1.1.1,1.0.0.1,8.8.4.4", "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}, {"id": "fake-cph-5", "label": "Fake CPH 5, DK", "country":
+      "dk", "capabilities": ["Linodes", "Metadata"], "status": "ok", "resolvers":
+      {"ipv4": "8.8.8.8,1.1.1.1,1.0.0.1,8.8.4.4", "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
       5}, "site_type": "core"}, {"id": "us-central", "label": "Dallas, TX, USA", "country":
       "us", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Kubernetes",
       "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "72.14.179.5,72.14.188.5,173.255.199.5,66.228.53.5,96.126.122.5,96.126.124.5,96.126.127.5,198.58.107.5,198.58.111.5,23.239.24.5",
@@ -58,13 +66,13 @@ interactions:
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
       5}, "site_type": "core"}, {"id": "ap-south", "label": "Singapore, SG", "country":
-      "sg", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Object Storage",
-      "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "139.162.11.5,139.162.13.5,139.162.14.5,139.162.15.5,139.162.16.5,139.162.21.5,139.162.27.5,103.3.60.18,103.3.60.19,103.3.60.20",
+      "sg", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Managed Databases"],
+      "status": "ok", "resolvers": {"ipv4": "139.162.11.5,139.162.13.5,139.162.14.5,139.162.15.5,139.162.16.5,139.162.21.5,139.162.27.5,103.3.60.18,103.3.60.19,103.3.60.20",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
       5}, "site_type": "core"}, {"id": "eu-central", "label": "Frankfurt, DE", "country":
-      "de", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Object Storage",
-      "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "139.162.130.5,139.162.131.5,139.162.132.5,139.162.133.5,139.162.134.5,139.162.135.5,139.162.136.5,139.162.137.5,139.162.138.5,139.162.139.5",
+      "de", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Managed Databases"],
+      "status": "ok", "resolvers": {"ipv4": "139.162.130.5,139.162.131.5,139.162.132.5,139.162.133.5,139.162.134.5,139.162.135.5,139.162.136.5,139.162.137.5,139.162.138.5,139.162.139.5",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
       5}, "site_type": "core"}, {"id": "ap-northeast", "label": "Tokyo 2, JP", "country":
@@ -72,7 +80,7 @@ interactions:
       "status": "ok", "resolvers": {"ipv4": "139.162.66.5,139.162.67.5,139.162.68.5,139.162.69.5,139.162.70.5,139.162.71.5,139.162.72.5,139.162.73.5,139.162.74.5,139.162.75.5",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
-      5}, "site_type": "core"}], "page": 1, "pages": 1, "results": 11}'
+      5}, "site_type": "core"}], "page": 1, "pages": 1, "results": 13}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -87,10 +95,6 @@ interactions:
       Cache-Control:
       - private, max-age=900
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "7192"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -100,6 +104,7 @@ interactions:
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
+      - Accept-Encoding
       - Authorization, X-Filter
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
@@ -119,7 +124,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"]}],"label":"go-lke-test-def","region":"us-east","k8s_version":"1.28","tags":["testing"]}'
+    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"]}],"label":"go-lke-test-def","region":"us-east","k8s_version":"1.29","tags":["testing"]}'
     form: {}
     headers:
       Accept:
@@ -131,9 +136,9 @@ interactions:
     url: https://api.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 7328, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+    body: '{"id": 7878, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "label": "go-lke-test-def", "region": "us-east", "k8s_version":
-      "1.28", "control_plane": {"high_availability": false}, "tags": ["testing"]}'
+      "1.29", "control_plane": {"high_availability": false}, "tags": ["testing"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -147,8 +152,6 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
       - "239"
       Content-Security-Policy:
@@ -187,14 +190,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7328/pools
+    url: https://api.linode.com/v4beta/lke/clusters/7878/pools
     method: POST
   response:
-    body: '{"id": 7619, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "7619-0a55a93c0000",
-      "instance_id": null, "status": "not_ready"}, {"id": "7619-5f31de190000", "instance_id":
+    body: '{"id": 9264, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "9264-27d50e270000",
+      "instance_id": null, "status": "not_ready"}, {"id": "9264-4a467f9d0000", "instance_id":
       null, "status": "not_ready"}], "disks": [{"size": 1000, "type": "ext4"}], "autoscaler":
-      {"enabled": false, "min": 2, "max": 2}, "tags": ["testing"], "disk_encryption":
-      "enabled"}'
+      {"enabled": false, "min": 2, "max": 2}, "labels": {}, "taints": [], "tags":
+      ["testing"], "disk_encryption": "enabled"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -208,10 +211,6 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "354"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -221,6 +220,7 @@ interactions:
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
+      - Accept-Encoding
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
       - lke:read_write
@@ -248,18 +248,18 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7328/pools
+    url: https://api.linode.com/v4beta/lke/clusters/7878/pools
     method: GET
   response:
-    body: '{"data": [{"id": 7618, "type": "g6-standard-2", "count": 1, "nodes": [{"id":
-      "7618-08ab67bd0000", "instance_id": null, "status": "not_ready"}], "disks":
-      [], "autoscaler": {"enabled": false, "min": 1, "max": 1}, "tags": ["test"],
-      "disk_encryption": "enabled"}, {"id": 7619, "type": "g6-standard-2", "count":
-      2, "nodes": [{"id": "7619-0a55a93c0000", "instance_id": null, "status": "not_ready"},
-      {"id": "7619-5f31de190000", "instance_id": null, "status": "not_ready"}], "disks":
-      [{"size": 1000, "type": "ext4"}], "autoscaler": {"enabled": false, "min": 2,
-      "max": 2}, "tags": ["testing"], "disk_encryption": "enabled"}], "page": 1, "pages":
-      1, "results": 2}'
+    body: '{"data": [{"id": 9263, "type": "g6-standard-2", "count": 1, "nodes": [{"id":
+      "9263-0de73fca0000", "instance_id": null, "status": "not_ready"}], "disks":
+      [], "autoscaler": {"enabled": false, "min": 1, "max": 1}, "labels": {}, "taints":
+      [], "tags": ["test"], "disk_encryption": "enabled"}, {"id": 9264, "type": "g6-standard-2",
+      "count": 2, "nodes": [{"id": "9264-27d50e270000", "instance_id": null, "status":
+      "not_ready"}, {"id": "9264-4a467f9d0000", "instance_id": null, "status": "not_ready"}],
+      "disks": [{"size": 1000, "type": "ext4"}], "autoscaler": {"enabled": false,
+      "min": 2, "max": 2}, "labels": {}, "taints": [], "tags": ["testing"], "disk_encryption":
+      "enabled"}], "page": 1, "pages": 1, "results": 2}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -274,10 +274,6 @@ interactions:
       Cache-Control:
       - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "653"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -287,6 +283,7 @@ interactions:
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
+      - Accept-Encoding
       - Authorization, X-Filter
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
@@ -315,7 +312,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7328/pools/7619
+    url: https://api.linode.com/v4beta/lke/clusters/7878/pools/9264
     method: DELETE
   response:
     body: '{}'
@@ -332,8 +329,6 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
       - "2"
       Content-Security-Policy:
@@ -372,7 +367,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7328
+    url: https://api.linode.com/v4beta/lke/clusters/7878
     method: DELETE
   response:
     body: '{}'
@@ -389,8 +384,6 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
       Content-Length:
       - "2"
       Content-Security-Policy:

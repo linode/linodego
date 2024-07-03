@@ -11,7 +11,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4/lke/clusters/0
+    url: https://api.linode.com/v4beta/lke/clusters/0
     method: GET
   response:
     body: '{"errors": [{"reason": "Not found"}]}'
@@ -24,8 +24,6 @@ interactions:
       - '*'
       Cache-Control:
       - private, max-age=0, s-maxage=0, no-cache, no-store
-      Connection:
-      - keep-alive
       Content-Length:
       - "37"
       Content-Type:
@@ -42,6 +40,6 @@ interactions:
       - '*'
       X-Ratelimit-Limit:
       - "400"
-    status: 404 NOT FOUND
+    status: 404 Not Found
     code: 404
     duration: ""
