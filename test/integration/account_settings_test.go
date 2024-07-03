@@ -2,15 +2,33 @@ package integration
 
 import (
     "context"
+    "encoding/json"
     "testing"
-
-    "github.com/stretchr/testify/require"
+    
+    "github.com/jarcoal/httpmock"
     "github.com/linode/linodego"
+    "github.com/stretchr/testify/require"
 )
 
 func TestAccountSettings_Get(t *testing.T) {
     client, teardown := createTestClient(t, "fixtures/TestAccountSettings")
     defer teardown()
+
+    // Mocking the API response
+    httpmock.Activate()
+    defer httpmock.DeactivateAndReset()
+
+    mockSettings := linodego.AccountSettings{
+        BackupsEnabled:      true,
+        Managed:             true,
+        NetworkHelper:       true,
+        LongviewSubscription: String("longview-3"),
+        ObjectStorage:       String("active"),
+    }
+    mockResponse, _ := json.Marshal(mockSettings)
+
+    httpmock.RegisterResponder("GET", "https://api.linode.com/v4/account/settings",
+        httpmock.NewStringResponder(200, string(mockResponse)))
 
     settings, err := client.GetAccountSettings(context.Background())
     require.NoError(t, err, "Error getting Account Settings")
@@ -28,11 +46,25 @@ func TestAccountSettings_Update(t *testing.T) {
     client, teardown := createTestClient(t, "fixtures/TestAccountSettings")
     defer teardown()
 
+    // Mocking the API response
+    httpmock.Activate()
+    defer httpmock.DeactivateAndReset()
+
     opts := linodego.AccountSettingsUpdateOptions{
         BackupsEnabled:      Bool(false),
         LongviewSubscription: String("longview-10"),
         NetworkHelper:       Bool(false),
     }
+
+    mockSettings := linodego.AccountSettings{
+        BackupsEnabled:      false,
+        NetworkHelper:       false,
+        LongviewSubscription: String("longview-10"),
+    }
+    mockResponse, _ := json.Marshal(mockSettings)
+
+    httpmock.RegisterResponder("PUT", "https://api.linode.com/v4/account/settings",
+        httpmock.NewStringResponder(200, string(mockResponse)))
 
     settings, err := client.UpdateAccountSettings(context.Background(), opts)
     require.NoError(t, err, "Error updating Account Settings")
