@@ -11,16 +11,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/databases/engines
+    url: https://api.linode.com/v4beta/databases/engines?page=1
     method: GET
   response:
-    body: '{"data": [{"id": "mysql/5.7.39", "engine": "mysql", "version": "5.7.39"},
-      {"id": "mysql/8.0.30", "engine": "mysql", "version": "8.0.30"}, {"id": "postgresql/10.23",
-      "engine": "postgresql", "version": "10.23"}, {"id": "postgresql/11.17", "engine":
-      "postgresql", "version": "11.17"}, {"id": "postgresql/12.12", "engine": "postgresql",
-      "version": "12.12"}, {"id": "postgresql/13.8", "engine": "postgresql", "version":
-      "13.8"}, {"id": "postgresql/14.6", "engine": "postgresql", "version": "14.6"}],
-      "page": 1, "pages": 1, "results": 7}'
+    body: '{"data": [{"id": "mysql/8.0.30", "engine": "mysql", "version": "8.0.30"},
+      {"id": "postgresql/12.12", "engine": "postgresql", "version": "12.12"}, {"id":
+      "postgresql/13.8", "engine": "postgresql", "version": "13.8"}, {"id": "postgresql/14.6",
+      "engine": "postgresql", "version": "14.6"}], "page": 1, "pages": 1, "results":
+      4}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -33,16 +31,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
-      - "531"
+      - "323"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Mon, 24 Jun 2024 16:45:40 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -58,7 +59,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -74,10 +75,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/databases/engines/mysql%2F5.7.39
+    url: https://api.linode.com/v4beta/databases/engines/mysql%2F8.0.30
     method: GET
   response:
-    body: '{"id": "mysql/5.7.39", "engine": "mysql", "version": "5.7.39"}'
+    body: '{"id": "mysql/8.0.30", "engine": "mysql", "version": "8.0.30"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -90,16 +91,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "62"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Mon, 24 Jun 2024 16:45:40 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -115,7 +119,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
