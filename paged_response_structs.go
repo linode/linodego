@@ -45,11 +45,20 @@ type InstanceDisksPagedResponse legacyPagedResponse[InstanceDisk]
 // Deprecated: InstanceFirewallsPagedResponse exists for historical compatibility and should not be used.
 type InstanceFirewallsPagedResponse legacyPagedResponse[Firewall]
 
+// Deprecated: InstanceVolumesPagedResponse exists for historical compatibility and should not be used.
+type InstanceVolumesPagedResponse legacyPagedResponse[Volume]
+
+// Deprecated: InstancesPagedResponse exists for historical compatibility and should not be used.
+type InstancesPagedResponse legacyPagedResponse[Instance]
+
 // Deprecated: InvoiceItemsPagedResponse exists for historical compatibility and should not be used.
 type InvoiceItemsPagedResponse legacyPagedResponse[InvoiceItem]
 
 // Deprecated: InvoicesPagedResponse exists for historical compatibility and should not be used.
 type InvoicesPagedResponse legacyPagedResponse[Invoice]
+
+// Deprecated: LinodeKernelsPagedResponse exists for historical compatibility and should not be used.
+type LinodeKernelsPagedResponse legacyPagedResponse[LinodeKernel]
 
 // Deprecated: LoginsPagedResponse exists for historical compatibility and should not be used.
 type LoginsPagedResponse legacyPagedResponse[Login]
