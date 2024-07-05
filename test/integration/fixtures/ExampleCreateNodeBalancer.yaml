@@ -14,10 +14,11 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 694136, "label": "balancer694136", "region": "us-southeast", "hostname":
-      "45-79-245-145.ip.linodeusercontent.com", "ipv4": "45.79.245.145", "ipv6": "1234::5678",
-      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "client_conn_throttle":
-      20, "tags": [], "transfer": {"in": null, "out": null, "total": null}}'
+    body: '{"id": 767903, "label": "balancer767903", "region": "us-southeast", "hostname":
+      "139-144-164-228.ip.linodeusercontent.com", "ipv4": "139.144.164.228", "ipv6":
+      "1234::5678", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "client_conn_throttle": 20, "tags": [], "transfer": {"in": null, "out": null,
+      "total": null}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -34,13 +35,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "342"
+      - "346"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:04:37 GMT
+      - Mon, 08 Jul 2024 13:57:47 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -55,10 +56,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -76,13 +74,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/694136
+    url: https://api.linode.com/v4beta/nodebalancers/767903
     method: GET
   response:
-    body: '{"id": 694136, "label": "balancer694136", "region": "us-southeast", "hostname":
-      "45-79-245-145.ip.linodeusercontent.com", "ipv4": "45.79.245.145", "ipv6": "1234::5678",
-      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "client_conn_throttle":
-      20, "tags": [], "transfer": {"in": null, "out": null, "total": null}}'
+    body: '{"id": 767903, "label": "balancer767903", "region": "us-southeast", "hostname":
+      "139-144-164-228.ip.linodeusercontent.com", "ipv4": "139.144.164.228", "ipv6":
+      "1234::5678", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "client_conn_throttle": 20, "tags": [], "transfer": {"in": null, "out": null,
+      "total": null}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -99,13 +98,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "342"
+      - "346"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:04:37 GMT
+      - Mon, 08 Jul 2024 13:57:47 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -121,10 +120,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -133,7 +129,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"balancer694136_renamed","client_conn_throttle":20,"tags":[]}'
+    body: '{"label":"balancer767903_renamed","client_conn_throttle":20,"tags":[]}'
     form: {}
     headers:
       Accept:
@@ -142,11 +138,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/694136
+    url: https://api.linode.com/v4beta/nodebalancers/767903
     method: PUT
   response:
-    body: '{"id": 694136, "label": "balancer694136_renamed", "region": "us-southeast",
-      "hostname": "45-79-245-145.ip.linodeusercontent.com", "ipv4": "45.79.245.145",
+    body: '{"id": 767903, "label": "balancer767903_renamed", "region": "us-southeast",
+      "hostname": "139-144-164-228.ip.linodeusercontent.com", "ipv4": "139.144.164.228",
       "ipv6": "1234::5678", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "client_conn_throttle": 20, "tags": [], "transfer": {"in":
       null, "out": null, "total": null}}'
@@ -166,13 +162,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "350"
+      - "354"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:04:38 GMT
+      - Mon, 08 Jul 2024 13:57:48 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -187,10 +183,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -208,7 +201,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/694136
+    url: https://api.linode.com/v4beta/nodebalancers/767903
     method: DELETE
   response:
     body: '{}'
@@ -234,7 +227,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:04:38 GMT
+      - Mon, 08 Jul 2024 13:57:48 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -249,10 +242,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
