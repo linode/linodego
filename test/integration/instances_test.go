@@ -515,14 +515,14 @@ func createInstance(t *testing.T, client *linodego.Client, enableCloudFirewall b
 	if t != nil {
 		t.Helper()
 	}
-	booted := false
+
 	createOpts := linodego.InstanceCreateOptions{
 		Label:    "go-test-ins-" + randLabel(),
 		RootPass: randPassword(),
 		Region:   getRegionsWithCaps(t, client, []string{"linodes"})[0],
 		Type:     "g6-nanode-1",
 		Image:    "linode/debian9",
-		Booted:   &booted,
+		Booted:   linodego.Pointer(false),
 	}
 
 	if enableCloudFirewall {
@@ -565,12 +565,11 @@ func createInstanceWithoutDisks(
 ) (*linodego.Instance, *linodego.InstanceConfig, func(), error) {
 	t.Helper()
 
-	falseBool := false
 	createOpts := linodego.InstanceCreateOptions{
 		Label:  "go-test-ins-wo-disk-" + randLabel(),
 		Region: getRegionsWithCaps(t, client, []string{"linodes"})[0],
 		Type:   "g6-nanode-1",
-		Booted: &falseBool,
+		Booted: linodego.Pointer(false),
 	}
 
 	if enableCloudFirewall {
