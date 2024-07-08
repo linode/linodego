@@ -30,8 +30,20 @@ type EventsPagedResponse legacyPagedResponse[Event]
 // Deprecated: FirewallDevicesPagedResponse exists for historical compatibility and should not be used.
 type FirewallDevicesPagedResponse legacyPagedResponse[FirewallDevice]
 
+// Deprecated: FirewallsPagedResponse exists for historical compatibility and should not be used.
+type FirewallsPagedResponse legacyPagedResponse[Firewall]
+
 // Deprecated: ImagesPagedResponse exists for historical compatibility and should not be used.
 type ImagesPagedResponse legacyPagedResponse[Image]
+
+// Deprecated: InstanceConfigsPagedResponse exists for historical compatibility and should not be used.
+type InstanceConfigsPagedResponse legacyPagedResponse[InstanceConfig]
+
+// Deprecated: InstanceDisksPagedResponse exists for historical compatibility and should not be used.
+type InstanceDisksPagedResponse legacyPagedResponse[InstanceDisk]
+
+// Deprecated: InstanceFirewallsPagedResponse exists for historical compatibility and should not be used.
+type InstanceFirewallsPagedResponse legacyPagedResponse[Firewall]
 
 // Deprecated: InstanceVolumesPagedResponse exists for historical compatibility and should not be used.
 type InstanceVolumesPagedResponse legacyPagedResponse[Volume]
