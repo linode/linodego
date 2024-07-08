@@ -51,11 +51,20 @@ type LinodeKernelsPagedResponse legacyPagedResponse[LinodeKernel]
 // Deprecated: LoginsPagedResponse exists for historical compatibility and should not be used.
 type LoginsPagedResponse legacyPagedResponse[Login]
 
+// Deprecated: NodeBalancerFirewallsPagedResponse exists for historical compatibility and should not be used.
+type NodeBalancerFirewallsPagedResponse legacyPagedResponse[Firewall]
+
 // Deprecated: NotificationsPagedResponse exists for historical compatibility and should not be used.
 type NotificationsPagedResponse legacyPagedResponse[Notification]
 
 // Deprecated: OAuthClientsPagedResponse exists for historical compatibility and should not be used.
 type OAuthClientsPagedResponse legacyPagedResponse[OAuthClient]
+
+// Deprecated: ObjectStorageBucketsPagedResponse exists for historical compatibility and should not be used.
+type ObjectStorageBucketsPagedResponse legacyPagedResponse[ObjectStorageBucket]
+
+// Deprecated: ObjectStorageClustersPagedResponse exists for historical compatibility and should not be used.
+type ObjectStorageClustersPagedResponse legacyPagedResponse[ObjectStorageCluster]
 
 // Deprecated: PaymentsPagedResponse exists for historical compatibility and should not be used.
 type PaymentsPagedResponse legacyPagedResponse[Payment]
