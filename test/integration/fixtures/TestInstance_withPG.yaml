@@ -317,7 +317,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"linodego-test-1719609233973734000","region":"us-ord","affinity_type":"anti_affinity:local","is_strict":false}'
+    body: '{"label":"linodego-test-1719609233973734000","region":"us-ord","placement_group_type":"anti_affinity:local","placement_group_policy":"flexible"}'
     form: {}
     headers:
       Accept:
@@ -330,7 +330,7 @@ interactions:
     method: POST
   response:
     body: '{"id": 1288, "label": "linodego-test-1719609233973734000", "region": "us-ord",
-      "affinity_type": "anti_affinity:local", "is_strict": false, "is_compliant":
+      "placement_group_type": "anti_affinity:local", "placement_group_policy": "flexible", "is_compliant":
       true, "members": []}'
     headers:
       Access-Control-Allow-Credentials:
@@ -399,8 +399,8 @@ interactions:
       true, "available": false, "schedule": {"day": null, "window": null}, "last_successful":
       null}, "hypervisor": "kvm", "watchdog_enabled": true, "tags": [], "host_uuid":
       "a4dde4a930ee064d67f6ba03753d2aec98b0e75b", "has_user_data": false, "placement_group":
-      {"id": 1288, "label": "linodego-test-1719609233973734000", "affinity_type":
-      "anti_affinity:local", "is_strict": false}, "lke_cluster_id": null}'
+      {"id": 1288, "label": "linodego-test-1719609233973734000", "placement_group_type":
+      "anti_affinity:local", "placement_group_policy": "flexible"}, "lke_cluster_id": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"

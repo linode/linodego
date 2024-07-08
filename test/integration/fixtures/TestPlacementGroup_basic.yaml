@@ -119,7 +119,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"linodego-test-1712862362503240000","region":"eu-west","affinity_type":"anti_affinity:local","is_strict":false}'
+    body: '{"label":"linodego-test-1712862362503240000","region":"eu-west","placement_group_type":"anti_affinity:local","placement_group_policy": "flexible"}'
     form: {}
     headers:
       Accept:
@@ -132,7 +132,7 @@ interactions:
     method: POST
   response:
     body: '{"id": 351, "label": "linodego-test-1712862362503240000", "region": "eu-west",
-      "affinity_type": "anti_affinity:local", "is_strict": false, "is_compliant":
+      "placement_group_type": "anti_affinity:local", "placement_group_policy": "flexible", "is_compliant":
       true, "members": []}'
     headers:
       Access-Control-Allow-Credentials:
@@ -191,7 +191,7 @@ interactions:
     method: PUT
   response:
     body: '{"id": 351, "label": "linodego-test-1712862362503240000-updated", "region":
-      "eu-west", "affinity_type": "anti_affinity:local", "is_strict": false, "is_compliant":
+      "eu-west", "placement_group_type": "anti_affinity:local", "placement_group_policy": "flexible", "is_compliant":
       true, "members": []}'
     headers:
       Access-Control-Allow-Credentials:
@@ -250,7 +250,7 @@ interactions:
     method: GET
   response:
     body: '{"id": 351, "label": "linodego-test-1712862362503240000-updated", "region":
-      "eu-west", "affinity_type": "anti_affinity:local", "is_strict": false, "is_compliant":
+      "eu-west", "placement_group_type": "anti_affinity:local", "placement_group_policy": "flexible", "is_compliant":
       true, "members": []}'
     headers:
       Access-Control-Allow-Credentials:
@@ -313,7 +313,7 @@ interactions:
     method: GET
   response:
     body: '{"data": [{"id": 351, "label": "linodego-test-1712862362503240000-updated",
-      "region": "eu-west", "affinity_type": "anti_affinity:local", "is_strict": false,
+      "region": "eu-west", "placement_group_type": "anti_affinity:local", "placement_group_policy": "flexible",
       "is_compliant": true, "members": []}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:

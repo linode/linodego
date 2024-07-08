@@ -507,8 +507,8 @@ func TestInstance_withPG(t *testing.T) {
 	require.NotNil(t, inst.PlacementGroup)
 	require.Equal(t, inst.PlacementGroup.ID, pg.ID)
 	require.Equal(t, inst.PlacementGroup.Label, pg.Label)
-	require.Equal(t, inst.PlacementGroup.AffinityType, pg.AffinityType)
-	require.Equal(t, inst.PlacementGroup.IsStrict, pg.IsStrict)
+	require.Equal(t, inst.PlacementGroup.PlacementGroupType, pg.PlacementGroupType)
+	require.Equal(t, inst.PlacementGroup.PlacementGroupPolicy, pg.PlacementGroupPolicy)
 }
 
 func createInstance(t *testing.T, client *linodego.Client, enableCloudFirewall bool, modifiers ...instanceModifier) (*linodego.Instance, error) {
