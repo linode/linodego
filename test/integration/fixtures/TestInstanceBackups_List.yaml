@@ -57,10 +57,10 @@ interactions:
       5}, "site_type": "core"}, {"id": "us-ord", "label": "Chicago, IL", "country":
       "us", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Block Storage",
       "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall", "Vlans", "VPCs",
-      "Managed Databases", "Metadata", "Premium Plans"], "status": "ok", "resolvers":
-      {"ipv4": "172.232.0.17, 172.232.0.16, 172.232.0.21, 172.232.0.13, 172.232.0.22,
-      172.232.0.9, 172.232.0.19, 172.232.0.20, 172.232.0.15, 172.232.0.18", "ipv6":
-      "1234::5678, 1234::5678, 1234::5678,
+      "Managed Databases", "Metadata", "Premium Plans", "Placement Group"], "status":
+      "ok", "resolvers": {"ipv4": "172.232.0.17, 172.232.0.16, 172.232.0.21, 172.232.0.13,
+      172.232.0.22, 172.232.0.9, 172.232.0.19, 172.232.0.20, 172.232.0.15, 172.232.0.18",
+      "ipv6": "1234::5678, 1234::5678, 1234::5678,
       1234::5678, 1234::5678, 1234::5678,
       1234::5678, 1234::5678, 1234::5678,
       1234::5678"}, "placement_group_limits": {"maximum_pgs_per_customer":
@@ -156,8 +156,8 @@ interactions:
       100, "maximum_linodes_per_pg": 5}, "site_type": "core"}, {"id": "us-mia", "label":
       "Miami, FL", "country": "us", "capabilities": ["Linodes", "Backups", "NodeBalancers",
       "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans",
-      "VPCs", "Metadata", "Premium Plans"], "status": "ok", "resolvers": {"ipv4":
-      "172.233.160.34, 172.233.160.27, 172.233.160.30, 172.233.160.29, 172.233.160.32,
+      "VPCs", "Metadata", "Premium Plans", "Placement Group"], "status": "ok", "resolvers":
+      {"ipv4": "172.233.160.34, 172.233.160.27, 172.233.160.30, 172.233.160.29, 172.233.160.32,
       172.233.160.28, 172.233.160.33, 172.233.160.26, 172.233.160.25, 172.233.160.31",
       "ipv6": "1234::5678, 1234::5678, 1234::5678,
       1234::5678, 1234::5678, 1234::5678,
@@ -179,6 +179,25 @@ interactions:
       "VPCs", "Metadata", "Premium Plans"], "status": "ok", "resolvers": {"ipv4":
       "172.233.128.45, 172.233.128.38, 172.233.128.53, 172.233.128.37, 172.233.128.34,
       172.233.128.36, 172.233.128.33, 172.233.128.39, 172.233.128.43, 172.233.128.44",
+      "ipv6": "1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678"}, "placement_group_limits": {"maximum_pgs_per_customer":
+      100, "maximum_linodes_per_pg": 5}, "site_type": "core"}, {"id": "gb-lon", "label":
+      "London 2, UK", "country": "gb", "capabilities": ["Linodes", "Backups", "NodeBalancers",
+      "Block Storage", "Kubernetes", "Cloud Firewall", "Vlans", "VPCs", "Metadata",
+      "Premium Plans"], "status": "ok", "resolvers": {"ipv4": "172.236.0.46, 172.236.0.50,
+      172.236.0.47, 172.236.0.53, 172.236.0.52, 172.236.0.45, 172.236.0.49, 172.236.0.51,
+      172.236.0.54, 172.236.0.48", "ipv6": "1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678"}, "placement_group_limits":
+      {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg": 5}, "site_type":
+      "core"}, {"id": "au-mel", "label": "Melbourne, AU", "country": "au", "capabilities":
+      ["Linodes", "Backups", "NodeBalancers", "Block Storage", "Cloud Firewall", "Vlans",
+      "VPCs", "Metadata", "Premium Plans"], "status": "ok", "resolvers": {"ipv4":
+      "172.236.32.23, 172.236.32.35, 172.236.32.30, 172.236.32.28, 172.236.32.32,
+      172.236.32.33, 172.236.32.27, 172.236.32.37, 172.236.32.29, 172.236.32.34",
       "ipv6": "1234::5678, 1234::5678, 1234::5678,
       1234::5678, 1234::5678, 1234::5678,
       1234::5678, 1234::5678, 1234::5678,
@@ -251,7 +270,7 @@ interactions:
       "1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678,
       1234::5678, 1234::5678, 1234::5678, 1234::5678"}, "placement_group_limits":
       {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg": 5}, "site_type":
-      "core"}], "page": 1, "pages": 1, "results": 25}'
+      "core"}], "page": 1, "pages": 1, "results": 27}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -272,7 +291,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:37:50 GMT
+      - Fri, 28 Jun 2024 18:48:27 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -289,10 +308,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -301,7 +317,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"ap-west","type":"g6-nanode-1","label":"go-test-ins-wo-disk-4550ezy9h2qi","firewall_id":501419,"booted":false}'
+    body: '{"region":"ap-west","type":"g6-nanode-1","label":"go-test-ins-wo-disk-63gqb1484bax","firewall_id":610685,"booted":false}'
     form: {}
     headers:
       Accept:
@@ -313,16 +329,16 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 59542678, "label": "go-test-ins-wo-disk-4550ezy9h2qi", "group":
+    body: '{"id": 60779324, "label": "go-test-ins-wo-disk-63gqb1484bax", "group":
       "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["170.187.250.228"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["172.105.35.92"], "ipv6": "1234::5678/128",
       "image": null, "region": "ap-west", "specs": {"disk": 25600, "memory": 1024,
       "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
       true, "available": false, "schedule": {"day": null, "window": null}, "last_successful":
       null}, "hypervisor": "kvm", "watchdog_enabled": true, "tags": [], "host_uuid":
-      "0b2d5aae2f89f7a14796533db6c3fd605a035d50", "has_user_data": false, "placement_group":
-      null}'
+      "009ae04397a377b736399352007156c94585f928", "has_user_data": false, "placement_group":
+      null, "lke_cluster_id": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -339,13 +355,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "763"
+      - "785"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:37:51 GMT
+      - Fri, 28 Jun 2024 18:48:28 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -360,10 +376,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "10"
       X-Xss-Protection:
@@ -372,7 +385,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-conf-5o5g3we7j27u","devices":{},"interfaces":null}'
+    body: '{"label":"go-test-conf-4bjm21q2t8r0","devices":{},"interfaces":null}'
     form: {}
     headers:
       Accept:
@@ -381,10 +394,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/59542678/configs
+    url: https://api.linode.com/v4beta/linode/instances/60779324/configs
     method: POST
   response:
-    body: '{"id": 62729301, "label": "go-test-conf-5o5g3we7j27u", "helpers": {"updatedb_disabled":
+    body: '{"id": 63987204, "label": "go-test-conf-4bjm21q2t8r0", "helpers": {"updatedb_disabled":
       true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
       true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
@@ -413,7 +426,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:37:51 GMT
+      - Fri, 28 Jun 2024 18:48:28 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -428,10 +441,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -449,19 +459,19 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/59542678
+    url: https://api.linode.com/v4beta/linode/instances/60779324
     method: GET
   response:
-    body: '{"id": 59542678, "label": "go-test-ins-wo-disk-4550ezy9h2qi", "group":
-      "", "status": "offline", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["170.187.250.228"], "ipv6": "1234::5678/128",
+    body: '{"id": 60779324, "label": "go-test-ins-wo-disk-63gqb1484bax", "group":
+      "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "type": "g6-nanode-1", "ipv4": ["172.105.35.92"], "ipv6": "1234::5678/128",
       "image": null, "region": "ap-west", "specs": {"disk": 25600, "memory": 1024,
       "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
       true, "available": false, "schedule": {"day": "Scheduling", "window": "Scheduling"},
       "last_successful": null}, "hypervisor": "kvm", "watchdog_enabled": true, "tags":
-      [], "host_uuid": "0b2d5aae2f89f7a14796533db6c3fd605a035d50", "has_user_data":
-      false, "placement_group": null}'
+      [], "host_uuid": "009ae04397a377b736399352007156c94585f928", "has_user_data":
+      false, "placement_group": null, "lke_cluster_id": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -478,13 +488,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "774"
+      - "801"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:38:06 GMT
+      - Fri, 28 Jun 2024 18:48:43 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -500,10 +510,76 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/linode/instances/60779324
+    method: GET
+  response:
+    body: '{"id": 60779324, "label": "go-test-ins-wo-disk-63gqb1484bax", "group":
+      "", "status": "offline", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "type": "g6-nanode-1", "ipv4": ["172.105.35.92"], "ipv6": "1234::5678/128",
+      "image": null, "region": "ap-west", "specs": {"disk": 25600, "memory": 1024,
+      "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
+      10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
+      true, "available": false, "schedule": {"day": "Scheduling", "window": "Scheduling"},
+      "last_successful": null}, "hypervisor": "kvm", "watchdog_enabled": true, "tags":
+      [], "host_uuid": "009ae04397a377b736399352007156c94585f928", "has_user_data":
+      false, "placement_group": null, "lke_cluster_id": null}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "796"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Fri, 28 Jun 2024 18:48:58 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - linodes:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -521,10 +597,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/59542678/disks
+    url: https://api.linode.com/v4beta/linode/instances/60779324/disks
     method: POST
   response:
-    body: '{"id": 117261643, "status": "not ready", "label": "linodego-disk-test",
+    body: '{"id": 119519925, "status": "not ready", "label": "linodego-disk-test",
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem":
       "ext4", "size": 10}'
     headers:
@@ -549,7 +625,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:38:07 GMT
+      - Fri, 28 Jun 2024 18:48:59 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -564,10 +640,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -586,16 +659,16 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"disk_create","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":59542678,"entity.type":"linode"}'
+      - '{"+order":"desc","+order_by":"created","action":"disk_create","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":60779324,"entity.type":"linode"}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 728449224, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 759968116, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 100, "time_remaining": 0, "rate": null, "duration":
-      7.0, "action": "disk_create", "username": "youjungk01", "entity": {"label":
-      "go-test-ins-wo-disk-4550ezy9h2qi", "id": 59542678, "type": "linode", "url":
-      "/v4/linode/instances/59542678"}, "status": "finished", "secondary_entity":
-      {"id": 117261643, "type": "disk", "label": "linodego-disk-test", "url": "/v4/linode/instances/59542678/disks/117261643"},
+      14.0, "action": "disk_create", "username": "ErikZilber", "entity": {"label":
+      "go-test-ins-wo-disk-63gqb1484bax", "id": 60779324, "type": "linode", "url":
+      "/v4/linode/instances/60779324"}, "status": "finished", "secondary_entity":
+      {"id": 119519925, "type": "disk", "label": "linodego-disk-test", "url": "/v4/linode/instances/60779324/disks/119519925"},
       "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -613,13 +686,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "568"
+      - "569"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:38:22 GMT
+      - Fri, 28 Jun 2024 18:49:14 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -635,10 +708,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -656,7 +726,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/59542678/backups/enable
+    url: https://api.linode.com/v4beta/linode/instances/60779324/backups/enable
     method: POST
   response:
     body: '{}'
@@ -682,7 +752,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:38:22 GMT
+      - Fri, 28 Jun 2024 18:49:14 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -697,10 +767,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -718,10 +785,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/59542678/backups
+    url: https://api.linode.com/v4beta/linode/instances/60779324/backups
     method: POST
   response:
-    body: '{"id": 292760356, "region": "ap-west", "type": "snapshot", "status": "pending",
+    body: '{"id": 295859215, "region": "ap-west", "type": "snapshot", "status": "pending",
       "available": true, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "finished": null, "label": "snapshot-linodego-testing", "configs": [], "disks":
       []}'
@@ -747,7 +814,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:38:26 GMT
+      - Fri, 28 Jun 2024 18:49:19 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -762,10 +829,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -784,15 +848,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":59542678,"entity.type":"linode"}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":60779324,"entity.type":"linode"}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 728449415, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 759968348, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 0, "time_remaining": null, "rate": null,
-      "duration": 14, "action": "linode_snapshot", "username": "youjungk01", "entity":
-      {"label": "go-test-ins-wo-disk-4550ezy9h2qi", "id": 59542678, "type": "linode",
-      "url": "/v4/linode/instances/59542678"}, "status": "started", "secondary_entity":
+      "duration": 15, "action": "linode_snapshot", "username": "ErikZilber", "entity":
+      {"label": "go-test-ins-wo-disk-63gqb1484bax", "id": 60779324, "type": "linode",
+      "url": "/v4/linode/instances/60779324"}, "status": "started", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -816,7 +880,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:38:42 GMT
+      - Fri, 28 Jun 2024 18:49:35 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -832,10 +896,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -854,15 +915,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":59542678,"entity.type":"linode","id":{"+gte":728449415}}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":60779324,"entity.type":"linode","id":{"+gte":759968348}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 728449415, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 759968348, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 0, "time_remaining": null, "rate": null,
-      "duration": 29, "action": "linode_snapshot", "username": "youjungk01", "entity":
-      {"label": "go-test-ins-wo-disk-4550ezy9h2qi", "id": 59542678, "type": "linode",
-      "url": "/v4/linode/instances/59542678"}, "status": "started", "secondary_entity":
+      "duration": 30, "action": "linode_snapshot", "username": "ErikZilber", "entity":
+      {"label": "go-test-ins-wo-disk-63gqb1484bax", "id": 60779324, "type": "linode",
+      "url": "/v4/linode/instances/60779324"}, "status": "started", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -886,7 +947,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:38:56 GMT
+      - Fri, 28 Jun 2024 18:49:50 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -902,10 +963,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -924,15 +982,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":59542678,"entity.type":"linode","id":{"+gte":728449415}}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":60779324,"entity.type":"linode","id":{"+gte":759968348}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 728449415, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 759968348, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 0, "time_remaining": null, "rate": null,
-      "duration": 44, "action": "linode_snapshot", "username": "youjungk01", "entity":
-      {"label": "go-test-ins-wo-disk-4550ezy9h2qi", "id": 59542678, "type": "linode",
-      "url": "/v4/linode/instances/59542678"}, "status": "started", "secondary_entity":
+      "duration": 44, "action": "linode_snapshot", "username": "ErikZilber", "entity":
+      {"label": "go-test-ins-wo-disk-63gqb1484bax", "id": 60779324, "type": "linode",
+      "url": "/v4/linode/instances/60779324"}, "status": "started", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -956,7 +1014,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:39:11 GMT
+      - Fri, 28 Jun 2024 18:50:05 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -972,10 +1030,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -994,15 +1049,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":59542678,"entity.type":"linode","id":{"+gte":728449415}}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":60779324,"entity.type":"linode","id":{"+gte":759968348}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 728449415, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 759968348, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 0, "time_remaining": null, "rate": null,
-      "duration": 59, "action": "linode_snapshot", "username": "youjungk01", "entity":
-      {"label": "go-test-ins-wo-disk-4550ezy9h2qi", "id": 59542678, "type": "linode",
-      "url": "/v4/linode/instances/59542678"}, "status": "started", "secondary_entity":
+      "duration": 59, "action": "linode_snapshot", "username": "ErikZilber", "entity":
+      {"label": "go-test-ins-wo-disk-63gqb1484bax", "id": 60779324, "type": "linode",
+      "url": "/v4/linode/instances/60779324"}, "status": "started", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1026,7 +1081,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:39:27 GMT
+      - Fri, 28 Jun 2024 18:50:20 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -1042,10 +1097,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -1064,15 +1116,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":59542678,"entity.type":"linode","id":{"+gte":728449415}}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":60779324,"entity.type":"linode","id":{"+gte":759968348}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 728449415, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 759968348, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 0, "time_remaining": null, "rate": null,
-      "duration": 74, "action": "linode_snapshot", "username": "youjungk01", "entity":
-      {"label": "go-test-ins-wo-disk-4550ezy9h2qi", "id": 59542678, "type": "linode",
-      "url": "/v4/linode/instances/59542678"}, "status": "started", "secondary_entity":
+      "duration": 74, "action": "linode_snapshot", "username": "ErikZilber", "entity":
+      {"label": "go-test-ins-wo-disk-63gqb1484bax", "id": 60779324, "type": "linode",
+      "url": "/v4/linode/instances/60779324"}, "status": "started", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1096,7 +1148,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:39:42 GMT
+      - Fri, 28 Jun 2024 18:50:35 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -1112,10 +1164,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -1134,15 +1183,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":59542678,"entity.type":"linode","id":{"+gte":728449415}}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":60779324,"entity.type":"linode","id":{"+gte":759968348}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 728449415, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 759968348, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 0, "time_remaining": null, "rate": null,
-      "duration": 89, "action": "linode_snapshot", "username": "youjungk01", "entity":
-      {"label": "go-test-ins-wo-disk-4550ezy9h2qi", "id": 59542678, "type": "linode",
-      "url": "/v4/linode/instances/59542678"}, "status": "started", "secondary_entity":
+      "duration": 90, "action": "linode_snapshot", "username": "ErikZilber", "entity":
+      {"label": "go-test-ins-wo-disk-63gqb1484bax", "id": 60779324, "type": "linode",
+      "url": "/v4/linode/instances/60779324"}, "status": "started", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1166,7 +1215,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:39:57 GMT
+      - Fri, 28 Jun 2024 18:50:50 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -1182,10 +1231,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -1204,15 +1250,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":59542678,"entity.type":"linode","id":{"+gte":728449415}}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":60779324,"entity.type":"linode","id":{"+gte":759968348}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 728449415, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 759968348, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 0, "time_remaining": null, "rate": null,
-      "duration": 105, "action": "linode_snapshot", "username": "youjungk01", "entity":
-      {"label": "go-test-ins-wo-disk-4550ezy9h2qi", "id": 59542678, "type": "linode",
-      "url": "/v4/linode/instances/59542678"}, "status": "started", "secondary_entity":
+      "duration": 104, "action": "linode_snapshot", "username": "ErikZilber", "entity":
+      {"label": "go-test-ins-wo-disk-63gqb1484bax", "id": 60779324, "type": "linode",
+      "url": "/v4/linode/instances/60779324"}, "status": "started", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1236,7 +1282,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:40:12 GMT
+      - Fri, 28 Jun 2024 18:51:05 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -1252,10 +1298,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -1274,15 +1317,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":59542678,"entity.type":"linode","id":{"+gte":728449415}}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":60779324,"entity.type":"linode","id":{"+gte":759968348}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 728449415, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 759968348, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 0, "time_remaining": null, "rate": null,
-      "duration": 119, "action": "linode_snapshot", "username": "youjungk01", "entity":
-      {"label": "go-test-ins-wo-disk-4550ezy9h2qi", "id": 59542678, "type": "linode",
-      "url": "/v4/linode/instances/59542678"}, "status": "started", "secondary_entity":
+      "duration": 119, "action": "linode_snapshot", "username": "ErikZilber", "entity":
+      {"label": "go-test-ins-wo-disk-63gqb1484bax", "id": 60779324, "type": "linode",
+      "url": "/v4/linode/instances/60779324"}, "status": "started", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1306,7 +1349,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:40:26 GMT
+      - Fri, 28 Jun 2024 18:51:20 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -1322,10 +1365,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -1344,15 +1384,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":59542678,"entity.type":"linode","id":{"+gte":728449415}}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":60779324,"entity.type":"linode","id":{"+gte":759968348}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 728449415, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 759968348, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 0, "time_remaining": null, "rate": null,
-      "duration": 134, "action": "linode_snapshot", "username": "youjungk01", "entity":
-      {"label": "go-test-ins-wo-disk-4550ezy9h2qi", "id": 59542678, "type": "linode",
-      "url": "/v4/linode/instances/59542678"}, "status": "started", "secondary_entity":
+      "duration": 135, "action": "linode_snapshot", "username": "ErikZilber", "entity":
+      {"label": "go-test-ins-wo-disk-63gqb1484bax", "id": 60779324, "type": "linode",
+      "url": "/v4/linode/instances/60779324"}, "status": "started", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1376,7 +1416,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:40:41 GMT
+      - Fri, 28 Jun 2024 18:51:35 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -1392,10 +1432,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -1414,15 +1451,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":59542678,"entity.type":"linode","id":{"+gte":728449415}}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":60779324,"entity.type":"linode","id":{"+gte":759968348}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 728449415, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 759968348, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 0, "time_remaining": null, "rate": null,
-      "duration": 149, "action": "linode_snapshot", "username": "youjungk01", "entity":
-      {"label": "go-test-ins-wo-disk-4550ezy9h2qi", "id": 59542678, "type": "linode",
-      "url": "/v4/linode/instances/59542678"}, "status": "started", "secondary_entity":
+      "duration": 149, "action": "linode_snapshot", "username": "ErikZilber", "entity":
+      {"label": "go-test-ins-wo-disk-63gqb1484bax", "id": 60779324, "type": "linode",
+      "url": "/v4/linode/instances/60779324"}, "status": "started", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1446,7 +1483,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:40:56 GMT
+      - Fri, 28 Jun 2024 18:51:50 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -1462,10 +1499,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -1484,15 +1518,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":59542678,"entity.type":"linode","id":{"+gte":728449415}}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":60779324,"entity.type":"linode","id":{"+gte":759968348}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 728449415, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 759968348, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 0, "time_remaining": null, "rate": null,
-      "duration": 165, "action": "linode_snapshot", "username": "youjungk01", "entity":
-      {"label": "go-test-ins-wo-disk-4550ezy9h2qi", "id": 59542678, "type": "linode",
-      "url": "/v4/linode/instances/59542678"}, "status": "started", "secondary_entity":
+      "duration": 165, "action": "linode_snapshot", "username": "ErikZilber", "entity":
+      {"label": "go-test-ins-wo-disk-63gqb1484bax", "id": 60779324, "type": "linode",
+      "url": "/v4/linode/instances/60779324"}, "status": "started", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1516,7 +1550,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:41:12 GMT
+      - Fri, 28 Jun 2024 18:52:05 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -1532,10 +1566,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -1554,15 +1585,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":59542678,"entity.type":"linode","id":{"+gte":728449415}}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":60779324,"entity.type":"linode","id":{"+gte":759968348}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 728449415, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 759968348, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 0, "time_remaining": null, "rate": null,
-      "duration": 179, "action": "linode_snapshot", "username": "youjungk01", "entity":
-      {"label": "go-test-ins-wo-disk-4550ezy9h2qi", "id": 59542678, "type": "linode",
-      "url": "/v4/linode/instances/59542678"}, "status": "started", "secondary_entity":
+      "duration": 179, "action": "linode_snapshot", "username": "ErikZilber", "entity":
+      {"label": "go-test-ins-wo-disk-63gqb1484bax", "id": 60779324, "type": "linode",
+      "url": "/v4/linode/instances/60779324"}, "status": "started", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1586,7 +1617,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:41:27 GMT
+      - Fri, 28 Jun 2024 18:52:20 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -1602,10 +1633,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -1624,15 +1652,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":59542678,"entity.type":"linode","id":{"+gte":728449415}}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":60779324,"entity.type":"linode","id":{"+gte":759968348}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 728449415, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 759968348, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 0, "time_remaining": null, "rate": null,
-      "duration": 195, "action": "linode_snapshot", "username": "youjungk01", "entity":
-      {"label": "go-test-ins-wo-disk-4550ezy9h2qi", "id": 59542678, "type": "linode",
-      "url": "/v4/linode/instances/59542678"}, "status": "started", "secondary_entity":
+      "duration": 195, "action": "linode_snapshot", "username": "ErikZilber", "entity":
+      {"label": "go-test-ins-wo-disk-63gqb1484bax", "id": 60779324, "type": "linode",
+      "url": "/v4/linode/instances/60779324"}, "status": "started", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1656,7 +1684,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:41:42 GMT
+      - Fri, 28 Jun 2024 18:52:35 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -1672,10 +1700,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -1694,15 +1719,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":59542678,"entity.type":"linode","id":{"+gte":728449415}}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":60779324,"entity.type":"linode","id":{"+gte":759968348}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 728449415, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 759968348, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 50, "time_remaining": null, "rate": null,
-      "duration": 209, "action": "linode_snapshot", "username": "youjungk01", "entity":
-      {"label": "go-test-ins-wo-disk-4550ezy9h2qi", "id": 59542678, "type": "linode",
-      "url": "/v4/linode/instances/59542678"}, "status": "started", "secondary_entity":
+      "duration": 209, "action": "linode_snapshot", "username": "ErikZilber", "entity":
+      {"label": "go-test-ins-wo-disk-63gqb1484bax", "id": 60779324, "type": "linode",
+      "url": "/v4/linode/instances/60779324"}, "status": "started", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1726,7 +1751,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:41:57 GMT
+      - Fri, 28 Jun 2024 18:52:50 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -1742,10 +1767,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -1764,15 +1786,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":59542678,"entity.type":"linode","id":{"+gte":728449415}}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":60779324,"entity.type":"linode","id":{"+gte":759968348}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 728449415, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 759968348, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 50, "time_remaining": null, "rate": null,
-      "duration": 224, "action": "linode_snapshot", "username": "youjungk01", "entity":
-      {"label": "go-test-ins-wo-disk-4550ezy9h2qi", "id": 59542678, "type": "linode",
-      "url": "/v4/linode/instances/59542678"}, "status": "started", "secondary_entity":
+      "duration": 224, "action": "linode_snapshot", "username": "ErikZilber", "entity":
+      {"label": "go-test-ins-wo-disk-63gqb1484bax", "id": 60779324, "type": "linode",
+      "url": "/v4/linode/instances/60779324"}, "status": "started", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1796,7 +1818,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:42:12 GMT
+      - Fri, 28 Jun 2024 18:53:05 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -1812,10 +1834,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -1834,15 +1853,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":59542678,"entity.type":"linode","id":{"+gte":728449415}}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":60779324,"entity.type":"linode","id":{"+gte":759968348}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 728449415, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 759968348, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 50, "time_remaining": null, "rate": null,
-      "duration": 239, "action": "linode_snapshot", "username": "youjungk01", "entity":
-      {"label": "go-test-ins-wo-disk-4550ezy9h2qi", "id": 59542678, "type": "linode",
-      "url": "/v4/linode/instances/59542678"}, "status": "started", "secondary_entity":
+      "duration": 239, "action": "linode_snapshot", "username": "ErikZilber", "entity":
+      {"label": "go-test-ins-wo-disk-63gqb1484bax", "id": 60779324, "type": "linode",
+      "url": "/v4/linode/instances/60779324"}, "status": "started", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1866,7 +1885,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:42:26 GMT
+      - Fri, 28 Jun 2024 18:53:20 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -1882,10 +1901,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -1904,15 +1920,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":59542678,"entity.type":"linode","id":{"+gte":728449415}}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":60779324,"entity.type":"linode","id":{"+gte":759968348}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 728449415, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 759968348, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 50, "time_remaining": null, "rate": null,
-      "duration": 254, "action": "linode_snapshot", "username": "youjungk01", "entity":
-      {"label": "go-test-ins-wo-disk-4550ezy9h2qi", "id": 59542678, "type": "linode",
-      "url": "/v4/linode/instances/59542678"}, "status": "started", "secondary_entity":
+      "duration": 255, "action": "linode_snapshot", "username": "ErikZilber", "entity":
+      {"label": "go-test-ins-wo-disk-63gqb1484bax", "id": 60779324, "type": "linode",
+      "url": "/v4/linode/instances/60779324"}, "status": "started", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1936,7 +1952,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:42:42 GMT
+      - Fri, 28 Jun 2024 18:53:35 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -1952,10 +1968,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -1974,15 +1987,149 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":59542678,"entity.type":"linode","id":{"+gte":728449415}}'
+      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":60779324,"entity.type":"linode","id":{"+gte":759968348}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 728449415, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 759968348, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": 50, "time_remaining": null, "rate": null,
+      "duration": 269, "action": "linode_snapshot", "username": "ErikZilber", "entity":
+      {"label": "go-test-ins-wo-disk-63gqb1484bax", "id": 60779324, "type": "linode",
+      "url": "/v4/linode/instances/60779324"}, "status": "started", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "457"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Fri, 28 Jun 2024 18:53:50 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":60779324,"entity.type":"linode","id":{"+gte":759968348}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 759968348, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": 50, "time_remaining": null, "rate": null,
+      "duration": 285, "action": "linode_snapshot", "username": "ErikZilber", "entity":
+      {"label": "go-test-ins-wo-disk-63gqb1484bax", "id": 60779324, "type": "linode",
+      "url": "/v4/linode/instances/60779324"}, "status": "started", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "457"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Fri, 28 Jun 2024 18:54:05 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"linode_snapshot","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":60779324,"entity.type":"linode","id":{"+gte":759968348}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 759968348, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 100, "time_remaining": null, "rate": null,
-      "duration": 269, "action": "linode_snapshot", "username": "youjungk01", "entity":
-      {"label": "go-test-ins-wo-disk-4550ezy9h2qi", "id": 59542678, "type": "linode",
-      "url": "/v4/linode/instances/59542678"}, "status": "finished", "secondary_entity":
+      "duration": 299, "action": "linode_snapshot", "username": "ErikZilber", "entity":
+      {"label": "go-test-ins-wo-disk-63gqb1484bax", "id": 60779324, "type": "linode",
+      "url": "/v4/linode/instances/60779324"}, "status": "finished", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -2006,7 +2153,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:42:57 GMT
+      - Fri, 28 Jun 2024 18:54:20 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -2022,10 +2169,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -2043,13 +2187,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/59542678/backups/292760356
+    url: https://api.linode.com/v4beta/linode/instances/60779324/backups/295859215
     method: GET
   response:
-    body: '{"id": 292760356, "region": "ap-west", "type": "snapshot", "status": "successful",
+    body: '{"id": 295859215, "region": "ap-west", "type": "snapshot", "status": "successful",
       "available": true, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "finished": "2018-01-02T03:04:05", "label": "snapshot-linodego-testing", "configs":
-      ["go-test-conf-5o5g3we7j27u"], "disks": [{"label": "linodego-disk-test", "size":
+      ["go-test-conf-4bjm21q2t8r0"], "disks": [{"label": "linodego-disk-test", "size":
       10, "filesystem": "ext4"}]}'
     headers:
       Access-Control-Allow-Credentials:
@@ -2073,7 +2217,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:42:57 GMT
+      - Fri, 28 Jun 2024 18:54:20 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -2089,10 +2233,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -2110,19 +2251,19 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/59542678
+    url: https://api.linode.com/v4beta/linode/instances/60779324
     method: GET
   response:
-    body: '{"id": 59542678, "label": "go-test-ins-wo-disk-4550ezy9h2qi", "group":
+    body: '{"id": 60779324, "label": "go-test-ins-wo-disk-63gqb1484bax", "group":
       "", "status": "offline", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["170.187.250.228"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["172.105.35.92"], "ipv6": "1234::5678/128",
       "image": null, "region": "ap-west", "specs": {"disk": 25600, "memory": 1024,
       "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
       true, "available": true, "schedule": {"day": "Scheduling", "window": "Scheduling"},
       "last_successful": "2018-01-02T03:04:05"}, "hypervisor": "kvm", "watchdog_enabled":
-      true, "tags": [], "host_uuid": "0b2d5aae2f89f7a14796533db6c3fd605a035d50", "has_user_data":
-      false, "placement_group": null}'
+      true, "tags": [], "host_uuid": "009ae04397a377b736399352007156c94585f928", "has_user_data":
+      false, "placement_group": null, "lke_cluster_id": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -2139,13 +2280,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "790"
+      - "812"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:42:57 GMT
+      - Fri, 28 Jun 2024 18:54:20 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -2161,10 +2302,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -2182,13 +2320,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/59542678/backups
+    url: https://api.linode.com/v4beta/linode/instances/60779324/backups
     method: GET
   response:
-    body: '{"automatic": [], "snapshot": {"current": {"id": 292760356, "region": "ap-west",
+    body: '{"automatic": [], "snapshot": {"current": {"id": 295859215, "region": "ap-west",
       "type": "snapshot", "status": "successful", "available": true, "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "finished": "2018-01-02T03:04:05", "label":
-      "snapshot-linodego-testing", "configs": ["go-test-conf-5o5g3we7j27u"], "disks":
+      "snapshot-linodego-testing", "configs": ["go-test-conf-4bjm21q2t8r0"], "disks":
       [{"label": "linodego-disk-test", "size": 10, "filesystem": "ext4"}]}, "in_progress":
       null}}'
     headers:
@@ -2213,7 +2351,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:42:57 GMT
+      - Fri, 28 Jun 2024 18:54:20 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -2229,10 +2367,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -2250,13 +2385,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/59542678/backups/292760356
+    url: https://api.linode.com/v4beta/linode/instances/60779324/backups/295859215
     method: GET
   response:
-    body: '{"id": 292760356, "region": "ap-west", "type": "snapshot", "status": "successful",
+    body: '{"id": 295859215, "region": "ap-west", "type": "snapshot", "status": "successful",
       "available": true, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "finished": "2018-01-02T03:04:05", "label": "snapshot-linodego-testing", "configs":
-      ["go-test-conf-5o5g3we7j27u"], "disks": [{"label": "linodego-disk-test", "size":
+      ["go-test-conf-4bjm21q2t8r0"], "disks": [{"label": "linodego-disk-test", "size":
       10, "filesystem": "ext4"}]}'
     headers:
       Access-Control-Allow-Credentials:
@@ -2280,7 +2415,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:43:12 GMT
+      - Fri, 28 Jun 2024 18:54:35 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -2296,10 +2431,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -2308,7 +2440,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"linode_id":59542678,"overwrite":true}'
+    body: '{"linode_id":60779324,"overwrite":true}'
     form: {}
     headers:
       Accept:
@@ -2317,7 +2449,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/59542678/backups/292760356/restore
+    url: https://api.linode.com/v4beta/linode/instances/60779324/backups/295859215/restore
     method: POST
   response:
     body: '{}'
@@ -2343,7 +2475,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:43:12 GMT
+      - Fri, 28 Jun 2024 18:54:35 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -2358,10 +2490,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -2379,7 +2508,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/59542678/backups/cancel
+    url: https://api.linode.com/v4beta/linode/instances/60779324/backups/cancel
     method: POST
   response:
     body: '{}'
@@ -2405,7 +2534,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:43:13 GMT
+      - Fri, 28 Jun 2024 18:54:36 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -2420,10 +2549,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -2442,15 +2568,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"backups_restore","created":{"+gte":"2024-05-31T17:43:12"},"entity.id":59542678,"entity.type":"linode"}'
+      - '{"+order":"desc","+order_by":"created","action":"backups_restore","created":{"+gte":"2024-06-28T18:54:35"},"entity.id":60779324,"entity.type":"linode"}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 728452524, "created": "2018-01-02T03:04:05", "seen": false,
-      "read": false, "percent_complete": 0, "time_remaining": null, "rate": null,
-      "duration": null, "action": "backups_restore", "username": "youjungk01", "entity":
-      {"label": "go-test-ins-wo-disk-4550ezy9h2qi", "id": 59542678, "type": "linode",
-      "url": "/v4/linode/instances/59542678"}, "status": "scheduled", "secondary_entity":
+    body: '{"data": [{"id": 759973144, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": 50, "time_remaining": null, "rate": null,
+      "duration": 15.246632, "action": "backups_restore", "username": "ErikZilber",
+      "entity": {"label": "go-test-ins-wo-disk-63gqb1484bax", "id": 60779324, "type":
+      "linode", "url": "/v4/linode/instances/60779324"}, "status": "started", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -2468,13 +2594,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "459"
+      - "463"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:43:28 GMT
+      - Fri, 28 Jun 2024 18:54:51 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -2490,10 +2616,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -2512,15 +2635,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"backups_restore","created":{"+gte":"2024-05-31T17:43:12"},"entity.id":59542678,"entity.type":"linode","id":{"+gte":728452524}}'
+      - '{"+order":"desc","+order_by":"created","action":"backups_restore","created":{"+gte":"2024-06-28T18:54:35"},"entity.id":60779324,"entity.type":"linode","id":{"+gte":759973144}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 728452524, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 759973144, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 100, "time_remaining": 0, "rate": null, "duration":
-      25.0, "action": "backups_restore", "username": "youjungk01", "entity": {"label":
-      "go-test-ins-wo-disk-4550ezy9h2qi", "id": 59542678, "type": "linode", "url":
-      "/v4/linode/instances/59542678"}, "status": "finished", "secondary_entity":
+      17.0, "action": "backups_restore", "username": "ErikZilber", "entity": {"label":
+      "go-test-ins-wo-disk-63gqb1484bax", "id": 60779324, "type": "linode", "url":
+      "/v4/linode/instances/60779324"}, "status": "finished", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -2544,7 +2667,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:43:43 GMT
+      - Fri, 28 Jun 2024 18:55:06 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -2560,10 +2683,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -2581,7 +2701,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/59542678
+    url: https://api.linode.com/v4beta/linode/instances/60779324
     method: DELETE
   response:
     body: '{}'
@@ -2607,7 +2727,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:43:43 GMT
+      - Fri, 28 Jun 2024 18:55:06 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -2622,10 +2742,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:

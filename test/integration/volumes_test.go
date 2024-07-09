@@ -8,6 +8,8 @@ import (
 	"github.com/linode/linodego"
 )
 
+type volumeModifier func(*linodego.Client, *linodego.VolumeCreateOptions)
+
 func TestVolume_Create_smoke(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestVolume_Create")
 	defer teardown()
@@ -189,4 +191,32 @@ func setupVolume(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 		fixtureTeardown()
 	}
 	return client, volume, teardown, err
+}
+
+func createVolume(
+	t *testing.T,
+	client *linodego.Client,
+	vModifier ...volumeModifier,
+) (*linodego.Volume, func(), error) {
+	t.Helper()
+	createOpts := linodego.VolumeCreateOptions{
+		Label:  "go-vol-test" + randLabel(),
+		Region: getRegionsWithCaps(t, client, []string{"Linodes"})[0],
+	}
+
+	for _, mod := range vModifier {
+		mod(client, &createOpts)
+	}
+
+	v, err := client.CreateVolume(context.Background(), createOpts)
+	if err != nil {
+		t.Fatalf("failed to create volume: %s", err)
+	}
+
+	teardown := func() {
+		if err := client.DeleteVolume(context.Background(), v.ID); err != nil {
+			t.Errorf("failed to delete volume: %s", err)
+		}
+	}
+	return v, teardown, err
 }
