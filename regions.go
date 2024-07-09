@@ -86,7 +86,7 @@ func (c *Client) ListRegions(ctx context.Context, opts *ListOptions) ([]Region, 
 		return nil, err
 	}
 
-	c.addCachedResponse(endpoint, response, nil)
+	c.addCachedResponse(endpoint, response, &cacheExpiryTime)
 
 	return response, nil
 }
