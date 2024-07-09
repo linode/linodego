@@ -23,6 +23,7 @@ func (c *Client) ListObjectStorageClusters(ctx context.Context, opts *ListOption
 	return response, nil
 }
 
+// Deprecated: GetObjectStorageCluster uses a deprecated API endpoint.
 // GetObjectStorageCluster gets the template with the provided ID
 func (c *Client) GetObjectStorageCluster(ctx context.Context, clusterID string) (*ObjectStorageCluster, error) {
 	e := formatAPIPath("object-storage/clusters/%s", clusterID)

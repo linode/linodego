@@ -30,8 +30,20 @@ type EventsPagedResponse legacyPagedResponse[Event]
 // Deprecated: FirewallDevicesPagedResponse exists for historical compatibility and should not be used.
 type FirewallDevicesPagedResponse legacyPagedResponse[FirewallDevice]
 
+// Deprecated: FirewallsPagedResponse exists for historical compatibility and should not be used.
+type FirewallsPagedResponse legacyPagedResponse[Firewall]
+
 // Deprecated: ImagesPagedResponse exists for historical compatibility and should not be used.
 type ImagesPagedResponse legacyPagedResponse[Image]
+
+// Deprecated: InstanceConfigsPagedResponse exists for historical compatibility and should not be used.
+type InstanceConfigsPagedResponse legacyPagedResponse[InstanceConfig]
+
+// Deprecated: InstanceDisksPagedResponse exists for historical compatibility and should not be used.
+type InstanceDisksPagedResponse legacyPagedResponse[InstanceDisk]
+
+// Deprecated: InstanceFirewallsPagedResponse exists for historical compatibility and should not be used.
+type InstanceFirewallsPagedResponse legacyPagedResponse[Firewall]
 
 // Deprecated: InstanceVolumesPagedResponse exists for historical compatibility and should not be used.
 type InstanceVolumesPagedResponse legacyPagedResponse[Volume]
@@ -45,6 +57,15 @@ type InvoiceItemsPagedResponse legacyPagedResponse[InvoiceItem]
 // Deprecated: InvoicesPagedResponse exists for historical compatibility and should not be used.
 type InvoicesPagedResponse legacyPagedResponse[Invoice]
 
+// Deprecated: IPAddressesPagedResponse exists for historical compatibility and should not be used.
+type IPAddressesPagedResponse legacyPagedResponse[InstanceIP]
+
+// Deprecated: IPv6PoolsPagedResponse exists for historical compatibility and should not be used.
+type IPv6PoolsPagedResponse legacyPagedResponse[IPv6Range]
+
+// Deprecated: IPv6RangesPagedResponse exists for historical compatibility and should not be used.
+type IPv6RangesPagedResponse legacyPagedResponse[IPv6Range]
+
 // Deprecated: LinodeKernelsPagedResponse exists for historical compatibility and should not be used.
 type LinodeKernelsPagedResponse legacyPagedResponse[LinodeKernel]
 
@@ -53,6 +74,14 @@ type LoginsPagedResponse legacyPagedResponse[Login]
 
 // Deprecated: NodeBalancerFirewallsPagedResponse exists for historical compatibility and should not be used.
 type NodeBalancerFirewallsPagedResponse legacyPagedResponse[Firewall]
+// Deprecated: NodeBalancersPagedResponse exists for historical compatibility and should not be used.
+type NodeBalancersPagedResponse legacyPagedResponse[NodeBalancer]
+
+// Deprecated: NodeBalancerConfigsPagedResponse exists for historical compatibility and should not be used.
+type NodeBalancerConfigsPagedResponse legacyPagedResponse[NodeBalancerConfig]
+
+// Deprecated: NodeBalancerNodesPagedResponse exists for historical compatibility and should not be used.
+type NodeBalancerNodesPagedResponse legacyPagedResponse[NodeBalancerNode]
 
 // Deprecated: NotificationsPagedResponse exists for historical compatibility and should not be used.
 type NotificationsPagedResponse legacyPagedResponse[Notification]

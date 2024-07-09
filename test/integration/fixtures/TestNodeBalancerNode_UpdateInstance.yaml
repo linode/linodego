@@ -57,10 +57,10 @@ interactions:
       5}, "site_type": "core"}, {"id": "us-ord", "label": "Chicago, IL", "country":
       "us", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Block Storage",
       "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall", "Vlans", "VPCs",
-      "Managed Databases", "Metadata", "Premium Plans"], "status": "ok", "resolvers":
-      {"ipv4": "172.232.0.17, 172.232.0.16, 172.232.0.21, 172.232.0.13, 172.232.0.22,
-      172.232.0.9, 172.232.0.19, 172.232.0.20, 172.232.0.15, 172.232.0.18", "ipv6":
-      "1234::5678, 1234::5678, 1234::5678,
+      "Managed Databases", "Metadata", "Premium Plans", "Placement Group"], "status":
+      "ok", "resolvers": {"ipv4": "172.232.0.17, 172.232.0.16, 172.232.0.21, 172.232.0.13,
+      172.232.0.22, 172.232.0.9, 172.232.0.19, 172.232.0.20, 172.232.0.15, 172.232.0.18",
+      "ipv6": "1234::5678, 1234::5678, 1234::5678,
       1234::5678, 1234::5678, 1234::5678,
       1234::5678, 1234::5678, 1234::5678,
       1234::5678"}, "placement_group_limits": {"maximum_pgs_per_customer":
@@ -156,8 +156,8 @@ interactions:
       100, "maximum_linodes_per_pg": 5}, "site_type": "core"}, {"id": "us-mia", "label":
       "Miami, FL", "country": "us", "capabilities": ["Linodes", "Backups", "NodeBalancers",
       "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans",
-      "VPCs", "Metadata", "Premium Plans"], "status": "ok", "resolvers": {"ipv4":
-      "172.233.160.34, 172.233.160.27, 172.233.160.30, 172.233.160.29, 172.233.160.32,
+      "VPCs", "Metadata", "Premium Plans", "Placement Group"], "status": "ok", "resolvers":
+      {"ipv4": "172.233.160.34, 172.233.160.27, 172.233.160.30, 172.233.160.29, 172.233.160.32,
       172.233.160.28, 172.233.160.33, 172.233.160.26, 172.233.160.25, 172.233.160.31",
       "ipv6": "1234::5678, 1234::5678, 1234::5678,
       1234::5678, 1234::5678, 1234::5678,
@@ -179,6 +179,25 @@ interactions:
       "VPCs", "Metadata", "Premium Plans"], "status": "ok", "resolvers": {"ipv4":
       "172.233.128.45, 172.233.128.38, 172.233.128.53, 172.233.128.37, 172.233.128.34,
       172.233.128.36, 172.233.128.33, 172.233.128.39, 172.233.128.43, 172.233.128.44",
+      "ipv6": "1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678"}, "placement_group_limits": {"maximum_pgs_per_customer":
+      100, "maximum_linodes_per_pg": 5}, "site_type": "core"}, {"id": "gb-lon", "label":
+      "London 2, UK", "country": "gb", "capabilities": ["Linodes", "Backups", "NodeBalancers",
+      "Block Storage", "Kubernetes", "Cloud Firewall", "Vlans", "VPCs", "Metadata",
+      "Premium Plans"], "status": "ok", "resolvers": {"ipv4": "172.236.0.46, 172.236.0.50,
+      172.236.0.47, 172.236.0.53, 172.236.0.52, 172.236.0.45, 172.236.0.49, 172.236.0.51,
+      172.236.0.54, 172.236.0.48", "ipv6": "1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678"}, "placement_group_limits":
+      {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg": 5}, "site_type":
+      "core"}, {"id": "au-mel", "label": "Melbourne, AU", "country": "au", "capabilities":
+      ["Linodes", "Backups", "NodeBalancers", "Block Storage", "Kubernetes", "Cloud
+      Firewall", "Vlans", "VPCs", "Metadata", "Premium Plans"], "status": "ok", "resolvers":
+      {"ipv4": "172.236.32.23, 172.236.32.35, 172.236.32.30, 172.236.32.28, 172.236.32.32,
+      172.236.32.33, 172.236.32.27, 172.236.32.37, 172.236.32.29, 172.236.32.34",
       "ipv6": "1234::5678, 1234::5678, 1234::5678,
       1234::5678, 1234::5678, 1234::5678,
       1234::5678, 1234::5678, 1234::5678,
@@ -251,7 +270,7 @@ interactions:
       "1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678,
       1234::5678, 1234::5678, 1234::5678, 1234::5678"}, "placement_group_limits":
       {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg": 5}, "site_type":
-      "core"}], "page": 1, "pages": 1, "results": 25}'
+      "core"}], "page": 1, "pages": 1, "results": 27}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -272,7 +291,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:28:19 GMT
+      - Mon, 08 Jul 2024 13:39:09 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -289,10 +308,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -301,7 +317,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"ap-west","type":"g6-nanode-1","label":"go-test-ins-tf36qat88h01","root_pass":"/X-v1/Enlf{*\u003cQ~cHihc83.}Q-1?89G62g4P,.uVs|107EOXRfaJCe95US;v$4t3","image":"linode/debian9","firewall_id":501400,"booted":false}'
+    body: '{"region":"ap-west","type":"g6-nanode-1","label":"go-test-ins-08lggw81w1l0","root_pass":"v534D23]eUG;[VVC!vA205{`5dE1~:j\\yV$e1jbPt2S80w=orJ7HBF:1ji*c/*T`","image":"linode/debian9","firewall_id":640280,"booted":false}'
     form: {}
     headers:
       Accept:
@@ -313,16 +329,16 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 59542211, "label": "go-test-ins-tf36qat88h01", "group": "", "status":
+    body: '{"id": 61169919, "label": "go-test-ins-08lggw81w1l0", "group": "", "status":
       "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["45.79.125.26"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["172.105.55.249"], "ipv6": "1234::5678/128",
       "image": "linode/debian9", "region": "ap-west", "specs": {"disk": 25600, "memory":
       1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
       true, "available": false, "schedule": {"day": null, "window": null}, "last_successful":
       null}, "hypervisor": "kvm", "watchdog_enabled": true, "tags": [], "host_uuid":
-      "d33f497aa1cc27824ae1ad0b23fb07978a5f9ab8", "has_user_data": false, "placement_group":
-      null}'
+      "3cea0f3e7e25a8eb97340be86615d802453acd3a", "has_user_data": false, "placement_group":
+      null, "lke_cluster_id": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -339,13 +355,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "764"
+      - "790"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:28:20 GMT
+      - Mon, 08 Jul 2024 13:39:09 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -360,10 +376,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "10"
       X-Xss-Protection:
@@ -381,11 +394,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/59542211/ips
+    url: https://api.linode.com/v4beta/linode/instances/61169919/ips
     method: POST
   response:
-    body: '{"address": "192.168.142.212", "gateway": null, "subnet_mask": "255.255.128.0",
-      "prefix": 17, "type": "ipv4", "public": false, "rdns": null, "linode_id": 59542211,
+    body: '{"address": "192.168.128.99", "gateway": null, "subnet_mask": "255.255.128.0",
+      "prefix": 17, "type": "ipv4", "public": false, "rdns": null, "linode_id": 61169919,
       "region": "ap-west", "vpc_nat_1_1": null}'
     headers:
       Access-Control-Allow-Credentials:
@@ -403,13 +416,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "205"
+      - "204"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:28:20 GMT
+      - Mon, 08 Jul 2024 13:39:10 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -424,10 +437,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -436,7 +446,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"address":"192.168.142.212:8080","label":"go-node-test-def","weight":10,"mode":"accept"}'
+    body: '{"address":"192.168.128.99:8080","label":"go-node-test-def","weight":10,"mode":"accept"}'
     form: {}
     headers:
       Accept:
@@ -445,12 +455,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/694186/configs/1134760/nodes
+    url: https://api.linode.com/v4beta/nodebalancers/767856/configs/1266885/nodes
     method: POST
   response:
-    body: '{"id": 2047158849, "address": "192.168.142.212:8080", "label": "go-node-test-def",
-      "status": "Unknown", "weight": 10, "mode": "accept", "config_id": 1134760, "nodebalancer_id":
-      694186}'
+    body: '{"id": 2051557829, "address": "192.168.128.99:8080", "label": "go-node-test-def",
+      "status": "Unknown", "weight": 10, "mode": "accept", "config_id": 1266885, "nodebalancer_id":
+      767856}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -467,13 +477,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "184"
+      - "183"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:28:21 GMT
+      - Mon, 08 Jul 2024 13:39:10 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -488,10 +498,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -509,12 +516,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/694186/configs/1134760/nodes/2047158849
+    url: https://api.linode.com/v4beta/nodebalancers/767856/configs/1266885/nodes/2051557829
     method: PUT
   response:
-    body: '{"id": 2047158849, "address": "192.168.142.212:8080", "label": "go-node-test-def_r",
-      "status": "Unknown", "weight": 100, "mode": "drain", "config_id": 1134760, "nodebalancer_id":
-      694186}'
+    body: '{"id": 2051557829, "address": "192.168.128.99:8080", "label": "go-node-test-def_r",
+      "status": "Unknown", "weight": 100, "mode": "drain", "config_id": 1266885, "nodebalancer_id":
+      767856}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -531,13 +538,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "186"
+      - "185"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:28:21 GMT
+      - Mon, 08 Jul 2024 13:39:10 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -552,10 +559,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -573,7 +577,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/694186/configs/1134760/nodes/2047158849
+    url: https://api.linode.com/v4beta/nodebalancers/767856/configs/1266885/nodes/2051557829
     method: DELETE
   response:
     body: '{}'
@@ -599,7 +603,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:28:21 GMT
+      - Mon, 08 Jul 2024 13:39:10 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -614,10 +618,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -635,7 +636,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/59542211
+    url: https://api.linode.com/v4beta/linode/instances/61169919
     method: DELETE
   response:
     body: '{}'
@@ -661,7 +662,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:28:22 GMT
+      - Mon, 08 Jul 2024 13:39:11 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -676,10 +677,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:

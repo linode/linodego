@@ -153,7 +153,7 @@ func TestDebugLogSanitization(t *testing.T) {
 		Label  string `json:"label"`
 	}
 
-	var testResp = instanceResponse{
+	testResp := instanceResponse{
 		ID:     100,
 		Region: "test-central",
 		Label:  "this-is-a-test-linode",
