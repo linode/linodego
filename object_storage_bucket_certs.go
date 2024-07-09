@@ -39,10 +39,5 @@ func (c *Client) GetObjectStorageBucketCert(ctx context.Context, clusterOrRegion
 func (c *Client) DeleteObjectStorageBucketCert(ctx context.Context, clusterOrRegionID, bucket string) error {
 	e := formatAPIPath("object-storage/buckets/%s/%s/ssl", clusterOrRegionID, bucket)
 	err := doDELETERequest(ctx, c, e)
-func (c *Client) DeleteObjectStorageBucketCert(ctx context.Context, clusterOrRegionID, bucket string) error {
-	clusterOrRegionID = url.PathEscape(clusterOrRegionID)
-	bucket = url.PathEscape(bucket)
-	e := fmt.Sprintf("object-storage/buckets/%s/%s/ssl", clusterOrRegionID, bucket)
-	_, err := coupleAPIErrors(c.R(ctx).Delete(e))
 	return err
 }

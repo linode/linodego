@@ -73,9 +73,11 @@ type LinodeKernelsPagedResponse legacyPagedResponse[LinodeKernel]
 type LoginsPagedResponse legacyPagedResponse[Login]
 
 // Deprecated: NodeBalancerFirewallsPagedResponse exists for historical compatibility and should not be used.
-type NodeBalancerFirewallsPagedResponse legacyPagedResponse[Firewall]
-// Deprecated: NodeBalancersPagedResponse exists for historical compatibility and should not be used.
-type NodeBalancersPagedResponse legacyPagedResponse[NodeBalancer]
+type (
+	NodeBalancerFirewallsPagedResponse legacyPagedResponse[Firewall]
+	// Deprecated: NodeBalancersPagedResponse exists for historical compatibility and should not be used.
+	NodeBalancersPagedResponse legacyPagedResponse[NodeBalancer]
+)
 
 // Deprecated: NodeBalancerConfigsPagedResponse exists for historical compatibility and should not be used.
 type NodeBalancerConfigsPagedResponse legacyPagedResponse[NodeBalancerConfig]
