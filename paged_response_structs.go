@@ -90,5 +90,14 @@ type OAuthClientsPagedResponse legacyPagedResponse[OAuthClient]
 // Deprecated: PaymentsPagedResponse exists for historical compatibility and should not be used.
 type PaymentsPagedResponse legacyPagedResponse[Payment]
 
+// Deprecated: RegionsPagedResponse exists for historical compatibility and should not be used.
+type RegionsPagedResponse legacyPagedResponse[Region]
+
+// Deprecated: SSHKeysPagedResponse exists for historical compatibility and should not be used.
+type SSHKeysPagedResponse legacyPagedResponse[SSHKey]
+
+// Deprecated: TokensPagedResponse exists for historical compatibility and should not be used.
+type TokensPagedResponse legacyPagedResponse[Token]
+
 // Deprecated: UsersPagedResponse exists for historical compatibility and should not be used.
 type UsersPagedResponse legacyPagedResponse[User]
