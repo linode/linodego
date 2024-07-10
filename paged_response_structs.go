@@ -115,8 +115,20 @@ type NotificationsPagedResponse legacyPagedResponse[Notification]
 // Deprecated: OAuthClientsPagedResponse exists for historical compatibility and should not be used.
 type OAuthClientsPagedResponse legacyPagedResponse[OAuthClient]
 
+// Deprecated: ObjectStorageKeysPagedResponse exists for historical compatibility and should not be used.
+type ObjectStorageKeysPagedResponse legacyPagedResponse[ObjectStorageKey]
+
 // Deprecated: PaymentsPagedResponse exists for historical compatibility and should not be used.
 type PaymentsPagedResponse legacyPagedResponse[Payment]
+
+// Deprecated: PostgresDatabasesPagedResponse exists for historical compatibility and should not be used.
+type PostgresDatabasesPagedResponse legacyPagedResponse[PostgresDatabase]
+
+// Deprecated: PostgresDatabaseBackupsPagedResponse exists for historical compatibility and should not be used.
+type PostgresDatabaseBackupsPagedResponse legacyPagedResponse[PostgresDatabaseBackup]
+
+// Deprecated: ProfileLoginsPagedResponse exists for historical compatibility and should not be used.
+type ProfileLoginsPagedResponse legacyPagedResponse[ProfileLogin]
 
 // Deprecated: UsersPagedResponse exists for historical compatibility and should not be used.
 type UsersPagedResponse legacyPagedResponse[User]
