@@ -148,7 +148,7 @@ interactions:
     url: https://api.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 7934, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+    body: '{"id": 7948, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "label": "go-lke-test-def", "region": "us-east", "k8s_version":
       "1.29", "control_plane": {"high_availability": false}, "tags": ["testing"]}'
     headers:
@@ -202,11 +202,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7934/pools
+    url: https://api.linode.com/v4beta/lke/clusters/7948/pools
     method: POST
   response:
-    body: '{"id": 9484, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "9484-33a4f9d30000",
-      "instance_id": null, "status": "not_ready"}, {"id": "9484-446c04de0000", "instance_id":
+    body: '{"id": 9515, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "9515-11f609cf0000",
+      "instance_id": null, "status": "not_ready"}, {"id": "9515-1ca1561e0000", "instance_id":
       null, "status": "not_ready"}], "disks": [{"size": 1000, "type": "ext4"}], "autoscaler":
       {"enabled": false, "min": 2, "max": 2}, "labels": {}, "taints": [], "tags":
       ["testing"], "disk_encryption": "enabled"}'
@@ -260,11 +260,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7934/pools/9484
+    url: https://api.linode.com/v4beta/lke/clusters/7948/pools/9515
     method: GET
   response:
-    body: '{"id": 9484, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "9484-33a4f9d30000",
-      "instance_id": null, "status": "not_ready"}, {"id": "9484-446c04de0000", "instance_id":
+    body: '{"id": 9515, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "9515-11f609cf0000",
+      "instance_id": null, "status": "not_ready"}, {"id": "9515-1ca1561e0000", "instance_id":
       null, "status": "not_ready"}], "disks": [{"size": 1000, "type": "ext4"}], "autoscaler":
       {"enabled": false, "min": 2, "max": 2}, "labels": {}, "taints": [], "tags":
       ["testing"], "disk_encryption": "enabled"}'
@@ -320,7 +320,542 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7934/pools/9484
+    url: https://api.linode.com/v4beta/lke/clusters/7948/kubeconfig
+    method: GET
+  response:
+    body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
+      try again later."}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Content-Length:
+      - "92"
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - lke:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+    status: 503 Service Unavailable
+    code: 503
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/7948/kubeconfig
+    method: GET
+  response:
+    body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
+      try again later."}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Content-Length:
+      - "92"
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - lke:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+    status: 503 Service Unavailable
+    code: 503
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/7948/kubeconfig
+    method: GET
+  response:
+    body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
+      try again later."}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Content-Length:
+      - "92"
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - lke:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+    status: 503 Service Unavailable
+    code: 503
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/7948/kubeconfig
+    method: GET
+  response:
+    body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
+      try again later."}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Content-Length:
+      - "92"
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - lke:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+    status: 503 Service Unavailable
+    code: 503
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/7948/kubeconfig
+    method: GET
+  response:
+    body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
+      try again later."}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Content-Length:
+      - "92"
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - lke:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+    status: 503 Service Unavailable
+    code: 503
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/7948/kubeconfig
+    method: GET
+  response:
+    body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
+      try again later."}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Content-Length:
+      - "92"
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - lke:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+    status: 503 Service Unavailable
+    code: 503
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/7948/kubeconfig
+    method: GET
+  response:
+    body: '{"errors": [{"reason": "Cluster kubeconfig is not yet available. Please
+      try again later."}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Content-Length:
+      - "92"
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - lke:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+    status: 503 Service Unavailable
+    code: 503
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/7948/kubeconfig
+    method: GET
+  response:
+    body: '{"kubeconfig": "CmFwaVZlcnNpb246IHYxCmtpbmQ6IENvbmZpZwpwcmVmZXJlbmNlczoge30KCmNsdXN0ZXJzOgotIGNsdXN0ZXI6CiAgICBjZXJ0aWZpY2F0ZS1hdXRob3JpdHktZGF0YTogTFMwdExTMUNSVWRKVGlCRFJWSlVTVVpKUTBGVVJTMHRMUzB0Q2sxSlNVUkNWRU5EUVdVeVowRjNTVUpCWjBsSlZURnBSR2xTVUhJMVJYZDNSRkZaU2t0dldrbG9kbU5PUVZGRlRFSlJRWGRHVkVWVVRVSkZSMEV4VlVVS1FYaE5TMkV6Vm1sYVdFcDFXbGhTYkdONlFXVkdkekI1VGtSQk0wMVVRWGhPYWtrd1RrUktZVVozTUhwT1JFRXpUVVJuZUU1cVNUVk9SRXBoVFVKVmVBcEZla0ZTUW1kT1ZrSkJUVlJEYlhReFdXMVdlV0p0VmpCYVdFMTNaMmRGYVUxQk1FZERVM0ZIVTBsaU0wUlJSVUpCVVZWQlFUUkpRa1IzUVhkblowVkxDa0Z2U1VKQlVVTjFaVlF5UlhKbVZtVTFMMWxyYmxocFlsRktOekl3Umt0WE4wUTVSbkkxTDAxM2EyRlJLMWREWkRCVlNtRTRTbEl2YkRWVlNFYzJUMHNLUjJScUwycG5NRlJ3Vm5VelpGTkJhV2M0TnpVd0x6Y3ZNR3AyZGl0TEwwVlFkMGhUYVVselExQnhTRUZCTHpScVFYSXlRbTlFVG05bFUzaG1lVTlPY1FwUFVHSktOMVIxYm5JelNEZHpaMmRhY1VwVVVscDRkbVJ0UWxoVWRsRklPVzB6Y0ZWYVUzRnRiMlZGY1ZSSFJVaDZTVlZzWVd3M1VrRkNLMVY0VkROckNrbzJTWGx3YUVScVVXTlpUazVKU2xwMlNWbG1ibTVxVjNoaVRFRXdWeTl2YmxCcGFHeFJZblEyUm5vdlZuQmlNMjFSUkRKSGVHdG5VVTFvZHpkcU5ERUtlVzVSYW1KS1NFUmpaelZxZEdwUWQzUTNTM1JtVFZkb2JUZ3JjbGt4YkdZd2EwZGhZWHBLVVVWaVFtSnpORzVtTTFoV1lWZHdha2hHVFRGU1ltRTNkUXBYZGt4S1ExZFhWelF6UjFaM2VIRXhUV1J0ZVdWT1JVaHRaVkl4UVdkTlFrRkJSMnBYVkVKWVRVRTBSMEV4VldSRWQwVkNMM2RSUlVGM1NVTndSRUZRQ2tKblRsWklVazFDUVdZNFJVSlVRVVJCVVVndlRVSXdSMEV4VldSRVoxRlhRa0pTWTIwdmNqZzVjSFJhVUhwTGFuSkpiM2N2Y3pWUk5VNXpjbFZVUVZZS1FtZE9Wa2hTUlVWRWFrRk5aMmR3Y21SWFNteGpiVFZzWkVkV2VrMUJNRWREVTNGSFUwbGlNMFJSUlVKRGQxVkJRVFJKUWtGUlFqazBNVXB0UWpoUVJ3cExaR28xVG5KMWJXTkRTVWt6Y1RoVFdqaEJZMGh1V21sMFZrZE5WRE5YWnpSbUx6TXpXa3BTWkVWWlEwNUNaUzlSTVdWTk0ybHVNRVZpUTNKSWFreGpDazVtZEN0TlFtbEVXSHBEYzNOemJVVTFRVVJFT1RsS2VVVkRiMWxCUzJab1JsWnNTWEJaZG01amFHUmpURUZNT0ZkMWJsY3dlWGd5VkhoSU0yNDJhRFFLWWxST2REaHRaVzh6TjI5blVGWTBWMmR5YlVKSFFsZHVOM0ExYURNMlJtRktXR1pvYldwdWQwZ3pTMWx6Wkc5dVZGQkJXRVpRTjNkM2RFUnJSMjVUTkFwUVNXZGtSRlV2UTNaM1ZVZEtTRWRJTTBKQlZXVnFkRk4yYVVSeGRWTllVVk4xUjJSMk9HbHVOSFZ6VFdOaU5IVmFjRFJhYUVKdFNVc3hhVTF4VkhwRUNuaEViVmxJVjA1dVRVTlVibVJhV0ZKbGJFaGxTbTV0VUZsVWMwTlFWbFJ5U2s0MmMyZHpZelYyYjAxQlkyY3hUV3MwVjNKd1YxVXhhbEZHZDBkVmIwb0tZakl5U0ZWUFREaERWMlV5Q2kwdExTMHRSVTVFSUVORlVsUkpSa2xEUVZSRkxTMHRMUzBLCiAgICBzZXJ2ZXI6IGh0dHBzOi8vZmFlZmYyMWEtY2YwMi00ZDI1LTgyZTEtMTI5NzVjMDI1MzY1LmNwYzEtY2pqMS10ZXN0aW5nLmxpbm9kZWxrZS5uZXQ6NDQzCiAgbmFtZTogbGtlNzk0OAoKdXNlcnM6Ci0gbmFtZTogbGtlNzk0OC1hZG1pbgogIHVzZXI6CiAgICBhcy11c2VyLWV4dHJhOiB7fQogICAgdG9rZW46IGV5SmhiR2NpT2lKU1V6STFOaUlzSW10cFpDSTZJa3hMTUhSaFIySnZSVGhVTlZsRmRqUlVXV0Y1YTNOSmNsSjRabFZzY1U5dFFtTTBkMmwzVDNWUE9GRWlmUS5leUpwYzNNaU9pSnJkV0psY201bGRHVnpMM05sY25acFkyVmhZMk52ZFc1MElpd2lhM1ZpWlhKdVpYUmxjeTVwYnk5elpYSjJhV05sWVdOamIzVnVkQzl1WVcxbGMzQmhZMlVpT2lKcmRXSmxMWE41YzNSbGJTSXNJbXQxWW1WeWJtVjBaWE11YVc4dmMyVnlkbWxqWldGalkyOTFiblF2YzJWamNtVjBMbTVoYldVaU9pSnNhMlV0WVdSdGFXNHRkRzlyWlc0dGVHWjZOWEFpTENKcmRXSmxjbTVsZEdWekxtbHZMM05sY25acFkyVmhZMk52ZFc1MEwzTmxjblpwWTJVdFlXTmpiM1Z1ZEM1dVlXMWxJam9pYkd0bExXRmtiV2x1SWl3aWEzVmlaWEp1WlhSbGN5NXBieTl6WlhKMmFXTmxZV05qYjNWdWRDOXpaWEoyYVdObExXRmpZMjkxYm5RdWRXbGtJam9pTlRReFpUWmlZakl0WVRjNU9TMDBORFZrTFdGbU1HTXRZVGc1WWpJeVpUUmxOelU0SWl3aWMzVmlJam9pYzNsemRHVnRPbk5sY25acFkyVmhZMk52ZFc1ME9tdDFZbVV0YzNsemRHVnRPbXhyWlMxaFpHMXBiaUo5LnNJYW5qV3g3ZTVNX3h3S2J0S19VYVhJUk05ajlPMUNSWXhSbmNsdEx5UFJBbl9vQXNBMHZrRTV1SVhOaktLNHdiVzBpNTFtXzNLeVNYY25qMUlUX2N0cVBXNThEVmx3YnhUQWdJaVlxN3Bya2NSNGhOdkd3ZUs4MXhXUG1Ld18tSkh3MFVQc3JjZ3VDaF9zWmVWajVEZTFDenVwTy1hYnB1eUlhV2NQX2FIa0xmdXI5aUhYa2dnQnh4ZTgzMDh0cXQwdHBRYXdwTnRrdF9kZ095MENMUGxDdEs0M2hFLUx6Y2ZkSXNkcHI2bU83NThnVmh1RnJVeG51aWNOQ0o0VlBhc0N6d3NPX25oV2pkcVZwMENJX094VVA1ekVYdHZwUTRxZW95NjFlUEhwZ0Y5M3RBN296NnZDNTZQVG5rdlZzengzdkJYN2xLX0kydFlNS1FSLThvdwoKY29udGV4dHM6Ci0gY29udGV4dDoKICAgIGNsdXN0ZXI6IGxrZTc5NDgKICAgIG5hbWVzcGFjZTogZGVmYXVsdAogICAgdXNlcjogbGtlNzk0OC1hZG1pbgogIG5hbWU6IGxrZTc5NDgtY3R4CgpjdXJyZW50LWNvbnRleHQ6IGxrZTc5NDgtY3R4Cg=="}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Accept-Encoding
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - lke:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/7948/pools/9515
+    method: GET
+  response:
+    body: '{"id": 9515, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "9515-11f609cf0000",
+      "instance_id": 25218469, "status": "not_ready"}, {"id": "9515-1ca1561e0000",
+      "instance_id": 25218470, "status": "not_ready"}], "disks": [{"size": 1000, "type":
+      "ext4"}], "autoscaler": {"enabled": false, "min": 2, "max": 2}, "labels": {},
+      "taints": [], "tags": ["testing"], "disk_encryption": "enabled"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Accept-Encoding
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - lke:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/linode/instances/25218469
+    method: GET
+  response:
+    body: '{"id": 25218469, "label": "lke7948-9515-11f609cf0000", "group": "", "status":
+      "offline", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "type": "g6-standard-2", "ipv4": ["139.144.130.16", "192.168.191.153"], "ipv6":
+      "1234::5678/128", "image": null, "region": "us-east", "specs":
+      {"disk": 81920, "memory": 4096, "vcpus": 2, "gpus": 0, "transfer": 4000}, "alerts":
+      {"cpu": 180, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io":
+      10000}, "backups": {"enabled": false, "available": false, "schedule": {"day":
+      null, "window": null}, "last_successful": null}, "hypervisor": "kvm", "watchdog_enabled":
+      true, "tags": [], "host_uuid": "1d386e98b6381ebb19830539b75c23937bc034a9", "has_user_data":
+      false, "placement_group": null, "disk_encryption": "enabled", "lke_cluster_id":
+      7948}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Accept-Encoding
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - linodes:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/linode/instances/25218470
+    method: GET
+  response:
+    body: '{"id": 25218470, "label": "lke7948-9515-1ca1561e0000", "group": "", "status":
+      "offline", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "type": "g6-standard-2", "ipv4": ["139.144.130.162", "192.168.191.176"], "ipv6":
+      "1234::5678/128", "image": null, "region": "us-east", "specs":
+      {"disk": 81920, "memory": 4096, "vcpus": 2, "gpus": 0, "transfer": 4000}, "alerts":
+      {"cpu": 180, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io":
+      10000}, "backups": {"enabled": false, "available": false, "schedule": {"day":
+      null, "window": null}, "last_successful": null}, "hypervisor": "kvm", "watchdog_enabled":
+      true, "tags": [], "host_uuid": "4aeb9f6781d440986269692c626f2d0fd0b867f1", "has_user_data":
+      false, "placement_group": null, "disk_encryption": "enabled", "lke_cluster_id":
+      7948}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Accept-Encoding
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - linodes:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/7948/pools/9515
     method: DELETE
   response:
     body: '{}'
@@ -375,7 +910,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7934
+    url: https://api.linode.com/v4beta/lke/clusters/7948
     method: DELETE
   response:
     body: '{}'

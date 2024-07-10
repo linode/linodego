@@ -1,0 +1,32 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json, */*
+      User-Agent:
+      - integration.test/v0.0.0 (darwin/amd64) kubernetes/$Format
+    url: https://faeff21a-cf02-4d25-82e1-12975c025365.cpc1-cjj1-testing.linodelke.net:443/api/v1/nodes
+    method: GET
+  response:
+    body: |
+      {"kind":"NodeList","apiVersion":"v1","metadata":{"resourceVersion":"482"},"items":[]}
+    headers:
+      Audit-Id:
+      - 9ddbdd5c-d2eb-4d41-8c16-fe7cfd2f5c10
+      Cache-Control:
+      - no-cache, private
+      Content-Length:
+      - "86"
+      Content-Type:
+      - application/json
+      X-Kubernetes-Pf-Flowschema-Uid:
+      - 9596e99f-aaf7-40f9-8fa8-8309aae067f0
+      X-Kubernetes-Pf-Prioritylevel-Uid:
+      - 782728e3-ba72-4fc4-970c-d90f8dbfbbcf
+    status: 200 OK
+    code: 200
+    duration: ""
