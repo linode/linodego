@@ -88,12 +88,6 @@ type LinodeKernelsPagedResponse legacyPagedResponse[LinodeKernel]
 // Deprecated: LoginsPagedResponse exists for historical compatibility and should not be used.
 type LoginsPagedResponse legacyPagedResponse[Login]
 
-// Deprecated: NodeBalancerFirewallsPagedResponse exists for historical compatibility and should not be used.
-type (
-	NodeBalancerFirewallsPagedResponse legacyPagedResponse[Firewall]
-	// Deprecated: NodeBalancersPagedResponse exists for historical compatibility and should not be used.
-	NodeBalancersPagedResponse legacyPagedResponse[NodeBalancer]
-)
 // Deprecated: LongviewClientsPagedResponse exists for historical compatibility and should not be used.
 type LongviewClientsPagedResponse legacyPagedResponse[LongviewClient]
 
@@ -114,6 +108,9 @@ type NodeBalancerConfigsPagedResponse legacyPagedResponse[NodeBalancerConfig]
 
 // Deprecated: NodeBalancerNodesPagedResponse exists for historical compatibility and should not be used.
 type NodeBalancerNodesPagedResponse legacyPagedResponse[NodeBalancerNode]
+
+// Deprecated: NodeBalancerFirewallsPagedResponse exists for historical compatibility and should not be used.
+type NodeBalancerFirewallsPagedResponse legacyPagedResponse[Firewall]
 
 // Deprecated: NotificationsPagedResponse exists for historical compatibility and should not be used.
 type NotificationsPagedResponse legacyPagedResponse[Notification]
