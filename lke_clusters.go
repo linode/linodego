@@ -132,7 +132,9 @@ func (i LKECluster) GetUpdateOptions() (o LKEClusterUpdateOptions) {
 
 // ListLKEVersions lists the Kubernetes versions available through LKE. This endpoint is cached by default.
 func (c *Client) ListLKEVersions(ctx context.Context, opts *ListOptions) ([]LKEVersion, error) {
-	endpoint, err := generateListCacheURL("lke/versions", opts)
+	e := "lke/versions"
+
+	endpoint, err := generateListCacheURL(e, opts)
 	if err != nil {
 		return nil, err
 	}
@@ -141,7 +143,7 @@ func (c *Client) ListLKEVersions(ctx context.Context, opts *ListOptions) ([]LKEV
 		return result.([]LKEVersion), nil
 	}
 
-	response, err := getPaginatedResults[LKEVersion](ctx, c, "lke/versions", opts)
+	response, err := getPaginatedResults[LKEVersion](ctx, c, e, opts)
 	if err != nil {
 		return nil, err
 	}
@@ -183,11 +185,7 @@ func (c *Client) ListLKEClusterAPIEndpoints(ctx context.Context, clusterID int, 
 // ListLKEClusters lists LKEClusters
 func (c *Client) ListLKEClusters(ctx context.Context, opts *ListOptions) ([]LKECluster, error) {
 	response, err := getPaginatedResults[LKECluster](ctx, c, "lke/clusters", opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return response, err
 }
 
 // GetLKECluster gets the lkeCluster with the provided ID
