@@ -315,14 +315,20 @@ func TestInstance_Volumes_List(t *testing.T) {
 		t.Error(err)
 	}
 
-	clientVol, volume, teardown, err := setupVolume(t, "fixtures/TestInstance_Volumes_List")
-	defer teardown()
+	volume, teardown, volErr := createVolume(t, client)
+
+	_, err = client.WaitForVolumeStatus(context.Background(), volume.ID, linodego.VolumeActive, 500)
 	if err != nil {
+		t.Errorf("Error waiting for volume to be active, %s", err)
+	}
+
+	defer teardown()
+	if volErr != nil {
 		t.Error(err)
 	}
 
 	configOpts := linodego.InstanceConfigUpdateOptions{
-		Label: "go-vol-test" + randLabel(),
+		Label: "go-vol-test" + getUniqueText(),
 		Devices: &linodego.InstanceConfigDeviceMap{
 			SDA: &linodego.InstanceConfigDevice{
 				VolumeID: volume.ID,
@@ -334,7 +340,7 @@ func TestInstance_Volumes_List(t *testing.T) {
 		t.Error(err)
 	}
 
-	volumes, err := clientVol.ListInstanceVolumes(context.Background(), instance.ID, nil)
+	volumes, err := client.ListInstanceVolumes(context.Background(), instance.ID, nil)
 	if err != nil {
 		t.Errorf("Error listing instance volumes, expected struct, got error %v", err)
 	}
@@ -587,14 +593,14 @@ func createInstance(t *testing.T, client *linodego.Client, enableCloudFirewall b
 	if t != nil {
 		t.Helper()
 	}
-	booted := false
+
 	createOpts := linodego.InstanceCreateOptions{
 		Label:    "go-test-ins-" + randLabel(),
 		RootPass: randPassword(),
 		Region:   getRegionsWithCaps(t, client, []string{"linodes"})[0],
 		Type:     "g6-nanode-1",
 		Image:    "linode/debian9",
-		Booted:   &booted,
+		Booted:   linodego.Pointer(false),
 	}
 
 	if enableCloudFirewall {
@@ -637,12 +643,11 @@ func createInstanceWithoutDisks(
 ) (*linodego.Instance, *linodego.InstanceConfig, func(), error) {
 	t.Helper()
 
-	falseBool := false
 	createOpts := linodego.InstanceCreateOptions{
 		Label:  "go-test-ins-wo-disk-" + randLabel(),
 		Region: getRegionsWithCaps(t, client, []string{"linodes"})[0],
 		Type:   "g6-nanode-1",
-		Booted: &falseBool,
+		Booted: linodego.Pointer(false),
 	}
 
 	if enableCloudFirewall {

@@ -37,6 +37,18 @@ interactions:
       "dk", "capabilities": ["Linodes", "Metadata"], "status": "ok", "resolvers":
       {"ipv4": "8.8.8.8,1.1.1.1,1.0.0.1,8.8.4.4", "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}, {"id": "billing66", "label": "Billing Automation,
+      BA", "country": "dk", "capabilities": ["Linodes", "Metadata"], "status": "ok",
+      "resolvers": {"ipv4": "8.8.8.8,1.1.1.1,1.0.0.1,8.8.4.4", "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}, {"id": "billing67", "label": "Billing Automation,
+      BA", "country": "dk", "capabilities": ["Linodes", "Metadata"], "status": "ok",
+      "resolvers": {"ipv4": "8.8.8.8,1.1.1.1,1.0.0.1,8.8.4.4", "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}, {"id": "billing100", "label": "Billing Automation,
+      BA", "country": "dk", "capabilities": ["Linodes", "Metadata"], "status": "ok",
+      "resolvers": {"ipv4": "8.8.8.8,1.1.1.1,1.0.0.1,8.8.4.4", "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
       5}, "site_type": "core"}, {"id": "us-central", "label": "Dallas, TX, USA", "country":
       "us", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Kubernetes",
       "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "72.14.179.5,72.14.188.5,173.255.199.5,66.228.53.5,96.126.122.5,96.126.124.5,96.126.127.5,198.58.107.5,198.58.111.5,23.239.24.5",
@@ -80,7 +92,7 @@ interactions:
       "status": "ok", "resolvers": {"ipv4": "139.162.66.5,139.162.67.5,139.162.68.5,139.162.69.5,139.162.70.5,139.162.71.5,139.162.72.5,139.162.73.5,139.162.74.5,139.162.75.5",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
-      5}, "site_type": "core"}], "page": 1, "pages": 1, "results": 13}'
+      5}, "site_type": "core"}], "page": 1, "pages": 1, "results": 16}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -136,7 +148,7 @@ interactions:
     url: https://api.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 7879, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+    body: '{"id": 7937, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "label": "go-lke-test-def", "region": "us-east", "k8s_version":
       "1.29", "control_plane": {"high_availability": false}, "tags": ["testing"]}'
     headers:
@@ -190,11 +202,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7879/pools
+    url: https://api.linode.com/v4beta/lke/clusters/7937/pools
     method: POST
   response:
-    body: '{"id": 9266, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "9266-137bfd410000",
-      "instance_id": null, "status": "not_ready"}, {"id": "9266-39dc55650000", "instance_id":
+    body: '{"id": 9490, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "9490-1f97327a0000",
+      "instance_id": null, "status": "not_ready"}, {"id": "9490-58daceda0000", "instance_id":
       null, "status": "not_ready"}], "disks": [{"size": 1000, "type": "ext4"}], "autoscaler":
       {"enabled": false, "min": 2, "max": 2}, "labels": {}, "taints": [], "tags":
       ["testing"], "disk_encryption": "enabled"}'
@@ -248,11 +260,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7879/pools/9266
+    url: https://api.linode.com/v4beta/lke/clusters/7937/pools/9490
     method: PUT
   response:
-    body: '{"id": 9266, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "9266-137bfd410000",
-      "instance_id": null, "status": "not_ready"}, {"id": "9266-39dc55650000", "instance_id":
+    body: '{"id": 9490, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "9490-1f97327a0000",
+      "instance_id": null, "status": "not_ready"}, {"id": "9490-58daceda0000", "instance_id":
       null, "status": "not_ready"}], "disks": [{"size": 1000, "type": "ext4"}], "autoscaler":
       {"enabled": true, "min": 2, "max": 5}, "labels": {}, "taints": [], "tags": [],
       "disk_encryption": "enabled"}'
@@ -306,12 +318,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7879/pools/9266
+    url: https://api.linode.com/v4beta/lke/clusters/7937/pools/9490
     method: PUT
   response:
-    body: '{"id": 9266, "type": "g6-standard-2", "count": 3, "nodes": [{"id": "9266-137bfd410000",
-      "instance_id": null, "status": "not_ready"}, {"id": "9266-29cc682e0000", "instance_id":
-      null, "status": "not_ready"}, {"id": "9266-39dc55650000", "instance_id": null,
+    body: '{"id": 9490, "type": "g6-standard-2", "count": 3, "nodes": [{"id": "9490-1f97327a0000",
+      "instance_id": null, "status": "not_ready"}, {"id": "9490-509c95f30000", "instance_id":
+      null, "status": "not_ready"}, {"id": "9490-58daceda0000", "instance_id": null,
       "status": "not_ready"}], "disks": [{"size": 1000, "type": "ext4"}], "autoscaler":
       {"enabled": true, "min": 2, "max": 5}, "labels": {}, "taints": [], "tags": ["bar",
       "foo", "test"], "disk_encryption": "enabled"}'
@@ -365,7 +377,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7879/pools/9266
+    url: https://api.linode.com/v4beta/lke/clusters/7937/pools/9490
     method: DELETE
   response:
     body: '{}'
@@ -420,7 +432,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7879
+    url: https://api.linode.com/v4beta/lke/clusters/7937
     method: DELETE
   response:
     body: '{}'

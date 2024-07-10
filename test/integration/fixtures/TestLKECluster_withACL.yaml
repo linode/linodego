@@ -37,6 +37,18 @@ interactions:
       "dk", "capabilities": ["Linodes", "Metadata"], "status": "ok", "resolvers":
       {"ipv4": "8.8.8.8,1.1.1.1,1.0.0.1,8.8.4.4", "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}, {"id": "billing66", "label": "Billing Automation,
+      BA", "country": "dk", "capabilities": ["Linodes", "Metadata"], "status": "ok",
+      "resolvers": {"ipv4": "8.8.8.8,1.1.1.1,1.0.0.1,8.8.4.4", "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}, {"id": "billing67", "label": "Billing Automation,
+      BA", "country": "dk", "capabilities": ["Linodes", "Metadata"], "status": "ok",
+      "resolvers": {"ipv4": "8.8.8.8,1.1.1.1,1.0.0.1,8.8.4.4", "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}, {"id": "billing100", "label": "Billing Automation,
+      BA", "country": "dk", "capabilities": ["Linodes", "Metadata"], "status": "ok",
+      "resolvers": {"ipv4": "8.8.8.8,1.1.1.1,1.0.0.1,8.8.4.4", "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
       5}, "site_type": "core"}, {"id": "us-central", "label": "Dallas, TX, USA", "country":
       "us", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Kubernetes",
       "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "72.14.179.5,72.14.188.5,173.255.199.5,66.228.53.5,96.126.122.5,96.126.124.5,96.126.127.5,198.58.107.5,198.58.111.5,23.239.24.5",
@@ -80,7 +92,7 @@ interactions:
       "status": "ok", "resolvers": {"ipv4": "139.162.66.5,139.162.67.5,139.162.68.5,139.162.69.5,139.162.70.5,139.162.71.5,139.162.72.5,139.162.73.5,139.162.74.5,139.162.75.5",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
-      5}, "site_type": "core"}], "page": 1, "pages": 1, "results": 13}'
+      5}, "site_type": "core"}], "page": 1, "pages": 1, "results": 16}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -136,7 +148,7 @@ interactions:
     url: https://api.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 7868, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+    body: '{"id": 7938, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "label": "go-test-def", "region": "us-east", "k8s_version":
       "1.29", "control_plane": {"high_availability": false}, "tags": ["testing"]}'
     headers:
@@ -190,7 +202,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7868/control_plane_acl
+    url: https://api.linode.com/v4beta/lke/clusters/7938/control_plane_acl
     method: GET
   response:
     body: '{"acl": {"enabled": true, "addresses": {"ipv4": ["10.0.0.1/32"], "ipv6":
@@ -248,7 +260,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7868/control_plane_acl
+    url: https://api.linode.com/v4beta/lke/clusters/7938/control_plane_acl
     method: PUT
   response:
     body: '{"acl": {"enabled": true, "addresses": {"ipv4": ["10.0.0.2/32"]}}}'
@@ -303,7 +315,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7868/control_plane_acl
+    url: https://api.linode.com/v4beta/lke/clusters/7938/control_plane_acl
     method: DELETE
   response:
     body: '{}'
@@ -358,7 +370,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7868/control_plane_acl
+    url: https://api.linode.com/v4beta/lke/clusters/7938/control_plane_acl
     method: GET
   response:
     body: '{"acl": {"enabled": false, "addresses": null}}'
@@ -415,7 +427,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7868
+    url: https://api.linode.com/v4beta/lke/clusters/7938
     method: DELETE
   response:
     body: '{}'

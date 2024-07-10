@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/longview/clients
     method: POST
   response:
-    body: '{"id": 297873, "label": "testing", "api_key": "274D7DEB-393F-4AE8-AC231D11B441BE5F",
-      "install_code": "659AE7C6-D98F-420A-B293031726EF75D1", "apps": {"apache": 0,
+    body: '{"id": 342826, "label": "testing", "api_key": "DD873740-C520-49DE-825B296BA2ABCED7",
+      "install_code": "AACFFDDF-C094-4A3C-8288B2883AEECFC1", "apps": {"apache": 0,
       "nginx": 0, "mysql": 0}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -29,15 +29,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "254"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Mon, 01 Jul 2024 19:30:59 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -52,7 +56,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -68,11 +72,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/longview/clients/297873
+    url: https://api.linode.com/v4beta/longview/clients/342826
     method: GET
   response:
-    body: '{"id": 297873, "label": "testing", "api_key": "274D7DEB-393F-4AE8-AC231D11B441BE5F",
-      "install_code": "659AE7C6-D98F-420A-B293031726EF75D1", "apps": {"apache": false,
+    body: '{"id": 342826, "label": "testing", "api_key": "DD873740-C520-49DE-825B296BA2ABCED7",
+      "install_code": "AACFFDDF-C094-4A3C-8288B2883AEECFC1", "apps": {"apache": false,
       "nginx": false, "mysql": false}, "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05"}'
     headers:
@@ -87,16 +91,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "266"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Mon, 01 Jul 2024 19:31:00 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -112,7 +119,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -128,7 +135,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/longview/clients/297873
+    url: https://api.linode.com/v4beta/longview/clients/342826
     method: DELETE
   response:
     body: '{}'
@@ -144,15 +151,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "2"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Mon, 01 Jul 2024 19:31:00 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -167,7 +178,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

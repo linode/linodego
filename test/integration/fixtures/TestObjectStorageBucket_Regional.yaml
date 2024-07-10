@@ -29,26 +29,6 @@ interactions:
       "VPCs", "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "172.105.166.5,172.105.169.5,172.105.168.5,172.105.172.5,172.105.162.5,172.105.170.5,172.105.167.5,172.105.171.5,172.105.181.5,172.105.161.5",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
-      5}, "site_type": "core"}, {"id": "fake-cph-4", "label": "Fake CPH 4, DK", "country":
-      "dk", "capabilities": ["Linodes", "Metadata"], "status": "ok", "resolvers":
-      {"ipv4": "8.8.8.8,1.1.1.1,1.0.0.1,8.8.4.4", "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678"},
-      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
-      5}, "site_type": "core"}, {"id": "fake-cph-5", "label": "Fake CPH 5, DK", "country":
-      "dk", "capabilities": ["Linodes", "Metadata"], "status": "ok", "resolvers":
-      {"ipv4": "8.8.8.8,1.1.1.1,1.0.0.1,8.8.4.4", "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678"},
-      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
-      5}, "site_type": "core"}, {"id": "billing66", "label": "Billing Automation,
-      BA", "country": "dk", "capabilities": ["Linodes", "Metadata"], "status": "ok",
-      "resolvers": {"ipv4": "8.8.8.8,1.1.1.1,1.0.0.1,8.8.4.4", "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678"},
-      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
-      5}, "site_type": "core"}, {"id": "billing67", "label": "Billing Automation,
-      BA", "country": "dk", "capabilities": ["Linodes", "Metadata"], "status": "ok",
-      "resolvers": {"ipv4": "8.8.8.8,1.1.1.1,1.0.0.1,8.8.4.4", "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678"},
-      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
-      5}, "site_type": "core"}, {"id": "billing100", "label": "Billing Automation,
-      BA", "country": "dk", "capabilities": ["Linodes", "Metadata"], "status": "ok",
-      "resolvers": {"ipv4": "8.8.8.8,1.1.1.1,1.0.0.1,8.8.4.4", "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678"},
-      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
       5}, "site_type": "core"}, {"id": "us-central", "label": "Dallas, TX, USA", "country":
       "us", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Kubernetes",
       "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "72.14.179.5,72.14.188.5,173.255.199.5,66.228.53.5,96.126.122.5,96.126.124.5,96.126.127.5,198.58.107.5,198.58.111.5,23.239.24.5",
@@ -92,7 +72,7 @@ interactions:
       "status": "ok", "resolvers": {"ipv4": "139.162.66.5,139.162.67.5,139.162.68.5,139.162.69.5,139.162.70.5,139.162.71.5,139.162.72.5,139.162.73.5,139.162.74.5,139.162.75.5",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
-      5}, "site_type": "core"}], "page": 1, "pages": 1, "results": 16}'
+      5}, "site_type": "core"}], "page": 1, "pages": 1, "results": 11}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -107,6 +87,10 @@ interactions:
       Cache-Control:
       - private, max-age=900
       - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "7156"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -116,7 +100,6 @@ interactions:
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
-      - Accept-Encoding
       - Authorization, X-Filter
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
@@ -136,7 +119,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"]}],"label":"go-lke-test-recycle","region":"us-east","k8s_version":"1.29","tags":["testing"]}'
+    body: '{"region":"us-east","label":"go-bucket-test-def"}'
     form: {}
     headers:
       Accept:
@@ -145,13 +128,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters
+    url: https://api.linode.com/v4beta/object-storage/buckets
     method: POST
   response:
-    body: '{"id": 7942, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "label": "go-lke-test-recycle", "region": "us-east",
-      "k8s_version": "1.29", "control_plane": {"high_availability": false}, "tags":
-      ["testing"]}'
+    body: '{"hostname": "go-bucket-test-def.alpha.linodeobjects.com", "label": "go-bucket-test-def",
+      "created": "2018-01-02T03:04:05", "region": "us-east", "cluster": "alpha", "size":
+      0, "objects": 0}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -165,8 +147,10 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
       Content-Length:
-      - "243"
+      - "189"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -178,7 +162,7 @@ interactions:
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - lke:read_write
+      - object_storage:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -203,10 +187,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7942/recycle
-    method: POST
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east/go-bucket-test-def
+    method: GET
   response:
-    body: '{}'
+    body: '{"hostname": "go-bucket-test-def.alpha.linodeobjects.com", "label": "go-bucket-test-def",
+      "created": "2018-01-02T03:04:05", "region": "us-east", "cluster": "alpha", "size":
+      0, "objects": 0}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -219,9 +205,12 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
       Content-Length:
-      - "2"
+      - "189"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -232,8 +221,9 @@ interactions:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
+      - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - lke:read_write
+      - object_storage:read_only
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -258,7 +248,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/7942
+    url: https://api.linode.com/v4beta/object-storage/buckets/alpha/go-bucket-test-def
     method: DELETE
   response:
     body: '{}'
@@ -275,6 +265,8 @@ interactions:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
       - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
       Content-Length:
       - "2"
       Content-Security-Policy:
@@ -288,7 +280,7 @@ interactions:
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - lke:read_write
+      - object_storage:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
