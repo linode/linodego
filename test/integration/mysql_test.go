@@ -179,7 +179,7 @@ func createMySQLDatabase(t *testing.T, client *linodego.Client,
 	t.Helper()
 
 	createOpts := linodego.MySQLCreateOptions{
-		Label:           "go-mysql-test-def",
+		Label:           "go-mysql-test-def" + randLabel(),
 		Region:          getRegionsWithCaps(t, client, []string{"Managed Databases"})[0],
 		Type:            "g6-nanode-1",
 		Engine:          "mysql/8.0.30",

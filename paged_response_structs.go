@@ -57,6 +57,22 @@ type InvoiceItemsPagedResponse legacyPagedResponse[InvoiceItem]
 // Deprecated: InvoicesPagedResponse exists for historical compatibility and should not be used.
 type InvoicesPagedResponse legacyPagedResponse[Invoice]
 
+// Deprecated: LKEClusterPoolsPagedResponse exists for historical compatibility and should not be used.
+// LKEClusterPoolsPagedResponse represents a paginated LKEClusterPool API response.
+type LKEClusterPoolsPagedResponse LKENodePoolsPagedResponse
+
+// Deprecated: LKEVersionsPagedResponse exists for historical compatibility and should not be used.
+type LKEVersionsPagedResponse legacyPagedResponse[LKEVersion]
+
+// Deprecated: LKEClusterAPIEndpointsPagedResponse exists for historical compatibility and should not be used.
+type LKEClusterAPIEndpointsPagedResponse legacyPagedResponse[LKEClusterAPIEndpoint]
+
+// Deprecated: LKEClustersPagedResponse exists for historical compatibility and should not be used.
+type LKEClustersPagedResponse legacyPagedResponse[LKECluster]
+
+// Deprecated: LKENodePoolsPagedResponse exists for historical compatibility and should not be used.
+type LKENodePoolsPagedResponse legacyPagedResponse[LKENodePool]
+
 // Deprecated: IPAddressesPagedResponse exists for historical compatibility and should not be used.
 type IPAddressesPagedResponse legacyPagedResponse[InstanceIP]
 
@@ -71,6 +87,18 @@ type LinodeKernelsPagedResponse legacyPagedResponse[LinodeKernel]
 
 // Deprecated: LoginsPagedResponse exists for historical compatibility and should not be used.
 type LoginsPagedResponse legacyPagedResponse[Login]
+
+// Deprecated: LongviewClientsPagedResponse exists for historical compatibility and should not be used.
+type LongviewClientsPagedResponse legacyPagedResponse[LongviewClient]
+
+// Deprecated: LongviewSubscriptionsPagedResponse exists for historical compatibility and should not be used.
+type LongviewSubscriptionsPagedResponse legacyPagedResponse[LongviewSubscription]
+
+// Deprecated: MySQLDatabasesPagedResponse exists for historical compatibility and should not be used.
+type MySQLDatabasesPagedResponse legacyPagedResponse[MySQLDatabase]
+
+// Deprecated: MySQLDatabaseBackupsPagedResponse exists for historical compatibility and should not be used.
+type MySQLDatabaseBackupsPagedResponse legacyPagedResponse[MySQLDatabaseBackup]
 
 // Deprecated: NodeBalancersPagedResponse exists for historical compatibility and should not be used.
 type NodeBalancersPagedResponse legacyPagedResponse[NodeBalancer]
