@@ -2,9 +2,6 @@ package linodego
 
 import (
 	"context"
-	"encoding/json"
-	"fmt"
-	"net/url"
 )
 
 type ObjectStorageBucketCert struct {
@@ -18,40 +15,29 @@ type ObjectStorageBucketCertUploadOptions struct {
 
 // UploadObjectStorageBucketCert uploads a TLS/SSL Cert to be used with an Object Storage Bucket.
 func (c *Client) UploadObjectStorageBucketCert(ctx context.Context, clusterOrRegionID, bucket string, opts ObjectStorageBucketCertUploadOptions) (*ObjectStorageBucketCert, error) {
-	body, err := json.Marshal(opts)
+	e := formatAPIPath("object-storage/buckets/%s/%s/ssl", clusterOrRegionID, bucket)
+	response, err := doPOSTRequest[ObjectStorageBucketCert](ctx, c, e, opts)
 	if err != nil {
 		return nil, err
 	}
 
-	clusterOrRegionID = url.PathEscape(clusterOrRegionID)
-	bucket = url.PathEscape(bucket)
-	e := fmt.Sprintf("object-storage/buckets/%s/%s/ssl", clusterOrRegionID, bucket)
-	req := c.R(ctx).SetResult(&ObjectStorageBucketCert{}).SetBody(string(body))
-	r, err := coupleAPIErrors(req.Post(e))
-	if err != nil {
-		return nil, err
-	}
-	return r.Result().(*ObjectStorageBucketCert), nil
+	return response, nil
 }
 
 // GetObjectStorageBucketCert gets an ObjectStorageBucketCert
 func (c *Client) GetObjectStorageBucketCert(ctx context.Context, clusterOrRegionID, bucket string) (*ObjectStorageBucketCert, error) {
-	clusterOrRegionID = url.PathEscape(clusterOrRegionID)
-	bucket = url.PathEscape(bucket)
-	e := fmt.Sprintf("object-storage/buckets/%s/%s/ssl", clusterOrRegionID, bucket)
-	req := c.R(ctx).SetResult(&ObjectStorageBucketCert{})
-	r, err := coupleAPIErrors(req.Get(e))
+	e := formatAPIPath("object-storage/buckets/%s/%s/ssl", clusterOrRegionID, bucket)
+	response, err := doGETRequest[ObjectStorageBucketCert](ctx, c, e)
 	if err != nil {
 		return nil, err
 	}
-	return r.Result().(*ObjectStorageBucketCert), nil
+
+	return response, nil
 }
 
 // DeleteObjectStorageBucketCert deletes an ObjectStorageBucketCert
 func (c *Client) DeleteObjectStorageBucketCert(ctx context.Context, clusterOrRegionID, bucket string) error {
-	clusterOrRegionID = url.PathEscape(clusterOrRegionID)
-	bucket = url.PathEscape(bucket)
-	e := fmt.Sprintf("object-storage/buckets/%s/%s/ssl", clusterOrRegionID, bucket)
-	_, err := coupleAPIErrors(c.R(ctx).Delete(e))
+	e := formatAPIPath("object-storage/buckets/%s/%s/ssl", clusterOrRegionID, bucket)
+	err := doDELETERequest(ctx, c, e)
 	return err
 }
