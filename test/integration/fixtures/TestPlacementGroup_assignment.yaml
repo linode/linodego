@@ -37,6 +37,18 @@ interactions:
       "dk", "capabilities": ["Linodes", "Metadata"], "status": "ok", "resolvers":
       {"ipv4": "8.8.8.8,1.1.1.1,1.0.0.1,8.8.4.4", "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}, {"id": "billing66", "label": "Billing Automation,
+      BA", "country": "dk", "capabilities": ["Linodes", "Metadata"], "status": "ok",
+      "resolvers": {"ipv4": "8.8.8.8,1.1.1.1,1.0.0.1,8.8.4.4", "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}, {"id": "billing67", "label": "Billing Automation,
+      BA", "country": "dk", "capabilities": ["Linodes", "Metadata"], "status": "ok",
+      "resolvers": {"ipv4": "8.8.8.8,1.1.1.1,1.0.0.1,8.8.4.4", "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}, {"id": "billing100", "label": "Billing Automation,
+      BA", "country": "dk", "capabilities": ["Linodes", "Metadata"], "status": "ok",
+      "resolvers": {"ipv4": "8.8.8.8,1.1.1.1,1.0.0.1,8.8.4.4", "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
       5}, "site_type": "core"}, {"id": "us-central", "label": "Dallas, TX, USA", "country":
       "us", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Kubernetes",
       "Managed Databases"], "status": "ok", "resolvers": {"ipv4": "72.14.179.5,72.14.188.5,173.255.199.5,66.228.53.5,96.126.122.5,96.126.124.5,96.126.127.5,198.58.107.5,198.58.111.5,23.239.24.5",
@@ -80,7 +92,7 @@ interactions:
       "status": "ok", "resolvers": {"ipv4": "139.162.66.5,139.162.67.5,139.162.68.5,139.162.69.5,139.162.70.5,139.162.71.5,139.162.72.5,139.162.73.5,139.162.74.5,139.162.75.5",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 100, "maximum_linodes_per_pg":
-      5}, "site_type": "core"}], "page": 1, "pages": 1, "results": 13}'
+      5}, "site_type": "core"}], "page": 1, "pages": 1, "results": 16}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -124,7 +136,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"linodego-test-1718722972576732000","region":"us-east","placement_group_type":"anti_affinity:local","placement_group_policy":"flexible"}'
+    body: '{"label":"linodego-test-1720709767110025000","region":"us-east","placement_group_type":"anti_affinity:local","placement_group_policy":"flexible"}'
     form: {}
     headers:
       Accept:
@@ -136,9 +148,9 @@ interactions:
     url: https://api.linode.com/v4beta/placement/groups
     method: POST
   response:
-    body: '{"id": 4020, "label": "linodego-test-1718722972576732000", "region": "us-east",
-      "placement_group_type": "anti_affinity:local", "placement_group_policy": "flexible", "is_compliant":
-      true, "members": []}'
+    body: '{"id": 5840, "label": "linodego-test-1720709767110025000", "region": "us-east",
+      "placement_group_type": "anti_affinity:local", "placement_group_policy": "flexible",
+      "is_compliant": true, "members": [], "migrations": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -153,7 +165,7 @@ interactions:
       Cache-Control:
       - private, max-age=60, s-maxage=60
       Content-Length:
-      - "176"
+      - "221"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -181,7 +193,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-t02660a1ehag","root_pass":"1@L\u003e)0sb6qd`]5\u0026OW~K\\Q6F~5l4Tys\\3Gh9RI93}2Wrs6u;Pu?5c;~)ERj8Jm9Xo","image":"linode/debian9","firewall_id":34215,"booted":false}'
+    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-7xhcq5t3351e","root_pass":"M!3(tHq501ZrIZ\u00260glkmLQ6''0#o8(23^}k0WSHxM8#g(p23{\u003c`[1ya!MhIYFy0G.","image":"linode/debian9","firewall_id":36404,"booted":false}'
     form: {}
     headers:
       Accept:
@@ -193,15 +205,15 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 25195349, "label": "go-test-ins-t02660a1ehag", "group": "", "status":
+    body: '{"id": 25220227, "label": "go-test-ins-7xhcq5t3351e", "group": "", "status":
       "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["143.42.181.254"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["143.42.181.243"], "ipv6": "1234::5678/128",
       "image": "linode/debian9", "region": "us-east", "specs": {"disk": 25600, "memory":
       1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
       10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
       false, "available": false, "schedule": {"day": null, "window": null}, "last_successful":
       null}, "hypervisor": "kvm", "watchdog_enabled": true, "tags": [], "host_uuid":
-      "53257e56e7692e143036a5fbf7daaf92b5350bf3", "has_user_data": false, "placement_group":
+      "f7b823a530971cfdb3b3374ec6598f5354e688e0", "has_user_data": false, "placement_group":
       null, "disk_encryption": "enabled", "lke_cluster_id": null}'
     headers:
       Access-Control-Allow-Credentials:
@@ -244,7 +256,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"linodes":[25195349]}'
+    body: '{"linodes":[25220227]}'
     form: {}
     headers:
       Accept:
@@ -253,12 +265,136 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/placement/groups/4020/assign
+    url: https://api.linode.com/v4beta/placement/groups/5840/assign
     method: POST
   response:
-    body: '{"id": 4020, "label": "linodego-test-1718722972576732000", "region": "us-east",
-      "placement_group_type": "anti_affinity:local", "placement_group_policy": "flexible", "is_compliant":
-      true, "members": [{"linode_id": 25195349, "is_compliant": true}]}'
+    body: '{"id": 5840, "label": "linodego-test-1720709767110025000", "region": "us-east",
+      "placement_group_type": "anti_affinity:local", "placement_group_policy": "flexible",
+      "is_compliant": true, "members": [{"linode_id": 25220227, "is_compliant": true}],
+      "migrations": null}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Accept-Encoding
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - linodes:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/linode/instances/25220227
+    method: GET
+  response:
+    body: '{"id": 25220227, "label": "go-test-ins-7xhcq5t3351e", "group": "", "status":
+      "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "type": "g6-nanode-1", "ipv4": ["143.42.181.243"], "ipv6": "1234::5678/128",
+      "image": "linode/debian9", "region": "us-east", "specs": {"disk": 25600, "memory":
+      1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
+      10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
+      false, "available": false, "schedule": {"day": null, "window": null}, "last_successful":
+      null}, "hypervisor": "kvm", "watchdog_enabled": true, "tags": [], "host_uuid":
+      "f7b823a530971cfdb3b3374ec6598f5354e688e0", "has_user_data": false, "placement_group":
+      {"id": 5840, "label": "linodego-test-1720709767110025000", "placement_group_type":
+      "anti_affinity:local", "placement_group_policy": "flexible", "migrating_to":
+      null}, "disk_encryption": "enabled", "lke_cluster_id": null}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Accept-Encoding
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - linodes:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"linodes":[25220227]}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/placement/groups/5840/unassign
+    method: POST
+  response:
+    body: '{"id": 5840, "label": "linodego-test-1720709767110025000", "region": "us-east",
+      "placement_group_type": "anti_affinity:local", "placement_group_policy": "flexible",
+      "is_compliant": true, "members": [], "migrations": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -310,131 +446,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/25195349
-    method: GET
-  response:
-    body: '{"id": 25195349, "label": "go-test-ins-t02660a1ehag", "group": "", "status":
-      "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["143.42.181.254"], "ipv6": "1234::5678/128",
-      "image": "linode/debian9", "region": "us-east", "specs": {"disk": 25600, "memory":
-      1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu": 90, "network_in":
-      10, "network_out": 10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled":
-      false, "available": false, "schedule": {"day": null, "window": null}, "last_successful":
-      null}, "hypervisor": "kvm", "watchdog_enabled": true, "tags": [], "host_uuid":
-      "53257e56e7692e143036a5fbf7daaf92b5350bf3", "has_user_data": false, "placement_group":
-      {"id": 4020, "label": "linodego-test-1718722972576732000", "placement_group_type":
-      "anti_affinity:local", "placement_group_policy": "flexible"}, "disk_encryption": "enabled", "lke_cluster_id":
-      null}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Accept-Encoding
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - linodes:read_only
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "400"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: '{"linodes":[25195349]}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/placement/groups/4020/unassign
-    method: POST
-  response:
-    body: '{"id": 4020, "label": "linodego-test-1718722972576732000", "region": "us-east",
-      "placement_group_type": "anti_affinity:local", "placement_group_policy": "flexible", "is_compliant":
-      true, "members": []}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Cache-Control:
-      - private, max-age=60, s-maxage=60
-      Content-Length:
-      - "176"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - linodes:read_write
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "400"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/placement/groups/4020
+    url: https://api.linode.com/v4beta/placement/groups/5840
     method: DELETE
   response:
     body: '{}'
