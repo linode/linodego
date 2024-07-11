@@ -224,6 +224,6 @@ func (c *Client) RestorePostgresDatabaseBackup(ctx context.Context, databaseID i
 // CreatePostgresDatabaseBackup creates a snapshot for the given Postgres database
 func (c *Client) CreatePostgresDatabaseBackup(ctx context.Context, databaseID int, opts PostgresBackupCreateOptions) error {
 	e := formatAPIPath("databases/postgresql/instances/%d/backups", databaseID)
-	_, err := doPOSTRequest[PostgresDatabaseBackup, any](ctx, c, e)
+	_, err := doPOSTRequest[PostgresDatabaseBackup](ctx, c, e, opts)
 	return err
 }
