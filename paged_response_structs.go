@@ -129,3 +129,12 @@ type PaymentsPagedResponse legacyPagedResponse[Payment]
 
 // Deprecated: UsersPagedResponse exists for historical compatibility and should not be used.
 type UsersPagedResponse legacyPagedResponse[User]
+
+// Deprecated: VolumesPagedResponse exists for historical compatibility and should not be used.
+type VolumesPagedResponse legacyPagedResponse[Volume]
+
+// Deprecated: VPCsPagedResponse exists for historical compatibility and should not be used.
+type VPCsPagedResponse legacyPagedResponse[VPC]
+
+// Deprecated: VPCSubnetsPagedResponse exists for historical compatibility and should not be used.
+type VPCSubnetsPagedResponse legacyPagedResponse[VPCSubnet]
