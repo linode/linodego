@@ -11,7 +11,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/clusters
+    url: https://api.linode.com/v4beta/object-storage/clusters?page=1
     method: GET
   response:
     body: '{"data": [{"id": "us-east-1", "region": "us-east", "status": "available",
@@ -21,8 +21,36 @@ interactions:
       {"id": "ap-south-1", "region": "ap-south", "status": "available", "domain":
       "ap-south-1.linodeobjects.com", "static_site_domain": "website-ap-south-1.linodeobjects.com"},
       {"id": "us-southeast-1", "region": "us-southeast", "status": "available", "domain":
-      "us-southeast-1.linodeobjects.com", "static_site_domain": "website-us-southeast-1.linodeobjects.com"}],
-      "page": 1, "pages": 1, "results": 4}'
+      "us-southeast-1.linodeobjects.com", "static_site_domain": "website-us-southeast-1.linodeobjects.com"},
+      {"id": "us-iad-1", "region": "us-iad", "status": "available", "domain": "us-iad-1.linodeobjects.com",
+      "static_site_domain": "website-us-iad-1.linodeobjects.com"}, {"id": "fr-par-1",
+      "region": "fr-par", "status": "available", "domain": "fr-par-1.linodeobjects.com",
+      "static_site_domain": "website-fr-par-1.linodeobjects.com"}, {"id": "us-ord-1",
+      "region": "us-ord", "status": "available", "domain": "us-ord-1.linodeobjects.com",
+      "static_site_domain": "website-us-ord-1.linodeobjects.com"}, {"id": "in-maa-1",
+      "region": "in-maa", "status": "available", "domain": "in-maa-1.linodeobjects.com",
+      "static_site_domain": "website-in-maa-1.linodeobjects.com"}, {"id": "se-sto-1",
+      "region": "se-sto", "status": "available", "domain": "se-sto-1.linodeobjects.com",
+      "static_site_domain": "website-se-sto-1.linodeobjects.com"}, {"id": "it-mil-1",
+      "region": "it-mil", "status": "available", "domain": "it-mil-1.linodeobjects.com",
+      "static_site_domain": "website-it-mil-1.linodeobjects.com"}, {"id": "us-sea-1",
+      "region": "us-sea", "status": "available", "domain": "us-sea-1.linodeobjects.com",
+      "static_site_domain": "website-us-sea-1.linodeobjects.com"}, {"id": "id-cgk-1",
+      "region": "id-cgk", "status": "available", "domain": "id-cgk-1.linodeobjects.com",
+      "static_site_domain": "website-id-cgk-1.linodeobjects.com"}, {"id": "jp-osa-1",
+      "region": "jp-osa", "status": "available", "domain": "jp-osa-1.linodeobjects.com",
+      "static_site_domain": "website-jp-osa-1.linodeobjects.com"}, {"id": "br-gru-1",
+      "region": "br-gru", "status": "available", "domain": "br-gru-1.linodeobjects.com",
+      "static_site_domain": "website-br-gru-1.linodeobjects.com"}, {"id": "us-lax-1",
+      "region": "us-lax", "status": "available", "domain": "us-lax-1.linodeobjects.com",
+      "static_site_domain": "website-us-lax-1.linodeobjects.com"}, {"id": "nl-ams-1",
+      "region": "nl-ams", "status": "available", "domain": "nl-ams-1.linodeobjects.com",
+      "static_site_domain": "website-nl-ams-1.linodeobjects.com"}, {"id": "us-mia-1",
+      "region": "us-mia", "status": "available", "domain": "us-mia-1.linodeobjects.com",
+      "static_site_domain": "website-us-mia-1.linodeobjects.com"}, {"id": "es-mad-1",
+      "region": "es-mad", "status": "available", "domain": "es-mad-1.linodeobjects.com",
+      "static_site_domain": "website-es-mad-1.linodeobjects.com"}], "page": 1, "pages":
+      1, "results": 18}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -35,21 +63,23 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
-      Content-Length:
-      - "751"
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Mon, 08 Jul 2024 15:14:20 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
       - Authorization, X-Filter
+      - Accept-Encoding
       X-Accepted-Oauth-Scopes:
       - object_storage:read_only
       X-Content-Type-Options:
@@ -60,7 +90,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
