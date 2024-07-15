@@ -15,8 +15,8 @@ interactions:
     method: POST
   response:
     body: '{"hostname": "go-bucket-test-def.us-east-1.linodeobjects.com", "label":
-      "go-bucket-test-def", "created": "2018-01-02T03:04:05", "cluster": "us-east-1",
-      "size": 0, "objects": 0}'
+      "go-bucket-test-def", "created": "2018-01-02T03:04:05", "region": "us-east",
+      "cluster": "us-east-1", "size": 0, "objects": 0}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -29,15 +29,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
-      - "176"
+      - "197"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Mon, 08 Jul 2024 15:14:03 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -52,7 +56,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -68,12 +72,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1?page=1
     method: GET
   response:
-    body: '{"page": 1, "pages": 1, "results": 1, "data": [{"hostname": "go-bucket-test-def.us-east-1.linodeobjects.com",
-      "label": "go-bucket-test-def", "created": "2018-01-02T03:04:05", "cluster":
-      "us-east-1", "size": 0, "objects": 0}]}'
+    body: '{"data": [{"hostname": "go-bucket-test-def.us-east-1.linodeobjects.com",
+      "label": "go-bucket-test-def", "created": "2018-01-02T03:04:05", "region": "us-east",
+      "cluster": "us-east-1", "size": 0, "objects": 0}], "page": 1, "pages": 1, "results":
+      1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -86,16 +91,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
-      - "225"
+      - "246"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Mon, 08 Jul 2024 15:14:04 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -111,7 +119,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -143,15 +151,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "2"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Mon, 08 Jul 2024 15:14:06 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -166,7 +178,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

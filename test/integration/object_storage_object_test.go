@@ -74,7 +74,7 @@ func deleteObjectStorageObject(t *testing.T, client *linodego.Client, bucket *li
 }
 
 func TestObjectStorageObject_ACLConfig_Update(t *testing.T) {
-	client, bucket, teardown, err := setupObjectStorageBucket(t, nil, "fixtures/TestObjectStorageObject_ACLConfig_Update")
+	client, bucket, teardown, err := setupObjectStorageBucket(t, nil, "fixtures/TestObjectStorageObject_ACLConfig_Update", nil, nil)
 	if err != nil {
 		t.Fatalf("failed to create Object Storage Object: %s", err)
 	}
