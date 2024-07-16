@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"go-test-def","bucket_access":null}'
+    body: '{"label":"go-test-def"}'
     form: {}
     headers:
       Accept:
@@ -14,8 +14,22 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/keys
     method: POST
   response:
-    body: '{"id": 360684, "label": "go-test-def", "access_key": "[SANITIZED]", "secret_key":
-      "[SANITIZED]", "limited": false, "bucket_access": null}'
+    body: '{"id": 1171496, "label": "go-test-def", "access_key": "[SANITIZED]", "secret_key":
+      "[SANITIZED]", "limited": false, "bucket_access": null, "regions": [{"id": "us-southeast",
+      "s3_endpoint": "us-southeast-1.linodeobjects.com"}, {"id": "us-east", "s3_endpoint":
+      "us-east-1.linodeobjects.com"}, {"id": "ap-south", "s3_endpoint": "ap-south-1.linodeobjects.com"},
+      {"id": "eu-central", "s3_endpoint": "eu-central-1.linodeobjects.com"}, {"id":
+      "us-iad", "s3_endpoint": "us-iad-1.linodeobjects.com"}, {"id": "us-ord", "s3_endpoint":
+      "us-ord-1.linodeobjects.com"}, {"id": "fr-par", "s3_endpoint": "fr-par-1.linodeobjects.com"},
+      {"id": "us-sea", "s3_endpoint": "us-sea-1.linodeobjects.com"}, {"id": "br-gru",
+      "s3_endpoint": "br-gru-1.linodeobjects.com"}, {"id": "nl-ams", "s3_endpoint":
+      "nl-ams-1.linodeobjects.com"}, {"id": "se-sto", "s3_endpoint": "se-sto-1.linodeobjects.com"},
+      {"id": "es-mad", "s3_endpoint": "es-mad-1.linodeobjects.com"}, {"id": "in-maa",
+      "s3_endpoint": "in-maa-1.linodeobjects.com"}, {"id": "jp-osa", "s3_endpoint":
+      "jp-osa-1.linodeobjects.com"}, {"id": "it-mil", "s3_endpoint": "it-mil-1.linodeobjects.com"},
+      {"id": "us-mia", "s3_endpoint": "us-mia-1.linodeobjects.com"}, {"id": "id-cgk",
+      "s3_endpoint": "id-cgk-1.linodeobjects.com"}, {"id": "us-lax", "s3_endpoint":
+      "us-lax-1.linodeobjects.com"}]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -27,20 +41,25 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=60, s-maxage=60
-      Content-Length:
-      - "175"
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Wed, 10 Jul 2024 18:00:49 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
+      - Accept-Encoding
       X-Accepted-Oauth-Scopes:
       - object_storage:read_write
       X-Content-Type-Options:
@@ -51,7 +70,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -67,11 +86,25 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/360684
+    url: https://api.linode.com/v4beta/object-storage/keys/1171496
     method: GET
   response:
-    body: '{"id": 360684, "label": "go-test-def", "access_key": "[SANITIZED]", "secret_key":
-      "[REDACTED]", "limited": false, "bucket_access": null}'
+    body: '{"id": 1171496, "label": "go-test-def", "access_key": "[SANITIZED]", "secret_key":
+      "[REDACTED]", "limited": false, "bucket_access": null, "regions": [{"id": "us-southeast",
+      "s3_endpoint": "us-southeast-1.linodeobjects.com"}, {"id": "us-east", "s3_endpoint":
+      "us-east-1.linodeobjects.com"}, {"id": "ap-south", "s3_endpoint": "ap-south-1.linodeobjects.com"},
+      {"id": "eu-central", "s3_endpoint": "eu-central-1.linodeobjects.com"}, {"id":
+      "us-iad", "s3_endpoint": "us-iad-1.linodeobjects.com"}, {"id": "us-ord", "s3_endpoint":
+      "us-ord-1.linodeobjects.com"}, {"id": "fr-par", "s3_endpoint": "fr-par-1.linodeobjects.com"},
+      {"id": "us-sea", "s3_endpoint": "us-sea-1.linodeobjects.com"}, {"id": "br-gru",
+      "s3_endpoint": "br-gru-1.linodeobjects.com"}, {"id": "nl-ams", "s3_endpoint":
+      "nl-ams-1.linodeobjects.com"}, {"id": "se-sto", "s3_endpoint": "se-sto-1.linodeobjects.com"},
+      {"id": "es-mad", "s3_endpoint": "es-mad-1.linodeobjects.com"}, {"id": "in-maa",
+      "s3_endpoint": "in-maa-1.linodeobjects.com"}, {"id": "jp-osa", "s3_endpoint":
+      "jp-osa-1.linodeobjects.com"}, {"id": "it-mil", "s3_endpoint": "it-mil-1.linodeobjects.com"},
+      {"id": "us-mia", "s3_endpoint": "us-mia-1.linodeobjects.com"}, {"id": "id-cgk",
+      "s3_endpoint": "id-cgk-1.linodeobjects.com"}, {"id": "us-lax", "s3_endpoint":
+      "us-lax-1.linodeobjects.com"}]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -83,24 +116,28 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
-      Content-Length:
-      - "145"
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Wed, 10 Jul 2024 18:00:49 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
       - Authorization, X-Filter
+      - Accept-Encoding
       X-Accepted-Oauth-Scopes:
-      - object_storage:read_write
+      - object_storage:read_only
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -109,7 +146,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -125,7 +162,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/360684
+    url: https://api.linode.com/v4beta/object-storage/keys/1171496
     method: DELETE
   response:
     body: '{}'
@@ -140,16 +177,22 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "2"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Wed, 10 Jul 2024 18:00:55 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -164,7 +207,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
