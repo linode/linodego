@@ -11,20 +11,28 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/profile/logins
+    url: https://api.linode.com/v4beta/profile/logins?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 1563948056, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+    body: '{"data": [{"id": 1571944101, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
       "username": "ErikZilber", "status": "successful", "restricted": false}, {"id":
-      1563982298, "datetime": "2018-01-02T03:04:05", "ip": "24.63.69.52", "username":
-      "ErikZilber", "status": "successful", "restricted": false}, {"id": 1564542275,
-      "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
-      "username": "ErikZilber", "status": "failed", "restricted": false}, {"id": 1564542300,
+      1571945711, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+      "username": "ErikZilber", "status": "successful", "restricted": false}, {"id":
+      1571945752, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+      "username": "ErikZilber", "status": "successful", "restricted": false}, {"id":
+      1571956173, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+      "username": "ErikZilber", "status": "successful", "restricted": false}, {"id":
+      1571970960, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+      "username": "ErikZilber", "status": "failed", "restricted": false}, {"id": 1571970963,
       "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
       "username": "ErikZilber", "status": "successful", "restricted": false}, {"id":
-      1564542307, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+      1571971001, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+      "username": "ErikZilber", "status": "successful", "restricted": false}, {"id":
+      1572017249, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+      "username": "ErikZilber", "status": "successful", "restricted": false}, {"id":
+      1572047784, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
       "username": "ErikZilber", "status": "successful", "restricted": false}], "page":
-      1, "pages": 1, "results": 5}'
+      1, "pages": 1, "results": 9}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -36,22 +44,26 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
-      Content-Length:
-      - "878"
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Wed, 10 Jul 2024 18:11:09 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
       - Authorization, X-Filter
+      - Accept-Encoding
       X-Accepted-Oauth-Scopes:
       - account:read_only
       X-Content-Type-Options:
@@ -62,7 +74,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -78,10 +90,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/profile/logins/1563948056
+    url: https://api.linode.com/v4beta/profile/logins/1571944101
     method: GET
   response:
-    body: '{"id": 1563948056, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
+    body: '{"id": 1571944101, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
       "username": "ErikZilber", "status": "successful", "restricted": false}'
     headers:
       Access-Control-Allow-Credentials:
@@ -94,17 +106,22 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "170"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Wed, 10 Jul 2024 18:11:09 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -120,7 +137,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

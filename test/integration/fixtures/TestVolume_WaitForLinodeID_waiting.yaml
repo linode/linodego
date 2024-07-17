@@ -11,13 +11,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/volumes/4210941
+    url: https://api.linode.com/v4beta/volumes/4979073
     method: GET
   response:
-    body: '{"id": 4210941, "status": "active", "label": "go-vol-test-def", "created":
+    body: '{"id": 4979073, "status": "active", "label": "go-vol-test-def", "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
       "/dev/disk/by-id/scsi-0Linode_Volume_go-vol-test-def", "size": 20, "linode_id":
-      59542537, "linode_label": "go-test-ins-5647vkb87baw", "region": "ap-west", "tags":
+      61342082, "linode_label": "go-test-ins-8w21pl1h4n1x", "region": "ap-west", "tags":
       [], "hardware_type": "nvme"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -30,6 +30,8 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -41,7 +43,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:35:46 GMT
+      - Thu, 11 Jul 2024 20:02:05 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -57,10 +59,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
