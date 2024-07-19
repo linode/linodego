@@ -3,7 +3,10 @@ package linodego
 import (
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
+	"net/http"
+	"net/http/httptest"
 	"reflect"
 	"strings"
 	"testing"
@@ -196,5 +199,131 @@ func TestDebugLogSanitization(t *testing.T) {
 
 	if !reflect.DeepEqual(*result, testResp) {
 		t.Fatalf("actual response does not equal desired response: %s", cmp.Diff(result, testResponse))
+	}
+}
+
+func TestDoRequest_Success(t *testing.T) {
+	handler := func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"message":"success"}`))
+	}
+	server := httptest.NewServer(http.HandlerFunc(handler))
+	defer server.Close()
+
+	client := &HTTPClient{
+		httpClient: server.Client(),
+	}
+
+	params := RequestParams{
+		Response: &map[string]string{},
+	}
+
+	err := client.doRequest(context.Background(), http.MethodGet, server.URL, params)
+	if err != nil {
+		t.Fatal(cmp.Diff(nil, err))
+	}
+
+	expected := "success"
+	actual := (*params.Response.(*map[string]string))["message"]
+	if diff := cmp.Diff(expected, actual); diff != "" {
+		t.Fatalf("response mismatch (-expected +actual):\n%s", diff)
+	}
+}
+
+func TestDoRequest_FailedEncodeBody(t *testing.T) {
+	client := &HTTPClient{
+		httpClient: http.DefaultClient,
+	}
+
+	params := RequestParams{
+		Body: map[string]interface{}{
+			"invalid": func() {},
+		},
+	}
+
+	err := client.doRequest(context.Background(), http.MethodPost, "http://example.com", params)
+	expectedErr := "failed to encode body"
+	if err == nil || !strings.Contains(err.Error(), expectedErr) {
+		t.Fatalf("expected error %q, got: %v", expectedErr, err)
+	}
+}
+
+func TestDoRequest_FailedCreateRequest(t *testing.T) {
+	client := &HTTPClient{
+		httpClient: http.DefaultClient,
+	}
+
+	// Create a request with an invalid URL to simulate a request creation failure
+	err := client.doRequest(context.Background(), http.MethodGet, "http://invalid url", RequestParams{})
+	expectedErr := "failed to create request"
+	if err == nil || !strings.Contains(err.Error(), expectedErr) {
+		t.Fatalf("expected error %q, got: %v", expectedErr, err)
+	}
+}
+
+func TestDoRequest_Non2xxStatusCode(t *testing.T) {
+	handler := func(w http.ResponseWriter, r *http.Request) {
+		http.Error(w, "error", http.StatusInternalServerError)
+	}
+	server := httptest.NewServer(http.HandlerFunc(handler))
+	defer server.Close()
+
+	client := &HTTPClient{
+		httpClient: server.Client(),
+	}
+
+	err := client.doRequest(context.Background(), http.MethodGet, server.URL, RequestParams{})
+	expectedErr := "received non-2xx status code"
+	if err == nil || !strings.Contains(err.Error(), expectedErr) {
+		t.Fatalf("expected error %q, got: %v", expectedErr, err)
+	}
+}
+
+func TestDoRequest_FailedDecodeResponse(t *testing.T) {
+	handler := func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`invalid json`))
+	}
+	server := httptest.NewServer(http.HandlerFunc(handler))
+	defer server.Close()
+
+	client := &HTTPClient{
+		httpClient: server.Client(),
+	}
+
+	params := RequestParams{
+		Response: &map[string]string{},
+	}
+
+	err := client.doRequest(context.Background(), http.MethodGet, server.URL, params)
+	expectedErr := "failed to decode response"
+	if err == nil || !strings.Contains(err.Error(), expectedErr) {
+		t.Fatalf("expected error %q, got: %v", expectedErr, err)
+	}
+}
+
+func TestDoRequest_MutatorError(t *testing.T) {
+	handler := func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"message":"success"}`))
+	}
+	server := httptest.NewServer(http.HandlerFunc(handler))
+	defer server.Close()
+
+	client := &HTTPClient{
+		httpClient: server.Client(),
+	}
+
+	mutator := func(req *http.Request) error {
+		return errors.New("mutator error")
+	}
+
+	err := client.doRequest(context.Background(), http.MethodGet, server.URL, RequestParams{}, mutator)
+	expectedErr := "failed to mutate request"
+	if err == nil || !strings.Contains(err.Error(), expectedErr) {
+		t.Fatalf("expected error %q, got: %v", expectedErr, err)
 	}
 }

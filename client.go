@@ -1,8 +1,11 @@
 package linodego
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"net/url"
@@ -71,6 +74,45 @@ type Client struct {
 	cachedEntryLock *sync.RWMutex
 }
 
+// Client is a wrapper around the Resty client
+type HTTPClient struct {
+	//nolint:unused
+	httpClient *http.Client
+	//nolint:unused
+	userAgent string
+	//nolint:unused
+	debug bool
+	//nolint:unused
+	retryConditionals []RetryConditional
+
+	//nolint:unused
+	pollInterval time.Duration
+
+	//nolint:unused
+	baseURL string
+	//nolint:unused
+	apiVersion string
+	//nolint:unused
+	apiProto string
+	//nolint:unused
+	selectedProfile string
+	//nolint:unused
+	loadedProfile string
+
+	//nolint:unused
+	configProfiles map[string]ConfigProfile
+
+	// Fields for caching endpoint responses
+	//nolint:unused
+	shouldCache bool
+	//nolint:unused
+	cacheExpiration time.Duration
+	//nolint:unused
+	cachedEntries map[string]clientCacheEntry
+	//nolint:unused
+	cachedEntryLock *sync.RWMutex
+}
+
 type EnvDefaults struct {
 	Token   string
 	Profile string
@@ -108,6 +150,66 @@ func (c *Client) SetUserAgent(ua string) *Client {
 	c.resty.SetHeader("User-Agent", c.userAgent)
 
 	return c
+}
+
+type RequestParams struct {
+	Body     map[string]any
+	Response any
+}
+
+// Generic helper to execute HTTP requests using the
+//
+//nolint:unused
+func (c *HTTPClient) doRequest(ctx context.Context, method, url string, params RequestParams, mutators ...func(req *http.Request) error) error {
+	// Create a new HTTP request
+	var bodyReader io.Reader
+	if params.Body != nil {
+		buf := new(bytes.Buffer)
+		if err := json.NewEncoder(buf).Encode(params.Body); err != nil {
+			return fmt.Errorf("failed to encode body: %w", err)
+		}
+		bodyReader = buf
+	}
+
+	req, err := http.NewRequestWithContext(ctx, method, url, bodyReader)
+	if err != nil {
+		return fmt.Errorf("failed to create request: %w", err)
+	}
+
+	// Set default headers
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Accept", "application/json")
+	if c.userAgent != "" {
+		req.Header.Set("User-Agent", c.userAgent)
+	}
+
+	// Apply mutators
+	for _, mutate := range mutators {
+		if err := mutate(req); err != nil {
+			return fmt.Errorf("failed to mutate request: %w", err)
+		}
+	}
+
+	// Send the request
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+		return fmt.Errorf("failed to send request: %w", err)
+	}
+	defer resp.Body.Close()
+
+	// Check for HTTP errors
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
+		return fmt.Errorf("received non-2xx status code: %d", resp.StatusCode)
+	}
+
+	// Decode the response body
+	if params.Response != nil {
+		if err := json.NewDecoder(resp.Body).Decode(params.Response); err != nil {
+			return fmt.Errorf("failed to decode response: %w", err)
+		}
+	}
+
+	return nil
 }
 
 // R wraps resty's R method
