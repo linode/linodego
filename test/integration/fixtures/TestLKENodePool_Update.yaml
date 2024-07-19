@@ -504,7 +504,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"count":3,"tags":["bar","foo","test"]}'
+    body: '{"count":3,"tags":["bar","foo","test"],"labels":{"foo":"bar"},"taints":[{"key":"foo","value":"bar","effect":"NoSchedule"}]}'
     form: {}
     headers:
       Accept:
@@ -520,8 +520,9 @@ interactions:
       "instance_id": 60897411, "status": "not_ready"}, {"id": "281818-311827560000",
       "instance_id": 60897409, "status": "not_ready"}, {"id": "281818-46e0d5dc0000",
       "instance_id": 60897407, "status": "not_ready"}], "disks": [{"size": 1000, "type":
-      "ext4"}], "autoscaler": {"enabled": true, "min": 2, "max": 5}, "labels": {},
-      "taints": [], "tags": ["bar", "foo", "test"]}'
+      "ext4"}], "autoscaler": {"enabled": true, "min": 2, "max": 5}, "tags": ["bar",
+      "foo", "test"], "labels": { "foo": "bar"}, "taints": [{ "key": "foo", "value":
+      "bar", "effect": "NoSchedule"}]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
