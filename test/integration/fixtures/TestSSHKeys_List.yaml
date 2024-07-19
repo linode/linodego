@@ -15,7 +15,7 @@ interactions:
     url: https://api.linode.com/v4beta/profile/sshkeys
     method: POST
   response:
-    body: '{"id": 225131, "label": "go-test-def", "ssh_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYlv4Ns3tY2NEseuuMXEz1sLzO9sGC0cwaT2ECbWFyrsn1Fg5ISdkaJD8LiuhZ41/1Mh0Sq49wY89yLkmw+Ukrd+thFbhUqTzjL09U89kn3Ds/ajVJgwnJ4pXmBqhq0/3pmO/UkYIBi5ErTnPWL+yHAoQ1HsVetxYUmY2SPaT0pduDIrvNZRvWn3Nvn9qsUVfthWiGc8oHWE5xyd7+3UPLHSMkE4rZd2k6e7bJWCM/VJ7ZrJQ6UVTDXjBCkkT12WsOWxcEuL36RUGgGa4h5M4IY0SkgQSKHer01dJSj3c6OBzj2CRDZFoM8f/YC66s0+ZQ9cE/aADDycMIvqOJBI6X
+    body: '{"id": 451623, "label": "go-test-def", "ssh_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYlv4Ns3tY2NEseuuMXEz1sLzO9sGC0cwaT2ECbWFyrsn1Fg5ISdkaJD8LiuhZ41/1Mh0Sq49wY89yLkmw+Ukrd+thFbhUqTzjL09U89kn3Ds/ajVJgwnJ4pXmBqhq0/3pmO/UkYIBi5ErTnPWL+yHAoQ1HsVetxYUmY2SPaT0pduDIrvNZRvWn3Nvn9qsUVfthWiGc8oHWE5xyd7+3UPLHSMkE4rZd2k6e7bJWCM/VJ7ZrJQ6UVTDXjBCkkT12WsOWxcEuL36RUGgGa4h5M4IY0SkgQSKHer01dJSj3c6OBzj2CRDZFoM8f/YC66s0+ZQ9cE/aADDycMIvqOJBI6X
       go-test-def", "created": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -29,15 +29,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "479"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Tue, 09 Jul 2024 13:22:52 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -52,7 +56,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -68,23 +72,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/profile/sshkeys
+    url: https://api.linode.com/v4beta/profile/sshkeys?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 152998, "label": "tf_test_authorized_keys", "ssh_key":
-      "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQDTvJ3DEQbiBaaLunzTgQrgsDKqgTqDnNLhhnZSLIqCCuM60bZgJ6ML8xfmeLZ22sUGcC3sx1Qbq2xhfLbugEdPKalNav4VClBw14oham7dtFdKP1KjsPn1vo4/BbBQD1OVQkYJtEJn+Kes8mzKLVd1KAxD2a3AQCMpd799Tpwzqw==
-      linode@ssh-acceptance-test", "created": "2018-01-02T03:04:05"}, {"id": 161097,
-      "label": "main", "ssh_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC/9hS+wF6hxr7F8u18foHDiZSH6OBv27gwJwW3zbGLPCp37Q9sP/ZxvIGjOUgC/8dtZYMwbv9G2/E1/V0JjLIA7sE5y5u+O+8Qo/WvvLMttp7UOzNswzjOAEHSlsHnj+Fjc6H0zSjjZAutNxmzDweaGueGXwIILbuXp+TTv2ZFBgFETP8psCCbBUV/ONTzDV2Azp0nOD2Jq7BCg2uXvSgbArWR8EEt7WKoxLtGQpM3eY9fkIACzNMJrUbzPjzcQDiAoh1lx7SYbhCejVAgWRmaaWCAzDDYAsJbaDdlsLedcMO+l0bHgyW2om7D4ougeEZTVKpw1NbjtIeMSP/yMMGb
-      porkysm@ubuntu", "created": "2018-01-02T03:04:05"}, {"id": 210640, "label":
-      "tf_test_authorized_keys", "ssh_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQCmlfMklYRrffVWmxXkaUuBKx1Cy0YDPjPpAjqAOuGNwpUS2rx9kd842UVHnKFyPc6VxUudmXm1htG46k21RkyxhSp6M9evMYhqmY+5g+MyBf/rwCKQqPDbBfgkAbzOWfTj68/rlitxljjIn4JCS99DmgkxBxpdBFeVhuAG5a8Hkw==
-      linode@ssh-acceptance-test", "created": "2018-01-02T03:04:05"}, {"id": 210892,
-      "label": "dev-server-rsa", "ssh_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQC3tmzKeKrdyhTrtX3vjV7bDG3SlYf0IDPh7QkY9etASgFfqOW4vmioXj7yAj5mx3wOlAVcDCKhc4+X4jED87ZHPmupr2FRCJprW/hdHA0J97sDSYpZ2v4y/GNzmvPR+z8Nqi+heUuXPj4d9CKMx9MqiyS7OrFrj86HTkVIGZgkK55cD+Vy3WJsr6mYuaSKc8q7vd7MqjVZJ7xaxX41Ss6bYFHi3Hu8QtSCTr/V7qAxAmlLSrf36fxm1xK5BrS5LgllwTfKoQJKbBupBdiEMuAknoVoMflZhuXB5pbqqgTGCFZ7bKCejFE0jdAqOUEh/sa3FJLozjx4cS1SEbI4IwJqp/Xtfh8lerJHA+EJahLHbHLP9/UiSy36taKK6ULXx+PHXWekh9OhsC8f68dMN56KOvw7zjo4IpAPQpFaNYzGsEd5DA+M/y2MIcdI66hMmNqx0KJD71m62Pw1ACmVBC1WKKCbKAmcdfD5buHp2hNq3dTte/MYY40fkSWXJCDlSBE=
-      lgarber@atl-mpd9p", "created": "2018-01-02T03:04:05"}, {"id": 220902, "label":
-      "tf_test_authorized_keys", "ssh_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgQCz7HK6PeQ3r0Bw4rlICFCCTlaMHElm5/5texwLuhLyCyRIyB45Ddg54x1nGLFCIyJvj/8Xx7rJYEoukfyK4VmnGvIdFlEXGrrfAaiUOzg20Rg4PvVAiR1KxCXr0/gpXA6PTMbUmntVkZ3KVtkehabJlB6kZw8Wl82GKOtArFKJEw==
-      linode@ssh-acceptance-test", "created": "2018-01-02T03:04:05"}, {"id": 225131,
-      "label": "go-test-def", "ssh_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYlv4Ns3tY2NEseuuMXEz1sLzO9sGC0cwaT2ECbWFyrsn1Fg5ISdkaJD8LiuhZ41/1Mh0Sq49wY89yLkmw+Ukrd+thFbhUqTzjL09U89kn3Ds/ajVJgwnJ4pXmBqhq0/3pmO/UkYIBi5ErTnPWL+yHAoQ1HsVetxYUmY2SPaT0pduDIrvNZRvWn3Nvn9qsUVfthWiGc8oHWE5xyd7+3UPLHSMkE4rZd2k6e7bJWCM/VJ7ZrJQ6UVTDXjBCkkT12WsOWxcEuL36RUGgGa4h5M4IY0SkgQSKHer01dJSj3c6OBzj2CRDZFoM8f/YC66s0+ZQ9cE/aADDycMIvqOJBI6X
+    body: '{"data": [{"id": 451623, "label": "go-test-def", "ssh_key": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYlv4Ns3tY2NEseuuMXEz1sLzO9sGC0cwaT2ECbWFyrsn1Fg5ISdkaJD8LiuhZ41/1Mh0Sq49wY89yLkmw+Ukrd+thFbhUqTzjL09U89kn3Ds/ajVJgwnJ4pXmBqhq0/3pmO/UkYIBi5ErTnPWL+yHAoQ1HsVetxYUmY2SPaT0pduDIrvNZRvWn3Nvn9qsUVfthWiGc8oHWE5xyd7+3UPLHSMkE4rZd2k6e7bJWCM/VJ7ZrJQ6UVTDXjBCkkT12WsOWxcEuL36RUGgGa4h5M4IY0SkgQSKHer01dJSj3c6OBzj2CRDZFoM8f/YC66s0+ZQ9cE/aADDycMIvqOJBI6X
       go-test-def", "created": "2018-01-02T03:04:05"}], "page": 1, "pages": 1, "results":
-      6}'
+      1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -97,14 +90,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "528"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Tue, 09 Jul 2024 13:22:52 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -120,7 +118,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -136,7 +134,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/profile/sshkeys/225131
+    url: https://api.linode.com/v4beta/profile/sshkeys/451623
     method: DELETE
   response:
     body: '{}'
@@ -152,15 +150,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "2"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Tue, 09 Jul 2024 13:22:52 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -175,7 +177,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
