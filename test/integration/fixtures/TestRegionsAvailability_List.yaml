@@ -11,7 +11,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/regions/availability
+    url: https://api.linode.com/v4beta/regions/availability?page=1
     method: GET
   response:
     body: '{"data": [{"region": "us-central", "plan": "g1-gpu-rtx6000-1", "available":
@@ -112,6 +112,8 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -259,6 +261,8 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -402,6 +406,141 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 11 Jul 2024 18:27:15 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/regions/availability?page=5
+    method: GET
+  response:
+    body: '{"data": [{"region": "us-mia", "plan": "g7-premium-2", "available": true},
+      {"region": "us-mia", "plan": "g7-premium-4", "available": true}, {"region":
+      "us-mia", "plan": "g7-premium-8", "available": true}, {"region": "us-mia", "plan":
+      "g7-premium-16", "available": true}, {"region": "us-mia", "plan": "g7-premium-32",
+      "available": true}, {"region": "us-mia", "plan": "g7-premium-48", "available":
+      true}, {"region": "us-mia", "plan": "g7-premium-50", "available": true}, {"region":
+      "us-mia", "plan": "g7-premium-56", "available": true}, {"region": "us-mia",
+      "plan": "g7-premium-64", "available": false}, {"region": "us-mia", "plan": "g1-gpu-rtx4000a-1",
+      "available": false}, {"region": "us-mia", "plan": "g1-gpu-rtx4000a-2", "available":
+      false}, {"region": "us-mia", "plan": "g1-gpu-rtx4000a-4", "available": false},
+      {"region": "us-mia", "plan": "g1-gpu-rtx4000a-6", "available": false}, {"region":
+      "us-mia", "plan": "g1-gpu-rtx4000a-8", "available": false}, {"region": "id-cgk",
+      "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "id-cgk", "plan":
+      "g1-gpu-rtx6000-2", "available": false}, {"region": "id-cgk", "plan": "g1-gpu-rtx6000-3",
+      "available": false}, {"region": "id-cgk", "plan": "g1-gpu-rtx6000-4", "available":
+      false}, {"region": "id-cgk", "plan": "g7-premium-2", "available": true}, {"region":
+      "id-cgk", "plan": "g7-premium-4", "available": true}, {"region": "id-cgk", "plan":
+      "g7-premium-8", "available": true}, {"region": "id-cgk", "plan": "g7-premium-16",
+      "available": true}, {"region": "id-cgk", "plan": "g7-premium-32", "available":
+      true}, {"region": "id-cgk", "plan": "g7-premium-48", "available": true}, {"region":
+      "id-cgk", "plan": "g7-premium-50", "available": true}, {"region": "id-cgk",
+      "plan": "g7-premium-56", "available": true}, {"region": "id-cgk", "plan": "g7-premium-64",
+      "available": true}, {"region": "id-cgk", "plan": "g1-gpu-rtx4000a-1", "available":
+      false}, {"region": "id-cgk", "plan": "g1-gpu-rtx4000a-2", "available": false},
+      {"region": "id-cgk", "plan": "g1-gpu-rtx4000a-4", "available": false}, {"region":
+      "id-cgk", "plan": "g1-gpu-rtx4000a-6", "available": false}, {"region": "id-cgk",
+      "plan": "g1-gpu-rtx4000a-8", "available": false}, {"region": "us-lax", "plan":
+      "g1-gpu-rtx6000-1", "available": false}, {"region": "us-lax", "plan": "g1-gpu-rtx6000-2",
+      "available": false}, {"region": "us-lax", "plan": "g1-gpu-rtx6000-3", "available":
+      false}, {"region": "us-lax", "plan": "g1-gpu-rtx6000-4", "available": false},
+      {"region": "us-lax", "plan": "g7-premium-2", "available": true}, {"region":
+      "us-lax", "plan": "g7-premium-4", "available": true}, {"region": "us-lax", "plan":
+      "g7-premium-8", "available": true}, {"region": "us-lax", "plan": "g7-premium-16",
+      "available": true}, {"region": "us-lax", "plan": "g7-premium-32", "available":
+      true}, {"region": "us-lax", "plan": "g7-premium-48", "available": true}, {"region":
+      "us-lax", "plan": "g7-premium-50", "available": true}, {"region": "us-lax",
+      "plan": "g7-premium-56", "available": true}, {"region": "us-lax", "plan": "g7-premium-64",
+      "available": true}, {"region": "us-lax", "plan": "g1-gpu-rtx4000a-1", "available":
+      false}, {"region": "us-lax", "plan": "g1-gpu-rtx4000a-2", "available": false},
+      {"region": "us-lax", "plan": "g1-gpu-rtx4000a-4", "available": false}, {"region":
+      "us-lax", "plan": "g1-gpu-rtx4000a-6", "available": false}, {"region": "us-lax",
+      "plan": "g1-gpu-rtx4000a-8", "available": false}, {"region": "gb-lon", "plan":
+      "g1-gpu-rtx6000-1", "available": false}, {"region": "gb-lon", "plan": "g1-gpu-rtx6000-2",
+      "available": false}, {"region": "gb-lon", "plan": "g1-gpu-rtx6000-3", "available":
+      false}, {"region": "gb-lon", "plan": "g1-gpu-rtx6000-4", "available": false},
+      {"region": "gb-lon", "plan": "g7-premium-2", "available": true}, {"region":
+      "gb-lon", "plan": "g7-premium-4", "available": true}, {"region": "gb-lon", "plan":
+      "g7-premium-8", "available": true}, {"region": "gb-lon", "plan": "g7-premium-16",
+      "available": true}, {"region": "gb-lon", "plan": "g7-premium-32", "available":
+      true}, {"region": "gb-lon", "plan": "g7-premium-48", "available": true}, {"region":
+      "gb-lon", "plan": "g7-premium-50", "available": true}, {"region": "gb-lon",
+      "plan": "g7-premium-56", "available": true}, {"region": "gb-lon", "plan": "g7-premium-64",
+      "available": true}, {"region": "gb-lon", "plan": "g1-gpu-rtx4000a-1", "available":
+      false}, {"region": "gb-lon", "plan": "g1-gpu-rtx4000a-2", "available": false},
+      {"region": "gb-lon", "plan": "g1-gpu-rtx4000a-4", "available": false}, {"region":
+      "gb-lon", "plan": "g1-gpu-rtx4000a-6", "available": false}, {"region": "gb-lon",
+      "plan": "g1-gpu-rtx4000a-8", "available": false}, {"region": "au-mel", "plan":
+      "g1-gpu-rtx6000-1", "available": false}, {"region": "au-mel", "plan": "g1-gpu-rtx6000-2",
+      "available": false}, {"region": "au-mel", "plan": "g1-gpu-rtx6000-3", "available":
+      false}, {"region": "au-mel", "plan": "g1-gpu-rtx6000-4", "available": false},
+      {"region": "au-mel", "plan": "g7-premium-2", "available": true}, {"region":
+      "au-mel", "plan": "g7-premium-4", "available": true}, {"region": "au-mel", "plan":
+      "g7-premium-8", "available": true}, {"region": "au-mel", "plan": "g7-premium-16",
+      "available": true}, {"region": "au-mel", "plan": "g7-premium-32", "available":
+      true}, {"region": "au-mel", "plan": "g7-premium-48", "available": true}, {"region":
+      "au-mel", "plan": "g7-premium-50", "available": true}, {"region": "au-mel",
+      "plan": "g7-premium-56", "available": true}, {"region": "au-mel", "plan": "g7-premium-64",
+      "available": true}, {"region": "au-mel", "plan": "g1-gpu-rtx4000a-1", "available":
+      false}, {"region": "au-mel", "plan": "g1-gpu-rtx4000a-2", "available": false},
+      {"region": "au-mel", "plan": "g1-gpu-rtx4000a-4", "available": false}, {"region":
+      "au-mel", "plan": "g1-gpu-rtx4000a-6", "available": false}, {"region": "au-mel",
+      "plan": "g1-gpu-rtx4000a-8", "available": false}], "page": 5, "pages": 5, "results":
+      486}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
