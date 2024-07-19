@@ -186,7 +186,17 @@ func getRegionsWithCaps(t *testing.T, client *linodego.Client, capabilities, pla
 		t.Fatal(err)
 	}
 
-	regionsAvilabilities, err := client.ListRegionsAvailability(context.Background(), nil)
+	regionsAvailabilities, err := client.ListRegionsAvailability(context.Background(), nil)
+
+	type availKey struct {
+		Region string
+		Plan   string
+	}
+
+	availMap := make(map[availKey]linodego.RegionAvailability, len(regionsAvailabilities))
+	for _, avail := range regionsAvailabilities {
+		availMap[availKey{Region: avail.Region, Plan: avail.Plan}] = avail
+	}
 
 	regionHasCaps := func(r linodego.Region) bool {
 		capsMap := make(map[string]bool)
@@ -211,14 +221,7 @@ func getRegionsWithCaps(t *testing.T, client *linodego.Client, capabilities, pla
 		}
 
 		for _, plan := range plans {
-			planAvailable := false
-			for _, regionAvailability := range regionsAvilabilities {
-				if regionAvailability.Region == regionID && regionAvailability.Plan == plan && regionAvailability.Available {
-					planAvailable = true
-					break
-				}
-			}
-			if !planAvailable {
+			if avail, ok := availMap[availKey{Region: regionID, Plan: plan}]; !ok || !avail.Available {
 				return false
 			}
 		}
