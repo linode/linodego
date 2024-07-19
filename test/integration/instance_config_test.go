@@ -67,7 +67,7 @@ func setupInstanceWithVPCAndNATOneToOne(t *testing.T, fixturesYaml string) (
 		t,
 		fixturesYaml,
 		func(client *Client, opts *InstanceCreateOptions) {
-			opts.Region = getRegionsWithCaps(t, client, []string{"Linodes", "VPCs"})[0]
+			opts.Region = getRegionsWithCaps(t, client, []string{"Linodes", "VPCs"}, []string{})[0]
 		},
 	)
 	if err != nil {
@@ -110,7 +110,7 @@ func setupInstanceWith3Interfaces(t *testing.T, fixturesYaml string) (
 		t,
 		fixturesYaml,
 		func(client *Client, opts *InstanceCreateOptions) {
-			opts.Region = getRegionsWithCaps(t, client, []string{"Linodes", "VPCs"})[0]
+			opts.Region = getRegionsWithCaps(t, client, []string{"Linodes", "VPCs"}, []string{})[0]
 		},
 	)
 	if err != nil {
@@ -153,7 +153,7 @@ func TestInstance_ConfigInterfaces_AppendDelete(t *testing.T) {
 		"fixtures/TestInstance_ConfigInterfaces_AppendDelete",
 		func(client *Client, opts *InstanceCreateOptions) {
 			// Ensure we're in a region that supports VLANs
-			opts.Region = getRegionsWithCaps(t, client, []string{"vlans", "VPCs"})[0]
+			opts.Region = getRegionsWithCaps(t, client, []string{"vlans", "VPCs"}, []string{})[0]
 		},
 	)
 	defer teardown()
@@ -303,7 +303,7 @@ func TestInstance_ConfigInterfaces_Update(t *testing.T) {
 		"fixtures/TestInstance_ConfigInterfaces_Update",
 		func(client *Client, opts *InstanceCreateOptions) {
 			// Ensure we're in a region that supports VLANs
-			opts.Region = getRegionsWithCaps(t, client, []string{"vlans", "VPCs"})[0]
+			opts.Region = getRegionsWithCaps(t, client, []string{"vlans", "VPCs"}, []string{})[0]
 		},
 	)
 	defer teardown()
@@ -377,7 +377,7 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 		"fixtures/TestInstance_ConfigInterface_Update",
 		func(client *Client, opts *InstanceCreateOptions) {
 			// Ensure we're in a region that supports VLANs
-			opts.Region = getRegionsWithCaps(t, client, []string{"vlans", "VPCs"})[0]
+			opts.Region = getRegionsWithCaps(t, client, []string{"vlans", "VPCs"}, []string{})[0]
 		},
 	)
 	defer teardown()

@@ -41,7 +41,7 @@ func TestObjectStorageBucket_Create_smoke(t *testing.T) {
 func TestObjectStorageBucket_Regional(t *testing.T) {
 	// t.Skip("skipping region test before GA")
 	client, teardown := createTestClient(t, "fixtures/TestObjectStorageBucket_Regional")
-	regions := getRegionsWithCaps(t, client, []string{"Object Storage"})
+	regions := getRegionsWithCaps(t, client, []string{"Object Storage"}, []string{})
 	if len(regions) < 1 {
 		t.Fatal("Can't get region with Object Storage capability")
 	}
