@@ -35,7 +35,7 @@ func createVPC(t *testing.T, client *linodego.Client, vpcModifier ...vpcModifier
 	t.Helper()
 	createOpts := linodego.VPCCreateOptions{
 		Label:  "go-test-vpc-" + getUniqueText(),
-		Region: getRegionsWithCaps(t, client, []string{"VPCs"})[0],
+		Region: getRegionsWithCaps(t, client, []string{"VPCs"}, []string{})[0],
 	}
 
 	for _, mod := range vpcModifier {
@@ -59,7 +59,7 @@ func createVPC_invalid_label(t *testing.T, client *linodego.Client) error {
 	t.Helper()
 	createOpts := linodego.VPCCreateOptions{
 		Label:  "gotest_vpc_invalid_label" + getUniqueText(),
-		Region: getRegionsWithCaps(t, client, []string{"VPCs"})[0],
+		Region: getRegionsWithCaps(t, client, []string{"VPCs"}, []string{})[0],
 	}
 	_, err := client.CreateVPC(context.Background(), createOpts)
 
