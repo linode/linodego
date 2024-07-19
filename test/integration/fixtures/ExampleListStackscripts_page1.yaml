@@ -2798,7 +2798,7 @@ interactions:
       can now configure DIY and Softaculous Webuzo at the following URL :\"\necho
       \"http://$ip:2004/\"\necho \" \"\necho \"Thank you for choosing Softaculous
       Webuzo !\"\necho \" \"", "user_defined_fields": []}, {"id": 665116, "username":
-      "prod-test-012", "user_gravatar_id": "9c7a651c63f3cefe52654946e9b46bd2", "label":
+      "prod-test-012", "user_gravatar_id": "baf45275c482453fbd50f381af256408", "label":
       "test public2", "description": "", "ordinal": 0, "logo_url": "", "images": ["linode/alpine3.10"],
       "deployments_total": 0, "deployments_active": 0, "is_public": true, "mine":
       false, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "rev_note":
@@ -3672,7 +3672,7 @@ interactions:
       \"You can now configure qdPM and Softaculous Webuzo at the following URL :\"\necho
       \"http://$ip:2004/\"\necho \" \"\necho \"Thank you for choosing Softaculous
       Webuzo !\"\necho \" \"", "user_defined_fields": []}], "page": 1, "pages": 26,
-      "results": 2504}'
+      "results": 2527}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -3684,16 +3684,19 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
+      - Transfer-Encoding
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:04:46 GMT
+      - Thu, 11 Jul 2024 18:39:07 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -3710,10 +3713,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "20"
       X-Xss-Protection:
