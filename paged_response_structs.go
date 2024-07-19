@@ -140,9 +140,11 @@ type RegionsPagedResponse legacyPagedResponse[Region]
 type SSHKeysPagedResponse legacyPagedResponse[SSHKey]
 
 // Deprecated: TokensPagedResponse exists for historical compatibility and should not be used.
-type TokensPagedResponse legacyPagedResponse[Token]
-// Deprecated: RegionsAvailabilityPagedResponse exists for historical compatibility and should not be used.
-type RegionsAvailabilityPagedResponse legacyPagedResponse[RegionAvailability]
+type (
+	TokensPagedResponse legacyPagedResponse[Token]
+	// Deprecated: RegionsAvailabilityPagedResponse exists for historical compatibility and should not be used.
+	RegionsAvailabilityPagedResponse legacyPagedResponse[RegionAvailability]
+)
 
 // Deprecated: StackscriptsPagedResponse exists for historical compatibility and should not be used.
 type StackscriptsPagedResponse legacyPagedResponse[Stackscript]
