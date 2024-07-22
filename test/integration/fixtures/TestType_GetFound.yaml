@@ -15,8 +15,11 @@ interactions:
     method: GET
   response:
     body: '{"id": "g6-standard-1", "label": "Linode 2GB", "price": {"hourly": 0.018,
-      "monthly": 12.0}, "addons": {"backups": {"price": {"hourly": 0.004, "monthly":
-      2.5}}}, "memory": 2048, "disk": 51200, "transfer": 2000, "vcpus": 1, "gpus":
+      "monthly": 12.0}, "region_prices": [{"id": "id-cgk", "hourly": 0.022, "monthly":
+      14.4}, {"id": "br-gru", "hourly": 0.025, "monthly": 16.8}], "addons": {"backups":
+      {"price": {"hourly": 0.004, "monthly": 2.5}, "region_prices": [{"id": "id-cgk",
+      "hourly": 0.0045, "monthly": 3.0}, {"id": "br-gru", "hourly": 0.005, "monthly":
+      3.5}]}}, "memory": 2048, "disk": 51200, "transfer": 2000, "vcpus": 1, "gpus":
       0, "network_out": 2000, "class": "standard", "successor": null}'
     headers:
       Access-Control-Allow-Credentials:
@@ -29,17 +32,22 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=900
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
-      - "293"
+      - "538"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Thu, 11 Jul 2024 18:32:53 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -55,7 +63,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

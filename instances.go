@@ -10,7 +10,7 @@ import (
 )
 
 /*
- * https://developers.linode.com/v4/reference/endpoints/linode/instances
+ * https://techdocs.akamai.com/linode-api/reference/post-linode-instance
  */
 
 // InstanceStatus constants start with Instance and include Linode API Instance Status values
