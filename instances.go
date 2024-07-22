@@ -108,10 +108,10 @@ type InstanceTransfer struct {
 // InstancePlacementGroup represents information about the placement group
 // this Linode is a part of.
 type InstancePlacementGroup struct {
-	ID           int                        `json:"id"`
-	Label        string                     `json:"label"`
-	AffinityType PlacementGroupAffinityType `json:"affinity_type"`
-	IsStrict     bool                       `json:"is_strict"`
+	ID                   int                  `json:"id"`
+	Label                string               `json:"label"`
+	PlacementGroupType   PlacementGroupType   `json:"placement_group_type"`
+	PlacementGroupPolicy PlacementGroupPolicy `json:"placement_group_policy"`
 }
 
 // InstanceMetadataOptions specifies various Instance creation fields
