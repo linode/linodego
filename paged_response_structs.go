@@ -85,6 +85,9 @@ type IPv6RangesPagedResponse legacyPagedResponse[IPv6Range]
 // Deprecated: LinodeKernelsPagedResponse exists for historical compatibility and should not be used.
 type LinodeKernelsPagedResponse legacyPagedResponse[LinodeKernel]
 
+// Deprecated: LinodeTypesPagedResponse exists for historical compatibility and should not be used.
+type LinodeTypesPagedResponse legacyPagedResponse[LinodeType]
+
 // Deprecated: LoginsPagedResponse exists for historical compatibility and should not be used.
 type LoginsPagedResponse legacyPagedResponse[Login]
 
@@ -129,6 +132,31 @@ type ObjectStorageClustersPagedResponse legacyPagedResponse[ObjectStorageCluster
 
 // Deprecated: PaymentsPagedResponse exists for historical compatibility and should not be used.
 type PaymentsPagedResponse legacyPagedResponse[Payment]
+
+// Deprecated: RegionsPagedResponse exists for historical compatibility and should not be used.
+type RegionsPagedResponse legacyPagedResponse[Region]
+
+// Deprecated: SSHKeysPagedResponse exists for historical compatibility and should not be used.
+type SSHKeysPagedResponse legacyPagedResponse[SSHKey]
+
+// Deprecated: TokensPagedResponse exists for historical compatibility and should not be used.
+type (
+	TokensPagedResponse legacyPagedResponse[Token]
+	// Deprecated: RegionsAvailabilityPagedResponse exists for historical compatibility and should not be used.
+	RegionsAvailabilityPagedResponse legacyPagedResponse[RegionAvailability]
+)
+
+// Deprecated: StackscriptsPagedResponse exists for historical compatibility and should not be used.
+type StackscriptsPagedResponse legacyPagedResponse[Stackscript]
+
+// Deprecated: TagsPagedResponse exists for historical compatibility and should not be used.
+type TagsPagedResponse legacyPagedResponse[Tag]
+
+// Deprecated: TaggedObjectsPagedResponse exists for historical compatibility and should not be used.
+type TaggedObjectsPagedResponse legacyPagedResponse[TaggedObject]
+
+// Deprecated: TicketsPagedResponse exists for historical compatibility and should not be used.
+type TicketsPagedResponse legacyPagedResponse[Ticket]
 
 // Deprecated: PostgresDatabasesPagedResponse exists for historical compatibility and should not be used.
 type PostgresDatabasesPagedResponse legacyPagedResponse[PostgresDatabase]

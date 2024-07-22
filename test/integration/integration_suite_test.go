@@ -182,13 +182,36 @@ func transportRecorderWrapper(t *testing.T, fixtureYaml string) (transport.Wrapp
 	}, teardown
 }
 
-// getRegionsWithCaps returns a list of regions that support the given capabilities.
-func getRegionsWithCaps(t *testing.T, client *linodego.Client, capabilities []string) []string {
+/*
+Helper function getRegionsWithCaps returns a list of regions that support the given capabilities and plans.
+It filters regions based on their capabilities and the availability of specified plans.
+If the plans list is empty, it only checks for the capabilities.
+
+Parameters:
+  - capabilities: A list of required capabilities that regions must support.
+  - plans (optional): A list of required plans that must be available in the regions.
+
+Returns:
+  - string values representing the IDs of regions that meet the given criteria.
+*/
+func getRegionsWithCaps(t *testing.T, client *linodego.Client, capabilities, plans []string) []string {
 	result := make([]string, 0)
 
 	regions, err := client.ListRegions(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
+	}
+
+	regionsAvailabilities, err := client.ListRegionsAvailability(context.Background(), nil)
+
+	type availKey struct {
+		Region string
+		Plan   string
+	}
+
+	availMap := make(map[availKey]linodego.RegionAvailability, len(regionsAvailabilities))
+	for _, avail := range regionsAvailabilities {
+		availMap[availKey{Region: avail.Region, Plan: avail.Plan}] = avail
 	}
 
 	regionHasCaps := func(r linodego.Region) bool {
@@ -207,8 +230,22 @@ func getRegionsWithCaps(t *testing.T, client *linodego.Client, capabilities []st
 		return true
 	}
 
+	// Function to check if a region has the required plans available
+	regionHasPlans := func(regionID string) bool {
+		if len(plans) == 0 {
+			return true
+		}
+
+		for _, plan := range plans {
+			if avail, ok := availMap[availKey{Region: regionID, Plan: plan}]; !ok || !avail.Available {
+				return false
+			}
+		}
+		return true
+	}
+
 	for _, region := range regions {
-		if region.Status != "ok" || !regionHasCaps(region) {
+		if region.Status != "ok" || !regionHasCaps(region) || !regionHasPlans(region.ID) {
 			continue
 		}
 

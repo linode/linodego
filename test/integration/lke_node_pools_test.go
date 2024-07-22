@@ -39,7 +39,7 @@ func TestLKENodePool_GetMissing(t *testing.T) {
 }
 
 func TestLKENodePool_GetFound(t *testing.T) {
-	client, lkeCluster, pool, teardown, err := setupLKENodePool(t, "fixtures/TestLKENodePool_GetFound")
+	client, lkeCluster, pool, teardown, err := setupLKENodePool(t, "fixtures/TestLKENodePool_GetFound", &testLKENodePoolCreateOpts)
 	if err != nil {
 		t.Error(err)
 	}
@@ -72,7 +72,7 @@ func TestLKENodePool_GetFound(t *testing.T) {
 }
 
 func TestLKENodePools_List(t *testing.T) {
-	client, lkeCluster, _, teardown, err := setupLKENodePool(t, "fixtures/TestLKENodePools_List")
+	client, lkeCluster, _, teardown, err := setupLKENodePool(t, "fixtures/TestLKENodePools_List", &testLKENodePoolCreateOpts)
 	if err != nil {
 		t.Error(err)
 	}
@@ -88,7 +88,7 @@ func TestLKENodePools_List(t *testing.T) {
 }
 
 func TestLKENodePoolNode_Delete(t *testing.T) {
-	client, lkeCluster, nodePool, teardown, err := setupLKENodePool(t, "fixtures/TestLKENodePoolNode_Delete")
+	client, lkeCluster, nodePool, teardown, err := setupLKENodePool(t, "fixtures/TestLKENodePoolNode_Delete", &testLKENodePoolCreateOpts)
 	if err != nil {
 		t.Error(err)
 	}
@@ -111,7 +111,7 @@ func TestLKENodePoolNode_Delete(t *testing.T) {
 }
 
 func TestLKENodePool_Update(t *testing.T) {
-	client, lkeCluster, nodePool, teardown, err := setupLKENodePool(t, "fixtures/TestLKENodePool_Update")
+	client, lkeCluster, nodePool, teardown, err := setupLKENodePool(t, "fixtures/TestLKENodePool_Update", &testLKENodePoolCreateOpts)
 	if err != nil {
 		t.Error(err)
 	}
@@ -138,11 +138,25 @@ func TestLKENodePool_Update(t *testing.T) {
 	if updated.Count != 2 {
 		t.Errorf("expected count to be 2; got %d", updated.Count)
 	}
+	if len(updated.Labels) != 0 {
+		t.Errorf("expected labels to be empty; got %v", updated.Labels)
+	}
+	if len(updated.Taints) != 0 {
+		t.Errorf("expected taints to be empty; got %v", updated.Taints)
+	}
 
 	updatedTags = []string{"bar", "foo", "test"}
+	updatedLabels := linodego.LKENodePoolLabels{"foo": "bar"}
+	updatedTaints := []linodego.LKENodePoolTaint{{
+		Key:    "foo",
+		Value:  "bar",
+		Effect: linodego.LKENodePoolTaintEffectNoSchedule,
+	}}
 	updated, err = client.UpdateLKENodePool(context.TODO(), lkeCluster.ID, nodePool.ID, linodego.LKENodePoolUpdateOptions{
-		Count: 3,            // upsize
-		Tags:  &updatedTags, // repopulate tags
+		Count:  3,              // upsize
+		Tags:   &updatedTags,   // repopulate tags
+		Labels: &updatedLabels, // set a label
+		Taints: &updatedTaints, // set a taint
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -154,12 +168,44 @@ func TestLKENodePool_Update(t *testing.T) {
 	if diff := cmp.Diff(updatedAutoscaler, updated.Autoscaler); diff != "" {
 		t.Errorf("unexpected autoscaler:\n%s", diff)
 	}
+	if diff := cmp.Diff(updatedLabels, updated.Labels); diff != "" {
+		t.Errorf("unexpected labels:\n%s", diff)
+	}
+	if diff := cmp.Diff(updatedTaints, updated.Taints); diff != "" {
+		t.Errorf("unexpected taints:\n%s", diff)
+	}
+
 	if updated.Count != 3 {
 		t.Errorf("expected count to be 3; got %d", updated.Count)
 	}
 }
 
-func setupLKENodePool(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.LKECluster, *linodego.LKENodePool, func(), error) {
+func TestLKENodePool_CreateWithLabelsAndTaints(t *testing.T) {
+	createOpts := &linodego.LKENodePoolCreateOptions{
+		Labels: linodego.LKENodePoolLabels{"foo": "bar"},
+		Taints: []linodego.LKENodePoolTaint{{
+			Key:    "foo",
+			Value:  "bar",
+			Effect: linodego.LKENodePoolTaintEffectNoSchedule,
+		}},
+		Count: 1,
+		Type: "g6-standard-1",
+	}
+	_, _, nodePool, teardown, err := setupLKENodePool(t, "fixtures/TestLKENodePool_CreateWithLabelsAndTaints", createOpts)
+	if err != nil {
+		t.Error(err)
+	}
+	defer teardown()
+
+	if diff := cmp.Diff(createOpts.Labels, nodePool.Labels); diff != "" {
+		t.Errorf("unexpected labels:\n%s", diff)
+	}
+	if diff := cmp.Diff(createOpts.Taints, nodePool.Taints); diff != "" {
+		t.Errorf("unexpected taints:\n%s", diff)
+	}
+}
+
+func setupLKENodePool(t *testing.T, fixturesYaml string, nodePoolCreateOpts *linodego.LKENodePoolCreateOptions) (*linodego.Client, *linodego.LKECluster, *linodego.LKENodePool, func(), error) {
 	t.Helper()
 	var fixtureTeardown func()
 	client, lkeCluster, fixtureTeardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
@@ -169,7 +215,7 @@ func setupLKENodePool(t *testing.T, fixturesYaml string) (*linodego.Client, *lin
 		t.Errorf("Error creating lkeCluster, got error %v", err)
 	}
 
-	pool, err := client.CreateLKENodePool(context.Background(), lkeCluster.ID, testLKENodePoolCreateOpts)
+	pool, err := client.CreateLKENodePool(context.Background(), lkeCluster.ID, *nodePoolCreateOpts)
 	if err != nil {
 		t.Errorf("Error creating LKE Node Pool, got error %v", err)
 	}

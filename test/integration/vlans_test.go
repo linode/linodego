@@ -96,7 +96,7 @@ func createVLANInstance(t *testing.T, client *linodego.Client, instanceName, vla
 
 		opts.Booted = &trueBool
 		opts.Label = instanceName
-		opts.Region = getRegionsWithCaps(t, client, []string{"Vlans"})[0]
+		opts.Region = getRegionsWithCaps(t, client, []string{"Vlans"}, []string{})[0]
 	})
 	if err != nil {
 		return nil, nil, err
