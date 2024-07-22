@@ -107,7 +107,7 @@ func TestImage_CreateUpload(t *testing.T) {
 	defer teardown()
 
 	image, uploadURL, err := client.CreateImageUpload(context.Background(), ImageCreateUploadOptions{
-		Region:      getRegionsWithCaps(t, client, []string{"Metadata"})[0],
+		Region:      getRegionsWithCaps(t, client, []string{"Metadata"}, []string{})[0],
 		Label:       "linodego-image-create-upload",
 		Description: "An image that does stuff.",
 		CloudInit:   true,
@@ -132,7 +132,7 @@ func TestImage_CloudInit(t *testing.T) {
 	client, instance, teardown, err := setupInstance(
 		t, "fixtures/TestImage_CloudInit", true,
 		func(client *Client, options *InstanceCreateOptions) {
-			options.Region = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
+			options.Region = getRegionsWithCaps(t, client, []string{"Metadata"}, []string{})[0]
 		})
 	if err != nil {
 		t.Fatal(err)

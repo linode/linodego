@@ -98,6 +98,11 @@ values are set in the supplied ListOptions.
 // opts.Results == 218
 ```
 
+> **_NOTES:_**  
+>	- The ListOptions will be mutated by list endpoint functions.
+>	- Instances of ListOptions should NOT be shared across multiple list endpoint functions.
+>	- The resulting number of results and pages can be accessed through the user-supplied ListOptions instance.
+
 #### Filtering
 
 ```go
