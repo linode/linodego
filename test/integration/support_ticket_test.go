@@ -8,6 +8,7 @@ import (
 )
 
 func TestTicket_List(t *testing.T) {
+    warnSensitiveTest(t)
     client, teardown := createTestClient(t, "fixtures/TestTicket_List")
     defer teardown()
 
@@ -20,6 +21,7 @@ func TestTicket_List(t *testing.T) {
 }
 
 func TestTicket_Get(t *testing.T) {
+    warnSensitiveTest(t)
     client, teardown := createTestClient(t, "fixtures/TestTicket_Get")
     defer teardown()
 

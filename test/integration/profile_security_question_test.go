@@ -2,28 +2,10 @@ package integration
 
 import (
     "context"
-    "fmt"
     "testing"
 
     "github.com/stretchr/testify/require"
-    "golang.org/x/exp/slog"
 )
-
-// Assuming `testingMode` and `recorder.ModeReplaying` are defined somewhere in your codebase
-
-func warnSensitiveTest(t *testing.T) {
-    if testingMode == recorder.ModeReplaying {
-        return
-    }
-
-    slog.Warn(
-        fmt.Sprintf(
-            "Test %s is a sensitive test. Ensure you validate and sanitize "+
-                "its generated test fixtures before pushing.",
-            t.Name(),
-        ),
-    )
-}
 
 func TestSecurityQuestions_List(t *testing.T) {
     warnSensitiveTest(t)

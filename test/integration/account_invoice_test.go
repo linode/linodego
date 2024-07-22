@@ -8,6 +8,7 @@ import (
 )
 
 func TestInvoice_List(t *testing.T) {
+    warnSensitiveTest(t)
     client, teardown := createTestClient(t, "fixtures/TestInvoice_List")
     defer teardown()
 
@@ -17,6 +18,7 @@ func TestInvoice_List(t *testing.T) {
 }
 
 func TestInvoice_Get(t *testing.T) {
+    warnSensitiveTest(t)
     client, teardown := createTestClient(t, "fixtures/TestInvoice_Get")
     defer teardown()
 
@@ -28,6 +30,7 @@ func TestInvoice_Get(t *testing.T) {
 }
 
 func TestInvoiceItems_List(t *testing.T) {
+    warnSensitiveTest(t)
     client, teardown := createTestClient(t, "fixtures/TestInvoiceItems_List")
     defer teardown()
 
