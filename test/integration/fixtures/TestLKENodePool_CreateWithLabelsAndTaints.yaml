@@ -339,7 +339,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 19 Jul 2024 17:04:13 GMT
+      - Fri, 19 Jul 2024 17:05:20 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -377,7 +377,7 @@ interactions:
     url: https://api.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 202481, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+    body: '{"id": 202484, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "label": "go-lke-test-def", "region": "ap-west", "k8s_version":
       "1.29", "control_plane": {"high_availability": false}, "tags": ["testing"]}'
     headers:
@@ -404,7 +404,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 19 Jul 2024 17:04:23 GMT
+      - Fri, 19 Jul 2024 17:05:30 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -428,7 +428,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"count":2,"type":"g6-standard-2","disks":[{"size":1000,"type":"ext4"}],"tags":["testing"],"labels":null,"taints":null}'
+    body: '{"count":1,"type":"g6-standard-1","disks":null,"tags":null,"labels":{"foo":"bar"},"taints":[{"key":"foo","value":"bar","effect":"NoSchedule"}]}'
     form: {}
     headers:
       Accept:
@@ -437,14 +437,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/202481/pools
+    url: https://api.linode.com/v4beta/lke/clusters/202484/pools
     method: POST
   response:
-    body: '{"id": 293255, "type": "g6-standard-2", "count": 2, "nodes": [{"id": "293255-19e4962a0000",
-      "instance_id": 61650840, "status": "not_ready"}, {"id": "293255-3929ffa60000",
-      "instance_id": 61650842, "status": "not_ready"}], "disks": [{"size": 1000, "type":
-      "ext4"}], "autoscaler": {"enabled": false, "min": 2, "max": 2}, "labels": {},
-      "taints": [], "tags": ["testing"]}'
+    body: '{"id": 293261, "type": "g6-standard-1", "count": 1, "nodes": [{"id": "293261-3d19e44f0000",
+      "instance_id": 61650901, "status": "not_ready"}], "disks": [], "autoscaler":
+      {"enabled": false, "min": 1, "max": 1}, "labels": {"foo": "bar"}, "taints":
+      [{"key": "foo", "value": "bar", "effect": "NoSchedule"}], "tags": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -463,13 +462,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "366"
+      - "314"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 19 Jul 2024 17:04:26 GMT
+      - Fri, 19 Jul 2024 17:05:32 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -502,77 +501,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/202481/pools?page=1
-    method: GET
-  response:
-    body: '{"data": [{"id": 293254, "type": "g6-standard-2", "count": 1, "nodes":
-      [{"id": "293254-2353bcf80000", "instance_id": 61650839, "status": "not_ready"}],
-      "disks": [], "autoscaler": {"enabled": false, "min": 1, "max": 1}, "labels":
-      {}, "taints": [], "tags": ["test"]}, {"id": 293255, "type": "g6-standard-2",
-      "count": 2, "nodes": [{"id": "293255-19e4962a0000", "instance_id": 61650840,
-      "status": "not_ready"}, {"id": "293255-3929ffa60000", "instance_id": 61650842,
-      "status": "not_ready"}], "disks": [{"size": 1000, "type": "ext4"}], "autoscaler":
-      {"enabled": false, "min": 2, "max": 2}, "labels": {}, "taints": [], "tags":
-      ["testing"]}], "page": 1, "pages": 1, "results": 2}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "671"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Fri, 19 Jul 2024 17:04:27 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - lke:read_only
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "400"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/202481/pools/293255
+    url: https://api.linode.com/v4beta/lke/clusters/202484/pools/293261
     method: DELETE
   response:
     body: '{}'
@@ -600,7 +529,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 19 Jul 2024 17:04:29 GMT
+      - Fri, 19 Jul 2024 17:05:34 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -633,7 +562,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/202481
+    url: https://api.linode.com/v4beta/lke/clusters/202484
     method: DELETE
   response:
     body: '{}'
@@ -661,7 +590,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 19 Jul 2024 17:04:32 GMT
+      - Fri, 19 Jul 2024 17:05:37 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

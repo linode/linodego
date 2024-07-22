@@ -18,7 +18,7 @@ func TestEventPoller_InstancePower(t *testing.T) {
 	}
 
 	instance, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
-		Region:   getRegionsWithCaps(t, client, []string{"Linodes"})[0],
+		Region:   getRegionsWithCaps(t, client, []string{"Linodes"}, []string{})[0],
 		Type:     "g6-nanode-1",
 		Image:    "linode/ubuntu22.04",
 		RootPass: randPassword(),
@@ -102,7 +102,7 @@ func TestWaitForResourceFree(t *testing.T) {
 
 	// Create a booted instance
 	instance, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
-		Region:   getRegionsWithCaps(t, client, []string{"Linodes"})[0],
+		Region:   getRegionsWithCaps(t, client, []string{"Linodes"}, []string{})[0],
 		Type:     "g6-nanode-1",
 		Image:    "linode/ubuntu22.04",
 		RootPass: randPassword(),
@@ -145,7 +145,7 @@ func TestEventPoller_Secondary(t *testing.T) {
 	}
 
 	instance, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
-		Region: getRegionsWithCaps(t, client, []string{"Linodes"})[0],
+		Region: getRegionsWithCaps(t, client, []string{"Linodes"}, []string{})[0],
 		Type:   "g6-nanode-1",
 		Label:  "go-ins-poll-test",
 		Booted: linodego.Pointer(false),
