@@ -189,7 +189,7 @@ func TestLKENodePool_CreateWithLabelsAndTaints(t *testing.T) {
 			Effect: linodego.LKENodePoolTaintEffectNoSchedule,
 		}},
 		Count: 1,
-		Type: "g6-standard-1",
+		Type:  "g6-standard-1",
 	}
 	_, _, nodePool, teardown, err := setupLKENodePool(t, "fixtures/TestLKENodePool_CreateWithLabelsAndTaints", createOpts)
 	if err != nil {
