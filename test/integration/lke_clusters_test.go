@@ -256,7 +256,7 @@ func setupLKECluster(t *testing.T, clusterModifiers []clusterModifier, fixturesY
 
 	createOpts := linodego.LKEClusterCreateOptions{
 		Label:      label,
-		Region:     getRegionsWithCaps(t, client, []string{"Kubernetes"}, []string{})[0],
+		Region:     getRegionsWithCaps(t, client, []string{"Kubernetes"})[0],
 		K8sVersion: "1.29",
 		Tags:       []string{"testing"},
 		NodePools:  []linodego.LKENodePoolCreateOptions{{Count: 1, Type: "g6-standard-2", Tags: []string{"test"}}},
