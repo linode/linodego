@@ -138,7 +138,7 @@ func TestInstance_Disks_List(t *testing.T) {
 
 func TestInstance_Disks_List_WithEncryption(t *testing.T) {
 	client, instance, teardown, err := setupInstance(t, "fixtures/TestInstance_Disks_List_WithEncryption", true, func(c *linodego.Client, ico *linodego.InstanceCreateOptions) {
-		ico.Region = getRegionsWithCaps(t, c, []string{"Disk Encryption"}, []string{})[0]
+		ico.Region = getRegionsWithCaps(t, c, []string{"Disk Encryption"})[0]
 	})
 	defer teardown()
 	if err != nil {
@@ -417,7 +417,7 @@ func TestInstance_RebuildWithEncryption(t *testing.T) {
 		"fixtures/TestInstance_RebuildWithEncryption",
 		true,
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-			options.Region = getRegionsWithCaps(t, client, []string{"Disk Encryption"}, []string{})[0]
+			options.Region = getRegionsWithCaps(t, client, []string{"Disk Encryption"})[0]
 			options.DiskEncryption = linodego.InstanceDiskEncryptionEnabled
 		},
 	)
