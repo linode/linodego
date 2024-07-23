@@ -16,7 +16,7 @@ func TestVolume_Create_smoke(t *testing.T) {
 
 	createOpts := linodego.VolumeCreateOptions{
 		Label:  "go-vol-test-create",
-		Region: getRegionsWithCaps(t, client, []string{"Linodes"}, []string{})[0],
+		Region: getRegionsWithCaps(t, client, []string{"Linodes"})[0],
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
 	if err != nil {
@@ -175,7 +175,7 @@ func setupVolume(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := linodego.VolumeCreateOptions{
 		Label:  "go-vol-test-def",
-		Region: getRegionsWithCaps(t, client, []string{"Linodes"}, []string{})[0],
+		Region: getRegionsWithCaps(t, client, []string{"Linodes"})[0],
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
 	if err != nil {
@@ -201,7 +201,7 @@ func createVolume(
 	t.Helper()
 	createOpts := linodego.VolumeCreateOptions{
 		Label:  "go-vol-test" + randLabel(),
-		Region: getRegionsWithCaps(t, client, []string{"Linodes"}, []string{})[0],
+		Region: getRegionsWithCaps(t, client, []string{"Linodes"})[0],
 	}
 
 	for _, mod := range vModifier {
