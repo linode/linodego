@@ -64,8 +64,10 @@ type Instance struct {
 	// NOTE: Placement Groups may not currently be available to all users.
 	PlacementGroup *InstancePlacementGroup `json:"placement_group"`
 
+	// NOTE: Disk encryption may not currently be available to all users.
 	DiskEncryption InstanceDiskEncryption `json:"disk_encryption"`
-	LKEClusterID   int                    `json:"lke_cluster_id"`
+
+	LKEClusterID int `json:"lke_cluster_id"`
 }
 
 // InstanceSpec represents a linode spec
@@ -149,7 +151,9 @@ type InstanceCreateOptions struct {
 	Tags            []string                               `json:"tags,omitempty"`
 	Metadata        *InstanceMetadataOptions               `json:"metadata,omitempty"`
 	FirewallID      int                                    `json:"firewall_id,omitempty"`
-	DiskEncryption  InstanceDiskEncryption                 `json:"disk_encryption,omitempty"`
+
+	// NOTE: Disk encryption may not currently be available to all users.
+	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitempty"`
 
 	// NOTE: Placement Groups may not currently be available to all users.
 	PlacementGroup *InstanceCreatePlacementGroupOptions `json:"placement_group,omitempty"`
@@ -367,7 +371,9 @@ type InstanceRebuildOptions struct {
 	Booted          *bool                    `json:"booted,omitempty"`
 	Metadata        *InstanceMetadataOptions `json:"metadata,omitempty"`
 	Type            string                   `json:"type,omitempty"`
-	DiskEncryption  InstanceDiskEncryption   `json:"disk_encryption,omitempty"`
+
+	// NOTE: Disk encryption may not currently be available to all users.
+	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitempty"`
 }
 
 // RebuildInstance Deletes all Disks and Configs on this Linode,

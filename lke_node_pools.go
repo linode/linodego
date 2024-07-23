@@ -63,7 +63,9 @@ type LKENodePool struct {
 	Labels  LKENodePoolLabels   `json:"labels"`
 	Taints  []LKENodePoolTaint  `json:"taints"`
 
-	Autoscaler     LKENodePoolAutoscaler  `json:"autoscaler"`
+	Autoscaler LKENodePoolAutoscaler `json:"autoscaler"`
+
+	// NOTE: Disk encryption may not currently be available to all users.
 	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitempty"`
 }
 
