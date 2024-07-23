@@ -4,6 +4,8 @@ import (
 	"context"
 	"testing"
 
+	k8scondition "github.com/linode/linodego/k8s/pkg/condition"
+
 	"github.com/google/go-cmp/cmp"
 	"github.com/linode/linodego"
 )
@@ -68,6 +70,37 @@ func TestLKENodePool_GetFound(t *testing.T) {
 	}
 	if diff := cmp.Diff([]string{"testing"}, i.Tags); diff != "" {
 		t.Errorf("unexpected tags:\n%s", diff)
+	}
+
+	if i.DiskEncryption != linodego.InstanceDiskEncryptionEnabled {
+		t.Errorf("DiskEncryption not enabled, got: %s, want: %s", i.DiskEncryption, linodego.InstanceDiskEncryptionEnabled)
+	}
+
+	wrapper, teardownClusterClient := transportRecorderWrapper(t, "fixtures/TestLKENodePool_GetFound_k8s")
+	defer teardownClusterClient()
+
+	if err := k8scondition.WaitForLKEClusterAndNodesReady(context.TODO(), *client, lkeCluster.ID, linodego.LKEClusterPollOptions{
+		Retry:            true,
+		TimeoutSeconds:   0,
+		TransportWrapper: wrapper,
+	}); err != nil {
+		t.Fatalf("got err waiting for LKE cluster and nodes to be ready, err: %v", err)
+	}
+
+	i, err = client.GetLKENodePool(context.TODO(), lkeCluster.ID, pool.ID)
+	if err != nil {
+		t.Fatalf("failed to get lke node pool, got err: %v", err)
+	}
+
+	for _, node := range i.Linodes {
+		instance, err := client.GetInstance(context.Background(), node.InstanceID)
+		if err != nil {
+			t.Errorf("failed to get Linode, got err: %v", err)
+		}
+
+		if instance.LKEClusterID != lkeCluster.ID {
+			t.Errorf("linode: %d is LKENodePool member but got linode LKEClusterID: %d, want: %d", instance.ID, instance.LKEClusterID, lkeCluster.ID)
+		}
 	}
 }
 
