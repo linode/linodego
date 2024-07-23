@@ -2,12 +2,21 @@ package linodego
 
 import "context"
 
-// PlacementGroupAffinityType is an enum that determines the affinity policy
+// PlacementGroupType is an enum that determines the affinity policy
 // for Linodes in a placement group.
-type PlacementGroupAffinityType string
+type PlacementGroupType string
 
 const (
-	AffinityTypeAntiAffinityLocal PlacementGroupAffinityType = "anti_affinity:local"
+	PlacementGroupTypeAntiAffinityLocal PlacementGroupType = "anti_affinity:local"
+)
+
+// PlacementGroupPolicy is an enum for the policy that determines whether a
+// Linode can be assigned to a Placement Group.
+type PlacementGroupPolicy string
+
+const (
+	PlacementGroupPolicyStrict   PlacementGroupPolicy = "strict"
+	PlacementGroupPolicyFlexible PlacementGroupPolicy = "flexible"
 )
 
 // PlacementGroupMember represents a single Linode assigned to a
@@ -20,22 +29,22 @@ type PlacementGroupMember struct {
 // PlacementGroup represents a Linode placement group.
 // NOTE: Placement Groups may not currently be available to all users.
 type PlacementGroup struct {
-	ID           int                        `json:"id"`
-	Label        string                     `json:"label"`
-	Region       string                     `json:"region"`
-	AffinityType PlacementGroupAffinityType `json:"affinity_type"`
-	IsCompliant  bool                       `json:"is_compliant"`
-	IsStrict     bool                       `json:"is_strict"`
-	Members      []PlacementGroupMember     `json:"members"`
+	ID                   int                    `json:"id"`
+	Label                string                 `json:"label"`
+	Region               string                 `json:"region"`
+	PlacementGroupType   PlacementGroupType     `json:"placement_group_type"`
+	PlacementGroupPolicy PlacementGroupPolicy   `json:"placement_group_policy"`
+	IsCompliant          bool                   `json:"is_compliant"`
+	Members              []PlacementGroupMember `json:"members"`
 }
 
 // PlacementGroupCreateOptions represents the options to use
 // when creating a placement group.
 type PlacementGroupCreateOptions struct {
-	Label        string                     `json:"label"`
-	Region       string                     `json:"region"`
-	AffinityType PlacementGroupAffinityType `json:"affinity_type"`
-	IsStrict     bool                       `json:"is_strict"`
+	Label                string               `json:"label"`
+	Region               string               `json:"region"`
+	PlacementGroupType   PlacementGroupType   `json:"placement_group_type"`
+	PlacementGroupPolicy PlacementGroupPolicy `json:"placement_group_policy"`
 }
 
 // PlacementGroupUpdateOptions represents the options to use

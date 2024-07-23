@@ -33,6 +33,25 @@ type LKENodePoolLinode struct {
 	Status     LKELinodeStatus `json:"status"`
 }
 
+// LKENodePoolTaintEffect represents the effect value of a taint
+type LKENodePoolTaintEffect string
+
+const (
+	LKENodePoolTaintEffectNoSchedule       LKENodePoolTaintEffect = "NoSchedule"
+	LKENodePoolTaintEffectPreferNoSchedule LKENodePoolTaintEffect = "PreferNoSchedule"
+	LKENodePoolTaintEffectNoExecute        LKENodePoolTaintEffect = "NoExecute"
+)
+
+// LKENodePoolTaint represents a corev1.Taint to add to an LKENodePool
+type LKENodePoolTaint struct {
+	Key    string                 `json:"key"`
+	Value  string                 `json:"value,omitempty"`
+	Effect LKENodePoolTaintEffect `json:"effect"`
+}
+
+// LKENodePoolLabels represents Kubernetes labels to add to an LKENodePool
+type LKENodePoolLabels map[string]string
+
 // LKENodePool represents a LKENodePool object
 type LKENodePool struct {
 	ID      int                 `json:"id"`
@@ -41,6 +60,8 @@ type LKENodePool struct {
 	Disks   []LKENodePoolDisk   `json:"disks"`
 	Linodes []LKENodePoolLinode `json:"nodes"`
 	Tags    []string            `json:"tags"`
+	Labels  LKENodePoolLabels   `json:"labels"`
+	Taints  []LKENodePoolTaint  `json:"taints"`
 
 	Autoscaler     LKENodePoolAutoscaler  `json:"autoscaler"`
 	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitempty"`
@@ -48,18 +69,22 @@ type LKENodePool struct {
 
 // LKENodePoolCreateOptions fields are those accepted by CreateLKENodePool
 type LKENodePoolCreateOptions struct {
-	Count int               `json:"count"`
-	Type  string            `json:"type"`
-	Disks []LKENodePoolDisk `json:"disks"`
-	Tags  []string          `json:"tags"`
+	Count  int                `json:"count"`
+	Type   string             `json:"type"`
+	Disks  []LKENodePoolDisk  `json:"disks"`
+	Tags   []string           `json:"tags"`
+	Labels LKENodePoolLabels  `json:"labels"`
+	Taints []LKENodePoolTaint `json:"taints"`
 
 	Autoscaler *LKENodePoolAutoscaler `json:"autoscaler,omitempty"`
 }
 
 // LKENodePoolUpdateOptions fields are those accepted by UpdateLKENodePoolUpdate
 type LKENodePoolUpdateOptions struct {
-	Count int       `json:"count,omitempty"`
-	Tags  *[]string `json:"tags,omitempty"`
+	Count  int                 `json:"count,omitempty"`
+	Tags   *[]string           `json:"tags,omitempty"`
+	Labels *LKENodePoolLabels  `json:"labels,omitempty"`
+	Taints *[]LKENodePoolTaint `json:"taints,omitempty"`
 
 	Autoscaler *LKENodePoolAutoscaler `json:"autoscaler,omitempty"`
 }
@@ -70,6 +95,8 @@ func (l LKENodePool) GetCreateOptions() (o LKENodePoolCreateOptions) {
 	o.Count = l.Count
 	o.Disks = l.Disks
 	o.Tags = l.Tags
+	o.Labels = l.Labels
+	o.Taints = l.Taints
 	o.Autoscaler = &l.Autoscaler
 	return
 }
@@ -78,6 +105,8 @@ func (l LKENodePool) GetCreateOptions() (o LKENodePoolCreateOptions) {
 func (l LKENodePool) GetUpdateOptions() (o LKENodePoolUpdateOptions) {
 	o.Count = l.Count
 	o.Tags = &l.Tags
+	o.Labels = &l.Labels
+	o.Taints = &l.Taints
 	o.Autoscaler = &l.Autoscaler
 	return
 }

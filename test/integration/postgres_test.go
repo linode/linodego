@@ -179,8 +179,8 @@ func createPostgresDatabase(t *testing.T, client *linodego.Client,
 	t.Helper()
 
 	createOpts := linodego.PostgresCreateOptions{
-		Label:           "go-postgres-testing-def",
-		Region:          getRegionsWithCaps(t, client, []string{"Managed Databases"})[0],
+		Label:           "go-postgres-testing-def" + randLabel(),
+		Region:          getRegionsWithCaps(t, client, []string{"Managed Databases"}, []string{})[0],
 		Type:            "g6-nanode-1",
 		Engine:          "postgresql/14.6",
 		Encrypted:       false,
@@ -241,7 +241,7 @@ func setupPostgresDatabase(t *testing.T, databaseMofidiers []postgresDatabaseMod
 	}
 
 	_, err = client.WaitForEventFinished(context.Background(), database.ID, linodego.EntityDatabase,
-		linodego.ActionDatabaseCreate, now, 3600)
+		linodego.ActionDatabaseCreate, now, 5400)
 	if err != nil {
 		t.Fatalf("failed to wait for db create event: %s", err)
 	}

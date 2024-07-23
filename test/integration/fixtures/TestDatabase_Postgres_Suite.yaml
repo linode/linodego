@@ -11,7 +11,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/regions
+    url: https://api.linode.com/v4beta/regions?page=1
     method: GET
   response:
     body: '{"data": [{"id": "ap-west", "label": "Mumbai, IN", "country": "in", "capabilities":
@@ -12835,7 +12835,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/databases/postgresql/instances
+    url: https://api.linode.com/v4beta/databases/postgresql/instances?page=1
     method: GET
   response:
     body: '{"data": [{"id": 133403, "label": "go-postgres-testing-def", "type": "g6-nanode-1",
@@ -22578,7 +22578,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/databases/postgresql/instances/133403/backups
+    url: https://api.linode.com/v4beta/databases/postgresql/instances/133403/backups?page=1
     method: GET
   response:
     body: '{"data": [], "page": 1, "pages": 1, "results": 0}'
@@ -22638,7 +22638,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/databases/postgresql/instances/133403/backups
+    url: https://api.linode.com/v4beta/databases/postgresql/instances/133403/backups?page=1
     method: GET
   response:
     body: '{"data": [], "page": 1, "pages": 1, "results": 0}'
@@ -22698,7 +22698,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/databases/postgresql/instances/133403/backups
+    url: https://api.linode.com/v4beta/databases/postgresql/instances/133403/backups?page=1
     method: GET
   response:
     body: '{"data": [], "page": 1, "pages": 1, "results": 0}'
@@ -22758,7 +22758,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/databases/postgresql/instances/133403/backups
+    url: https://api.linode.com/v4beta/databases/postgresql/instances/133403/backups?page=1
     method: GET
   response:
     body: '{"data": [], "page": 1, "pages": 1, "results": 0}'
@@ -22818,7 +22818,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/databases/postgresql/instances/133403/backups
+    url: https://api.linode.com/v4beta/databases/postgresql/instances/133403/backups?page=1
     method: GET
   response:
     body: '{"data": [], "page": 1, "pages": 1, "results": 0}'
@@ -22878,7 +22878,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/databases/postgresql/instances/133403/backups
+    url: https://api.linode.com/v4beta/databases/postgresql/instances/133403/backups?page=1
     method: GET
   response:
     body: '{"data": [], "page": 1, "pages": 1, "results": 0}'
@@ -22938,7 +22938,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/databases/postgresql/instances/133403/backups
+    url: https://api.linode.com/v4beta/databases/postgresql/instances/133403/backups?page=1
     method: GET
   response:
     body: '{"data": [], "page": 1, "pages": 1, "results": 0}'
@@ -22998,7 +22998,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/databases/postgresql/instances/133403/backups
+    url: https://api.linode.com/v4beta/databases/postgresql/instances/133403/backups?page=1
     method: GET
   response:
     body: '{"data": [{"id": 1425482, "type": "snapshot", "label": "postgresbackupforlinodego",

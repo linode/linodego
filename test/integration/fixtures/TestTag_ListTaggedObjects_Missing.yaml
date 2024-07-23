@@ -11,7 +11,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/tags/does-not-exist
+    url: https://api.linode.com/v4beta/tags/does-not-exist?page=1
     method: GET
   response:
     body: '{"errors": [{"reason": "Not found"}]}'
@@ -22,14 +22,20 @@ interactions:
       - HEAD, GET, OPTIONS, POST, PUT, DELETE
       Access-Control-Allow-Origin:
       - '*'
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "37"
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Thu, 11 Jul 2024 18:29:09 GMT
+      Pragma:
+      - no-cache
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
@@ -39,7 +45,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
     status: 404 Not Found
     code: 404
     duration: ""

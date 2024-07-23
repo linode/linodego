@@ -138,7 +138,7 @@ func TestInstance_Disks_List(t *testing.T) {
 
 func TestInstance_Disks_List_WithEncryption(t *testing.T) {
 	client, instance, teardown, err := setupInstance(t, "fixtures/TestInstance_Disks_List_WithEncryption", true, func(c *linodego.Client, ico *linodego.InstanceCreateOptions) {
-		ico.Region = getRegionsWithCaps(t, c, []string{"Disk Encryption"})[0]
+		ico.Region = getRegionsWithCaps(t, c, []string{"Disk Encryption"}, []string{})[0]
 	})
 	defer teardown()
 	if err != nil {
@@ -379,7 +379,7 @@ func TestInstance_Rebuild(t *testing.T) {
 		t,
 		"fixtures/TestInstance_Rebuild", true,
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-			options.Region = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
+			options.Region = getRegionsWithCaps(t, client, []string{"Metadata"}, []string{})[0]
 		},
 	)
 	defer teardown()
@@ -417,7 +417,7 @@ func TestInstance_RebuildWithEncryption(t *testing.T) {
 		"fixtures/TestInstance_RebuildWithEncryption",
 		true,
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-			options.Region = getRegionsWithCaps(t, client, []string{"Disk Encryption"})[0]
+			options.Region = getRegionsWithCaps(t, client, []string{"Disk Encryption"}, []string{})[0]
 			options.DiskEncryption = linodego.InstanceDiskEncryptionEnabled
 		},
 	)
@@ -454,7 +454,7 @@ func TestInstance_Clone(t *testing.T) {
 	client, instance, teardownOriginalLinode, err := setupInstance(
 		t, "fixtures/TestInstance_Clone", true,
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-			targetRegion = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
+			targetRegion = getRegionsWithCaps(t, client, []string{"Metadata"}, []string{})[0]
 
 			options.Region = targetRegion
 		})
@@ -532,7 +532,7 @@ func TestInstance_withMetadata(t *testing.T) {
 			options.Metadata = &linodego.InstanceMetadataOptions{
 				UserData: base64.StdEncoding.EncodeToString([]byte("reallycoolmetadata")),
 			}
-			options.Region = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
+			options.Region = getRegionsWithCaps(t, client, []string{"Metadata"}, []string{})[0]
 		})
 	if err != nil {
 		t.Fatal(err)
@@ -585,8 +585,8 @@ func TestInstance_withPG(t *testing.T) {
 	require.NotNil(t, inst.PlacementGroup)
 	require.Equal(t, inst.PlacementGroup.ID, pg.ID)
 	require.Equal(t, inst.PlacementGroup.Label, pg.Label)
-	require.Equal(t, inst.PlacementGroup.AffinityType, pg.AffinityType)
-	require.Equal(t, inst.PlacementGroup.IsStrict, pg.IsStrict)
+	require.Equal(t, inst.PlacementGroup.PlacementGroupType, pg.PlacementGroupType)
+	require.Equal(t, inst.PlacementGroup.PlacementGroupPolicy, pg.PlacementGroupPolicy)
 }
 
 func createInstance(t *testing.T, client *linodego.Client, enableCloudFirewall bool, modifiers ...instanceModifier) (*linodego.Instance, error) {
@@ -597,7 +597,7 @@ func createInstance(t *testing.T, client *linodego.Client, enableCloudFirewall b
 	createOpts := linodego.InstanceCreateOptions{
 		Label:    "go-test-ins-" + randLabel(),
 		RootPass: randPassword(),
-		Region:   getRegionsWithCaps(t, client, []string{"linodes"})[0],
+		Region:   getRegionsWithCaps(t, client, []string{"linodes"}, []string{})[0],
 		Type:     "g6-nanode-1",
 		Image:    "linode/debian9",
 		Booted:   linodego.Pointer(false),
@@ -645,7 +645,7 @@ func createInstanceWithoutDisks(
 
 	createOpts := linodego.InstanceCreateOptions{
 		Label:  "go-test-ins-wo-disk-" + randLabel(),
-		Region: getRegionsWithCaps(t, client, []string{"linodes"})[0],
+		Region: getRegionsWithCaps(t, client, []string{"linodes"}, []string{})[0],
 		Type:   "g6-nanode-1",
 		Booted: linodego.Pointer(false),
 	}

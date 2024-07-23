@@ -10,7 +10,7 @@ import (
 )
 
 /*
- * https://developers.linode.com/v4/reference/endpoints/linode/instances
+ * https://techdocs.akamai.com/linode-api/reference/post-linode-instance
  */
 
 // InstanceStatus constants start with Instance and include Linode API Instance Status values
@@ -118,10 +118,10 @@ type InstanceTransfer struct {
 // InstancePlacementGroup represents information about the placement group
 // this Linode is a part of.
 type InstancePlacementGroup struct {
-	ID           int                        `json:"id"`
-	Label        string                     `json:"label"`
-	AffinityType PlacementGroupAffinityType `json:"affinity_type"`
-	IsStrict     bool                       `json:"is_strict"`
+	ID                   int                  `json:"id"`
+	Label                string               `json:"label"`
+	PlacementGroupType   PlacementGroupType   `json:"placement_group_type"`
+	PlacementGroupPolicy PlacementGroupPolicy `json:"placement_group_policy"`
 }
 
 // InstanceMetadataOptions specifies various Instance creation fields
