@@ -17,6 +17,9 @@ type InstanceDisk struct {
 	Filesystem DiskFilesystem `json:"filesystem"`
 	Created    *time.Time     `json:"-"`
 	Updated    *time.Time     `json:"-"`
+
+	// NOTE: Disk encryption may not currently be available to all users.
+	DiskEncryption InstanceDiskEncryption `json:"disk_encryption"`
 }
 
 // DiskFilesystem constants start with Filesystem and include Linode API Filesystems

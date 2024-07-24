@@ -28,8 +28,8 @@ func TestPlacementGroup_basic(t *testing.T) {
 	require.NotEqual(t, pg.ID, 0)
 	require.Contains(t, pg.Label, "linodego-test-")
 	require.NotEmpty(t, pg.Label)
-	require.Equal(t, pg.AffinityType, linodego.AffinityTypeAntiAffinityLocal)
-	require.Equal(t, pg.IsStrict, false)
+	require.Equal(t, pg.PlacementGroupType, linodego.PlacementGroupTypeAntiAffinityLocal)
+	require.Equal(t, pg.PlacementGroupPolicy, linodego.PlacementGroupPolicyFlexible)
 	require.Len(t, pg.Members, 0)
 
 	updatedLabel := pg.Label + "-updated"
@@ -97,8 +97,8 @@ func TestPlacementGroup_assignment(t *testing.T) {
 	require.NotNil(t, inst.PlacementGroup)
 	require.Equal(t, inst.PlacementGroup.ID, pg.ID)
 	require.Equal(t, inst.PlacementGroup.Label, pg.Label)
-	require.Equal(t, inst.PlacementGroup.IsStrict, pg.IsStrict)
-	require.Equal(t, inst.PlacementGroup.AffinityType, pg.AffinityType)
+	require.Equal(t, inst.PlacementGroup.PlacementGroupPolicy, pg.PlacementGroupPolicy)
+	require.Equal(t, inst.PlacementGroup.PlacementGroupType, pg.PlacementGroupType)
 
 	// Ensure unassignment works as expected
 	pg, err = client.UnassignPlacementGroupLinodes(
@@ -121,10 +121,10 @@ func createPlacementGroup(
 ) (*linodego.PlacementGroup, func(), error) {
 	t.Helper()
 	createOpts := linodego.PlacementGroupCreateOptions{
-		Label:        "linodego-test-" + getUniqueText(),
-		Region:       getRegionsWithCaps(t, client, []string{"Placement Group"}, []string{})[0],
-		AffinityType: linodego.AffinityTypeAntiAffinityLocal,
-		IsStrict:     false,
+		Label:                "linodego-test-" + getUniqueText(),
+		Region:               getRegionsWithCaps(t, client, []string{"Placement Group"})[0],
+		PlacementGroupType:   linodego.PlacementGroupTypeAntiAffinityLocal,
+		PlacementGroupPolicy: linodego.PlacementGroupPolicyFlexible,
 	}
 
 	for _, mod := range pgModifier {
