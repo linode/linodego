@@ -199,7 +199,16 @@ func (c *HTTPClient) doRequest(ctx context.Context, method, url string, params R
 
 	// Check for HTTP errors
 	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		return fmt.Errorf("received non-2xx status code: %d", resp.StatusCode)
+		var errorDetails string
+		if resp.Body != nil {
+			bodyBytes, err := io.ReadAll(resp.Body)
+			if err != nil {
+				errorDetails = fmt.Sprintf("failed to read response body: %v", err)
+			} else {
+				errorDetails = string(bodyBytes)
+			}
+		}
+		return fmt.Errorf("received non-2xx status code: %d, details: %s", resp.StatusCode, errorDetails)
 	}
 
 	// Decode the response body
