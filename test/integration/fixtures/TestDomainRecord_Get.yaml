@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/domains
     method: POST
   response:
-    body: '{"id": 1899363, "type": "master", "domain": "linodego-blue-test.com", "tags":
+    body: '{"id": 3041957, "type": "master", "domain": "linodego-blue-test.com", "tags":
       [], "group": "", "status": "active", "errors": "", "description": "", "soa_email":
       "example@example.com", "retry_sec": 0, "master_ips": [], "axfr_ips": [], "expire_sec":
       0, "refresh_sec": 0, "ttl_sec": 0, "created": "2018-01-02T03:04:05", "updated":
@@ -30,16 +30,22 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "350"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Thu, 25 Jul 2024 17:44:30 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -52,9 +58,12 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -70,10 +79,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/domains/1899363/records
+    url: https://api.linode.com/v4beta/domains/3041957/records
     method: POST
   response:
-    body: '{"id": 22122788, "type": "A", "name": "a", "target": "127.0.0.1", "priority":
+    body: '{"id": 35694155, "type": "A", "name": "a", "target": "127.0.0.1", "priority":
       0, "weight": 0, "port": 0, "service": null, "protocol": null, "ttl_sec": 0,
       "tag": null, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
     headers:
@@ -87,16 +96,22 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "234"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Thu, 25 Jul 2024 17:44:30 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -109,9 +124,12 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -127,10 +145,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/domains/1899363/records/22122788
+    url: https://api.linode.com/v4beta/domains/3041957/records/35694155
     method: GET
   response:
-    body: '{"id": 22122788, "type": "A", "name": "a", "target": "127.0.0.1", "priority":
+    body: '{"id": 35694155, "type": "A", "name": "a", "target": "127.0.0.1", "priority":
       0, "weight": 0, "port": 0, "service": null, "protocol": null, "ttl_sec": 0,
       "tag": null, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
     headers:
@@ -144,17 +162,22 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "234"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Thu, 25 Jul 2024 17:44:30 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -168,9 +191,12 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -186,7 +212,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/domains/1899363/records/22122788
+    url: https://api.linode.com/v4beta/domains/3041957/records/35694155
     method: DELETE
   response:
     body: '{}'
@@ -201,16 +227,22 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "2"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Thu, 25 Jul 2024 17:44:30 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -223,9 +255,12 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -241,7 +276,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/domains/1899363
+    url: https://api.linode.com/v4beta/domains/3041957
     method: DELETE
   response:
     body: '{}'
@@ -256,16 +291,22 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "2"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Thu, 25 Jul 2024 17:44:31 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -278,9 +319,12 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

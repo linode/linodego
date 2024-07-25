@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"linodego-token-test","scopes":"linodes:read_only","expiry":"2022-10-10T19:47:29"}'
+    body: '{"label":"linodego-token-test","scopes":"linodes:read_only","expiry":"2024-07-09T13:30:00"}'
     form: {}
     headers:
       Accept:
@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/profile/tokens
     method: POST
   response:
-    body: '{"id": 41180273, "scopes": "linodes:read_only", "created": "2018-01-02T03:04:05",
-      "label": "linodego-token-test", "token": "60fbc58db1ab95071e646f48d1da3dd2f8c37d7f7fb602bafd6b731ee875a067",
+    body: '{"id": 57288265, "scopes": "linodes:read_only", "created": "2018-01-02T03:04:05",
+      "label": "linodego-token-test", "token": "1043c72081856d48850ecfc614f88aeccb86272b3987441700b71b43e2698ead",
       "expiry": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -29,15 +29,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "223"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Tue, 09 Jul 2024 13:28:01 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -52,7 +56,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -68,23 +72,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/profile/tokens
+    url: https://api.linode.com/v4beta/profile/tokens?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 39828879, "scopes": "*", "created": "2018-01-02T03:04:05",
-      "label": "lena-pc", "token": "f769d10d3554bab1", "expiry": "2018-01-02T03:04:05"},
-      {"id": 39906996, "scopes": "*", "created": "2018-01-02T03:04:05", "label": "lena-pc2",
-      "token": "30f37bba6d5ff947", "expiry": "2222-08-19T00:00:00"}, {"id": 40478549,
-      "scopes": "*", "created": "2018-01-02T03:04:05", "label": "lena-pc-3", "token":
-      "fe0549c503a93043", "expiry": "2018-01-02T03:04:05"}, {"id": 40581141, "scopes":
-      "*", "created": "2018-01-02T03:04:05", "label": "tesat", "token": "baa4e1616b02312a",
-      "expiry": "2018-01-02T03:04:05"}, {"id": 40676179, "scopes": "*", "created":
-      "2018-01-02T03:04:05", "label": "asdad", "token": "77e6e2a9cf240f0d", "expiry":
-      "2018-01-02T03:04:05"}, {"id": 40719326, "scopes": "*", "created": "2018-01-02T03:04:05",
-      "label": "laptop", "token": "ba91c55cc1531b4f", "expiry": "2018-01-02T03:04:05"},
-      {"id": 41180273, "scopes": "linodes:read_only", "created": "2018-01-02T03:04:05",
-      "label": "linodego-token-test", "token": "60fbc58db1ab9507", "expiry": "2018-01-02T03:04:05"}],
-      "page": 1, "pages": 1, "results": 7}'
+    body: '{"data": [{"id": 56990571, "scopes": "*", "created": "2018-01-02T03:04:05",
+      "label": "token", "token": "9853aa8891ad9fe2", "expiry": "2018-01-02T03:04:05"},
+      {"id": 57288265, "scopes": "linodes:read_only", "created": "2018-01-02T03:04:05",
+      "label": "linodego-token-test", "token": "1043c72081856d48", "expiry": "2018-01-02T03:04:05"}],
+      "page": 1, "pages": 1, "results": 2}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -97,14 +92,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "371"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Tue, 09 Jul 2024 13:28:01 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -120,7 +120,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -136,7 +136,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/profile/tokens/41180273
+    url: https://api.linode.com/v4beta/profile/tokens/57288265
     method: DELETE
   response:
     body: '{}'
@@ -152,15 +152,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "2"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Tue, 09 Jul 2024 13:28:01 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -175,7 +179,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

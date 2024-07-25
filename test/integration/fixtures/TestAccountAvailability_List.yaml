@@ -31,8 +31,8 @@ interactions:
       ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
       []}, {"region": "ap-southeast", "available": ["Linodes", "NodeBalancers", "Block
       Storage", "Kubernetes"], "unavailable": []}, {"region": "us-iad", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "us-ord", "available": ["Linodes", "NodeBalancers", "Block Storage",
+      ["Linodes", "NodeBalancers", "Block Storage"], "unavailable": ["Kubernetes"]},
+      {"region": "us-ord", "available": ["Linodes", "NodeBalancers", "Block Storage",
       "Kubernetes"], "unavailable": []}, {"region": "fr-par", "available": ["Linodes",
       "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable": []}, {"region":
       "us-sea", "available": ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"],
@@ -50,10 +50,21 @@ interactions:
       "Kubernetes"], "unavailable": []}, {"region": "id-cgk", "available": ["Linodes",
       "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable": []}, {"region":
       "us-lax", "available": ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"],
-      "unavailable": []}, {"region": "gb-lon", "available": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "au-mel", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}], "page": 1, "pages": 1, "results": 27}'
+      "unavailable": []}, {"region": "us-den-edge-1", "available": ["Linodes"], "unavailable":
+      ["NodeBalancers", "Block Storage", "Kubernetes"]}, {"region": "de-ham-edge-1",
+      "available": ["Linodes"], "unavailable": ["NodeBalancers", "Block Storage",
+      "Kubernetes"]}, {"region": "fr-mrs-edge-1", "available": ["Linodes"], "unavailable":
+      ["NodeBalancers", "Block Storage", "Kubernetes"]}, {"region": "za-jnb-edge-1",
+      "available": ["Linodes"], "unavailable": ["NodeBalancers", "Block Storage",
+      "Kubernetes"]}, {"region": "my-kul-edge-1", "available": ["Linodes"], "unavailable":
+      ["NodeBalancers", "Block Storage", "Kubernetes"]}, {"region": "co-bog-edge-1",
+      "available": ["Linodes"], "unavailable": ["NodeBalancers", "Block Storage",
+      "Kubernetes"]}, {"region": "mx-qro-edge-1", "available": ["Linodes"], "unavailable":
+      ["NodeBalancers", "Block Storage", "Kubernetes"]}, {"region": "us-hou-edge-1",
+      "available": ["Linodes"], "unavailable": ["NodeBalancers", "Block Storage",
+      "Kubernetes"]}, {"region": "cl-scl-edge-1", "available": ["Linodes"], "unavailable":
+      ["NodeBalancers", "Block Storage", "Kubernetes"]}], "page": 1, "pages": 1, "results":
+      34}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -65,6 +76,8 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -74,7 +87,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 17 Jun 2024 15:46:53 GMT
+      - Thu, 25 Jul 2024 17:44:02 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -91,7 +104,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:

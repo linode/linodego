@@ -2,8 +2,8 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"example stackscript 2024-05-31 10:04:42.930229 -0700 PDT m=+25.142787667","description":"description
-      for example stackscript 2024-05-31 10:04:42.930224 -0700 PDT m=+25.142783033","images":["linode/debian9","linode/ubuntu18.04"],"is_public":false,"rev_note":"revision
+    body: '{"label":"example stackscript 2024-07-11 14:35:59.602577 -0400 EDT m=+1.641587543","description":"description
+      for example stackscript 2024-07-11 14:35:59.602562 -0400 EDT m=+1.641572501","images":["linode/debian9","linode/ubuntu18.04"],"is_public":false,"rev_note":"revision
       1","script":"#!/bin/bash\n"}'
     form: {}
     headers:
@@ -16,10 +16,10 @@ interactions:
     url: https://api.linode.com/v4beta/linode/stackscripts
     method: POST
   response:
-    body: '{"id": 1384476, "username": "youjungk01", "user_gravatar_id": "89c3034428203ecf41c0c4795ac9f651",
-      "label": "example stackscript 2024-05-31 10:04:42.930229 -0700 PDT m=+25.142787667",
-      "description": "description for example stackscript 2024-05-31 10:04:42.930224
-      -0700 PDT m=+25.142783033", "ordinal": 0, "logo_url": "", "images": ["linode/debian9",
+    body: '{"id": 1413819, "username": "ErikZilber", "user_gravatar_id": "dea680eaec3cc565140cd87c663c1100",
+      "label": "example stackscript 2024-07-11 14:35:59.602577 -0400 EDT m=+1.641587543",
+      "description": "description for example stackscript 2024-07-11 14:35:59.602562
+      -0400 EDT m=+1.641572501", "ordinal": 0, "logo_url": "", "images": ["linode/debian9",
       "linode/ubuntu18.04"], "deployments_total": 0, "deployments_active": 0, "is_public":
       false, "mine": true, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "rev_note": "revision 1", "script": "#!/bin/bash\n", "user_defined_fields":
@@ -35,18 +35,20 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "602"
+      - "600"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:04:43 GMT
+      - Thu, 11 Jul 2024 18:35:59 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -61,10 +63,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -73,8 +72,8 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"2 example stackscript 2024-05-31 10:04:42.930229 -0700 PDT m=+25.142787667","description":"description
-      for example stackscript 2024-05-31 10:04:42.930224 -0700 PDT m=+25.142783033","images":["linode/debian9","linode/ubuntu18.04"],"is_public":false,"rev_note":"revision
+    body: '{"label":"2 example stackscript 2024-07-11 14:35:59.602577 -0400 EDT m=+1.641587543","description":"description
+      for example stackscript 2024-07-11 14:35:59.602562 -0400 EDT m=+1.641572501","images":["linode/debian9","linode/ubuntu18.04"],"is_public":false,"rev_note":"revision
       2","script":"#!/bin/bash\necho 2\n"}'
     form: {}
     headers:
@@ -84,13 +83,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/stackscripts/1384476
+    url: https://api.linode.com/v4beta/linode/stackscripts/1413819
     method: PUT
   response:
-    body: '{"id": 1384476, "username": "youjungk01", "user_gravatar_id": "89c3034428203ecf41c0c4795ac9f651",
-      "label": "2 example stackscript 2024-05-31 10:04:42.930229 -0700 PDT m=+25.142787667",
-      "description": "description for example stackscript 2024-05-31 10:04:42.930224
-      -0700 PDT m=+25.142783033", "ordinal": 0, "logo_url": "", "images": ["linode/debian9",
+    body: '{"id": 1413819, "username": "ErikZilber", "user_gravatar_id": "dea680eaec3cc565140cd87c663c1100",
+      "label": "2 example stackscript 2024-07-11 14:35:59.602577 -0400 EDT m=+1.641587543",
+      "description": "description for example stackscript 2024-07-11 14:35:59.602562
+      -0400 EDT m=+1.641572501", "ordinal": 0, "logo_url": "", "images": ["linode/debian9",
       "linode/ubuntu18.04"], "deployments_total": 0, "deployments_active": 0, "is_public":
       false, "mine": true, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "rev_note": "revision 2", "script": "#!/bin/bash\necho 2\n", "user_defined_fields":
@@ -106,18 +105,20 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "612"
+      - "610"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:04:43 GMT
+      - Thu, 11 Jul 2024 18:35:59 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -132,10 +133,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -144,9 +142,9 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"3 2 example stackscript 2024-05-31 10:04:42.930229 -0700 PDT
-      m=+25.142787667","description":"description for example stackscript 2024-05-31
-      10:04:42.930224 -0700 PDT m=+25.142783033","images":["linode/debian9","linode/ubuntu18.04"],"is_public":false,"rev_note":"revision
+    body: '{"label":"3 2 example stackscript 2024-07-11 14:35:59.602577 -0400 EDT
+      m=+1.641587543","description":"description for example stackscript 2024-07-11
+      14:35:59.602562 -0400 EDT m=+1.641572501","images":["linode/debian9","linode/ubuntu18.04"],"is_public":false,"rev_note":"revision
       3","script":"#!/bin/bash\necho 2\necho 3\n"}'
     form: {}
     headers:
@@ -156,13 +154,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/stackscripts/1384476
+    url: https://api.linode.com/v4beta/linode/stackscripts/1413819
     method: PUT
   response:
-    body: '{"id": 1384476, "username": "youjungk01", "user_gravatar_id": "89c3034428203ecf41c0c4795ac9f651",
-      "label": "3 2 example stackscript 2024-05-31 10:04:42.930229 -0700 PDT m=+25.142787667",
-      "description": "description for example stackscript 2024-05-31 10:04:42.930224
-      -0700 PDT m=+25.142783033", "ordinal": 0, "logo_url": "", "images": ["linode/debian9",
+    body: '{"id": 1413819, "username": "ErikZilber", "user_gravatar_id": "dea680eaec3cc565140cd87c663c1100",
+      "label": "3 2 example stackscript 2024-07-11 14:35:59.602577 -0400 EDT m=+1.641587543",
+      "description": "description for example stackscript 2024-07-11 14:35:59.602562
+      -0400 EDT m=+1.641572501", "ordinal": 0, "logo_url": "", "images": ["linode/debian9",
       "linode/ubuntu18.04"], "deployments_total": 0, "deployments_active": 0, "is_public":
       false, "mine": true, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "rev_note": "revision 3", "script": "#!/bin/bash\necho 2\necho 3\n", "user_defined_fields":
@@ -178,18 +176,20 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "622"
+      - "620"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:04:43 GMT
+      - Thu, 11 Jul 2024 18:36:00 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -204,10 +204,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -225,13 +222,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/stackscripts/1384476
+    url: https://api.linode.com/v4beta/linode/stackscripts/1413819
     method: GET
   response:
-    body: '{"id": 1384476, "username": "youjungk01", "user_gravatar_id": "89c3034428203ecf41c0c4795ac9f651",
-      "label": "3 2 example stackscript 2024-05-31 10:04:42.930229 -0700 PDT m=+25.142787667",
-      "description": "description for example stackscript 2024-05-31 10:04:42.930224
-      -0700 PDT m=+25.142783033", "ordinal": 0, "logo_url": "", "images": ["linode/debian9",
+    body: '{"id": 1413819, "username": "ErikZilber", "user_gravatar_id": "dea680eaec3cc565140cd87c663c1100",
+      "label": "3 2 example stackscript 2024-07-11 14:35:59.602577 -0400 EDT m=+1.641587543",
+      "description": "description for example stackscript 2024-07-11 14:35:59.602562
+      -0400 EDT m=+1.641572501", "ordinal": 0, "logo_url": "", "images": ["linode/debian9",
       "linode/ubuntu18.04"], "deployments_total": 0, "deployments_active": 0, "is_public":
       false, "mine": true, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "rev_note": "revision 3", "script": "#!/bin/bash\necho 2\necho 3\n", "user_defined_fields":
@@ -247,18 +244,20 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "622"
+      - "620"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:04:43 GMT
+      - Thu, 11 Jul 2024 18:36:00 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -274,10 +273,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -295,7 +291,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/stackscripts/1384476
+    url: https://api.linode.com/v4beta/linode/stackscripts/1413819
     method: DELETE
   response:
     body: '{}'
@@ -310,6 +306,8 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -321,7 +319,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 17:04:43 GMT
+      - Thu, 11 Jul 2024 18:36:00 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -336,10 +334,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:

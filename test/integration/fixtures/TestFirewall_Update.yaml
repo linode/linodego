@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 498953, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
+    body: '{"id": 692866, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"action": "DROP", "label": "linodego-fwrule-test", "protocol": "ICMP", "addresses":
       {"ipv4": ["0.0.0.0/0"]}}], "inbound_policy": "ACCEPT", "outbound": null, "outbound_policy":
@@ -31,6 +31,8 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -42,7 +44,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 00:09:53 GMT
+      - Thu, 25 Jul 2024 17:44:50 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -78,10 +80,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/498953
+    url: https://api.linode.com/v4beta/networking/firewalls/692866
     method: PUT
   response:
-    body: '{"id": 498953, "label": "linodego-fw-test-updated", "created": "2018-01-02T03:04:05",
+    body: '{"id": 692866, "label": "linodego-fw-test-updated", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "disabled", "rules": {"inbound":
       [{"action": "DROP", "label": "linodego-fwrule-test", "protocol": "ICMP", "addresses":
       {"ipv4": ["0.0.0.0/0"]}}], "inbound_policy": "ACCEPT", "outbound": null, "outbound_policy":
@@ -98,6 +100,8 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -109,7 +113,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 00:09:54 GMT
+      - Thu, 25 Jul 2024 17:44:50 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -145,7 +149,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/498953
+    url: https://api.linode.com/v4beta/networking/firewalls/692866
     method: DELETE
   response:
     body: '{}'
@@ -160,6 +164,8 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -171,7 +177,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 31 May 2024 00:09:54 GMT
+      - Thu, 25 Jul 2024 17:44:50 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

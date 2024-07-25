@@ -11,113 +11,39 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/databases/engines
+    url: https://api.linode.com/v4beta/databases/engines?page=1
     method: GET
   response:
-    body: '{"data": [{"id": "mysql/5.7.39", "engine": "mysql", "version": "5.7.39"},
-      {"id": "mysql/8.0.30", "engine": "mysql", "version": "8.0.30"}, {"id": "postgresql/10.23",
-      "engine": "postgresql", "version": "10.23"}, {"id": "postgresql/11.17", "engine":
-      "postgresql", "version": "11.17"}, {"id": "postgresql/12.12", "engine": "postgresql",
-      "version": "12.12"}, {"id": "postgresql/13.8", "engine": "postgresql", "version":
-      "13.8"}, {"id": "postgresql/14.6", "engine": "postgresql", "version": "14.6"}],
-      "page": 1, "pages": 1, "results": 7}'
+    body: '{"errors": [{"reason": "Not found"}]}'
     headers:
-      Access-Control-Allow-Credentials:
-      - "true"
       Access-Control-Allow-Headers:
       - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
       Access-Control-Allow-Methods:
       - HEAD, GET, OPTIONS, POST, PUT, DELETE
       Access-Control-Allow-Origin:
       - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
-      - "531"
-      Content-Security-Policy:
-      - default-src 'none'
+      - "37"
       Content-Type:
       - application/json
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000
+      Expires:
+      - Thu, 25 Jul 2024 17:44:20 GMT
+      Pragma:
+      - no-cache
       Vary:
-      - Authorization, X-Filter
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
       - '*'
-      X-Content-Type-Options:
-      - nosniff
       X-Frame-Options:
       - DENY
-      - DENY
       X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "800"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/databases/engines/mysql%2F5.7.39
-    method: GET
-  response:
-    body: '{"id": "mysql/5.7.39", "engine": "mysql", "version": "5.7.39"}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
-      Content-Length:
-      - "62"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - '*'
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "800"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
+      - unknown
+    status: 404 Not Found
+    code: 404
     duration: ""

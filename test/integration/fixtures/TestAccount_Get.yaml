@@ -14,14 +14,15 @@ interactions:
     url: https://api.linode.com/v4beta/account
     method: GET
   response:
-    body: '{"company": "Linode", "email": "foo@linode.com", "first_name": "foo",
-      "last_name": "bar", "address_1": "123 Street Street", "address_2": "NA",
-      "city": "Philadelphia", "state": "PA", "zip": "30000", "country": "US", "phone":
-      "1234567891", "balance": 0.0, "tax_id": "", "billing_source": "linode", "credit_card":
-      {"last_four": "1234", "expiry": "02/2020"}, "balance_uninvoiced": 0.0, "active_since":
+    body: '{"company": "", "email": "yechen@akamai.com", "first_name": "", "last_name":
+      "", "address_1": "", "address_2": "", "city": "", "state": "", "zip": "", "country":
+      "", "phone": "", "balance": 0.0, "tax_id": "", "billing_source": "linode", "credit_card":
+      {"last_four": null, "expiry": null}, "balance_uninvoiced": 0.0, "active_since":
       "2018-01-02T03:04:05", "capabilities": ["Linodes", "NodeBalancers", "Block Storage",
       "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans", "LKE HA Control Planes",
-      "Machine Images", "Managed Databases"], "active_promotions": [], "euuid": "FFFFFFFF-2E4D-47CE-FFFFFFFFFFFFFFFFF"}'
+      "Machine Images", "VPCs", "LKE Network Access Control List (IP ACL)", "Placement
+      Group", "Object Storage Access Key Regions"], "active_promotions": [], "euuid":
+      "4D76E527-6B98-41BB-BE6936746C131930"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -33,18 +34,20 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "776"
+      - "700"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 17 Jun 2024 15:46:56 GMT
+      - Thu, 25 Jul 2024 17:44:08 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -60,7 +63,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:

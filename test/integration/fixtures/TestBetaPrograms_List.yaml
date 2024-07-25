@@ -11,15 +11,19 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/betas
+    url: https://api.linode.com/v4beta/betas?page=1
     method: GET
   response:
-    body: '{"data": [{"id": "active_closed", "label": "active closed beta", 
-    "description": "An active closed beta", "started": "2023-07-19T15:23:43", 
-    "ended": null, "greenlight_only": true, "more_info": "a link with even more info"}, 
-    {"id": "limited", "label": "limited beta", "description": "An active limited beta", 
-    "started": "2023-07-19T15:23:43", "ended": null, "greenlight_only": false, 
-    "more_info": "a link with even more info"}], "page": 1, "pages": 1, "results": 2}'
+    body: '{"data": [{"id": "rtx_4000_ada_beta", "label": "NVIDIA RTX 4000 Ada Series
+      GPU Beta", "description": "Our new cloud GPUs are available to a limited number
+      of customers for early access. Powered by the NVIDIA Quadro RTX 4000 Ada generation
+      GPU cards, these GPUs are optimized for media workloads such as media transcoding,
+      but fit a range of use cases for parallelization such as training for AI models
+      and data analysis. If accepted for early access participation, you will be notified
+      via support ticket with instructions and resources. Beta GPUs are subject to
+      standard charges.", "started": "2018-01-02T03:04:05", "ended": null, "greenlight_only":
+      false, "more_info": "https://www.linode.com/docs/products/compute/compute-instances/plans/gpu/"}],
+      "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -31,19 +35,25 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "786"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Thu, 25 Jul 2024 17:44:17 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
-      - Accept-Encoding
       - Authorization, X-Filter
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
@@ -54,9 +64,12 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
-      - "1200"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

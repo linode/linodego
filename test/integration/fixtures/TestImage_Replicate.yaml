@@ -15,12 +15,12 @@ interactions:
     url: https://api.linode.com/v4beta/images/upload
     method: POST
   response:
-    body: '{"upload_to": "https://us-east-1.linodeobjects.com:443/linode-production-machine-images-uploads/26427080?Signature=65Q98zFPjnVPqM9Mmu7xHwxTo7g%3D&Expires=1722014026&AWSAccessKeyID=SANITIZED",
-      "image": {"id": "private/26427080", "label": "linodego-image-replication", "description":
+    body: '{"upload_to": "https://us-east-1.linodeobjects.com:443/linode-production-machine-images-uploads/26427545?Signature=qB9MKMVqJW7FdH2BfCg8p6U1HJA%3D&Expires=1722015944&AWSAccessKeyID=SANITIZED",
+      "image": {"id": "private/26427545", "label": "linodego-image-replication", "description":
       "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "size": 0, "created_by": "ychen123", "type": "manual", "tags": [], "is_public":
       false, "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
-      "pending_upload", "capabilities": [], "regions": [], "total_size": 0}}'
+      "pending_upload", "capabilities": []}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -35,19 +35,20 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "623"
+      - "591"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx/1.14.2
+      Expires:
+      - Thu, 25 Jul 2024 17:45:44 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
-      - max-age=31536000
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
@@ -80,14 +81,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private%2F26427080
+    url: https://api.linode.com/v4beta/images/private%2F26427545
     method: GET
   response:
-    body: '{"id": "private/26427080", "label": "linodego-image-replication", "description":
+    body: '{"id": "private/26427545", "label": "linodego-image-replication", "description":
       "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "size": 0, "created_by": "ychen123", "type": "manual", "tags": [], "is_public":
       false, "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
-      "pending_upload", "capabilities": [], "regions": [], "total_size": 0}'
+      "pending_upload", "capabilities": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -102,20 +103,20 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "410"
+      - "378"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx/1.14.2
+      Expires:
+      - Thu, 25 Jul 2024 17:45:59 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
-      - max-age=31536000
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
@@ -149,84 +150,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private%2F26427080
+    url: https://api.linode.com/v4beta/images/private%2F26427545
     method: GET
   response:
-    body: '{"id": "private/26427080", "label": "linodego-image-replication", "description":
-      "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "size": 0, "created_by": "ychen123", "type": "manual", "tags": [], "is_public":
-      false, "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
-      "pending_upload", "capabilities": [], "regions": [], "total_size": 0}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "410"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Server:
-      - nginx/1.14.2
-      Strict-Transport-Security:
-      - max-age=31536000
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - images:read_only
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
-      X-Ratelimit-Limit:
-      - "400"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private%2F26427080
-    method: GET
-  response:
-    body: '{"id": "private/26427080", "label": "linodego-image-replication", "description":
+    body: '{"id": "private/26427545", "label": "linodego-image-replication", "description":
       "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "size": 1, "created_by": "ychen123", "type": "manual", "tags": [], "is_public":
       false, "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
-      "available", "capabilities": [], "regions": [{"region": "us-east", "status":
-      "available"}], "total_size": 1}'
+      "available", "capabilities": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -241,20 +172,20 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "449"
+      - "373"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx/1.14.2
+      Expires:
+      - Thu, 25 Jul 2024 17:46:14 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
-      - max-age=31536000
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
@@ -288,16 +219,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private%2F26427080/regions
+    url: https://api.linode.com/v4beta/images/private%2F26427545/regions
     method: POST
   response:
-    body: '{"id": "private/26427080", "label": "linodego-image-replication", "description":
+    body: '{"id": "private/26427545", "label": "linodego-image-replication", "description":
       "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "size": 1, "created_by": "ychen123", "type": "manual", "tags": [], "is_public":
       false, "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
-      "available", "capabilities": [], "regions": [{"region": "us-east", "status":
-      "available"}, {"region": "eu-west", "status": "pending replication"}], "total_size":
-      1}'
+      "available", "capabilities": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -312,19 +241,20 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "505"
+      - "373"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx/1.14.2
+      Expires:
+      - Thu, 25 Jul 2024 17:46:14 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
-      - max-age=31536000
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
@@ -357,7 +287,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private%2F26427080
+    url: https://api.linode.com/v4beta/images/private%2F26427545
     method: DELETE
   response:
     body: '{}'
@@ -375,7 +305,7 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
@@ -384,10 +314,11 @@ interactions:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx/1.14.2
+      Expires:
+      - Thu, 25 Jul 2024 17:46:14 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
-      - max-age=31536000
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
