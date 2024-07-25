@@ -111,9 +111,7 @@ func TestImage_CreateUpload(t *testing.T) {
 	defer teardown()
 
 	image, uploadURL, err := client.CreateImageUpload(context.Background(), ImageCreateUploadOptions{
-		// TODO: Uncomment before merging Images Gen. 2 support to main
-		// Region:      getRegionsWithCaps(t, client, []string{"Metadata"})[0],
-		Region: "us-east",
+		Region: getRegionsWithCaps(t, client, []string{"Metadata"})[0],
 
 		Label:       "linodego-image-create-upload",
 		Description: "An image that does stuff.",
@@ -142,9 +140,7 @@ func TestImage_CloudInit(t *testing.T) {
 	client, instance, teardown, err := setupInstance(
 		t, "fixtures/TestImage_CloudInit", true,
 		func(client *Client, options *InstanceCreateOptions) {
-			// TODO: Uncomment before merging Images Gen. 2 support to main
-			// options.Region = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
-			options.Region = "us-east"
+			options.Region = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
 		})
 	if err != nil {
 		t.Fatal(err)
@@ -182,60 +178,54 @@ func TestImage_CloudInit(t *testing.T) {
 }
 
 func TestImage_Replicate(t *testing.T) {
-	// TODO: Remove when replication is available
-	t.Skip("Replication is not yet available")
+	// TODO: use random regions with capabilities once it gets stable
+	availableRegions := []string{"us-east", "eu-west"}
 
-	var testRegion string
-	var availableRegions []string
+	client, teardown := createTestClient(t, "fixtures/TestImage_Replicate")
+	defer teardown()
 
-	client, instance, teardown, err := setupInstance(
-		t, "fixtures/TestImage_Replicate", true,
-		func(client *Client, options *InstanceCreateOptions) {
-			// TODO: Uncomment before merging Images Gen. 2 to main
-			// availableRegions = getRegionsWithCaps(t, client, []string{"Linodes"})
-			availableRegions = []string{"us-east", "us-central", "us-southeast"}
-
-			testRegion = availableRegions[0]
-			options.Region = testRegion
-		})
-	require.NoError(t, err)
-	t.Cleanup(teardown)
-
-	instanceDisks, err := client.ListInstanceDisks(
-		context.Background(),
-		instance.ID,
-		nil,
-	)
-	require.NoError(t, err)
-
-	image, err := client.CreateImage(context.Background(), ImageCreateOptions{
-		DiskID: instanceDisks[0].ID,
-		Label:  "linodego-test-replication",
+	image, uploadURL, err := client.CreateImageUpload(context.Background(), ImageCreateUploadOptions{
+		Region:      availableRegions[0],
+		Label:       "linodego-image-replication",
+		Description: "An image that does stuff.",
 	})
-	require.NoError(t, err)
-	t.Cleanup(func() {
-		require.NoError(t, client.DeleteImage(context.Background(), image.ID))
-	})
+	if err != nil {
+		t.Errorf("Failed to create image upload: %v", err)
+	}
+	defer func() {
+		if err := client.DeleteImage(context.Background(), image.ID); err != nil {
+			t.Errorf("Failed to delete image %s: %v", image.ID, err)
+		}
+	}()
 
-	image, err = client.WaitForImageStatus(context.Background(), image.ID, ImageStatusAvailable, 240)
-	require.NoError(t, err)
+	if uploadURL == "" {
+		t.Errorf("Expected upload URL, got none")
+	}
 
-	replicaRegions := availableRegions[1:]
+	if _, err := client.WaitForImageStatus(context.Background(), image.ID, ImageStatusPendingUpload, 60); err != nil {
+		t.Errorf("Failed to wait for image pending upload status: %v", err)
+	}
+
+	// Because this request currently bypasses the recorder, we should only run it when the recorder is recording
+	if testingMode != recorder.ModeReplaying {
+		if err := client.UploadImageToURL(context.Background(), uploadURL, bytes.NewReader(testImageBytes)); err != nil {
+			t.Errorf("failed to upload image: %v", err)
+		}
+	}
+
+	if _, err := client.WaitForImageStatus(context.Background(), image.ID, ImageStatusAvailable, 240); err != nil {
+		t.Errorf("Failed to wait for image available upload status: %v", err)
+	}
+
+	replicaRegions := availableRegions
 
 	image, err = client.ReplicateImage(context.Background(), image.ID, ImageReplicateOptions{
 		Regions: replicaRegions,
 	})
 	require.NoError(t, err)
 
-	// Wait for all region replications to finish
-	for _, region := range replicaRegions {
-		image, err = client.WaitForImageRegionStatus(
-			context.Background(), image.ID, region, ImageRegionStatusAvailable,
-		)
-	}
-
 	require.Len(t, image.Regions, len(availableRegions))
 	for _, region := range image.Regions {
-		assert.Contains(t, region.Region, availableRegions)
+		assert.Contains(t, availableRegions, region.Region)
 	}
 }
