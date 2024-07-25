@@ -2,7 +2,8 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-southeast","client_conn_throttle":20,"tags":null,"firewall_id":501321}'
+    body: '{"region":"us-east","label":"linodego-image-replication","description":"An
+      image that does stuff."}'
     form: {}
     headers:
       Accept:
@@ -11,13 +12,15 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers
+    url: https://api.linode.com/v4beta/images/upload
     method: POST
   response:
-    body: '{"id": 694137, "label": "balancer694137", "region": "us-southeast", "hostname":
-      "45-79-244-189.ip.linodeusercontent.com", "ipv4": "45.79.244.189", "ipv6": "1234::5678",
-      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "client_conn_throttle":
-      20, "tags": [], "transfer": {"in": null, "out": null, "total": null}}'
+    body: '{"upload_to": "https://us-east-1.linodeobjects.com:443/linode-production-machine-images-uploads/26427080?Signature=65Q98zFPjnVPqM9Mmu7xHwxTo7g%3D&Expires=1722014026&AWSAccessKeyID=SANITIZED",
+      "image": {"id": "private/26427080", "label": "linodego-image-replication", "description":
+      "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "size": 0, "created_by": "ychen123", "type": "manual", "tags": [], "is_public":
+      false, "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
+      "pending_upload", "capabilities": [], "regions": [], "total_size": 0}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -29,160 +32,27 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "342"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Fri, 31 May 2024 17:04:39 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - nodebalancers:read_write
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
-      X-Ratelimit-Limit:
-      - "400"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: '{"port":80,"check_interval":30,"check_attempts":5,"check_timeout":5}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/694137/configs
-    method: POST
-  response:
-    body: '{"id": 1134667, "port": 80, "protocol": "http", "algorithm": "roundrobin",
-      "stickiness": "none", "check": "none", "check_interval": 30, "check_timeout":
-      5, "check_attempts": 5, "check_path": "", "check_body": "", "check_passive":
-      true, "proxy_protocol": "none", "cipher_suite": "recommended", "nodebalancer_id":
-      694137, "ssl_commonname": "", "ssl_fingerprint": "", "ssl_cert": null, "ssl_key":
-      null, "nodes_status": {"up": 0, "down": 0}}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
+      Akamai-Internal-Account:
       - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - max-age=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
       Connection:
       - keep-alive
       Content-Length:
-      - "437"
+      - "623"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Fri, 31 May 2024 17:04:39 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx/1.14.2
       Strict-Transport-Security:
+      - max-age=31536000
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - nodebalancers:read_write
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
-      X-Ratelimit-Limit:
-      - "400"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: '{"port":8080,"protocol":"http","proxy_protocol":"none","algorithm":"roundrobin","stickiness":"none","check":"none","check_interval":30,"check_attempts":5,"check_passive":true,"check_timeout":5,"cipher_suite":"recommended"}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/694137/configs/1134667
-    method: PUT
-  response:
-    body: '{"id": 1134667, "port": 8080, "protocol": "http", "algorithm": "roundrobin",
-      "stickiness": "none", "check": "none", "check_interval": 30, "check_timeout":
-      5, "check_attempts": 5, "check_path": "", "check_body": "", "check_passive":
-      true, "proxy_protocol": "none", "cipher_suite": "recommended", "nodebalancer_id":
-      694137, "ssl_commonname": "", "ssl_fingerprint": "", "ssl_cert": null, "ssl_key":
-      null, "nodes_status": {"up": 0, "down": 0}}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "439"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Fri, 31 May 2024 17:04:39 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - nodebalancers:read_write
+      - images:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -210,15 +80,223 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/694137/configs
+    url: https://api.linode.com/v4beta/images/private%2F26427080
     method: GET
   response:
-    body: '{"data": [{"id": 1134667, "port": 8080, "protocol": "http", "algorithm":
-      "roundrobin", "stickiness": "none", "check": "none", "check_interval": 30, "check_timeout":
-      5, "check_attempts": 5, "check_path": "", "check_body": "", "check_passive":
-      true, "proxy_protocol": "none", "cipher_suite": "recommended", "nodebalancer_id":
-      694137, "ssl_commonname": "", "ssl_fingerprint": "", "ssl_cert": null, "ssl_key":
-      null, "nodes_status": {"up": 0, "down": 0}}], "page": 1, "pages": 1, "results":
+    body: '{"id": "private/26427080", "label": "linodego-image-replication", "description":
+      "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "size": 0, "created_by": "ychen123", "type": "manual", "tags": [], "is_public":
+      false, "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
+      "pending_upload", "capabilities": [], "regions": [], "total_size": 0}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "410"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.14.2
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/private%2F26427080
+    method: GET
+  response:
+    body: '{"id": "private/26427080", "label": "linodego-image-replication", "description":
+      "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "size": 0, "created_by": "ychen123", "type": "manual", "tags": [], "is_public":
+      false, "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
+      "pending_upload", "capabilities": [], "regions": [], "total_size": 0}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "410"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.14.2
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/private%2F26427080
+    method: GET
+  response:
+    body: '{"id": "private/26427080", "label": "linodego-image-replication", "description":
+      "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "size": 1, "created_by": "ychen123", "type": "manual", "tags": [], "is_public":
+      false, "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
+      "available", "capabilities": [], "regions": [{"region": "us-east", "status":
+      "available"}], "total_size": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "449"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.14.2
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"regions":["us-east","eu-west"]}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/private%2F26427080/regions
+    method: POST
+  response:
+    body: '{"id": "private/26427080", "label": "linodego-image-replication", "description":
+      "An image that does stuff.", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "size": 1, "created_by": "ychen123", "type": "manual", "tags": [], "is_public":
+      false, "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
+      "available", "capabilities": [], "regions": [{"region": "us-east", "status":
+      "available"}, {"region": "eu-west", "status": "pending replication"}], "total_size":
       1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -231,95 +309,27 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "488"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Fri, 31 May 2024 17:04:39 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - nodebalancers:read_only
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
-      X-Ratelimit-Limit:
-      - "400"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/694137/configs/1134667
-    method: GET
-  response:
-    body: '{"id": 1134667, "port": 8080, "protocol": "http", "algorithm": "roundrobin",
-      "stickiness": "none", "check": "none", "check_interval": 30, "check_timeout":
-      5, "check_attempts": 5, "check_path": "", "check_body": "", "check_passive":
-      true, "proxy_protocol": "none", "cipher_suite": "recommended", "nodebalancer_id":
-      694137, "ssl_commonname": "", "ssl_fingerprint": "", "ssl_cert": null, "ssl_key":
-      null, "nodes_status": {"up": 0, "down": 0}}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
+      Akamai-Internal-Account:
       - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - max-age=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
       Connection:
       - keep-alive
       Content-Length:
-      - "439"
+      - "505"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Fri, 31 May 2024 17:04:39 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx/1.14.2
       Strict-Transport-Security:
+      - max-age=31536000
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
-      - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - nodebalancers:read_only
+      - images:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -347,7 +357,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/694137/configs/1134667
+    url: https://api.linode.com/v4beta/images/private%2F26427080
     method: DELETE
   response:
     body: '{}'
@@ -362,70 +372,10 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "2"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Fri, 31 May 2024 17:04:39 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - nodebalancers:read_write
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
-      X-Ratelimit-Limit:
-      - "400"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/694137
-    method: DELETE
-  response:
-    body: '{}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
+      Akamai-Internal-Account:
       - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - max-age=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
       Connection:
       - keep-alive
       Content-Length:
@@ -434,16 +384,15 @@ interactions:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Fri, 31 May 2024 17:04:40 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx/1.14.2
       Strict-Transport-Security:
+      - max-age=31536000
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - nodebalancers:read_write
+      - images:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
