@@ -11,7 +11,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api-staging.linode.com/v4beta/regions?page=1
+    url: https://api.linode.com/v4beta/regions?page=1
     method: GET
   response:
     body: '{"data": [{"id": "ap-west", "label": "Mumbai, IN", "country": "in", "capabilities":
@@ -360,7 +360,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api-staging.linode.com/v4beta/images/upload
+    url: https://api.linode.com/v4beta/images/upload
     method: POST
   response:
     body: '{"upload_to": "https://ap-south-1.linodeobjects.com:443/linode-production-machine-images-uploads/26428985?Signature=YSPz1TGmUEONHST2rp1RHHe4FjM%3D&Expires=1722022632&AWSAccessKeyID=SANITIZED",
@@ -429,7 +429,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api-staging.linode.com/v4beta/images/private%2F26428985
+    url: https://api.linode.com/v4beta/images/private%2F26428985
     method: DELETE
   response:
     body: '{}'

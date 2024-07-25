@@ -11,7 +11,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api-staging.linode.com/v4beta/regions?page=1
+    url: https://api.linode.com/v4beta/regions?page=1
     method: GET
   response:
     body: '{"data": [{"id": "ap-west", "label": "Mumbai, IN", "country": "in", "capabilities":
@@ -359,7 +359,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api-staging.linode.com/v4beta/linode/instances
+    url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
     body: '{"id": 61877581, "label": "go-test-ins-837hb70fb4qy", "group": "", "status":
@@ -432,7 +432,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api-staging.linode.com/v4beta/linode/instances/61877581/disks?page=1
+    url: https://api.linode.com/v4beta/linode/instances/61877581/disks?page=1
     method: GET
   response:
     body: '{"data": [{"id": 121429953, "status": "not ready", "label": "Debian 9 Disk",
@@ -502,7 +502,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api-staging.linode.com/v4beta/images
+    url: https://api.linode.com/v4beta/images
     method: POST
   response:
     body: '{"id": "private/26428978", "label": "linodego-test-cloud-init", "description":
@@ -570,7 +570,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api-staging.linode.com/v4beta/images/private%2F26428978
+    url: https://api.linode.com/v4beta/images/private%2F26428978
     method: DELETE
   response:
     body: '{}'
@@ -633,7 +633,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api-staging.linode.com/v4beta/linode/instances/61877581
+    url: https://api.linode.com/v4beta/linode/instances/61877581
     method: DELETE
   response:
     body: '{}'

@@ -14,7 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/account/payments?page=1
     method: GET
   response:
-    body: '{"data": [], "page": 1, "pages": 1, "results": 0}'
+    body: '{"data": [{"id": 12065587, "date": "2018-01-02T03:04:05", "usd": 25.0}],
+          "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -26,8 +27,6 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -55,10 +54,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
