@@ -11,6 +11,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/require"
+
 	"github.com/dnaeon/go-vcr/cassette"
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/linode/linodego"
@@ -166,7 +168,17 @@ func transportRecorderWrapper(t *testing.T, fixtureYaml string) (transport.Wrapp
 	}, teardown
 }
 
-// getRegionsWithCaps returns a list of regions that support the given capabilities.
+/*
+Helper function getRegionsWithCaps returns a list of regions that support the given capabilities and plans.
+It filters regions based on their capabilities and the availability of specified plans.
+If the plans list is empty, it only checks for the capabilities.
+
+Parameters:
+  - capabilities: A list of required capabilities that regions must support.
+
+Returns:
+  - string values representing the IDs of regions that have a given set of capabilities.
+*/
 func getRegionsWithCaps(t *testing.T, client *linodego.Client, capabilities []string) []string {
 	result := make([]string, 0)
 
@@ -197,6 +209,47 @@ func getRegionsWithCaps(t *testing.T, client *linodego.Client, capabilities []st
 		}
 
 		result = append(result, region.ID)
+	}
+
+	return result
+}
+
+// getRegionWithCapsAndPlans resolves a list of regions that meet the given capabilities
+// and has availability for all the provided plans.
+func getRegionsWithCapsAndPlans(t *testing.T, client *linodego.Client, capabilities, plans []string) []string {
+	regionsWithCaps := getRegionsWithCaps(t, client, capabilities)
+
+	regionsAvailabilities, err := client.ListRegionsAvailability(context.Background(), nil)
+	require.NoError(t, err)
+
+	type availKey struct {
+		Region string
+		Plan   string
+	}
+
+	availMap := make(map[availKey]linodego.RegionAvailability, len(regionsAvailabilities))
+	for _, avail := range regionsAvailabilities {
+		availMap[availKey{Region: avail.Region, Plan: avail.Plan}] = avail
+	}
+
+	// Function to check if a region has the required plans available
+	regionHasPlans := func(regionID string) bool {
+		for _, plan := range plans {
+			if avail, ok := availMap[availKey{Region: regionID, Plan: plan}]; !ok || !avail.Available {
+				return false
+			}
+		}
+		return true
+	}
+
+	result := make([]string, 0, len(regionsWithCaps))
+
+	for _, region := range regionsWithCaps {
+		if !regionHasPlans(region) {
+			continue
+		}
+
+		result = append(result, region)
 	}
 
 	return result

@@ -15,13 +15,13 @@ interactions:
     url: https://api.linode.com/v4beta/images/upload
     method: POST
   response:
-    body: '{"upload_to": "https://alpha.linodeobjects.com:443/linode-machine-images-upload/10044175?Signature=ef8tiIxbZuoAy%2BN%2BKO2jQ%2Bhg0yY%3D&Expires=1718393154&AWSAccessKeyID=SANITIZED",
-      "image": {"id": "private/10044175", "label": "linodego-image-create-upload",
+    body: '{"upload_to": "https://us-east-1.linodeobjects.com:443/linode-production-machine-images-uploads/26428865?Signature=%2FzwmpBtlQg%2F%2B6hPjV6cl48Nw0V8%3D&Expires=1722021514&AWSAccessKeyID=SANITIZED",
+      "image": {"id": "private/26428865", "label": "linodego-image-create-upload",
       "description": "An image that does stuff.", "created": "2018-01-02T03:04:05",
-      "updated": "2018-01-02T03:04:05", "size": 0, "created_by": "lgarber", "type":
+      "updated": "2018-01-02T03:04:05", "size": 0, "created_by": "ychen123", "type":
       "manual", "tags": ["bar", "foo"], "is_public": false, "deprecated": false, "vendor":
       null, "expiry": null, "eol": null, "status": "pending_upload", "capabilities":
-      ["cloud-init"], "regions": [], "total_size": 0}}'
+      ["cloud-init"]}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -33,18 +33,25 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "623"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Thu, 25 Jul 2024 19:18:34 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
-      - Accept-Encoding
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
       - images:read_write
@@ -54,7 +61,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -72,7 +82,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/images/private%2F10044175
+    url: https://api.linode.com/v4beta/images/private%2F26428865
     method: DELETE
   response:
     body: '{}'
@@ -87,16 +97,22 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "2"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Thu, 25 Jul 2024 19:18:35 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -109,7 +125,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:

@@ -14,12 +14,12 @@ interactions:
     url: https://api.linode.com/v4beta/profile
     method: GET
   response:
-    body: '{"uid": 1989601, "username": "lgarber-dev", "email": "REDACTED",
-      "verified_phone_number": null, "timezone": "GMT", "email_notifications": false,
+    body: '{"uid": 6368933, "username": "ErikZilber", "email": "ezilber@akamai.com",
+      "verified_phone_number": null, "timezone": "GMT", "email_notifications": true,
       "referrals": {"code": "", "url": "", "total": 0, "completed": 0, "pending":
       0, "credit": 0}, "ip_whitelist_enabled": false, "lish_auth_method": "password_keys",
-      "authorized_keys": null, "two_factor_auth": true, "restricted": false, "authentication_type":
-      "password"}'
+      "authorized_keys": null, "two_factor_auth": false, "restricted": false, "authentication_type":
+      "password", "user_type": "default"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -31,17 +31,22 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
-      - "421"
+      - "444"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Wed, 10 Jul 2024 18:10:23 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -57,14 +62,14 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"email":"REDACTED","timezone":"GMT","email_notifications":false,"ip_whitelist_enabled":false,"lish_auth_method":"password_keys","authorized_keys":[],"two_factor_auth":true,"restricted":false}'
+    body: '{"email":"ezilber@akamai.com","timezone":"GMT","email_notifications":true,"ip_whitelist_enabled":false,"lish_auth_method":"password_keys","authorized_keys":[],"two_factor_auth":false,"restricted":false}'
     form: {}
     headers:
       Accept:
@@ -76,12 +81,12 @@ interactions:
     url: https://api.linode.com/v4beta/profile
     method: PUT
   response:
-    body: '{"uid": 1989601, "username": "lgarber-dev", "email": "REDACTED",
-      "verified_phone_number": null, "timezone": "GMT", "email_notifications": false,
+    body: '{"uid": 6368933, "username": "ErikZilber", "email": "ezilber@akamai.com",
+      "verified_phone_number": null, "timezone": "GMT", "email_notifications": true,
       "referrals": {"code": "", "url": "", "total": 0, "completed": 0, "pending":
       0, "credit": 0}, "ip_whitelist_enabled": false, "lish_auth_method": "password_keys",
-      "authorized_keys": null, "two_factor_auth": true, "restricted": false, "authentication_type":
-      "password"}'
+      "authorized_keys": null, "two_factor_auth": false, "restricted": false, "authentication_type":
+      "password", "user_type": "default"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -93,16 +98,22 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
-      - "421"
+      - "444"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Wed, 10 Jul 2024 18:10:23 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -117,7 +128,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

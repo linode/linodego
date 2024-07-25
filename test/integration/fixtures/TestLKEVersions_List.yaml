@@ -11,10 +11,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/versions
+    url: https://api.linode.com/v4beta/lke/versions?page=1
     method: GET
   response:
-    body: '{"data": [{"id": "1.23"}], "page": 1, "pages": 1, "results": 1}'
+    body: '{"data": [{"id": "1.30"}, {"id": "1.29"}, {"id": "1.28"}], "page": 1, "pages":
+      1, "results": 3}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -27,16 +28,19 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
-      - "63"
+      - "95"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Wed, 03 Jul 2024 19:57:34 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -52,7 +56,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
