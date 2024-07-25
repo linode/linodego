@@ -28,16 +28,22 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "243"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Thu, 25 Jul 2024 17:44:17 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -50,7 +56,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -71,14 +80,89 @@ interactions:
     url: https://api.linode.com/v4beta/account/users?page=1
     method: GET
   response:
-    body: '{"data": [{"username": "ErikZilber", "email": "ezilber@akamai.com", "restricted":
-      false, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number": "+11234567890",
+    body: '{"data": [{"username": "ychen123", "email": "yechen@akamai.com", "restricted":
+      false, "ssh_keys": ["foo"], "tfa_enabled": true, "verified_phone_number": "+19173318647",
       "password_created": "2018-01-02T03:04:05", "last_login": {"login_datetime":
       "2018-01-02T03:04:05", "status": "successful"}, "user_type": "default"}, {"username":
-      "linodegotest-listuser", "email": "linodegotest-listuser@example.com", "restricted":
-      false, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number": null,
-      "password_created": null, "last_login": null, "user_type": "default"}], "page":
-      1, "pages": 1, "results": 2}'
+      "tf-test-8125004655895970073", "email": "tf-test-8125004655895970073@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "tf-test-3780767100546130489", "email": "tf-test-3780767100546130489@example.com",
+      "restricted": false, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "tf-test-2299707981995340093", "email": "tf-test-2299707981995340093@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "tf-test-2147684760611667834", "email": "tf-test-2147684760611667834@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "tf-test-5507871777906426864", "email": "tf-test-5507871777906426864@example.com",
+      "restricted": false, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "tf-test-4243868853498240525", "email": "tf-test-4243868853498240525@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "tf-test-6871414574593889029", "email": "tf-test-6871414574593889029@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "tf-test-2519132488096826016", "email": "tf-test-2519132488096826016@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "tf-test-969942227562349701", "email": "tf-test-969942227562349701@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "tf-test-2446821540606644016", "email": "tf-test-2446821540606644016@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "tf-test-9178641674671843035", "email": "tf-test-9178641674671843035@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "tf-test-3624347175135644429", "email": "tf-test-3624347175135644429@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "tf-test-6953009986395160284", "email": "tf-test-6953009986395160284@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "tf-test-1532592034131405740", "email": "tf-test-1532592034131405740@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "tf-test-4125167084682567855", "email": "tf-test-4125167084682567855@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "tf-test-8814960275226187779", "email": "tf-test-8814960275226187779@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "tf-test-2481363777634915585", "email": "tf-test-2481363777634915585@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "tf-test-8271719396887279775", "email": "tf-test-8271719396887279775@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "tf-test-7182869575920600289", "email": "tf-test-7182869575920600289@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "tf-test-2377037076663955215", "email": "tf-test-2377037076663955215@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "tf-test-4723681129312005021", "email": "tf-test-4723681129312005021@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "tf-test-4502584305220713881", "email": "tf-test-4502584305220713881@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "tf-test-6840263186492004427", "email": "tf-test-6840263186492004427@example.com",
+      "restricted": false, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "tf-test-4734570691858190370", "email": "tf-test-4734570691858190370@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "tf-test-1973126705199777758", "email": "tf-test-1973126705199777758@example.com",
+      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"},
+      {"username": "linodegotest-listuser", "email": "linodegotest-listuser@example.com",
+      "restricted": false, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
+      null, "password_created": null, "last_login": null, "user_type": "default"}],
+      "page": 1, "pages": 1, "results": 27}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -90,21 +174,26 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Thu, 25 Jul 2024 17:44:17 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
       - Accept-Encoding
-      - Authorization, X-Filter
-      - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
       - account:read_only
       X-Content-Type-Options:
@@ -113,7 +202,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -146,16 +238,22 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "2"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Thu, 25 Jul 2024 17:44:17 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -168,7 +266,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:

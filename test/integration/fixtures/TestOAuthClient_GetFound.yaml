@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/account/oauth-clients
     method: POST
   response:
-    body: '{"id": "32720c96aecfac5ede47", "redirect_uri": "https://example.com", "label":
-      "go-client-test", "status": "active", "secret": "3e7063e5014eb448e340b1bd83c4c2677fdc031dfa8f183df84634d687784cfb",
+    body: '{"id": "519d660133f3fbb47357", "redirect_uri": "https://example.com", "label":
+      "go-client-test", "status": "active", "secret": "675a386a638d70300f4d1d3724ebd5d7f45e4903fe5e5916001692834bcf6380",
       "thumbnail_url": null, "public": true}'
     headers:
       Access-Control-Allow-Credentials:
@@ -28,6 +28,8 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -39,7 +41,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 30 May 2024 23:12:09 GMT
+      - Thu, 25 Jul 2024 17:44:06 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -75,10 +77,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/oauth-clients/32720c96aecfac5ede47
+    url: https://api.linode.com/v4beta/account/oauth-clients/519d660133f3fbb47357
     method: GET
   response:
-    body: '{"id": "32720c96aecfac5ede47", "redirect_uri": "https://example.com", "label":
+    body: '{"id": "519d660133f3fbb47357", "redirect_uri": "https://example.com", "label":
       "go-client-test", "status": "active", "secret": "<REDACTED>", "thumbnail_url":
       null, "public": true}'
     headers:
@@ -92,6 +94,8 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -103,7 +107,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 30 May 2024 23:12:09 GMT
+      - Thu, 25 Jul 2024 17:44:06 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -140,7 +144,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/oauth-clients/32720c96aecfac5ede47
+    url: https://api.linode.com/v4beta/account/oauth-clients/519d660133f3fbb47357
     method: DELETE
   response:
     body: '{}'
@@ -155,6 +159,8 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -166,7 +172,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 30 May 2024 23:12:09 GMT
+      - Thu, 25 Jul 2024 17:44:07 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

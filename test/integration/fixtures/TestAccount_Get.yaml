@@ -14,15 +14,15 @@ interactions:
     url: https://api.linode.com/v4beta/account
     method: GET
   response:
-    body: '{"company": "Akamai", "email": "ykim@akamai.com", "first_name": "Youjung",
-      "last_name": "Kim", "address_1": "", "address_2": "", "city": "", "state": "",
-      "zip": "", "country": "", "phone": "", "balance": 0.0, "tax_id": "", "billing_source":
-      "linode", "credit_card": {"last_four": null, "expiry": null}, "balance_uninvoiced":
-      0.0, "active_since": "2018-01-02T03:04:05", "capabilities": ["Linodes", "NodeBalancers",
-      "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans",
-      "LKE HA Control Planes", "Machine Images", "Managed Databases", "VPCs", "LKE
-      Network Access Control List (IP ACL)", "Placement Group", "Object Storage Access
-      Key Regions"], "active_promotions": [], "euuid": "F959AD74-9386-4827-A426975C90B4EBD5"}'
+    body: '{"company": "", "email": "yechen@akamai.com", "first_name": "", "last_name":
+      "", "address_1": "", "address_2": "", "city": "", "state": "", "zip": "", "country":
+      "", "phone": "", "balance": 0.0, "tax_id": "", "billing_source": "linode", "credit_card":
+      {"last_four": null, "expiry": null}, "balance_uninvoiced": 0.0, "active_since":
+      "2018-01-02T03:04:05", "capabilities": ["Linodes", "NodeBalancers", "Block Storage",
+      "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans", "LKE HA Control Planes",
+      "Machine Images", "VPCs", "LKE Network Access Control List (IP ACL)", "Placement
+      Group", "Object Storage Access Key Regions"], "active_promotions": [], "euuid":
+      "4D76E527-6B98-41BB-BE6936746C131930"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -34,18 +34,20 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "735"
+      - "700"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 27 Jun 2024 20:41:57 GMT
+      - Thu, 25 Jul 2024 17:44:08 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
