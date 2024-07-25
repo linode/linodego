@@ -22,20 +22,14 @@ interactions:
       - HEAD, GET, OPTIONS, POST, PUT, DELETE
       Access-Control-Allow-Origin:
       - '*'
-      Akamai-Internal-Account:
-      - '*'
       Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
+      - private, max-age=0, s-maxage=0, no-cache, no-store
       Content-Length:
       - "37"
       Content-Type:
       - application/json
-      Expires:
-      - Fri, 19 Jul 2024 17:03:54 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:

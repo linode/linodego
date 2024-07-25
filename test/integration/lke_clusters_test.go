@@ -32,7 +32,7 @@ func TestLKECluster_WaitForReady(t *testing.T) {
 	client, cluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = "go-lke-test-wait"
 		createOpts.NodePools = []linodego.LKENodePoolCreateOptions{
-			{Count: 3, Type: "g6-standard-2"},
+			{Count: 3, Type: "g6-standard-1"},
 		}
 	}}, "fixtures/TestLKECluster_WaitForReady")
 	defer teardown()
@@ -75,15 +75,11 @@ func TestLKECluster_Update(t *testing.T) {
 	updatedTags := []string{"test=true"}
 	updatedLabel := cluster.Label + "-updated"
 	updatedK8sVersion := "1.30"
-	isHA := false
 
-	updatedControlPlane := &linodego.LKEClusterControlPlaneOptions{HighAvailability: &isHA}
-
-	updatedCluster, err := client.UpdateLKECluster(context.TODO(), cluster.ID, linodego.LKEClusterUpdateOptions{
-		Tags:         &updatedTags,
-		Label:        updatedLabel,
-		K8sVersion:   updatedK8sVersion,
-		ControlPlane: updatedControlPlane,
+	updatedCluster, err := client.UpdateLKECluster(context.Background(), cluster.ID, linodego.LKEClusterUpdateOptions{
+		Tags:       &updatedTags,
+		Label:      updatedLabel,
+		K8sVersion: updatedK8sVersion,
 	})
 	if err != nil {
 		t.Fatalf("failed to update LKE Cluster (%d): %s", cluster.ID, err)
@@ -99,6 +95,18 @@ func TestLKECluster_Update(t *testing.T) {
 
 	if !reflect.DeepEqual(updatedTags, updatedCluster.Tags) {
 		t.Errorf("expected tags to be updated to %#v; got %#v", updatedTags, updatedCluster.Tags)
+	}
+
+	// Update the LKE cluster to HA
+	// This needs to be done in a separate API request from the K8s version upgrade
+	isHA := true
+	updatedControlPlane := &linodego.LKEClusterControlPlaneOptions{HighAvailability: &isHA}
+
+	updatedCluster, err = client.UpdateLKECluster(context.Background(), cluster.ID, linodego.LKEClusterUpdateOptions{
+		ControlPlane: updatedControlPlane,
+	})
+	if err != nil {
+		t.Fatalf("failed to update LKE Cluster (%d): %s", cluster.ID, err)
 	}
 
 	if !reflect.DeepEqual(*updatedControlPlane.HighAvailability, updatedCluster.ControlPlane.HighAvailability) {
@@ -225,11 +233,12 @@ func TestLKEVersion_GetFound(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestLKEVersion_GetFound")
 	defer teardown()
 
-	i, err := client.GetLKEVersion(context.Background(), "1.23")
+	i, err := client.GetLKEVersion(context.Background(), "1.29")
 	if err != nil {
 		t.Errorf("Error getting version, expected struct, got %v and error %v", i, err)
 	}
-	if i.ID != "1.23" {
+
+	if i.ID != "1.29" {
 		t.Errorf("Expected a specific version, but got a different one %v", i)
 	}
 }
@@ -256,7 +265,7 @@ func setupLKECluster(t *testing.T, clusterModifiers []clusterModifier, fixturesY
 
 	createOpts := linodego.LKEClusterCreateOptions{
 		Label:      label,
-		Region:     getRegionsWithCaps(t, client, []string{"Kubernetes"}, []string{})[0],
+		Region:     getRegionsWithCaps(t, client, []string{"Kubernetes", "Disk Encryption"})[0],
 		K8sVersion: "1.29",
 		Tags:       []string{"testing"},
 		NodePools:  []linodego.LKENodePoolCreateOptions{{Count: 1, Type: "g6-standard-2", Tags: []string{"test"}}},

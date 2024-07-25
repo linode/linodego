@@ -12,6 +12,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/require"
+
 	"github.com/dnaeon/go-vcr/cassette"
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/linode/linodego"
@@ -189,29 +191,16 @@ If the plans list is empty, it only checks for the capabilities.
 
 Parameters:
   - capabilities: A list of required capabilities that regions must support.
-  - plans (optional): A list of required plans that must be available in the regions.
 
 Returns:
-  - string values representing the IDs of regions that meet the given criteria.
+  - string values representing the IDs of regions that have a given set of capabilities.
 */
-func getRegionsWithCaps(t *testing.T, client *linodego.Client, capabilities, plans []string) []string {
+func getRegionsWithCaps(t *testing.T, client *linodego.Client, capabilities []string) []string {
 	result := make([]string, 0)
 
 	regions, err := client.ListRegions(context.Background(), nil)
 	if err != nil {
 		t.Fatal(err)
-	}
-
-	regionsAvailabilities, err := client.ListRegionsAvailability(context.Background(), nil)
-
-	type availKey struct {
-		Region string
-		Plan   string
-	}
-
-	availMap := make(map[availKey]linodego.RegionAvailability, len(regionsAvailabilities))
-	for _, avail := range regionsAvailabilities {
-		availMap[availKey{Region: avail.Region, Plan: avail.Plan}] = avail
 	}
 
 	regionHasCaps := func(r linodego.Region) bool {
@@ -230,12 +219,37 @@ func getRegionsWithCaps(t *testing.T, client *linodego.Client, capabilities, pla
 		return true
 	}
 
-	// Function to check if a region has the required plans available
-	regionHasPlans := func(regionID string) bool {
-		if len(plans) == 0 {
-			return true
+	for _, region := range regions {
+		if region.Status != "ok" || !regionHasCaps(region) {
+			continue
 		}
 
+		result = append(result, region.ID)
+	}
+
+	return result
+}
+
+// getRegionWithCapsAndPlans resolves a list of regions that meet the given capabilities
+// and has availability for all the provided plans.
+func getRegionsWithCapsAndPlans(t *testing.T, client *linodego.Client, capabilities, plans []string) []string {
+	regionsWithCaps := getRegionsWithCaps(t, client, capabilities)
+
+	regionsAvailabilities, err := client.ListRegionsAvailability(context.Background(), nil)
+	require.NoError(t, err)
+
+	type availKey struct {
+		Region string
+		Plan   string
+	}
+
+	availMap := make(map[availKey]linodego.RegionAvailability, len(regionsAvailabilities))
+	for _, avail := range regionsAvailabilities {
+		availMap[availKey{Region: avail.Region, Plan: avail.Plan}] = avail
+	}
+
+	// Function to check if a region has the required plans available
+	regionHasPlans := func(regionID string) bool {
 		for _, plan := range plans {
 			if avail, ok := availMap[availKey{Region: regionID, Plan: plan}]; !ok || !avail.Available {
 				return false
@@ -244,12 +258,14 @@ func getRegionsWithCaps(t *testing.T, client *linodego.Client, capabilities, pla
 		return true
 	}
 
-	for _, region := range regions {
-		if region.Status != "ok" || !regionHasCaps(region) || !regionHasPlans(region.ID) {
+	result := make([]string, 0, len(regionsWithCaps))
+
+	for _, region := range regionsWithCaps {
+		if !regionHasPlans(region) {
 			continue
 		}
 
-		result = append(result, region.ID)
+		result = append(result, region)
 	}
 
 	return result

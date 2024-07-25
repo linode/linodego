@@ -3,13 +3,14 @@ package integration
 import (
 	"context"
 	"fmt"
-	"github.com/linode/linodego"
 	"io"
 	"log"
 	"net/http"
 	"os"
 	"testing"
 	"time"
+
+	"github.com/linode/linodego"
 )
 
 var (

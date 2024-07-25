@@ -63,6 +63,11 @@ type Instance struct {
 
 	// NOTE: Placement Groups may not currently be available to all users.
 	PlacementGroup *InstancePlacementGroup `json:"placement_group"`
+
+	// NOTE: Disk encryption may not currently be available to all users.
+	DiskEncryption InstanceDiskEncryption `json:"disk_encryption"`
+
+	LKEClusterID int `json:"lke_cluster_id"`
 }
 
 // InstanceSpec represents a linode spec
@@ -93,6 +98,13 @@ type InstanceBackup struct {
 	} `json:"schedule,omitempty"`
 }
 
+type InstanceDiskEncryption string
+
+const (
+	InstanceDiskEncryptionEnabled  InstanceDiskEncryption = "enabled"
+	InstanceDiskEncryptionDisabled InstanceDiskEncryption = "disabled"
+)
+
 // InstanceTransfer pool stats for a Linode Instance during the current billing month
 type InstanceTransfer struct {
 	// Bytes of transfer this instance has consumed
@@ -108,10 +120,10 @@ type InstanceTransfer struct {
 // InstancePlacementGroup represents information about the placement group
 // this Linode is a part of.
 type InstancePlacementGroup struct {
-	ID           int                        `json:"id"`
-	Label        string                     `json:"label"`
-	AffinityType PlacementGroupAffinityType `json:"affinity_type"`
-	IsStrict     bool                       `json:"is_strict"`
+	ID                   int                  `json:"id"`
+	Label                string               `json:"label"`
+	PlacementGroupType   PlacementGroupType   `json:"placement_group_type"`
+	PlacementGroupPolicy PlacementGroupPolicy `json:"placement_group_policy"`
 }
 
 // InstanceMetadataOptions specifies various Instance creation fields
@@ -139,6 +151,9 @@ type InstanceCreateOptions struct {
 	Tags            []string                               `json:"tags,omitempty"`
 	Metadata        *InstanceMetadataOptions               `json:"metadata,omitempty"`
 	FirewallID      int                                    `json:"firewall_id,omitempty"`
+
+	// NOTE: Disk encryption may not currently be available to all users.
+	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitempty"`
 
 	// NOTE: Placement Groups may not currently be available to all users.
 	PlacementGroup *InstanceCreatePlacementGroupOptions `json:"placement_group,omitempty"`
@@ -356,6 +371,9 @@ type InstanceRebuildOptions struct {
 	Booted          *bool                    `json:"booted,omitempty"`
 	Metadata        *InstanceMetadataOptions `json:"metadata,omitempty"`
 	Type            string                   `json:"type,omitempty"`
+
+	// NOTE: Disk encryption may not currently be available to all users.
+	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitempty"`
 }
 
 // RebuildInstance Deletes all Disks and Configs on this Linode,

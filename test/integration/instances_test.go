@@ -136,6 +136,31 @@ func TestInstance_Disks_List(t *testing.T) {
 	}
 }
 
+func TestInstance_Disks_List_WithEncryption(t *testing.T) {
+	client, instance, teardown, err := setupInstance(t, "fixtures/TestInstance_Disks_List_WithEncryption", true, func(c *linodego.Client, ico *linodego.InstanceCreateOptions) {
+		ico.Region = getRegionsWithCaps(t, c, []string{"Disk Encryption"})[0]
+	})
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	disks, err := client.ListInstanceDisks(context.Background(), instance.ID, nil)
+	if err != nil {
+		t.Errorf("Error listing instance disks, expected struct, got error %v", err)
+	}
+	if len(disks) == 0 {
+		t.Errorf("Expected a list of instance disks, but got %v", disks)
+	}
+
+	// Disk Encryption should be enabled by default if not otherwise specified
+	for _, disk := range disks {
+		if disk.DiskEncryption != linodego.InstanceDiskEncryptionEnabled {
+			t.Fatalf("expected disk encryption status: %s, got :%s", linodego.InstanceDiskEncryptionEnabled, disk.DiskEncryption)
+		}
+	}
+}
+
 func TestInstance_Disk_Resize(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Disk_Resize", true)
 	defer teardown()
@@ -354,7 +379,7 @@ func TestInstance_Rebuild(t *testing.T) {
 		t,
 		"fixtures/TestInstance_Rebuild", true,
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-			options.Region = getRegionsWithCaps(t, client, []string{"Metadata"}, []string{})[0]
+			options.Region = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
 		},
 	)
 	defer teardown()
@@ -386,13 +411,50 @@ func TestInstance_Rebuild(t *testing.T) {
 	}
 }
 
+func TestInstance_RebuildWithEncryption(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(
+		t,
+		"fixtures/TestInstance_RebuildWithEncryption",
+		true,
+		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+			options.Region = getRegionsWithCaps(t, client, []string{"Disk Encryption"})[0]
+			options.DiskEncryption = linodego.InstanceDiskEncryptionEnabled
+		},
+	)
+	defer teardown()
+
+	if err != nil {
+		t.Error(err)
+	}
+
+	_, err = client.WaitForEventFinished(context.Background(), instance.ID, linodego.EntityLinode, linodego.ActionLinodeCreate, *instance.Created, 180)
+	if err != nil {
+		t.Errorf("Error waiting for instance created: %s", err)
+	}
+
+	rebuildOpts := linodego.InstanceRebuildOptions{
+		Image:          "linode/alpine3.19",
+		RootPass:       randPassword(),
+		Type:           "g6-standard-2",
+		DiskEncryption: linodego.InstanceDiskEncryptionDisabled,
+	}
+	instance, err = client.RebuildInstance(context.Background(), instance.ID, rebuildOpts)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if instance.DiskEncryption != linodego.InstanceDiskEncryptionDisabled {
+		t.Fatalf("expected instance.DiskEncryption to be: %s, got: %s", linodego.InstanceDiskEncryptionDisabled, linodego.InstanceDiskEncryptionEnabled)
+	}
+}
+
 func TestInstance_Clone(t *testing.T) {
 	var targetRegion string
 
 	client, instance, teardownOriginalLinode, err := setupInstance(
 		t, "fixtures/TestInstance_Clone", true,
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-			targetRegion = getRegionsWithCaps(t, client, []string{"Metadata"}, []string{})[0]
+			targetRegion = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
 
 			options.Region = targetRegion
 		})
@@ -470,7 +532,7 @@ func TestInstance_withMetadata(t *testing.T) {
 			options.Metadata = &linodego.InstanceMetadataOptions{
 				UserData: base64.StdEncoding.EncodeToString([]byte("reallycoolmetadata")),
 			}
-			options.Region = getRegionsWithCaps(t, client, []string{"Metadata"}, []string{})[0]
+			options.Region = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
 		})
 	if err != nil {
 		t.Fatal(err)
@@ -480,6 +542,22 @@ func TestInstance_withMetadata(t *testing.T) {
 
 	if !inst.HasUserData {
 		t.Fatalf("expected instance.HasUserData to be true, got false")
+	}
+}
+
+func TestInstance_DiskEncryption(t *testing.T) {
+	_, inst, teardown, err := setupInstance(t, "fixtures/TestInstance_DiskEncryption", true, func(c *linodego.Client, ico *linodego.InstanceCreateOptions) {
+		ico.DiskEncryption = linodego.InstanceDiskEncryptionEnabled
+		ico.Region = "us-east"
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Cleanup(teardown)
+
+	if inst.DiskEncryption != linodego.InstanceDiskEncryptionEnabled {
+		t.Fatalf("expected instance to have disk encryption enabled, got: %s, want: %s", inst.DiskEncryption, linodego.InstanceDiskEncryptionEnabled)
 	}
 }
 
@@ -507,8 +585,8 @@ func TestInstance_withPG(t *testing.T) {
 	require.NotNil(t, inst.PlacementGroup)
 	require.Equal(t, inst.PlacementGroup.ID, pg.ID)
 	require.Equal(t, inst.PlacementGroup.Label, pg.Label)
-	require.Equal(t, inst.PlacementGroup.AffinityType, pg.AffinityType)
-	require.Equal(t, inst.PlacementGroup.IsStrict, pg.IsStrict)
+	require.Equal(t, inst.PlacementGroup.PlacementGroupType, pg.PlacementGroupType)
+	require.Equal(t, inst.PlacementGroup.PlacementGroupPolicy, pg.PlacementGroupPolicy)
 }
 
 func createInstance(t *testing.T, client *linodego.Client, enableCloudFirewall bool, modifiers ...instanceModifier) (*linodego.Instance, error) {
@@ -519,7 +597,7 @@ func createInstance(t *testing.T, client *linodego.Client, enableCloudFirewall b
 	createOpts := linodego.InstanceCreateOptions{
 		Label:    "go-test-ins-" + randLabel(),
 		RootPass: randPassword(),
-		Region:   getRegionsWithCaps(t, client, []string{"linodes"}, []string{})[0],
+		Region:   getRegionsWithCaps(t, client, []string{"linodes"})[0],
 		Type:     "g6-nanode-1",
 		Image:    "linode/debian9",
 		Booted:   linodego.Pointer(false),
@@ -567,7 +645,7 @@ func createInstanceWithoutDisks(
 
 	createOpts := linodego.InstanceCreateOptions{
 		Label:  "go-test-ins-wo-disk-" + randLabel(),
-		Region: getRegionsWithCaps(t, client, []string{"linodes"}, []string{})[0],
+		Region: getRegionsWithCaps(t, client, []string{"linodes"})[0],
 		Type:   "g6-nanode-1",
 		Booted: linodego.Pointer(false),
 	}
