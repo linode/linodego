@@ -1,8 +1,11 @@
 package linodego
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
+	"io"
 	"log"
 	"net/http"
 	"net/url"
@@ -108,6 +111,67 @@ func (c *Client) SetUserAgent(ua string) *Client {
 	c.resty.SetHeader("User-Agent", c.userAgent)
 
 	return c
+}
+
+type RequestParams struct {
+	Body     any
+	Response any
+}
+
+// Generic helper to execute HTTP requests using the
+//
+//nolint:unused
+func (c *httpClient) doRequest(ctx context.Context, method, url string, params RequestParams, mutators ...func(req *http.Request) error) error {
+	// Create a new HTTP request
+	var bodyReader io.Reader
+	if params.Body != nil {
+		buf := new(bytes.Buffer)
+		if err := json.NewEncoder(buf).Encode(params.Body); err != nil {
+			return fmt.Errorf("failed to encode body: %w", err)
+		}
+		bodyReader = buf
+	}
+
+	req, err := http.NewRequestWithContext(ctx, method, url, bodyReader)
+	if err != nil {
+		return fmt.Errorf("failed to create request: %w", err)
+	}
+
+	// Set default headers
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Accept", "application/json")
+	if c.userAgent != "" {
+		req.Header.Set("User-Agent", c.userAgent)
+	}
+
+	// Apply mutators
+	for _, mutate := range mutators {
+		if err := mutate(req); err != nil {
+			return fmt.Errorf("failed to mutate request: %w", err)
+		}
+	}
+
+	// Send the request
+	resp, err := c.httpClient.Do(req)
+	if err != nil {
+		return fmt.Errorf("failed to send request: %w", err)
+	}
+	defer resp.Body.Close()
+
+	// Check for HTTP errors
+	resp, err = coupleAPIErrorsHTTP(resp, err)
+	if err != nil {
+		return err
+	}
+
+	// Decode the response body
+	if params.Response != nil {
+		if err := json.NewDecoder(resp.Body).Decode(params.Response); err != nil {
+			return fmt.Errorf("failed to decode response: %w", err)
+		}
+	}
+
+	return nil
 }
 
 // R wraps resty's R method
