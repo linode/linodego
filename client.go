@@ -114,7 +114,7 @@ func (c *Client) SetUserAgent(ua string) *Client {
 }
 
 type RequestParams struct {
-	Body     map[string]any
+	Body     any
 	Response any
 }
 
