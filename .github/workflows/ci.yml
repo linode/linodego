@@ -67,13 +67,13 @@ jobs:
       - name: Upload test results to bucket
         if: github.ref == 'refs/heads/main' && github.event_name == 'push' && always()
         run: |
-          python tod_scripts/add_to_xml_test_report.py \
+          python3 e2e_scripts/tod_scripts/xml_to_obj_storage/scripts/add_gha_info_to_xml.py \
           --branch_name "${GITHUB_REF#refs/*/}" \
           --gha_run_id "$GITHUB_RUN_ID" \
           --gha_run_number "$GITHUB_RUN_NUMBER" \
           --xmlfile "$REPORT_FILENAME"
           sync
-          python tod_scripts/test_report_upload_script.py "$REPORT_FILENAME"
+          python3 e2e_scripts/tod_scripts/xml_to_obj_storage/scripts/xml_to_obj.py "$REPORT_FILENAME"
         env:
           LINODE_CLI_OBJ_ACCESS_KEY: ${{ secrets.LINODE_CLI_OBJ_ACCESS_KEY }}
           LINODE_CLI_OBJ_SECRET_KEY: ${{ secrets.LINODE_CLI_OBJ_SECRET_KEY }}
