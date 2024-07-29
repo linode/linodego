@@ -1,0 +1,20 @@
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.linode.com/v4beta/networking/ipv6/pools?page=1
+    method: GET
+  response:
+    body: '{"data": [{"range": "2600:3c00::/32", "region": "us-east", "route_target": "2600:3c00::/32"}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Content-Type:
+      - application/json
+    status: 200
+    code: 200
+    duration: ""

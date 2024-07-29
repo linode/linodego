@@ -1,0 +1,20 @@
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.linode.com/v4beta/account/invoices/123
+    method: GET
+  response:
+    body: '{"id": 123, "label": "Invoice", "date": "2018-01-01T00:01:01", "subtotal": 120.25, "tax": 12.25, "tax_summary": [{"name": "PA STATE TAX", "tax": 12.25}], "total": 132.5, "billing_source": "linode"}'
+    headers:
+      Content-Type:
+      - application/json
+    status: 200
+    code: 200
+    duration: ""

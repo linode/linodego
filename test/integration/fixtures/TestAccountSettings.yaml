@@ -1,0 +1,51 @@
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.linode.com/v4beta/account/settings
+    method: GET
+  response:
+    body: '{
+      "backups_enabled": true,
+      "managed": true,
+      "network_helper": true,
+      "longview_subscription": "longview-3",
+      "object_storage": "active"
+    }'
+    headers:
+      Content-Type:
+      - application/json
+    status: 200
+    code: 200
+    duration: ""
+
+- request:
+    body: '{"backups_enabled":false,"longview_subscription":"longview-10","network_helper":false}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+    url: https://api.linode.com/v4beta/account/settings
+    method: PUT
+  response:
+    body: '{
+      "backups_enabled": false,
+      "managed": true,
+      "network_helper": false,
+      "longview_subscription": "longview-10",
+      "object_storage": "active"
+    }'
+    headers:
+      Content-Type:
+      - application/json
+    status: 200
+    code: 200
+    duration: ""
