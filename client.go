@@ -74,45 +74,6 @@ type Client struct {
 	cachedEntryLock *sync.RWMutex
 }
 
-// Client is a wrapper around the Resty client
-type HTTPClient struct {
-	//nolint:unused
-	httpClient *http.Client
-	//nolint:unused
-	userAgent string
-	//nolint:unused
-	debug bool
-	//nolint:unused
-	retryConditionals []RetryConditional
-
-	//nolint:unused
-	pollInterval time.Duration
-
-	//nolint:unused
-	baseURL string
-	//nolint:unused
-	apiVersion string
-	//nolint:unused
-	apiProto string
-	//nolint:unused
-	selectedProfile string
-	//nolint:unused
-	loadedProfile string
-
-	//nolint:unused
-	configProfiles map[string]ConfigProfile
-
-	// Fields for caching endpoint responses
-	//nolint:unused
-	shouldCache bool
-	//nolint:unused
-	cacheExpiration time.Duration
-	//nolint:unused
-	cachedEntries map[string]clientCacheEntry
-	//nolint:unused
-	cachedEntryLock *sync.RWMutex
-}
-
 type EnvDefaults struct {
 	Token   string
 	Profile string
@@ -160,7 +121,7 @@ type RequestParams struct {
 // Generic helper to execute HTTP requests using the
 //
 //nolint:unused
-func (c *HTTPClient) doRequest(ctx context.Context, method, url string, params RequestParams, mutators ...func(req *http.Request) error) error {
+func (c *httpClient) doRequest(ctx context.Context, method, url string, params RequestParams, mutators ...func(req *http.Request) error) error {
 	// Create a new HTTP request
 	var bodyReader io.Reader
 	if params.Body != nil {
@@ -198,17 +159,9 @@ func (c *HTTPClient) doRequest(ctx context.Context, method, url string, params R
 	defer resp.Body.Close()
 
 	// Check for HTTP errors
-	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
-		var errorDetails string
-		if resp.Body != nil {
-			bodyBytes, err := io.ReadAll(resp.Body)
-			if err != nil {
-				errorDetails = fmt.Sprintf("failed to read response body: %v", err)
-			} else {
-				errorDetails = string(bodyBytes)
-			}
-		}
-		return fmt.Errorf("received non-2xx status code: %d, details: %s", resp.StatusCode, errorDetails)
+	resp, err = coupleAPIErrorsHTTP(resp, err)
+	if err != nil {
+		return err
 	}
 
 	// Decode the response body

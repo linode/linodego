@@ -211,7 +211,7 @@ func TestDoRequest_Success(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(handler))
 	defer server.Close()
 
-	client := &HTTPClient{
+	client := &httpClient{
 		httpClient: server.Client(),
 	}
 
@@ -232,7 +232,7 @@ func TestDoRequest_Success(t *testing.T) {
 }
 
 func TestDoRequest_FailedEncodeBody(t *testing.T) {
-	client := &HTTPClient{
+	client := &httpClient{
 		httpClient: http.DefaultClient,
 	}
 
@@ -250,7 +250,7 @@ func TestDoRequest_FailedEncodeBody(t *testing.T) {
 }
 
 func TestDoRequest_FailedCreateRequest(t *testing.T) {
-	client := &HTTPClient{
+	client := &httpClient{
 		httpClient: http.DefaultClient,
 	}
 
@@ -269,14 +269,23 @@ func TestDoRequest_Non2xxStatusCode(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(handler))
 	defer server.Close()
 
-	client := &HTTPClient{
+	client := &httpClient{
 		httpClient: server.Client(),
 	}
 
 	err := client.doRequest(context.Background(), http.MethodGet, server.URL, RequestParams{})
-	expectedErr := "received non-2xx status code"
-	if err == nil || !strings.Contains(err.Error(), expectedErr) {
-		t.Fatalf("expected error %q, got: %v", expectedErr, err)
+	if err == nil {
+		t.Fatal("expected error, got nil")
+	}
+	httpError, ok := err.(Error)
+	if !ok {
+		t.Fatalf("expected error to be of type Error, got %T", err)
+	}
+	if httpError.Code != http.StatusInternalServerError {
+		t.Fatalf("expected status code %d, got %d", http.StatusInternalServerError, httpError.Code)
+	}
+	if !strings.Contains(httpError.Message, "error") {
+		t.Fatalf("expected error message to contain %q, got %v", "error", httpError.Message)
 	}
 }
 
@@ -289,7 +298,7 @@ func TestDoRequest_FailedDecodeResponse(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(handler))
 	defer server.Close()
 
-	client := &HTTPClient{
+	client := &httpClient{
 		httpClient: server.Client(),
 	}
 
@@ -313,7 +322,7 @@ func TestDoRequest_MutatorError(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(handler))
 	defer server.Close()
 
-	client := &HTTPClient{
+	client := &httpClient{
 		httpClient: server.Client(),
 	}
 
