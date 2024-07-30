@@ -336,3 +336,75 @@ func TestDoRequest_MutatorError(t *testing.T) {
 		t.Fatalf("expected error %q, got: %v", expectedErr, err)
 	}
 }
+
+func TestDoRequestLogging_Success(t *testing.T) {
+	var logBuffer bytes.Buffer
+	logger := createLogger()
+	logger.l.SetOutput(&logBuffer) // Redirect log output to buffer
+
+	client := &httpClient{
+		httpClient: http.DefaultClient,
+		debug:      true,
+		logger:     logger,
+	}
+
+	handler := func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"message":"success"}`))
+	}
+	server := httptest.NewServer(http.HandlerFunc(handler))
+	defer server.Close()
+
+	params := RequestParams{
+		Response: &map[string]string{},
+	}
+
+	err := client.doRequest(context.Background(), http.MethodGet, server.URL, params)
+	if err != nil {
+		t.Fatal(cmp.Diff(nil, err))
+	}
+
+	logInfo := logBuffer.String()
+	expectedLogs := []string{
+		"DEBUG RESTY sending request: GET " + server.URL,
+		"DEBUG RESTY received response: GET " + server.URL + ", status: 200",
+	}
+
+	for _, expectedLog := range expectedLogs {
+		if !strings.Contains(logInfo, expectedLog) {
+			t.Fatalf("expected log %q not found in logs", expectedLog)
+		}
+	}
+}
+
+func TestDoRequestLogging_Error(t *testing.T) {
+	var logBuffer bytes.Buffer
+	logger := createLogger()
+	logger.l.SetOutput(&logBuffer) // Redirect log output to buffer
+
+	client := &httpClient{
+		httpClient: http.DefaultClient,
+		debug:      true,
+		logger:     logger,
+	}
+
+	params := RequestParams{
+		Body: map[string]interface{}{
+			"invalid": func() {},
+		},
+	}
+
+	err := client.doRequest(context.Background(), http.MethodPost, "http://example.com", params)
+	expectedErr := "failed to encode body"
+	if err == nil || !strings.Contains(err.Error(), expectedErr) {
+		t.Fatalf("expected error %q, got: %v", expectedErr, err)
+	}
+
+	logInfo := logBuffer.String()
+	expectedLog := "ERROR RESTY failed to encode body"
+
+	if !strings.Contains(logInfo, expectedLog) {
+		t.Fatalf("expected log %q not found in logs", expectedLog)
+	}
+}
