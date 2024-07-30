@@ -49,6 +49,20 @@ const (
 	APIDefaultCacheExpiration = time.Minute * 15
 )
 
+//nolint:unused
+var (
+	reqLogTemplate = template.Must(template.New("request").Parse(`Sending request:
+Method: {{.Method}}
+URL: {{.URL}}
+Headers: {{.Headers}}
+Body: {{.Body}}`))
+
+	respLogTemplate = template.Must(template.New("response").Parse(`Received response:
+Status: {{.Status}}
+Headers: {{.Headers}}
+Body: {{.Body}}`))
+)
+
 var envDebug = false
 
 // Client is a wrapper around the Resty client
@@ -170,14 +184,8 @@ func (c *httpClient) doRequest(ctx context.Context, method, url string, params R
 			reqBody = bodyBuffer.String()
 		}
 
-		reqLog := `Sending request:
-Method: {{.Method}}
-URL: {{.URL}}
-Headers: {{.Headers}}
-Body: {{.Body}}`
-		tmpl, _ := template.New("request").Parse(reqLog)
 		var logBuf bytes.Buffer
-		err = tmpl.Execute(&logBuf, map[string]interface{}{
+		err = reqLogTemplate.Execute(&logBuf, map[string]interface{}{
 			"Method":  method,
 			"URL":     url,
 			"Headers": req.Header,
@@ -214,13 +222,8 @@ Body: {{.Body}}`
 			c.logger.Errorf("failed to read response body: %v", err)
 		}
 
-		respLog := `Received response:
-Status: {{.Status}}
-Headers: {{.Headers}}
-Body: {{.Body}}`
-		tmpl, _ := template.New("response").Parse(respLog)
 		var logBuf bytes.Buffer
-		err = tmpl.Execute(&logBuf, map[string]interface{}{
+		err = respLogTemplate.Execute(&logBuf, map[string]interface{}{
 			"Status":  resp.Status,
 			"Headers": resp.Header,
 			"Body":    respBody.String(),
