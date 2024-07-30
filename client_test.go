@@ -366,15 +366,17 @@ func TestDoRequestLogging_Success(t *testing.T) {
 	}
 
 	logInfo := logBuffer.String()
-	expectedLogs := []string{
-		"DEBUG RESTY sending request: GET " + server.URL,
-		"DEBUG RESTY received response: GET " + server.URL + ", status: 200",
-	}
+	logInfoWithoutTimestamps := removeTimestamps(logInfo)
 
-	for _, expectedLog := range expectedLogs {
-		if !strings.Contains(logInfo, expectedLog) {
-			t.Fatalf("expected log %q not found in logs", expectedLog)
-		}
+	// Expected logs with templates filled in
+	expectedRequestLog := "DEBUG RESTY Sending request:\nMethod: GET\nURL: " + server.URL + "\nHeaders: map[Accept:[application/json] Content-Type:[application/json]]\nBody: "
+	expectedResponseLog := "DEBUG RESTY Received response:\nStatus: 200 OK\nHeaders: map[Content-Length:[21] Content-Type:[text/plain; charset=utf-8]]\nBody: {\"message\":\"success\"}"
+
+	if !strings.Contains(logInfo, expectedRequestLog) {
+		t.Fatalf("expected log %q not found in logs", expectedRequestLog)
+	}
+	if !strings.Contains(logInfoWithoutTimestamps, expectedResponseLog) {
+		t.Fatalf("expected log %q not found in logs", expectedResponseLog)
 	}
 }
 
@@ -407,4 +409,20 @@ func TestDoRequestLogging_Error(t *testing.T) {
 	if !strings.Contains(logInfo, expectedLog) {
 		t.Fatalf("expected log %q not found in logs", expectedLog)
 	}
+}
+
+func removeTimestamps(log string) string {
+	lines := strings.Split(log, "\n")
+	var filteredLines []string
+	for _, line := range lines {
+		// Find the index of the "Date:" substring
+		if index := strings.Index(line, "Date:"); index != -1 {
+			// Cut off everything after "Date:"
+			trimmedLine := strings.TrimSpace(line[:index])
+			filteredLines = append(filteredLines, trimmedLine+"]")
+		} else {
+			filteredLines = append(filteredLines, line)
+		}
+	}
+	return strings.Join(filteredLines, "\n")
 }

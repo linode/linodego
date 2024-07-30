@@ -17,6 +17,7 @@ import (
 	"strconv"
 	"strings"
 	"sync"
+	"text/template"
 	"time"
 
 	"github.com/go-resty/resty/v2"
@@ -120,10 +121,12 @@ type RequestParams struct {
 
 // Generic helper to execute HTTP requests using the
 //
-//nolint:unused
+//nolint:gocognit,unused,funlen
 func (c *httpClient) doRequest(ctx context.Context, method, url string, params RequestParams, mutators ...func(req *http.Request) error) error {
 	// Create a new HTTP request
 	var bodyReader io.Reader
+	var bodyBuffer *bytes.Buffer
+
 	if params.Body != nil {
 		buf := new(bytes.Buffer)
 		if err := json.NewEncoder(buf).Encode(params.Body); err != nil {
@@ -162,7 +165,27 @@ func (c *httpClient) doRequest(ctx context.Context, method, url string, params R
 
 	// Log the request if in debug mode
 	if c.debug && c.logger != nil {
-		c.logger.Debugf("sending request: %s %s", method, url)
+		var reqBody string
+		if bodyBuffer != nil {
+			reqBody = bodyBuffer.String()
+		}
+
+		reqLog := `Sending request:
+Method: {{.Method}}
+URL: {{.URL}}
+Headers: {{.Headers}}
+Body: {{.Body}}`
+		tmpl, _ := template.New("request").Parse(reqLog)
+		var logBuf bytes.Buffer
+		err = tmpl.Execute(&logBuf, map[string]interface{}{
+			"Method":  method,
+			"URL":     url,
+			"Headers": req.Header,
+			"Body":    reqBody,
+		})
+		if err == nil {
+			c.logger.Debugf(logBuf.String())
+		}
 	}
 
 	// Send the request
@@ -186,7 +209,28 @@ func (c *httpClient) doRequest(ctx context.Context, method, url string, params R
 
 	// Log the response if in debug mode
 	if c.debug && c.logger != nil {
-		c.logger.Debugf("received response: %s %s, status: %d", method, url, resp.StatusCode)
+		var respBody bytes.Buffer
+		if _, err := io.Copy(&respBody, resp.Body); err != nil {
+			c.logger.Errorf("failed to read response body: %v", err)
+		}
+
+		respLog := `Received response:
+Status: {{.Status}}
+Headers: {{.Headers}}
+Body: {{.Body}}`
+		tmpl, _ := template.New("response").Parse(respLog)
+		var logBuf bytes.Buffer
+		err = tmpl.Execute(&logBuf, map[string]interface{}{
+			"Status":  resp.Status,
+			"Headers": resp.Header,
+			"Body":    respBody.String(),
+		})
+		if err == nil {
+			c.logger.Debugf(logBuf.String())
+		}
+
+		// Reset the response body reader for actual decoding
+		resp.Body = io.NopCloser(bytes.NewReader(respBody.Bytes()))
 	}
 
 	// Decode the response body
