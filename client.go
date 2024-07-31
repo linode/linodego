@@ -133,23 +133,63 @@ type RequestParams struct {
 	Response any
 }
 
-// Generic helper to execute HTTP requests using the
+// Generic helper to execute HTTP requests using the net/http package
 //
-//nolint:gocognit,unused,funlen
+// nolint:unused
 func (c *httpClient) doRequest(ctx context.Context, method, url string, params RequestParams, mutators ...func(req *http.Request) error) error {
-	// Create a new HTTP request
+	req, bodyBuffer, err := c.createRequest(ctx, method, url, params)
+	if err != nil {
+		return err
+	}
+
+	if err := c.applyMutators(req, mutators); err != nil {
+		return err
+	}
+
+	if c.debug && c.logger != nil {
+		c.logRequest(req, method, url, bodyBuffer)
+	}
+
+	resp, err := c.sendRequest(req)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	if err := c.checkHTTPError(resp); err != nil {
+		return err
+	}
+
+	if c.debug && c.logger != nil {
+		resp, err = c.logResponse(resp)
+		if err != nil {
+			return err
+		}
+	}
+
+	if params.Response != nil {
+		if err := c.decodeResponseBody(resp, params.Response); err != nil {
+			return err
+		}
+	}
+
+	return nil
+}
+
+// nolint:unused
+func (c *httpClient) createRequest(ctx context.Context, method, url string, params RequestParams) (*http.Request, *bytes.Buffer, error) {
 	var bodyReader io.Reader
 	var bodyBuffer *bytes.Buffer
 
 	if params.Body != nil {
-		buf := new(bytes.Buffer)
-		if err := json.NewEncoder(buf).Encode(params.Body); err != nil {
+		bodyBuffer = new(bytes.Buffer)
+		if err := json.NewEncoder(bodyBuffer).Encode(params.Body); err != nil {
 			if c.debug && c.logger != nil {
 				c.logger.Errorf("failed to encode body: %v", err)
 			}
-			return fmt.Errorf("failed to encode body: %w", err)
+			return nil, nil, fmt.Errorf("failed to encode body: %w", err)
 		}
-		bodyReader = buf
+		bodyReader = bodyBuffer
 	}
 
 	req, err := http.NewRequestWithContext(ctx, method, url, bodyReader)
@@ -157,17 +197,20 @@ func (c *httpClient) doRequest(ctx context.Context, method, url string, params R
 		if c.debug && c.logger != nil {
 			c.logger.Errorf("failed to create request: %v", err)
 		}
-		return fmt.Errorf("failed to create request: %w", err)
+		return nil, nil, fmt.Errorf("failed to create request: %w", err)
 	}
 
-	// Set default headers
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
 	if c.userAgent != "" {
 		req.Header.Set("User-Agent", c.userAgent)
 	}
 
-	// Apply mutators
+	return req, bodyBuffer, nil
+}
+
+// nolint:unused
+func (c *httpClient) applyMutators(req *http.Request, mutators []func(req *http.Request) error) error {
 	for _, mutate := range mutators {
 		if err := mutate(req); err != nil {
 			if c.debug && c.logger != nil {
@@ -176,76 +219,81 @@ func (c *httpClient) doRequest(ctx context.Context, method, url string, params R
 			return fmt.Errorf("failed to mutate request: %w", err)
 		}
 	}
+	return nil
+}
 
-	// Log the request if in debug mode
-	if c.debug && c.logger != nil {
-		var reqBody string
-		if bodyBuffer != nil {
-			reqBody = bodyBuffer.String()
-		}
-
-		var logBuf bytes.Buffer
-		err = reqLogTemplate.Execute(&logBuf, map[string]interface{}{
-			"Method":  method,
-			"URL":     url,
-			"Headers": req.Header,
-			"Body":    reqBody,
-		})
-		if err == nil {
-			c.logger.Debugf(logBuf.String())
-		}
+// nolint:unused
+func (c *httpClient) logRequest(req *http.Request, method, url string, bodyBuffer *bytes.Buffer) {
+	var reqBody string
+	if bodyBuffer != nil {
+		reqBody = bodyBuffer.String()
 	}
 
-	// Send the request
+	var logBuf bytes.Buffer
+	err := reqLogTemplate.Execute(&logBuf, map[string]interface{}{
+		"Method":  method,
+		"URL":     url,
+		"Headers": req.Header,
+		"Body":    reqBody,
+	})
+	if err == nil {
+		c.logger.Debugf(logBuf.String())
+	}
+}
+
+// nolint:unused
+func (c *httpClient) sendRequest(req *http.Request) (*http.Response, error) {
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		if c.debug && c.logger != nil {
 			c.logger.Errorf("failed to send request: %v", err)
 		}
-		return fmt.Errorf("failed to send request: %w", err)
+		return nil, fmt.Errorf("failed to send request: %w", err)
 	}
-	defer resp.Body.Close()
+	return resp, nil
+}
 
-	// Check for HTTP errors
-	resp, err = coupleAPIErrorsHTTP(resp, err)
+// nolint:unused
+func (c *httpClient) checkHTTPError(resp *http.Response) error {
+	_, err := coupleAPIErrorsHTTP(resp, nil)
 	if err != nil {
 		if c.debug && c.logger != nil {
 			c.logger.Errorf("received HTTP error: %v", err)
 		}
 		return err
 	}
+	return nil
+}
 
-	// Log the response if in debug mode
-	if c.debug && c.logger != nil {
-		var respBody bytes.Buffer
-		if _, err := io.Copy(&respBody, resp.Body); err != nil {
-			c.logger.Errorf("failed to read response body: %v", err)
-		}
-
-		var logBuf bytes.Buffer
-		err = respLogTemplate.Execute(&logBuf, map[string]interface{}{
-			"Status":  resp.Status,
-			"Headers": resp.Header,
-			"Body":    respBody.String(),
-		})
-		if err == nil {
-			c.logger.Debugf(logBuf.String())
-		}
-
-		// Reset the response body reader for actual decoding
-		resp.Body = io.NopCloser(bytes.NewReader(respBody.Bytes()))
+// nolint:unused
+func (c *httpClient) logResponse(resp *http.Response) (*http.Response, error) {
+	var respBody bytes.Buffer
+	if _, err := io.Copy(&respBody, resp.Body); err != nil {
+		c.logger.Errorf("failed to read response body: %v", err)
 	}
 
-	// Decode the response body
-	if params.Response != nil {
-		if err := json.NewDecoder(resp.Body).Decode(params.Response); err != nil {
-			if c.debug && c.logger != nil {
-				c.logger.Errorf("failed to decode response: %v", err)
-			}
-			return fmt.Errorf("failed to decode response: %w", err)
-		}
+	var logBuf bytes.Buffer
+	err := respLogTemplate.Execute(&logBuf, map[string]interface{}{
+		"Status":  resp.Status,
+		"Headers": resp.Header,
+		"Body":    respBody.String(),
+	})
+	if err == nil {
+		c.logger.Debugf(logBuf.String())
 	}
 
+	resp.Body = io.NopCloser(bytes.NewReader(respBody.Bytes()))
+	return resp, nil
+}
+
+// nolint:unused
+func (c *httpClient) decodeResponseBody(resp *http.Response, response interface{}) error {
+	if err := json.NewDecoder(resp.Body).Decode(response); err != nil {
+		if c.debug && c.logger != nil {
+			c.logger.Errorf("failed to decode response: %v", err)
+		}
+		return fmt.Errorf("failed to decode response: %w", err)
+	}
 	return nil
 }
 
