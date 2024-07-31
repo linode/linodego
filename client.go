@@ -431,9 +431,15 @@ func (c *Client) updateHostURL() {
 	)
 }
 
-// SetRootCertificate adds a root certificate to the underlying TLS client config
+// SetRootCertificate adds a path to the root certificate to the underlying TLS client config.
 func (c *Client) SetRootCertificate(path string) *Client {
 	c.resty.SetRootCertificate(path)
+	return c
+}
+
+// SetRootCertificateFromString adds a root certificate to the underlying TLS client config.
+func (c *Client) SetRootCertificateFromString(pemContent string) *Client {
+	c.resty.SetRootCertificateFromString(pemContent)
 	return c
 }
 
