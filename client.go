@@ -227,6 +227,8 @@ func (c *httpClient) logRequest(req *http.Request, method, url string, bodyBuffe
 	var reqBody string
 	if bodyBuffer != nil {
 		reqBody = bodyBuffer.String()
+	} else {
+		reqBody = "nil"
 	}
 
 	var logBuf bytes.Buffer
