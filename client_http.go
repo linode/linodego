@@ -45,4 +45,6 @@ type httpClient struct {
 	cachedEntries map[string]clientCacheEntry
 	//nolint:unused
 	cachedEntryLock *sync.RWMutex
+	//nolint:unused
+	logger httpLogger
 }
