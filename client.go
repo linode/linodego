@@ -135,7 +135,7 @@ type RequestParams struct {
 
 // Generic helper to execute HTTP requests using the net/http package
 //
-// nolint:unused
+// nolint:unused, gocognit
 func (c *httpClient) doRequest(ctx context.Context, method, url string, params RequestParams, mutators ...func(req *http.Request) error) error {
 	var (
 		req        *http.Request
@@ -159,7 +159,7 @@ func (c *httpClient) doRequest(ctx context.Context, method, url string, params R
 		}
 
 		resp, err = c.sendRequest(req)
-		if err == nil {
+		if err == nil { //nolint:nestif
 			defer resp.Body.Close()
 			if err = c.checkHTTPError(resp); err == nil {
 				if c.debug && c.logger != nil {
@@ -191,6 +191,7 @@ func (c *httpClient) doRequest(ctx context.Context, method, url string, params R
 	return err
 }
 
+// nolint:unused
 func (c *httpClient) shouldRetry(resp *http.Response, err error) bool {
 	for _, retryConditional := range c.retryConditionals {
 		if retryConditional(resp, err) {
