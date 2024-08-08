@@ -2,6 +2,7 @@ package integration
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -17,6 +18,7 @@ import (
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/linode/linodego"
 	"golang.org/x/oauth2"
+	"log/slog"
 	"k8s.io/client-go/transport"
 )
 
@@ -58,6 +60,20 @@ func init() {
 			testingMaxRetryTime = time.Duration(1) * time.Microsecond
 		}
 	}
+}
+
+func warnSensitiveTest(t *testing.T) {
+    if testingMode == recorder.ModeReplaying {
+        return
+    }
+
+    slog.Warn(
+        fmt.Sprintf(
+            "Test %s is a sensitive test. Ensure you validate and sanitize "+
+                "its generated test fixtures before pushing.",
+            t.Name(),
+        ),
+    )
 }
 
 // testRecorder returns a go-vcr recorder and an associated function that the caller must defer
