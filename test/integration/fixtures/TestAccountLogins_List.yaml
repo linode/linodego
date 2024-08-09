@@ -14,31 +14,18 @@ interactions:
     url: https://api.linode.com/v4beta/account/logins?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 1570617688, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
-      "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
-      1570661980, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
-      "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
-      1570727356, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
-      "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
-      1570740884, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
-      "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
-      1570741777, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
-      "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
-      1570925268, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
-      "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
-      1571003920, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
-      "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
-      1571045131, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
-      "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
-      1571148324, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
-      "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
-      1571641625, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
-      "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
-      1571642229, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
-      "username": "lgarber-dev", "status": "successful", "restricted": false}, {"id":
-      1571656292, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
-      "username": "lgarber-dev", "status": "successful", "restricted": false}], "page":
-      1, "pages": 1, "results": 12}'
+    body: '{"data": [{"id": 1571371160, "datetime": "2018-01-02T03:04:05", "ip": "207.172.164.59",
+      "username": "ychen123", "status": "successful", "restricted": false}, {"id":
+      1571930431, "datetime": "2018-01-02T03:04:05", "ip": "207.172.164.59", "username":
+      "ychen123", "status": "successful", "restricted": false}, {"id": 1572136305,
+      "datetime": "2018-01-02T03:04:05", "ip": "207.172.164.59", "username": "ychen123",
+      "status": "successful", "restricted": false}, {"id": 1572315925, "datetime":
+      "2018-01-02T03:04:05", "ip": "207.172.164.59", "username": "ychen123", "status":
+      "successful", "restricted": false}, {"id": 1572346753, "datetime": "2018-01-02T03:04:05",
+      "ip": "50.116.59.237", "username": "ychen123", "status": "successful", "restricted":
+      false}, {"id": 1572356544, "datetime": "2018-01-02T03:04:05", "ip": "50.116.59.237",
+      "username": "ychen123", "status": "successful", "restricted": false}], "page":
+      1, "pages": 1, "results": 6}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -50,6 +37,8 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -59,7 +48,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 17 Jun 2024 15:46:55 GMT
+      - Thu, 25 Jul 2024 17:44:05 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -76,7 +65,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -94,11 +86,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/logins/1570617688
+    url: https://api.linode.com/v4beta/account/logins/1571371160
     method: GET
   response:
-    body: '{"id": 1570617688, "datetime": "2018-01-02T03:04:05", "ip": "1234::5678",
-      "username": "lgarber-dev", "status": "successful", "restricted": false}'
+    body: '{"id": 1571371160, "datetime": "2018-01-02T03:04:05", "ip": "207.172.164.59",
+      "username": "ychen123", "status": "successful", "restricted": false}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -110,18 +102,20 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "174"
+      - "146"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 17 Jun 2024 15:46:55 GMT
+      - Thu, 25 Jul 2024 17:44:05 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -137,7 +131,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:

@@ -3,7 +3,11 @@ package integration
 import (
 	"bytes"
 	"context"
+	"slices"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/dnaeon/go-vcr/recorder"
 	. "github.com/linode/linodego"
@@ -107,10 +111,12 @@ func TestImage_CreateUpload(t *testing.T) {
 	defer teardown()
 
 	image, uploadURL, err := client.CreateImageUpload(context.Background(), ImageCreateUploadOptions{
-		Region:      getRegionsWithCaps(t, client, []string{"Metadata"})[0],
+		Region: getRegionsWithCaps(t, client, []string{"Metadata"})[0],
+
 		Label:       "linodego-image-create-upload",
 		Description: "An image that does stuff.",
 		CloudInit:   true,
+		Tags:        &[]string{"foo", "bar"},
 	})
 	if err != nil {
 		t.Errorf("Failed to create image upload: %v", err)
@@ -126,6 +132,8 @@ func TestImage_CreateUpload(t *testing.T) {
 	if uploadURL == "" {
 		t.Errorf("Expected upload URL, got none")
 	}
+
+	require.NotNil(t, image.Tags)
 }
 
 func TestImage_CloudInit(t *testing.T) {
@@ -152,9 +160,10 @@ func TestImage_CloudInit(t *testing.T) {
 		DiskID:    instanceDisks[0].ID,
 		Label:     "linodego-test-cloud-init",
 		CloudInit: true,
+		Tags:      &[]string{"test1", "test2"},
 	})
 	if err != nil {
-		t.Errorf("Failed to create image upload: %v", err)
+		t.Errorf("Failed to create image: %v", err)
 	}
 	t.Cleanup(func() {
 		if err := client.DeleteImage(context.Background(), image.ID); err != nil {
@@ -163,4 +172,60 @@ func TestImage_CloudInit(t *testing.T) {
 	})
 
 	assertSliceContains(t, image.Capabilities, "cloud-init")
+
+	slices.Sort(image.Tags)
+	require.Equal(t, image.Tags, []string{"test1", "test2"})
+}
+
+func TestImage_Replicate(t *testing.T) {
+	// TODO: use random regions with capabilities once it gets stable
+	availableRegions := []string{"us-east", "eu-west"}
+
+	client, teardown := createTestClient(t, "fixtures/TestImage_Replicate")
+	defer teardown()
+
+	image, uploadURL, err := client.CreateImageUpload(context.Background(), ImageCreateUploadOptions{
+		Region:      availableRegions[0],
+		Label:       "linodego-image-replication",
+		Description: "An image that does stuff.",
+	})
+	if err != nil {
+		t.Errorf("Failed to create image upload: %v", err)
+	}
+	defer func() {
+		if err := client.DeleteImage(context.Background(), image.ID); err != nil {
+			t.Errorf("Failed to delete image %s: %v", image.ID, err)
+		}
+	}()
+
+	if uploadURL == "" {
+		t.Errorf("Expected upload URL, got none")
+	}
+
+	if _, err := client.WaitForImageStatus(context.Background(), image.ID, ImageStatusPendingUpload, 60); err != nil {
+		t.Errorf("Failed to wait for image pending upload status: %v", err)
+	}
+
+	// Because this request currently bypasses the recorder, we should only run it when the recorder is recording
+	if testingMode != recorder.ModeReplaying {
+		if err := client.UploadImageToURL(context.Background(), uploadURL, bytes.NewReader(testImageBytes)); err != nil {
+			t.Errorf("failed to upload image: %v", err)
+		}
+	}
+
+	if _, err := client.WaitForImageStatus(context.Background(), image.ID, ImageStatusAvailable, 240); err != nil {
+		t.Errorf("Failed to wait for image available upload status: %v", err)
+	}
+
+	replicaRegions := availableRegions
+
+	image, err = client.ReplicateImage(context.Background(), image.ID, ImageReplicateOptions{
+		Regions: replicaRegions,
+	})
+	require.NoError(t, err)
+
+	require.Len(t, image.Regions, len(availableRegions))
+	for _, region := range image.Regions {
+		assert.Contains(t, availableRegions, region.Region)
+	}
 }
