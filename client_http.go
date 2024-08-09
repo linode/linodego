@@ -17,7 +17,9 @@ type httpClient struct {
 	//nolint:unused
 	debug bool
 	//nolint:unused
-	retryConditionals []RetryConditional
+	retryConditionals []httpRetryConditional
+	//nolint:unused
+	retryAfter httpRetryAfter
 
 	//nolint:unused
 	pollInterval time.Duration
