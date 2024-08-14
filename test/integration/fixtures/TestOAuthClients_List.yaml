@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/account/oauth-clients
     method: POST
   response:
-    body: '{"id": "4a48ff5903b62d743bf0", "redirect_uri": "https://example.com", "label":
-      "go-client-test", "status": "active", "secret": "3e1d30e5a0a3e350ba7231cf4ba2c0863880007d62be38ebdf89fda9d2aadaff",
+    body: '{"id": "e4b5214e8826a1cac065", "redirect_uri": "https://example.com", "label":
+      "go-client-test", "status": "active", "secret": "45bae57955489bbe751eb3d21c3a462c9b37d615accbc14f056a91b267e6ce0e",
       "thumbnail_url": null, "public": true}'
     headers:
       Access-Control-Allow-Credentials:
@@ -28,6 +28,8 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -39,7 +41,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 17 Jun 2024 19:45:25 GMT
+      - Thu, 25 Jul 2024 17:44:07 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -54,7 +56,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -75,13 +80,9 @@ interactions:
     url: https://api.linode.com/v4beta/account/oauth-clients?page=1
     method: GET
   response:
-    body: '{"data": [{"id": "644f910542377876eaab", "redirect_uri": "https://localhost",
-      "label": "asd", "status": "active", "secret": "<REDACTED>", "thumbnail_url":
-      null, "public": false}, {"id": "8839550c17ba6c006e90", "redirect_uri": "http://localhost:5000/auth_callback",
-      "label": "sdf", "status": "active", "secret": "<REDACTED>", "thumbnail_url":
-      null, "public": false}, {"id": "4a48ff5903b62d743bf0", "redirect_uri": "https://example.com",
+    body: '{"data": [{"id": "e4b5214e8826a1cac065", "redirect_uri": "https://example.com",
       "label": "go-client-test", "status": "active", "secret": "<REDACTED>", "thumbnail_url":
-      null, "public": true}], "page": 1, "pages": 1, "results": 3}'
+      null, "public": true}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -93,18 +94,20 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "584"
+      - "228"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 17 Jun 2024 19:45:26 GMT
+      - Thu, 25 Jul 2024 17:44:07 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -120,7 +123,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -138,7 +144,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/oauth-clients/4a48ff5903b62d743bf0
+    url: https://api.linode.com/v4beta/account/oauth-clients/e4b5214e8826a1cac065
     method: DELETE
   response:
     body: '{}'
@@ -153,6 +159,8 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -164,7 +172,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 17 Jun 2024 19:45:26 GMT
+      - Thu, 25 Jul 2024 17:44:07 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -179,7 +187,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:

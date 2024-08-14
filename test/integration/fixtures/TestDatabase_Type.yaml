@@ -1,20 +1,20 @@
 ---
 version: 1
 interactions:
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/databases/types?page=1
-    method: GET
-  response:
-    body: '{"page": 1, "pages": 1, "results": 19, "data": [{"id": "g6-nanode-1", "label":
+  - request:
+      body: ""
+      form: {}
+      headers:
+        Accept:
+          - application/json
+        Content-Type:
+          - application/json
+        User-Agent:
+          - linodego/dev https://github.com/linode/linodego
+      url: https://api.linode.com/v4beta/databases/types?page=1
+      method: GET
+    response:
+      body: '{"page": 1, "pages": 1, "results": 19, "data": [{"id": "g6-nanode-1", "label":
       "DBaaS - Nanode 1GB", "engines": {"mysql": [{"quantity": 1, "price": {"hourly":
       0.0225, "monthly": 15.0}}, {"quantity": 2, "price": {"hourly": 0.0375, "monthly":
       25.0}}, {"quantity": 3, "price": {"hourly": 0.0525, "monthly": 35.0}}], "postgresql":
@@ -142,114 +142,114 @@ interactions:
       {"hourly": 12.48, "monthly": 8320.0}}, {"quantity": 2, "price": {"hourly": 24.96,
       "monthly": 16640.0}}, {"quantity": 3, "price": {"hourly": 37.44, "monthly":
       24960.0}}]}, "memory": 524288, "disk": 7372800, "vcpus": 64, "class": "dedicated"}]}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Mon, 24 Jun 2024 16:45:40 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      - Accept-Encoding
-      X-Accepted-Oauth-Scopes:
-      - '*'
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "400"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/databases/types/g6-nanode-1
-    method: GET
-  response:
-    body: '{"id": "g6-nanode-1", "label": "DBaaS - Nanode 1GB", "engines": {"mysql":
+      headers:
+        Access-Control-Allow-Credentials:
+          - "true"
+        Access-Control-Allow-Headers:
+          - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+        Access-Control-Allow-Methods:
+          - HEAD, GET, OPTIONS, POST, PUT, DELETE
+        Access-Control-Allow-Origin:
+          - '*'
+        Access-Control-Expose-Headers:
+          - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+        Cache-Control:
+          - max-age=0, no-cache, no-store
+        Connection:
+          - keep-alive
+        Content-Security-Policy:
+          - default-src 'none'
+        Content-Type:
+          - application/json
+        Expires:
+          - Mon, 24 Jun 2024 16:45:40 GMT
+        Pragma:
+          - no-cache
+        Strict-Transport-Security:
+          - max-age=31536000
+        Vary:
+          - Authorization, X-Filter
+          - Authorization, X-Filter
+          - Accept-Encoding
+        X-Accepted-Oauth-Scopes:
+          - '*'
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - DENY
+          - DENY
+        X-Oauth-Scopes:
+          - '*'
+        X-Ratelimit-Limit:
+          - "400"
+        X-Xss-Protection:
+          - 1; mode=block
+      status: 200 OK
+      code: 200
+      duration: ""
+  - request:
+      body: ""
+      form: {}
+      headers:
+        Accept:
+          - application/json
+        Content-Type:
+          - application/json
+        User-Agent:
+          - linodego/dev https://github.com/linode/linodego
+      url: https://api.linode.com/v4beta/databases/types/g6-nanode-1
+      method: GET
+    response:
+      body: '{"id": "g6-nanode-1", "label": "DBaaS - Nanode 1GB", "engines": {"mysql":
       [{"quantity": 1, "price": {"hourly": 0.0225, "monthly": 15.0}}, {"quantity":
       2, "price": {"hourly": 0.0375, "monthly": 25.0}}, {"quantity": 3, "price": {"hourly":
       0.0525, "monthly": 35.0}}], "postgresql": [{"quantity": 1, "price": {"hourly":
       0.0225, "monthly": 15.0}}, {"quantity": 2, "price": {"hourly": 0.0375, "monthly":
       25.0}}, {"quantity": 3, "price": {"hourly": 0.0525, "monthly": 35.0}}]}, "memory":
       1024, "disk": 25600, "vcpus": 1, "class": "nanode"}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "532"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Mon, 24 Jun 2024 16:45:41 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - '*'
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "400"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
+      headers:
+        Access-Control-Allow-Credentials:
+          - "true"
+        Access-Control-Allow-Headers:
+          - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+        Access-Control-Allow-Methods:
+          - HEAD, GET, OPTIONS, POST, PUT, DELETE
+        Access-Control-Allow-Origin:
+          - '*'
+        Access-Control-Expose-Headers:
+          - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+        Cache-Control:
+          - max-age=0, no-cache, no-store
+        Connection:
+          - keep-alive
+        Content-Length:
+          - "532"
+        Content-Security-Policy:
+          - default-src 'none'
+        Content-Type:
+          - application/json
+        Expires:
+          - Mon, 24 Jun 2024 16:45:41 GMT
+        Pragma:
+          - no-cache
+        Strict-Transport-Security:
+          - max-age=31536000
+        Vary:
+          - Authorization, X-Filter
+          - Authorization, X-Filter
+        X-Accepted-Oauth-Scopes:
+          - '*'
+        X-Content-Type-Options:
+          - nosniff
+        X-Frame-Options:
+          - DENY
+          - DENY
+        X-Oauth-Scopes:
+          - '*'
+        X-Ratelimit-Limit:
+          - "400"
+        X-Xss-Protection:
+          - 1; mode=block
+      status: 200 OK
+      code: 200
+      duration: ""

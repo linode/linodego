@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 34619, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
+    body: '{"id": 692864, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"action": "ACCEPT", "label": "go-fwrule-test", "ports": "22", "protocol":
       "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy":
@@ -33,18 +33,25 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "583"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Thu, 25 Jul 2024 17:44:49 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
-      - Accept-Encoding
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
       - firewall:read_write
@@ -54,7 +61,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -75,12 +85,97 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 34618, "label": "cloudfw-1719245395965694000", "created":
-      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "status": "enabled",
-      "rules": {"inbound": [{"action": "ACCEPT", "label": "ssh-inbound-accept-local",
-      "ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["71.232.163.72/32"]}}],
+    body: '{"data": [{"id": 433514, "label": "test-fw", "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
+      [{"action": "ACCEPT", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]},
+      "ports": "22", "protocol": "TCP", "label": "accept-inbound-SSH", "description":
+      null}], "inbound_policy": "DROP", "outbound": [], "outbound_policy": "ACCEPT",
+      "version": 4, "fingerprint": "20eec66f"}, "tags": [], "entities": [{"id": 57328123,
+      "type": "linode", "label": "debian-us-central", "url": "/v4/linode/instances/57328123"},
+      {"id": 54748754, "type": "linode", "label": "debian-us-ord", "url": "/v4/linode/instances/54748754"}]},
+      {"id": 624183, "label": "e2e-firewall-izUKXM", "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
+      [{"label": "ssh-accept-inbound-rule", "addresses": {"ipv4": ["207.172.164.59/32"]},
+      "description": "ACCEPT SSH from test machine", "ports": "22", "protocol": "TCP",
+      "action": "ACCEPT"}], "inbound_policy": "DROP", "outbound": [], "outbound_policy":
+      "ACCEPT", "version": 1, "fingerprint": "45912779"}, "tags": [], "entities":
+      []}, {"id": 624308, "label": "e2e-firewall-svVoqB", "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
+      [{"label": "ssh-accept-inbound-rule", "addresses": {"ipv4": ["207.172.164.59/32"]},
+      "description": "ACCEPT SSH from test machine", "ports": "22", "protocol": "TCP",
+      "action": "ACCEPT"}], "inbound_policy": "DROP", "outbound": [], "outbound_policy":
+      "ACCEPT", "version": 1, "fingerprint": "45912779"}, "tags": [], "entities":
+      [{"id": 60939824, "type": "linode", "label": "ansible-test-471035164-updated",
+      "url": "/v4/linode/instances/60939824"}]}, {"id": 682410, "label": "e2e-firewall-bucVPC",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "status":
+      "enabled", "rules": {"inbound": [{"label": "ssh-accept-inbound-rule", "addresses":
+      {"ipv4": ["207.172.164.59/32"]}, "description": "ACCEPT SSH from test machine",
+      "ports": "22", "protocol": "TCP", "action": "ACCEPT"}], "inbound_policy": "DROP",
+      "outbound": [], "outbound_policy": "ACCEPT", "version": 1, "fingerprint": "45912779"},
+      "tags": [], "entities": []}, {"id": 682453, "label": "e2e-firewall-WJsukx",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "status":
+      "enabled", "rules": {"inbound": [{"label": "ssh-accept-inbound-rule", "addresses":
+      {"ipv4": ["207.172.164.59/32"]}, "description": "ACCEPT SSH from test machine",
+      "ports": "22", "protocol": "TCP", "action": "ACCEPT"}], "inbound_policy": "DROP",
+      "outbound": [], "outbound_policy": "ACCEPT", "version": 1, "fingerprint": "45912779"},
+      "tags": [], "entities": []}, {"id": 682477, "label": "e2e-firewall-IzEjvH",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "status":
+      "enabled", "rules": {"inbound": [{"label": "ssh-accept-inbound-rule", "addresses":
+      {"ipv4": ["207.172.164.59/32"]}, "description": "ACCEPT SSH from test machine",
+      "ports": "22", "protocol": "TCP", "action": "ACCEPT"}], "inbound_policy": "DROP",
+      "outbound": [], "outbound_policy": "ACCEPT", "version": 1, "fingerprint": "45912779"},
+      "tags": [], "entities": []}, {"id": 682500, "label": "e2e-firewall-QdxDkS",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "status":
+      "enabled", "rules": {"inbound": [{"label": "ssh-accept-inbound-rule", "addresses":
+      {"ipv4": ["207.172.164.59/32"]}, "description": "ACCEPT SSH from test machine",
+      "ports": "22", "protocol": "TCP", "action": "ACCEPT"}], "inbound_policy": "DROP",
+      "outbound": [], "outbound_policy": "ACCEPT", "version": 1, "fingerprint": "45912779"},
+      "tags": [], "entities": []}, {"id": 682505, "label": "e2e-firewall-KkroRq",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "status":
+      "enabled", "rules": {"inbound": [{"label": "ssh-accept-inbound-rule", "addresses":
+      {"ipv4": ["207.172.164.59/32"]}, "description": "ACCEPT SSH from test machine",
+      "ports": "22", "protocol": "TCP", "action": "ACCEPT"}], "inbound_policy": "DROP",
+      "outbound": [], "outbound_policy": "ACCEPT", "version": 1, "fingerprint": "45912779"},
+      "tags": [], "entities": []}, {"id": 682508, "label": "e2e-firewall-WPxzQk",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "status":
+      "enabled", "rules": {"inbound": [{"label": "ssh-accept-inbound-rule", "addresses":
+      {"ipv4": ["207.172.164.59/32"]}, "description": "ACCEPT SSH from test machine",
+      "ports": "22", "protocol": "TCP", "action": "ACCEPT"}], "inbound_policy": "DROP",
+      "outbound": [], "outbound_policy": "ACCEPT", "version": 1, "fingerprint": "45912779"},
+      "tags": [], "entities": []}, {"id": 682532, "label": "e2e-firewall-rBZhHt",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "status":
+      "enabled", "rules": {"inbound": [{"label": "ssh-accept-inbound-rule", "addresses":
+      {"ipv4": ["207.172.164.59/32"]}, "description": "ACCEPT SSH from test machine",
+      "ports": "22", "protocol": "TCP", "action": "ACCEPT"}], "inbound_policy": "DROP",
+      "outbound": [], "outbound_policy": "ACCEPT", "version": 1, "fingerprint": "45912779"},
+      "tags": [], "entities": []}, {"id": 692740, "label": "cloudfw-1721926678901029000",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "status":
+      "enabled", "rules": {"inbound": [{"action": "ACCEPT", "label": "ssh-inbound-accept-local",
+      "ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["207.172.164.59/32"]}}],
       "inbound_policy": "DROP", "outbound": [], "outbound_policy": "ACCEPT", "version":
-      1, "fingerprint": "76a7d3b4"}, "tags": [], "entities": []}, {"id": 34619, "label":
+      1, "fingerprint": "3e4f4201"}, "tags": [], "entities": []}, {"id": 692760, "label":
+      "cloudfw-1721927227347144000", "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound": [{"action":
+      "ACCEPT", "label": "ssh-inbound-accept-local", "ports": "22", "protocol": "TCP",
+      "addresses": {"ipv4": ["207.172.164.59/32"]}}], "inbound_policy": "DROP", "outbound":
+      [], "outbound_policy": "ACCEPT", "version": 1, "fingerprint": "3e4f4201"}, "tags":
+      [], "entities": []}, {"id": 692763, "label": "cloudfw-1721927316071520000",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "status":
+      "enabled", "rules": {"inbound": [{"action": "ACCEPT", "label": "ssh-inbound-accept-local",
+      "ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["207.172.164.59/32"]}}],
+      "inbound_policy": "DROP", "outbound": [], "outbound_policy": "ACCEPT", "version":
+      1, "fingerprint": "3e4f4201"}, "tags": [], "entities": []}, {"id": 692848, "label":
+      "cloudfw-1721929346146739000", "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound": [{"action":
+      "ACCEPT", "label": "ssh-inbound-accept-local", "ports": "22", "protocol": "TCP",
+      "addresses": {"ipv4": ["207.172.164.59/32"]}}], "inbound_policy": "DROP", "outbound":
+      [], "outbound_policy": "ACCEPT", "version": 1, "fingerprint": "3e4f4201"}, "tags":
+      [], "entities": []}, {"id": 692854, "label": "cloudfw-1721929441971780000",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "status":
+      "enabled", "rules": {"inbound": [{"action": "ACCEPT", "label": "ssh-inbound-accept-local",
+      "ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["207.172.164.59/32"]}}],
+      "inbound_policy": "DROP", "outbound": [], "outbound_policy": "ACCEPT", "version":
+      1, "fingerprint": "3e4f4201"}, "tags": [], "entities": []}, {"id": 692864, "label":
       "linodego-fw-test", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "status": "enabled", "rules": {"inbound": [{"action": "ACCEPT", "label": "go-fwrule-test",
       "ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6":
@@ -88,7 +183,7 @@ interactions:
       "go-fwrule-test", "ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"],
       "ipv6": ["1234::5678/0"]}}], "outbound_policy": "ACCEPT", "version": 1, "fingerprint":
       "7bcc0f03"}, "tags": ["testing"], "entities": []}], "page": 1, "pages": 1, "results":
-      2}'
+      16}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -100,21 +195,26 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Thu, 25 Jul 2024 17:44:49 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
       - Accept-Encoding
-      - Authorization, X-Filter
-      - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
       - firewall:read_only
       X-Content-Type-Options:
@@ -123,7 +223,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
@@ -141,7 +244,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/34619
+    url: https://api.linode.com/v4beta/networking/firewalls/692864
     method: DELETE
   response:
     body: '{}'
@@ -156,16 +259,22 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "2"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Thu, 25 Jul 2024 17:44:49 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -178,7 +287,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_write databases:read_write domains:read_write events:read_write
+        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
+        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
+        volumes:read_write vpc:read_write
       X-Ratelimit-Limit:
       - "400"
       X-Xss-Protection:
