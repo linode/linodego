@@ -135,7 +135,7 @@ type RequestParams struct {
 
 // Generic helper to execute HTTP requests using the net/http package
 //
-// nolint:unused, gocognit
+// nolint:unused, funlen, gocognit
 func (c *httpClient) doRequest(ctx context.Context, method, url string, params RequestParams, mutators ...func(req *http.Request) error) error {
 	var (
 		req        *http.Request
@@ -158,21 +158,34 @@ func (c *httpClient) doRequest(ctx context.Context, method, url string, params R
 			c.logRequest(req, method, url, bodyBuffer)
 		}
 
+		processResponse := func() error {
+			defer func() {
+				closeErr := resp.Body.Close()
+				if closeErr != nil && err == nil {
+					err = closeErr
+				}
+			}()
+			if err = c.checkHTTPError(resp); err != nil {
+				return err
+			}
+			if c.debug && c.logger != nil {
+				var logErr error
+				resp, logErr = c.logResponse(resp)
+				if logErr != nil {
+					return logErr
+				}
+			}
+			if params.Response != nil {
+				if err = c.decodeResponseBody(resp, params.Response); err != nil {
+					return err
+				}
+			}
+			return nil
+		}
+
 		resp, err = c.sendRequest(req)
-		if err == nil { //nolint:nestif
-			defer resp.Body.Close()
-			if err = c.checkHTTPError(resp); err == nil {
-				if c.debug && c.logger != nil {
-					resp, err = c.logResponse(resp)
-					if err != nil {
-						return err
-					}
-				}
-				if params.Response != nil {
-					if err = c.decodeResponseBody(resp, params.Response); err != nil {
-						return err
-					}
-				}
+		if err == nil {
+			if err = processResponse(); err == nil {
 				return nil
 			}
 		}
@@ -185,6 +198,10 @@ func (c *httpClient) doRequest(ctx context.Context, method, url string, params R
 		if retryErr != nil {
 			return retryErr
 		}
+
+		// Sleep for the specified duration before retrying.
+		// If retryAfter is 0 (i.e., Retry-After header is not found),
+		// no delay is applied.
 		time.Sleep(retryAfter)
 	}
 
@@ -604,14 +621,14 @@ func (c *Client) UseCache(value bool) {
 }
 
 // SetRetryMaxWaitTime sets the maximum delay before retrying a request.
-func (c *Client) SetRetryMaxWaitTime(max time.Duration) *Client {
-	c.resty.SetRetryMaxWaitTime(max)
+func (c *Client) SetRetryMaxWaitTime(maxWaitTime time.Duration) *Client {
+	c.resty.SetRetryMaxWaitTime(maxWaitTime)
 	return c
 }
 
 // SetRetryWaitTime sets the default (minimum) delay before retrying a request.
-func (c *Client) SetRetryWaitTime(min time.Duration) *Client {
-	c.resty.SetRetryWaitTime(min)
+func (c *Client) SetRetryWaitTime(minWaitTime time.Duration) *Client {
+	c.resty.SetRetryWaitTime(minWaitTime)
 	return c
 }
 
