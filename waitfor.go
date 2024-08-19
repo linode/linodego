@@ -76,7 +76,6 @@ func (client Client) WaitForInstanceDiskStatus(ctx context.Context, instanceID i
 			}
 
 			for _, disk := range disks {
-				disk := disk
 				if disk.ID == diskID {
 					complete := (disk.Status == status)
 					if complete {

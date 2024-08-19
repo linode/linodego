@@ -144,7 +144,7 @@ func (c *httpClient) doRequest(ctx context.Context, method, url string, params R
 		err        error
 	)
 
-	for attempt := 0; attempt < httpDefaultRetryCount; attempt++ {
+	for range httpDefaultRetryCount {
 		req, bodyBuffer, err = c.createRequest(ctx, method, url, params)
 		if err != nil {
 			return err
