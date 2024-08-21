@@ -49,4 +49,4 @@ require (
 
 replace github.com/linode/linodego => ../
 
-go 1.21
+go 1.22
