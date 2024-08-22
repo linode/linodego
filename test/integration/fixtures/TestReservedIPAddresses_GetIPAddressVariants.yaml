@@ -1,0 +1,46 @@
+---
+version: 1
+interactions:
+- request:
+    body: '{"region":"us-east"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/reserved/ips
+    method: POST
+  response:
+    body: '{"errors": [{"reason": "Account doesn''t have permission to access the
+      ''Reserved IPs'' feature."}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Content-Length:
+      - "97"
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 22 Aug 2024 20:10:44 GMT
+      Pragma:
+      - no-cache
+      X-Accepted-Oauth-Scopes:
+      - ips:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+    status: 404 Not Found
+    code: 404
+    duration: ""
