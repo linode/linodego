@@ -14,11 +14,12 @@ import (
 
 	"github.com/stretchr/testify/require"
 
+	"log/slog"
+
 	"github.com/dnaeon/go-vcr/cassette"
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/linode/linodego"
 	"golang.org/x/oauth2"
-	"log/slog"
 	"k8s.io/client-go/transport"
 )
 
@@ -38,6 +39,7 @@ var (
 func init() {
 	if apiToken, ok := os.LookupEnv("LINODE_TOKEN"); ok {
 		validTestAPIKey = apiToken
+		fmt.Println(validTestAPIKey)
 	}
 
 	if apiDebug, ok := os.LookupEnv("LINODE_DEBUG"); ok {
@@ -63,17 +65,17 @@ func init() {
 }
 
 func warnSensitiveTest(t *testing.T) {
-    if testingMode == recorder.ModeReplaying {
-        return
-    }
+	if testingMode == recorder.ModeReplaying {
+		return
+	}
 
-    slog.Warn(
-        fmt.Sprintf(
-            "Test %s is a sensitive test. Ensure you validate and sanitize "+
-                "its generated test fixtures before pushing.",
-            t.Name(),
-        ),
-    )
+	slog.Warn(
+		fmt.Sprintf(
+			"Test %s is a sensitive test. Ensure you validate and sanitize "+
+				"its generated test fixtures before pushing.",
+			t.Name(),
+		),
+	)
 }
 
 // testRecorder returns a go-vcr recorder and an associated function that the caller must defer
