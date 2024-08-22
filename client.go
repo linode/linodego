@@ -136,7 +136,7 @@ type RequestParams struct {
 // Generic helper to execute HTTP requests using the net/http package
 //
 // nolint:unused, funlen, gocognit
-func (c *httpClient) doRequest(ctx context.Context, method, url string, params RequestParams, mutators ...func(req *http.Request) error) error {
+func (c *httpClient) doRequest(ctx context.Context, method, url string, params RequestParams) error {
 	var (
 		req        *http.Request
 		bodyBuffer *bytes.Buffer
@@ -150,7 +150,7 @@ func (c *httpClient) doRequest(ctx context.Context, method, url string, params R
 			return err
 		}
 
-		if err = c.applyMutators(req, mutators); err != nil {
+		if err = c.applyBeforeRequest(req); err != nil {
 			return err
 		}
 
@@ -180,6 +180,12 @@ func (c *httpClient) doRequest(ctx context.Context, method, url string, params R
 					return err
 				}
 			}
+
+			// Apply after-response mutations
+			if err = c.applyAfterResponse(resp); err != nil {
+				return err
+			}
+
 			return nil
 		}
 
@@ -252,13 +258,26 @@ func (c *httpClient) createRequest(ctx context.Context, method, url string, para
 }
 
 // nolint:unused
-func (c *httpClient) applyMutators(req *http.Request, mutators []func(req *http.Request) error) error {
-	for _, mutate := range mutators {
+func (c *httpClient) applyBeforeRequest(req *http.Request) error {
+	for _, mutate := range c.onBeforeRequest {
 		if err := mutate(req); err != nil {
 			if c.debug && c.logger != nil {
-				c.logger.Errorf("failed to mutate request: %v", err)
+				c.logger.Errorf("failed to mutate before request: %v", err)
 			}
-			return fmt.Errorf("failed to mutate request: %w", err)
+			return fmt.Errorf("failed to mutate before request: %w", err)
+		}
+	}
+	return nil
+}
+
+// nolint:unused
+func (c *httpClient) applyAfterResponse(resp *http.Response) error {
+	for _, mutate := range c.onAfterResponse {
+		if err := mutate(resp); err != nil {
+			if c.debug && c.logger != nil {
+				c.logger.Errorf("failed to mutate after response: %v", err)
+			}
+			return fmt.Errorf("failed to mutate after response: %w", err)
 		}
 	}
 	return nil
@@ -392,6 +411,20 @@ func (c *Client) OnAfterResponse(m func(response *Response) error) {
 	c.resty.OnAfterResponse(func(_ *resty.Client, req *resty.Response) error {
 		return m(req)
 	})
+}
+
+// nolint:unused
+func (c *httpClient) httpOnBeforeRequest(m func(*http.Request) error) *httpClient {
+	c.onBeforeRequest = append(c.onBeforeRequest, m)
+
+	return c
+}
+
+// nolint:unused
+func (c *httpClient) httpOnAfterResponse(m func(*http.Response) error) *httpClient {
+	c.onAfterResponse = append(c.onAfterResponse, m)
+
+	return c
 }
 
 // UseURL parses the individual components of the given API URL and configures the client
