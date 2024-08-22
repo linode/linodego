@@ -39,7 +39,6 @@ var (
 func init() {
 	if apiToken, ok := os.LookupEnv("LINODE_TOKEN"); ok {
 		validTestAPIKey = apiToken
-		fmt.Println(validTestAPIKey)
 	}
 
 	if apiDebug, ok := os.LookupEnv("LINODE_DEBUG"); ok {
