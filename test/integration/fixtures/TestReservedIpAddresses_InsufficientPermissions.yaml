@@ -14,7 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips?page=1
     method: GET
   response:
-    body: '{"errors": [{"reason": "Invalid Token"}]}'
+    body: '{"errors": [{"reason": "Account doesn''t have permission to access the
+      ''Reserved IPs'' feature."}]}'
     headers:
       Access-Control-Allow-Headers:
       - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
@@ -22,16 +23,18 @@ interactions:
       - HEAD, GET, OPTIONS, POST, PUT, DELETE
       Access-Control-Allow-Origin:
       - '*'
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "41"
+      - "97"
       Content-Type:
       - application/json
       Expires:
-      - Mon, 26 Aug 2024 18:41:47 GMT
+      - Thu, 22 Aug 2024 15:37:02 GMT
       Pragma:
       - no-cache
       Vary:
@@ -41,9 +44,9 @@ interactions:
       X-Frame-Options:
       - DENY
       X-Oauth-Scopes:
-      - unknown
-    status: 401 Unauthorized
-    code: 401
+      - '*'
+    status: 404 Not Found
+    code: 404
     duration: ""
 - request:
     body: '{"region":"us-east"}'
@@ -58,7 +61,8 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips
     method: POST
   response:
-    body: '{"errors": [{"reason": "Invalid Token"}]}'
+    body: '{"errors": [{"reason": "Account doesn''t have permission to access the
+      ''Reserved IPs'' feature."}]}'
     headers:
       Access-Control-Allow-Headers:
       - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
@@ -66,14 +70,16 @@ interactions:
       - HEAD, GET, OPTIONS, POST, PUT, DELETE
       Access-Control-Allow-Origin:
       - '*'
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Content-Length:
-      - "41"
+      - "97"
       Content-Type:
       - application/json
       Expires:
-      - Mon, 26 Aug 2024 18:41:48 GMT
+      - Thu, 22 Aug 2024 15:37:02 GMT
       Pragma:
       - no-cache
       X-Accepted-Oauth-Scopes:
@@ -81,9 +87,9 @@ interactions:
       X-Frame-Options:
       - DENY
       X-Oauth-Scopes:
-      - unknown
-    status: 401 Unauthorized
-    code: 401
+      - '*'
+    status: 404 Not Found
+    code: 404
     duration: ""
 - request:
     body: ""
@@ -98,7 +104,8 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips/172.28.3.4
     method: GET
   response:
-    body: '{"errors": [{"reason": "Invalid Token"}]}'
+    body: '{"errors": [{"reason": "Account doesn''t have permission to access the
+      ''Reserved IPs'' feature."}]}'
     headers:
       Access-Control-Allow-Headers:
       - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
@@ -106,16 +113,18 @@ interactions:
       - HEAD, GET, OPTIONS, POST, PUT, DELETE
       Access-Control-Allow-Origin:
       - '*'
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "41"
+      - "97"
       Content-Type:
       - application/json
       Expires:
-      - Mon, 26 Aug 2024 18:41:48 GMT
+      - Thu, 22 Aug 2024 15:37:03 GMT
       Pragma:
       - no-cache
       Vary:
@@ -125,9 +134,9 @@ interactions:
       X-Frame-Options:
       - DENY
       X-Oauth-Scopes:
-      - unknown
-    status: 401 Unauthorized
-    code: 401
+      - '*'
+    status: 404 Not Found
+    code: 404
     duration: ""
 - request:
     body: ""
@@ -142,7 +151,8 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips/172.28.3.4
     method: DELETE
   response:
-    body: '{"errors": [{"reason": "Invalid Token"}]}'
+    body: '{"errors": [{"reason": "Account doesn''t have permission to access the
+      ''Reserved IPs'' feature."}]}'
     headers:
       Access-Control-Allow-Headers:
       - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
@@ -150,16 +160,18 @@ interactions:
       - HEAD, GET, OPTIONS, POST, PUT, DELETE
       Access-Control-Allow-Origin:
       - '*'
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "41"
+      - "97"
       Content-Type:
       - application/json
       Expires:
-      - Mon, 26 Aug 2024 18:41:48 GMT
+      - Thu, 22 Aug 2024 15:37:03 GMT
       Pragma:
       - no-cache
       X-Accepted-Oauth-Scopes:
@@ -167,7 +179,7 @@ interactions:
       X-Frame-Options:
       - DENY
       X-Oauth-Scopes:
-      - unknown
-    status: 401 Unauthorized
-    code: 401
+      - '*'
+    status: 404 Not Found
+    code: 404
     duration: ""
