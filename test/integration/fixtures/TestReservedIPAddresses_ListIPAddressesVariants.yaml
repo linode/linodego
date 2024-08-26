@@ -14,13 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips?page=1
     method: GET
   response:
-    body: '{"data": [{"address": "66.228.35.140", "gateway": "66.228.35.1", "subnet_mask":
-      "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true, "rdns": "66-228-35-140.ip.linodeusercontent.com",
-      "linode_id": null, "region": "us-east", "vpc_nat_1_1": null, "reserved": true},
-      {"address": "45.33.69.212", "gateway": "45.33.69.1", "subnet_mask": "255.255.255.0",
-      "prefix": 24, "type": "ipv4", "public": true, "rdns": "45-33-69-212.ip.linodeusercontent.com",
-      "linode_id": null, "region": "us-east", "vpc_nat_1_1": null, "reserved": true}],
-      "page": 1, "pages": 1, "results": 2}'
+    body: '{"data": [], "page": 1, "pages": 1, "results": 0}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -39,13 +33,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "570"
+      - "49"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 26 Aug 2024 18:31:09 GMT
+      - Mon, 26 Aug 2024 19:11:49 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
