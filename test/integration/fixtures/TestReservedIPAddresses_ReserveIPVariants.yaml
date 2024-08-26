@@ -14,8 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips
     method: POST
   response:
-    body: '{"errors": [{"reason": "Account doesn''t have permission to access the
-      ''Reserved IPs'' feature."}]}'
+    body: '{"errors": [{"reason": "region is not valid", "field": "region"}]}'
     headers:
       Access-Control-Allow-Headers:
       - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
@@ -28,11 +27,11 @@ interactions:
       Cache-Control:
       - max-age=0, no-cache, no-store
       Content-Length:
-      - "97"
+      - "66"
       Content-Type:
       - application/json
       Expires:
-      - Thu, 22 Aug 2024 20:10:44 GMT
+      - Mon, 26 Aug 2024 18:31:10 GMT
       Pragma:
       - no-cache
       X-Accepted-Oauth-Scopes:
@@ -41,8 +40,10 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-    status: 404 Not Found
-    code: 404
+      X-Ratelimit-Limit:
+      - "400"
+    status: 400 Bad Request
+    code: 400
     duration: ""
 - request:
     body: '{"region":"us"}'
@@ -57,8 +58,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips
     method: POST
   response:
-    body: '{"errors": [{"reason": "Account doesn''t have permission to access the
-      ''Reserved IPs'' feature."}]}'
+    body: '{"errors": [{"reason": "region is not valid", "field": "region"}]}'
     headers:
       Access-Control-Allow-Headers:
       - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
@@ -71,11 +71,11 @@ interactions:
       Cache-Control:
       - max-age=0, no-cache, no-store
       Content-Length:
-      - "97"
+      - "66"
       Content-Type:
       - application/json
       Expires:
-      - Thu, 22 Aug 2024 20:10:44 GMT
+      - Mon, 26 Aug 2024 18:31:10 GMT
       Pragma:
       - no-cache
       X-Accepted-Oauth-Scopes:
@@ -84,8 +84,10 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-    status: 404 Not Found
-    code: 404
+      X-Ratelimit-Limit:
+      - "400"
+    status: 400 Bad Request
+    code: 400
     duration: ""
 - request:
     body: '{"region":""}'
@@ -100,8 +102,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips
     method: POST
   response:
-    body: '{"errors": [{"reason": "Account doesn''t have permission to access the
-      ''Reserved IPs'' feature."}]}'
+    body: '{"errors": [{"reason": "region is not valid", "field": "region"}]}'
     headers:
       Access-Control-Allow-Headers:
       - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
@@ -114,11 +115,11 @@ interactions:
       Cache-Control:
       - max-age=0, no-cache, no-store
       Content-Length:
-      - "97"
+      - "66"
       Content-Type:
       - application/json
       Expires:
-      - Thu, 22 Aug 2024 20:10:44 GMT
+      - Mon, 26 Aug 2024 18:31:10 GMT
       Pragma:
       - no-cache
       X-Accepted-Oauth-Scopes:
@@ -127,8 +128,10 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-    status: 404 Not Found
-    code: 404
+      X-Ratelimit-Limit:
+      - "400"
+    status: 400 Bad Request
+    code: 400
     duration: ""
 - request:
     body: '{"region":"us-east"}'
@@ -143,8 +146,8 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips
     method: POST
   response:
-    body: '{"errors": [{"reason": "Account doesn''t have permission to access the
-      ''Reserved IPs'' feature."}]}'
+    body: '{"errors": [{"reason": "Additional Reserved IPv4 addresses require technical
+      justification. Please contact support describing your requirement."}]}'
     headers:
       Access-Control-Allow-Headers:
       - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
@@ -157,11 +160,11 @@ interactions:
       Cache-Control:
       - max-age=0, no-cache, no-store
       Content-Length:
-      - "97"
+      - "147"
       Content-Type:
       - application/json
       Expires:
-      - Thu, 22 Aug 2024 20:10:45 GMT
+      - Mon, 26 Aug 2024 18:31:10 GMT
       Pragma:
       - no-cache
       X-Accepted-Oauth-Scopes:
@@ -170,8 +173,10 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-    status: 404 Not Found
-    code: 404
+      X-Ratelimit-Limit:
+      - "400"
+    status: 400 Bad Request
+    code: 400
     duration: ""
 - request:
     body: '{"region":"us-east"}'
@@ -186,8 +191,8 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips
     method: POST
   response:
-    body: '{"errors": [{"reason": "Account doesn''t have permission to access the
-      ''Reserved IPs'' feature."}]}'
+    body: '{"errors": [{"reason": "Additional Reserved IPv4 addresses require technical
+      justification. Please contact support describing your requirement."}]}'
     headers:
       Access-Control-Allow-Headers:
       - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
@@ -200,11 +205,11 @@ interactions:
       Cache-Control:
       - max-age=0, no-cache, no-store
       Content-Length:
-      - "97"
+      - "147"
       Content-Type:
       - application/json
       Expires:
-      - Thu, 22 Aug 2024 20:10:45 GMT
+      - Mon, 26 Aug 2024 18:31:11 GMT
       Pragma:
       - no-cache
       X-Accepted-Oauth-Scopes:
@@ -213,6 +218,8 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-    status: 404 Not Found
-    code: 404
+      X-Ratelimit-Limit:
+      - "400"
+    status: 400 Bad Request
+    code: 400
     duration: ""
