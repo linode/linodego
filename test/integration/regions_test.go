@@ -45,3 +45,17 @@ func TestRegions_pgLimits(t *testing.T) {
 	require.NotZero(t, region.PlacementGroupLimits.MaximumLinodesPerPG)
 	require.NotZero(t, region.PlacementGroupLimits.MaximumPGsPerCustomer)
 }
+
+func TestRegions_blockStorageEncryption(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestRegions_blockStorageEncryption")
+	defer teardown()
+
+	regions, err := client.ListRegions(context.Background(), nil)
+	require.NoError(t, err)
+
+	// Filtering is not currently supported on capabilities
+	regionIdx := slices.IndexFunc(regions, func(region linodego.Region) bool {
+		return slices.Contains(region.Capabilities, "Block Storage Encryption")
+	})
+	require.NotZero(t, regionIdx)
+}
