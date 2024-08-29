@@ -10,7 +10,7 @@ type ReserveIPOptions struct {
 }
 
 // GetReservedIPs retrieves a list of reserved IP addresses
-func (c *Client) GetReservedIPs(ctx context.Context, opts *ListOptions) ([]InstanceIP, error) {
+func (c *Client) ListReservedIPAddresses(ctx context.Context, opts *ListOptions) ([]InstanceIP, error) {
 	e := formatAPIPath("networking/reserved/ips")
 	response, err := getPaginatedResults[InstanceIP](ctx, c, e, opts)
 	if err != nil {
@@ -21,8 +21,8 @@ func (c *Client) GetReservedIPs(ctx context.Context, opts *ListOptions) ([]Insta
 }
 
 // GetReservedIPAddress retrieves details of a specific reserved IP address
-func (c *Client) GetReservedIPAddress(ctx context.Context, id string) (*InstanceIP, error) {
-	e := formatAPIPath("networking/reserved/ips/%s", id)
+func (c *Client) GetReservedIPAddress(ctx context.Context, ipAddress string) (*InstanceIP, error) {
+	e := formatAPIPath("networking/reserved/ips/%s", ipAddress)
 	response, err := doGETRequest[InstanceIP](ctx, c, e)
 	if err != nil {
 		return nil, err
