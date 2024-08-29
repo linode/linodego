@@ -11,10 +11,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips?page=1
+      X-Filter:
+      - '{"reserved":true,"region":"us-east"}'
+    url: https://api.linode.com/v4beta/networking/ips?page=1
     method: GET
   response:
-    body: '{"data": [], "page": 1, "pages": 1, "results": 0}'
+    body: '{"page": 1, "pages": 1, "results": 0, "data": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -39,7 +41,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 26 Aug 2024 19:11:49 GMT
+      - Thu, 29 Aug 2024 15:39:20 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -57,7 +59,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "10"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
