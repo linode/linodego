@@ -2,7 +2,6 @@ package integration
 
 import (
 	"context"
-	"fmt"
 	"strings"
 
 	"testing"
@@ -72,7 +71,6 @@ func TestReservedIPAddresses_EndToEndTest(t *testing.T) {
 	filter := ""
 
 	ipList, err := client.ListReservedIPAddresses(context.Background(), NewListOptions(0, filter))
-	fmt.Println(ipList)
 
 	if err != nil {
 		t.Fatalf("Error listing IP addresses: %v", err)
