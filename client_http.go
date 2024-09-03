@@ -49,4 +49,8 @@ type httpClient struct {
 	cachedEntryLock *sync.RWMutex
 	//nolint:unused
 	logger httpLogger
+	//nolint:unused
+	onBeforeRequest []func(*http.Request) error
+	//nolint:unused
+	onAfterResponse []func(*http.Response) error
 }
