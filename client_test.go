@@ -313,7 +313,42 @@ func TestDoRequest_FailedDecodeResponse(t *testing.T) {
 	}
 }
 
-func TestDoRequest_MutatorError(t *testing.T) {
+func TestDoRequest_BeforeRequestSuccess(t *testing.T) {
+	var capturedRequest *http.Request
+
+	handler := func(w http.ResponseWriter, r *http.Request) {
+		capturedRequest = r // Capture the request to inspect it later
+		w.WriteHeader(http.StatusOK)
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"message":"success"}`))
+	}
+	server := httptest.NewServer(http.HandlerFunc(handler))
+	defer server.Close()
+
+	client := &httpClient{
+		httpClient: server.Client(),
+	}
+
+	// Define a mutator that successfully modifies the request
+	mutator := func(req *http.Request) error {
+		req.Header.Set("X-Custom-Header", "CustomValue")
+		return nil
+	}
+
+	client.httpOnBeforeRequest(mutator)
+
+	err := client.doRequest(context.Background(), http.MethodGet, server.URL, RequestParams{})
+	if err != nil {
+		t.Fatalf("expected no error, got: %v", err)
+	}
+
+	// Check if the header was successfully added to the captured request
+	if reqHeader := capturedRequest.Header.Get("X-Custom-Header"); reqHeader != "CustomValue" {
+		t.Fatalf("expected X-Custom-Header to be set to CustomValue, got: %v", reqHeader)
+	}
+}
+
+func TestDoRequest_BeforeRequestError(t *testing.T) {
 	handler := func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		w.Header().Set("Content-Type", "application/json")
@@ -330,8 +365,71 @@ func TestDoRequest_MutatorError(t *testing.T) {
 		return errors.New("mutator error")
 	}
 
-	err := client.doRequest(context.Background(), http.MethodGet, server.URL, RequestParams{}, mutator)
-	expectedErr := "failed to mutate request"
+	client.httpOnBeforeRequest(mutator)
+
+	err := client.doRequest(context.Background(), http.MethodGet, server.URL, RequestParams{})
+	expectedErr := "failed to mutate before request"
+	if err == nil || !strings.Contains(err.Error(), expectedErr) {
+		t.Fatalf("expected error %q, got: %v", expectedErr, err)
+	}
+}
+
+func TestDoRequest_AfterResponseSuccess(t *testing.T) {
+	handler := func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"message":"success"}`))
+	}
+	server := httptest.NewServer(http.HandlerFunc(handler))
+	defer server.Close()
+
+	// Create a custom RoundTripper to capture the response
+	tr := &testRoundTripper{
+		Transport: server.Client().Transport,
+	}
+	client := &httpClient{
+		httpClient: &http.Client{Transport: tr},
+	}
+
+	mutator := func(resp *http.Response) error {
+		resp.Header.Set("X-Modified-Header", "ModifiedValue")
+		return nil
+	}
+
+	client.httpOnAfterResponse(mutator)
+
+	err := client.doRequest(context.Background(), http.MethodGet, server.URL, RequestParams{})
+	if err != nil {
+		t.Fatalf("expected no error, got: %v", err)
+	}
+
+	// Check if the header was successfully added to the response
+	if respHeader := tr.Response.Header.Get("X-Modified-Header"); respHeader != "ModifiedValue" {
+		t.Fatalf("expected X-Modified-Header to be set to ModifiedValue, got: %v", respHeader)
+	}
+}
+
+func TestDoRequest_AfterResponseError(t *testing.T) {
+	handler := func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"message":"success"}`))
+	}
+	server := httptest.NewServer(http.HandlerFunc(handler))
+	defer server.Close()
+
+	client := &httpClient{
+		httpClient: server.Client(),
+	}
+
+	mutator := func(resp *http.Response) error {
+		return errors.New("mutator error")
+	}
+
+	client.httpOnAfterResponse(mutator)
+
+	err := client.doRequest(context.Background(), http.MethodGet, server.URL, RequestParams{})
+	expectedErr := "failed to mutate after response"
 	if err == nil || !strings.Contains(err.Error(), expectedErr) {
 		t.Fatalf("expected error %q, got: %v", expectedErr, err)
 	}
@@ -425,4 +523,17 @@ func removeTimestamps(log string) string {
 		}
 	}
 	return strings.Join(filteredLines, "\n")
+}
+
+type testRoundTripper struct {
+	Transport http.RoundTripper
+	Response  *http.Response
+}
+
+func (t *testRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) {
+	resp, err := t.Transport.RoundTrip(req)
+	if err == nil {
+		t.Response = resp
+	}
+	return resp, err
 }
