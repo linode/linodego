@@ -3,6 +3,7 @@ package integration
 import (
 	"context"
 	"encoding/base64"
+	"fmt"
 	"strconv"
 	"testing"
 
@@ -587,6 +588,167 @@ func TestInstance_withPG(t *testing.T) {
 	require.Equal(t, inst.PlacementGroup.Label, pg.Label)
 	require.Equal(t, inst.PlacementGroup.PlacementGroupType, pg.PlacementGroupType)
 	require.Equal(t, inst.PlacementGroup.PlacementGroupPolicy, pg.PlacementGroupPolicy)
+}
+
+func TestInstance_CreateWithReservedIPAddress(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestInstance_CreateWithReservedIPAddress")
+	defer teardown()
+
+	// Reserve an IP for testing
+	reservedIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{Region: "us-east"})
+	if err != nil {
+		t.Fatalf("Failed to reserve IP: %v", err)
+	}
+	defer func() {
+		err := client.DeleteReservedIPAddress(context.Background(), reservedIP.Address)
+		if err != nil {
+			t.Errorf("Failed to delete reserved IP: %v", err)
+		}
+	}()
+
+	instance, instanceTeardown, err := createInstanceWithReservedIP(t, client, reservedIP.Address)
+	if err != nil {
+		t.Fatalf("Error creating instance with reserved IP: %s", err)
+	}
+	defer instanceTeardown()
+
+	fmt.Println(instance.IPv4)
+
+}
+
+func createInstanceWithReservedIP(
+	t *testing.T,
+	client *linodego.Client,
+	reservedIP string,
+	modifiers ...instanceModifier,
+) (*linodego.Instance, func(), error) {
+	t.Helper()
+
+	createOpts := linodego.InstanceCreateOptions{
+		Label:    "go-test-ins-reserved-ip-" + randLabel(),
+		Region:   "us-east", // You might want to make this configurable
+		Type:     "g6-nanode-1",
+		Booted:   linodego.Pointer(false),
+		Image:    "linode/alpine3.17",
+		RootPass: randPassword(), // Consider generating this dynamically
+		Interfaces: []linodego.InstanceConfigInterfaceCreateOptions{
+			{
+				Purpose:     linodego.InterfacePurposePublic,
+				Label:       "",
+				IPAMAddress: "",
+			},
+		},
+		Ipv4: []string{reservedIP},
+	}
+
+	for _, modifier := range modifiers {
+		modifier(client, &createOpts)
+	}
+
+	instance, err := client.CreateInstance(context.Background(), createOpts)
+	if err != nil {
+		return nil, func() {}, err
+	}
+
+	teardown := func() {
+		if terr := client.DeleteInstance(context.Background(), instance.ID); terr != nil {
+			t.Errorf("Error deleting test Instance: %s", terr)
+		} else {
+			fmt.Println("Deleted Linode!")
+		}
+	}
+
+	return instance, teardown, nil
+}
+
+func TestInstance_CreateWithReservedIPAddressVariants(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestInstance_CreateWithReservedIPAddressVariants")
+	defer teardown()
+
+	// Reserve an IP for testing
+	reservedIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{Region: "us-east"})
+	if err != nil {
+		t.Fatalf("Failed to reserve IP: %v", err)
+	}
+	defer func() {
+		err := client.DeleteReservedIPAddress(context.Background(), reservedIP.Address)
+		if err != nil {
+			t.Errorf("Failed to delete reserved IP: %v", err)
+		}
+	}()
+
+	// Test: Owned non-assigned reserved IP
+	instance, instanceTeardown, err := createInstanceWithReservedIP(t, client, reservedIP.Address)
+	if err != nil {
+		t.Errorf("Unexpected error with owned non-assigned reserved IP: %v", err)
+	} else {
+		defer instanceTeardown()
+		t.Logf("Successfully created instance with owned non-assigned reserved IP: %d", instance.ID)
+	}
+
+	// Test: Already assigned reserved IP
+	_, _, err = createInstanceWithReservedIP(t, client, reservedIP.Address)
+	if err == nil {
+		t.Errorf("Expected error with already assigned reserved IP, but got none")
+	} else {
+		t.Logf("Correctly received error when using already assigned IP: %v", err)
+	}
+
+	// Test: Non-reserved address
+	_, _, err = createInstanceWithReservedIP(t, client, "192.0.2.1")
+	if err == nil {
+		t.Errorf("Expected error with non-reserved address, but got none")
+	} else {
+		t.Logf("Correctly received error when using non-reserved address: %v", err)
+	}
+
+	// Test: Non-owned reserved address
+	_, _, err = createInstanceWithReservedIP(t, client, "198.51.100.1")
+	if err == nil {
+		t.Errorf("Expected error with non-owned reserved address, but got none")
+	} else {
+		t.Logf("Correctly received error when using non-owned reserved address: %v", err)
+	}
+
+	// Test: Empty IP address
+	_, _, err = createInstanceWithReservedIP(t, client, "")
+	if err == nil {
+		t.Errorf("Expected error with empty IP address, but got none")
+	} else {
+		t.Logf("Correctly received error when using empty IP address: %v", err)
+	}
+
+	// Test: Null IP address
+	instance, instanceTeardown, err = createInstanceWithReservedIP(t, client, "", func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
+		opts.Ipv4 = nil
+	})
+	if err != nil {
+		t.Errorf("Unexpected error with null IP address: %v", err)
+	} else {
+		defer instanceTeardown()
+		t.Logf("Successfully created instance with null IP address: %d", instance.ID)
+	}
+
+	// Test: Multiple IP addresses
+	_, _, err = createInstanceWithReservedIP(t, client, "", func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
+		opts.Ipv4 = []string{reservedIP.Address, "192.0.2.2"}
+	})
+	if err == nil {
+		t.Errorf("Expected error with multiple IP addresses, but got none")
+	} else {
+		t.Logf("Correctly received error when using multiple IP addresses: %v", err)
+	}
+
+	// Test: Omit IPv4 field
+	instance, instanceTeardown, err = createInstanceWithReservedIP(t, client, "", func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
+		opts.Ipv4 = nil
+	})
+	if err != nil {
+		t.Errorf("Unexpected error when omitting IPv4 field: %v", err)
+	} else {
+		defer instanceTeardown()
+		t.Logf("Successfully created instance without IPv4 field: %d", instance.ID)
+	}
 }
 
 func createInstance(t *testing.T, client *linodego.Client, enableCloudFirewall bool, modifiers ...instanceModifier) (*linodego.Instance, error) {
