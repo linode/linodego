@@ -8,10 +8,10 @@ interactions:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.linode.com/v4beta/networking/ipv6/pools/2600:3c00::%2F32
+    url: https://api.linode.com/v4beta/networking/ipv6/pools/1234::5678%2F32
     method: GET
   response:
-    body: '{"range": "2600:3c00::/32", "region": "us-east", "route_target": "2600:3c00::/32"}'
+    body: '{"range": "1234::5678/32", "region": "us-east", "route_target": "1234::5678/32"}'
     headers:
       Content-Type:
       - application/json
