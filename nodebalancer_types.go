@@ -4,9 +4,7 @@ import (
 	"context"
 )
 
-// NodeBalancerType represents a single valid LKE type.
-// NOTE: This typically corresponds to the availability of a cluster's
-// control plane.
+// NodeBalancerType represents a single valid NodeBalancer type.
 type NodeBalancerType struct {
 	baseType
 }
