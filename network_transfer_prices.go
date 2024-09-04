@@ -6,7 +6,19 @@ import (
 
 // NetworkTransferPrice represents a single valid network transfer price.
 type NetworkTransferPrice struct {
-	baseType
+	baseType[NetworkTransferTypePrice, NetworkTransferTypeRegionPrice]
+}
+
+// NetworkTransferTypePrice represents the base hourly and monthly prices
+// for a network transfer price entry.
+type NetworkTransferTypePrice struct {
+	baseTypePrice
+}
+
+// NetworkTransferTypeRegionPrice represents the regional hourly and monthly prices
+// for a network transfer price entry.
+type NetworkTransferTypeRegionPrice struct {
+	baseTypeRegionPrice
 }
 
 // ListNetworkTransferPrices lists network transfer prices. This endpoint is cached by default.

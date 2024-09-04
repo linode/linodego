@@ -6,7 +6,19 @@ import (
 
 // NodeBalancerType represents a single valid NodeBalancer type.
 type NodeBalancerType struct {
-	baseType
+	baseType[NodeBalancerTypePrice, NodeBalancerTypeRegionPrice]
+}
+
+// NodeBalancerTypePrice represents the base hourly and monthly prices
+// for a NodeBalancer type entry.
+type NodeBalancerTypePrice struct {
+	baseTypePrice
+}
+
+// NodeBalancerTypeRegionPrice represents the regional hourly and monthly prices
+// for a NodeBalancer type entry.
+type NodeBalancerTypeRegionPrice struct {
+	baseTypeRegionPrice
 }
 
 // ListNodeBalancerTypes lists NodeBalancer types. This endpoint is cached by default.

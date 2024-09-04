@@ -5,12 +5,12 @@ package linodego
 
 // baseType is a base struct containing the core fields of a resource type
 // returned from the Linode API.
-type baseType struct {
-	ID           string                `json:"id"`
-	Label        string                `json:"label"`
-	Price        baseTypePrice         `json:"price"`
-	RegionPrices []baseTypeRegionPrice `json:"region_prices"`
-	Transfer     int                   `json:"transfer"`
+type baseType[PriceType any, RegionPriceType any] struct {
+	ID           string            `json:"id"`
+	Label        string            `json:"label"`
+	Price        PriceType         `json:"price"`
+	RegionPrices []RegionPriceType `json:"region_prices"`
+	Transfer     int               `json:"transfer"`
 }
 
 // baseTypePrice is a base struct containing the core fields of a resource type's

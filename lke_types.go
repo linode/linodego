@@ -8,7 +8,19 @@ import (
 // NOTE: This typically corresponds to the availability of a cluster's
 // control plane.
 type LKEType struct {
-	baseType
+	baseType[LKETypePrice, LKETypeRegionPrice]
+}
+
+// LKETypePrice represents the base hourly and monthly prices
+// for an LKE type entry.
+type LKETypePrice struct {
+	baseTypePrice
+}
+
+// LKETypeRegionPrice represents the regional hourly and monthly prices
+// for an LKE type entry.
+type LKETypeRegionPrice struct {
+	baseTypeRegionPrice
 }
 
 // ListLKETypes lists LKE types. This endpoint is cached by default.
