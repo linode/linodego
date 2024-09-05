@@ -10,7 +10,7 @@ import (
 )
 
 // TestReservedIPAddresses_InsufficientPermissions tests the behavior when a user account
-// doesn't have the can_reserve_ip flag enabled
+// doesn't have the permission to use the Reserved IP feature
 func TestReservedIPAddresses_InsufficientPermissions(t *testing.T) {
 	original := validTestAPIKey
 	dummyToken := "badtoken"
@@ -86,10 +86,6 @@ func TestReservedIPAddresses_EndToEndTest(t *testing.T) {
 		t.Fatalf("Failed to reserve IP. This test expects the user to have 0 prior reservations and the ip_reservation_limit to be 2. Error from the API: %v", resErr)
 	}
 
-	if resIP == nil {
-		t.Fatalf("Reserved IP is nil")
-	}
-
 	t.Logf("Successfully reserved IP: %+v", resIP)
 
 	// Fetch the reserved IP
@@ -99,7 +95,7 @@ func TestReservedIPAddresses_EndToEndTest(t *testing.T) {
 	}
 
 	if fetchedIP == nil {
-		t.Errorf("Retrieved reserved IP is nil")
+		t.Errorf("Expected %s but got nil indicating a failure in fetching the reserved IP", resIP.Address)
 	}
 
 	// Verify the list of IPs has increased
@@ -121,7 +117,7 @@ func TestReservedIPAddresses_EndToEndTest(t *testing.T) {
 	// Verify the IP has been deleted
 	_, fetchDelErr := client.GetReservedIPAddress(context.Background(), resIP.Address)
 	if fetchDelErr == nil {
-		t.Errorf("Expected error when fetching deleted IP, got nil")
+		t.Errorf("Expected error when fetching %s, got nil", resIP.Address)
 	}
 
 	verifyDelList, verifyDelErr := client.ListReservedIPAddresses(context.Background(), NewListOptions(0, filter))
@@ -139,9 +135,11 @@ func TestReservedIPAddresses_ListIPAddressesVariants(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestReservedIPAddresses_ListIPAddressesVariants")
 	defer teardown()
 
+	expected_ips := 2
+
 	// Reserve two IP addresses in us-east region
-	reservedIPs := make([]string, 2)
-	for i := 0; i < 2; i++ {
+	reservedIPs := make([]string, expected_ips)
+	for i := 0; i < expected_ips; i++ {
 		reserveIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{
 			Region: "us-east",
 		})
@@ -193,6 +191,9 @@ func TestReservedIPAddresses_ListIPAddressesVariants(t *testing.T) {
 				break
 			}
 		}
+	}
+	if foundReservedIPs != expected_ips {
+		t.Errorf("Expected %d but found %d while listing reserved IP addresses", expected_ips, foundReservedIPs)
 	}
 
 }
@@ -324,7 +325,7 @@ func TestReservedIPAddresses_DeleteIPAddressVariants(t *testing.T) {
 	}
 
 	if len(ipList) == 0 {
-		t.Skip("No reserved IPs available for testing deletion")
+		t.Fatalf("No reserved IPs available for testing deletion")
 	}
 
 	delErr := client.DeleteReservedIPAddress(context.Background(), validRes.Address)

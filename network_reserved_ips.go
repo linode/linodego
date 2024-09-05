@@ -9,7 +9,7 @@ type ReserveIPOptions struct {
 	Region string `json:"region"`
 }
 
-// GetReservedIPs retrieves a list of reserved IP addresses
+// ListReservedIPAddresses retrieves a list of reserved IP addresses
 func (c *Client) ListReservedIPAddresses(ctx context.Context, opts *ListOptions) ([]InstanceIP, error) {
 	e := formatAPIPath("networking/reserved/ips")
 	response, err := getPaginatedResults[InstanceIP](ctx, c, e, opts)
