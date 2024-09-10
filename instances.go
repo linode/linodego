@@ -164,6 +164,8 @@ type InstanceCreateOptions struct {
 
 	// Deprecated: group is a deprecated property denoting a group label for the Linode.
 	Group string `json:"group,omitempty"`
+
+	Ipv4 []string `json:"ipv4,omitempty"`
 }
 
 type InstanceReserveAdditionalIPOptions struct {
