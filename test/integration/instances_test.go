@@ -675,7 +675,7 @@ func TestInstance_CreateWithOwnedNonAssignedReservedIP(t *testing.T) {
 	if err != nil {
 		t.Errorf("Unexpected error with owned non-assigned reserved IP: %v", err)
 	} else {
-		defer instanceTeardown()
+		instanceTeardown()
 	}
 }
 
@@ -705,7 +705,7 @@ func TestInstance_CreateWithAlreadyAssignedReservedIP(t *testing.T) {
 	_, secondInstanceTeardown, err := createInstanceWithReservedIP(t, client, reservedIP.Address)
 	if err == nil {
 		t.Errorf("Expected error with already assigned reserved IP, but got none")
-		defer secondInstanceTeardown()
+		secondInstanceTeardown()
 	}
 }
 
@@ -716,7 +716,7 @@ func TestInstance_CreateWithNonReservedAddress(t *testing.T) {
 	_, instanceTeardown, err := createInstanceWithReservedIP(t, client, "192.0.2.1")
 	if err == nil {
 		t.Errorf("Expected error with non-reserved address, but got none")
-		defer instanceTeardown()
+		instanceTeardown()
 	}
 }
 
@@ -727,7 +727,7 @@ func TestInstance_CreateWithNonOwnedReservedAddress(t *testing.T) {
 	_, instanceTeardown, err := createInstanceWithReservedIP(t, client, "198.51.100.1")
 	if err == nil {
 		t.Errorf("Expected error with non-owned reserved address, but got none")
-		defer instanceTeardown()
+		instanceTeardown()
 	}
 }
 
@@ -738,7 +738,7 @@ func TestInstance_CreateWithEmptyIPAddress(t *testing.T) {
 	_, instanceTeardown, err := createInstanceWithReservedIP(t, client, "")
 	if err == nil {
 		t.Errorf("Expected error with empty IP address, but got none")
-		defer instanceTeardown()
+		instanceTeardown()
 	}
 }
 
@@ -752,7 +752,7 @@ func TestInstance_CreateWithNullIPAddress(t *testing.T) {
 	if err != nil {
 		t.Errorf("Unexpected error with null IP address: %v", err)
 	} else {
-		defer instanceTeardown()
+		instanceTeardown()
 	}
 }
 
@@ -776,7 +776,7 @@ func TestInstance_CreateWithMultipleIPAddresses(t *testing.T) {
 	})
 	if err == nil {
 		t.Errorf("Expected error with multiple IP addresses, but got none")
-		defer instanceTeardown()
+		instanceTeardown()
 	}
 }
 
@@ -790,7 +790,7 @@ func TestInstance_CreateWithoutIPv4Field(t *testing.T) {
 	if err != nil {
 		t.Errorf("Unexpected error when omitting IPv4 field: %v", err)
 	} else {
-		defer instanceTeardown()
+		instanceTeardown()
 	}
 }
 
