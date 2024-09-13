@@ -702,9 +702,10 @@ func TestInstance_CreateWithAlreadyAssignedReservedIP(t *testing.T) {
 	defer instanceTeardown()
 
 	// Now try to create another instance with the same IP
-	_, _, err = createInstanceWithReservedIP(t, client, reservedIP.Address)
+	_, secondInstanceTeardown, err := createInstanceWithReservedIP(t, client, reservedIP.Address)
 	if err == nil {
 		t.Errorf("Expected error with already assigned reserved IP, but got none")
+		defer secondInstanceTeardown()
 	}
 }
 
@@ -712,9 +713,10 @@ func TestInstance_CreateWithNonReservedAddress(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestInstance_CreateWithNonReservedAddress")
 	defer teardown()
 
-	_, _, err := createInstanceWithReservedIP(t, client, "192.0.2.1")
+	_, instanceTeardown, err := createInstanceWithReservedIP(t, client, "192.0.2.1")
 	if err == nil {
 		t.Errorf("Expected error with non-reserved address, but got none")
+		defer instanceTeardown()
 	}
 }
 
@@ -722,9 +724,10 @@ func TestInstance_CreateWithNonOwnedReservedAddress(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestInstance_CreateWithNonOwnedReservedAddress")
 	defer teardown()
 
-	_, _, err := createInstanceWithReservedIP(t, client, "198.51.100.1")
+	_, instanceTeardown, err := createInstanceWithReservedIP(t, client, "198.51.100.1")
 	if err == nil {
 		t.Errorf("Expected error with non-owned reserved address, but got none")
+		defer instanceTeardown()
 	}
 }
 
@@ -732,9 +735,10 @@ func TestInstance_CreateWithEmptyIPAddress(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestInstance_CreateWithEmptyIPAddress")
 	defer teardown()
 
-	_, _, err := createInstanceWithReservedIP(t, client, "")
+	_, instanceTeardown, err := createInstanceWithReservedIP(t, client, "")
 	if err == nil {
 		t.Errorf("Expected error with empty IP address, but got none")
+		defer instanceTeardown()
 	}
 }
 
@@ -767,11 +771,12 @@ func TestInstance_CreateWithMultipleIPAddresses(t *testing.T) {
 		}
 	}()
 
-	_, _, err = createInstanceWithReservedIP(t, client, "", func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
+	_, instanceTeardown, err := createInstanceWithReservedIP(t, client, "", func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
 		opts.Ipv4 = []string{reservedIP.Address, "192.0.2.2"}
 	})
 	if err == nil {
 		t.Errorf("Expected error with multiple IP addresses, but got none")
+		defer instanceTeardown()
 	}
 }
 
