@@ -301,9 +301,23 @@ func TestReservedIPAddresses_ExceedLimit(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestReservedIPAddresses_ExceedLimit")
 	defer teardown()
 
+	// Slice to keep track of all reserved IPs
+	var reservedIPs []string
+
+	// Helper function to clean up reserved IPs
+	cleanupIPs := func() {
+		for _, ip := range reservedIPs {
+			err := client.DeleteReservedIPAddress(context.Background(), ip)
+			if err != nil {
+				t.Errorf("Failed to delete reserved IP %s: %v", ip, err)
+			}
+		}
+	}
+	defer cleanupIPs()
+
 	// Reserve IPs until the limit is reached and assert the error message
 	for i := 0; i < 100; i++ {
-		_, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{
+		reservedIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{
 			Region: "us-east",
 		})
 		if err != nil {
@@ -315,6 +329,9 @@ func TestReservedIPAddresses_ExceedLimit(t *testing.T) {
 			}
 			break
 		}
+
+		reservedIPs = append(reservedIPs, reservedIP.Address)
+
 		if i == 99 {
 			t.Errorf("Expected to hit reservation limit, but did not reach it after 100 attempts")
 		}
