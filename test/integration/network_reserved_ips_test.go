@@ -2,6 +2,7 @@ package integration
 
 import (
 	"context"
+	"strings"
 
 	"testing"
 
@@ -294,11 +295,29 @@ func TestReservedIPAddresses_ReserveIPAddressVariants(t *testing.T) {
 		reservedIPs = append(reservedIPs, reserveIP.Address)
 		t.Logf("Successfully reserved IP %d: %s", i+1, reserveIP.Address)
 	}
+}
 
-	// Verify that we can't reserve more IPs
-	_, exceedErr := client.ReserveIPAddress(context.Background(), ReserveIPOptions{Region: "us-east"})
-	if exceedErr == nil {
-		t.Errorf("Expected error when exceeding reservation limit, got nil")
+func TestReservedIPAddresses_ExceedLimit(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestReservedIPAddresses_ExceedLimit")
+	defer teardown()
+
+	// Reserve IPs until the limit is reached and assert the error message
+	for i := 0; i < 100; i++ {
+		_, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{
+			Region: "us-east",
+		})
+		if err != nil {
+			expectedErrorMessage := "[500] Could not reserve IP address"
+			if !strings.Contains(err.Error(), expectedErrorMessage) {
+				t.Errorf("Expected error message to contain '%s', but got: %v", expectedErrorMessage, err)
+			} else {
+				t.Logf("Failed to reserve IP %d as expected: %v", i+1, err)
+			}
+			break
+		}
+		if i == 99 {
+			t.Errorf("Expected to hit reservation limit, but did not reach it after 100 attempts")
+		}
 	}
 }
 
