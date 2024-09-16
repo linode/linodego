@@ -2,138 +2,6 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":""}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips
-    method: POST
-  response:
-    body: '{"errors": [{"reason": "region is not valid", "field": "region"}]}'
-    headers:
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Content-Length:
-      - "66"
-      Content-Type:
-      - application/json
-      Expires:
-      - Mon, 16 Sep 2024 17:00:20 GMT
-      Pragma:
-      - no-cache
-      X-Accepted-Oauth-Scopes:
-      - ips:read_write
-      X-Frame-Options:
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "800"
-    status: 400 Bad Request
-    code: 400
-    duration: ""
-- request:
-    body: '{"region":"us"}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips
-    method: POST
-  response:
-    body: '{"errors": [{"reason": "region is not valid", "field": "region"}]}'
-    headers:
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Content-Length:
-      - "66"
-      Content-Type:
-      - application/json
-      Expires:
-      - Mon, 16 Sep 2024 17:00:20 GMT
-      Pragma:
-      - no-cache
-      X-Accepted-Oauth-Scopes:
-      - ips:read_write
-      X-Frame-Options:
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "800"
-    status: 400 Bad Request
-    code: 400
-    duration: ""
-- request:
-    body: '{"region":""}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips
-    method: POST
-  response:
-    body: '{"errors": [{"reason": "region is not valid", "field": "region"}]}'
-    headers:
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Content-Length:
-      - "66"
-      Content-Type:
-      - application/json
-      Expires:
-      - Mon, 16 Sep 2024 17:00:20 GMT
-      Pragma:
-      - no-cache
-      X-Accepted-Oauth-Scopes:
-      - ips:read_write
-      X-Frame-Options:
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "800"
-    status: 400 Bad Request
-    code: 400
-    duration: ""
-- request:
     body: '{"region":"us-east"}'
     form: {}
     headers:
@@ -173,7 +41,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 16 Sep 2024 17:00:21 GMT
+      - Mon, 16 Sep 2024 17:00:22 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -236,7 +104,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 16 Sep 2024 17:00:21 GMT
+      - Mon, 16 Sep 2024 17:00:22 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -258,6 +126,51 @@ interactions:
       - 1; mode=block
     status: 200 OK
     code: 200
+    duration: ""
+- request:
+    body: '{"region":"us-east"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/reserved/ips
+    method: POST
+  response:
+    body: '{"errors": [{"reason": "Additional Reserved IPv4 addresses require technical
+      justification. Please contact support describing your requirement."}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Content-Length:
+      - "147"
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 16 Sep 2024 17:00:22 GMT
+      Pragma:
+      - no-cache
+      X-Accepted-Oauth-Scopes:
+      - ips:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+    status: 400 Bad Request
+    code: 400
     duration: ""
 - request:
     body: ""
@@ -297,7 +210,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 16 Sep 2024 17:00:21 GMT
+      - Mon, 16 Sep 2024 17:00:22 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -358,7 +271,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 16 Sep 2024 17:00:21 GMT
+      - Mon, 16 Sep 2024 17:00:23 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

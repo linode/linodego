@@ -321,7 +321,7 @@ func TestReservedIPAddresses_ExceedLimit(t *testing.T) {
 			Region: "us-east",
 		})
 		if err != nil {
-			expectedErrorMessage := "[500] Could not reserve IP address"
+			expectedErrorMessage := "[400] Additional Reserved IPv4 addresses require technical justification."
 			if !strings.Contains(err.Error(), expectedErrorMessage) {
 				t.Errorf("Expected error message to contain '%s', but got: %v", expectedErrorMessage, err)
 			} else {
