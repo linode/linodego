@@ -1,0 +1,48 @@
+---
+version: 1
+interactions:
+- request:
+    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-x34lc083oko4","root_pass":"}VsdSi,{!omez2A1BMU7J7p`41z1ER6-rs=hD,151f2\u003e/81q\\SJNg].Rz7Q=`Z\u00262","image":"linode/alpine3.17","interfaces":[{"purpose":"public"}],"booted":false,"ipv4":["198.51.100.1"]}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/linode/instances
+    method: POST
+  response:
+    body: '{"errors": [{"reason": "Must provide a single valid reserved ipv4 address",
+      "field": "ipv4"}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Content-Length:
+      - "94"
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 12 Sep 2024 16:44:22 GMT
+      Pragma:
+      - no-cache
+      X-Accepted-Oauth-Scopes:
+      - linodes:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "10"
+    status: 400 Bad Request
+    code: 400
+    duration: ""
