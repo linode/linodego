@@ -270,3 +270,39 @@ func getRegionsWithCapsAndPlans(t *testing.T, client *linodego.Client, capabilit
 
 	return result
 }
+
+// getRegionsWithCapsAndSiteType returns a list of regions that meet the given capabilities and site type
+func getRegionsWithCapsAndSiteType(t *testing.T, client *linodego.Client, capabilities []string, siteType string) []string {
+	result := make([]string, 0)
+
+	regions, err := client.ListRegions(context.Background(), nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	regionHasCaps := func(r linodego.Region) bool {
+		capsMap := make(map[string]bool)
+
+		for _, c := range r.Capabilities {
+			capsMap[strings.ToUpper(c)] = true
+		}
+
+		for _, c := range capabilities {
+			if _, ok := capsMap[strings.ToUpper(c)]; !ok {
+				return false
+			}
+		}
+
+		return true
+	}
+
+	for _, region := range regions {
+		if region.Status != "ok" || region.SiteType != siteType || !regionHasCaps(region) {
+			continue
+		}
+
+		result = append(result, region.ID)
+	}
+
+	return result
+}
