@@ -17,10 +17,17 @@ const (
 	UserTypeDefault UserType = "default"
 )
 
+// LastLogin represents a LastLogin object
+type LastLogin struct {
+	LoginDatetime *time.Time `json:"-"`
+	Status        string     `json:"status"`
+}
+
 // User represents a User object
 type User struct {
 	Username            string     `json:"username"`
 	Email               string     `json:"email"`
+	LastLogin           *LastLogin `json:"last_login"`
 	UserType            UserType   `json:"user_type"`
 	Restricted          bool       `json:"restricted"`
 	TFAEnabled          bool       `json:"tfa_enabled"`
@@ -40,6 +47,26 @@ type UserCreateOptions struct {
 type UserUpdateOptions struct {
 	Username   string `json:"username,omitempty"`
 	Restricted *bool  `json:"restricted,omitempty"`
+}
+
+// UnmarshalJSON implements the json.Unmarshaler interface
+func (ll *LastLogin) UnmarshalJSON(b []byte) error {
+	type Mask LastLogin
+
+	p := struct {
+		*Mask
+		LoginDatetime *parseabletime.ParseableTime `json:"login_datetime"`
+	}{
+		Mask: (*Mask)(ll),
+	}
+
+	if err := json.Unmarshal(b, &p); err != nil {
+		return err
+	}
+
+	ll.LoginDatetime = (*time.Time)(p.LoginDatetime)
+
+	return nil
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
