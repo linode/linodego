@@ -203,24 +203,8 @@ func getRegionsWithCaps(t *testing.T, client *linodego.Client, capabilities []st
 		t.Fatal(err)
 	}
 
-	regionHasCaps := func(r linodego.Region) bool {
-		capsMap := make(map[string]bool)
-
-		for _, c := range r.Capabilities {
-			capsMap[strings.ToUpper(c)] = true
-		}
-
-		for _, c := range capabilities {
-			if _, ok := capsMap[strings.ToUpper(c)]; !ok {
-				return false
-			}
-		}
-
-		return true
-	}
-
 	for _, region := range regions {
-		if region.Status != "ok" || !regionHasCaps(region) {
+		if region.Status != "ok" || !regionHasCaps(region, capabilities) {
 			continue
 		}
 
@@ -280,24 +264,8 @@ func getRegionsWithCapsAndSiteType(t *testing.T, client *linodego.Client, capabi
 		t.Fatal(err)
 	}
 
-	regionHasCaps := func(r linodego.Region) bool {
-		capsMap := make(map[string]bool)
-
-		for _, c := range r.Capabilities {
-			capsMap[strings.ToUpper(c)] = true
-		}
-
-		for _, c := range capabilities {
-			if _, ok := capsMap[strings.ToUpper(c)]; !ok {
-				return false
-			}
-		}
-
-		return true
-	}
-
 	for _, region := range regions {
-		if region.Status != "ok" || region.SiteType != siteType || !regionHasCaps(region) {
+		if region.Status != "ok" || region.SiteType != siteType || !regionHasCaps(region, capabilities) {
 			continue
 		}
 
@@ -305,4 +273,20 @@ func getRegionsWithCapsAndSiteType(t *testing.T, client *linodego.Client, capabi
 	}
 
 	return result
+}
+
+func regionHasCaps(r linodego.Region, capabilities []string) bool {
+	capsMap := make(map[string]bool)
+
+	for _, c := range r.Capabilities {
+		capsMap[strings.ToUpper(c)] = true
+	}
+
+	for _, c := range capabilities {
+		if _, ok := capsMap[strings.ToUpper(c)]; !ok {
+			return false
+		}
+	}
+
+	return true
 }
