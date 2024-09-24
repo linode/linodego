@@ -53,7 +53,7 @@ func createInstanceWithReservedIP(
 				IPAMAddress: "",
 			},
 		},
-		Ipv4: []string{reservedIP},
+		IPv4: []string{reservedIP},
 	}
 
 	for _, modifier := range modifiers {
@@ -164,7 +164,7 @@ func TestInstance_CreateWithNullIPAddress(t *testing.T) {
 	defer teardown()
 
 	_, instanceTeardown, err := createInstanceWithReservedIP(t, client, "", func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
-		opts.Ipv4 = nil
+		opts.IPv4 = nil
 	})
 	defer instanceTeardown()
 	if err != nil {
@@ -188,7 +188,7 @@ func TestInstance_CreateWithMultipleIPAddresses(t *testing.T) {
 	}()
 
 	_, instanceTeardown, err := createInstanceWithReservedIP(t, client, "", func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
-		opts.Ipv4 = []string{reservedIP.Address, "192.0.2.2"}
+		opts.IPv4 = []string{reservedIP.Address, "192.0.2.2"}
 	})
 	defer instanceTeardown()
 	if err == nil {
@@ -201,7 +201,7 @@ func TestInstance_CreateWithoutIPv4Field(t *testing.T) {
 	defer teardown()
 
 	_, instanceTeardown, err := createInstanceWithReservedIP(t, client, "", func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
-		opts.Ipv4 = nil
+		opts.IPv4 = nil
 	})
 	defer instanceTeardown()
 	if err != nil {
@@ -248,7 +248,7 @@ func TestInstance_AddReservedIPToInstance(t *testing.T) {
 		Public:  true,
 		Address: reservedIP.Address,
 	}
-	_, err = client.AddReservedIPToInstance(context.Background(), instance.ID, opts)
+	_, err = client.AssignInstanceReservedIP(context.Background(), instance.ID, opts)
 	if err != nil {
 		t.Fatalf("Error adding reserved IP to instance: %v", err)
 	}
@@ -311,7 +311,7 @@ func TestInstance_AddReservedIPToInstanceVariants(t *testing.T) {
 		Public:  true,
 		Address: reservedIP.Address,
 	}
-	_, err = client.AddReservedIPToInstance(context.Background(), instance.ID, opts)
+	_, err = client.AssignInstanceReservedIP(context.Background(), instance.ID, opts)
 	if err != nil {
 		t.Fatalf("Error adding reserved IP to instance: %v", err)
 	}
@@ -322,7 +322,7 @@ func TestInstance_AddReservedIPToInstanceVariants(t *testing.T) {
 		Address: reservedIP.Address,
 		// Public field is omitted here
 	}
-	_, err = client.AddReservedIPToInstance(context.Background(), instance.ID, omitPublicOpts)
+	_, err = client.AssignInstanceReservedIP(context.Background(), instance.ID, omitPublicOpts)
 	if err == nil {
 		t.Fatalf("Expected error when adding reserved IP with omitted public field, but got none")
 	}
@@ -339,7 +339,7 @@ func TestInstance_AddReservedIPToInstanceVariants(t *testing.T) {
 	}
 
 	//  Add IP address to the Linode
-	_, err = client.AddReservedIPToInstance(context.Background(), linodeID, linodego.InstanceReserveIPOptions{
+	_, err = client.AssignInstanceReservedIP(context.Background(), linodeID, linodego.InstanceReserveIPOptions{
 		Type:    "ipv4",
 		Public:  true,
 		Address: resIP.Address,
@@ -356,19 +356,19 @@ func TestInstance_AddReservedIPToInstanceVariants(t *testing.T) {
 
 	// Test: Non-owned Linode ID
 	nonOwnedInstanceID := 888888 // Replace with an actual non-owned Linode ID
-	_, err = client.AddReservedIPToInstance(context.Background(), nonOwnedInstanceID, opts)
+	_, err = client.AssignInstanceReservedIP(context.Background(), nonOwnedInstanceID, opts)
 	if err == nil {
 		t.Errorf("Expected error when adding reserved IP to non-owned Linode, but got none")
 	}
 
 	// Test: Already assigned reserved IP
-	_, err = client.AddReservedIPToInstance(context.Background(), instance.ID, opts)
+	_, err = client.AssignInstanceReservedIP(context.Background(), instance.ID, opts)
 	if err == nil {
 		t.Errorf("Expected error when adding already assigned reserved IP, but got none")
 	}
 
 	// Test: Non-owned reserved IP
-	_, err = client.AddReservedIPToInstance(context.Background(), instance.ID, linodego.InstanceReserveIPOptions{
+	_, err = client.AssignInstanceReservedIP(context.Background(), instance.ID, linodego.InstanceReserveIPOptions{
 		Type:    "ipv4",
 		Public:  true,
 		Address: "198.51.100.1", // Assume this is a non-owned reserved IP
@@ -390,7 +390,7 @@ func TestInstance_AddReservedIPToInstanceVariants(t *testing.T) {
 			t.Errorf("Error deleting reserved IP: %v", err)
 		}
 	}()
-	_, err = client.AddReservedIPToInstance(context.Background(), instance.ID, linodego.InstanceReserveIPOptions{
+	_, err = client.AssignInstanceReservedIP(context.Background(), instance.ID, linodego.InstanceReserveIPOptions{
 		Type:    "ipv4",
 		Public:  true,
 		Address: diffDataCentreIP.Address, // Assume this IP is in a different datacenter
@@ -400,7 +400,7 @@ func TestInstance_AddReservedIPToInstanceVariants(t *testing.T) {
 	}
 
 	// Test: IPv6 type
-	_, err = client.AddReservedIPToInstance(context.Background(), instance.ID, linodego.InstanceReserveIPOptions{
+	_, err = client.AssignInstanceReservedIP(context.Background(), instance.ID, linodego.InstanceReserveIPOptions{
 		Type:    "ipv6",
 		Public:  true,
 		Address: reservedIP.Address,
@@ -411,13 +411,13 @@ func TestInstance_AddReservedIPToInstanceVariants(t *testing.T) {
 
 	// Test: Public field set to false
 	opts.Public = false
-	_, err = client.AddReservedIPToInstance(context.Background(), instance.ID, opts)
+	_, err = client.AssignInstanceReservedIP(context.Background(), instance.ID, opts)
 	if err == nil {
 		t.Errorf("Expected error when adding reserved IP with public field set to false, but got none")
 	}
 
 	// Test: Integer as address
-	_, err = client.AddReservedIPToInstance(context.Background(), instance.ID, linodego.InstanceReserveIPOptions{
+	_, err = client.AssignInstanceReservedIP(context.Background(), instance.ID, linodego.InstanceReserveIPOptions{
 		Type:    "ipv4",
 		Public:  true,
 		Address: "12345", // Invalid IP format
@@ -427,7 +427,7 @@ func TestInstance_AddReservedIPToInstanceVariants(t *testing.T) {
 	}
 
 	// Test: Empty address
-	_, err = client.AddReservedIPToInstance(context.Background(), instance.ID, linodego.InstanceReserveIPOptions{
+	_, err = client.AssignInstanceReservedIP(context.Background(), instance.ID, linodego.InstanceReserveIPOptions{
 		Type:    "ipv4",
 		Public:  true,
 		Address: "",
@@ -437,7 +437,7 @@ func TestInstance_AddReservedIPToInstanceVariants(t *testing.T) {
 	}
 
 	// Test: Null address
-	_, err = client.AddReservedIPToInstance(context.Background(), instance.ID, linodego.InstanceReserveIPOptions{
+	_, err = client.AssignInstanceReservedIP(context.Background(), instance.ID, linodego.InstanceReserveIPOptions{
 		Type:   "ipv4",
 		Public: true,
 	})
@@ -446,7 +446,7 @@ func TestInstance_AddReservedIPToInstanceVariants(t *testing.T) {
 	}
 
 	// Test: Omit address field
-	_, err = client.AddReservedIPToInstance(context.Background(), instance.ID, linodego.InstanceReserveIPOptions{
+	_, err = client.AssignInstanceReservedIP(context.Background(), instance.ID, linodego.InstanceReserveIPOptions{
 		Type:   "ipv4",
 		Public: true,
 	})

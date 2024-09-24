@@ -152,7 +152,7 @@ func (c *Client) DeleteInstanceIPAddress(ctx context.Context, linodeID int, ipAd
 }
 
 // Function to add additional reserved IPV4 addresses to an existing linode
-func (c *Client) AddReservedIPToInstance(ctx context.Context, linodeID int, opts InstanceReserveIPOptions) (*InstanceIP, error) {
+func (c *Client) AssignInstanceReservedIP(ctx context.Context, linodeID int, opts InstanceReserveIPOptions) (*InstanceIP, error) {
 	endpoint := formatAPIPath("linode/instances/%d/ips", linodeID)
 	response, err := doPOSTRequest[InstanceIP](ctx, c, endpoint, opts)
 	if err != nil {
