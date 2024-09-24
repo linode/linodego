@@ -1,8 +1,10 @@
 package linodego
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
+	"io"
 	"log"
 	"net/http"
 	"strconv"
@@ -113,8 +115,19 @@ func RequestNGINXRetryCondition(resp *http.Response, _ error) bool {
 
 // Helper function to extract APIError from response
 func getAPIError(resp *http.Response) (*APIError, bool) {
+	if resp.Body == nil {
+		return nil, false
+	}
+
+	// Create a buffer to hold the body
+	body, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return nil, false
+	}
+	resp.Body = io.NopCloser(bytes.NewReader(body)) // Restore body
+
 	var apiError APIError
-	err := json.NewDecoder(resp.Body).Decode(&apiError)
+	err = json.Unmarshal(body, &apiError)
 	if err != nil {
 		return nil, false
 	}

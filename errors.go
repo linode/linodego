@@ -9,8 +9,6 @@ import (
 	"net/http"
 	"reflect"
 	"strings"
-
-	"github.com/go-resty/resty/v2"
 )
 
 const (
@@ -145,7 +143,7 @@ func (err Error) Is(target error) bool {
 // - ErrorFromString   (1) from a string
 // - ErrorFromError    (2) for an error
 // - ErrorFromStringer (3) for a Stringer
-// - HTTP Status Codes (100-600) for a resty.Response object
+// - HTTP Status Codes (100-600) for a http.Response object
 func NewError(err any) *Error {
 	if err == nil {
 		return nil
@@ -154,17 +152,17 @@ func NewError(err any) *Error {
 	switch e := err.(type) {
 	case *Error:
 		return e
-	case *resty.Response:
-		apiError, ok := e.Error().(*APIError)
+	case *http.Response:
+		apiError, ok := getAPIError(e)
 
 		if !ok {
-			return &Error{Code: ErrorUnsupported, Message: "Unexpected Resty Error Response, no error"}
+			return &Error{Code: ErrorUnsupported, Message: "Unexpected HTTP Error Response, no error"}
 		}
 
 		return &Error{
-			Code:     e.RawResponse.StatusCode,
+			Code:     e.StatusCode,
 			Message:  apiError.Error(),
-			Response: e.RawResponse,
+			Response: e,
 		}
 	case error:
 		return &Error{Code: ErrorFromError, Message: e.Error()}

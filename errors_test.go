@@ -7,11 +7,11 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"testing"
 
-	"github.com/go-resty/resty/v2"
 	"github.com/google/go-cmp/cmp"
 )
 
@@ -27,10 +27,10 @@ func (e testError) Error() string {
 	return string(e)
 }
 
-func restyError(reason, field string) *resty.Response {
+func httpError(reason, field string) *http.Response {
 	var reasons []APIErrorReason
 
-	// allow for an empty reasons
+	// Allow for an empty reasons
 	if reason != "" && field != "" {
 		reasons = append(reasons, APIErrorReason{
 			Reason: reason,
@@ -38,15 +38,18 @@ func restyError(reason, field string) *resty.Response {
 		})
 	}
 
-	return &resty.Response{
-		RawResponse: &http.Response{
-			StatusCode: 500,
-		},
-		Request: &resty.Request{
-			Error: &APIError{
-				Errors: reasons,
-			},
-		},
+	apiError := &APIError{
+		Errors: reasons,
+	}
+
+	body, err := json.Marshal(apiError)
+	if err != nil {
+		panic("Failed to marshal APIError")
+	}
+
+	return &http.Response{
+		StatusCode: 500,
+		Body:       ioutil.NopCloser(bytes.NewReader(body)),
 	}
 }
 
@@ -73,12 +76,12 @@ func TestNewError(t *testing.T) {
 		t.Error("Error should be itself")
 	}
 
-	if err := NewError(&resty.Response{Request: &resty.Request{}}); err.Message != "Unexpected Resty Error Response, no error" {
-		t.Error("Unexpected Resty Error Response, no error")
+	if err := NewError(&http.Response{Request: &http.Request{}}); err.Message != "Unexpected HTTP Error Response, no error" {
+		t.Error("Unexpected HTTP Error Response, no error")
 	}
 
-	if err := NewError(restyError("testreason", "testfield")); err.Message != "[testfield] testreason" {
-		t.Error("rest response error should should be set")
+	if err := NewError(httpError("testreason", "testfield")); err.Message != "[testfield] testreason" {
+		t.Error("http response error should should be set")
 	}
 
 	if err := NewError("stringerror"); err.Message != "stringerror" || err.Code != ErrorFromString {
@@ -290,26 +293,26 @@ func TestErrorIs(t *testing.T) {
 			expectedResult: true,
 		},
 		{
-			testName:       "default and Error from empty resty error",
-			err1:           NewError(restyError("", "")),
+			testName:       "default and Error from empty http error",
+			err1:           NewError(httpError("", "")),
 			err2:           defaultError,
 			expectedResult: true,
 		},
 		{
-			testName:       "default and Error from resty error with field",
-			err1:           NewError(restyError("", "test field")),
+			testName:       "default and Error from http error with field",
+			err1:           NewError(httpError("", "test field")),
 			err2:           defaultError,
 			expectedResult: true,
 		},
 		{
-			testName:       "default and Error from resty error with field and reason",
-			err1:           NewError(restyError("test reason", "test field")),
+			testName:       "default and Error from http error with field and reason",
+			err1:           NewError(httpError("test reason", "test field")),
 			err2:           defaultError,
 			expectedResult: true,
 		},
 		{
-			testName:       "default and Error from resty error with reason",
-			err1:           NewError(restyError("test reason", "")),
+			testName:       "default and Error from http error with reason",
+			err1:           NewError(httpError("test reason", "")),
 			err2:           defaultError,
 			expectedResult: true,
 		},
