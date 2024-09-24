@@ -119,98 +119,6 @@ func TestCoupleAPIErrors(t *testing.T) {
 		}
 	})
 
-	t.Run("resty 500 response error with reasons", func(t *testing.T) {
-		if _, err := coupleAPIErrors(restyError("testreason", "testfield"), nil); err.Error() != "[500] [testfield] testreason" {
-			t.Error("resty error should return with proper format [code] [field] reason")
-		}
-	})
-
-	t.Run("resty 500 response error without reasons", func(t *testing.T) {
-		if _, err := coupleAPIErrors(restyError("", ""), nil); err != nil {
-			t.Error("resty error with no reasons should return no error")
-		}
-	})
-
-	t.Run("resty response with nil error", func(t *testing.T) {
-		emptyErr := &resty.Response{
-			RawResponse: &http.Response{
-				StatusCode: 500,
-			},
-			Request: &resty.Request{
-				Error: nil,
-			},
-		}
-		if _, err := coupleAPIErrors(emptyErr, nil); err != nil {
-			t.Error("resty error with no reasons should return no error")
-		}
-	})
-
-	t.Run("generic html error", func(t *testing.T) {
-		rawResponse := `<html>
-<head><title>500 Internal Server Error</title></head>
-<body bgcolor="white">
-<center><h1>500 Internal Server Error</h1></center>
-<hr><center>nginx</center>
-</body>
-</html>`
-		route := "/v4/linode/instances/123"
-		ts, client := createTestServer(http.MethodGet, route, "text/html", rawResponse, http.StatusInternalServerError)
-		// client.SetDebug(true)
-		defer ts.Close()
-
-		expectedError := Error{
-			Code:    http.StatusInternalServerError,
-			Message: "Unexpected Content-Type: Expected: application/json, Received: text/html\nResponse body: " + rawResponse,
-		}
-
-		_, err := coupleAPIErrors(client.R(context.Background()).SetResult(&Instance{}).Get(ts.URL + route))
-		if diff := cmp.Diff(expectedError, err); diff != "" {
-			t.Errorf("expected error to match but got diff:\n%s", diff)
-		}
-	})
-
-	t.Run("bad gateway error", func(t *testing.T) {
-		rawResponse := []byte(`<html>
-<head><title>502 Bad Gateway</title></head>
-<body bgcolor="white">
-<center><h1>502 Bad Gateway</h1></center>
-<hr><center>nginx</center>
-</body>
-</html>`)
-		buf := io.NopCloser(bytes.NewBuffer(rawResponse))
-
-		resp := &resty.Response{
-			Request: &resty.Request{
-				Error: errors.New("Bad Gateway"),
-			},
-			RawResponse: &http.Response{
-				Header: http.Header{
-					"Content-Type": []string{"text/html"},
-				},
-				StatusCode: http.StatusBadGateway,
-				Body:       buf,
-			},
-		}
-
-		expectedError := Error{
-			Code:    http.StatusBadGateway,
-			Message: http.StatusText(http.StatusBadGateway),
-		}
-
-		if _, err := coupleAPIErrors(resp, nil); !cmp.Equal(err, expectedError) {
-			t.Errorf("expected error %#v to match error %#v", err, expectedError)
-		}
-	})
-}
-
-func TestCoupleAPIErrorsHTTP(t *testing.T) {
-	t.Run("not nil error generates error", func(t *testing.T) {
-		err := errors.New("test")
-		if _, err := coupleAPIErrorsHTTP(nil, err); !cmp.Equal(err, NewError(err)) {
-			t.Errorf("expect a not nil error to be returned as an Error")
-		}
-	})
-
 	t.Run("http 500 response error with reasons", func(t *testing.T) {
 		// Create the simulated HTTP response with a 500 status and a JSON body containing the error details
 		apiError := APIError{
@@ -228,7 +136,7 @@ func TestCoupleAPIErrorsHTTP(t *testing.T) {
 			Request:    &http.Request{Header: http.Header{"Accept": []string{"application/json"}}},
 		}
 
-		_, err := coupleAPIErrorsHTTP(resp, nil)
+		_, err := coupleAPIErrors(resp, nil)
 		expectedMessage := "[500] [testfield] testreason"
 		if err == nil || err.Error() != expectedMessage {
 			t.Errorf("expected error message %q, got: %v", expectedMessage, err)
@@ -250,7 +158,7 @@ func TestCoupleAPIErrorsHTTP(t *testing.T) {
 			Request:    &http.Request{Header: http.Header{"Accept": []string{"application/json"}}},
 		}
 
-		_, err := coupleAPIErrorsHTTP(resp, nil)
+		_, err := coupleAPIErrors(resp, nil)
 		if err != nil {
 			t.Error("http error with no reasons should return no error")
 		}
@@ -265,7 +173,7 @@ func TestCoupleAPIErrorsHTTP(t *testing.T) {
 			Request:    &http.Request{Header: http.Header{"Accept": []string{"application/json"}}},
 		}
 
-		_, err := coupleAPIErrorsHTTP(resp, nil)
+		_, err := coupleAPIErrors(resp, nil)
 		if err != nil {
 			t.Error("http error with no reasons should return no error")
 		}
@@ -288,7 +196,7 @@ func TestCoupleAPIErrorsHTTP(t *testing.T) {
 		}))
 		defer ts.Close()
 
-		client := &httpClient{
+		client := &Client{
 			httpClient: ts.Client(),
 		}
 
@@ -310,7 +218,7 @@ func TestCoupleAPIErrorsHTTP(t *testing.T) {
 		}
 		defer resp.Body.Close()
 
-		_, err = coupleAPIErrorsHTTP(resp, nil)
+		_, err = coupleAPIErrors(resp, nil)
 		if diff := cmp.Diff(expectedError, err); diff != "" {
 			t.Errorf("expected error to match but got diff:\n%s", diff)
 		}
@@ -342,7 +250,7 @@ func TestCoupleAPIErrorsHTTP(t *testing.T) {
 			Message: http.StatusText(http.StatusBadGateway),
 		}
 
-		_, err := coupleAPIErrorsHTTP(resp, nil)
+		_, err := coupleAPIErrors(resp, nil)
 		if !cmp.Equal(err, expectedError) {
 			t.Errorf("expected error %#v to match error %#v", err, expectedError)
 		}

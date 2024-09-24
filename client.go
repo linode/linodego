@@ -3,6 +3,8 @@ package linodego
 import (
 	"bytes"
 	"context"
+	"crypto/tls"
+	"crypto/x509"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -14,13 +16,12 @@ import (
 	"path/filepath"
 	"reflect"
 	"regexp"
+	"runtime"
 	"strconv"
 	"strings"
 	"sync"
 	"text/template"
 	"time"
-
-	"github.com/go-resty/resty/v2"
 )
 
 const (
@@ -49,7 +50,6 @@ const (
 	APIDefaultCacheExpiration = time.Minute * 15
 )
 
-//nolint:unused
 var (
 	reqLogTemplate = template.Must(template.New("request").Parse(`Sending request:
 Method: {{.Method}}
@@ -63,20 +63,35 @@ Headers: {{.Headers}}
 Body: {{.Body}}`))
 )
 
+type RequestLog struct {
+	Method  string
+	URL     string
+	Headers http.Header
+	Body    string
+}
+
+type ResponseLog struct {
+	Method  string
+	URL     string
+	Headers http.Header
+	Body    string
+}
+
 var envDebug = false
 
-// Client is a wrapper around the Resty client
+// Client is a wrapper around the http client
 type Client struct {
-	resty             *resty.Client
-	userAgent         string
-	debug             bool
-	retryConditionals []RetryConditional
+	httpClient *http.Client
+	userAgent  string
+	debug      bool
 
 	pollInterval time.Duration
 
 	baseURL         string
 	apiVersion      string
 	apiProto        string
+	hostURL         string
+	header          http.Header
 	selectedProfile string
 	loadedProfile   string
 
@@ -87,6 +102,16 @@ type Client struct {
 	cacheExpiration time.Duration
 	cachedEntries   map[string]clientCacheEntry
 	cachedEntryLock *sync.RWMutex
+	logger          Logger
+	requestLog      func(*RequestLog) error
+	onBeforeRequest []func(*http.Request) error
+	onAfterResponse []func(*http.Response) error
+
+	retryConditionals []RetryConditional
+	retryMaxWaitTime  time.Duration
+	retryMinWaitTime  time.Duration
+	retryAfter        RetryAfter
+	retryCount        int
 }
 
 type EnvDefaults struct {
@@ -103,13 +128,11 @@ type clientCacheEntry struct {
 }
 
 type (
-	Request  = resty.Request
-	Response = resty.Response
-	Logger   = resty.Logger
+	Request  = http.Request
+	Response = http.Response
 )
 
 func init() {
-	// Whether we will enable Resty debugging output
 	if apiDebug, ok := os.LookupEnv("LINODE_DEBUG"); ok {
 		if parsed, err := strconv.ParseBool(apiDebug); err == nil {
 			envDebug = parsed
@@ -123,7 +146,7 @@ func init() {
 // SetUserAgent sets a custom user-agent for HTTP requests
 func (c *Client) SetUserAgent(ua string) *Client {
 	c.userAgent = ua
-	c.resty.SetHeader("User-Agent", c.userAgent)
+	c.SetHeader("User-Agent", c.userAgent)
 
 	return c
 }
@@ -135,8 +158,8 @@ type RequestParams struct {
 
 // Generic helper to execute HTTP requests using the net/http package
 //
-// nolint:unused, funlen, gocognit
-func (c *httpClient) doRequest(ctx context.Context, method, url string, params RequestParams) error {
+// nolint:funlen, gocognit
+func (c *Client) doRequest(ctx context.Context, method, endpoint string, params RequestParams, paginationMutator *func(*http.Request) error) error {
 	var (
 		req        *http.Request
 		bodyBuffer *bytes.Buffer
@@ -144,8 +167,8 @@ func (c *httpClient) doRequest(ctx context.Context, method, url string, params R
 		err        error
 	)
 
-	for range httpDefaultRetryCount {
-		req, bodyBuffer, err = c.createRequest(ctx, method, url, params)
+	for range c.retryCount {
+		req, bodyBuffer, err = c.createRequest(ctx, method, endpoint, params)
 		if err != nil {
 			return err
 		}
@@ -154,8 +177,17 @@ func (c *httpClient) doRequest(ctx context.Context, method, url string, params R
 			return err
 		}
 
+		if paginationMutator != nil {
+			if err := (*paginationMutator)(req); err != nil {
+				if c.debug && c.logger != nil {
+					c.logger.Errorf("failed to mutate before request: %v", err)
+				}
+				return fmt.Errorf("failed to mutate before request: %w", err)
+			}
+		}
+
 		if c.debug && c.logger != nil {
-			c.logRequest(req, method, url, bodyBuffer)
+			c.logRequest(req, method, endpoint, bodyBuffer)
 		}
 
 		processResponse := func() error {
@@ -214,33 +246,33 @@ func (c *httpClient) doRequest(ctx context.Context, method, url string, params R
 	return err
 }
 
-// nolint:unused
-func (c *httpClient) shouldRetry(resp *http.Response, err error) bool {
+func (c *Client) shouldRetry(resp *http.Response, err error) bool {
 	for _, retryConditional := range c.retryConditionals {
 		if retryConditional(resp, err) {
+			log.Printf("[INFO] Received error %v - Retrying", err)
 			return true
 		}
 	}
 	return false
 }
 
-// nolint:unused
-func (c *httpClient) createRequest(ctx context.Context, method, url string, params RequestParams) (*http.Request, *bytes.Buffer, error) {
+func (c *Client) createRequest(ctx context.Context, method, endpoint string, params RequestParams) (*http.Request, *bytes.Buffer, error) {
 	var bodyReader io.Reader
 	var bodyBuffer *bytes.Buffer
 
 	if params.Body != nil {
-		bodyBuffer = new(bytes.Buffer)
-		if err := json.NewEncoder(bodyBuffer).Encode(params.Body); err != nil {
+		var ok bool
+		bodyReader, ok = params.Body.(io.Reader)
+		if !ok {
 			if c.debug && c.logger != nil {
-				c.logger.Errorf("failed to encode body: %v", err)
+				c.logger.Errorf("failed to read body: params.Body is not an io.Reader")
 			}
-			return nil, nil, fmt.Errorf("failed to encode body: %w", err)
+			return nil, nil, fmt.Errorf("failed to read body: params.Body is not an io.Reader")
 		}
-		bodyReader = bodyBuffer
 	}
 
-	req, err := http.NewRequestWithContext(ctx, method, url, bodyReader)
+	req, err := http.NewRequestWithContext(ctx, method, fmt.Sprintf("%s/%s", strings.TrimRight(c.hostURL, "/"),
+		strings.TrimLeft(endpoint, "/")), bodyReader)
 	if err != nil {
 		if c.debug && c.logger != nil {
 			c.logger.Errorf("failed to create request: %v", err)
@@ -248,17 +280,24 @@ func (c *httpClient) createRequest(ctx context.Context, method, url string, para
 		return nil, nil, fmt.Errorf("failed to create request: %w", err)
 	}
 
+	// Set the default headers
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("Accept", "application/json")
 	if c.userAgent != "" {
 		req.Header.Set("User-Agent", c.userAgent)
 	}
 
+	// Set additional headers added to the client
+	for name, values := range c.header {
+		for _, value := range values {
+			req.Header.Set(name, value)
+		}
+	}
+
 	return req, bodyBuffer, nil
 }
 
-// nolint:unused
-func (c *httpClient) applyBeforeRequest(req *http.Request) error {
+func (c *Client) applyBeforeRequest(req *http.Request) error {
 	for _, mutate := range c.onBeforeRequest {
 		if err := mutate(req); err != nil {
 			if c.debug && c.logger != nil {
@@ -267,11 +306,11 @@ func (c *httpClient) applyBeforeRequest(req *http.Request) error {
 			return fmt.Errorf("failed to mutate before request: %w", err)
 		}
 	}
+
 	return nil
 }
 
-// nolint:unused
-func (c *httpClient) applyAfterResponse(resp *http.Response) error {
+func (c *Client) applyAfterResponse(resp *http.Response) error {
 	for _, mutate := range c.onAfterResponse {
 		if err := mutate(resp); err != nil {
 			if c.debug && c.logger != nil {
@@ -283,8 +322,7 @@ func (c *httpClient) applyAfterResponse(resp *http.Response) error {
 	return nil
 }
 
-// nolint:unused
-func (c *httpClient) logRequest(req *http.Request, method, url string, bodyBuffer *bytes.Buffer) {
+func (c *Client) logRequest(req *http.Request, method, url string, bodyBuffer *bytes.Buffer) {
 	var reqBody string
 	if bodyBuffer != nil {
 		reqBody = bodyBuffer.String()
@@ -292,20 +330,33 @@ func (c *httpClient) logRequest(req *http.Request, method, url string, bodyBuffe
 		reqBody = "nil"
 	}
 
+	reqLog := &RequestLog{
+		Method:  method,
+		URL:     url,
+		Headers: req.Header,
+		Body:    reqBody,
+	}
+
+	e := c.requestLog(reqLog)
+	if e != nil {
+		if c.debug && c.logger != nil {
+			c.logger.Errorf("failed to log request: %v", e)
+		}
+	}
+
 	var logBuf bytes.Buffer
 	err := reqLogTemplate.Execute(&logBuf, map[string]interface{}{
-		"Method":  method,
-		"URL":     url,
-		"Headers": req.Header,
-		"Body":    reqBody,
+		"Method":  reqLog.Method,
+		"URL":     reqLog.URL,
+		"Headers": reqLog.Headers,
+		"Body":    reqLog.Body,
 	})
 	if err == nil {
 		c.logger.Debugf(logBuf.String())
 	}
 }
 
-// nolint:unused
-func (c *httpClient) sendRequest(req *http.Request) (*http.Response, error) {
+func (c *Client) sendRequest(req *http.Request) (*http.Response, error) {
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		if c.debug && c.logger != nil {
@@ -316,9 +367,8 @@ func (c *httpClient) sendRequest(req *http.Request) (*http.Response, error) {
 	return resp, nil
 }
 
-// nolint:unused
-func (c *httpClient) checkHTTPError(resp *http.Response) error {
-	_, err := coupleAPIErrorsHTTP(resp, nil)
+func (c *Client) checkHTTPError(resp *http.Response) error {
+	_, err := coupleAPIErrors(resp, nil)
 	if err != nil {
 		if c.debug && c.logger != nil {
 			c.logger.Errorf("received HTTP error: %v", err)
@@ -328,8 +378,7 @@ func (c *httpClient) checkHTTPError(resp *http.Response) error {
 	return nil
 }
 
-// nolint:unused
-func (c *httpClient) logResponse(resp *http.Response) (*http.Response, error) {
+func (c *Client) logResponse(resp *http.Response) (*http.Response, error) {
 	var respBody bytes.Buffer
 	if _, err := io.Copy(&respBody, resp.Body); err != nil {
 		c.logger.Errorf("failed to read response body: %v", err)
@@ -349,8 +398,7 @@ func (c *httpClient) logResponse(resp *http.Response) (*http.Response, error) {
 	return resp, nil
 }
 
-// nolint:unused
-func (c *httpClient) decodeResponseBody(resp *http.Response, response interface{}) error {
+func (c *Client) decodeResponseBody(resp *http.Response, response interface{}) error {
 	if err := json.NewDecoder(resp.Body).Decode(response); err != nil {
 		if c.debug && c.logger != nil {
 			c.logger.Errorf("failed to decode response: %v", err)
@@ -360,71 +408,24 @@ func (c *httpClient) decodeResponseBody(resp *http.Response, response interface{
 	return nil
 }
 
-// R wraps resty's R method
-func (c *Client) R(ctx context.Context) *resty.Request {
-	return c.resty.R().
-		ExpectContentType("application/json").
-		SetHeader("Content-Type", "application/json").
-		SetContext(ctx).
-		SetError(APIError{})
-}
-
-// SetDebug sets the debug on resty's client
 func (c *Client) SetDebug(debug bool) *Client {
 	c.debug = debug
-	c.resty.SetDebug(debug)
 
 	return c
 }
 
-// SetLogger allows the user to override the output
-// logger for debug logs.
 func (c *Client) SetLogger(logger Logger) *Client {
-	c.resty.SetLogger(logger)
-
-	return c
-}
-
-//nolint:unused
-func (c *httpClient) httpSetDebug(debug bool) *httpClient {
-	c.debug = debug
-
-	return c
-}
-
-//nolint:unused
-func (c *httpClient) httpSetLogger(logger httpLogger) *httpClient {
 	c.logger = logger
 
 	return c
 }
 
-// OnBeforeRequest adds a handler to the request body to run before the request is sent
-func (c *Client) OnBeforeRequest(m func(request *Request) error) {
-	c.resty.OnBeforeRequest(func(_ *resty.Client, req *resty.Request) error {
-		return m(req)
-	})
-}
-
-// OnAfterResponse adds a handler to the request body to run before the request is sent
-func (c *Client) OnAfterResponse(m func(response *Response) error) {
-	c.resty.OnAfterResponse(func(_ *resty.Client, req *resty.Response) error {
-		return m(req)
-	})
-}
-
-// nolint:unused
-func (c *httpClient) httpOnBeforeRequest(m func(*http.Request) error) *httpClient {
+func (c *Client) OnBeforeRequest(m func(*http.Request) error) {
 	c.onBeforeRequest = append(c.onBeforeRequest, m)
-
-	return c
 }
 
-// nolint:unused
-func (c *httpClient) httpOnAfterResponse(m func(*http.Response) error) *httpClient {
+func (c *Client) OnAfterResponse(m func(*http.Response) error) {
 	c.onAfterResponse = append(c.onAfterResponse, m)
-
-	return c
 }
 
 // UseURL parses the individual components of the given API URL and configures the client
@@ -458,7 +459,6 @@ func (c *Client) UseURL(apiURL string) (*Client, error) {
 	return c, nil
 }
 
-// SetBaseURL sets the base URL of the Linode v4 API (https://api.linode.com/v4)
 func (c *Client) SetBaseURL(baseURL string) *Client {
 	baseURLPath, _ := url.Parse(baseURL)
 
@@ -496,51 +496,68 @@ func (c *Client) updateHostURL() {
 		apiProto = c.apiProto
 	}
 
-	c.resty.SetBaseURL(
-		fmt.Sprintf(
-			"%s://%s/%s",
-			apiProto,
-			baseURL,
-			url.PathEscape(apiVersion),
-		),
-	)
+	c.hostURL = strings.TrimRight(fmt.Sprintf("%s://%s/%s", apiProto, baseURL, url.PathEscape(apiVersion)), "/")
+}
+
+func (c *Client) Transport() (*http.Transport, error) {
+	if transport, ok := c.httpClient.Transport.(*http.Transport); ok {
+		return transport, nil
+	}
+	return nil, fmt.Errorf("current transport is not an *http.Transport instance")
+}
+
+func (c *Client) tlsConfig() (*tls.Config, error) {
+	transport, err := c.Transport()
+	if err != nil {
+		return nil, err
+	}
+	if transport.TLSClientConfig == nil {
+		transport.TLSClientConfig = &tls.Config{
+			MinVersion: tls.VersionTLS12,
+		}
+	}
+	return transport.TLSClientConfig, nil
 }
 
 // SetRootCertificate adds a root certificate to the underlying TLS client config
 func (c *Client) SetRootCertificate(path string) *Client {
-	c.resty.SetRootCertificate(path)
+	config, err := c.tlsConfig()
+	if err != nil {
+		c.logger.Errorf("%v", err)
+		return c
+	}
+	if config.RootCAs == nil {
+		config.RootCAs = x509.NewCertPool()
+	}
+
+	config.RootCAs.AppendCertsFromPEM([]byte(path))
 	return c
 }
 
 // SetToken sets the API token for all requests from this client
 // Only necessary if you haven't already provided the http client to NewClient() configured with the token.
 func (c *Client) SetToken(token string) *Client {
-	c.resty.SetHeader("Authorization", fmt.Sprintf("Bearer %s", token))
+	c.SetHeader("Authorization", fmt.Sprintf("Bearer %s", token))
 	return c
 }
 
 // SetRetries adds retry conditions for "Linode Busy." errors and 429s.
 func (c *Client) SetRetries() *Client {
 	c.
-		addRetryConditional(linodeBusyRetryCondition).
-		addRetryConditional(tooManyRequestsRetryCondition).
-		addRetryConditional(serviceUnavailableRetryCondition).
-		addRetryConditional(requestTimeoutRetryCondition).
-		addRetryConditional(requestGOAWAYRetryCondition).
-		addRetryConditional(requestNGINXRetryCondition).
+		AddRetryCondition(LinodeBusyRetryCondition).
+		AddRetryCondition(TooManyRequestsRetryCondition).
+		AddRetryCondition(ServiceUnavailableRetryCondition).
+		AddRetryCondition(RequestTimeoutRetryCondition).
+		AddRetryCondition(RequestGOAWAYRetryCondition).
+		AddRetryCondition(RequestNGINXRetryCondition).
 		SetRetryMaxWaitTime(APIRetryMaxWaitTime)
-	configureRetries(c)
+	ConfigureRetries(c)
 	return c
 }
 
 // AddRetryCondition adds a RetryConditional function to the Client
 func (c *Client) AddRetryCondition(retryCondition RetryConditional) *Client {
-	c.resty.AddRetryCondition(resty.RetryConditionFunc(retryCondition))
-	return c
-}
-
-func (c *Client) addRetryConditional(retryConditional RetryConditional) *Client {
-	c.retryConditionals = append(c.retryConditionals, retryConditional)
+	c.retryConditionals = append(c.retryConditionals, retryCondition)
 	return c
 }
 
@@ -655,26 +672,26 @@ func (c *Client) UseCache(value bool) {
 
 // SetRetryMaxWaitTime sets the maximum delay before retrying a request.
 func (c *Client) SetRetryMaxWaitTime(maxWaitTime time.Duration) *Client {
-	c.resty.SetRetryMaxWaitTime(maxWaitTime)
+	c.retryMaxWaitTime = maxWaitTime
 	return c
 }
 
 // SetRetryWaitTime sets the default (minimum) delay before retrying a request.
 func (c *Client) SetRetryWaitTime(minWaitTime time.Duration) *Client {
-	c.resty.SetRetryWaitTime(minWaitTime)
+	c.retryMinWaitTime = minWaitTime
 	return c
 }
 
 // SetRetryAfter sets the callback function to be invoked with a failed request
 // to determine wben it should be retried.
 func (c *Client) SetRetryAfter(callback RetryAfter) *Client {
-	c.resty.SetRetryAfter(resty.RetryAfterFunc(callback))
+	c.retryAfter = callback
 	return c
 }
 
 // SetRetryCount sets the maximum retry attempts before aborting.
 func (c *Client) SetRetryCount(count int) *Client {
-	c.resty.SetRetryCount(count)
+	c.retryCount = count
 	return c
 }
 
@@ -695,13 +712,29 @@ func (c *Client) GetPollDelay() time.Duration {
 // client.
 // NOTE: Some headers may be overridden by the individual request functions.
 func (c *Client) SetHeader(name, value string) {
-	c.resty.SetHeader(name, value)
+	if c.header == nil {
+		c.header = make(http.Header) // Initialize header if nil
+	}
+	c.header.Set(name, value)
+}
+
+func (c *Client) onRequestLog(rl func(*RequestLog) error) *Client {
+	if c.requestLog != nil {
+		c.logger.Warnf("Overwriting an existing on-request-log callback from=%s to=%s",
+			functionName(c.requestLog), functionName(rl))
+	}
+	c.requestLog = rl
+	return c
+}
+
+func functionName(i interface{}) string {
+	return runtime.FuncForPC(reflect.ValueOf(i).Pointer()).Name()
 }
 
 func (c *Client) enableLogSanitization() *Client {
-	c.resty.OnRequestLog(func(r *resty.RequestLog) error {
+	c.onRequestLog(func(r *RequestLog) error {
 		// masking authorization header
-		r.Header.Set("Authorization", "Bearer *******************************")
+		r.Headers.Set("Authorization", "Bearer *******************************")
 		return nil
 	})
 
@@ -711,20 +744,25 @@ func (c *Client) enableLogSanitization() *Client {
 // NewClient factory to create new Client struct
 func NewClient(hc *http.Client) (client Client) {
 	if hc != nil {
-		client.resty = resty.NewWithClient(hc)
+		client.httpClient = hc
 	} else {
-		client.resty = resty.New()
+		client.httpClient = &http.Client{}
+	}
+
+	// Ensure that the Header map is not nil
+	if client.httpClient.Transport == nil {
+		client.httpClient.Transport = &http.Transport{}
 	}
 
 	client.shouldCache = true
 	client.cacheExpiration = APIDefaultCacheExpiration
 	client.cachedEntries = make(map[string]clientCacheEntry)
 	client.cachedEntryLock = &sync.RWMutex{}
+	client.configProfiles = make(map[string]ConfigProfile)
 
 	client.SetUserAgent(DefaultUserAgent)
 
 	baseURL, baseURLExists := os.LookupEnv(APIHostVar)
-
 	if baseURLExists {
 		client.SetBaseURL(baseURL)
 	}
@@ -736,7 +774,6 @@ func NewClient(hc *http.Client) (client Client) {
 	}
 
 	certPath, certPathExists := os.LookupEnv(APIHostCert)
-
 	if certPathExists {
 		cert, err := os.ReadFile(filepath.Clean(certPath))
 		if err != nil {

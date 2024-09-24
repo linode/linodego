@@ -5,43 +5,36 @@ import (
 	"os"
 )
 
-//nolint:unused
-type httpLogger interface {
+type Logger interface {
 	Errorf(format string, v ...interface{})
 	Warnf(format string, v ...interface{})
 	Debugf(format string, v ...interface{})
 }
 
-//nolint:unused
 type logger struct {
 	l *log.Logger
 }
 
-//nolint:unused
+// nolint: unused
 func createLogger() *logger {
 	l := &logger{l: log.New(os.Stderr, "", log.Ldate|log.Lmicroseconds)}
 	return l
 }
 
-//nolint:unused
-var _ httpLogger = (*logger)(nil)
+var _ Logger = (*logger)(nil)
 
-//nolint:unused
 func (l *logger) Errorf(format string, v ...interface{}) {
-	l.output("ERROR RESTY "+format, v...)
+	l.output("ERROR "+format, v...)
 }
 
-//nolint:unused
 func (l *logger) Warnf(format string, v ...interface{}) {
-	l.output("WARN RESTY "+format, v...)
+	l.output("WARN "+format, v...)
 }
 
-//nolint:unused
 func (l *logger) Debugf(format string, v ...interface{}) {
-	l.output("DEBUG RESTY "+format, v...)
+	l.output("DEBUG "+format, v...)
 }
 
-//nolint:unused
 func (l *logger) output(format string, v ...interface{}) { //nolint:goprintffuncname
 	if len(v) == 0 {
 		l.l.Print(format)
