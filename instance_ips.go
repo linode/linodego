@@ -79,6 +79,12 @@ type IPv6Range struct {
 	Linodes []int `json:"linodes"`
 }
 
+type InstanceReserveIPOptions struct {
+	Type    string `json:"type"`
+	Public  bool   `json:"public"`
+	Address string `json:"address"`
+}
+
 // InstanceIPType constants start with IPType and include Linode Instance IP Types
 type InstanceIPType string
 
@@ -143,4 +149,14 @@ func (c *Client) DeleteInstanceIPAddress(ctx context.Context, linodeID int, ipAd
 	e := formatAPIPath("linode/instances/%d/ips/%s", linodeID, ipAddress)
 	err := doDELETERequest(ctx, c, e)
 	return err
+}
+
+// Function to add additional reserved IPV4 addresses to an existing linode
+func (c *Client) AssignInstanceReservedIP(ctx context.Context, linodeID int, opts InstanceReserveIPOptions) (*InstanceIP, error) {
+	endpoint := formatAPIPath("linode/instances/%d/ips", linodeID)
+	response, err := doPOSTRequest[InstanceIP](ctx, c, endpoint, opts)
+	if err != nil {
+		return nil, err
+	}
+	return response, nil
 }
