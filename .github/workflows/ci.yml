@@ -81,7 +81,7 @@ jobs:
   notify-slack:
     runs-on: ubuntu-latest
     needs: [test]
-    if: always() # Run even if integration tests fail and only on main repository
+    if: always() && github.repository == 'linode/linodego' # Run even if integration tests fail and only on main repository
 
     steps:
       - name: Notify Slack
@@ -106,7 +106,7 @@ jobs:
                   "fields": [
                     {
                       "type": "mrkdwn",
-                      "text": "*Build Result:*\n${{ needs.test.outcome == 'success' && ':large_green_circle: Build Passed' || ':red_circle: Build Failed' }}"
+                      "text": "*Build Result:*\n${{ needs.test.result == 'success' && ':large_green_circle: Build Passed' || ':red_circle: Build Failed' }}"
                     },
                     {
                       "type": "mrkdwn",
