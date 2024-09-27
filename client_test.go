@@ -277,7 +277,7 @@ func TestDoRequest_Non2xxStatusCode(t *testing.T) {
 		t.Fatal("expected error, got nil")
 	}
 
-	httpError, ok := err.(Error)
+	httpError, ok := err.(*Error)
 	if !ok {
 		t.Fatalf("expected error to be of type Error, got %T", err)
 	}

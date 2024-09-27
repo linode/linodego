@@ -119,17 +119,18 @@ func getAPIError(resp *http.Response) (*APIError, bool) {
 		return nil, false
 	}
 
-	// Create a buffer to hold the body
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return nil, false
 	}
-	resp.Body = io.NopCloser(bytes.NewReader(body)) // Restore body
+
+	resp.Body = io.NopCloser(bytes.NewReader(body))
 
 	var apiError APIError
 	err = json.Unmarshal(body, &apiError)
 	if err != nil {
 		return nil, false
 	}
+
 	return &apiError, true
 }

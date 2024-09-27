@@ -2,7 +2,6 @@ package linodego
 
 import (
 	"bytes"
-	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
@@ -47,11 +46,6 @@ type APIError struct {
 	Errors []APIErrorReason `json:"errors"`
 }
 
-// String returns the error reason in a formatted string
-func (r APIErrorReason) String() string {
-	return fmt.Sprintf("[%s] %s", r.Field, r.Reason)
-}
-
 //nolint:nestif
 func coupleAPIErrors(resp *http.Response, err error) (*http.Response, error) {
 	if err != nil {
@@ -74,7 +68,7 @@ func coupleAPIErrors(resp *http.Response, err error) (*http.Response, error) {
 		// If the upstream server fails to respond to the request,
 		// the HTTP server will respond with a default error page with Content-Type "text/html".
 		if resp.StatusCode == http.StatusBadGateway && responseContentType == "text/html" {
-			return nil, Error{Code: http.StatusBadGateway, Message: http.StatusText(http.StatusBadGateway)}
+			return nil, &Error{Code: http.StatusBadGateway, Message: http.StatusText(http.StatusBadGateway)}
 		}
 
 		if responseContentType != expectedContentType {
@@ -96,11 +90,11 @@ func coupleAPIErrors(resp *http.Response, err error) (*http.Response, error) {
 				string(bodyBytes),
 			)
 
-			return nil, Error{Code: resp.StatusCode, Message: msg}
+			return nil, &Error{Code: resp.StatusCode, Message: msg}
 		}
 
-		var apiError APIError
-		if err := json.NewDecoder(resp.Body).Decode(&apiError); err != nil {
+		apiError, ok := getAPIError(resp)
+		if !ok {
 			return nil, NewError(fmt.Errorf("failed to decode response body: %w", err))
 		}
 
@@ -108,7 +102,7 @@ func coupleAPIErrors(resp *http.Response, err error) (*http.Response, error) {
 			return resp, nil
 		}
 
-		return nil, Error{Code: resp.StatusCode, Message: apiError.Errors[0].String()}
+		return nil, &Error{Code: resp.StatusCode, Message: apiError.Errors[0].Error()}
 	}
 
 	return resp, nil

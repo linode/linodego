@@ -173,10 +173,6 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 			return err
 		}
 
-		if err = c.applyBeforeRequest(req); err != nil {
-			return err
-		}
-
 		if paginationMutator != nil {
 			if err := (*paginationMutator)(req); err != nil {
 				if c.debug && c.logger != nil {
@@ -184,6 +180,10 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 				}
 				return fmt.Errorf("failed to mutate before request: %w", err)
 			}
+		}
+
+		if err = c.applyBeforeRequest(req); err != nil {
+			return err
 		}
 
 		if c.debug && c.logger != nil {
@@ -791,6 +791,7 @@ func NewClient(hc *http.Client) (client Client) {
 		SetRetryWaitTime(APISecondsPerPoll * time.Second).
 		SetPollDelay(APISecondsPerPoll * time.Second).
 		SetRetries().
+		SetLogger(createLogger()).
 		SetDebug(envDebug).
 		enableLogSanitization()
 

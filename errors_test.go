@@ -203,7 +203,7 @@ func TestCoupleAPIErrors(t *testing.T) {
 			httpClient: ts.Client(),
 		}
 
-		expectedError := Error{
+		expectedError := &Error{
 			Code:    http.StatusInternalServerError,
 			Message: "Unexpected Content-Type: Expected: application/json, Received: text/html\nResponse body: " + rawResponse,
 		}
@@ -248,7 +248,7 @@ func TestCoupleAPIErrors(t *testing.T) {
 			},
 		}
 
-		expectedError := Error{
+		expectedError := &Error{
 			Code:    http.StatusBadGateway,
 			Message: http.StatusText(http.StatusBadGateway),
 		}
