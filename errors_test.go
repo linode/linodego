@@ -10,6 +10,8 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
+	"strconv"
+	"strings"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
@@ -203,11 +205,6 @@ func TestCoupleAPIErrors(t *testing.T) {
 			httpClient: ts.Client(),
 		}
 
-		expectedError := &Error{
-			Code:    http.StatusInternalServerError,
-			Message: "Unexpected Content-Type: Expected: application/json, Received: text/html\nResponse body: " + rawResponse,
-		}
-
 		req, err := http.NewRequestWithContext(context.Background(), http.MethodGet, ts.URL+route, nil)
 		if err != nil {
 			t.Fatalf("failed to create request: %v", err)
@@ -219,11 +216,23 @@ func TestCoupleAPIErrors(t *testing.T) {
 		if err != nil {
 			t.Fatalf("failed to send request: %v", err)
 		}
+
+		expectedError := &Error{
+			Response: resp,
+			Code:     http.StatusInternalServerError,
+			Message:  "Unexpected Content-Type: Expected: application/json, Received: text/html\nResponse body: " + rawResponse,
+		}
+
 		defer resp.Body.Close()
 
 		_, err = coupleAPIErrors(resp, nil)
-		if diff := cmp.Diff(expectedError, err); diff != "" {
-			t.Errorf("expected error to match but got diff:\n%s", diff)
+
+		if !strings.Contains(err.Error(), strconv.Itoa(expectedError.Code)) {
+			t.Errorf("expected error code %d, got %d", expectedError.Code, resp.StatusCode)
+		}
+
+		if !strings.Contains(err.Error(), expectedError.Message) {
+			t.Errorf("expected error message %s, got %s", expectedError.Message, err.Error())
 		}
 	})
 
@@ -249,13 +258,18 @@ func TestCoupleAPIErrors(t *testing.T) {
 		}
 
 		expectedError := &Error{
-			Code:    http.StatusBadGateway,
-			Message: http.StatusText(http.StatusBadGateway),
+			Response: resp,
+			Code:     http.StatusBadGateway,
+			Message:  http.StatusText(http.StatusBadGateway),
 		}
 
 		_, err := coupleAPIErrors(resp, nil)
-		if !cmp.Equal(err, expectedError) {
-			t.Errorf("expected error %#v to match error %#v", err, expectedError)
+		if !strings.Contains(err.Error(), strconv.Itoa(expectedError.Code)) {
+			t.Errorf("expected error code %d, got %d", expectedError.Code, resp.StatusCode)
+		}
+
+		if !strings.Contains(err.Error(), expectedError.Message) {
+			t.Errorf("expected error message %s, got %s", expectedError.Message, err.Error())
 		}
 	})
 }

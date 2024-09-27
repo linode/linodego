@@ -15,7 +15,6 @@ type logger struct {
 	l *log.Logger
 }
 
-// nolint: unused
 func createLogger() *logger {
 	l := &logger{l: log.New(os.Stderr, "", log.Ldate|log.Lmicroseconds)}
 	return l

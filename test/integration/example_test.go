@@ -35,33 +35,25 @@ func ExampleClient_ListTypes_all() {
 // ExampleGetType_missing demonstrates the Error type, which allows inspecting
 // the request and response.  Error codes will be the HTTP status code,
 // or sub-100 for errors before the request was issued.
-//func ExampleClient_GetType_missing() {
-//	// Example readers, Ignore this bit of setup code needed to record test fixtures
-//
-//	fmt.Println("starting the test")
-//
-//	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleGetType_missing")
-//	defer teardown()
-//
-//	fmt.Println("made it here")
-//
-//	_, err := linodeClient.GetType(context.Background(), "missing-type")
-//	if err != nil {
-//		fmt.Println(err)
-//		fmt.Println(reflect.TypeOf(err))
-//
-//		if v, ok := err.(*linodego.Error); ok {
-//			fmt.Println("Request was:", v.Response.Request.URL)
-//			fmt.Println("Response was:", v.Response.Status)
-//			fmt.Println("Error was:", v)
-//		}
-//	}
-//
-//	// Output:
-//	// Request was: https://api.linode.com/v4beta/linode/types/missing-type
-//	// Response was: 404 Not Found
-//	// Error was: [404] Not found
-//}
+func ExampleClient_GetType_missing() {
+	// Example readers, Ignore this bit of setup code needed to record test fixtures
+	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleGetType_missing")
+	defer teardown()
+
+	_, err := linodeClient.GetType(context.Background(), "missing-type")
+	if err != nil {
+		if v, ok := err.(*linodego.Error); ok {
+			fmt.Println("Request was:", v.Response.Request.URL)
+			fmt.Println("Response was:", v.Response.Status)
+			fmt.Println("Error was:", v)
+		}
+	}
+
+	// Output:
+	// Request was: https://api.linode.com/v4beta/linode/types/missing-type
+	// Response was: 404 Not Found
+	// Error was: [404] Not found
+}
 
 // ExampleListKernels_all Demonstrates how to list all Linode Kernels.  Paginated
 // responses are automatically traversed and concatenated when the ListOptions are nil
@@ -173,25 +165,25 @@ func ExampleClient_GetKernel_specific() {
 	// First Label still starts: Latest 32
 }
 
-//func ExampleClient_GetImage_missing() {
-//	// Example readers, Ignore this bit of setup code needed to record test fixtures
-//	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleGetImage_missing")
-//	defer teardown()
-//
-//	_, err := linodeClient.GetImage(context.Background(), "not-found")
-//	if err != nil {
-//		if v, ok := err.(*linodego.Error); ok {
-//			fmt.Println("Request was:", v.Response.Request.URL)
-//			fmt.Println("Response was:", v.Response.Status)
-//			fmt.Println("Error was:", v)
-//		}
-//	}
-//
-//	// Output:
-//	// Request was: https://api.linode.com/v4beta/images/not-found
-//	// Response was: 404 Not Found
-//	// Error was: [404] Not found
-//}
+func ExampleClient_GetImage_missing() {
+	// Example readers, Ignore this bit of setup code needed to record test fixtures
+	linodeClient, teardown := createTestClient(nil, "fixtures/ExampleGetImage_missing")
+	defer teardown()
+
+	_, err := linodeClient.GetImage(context.Background(), "not-found")
+	if err != nil {
+		if v, ok := err.(*linodego.Error); ok {
+			fmt.Println("Request was:", v.Response.Request.URL)
+			fmt.Println("Response was:", v.Response.Status)
+			fmt.Println("Error was:", v)
+		}
+	}
+
+	// Output:
+	// Request was: https://api.linode.com/v4beta/images/not-found
+	// Response was: 404 Not Found
+	// Error was: [404] Not found
+}
 
 func ExampleClient_ListImages_all() {
 	// Example readers, Ignore this bit of setup code needed to record test fixtures

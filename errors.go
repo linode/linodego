@@ -68,7 +68,8 @@ func coupleAPIErrors(resp *http.Response, err error) (*http.Response, error) {
 		// If the upstream server fails to respond to the request,
 		// the HTTP server will respond with a default error page with Content-Type "text/html".
 		if resp.StatusCode == http.StatusBadGateway && responseContentType == "text/html" {
-			return nil, &Error{Code: http.StatusBadGateway, Message: http.StatusText(http.StatusBadGateway)}
+			//return nil, &Error{Code: http.StatusBadGateway, Message: http.StatusText(http.StatusBadGateway)}
+			return nil, &Error{Code: http.StatusBadGateway, Message: http.StatusText(http.StatusBadGateway), Response: resp}
 		}
 
 		if responseContentType != expectedContentType {
@@ -93,6 +94,7 @@ func coupleAPIErrors(resp *http.Response, err error) (*http.Response, error) {
 			return nil, &Error{Code: resp.StatusCode, Message: msg}
 		}
 
+		// Must check if there is no list of reasons in the error before making a call to NewError
 		apiError, ok := getAPIError(resp)
 		if !ok {
 			return nil, NewError(fmt.Errorf("failed to decode response body: %w", err))
@@ -102,7 +104,7 @@ func coupleAPIErrors(resp *http.Response, err error) (*http.Response, error) {
 			return resp, nil
 		}
 
-		return nil, &Error{Code: resp.StatusCode, Message: apiError.Errors[0].Error()}
+		return nil, NewError(resp)
 	}
 
 	return resp, nil
