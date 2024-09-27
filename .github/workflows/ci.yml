@@ -81,7 +81,7 @@ jobs:
   notify-slack:
     runs-on: ubuntu-latest
     needs: [test]
-    if: always() && github.repository == 'linode/linodego' # Run even if integration tests fail and only on main repository
+    if: always() # Run even if integration tests fail and only on main repository
 
     steps:
       - name: Notify Slack
