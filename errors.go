@@ -68,7 +68,6 @@ func coupleAPIErrors(resp *http.Response, err error) (*http.Response, error) {
 		// If the upstream server fails to respond to the request,
 		// the HTTP server will respond with a default error page with Content-Type "text/html".
 		if resp.StatusCode == http.StatusBadGateway && responseContentType == "text/html" {
-			//return nil, &Error{Code: http.StatusBadGateway, Message: http.StatusText(http.StatusBadGateway)}
 			return nil, &Error{Code: http.StatusBadGateway, Message: http.StatusText(http.StatusBadGateway), Response: resp}
 		}
 
