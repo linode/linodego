@@ -3,9 +3,9 @@ module github.com/linode/linodego
 require (
 	github.com/google/go-cmp v0.6.0
 	github.com/jarcoal/httpmock v1.3.1
-	golang.org/x/net v0.28.0
-	golang.org/x/oauth2 v0.22.0
-	golang.org/x/text v0.17.0
+	golang.org/x/net v0.29.0
+	golang.org/x/oauth2 v0.23.0
+	golang.org/x/text v0.18.0
 	gopkg.in/ini.v1 v1.66.6
 )
 

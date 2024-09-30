@@ -178,14 +178,13 @@ func TestImage_CloudInit(t *testing.T) {
 }
 
 func TestImage_Replicate(t *testing.T) {
-	// TODO: use random regions with capabilities once it gets stable
-	availableRegions := []string{"us-east", "eu-west"}
-
 	client, teardown := createTestClient(t, "fixtures/TestImage_Replicate")
 	defer teardown()
 
+	availableRegions := getRegionsWithCapsAndSiteType(t, client, []string{"Object Storage"}, "core")
+
 	image, uploadURL, err := client.CreateImageUpload(context.Background(), ImageCreateUploadOptions{
-		Region:      availableRegions[0],
+		Region:      availableRegions[1],
 		Label:       "linodego-image-replication",
 		Description: "An image that does stuff.",
 	})
@@ -213,19 +212,19 @@ func TestImage_Replicate(t *testing.T) {
 		}
 	}
 
-	if _, err := client.WaitForImageStatus(context.Background(), image.ID, ImageStatusAvailable, 240); err != nil {
+	if _, err := client.WaitForImageStatus(context.Background(), image.ID, ImageStatusAvailable, 400); err != nil {
 		t.Errorf("Failed to wait for image available upload status: %v", err)
 	}
 
-	replicaRegions := availableRegions
+	replicaRegions := availableRegions[:2]
 
 	image, err = client.ReplicateImage(context.Background(), image.ID, ImageReplicateOptions{
 		Regions: replicaRegions,
 	})
 	require.NoError(t, err)
 
-	require.Len(t, image.Regions, len(availableRegions))
+	require.Len(t, image.Regions, len(replicaRegions))
 	for _, region := range image.Regions {
-		assert.Contains(t, availableRegions, region.Region)
+		assert.Contains(t, replicaRegions, region.Region)
 	}
 }
