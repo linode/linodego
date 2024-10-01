@@ -158,7 +158,7 @@ type RequestParams struct {
 
 // Generic helper to execute HTTP requests using the net/http package
 //
-// nolint:funlen, gocognit
+// nolint:funlen, gocognit, nestif
 func (c *Client) doRequest(ctx context.Context, method, endpoint string, params RequestParams, paginationMutator *func(*http.Request) error) error {
 	var (
 		req        *http.Request
@@ -282,6 +282,7 @@ func (c *Client) shouldRetry(resp *http.Response, err error) bool {
 	return false
 }
 
+// nolint:nestif
 func (c *Client) createRequest(ctx context.Context, method, endpoint string, params RequestParams) (*http.Request, *bytes.Buffer, error) {
 	var bodyReader io.Reader
 	var bodyBuffer *bytes.Buffer
