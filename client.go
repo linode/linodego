@@ -261,14 +261,24 @@ func (c *Client) createRequest(ctx context.Context, method, endpoint string, par
 	var bodyBuffer *bytes.Buffer
 
 	if params.Body != nil {
-		var ok bool
-		bodyReader, ok = params.Body.(io.Reader)
+		reader, ok := params.Body.(io.Reader)
 		if !ok {
+			err := fmt.Errorf("failed to read body: params.Body is not an io.Reader")
 			if c.debug && c.logger != nil {
-				c.logger.Errorf("failed to read body: params.Body is not an io.Reader")
+				c.logger.Errorf(err.Error())
 			}
-			return nil, nil, fmt.Errorf("failed to read body: params.Body is not an io.Reader")
+			return nil, nil, err
 		}
+
+		bodyBuffer = new(bytes.Buffer)
+		_, err := io.Copy(bodyBuffer, reader)
+		if err != nil {
+			if c.debug && c.logger != nil {
+				c.logger.Errorf("failed to copy body: %v", err)
+			}
+			return nil, nil, fmt.Errorf("failed to copy body: %w", err)
+		}
+		bodyReader = bytes.NewReader(bodyBuffer.Bytes())
 	}
 
 	req, err := http.NewRequestWithContext(ctx, method, fmt.Sprintf("%s/%s", strings.TrimRight(c.hostURL, "/"),
