@@ -167,7 +167,33 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 		err        error
 	)
 
+	// Capture the original body into a buffer
+	originalBodyBuffer := new(bytes.Buffer)
+	if params.Body != nil {
+		reader, ok := params.Body.(io.Reader)
+		if !ok {
+			if c.debug && c.logger != nil {
+				c.logger.Errorf("failed to read body: params.Body is not an io.Reader")
+			}
+			return fmt.Errorf("failed to read body: params.Body is not an io.Reader")
+		}
+		// Copy the body into the buffer for reuse on retries
+		_, err = io.Copy(originalBodyBuffer, reader)
+		if err != nil {
+			if c.debug && c.logger != nil {
+				c.logger.Errorf("failed to copy body: %w", err)
+			}
+			return fmt.Errorf("failed to copy body: %w", err)
+		}
+	}
+
 	for range c.retryCount {
+		// Reset bodyBuffer from the original data for each retry
+		if originalBodyBuffer.Len() > 0 {
+			bodyBuffer = bytes.NewBuffer(originalBodyBuffer.Bytes())
+			params.Body = bodyBuffer // Assign the reset body to params
+		}
+
 		req, bodyBuffer, err = c.createRequest(ctx, method, endpoint, params)
 		if err != nil {
 			return err
