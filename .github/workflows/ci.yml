@@ -5,7 +5,7 @@ on:
   push:
     branches:
       - main
-  pull_request_target:
+  pull_request: null
 
 jobs:
   lint-tidy:
@@ -81,7 +81,7 @@ jobs:
   notify-slack:
     runs-on: ubuntu-latest
     needs: [test]
-    if: always() && github.repository == 'linode/linodego' # Run even if integration tests fail and only on main repository
+    if: always() && github.ref == 'refs/heads/main' && github.event_name == 'push' # Run even if integration tests fail and only on main repository
 
     steps:
       - name: Notify Slack
