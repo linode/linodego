@@ -5,7 +5,9 @@ on:
   push:
     branches:
       - main
-  pull_request_target: null
+  pull_request_target:
+    branches:
+      - main
 
 jobs:
   lint-tidy:
