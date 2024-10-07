@@ -392,7 +392,7 @@ func TestReservedIPAddresses_DeleteIPAddressVariants(t *testing.T) {
 	}
 }
 
-func TestReservedIPAddresses_GetInstanceIPReservationStatus(t *testing.T) {
+func TestReservedIPAddresses_GetIPReservationStatus(t *testing.T) {
 	client, teardown := createTestClient(t, "TestReservedIPAddresses_GetInstanceIPReservationStatus")
 	defer teardown()
 
