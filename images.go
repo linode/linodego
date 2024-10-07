@@ -219,6 +219,9 @@ func (c *Client) CreateImageUpload(ctx context.Context, opts ImageCreateUploadOp
 
 // UploadImageToURL uploads the given image to the given upload URL.
 func (c *Client) UploadImageToURL(ctx context.Context, uploadURL string, image io.Reader) error {
+	clonedClient := *c.httpClient
+	clonedClient.Transport = http.DefaultTransport
+
 	req, err := http.NewRequestWithContext(ctx, http.MethodPut, uploadURL, image)
 	if err != nil {
 		return err
@@ -227,7 +230,7 @@ func (c *Client) UploadImageToURL(ctx context.Context, uploadURL string, image i
 	req.Header.Set("Content-Type", "application/octet-stream")
 	req.ContentLength = -1 // Automatically calculate content length
 
-	resp, err := c.httpClient.Do(req)
+	resp, err := clonedClient.Do(req)
 
 	_, err = coupleAPIErrors(resp, err)
 	if err != nil {
