@@ -222,13 +222,32 @@ func (c *Client) UploadImageToURL(ctx context.Context, uploadURL string, image i
 	clonedClient := *c.httpClient
 	clonedClient.Transport = http.DefaultTransport
 
+	var contentLength int64 = -1
+
+	if seeker, ok := image.(io.Seeker); ok {
+		size, err := seeker.Seek(0, io.SeekEnd)
+		if err != nil {
+			return err
+		}
+
+		_, err = seeker.Seek(0, io.SeekStart)
+		if err != nil {
+			return err
+		}
+
+		contentLength = size
+	}
+
 	req, err := http.NewRequestWithContext(ctx, http.MethodPut, uploadURL, image)
 	if err != nil {
 		return err
 	}
 
+	if contentLength >= 0 {
+		req.ContentLength = contentLength
+	}
+
 	req.Header.Set("Content-Type", "application/octet-stream")
-	req.ContentLength = -1 // Automatically calculate content length
 
 	resp, err := clonedClient.Do(req)
 
