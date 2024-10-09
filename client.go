@@ -151,7 +151,7 @@ func (c *Client) SetUserAgent(ua string) *Client {
 	return c
 }
 
-type RequestParams struct {
+type requestParams struct {
 	Body     any
 	Response any
 }
@@ -159,7 +159,7 @@ type RequestParams struct {
 // Generic helper to execute HTTP requests using the net/http package
 //
 // nolint:funlen, gocognit, nestif
-func (c *Client) doRequest(ctx context.Context, method, endpoint string, params RequestParams, paginationMutator *func(*http.Request) error) error {
+func (c *Client) doRequest(ctx context.Context, method, endpoint string, params requestParams, paginationMutator *func(*http.Request) error) error {
 	var (
 		req        *http.Request
 		bodyBuffer *bytes.Buffer
@@ -167,31 +167,23 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 		err        error
 	)
 
-	// Capture the original body into a buffer
-	originalBodyBuffer := new(bytes.Buffer)
+	// If there is a body, ensure it's a *bytes.Reader so we can reset its position for each retry
+	var bodyReader *bytes.Reader
 	if params.Body != nil {
-		reader, ok := params.Body.(io.Reader)
+		var ok bool
+		bodyReader, ok = params.Body.(*bytes.Reader)
 		if !ok {
-			if c.debug && c.logger != nil {
-				c.logger.Errorf("failed to read body: params.Body is not an io.Reader")
-			}
-			return fmt.Errorf("failed to read body: params.Body is not an io.Reader")
-		}
-		// Copy the body into the buffer for reuse on retries
-		_, err = io.Copy(originalBodyBuffer, reader)
-		if err != nil {
-			if c.debug && c.logger != nil {
-				c.logger.Errorf("failed to copy body: %w", err)
-			}
-			return fmt.Errorf("failed to copy body: %w", err)
+			return c.ErrorAndLogf("failed to read body: params.Body is not a *bytes.Reader")
 		}
 	}
 
 	for range c.retryCount {
-		// Reset bodyBuffer from the original data for each retry
-		if originalBodyBuffer.Len() > 0 {
-			bodyBuffer = bytes.NewBuffer(originalBodyBuffer.Bytes())
-			params.Body = bodyBuffer // Assign the reset body to params
+		// Reset the body to the start for each retry
+		if bodyReader != nil {
+			_, err := bodyReader.Seek(0, io.SeekStart)
+			if err != nil {
+				return c.ErrorAndLogf("failed to seek to the start of the body: %v", err.Error())
+			}
 		}
 
 		req, bodyBuffer, err = c.createRequest(ctx, method, endpoint, params)
@@ -201,10 +193,8 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 
 		if paginationMutator != nil {
 			if err := (*paginationMutator)(req); err != nil {
-				if c.debug && c.logger != nil {
-					c.logger.Errorf("failed to mutate before request: %v", err)
-				}
-				return fmt.Errorf("failed to mutate before request: %w", err)
+				e := c.ErrorAndLogf("failed to mutate before request: %v", err.Error())
+				return e
 			}
 		}
 
@@ -283,38 +273,29 @@ func (c *Client) shouldRetry(resp *http.Response, err error) bool {
 }
 
 // nolint:nestif
-func (c *Client) createRequest(ctx context.Context, method, endpoint string, params RequestParams) (*http.Request, *bytes.Buffer, error) {
+func (c *Client) createRequest(ctx context.Context, method, endpoint string, params requestParams) (*http.Request, *bytes.Buffer, error) {
 	var bodyReader io.Reader
 	var bodyBuffer *bytes.Buffer
 
 	if params.Body != nil {
-		reader, ok := params.Body.(io.Reader)
+		reader, ok := params.Body.(*bytes.Reader)
 		if !ok {
-			err := fmt.Errorf("failed to read body: params.Body is not an io.Reader")
-			if c.debug && c.logger != nil {
-				c.logger.Errorf(err.Error())
-			}
-			return nil, nil, err
+			return nil, nil, c.ErrorAndLogf("failed to read body: params.Body is not a *bytes.Reader")
 		}
 
-		bodyBuffer = new(bytes.Buffer)
-		_, err := io.Copy(bodyBuffer, reader)
+		// Reset the body position to the start before using it
+		_, err := reader.Seek(0, io.SeekStart)
 		if err != nil {
-			if c.debug && c.logger != nil {
-				c.logger.Errorf("failed to copy body: %v", err)
-			}
-			return nil, nil, fmt.Errorf("failed to copy body: %w", err)
+			return nil, nil, c.ErrorAndLogf("failed to seek to the start of the body: %v", err.Error())
 		}
-		bodyReader = bytes.NewReader(bodyBuffer.Bytes())
+
+		bodyReader = reader
 	}
 
 	req, err := http.NewRequestWithContext(ctx, method, fmt.Sprintf("%s/%s", strings.TrimRight(c.hostURL, "/"),
 		strings.TrimLeft(endpoint, "/")), bodyReader)
 	if err != nil {
-		if c.debug && c.logger != nil {
-			c.logger.Errorf("failed to create request: %v", err)
-		}
-		return nil, nil, fmt.Errorf("failed to create request: %w", err)
+		return nil, nil, c.ErrorAndLogf("failed to create request: %v", err.Error())
 	}
 
 	// Set the default headers
@@ -337,10 +318,8 @@ func (c *Client) createRequest(ctx context.Context, method, endpoint string, par
 func (c *Client) applyBeforeRequest(req *http.Request) error {
 	for _, mutate := range c.onBeforeRequest {
 		if err := mutate(req); err != nil {
-			if c.debug && c.logger != nil {
-				c.logger.Errorf("failed to mutate before request: %v", err)
-			}
-			return fmt.Errorf("failed to mutate before request: %w", err)
+			e := c.ErrorAndLogf("failed to mutate before request: %v", err.Error())
+			return e
 		}
 	}
 
@@ -350,10 +329,8 @@ func (c *Client) applyBeforeRequest(req *http.Request) error {
 func (c *Client) applyAfterResponse(resp *http.Response) error {
 	for _, mutate := range c.onAfterResponse {
 		if err := mutate(resp); err != nil {
-			if c.debug && c.logger != nil {
-				c.logger.Errorf("failed to mutate after response: %v", err)
-			}
-			return fmt.Errorf("failed to mutate after response: %w", err)
+			e := c.ErrorAndLogf("failed to mutate after response: %v", err.Error())
+			return e
 		}
 	}
 	return nil
@@ -376,9 +353,7 @@ func (c *Client) logRequest(req *http.Request, method, url string, bodyBuffer *b
 
 	e := c.requestLog(reqLog)
 	if e != nil {
-		if c.debug && c.logger != nil {
-			c.logger.Errorf("failed to log request: %v", e)
-		}
+		_ = c.ErrorAndLogf("failed to mutate after response: %v", e.Error())
 	}
 
 	var logBuf bytes.Buffer
@@ -396,10 +371,8 @@ func (c *Client) logRequest(req *http.Request, method, url string, bodyBuffer *b
 func (c *Client) sendRequest(req *http.Request) (*http.Response, error) {
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
-		if c.debug && c.logger != nil {
-			c.logger.Errorf("failed to send request: %v", err)
-		}
-		return nil, fmt.Errorf("failed to send request: %w", err)
+		e := c.ErrorAndLogf("failed to send request: %w", err)
+		return nil, e
 	}
 	return resp, nil
 }
@@ -407,9 +380,7 @@ func (c *Client) sendRequest(req *http.Request) (*http.Response, error) {
 func (c *Client) checkHTTPError(resp *http.Response) error {
 	_, err := coupleAPIErrors(resp, nil)
 	if err != nil {
-		if c.debug && c.logger != nil {
-			c.logger.Errorf("received HTTP error: %v", err)
-		}
+		_ = c.ErrorAndLogf("received HTTP error: %v", err.Error())
 		return err
 	}
 	return nil
@@ -437,10 +408,8 @@ func (c *Client) logResponse(resp *http.Response) (*http.Response, error) {
 
 func (c *Client) decodeResponseBody(resp *http.Response, response interface{}) error {
 	if err := json.NewDecoder(resp.Body).Decode(response); err != nil {
-		if c.debug && c.logger != nil {
-			c.logger.Errorf("failed to decode response: %v", err)
-		}
-		return fmt.Errorf("failed to decode response: %w", err)
+		e := c.ErrorAndLogf("failed to decode response: %v", err.Error())
+		return e
 	}
 	return nil
 }
@@ -953,4 +922,11 @@ func generateListCacheURL(endpoint string, opts *ListOptions) (string, error) {
 	}
 
 	return fmt.Sprintf("%s:%s", endpoint, hashedOpts), nil
+}
+
+func (c *Client) ErrorAndLogf(format string, args ...interface{}) error {
+	if c.debug && c.logger != nil {
+		c.logger.Errorf(format, args...)
+	}
+	return fmt.Errorf(format, args...)
 }

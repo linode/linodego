@@ -218,7 +218,7 @@ func TestDoRequest_Success(t *testing.T) {
 	client := NewClient(server.Client())
 	client.SetBaseURL(server.URL)
 
-	params := RequestParams{
+	params := requestParams{
 		Response: &map[string]string{},
 	}
 
@@ -238,14 +238,14 @@ func TestDoRequest_FailedReadBody(t *testing.T) {
 	client := NewClient(nil)
 
 	// Create a request with an invalid body
-	params := RequestParams{
+	params := requestParams{
 		Body: map[string]interface{}{
 			"invalid": func() {},
 		},
 	}
 
 	err := client.doRequest(context.Background(), http.MethodPost, "/foo/bar", params, nil)
-	expectedErr := "failed to read body: params.Body is not an io.Reader"
+	expectedErr := "failed to read body: params.Body is not a *bytes.Reader"
 	if err == nil || !strings.Contains(err.Error(), expectedErr) {
 		t.Fatalf("expected error %q, got: %v", expectedErr, err)
 	}
@@ -255,7 +255,7 @@ func TestDoRequest_FailedCreateRequest(t *testing.T) {
 	client := NewClient(nil)
 
 	// Create a request with an invalid method to simulate a request creation failure
-	err := client.doRequest(context.Background(), "bad method", "/foo/bar", RequestParams{}, nil)
+	err := client.doRequest(context.Background(), "bad method", "/foo/bar", requestParams{}, nil)
 	expectedErr := "failed to create request"
 	if err == nil || !strings.Contains(err.Error(), expectedErr) {
 		t.Fatalf("expected error %q, got: %v", expectedErr, err)
@@ -272,7 +272,7 @@ func TestDoRequest_Non2xxStatusCode(t *testing.T) {
 	client := NewClient(server.Client())
 	client.SetBaseURL(server.URL)
 
-	err := client.doRequest(context.Background(), http.MethodGet, "/foo/bar", RequestParams{}, nil)
+	err := client.doRequest(context.Background(), http.MethodGet, "/foo/bar", requestParams{}, nil)
 	if err == nil {
 		t.Fatal("expected error, got nil")
 	}
@@ -303,7 +303,7 @@ func TestDoRequest_FailedDecodeResponse(t *testing.T) {
 	client := NewClient(server.Client())
 	client.SetBaseURL(server.URL)
 
-	params := RequestParams{
+	params := requestParams{
 		Response: &map[string]string{},
 	}
 
@@ -337,7 +337,7 @@ func TestDoRequest_BeforeRequestSuccess(t *testing.T) {
 
 	client.OnBeforeRequest(mutator)
 
-	err := client.doRequest(context.Background(), http.MethodGet, "/foo/bar", RequestParams{}, nil)
+	err := client.doRequest(context.Background(), http.MethodGet, "/foo/bar", requestParams{}, nil)
 	if err != nil {
 		t.Fatalf("expected no error, got: %v", err)
 	}
@@ -365,7 +365,7 @@ func TestDoRequest_BeforeRequestError(t *testing.T) {
 
 	client.OnBeforeRequest(mutator)
 
-	err := client.doRequest(context.Background(), http.MethodGet, "/foo/bar", RequestParams{}, nil)
+	err := client.doRequest(context.Background(), http.MethodGet, "/foo/bar", requestParams{}, nil)
 	expectedErr := "failed to mutate before request"
 
 	if err == nil || !strings.Contains(err.Error(), expectedErr) {
@@ -396,7 +396,7 @@ func TestDoRequest_AfterResponseSuccess(t *testing.T) {
 
 	client.OnAfterResponse(mutator)
 
-	err := client.doRequest(context.Background(), http.MethodGet, "/foo/bar", RequestParams{}, nil)
+	err := client.doRequest(context.Background(), http.MethodGet, "/foo/bar", requestParams{}, nil)
 	if err != nil {
 		t.Fatalf("expected no error, got: %v", err)
 	}
@@ -424,7 +424,7 @@ func TestDoRequest_AfterResponseError(t *testing.T) {
 
 	client.OnAfterResponse(mutator)
 
-	err := client.doRequest(context.Background(), http.MethodGet, "/foo/bar", RequestParams{}, nil)
+	err := client.doRequest(context.Background(), http.MethodGet, "/foo/bar", requestParams{}, nil)
 	expectedErr := "failed to mutate after response"
 	if err == nil || !strings.Contains(err.Error(), expectedErr) {
 		t.Fatalf("expected error %q, got: %v", expectedErr, err)
@@ -449,7 +449,7 @@ func TestDoRequestLogging_Success(t *testing.T) {
 	client.SetBaseURL(server.URL)
 	defer server.Close()
 
-	params := RequestParams{
+	params := requestParams{
 		Response: &map[string]string{},
 	}
 
@@ -482,20 +482,20 @@ func TestDoRequestLogging_Error(t *testing.T) {
 	client.SetDebug(true)
 	client.SetLogger(logger)
 
-	params := RequestParams{
+	params := requestParams{
 		Body: map[string]interface{}{
 			"invalid": func() {},
 		},
 	}
 
 	err := client.doRequest(context.Background(), http.MethodPost, "/foo/bar", params, nil)
-	expectedErr := "failed to read body: params.Body is not an io.Reader"
+	expectedErr := "failed to read body: params.Body is not a *bytes.Reader"
 	if err == nil || !strings.Contains(err.Error(), expectedErr) {
 		t.Fatalf("expected error %q, got: %v", expectedErr, err)
 	}
 
 	logInfo := logBuffer.String()
-	expectedLog := "ERROR failed to read body: params.Body is not an io.Reader"
+	expectedLog := "ERROR failed to read body: params.Body is not a *bytes.Reader"
 
 	if !strings.Contains(logInfo, expectedLog) {
 		t.Fatalf("expected log %q not found in logs", expectedLog)

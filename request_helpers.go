@@ -44,7 +44,7 @@ func getPaginatedResults[T any](
 		var resultType paginatedResponse[T]
 		opts.Page = page
 
-		params := RequestParams{
+		params := requestParams{
 			Response: &resultType,
 		}
 
@@ -103,7 +103,7 @@ func doGETRequest[T any](
 	endpoint string,
 ) (*T, error) {
 	var resultType T
-	params := RequestParams{
+	params := requestParams{
 		Response: &resultType,
 	}
 
@@ -129,7 +129,7 @@ func doPOSTRequest[T, O any](
 		return nil, fmt.Errorf("invalid number of options: %d", numOpts)
 	}
 
-	params := RequestParams{
+	params := requestParams{
 		Response: &resultType,
 	}
 	if numOpts > 0 && !isNil(options[0]) {
@@ -161,7 +161,7 @@ func doPUTRequest[T, O any](
 		return nil, fmt.Errorf("invalid number of options: %d", numOpts)
 	}
 
-	params := RequestParams{
+	params := requestParams{
 		Response: &resultType,
 	}
 	if numOpts > 0 && !isNil(options[0]) {
@@ -186,7 +186,7 @@ func doDELETERequest(
 	client *Client,
 	endpoint string,
 ) error {
-	params := RequestParams{}
+	params := requestParams{}
 	err := client.doRequest(ctx, http.MethodDelete, endpoint, params, nil)
 	return err
 }
