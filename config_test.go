@@ -42,11 +42,11 @@ func TestConfig_LoadWithDefaults(t *testing.T) {
 
 	expectedURL := "https://api.cool.linode.com/v4beta"
 
-	if client.resty.BaseURL != expectedURL {
-		t.Fatalf("mismatched host url: %s != %s", client.resty.BaseURL, expectedURL)
+	if client.hostURL != expectedURL {
+		t.Fatalf("mismatched host url: %s != %s", client.hostURL, expectedURL)
 	}
 
-	if client.resty.Header.Get("Authorization") != "Bearer "+p.APIToken {
+	if client.header.Get("Authorization") != "Bearer "+p.APIToken {
 		t.Fatalf("token not found in auth header: %s", p.APIToken)
 	}
 }
@@ -88,11 +88,11 @@ func TestConfig_OverrideDefaults(t *testing.T) {
 
 	expectedURL := "https://api.cool.linode.com/v4"
 
-	if client.resty.BaseURL != expectedURL {
-		t.Fatalf("mismatched host url: %s != %s", client.resty.BaseURL, expectedURL)
+	if client.hostURL != expectedURL {
+		t.Fatalf("mismatched host url: %s != %s", client.hostURL, expectedURL)
 	}
 
-	if client.resty.Header.Get("Authorization") != "Bearer "+p.APIToken {
+	if client.header.Get("Authorization") != "Bearer "+p.APIToken {
 		t.Fatalf("token not found in auth header: %s", p.APIToken)
 	}
 }
@@ -124,7 +124,7 @@ func TestConfig_NoDefaults(t *testing.T) {
 		t.Fatalf("mismatched api token: %s != %s", p.APIToken, "mytoken")
 	}
 
-	if client.resty.Header.Get("Authorization") != "Bearer "+p.APIToken {
+	if client.header.Get("Authorization") != "Bearer "+p.APIToken {
 		t.Fatalf("token not found in auth header: %s", p.APIToken)
 	}
 }
