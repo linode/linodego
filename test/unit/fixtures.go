@@ -1,11 +1,14 @@
 package unit
 
 import (
+	"embed"
 	"encoding/json"
 	"fmt"
-	"os"
 	"path/filepath"
 )
+
+//go:embed fixtures/*.json
+var fixtureFiles embed.FS // Embeds all JSON files in the fixtures directory
 
 // TestFixtures manages loading and retrieving test fixtures
 type TestFixtures struct {
@@ -19,41 +22,41 @@ func NewTestFixtures() *TestFixtures {
 	return tf
 }
 
-// loadFixtures loads all JSON files in fixtures directory
+// loadFixtures loads all embedded JSON files
 func (tf *TestFixtures) loadFixtures() {
 	tf.fixtures = make(map[string]interface{})
-	fixturesDir := "fixtures"
 
-	err := filepath.Walk(fixturesDir, func(path string, info os.FileInfo, err error) error {
-		if err != nil {
-			return err
-		}
-		if !info.IsDir() && filepath.Ext(path) == ".json" {
-			data, err := os.ReadFile(path)
+	// You can use the `ReadDir` function to list all files in the embedded directory.
+	entries, err := fixtureFiles.ReadDir("fixtures")
+	if err != nil {
+		panic(fmt.Sprintf("failed to read embedded fixtures: %v", err))
+	}
+
+	for _, entry := range entries {
+		if !entry.IsDir() && filepath.Ext(entry.Name()) == ".json" {
+			// Read the embedded JSON file
+			data, err := fixtureFiles.ReadFile("fixtures/" + entry.Name())
 			if err != nil {
-				return err
+				panic(fmt.Sprintf("failed to read fixture %s: %v", entry.Name(), err))
 			}
+
 			var jsonData interface{}
 			if err := json.Unmarshal(data, &jsonData); err != nil {
-				return err
+				panic(fmt.Sprintf("failed to unmarshal fixture %s: %v", entry.Name(), err))
 			}
-			fixtureName := filepath.Base(path)
-			tf.fixtures[fixtureName[:len(fixtureName)-5]] = jsonData
+
+			// Remove ".json" from the file name
+			fixtureName := entry.Name()[:len(entry.Name())-5]
+			tf.fixtures[fixtureName] = jsonData
 		}
-		return nil
-	})
-	if err != nil {
-		panic(err)
 	}
 }
 
-// GetFixture retrieves the fixture data for the given URL
-func (tf *TestFixtures) GetFixture(jsonFile string) (interface{}, error) {
-	data, ok := tf.fixtures[jsonFile]
+// GetFixture retrieves the fixture data for the given name.
+func (tf *TestFixtures) GetFixture(name string) (interface{}, error) {
+	data, ok := tf.fixtures[name]
 	if !ok {
-		return nil, os.ErrNotExist
+		return nil, fmt.Errorf("fixture not found: %s", name)
 	}
-	fmt.Printf("Loading fixture: %s\n", jsonFile) // TODO:: debugging remove later
-
 	return data, nil
 }
