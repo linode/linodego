@@ -248,6 +248,7 @@ func (c *Client) UploadImageToURL(ctx context.Context, uploadURL string, image i
 	}
 
 	req.Header.Set("Content-Type", "application/octet-stream")
+	req.Header.Set("User-Agent", c.userAgent)
 
 	resp, err := clonedClient.Do(req)
 
