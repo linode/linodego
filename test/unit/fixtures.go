@@ -8,7 +8,7 @@ import (
 )
 
 //go:embed fixtures/*.json
-var fixtureFiles embed.FS // Embeds all JSON files in the fixtures directory
+var fixtureFiles embed.FS
 
 // TestFixtures manages loading and retrieving test fixtures
 type TestFixtures struct {
@@ -26,7 +26,6 @@ func NewTestFixtures() *TestFixtures {
 func (tf *TestFixtures) loadFixtures() {
 	tf.fixtures = make(map[string]interface{})
 
-	// You can use the `ReadDir` function to list all files in the embedded directory.
 	entries, err := fixtureFiles.ReadDir("fixtures")
 	if err != nil {
 		panic(fmt.Sprintf("failed to read embedded fixtures: %v", err))
@@ -52,7 +51,7 @@ func (tf *TestFixtures) loadFixtures() {
 	}
 }
 
-// GetFixture retrieves the fixture data for the given name.
+// GetFixture retrieves the fixture data for the given name
 func (tf *TestFixtures) GetFixture(name string) (interface{}, error) {
 	data, ok := tf.fixtures[name]
 	if !ok {
