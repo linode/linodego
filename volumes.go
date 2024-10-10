@@ -37,6 +37,7 @@ type Volume struct {
 	Tags           []string     `json:"tags"`
 	Created        *time.Time   `json:"-"`
 	Updated        *time.Time   `json:"-"`
+	Encryption     string       `json:"encryption"`
 }
 
 // VolumeCreateOptions fields are those accepted by CreateVolume
@@ -50,6 +51,7 @@ type VolumeCreateOptions struct {
 	// An array of tags applied to this object. Tags are for organizational purposes only.
 	Tags               []string `json:"tags"`
 	PersistAcrossBoots *bool    `json:"persist_across_boots,omitempty"`
+	Encryption         string   `json:"encryption,omitempty"`
 }
 
 // VolumeUpdateOptions fields are those accepted by UpdateVolume

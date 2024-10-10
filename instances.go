@@ -67,7 +67,8 @@ type Instance struct {
 	// NOTE: Disk encryption may not currently be available to all users.
 	DiskEncryption InstanceDiskEncryption `json:"disk_encryption"`
 
-	LKEClusterID int `json:"lke_cluster_id"`
+	LKEClusterID int      `json:"lke_cluster_id"`
+	Capabilities []string `json:"capabilities"`
 }
 
 // InstanceSpec represents a linode spec
