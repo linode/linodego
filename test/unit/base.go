@@ -5,6 +5,7 @@ import (
 	"github.com/linode/linodego"
 	"github.com/linode/linodego/internal/testutil"
 	"github.com/stretchr/testify/mock"
+	"net/http"
 	"testing"
 )
 
@@ -32,8 +33,26 @@ func (c *ClientBaseCase) TearDown(t *testing.T) {
 	c.Mock.AssertExpectations(t)
 }
 
-// MockGet mocks a GET request to the client.
+// MockGet mocks a GET request to the client
 func (c *ClientBaseCase) MockGet(path string, response interface{}) {
 	fullURL := c.BaseURL + path
-	httpmock.RegisterResponder("GET", fullURL, httpmock.NewJsonResponderOrPanic(200, response))
+	httpmock.RegisterResponder("GET", fullURL, httpmock.NewJsonResponderOrPanic(http.StatusOK, response))
+}
+
+// MockPost mocks a POST request for a given path with the provided response body
+func (c *ClientBaseCase) MockPost(path string, response interface{}) {
+	fullURL := c.BaseURL + path
+	httpmock.RegisterResponder("POST", fullURL, httpmock.NewJsonResponderOrPanic(http.StatusOK, response))
+}
+
+// MockPut mocks a PUT request for a given path with the provided response body
+func (c *ClientBaseCase) MockPut(path string, response interface{}) {
+	fullURL := c.BaseURL + path
+	httpmock.RegisterResponder("PUT", fullURL, httpmock.NewJsonResponderOrPanic(http.StatusOK, response))
+}
+
+// MockDelete mocks a DELETE request for a given path with the provided response body
+func (c *ClientBaseCase) MockDelete(path string, response interface{}) {
+	fullURL := c.BaseURL + path
+	httpmock.RegisterResponder("DELETE", fullURL, httpmock.NewJsonResponderOrPanic(http.StatusOK, response))
 }

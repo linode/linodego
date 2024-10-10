@@ -8,11 +8,9 @@ import (
 )
 
 func TestListInstances(t *testing.T) {
-	// Initialize the TestFixtures to load the fixture
 	fixtures := NewTestFixtures()
 
-	// Mock the expected response from the ListInstances endpoint
-	fixtureData, err := fixtures.GetFixture("linodes_list") // Use the correct fixture name without ".json"
+	fixtureData, err := fixtures.GetFixture("linodes_list")
 	if err != nil {
 		t.Fatalf("Failed to load fixture: %v", err)
 	}
@@ -32,13 +30,8 @@ func TestListInstances(t *testing.T) {
 	linode := instances[0]
 	assert.Equal(t, 123, linode.ID)
 	assert.Equal(t, "linode123", linode.Label)
-
-	// Fix for the status comparison
 	assert.Equal(t, "running", string(linode.Status))
-
-	// Fix for the IP address comparison
 	assert.Equal(t, "203.0.113.1", linode.IPv4[0].String())
-
 	assert.Equal(t, "g6-standard-1", linode.Type)
 	assert.Equal(t, "us-east", linode.Region)
 	assert.Equal(t, 4096, linode.Specs.Memory)
