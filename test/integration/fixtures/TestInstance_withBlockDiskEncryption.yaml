@@ -309,7 +309,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 10 Oct 2024 18:15:13 GMT
+      - Thu, 10 Oct 2024 19:10:11 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -320,6 +320,137 @@ interactions:
       - Accept-Encoding
       X-Accepted-Oauth-Scopes:
       - '*'
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"region":"us-lax","type":"g6-nanode-1","label":"go-inst-test-create-bde","root_pass":"4\u003ewNSPs216H^d;?{}hI0(hx9q5t\u0026DO\u00269U~2F\u0026EN63h`R:Xt2Ppz`jm19S`Jv59e\\","image":"linode/debian9","firewall_id":997124,"booted":false}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/linode/instances
+    method: POST
+  response:
+    body: '{"id": 65155469, "label": "go-inst-test-create-bde", "group": "", "status":
+      "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "type": "g6-nanode-1", "ipv4": ["172.236.233.83"], "ipv6": "1234::5678/128",
+      "image": "linode/debian9", "region": "us-lax", "site_type": "core", "specs":
+      {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts":
+      {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io":
+      10000}, "backups": {"enabled": true, "available": false, "schedule": {"day":
+      null, "window": null}, "last_successful": null}, "hypervisor": "kvm", "watchdog_enabled":
+      true, "tags": [], "host_uuid": "0c7366a251935288324767c7b0cc883f1b8540a7", "has_user_data":
+      false, "placement_group": null, "disk_encryption": "enabled", "lke_cluster_id":
+      null, "capabilities": ["Block Storage Encryption"]}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 10 Oct 2024 19:10:12 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - linodes:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "10"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/linode/instances/65155469
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 10 Oct 2024 19:10:14 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - linodes:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:

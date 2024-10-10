@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/require"
+	"slices"
 	"strconv"
 	"testing"
 )
@@ -557,6 +558,24 @@ func TestInstance_DiskEncryption(t *testing.T) {
 	if inst.DiskEncryption != linodego.InstanceDiskEncryptionEnabled {
 		t.Fatalf("expected instance to have disk encryption enabled, got: %s, want: %s", inst.DiskEncryption, linodego.InstanceDiskEncryptionEnabled)
 	}
+}
+
+func TestInstance_withBlockDiskEncryption(t *testing.T) {
+	client, clientTeardown := createTestClient(t, "fixtures/TestInstance_withBlockDiskEncryption")
+
+	inst, err := createInstance(t, client, true, func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+		options.Region = getRegionsWithCaps(t, client, []string{"Linodes", "Block Storage Encryption"})[0]
+		options.Label = "go-inst-test-create-bde"
+	})
+	require.NoError(t, err)
+
+	defer func() {
+		client.DeleteInstance(context.Background(), inst.ID)
+		clientTeardown()
+	}()
+
+	// Filtering is not currently supported on capabilities
+	require.True(t, slices.Contains(inst.Capabilities, "Block Storage Encryption"))
 }
 
 func TestInstance_withPG(t *testing.T) {
