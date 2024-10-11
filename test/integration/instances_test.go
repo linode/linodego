@@ -560,8 +560,8 @@ func TestInstance_DiskEncryption(t *testing.T) {
 	}
 }
 
-func TestInstance_withBlockDiskEncryption(t *testing.T) {
-	client, clientTeardown := createTestClient(t, "fixtures/TestInstance_withBlockDiskEncryption")
+func TestInstance_withBlockStorageEncryption(t *testing.T) {
+	client, clientTeardown := createTestClient(t, "fixtures/TestInstance_withBlockStorageEncryption")
 
 	inst, err := createInstance(t, client, true, func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
 		options.Region = getRegionsWithCaps(t, client, []string{"Linodes", "Block Storage Encryption"})[0]
