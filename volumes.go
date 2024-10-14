@@ -37,7 +37,9 @@ type Volume struct {
 	Tags           []string     `json:"tags"`
 	Created        *time.Time   `json:"-"`
 	Updated        *time.Time   `json:"-"`
-	Encryption     string       `json:"encryption"`
+
+	// Note: Block Storage Disk Encryption is not currently available to all users.
+	Encryption string `json:"encryption"`
 }
 
 // VolumeCreateOptions fields are those accepted by CreateVolume
