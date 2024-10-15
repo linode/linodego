@@ -2,113 +2,46 @@ package unit
 
 import (
 	"context"
-	"reflect"
+	"github.com/stretchr/testify/assert"
 	"testing"
-
-	"github.com/google/go-cmp/cmp"
-	"github.com/jarcoal/httpmock"
-	"github.com/linode/linodego"
 )
 
 func TestGrantsList(t *testing.T) {
-	// username := usernamePrefix + "grantslist"
-	client := createMockClient(t)
-	accessLevel := linodego.AccessLevelReadOnly
-	desiredResponse := linodego.GrantsListResponse{
-		Database: []linodego.GrantedEntity{
-			{
-				ID:          1,
-				Label:       "example-entity-label",
-				Permissions: "read_write",
-			},
-		},
-		Domain: []linodego.GrantedEntity{
-			{
-				ID:          1,
-				Label:       "example-entity-label",
-				Permissions: "read_only",
-			},
-		},
-		Firewall: []linodego.GrantedEntity{
-			{
-				ID:          1,
-				Label:       "example-entity-label",
-				Permissions: "read_only",
-			},
-		},
-		Image: []linodego.GrantedEntity{
-			{
-				ID:          1,
-				Label:       "example-entity-label",
-				Permissions: "read_only",
-			},
-		},
-		Linode: []linodego.GrantedEntity{
-			{
-				ID:          1,
-				Label:       "example-entity-label",
-				Permissions: "read_write",
-			},
-		},
-		Longview: []linodego.GrantedEntity{
-			{
-				ID:          1,
-				Label:       "example-entity-label",
-				Permissions: "read_write",
-			},
-		},
-		NodeBalancer: []linodego.GrantedEntity{
-			{
-				ID:          1,
-				Label:       "example-entity-label",
-				Permissions: "read_only",
-			},
-		},
-		StackScript: []linodego.GrantedEntity{
-			{
-				ID:          1,
-				Label:       "example-entity-label",
-				Permissions: "read_only",
-			},
-		},
-		Volume: []linodego.GrantedEntity{
-			{
-				ID:          1,
-				Label:       "example-entity-label",
-				Permissions: "read_only",
-			},
-		},
+	fixtureData, err := fixtures.GetFixture("profile_grants_list")
+	assert.NoError(t, err)
 
-		Global: linodego.GlobalUserGrants{
-			AccountAccess:        &accessLevel,
-			AddDomains:           false,
-			AddDatabases:         true,
-			AddFirewalls:         false,
-			AddImages:            true,
-			AddLinodes:           true,
-			AddLongview:          true,
-			AddNodeBalancers:     true,
-			AddStackScripts:      true,
-			AddVolumes:           false,
-			CancelAccount:        false,
-			LongviewSubscription: true,
-		},
-	}
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
 
-	httpmock.RegisterRegexpResponder(
-		"GET",
-		mockRequestURL(t, "/profile/grants"),
-		httpmock.NewJsonResponderOrPanic(200, &desiredResponse),
-	)
-	grants, err := client.GrantsList(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
+	base.MockGet("profile/grants", fixtureData)
 
-	if !reflect.DeepEqual(*grants, desiredResponse) {
-		t.Fatalf(
-			"actual response does not equal desired response: %s",
-			cmp.Diff(grants, desiredResponse),
-		)
-	}
+	grants, err := base.Client.GrantsList(context.Background())
+	assert.NoError(t, err)
+
+	assert.Equal(t, "read_only", string(*grants.Global.AccountAccess))
+	assert.True(t, grants.Global.AddDatabases)
+	assert.True(t, grants.Global.AddDomains)
+	assert.True(t, grants.Global.AddFirewalls)
+	assert.False(t, grants.Global.CancelAccount)
+
+	assert.Len(t, grants.Database, 1)
+	assert.Equal(t, 123, grants.Database[0].ID)
+	assert.Equal(t, "example-entity", grants.Database[0].Label)
+	assert.Equal(t, "read_only", string(grants.Database[0].Permissions))
+
+	assert.Len(t, grants.Domain, 1)
+	assert.Equal(t, 123, grants.Domain[0].ID)
+	assert.Equal(t, "example-entity", grants.Domain[0].Label)
+	assert.Equal(t, "read_only", string(grants.Domain[0].Permissions))
+
+	assert.Len(t, grants.Firewall, 1)
+	assert.Equal(t, 123, grants.Firewall[0].ID)
+	assert.Equal(t, "example-entity", grants.Firewall[0].Label)
+	assert.Equal(t, "read_only", string(grants.Firewall[0].Permissions))
+
+	assert.Len(t, grants.Linode, 1)
+	assert.Equal(t, 123, grants.Linode[0].ID)
+	assert.Equal(t, "example-entity", grants.Linode[0].Label)
+	assert.Equal(t, "read_only", string(grants.Linode[0].Permissions))
 }

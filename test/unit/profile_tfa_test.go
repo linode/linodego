@@ -2,32 +2,29 @@ package unit
 
 import (
 	"context"
-	"reflect"
+	"github.com/stretchr/testify/assert"
 	"testing"
+	"time"
 
-	"github.com/google/go-cmp/cmp"
 	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"
 )
 
 func TestTwoFactor_CreateSecret_smoke(t *testing.T) {
-	client := createMockClient(t)
+	fixtureData, err := fixtures.GetFixture("profile_two_factor_secret_create")
+	assert.NoError(t, err)
 
-	expectedResponse := linodego.TwoFactorSecret{
-		Secret: "verysecureverysecureverysecure",
-	}
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
 
-	httpmock.RegisterRegexpResponder("POST", mockRequestURL(t, "/profile/tfa-enable"),
-		httpmock.NewJsonResponderOrPanic(200, expectedResponse))
+	base.MockPost("profile/tfa-enable", fixtureData)
 
-	secret, err := client.CreateTwoFactorSecret(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
+	secret, err := base.Client.CreateTwoFactorSecret(context.Background())
+	assert.NoError(t, err)
 
-	if !reflect.DeepEqual(*secret, expectedResponse) {
-		t.Fatalf("returned value did not match expected response: %s", cmp.Diff(*secret, expectedResponse))
-	}
+	assert.Equal(t, time.Time(time.Date(2018, time.March, 1, 0, 1, 1, 0, time.UTC)), *secret.Expiry)
+	assert.Equal(t, "5FXX6KLACOC33GTC", secret.Secret)
 }
 
 func TestTwoFactor_Disable(t *testing.T) {
@@ -42,20 +39,19 @@ func TestTwoFactor_Disable(t *testing.T) {
 }
 
 func TestTwoFactor_Confirm(t *testing.T) {
-	client := createMockClient(t)
+	fixtureData, err := fixtures.GetFixture("profile_two_factor_enable")
+	assert.NoError(t, err)
 
 	request := linodego.ConfirmTwoFactorOptions{TFACode: "reallycoolandlegittfacode"}
-	response := linodego.ConfirmTwoFactorResponse{Scratch: "really cool scratch code"}
 
-	httpmock.RegisterRegexpResponder("POST", mockRequestURL(t, "/profile/tfa-enable-confirm"),
-		mockRequestBodyValidate(t, request, response))
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
 
-	runResult, err := client.ConfirmTwoFactor(context.Background(), request)
-	if err != nil {
-		t.Fatal(err)
-	}
+	base.MockPost("profile/tfa-enable-confirm", fixtureData)
 
-	if !reflect.DeepEqual(*runResult, response) {
-		t.Fatalf("actual response does not equal desired response: %s", cmp.Diff(*runResult, response))
-	}
+	response, err := base.Client.ConfirmTwoFactor(context.Background(), request)
+	assert.NoError(t, err)
+
+	assert.Equal(t, "reallycoolandlegittfacode", response.Scratch)
 }
