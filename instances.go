@@ -61,7 +61,6 @@ type Instance struct {
 	WatchdogEnabled bool            `json:"watchdog_enabled"`
 	Tags            []string        `json:"tags"`
 
-	// NOTE: Placement Groups may not currently be available to all users.
 	PlacementGroup *InstancePlacementGroup `json:"placement_group"`
 
 	// NOTE: Disk encryption may not currently be available to all users.
@@ -156,7 +155,6 @@ type InstanceCreateOptions struct {
 	// NOTE: Disk encryption may not currently be available to all users.
 	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitempty"`
 
-	// NOTE: Placement Groups may not currently be available to all users.
 	PlacementGroup *InstanceCreatePlacementGroupOptions `json:"placement_group,omitempty"`
 
 	// Creation fields that need to be set explicitly false, "", or 0 use pointers
