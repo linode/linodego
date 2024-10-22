@@ -77,7 +77,7 @@ func TestAccountChild_get(t *testing.T) {
 
 	if account.CreditCard != nil {
 		assert.Equal(t, "11/2024", account.CreditCard.Expiry)
-		assert.Equal(t, 1111, account.CreditCard.LastFour)
+		assert.Equal(t, "1111", account.CreditCard.LastFour)
 	}
 
 	assert.Equal(t, "A1BC2DEF-34GH-567I-J890KLMN12O34P56", account.EUUID)
