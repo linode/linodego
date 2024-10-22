@@ -53,7 +53,7 @@ func (account *Account) UnmarshalJSON(b []byte) error {
 
 // CreditCard information associated with the Account.
 type CreditCard struct {
-	LastFour int    `json:"last_four"`
+	LastFour string `json:"last_four"`
 	Expiry   string `json:"expiry"`
 }
 
