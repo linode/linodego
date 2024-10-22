@@ -255,8 +255,20 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 
 		// Sleep for the specified duration before retrying.
 		// If retryAfter is 0 (i.e., Retry-After header is not found),
-		// no delay is applied.
-		time.Sleep(retryAfter)
+		// no delay is applied. Otherwise, adjust duration to be within bounds.
+		if retryAfter > 0 {
+			waitTime := retryAfter
+
+			// Ensure the wait time is within the defined bounds
+			if waitTime < c.retryMinWaitTime {
+				waitTime = c.retryMinWaitTime
+			} else if waitTime > c.retryMaxWaitTime {
+				waitTime = c.retryMaxWaitTime
+			}
+
+			// Sleep for the calculated duration before retrying
+			time.Sleep(waitTime)
+		}
 	}
 
 	return err
