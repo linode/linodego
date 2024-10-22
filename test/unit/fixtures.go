@@ -45,7 +45,7 @@ func (tf *TestFixtures) loadFixtures() {
 			}
 
 			// Remove ".json" from the file name
-			fixtureName := entry.Name()[:len(entry.Name())-5]
+			fixtureName := strings.TrimSuffix(entry.Name(), ".json")
 			tf.fixtures[fixtureName] = jsonData
 		}
 	}
