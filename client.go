@@ -760,6 +760,7 @@ func (c *Client) enableLogSanitization() *Client {
 }
 
 // NewClient factory to create new Client struct
+// nolint:funlen
 func NewClient(hc *http.Client) (client Client) {
 	if hc != nil {
 		client.httpClient = hc
@@ -777,6 +778,14 @@ func NewClient(hc *http.Client) (client Client) {
 	client.cachedEntries = make(map[string]clientCacheEntry)
 	client.cachedEntryLock = &sync.RWMutex{}
 	client.configProfiles = make(map[string]ConfigProfile)
+
+	const (
+		retryMinWaitDuration = 100 * time.Millisecond
+		retryMaxWaitDuration = 2 * time.Second
+	)
+
+	client.retryMinWaitTime = retryMinWaitDuration
+	client.retryMaxWaitTime = retryMaxWaitDuration
 
 	client.SetUserAgent(DefaultUserAgent)
 
