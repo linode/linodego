@@ -28,7 +28,7 @@ type Account struct {
 	EUUID             string      `json:"euuid"`
 	BillingSource     string      `json:"billing_source"`
 	Capabilities      []string    `json:"capabilities"`
-	ActiveSince       *time.Time  `json:"-"`
+	ActiveSince       *time.Time  `json:"active_since"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
