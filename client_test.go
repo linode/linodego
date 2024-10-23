@@ -234,23 +234,6 @@ func TestDoRequest_Success(t *testing.T) {
 	}
 }
 
-func TestDoRequest_FailedReadBody(t *testing.T) {
-	client := NewClient(nil)
-
-	// Create a request with an invalid body
-	params := requestParams{
-		Body: map[string]interface{}{
-			"invalid": func() {},
-		},
-	}
-
-	err := client.doRequest(context.Background(), http.MethodPost, "/foo/bar", params, nil)
-	expectedErr := "failed to read body: params.Body is not a *bytes.Reader"
-	if err == nil || !strings.Contains(err.Error(), expectedErr) {
-		t.Fatalf("expected error %q, got: %v", expectedErr, err)
-	}
-}
-
 func TestDoRequest_FailedCreateRequest(t *testing.T) {
 	client := NewClient(nil)
 
@@ -473,6 +456,34 @@ func TestDoRequestLogging_Success(t *testing.T) {
 	}
 }
 
+//	func TestDoRequestLogging_Error(t *testing.T) {
+//		var logBuffer bytes.Buffer
+//		logger := createLogger()
+//		logger.l.SetOutput(&logBuffer) // Redirect log output to buffer
+//
+//		client := NewClient(nil)
+//		client.SetDebug(true)
+//		client.SetLogger(logger)
+//
+//		params := requestParams{
+//			Body: map[string]interface{}{
+//				"invalid": func() {},
+//			},
+//		}
+//
+//		err := client.doRequest(context.Background(), http.MethodPost, "/foo/bar", params, nil)
+//		expectedErr := "failed to read body: params.Body is not a *bytes.Reader"
+//		if err == nil || !strings.Contains(err.Error(), expectedErr) {
+//			t.Fatalf("expected error %q, got: %v", expectedErr, err)
+//		}
+//
+//		logInfo := logBuffer.String()
+//		expectedLog := "ERROR failed to read body: params.Body is not a *bytes.Reader"
+//
+//		if !strings.Contains(logInfo, expectedLog) {
+//			t.Fatalf("expected log %q not found in logs", expectedLog)
+//		}
+//	}
 func TestDoRequestLogging_Error(t *testing.T) {
 	var logBuffer bytes.Buffer
 	logger := createLogger()
@@ -482,20 +493,15 @@ func TestDoRequestLogging_Error(t *testing.T) {
 	client.SetDebug(true)
 	client.SetLogger(logger)
 
-	params := requestParams{
-		Body: map[string]interface{}{
-			"invalid": func() {},
-		},
-	}
-
-	err := client.doRequest(context.Background(), http.MethodPost, "/foo/bar", params, nil)
-	expectedErr := "failed to read body: params.Body is not a *bytes.Reader"
+	// Create a request with an invalid method to simulate a request creation failure
+	err := client.doRequest(context.Background(), "bad method", "/foo/bar", requestParams{}, nil)
+	expectedErr := "failed to create request"
 	if err == nil || !strings.Contains(err.Error(), expectedErr) {
 		t.Fatalf("expected error %q, got: %v", expectedErr, err)
 	}
 
 	logInfo := logBuffer.String()
-	expectedLog := "ERROR failed to read body: params.Body is not a *bytes.Reader"
+	expectedLog := "ERROR failed to create request"
 
 	if !strings.Contains(logInfo, expectedLog) {
 		t.Fatalf("expected log %q not found in logs", expectedLog)

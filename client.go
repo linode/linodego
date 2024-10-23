@@ -152,7 +152,7 @@ func (c *Client) SetUserAgent(ua string) *Client {
 }
 
 type requestParams struct {
-	Body     any
+	Body     *bytes.Reader
 	Response any
 }
 
@@ -167,20 +167,10 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 		err        error
 	)
 
-	// If there is a body, ensure it's a *bytes.Reader so we can reset its position for each retry
-	var bodyReader *bytes.Reader
-	if params.Body != nil {
-		var ok bool
-		bodyReader, ok = params.Body.(*bytes.Reader)
-		if !ok {
-			return c.ErrorAndLogf("failed to read body: params.Body is not a *bytes.Reader")
-		}
-	}
-
 	for range c.retryCount {
-		// Reset the body to the start for each retry
-		if bodyReader != nil {
-			_, err := bodyReader.Seek(0, io.SeekStart)
+		// Reset the body to the start for each retry if it's not nil
+		if params.Body != nil {
+			_, err := params.Body.Seek(0, io.SeekStart)
 			if err != nil {
 				return c.ErrorAndLogf("failed to seek to the start of the body: %v", err.Error())
 			}
@@ -193,8 +183,7 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 
 		if paginationMutator != nil {
 			if err := (*paginationMutator)(req); err != nil {
-				e := c.ErrorAndLogf("failed to mutate before request: %v", err.Error())
-				return e
+				return c.ErrorAndLogf("failed to mutate before request: %v", err.Error())
 			}
 		}
 
@@ -254,8 +243,6 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 		}
 
 		// Sleep for the specified duration before retrying.
-		// If retryAfter is 0 (i.e., Retry-After header is not found),
-		// no delay is applied. Otherwise, adjust duration to be within bounds.
 		if retryAfter > 0 {
 			waitTime := retryAfter
 
@@ -284,24 +271,18 @@ func (c *Client) shouldRetry(resp *http.Response, err error) bool {
 	return false
 }
 
-// nolint:nestif
 func (c *Client) createRequest(ctx context.Context, method, endpoint string, params requestParams) (*http.Request, *bytes.Buffer, error) {
 	var bodyReader io.Reader
 	var bodyBuffer *bytes.Buffer
 
 	if params.Body != nil {
-		reader, ok := params.Body.(*bytes.Reader)
-		if !ok {
-			return nil, nil, c.ErrorAndLogf("failed to read body: params.Body is not a *bytes.Reader")
-		}
-
 		// Reset the body position to the start before using it
-		_, err := reader.Seek(0, io.SeekStart)
+		_, err := params.Body.Seek(0, io.SeekStart)
 		if err != nil {
 			return nil, nil, c.ErrorAndLogf("failed to seek to the start of the body: %v", err.Error())
 		}
 
-		bodyReader = reader
+		bodyReader = params.Body
 	}
 
 	req, err := http.NewRequestWithContext(ctx, method, fmt.Sprintf("%s/%s", strings.TrimRight(c.hostURL, "/"),
