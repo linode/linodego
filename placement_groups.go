@@ -27,7 +27,6 @@ type PlacementGroupMember struct {
 }
 
 // PlacementGroup represents a Linode placement group.
-// NOTE: Placement Groups may not currently be available to all users.
 type PlacementGroup struct {
 	ID                   int                    `json:"id"`
 	Label                string                 `json:"label"`
@@ -68,7 +67,6 @@ type PlacementGroupUnAssignOptions struct {
 
 // ListPlacementGroups lists placement groups under the current account
 // matching the given list options.
-// NOTE: Placement Groups may not currently be available to all users.
 func (c *Client) ListPlacementGroups(
 	ctx context.Context,
 	options *ListOptions,
@@ -82,7 +80,6 @@ func (c *Client) ListPlacementGroups(
 }
 
 // GetPlacementGroup gets a placement group with the specified ID.
-// NOTE: Placement Groups may not currently be available to all users.
 func (c *Client) GetPlacementGroup(
 	ctx context.Context,
 	id int,
@@ -95,7 +92,6 @@ func (c *Client) GetPlacementGroup(
 }
 
 // CreatePlacementGroup creates a placement group with the specified options.
-// NOTE: Placement Groups may not currently be available to all users.
 func (c *Client) CreatePlacementGroup(
 	ctx context.Context,
 	options PlacementGroupCreateOptions,
@@ -109,7 +105,6 @@ func (c *Client) CreatePlacementGroup(
 }
 
 // UpdatePlacementGroup updates a placement group with the specified ID using the provided options.
-// NOTE: Placement Groups may not currently be available to all users.
 func (c *Client) UpdatePlacementGroup(
 	ctx context.Context,
 	id int,
@@ -125,7 +120,6 @@ func (c *Client) UpdatePlacementGroup(
 
 // AssignPlacementGroupLinodes assigns the specified Linodes to the given
 // placement group.
-// NOTE: Placement Groups may not currently be available to all users.
 func (c *Client) AssignPlacementGroupLinodes(
 	ctx context.Context,
 	id int,
@@ -141,7 +135,6 @@ func (c *Client) AssignPlacementGroupLinodes(
 
 // UnassignPlacementGroupLinodes un-assigns the specified Linodes from the given
 // placement group.
-// NOTE: Placement Groups may not currently be available to all users.
 func (c *Client) UnassignPlacementGroupLinodes(
 	ctx context.Context,
 	id int,
@@ -156,7 +149,6 @@ func (c *Client) UnassignPlacementGroupLinodes(
 }
 
 // DeletePlacementGroup deletes a placement group with the specified ID.
-// NOTE: Placement Groups may not currently be available to all users.
 func (c *Client) DeletePlacementGroup(
 	ctx context.Context,
 	id int,
