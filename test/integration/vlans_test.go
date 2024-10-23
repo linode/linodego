@@ -9,7 +9,7 @@ import (
 	"github.com/linode/linodego"
 )
 
-func TestVLANs_List(t *testing.T) {
+func TestVLANs_List_smoke(t *testing.T) {
 	vlanName := "go-vlan-test-list"
 	instancePrefix := "go-ins-test-list"
 

@@ -99,7 +99,7 @@ HMuBpZsWkNKLh0hjC5i7YBZYtXGYPG2JCEE4mpiV8ClxTvmijsr8sYUOtnmIBXfG
 `
 )
 
-func TestObjectStorageBucketCert(t *testing.T) {
+func TestObjectStorageBucketCert_smoke(t *testing.T) {
 	client, fixtureTeardown := createTestClient(t, "fixtures/TestObjectStorageBucketCert")
 	bucket, err := client.CreateObjectStorageBucket(context.Background(), linodego.ObjectStorageBucketCreateOptions{
 		Cluster: "us-east-1",

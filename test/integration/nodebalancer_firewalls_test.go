@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestNodeBalancerFirewalls_List(t *testing.T) {
+func TestNodeBalancerFirewalls_List_smoke(t *testing.T) {
 	client, nodebalancer, teardown, err := setupNodeBalancer(t,
 		"fixtures/TestNodeBalancerFirewalls_List")
 	if err != nil {

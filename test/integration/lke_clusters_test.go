@@ -49,7 +49,7 @@ func TestLKECluster_WaitForReady(t *testing.T) {
 	}
 }
 
-func TestLKECluster_GetFound(t *testing.T) {
+func TestLKECluster_GetFound_smoke(t *testing.T) {
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = "go-lke-test-found"
 	}}, "fixtures/TestLKECluster_GetFound")

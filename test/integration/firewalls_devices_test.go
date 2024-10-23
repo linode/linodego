@@ -9,7 +9,7 @@ import (
 	"github.com/linode/linodego"
 )
 
-func TestFirewallDevices_List(t *testing.T) {
+func TestFirewallDevices_List_smoke(t *testing.T) {
 	client, instance, teardown, err := setupInstance(t, "fixtures/TestFirewallDevices_List", false)
 	if err != nil {
 		t.Error(err)
