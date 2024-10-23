@@ -4,9 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"io"
+	"net/http"
 	"time"
 
-	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -219,17 +219,45 @@ func (c *Client) CreateImageUpload(ctx context.Context, opts ImageCreateUploadOp
 
 // UploadImageToURL uploads the given image to the given upload URL.
 func (c *Client) UploadImageToURL(ctx context.Context, uploadURL string, image io.Reader) error {
-	// Linode-specific headers do not need to be sent to this endpoint
-	req := resty.New().SetDebug(c.resty.Debug).R().
-		SetContext(ctx).
-		SetContentLength(true).
-		SetHeader("Content-Type", "application/octet-stream").
-		SetBody(image)
+	clonedClient := *c.httpClient
+	clonedClient.Transport = http.DefaultTransport
 
-	_, err := coupleAPIErrors(req.
-		Put(uploadURL))
+	var contentLength int64 = -1
 
-	return err
+	if seeker, ok := image.(io.Seeker); ok {
+		size, err := seeker.Seek(0, io.SeekEnd)
+		if err != nil {
+			return err
+		}
+
+		_, err = seeker.Seek(0, io.SeekStart)
+		if err != nil {
+			return err
+		}
+
+		contentLength = size
+	}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPut, uploadURL, image)
+	if err != nil {
+		return err
+	}
+
+	if contentLength >= 0 {
+		req.ContentLength = contentLength
+	}
+
+	req.Header.Set("Content-Type", "application/octet-stream")
+	req.Header.Set("User-Agent", c.userAgent)
+
+	resp, err := clonedClient.Do(req)
+
+	_, err = coupleAPIErrors(resp, err)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // UploadImage creates and uploads an image.
