@@ -28,7 +28,7 @@ var (
 	}
 )
 
-func TestFirewallRules_Get(t *testing.T) {
+func TestFirewallRules_Get_smoke(t *testing.T) {
 	client, firewall, teardown, err := setupFirewall(t, []firewallModifier{func(createOpts *linodego.FirewallCreateOptions) {
 		createOpts.Rules = testFirewallRuleSet
 	}}, "fixtures/TestFirewallRules_Get")
