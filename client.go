@@ -743,6 +743,11 @@ func NewClient(hc *http.Client) (client Client) {
 			log.Fatalf("[ERROR] Error when reading cert at %s: %s\n", certPath, err.Error())
 		}
 
+		if hc.Transport != http.DefaultTransport.(*http.Transport) {
+			log.Println("[WARN] Custom transport is not allowed with a custom root CA.")
+			return
+		}
+
 		client.SetRootCertificate(certPath)
 
 		if envDebug {
