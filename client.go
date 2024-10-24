@@ -32,7 +32,8 @@ const (
 	APIHost = "api.linode.com"
 	// APIHostVar environment var to check for alternate API URL
 	APIHostVar = "LINODE_URL"
-	// APIHostCert environment var containing path to CA cert to validate against
+	// APIHostCert environment var containing path to CA cert to validate against.
+	// Note that the custom CA cannot be configured together with a custom HTTP Transport.
 	APIHostCert = "LINODE_CA"
 	// APIVersion Linode API version
 	APIVersion = "v4"
