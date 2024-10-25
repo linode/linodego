@@ -167,6 +167,30 @@ func TestLKECluster_Kubeconfig_Get(t *testing.T) {
 	}
 }
 
+func TestLKECluster_Kubeconfig_Delete(t *testing.T) {
+	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
+		createOpts.Label = "go-lke-test-kube-delete"
+	}}, "fixtures/TestLKECluster_Kubeconfig_Delete")
+	defer teardown()
+
+	_, err = client.WaitForLKEClusterStatus(context.Background(), lkeCluster.ID, linodego.LKEClusterReady, 180)
+	if err != nil {
+		t.Errorf("Error waiting for LKECluster readiness: %s", err)
+	}
+	i, err := client.GetLKEClusterKubeconfig(context.Background(), lkeCluster.ID)
+	if err != nil {
+		t.Errorf("Error getting lkeCluster Kubeconfig, expected struct, got %v and error %v", i, err)
+	}
+	if len(i.KubeConfig) == 0 {
+		t.Errorf("Expected an lkeCluster Kubeconfig, but got empty string %v", i)
+	}
+
+	delete_err := client.DeleteLKEClusterKubeconfig(context.Background(), lkeCluster.ID)
+	if err != nil {
+		t.Errorf("Error deleting lkeCluster Kubeconfig, got error %v", delete_err)
+	}
+}
+
 func TestLKECluster_Dashboard_Get(t *testing.T) {
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = "go-lke-test-dash"

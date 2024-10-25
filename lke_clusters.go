@@ -239,6 +239,13 @@ func (c *Client) GetLKEClusterKubeconfig(ctx context.Context, clusterID int) (*L
 	return response, nil
 }
 
+// DeleteLKEClusterKubeconfig deletes the Kubeconfig for the LKE Cluster specified
+func (c *Client) DeleteLKEClusterKubeconfig(ctx context.Context, clusterID int) error {
+	e := formatAPIPath("lke/clusters/%d/kubeconfig", clusterID)
+	err := doDELETERequest(ctx, c, e)
+	return err
+}
+
 // GetLKEClusterDashboard gets information about the dashboard for an LKE cluster
 func (c *Client) GetLKEClusterDashboard(ctx context.Context, clusterID int) (*LKEClusterDashboard, error) {
 	e := formatAPIPath("lke/clusters/%d/dashboard", clusterID)
