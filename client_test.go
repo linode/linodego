@@ -442,48 +442,35 @@ func TestDoRequestLogging_Success(t *testing.T) {
 	}
 
 	logInfo := logBuffer.String()
-	logInfoWithoutTimestamps := removeTimestamps(logInfo)
 
-	// Expected logs with templates filled in
-	expectedRequestLog := "DEBUG Sending request:\nMethod: GET\nURL: " + server.URL + "\nHeaders: map[Accept:[application/json] Authorization:[Bearer *******************************] Content-Type:[application/json] User-Agent:[linodego/dev https://github.com/linode/linodego]]\nBody: "
-	expectedResponseLog := "DEBUG Received response:\nStatus: 200 OK\nHeaders: map[Content-Length:[21] Content-Type:[text/plain; charset=utf-8]]\nBody: {\"message\":\"success\"}"
-
-	if !strings.Contains(logInfo, expectedRequestLog) {
-		t.Fatalf("expected log %q not found in logs", expectedRequestLog)
+	expectedRequestParts := []string{
+		"GET /v4/" + server.URL + " " + "HTTP/1.1",
+		"Accept: application/json",
+		"Authorization: Bearer *******************************",
+		"Content-Type: application/json",
+		"User-Agent: linodego/dev https://github.com/linode/linodego",
 	}
-	if !strings.Contains(logInfoWithoutTimestamps, expectedResponseLog) {
-		t.Fatalf("expected log %q not found in logs", expectedResponseLog)
+
+	expectedResponseParts := []string{
+		"STATUS: 200 OK",
+		"PROTO: HTTP/1.1",
+		"Content-Length: 21",
+		"Content-Type: application/json",
+		`"message": "success"`,
+	}
+
+	for _, part := range expectedRequestParts {
+		if !strings.Contains(logInfo, part) {
+			t.Fatalf("expected request part %q not found in logs", part)
+		}
+	}
+	for _, part := range expectedResponseParts {
+		if !strings.Contains(logInfo, part) {
+			t.Fatalf("expected response part %q not found in logs", part)
+		}
 	}
 }
 
-//	func TestDoRequestLogging_Error(t *testing.T) {
-//		var logBuffer bytes.Buffer
-//		logger := createLogger()
-//		logger.l.SetOutput(&logBuffer) // Redirect log output to buffer
-//
-//		client := NewClient(nil)
-//		client.SetDebug(true)
-//		client.SetLogger(logger)
-//
-//		params := requestParams{
-//			Body: map[string]interface{}{
-//				"invalid": func() {},
-//			},
-//		}
-//
-//		err := client.doRequest(context.Background(), http.MethodPost, "/foo/bar", params, nil)
-//		expectedErr := "failed to read body: params.Body is not a *bytes.Reader"
-//		if err == nil || !strings.Contains(err.Error(), expectedErr) {
-//			t.Fatalf("expected error %q, got: %v", expectedErr, err)
-//		}
-//
-//		logInfo := logBuffer.String()
-//		expectedLog := "ERROR failed to read body: params.Body is not a *bytes.Reader"
-//
-//		if !strings.Contains(logInfo, expectedLog) {
-//			t.Fatalf("expected log %q not found in logs", expectedLog)
-//		}
-//	}
 func TestDoRequestLogging_Error(t *testing.T) {
 	var logBuffer bytes.Buffer
 	logger := createLogger()

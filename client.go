@@ -51,30 +51,41 @@ const (
 )
 
 var (
-	reqLogTemplate = template.Must(template.New("request").Parse(`Sending request:
-Method: {{.Method}}
-URL: {{.URL}}
-Headers: {{.Headers}}
-Body: {{.Body}}`))
+	reqLogTemplate = template.Must(template.New("request").Parse(`
+============================================================================================
+~~~ REQUEST ~~~
+{{.Request}}
+HOST: {{.Host}}
+HEADERS: {{.Headers}}
+BODY: {{.Body}}
+--------------------------------------------------------------------------------------------`))
 
-	respLogTemplate = template.Must(template.New("response").Parse(`Received response:
-Status: {{.Status}}
-Headers: {{.Headers}}
-Body: {{.Body}}`))
+	respLogTemplate = template.Must(template.New("response").Parse(`
+============================================================================================
+~~~ RESPONSE ~~~
+STATUS: {{.Status}}
+PROTO: {{.Proto}}
+RECEIVED AT: {{.ReceivedAt}}
+TIME DURATION: {{.TimeDuration}}
+HEADERS: {{.Headers}}
+BODY: {{.Body}}
+--------------------------------------------------------------------------------------------`))
 )
 
 type RequestLog struct {
-	Method  string
-	URL     string
+	Request string
+	Host    string
 	Headers http.Header
 	Body    string
 }
 
 type ResponseLog struct {
-	Method  string
-	URL     string
-	Headers http.Header
-	Body    string
+	Status       string
+	Proto        string
+	ReceivedAt   string
+	TimeDuration string
+	Headers      http.Header
+	Body         string
 }
 
 var envDebug = false
@@ -192,10 +203,10 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 		}
 
 		if c.debug && c.logger != nil {
-			c.logRequest(req, method, endpoint, bodyBuffer)
+			c.logRequest(req, bodyBuffer)
 		}
 
-		processResponse := func() error {
+		processResponse := func(start, end time.Time) error {
 			defer func() {
 				closeErr := resp.Body.Close()
 				if closeErr != nil && err == nil {
@@ -207,7 +218,7 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 			}
 			if c.debug && c.logger != nil {
 				var logErr error
-				resp, logErr = c.logResponse(resp)
+				resp, logErr = c.logResponse(resp, start, end)
 				if logErr != nil {
 					return logErr
 				}
@@ -226,9 +237,11 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 			return nil
 		}
 
+		startTime := time.Now()
 		resp, err = c.sendRequest(req)
+		endTime := time.Now()
 		if err == nil {
-			if err = processResponse(); err == nil {
+			if err = processResponse(startTime, endTime); err == nil {
 				return nil
 			}
 		}
@@ -327,7 +340,7 @@ func (c *Client) applyAfterResponse(resp *http.Response) error {
 	return nil
 }
 
-func (c *Client) logRequest(req *http.Request, method, url string, bodyBuffer *bytes.Buffer) {
+func (c *Client) logRequest(req *http.Request, bodyBuffer *bytes.Buffer) {
 	var reqBody string
 	if bodyBuffer != nil {
 		reqBody = bodyBuffer.String()
@@ -336,8 +349,8 @@ func (c *Client) logRequest(req *http.Request, method, url string, bodyBuffer *b
 	}
 
 	reqLog := &RequestLog{
-		Method:  method,
-		URL:     url,
+		Request: strings.Join([]string{req.Method, req.URL.Path, req.Proto}, " "),
+		Host:    req.Host,
 		Headers: req.Header,
 		Body:    reqBody,
 	}
@@ -347,16 +360,62 @@ func (c *Client) logRequest(req *http.Request, method, url string, bodyBuffer *b
 		_ = c.ErrorAndLogf("failed to mutate after response: %v", e.Error())
 	}
 
+	body, jsonErr := formatBody(reqLog.Body)
+	if jsonErr != nil {
+		if c.debug && c.logger != nil {
+			c.logger.Errorf("%v", jsonErr)
+		}
+	}
+
 	var logBuf bytes.Buffer
 	err := reqLogTemplate.Execute(&logBuf, map[string]interface{}{
-		"Method":  reqLog.Method,
-		"URL":     reqLog.URL,
-		"Headers": reqLog.Headers,
-		"Body":    reqLog.Body,
+		"Request": reqLog.Request,
+		"Host":    reqLog.Host,
+		"Headers": formatHeaders(reqLog.Headers),
+		"Body":    body,
 	})
 	if err == nil {
 		c.logger.Debugf(logBuf.String())
 	}
+}
+
+func formatHeaders(headers map[string][]string) string {
+	var builder strings.Builder
+	builder.WriteString("\n")
+
+	for key, values := range headers {
+		builder.WriteString(fmt.Sprintf("    %s: %s\n", key, strings.Join(values, ", ")))
+	}
+	return strings.TrimSuffix(builder.String(), "\n")
+}
+
+func formatBody(body string) (string, error) {
+	body = strings.TrimSpace(body)
+	if body == "null" || body == "nil" || body == "" {
+		return "", nil
+	}
+
+	var jsonData map[string]interface{}
+	err := json.Unmarshal([]byte(body), &jsonData)
+	if err != nil {
+		return "", fmt.Errorf("error unmarshalling JSON: %w", err)
+	}
+
+	prettyJSON, err := json.MarshalIndent(jsonData, "", "  ")
+	if err != nil {
+		return "", fmt.Errorf("error marshalling JSON: %w", err)
+	}
+
+	return "\n" + string(prettyJSON), nil
+}
+
+func formatDate(dateStr string) (string, error) {
+	parsedTime, err := time.Parse(time.RFC1123, dateStr)
+	if err != nil {
+		return "", fmt.Errorf("error parsing date: %v", err)
+	}
+	formattedDate := parsedTime.In(time.Local).Format("2006-01-02T15:04:05-07:00") // nolint:gosmopolitan
+	return formattedDate, nil
 }
 
 func (c *Client) sendRequest(req *http.Request) (*http.Response, error) {
@@ -376,17 +435,45 @@ func (c *Client) checkHTTPError(resp *http.Response) error {
 	return nil
 }
 
-func (c *Client) logResponse(resp *http.Response) (*http.Response, error) {
+func (c *Client) logResponse(resp *http.Response, start, end time.Time) (*http.Response, error) {
 	var respBody bytes.Buffer
 	if _, err := io.Copy(&respBody, resp.Body); err != nil {
 		c.logger.Errorf("failed to read response body: %v", err)
 	}
 
+	receivedAt, dateErr := formatDate(resp.Header.Get("Date"))
+	if dateErr != nil {
+		if c.debug && c.logger != nil {
+			c.logger.Errorf("failed to format date: %v", dateErr)
+		}
+	}
+
+	duration := end.Sub(start).String()
+
+	respLog := &ResponseLog{
+		Status:       resp.Status,
+		Proto:        resp.Proto,
+		ReceivedAt:   receivedAt,
+		TimeDuration: duration,
+		Headers:      resp.Header,
+		Body:         respBody.String(),
+	}
+
+	body, jsonErr := formatBody(respLog.Body)
+	if jsonErr != nil {
+		if c.debug && c.logger != nil {
+			c.logger.Errorf("%v", jsonErr)
+		}
+	}
+
 	var logBuf bytes.Buffer
 	err := respLogTemplate.Execute(&logBuf, map[string]interface{}{
-		"Status":  resp.Status,
-		"Headers": resp.Header,
-		"Body":    respBody.String(),
+		"Status":       respLog.Status,
+		"Proto":        respLog.Proto,
+		"ReceivedAt":   respLog.ReceivedAt,
+		"TimeDuration": respLog.TimeDuration,
+		"Headers":      formatHeaders(respLog.Headers),
+		"Body":         body,
 	})
 	if err == nil {
 		c.logger.Debugf(logBuf.String())
