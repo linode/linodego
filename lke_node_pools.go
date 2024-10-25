@@ -170,8 +170,7 @@ func (c *Client) UpdateLKENodePool(ctx context.Context, clusterID, poolID int, o
 // DeleteLKENodePool deletes the LKENodePool with the specified id
 func (c *Client) DeleteLKENodePool(ctx context.Context, clusterID, poolID int) error {
 	e := formatAPIPath("lke/clusters/%d/pools/%d", clusterID, poolID)
-	err := doDELETERequest(ctx, c, e)
-	return err
+	return doDELETERequest(ctx, c, e)
 }
 
 // GetLKENodePoolNode gets the LKENodePoolLinode with the provided ID
@@ -199,6 +198,5 @@ func (c *Client) RecycleLKENodePoolNode(ctx context.Context, clusterID int, node
 // DeleteLKENodePoolNode deletes a given node from a node pool
 func (c *Client) DeleteLKENodePoolNode(ctx context.Context, clusterID int, nodeID string) error {
 	e := formatAPIPath("lke/clusters/%d/nodes/%s", clusterID, nodeID)
-	err := doDELETERequest(ctx, c, e)
-	return err
+	return doDELETERequest(ctx, c, e)
 }
