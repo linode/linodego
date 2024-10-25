@@ -311,8 +311,7 @@ func (c *Client) createRequest(ctx context.Context, method, endpoint string, par
 func (c *Client) applyBeforeRequest(req *http.Request) error {
 	for _, mutate := range c.onBeforeRequest {
 		if err := mutate(req); err != nil {
-			e := c.ErrorAndLogf("failed to mutate before request: %v", err.Error())
-			return e
+			return c.ErrorAndLogf("failed to mutate before request: %v", err.Error())
 		}
 	}
 
@@ -322,8 +321,7 @@ func (c *Client) applyBeforeRequest(req *http.Request) error {
 func (c *Client) applyAfterResponse(resp *http.Response) error {
 	for _, mutate := range c.onAfterResponse {
 		if err := mutate(resp); err != nil {
-			e := c.ErrorAndLogf("failed to mutate after response: %v", err.Error())
-			return e
+			return c.ErrorAndLogf("failed to mutate after response: %v", err.Error())
 		}
 	}
 	return nil
@@ -364,8 +362,7 @@ func (c *Client) logRequest(req *http.Request, method, url string, bodyBuffer *b
 func (c *Client) sendRequest(req *http.Request) (*http.Response, error) {
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
-		e := c.ErrorAndLogf("failed to send request: %w", err)
-		return nil, e
+		return nil, c.ErrorAndLogf("failed to send request: %w", err)
 	}
 	return resp, nil
 }
@@ -401,8 +398,7 @@ func (c *Client) logResponse(resp *http.Response) (*http.Response, error) {
 
 func (c *Client) decodeResponseBody(resp *http.Response, response interface{}) error {
 	if err := json.NewDecoder(resp.Body).Decode(response); err != nil {
-		e := c.ErrorAndLogf("failed to decode response: %v", err.Error())
-		return e
+		return c.ErrorAndLogf("failed to decode response: %v", err.Error())
 	}
 	return nil
 }
