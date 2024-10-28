@@ -33,3 +33,13 @@ func TestLKECluster_DeleteServiceToken(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestLKECluster_KubeconfigDelete(t *testing.T) {
+	client := createMockClient(t)
+
+	httpmock.RegisterRegexpResponder("DELETE", mockRequestURL(t, "clusters/1234/kubeconfig"), httpmock.NewStringResponder(200, "{}"))
+
+	if err := client.DeleteLKEClusterKubeconfig(context.Background(), 1234); err != nil {
+		t.Fatal(err)
+	}
+}
