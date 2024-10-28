@@ -2,15 +2,20 @@ package unit
 
 import (
 	"context"
+	"github.com/stretchr/testify/assert"
 	"testing"
+	"time"
 
-	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"
-	"github.com/stretchr/testify/require"
 )
 
 func TestImage_Replicate(t *testing.T) {
-	client := createMockClient(t)
+	fixtureData, err := fixtures.GetFixture("image_replicate")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
 
 	requestData := linodego.ImageReplicateOptions{
 		Regions: []string{
@@ -19,43 +24,29 @@ func TestImage_Replicate(t *testing.T) {
 		},
 	}
 
-	responseData := linodego.Image{
-		ID:    "private/1234",
-		Label: "test",
-		Regions: []linodego.ImageRegion{
-			{
-				Region: "us-iad",
-				Status: linodego.ImageRegionStatusAvailable,
-			},
-			{
-				Region: "us-mia",
-				Status: linodego.ImageRegionStatusReplicating,
-			},
-			{
-				Region: "us-ord",
-				Status: linodego.ImageRegionStatusPendingReplication,
-			},
-		},
-	}
+	base.MockPost("images/private%2F1234/regions", fixtureData)
 
-	httpmock.RegisterRegexpResponder(
-		"POST",
-		mockRequestURL(t, "images/private%2F1234/regions"),
-		mockRequestBodyValidate(t, requestData, responseData),
-	)
+	image, err := base.Client.ReplicateImage(context.Background(), "private/1234", requestData)
+	assert.NoError(t, err)
 
-	image, err := client.ReplicateImage(context.Background(), "private/1234", requestData)
-	require.NoError(t, err)
+	assert.Equal(t, "linode/debian11", image.ID)
+	assert.Equal(t, "Debian 11", image.Label)
+	assert.Equal(t, "Example image description.", image.Description)
+	assert.Equal(t, "Debian", image.Vendor)
+	assert.Equal(t, true, image.IsPublic)
+	assert.Equal(t, false, image.Deprecated)
+	assert.Equal(t, "available", string(image.Status))
+	assert.Equal(t, "2021-08-14T22:44:02Z", image.Created.Format(time.RFC3339))
+	assert.Equal(t, "2021-08-14T22:44:02Z", image.Updated.Format(time.RFC3339))
+	assert.Equal(t, "2026-07-01T04:00:00Z", image.EOL.Format(time.RFC3339))
+	assert.Equal(t, 2500, image.Size)
+	assert.Equal(t, 1234567, image.TotalSize)
 
-	require.Equal(t, "private/1234", image.ID)
-	require.Equal(t, "test", image.Label)
+	assert.ElementsMatch(t, []string{"cloud-init", "distributed-sites"}, image.Capabilities)
 
-	require.EqualValues(t, "us-iad", image.Regions[0].Region)
-	require.EqualValues(t, linodego.ImageRegionStatusAvailable, image.Regions[0].Status)
+	assert.Len(t, image.Regions, 1)
+	assert.Equal(t, "us-iad", image.Regions[0].Region)
+	assert.Equal(t, "available", string(image.Regions[0].Status))
 
-	require.EqualValues(t, "us-mia", image.Regions[1].Region)
-	require.EqualValues(t, linodego.ImageRegionStatusReplicating, image.Regions[1].Status)
-
-	require.EqualValues(t, "us-ord", image.Regions[2].Region)
-	require.EqualValues(t, linodego.ImageRegionStatusPendingReplication, image.Regions[2].Status)
+	assert.ElementsMatch(t, []string{"repair-image", "fix-1"}, image.Tags)
 }
