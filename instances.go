@@ -250,8 +250,9 @@ type InstanceResizeOptions struct {
 
 // InstanceMigrateOptions is an options struct used when migrating an instance
 type InstanceMigrateOptions struct {
-	Type   InstanceMigrationType `json:"type,omitempty"`
-	Region string                `json:"region,omitempty"`
+	Type    InstanceMigrationType `json:"type,omitempty"`
+	Region  string                `json:"region,omitempty"`
+	Upgrade *bool                 `json:"upgrade,omitempty"`
 
 	PlacementGroup *InstanceCreatePlacementGroupOptions `json:"placement_group,omitempty"`
 }
