@@ -5,6 +5,7 @@ import (
 	"context"
 	"crypto/tls"
 	"crypto/x509"
+	_ "embed"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -50,26 +51,17 @@ const (
 	APIDefaultCacheExpiration = time.Minute * 15
 )
 
-var (
-	reqLogTemplate = template.Must(template.New("request").Parse(`
-============================================================================================
-~~~ REQUEST ~~~
-{{.Request}}
-HOST: {{.Host}}
-HEADERS: {{.Headers}}
-BODY: {{.Body}}
---------------------------------------------------------------------------------------------`))
+// Embed the log template files
+//
+//go:embed request_log_template.tmpl
+var requestTemplateStr string
 
-	respLogTemplate = template.Must(template.New("response").Parse(`
-============================================================================================
-~~~ RESPONSE ~~~
-STATUS: {{.Status}}
-PROTO: {{.Proto}}
-RECEIVED AT: {{.ReceivedAt}}
-TIME DURATION: {{.TimeDuration}}
-HEADERS: {{.Headers}}
-BODY: {{.Body}}
---------------------------------------------------------------------------------------------`))
+//go:embed response_log_template.tmpl
+var responseTemplateStr string
+
+var (
+	reqLogTemplate  = template.Must(template.New("request").Parse(requestTemplateStr))
+	respLogTemplate = template.Must(template.New("response").Parse(responseTemplateStr))
 )
 
 type RequestLog struct {
