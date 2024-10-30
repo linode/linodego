@@ -18,6 +18,7 @@ import (
 	"reflect"
 	"regexp"
 	"runtime"
+	"sort"
 	"strconv"
 	"strings"
 	"sync"
@@ -164,10 +165,9 @@ type requestParams struct {
 // nolint:funlen, gocognit, nestif
 func (c *Client) doRequest(ctx context.Context, method, endpoint string, params requestParams, paginationMutator *func(*http.Request) error) error {
 	var (
-		req        *http.Request
-		bodyBuffer *bytes.Buffer
-		resp       *http.Response
-		err        error
+		req  *http.Request
+		resp *http.Response
+		err  error
 	)
 
 	for range c.retryCount {
@@ -179,7 +179,7 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 			}
 		}
 
-		req, bodyBuffer, err = c.createRequest(ctx, method, endpoint, params)
+		req, err = c.createRequest(ctx, method, endpoint, params)
 		if err != nil {
 			return err
 		}
@@ -195,7 +195,11 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 		}
 
 		if c.debug && c.logger != nil {
-			c.logRequest(req, bodyBuffer)
+			loggedReq, logErr := c.logRequest(req)
+			if logErr != nil {
+				return logErr
+			}
+			req = loggedReq
 		}
 
 		processResponse := func(start, end time.Time) error {
@@ -276,15 +280,14 @@ func (c *Client) shouldRetry(resp *http.Response, err error) bool {
 	return false
 }
 
-func (c *Client) createRequest(ctx context.Context, method, endpoint string, params requestParams) (*http.Request, *bytes.Buffer, error) {
+func (c *Client) createRequest(ctx context.Context, method, endpoint string, params requestParams) (*http.Request, error) {
 	var bodyReader io.Reader
-	var bodyBuffer *bytes.Buffer
 
 	if params.Body != nil {
 		// Reset the body position to the start before using it
 		_, err := params.Body.Seek(0, io.SeekStart)
 		if err != nil {
-			return nil, nil, c.ErrorAndLogf("failed to seek to the start of the body: %v", err.Error())
+			return nil, c.ErrorAndLogf("failed to seek to the start of the body: %v", err.Error())
 		}
 
 		bodyReader = params.Body
@@ -293,7 +296,7 @@ func (c *Client) createRequest(ctx context.Context, method, endpoint string, par
 	req, err := http.NewRequestWithContext(ctx, method, fmt.Sprintf("%s/%s", strings.TrimRight(c.hostURL, "/"),
 		strings.TrimLeft(endpoint, "/")), bodyReader)
 	if err != nil {
-		return nil, nil, c.ErrorAndLogf("failed to create request: %v", err.Error())
+		return nil, c.ErrorAndLogf("failed to create request: %v", err.Error())
 	}
 
 	// Set the default headers
@@ -310,7 +313,7 @@ func (c *Client) createRequest(ctx context.Context, method, endpoint string, par
 		}
 	}
 
-	return req, bodyBuffer, nil
+	return req, nil
 }
 
 func (c *Client) applyBeforeRequest(req *http.Request) error {
@@ -332,24 +335,25 @@ func (c *Client) applyAfterResponse(resp *http.Response) error {
 	return nil
 }
 
-func (c *Client) logRequest(req *http.Request, bodyBuffer *bytes.Buffer) {
-	var reqBody string
-	if bodyBuffer != nil {
-		reqBody = bodyBuffer.String()
-	} else {
-		reqBody = "nil"
+func (c *Client) logRequest(req *http.Request) (*http.Request, error) {
+	var reqBody bytes.Buffer
+	if req.Body != nil {
+		if _, err := io.Copy(&reqBody, req.Body); err != nil {
+			c.logger.Errorf("failed to read request body: %v", err)
+		}
+		req.Body = io.NopCloser(bytes.NewReader(reqBody.Bytes()))
 	}
 
 	reqLog := &RequestLog{
 		Request: strings.Join([]string{req.Method, req.URL.Path, req.Proto}, " "),
 		Host:    req.Host,
 		Headers: req.Header,
-		Body:    reqBody,
+		Body:    reqBody.String(),
 	}
 
 	e := c.requestLog(reqLog)
 	if e != nil {
-		_ = c.ErrorAndLogf("failed to mutate after response: %v", e.Error())
+		_ = c.ErrorAndLogf("failed to log request: %v", e.Error())
 	}
 
 	body, jsonErr := formatBody(reqLog.Body)
@@ -369,14 +373,21 @@ func (c *Client) logRequest(req *http.Request, bodyBuffer *bytes.Buffer) {
 	if err == nil {
 		c.logger.Debugf(logBuf.String())
 	}
+	return req, nil
 }
 
 func formatHeaders(headers map[string][]string) string {
 	var builder strings.Builder
 	builder.WriteString("\n")
 
-	for key, values := range headers {
-		builder.WriteString(fmt.Sprintf("    %s: %s\n", key, strings.Join(values, ", ")))
+	keys := make([]string, 0, len(headers))
+	for key := range headers {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+
+	for _, key := range keys {
+		builder.WriteString(fmt.Sprintf("    %s: %s\n", key, strings.Join(headers[key], ", ")))
 	}
 	return strings.TrimSuffix(builder.String(), "\n")
 }
