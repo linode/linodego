@@ -70,7 +70,7 @@ const (
 )
 
 // UnmarshalJSON for DomainRecord responses
-func (dr *DomainRecord) UnmarshalJSON(b []byte) error {
+func (d *DomainRecord) UnmarshalJSON(b []byte) error {
 	type Mask DomainRecord
 
 	p := struct {
@@ -78,15 +78,15 @@ func (dr *DomainRecord) UnmarshalJSON(b []byte) error {
 		Created *parseabletime.ParseableTime `json:"created"`
 		Updated *parseabletime.ParseableTime `json:"updated"`
 	}{
-		Mask: (*Mask)(dr),
+		Mask: (*Mask)(d),
 	}
 
 	if err := json.Unmarshal(b, &p); err != nil {
 		return err
 	}
 
-	dr.Created = (*time.Time)(p.Created)
-	dr.Updated = (*time.Time)(p.Updated)
+	d.Created = (*time.Time)(p.Created)
+	d.Updated = (*time.Time)(p.Updated)
 	return nil
 }
 
