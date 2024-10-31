@@ -224,8 +224,7 @@ func (c *Client) UpdateLKECluster(ctx context.Context, clusterID int, opts LKECl
 // DeleteLKECluster deletes the LKECluster with the specified id
 func (c *Client) DeleteLKECluster(ctx context.Context, clusterID int) error {
 	e := formatAPIPath("lke/clusters/%d", clusterID)
-	err := doDELETERequest(ctx, c, e)
-	return err
+	return doDELETERequest(ctx, c, e)
 }
 
 // GetLKEClusterKubeconfig gets the Kubeconfig for the LKE Cluster specified
@@ -237,6 +236,12 @@ func (c *Client) GetLKEClusterKubeconfig(ctx context.Context, clusterID int) (*L
 	}
 
 	return response, nil
+}
+
+// DeleteLKEClusterKubeconfig deletes the Kubeconfig for the LKE Cluster specified
+func (c *Client) DeleteLKEClusterKubeconfig(ctx context.Context, clusterID int) error {
+	e := formatAPIPath("lke/clusters/%d/kubeconfig", clusterID)
+	return doDELETERequest(ctx, c, e)
 }
 
 // GetLKEClusterDashboard gets information about the dashboard for an LKE cluster
@@ -271,6 +276,5 @@ func (c *Client) RegenerateLKECluster(ctx context.Context, clusterID int, opts L
 // DeleteLKEClusterServiceToken deletes and regenerate the service account token for a Cluster.
 func (c *Client) DeleteLKEClusterServiceToken(ctx context.Context, clusterID int) error {
 	e := formatAPIPath("lke/clusters/%d/servicetoken", clusterID)
-	err := doDELETERequest(ctx, c, e)
-	return err
+	return doDELETERequest(ctx, c, e)
 }
