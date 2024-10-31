@@ -5,8 +5,10 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"reflect"
 	"strings"
 	"testing"
@@ -536,4 +538,41 @@ func (t *testRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) 
 		t.Response = resp
 	}
 	return resp, err
+}
+
+func TestClient_CustomRootCAWithCustomRoundTripper(t *testing.T) {
+	caFile, err := os.CreateTemp(t.TempDir(), "linodego_test_ca_*")
+	if err != nil {
+		t.Fatalf("Failed to create temp ca file: %s", err)
+	}
+	defer os.Remove(caFile.Name())
+
+	t.Setenv(APIHostCert, caFile.Name())
+
+	handler := func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"message":"success"}`))
+	}
+
+	server := httptest.NewServer(http.HandlerFunc(handler))
+	defer server.Close()
+
+	// Create a custom RoundTripper
+	tr := &testRoundTripper{
+		Transport: server.Client().Transport,
+	}
+
+	buf := new(strings.Builder)
+	log.SetOutput(buf)
+
+	NewClient(&http.Client{Transport: tr})
+
+	expectedLog := "Custom transport is not allowed with a custom root CA"
+
+	if !strings.Contains(buf.String(), expectedLog) {
+		t.Fatalf("expected log %q not found in logs", expectedLog)
+	}
+
+	log.SetOutput(os.Stderr)
 }

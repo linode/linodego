@@ -119,6 +119,48 @@ func TestInstance_Resize(t *testing.T) {
 	}
 }
 
+func TestInstance_Migrate(t *testing.T) {
+	client, instance, teardown, err := setupInstance(
+		t,
+		"fixtures/TestInstance_Migrate", true,
+		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+			boot := true
+			options.Type = "g6-nanode-1"
+			options.Booted = &boot
+		},
+	)
+
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	instance, err = client.WaitForInstanceStatus(
+		context.Background(),
+		instance.ID,
+		linodego.InstanceRunning,
+		180,
+	)
+	if err != nil {
+		t.Errorf("Error waiting for instance readiness for migration: %s", err.Error())
+	}
+
+	upgrade := false
+
+	err = client.MigrateInstance(
+		context.Background(),
+		instance.ID,
+		linodego.InstanceMigrateOptions{
+			Type:    "cold",
+			Region:  "us-west",
+			Upgrade: &upgrade,
+		},
+	)
+	if err != nil {
+		t.Errorf("failed to migrate instance %d: %v", instance.ID, err.Error())
+	}
+}
+
 func TestInstance_Disks_List(t *testing.T) {
 	client, instance, teardown, err := setupInstance(t, "fixtures/TestInstance_Disks_List", true)
 	defer teardown()

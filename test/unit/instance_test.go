@@ -2,6 +2,8 @@ package unit
 
 import (
 	"context"
+	"github.com/jarcoal/httpmock"
+	"github.com/linode/linodego"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -35,4 +37,23 @@ func TestListInstances(t *testing.T) {
 	assert.Equal(t, "g6-standard-1", linode.Type)
 	assert.Equal(t, "us-east", linode.Region)
 	assert.Equal(t, 4096, linode.Specs.Memory)
+}
+
+func TestInstance_Migrate(t *testing.T) {
+	client := createMockClient(t)
+
+	upgrade := false
+
+	requestData := linodego.InstanceMigrateOptions{
+		Type:    "cold",
+		Region:  "us-west",
+		Upgrade: &upgrade,
+	}
+
+	httpmock.RegisterRegexpResponder("POST", mockRequestURL(t, "/linode/instances/123456/migrate"),
+		mockRequestBodyValidate(t, requestData, nil))
+
+	if err := client.MigrateInstance(context.Background(), 123456, requestData); err != nil {
+		t.Fatal(err)
+	}
 }
