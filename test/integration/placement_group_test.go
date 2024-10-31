@@ -13,7 +13,7 @@ import (
 
 type placementGroupModifier func(*linodego.Client, *linodego.PlacementGroupCreateOptions)
 
-func TestPlacementGroup_basic(t *testing.T) {
+func TestPlacementGroup_basic_smoke(t *testing.T) {
 	client, clientTeardown := createTestClient(t, "fixtures/TestPlacementGroup_basic")
 
 	// Create a PG

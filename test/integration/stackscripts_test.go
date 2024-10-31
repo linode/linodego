@@ -7,7 +7,7 @@ import (
 	"github.com/linode/linodego"
 )
 
-func TestStackscripts_List(t *testing.T) {
+func TestStackscripts_List_smoke(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestStackscripts_List")
 	defer teardown()
 
