@@ -347,7 +347,7 @@ func (c *Client) logRequest(req *http.Request) (*http.Request, error) {
 	reqLog := &RequestLog{
 		Request: strings.Join([]string{req.Method, req.URL.Path, req.Proto}, " "),
 		Host:    req.Host,
-		Headers: req.Header,
+		Headers: req.Header.Clone(),
 		Body:    reqBody.String(),
 	}
 
