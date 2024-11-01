@@ -27,23 +27,11 @@ func (i AccountAgreements) GetUpdateOptions() (o AccountAgreementsUpdateOptions)
 
 // GetAccountAgreements gets all agreements and their acceptance status for the Account.
 func (c *Client) GetAccountAgreements(ctx context.Context) (*AccountAgreements, error) {
-	e := "account/agreements"
-
-	response, err := doGETRequest[AccountAgreements](ctx, c, e)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doGETRequest[AccountAgreements](ctx, c, "account/agreements")
 }
 
 // AcknowledgeAccountAgreements acknowledges account agreements for the Account
 func (c *Client) AcknowledgeAccountAgreements(ctx context.Context, opts AccountAgreementsUpdateOptions) error {
-	e := "account/agreements"
-	_, err := doPOSTRequest[AccountAgreements](ctx, c, e, opts)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	_, err := doPOSTRequest[AccountAgreements](ctx, c, "account/agreements", opts)
+	return err
 }

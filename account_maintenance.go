@@ -47,6 +47,5 @@ func (accountMaintenance *AccountMaintenance) UnmarshalJSON(b []byte) error {
 
 // ListMaintenances lists Account Maintenance objects for any entity a user has permissions to view
 func (c *Client) ListMaintenances(ctx context.Context, opts *ListOptions) ([]AccountMaintenance, error) {
-	response, err := getPaginatedResults[AccountMaintenance](ctx, c, "account/maintenance", opts)
-	return response, err
+	return getPaginatedResults[AccountMaintenance](ctx, c, "account/maintenance", opts)
 }

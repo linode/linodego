@@ -93,22 +93,11 @@ type CreditCard struct {
 
 // GetAccount gets the contact and billing information related to the Account.
 func (c *Client) GetAccount(ctx context.Context) (*Account, error) {
-	e := "account"
-	response, err := doGETRequest[Account](ctx, c, e)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doGETRequest[Account](ctx, c, "account")
 }
 
 // UpdateAccount updates the Account
 func (c *Client) UpdateAccount(ctx context.Context, opts AccountUpdateOptions) (*Account, error) {
-	e := "account"
-	response, err := doPUTRequest[Account](ctx, c, e, opts)
-	if err != nil {
-		return nil, err
-	}
+	return doPUTRequest[Account](ctx, c, "account", opts)
 
-	return response, nil
 }
