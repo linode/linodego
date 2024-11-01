@@ -99,5 +99,4 @@ func (c *Client) GetAccount(ctx context.Context) (*Account, error) {
 // UpdateAccount updates the Account
 func (c *Client) UpdateAccount(ctx context.Context, opts AccountUpdateOptions) (*Account, error) {
 	return doPUTRequest[Account](ctx, c, "account", opts)
-
 }
