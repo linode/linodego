@@ -8,8 +8,8 @@ import (
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
-// PromoCode represents a PromoCode object
-type PromoCode struct {
+// Promotion represents a Promotion object
+type Promotion struct {
 	// The amount available to spend per month.
 	CreditMonthlyCap string `json:"credit_monthly_cap"`
 
@@ -42,8 +42,8 @@ type PromoCodeCreateOptions struct {
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
-func (i *PromoCode) UnmarshalJSON(b []byte) error {
-	type Mask PromoCode
+func (i *Promotion) UnmarshalJSON(b []byte) error {
+	type Mask Promotion
 
 	p := struct {
 		*Mask
@@ -62,6 +62,6 @@ func (i *PromoCode) UnmarshalJSON(b []byte) error {
 }
 
 // AddPromoCode adds the provided promo code to the account
-func (c *Client) AddPromoCode(ctx context.Context, opts PromoCodeCreateOptions) (*PromoCode, error) {
-	return doPOSTRequest[PromoCode, any](ctx, c, "account/promo-codes", opts)
+func (c *Client) AddPromoCode(ctx context.Context, opts PromoCodeCreateOptions) (*Promotion, error) {
+	return doPOSTRequest[Promotion, any](ctx, c, "account/promo-codes", opts)
 }
