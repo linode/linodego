@@ -7,7 +7,9 @@ import (
 	"github.com/stretchr/testify/require"
 	"slices"
 	"strconv"
+	"strings"
 	"testing"
+	"time"
 )
 
 type instanceModifier func(*linodego.Client, *linodego.InstanceCreateOptions)
@@ -78,6 +80,73 @@ func TestInstance_Get_smoke(t *testing.T) {
 
 	assertDateSet(t, instance.Created)
 	assertDateSet(t, instance.Updated)
+}
+
+func TestInstance_GetTransfer(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_GetTransfer", true)
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	_, err = client.GetInstanceTransfer(context.Background(), instance.ID)
+	if err != nil {
+		t.Errorf("Error getting instance transfer, expected struct, got error %v", err)
+	}
+}
+
+func TestInstance_GetMonthlyTransfer(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_GetMonthlyTransfer", true)
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	currentYear, currentMonth := time.Now().Year(), int(time.Now().Month())
+
+	_, err = client.GetInstanceTransferMonthly(context.Background(), instance.ID, currentYear, currentMonth)
+	if err != nil {
+		t.Errorf("Error getting monthly instance transfer, expected struct, got error %v", err)
+	}
+}
+
+func TestInstance_ResetPassword(t *testing.T) {
+	client, instance, teardown, err := setupInstance(
+		t,
+		"fixtures/TestInstance_ResetPassword", true,
+		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+			boot := false
+			options.Type = "g6-nanode-1"
+			options.Booted = &boot
+			options.RootPass = randPassword()
+		},
+	)
+
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	instance, err = client.WaitForInstanceStatus(
+		context.Background(),
+		instance.ID,
+		linodego.InstanceOffline,
+		180,
+	)
+	if err != nil {
+		t.Errorf("Error waiting for instance readiness for password reset: %s", err.Error())
+	}
+
+	err = client.ResetInstancePassword(
+		context.Background(),
+		instance.ID,
+		linodego.InstancePasswordResetOptions{
+			RootPass: randPassword(),
+		},
+	)
+	if err != nil {
+		t.Errorf("failed to reset instance password for instance with id %d: %v", instance.ID, err.Error())
+	}
 }
 
 func TestInstance_Resize(t *testing.T) {
@@ -311,6 +380,44 @@ func TestInstance_Disk_ListMultiple(t *testing.T) {
 	}
 }
 
+func TestInstance_Disk_Clone(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Disk_Clone", true)
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	instance, err = client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceOffline, 180)
+	if err != nil {
+		t.Errorf("Error waiting for instance readiness for disk clone: %s", err)
+	}
+
+	disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
+		Label:      "go-disk-test-" + randLabel(),
+		Filesystem: "ext4",
+		Image:      "linode/debian9",
+		RootPass:   randPassword(),
+		Size:       2000,
+	})
+	if err != nil {
+		t.Errorf("Error creating disk for disk clone: %s", err)
+	}
+
+	instance, err = client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceOffline, 180)
+	if err != nil {
+		t.Errorf("Error waiting for instance readiness after creating disk for disk clone: %s", err)
+	}
+	disk, err = client.WaitForInstanceDiskStatus(context.Background(), instance.ID, disk.ID, linodego.DiskReady, 180)
+	if err != nil {
+		t.Errorf("Error waiting for disk readiness for disk clone: %s", err)
+	}
+
+	_, err = client.CloneInstanceDisk(context.Background(), instance.ID, disk.ID)
+	if err != nil {
+		t.Errorf("Error cloning instance disk: %s", err)
+	}
+}
+
 func TestInstance_Disk_ResetPassword(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Disk_ResetPassword", true)
 	defer teardown()
@@ -346,6 +453,42 @@ func TestInstance_Disk_ResetPassword(t *testing.T) {
 	err = client.PasswordResetInstanceDisk(context.Background(), instance.ID, disk.ID, "r34!_b4d_p455")
 	if err != nil {
 		t.Errorf("Error reseting password on instance disk: %s", err)
+	}
+}
+
+func TestInstance_NodeBalancers_List(t *testing.T) {
+	client, _, _, node, teardown, err := setupNodeBalancerNode(t, "fixtures/TestInstance_NodeBalancers_List")
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	privateIP := strings.Split(node.Address, ":")[0]
+
+	instanceIPs, err := client.ListIPAddresses(context.Background(), nil)
+	if err != nil {
+		t.Error(err)
+	}
+
+	var linodeID = 0
+
+	for _, instanceIP := range instanceIPs {
+		if instanceIP.Address == privateIP {
+			linodeID = instanceIP.LinodeID
+			break
+		}
+	}
+
+	if linodeID == 0 {
+		t.Errorf("Could not find instance with node's IP")
+	}
+
+	nodebalancers, err := client.ListInstanceNodeBalancers(context.Background(), linodeID, nil)
+	if err != nil {
+		t.Errorf("Error listing instance nodebalancers, expected struct, got error %v", err)
+	}
+	if len(nodebalancers) == 0 {
+		t.Errorf("Expected an list of instance nodebalancers, but got %v", nodebalancers)
 	}
 }
 

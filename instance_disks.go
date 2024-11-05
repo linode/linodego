@@ -165,3 +165,9 @@ func (c *Client) DeleteInstanceDisk(ctx context.Context, linodeID int, diskID in
 	err := doDELETERequest(ctx, c, e)
 	return err
 }
+
+// CloneInstanceDisk clones the given InstanceDisk for the given Instance
+func (c *Client) CloneInstanceDisk(ctx context.Context, linodeID, diskID int) (*InstanceDisk, error) {
+	e := formatAPIPath("linode/instances/%d/disks/%d/clone", linodeID, diskID)
+	return doPOSTRequest[InstanceDisk, any](ctx, c, e)
+}
