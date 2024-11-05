@@ -65,6 +65,8 @@ type InstanceDiskUpdateOptions struct {
 	Label string `json:"label"`
 }
 
+type InstanceDiskCloneOptions struct{}
+
 // ListInstanceDisks lists InstanceDisks
 func (c *Client) ListInstanceDisks(ctx context.Context, linodeID int, opts *ListOptions) ([]InstanceDisk, error) {
 	response, err := getPaginatedResults[InstanceDisk](ctx, c, formatAPIPath("linode/instances/%d/disks", linodeID), opts)
@@ -167,7 +169,7 @@ func (c *Client) DeleteInstanceDisk(ctx context.Context, linodeID int, diskID in
 }
 
 // CloneInstanceDisk clones the given InstanceDisk for the given Instance
-func (c *Client) CloneInstanceDisk(ctx context.Context, linodeID, diskID int) (*InstanceDisk, error) {
+func (c *Client) CloneInstanceDisk(ctx context.Context, linodeID, diskID int, opts InstanceDiskCloneOptions) (*InstanceDisk, error) {
 	e := formatAPIPath("linode/instances/%d/disks/%d/clone", linodeID, diskID)
-	return doPOSTRequest[InstanceDisk, any](ctx, c, e)
+	return doPOSTRequest[InstanceDisk](ctx, c, e, opts)
 }

@@ -412,7 +412,9 @@ func TestInstance_Disk_Clone(t *testing.T) {
 		t.Errorf("Error waiting for disk readiness for disk clone: %s", err)
 	}
 
-	_, err = client.CloneInstanceDisk(context.Background(), instance.ID, disk.ID)
+	opts := linodego.InstanceDiskCloneOptions{}
+
+	_, err = client.CloneInstanceDisk(context.Background(), instance.ID, disk.ID, opts)
 	if err != nil {
 		t.Errorf("Error cloning instance disk: %s", err)
 	}
