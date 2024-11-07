@@ -1,12 +1,13 @@
 package unit
 
 import (
+	"net/http"
+	"testing"
+
 	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"
 	"github.com/linode/linodego/internal/testutil"
 	"github.com/stretchr/testify/mock"
-	"net/http"
-	"testing"
 )
 
 type MockResponse struct {

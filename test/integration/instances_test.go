@@ -178,7 +178,9 @@ func TestInstance_Disks_List(t *testing.T) {
 	}
 }
 
+// TODO:: Un-skip this test once diskencryption is enabled
 func TestInstance_Disks_List_WithEncryption(t *testing.T) {
+	t.Skip("Skip disk encryption tests until it is enabled in region")
 	client, instance, teardown, err := setupInstance(t, "fixtures/TestInstance_Disks_List_WithEncryption", true, func(c *linodego.Client, ico *linodego.InstanceCreateOptions) {
 		ico.Region = getRegionsWithCaps(t, c, []string{"Disk Encryption"})[0]
 	})
@@ -453,7 +455,9 @@ func TestInstance_Rebuild(t *testing.T) {
 	}
 }
 
+// TODO:: Un-skip this test once diskencryption is enabled
 func TestInstance_RebuildWithEncryption(t *testing.T) {
+	t.Skip("Skip disk encryption tests until it is enabled in region")
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(
 		t,
 		"fixtures/TestInstance_RebuildWithEncryption",
