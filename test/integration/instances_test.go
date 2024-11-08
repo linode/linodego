@@ -3,11 +3,12 @@ package integration
 import (
 	"context"
 	"encoding/base64"
-	"github.com/linode/linodego"
-	"github.com/stretchr/testify/require"
 	"slices"
 	"strconv"
 	"testing"
+
+	"github.com/linode/linodego"
+	"github.com/stretchr/testify/require"
 )
 
 type instanceModifier func(*linodego.Client, *linodego.InstanceCreateOptions)

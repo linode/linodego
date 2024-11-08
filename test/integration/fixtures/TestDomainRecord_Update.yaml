@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/domains
     method: POST
   response:
-    body: '{"id": 3041954, "type": "master", "domain": "linodego-blue-test.com", "tags":
+    body: '{"id": 3153529, "type": "master", "domain": "linodego-blue-test.com", "tags":
       [], "group": "", "status": "active", "errors": "", "description": "", "soa_email":
       "example@example.com", "retry_sec": 0, "master_ips": [], "axfr_ips": [], "expire_sec":
       0, "refresh_sec": 0, "ttl_sec": 0, "created": "2018-01-02T03:04:05", "updated":
@@ -43,7 +43,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 25 Jul 2024 17:44:24 GMT
+      - Thu, 31 Oct 2024 20:38:30 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -58,12 +58,9 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -79,10 +76,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/domains/3041954/records
+    url: https://api.linode.com/v4beta/domains/3153529/records
     method: POST
   response:
-    body: '{"id": 35694151, "type": "A", "name": "a", "target": "127.0.0.1", "priority":
+    body: '{"id": 36666865, "type": "A", "name": "a", "target": "127.0.0.1", "priority":
       0, "weight": 0, "port": 0, "service": null, "protocol": null, "ttl_sec": 0,
       "tag": null, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
     headers:
@@ -109,7 +106,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 25 Jul 2024 17:44:24 GMT
+      - Thu, 31 Oct 2024 20:38:31 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -124,12 +121,9 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -145,10 +139,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/domains/3041954/records/35694151
+    url: https://api.linode.com/v4beta/domains/3153529/records/36666865
     method: PUT
   response:
-    body: '{"id": 35694151, "type": "A", "name": "renamed", "target": "127.0.0.1",
+    body: '{"id": 36666865, "type": "A", "name": "renamed", "target": "127.0.0.1",
       "priority": 0, "weight": 0, "port": 0, "service": null, "protocol": null, "ttl_sec":
       0, "tag": null, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
     headers:
@@ -175,7 +169,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 25 Jul 2024 17:44:24 GMT
+      - Thu, 31 Oct 2024 20:38:31 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -190,12 +184,9 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -211,7 +202,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/domains/3041954/records/35694151
+    url: https://api.linode.com/v4beta/domains/3153529/records/36666865
     method: DELETE
   response:
     body: '{}'
@@ -239,7 +230,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 25 Jul 2024 17:44:24 GMT
+      - Thu, 31 Oct 2024 20:38:31 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -254,12 +245,9 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -275,7 +263,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/domains/3041954
+    url: https://api.linode.com/v4beta/domains/3153529
     method: DELETE
   response:
     body: '{}'
@@ -303,7 +291,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 25 Jul 2024 17:44:24 GMT
+      - Thu, 31 Oct 2024 20:38:31 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -318,12 +306,9 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

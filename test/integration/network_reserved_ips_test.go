@@ -3,7 +3,6 @@ package integration
 import (
 	"context"
 	"strings"
-
 	"testing"
 
 	"github.com/linode/linodego"
@@ -71,7 +70,6 @@ func TestReservedIPAddresses_EndToEndTest(t *testing.T) {
 	filter := ""
 
 	ipList, err := client.ListReservedIPAddresses(context.Background(), NewListOptions(0, filter))
-
 	if err != nil {
 		t.Fatalf("Error listing IP addresses: %v", err)
 	}
@@ -170,7 +168,6 @@ func TestReservedIPAddresses_ListIPAddressesVariants(t *testing.T) {
 	}
 
 	ipList, err := client.ListIPAddresses(context.Background(), &listOptions)
-
 	if err != nil {
 		t.Fatalf("Error listing reserved IP addresses in us-east: %v", err)
 	}
@@ -196,7 +193,6 @@ func TestReservedIPAddresses_ListIPAddressesVariants(t *testing.T) {
 	if foundReservedIPs != expected_ips {
 		t.Errorf("Expected %d but found %d while listing reserved IP addresses", expected_ips, foundReservedIPs)
 	}
-
 }
 
 // TestReservedIPAddresses_GetIPAddressVariants tests various scenarios for getting a specific IP address
