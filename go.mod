@@ -1,10 +1,10 @@
 module github.com/linode/linodego
 
 require (
-	github.com/go-resty/resty/v2 v2.13.1
+	github.com/go-resty/resty/v2 v2.15.3
 	github.com/google/go-cmp v0.6.0
 	github.com/jarcoal/httpmock v1.3.1
-	golang.org/x/net v0.29.0
+	golang.org/x/net v0.30.0
 	golang.org/x/oauth2 v0.23.0
 	golang.org/x/text v0.19.0
 	gopkg.in/ini.v1 v1.66.6

@@ -3,17 +3,17 @@ package integration
 import (
 	"context"
 	"encoding/base64"
+	"slices"
 	"strconv"
 	"testing"
 
-	"github.com/stretchr/testify/require"
-
 	"github.com/linode/linodego"
+	"github.com/stretchr/testify/require"
 )
 
 type instanceModifier func(*linodego.Client, *linodego.InstanceCreateOptions)
 
-func TestInstances_List(t *testing.T) {
+func TestInstances_List_smoke(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(
 		t,
 		"fixtures/TestInstances_List", true,
@@ -120,6 +120,48 @@ func TestInstance_Resize(t *testing.T) {
 	}
 }
 
+func TestInstance_Migrate(t *testing.T) {
+	client, instance, teardown, err := setupInstance(
+		t,
+		"fixtures/TestInstance_Migrate", true,
+		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+			boot := true
+			options.Type = "g6-nanode-1"
+			options.Booted = &boot
+		},
+	)
+
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	instance, err = client.WaitForInstanceStatus(
+		context.Background(),
+		instance.ID,
+		linodego.InstanceRunning,
+		180,
+	)
+	if err != nil {
+		t.Errorf("Error waiting for instance readiness for migration: %s", err.Error())
+	}
+
+	upgrade := false
+
+	err = client.MigrateInstance(
+		context.Background(),
+		instance.ID,
+		linodego.InstanceMigrateOptions{
+			Type:    "cold",
+			Region:  "us-west",
+			Upgrade: &upgrade,
+		},
+	)
+	if err != nil {
+		t.Errorf("failed to migrate instance %d: %v", instance.ID, err.Error())
+	}
+}
+
 func TestInstance_Disks_List(t *testing.T) {
 	client, instance, teardown, err := setupInstance(t, "fixtures/TestInstance_Disks_List", true)
 	defer teardown()
@@ -136,7 +178,9 @@ func TestInstance_Disks_List(t *testing.T) {
 	}
 }
 
+// TODO:: Un-skip this test once diskencryption is enabled
 func TestInstance_Disks_List_WithEncryption(t *testing.T) {
+	t.Skip("Skip disk encryption tests until it is enabled in region")
 	client, instance, teardown, err := setupInstance(t, "fixtures/TestInstance_Disks_List_WithEncryption", true, func(c *linodego.Client, ico *linodego.InstanceCreateOptions) {
 		ico.Region = getRegionsWithCaps(t, c, []string{"Disk Encryption"})[0]
 	})
@@ -411,7 +455,9 @@ func TestInstance_Rebuild(t *testing.T) {
 	}
 }
 
+// TODO:: Un-skip this test once diskencryption is enabled
 func TestInstance_RebuildWithEncryption(t *testing.T) {
+	t.Skip("Skip disk encryption tests until it is enabled in region")
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(
 		t,
 		"fixtures/TestInstance_RebuildWithEncryption",
@@ -559,6 +605,24 @@ func TestInstance_DiskEncryption(t *testing.T) {
 	if inst.DiskEncryption != linodego.InstanceDiskEncryptionEnabled {
 		t.Fatalf("expected instance to have disk encryption enabled, got: %s, want: %s", inst.DiskEncryption, linodego.InstanceDiskEncryptionEnabled)
 	}
+}
+
+func TestInstance_withBlockStorageEncryption(t *testing.T) {
+	client, clientTeardown := createTestClient(t, "fixtures/TestInstance_withBlockStorageEncryption")
+
+	inst, err := createInstance(t, client, true, func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+		options.Region = getRegionsWithCaps(t, client, []string{"Linodes", "Block Storage Encryption"})[0]
+		options.Label = "go-inst-test-create-bde"
+	})
+	require.NoError(t, err)
+
+	defer func() {
+		client.DeleteInstance(context.Background(), inst.ID)
+		clientTeardown()
+	}()
+
+	// Filtering is not currently supported on capabilities
+	require.True(t, slices.Contains(inst.Capabilities, "Block Storage Encryption"))
 }
 
 func TestInstance_withPG(t *testing.T) {

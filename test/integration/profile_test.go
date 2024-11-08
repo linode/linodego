@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestProfile_Get(t *testing.T) {
+func TestProfile_Get_smoke(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestProfile_Get")
 	defer teardown()
 

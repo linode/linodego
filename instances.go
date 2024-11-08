@@ -61,13 +61,13 @@ type Instance struct {
 	WatchdogEnabled bool            `json:"watchdog_enabled"`
 	Tags            []string        `json:"tags"`
 
-	// NOTE: Placement Groups may not currently be available to all users.
 	PlacementGroup *InstancePlacementGroup `json:"placement_group"`
 
 	// NOTE: Disk encryption may not currently be available to all users.
 	DiskEncryption InstanceDiskEncryption `json:"disk_encryption"`
 
-	LKEClusterID int `json:"lke_cluster_id"`
+	LKEClusterID int      `json:"lke_cluster_id"`
+	Capabilities []string `json:"capabilities"`
 }
 
 // InstanceSpec represents a linode spec
@@ -155,7 +155,6 @@ type InstanceCreateOptions struct {
 	// NOTE: Disk encryption may not currently be available to all users.
 	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitempty"`
 
-	// NOTE: Placement Groups may not currently be available to all users.
 	PlacementGroup *InstanceCreatePlacementGroupOptions `json:"placement_group,omitempty"`
 
 	// Creation fields that need to be set explicitly false, "", or 0 use pointers
@@ -251,8 +250,9 @@ type InstanceResizeOptions struct {
 
 // InstanceMigrateOptions is an options struct used when migrating an instance
 type InstanceMigrateOptions struct {
-	Type   InstanceMigrationType `json:"type,omitempty"`
-	Region string                `json:"region,omitempty"`
+	Type    InstanceMigrationType `json:"type,omitempty"`
+	Region  string                `json:"region,omitempty"`
+	Upgrade *bool                 `json:"upgrade,omitempty"`
 
 	PlacementGroup *InstanceCreatePlacementGroupOptions `json:"placement_group,omitempty"`
 }

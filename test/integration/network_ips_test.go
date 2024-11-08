@@ -29,7 +29,7 @@ func TestIPAddress_GetMissing(t *testing.T) {
 	}
 }
 
-func TestIPAddress_GetFound(t *testing.T) {
+func TestIPAddress_GetFound_smoke(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestIPAddress_GetFound", true)
 	defer teardown()
 	if err != nil {

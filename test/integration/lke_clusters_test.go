@@ -49,7 +49,7 @@ func TestLKECluster_WaitForReady(t *testing.T) {
 	}
 }
 
-func TestLKECluster_GetFound(t *testing.T) {
+func TestLKECluster_GetFound_smoke(t *testing.T) {
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = "go-lke-test-found"
 	}}, "fixtures/TestLKECluster_GetFound")
@@ -167,6 +167,30 @@ func TestLKECluster_Kubeconfig_Get(t *testing.T) {
 	}
 }
 
+func TestLKECluster_Kubeconfig_Delete(t *testing.T) {
+	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
+		createOpts.Label = "go-lke-test-kube-delete"
+	}}, "fixtures/TestLKECluster_Kubeconfig_Delete")
+	defer teardown()
+
+	_, err = client.WaitForLKEClusterStatus(context.Background(), lkeCluster.ID, linodego.LKEClusterReady, 180)
+	if err != nil {
+		t.Errorf("Error waiting for LKECluster readiness: %s", err)
+	}
+	i, err := client.GetLKEClusterKubeconfig(context.Background(), lkeCluster.ID)
+	if err != nil {
+		t.Errorf("Error getting lkeCluster Kubeconfig, expected struct, got %v and error %v", i, err)
+	}
+	if len(i.KubeConfig) == 0 {
+		t.Errorf("Expected an lkeCluster Kubeconfig, but got empty string %v", i)
+	}
+
+	delete_err := client.DeleteLKEClusterKubeconfig(context.Background(), lkeCluster.ID)
+	if err != nil {
+		t.Errorf("Error deleting lkeCluster Kubeconfig, got error %v", delete_err)
+	}
+}
+
 func TestLKECluster_Dashboard_Get(t *testing.T) {
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = "go-lke-test-dash"
@@ -263,9 +287,10 @@ func setupLKECluster(t *testing.T, clusterModifiers []clusterModifier, fixturesY
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 
+	// TODO:: Add "Disk Encryption" to Region once disk encryption is enabled
 	createOpts := linodego.LKEClusterCreateOptions{
 		Label:      label,
-		Region:     getRegionsWithCaps(t, client, []string{"Kubernetes", "Disk Encryption"})[0],
+		Region:     getRegionsWithCaps(t, client, []string{"Kubernetes"})[0],
 		K8sVersion: "1.29",
 		Tags:       []string{"testing"},
 		NodePools:  []linodego.LKENodePoolCreateOptions{{Count: 1, Type: "g6-standard-2", Tags: []string{"test"}}},

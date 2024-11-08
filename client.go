@@ -32,7 +32,8 @@ const (
 	APIHost = "api.linode.com"
 	// APIHostVar environment var to check for alternate API URL
 	APIHostVar = "LINODE_URL"
-	// APIHostCert environment var containing path to CA cert to validate against
+	// APIHostCert environment var containing path to CA cert to validate against.
+	// Note that the custom CA cannot be configured together with a custom HTTP Transport.
 	APIHostCert = "LINODE_CA"
 	// APIVersion Linode API version
 	APIVersion = "v4"
@@ -737,7 +738,7 @@ func NewClient(hc *http.Client) (client Client) {
 
 	certPath, certPathExists := os.LookupEnv(APIHostCert)
 
-	if certPathExists {
+	if certPathExists && !isCustomTransport(hc.Transport) {
 		cert, err := os.ReadFile(filepath.Clean(certPath))
 		if err != nil {
 			log.Fatalf("[ERROR] Error when reading cert at %s: %s\n", certPath, err.Error())
@@ -793,7 +794,7 @@ func NewClientFromEnv(hc *http.Client) (*Client, error) {
 	client.selectedProfile = configProfile
 
 	// We should only load the config if the config file exists
-	if _, err := os.Stat(configPath); err != nil {
+	if _, err = os.Stat(configPath); err != nil {
 		return nil, fmt.Errorf("error loading config file %s: %w", configPath, err)
 	}
 
@@ -878,4 +879,12 @@ func generateListCacheURL(endpoint string, opts *ListOptions) (string, error) {
 	}
 
 	return fmt.Sprintf("%s:%s", endpoint, hashedOpts), nil
+}
+
+func isCustomTransport(transport http.RoundTripper) bool {
+	if transport != http.DefaultTransport.(*http.Transport) {
+		log.Println("[WARN] Custom transport is not allowed with a custom root CA.")
+		return true
+	}
+	return false
 }

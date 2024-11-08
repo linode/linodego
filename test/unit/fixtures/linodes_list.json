@@ -1,0 +1,60 @@
+{
+  "data": [
+    {
+      "alerts": {
+        "cpu": 180,
+        "io": 10000,
+        "network_in": 10,
+        "network_out": 10,
+        "transfer_quota": 80
+      },
+      "backups": {
+        "available": true,
+        "enabled": true,
+        "last_successful": "2018-01-01T00:01:01",
+        "schedule": {
+          "day": "Saturday",
+          "window": "W22"
+        }
+      },
+      "created": "2018-01-01T00:01:01",
+      "has_user_data": true,
+      "host_uuid": "3a3ddd59d9a78bb8de041391075df44de62bfec8",
+      "hypervisor": "kvm",
+      "id": 123,
+      "image": "linode/debian10",
+      "ipv4": [
+        "203.0.113.1",
+        "192.0.2.1"
+      ],
+      "ipv6": "c001:d00d::1337/128",
+      "label": "linode123",
+      "placement_group": {
+        "id": 528,
+        "label": "PG_Miami_failover",
+        "migrating_to": 2468,
+        "placement_group_policy": "strict",
+        "placement_group_type": "anti-affinity:local"
+      },
+      "region": "us-east",
+      "specs": {
+        "disk": 81920,
+        "gpus": 0,
+        "memory": 4096,
+        "transfer": 4000,
+        "vcpus": 2
+      },
+      "status": "running",
+      "tags": [
+        "example tag",
+        "another example"
+      ],
+      "type": "g6-standard-1",
+      "updated": "2018-01-01T00:01:01",
+      "watchdog_enabled": true
+    }
+  ],
+  "page": 1,
+  "pages": 1,
+  "results": 1
+}

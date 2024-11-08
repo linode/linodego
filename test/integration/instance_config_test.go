@@ -272,7 +272,7 @@ func TestInstance_ConfigInterfaces_Reorder(t *testing.T) {
 	}
 }
 
-func TestInstance_ConfigInterfaces_List(t *testing.T) {
+func TestInstance_ConfigInterfaces_List_smoke(t *testing.T) {
 	client, _, _, instance, config, teardown := setupInstanceWith3Interfaces(
 		t,
 		"fixtures/TestInstance_ConfigInterfaces_List",
