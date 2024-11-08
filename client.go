@@ -5,6 +5,7 @@ import (
 	"context"
 	"crypto/tls"
 	"crypto/x509"
+	_ "embed"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -17,6 +18,7 @@ import (
 	"reflect"
 	"regexp"
 	"runtime"
+	"sort"
 	"strconv"
 	"strings"
 	"sync"
@@ -51,31 +53,33 @@ const (
 	APIDefaultCacheExpiration = time.Minute * 15
 )
 
-var (
-	reqLogTemplate = template.Must(template.New("request").Parse(`Sending request:
-Method: {{.Method}}
-URL: {{.URL}}
-Headers: {{.Headers}}
-Body: {{.Body}}`))
+// Embed the log template files
+//
+//go:embed request_log_template.tmpl
+var requestTemplateStr string
 
-	respLogTemplate = template.Must(template.New("response").Parse(`Received response:
-Status: {{.Status}}
-Headers: {{.Headers}}
-Body: {{.Body}}`))
+//go:embed response_log_template.tmpl
+var responseTemplateStr string
+
+var (
+	reqLogTemplate  = template.Must(template.New("request").Parse(requestTemplateStr))
+	respLogTemplate = template.Must(template.New("response").Parse(responseTemplateStr))
 )
 
 type RequestLog struct {
-	Method  string
-	URL     string
+	Request string
+	Host    string
 	Headers http.Header
 	Body    string
 }
 
 type ResponseLog struct {
-	Method  string
-	URL     string
-	Headers http.Header
-	Body    string
+	Status       string
+	Proto        string
+	ReceivedAt   string
+	TimeDuration string
+	Headers      http.Header
+	Body         string
 }
 
 var envDebug = false
@@ -499,10 +503,9 @@ func (c *Client) Transport() (*http.Transport, error) {
 // nolint:funlen, gocognit, nestif
 func (c *Client) doRequest(ctx context.Context, method, endpoint string, params requestParams, paginationMutator *func(*http.Request) error) error {
 	var (
-		req        *http.Request
-		bodyBuffer *bytes.Buffer
-		resp       *http.Response
-		err        error
+		req  *http.Request
+		resp *http.Response
+		err  error
 	)
 
 	for range c.retryCount {
@@ -513,7 +516,7 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 			}
 		}
 
-		req, bodyBuffer, err = c.createRequest(ctx, method, endpoint, params)
+		req, err = c.createRequest(ctx, method, endpoint, params)
 		if err != nil {
 			return err
 		}
@@ -529,10 +532,15 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 		}
 
 		if c.debug && c.logger != nil {
-			c.logRequest(req, method, endpoint, bodyBuffer)
+			loggedReq, logErr := c.logRequest(req)
+			if logErr != nil {
+				return logErr
+			}
+
+			req = loggedReq
 		}
 
-		processResponse := func() error {
+		processResponse := func(start, end time.Time) error {
 			defer func() {
 				closeErr := resp.Body.Close()
 				if closeErr != nil && err == nil {
@@ -545,7 +553,7 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 			}
 
 			if c.debug && c.logger != nil {
-				resp = c.logResponse(resp)
+				resp = c.logResponse(resp, start, end)
 			}
 
 			if params.Response != nil {
@@ -562,9 +570,11 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 			return nil
 		}
 
+		startTime := time.Now()
 		resp, err = c.sendRequest(req)
+		endTime := time.Now()
 		if err == nil {
-			if err = processResponse(); err == nil {
+			if err = processResponse(startTime, endTime); err == nil {
 				return nil
 			}
 		}
@@ -608,17 +618,16 @@ func (c *Client) shouldRetry(resp *http.Response, err error) bool {
 	return false
 }
 
-func (c *Client) createRequest(ctx context.Context, method, endpoint string, params requestParams) (*http.Request, *bytes.Buffer, error) {
+func (c *Client) createRequest(ctx context.Context, method, endpoint string, params requestParams) (*http.Request, error) {
 	var (
 		bodyReader io.Reader
-		bodyBuffer *bytes.Buffer
 	)
 
 	if params.Body != nil {
 		// Reset the body position to the start before using it
 		_, err := params.Body.Seek(0, io.SeekStart)
 		if err != nil {
-			return nil, nil, c.ErrorAndLogf("failed to seek to the start of the body: %v", err.Error())
+			return nil, c.ErrorAndLogf("failed to seek to the start of the body: %v", err.Error())
 		}
 
 		bodyReader = params.Body
@@ -627,7 +636,7 @@ func (c *Client) createRequest(ctx context.Context, method, endpoint string, par
 	req, err := http.NewRequestWithContext(ctx, method, fmt.Sprintf("%s/%s", strings.TrimRight(c.hostURL, "/"),
 		strings.TrimLeft(endpoint, "/")), bodyReader)
 	if err != nil {
-		return nil, nil, c.ErrorAndLogf("failed to create request: %v", err.Error())
+		return nil, c.ErrorAndLogf("failed to create request: %v", err.Error())
 	}
 
 	// Set the default headers
@@ -645,7 +654,7 @@ func (c *Client) createRequest(ctx context.Context, method, endpoint string, par
 		}
 	}
 
-	return req, bodyBuffer, nil
+	return req, nil
 }
 
 func (c *Client) applyBeforeRequest(req *http.Request) error {
@@ -680,37 +689,92 @@ func redactHeaders(headers http.Header) http.Header {
 	return redacted
 }
 
-func (c *Client) logRequest(req *http.Request, method, url string, bodyBuffer *bytes.Buffer) {
-	var reqBody string
-	if bodyBuffer != nil {
-		reqBody = bodyBuffer.String()
-	} else {
-		reqBody = "nil"
+func (c *Client) logRequest(req *http.Request) (*http.Request, error) {
+	var reqBody bytes.Buffer
+	if req.Body != nil {
+		if _, err := io.Copy(&reqBody, req.Body); err != nil {
+			c.logger.Errorf("failed to read request body: %v", err)
+		}
+		req.Body = io.NopCloser(bytes.NewReader(reqBody.Bytes()))
 	}
 
 	reqLog := &RequestLog{
-		Method:  method,
-		URL:     url,
-		Headers: req.Header,
-		Body:    reqBody,
+		Request: strings.Join([]string{req.Method, req.URL.Path, req.Proto}, " "),
+		Host:    req.Host,
+		Headers: req.Header.Clone(),
+		Body:    reqBody.String(),
 	}
 
 	e := c.requestLog(reqLog)
 	if e != nil {
-		_ = c.ErrorAndLogf("failed to mutate after response: %v", e.Error())
+		_ = c.ErrorAndLogf("failed to log request: %v", e.Error())
+	}
+
+	body, jsonErr := formatBody(reqLog.Body)
+	if jsonErr != nil {
+		if c.debug && c.logger != nil {
+			c.logger.Errorf("%v", jsonErr)
+		}
 	}
 
 	var logBuf bytes.Buffer
 
 	err := reqLogTemplate.Execute(&logBuf, map[string]any{
-		"Method":  reqLog.Method,
-		"URL":     reqLog.URL,
-		"Headers": reqLog.Headers,
-		"Body":    reqLog.Body,
+		"Request": reqLog.Request,
+		"Host":    reqLog.Host,
+		"Headers": formatHeaders(reqLog.Headers),
+		"Body":    body,
 	})
 	if err == nil {
 		c.logger.Debugf(logBuf.String())
 	}
+
+	return req, nil
+}
+
+func formatHeaders(headers map[string][]string) string {
+	var builder strings.Builder
+	builder.WriteString("\n")
+
+	keys := make([]string, 0, len(headers))
+	for key := range headers {
+		keys = append(keys, key)
+	}
+	sort.Strings(keys)
+
+	for _, key := range keys {
+		builder.WriteString(fmt.Sprintf("    %s: %s\n", key, strings.Join(headers[key], ", ")))
+	}
+	return strings.TrimSuffix(builder.String(), "\n")
+}
+
+func formatBody(body string) (string, error) {
+	body = strings.TrimSpace(body)
+	if body == "null" || body == "nil" || body == "" {
+		return "", nil
+	}
+
+	var jsonData map[string]interface{}
+	err := json.Unmarshal([]byte(body), &jsonData)
+	if err != nil {
+		return "", fmt.Errorf("error unmarshalling JSON: %w", err)
+	}
+
+	prettyJSON, err := json.MarshalIndent(jsonData, "", "  ")
+	if err != nil {
+		return "", fmt.Errorf("error marshalling JSON: %w", err)
+	}
+
+	return "\n" + string(prettyJSON), nil
+}
+
+func formatDate(dateStr string) (string, error) {
+	parsedTime, err := time.Parse(time.RFC1123, dateStr)
+	if err != nil {
+		return "", fmt.Errorf("error parsing date: %v", err)
+	}
+	formattedDate := parsedTime.In(time.Local).Format("2006-01-02T15:04:05-07:00") // nolint:gosmopolitan
+	return formattedDate, nil
 }
 
 func (c *Client) sendRequest(req *http.Request) (*http.Response, error) {
@@ -732,18 +796,46 @@ func (c *Client) checkHTTPError(resp *http.Response) error {
 	return nil
 }
 
-func (c *Client) logResponse(resp *http.Response) *http.Response {
+func (c *Client) logResponse(resp *http.Response, start, end time.Time) *http.Response {
 	var respBody bytes.Buffer
 	if _, err := io.Copy(&respBody, resp.Body); err != nil {
 		c.logger.Errorf("failed to read response body: %v", err)
 	}
 
+	receivedAt, dateErr := formatDate(resp.Header.Get("Date"))
+	if dateErr != nil {
+		if c.debug && c.logger != nil {
+			c.logger.Errorf("failed to format date: %v", dateErr)
+		}
+	}
+
+	duration := end.Sub(start).String()
+
+	respLog := &ResponseLog{
+		Status:       resp.Status,
+		Proto:        resp.Proto,
+		ReceivedAt:   receivedAt,
+		TimeDuration: duration,
+		Headers:      resp.Header,
+		Body:         respBody.String(),
+	}
+
+	body, jsonErr := formatBody(respLog.Body)
+	if jsonErr != nil {
+		if c.debug && c.logger != nil {
+			c.logger.Errorf("%v", jsonErr)
+		}
+	}
+
 	var logBuf bytes.Buffer
 
 	err := respLogTemplate.Execute(&logBuf, map[string]any{
-		"Status":  resp.Status,
-		"Headers": redactHeaders(resp.Header),
-		"Body":    respBody.String(),
+		"Status":       respLog.Status,
+		"Proto":        respLog.Proto,
+		"ReceivedAt":   respLog.ReceivedAt,
+		"TimeDuration": respLog.TimeDuration,
+		"Headers":      formatHeaders(redactHeaders(respLog.Headers)),
+		"Body":         body,
 	})
 	if err == nil {
 		c.logger.Debugf(logBuf.String())
