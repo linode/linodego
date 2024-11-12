@@ -14,15 +14,17 @@ interactions:
     url: https://api.linode.com/v4beta/account
     method: GET
   response:
-    body: '{"company": "", "email": "yechen@akamai.com", "first_name": "", "last_name":
-      "", "address_1": "", "address_2": "", "city": "", "state": "", "zip": "", "country":
-      "", "phone": "", "balance": 0.0, "tax_id": "", "billing_source": "linode", "credit_card":
-      {"last_four": null, "expiry": null}, "balance_uninvoiced": 0.0, "active_since":
-      "2018-01-02T03:04:05", "capabilities": ["Linodes", "NodeBalancers", "Block Storage",
-      "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans", "LKE HA Control Planes",
-      "Machine Images", "VPCs", "LKE Network Access Control List (IP ACL)", "Placement
-      Group", "Object Storage Access Key Regions"], "active_promotions": [], "euuid":
-      "4D76E527-6B98-41BB-BE6936746C131930"}'
+    body: '{"company": "Akamai Technologies - Compute - Individual", "email": "ezilber@akamai.com",
+      "first_name": "", "last_name": "", "address_1": "", "address_2": "", "city":
+      "", "state": "MA", "zip": "02142", "country": "US", "phone": "", "balance":
+      0.0, "tax_id": "", "billing_source": "linode", "credit_card": {"last_four":
+      null, "expiry": null}, "balance_uninvoiced": 0.0, "active_since": "2018-01-02T03:04:05",
+      "capabilities": ["Linodes", "NodeBalancers", "Block Storage", "Object Storage",
+      "Kubernetes", "Cloud Firewall", "Vlans", "LKE HA Control Planes", "Block Storage
+      Encryption", "Machine Images", "Managed Databases", "Managed Databases Beta",
+      "VPCs", "LKE Network Access Control List (IP ACL)", "Placement Group", "Object
+      Storage Access Key Regions", "Disk Encryption", "SMTP Enabled"], "active_promotions":
+      [], "euuid": "8151FBB7-C6D6-4480-8DF1A91D15E8AA0B"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -40,14 +42,12 @@ interactions:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
-      Content-Length:
-      - "700"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 25 Jul 2024 17:44:08 GMT
+      - Fri, 08 Nov 2024 14:32:02 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -55,6 +55,7 @@ interactions:
       Vary:
       - Authorization, X-Filter
       - Authorization, X-Filter
+      - Accept-Encoding
       X-Accepted-Oauth-Scopes:
       - account:read_only
       X-Content-Type-Options:
@@ -63,12 +64,9 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

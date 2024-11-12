@@ -19,6 +19,7 @@ type Ticket struct {
 	Summary     string        `json:"summary"`
 	Updated     *time.Time    `json:"-"`
 	UpdatedBy   string        `json:"updated_by"`
+	Closeable   bool          `json:"closeable"`
 }
 
 // TicketEntity refers a ticket to a specific entity
