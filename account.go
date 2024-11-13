@@ -29,6 +29,7 @@ type Account struct {
 	BillingSource     string      `json:"billing_source"`
 	Capabilities      []string    `json:"capabilities"`
 	ActiveSince       *time.Time  `json:"active_since"`
+	ActivePromotions  []Promotion `json:"active_promotions"`
 }
 
 // AccountUpdateOptions fields are those accepted by UpdateAccount
