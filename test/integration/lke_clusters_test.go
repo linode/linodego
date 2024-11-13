@@ -287,10 +287,9 @@ func setupLKECluster(t *testing.T, clusterModifiers []clusterModifier, fixturesY
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 
-	// TODO:: Add "Disk Encryption" to Region once disk encryption is enabled
 	createOpts := linodego.LKEClusterCreateOptions{
 		Label:      label,
-		Region:     getRegionsWithCaps(t, client, []string{"Kubernetes"})[0],
+		Region:     getRegionsWithCaps(t, client, []string{"Kubernetes", "Disk Encryption"})[0],
 		K8sVersion: "1.29",
 		Tags:       []string{"testing"},
 		NodePools:  []linodego.LKENodePoolCreateOptions{{Count: 1, Type: "g6-standard-2", Tags: []string{"test"}}},
