@@ -3,8 +3,9 @@ package linodego
 import (
 	"context"
 	"encoding/json"
-	"github.com/linode/linodego/internal/parseabletime"
 	"time"
+
+	"github.com/linode/linodego/internal/parseabletime"
 )
 
 // ProfileApp represents a ProfileApp object
@@ -25,7 +26,7 @@ type ProfileApp struct {
 	Scopes string `json:"scopes"`
 
 	// The URL at which this app's thumbnail may be accessed.
-	ThumbnailUrl string `json:"thumbnail_url"`
+	ThumbnailURL string `json:"thumbnail_url"`
 
 	// The website where you can get more information about this app.
 	Website string `json:"website"`
@@ -54,8 +55,8 @@ func (pa *ProfileApp) UnmarshalJSON(b []byte) error {
 }
 
 // GetProfileApp returns the ProfileApp with the provided id
-func (c *Client) GetProfileApp(ctx context.Context, appId int) (*ProfileApp, error) {
-	e := formatAPIPath("profile/apps/%d", appId)
+func (c *Client) GetProfileApp(ctx context.Context, appID int) (*ProfileApp, error) {
+	e := formatAPIPath("profile/apps/%d", appID)
 	return doGETRequest[ProfileApp](ctx, c, e)
 }
 
@@ -65,8 +66,8 @@ func (c *Client) ListProfileApps(ctx context.Context, opts *ListOptions) ([]Prof
 }
 
 // DeleteProfileApp revokes the given ProfileApp's access to the account
-func (c *Client) DeleteProfileApp(ctx context.Context, appId int) error {
-	e := formatAPIPath("profile/apps/%d", appId)
+func (c *Client) DeleteProfileApp(ctx context.Context, appID int) error {
+	e := formatAPIPath("profile/apps/%d", appID)
 	err := doDELETERequest(ctx, c, e)
 	return err
 }

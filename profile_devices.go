@@ -3,8 +3,9 @@ package linodego
 import (
 	"context"
 	"encoding/json"
-	"github.com/linode/linodego/internal/parseabletime"
 	"time"
+
+	"github.com/linode/linodego/internal/parseabletime"
 )
 
 // ProfileDevice represents a ProfileDevice object
@@ -53,8 +54,8 @@ func (pd *ProfileDevice) UnmarshalJSON(b []byte) error {
 }
 
 // GetProfileDevice returns the ProfileDevice with the provided id
-func (c *Client) GetProfileDevice(ctx context.Context, deviceId int) (*ProfileDevice, error) {
-	e := formatAPIPath("profile/devices/%d", deviceId)
+func (c *Client) GetProfileDevice(ctx context.Context, deviceID int) (*ProfileDevice, error) {
+	e := formatAPIPath("profile/devices/%d", deviceID)
 	return doGETRequest[ProfileDevice](ctx, c, e)
 }
 
@@ -64,8 +65,8 @@ func (c *Client) ListProfileDevices(ctx context.Context, opts *ListOptions) ([]P
 }
 
 // DeleteProfileDevice revokes the given ProfileDevice's status as a trusted device
-func (c *Client) DeleteProfileDevice(ctx context.Context, deviceId int) error {
-	e := formatAPIPath("profile/devices/%d", deviceId)
+func (c *Client) DeleteProfileDevice(ctx context.Context, deviceID int) error {
+	e := formatAPIPath("profile/devices/%d", deviceID)
 	err := doDELETERequest(ctx, c, e)
 	return err
 }
