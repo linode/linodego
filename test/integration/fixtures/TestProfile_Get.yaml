@@ -18,7 +18,7 @@ interactions:
       "verified_phone_number": null, "timezone": "GMT", "email_notifications": true,
       "referrals": {"code": "", "url": "", "total": 0, "completed": 0, "pending":
       0, "credit": 0}, "ip_whitelist_enabled": false, "lish_auth_method": "password_keys",
-      "authorized_keys": null, "two_factor_auth": false, "restricted": false, "authentication_type":
+      "authorized_keys": null, "two_factor_auth": true, "restricted": false, "authentication_type":
       "password", "user_type": "default"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -38,13 +38,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "444"
+      - "443"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Wed, 10 Jul 2024 18:09:42 GMT
+      - Fri, 08 Nov 2024 18:15:26 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -62,7 +62,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "800"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
