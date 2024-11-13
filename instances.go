@@ -117,6 +117,18 @@ type InstanceTransfer struct {
 	Quota int `json:"quota"`
 }
 
+// MonthlyInstanceTransferStats pool stats for a Linode Instance network transfer statistics for a specific month
+type MonthlyInstanceTransferStats struct {
+	// The amount of inbound public network traffic received by this Linode, in bytes, for a specific year/month.
+	BytesIn int `json:"bytes_in"`
+
+	// The amount of outbound public network traffic sent by this Linode, in bytes, for a specific year/month.
+	BytesOut int `json:"bytes_out"`
+
+	// The total amount of public network traffic sent and received by this Linode, in bytes, for a specific year/month.
+	BytesTotal int `json:"bytes_total"`
+}
+
 // InstancePlacementGroup represents information about the placement group
 // this Linode is a part of.
 type InstancePlacementGroup struct {
@@ -131,6 +143,11 @@ type InstancePlacementGroup struct {
 type InstanceMetadataOptions struct {
 	// UserData expects a Base64-encoded string
 	UserData string `json:"user_data,omitempty"`
+}
+
+// InstancePasswordResetOptions specifies the new password for the Linode
+type InstancePasswordResetOptions struct {
+	RootPass string `json:"root_pass"`
 }
 
 // InstanceCreateOptions require only Region and Type
@@ -278,7 +295,7 @@ func (c *Client) GetInstance(ctx context.Context, linodeID int) (*Instance, erro
 	return response, nil
 }
 
-// GetInstanceTransfer gets the instance with the provided ID
+// GetInstanceTransfer gets the instance's network transfer pool statistics for the current month.
 func (c *Client) GetInstanceTransfer(ctx context.Context, linodeID int) (*InstanceTransfer, error) {
 	e := formatAPIPath("linode/instances/%d/transfer", linodeID)
 	response, err := doGETRequest[InstanceTransfer](ctx, c, e)
@@ -287,6 +304,12 @@ func (c *Client) GetInstanceTransfer(ctx context.Context, linodeID int) (*Instan
 	}
 
 	return response, nil
+}
+
+// GetInstanceTransferMonthly gets the instance's network transfer pool statistics for a specific month.
+func (c *Client) GetInstanceTransferMonthly(ctx context.Context, linodeID, year, month int) (*MonthlyInstanceTransferStats, error) {
+	e := formatAPIPath("linode/instances/%d/transfer/%d/%d", linodeID, year, month)
+	return doGETRequest[MonthlyInstanceTransferStats](ctx, c, e)
 }
 
 // CreateInstance creates a Linode instance
@@ -346,6 +369,14 @@ func (c *Client) CloneInstance(ctx context.Context, linodeID int, opts InstanceC
 	}
 
 	return response, nil
+}
+
+// ResetInstancePassword resets a Linode instance's root password
+func (c *Client) ResetInstancePassword(ctx context.Context, linodeID int, opts InstancePasswordResetOptions) error {
+	e := formatAPIPath("linode/instances/%d/password", linodeID)
+	_, err := doPOSTRequest[Instance](ctx, c, e, opts)
+
+	return err
 }
 
 // RebootInstance reboots a Linode instance
