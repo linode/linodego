@@ -475,7 +475,7 @@ func (c *Client) MutateInstance(ctx context.Context, id int) error {
 	return c.simpleInstanceAction(ctx, "mutate", id)
 }
 
-// InstanceMutateOptions is a struct representing the options for upgrading a Linode
+// InstanceUpgradeOptions is a struct representing the options for upgrading a Linode
 type InstanceUpgradeOptions struct {
 	// Automatically resize disks when resizing a Linode.
 	// When resizing down to a smaller plan your Linode's data must fit within the smaller disk size.
