@@ -7,7 +7,7 @@ import (
 // IPAddressUpdateOptions fields are those accepted by UpdateToken
 type IPAddressUpdateOptions struct {
 	// The reverse DNS assigned to this address. For public IPv4 addresses, this will be set to a default value provided by Linode if set to nil.
-	Reserved bool    `json:"reserved"`
+	Reserved *bool   `json:"reserved,omitempty"`
 	RDNS     *string `json:"rdns,omitempty"`
 }
 
