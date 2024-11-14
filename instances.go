@@ -470,6 +470,7 @@ func (c *Client) ShutdownInstance(ctx context.Context, id int) error {
 	return c.simpleInstanceAction(ctx, "shutdown", id)
 }
 
+// Deprecated: Please use UpgradeInstance instead.
 // MutateInstance Upgrades a Linode to its next generation.
 func (c *Client) MutateInstance(ctx context.Context, id int) error {
 	return c.simpleInstanceAction(ctx, "mutate", id)
