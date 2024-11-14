@@ -60,7 +60,7 @@ func (c *Client) ListIPAddresses(ctx context.Context, opts *ListOptions) ([]Inst
 	return response, nil
 }
 
-// GetIPAddress gets the template with the provided ID
+// GetIPAddress gets the IPAddress with the provided IP
 func (c *Client) GetIPAddress(ctx context.Context, id string) (*InstanceIP, error) {
 	e := formatAPIPath("networking/ips/%s", id)
 	response, err := doGETRequest[InstanceIP](ctx, c, e)
