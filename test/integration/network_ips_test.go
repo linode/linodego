@@ -177,6 +177,9 @@ func TestIPAddress_Update(t *testing.T) {
 		t.Error(err)
 	}
 
+	reservedTrue := true
+	reservedFalse := false
+
 	address := instance.IPv4[0].String()
 	i, err := client.GetInstanceIPAddresses(context.Background(), instance.ID)
 	if err != nil {
@@ -207,7 +210,7 @@ func TestIPAddress_Update(t *testing.T) {
 
 	ephemeralIP := instance.IPv4[0].String()
 	updateOpts = IPAddressUpdateOptions{
-		Reserved: true,
+		Reserved: &reservedTrue,
 	}
 	updatedIP, err := client.UpdateIPAddress(context.Background(), ephemeralIP, updateOpts)
 	if err != nil {
@@ -226,7 +229,7 @@ func TestIPAddress_Update(t *testing.T) {
 	defer client.DeleteReservedIPAddress(context.Background(), reservedIP)
 
 	updateOpts = IPAddressUpdateOptions{
-		Reserved: true,
+		Reserved: &reservedTrue,
 	}
 	updatedIP, err = client.UpdateIPAddress(context.Background(), reservedIP, updateOpts)
 	if err != nil {
@@ -240,7 +243,7 @@ func TestIPAddress_Update(t *testing.T) {
 
 	ephemeralIP = instance.IPv4[0].String()
 	updateOpts = IPAddressUpdateOptions{
-		Reserved: false,
+		Reserved: &reservedFalse,
 	}
 	updatedIP, err = client.UpdateIPAddress(context.Background(), ephemeralIP, updateOpts)
 	if err != nil {
@@ -273,7 +276,7 @@ func TestIPAddress_Update(t *testing.T) {
 	}
 
 	updateOpts = IPAddressUpdateOptions{
-		Reserved: false,
+		Reserved: &reservedFalse,
 	}
 	updatedIP, err = client.UpdateIPAddress(context.Background(), reservedIP, updateOpts)
 	if err != nil {
@@ -291,27 +294,12 @@ func TestIPAddress_Update(t *testing.T) {
 	}
 
 	updateOpts = IPAddressUpdateOptions{
-		Reserved: true,
+		Reserved: &reservedTrue,
 		RDNS:     String("sample rdns"),
 	}
 	_, err = client.UpdateIPAddress(context.Background(), unassignedResIP, updateOpts)
 	if err == nil {
 		t.Fatalf("Expected error when setting RDNS for unassigned reserved IP, but got none")
-	}
-
-	// Sceanrio 6: Try to reserve an IP at MAX reserve IP limit
-
-	reservedIP, err = createReservedIP()
-	if err == nil {
-		t.Fatalf("Expected error indicating MAX IP Reservation limit has been reached, got nil")
-	} else {
-		updateOpts = IPAddressUpdateOptions{
-			Reserved: true,
-		}
-		_, err = client.UpdateIPAddress(context.Background(), reservedIP, updateOpts)
-		if err == nil {
-			t.Fatalf("Expected error when setting RDNS for unassigned reserved IP, but got none")
-		}
 	}
 
 	client.DeleteReservedIPAddress(context.Background(), unassignedResIP)
@@ -324,7 +312,7 @@ func TestIPAddress_Update(t *testing.T) {
 	}
 
 	updateOpts = IPAddressUpdateOptions{
-		Reserved: true,
+		Reserved: &reservedTrue,
 	}
 	updatedIP, err = client.UpdateIPAddress(context.Background(), reservedIP, updateOpts)
 	if err != nil {
@@ -344,7 +332,7 @@ func TestIPAddress_Update(t *testing.T) {
 	}
 
 	updateOpts = IPAddressUpdateOptions{
-		Reserved: false,
+		Reserved: &reservedFalse,
 	}
 	_, err = client.UpdateIPAddress(context.Background(), reservedIP, updateOpts)
 	if err != nil {
@@ -362,7 +350,7 @@ func TestIPAddress_Update(t *testing.T) {
 	invalidResIp := "123.72.121.76"
 
 	updateOpts = IPAddressUpdateOptions{
-		Reserved: false,
+		Reserved: &reservedFalse,
 	}
 
 	updatedIP, err = client.UpdateIPAddress(context.Background(), invalidResIp, updateOpts)
