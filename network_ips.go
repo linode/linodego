@@ -17,7 +17,7 @@ type LinodeIPAssignment struct {
 	LinodeID int    `json:"linode_id"`
 }
 
-type LinodeReserveIPOptions struct {
+type AllocateReserveIPOptions struct {
 	Type     string `json:"type"`
 	Public   bool   `json:"public"`
 	Reserved bool   `json:"reserved,omitempty"`
@@ -100,7 +100,7 @@ func (c *Client) ShareIPAddresses(ctx context.Context, opts IPAddressesShareOpti
 
 // AllocateReserveIP allocates a new IPv4 address to the Account, with the option to reserve it
 // and optionally assign it to a Linode.
-func (c *Client) AllocateReserveIP(ctx context.Context, opts LinodeReserveIPOptions) (*InstanceIP, error) {
+func (c *Client) AllocateReserveIP(ctx context.Context, opts AllocateReserveIPOptions) (*InstanceIP, error) {
 	e := "networking/ips"
 	result, err := doPOSTRequest[InstanceIP](ctx, c, e, opts)
 	if err != nil {

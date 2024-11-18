@@ -517,7 +517,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 
 	// Scenario 1: Valid request
 
-	opts := LinodeReserveIPOptions{
+	opts := AllocateReserveIPOptions{
 		Type:     "ipv4",
 		Public:   true,
 		Reserved: true,
@@ -534,7 +534,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 	}
 
 	// Scenario 2: Non-owned Linode
-	nonOwnedLinodeOpts := LinodeReserveIPOptions{
+	nonOwnedLinodeOpts := AllocateReserveIPOptions{
 		Type:     "ipv4",
 		Public:   true,
 		Reserved: true,
@@ -548,7 +548,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 
 	// Scenario 3: Omit Linode ID
 
-	omitLinodeIDOpts := LinodeReserveIPOptions{
+	omitLinodeIDOpts := AllocateReserveIPOptions{
 		Type:     "ipv4",
 		Public:   true,
 		Reserved: true,
@@ -564,7 +564,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 
 	// Scenario 4: Account at reserved IP limit
 
-	resLimitoOpts := linodego.LinodeReserveIPOptions{
+	resLimitoOpts := linodego.AllocateReserveIPOptions{
 		Type:     "ipv4",
 		Public:   true,
 		Reserved: true,
@@ -581,7 +581,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 
 	// // Scenario 5: Linode at IPMax limit
 
-	// opts = linodego.LinodeReserveIPOptions{
+	// opts = linodego.AllocateReserveIPOptions{
 	// 	Type:     "ipv4",
 	// 	Public:   true,
 	// 	Reserved: true,
@@ -595,7 +595,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 
 	// Scenario 6: Omit Region
 
-	omitRegionOpts := LinodeReserveIPOptions{
+	omitRegionOpts := AllocateReserveIPOptions{
 		Type:     "ipv4",
 		Public:   true,
 		Reserved: true,
@@ -614,7 +614,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 
 	// Scenario 7: Omit both Region and Linode ID
 
-	omitRegionAndLinodeIDopts := LinodeReserveIPOptions{
+	omitRegionAndLinodeIDopts := AllocateReserveIPOptions{
 		Type:     "ipv4",
 		Public:   true,
 		Reserved: true,
@@ -627,7 +627,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 
 	// Scenario 8: Reserved true, Public false
 
-	publicFalseOpts := LinodeReserveIPOptions{
+	publicFalseOpts := AllocateReserveIPOptions{
 		Type:     "ipv4",
 		Public:   false,
 		Reserved: true,
@@ -641,7 +641,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 
 	// Scenario 9: Reserved false
 
-	reservedFalseOpts := LinodeReserveIPOptions{
+	reservedFalseOpts := AllocateReserveIPOptions{
 		Type:     "ipv4",
 		Public:   true,
 		Reserved: false,
@@ -660,7 +660,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 
 	// Scenario 10: Omit Reserved field
 
-	omitReservedOpts := LinodeReserveIPOptions{
+	omitReservedOpts := AllocateReserveIPOptions{
 		Type:     "ipv4",
 		Public:   true,
 		Region:   instance.Region,
@@ -678,7 +678,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 
 	// Scenario 11: Omit Linode ID, Reserved false
 
-	omitOpts := LinodeReserveIPOptions{
+	omitOpts := AllocateReserveIPOptions{
 		Type:     "ipv4",
 		Public:   true,
 		Reserved: false,
@@ -691,7 +691,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 
 	// Scenario 12: Omit Linode ID and Reserved fields
 
-	omitIDResopts := LinodeReserveIPOptions{
+	omitIDResopts := AllocateReserveIPOptions{
 		Type:   "ipv4",
 		Public: true,
 		Region: instance.Region,
@@ -703,7 +703,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 
 	// Scenario 13: Reserved true, Type IPv6
 
-	typeIPv6opts := LinodeReserveIPOptions{
+	typeIPv6opts := AllocateReserveIPOptions{
 		Type:     "ipv6",
 		Public:   true,
 		Reserved: true,
@@ -717,7 +717,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 
 	// Scenario 14: Reserved false, Type IPv6
 
-	resFalseIPv6opts := LinodeReserveIPOptions{
+	resFalseIPv6opts := AllocateReserveIPOptions{
 		Type:     "ipv6",
 		Public:   true,
 		Reserved: false,
@@ -731,7 +731,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 
 	// Scenario 15: Region mismatch
 
-	regionMismatchOpts := LinodeReserveIPOptions{
+	regionMismatchOpts := AllocateReserveIPOptions{
 		Type:     "ipv4",
 		Public:   true,
 		Reserved: true,
