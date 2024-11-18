@@ -231,6 +231,109 @@ func TestInstance_Migrate(t *testing.T) {
 	}
 }
 
+func TestInstance_MigrateToPG(t *testing.T) {
+	client, clientTeardown := createTestClient(t, "fixtures/TestInstance_MigrateToPG")
+
+	defer func() {
+		clientTeardown()
+	}()
+
+	regions := getRegionsWithCaps(t, client, []string{"Placement Group"})
+
+	pgOutboundCreateOpts := linodego.PlacementGroupCreateOptions{
+		Label:                "linodego-test-" + getUniqueText(),
+		Region:               regions[0],
+		PlacementGroupType:   linodego.PlacementGroupTypeAntiAffinityLocal,
+		PlacementGroupPolicy: linodego.PlacementGroupPolicyFlexible,
+	}
+
+	pgOutbound, err := client.CreatePlacementGroup(context.Background(), pgOutboundCreateOpts)
+	if err != nil {
+		t.Fatalf("failed to create placement group: %s", err)
+	}
+
+	instanceCreateOpts := linodego.InstanceCreateOptions{
+		Label:    "go-test-ins-" + randLabel(),
+		RootPass: randPassword(),
+		Region:   regions[0],
+		Type:     "g6-nanode-1",
+		Image:    "linode/debian9",
+		Booted:   linodego.Pointer(true),
+		PlacementGroup: &linodego.InstanceCreatePlacementGroupOptions{
+			ID: pgOutbound.ID,
+		},
+	}
+
+	instance, err := client.CreateInstance(context.Background(), instanceCreateOpts)
+	if err != nil {
+		t.Fatalf("failed to create instance: %s", err)
+	}
+
+	instance, err = client.WaitForInstanceStatus(
+		context.Background(),
+		instance.ID,
+		linodego.InstanceRunning,
+		180,
+	)
+	if err != nil {
+		t.Errorf("Error waiting for instance readiness for migration: %s", err.Error())
+	}
+
+	pgInboundCreateOpts := linodego.PlacementGroupCreateOptions{
+		Label:                "linodego-test-" + getUniqueText(),
+		Region:               regions[1],
+		PlacementGroupType:   linodego.PlacementGroupTypeAntiAffinityLocal,
+		PlacementGroupPolicy: linodego.PlacementGroupPolicyFlexible,
+	}
+
+	pgInbound, err := client.CreatePlacementGroup(context.Background(), pgInboundCreateOpts)
+	if err != nil {
+		t.Fatalf("failed to create placement group: %s", err)
+	}
+
+	upgrade := false
+
+	err = client.MigrateInstance(
+		context.Background(),
+		instance.ID,
+		linodego.InstanceMigrateOptions{
+			Type:           "cold",
+			Region:         regions[1],
+			Upgrade:        &upgrade,
+			PlacementGroup: &linodego.InstanceCreatePlacementGroupOptions{ID: pgInbound.ID},
+		},
+	)
+	if err != nil {
+		t.Errorf("failed to migrate instance %d: %v", instance.ID, err.Error())
+	}
+
+	pgInboundRefreshed, err := client.GetPlacementGroup(context.Background(), pgInbound.ID)
+	if err != nil {
+		t.Fatalf("failed to get placement group: %s", err)
+	}
+
+	pgOutboundRefreshed, err := client.GetPlacementGroup(context.Background(), pgOutbound.ID)
+	if err != nil {
+		t.Fatalf("failed to get placement group: %s", err)
+	}
+
+	require.Equal(t, pgInboundRefreshed.ID, pgInbound.ID)
+	require.Equal(t, pgInboundRefreshed.Migrations.Inbound[0].LinodeID, instance.ID)
+	require.Equal(t, pgOutboundRefreshed.Migrations.Outbound[0].LinodeID, instance.ID)
+
+	if err := client.DeleteInstance(context.Background(), instance.ID); err != nil {
+		t.Errorf("failed to delete instance: %s", err)
+	}
+
+	if err := client.DeletePlacementGroup(context.Background(), pgInboundRefreshed.ID); err != nil {
+		t.Errorf("failed to delete placement group: %s", err)
+	}
+
+	if err := client.DeletePlacementGroup(context.Background(), pgOutboundRefreshed.ID); err != nil {
+		t.Errorf("failed to delete placement group: %s", err)
+	}
+}
+
 func TestInstance_Disks_List(t *testing.T) {
 	client, instance, teardown, err := setupInstance(t, "fixtures/TestInstance_Disks_List", true)
 	defer teardown()
