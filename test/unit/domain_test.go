@@ -20,7 +20,7 @@ func TestDomain_Clone(t *testing.T) {
 	}
 
 	domainToCloneID := 123
-	base.MockPost(formatMockAPIPath("domains/%d/clone", 123), fixtureData)
+	base.MockPost(formatMockAPIPath("domains/%d/clone", domainToCloneID), fixtureData)
 
 	domain, err := base.Client.CloneDomain(context.Background(), domainToCloneID, requestData)
 
