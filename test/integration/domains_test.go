@@ -2,6 +2,8 @@ package integration
 
 import (
 	"context"
+	"fmt"
+	"math/rand"
 	"testing"
 
 	"github.com/linode/linodego"
@@ -92,7 +94,7 @@ func setupDomain(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 
 	createOpts := testDomainCreateOpts
-	createOpts.Domain = "linodego-blue-test.com"
+	createOpts.Domain = fmt.Sprintf("linodego-%s-test.com", fmt.Sprintf("%s%d", generateRandomString(5), rand.Intn(1000)))
 
 	domain, err := client.CreateDomain(context.Background(), createOpts)
 	if err != nil {
@@ -106,4 +108,13 @@ func setupDomain(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 		fixtureTeardown()
 	}
 	return client, domain, teardown, err
+}
+
+func generateRandomString(length int) string {
+	const charset = "abcdefghijklmnopqrstuvwxyz0123456789"
+	b := make([]byte, length)
+	for i := range b {
+		b[i] = charset[rand.Intn(len(charset))]
+	}
+	return string(b)
 }
