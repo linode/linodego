@@ -36,6 +36,7 @@ const (
 	// APIHostVar environment var to check for alternate API URL
 	APIHostVar = "LINODE_URL"
 	// APIHostCert environment var containing path to CA cert to validate against
+	// Note that the custom CA cannot be configured together with a custom HTTP Transport.
 	APIHostCert = "LINODE_CA"
 	// APIVersion Linode API version
 	APIVersion = "v4"
@@ -173,8 +174,8 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 	for range c.retryCount {
 		// Reset the body to the start for each retry if it's not nil
 		if params.Body != nil {
-			_, err := params.Body.Seek(0, io.SeekStart)
-			if err != nil {
+			_, seekErr := params.Body.Seek(0, io.SeekStart)
+			if seekErr != nil {
 				return c.ErrorAndLogf("failed to seek to the start of the body: %v", err.Error())
 			}
 		}
@@ -185,8 +186,8 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 		}
 
 		if paginationMutator != nil {
-			if err := (*paginationMutator)(req); err != nil {
-				return c.ErrorAndLogf("failed to mutate before request: %v", err.Error())
+			if mutatorErr := (*paginationMutator)(req); mutatorErr != nil {
+				return c.ErrorAndLogf("failed to mutate before request: %v", mutatorErr.Error())
 			}
 		}
 
@@ -868,7 +869,7 @@ func NewClient(hc *http.Client) (client Client) {
 	}
 
 	certPath, certPathExists := os.LookupEnv(APIHostCert)
-	if certPathExists {
+	if certPathExists && !isCustomTransport(hc.Transport) {
 		cert, err := os.ReadFile(filepath.Clean(certPath))
 		if err != nil {
 			log.Fatalf("[ERROR] Error when reading cert at %s: %s\n", certPath, err.Error())
@@ -890,6 +891,14 @@ func NewClient(hc *http.Client) (client Client) {
 		enableLogSanitization()
 
 	return
+}
+
+func isCustomTransport(transport http.RoundTripper) bool {
+	if transport != http.DefaultTransport.(*http.Transport) {
+		log.Println("[WARN] Custom transport is not allowed with a custom root CA.")
+		return true
+	}
+	return false
 }
 
 // NewClientFromEnv creates a Client and initializes it with values
@@ -925,8 +934,8 @@ func NewClientFromEnv(hc *http.Client) (*Client, error) {
 	client.selectedProfile = configProfile
 
 	// We should only load the config if the config file exists
-	if _, err := os.Stat(configPath); err != nil {
-		return nil, fmt.Errorf("error loading config file %s: %w", configPath, err)
+	if _, statErr := os.Stat(configPath); statErr != nil {
+		return nil, fmt.Errorf("error loading config file %s: %w", configPath, statErr)
 	}
 
 	err = client.preLoadConfig(configPath)

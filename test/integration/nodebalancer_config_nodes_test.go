@@ -165,9 +165,9 @@ func setupNodeBalancerNode(t *testing.T, fixturesYaml string) (*linodego.Client,
 		t.Fatalf("Error creating nodebalancer config, got error %v", err)
 	}
 
-	client, instance, instanceTeardown, err := setupInstance(t, fixturesYaml+"Instance", true)
+	instance, err := createInstance(t, client, true)
 	if err != nil {
-		t.Fatal(err)
+		t.Errorf("failed to create test instance: %s", err)
 	}
 
 	instanceIP, err := client.AddInstanceIPAddress(context.Background(), instance.ID, false)
@@ -191,8 +191,13 @@ func setupNodeBalancerNode(t *testing.T, fixturesYaml string) (*linodego.Client,
 				t.Fatalf("Expected to delete a NodeBalancer Config Node, but got %v", err)
 			}
 		}
+		// delete the instance
+		if err := client.DeleteInstance(context.Background(), instance.ID); err != nil {
+			if t != nil {
+				t.Errorf("Error deleting test Instance: %s", err)
+			}
+		}
 		fixtureTeardown()
-		instanceTeardown()
 	}
 	return client, nodebalancer, config, node, teardown, err
 }

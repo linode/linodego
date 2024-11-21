@@ -3,17 +3,19 @@ package integration
 import (
 	"context"
 	"encoding/base64"
+	"slices"
 	"strconv"
+	"strings"
 	"testing"
-
-	"github.com/stretchr/testify/require"
+	"time"
 
 	"github.com/linode/linodego"
+	"github.com/stretchr/testify/require"
 )
 
 type instanceModifier func(*linodego.Client, *linodego.InstanceCreateOptions)
 
-func TestInstances_List(t *testing.T) {
+func TestInstances_List_smoke(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(
 		t,
 		"fixtures/TestInstances_List", true,
@@ -81,6 +83,73 @@ func TestInstance_Get_smoke(t *testing.T) {
 	assertDateSet(t, instance.Updated)
 }
 
+func TestInstance_GetTransfer(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_GetTransfer", true)
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	_, err = client.GetInstanceTransfer(context.Background(), instance.ID)
+	if err != nil {
+		t.Errorf("Error getting instance transfer, expected struct, got error %v", err)
+	}
+}
+
+func TestInstance_GetMonthlyTransfer(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_GetMonthlyTransfer", true)
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	currentYear, currentMonth := time.Now().Year(), int(time.Now().Month())
+
+	_, err = client.GetInstanceTransferMonthly(context.Background(), instance.ID, currentYear, currentMonth)
+	if err != nil {
+		t.Errorf("Error getting monthly instance transfer, expected struct, got error %v", err)
+	}
+}
+
+func TestInstance_ResetPassword(t *testing.T) {
+	client, instance, teardown, err := setupInstance(
+		t,
+		"fixtures/TestInstance_ResetPassword", true,
+		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+			boot := false
+			options.Type = "g6-nanode-1"
+			options.Booted = &boot
+			options.RootPass = randPassword()
+		},
+	)
+
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	instance, err = client.WaitForInstanceStatus(
+		context.Background(),
+		instance.ID,
+		linodego.InstanceOffline,
+		180,
+	)
+	if err != nil {
+		t.Errorf("Error waiting for instance readiness for password reset: %s", err.Error())
+	}
+
+	err = client.ResetInstancePassword(
+		context.Background(),
+		instance.ID,
+		linodego.InstancePasswordResetOptions{
+			RootPass: randPassword(),
+		},
+	)
+	if err != nil {
+		t.Errorf("failed to reset instance password for instance with id %d: %v", instance.ID, err.Error())
+	}
+}
+
 func TestInstance_Resize(t *testing.T) {
 	client, instance, teardown, err := setupInstance(
 		t,
@@ -117,6 +186,151 @@ func TestInstance_Resize(t *testing.T) {
 	)
 	if err != nil {
 		t.Errorf("failed to resize instance %d: %v", instance.ID, err.Error())
+	}
+}
+
+func TestInstance_Migrate(t *testing.T) {
+	client, instance, teardown, err := setupInstance(
+		t,
+		"fixtures/TestInstance_Migrate", true,
+		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+			boot := true
+			options.Type = "g6-nanode-1"
+			options.Booted = &boot
+		},
+	)
+
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	instance, err = client.WaitForInstanceStatus(
+		context.Background(),
+		instance.ID,
+		linodego.InstanceRunning,
+		180,
+	)
+	if err != nil {
+		t.Errorf("Error waiting for instance readiness for migration: %s", err.Error())
+	}
+
+	upgrade := false
+
+	err = client.MigrateInstance(
+		context.Background(),
+		instance.ID,
+		linodego.InstanceMigrateOptions{
+			Type:    "cold",
+			Region:  "us-west",
+			Upgrade: &upgrade,
+		},
+	)
+	if err != nil {
+		t.Errorf("failed to migrate instance %d: %v", instance.ID, err.Error())
+	}
+}
+
+func TestInstance_MigrateToPG(t *testing.T) {
+	client, clientTeardown := createTestClient(t, "fixtures/TestInstance_MigrateToPG")
+
+	defer func() {
+		clientTeardown()
+	}()
+
+	regions := getRegionsWithCaps(t, client, []string{"Placement Group"})
+
+	pgOutboundCreateOpts := linodego.PlacementGroupCreateOptions{
+		Label:                "linodego-test-" + getUniqueText(),
+		Region:               regions[0],
+		PlacementGroupType:   linodego.PlacementGroupTypeAntiAffinityLocal,
+		PlacementGroupPolicy: linodego.PlacementGroupPolicyFlexible,
+	}
+
+	pgOutbound, err := client.CreatePlacementGroup(context.Background(), pgOutboundCreateOpts)
+	if err != nil {
+		t.Fatalf("failed to create placement group: %s", err)
+	}
+
+	instanceCreateOpts := linodego.InstanceCreateOptions{
+		Label:    "go-test-ins-" + randLabel(),
+		RootPass: randPassword(),
+		Region:   regions[0],
+		Type:     "g6-nanode-1",
+		Image:    "linode/debian9",
+		Booted:   linodego.Pointer(true),
+		PlacementGroup: &linodego.InstanceCreatePlacementGroupOptions{
+			ID: pgOutbound.ID,
+		},
+	}
+
+	instance, err := client.CreateInstance(context.Background(), instanceCreateOpts)
+	if err != nil {
+		t.Fatalf("failed to create instance: %s", err)
+	}
+
+	instance, err = client.WaitForInstanceStatus(
+		context.Background(),
+		instance.ID,
+		linodego.InstanceRunning,
+		180,
+	)
+	if err != nil {
+		t.Errorf("Error waiting for instance readiness for migration: %s", err.Error())
+	}
+
+	pgInboundCreateOpts := linodego.PlacementGroupCreateOptions{
+		Label:                "linodego-test-" + getUniqueText(),
+		Region:               regions[1],
+		PlacementGroupType:   linodego.PlacementGroupTypeAntiAffinityLocal,
+		PlacementGroupPolicy: linodego.PlacementGroupPolicyFlexible,
+	}
+
+	pgInbound, err := client.CreatePlacementGroup(context.Background(), pgInboundCreateOpts)
+	if err != nil {
+		t.Fatalf("failed to create placement group: %s", err)
+	}
+
+	upgrade := false
+
+	err = client.MigrateInstance(
+		context.Background(),
+		instance.ID,
+		linodego.InstanceMigrateOptions{
+			Type:           "cold",
+			Region:         regions[1],
+			Upgrade:        &upgrade,
+			PlacementGroup: &linodego.InstanceCreatePlacementGroupOptions{ID: pgInbound.ID},
+		},
+	)
+	if err != nil {
+		t.Errorf("failed to migrate instance %d: %v", instance.ID, err.Error())
+	}
+
+	pgInboundRefreshed, err := client.GetPlacementGroup(context.Background(), pgInbound.ID)
+	if err != nil {
+		t.Fatalf("failed to get placement group: %s", err)
+	}
+
+	pgOutboundRefreshed, err := client.GetPlacementGroup(context.Background(), pgOutbound.ID)
+	if err != nil {
+		t.Fatalf("failed to get placement group: %s", err)
+	}
+
+	require.Equal(t, pgInboundRefreshed.ID, pgInbound.ID)
+	require.Equal(t, pgInboundRefreshed.Migrations.Inbound[0].LinodeID, instance.ID)
+	require.Equal(t, pgOutboundRefreshed.Migrations.Outbound[0].LinodeID, instance.ID)
+
+	if err := client.DeleteInstance(context.Background(), instance.ID); err != nil {
+		t.Errorf("failed to delete instance: %s", err)
+	}
+
+	if err := client.DeletePlacementGroup(context.Background(), pgInboundRefreshed.ID); err != nil {
+		t.Errorf("failed to delete placement group: %s", err)
+	}
+
+	if err := client.DeletePlacementGroup(context.Background(), pgOutboundRefreshed.ID); err != nil {
+		t.Errorf("failed to delete placement group: %s", err)
 	}
 }
 
@@ -270,6 +484,46 @@ func TestInstance_Disk_ListMultiple(t *testing.T) {
 	}
 }
 
+func TestInstance_Disk_Clone(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Disk_Clone", true)
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	instance, err = client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceOffline, 180)
+	if err != nil {
+		t.Errorf("Error waiting for instance readiness for disk clone: %s", err)
+	}
+
+	disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
+		Label:      "go-disk-test-" + randLabel(),
+		Filesystem: "ext4",
+		Image:      "linode/debian9",
+		RootPass:   randPassword(),
+		Size:       2000,
+	})
+	if err != nil {
+		t.Errorf("Error creating disk for disk clone: %s", err)
+	}
+
+	instance, err = client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceOffline, 180)
+	if err != nil {
+		t.Errorf("Error waiting for instance readiness after creating disk for disk clone: %s", err)
+	}
+	disk, err = client.WaitForInstanceDiskStatus(context.Background(), instance.ID, disk.ID, linodego.DiskReady, 180)
+	if err != nil {
+		t.Errorf("Error waiting for disk readiness for disk clone: %s", err)
+	}
+
+	opts := linodego.InstanceDiskCloneOptions{}
+
+	_, err = client.CloneInstanceDisk(context.Background(), instance.ID, disk.ID, opts)
+	if err != nil {
+		t.Errorf("Error cloning instance disk: %s", err)
+	}
+}
+
 func TestInstance_Disk_ResetPassword(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Disk_ResetPassword", true)
 	defer teardown()
@@ -305,6 +559,42 @@ func TestInstance_Disk_ResetPassword(t *testing.T) {
 	err = client.PasswordResetInstanceDisk(context.Background(), instance.ID, disk.ID, "r34!_b4d_p455")
 	if err != nil {
 		t.Errorf("Error reseting password on instance disk: %s", err)
+	}
+}
+
+func TestInstance_NodeBalancers_List(t *testing.T) {
+	client, _, _, node, teardown, err := setupNodeBalancerNode(t, "fixtures/TestInstance_NodeBalancers_List")
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	privateIP := strings.Split(node.Address, ":")[0]
+
+	instanceIPs, err := client.ListIPAddresses(context.Background(), nil)
+	if err != nil {
+		t.Error(err)
+	}
+
+	var linodeID = 0
+
+	for _, instanceIP := range instanceIPs {
+		if instanceIP.Address == privateIP {
+			linodeID = instanceIP.LinodeID
+			break
+		}
+	}
+
+	if linodeID == 0 {
+		t.Errorf("Could not find instance with node's IP")
+	}
+
+	nodebalancers, err := client.ListInstanceNodeBalancers(context.Background(), linodeID, nil)
+	if err != nil {
+		t.Errorf("Error listing instance nodebalancers, expected struct, got error %v", err)
+	}
+	if len(nodebalancers) == 0 {
+		t.Errorf("Expected an list of instance nodebalancers, but got %v", nodebalancers)
 	}
 }
 
@@ -559,6 +849,24 @@ func TestInstance_DiskEncryption(t *testing.T) {
 	if inst.DiskEncryption != linodego.InstanceDiskEncryptionEnabled {
 		t.Fatalf("expected instance to have disk encryption enabled, got: %s, want: %s", inst.DiskEncryption, linodego.InstanceDiskEncryptionEnabled)
 	}
+}
+
+func TestInstance_withBlockStorageEncryption(t *testing.T) {
+	client, clientTeardown := createTestClient(t, "fixtures/TestInstance_withBlockStorageEncryption")
+
+	inst, err := createInstance(t, client, true, func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+		options.Region = getRegionsWithCaps(t, client, []string{"Linodes", "Block Storage Encryption"})[0]
+		options.Label = "go-inst-test-create-bde"
+	})
+	require.NoError(t, err)
+
+	defer func() {
+		client.DeleteInstance(context.Background(), inst.ID)
+		clientTeardown()
+	}()
+
+	// Filtering is not currently supported on capabilities
+	require.True(t, slices.Contains(inst.Capabilities, "Block Storage Encryption"))
 }
 
 func TestInstance_withPG(t *testing.T) {

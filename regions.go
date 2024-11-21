@@ -35,6 +35,7 @@ const (
 	CapabilityBackups                string = "Backups"
 	CapabilityPlacementGroup         string = "Placement Group"
 	CapabilityDiskEncryption         string = "Disk Encryption"
+	CapabilityBlockStorageEncryption string = "Block Storage Encryption"
 )
 
 // Region-related endpoints have a custom expiry time as the

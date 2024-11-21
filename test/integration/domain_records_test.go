@@ -22,6 +22,9 @@ func TestDomainRecord_Create_smoke(t *testing.T) {
 		t.Errorf("Error creating domain record, got error %v", err)
 	}
 
+	assertDateSet(t, record.Created)
+	assertDateSet(t, record.Updated)
+
 	expected := testDomainRecordCreateOpts
 
 	// cant compare Target, fixture IPs are sanitized
@@ -36,6 +39,9 @@ func TestDomainRecord_Update(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
+
+	assertDateSet(t, record.Created)
+	assertDateSet(t, record.Updated)
 
 	updateOpts := linodego.DomainRecordUpdateOptions{
 		Name: "renamed",

@@ -7,8 +7,10 @@ import (
 	"fmt"
 	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego/internal/testutil"
+	"log"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"reflect"
 	"strings"
 	"testing"
@@ -495,20 +497,41 @@ func TestDoRequestLogging_Error(t *testing.T) {
 	}
 }
 
-func removeTimestamps(log string) string {
-	lines := strings.Split(log, "\n")
-	var filteredLines []string
-	for _, line := range lines {
-		// Find the index of the "Date:" substring
-		if index := strings.Index(line, "Date:"); index != -1 {
-			// Cut off everything after "Date:"
-			trimmedLine := strings.TrimSpace(line[:index])
-			filteredLines = append(filteredLines, trimmedLine+"]")
-		} else {
-			filteredLines = append(filteredLines, line)
-		}
+func TestClient_CustomRootCAWithCustomRoundTripper(t *testing.T) {
+	caFile, err := os.CreateTemp(t.TempDir(), "linodego_test_ca_*")
+	if err != nil {
+		t.Fatalf("Failed to create temp ca file: %s", err)
 	}
-	return strings.Join(filteredLines, "\n")
+	defer os.Remove(caFile.Name())
+
+	t.Setenv(APIHostCert, caFile.Name())
+
+	handler := func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Header().Set("Content-Type", "application/json")
+		_, _ = w.Write([]byte(`{"message":"success"}`))
+	}
+
+	server := httptest.NewServer(http.HandlerFunc(handler))
+	defer server.Close()
+
+	// Create a custom RoundTripper
+	tr := &testRoundTripper{
+		Transport: server.Client().Transport,
+	}
+
+	buf := new(strings.Builder)
+	log.SetOutput(buf)
+
+	NewClient(&http.Client{Transport: tr})
+
+	expectedLog := "Custom transport is not allowed with a custom root CA"
+
+	if !strings.Contains(buf.String(), expectedLog) {
+		t.Fatalf("expected log %q not found in logs", expectedLog)
+	}
+
+	log.SetOutput(os.Stderr)
 }
 
 type testRoundTripper struct {

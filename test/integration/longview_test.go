@@ -7,7 +7,7 @@ import (
 	"github.com/linode/linodego"
 )
 
-func TestLongviewClient_Get(t *testing.T) {
+func TestLongviewClient_Get_smoke(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestLongviewClient_Get")
 	defer teardown()
 

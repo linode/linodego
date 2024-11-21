@@ -26,17 +26,19 @@ type ProfileReferrals struct {
 
 // Profile represents a Profile object
 type Profile struct {
-	UID                int              `json:"uid"`
-	Username           string           `json:"username"`
-	Email              string           `json:"email"`
-	Timezone           string           `json:"timezone"`
-	EmailNotifications bool             `json:"email_notifications"`
-	IPWhitelistEnabled bool             `json:"ip_whitelist_enabled"`
-	TwoFactorAuth      bool             `json:"two_factor_auth"`
-	Restricted         bool             `json:"restricted"`
-	LishAuthMethod     LishAuthMethod   `json:"lish_auth_method"`
-	Referrals          ProfileReferrals `json:"referrals"`
-	AuthorizedKeys     []string         `json:"authorized_keys"`
+	UID                 int              `json:"uid"`
+	Username            string           `json:"username"`
+	Email               string           `json:"email"`
+	Timezone            string           `json:"timezone"`
+	EmailNotifications  bool             `json:"email_notifications"`
+	IPWhitelistEnabled  bool             `json:"ip_whitelist_enabled"`
+	TwoFactorAuth       bool             `json:"two_factor_auth"`
+	Restricted          bool             `json:"restricted"`
+	LishAuthMethod      LishAuthMethod   `json:"lish_auth_method"`
+	Referrals           ProfileReferrals `json:"referrals"`
+	AuthorizedKeys      []string         `json:"authorized_keys"`
+	AuthenticationType  string           `json:"authentication_type"`
+	VerifiedPhoneNumber string           `json:"verified_phone_number,omitempty"`
 }
 
 // ProfileUpdateOptions fields are those accepted by UpdateProfile
