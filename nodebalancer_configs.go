@@ -19,6 +19,7 @@ type NodeBalancerConfig struct {
 	CheckBody      string                  `json:"check_body"`
 	CheckPassive   bool                    `json:"check_passive"`
 	CheckTimeout   int                     `json:"check_timeout"`
+	UDPCheckPort   *int                    `json:"udp_check_port"`
 	CipherSuite    ConfigCipher            `json:"cipher_suite"`
 	NodeBalancerID int                     `json:"nodebalancer_id"`
 	SSLCommonName  string                  `json:"ssl_commonname"`
@@ -36,6 +37,7 @@ const (
 	AlgorithmRoundRobin ConfigAlgorithm = "roundrobin"
 	AlgorithmLeastConn  ConfigAlgorithm = "leastconn"
 	AlgorithmSource     ConfigAlgorithm = "source"
+	AlgorithmRingHash   ConfigAlgorithm = "ring_hash"
 )
 
 // ConfigStickiness constants start with Stickiness and include Linode API NodeBalancer Config Stickiness
@@ -44,6 +46,7 @@ type ConfigStickiness string
 // ConfigStickiness constants reflect the node stickiness method for a NodeBalancer Config
 const (
 	StickinessNone       ConfigStickiness = "none"
+	StickinessSession    ConfigStickiness = "session"
 	StickinessTable      ConfigStickiness = "table"
 	StickinessHTTPCookie ConfigStickiness = "http_cookie"
 )
@@ -67,12 +70,13 @@ const (
 	ProtocolHTTP  ConfigProtocol = "http"
 	ProtocolHTTPS ConfigProtocol = "https"
 	ProtocolTCP   ConfigProtocol = "tcp"
+	ProtocolUDP   ConfigProtocol = "udp"
 )
 
 // ConfigProxyProtocol constants start with ProxyProtocol and include Linode API NodeBalancer Config proxy protocol versions
 type ConfigProxyProtocol string
 
-// ConfigProxyProtocol constatns reflect the proxy protocol version used by a NodeBalancer Config
+// ConfigProxyProtocol constants reflect the proxy protocol version used by a NodeBalancer Config
 const (
 	ProxyProtocolNone ConfigProxyProtocol = "none"
 	ProxyProtocolV1   ConfigProxyProtocol = "v1"
@@ -108,6 +112,7 @@ type NodeBalancerConfigCreateOptions struct {
 	CheckBody     string                          `json:"check_body,omitempty"`
 	CheckPassive  *bool                           `json:"check_passive,omitempty"`
 	CheckTimeout  int                             `json:"check_timeout,omitempty"`
+	UDPCheckPort  *int                            `json:"udp_check_port,omitempty"`
 	CipherSuite   ConfigCipher                    `json:"cipher_suite,omitempty"`
 	SSLCert       string                          `json:"ssl_cert,omitempty"`
 	SSLKey        string                          `json:"ssl_key,omitempty"`
@@ -128,6 +133,7 @@ type NodeBalancerConfigRebuildOptions struct {
 	CheckBody     string                                 `json:"check_body,omitempty"`
 	CheckPassive  *bool                                  `json:"check_passive,omitempty"`
 	CheckTimeout  int                                    `json:"check_timeout,omitempty"`
+	UDPCheckPort  *int                                   `json:"udp_check_port,omitempty"`
 	CipherSuite   ConfigCipher                           `json:"cipher_suite,omitempty"`
 	SSLCert       string                                 `json:"ssl_cert,omitempty"`
 	SSLKey        string                                 `json:"ssl_key,omitempty"`
@@ -160,6 +166,7 @@ func (i NodeBalancerConfig) GetCreateOptions() NodeBalancerConfigCreateOptions {
 		CheckPath:     i.CheckPath,
 		CheckBody:     i.CheckBody,
 		CheckPassive:  copyBool(&i.CheckPassive),
+		UDPCheckPort:  copyInt(i.UDPCheckPort),
 		CipherSuite:   i.CipherSuite,
 		SSLCert:       i.SSLCert,
 		SSLKey:        i.SSLKey,
@@ -181,6 +188,7 @@ func (i NodeBalancerConfig) GetUpdateOptions() NodeBalancerConfigUpdateOptions {
 		CheckBody:     i.CheckBody,
 		CheckPassive:  copyBool(&i.CheckPassive),
 		CheckTimeout:  i.CheckTimeout,
+		UDPCheckPort:  copyInt(i.UDPCheckPort),
 		CipherSuite:   i.CipherSuite,
 		SSLCert:       i.SSLCert,
 		SSLKey:        i.SSLKey,
@@ -202,6 +210,7 @@ func (i NodeBalancerConfig) GetRebuildOptions() NodeBalancerConfigRebuildOptions
 		CheckPath:     i.CheckPath,
 		CheckBody:     i.CheckBody,
 		CheckPassive:  copyBool(&i.CheckPassive),
+		UDPCheckPort:  copyInt(i.UDPCheckPort),
 		CipherSuite:   i.CipherSuite,
 		SSLCert:       i.SSLCert,
 		SSLKey:        i.SSLKey,
