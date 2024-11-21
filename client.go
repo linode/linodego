@@ -174,8 +174,8 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 	for range c.retryCount {
 		// Reset the body to the start for each retry if it's not nil
 		if params.Body != nil {
-			_, err := params.Body.Seek(0, io.SeekStart)
-			if err != nil {
+			_, seekErr := params.Body.Seek(0, io.SeekStart)
+			if seekErr != nil {
 				return c.ErrorAndLogf("failed to seek to the start of the body: %v", err.Error())
 			}
 		}
@@ -186,8 +186,8 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 		}
 
 		if paginationMutator != nil {
-			if err := (*paginationMutator)(req); err != nil {
-				return c.ErrorAndLogf("failed to mutate before request: %v", err.Error())
+			if mutatorErr := (*paginationMutator)(req); mutatorErr != nil {
+				return c.ErrorAndLogf("failed to mutate before request: %v", mutatorErr.Error())
 			}
 		}
 
@@ -934,8 +934,8 @@ func NewClientFromEnv(hc *http.Client) (*Client, error) {
 	client.selectedProfile = configProfile
 
 	// We should only load the config if the config file exists
-	if _, err := os.Stat(configPath); err != nil {
-		return nil, fmt.Errorf("error loading config file %s: %w", configPath, err)
+	if _, statErr := os.Stat(configPath); statErr != nil {
+		return nil, fmt.Errorf("error loading config file %s: %w", configPath, statErr)
 	}
 
 	err = client.preLoadConfig(configPath)
