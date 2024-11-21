@@ -6,7 +6,6 @@ import (
 	"io"
 	"time"
 
-	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -183,7 +182,6 @@ func (c *Client) UpdateImage(ctx context.Context, imageID string, opts ImageUpda
 }
 
 // ReplicateImage replicates an image to a given set of regions.
-// NOTE: Image replication may not currently be available to all users.
 func (c *Client) ReplicateImage(ctx context.Context, imageID string, opts ImageReplicateOptions) (*Image, error) {
 	return doPOSTRequest[Image](
 		ctx,
