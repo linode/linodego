@@ -124,7 +124,7 @@ func vpcUpdateOptionsCheck(
 	}
 }
 
-func TestVPC_CreateGet(t *testing.T) {
+func TestVPC_CreateGet_smoke(t *testing.T) {
 	client, vpc, teardown, err := setupVPC(t, "fixtures/TestVPC_CreateGet")
 	defer teardown()
 	if err != nil {

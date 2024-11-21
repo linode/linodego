@@ -120,6 +120,38 @@ func TestLKENodePools_List(t *testing.T) {
 	}
 }
 
+func TestLKENodePoolNode_Get(t *testing.T) {
+	client, lkeCluster, nodePool, teardown, err := setupLKENodePool(t, "fixtures/TestLKENodePoolNode_Get", &testLKENodePoolCreateOpts)
+	if err != nil {
+		t.Error(err)
+	}
+	defer teardown()
+
+	linodes := nodePool.Linodes
+	nodePoolNode, err := client.GetLKENodePoolNode(context.Background(), lkeCluster.ID, linodes[0].ID)
+	if err != nil {
+		t.Errorf("failed to get node %q: %s", linodes[0].ID, err)
+	}
+
+	if nodePoolNode.ID != linodes[0].ID {
+		t.Errorf("expected node pool node to have id %s; got %s", linodes[0].ID, nodePoolNode.ID)
+	}
+}
+
+func TestLKENodePoolNode_Recycle(t *testing.T) {
+	client, lkeCluster, nodePool, teardown, err := setupLKENodePool(t, "fixtures/TestLKENodePoolNode_Recycle", &testLKENodePoolCreateOpts)
+	if err != nil {
+		t.Error(err)
+	}
+	defer teardown()
+
+	linodes := nodePool.Linodes
+	err = client.RecycleLKENodePoolNode(context.Background(), lkeCluster.ID, linodes[0].ID)
+	if err != nil {
+		t.Errorf("failed to recycle node pool node: %s", err)
+	}
+}
+
 func TestLKENodePoolNode_Delete(t *testing.T) {
 	client, lkeCluster, nodePool, teardown, err := setupLKENodePool(t, "fixtures/TestLKENodePoolNode_Delete", &testLKENodePoolCreateOpts)
 	if err != nil {
@@ -140,6 +172,24 @@ func TestLKENodePoolNode_Delete(t *testing.T) {
 
 	if !(len(nodePool.Linodes) == 1 && nodePool.Linodes[0].ID == linodes[1].ID) {
 		t.Errorf("expected node pool to have 1 linode (%s); got %v", linodes[1].ID, nodePool.Linodes)
+	}
+}
+
+func TestLKENodePool_Recycle(t *testing.T) {
+	client, lkeCluster, pool, teardown, err := setupLKENodePool(t, "fixtures/TestLKENodePool_Recycle", &testLKENodePoolCreateOpts)
+	if err != nil {
+		t.Error(err)
+	}
+	defer teardown()
+
+	i, err := client.GetLKENodePool(context.Background(), lkeCluster.ID, pool.ID)
+	if err != nil {
+		t.Errorf("Error getting LKENodePool, expected struct, got %v and error %v", i, err)
+	}
+
+	err = client.RecycleLKENodePool(context.Background(), lkeCluster.ID, pool.ID)
+	if err != nil {
+		t.Errorf("failed to recycle node pool: %s", err)
 	}
 }
 

@@ -7,7 +7,7 @@ import (
 	"github.com/linode/linodego"
 )
 
-func TestAccountEvents_List(t *testing.T) {
+func TestAccountEvents_List_smoke(t *testing.T) {
 	client, instance, teardown, err := setupInstance(t, "fixtures/TestAccountEvents_List", true)
 	defer teardown()
 	if err != nil {

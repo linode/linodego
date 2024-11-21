@@ -145,6 +145,17 @@ func (c *Client) CreateLKENodePool(ctx context.Context, clusterID int, opts LKEN
 	return response, nil
 }
 
+// RecycleLKENodePool recycles a LKENodePool
+func (c *Client) RecycleLKENodePool(ctx context.Context, clusterID, poolID int) error {
+	e := formatAPIPath("lke/clusters/%d/pools/%d/recycle", clusterID, poolID)
+	_, err := doPOSTRequest[LKENodePool, any](ctx, c, e)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 // UpdateLKENodePool updates the LKENodePool with the specified id
 func (c *Client) UpdateLKENodePool(ctx context.Context, clusterID, poolID int, opts LKENodePoolUpdateOptions) (*LKENodePool, error) {
 	e := formatAPIPath("lke/clusters/%d/pools/%d", clusterID, poolID)
@@ -159,13 +170,33 @@ func (c *Client) UpdateLKENodePool(ctx context.Context, clusterID, poolID int, o
 // DeleteLKENodePool deletes the LKENodePool with the specified id
 func (c *Client) DeleteLKENodePool(ctx context.Context, clusterID, poolID int) error {
 	e := formatAPIPath("lke/clusters/%d/pools/%d", clusterID, poolID)
-	err := doDELETERequest(ctx, c, e)
-	return err
+	return doDELETERequest(ctx, c, e)
+}
+
+// GetLKENodePoolNode gets the LKENodePoolLinode with the provided ID
+func (c *Client) GetLKENodePoolNode(ctx context.Context, clusterID int, nodeID string) (*LKENodePoolLinode, error) {
+	e := formatAPIPath("lke/clusters/%d/nodes/%s", clusterID, nodeID)
+	response, err := doGETRequest[LKENodePoolLinode](ctx, c, e)
+	if err != nil {
+		return nil, err
+	}
+
+	return response, nil
+}
+
+// RecycleLKENodePoolNode recycles a LKENodePoolLinode
+func (c *Client) RecycleLKENodePoolNode(ctx context.Context, clusterID int, nodeID string) error {
+	e := formatAPIPath("lke/clusters/%d/nodes/%s/recycle", clusterID, nodeID)
+	_, err := doPOSTRequest[LKENodePoolLinode, any](ctx, c, e)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // DeleteLKENodePoolNode deletes a given node from a node pool
 func (c *Client) DeleteLKENodePoolNode(ctx context.Context, clusterID int, nodeID string) error {
 	e := formatAPIPath("lke/clusters/%d/nodes/%s", clusterID, nodeID)
-	err := doDELETERequest(ctx, c, e)
-	return err
+	return doDELETERequest(ctx, c, e)
 }

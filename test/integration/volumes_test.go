@@ -36,6 +36,33 @@ func TestVolume_Create_smoke(t *testing.T) {
 	}
 }
 
+func TestVolume_Create_withEncryption(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestVolume_Create_withEncryption")
+	defer teardown()
+
+	createOpts := linodego.VolumeCreateOptions{
+		Label:      "go-vol-test-create-encryption",
+		Region:     getRegionsWithCaps(t, client, []string{"Linodes", "Block Storage Encryption"})[0],
+		Encryption: "enabled",
+	}
+	volume, err := client.CreateVolume(context.Background(), createOpts)
+	if err != nil {
+		t.Errorf("Error listing volumes, expected struct, got error %v", err)
+	}
+	if volume.ID == 0 {
+		t.Errorf("Expected a volumes id, but got 0")
+	}
+
+	assertDateSet(t, volume.Created)
+	assertDateSet(t, volume.Updated)
+
+	// volumes deleted too fast tend to stick, adding a few seconds to catch up
+	time.Sleep(time.Second * 5)
+	if err := client.DeleteVolume(context.Background(), volume.ID); err != nil {
+		t.Errorf("Expected to delete a volume, but got %v", err)
+	}
+}
+
 func TestVolume_Resize(t *testing.T) {
 	client, volume, teardown, err := setupVolume(t, "fixtures/TestVolume_Resize")
 	defer teardown()
@@ -86,6 +113,55 @@ func TestVolume_Get(t *testing.T) {
 	}
 	assertDateSet(t, volume.Created)
 	assertDateSet(t, volume.Updated)
+}
+
+func TestVolume_Get_withEncryption(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestVolume_Get_withEncryption")
+	defer teardown()
+
+	createOpts := linodego.VolumeCreateOptions{
+		Label:      "go-vol-test-get-encryption",
+		Region:     getRegionsWithCaps(t, client, []string{"Linodes", "Block Storage Encryption"})[0],
+		Encryption: "enabled",
+	}
+	volume, err := client.CreateVolume(context.Background(), createOpts)
+	if err != nil {
+		t.Errorf("Error listing volumes, expected struct, got error %v", err)
+	}
+	if volume.ID == 0 {
+		t.Errorf("Expected a volumes id, but got 0")
+	}
+
+	returnedVolume, err := client.GetVolume(context.Background(), volume.ID)
+	if err != nil {
+		t.Errorf("Error getting volume %d, expected *LinodeVolume, got error %v", volume.ID, err)
+	}
+	if returnedVolume.Encryption != "enabled" {
+		t.Errorf("Expected volume encryption to be enabled, but got %v", returnedVolume.Encryption)
+	}
+
+	volumes, err := client.ListVolumes(context.Background(), nil)
+	if err != nil {
+		t.Errorf("Error listing volumes, expected struct, got error %v", err)
+	}
+	found := false
+	for _, v := range volumes {
+		if v.ID == volume.ID {
+			found = true
+			if v.Encryption != "enabled" {
+				t.Errorf("Expected volume encryption to be enabled, but got %v", v.Encryption)
+			}
+		}
+	}
+	if !found {
+		t.Errorf("%d volume not found in list", volume.ID)
+	}
+
+	// volumes deleted too fast tend to stick, adding a few seconds to catch up
+	time.Sleep(time.Second * 5)
+	if err := client.DeleteVolume(context.Background(), volume.ID); err != nil {
+		t.Errorf("Expected to delete a volume, but got %v", err)
+	}
 }
 
 func TestVolume_WaitForLinodeID_nil(t *testing.T) {

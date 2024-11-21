@@ -28,7 +28,6 @@ func TestInstance_CreateWithReservedIPAddress(t *testing.T) {
 	if err != nil {
 		t.Fatalf("Error creating instance with reserved IP: %s", err)
 	}
-
 }
 
 func createInstanceWithReservedIP(

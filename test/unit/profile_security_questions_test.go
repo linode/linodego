@@ -2,38 +2,31 @@ package unit
 
 import (
 	"context"
-	"reflect"
 	"testing"
 
-	"github.com/google/go-cmp/cmp"
+	"github.com/stretchr/testify/assert"
+
 	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"
 )
 
 func TestSecurityQuestions_List(t *testing.T) {
-	client := createMockClient(t)
+	fixtureData, err := fixtures.GetFixture("profile_security_question_list")
+	assert.NoError(t, err)
 
-	desiredResponse := linodego.SecurityQuestionsListResponse{
-		SecurityQuestions: []linodego.SecurityQuestion{
-			{
-				ID:       1,
-				Question: "Really cool question",
-				Response: "uhhhh",
-			},
-		},
-	}
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
 
-	httpmock.RegisterRegexpResponder("GET", mockRequestURL(t, "/profile/security-questions"),
-		httpmock.NewJsonResponderOrPanic(200, &desiredResponse))
+	base.MockGet("profile/security-questions", fixtureData)
 
-	questions, err := client.SecurityQuestionsList(context.Background())
-	if err != nil {
-		t.Fatal(err)
-	}
+	securityQuestions, err := base.Client.SecurityQuestionsList(context.Background())
+	assert.NoError(t, err)
 
-	if !reflect.DeepEqual(*questions, desiredResponse) {
-		t.Fatalf("actual response does not equal desired response: %s", cmp.Diff(questions, desiredResponse))
-	}
+	assert.Len(t, securityQuestions.SecurityQuestions, 1)
+	assert.Equal(t, 1, securityQuestions.SecurityQuestions[0].ID)
+	assert.Equal(t, "In what city were you born?", securityQuestions.SecurityQuestions[0].Question)
+	assert.Equal(t, "Gotham City", securityQuestions.SecurityQuestions[0].Response)
 }
 
 func TestSecurityQuestions_Answer(t *testing.T) {
