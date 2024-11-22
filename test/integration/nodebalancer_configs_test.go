@@ -4,6 +4,8 @@ import (
 	"context"
 	"testing"
 
+	"github.com/stretchr/testify/require"
+
 	"github.com/linode/linodego"
 )
 
@@ -107,7 +109,59 @@ func TestNodeBalancerConfig_Get(t *testing.T) {
 	}
 }
 
-func setupNodeBalancerConfig(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.NodeBalancer, *linodego.NodeBalancerConfig, func(), error) {
+func TestNodeBalancerConfig_UDP(t *testing.T) {
+	_, _, config, teardown, err := setupNodeBalancerConfig(
+		t,
+		"fixtures/TestNodeBalancerConfig_UDP",
+		func(options *linodego.NodeBalancerConfigCreateOptions) {
+			options.Protocol = linodego.ProtocolUDP
+			options.UDPCheckPort = linodego.Pointer(1234)
+		},
+	)
+	defer teardown()
+
+	if err != nil {
+		t.Errorf("Error creating NodeBalancer Config, got error %v", err)
+	}
+
+	require.Equal(t, linodego.ProtocolUDP, config.UDPCheckPort)
+	require.Equal(t, 1234, config.UDPCheckPort)
+	require.NotZero(t, config.UDPSessionTimeout)
+}
+
+func createNodeBalancerConfig(
+	t *testing.T,
+	client *linodego.Client,
+	nodeBalancerID int,
+	modifiers ...func(options *linodego.NodeBalancerConfigCreateOptions),
+) (*linodego.NodeBalancerConfig, func(), error) {
+	t.Helper()
+
+	createOpts := testNodeBalancerConfigCreateOpts
+
+	for _, modifier := range modifiers {
+		modifier(&createOpts)
+	}
+
+	config, err := client.CreateNodeBalancerConfig(context.Background(), nodeBalancerID, createOpts)
+	if err != nil {
+		t.Fatalf("Error creating NodeBalancer Config, got error %v", err)
+	}
+
+	teardown := func() {
+		// delete the NodeBalancerConfig to exercise the code
+		if err := client.DeleteNodeBalancerConfig(context.Background(), nodeBalancerID, config.ID); err != nil {
+			t.Fatalf("Expected to delete a NodeBalancer Config, but got %v", err)
+		}
+	}
+	return config, teardown, err
+}
+
+func setupNodeBalancerConfig(
+	t *testing.T,
+	fixturesYaml string,
+	modifiers ...func(options *linodego.NodeBalancerConfigCreateOptions),
+) (*linodego.Client, *linodego.NodeBalancer, *linodego.NodeBalancerConfig, func(), error) {
 	t.Helper()
 	var fixtureTeardown func()
 	client, nodebalancer, fixtureTeardown, err := setupNodeBalancer(t, fixturesYaml)
@@ -115,17 +169,13 @@ func setupNodeBalancerConfig(t *testing.T, fixturesYaml string) (*linodego.Clien
 		t.Fatalf("Error creating nodebalancer, got error %v", err)
 	}
 
-	createOpts := testNodeBalancerConfigCreateOpts
-	config, err := client.CreateNodeBalancerConfig(context.Background(), nodebalancer.ID, createOpts)
+	config, configTeardown, err := createNodeBalancerConfig(t, client, nodebalancer.ID, modifiers...)
 	if err != nil {
 		t.Fatalf("Error creating NodeBalancer Config, got error %v", err)
 	}
 
 	teardown := func() {
-		// delete the NodeBalancerConfig to exercise the code
-		if err := client.DeleteNodeBalancerConfig(context.Background(), nodebalancer.ID, config.ID); err != nil {
-			t.Fatalf("Expected to delete a NodeBalancer Config, but got %v", err)
-		}
+		configTeardown()
 		fixtureTeardown()
 	}
 	return client, nodebalancer, config, teardown, err
