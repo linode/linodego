@@ -2,9 +2,10 @@ package unit
 
 import (
 	"context"
+	"testing"
+
 	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"
-	"testing"
 
 	"github.com/stretchr/testify/assert"
 )

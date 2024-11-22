@@ -3,9 +3,10 @@ package unit
 import (
 	"context"
 	"encoding/json"
+	"testing"
+
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestAccountPayments_Create(t *testing.T) {

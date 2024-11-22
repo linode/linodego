@@ -2,8 +2,9 @@ package unit
 
 import (
 	"context"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestInstance_NodeBalancers_List(t *testing.T) {

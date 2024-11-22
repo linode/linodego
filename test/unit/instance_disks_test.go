@@ -2,9 +2,10 @@ package unit
 
 import (
 	"context"
+	"testing"
+
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestInstance_Disks_Clone(t *testing.T) {
