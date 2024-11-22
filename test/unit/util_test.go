@@ -1,6 +1,8 @@
 package unit
 
 import (
+	"fmt"
+	"net/url"
 	"regexp"
 	"testing"
 
@@ -20,4 +22,17 @@ func mockRequestURL(t *testing.T, path string) *regexp.Regexp {
 
 func createMockClient(t *testing.T) *linodego.Client {
 	return testutil.CreateMockClient(t, linodego.NewClient)
+}
+
+func formatMockAPIPath(format string, args ...any) string {
+	escapedArgs := make([]any, len(args))
+	for i, arg := range args {
+		if typeStr, ok := arg.(string); ok {
+			arg = url.PathEscape(typeStr)
+		}
+
+		escapedArgs[i] = arg
+	}
+
+	return fmt.Sprintf(format, escapedArgs...)
 }
