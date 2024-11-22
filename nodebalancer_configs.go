@@ -6,27 +6,28 @@ import (
 
 // NodeBalancerConfig objects allow a NodeBalancer to accept traffic on a new port
 type NodeBalancerConfig struct {
-	ID             int                     `json:"id"`
-	Port           int                     `json:"port"`
-	Protocol       ConfigProtocol          `json:"protocol"`
-	ProxyProtocol  ConfigProxyProtocol     `json:"proxy_protocol"`
-	Algorithm      ConfigAlgorithm         `json:"algorithm"`
-	Stickiness     ConfigStickiness        `json:"stickiness"`
-	Check          ConfigCheck             `json:"check"`
-	CheckInterval  int                     `json:"check_interval"`
-	CheckAttempts  int                     `json:"check_attempts"`
-	CheckPath      string                  `json:"check_path"`
-	CheckBody      string                  `json:"check_body"`
-	CheckPassive   bool                    `json:"check_passive"`
-	CheckTimeout   int                     `json:"check_timeout"`
-	UDPCheckPort   *int                    `json:"udp_check_port"`
-	CipherSuite    ConfigCipher            `json:"cipher_suite"`
-	NodeBalancerID int                     `json:"nodebalancer_id"`
-	SSLCommonName  string                  `json:"ssl_commonname"`
-	SSLFingerprint string                  `json:"ssl_fingerprint"`
-	SSLCert        string                  `json:"ssl_cert"`
-	SSLKey         string                  `json:"ssl_key"`
-	NodesStatus    *NodeBalancerNodeStatus `json:"nodes_status"`
+	ID                int                     `json:"id"`
+	Port              int                     `json:"port"`
+	Protocol          ConfigProtocol          `json:"protocol"`
+	ProxyProtocol     ConfigProxyProtocol     `json:"proxy_protocol"`
+	Algorithm         ConfigAlgorithm         `json:"algorithm"`
+	Stickiness        ConfigStickiness        `json:"stickiness"`
+	Check             ConfigCheck             `json:"check"`
+	CheckInterval     int                     `json:"check_interval"`
+	CheckAttempts     int                     `json:"check_attempts"`
+	CheckPath         string                  `json:"check_path"`
+	CheckBody         string                  `json:"check_body"`
+	CheckPassive      bool                    `json:"check_passive"`
+	CheckTimeout      int                     `json:"check_timeout"`
+	UDPCheckPort      int                     `json:"udp_check_port"`
+	UDPSessionTimeout int                     `json:"udp_session_timeout"`
+	CipherSuite       ConfigCipher            `json:"cipher_suite"`
+	NodeBalancerID    int                     `json:"nodebalancer_id"`
+	SSLCommonName     string                  `json:"ssl_commonname"`
+	SSLFingerprint    string                  `json:"ssl_fingerprint"`
+	SSLCert           string                  `json:"ssl_cert"`
+	SSLKey            string                  `json:"ssl_key"`
+	NodesStatus       *NodeBalancerNodeStatus `json:"nodes_status"`
 }
 
 // ConfigAlgorithm constants start with Algorithm and include Linode API NodeBalancer Config Algorithms
@@ -49,6 +50,7 @@ const (
 	StickinessSession    ConfigStickiness = "session"
 	StickinessTable      ConfigStickiness = "table"
 	StickinessHTTPCookie ConfigStickiness = "http_cookie"
+	StickinessSourceIP   ConfigStickiness = "source_ip"
 )
 
 // ConfigCheck constants start with Check and include Linode API NodeBalancer Config Check methods
@@ -166,7 +168,7 @@ func (i NodeBalancerConfig) GetCreateOptions() NodeBalancerConfigCreateOptions {
 		CheckPath:     i.CheckPath,
 		CheckBody:     i.CheckBody,
 		CheckPassive:  copyBool(&i.CheckPassive),
-		UDPCheckPort:  copyInt(i.UDPCheckPort),
+		UDPCheckPort:  &i.UDPCheckPort,
 		CipherSuite:   i.CipherSuite,
 		SSLCert:       i.SSLCert,
 		SSLKey:        i.SSLKey,
@@ -188,7 +190,7 @@ func (i NodeBalancerConfig) GetUpdateOptions() NodeBalancerConfigUpdateOptions {
 		CheckBody:     i.CheckBody,
 		CheckPassive:  copyBool(&i.CheckPassive),
 		CheckTimeout:  i.CheckTimeout,
-		UDPCheckPort:  copyInt(i.UDPCheckPort),
+		UDPCheckPort:  copyInt(&i.UDPCheckPort),
 		CipherSuite:   i.CipherSuite,
 		SSLCert:       i.SSLCert,
 		SSLKey:        i.SSLKey,
@@ -210,7 +212,7 @@ func (i NodeBalancerConfig) GetRebuildOptions() NodeBalancerConfigRebuildOptions
 		CheckPath:     i.CheckPath,
 		CheckBody:     i.CheckBody,
 		CheckPassive:  copyBool(&i.CheckPassive),
-		UDPCheckPort:  copyInt(i.UDPCheckPort),
+		UDPCheckPort:  copyInt(&i.UDPCheckPort),
 		CipherSuite:   i.CipherSuite,
 		SSLCert:       i.SSLCert,
 		SSLKey:        i.SSLKey,
