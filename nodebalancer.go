@@ -31,7 +31,7 @@ type NodeBalancer struct {
 	// Throttle connections per second (0-20). Set to 0 (zero) to disable throttling.
 	ClientConnThrottle int `json:"client_conn_throttle"`
 
-	// ClientUDPSessThrottle TODO.
+	// ClientUDPSessThrottle throttles UDP sessions per second. Set to 0 (zero) to disable throttling.
 	ClientUDPSessThrottle int `json:"client_udp_sess_throttle"`
 
 	// Information about the amount of transfer this NodeBalancer has had so far this month.
