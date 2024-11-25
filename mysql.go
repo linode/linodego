@@ -19,23 +19,27 @@ const (
 
 // A MySQLDatabase is an instance of Linode MySQL Managed Databases
 type MySQLDatabase struct {
-	ID              int                       `json:"id"`
-	Status          DatabaseStatus            `json:"status"`
-	Label           string                    `json:"label"`
-	Hosts           DatabaseHost              `json:"hosts"`
-	Region          string                    `json:"region"`
-	Type            string                    `json:"type"`
-	Engine          string                    `json:"engine"`
-	Version         string                    `json:"version"`
-	ClusterSize     int                       `json:"cluster_size"`
-	ReplicationType string                    `json:"replication_type"`
-	SSLConnection   bool                      `json:"ssl_connection"`
-	Encrypted       bool                      `json:"encrypted"`
-	AllowList       []string                  `json:"allow_list"`
-	InstanceURI     string                    `json:"instance_uri"`
-	Created         *time.Time                `json:"-"`
-	Updated         *time.Time                `json:"-"`
-	Updates         DatabaseMaintenanceWindow `json:"updates"`
+	ID          int            `json:"id"`
+	Status      DatabaseStatus `json:"status"`
+	Label       string         `json:"label"`
+	Hosts       DatabaseHost   `json:"hosts"`
+	Region      string         `json:"region"`
+	Type        string         `json:"type"`
+	Engine      string         `json:"engine"`
+	Version     string         `json:"version"`
+	ClusterSize int            `json:"cluster_size"`
+
+	ReplicationType string `json:"replication_type,omitempty"` // This field doesn't exist in DBaaS v2
+
+	SSLConnection     bool                      `json:"ssl_connection"`
+	Encrypted         bool                      `json:"encrypted"`
+	AllowList         []string                  `json:"allow_list"`
+	InstanceURI       string                    `json:"instance_uri"`
+	Created           *time.Time                `json:"-"`
+	Updated           *time.Time                `json:"-"`
+	Updates           DatabaseMaintenanceWindow `json:"updates"`
+	Fork              DatabaseFork              `json:"fork"`
+	OldestRestoreTime *time.Time                `json:"-"`
 }
 
 func (d *MySQLDatabase) UnmarshalJSON(b []byte) error {
@@ -43,8 +47,9 @@ func (d *MySQLDatabase) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
-		Created *parseabletime.ParseableTime `json:"created"`
-		Updated *parseabletime.ParseableTime `json:"updated"`
+		Created           *parseabletime.ParseableTime `json:"created"`
+		Updated           *parseabletime.ParseableTime `json:"updated"`
+		OldestRestoreTime *parseabletime.ParseableTime `json:"oldest_restore_time"`
 	}{
 		Mask: (*Mask)(d),
 	}
@@ -55,20 +60,24 @@ func (d *MySQLDatabase) UnmarshalJSON(b []byte) error {
 
 	d.Created = (*time.Time)(p.Created)
 	d.Updated = (*time.Time)(p.Updated)
+	d.OldestRestoreTime = (*time.Time)(p.OldestRestoreTime)
 	return nil
 }
 
 // MySQLCreateOptions fields are used when creating a new MySQL Database
 type MySQLCreateOptions struct {
-	Label           string   `json:"label"`
-	Region          string   `json:"region"`
-	Type            string   `json:"type"`
-	Engine          string   `json:"engine"`
-	AllowList       []string `json:"allow_list,omitempty"`
-	ReplicationType string   `json:"replication_type,omitempty"`
-	ClusterSize     int      `json:"cluster_size,omitempty"`
-	Encrypted       bool     `json:"encrypted,omitempty"`
-	SSLConnection   bool     `json:"ssl_connection,omitempty"`
+	Label       string   `json:"label"`
+	Region      string   `json:"region"`
+	Type        string   `json:"type"`
+	Engine      string   `json:"engine"`
+	AllowList   []string `json:"allow_list,omitempty"`
+	ClusterSize int      `json:"cluster_size,omitempty"`
+
+	ReplicationType string `json:"replication_type,omitempty"` // This field doesn't exist in DBaaS v2
+	Encrypted       bool   `json:"encrypted,omitempty"`        // This field doesn't exist in DBaaS v2
+	SSLConnection   bool   `json:"ssl_connection,omitempty"`   // This field doesn't exist in DBaaS v2
+
+	Fork *DatabaseFork `json:"fork,omitempty"`
 }
 
 // MySQLUpdateOptions fields are used when altering the existing MySQL Database
@@ -76,9 +85,11 @@ type MySQLUpdateOptions struct {
 	Label     string                     `json:"label,omitempty"`
 	AllowList *[]string                  `json:"allow_list,omitempty"`
 	Updates   *DatabaseMaintenanceWindow `json:"updates,omitempty"`
+	Type      string                     `json:"type,omitempty"`
 }
 
 // MySQLDatabaseBackup is information for interacting with a backup for the existing MySQL Database
+// This struct is not supported in DBaaS v2
 type MySQLDatabaseBackup struct {
 	ID      int        `json:"id"`
 	Label   string     `json:"label"`
@@ -87,6 +98,7 @@ type MySQLDatabaseBackup struct {
 }
 
 // MySQLBackupCreateOptions are options used for CreateMySQLDatabaseBackup(...)
+// This struct is not supported in DBaaS v2
 type MySQLBackupCreateOptions struct {
 	Label  string              `json:"label"`
 	Target MySQLDatabaseTarget `json:"target"`
@@ -132,6 +144,7 @@ func (c *Client) ListMySQLDatabases(ctx context.Context, opts *ListOptions) ([]M
 }
 
 // ListMySQLDatabaseBackups lists all MySQL Database Backups associated with the given MySQL Database
+// Note: This method is not supported in DBaaS V2
 func (c *Client) ListMySQLDatabaseBackups(ctx context.Context, databaseID int, opts *ListOptions) ([]MySQLDatabaseBackup, error) {
 	response, err := getPaginatedResults[MySQLDatabaseBackup](ctx, c, formatAPIPath("databases/mysql/instances/%d/backups", databaseID), opts)
 	if err != nil {
@@ -211,6 +224,7 @@ func (c *Client) ResetMySQLDatabaseCredentials(ctx context.Context, databaseID i
 }
 
 // GetMySQLDatabaseBackup returns a specific MySQL Database Backup with the given ids
+// Note: This method is not supported in DBaaS V2
 func (c *Client) GetMySQLDatabaseBackup(ctx context.Context, databaseID int, backupID int) (*MySQLDatabaseBackup, error) {
 	e := formatAPIPath("databases/mysql/instances/%d/backups/%d", databaseID, backupID)
 	response, err := doGETRequest[MySQLDatabaseBackup](ctx, c, e)
@@ -222,6 +236,7 @@ func (c *Client) GetMySQLDatabaseBackup(ctx context.Context, databaseID int, bac
 }
 
 // RestoreMySQLDatabaseBackup returns the given MySQL Database with the given Backup
+// Note: This method is not supported in DBaaS V2
 func (c *Client) RestoreMySQLDatabaseBackup(ctx context.Context, databaseID int, backupID int) error {
 	e := formatAPIPath("databases/mysql/instances/%d/backups/%d/restore", databaseID, backupID)
 	_, err := doPOSTRequest[MySQLDatabaseBackup, any](ctx, c, e)
@@ -229,6 +244,7 @@ func (c *Client) RestoreMySQLDatabaseBackup(ctx context.Context, databaseID int,
 }
 
 // CreateMySQLDatabaseBackup creates a snapshot for the given MySQL database
+// Note: This method is not supported in DBaaS V2
 func (c *Client) CreateMySQLDatabaseBackup(ctx context.Context, databaseID int, opts MySQLBackupCreateOptions) error {
 	e := formatAPIPath("databases/mysql/instances/%d/backups", databaseID)
 	_, err := doPOSTRequest[MySQLDatabaseBackup](ctx, c, e, opts)

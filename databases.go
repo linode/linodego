@@ -52,22 +52,24 @@ const (
 
 // A Database is a instance of Linode Managed Databases
 type Database struct {
-	ID              int            `json:"id"`
-	Status          DatabaseStatus `json:"status"`
-	Label           string         `json:"label"`
-	Hosts           DatabaseHost   `json:"hosts"`
-	Region          string         `json:"region"`
-	Type            string         `json:"type"`
-	Engine          string         `json:"engine"`
-	Version         string         `json:"version"`
-	ClusterSize     int            `json:"cluster_size"`
-	ReplicationType string         `json:"replication_type"`
-	SSLConnection   bool           `json:"ssl_connection"`
-	Encrypted       bool           `json:"encrypted"`
-	AllowList       []string       `json:"allow_list"`
-	InstanceURI     string         `json:"instance_uri"`
-	Created         *time.Time     `json:"-"`
-	Updated         *time.Time     `json:"-"`
+	ID          int            `json:"id"`
+	Status      DatabaseStatus `json:"status"`
+	Label       string         `json:"label"`
+	Hosts       DatabaseHost   `json:"hosts"`
+	Region      string         `json:"region"`
+	Type        string         `json:"type"`
+	Engine      string         `json:"engine"`
+	Version     string         `json:"version"`
+	ClusterSize int            `json:"cluster_size"`
+
+	ReplicationType string `json:"replication_type,omitempty"` // This field doesn't exist in DBaaS v2
+	SSLConnection   bool   `json:"ssl_connection"`             // This field doesn't exist in DBaaS v2
+
+	Encrypted   bool       `json:"encrypted"`
+	AllowList   []string   `json:"allow_list"`
+	InstanceURI string     `json:"instance_uri"`
+	Created     *time.Time `json:"-"`
+	Updated     *time.Time `json:"-"`
 }
 
 // DatabaseHost for Primary/Secondary of Database
@@ -85,11 +87,18 @@ type DatabaseEngine struct {
 
 // DatabaseMaintenanceWindow stores information about a MySQL cluster's maintenance window
 type DatabaseMaintenanceWindow struct {
-	DayOfWeek   DatabaseDayOfWeek            `json:"day_of_week"`
-	Duration    int                          `json:"duration"`
-	Frequency   DatabaseMaintenanceFrequency `json:"frequency"`
-	HourOfDay   int                          `json:"hour_of_day"`
-	WeekOfMonth *int                         `json:"week_of_month"`
+	DayOfWeek DatabaseDayOfWeek            `json:"day_of_week"`
+	Duration  int                          `json:"duration"`
+	Frequency DatabaseMaintenanceFrequency `json:"frequency"`
+	HourOfDay int                          `json:"hour_of_day"`
+
+	Pending []struct {
+		Deadline    *time.Time `json:"deadline"`
+		Description string     `json:"description"`
+		PlannedFor  *time.Time `json:"planned_for"`
+	} `json:"pending,omitempty"`
+
+	WeekOfMonth *int `json:"week_of_month,omitempty"` // This field doesn't exist in v2
 }
 
 // DatabaseType is information about the supported Database Types by Linode Managed Databases
@@ -118,6 +127,12 @@ type DatabaseTypeEngine struct {
 type ClusterPrice struct {
 	Hourly  float32 `json:"hourly"`
 	Monthly float32 `json:"monthly"`
+}
+
+// DatabaseFork describes the source and restore time for the fork for forked DBs
+type DatabaseFork struct {
+	Source      int        `json:"source"`
+	RestoreTime *time.Time `json:"restore_time"`
 }
 
 func (d *Database) UnmarshalJSON(b []byte) error {
