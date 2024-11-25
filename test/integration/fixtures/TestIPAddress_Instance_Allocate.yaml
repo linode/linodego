@@ -100,40 +100,41 @@ interactions:
       {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg": 5}, "site_type":
       "core"}, {"id": "nl-ams", "label": "Amsterdam, NL", "country": "nl", "capabilities":
       ["Linodes", "Disk Encryption", "Backups", "NodeBalancers", "Block Storage",
-      "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans", "VPCs", "Metadata",
-      "Premium Plans", "Placement Group"], "status": "ok", "resolvers": {"ipv4": "172.233.33.36,
-      172.233.33.38, 172.233.33.35, 172.233.33.39, 172.233.33.34, 172.233.33.33, 172.233.33.31,
-      172.233.33.30, 172.233.33.37, 172.233.33.32", "ipv6": "2600:3c0e::f03c:93ff:fe9d:2d10,
-      2600:3c0e::f03c:93ff:fe9d:2d89, 2600:3c0e::f03c:93ff:fe9d:2d79, 2600:3c0e::f03c:93ff:fe9d:2d96,
-      2600:3c0e::f03c:93ff:fe9d:2da5, 2600:3c0e::f03c:93ff:fe9d:2d34, 2600:3c0e::f03c:93ff:fe9d:2d68,
-      2600:3c0e::f03c:93ff:fe9d:2d17, 2600:3c0e::f03c:93ff:fe9d:2d45, 2600:3c0e::f03c:93ff:fe9d:2d5c"},
-      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
-      5}, "site_type": "core"}, {"id": "se-sto", "label": "Stockholm, SE", "country":
-      "se", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Block Storage",
-      "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans", "VPCs", "Metadata",
-      "Premium Plans", "Placement Group"], "status": "ok", "resolvers": {"ipv4": "172.232.128.24,
-      172.232.128.26, 172.232.128.20, 172.232.128.22, 172.232.128.25, 172.232.128.19,
-      172.232.128.23, 172.232.128.18, 172.232.128.21, 172.232.128.27", "ipv6": "2600:3c09::f03c:93ff:fea9:4dbe,
-      2600:3c09::f03c:93ff:fea9:4d63, 2600:3c09::f03c:93ff:fea9:4dce, 2600:3c09::f03c:93ff:fea9:4dbb,
-      2600:3c09::f03c:93ff:fea9:4d99, 2600:3c09::f03c:93ff:fea9:4d26, 2600:3c09::f03c:93ff:fea9:4de0,
-      2600:3c09::f03c:93ff:fea9:4d69, 2600:3c09::f03c:93ff:fea9:4dbf, 2600:3c09::f03c:93ff:fea9:4da6"},
-      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
-      5}, "site_type": "core"}, {"id": "es-mad", "label": "Madrid, ES", "country":
-      "es", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Block Storage",
-      "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans", "VPCs", "Metadata",
-      "Premium Plans", "Placement Group"], "status": "ok", "resolvers": {"ipv4": "172.233.111.6,
-      172.233.111.17, 172.233.111.21, 172.233.111.25, 172.233.111.19, 172.233.111.12,
-      172.233.111.26, 172.233.111.16, 172.233.111.18, 172.233.111.9", "ipv6": "2a01:7e02::f03c:93ff:feea:b585,
-      2a01:7e02::f03c:93ff:feea:b5ab, 2a01:7e02::f03c:93ff:feea:b5c6, 2a01:7e02::f03c:93ff:feea:b592,
-      2a01:7e02::f03c:93ff:feea:b5aa, 2a01:7e02::f03c:93ff:feea:b5d3, 2a01:7e02::f03c:93ff:feea:b5d7,
-      2a01:7e02::f03c:93ff:feea:b528, 2a01:7e02::f03c:93ff:feea:b522, 2a01:7e02::f03c:93ff:feea:b51a"},
-      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
-      5}, "site_type": "core"}, {"id": "in-maa", "label": "Chennai, IN", "country":
-      "in", "capabilities": ["Linodes", "Disk Encryption", "Backups", "NodeBalancers",
+      "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans", "VPCs", "Managed
+      Databases", "Metadata", "Premium Plans", "Placement Group"], "status": "ok",
+      "resolvers": {"ipv4": "172.233.33.36, 172.233.33.38, 172.233.33.35, 172.233.33.39,
+      172.233.33.34, 172.233.33.33, 172.233.33.31, 172.233.33.30, 172.233.33.37, 172.233.33.32",
+      "ipv6": "2600:3c0e::f03c:93ff:fe9d:2d10, 2600:3c0e::f03c:93ff:fe9d:2d89, 2600:3c0e::f03c:93ff:fe9d:2d79,
+      2600:3c0e::f03c:93ff:fe9d:2d96, 2600:3c0e::f03c:93ff:fe9d:2da5, 2600:3c0e::f03c:93ff:fe9d:2d34,
+      2600:3c0e::f03c:93ff:fe9d:2d68, 2600:3c0e::f03c:93ff:fe9d:2d17, 2600:3c0e::f03c:93ff:fe9d:2d45,
+      2600:3c0e::f03c:93ff:fe9d:2d5c"}, "placement_group_limits": {"maximum_pgs_per_customer":
+      null, "maximum_linodes_per_pg": 5}, "site_type": "core"}, {"id": "se-sto", "label":
+      "Stockholm, SE", "country": "se", "capabilities": ["Linodes", "Backups", "NodeBalancers",
       "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans",
-      "VPCs", "Metadata", "Premium Plans", "Placement Group"], "status": "ok", "resolvers":
-      {"ipv4": "172.232.96.17, 172.232.96.26, 172.232.96.19, 172.232.96.20, 172.232.96.25,
-      172.232.96.21, 172.232.96.18, 172.232.96.22, 172.232.96.23, 172.232.96.24",
+      "VPCs", "Managed Databases", "Metadata", "Premium Plans", "Placement Group"],
+      "status": "ok", "resolvers": {"ipv4": "172.232.128.24, 172.232.128.26, 172.232.128.20,
+      172.232.128.22, 172.232.128.25, 172.232.128.19, 172.232.128.23, 172.232.128.18,
+      172.232.128.21, 172.232.128.27", "ipv6": "2600:3c09::f03c:93ff:fea9:4dbe, 2600:3c09::f03c:93ff:fea9:4d63,
+      2600:3c09::f03c:93ff:fea9:4dce, 2600:3c09::f03c:93ff:fea9:4dbb, 2600:3c09::f03c:93ff:fea9:4d99,
+      2600:3c09::f03c:93ff:fea9:4d26, 2600:3c09::f03c:93ff:fea9:4de0, 2600:3c09::f03c:93ff:fea9:4d69,
+      2600:3c09::f03c:93ff:fea9:4dbf, 2600:3c09::f03c:93ff:fea9:4da6"}, "placement_group_limits":
+      {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg": 5}, "site_type":
+      "core"}, {"id": "es-mad", "label": "Madrid, ES", "country": "es", "capabilities":
+      ["Linodes", "Backups", "NodeBalancers", "Block Storage", "Object Storage", "Kubernetes",
+      "Cloud Firewall", "Vlans", "VPCs", "Metadata", "Premium Plans", "Placement Group"],
+      "status": "ok", "resolvers": {"ipv4": "172.233.111.6, 172.233.111.17, 172.233.111.21,
+      172.233.111.25, 172.233.111.19, 172.233.111.12, 172.233.111.26, 172.233.111.16,
+      172.233.111.18, 172.233.111.9", "ipv6": "2a01:7e02::f03c:93ff:feea:b585, 2a01:7e02::f03c:93ff:feea:b5ab,
+      2a01:7e02::f03c:93ff:feea:b5c6, 2a01:7e02::f03c:93ff:feea:b592, 2a01:7e02::f03c:93ff:feea:b5aa,
+      2a01:7e02::f03c:93ff:feea:b5d3, 2a01:7e02::f03c:93ff:feea:b5d7, 2a01:7e02::f03c:93ff:feea:b528,
+      2a01:7e02::f03c:93ff:feea:b522, 2a01:7e02::f03c:93ff:feea:b51a"}, "placement_group_limits":
+      {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg": 5}, "site_type":
+      "core"}, {"id": "in-maa", "label": "Chennai, IN", "country": "in", "capabilities":
+      ["Linodes", "Disk Encryption", "Backups", "NodeBalancers", "Block Storage",
+      "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans", "VPCs", "Managed
+      Databases", "Metadata", "Premium Plans", "Placement Group"], "status": "ok",
+      "resolvers": {"ipv4": "172.232.96.17, 172.232.96.26, 172.232.96.19, 172.232.96.20,
+      172.232.96.25, 172.232.96.21, 172.232.96.18, 172.232.96.22, 172.232.96.23, 172.232.96.24",
       "ipv6": "2600:3c08::f03c:93ff:fe7c:1135, 2600:3c08::f03c:93ff:fe7c:11f8, 2600:3c08::f03c:93ff:fe7c:11d2,
       2600:3c08::f03c:93ff:fe7c:11a7, 2600:3c08::f03c:93ff:fe7c:11ad, 2600:3c08::f03c:93ff:fe7c:110a,
       2600:3c08::f03c:93ff:fe7c:11f9, 2600:3c08::f03c:93ff:fe7c:1137, 2600:3c08::f03c:93ff:fe7c:11db,
@@ -141,59 +142,59 @@ interactions:
       null, "maximum_linodes_per_pg": 5}, "site_type": "core"}, {"id": "jp-osa", "label":
       "Osaka, JP", "country": "jp", "capabilities": ["Linodes", "Disk Encryption",
       "Backups", "NodeBalancers", "Block Storage", "Object Storage", "GPU Linodes",
-      "Kubernetes", "Cloud Firewall", "Vlans", "VPCs", "Metadata", "Premium Plans",
-      "Placement Group"], "status": "ok", "resolvers": {"ipv4": "172.233.64.44, 172.233.64.43,
-      172.233.64.37, 172.233.64.40, 172.233.64.46, 172.233.64.41, 172.233.64.39, 172.233.64.42,
-      172.233.64.45, 172.233.64.38", "ipv6": "2400:8905::f03c:93ff:fe9d:b085, 2400:8905::f03c:93ff:fe9d:b012,
-      2400:8905::f03c:93ff:fe9d:b09b, 2400:8905::f03c:93ff:fe9d:b0d8, 2400:8905::f03c:93ff:fe9d:259f,
-      2400:8905::f03c:93ff:fe9d:b006, 2400:8905::f03c:93ff:fe9d:b084, 2400:8905::f03c:93ff:fe9d:b0ce,
-      2400:8905::f03c:93ff:fe9d:25ea, 2400:8905::f03c:93ff:fe9d:b086"}, "placement_group_limits":
+      "Kubernetes", "Cloud Firewall", "Vlans", "VPCs", "Managed Databases", "Metadata",
+      "Premium Plans", "Placement Group"], "status": "ok", "resolvers": {"ipv4": "172.233.64.44,
+      172.233.64.43, 172.233.64.37, 172.233.64.40, 172.233.64.46, 172.233.64.41, 172.233.64.39,
+      172.233.64.42, 172.233.64.45, 172.233.64.38", "ipv6": "2400:8905::f03c:93ff:fe9d:b085,
+      2400:8905::f03c:93ff:fe9d:b012, 2400:8905::f03c:93ff:fe9d:b09b, 2400:8905::f03c:93ff:fe9d:b0d8,
+      2400:8905::f03c:93ff:fe9d:259f, 2400:8905::f03c:93ff:fe9d:b006, 2400:8905::f03c:93ff:fe9d:b084,
+      2400:8905::f03c:93ff:fe9d:b0ce, 2400:8905::f03c:93ff:fe9d:25ea, 2400:8905::f03c:93ff:fe9d:b086"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5}, "site_type": "core"}, {"id": "it-mil", "label": "Milan, IT", "country":
+      "it", "capabilities": ["Linodes", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans",
+      "VPCs", "Metadata", "Premium Plans", "Placement Group"], "status": "ok", "resolvers":
+      {"ipv4": "172.232.192.19, 172.232.192.18, 172.232.192.16, 172.232.192.20, 172.232.192.24,
+      172.232.192.21, 172.232.192.22, 172.232.192.17, 172.232.192.15, 172.232.192.23",
+      "ipv6": "2600:3c0b::f03c:93ff:feba:d513, 2600:3c0b::f03c:93ff:feba:d5c3, 2600:3c0b::f03c:93ff:feba:d597,
+      2600:3c0b::f03c:93ff:feba:d5fb, 2600:3c0b::f03c:93ff:feba:d51f, 2600:3c0b::f03c:93ff:feba:d58e,
+      2600:3c0b::f03c:93ff:feba:d5d5, 2600:3c0b::f03c:93ff:feba:d534, 2600:3c0b::f03c:93ff:feba:d57c,
+      2600:3c0b::f03c:93ff:feba:d529"}, "placement_group_limits": {"maximum_pgs_per_customer":
+      null, "maximum_linodes_per_pg": 5}, "site_type": "core"}, {"id": "us-mia", "label":
+      "Miami, FL", "country": "us", "capabilities": ["Linodes", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans",
+      "VPCs", "Managed Databases", "Metadata", "Premium Plans", "Placement Group"],
+      "status": "ok", "resolvers": {"ipv4": "172.233.160.34, 172.233.160.27, 172.233.160.30,
+      172.233.160.29, 172.233.160.32, 172.233.160.28, 172.233.160.33, 172.233.160.26,
+      172.233.160.25, 172.233.160.31", "ipv6": "2a01:7e04::f03c:93ff:fead:d31f, 2a01:7e04::f03c:93ff:fead:d37f,
+      2a01:7e04::f03c:93ff:fead:d30c, 2a01:7e04::f03c:93ff:fead:d318, 2a01:7e04::f03c:93ff:fead:d316,
+      2a01:7e04::f03c:93ff:fead:d339, 2a01:7e04::f03c:93ff:fead:d367, 2a01:7e04::f03c:93ff:fead:d395,
+      2a01:7e04::f03c:93ff:fead:d3d0, 2a01:7e04::f03c:93ff:fead:d38e"}, "placement_group_limits":
       {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg": 5}, "site_type":
-      "core"}, {"id": "it-mil", "label": "Milan, IT", "country": "it", "capabilities":
-      ["Linodes", "Disk Encryption", "Backups", "NodeBalancers", "Block Storage",
-      "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans", "VPCs", "Metadata",
-      "Premium Plans", "Placement Group"], "status": "ok", "resolvers": {"ipv4": "172.232.192.19,
-      172.232.192.18, 172.232.192.16, 172.232.192.20, 172.232.192.24, 172.232.192.21,
-      172.232.192.22, 172.232.192.17, 172.232.192.15, 172.232.192.23", "ipv6": "2600:3c0b::f03c:93ff:feba:d513,
-      2600:3c0b::f03c:93ff:feba:d5c3, 2600:3c0b::f03c:93ff:feba:d597, 2600:3c0b::f03c:93ff:feba:d5fb,
-      2600:3c0b::f03c:93ff:feba:d51f, 2600:3c0b::f03c:93ff:feba:d58e, 2600:3c0b::f03c:93ff:feba:d5d5,
-      2600:3c0b::f03c:93ff:feba:d534, 2600:3c0b::f03c:93ff:feba:d57c, 2600:3c0b::f03c:93ff:feba:d529"},
-      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
-      5}, "site_type": "core"}, {"id": "us-mia", "label": "Miami, FL", "country":
-      "us", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Block Storage",
-      "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans", "VPCs", "Metadata",
-      "Premium Plans", "Placement Group"], "status": "ok", "resolvers": {"ipv4": "172.233.160.34,
-      172.233.160.27, 172.233.160.30, 172.233.160.29, 172.233.160.32, 172.233.160.28,
-      172.233.160.33, 172.233.160.26, 172.233.160.25, 172.233.160.31", "ipv6": "2a01:7e04::f03c:93ff:fead:d31f,
-      2a01:7e04::f03c:93ff:fead:d37f, 2a01:7e04::f03c:93ff:fead:d30c, 2a01:7e04::f03c:93ff:fead:d318,
-      2a01:7e04::f03c:93ff:fead:d316, 2a01:7e04::f03c:93ff:fead:d339, 2a01:7e04::f03c:93ff:fead:d367,
-      2a01:7e04::f03c:93ff:fead:d395, 2a01:7e04::f03c:93ff:fead:d3d0, 2a01:7e04::f03c:93ff:fead:d38e"},
-      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
-      5}, "site_type": "core"}, {"id": "id-cgk", "label": "Jakarta, ID", "country":
-      "id", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Block Storage",
-      "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans", "VPCs", "Metadata",
-      "Premium Plans", "Placement Group"], "status": "ok", "resolvers": {"ipv4": "172.232.224.23,
-      172.232.224.32, 172.232.224.26, 172.232.224.27, 172.232.224.21, 172.232.224.24,
-      172.232.224.22, 172.232.224.20, 172.232.224.31, 172.232.224.28", "ipv6": "2600:3c0c::f03c:93ff:feed:a90b,
-      2600:3c0c::f03c:93ff:feed:a9a5, 2600:3c0c::f03c:93ff:feed:a935, 2600:3c0c::f03c:93ff:feed:a930,
-      2600:3c0c::f03c:93ff:feed:a95c, 2600:3c0c::f03c:93ff:feed:a9ad, 2600:3c0c::f03c:93ff:feed:a9f2,
-      2600:3c0c::f03c:93ff:feed:a9ff, 2600:3c0c::f03c:93ff:feed:a9c8, 2600:3c0c::f03c:93ff:feed:a96b"},
-      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
-      5}, "site_type": "core"}, {"id": "us-lax", "label": "Los Angeles, CA", "country":
-      "us", "capabilities": ["Linodes", "Block Storage Encryption", "Disk Encryption",
-      "Backups", "NodeBalancers", "Block Storage", "Object Storage", "Kubernetes",
+      "core"}, {"id": "id-cgk", "label": "Jakarta, ID", "country": "id", "capabilities":
+      ["Linodes", "Backups", "NodeBalancers", "Block Storage", "Object Storage", "Kubernetes",
       "Cloud Firewall", "Vlans", "VPCs", "Metadata", "Premium Plans", "Placement Group"],
-      "status": "ok", "resolvers": {"ipv4": "172.233.128.45, 172.233.128.38, 172.233.128.53,
-      172.233.128.37, 172.233.128.34, 172.233.128.36, 172.233.128.33, 172.233.128.39,
-      172.233.128.43, 172.233.128.44", "ipv6": "2a01:7e03::f03c:93ff:feb1:b789, 2a01:7e03::f03c:93ff:feb1:b717,
-      2a01:7e03::f03c:93ff:feb1:b707, 2a01:7e03::f03c:93ff:feb1:b7ab, 2a01:7e03::f03c:93ff:feb1:b7e2,
-      2a01:7e03::f03c:93ff:feb1:b709, 2a01:7e03::f03c:93ff:feb1:b7a6, 2a01:7e03::f03c:93ff:feb1:b750,
-      2a01:7e03::f03c:93ff:feb1:b76e, 2a01:7e03::f03c:93ff:feb1:b7a2"}, "placement_group_limits":
+      "status": "ok", "resolvers": {"ipv4": "172.232.224.23, 172.232.224.32, 172.232.224.26,
+      172.232.224.27, 172.232.224.21, 172.232.224.24, 172.232.224.22, 172.232.224.20,
+      172.232.224.31, 172.232.224.28", "ipv6": "2600:3c0c::f03c:93ff:feed:a90b, 2600:3c0c::f03c:93ff:feed:a9a5,
+      2600:3c0c::f03c:93ff:feed:a935, 2600:3c0c::f03c:93ff:feed:a930, 2600:3c0c::f03c:93ff:feed:a95c,
+      2600:3c0c::f03c:93ff:feed:a9ad, 2600:3c0c::f03c:93ff:feed:a9f2, 2600:3c0c::f03c:93ff:feed:a9ff,
+      2600:3c0c::f03c:93ff:feed:a9c8, 2600:3c0c::f03c:93ff:feed:a96b"}, "placement_group_limits":
       {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg": 5}, "site_type":
-      "core"}, {"id": "gb-lon", "label": "London 2, UK", "country": "gb", "capabilities":
-      ["Linodes", "Backups", "NodeBalancers", "Block Storage", "Kubernetes", "Cloud
-      Firewall", "Vlans", "VPCs", "Metadata", "Premium Plans", "Placement Group"],
-      "status": "ok", "resolvers": {"ipv4": "172.236.0.46,172.236.0.50,172.236.0.47,172.236.0.53,172.236.0.52,172.236.0.45,172.236.0.49,172.236.0.51,172.236.0.54,172.236.0.48",
+      "core"}, {"id": "us-lax", "label": "Los Angeles, CA", "country": "us", "capabilities":
+      ["Linodes", "Block Storage Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans",
+      "VPCs", "Metadata", "Premium Plans", "Placement Group"], "status": "ok", "resolvers":
+      {"ipv4": "172.233.128.45, 172.233.128.38, 172.233.128.53, 172.233.128.37, 172.233.128.34,
+      172.233.128.36, 172.233.128.33, 172.233.128.39, 172.233.128.43, 172.233.128.44",
+      "ipv6": "2a01:7e03::f03c:93ff:feb1:b789, 2a01:7e03::f03c:93ff:feb1:b717, 2a01:7e03::f03c:93ff:feb1:b707,
+      2a01:7e03::f03c:93ff:feb1:b7ab, 2a01:7e03::f03c:93ff:feb1:b7e2, 2a01:7e03::f03c:93ff:feb1:b709,
+      2a01:7e03::f03c:93ff:feb1:b7a6, 2a01:7e03::f03c:93ff:feb1:b750, 2a01:7e03::f03c:93ff:feb1:b76e,
+      2a01:7e03::f03c:93ff:feb1:b7a2"}, "placement_group_limits": {"maximum_pgs_per_customer":
+      null, "maximum_linodes_per_pg": 5}, "site_type": "core"}, {"id": "gb-lon", "label":
+      "London 2, UK", "country": "gb", "capabilities": ["Linodes", "Backups", "NodeBalancers",
+      "Block Storage", "Kubernetes", "Cloud Firewall", "Vlans", "VPCs", "Metadata",
+      "Premium Plans", "Placement Group"], "status": "ok", "resolvers": {"ipv4": "172.236.0.46,172.236.0.50,172.236.0.47,172.236.0.53,172.236.0.52,172.236.0.45,172.236.0.49,172.236.0.51,172.236.0.54,172.236.0.48",
       "ipv6": "2600:3c13::f03c:94ff:fe52:37c2,2600:3c13::f03c:94ff:fe52:37da,2600:3c13::f03c:94ff:fe52:370c,2600:3c13::f03c:94ff:fe52:37b1,2600:3c13::f03c:94ff:fe52:3743,2600:3c13::f03c:94ff:fe52:37e8,2600:3c13::f03c:94ff:fe52:37c7,2600:3c13::f03c:94ff:fe52:372d,2600:3c13::f03c:94ff:fe52:37d2,2600:3c13::f03c:94ff:fe52:3797"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5}, "site_type": "core"}, {"id": "au-mel", "label": "Melbourne, AU", "country":
@@ -309,7 +310,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 02 Oct 2024 19:11:51 GMT
+      - Mon, 07 Oct 2024 14:56:09 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -335,7 +336,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"ap-west","type":"g6-nanode-1","label":"go-test-ins-wo-disk-4fbae521k2a1","booted":false}'
+    body: '{"region":"ap-west","type":"g6-nanode-1","label":"go-test-ins-wo-disk-e5r0jt5hy380","booted":false}'
     form: {}
     headers:
       Accept:
@@ -347,15 +348,15 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 64761254, "label": "go-test-ins-wo-disk-4fbae521k2a1", "group":
+    body: '{"id": 64970525, "label": "go-test-ins-wo-disk-e5r0jt5hy380", "group":
       "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.105.55.196"], "ipv6": "2400:8904::f03c:95ff:fe7e:b0ec/128",
+      "type": "g6-nanode-1", "ipv4": ["194.195.117.161"], "ipv6": "2400:8904::f03c:95ff:fe8c:d6a6/128",
       "image": null, "region": "ap-west", "site_type": "core", "specs": {"disk": 25600,
       "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu":
       90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io": 10000},
       "backups": {"enabled": false, "available": false, "schedule": {"day": null,
       "window": null}, "last_successful": null}, "hypervisor": "kvm", "watchdog_enabled":
-      true, "tags": [], "host_uuid": "b87012b659b947e3d8e73fccf7a05a0eaa29cc4d", "has_user_data":
+      true, "tags": [], "host_uuid": "4ecff3e7ba293f448d05aad89062f4677f5065a3", "has_user_data":
       false, "placement_group": null, "disk_encryption": "disabled", "lke_cluster_id":
       null, "capabilities": []}'
     headers:
@@ -375,20 +376,19 @@ interactions:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
-      Content-Length:
-      - "859"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Wed, 02 Oct 2024 19:11:52 GMT
+      - Mon, 07 Oct 2024 14:56:09 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
+      - Accept-Encoding
       X-Accepted-Oauth-Scopes:
       - linodes:read_write
       X-Content-Type-Options:
@@ -406,7 +406,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-conf-l70l72h89gjp","devices":{},"interfaces":null}'
+    body: '{"label":"go-test-conf-8en09mw3l29s","devices":{},"interfaces":null}'
     form: {}
     headers:
       Accept:
@@ -415,10 +415,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/64761254/configs
+    url: https://api.linode.com/v4beta/linode/instances/64970525/configs
     method: POST
   response:
-    body: '{"id": 68045903, "label": "go-test-conf-l70l72h89gjp", "helpers": {"updatedb_disabled":
+    body: '{"id": 68259920, "label": "go-test-conf-8en09mw3l29s", "helpers": {"updatedb_disabled":
       true, "distro": true, "modules_dep": true, "network": false, "devtmpfs_automount":
       true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
@@ -449,7 +449,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 02 Oct 2024 19:11:52 GMT
+      - Mon, 07 Oct 2024 14:56:10 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -473,7 +473,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: ""
+    body: '{"type":"ipv4","public":true,"reserved":true,"region":"ap-west","linode_id":64970525}'
     form: {}
     headers:
       Accept:
@@ -482,77 +482,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/ips/172.105.55.196
-    method: GET
-  response:
-    body: '{"address": "172.105.55.196", "gateway": "172.105.55.1", "subnet_mask":
-      "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true, "rdns": "172-105-55-196.ip.linodeusercontent.com",
-      "linode_id": 64761254, "region": "ap-west", "vpc_nat_1_1": null, "reserved":
-      false}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "269"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Wed, 02 Oct 2024 19:11:52 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - ips:read_only
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "800"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: '{"region":"ap-west"}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips
+    url: https://api.linode.com/v4beta/networking/ips
     method: POST
   response:
-    body: '{"address": "45.79.125.41", "gateway": "45.79.125.1", "subnet_mask": "255.255.255.0",
-      "prefix": 24, "type": "ipv4", "public": true, "rdns": "45-79-125-41.ip.linodeusercontent.com",
-      "linode_id": null, "region": "ap-west", "vpc_nat_1_1": null, "reserved": true}'
+    body: '{"address": "45.79.120.251", "gateway": "45.79.120.1", "subnet_mask": "255.255.255.0",
+      "prefix": 24, "type": "ipv4", "public": true, "rdns": "45-79-120-251.ip.linodeusercontent.com",
+      "linode_id": 64970525, "region": "ap-west", "vpc_nat_1_1": null, "reserved":
+      true}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -571,13 +507,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "259"
+      - "265"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Wed, 02 Oct 2024 19:11:53 GMT
+      - Mon, 07 Oct 2024 14:56:10 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -601,7 +537,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: ""
+    body: '{"type":"ipv4","public":true,"reserved":true,"region":"ap-west","linode_id":99999}'
     form: {}
     headers:
       Accept:
@@ -610,11 +546,55 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/ips/45.79.125.41
-    method: GET
+    url: https://api.linode.com/v4beta/networking/ips
+    method: POST
   response:
-    body: '{"address": "45.79.125.41", "gateway": "45.79.125.1", "subnet_mask": "255.255.255.0",
-      "prefix": 24, "type": "ipv4", "public": true, "rdns": "45-79-125-41.ip.linodeusercontent.com",
+    body: '{"errors": [{"reason": "Linode is not active", "field": "linode_id"}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Content-Length:
+      - "70"
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 07 Oct 2024 14:56:10 GMT
+      Pragma:
+      - no-cache
+      X-Accepted-Oauth-Scopes:
+      - ips:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+    status: 400 Bad Request
+    code: 400
+    duration: ""
+- request:
+    body: '{"type":"ipv4","public":true,"reserved":true,"region":"ap-west"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/ips
+    method: POST
+  response:
+    body: '{"address": "45.79.120.253", "gateway": "45.79.120.1", "subnet_mask": "255.255.255.0",
+      "prefix": 24, "type": "ipv4", "public": true, "rdns": "45-79-120-253.ip.linodeusercontent.com",
       "linode_id": null, "region": "ap-west", "vpc_nat_1_1": null, "reserved": true}'
     headers:
       Access-Control-Allow-Credentials:
@@ -634,22 +614,21 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "259"
+      - "261"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Wed, 02 Oct 2024 19:11:53 GMT
+      - Mon, 07 Oct 2024 14:56:12 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
-      - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - ips:read_only
+      - ips:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -665,6 +644,51 @@ interactions:
     code: 200
     duration: ""
 - request:
+    body: '{"type":"ipv4","public":true,"reserved":true,"region":"ap-west","linode_id":64970525}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/ips
+    method: POST
+  response:
+    body: '{"errors": [{"reason": "Additional Reserved IPv4 addresses require technical
+      justification. Please contact support describing your requirement."}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Content-Length:
+      - "147"
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 07 Oct 2024 14:56:12 GMT
+      Pragma:
+      - no-cache
+      X-Accepted-Oauth-Scopes:
+      - ips:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+    status: 400 Bad Request
+    code: 400
+    duration: ""
+- request:
     body: ""
     form: {}
     headers:
@@ -674,7 +698,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips/45.79.125.41
+    url: https://api.linode.com/v4beta/networking/reserved/ips/45.79.120.251
     method: DELETE
   response:
     body: '{}'
@@ -702,7 +726,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 02 Oct 2024 19:11:53 GMT
+      - Mon, 07 Oct 2024 14:56:12 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -735,7 +759,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/64761254
+    url: https://api.linode.com/v4beta/networking/reserved/ips/45.79.120.253
     method: DELETE
   response:
     body: '{}'
@@ -763,7 +787,755 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 02 Oct 2024 19:11:55 GMT
+      - Mon, 07 Oct 2024 14:56:12 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - ips:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "10"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"type":"ipv4","public":true,"reserved":true,"linode_id":64970525}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/ips
+    method: POST
+  response:
+    body: '{"address": "45.79.120.253", "gateway": "45.79.120.1", "subnet_mask": "255.255.255.0",
+      "prefix": 24, "type": "ipv4", "public": true, "rdns": "45-79-120-253.ip.linodeusercontent.com",
+      "linode_id": 64970525, "region": "ap-west", "vpc_nat_1_1": null, "reserved":
+      true}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "265"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 07 Oct 2024 14:56:13 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - ips:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/reserved/ips/45.79.120.253
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 07 Oct 2024 14:56:14 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - ips:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "10"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"type":"ipv4","public":true,"reserved":true}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/ips
+    method: POST
+  response:
+    body: '{"errors": [{"reason": "A datacenter or a Linode must be provided when
+      reserving an address."}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Content-Length:
+      - "96"
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 07 Oct 2024 14:56:14 GMT
+      Pragma:
+      - no-cache
+      X-Accepted-Oauth-Scopes:
+      - ips:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+    status: 400 Bad Request
+    code: 400
+    duration: ""
+- request:
+    body: '{"type":"ipv4","public":false,"reserved":true,"region":"ap-west","linode_id":64970525}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/ips
+    method: POST
+  response:
+    body: '{"errors": [{"reason": "Cannot reserve a private address.", "field": "public"}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Content-Length:
+      - "80"
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 07 Oct 2024 14:56:14 GMT
+      Pragma:
+      - no-cache
+      X-Accepted-Oauth-Scopes:
+      - ips:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+    status: 400 Bad Request
+    code: 400
+    duration: ""
+- request:
+    body: '{"type":"ipv4","public":true,"region":"ap-west","linode_id":64970525}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/ips
+    method: POST
+  response:
+    body: '{"address": "192.46.215.37", "gateway": "192.46.215.1", "subnet_mask":
+      "255.255.128.0", "prefix": 17, "type": "ipv4", "public": true, "rdns": "192-46-215-37.ip.linodeusercontent.com",
+      "linode_id": 64970525, "region": "ap-west", "vpc_nat_1_1": null, "reserved":
+      false}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "267"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 07 Oct 2024 14:56:14 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - ips:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/linode/instances/64970525/ips/192.46.215.37
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 07 Oct 2024 14:56:14 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - linodes:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"type":"ipv4","public":true,"region":"ap-west","linode_id":64970525}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/ips
+    method: POST
+  response:
+    body: '{"address": "192.46.215.37", "gateway": "192.46.215.1", "subnet_mask":
+      "255.255.128.0", "prefix": 17, "type": "ipv4", "public": true, "rdns": "192-46-215-37.ip.linodeusercontent.com",
+      "linode_id": 64970525, "region": "ap-west", "vpc_nat_1_1": null, "reserved":
+      false}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "267"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 07 Oct 2024 14:56:15 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - ips:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/linode/instances/64970525/ips/192.46.215.37
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 07 Oct 2024 14:56:15 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - linodes:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"type":"ipv4","public":true,"region":"ap-west"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/ips
+    method: POST
+  response:
+    body: '{"errors": [{"reason": "Linode is a required argument when not reserving
+      an IP address.", "field": "linode_id"}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Content-Length:
+      - "113"
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 07 Oct 2024 14:56:15 GMT
+      Pragma:
+      - no-cache
+      X-Accepted-Oauth-Scopes:
+      - ips:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+    status: 400 Bad Request
+    code: 400
+    duration: ""
+- request:
+    body: '{"type":"ipv4","public":true,"region":"ap-west"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/ips
+    method: POST
+  response:
+    body: '{"errors": [{"reason": "Linode is a required argument when not reserving
+      an IP address.", "field": "linode_id"}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Content-Length:
+      - "113"
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 07 Oct 2024 14:56:15 GMT
+      Pragma:
+      - no-cache
+      X-Accepted-Oauth-Scopes:
+      - ips:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+    status: 400 Bad Request
+    code: 400
+    duration: ""
+- request:
+    body: '{"type":"ipv6","public":true,"reserved":true,"region":"ap-west","linode_id":64970525}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/ips
+    method: POST
+  response:
+    body: '{"errors": [{"reason": "Only addresses of type ipv4 are currently supported."}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Content-Length:
+      - "80"
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 07 Oct 2024 14:56:15 GMT
+      Pragma:
+      - no-cache
+      X-Accepted-Oauth-Scopes:
+      - ips:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+    status: 400 Bad Request
+    code: 400
+    duration: ""
+- request:
+    body: '{"type":"ipv6","public":true,"region":"ap-west","linode_id":64970525}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/ips
+    method: POST
+  response:
+    body: '{"errors": [{"reason": "Only addresses of type ipv4 are currently supported."}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Content-Length:
+      - "80"
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 07 Oct 2024 14:56:16 GMT
+      Pragma:
+      - no-cache
+      X-Accepted-Oauth-Scopes:
+      - ips:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+    status: 400 Bad Request
+    code: 400
+    duration: ""
+- request:
+    body: '{"type":"ipv4","public":true,"reserved":true,"region":"us-west","linode_id":64970525}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/ips
+    method: POST
+  response:
+    body: '{"errors": [{"reason": "Region passed in must match Linode''s region.",
+      "field": "region"}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Content-Length:
+      - "91"
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 07 Oct 2024 14:56:16 GMT
+      Pragma:
+      - no-cache
+      X-Accepted-Oauth-Scopes:
+      - ips:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "800"
+    status: 400 Bad Request
+    code: 400
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/linode/instances/64970525
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 07 Oct 2024 14:56:18 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

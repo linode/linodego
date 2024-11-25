@@ -2,10 +2,9 @@ package unit
 
 import (
 	"context"
-	"testing"
-
 	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"
+	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -38,6 +37,8 @@ func TestListInstances(t *testing.T) {
 	assert.Equal(t, "g6-standard-1", linode.Type)
 	assert.Equal(t, "us-east", linode.Region)
 	assert.Equal(t, 4096, linode.Specs.Memory)
+	assert.Equal(t, "2018-01-01 00:01:01 +0000 UTC", linode.Backups.LastSuccessful.String())
+	assert.Equal(t, "2468", linode.PlacementGroup.MigratingTo)
 }
 
 func TestInstance_Migrate(t *testing.T) {
@@ -90,4 +91,17 @@ func TestInstance_Get_MonthlyTransfer(t *testing.T) {
 	assert.Equal(t, 30471077120, stats.BytesIn)
 	assert.Equal(t, 22956600198, stats.BytesOut)
 	assert.Equal(t, 53427677318, stats.BytesTotal)
+}
+
+func TestInstance_Upgrade(t *testing.T) {
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockPost("linode/instances/12345/mutate", nil)
+
+	err := base.Client.UpgradeInstance(context.Background(), 12345, linodego.InstanceUpgradeOptions{
+		AllowAutoDiskResize: true,
+	})
+	assert.NoError(t, err)
 }
