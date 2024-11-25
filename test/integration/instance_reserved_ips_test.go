@@ -453,3 +453,90 @@ func TestInstance_AddReservedIPToInstanceVariants(t *testing.T) {
 		t.Errorf("Expected error when omitting address field, but got none")
 	}
 }
+
+func TestInstance_DeleteInstanceVariants(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestInstance_DeleteInstanceVariants")
+	defer teardown()
+
+	// Create a Linode with a reserved IP
+	reservedIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{Region: "us-east"})
+	if err != nil {
+		t.Fatalf("Failed to reserve IP: %v", err)
+	}
+	t.Logf("Successfully reserved IP address")
+	defer func() {
+		err := client.DeleteReservedIPAddress(context.Background(), reservedIP.Address)
+		if err != nil {
+			t.Errorf("Failed to delete reserved IP: %v", err)
+		}
+	}()
+
+	instance, _, err := createInstanceWithReservedIP(t, client, reservedIP.Address)
+	if err != nil {
+		t.Fatalf("Error creating instance with reserved IP: %s", err)
+	}
+	t.Logf("Successfully created linode with reserved IP")
+
+	// Delete a Linode with a reserved IP
+	err = client.DeleteInstance(context.Background(), instance.ID)
+	if err != nil {
+		t.Fatalf("Failed to delete Linode with reserved IP: %v", err)
+	}
+	t.Logf("Successfully deleted linode!")
+
+	// Verify the reserved IP is retained after Linode deletion
+	retainedIP, err := client.GetReservedIPAddress(context.Background(), reservedIP.Address)
+	if err != nil {
+		t.Fatalf("Failed to get reserved IP after Linode deletion: %v", err)
+	}
+	if !retainedIP.Reserved || retainedIP.LinodeID != 0 {
+		t.Errorf("Reserved IP not retained correctly after Linode deletion")
+	}
+	t.Logf("Reserved IP retained after Linode deletion")
+
+	//  Reassign the freed reserved IP to a new Linode
+	newInstance, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
+		Region:   "us-east",
+		Type:     "g6-nanode-1",
+		Label:    "test-instance-freed-ip",
+		RootPass: randPassword(),
+		IPv4:     []string{reservedIP.Address},
+	})
+	if err != nil {
+		t.Fatalf("Failed to create new instance with freed reserved IP: %v", err)
+	}
+	t.Logf("Created instance with freed reserved IP with id = %d", newInstance.ID)
+
+	defer func() {
+		if err := client.DeleteInstance(context.Background(), newInstance.ID); err != nil {
+			t.Errorf("Error deleting new test Instance: %s", err)
+		}
+	}()
+
+	// Verify the IP is assigned to the new Linode
+	reassignedIP, err := client.GetReservedIPAddress(context.Background(), reservedIP.Address)
+	if err != nil {
+		t.Fatalf("Failed to get reassigned reserved IP: %v", err)
+	}
+	if reassignedIP.LinodeID == 0 || reassignedIP.LinodeID != newInstance.ID {
+		t.Errorf("Reserved IP not correctly reassigned to new Linode")
+	}
+	t.Logf("Reserved IP successfully reassigned to new Linode")
+
+	// PERMUTATION 4: Delete a Linode with an ephemeral IP
+	ephemeralInstance, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
+		Region:   "us-east",
+		Type:     "g6-nanode-1",
+		Label:    "ephemeral-ip-test",
+		RootPass: randPassword(),
+	})
+	if err != nil {
+		t.Fatalf("Failed to create Linode with ephemeral IP: %v", err)
+	}
+
+	err = client.DeleteInstance(context.Background(), ephemeralInstance.ID)
+	if err != nil {
+		t.Fatalf("Failed to delete Linode with ephemeral IP: %v", err)
+	}
+	t.Logf("Successfully deleted Linode with ephemeral IP")
+}
