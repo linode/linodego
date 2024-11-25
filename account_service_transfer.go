@@ -3,8 +3,9 @@ package linodego
 import (
 	"context"
 	"encoding/json"
-	"github.com/linode/linodego/internal/parseabletime"
 	"time"
+
+	"github.com/linode/linodego/internal/parseabletime"
 )
 
 // AccountServiceTransferStatus constants start with AccountServiceTransfer and
