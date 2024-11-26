@@ -13,6 +13,8 @@ type (
 	DatabaseDayOfWeek            int
 	DatabaseMaintenanceFrequency string
 	DatabaseStatus               string
+	DatabasePlatform             string
+	DatabaseMemberType           string
 )
 
 const (
@@ -50,17 +52,31 @@ const (
 	DatabaseStatusBackingUp    DatabaseStatus = "backing_up"
 )
 
+const (
+	DatabasePlatformRDBMSLegacy  DatabasePlatform = "rdbms-legacy"
+	DatabasePlatformRDBMSDefault DatabasePlatform = "rdbms-default"
+)
+
+const (
+	DatabaseMemberTypePrimary  DatabaseMemberType = "primary"
+	DatabaseMemberTypeFailover DatabaseMemberType = "failover"
+)
+
 // A Database is a instance of Linode Managed Databases
 type Database struct {
-	ID          int            `json:"id"`
-	Status      DatabaseStatus `json:"status"`
-	Label       string         `json:"label"`
-	Hosts       DatabaseHost   `json:"hosts"`
-	Region      string         `json:"region"`
-	Type        string         `json:"type"`
-	Engine      string         `json:"engine"`
-	Version     string         `json:"version"`
-	ClusterSize int            `json:"cluster_size"`
+	ID          int              `json:"id"`
+	Status      DatabaseStatus   `json:"status"`
+	Label       string           `json:"label"`
+	Hosts       DatabaseHost     `json:"hosts"`
+	Region      string           `json:"region"`
+	Type        string           `json:"type"`
+	Engine      string           `json:"engine"`
+	Version     string           `json:"version"`
+	ClusterSize int              `json:"cluster_size"`
+	Platform    DatabasePlatform `json:"platform"`
+
+	// Members has dynamic keys so it is a map
+	Members map[string]DatabaseMemberType `json:"members"`
 
 	ReplicationType string `json:"replication_type,omitempty"` // This field doesn't exist in DBaaS v2
 	SSLConnection   bool   `json:"ssl_connection"`             // This field doesn't exist in DBaaS v2

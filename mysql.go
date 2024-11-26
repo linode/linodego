@@ -19,15 +19,19 @@ const (
 
 // A MySQLDatabase is an instance of Linode MySQL Managed Databases
 type MySQLDatabase struct {
-	ID          int            `json:"id"`
-	Status      DatabaseStatus `json:"status"`
-	Label       string         `json:"label"`
-	Hosts       DatabaseHost   `json:"hosts"`
-	Region      string         `json:"region"`
-	Type        string         `json:"type"`
-	Engine      string         `json:"engine"`
-	Version     string         `json:"version"`
-	ClusterSize int            `json:"cluster_size"`
+	ID          int              `json:"id"`
+	Status      DatabaseStatus   `json:"status"`
+	Label       string           `json:"label"`
+	Hosts       DatabaseHost     `json:"hosts"`
+	Region      string           `json:"region"`
+	Type        string           `json:"type"`
+	Engine      string           `json:"engine"`
+	Version     string           `json:"version"`
+	ClusterSize int              `json:"cluster_size"`
+	Platform    DatabasePlatform `json:"platform"`
+
+	// Members has dynamic keys so it is a map
+	Members map[string]DatabaseMemberType `json:"members"`
 
 	ReplicationType string `json:"replication_type,omitempty"` // This field doesn't exist in DBaaS v2
 

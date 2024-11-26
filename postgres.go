@@ -35,18 +35,22 @@ const (
 
 // A PostgresDatabase is an instance of Linode Postgres Managed Databases
 type PostgresDatabase struct {
-	ID            int            `json:"id"`
-	Status        DatabaseStatus `json:"status"`
-	Label         string         `json:"label"`
-	Region        string         `json:"region"`
-	Type          string         `json:"type"`
-	Engine        string         `json:"engine"`
-	Version       string         `json:"version"`
-	Encrypted     bool           `json:"encrypted"`
-	AllowList     []string       `json:"allow_list"`
-	Port          int            `json:"port"`
-	SSLConnection bool           `json:"ssl_connection"`
-	ClusterSize   int            `json:"cluster_size"`
+	ID            int              `json:"id"`
+	Status        DatabaseStatus   `json:"status"`
+	Label         string           `json:"label"`
+	Region        string           `json:"region"`
+	Type          string           `json:"type"`
+	Engine        string           `json:"engine"`
+	Version       string           `json:"version"`
+	Encrypted     bool             `json:"encrypted"`
+	AllowList     []string         `json:"allow_list"`
+	Port          int              `json:"port"`
+	SSLConnection bool             `json:"ssl_connection"`
+	ClusterSize   int              `json:"cluster_size"`
+	Platform      DatabasePlatform `json:"platform"`
+
+	// Members has dynamic keys so it is a map
+	Members map[string]DatabaseMemberType `json:"members"`
 
 	ReplicationCommitType PostgresCommitType      `json:"replication_commit_type,omitempty"` // This field doesn't exist in DBaaS v2
 	ReplicationType       PostgresReplicationType `json:"replication_type,omitempty"`        // This field doesn't exist in DBaaS v2
