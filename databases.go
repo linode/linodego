@@ -92,13 +92,15 @@ type DatabaseMaintenanceWindow struct {
 	Frequency DatabaseMaintenanceFrequency `json:"frequency"`
 	HourOfDay int                          `json:"hour_of_day"`
 
-	Pending []struct {
-		Deadline    *time.Time `json:"deadline"`
-		Description string     `json:"description"`
-		PlannedFor  *time.Time `json:"planned_for"`
-	} `json:"pending,omitempty"`
+	Pending []DatabaseMaintenanceWindowPending `json:"pending,omitempty"`
 
 	WeekOfMonth *int `json:"week_of_month,omitempty"` // This field doesn't exist in v2
+}
+
+type DatabaseMaintenanceWindowPending struct {
+	Deadline    *time.Time `json:"deadline"`
+	Description string     `json:"description"`
+	PlannedFor  *time.Time `json:"planned_for"`
 }
 
 // DatabaseType is information about the supported Database Types by Linode Managed Databases
