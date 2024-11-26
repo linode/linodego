@@ -185,6 +185,7 @@ func (c *Client) ListObjectStorageBucketContents(ctx context.Context, clusterOrR
 	basePath := formatAPIPath("object-storage/buckets/%s/%s/object-list", clusterOrRegionID, label)
 	queryString := ""
 
+	// nolint:nestif
 	if params != nil {
 		if params.Marker != nil && *params.Marker != "" {
 			queryString += fmt.Sprintf("marker=%s&", *params.Marker)
