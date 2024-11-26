@@ -39,13 +39,13 @@ type ObjectStorageBucketAccess struct {
 type ObjectStorageBucketContent struct {
 	Data        []ObjectStorageBucketContentData `json:"data"`
 	IsTruncated bool                             `json:"is_truncated"`
-	NextMarker  string                           `json:"next_marker"`
+	NextMarker  *string                          `json:"next_marker"`
 }
 
 // ObjectStorageBucketContentData holds the data of the content of an ObjectStorageBucket
 type ObjectStorageBucketContentData struct {
 	Etag         string     `json:"etag"`
-	LastModified *time.Time `json:"last_modified"`
+	LastModified *time.Time `json:"-"`
 	Name         string     `json:"name"`
 	Owner        string     `json:"owner"`
 	Size         int        `json:"size"`
