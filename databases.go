@@ -150,7 +150,7 @@ type ClusterPrice struct {
 // DatabaseFork describes the source and restore time for the fork for forked DBs
 type DatabaseFork struct {
 	Source      int        `json:"source"`
-	RestoreTime *time.Time `json:"restore_time"`
+	RestoreTime *time.Time `json:"restore_time,omitempty"`
 }
 
 func (d *Database) UnmarshalJSON(b []byte) error {
