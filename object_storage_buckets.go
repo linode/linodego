@@ -45,7 +45,7 @@ type ObjectStorageBucketContent struct {
 // ObjectStorageBucketContentData holds the data of the content of an ObjectStorageBucket
 type ObjectStorageBucketContentData struct {
 	Etag         string     `json:"etag"`
-	LastModified *time.Time `json:"-"`
+	LastModified *time.Time `json:"last_modified"`
 	Name         string     `json:"name"`
 	Owner        string     `json:"owner"`
 	Size         int        `json:"size"`
