@@ -7,13 +7,22 @@ import (
 // IPAddressUpdateOptions fields are those accepted by UpdateToken
 type IPAddressUpdateOptions struct {
 	// The reverse DNS assigned to this address. For public IPv4 addresses, this will be set to a default value provided by Linode if set to nil.
-	RDNS *string `json:"rdns"`
+	Reserved *bool   `json:"reserved,omitempty"`
+	RDNS     *string `json:"rdns,omitempty"`
 }
 
 // LinodeIPAssignment stores an assignment between an IP address and a Linode instance.
 type LinodeIPAssignment struct {
 	Address  string `json:"address"`
 	LinodeID int    `json:"linode_id"`
+}
+
+type AllocateReserveIPOptions struct {
+	Type     string `json:"type"`
+	Public   bool   `json:"public"`
+	Reserved bool   `json:"reserved,omitempty"`
+	Region   string `json:"region,omitempty"`
+	LinodeID int    `json:"linode_id,omitempty"`
 }
 
 // LinodesAssignIPsOptions fields are those accepted by InstancesAssignIPs.
@@ -87,4 +96,15 @@ func (c *Client) ShareIPAddresses(ctx context.Context, opts IPAddressesShareOpti
 	e := "networking/ips/share"
 	_, err := doPOSTRequest[InstanceIP](ctx, c, e, opts)
 	return err
+}
+
+// AllocateReserveIP allocates a new IPv4 address to the Account, with the option to reserve it
+// and optionally assign it to a Linode.
+func (c *Client) AllocateReserveIP(ctx context.Context, opts AllocateReserveIPOptions) (*InstanceIP, error) {
+	e := "networking/ips"
+	result, err := doPOSTRequest[InstanceIP](ctx, c, e, opts)
+	if err != nil {
+		return nil, err
+	}
+	return result, nil
 }

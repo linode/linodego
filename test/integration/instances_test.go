@@ -907,7 +907,7 @@ func createInstance(t *testing.T, client *linodego.Client, enableCloudFirewall b
 		RootPass: randPassword(),
 		Region:   getRegionsWithCaps(t, client, []string{"linodes"})[0],
 		Type:     "g6-nanode-1",
-		Image:    "linode/debian9",
+		Image:    "linode/debian12",
 		Booted:   linodego.Pointer(false),
 	}
 
