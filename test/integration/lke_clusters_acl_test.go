@@ -50,6 +50,7 @@ func TestLKECluster_withACL(t *testing.T) {
 					IPv4: &[]string{"10.0.0.2/32"},
 					IPv6: &[]string{},
 				},
+				RevisionID: "test-revision-id",
 			},
 		},
 	)
