@@ -5,6 +5,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/jarcoal/httpmock"
+	"github.com/linode/linodego/internal/testutil"
 	"log"
 	"net/http"
 	"net/http/httptest"
@@ -14,8 +16,6 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/jarcoal/httpmock"
-	"github.com/linode/linodego/internal/testutil"
 )
 
 func TestClient_SetAPIVersion(t *testing.T) {
@@ -35,39 +35,39 @@ func TestClient_SetAPIVersion(t *testing.T) {
 
 	client := NewClient(nil)
 
-	if client.resty.BaseURL != defaultURL {
-		t.Fatal(cmp.Diff(client.resty.BaseURL, defaultURL))
+	if client.hostURL != defaultURL {
+		t.Fatal(cmp.Diff(client.hostURL, defaultURL))
 	}
 
 	client.SetBaseURL(baseURL)
 	client.SetAPIVersion(apiVersion)
 
-	if client.resty.BaseURL != expectedHost {
-		t.Fatal(cmp.Diff(client.resty.BaseURL, expectedHost))
+	if client.hostURL != expectedHost {
+		t.Fatal(cmp.Diff(client.hostURL, expectedHost))
 	}
 
 	// Ensure setting twice does not cause conflicts
 	client.SetBaseURL(updatedBaseURL)
 	client.SetAPIVersion(updatedAPIVersion)
 
-	if client.resty.BaseURL != updatedExpectedHost {
-		t.Fatal(cmp.Diff(client.resty.BaseURL, updatedExpectedHost))
+	if client.hostURL != updatedExpectedHost {
+		t.Fatal(cmp.Diff(client.hostURL, updatedExpectedHost))
 	}
 
 	// Revert
 	client.SetBaseURL(baseURL)
 	client.SetAPIVersion(apiVersion)
 
-	if client.resty.BaseURL != expectedHost {
-		t.Fatal(cmp.Diff(client.resty.BaseURL, expectedHost))
+	if client.hostURL != expectedHost {
+		t.Fatal(cmp.Diff(client.hostURL, expectedHost))
 	}
 
 	// Custom protocol
 	client.SetBaseURL(protocolBaseURL)
 	client.SetAPIVersion(protocolAPIVersion)
 
-	if client.resty.BaseURL != protocolExpectedHost {
-		t.Fatal(cmp.Diff(client.resty.BaseURL, expectedHost))
+	if client.hostURL != protocolExpectedHost {
+		t.Fatal(cmp.Diff(client.hostURL, expectedHost))
 	}
 }
 
@@ -109,7 +109,7 @@ func TestClient_NewFromEnvToken(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	if client.resty.Header.Get("Authorization") != "Bearer blah" {
+	if client.header.Get("Authorization") != "Bearer blah" {
 		t.Fatal("token not found in auth header: blah")
 	}
 }
@@ -173,12 +173,12 @@ func TestDebugLogSanitization(t *testing.T) {
 	logger.L.SetOutput(&lgr)
 
 	mockClient.SetDebug(true)
-	if !mockClient.resty.Debug {
+	if !mockClient.debug {
 		t.Fatal("debug should be enabled")
 	}
 	mockClient.SetHeader("Authorization", fmt.Sprintf("Bearer %s", plainTextToken))
 
-	if mockClient.resty.Header.Get("Authorization") != fmt.Sprintf("Bearer %s", plainTextToken) {
+	if mockClient.header.Get("Authorization") != fmt.Sprintf("Bearer %s", plainTextToken) {
 		t.Fatal("token not found in auth header")
 	}
 
@@ -206,22 +206,25 @@ func TestDebugLogSanitization(t *testing.T) {
 
 func TestDoRequest_Success(t *testing.T) {
 	handler := func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`{"message":"success"}`))
+		if r.URL.Path == "/v4/foo/bar" {
+			w.WriteHeader(http.StatusOK)
+			w.Header().Set("Content-Type", "application/json")
+			_, _ = w.Write([]byte(`{"message":"success"}`))
+		} else {
+			http.NotFound(w, r)
+		}
 	}
 	server := httptest.NewServer(http.HandlerFunc(handler))
 	defer server.Close()
 
-	client := &httpClient{
-		httpClient: server.Client(),
-	}
+	client := NewClient(server.Client())
+	client.SetBaseURL(server.URL)
 
-	params := RequestParams{
+	params := requestParams{
 		Response: &map[string]string{},
 	}
 
-	err := client.doRequest(context.Background(), http.MethodGet, server.URL, params)
+	err := client.doRequest(context.Background(), http.MethodGet, "/foo/bar", params, nil) // Pass only the endpoint
 	if err != nil {
 		t.Fatal(cmp.Diff(nil, err))
 	}
@@ -233,31 +236,11 @@ func TestDoRequest_Success(t *testing.T) {
 	}
 }
 
-func TestDoRequest_FailedEncodeBody(t *testing.T) {
-	client := &httpClient{
-		httpClient: http.DefaultClient,
-	}
-
-	params := RequestParams{
-		Body: map[string]interface{}{
-			"invalid": func() {},
-		},
-	}
-
-	err := client.doRequest(context.Background(), http.MethodPost, "http://example.com", params)
-	expectedErr := "failed to encode body"
-	if err == nil || !strings.Contains(err.Error(), expectedErr) {
-		t.Fatalf("expected error %q, got: %v", expectedErr, err)
-	}
-}
-
 func TestDoRequest_FailedCreateRequest(t *testing.T) {
-	client := &httpClient{
-		httpClient: http.DefaultClient,
-	}
+	client := NewClient(nil)
 
-	// Create a request with an invalid URL to simulate a request creation failure
-	err := client.doRequest(context.Background(), http.MethodGet, "http://invalid url", RequestParams{})
+	// Create a request with an invalid method to simulate a request creation failure
+	err := client.doRequest(context.Background(), "bad method", "/foo/bar", requestParams{}, nil)
 	expectedErr := "failed to create request"
 	if err == nil || !strings.Contains(err.Error(), expectedErr) {
 		t.Fatalf("expected error %q, got: %v", expectedErr, err)
@@ -266,26 +249,28 @@ func TestDoRequest_FailedCreateRequest(t *testing.T) {
 
 func TestDoRequest_Non2xxStatusCode(t *testing.T) {
 	handler := func(w http.ResponseWriter, r *http.Request) {
-		http.Error(w, "error", http.StatusInternalServerError)
+		http.Error(w, "error", http.StatusInternalServerError) // Simulate a 500 Internal Server Error
 	}
 	server := httptest.NewServer(http.HandlerFunc(handler))
 	defer server.Close()
 
-	client := &httpClient{
-		httpClient: server.Client(),
-	}
+	client := NewClient(server.Client())
+	client.SetBaseURL(server.URL)
 
-	err := client.doRequest(context.Background(), http.MethodGet, server.URL, RequestParams{})
+	err := client.doRequest(context.Background(), http.MethodGet, "/foo/bar", requestParams{}, nil)
 	if err == nil {
 		t.Fatal("expected error, got nil")
 	}
-	httpError, ok := err.(Error)
+
+	httpError, ok := err.(*Error)
 	if !ok {
 		t.Fatalf("expected error to be of type Error, got %T", err)
 	}
+
 	if httpError.Code != http.StatusInternalServerError {
 		t.Fatalf("expected status code %d, got %d", http.StatusInternalServerError, httpError.Code)
 	}
+
 	if !strings.Contains(httpError.Message, "error") {
 		t.Fatalf("expected error message to contain %q, got %v", "error", httpError.Message)
 	}
@@ -295,21 +280,21 @@ func TestDoRequest_FailedDecodeResponse(t *testing.T) {
 	handler := func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		w.Header().Set("Content-Type", "application/json")
-		_, _ = w.Write([]byte(`invalid json`))
+		_, _ = w.Write([]byte(`invalid json`)) // Simulate invalid JSON
 	}
 	server := httptest.NewServer(http.HandlerFunc(handler))
 	defer server.Close()
 
-	client := &httpClient{
-		httpClient: server.Client(),
-	}
+	client := NewClient(server.Client())
+	client.SetBaseURL(server.URL)
 
-	params := RequestParams{
+	params := requestParams{
 		Response: &map[string]string{},
 	}
 
-	err := client.doRequest(context.Background(), http.MethodGet, server.URL, params)
+	err := client.doRequest(context.Background(), http.MethodGet, "/foo/bar", params, nil)
 	expectedErr := "failed to decode response"
+
 	if err == nil || !strings.Contains(err.Error(), expectedErr) {
 		t.Fatalf("expected error %q, got: %v", expectedErr, err)
 	}
@@ -327,24 +312,21 @@ func TestDoRequest_BeforeRequestSuccess(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(handler))
 	defer server.Close()
 
-	client := &httpClient{
-		httpClient: server.Client(),
-	}
+	client := NewClient(server.Client())
+	client.SetBaseURL(server.URL)
 
-	// Define a mutator that successfully modifies the request
 	mutator := func(req *http.Request) error {
 		req.Header.Set("X-Custom-Header", "CustomValue")
 		return nil
 	}
 
-	client.httpOnBeforeRequest(mutator)
+	client.OnBeforeRequest(mutator)
 
-	err := client.doRequest(context.Background(), http.MethodGet, server.URL, RequestParams{})
+	err := client.doRequest(context.Background(), http.MethodGet, "/foo/bar", requestParams{}, nil)
 	if err != nil {
 		t.Fatalf("expected no error, got: %v", err)
 	}
 
-	// Check if the header was successfully added to the captured request
 	if reqHeader := capturedRequest.Header.Get("X-Custom-Header"); reqHeader != "CustomValue" {
 		t.Fatalf("expected X-Custom-Header to be set to CustomValue, got: %v", reqHeader)
 	}
@@ -359,18 +341,18 @@ func TestDoRequest_BeforeRequestError(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(handler))
 	defer server.Close()
 
-	client := &httpClient{
-		httpClient: server.Client(),
-	}
+	client := NewClient(server.Client())
+	client.SetBaseURL(server.URL)
 
 	mutator := func(req *http.Request) error {
 		return errors.New("mutator error")
 	}
 
-	client.httpOnBeforeRequest(mutator)
+	client.OnBeforeRequest(mutator)
 
-	err := client.doRequest(context.Background(), http.MethodGet, server.URL, RequestParams{})
+	err := client.doRequest(context.Background(), http.MethodGet, "/foo/bar", requestParams{}, nil)
 	expectedErr := "failed to mutate before request"
+
 	if err == nil || !strings.Contains(err.Error(), expectedErr) {
 		t.Fatalf("expected error %q, got: %v", expectedErr, err)
 	}
@@ -389,23 +371,21 @@ func TestDoRequest_AfterResponseSuccess(t *testing.T) {
 	tr := &testRoundTripper{
 		Transport: server.Client().Transport,
 	}
-	client := &httpClient{
-		httpClient: &http.Client{Transport: tr},
-	}
+	client := NewClient(&http.Client{Transport: tr})
+	client.SetBaseURL(server.URL)
 
 	mutator := func(resp *http.Response) error {
 		resp.Header.Set("X-Modified-Header", "ModifiedValue")
 		return nil
 	}
 
-	client.httpOnAfterResponse(mutator)
+	client.OnAfterResponse(mutator)
 
-	err := client.doRequest(context.Background(), http.MethodGet, server.URL, RequestParams{})
+	err := client.doRequest(context.Background(), http.MethodGet, "/foo/bar", requestParams{}, nil)
 	if err != nil {
 		t.Fatalf("expected no error, got: %v", err)
 	}
 
-	// Check if the header was successfully added to the response
 	if respHeader := tr.Response.Header.Get("X-Modified-Header"); respHeader != "ModifiedValue" {
 		t.Fatalf("expected X-Modified-Header to be set to ModifiedValue, got: %v", respHeader)
 	}
@@ -420,17 +400,16 @@ func TestDoRequest_AfterResponseError(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(handler))
 	defer server.Close()
 
-	client := &httpClient{
-		httpClient: server.Client(),
-	}
+	client := NewClient(server.Client())
+	client.SetBaseURL(server.URL)
 
 	mutator := func(resp *http.Response) error {
 		return errors.New("mutator error")
 	}
 
-	client.httpOnAfterResponse(mutator)
+	client.OnAfterResponse(mutator)
 
-	err := client.doRequest(context.Background(), http.MethodGet, server.URL, RequestParams{})
+	err := client.doRequest(context.Background(), http.MethodGet, "/foo/bar", requestParams{}, nil)
 	expectedErr := "failed to mutate after response"
 	if err == nil || !strings.Contains(err.Error(), expectedErr) {
 		t.Fatalf("expected error %q, got: %v", expectedErr, err)
@@ -442,11 +421,9 @@ func TestDoRequestLogging_Success(t *testing.T) {
 	logger := createLogger()
 	logger.l.SetOutput(&logBuffer) // Redirect log output to buffer
 
-	client := &httpClient{
-		httpClient: http.DefaultClient,
-		debug:      true,
-		logger:     logger,
-	}
+	client := NewClient(nil)
+	client.SetDebug(true)
+	client.SetLogger(logger)
 
 	handler := func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
@@ -454,29 +431,45 @@ func TestDoRequestLogging_Success(t *testing.T) {
 		_, _ = w.Write([]byte(`{"message":"success"}`))
 	}
 	server := httptest.NewServer(http.HandlerFunc(handler))
+	client.SetBaseURL(server.URL)
 	defer server.Close()
 
-	params := RequestParams{
+	params := requestParams{
 		Response: &map[string]string{},
 	}
 
-	err := client.doRequest(context.Background(), http.MethodGet, server.URL, params)
+	err := client.doRequest(context.Background(), http.MethodGet, server.URL, params, nil)
 	if err != nil {
 		t.Fatal(cmp.Diff(nil, err))
 	}
 
 	logInfo := logBuffer.String()
-	logInfoWithoutTimestamps := removeTimestamps(logInfo)
 
-	// Expected logs with templates filled in
-	expectedRequestLog := "DEBUG RESTY Sending request:\nMethod: GET\nURL: " + server.URL + "\nHeaders: map[Accept:[application/json] Content-Type:[application/json]]\nBody: "
-	expectedResponseLog := "DEBUG RESTY Received response:\nStatus: 200 OK\nHeaders: map[Content-Length:[21] Content-Type:[text/plain; charset=utf-8]]\nBody: {\"message\":\"success\"}"
-
-	if !strings.Contains(logInfo, expectedRequestLog) {
-		t.Fatalf("expected log %q not found in logs", expectedRequestLog)
+	expectedRequestParts := []string{
+		"GET /v4/" + server.URL + " " + "HTTP/1.1",
+		"Accept: application/json",
+		"Authorization: Bearer *******************************",
+		"Content-Type: application/json",
+		"User-Agent: linodego/dev https://github.com/linode/linodego",
 	}
-	if !strings.Contains(logInfoWithoutTimestamps, expectedResponseLog) {
-		t.Fatalf("expected log %q not found in logs", expectedResponseLog)
+
+	expectedResponseParts := []string{
+		"STATUS: 200 OK",
+		"PROTO: HTTP/1.1",
+		"Content-Length: 21",
+		"Content-Type: application/json",
+		`"message": "success"`,
+	}
+
+	for _, part := range expectedRequestParts {
+		if !strings.Contains(logInfo, part) {
+			t.Fatalf("expected request part %q not found in logs", part)
+		}
+	}
+	for _, part := range expectedResponseParts {
+		if !strings.Contains(logInfo, part) {
+			t.Fatalf("expected response part %q not found in logs", part)
+		}
 	}
 }
 
@@ -485,59 +478,23 @@ func TestDoRequestLogging_Error(t *testing.T) {
 	logger := createLogger()
 	logger.l.SetOutput(&logBuffer) // Redirect log output to buffer
 
-	client := &httpClient{
-		httpClient: http.DefaultClient,
-		debug:      true,
-		logger:     logger,
-	}
+	client := NewClient(nil)
+	client.SetDebug(true)
+	client.SetLogger(logger)
 
-	params := RequestParams{
-		Body: map[string]interface{}{
-			"invalid": func() {},
-		},
-	}
-
-	err := client.doRequest(context.Background(), http.MethodPost, "http://example.com", params)
-	expectedErr := "failed to encode body"
+	// Create a request with an invalid method to simulate a request creation failure
+	err := client.doRequest(context.Background(), "bad method", "/foo/bar", requestParams{}, nil)
+	expectedErr := "failed to create request"
 	if err == nil || !strings.Contains(err.Error(), expectedErr) {
 		t.Fatalf("expected error %q, got: %v", expectedErr, err)
 	}
 
 	logInfo := logBuffer.String()
-	expectedLog := "ERROR RESTY failed to encode body"
+	expectedLog := "ERROR failed to create request"
 
 	if !strings.Contains(logInfo, expectedLog) {
 		t.Fatalf("expected log %q not found in logs", expectedLog)
 	}
-}
-
-func removeTimestamps(log string) string {
-	lines := strings.Split(log, "\n")
-	var filteredLines []string
-	for _, line := range lines {
-		// Find the index of the "Date:" substring
-		if index := strings.Index(line, "Date:"); index != -1 {
-			// Cut off everything after "Date:"
-			trimmedLine := strings.TrimSpace(line[:index])
-			filteredLines = append(filteredLines, trimmedLine+"]")
-		} else {
-			filteredLines = append(filteredLines, line)
-		}
-	}
-	return strings.Join(filteredLines, "\n")
-}
-
-type testRoundTripper struct {
-	Transport http.RoundTripper
-	Response  *http.Response
-}
-
-func (t *testRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) {
-	resp, err := t.Transport.RoundTrip(req)
-	if err == nil {
-		t.Response = resp
-	}
-	return resp, err
 }
 
 func TestClient_CustomRootCAWithCustomRoundTripper(t *testing.T) {
@@ -575,4 +532,17 @@ func TestClient_CustomRootCAWithCustomRoundTripper(t *testing.T) {
 	}
 
 	log.SetOutput(os.Stderr)
+}
+
+type testRoundTripper struct {
+	Transport http.RoundTripper
+	Response  *http.Response
+}
+
+func (t *testRoundTripper) RoundTrip(req *http.Request) (*http.Response, error) {
+	resp, err := t.Transport.RoundTrip(req)
+	if err == nil {
+		t.Response = resp
+	}
+	return resp, err
 }
