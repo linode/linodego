@@ -109,6 +109,7 @@ type PostgresUpdateOptions struct {
 	Updates     *DatabaseMaintenanceWindow `json:"updates,omitempty"`
 	Type        string                     `json:"type,omitempty"`
 	ClusterSize int                        `json:"cluster_size,omitempty"`
+	Version     string                     `json:"version,omitempty"`
 }
 
 // PostgresDatabaseSSL is the SSL Certificate to access the Linode Managed Postgres Database

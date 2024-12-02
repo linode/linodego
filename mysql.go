@@ -91,6 +91,7 @@ type MySQLUpdateOptions struct {
 	Updates     *DatabaseMaintenanceWindow `json:"updates,omitempty"`
 	Type        string                     `json:"type,omitempty"`
 	ClusterSize int                        `json:"cluster_size,omitempty"`
+	Version     string                     `json:"version,omitempty"`
 }
 
 // MySQLDatabaseBackup is information for interacting with a backup for the existing MySQL Database

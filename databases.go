@@ -114,9 +114,9 @@ type DatabaseMaintenanceWindow struct {
 }
 
 type DatabaseMaintenanceWindowPending struct {
-	Deadline    *time.Time `json:"deadline"`
+	Deadline    *time.Time `json:"-"`
 	Description string     `json:"description"`
-	PlannedFor  *time.Time `json:"planned_for"`
+	PlannedFor  *time.Time `json:"-"`
 }
 
 // DatabaseType is information about the supported Database Types by Linode Managed Databases
@@ -150,7 +150,7 @@ type ClusterPrice struct {
 // DatabaseFork describes the source and restore time for the fork for forked DBs
 type DatabaseFork struct {
 	Source      int        `json:"source"`
-	RestoreTime *time.Time `json:"restore_time,omitempty"`
+	RestoreTime *time.Time `json:"-,omitempty"`
 }
 
 func (d *Database) UnmarshalJSON(b []byte) error {
@@ -170,6 +170,44 @@ func (d *Database) UnmarshalJSON(b []byte) error {
 
 	d.Created = (*time.Time)(p.Created)
 	d.Updated = (*time.Time)(p.Updated)
+	return nil
+}
+
+func (d *DatabaseFork) UnmarshalJSON(b []byte) error {
+	type Mask DatabaseFork
+
+	p := struct {
+		*Mask
+		RestoreTime *parseabletime.ParseableTime `json:"restore_time"`
+	}{
+		Mask: (*Mask)(d),
+	}
+
+	if err := json.Unmarshal(b, &p); err != nil {
+		return err
+	}
+
+	d.RestoreTime = (*time.Time)(p.RestoreTime)
+	return nil
+}
+
+func (d *DatabaseMaintenanceWindowPending) UnmarshalJSON(b []byte) error {
+	type Mask DatabaseMaintenanceWindowPending
+
+	p := struct {
+		*Mask
+		Deadline   *parseabletime.ParseableTime `json:"deadline"`
+		PlannedFor *parseabletime.ParseableTime `json:"planned_for"`
+	}{
+		Mask: (*Mask)(d),
+	}
+
+	if err := json.Unmarshal(b, &p); err != nil {
+		return err
+	}
+
+	d.Deadline = (*time.Time)(p.Deadline)
+	d.PlannedFor = (*time.Time)(p.PlannedFor)
 	return nil
 }
 
