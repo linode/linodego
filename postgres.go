@@ -59,7 +59,7 @@ type PostgresDatabase struct {
 	Updates           DatabaseMaintenanceWindow `json:"updates"`
 	Created           *time.Time                `json:"-"`
 	Updated           *time.Time                `json:"-"`
-	Fork              DatabaseFork              `json:"fork"`
+	Fork              *DatabaseFork             `json:"fork"`
 	OldestRestoreTime *time.Time                `json:"-"`
 }
 
@@ -104,10 +104,11 @@ type PostgresCreateOptions struct {
 
 // PostgresUpdateOptions fields are used when altering the existing Postgres Database
 type PostgresUpdateOptions struct {
-	Label     string                     `json:"label,omitempty"`
-	AllowList *[]string                  `json:"allow_list,omitempty"`
-	Updates   *DatabaseMaintenanceWindow `json:"updates,omitempty"`
-	Type      string                     `json:"type,omitempty"`
+	Label       string                     `json:"label,omitempty"`
+	AllowList   *[]string                  `json:"allow_list,omitempty"`
+	Updates     *DatabaseMaintenanceWindow `json:"updates,omitempty"`
+	Type        string                     `json:"type,omitempty"`
+	ClusterSize int                        `json:"cluster_size,omitempty"`
 }
 
 // PostgresDatabaseSSL is the SSL Certificate to access the Linode Managed Postgres Database

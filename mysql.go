@@ -42,7 +42,7 @@ type MySQLDatabase struct {
 	Created           *time.Time                `json:"-"`
 	Updated           *time.Time                `json:"-"`
 	Updates           DatabaseMaintenanceWindow `json:"updates"`
-	Fork              DatabaseFork              `json:"fork"`
+	Fork              *DatabaseFork             `json:"fork"`
 	OldestRestoreTime *time.Time                `json:"-"`
 }
 
@@ -86,10 +86,11 @@ type MySQLCreateOptions struct {
 
 // MySQLUpdateOptions fields are used when altering the existing MySQL Database
 type MySQLUpdateOptions struct {
-	Label     string                     `json:"label,omitempty"`
-	AllowList *[]string                  `json:"allow_list,omitempty"`
-	Updates   *DatabaseMaintenanceWindow `json:"updates,omitempty"`
-	Type      string                     `json:"type,omitempty"`
+	Label       string                     `json:"label,omitempty"`
+	AllowList   *[]string                  `json:"allow_list,omitempty"`
+	Updates     *DatabaseMaintenanceWindow `json:"updates,omitempty"`
+	Type        string                     `json:"type,omitempty"`
+	ClusterSize int                        `json:"cluster_size,omitempty"`
 }
 
 // MySQLDatabaseBackup is information for interacting with a backup for the existing MySQL Database
