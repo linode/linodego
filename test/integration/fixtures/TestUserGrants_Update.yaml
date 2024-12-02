@@ -41,7 +41,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 25 Jul 2024 17:44:10 GMT
+      - Tue, 19 Nov 2024 20:30:59 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -56,19 +56,16 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"global":{"account_access":"read_only","add_databases":true,"add_domains":false,"add_firewalls":true,"add_images":true,"add_linodes":false,"add_longview":true,"add_nodebalancers":false,"add_stackscripts":true,"add_volumes":true,"cancel_account":false,"longview_subscription":false}}'
+    body: '{"global":{"account_access":"read_only","add_databases":true,"add_domains":false,"add_firewalls":true,"add_images":true,"add_linodes":false,"add_longview":true,"add_nodebalancers":false,"add_placement_groups":false,"add_stackscripts":true,"add_volumes":true,"add_vpcs":true,"cancel_account":false,"child_account_access":false,"longview_subscription":false}}'
     form: {}
     headers:
       Accept:
@@ -80,42 +77,17 @@ interactions:
     url: https://api.linode.com/v4beta/account/users/linodegotest-updateusergrants/grants
     method: PUT
   response:
-    body: '{"linode": [{"id": 54748754, "label": "debian-us-ord", "permissions": null},
-      {"id": 57328123, "label": "debian-us-central", "permissions": null}, {"id":
-      60472044, "label": "linode60472044", "permissions": null}, {"id": 60939824,
-      "label": "ansible-test-471035164-updated", "permissions": null}, {"id": 61839386,
-      "label": "test-image-gen2", "permissions": null}, {"id": 61871792, "label":
-      "lke204599-296511-1ecf32b90000", "permissions": null}, {"id": 61871793, "label":
-      "lke204599-296511-5a5a335d0000", "permissions": null}, {"id": 61871794, "label":
-      "lke204599-296511-38c081dd0000", "permissions": null}], "nodebalancer": [{"id":
-      600437, "label": "ansible-test-585459311", "permissions": null}], "domain":
-      [{"id": 2956594, "label": "example.clone-1713285844751924000-IntTestSDK.org",
-      "permissions": null}], "stackscript": [{"id": 1338923, "label": "test-stackscript",
-      "permissions": null}, {"id": 1424120, "label": "debian12-kube-8138f8e63a05",
-      "permissions": null}, {"id": 1424121, "label": "debian12-kube-8138f8e63a05",
-      "permissions": null}], "longview": [], "image": [{"id": 26425827, "label": "test_1721924280886354",
-      "permissions": null}, {"id": 26426164, "label": "test_1721925185088324", "permissions":
-      null}], "volume": [{"id": 1527342, "label": "ansible-test-563202246", "permissions":
-      null}], "firewall": [{"id": 433514, "label": "test-fw", "permissions": null},
-      {"id": 624183, "label": "e2e-firewall-izUKXM", "permissions": null}, {"id":
-      624308, "label": "e2e-firewall-svVoqB", "permissions": null}, {"id": 682410,
-      "label": "e2e-firewall-bucVPC", "permissions": null}, {"id": 682453, "label":
-      "e2e-firewall-WJsukx", "permissions": null}, {"id": 682477, "label": "e2e-firewall-IzEjvH",
-      "permissions": null}, {"id": 682500, "label": "e2e-firewall-QdxDkS", "permissions":
-      null}, {"id": 682505, "label": "e2e-firewall-KkroRq", "permissions": null},
-      {"id": 682508, "label": "e2e-firewall-WPxzQk", "permissions": null}, {"id":
-      682532, "label": "e2e-firewall-rBZhHt", "permissions": null}, {"id": 692740,
-      "label": "cloudfw-1721926678901029000", "permissions": null}, {"id": 692760,
-      "label": "cloudfw-1721927227347144000", "permissions": null}, {"id": 692763,
-      "label": "cloudfw-1721927316071520000", "permissions": null}, {"id": 692848,
-      "label": "cloudfw-1721929346146739000", "permissions": null}, {"id": 692854,
-      "label": "cloudfw-1721929441971780000", "permissions": null}], "database": [],
-      "vpc": [{"id": 41184, "label": "test-vpc", "permissions": null}, {"id": 56469,
-      "label": "my-vpc", "permissions": null}], "global": {"add_volumes": true, "add_images":
-      true, "add_stackscripts": true, "add_firewalls": true, "add_linodes": false,
-      "add_nodebalancers": false, "add_vpcs": false, "longview_subscription": false,
-      "add_databases": true, "add_longview": true, "child_account_access": null, "add_domains":
-      false, "account_access": "read_only", "cancel_account": false}}'
+    body: '{"linode": [], "nodebalancer": [{"id": 1051282, "label": "balancer12345",
+      "permissions": null}], "domain": [{"id": 3162745, "label": "example.clone-1731948401076807000-inttestsdk.org",
+      "permissions": null}], "stackscript": [], "longview": [], "image": [], "volume":
+      [], "firewall": [{"id": 1214534, "label": "cloudfw-1731954852210218000", "permissions":
+      null}, {"id": 1222347, "label": "e2e-fw-1732043552", "permissions": null}, {"id":
+      1223238, "label": "cloudfw-1732048258071021000", "permissions": null}], "database":
+      [], "vpc": [], "global": {"add_nodebalancers": false, "child_account_access":
+      null, "add_longview": true, "add_volumes": true, "add_vpcs": true, "add_stackscripts":
+      true, "add_domains": false, "add_linodes": false, "add_images": true, "add_databases":
+      true, "longview_subscription": false, "add_firewalls": true, "account_access":
+      "read_only", "cancel_account": false}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -138,7 +110,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 25 Jul 2024 17:44:10 GMT
+      - Tue, 19 Nov 2024 20:31:00 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -154,12 +126,9 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -203,7 +172,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 25 Jul 2024 17:44:10 GMT
+      - Tue, 19 Nov 2024 20:31:00 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -218,12 +187,9 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
