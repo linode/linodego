@@ -271,7 +271,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 02 Dec 2024 15:23:46 GMT
+      - Mon, 02 Dec 2024 14:43:50 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -297,7 +297,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"ap-west","type":"g6-nanode-1","label":"go-test-ins-wo-disk-7cba34k3o18n","firewall_id":1279955,"booted":false}'
+    body: '{"region":"ap-west","type":"g6-nanode-1","label":"go-test-ins-wo-disk-4pz63s64i8uq","firewall_id":1279742,"booted":false}'
     form: {}
     headers:
       Accept:
@@ -309,15 +309,15 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 67896266, "label": "go-test-ins-wo-disk-7cba34k3o18n", "group":
+    body: '{"id": 67893544, "label": "go-test-ins-wo-disk-4pz63s64i8uq", "group":
       "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.105.43.239"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["192.46.213.173"], "ipv6": "1234::5678/128",
       "image": null, "region": "ap-west", "site_type": "core", "specs": {"disk": 25600,
       "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
       0}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota":
       80, "io": 10000}, "backups": {"enabled": true, "available": false, "schedule":
       {"day": null, "window": null}, "last_successful": null}, "hypervisor": "kvm",
-      "watchdog_enabled": true, "tags": [], "host_uuid": "3b56d9d3c467584a85cb7bc9099036e4c6b04ba6",
+      "watchdog_enabled": true, "tags": [], "host_uuid": "3f56a3df540f1c07c07d1bcb6b10cbaab2b6fb0a",
       "has_user_data": false, "placement_group": null, "disk_encryption": "enabled",
       "lke_cluster_id": null, "capabilities": ["SMTP Enabled"]}'
     headers:
@@ -342,7 +342,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 02 Dec 2024 15:23:47 GMT
+      - Mon, 02 Dec 2024 14:43:50 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -367,7 +367,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-conf-7h9m6zq086dc","devices":{},"interfaces":null}'
+    body: '{"label":"go-test-conf-194m54f0ewrb","devices":{},"interfaces":null}'
     form: {}
     headers:
       Accept:
@@ -376,10 +376,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/67896266/configs
+    url: https://api.linode.com/v4beta/linode/instances/67893544/configs
     method: POST
   response:
-    body: '{"id": 71236809, "label": "go-test-conf-7h9m6zq086dc", "helpers": {"updatedb_disabled":
+    body: '{"id": 71234066, "label": "go-test-conf-194m54f0ewrb", "helpers": {"updatedb_disabled":
       true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
       true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
@@ -410,7 +410,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 02 Dec 2024 15:23:48 GMT
+      - Mon, 02 Dec 2024 14:43:51 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -443,7 +443,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/67896266/transfer/2024/12
+    url: https://api.linode.com/v4beta/linode/instances/67893544/transfer/2024/12
     method: GET
   response:
     body: '{"bytes_in": 0, "bytes_out": 0, "bytes_total": 0}'
@@ -471,7 +471,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 02 Dec 2024 15:23:48 GMT
+      - Mon, 02 Dec 2024 14:43:51 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -505,7 +505,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/67896266
+    url: https://api.linode.com/v4beta/linode/instances/67893544
     method: DELETE
   response:
     body: '{}'
@@ -533,7 +533,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 02 Dec 2024 15:23:50 GMT
+      - Mon, 02 Dec 2024 14:43:53 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
