@@ -576,3 +576,30 @@ func TestClient_CustomRootCAWithCustomRoundTripper(t *testing.T) {
 
 	log.SetOutput(os.Stderr)
 }
+
+func TestClient_CustomRootCAWithoutCustomRoundTripper(t *testing.T) {
+	caFile, err := os.CreateTemp(t.TempDir(), "linodego_test_ca_*")
+	if err != nil {
+		t.Fatalf("Failed to create temp ca file: %s", err)
+	}
+	defer os.Remove(caFile.Name())
+
+	for _, setCA := range []bool{false, true} {
+		if setCA {
+			t.Setenv(APIHostCert, caFile.Name())
+		}
+
+		client := NewClient(nil)
+
+		transport, err := client.resty.Transport()
+		if err != nil {
+			t.Fatal(err)
+		}
+		if setCA && (transport.TLSClientConfig == nil || transport.TLSClientConfig.RootCAs == nil) {
+			t.Error("expected root CAs to be set")
+		}
+		if !setCA && transport.TLSClientConfig != nil {
+			t.Errorf("didn't set a custom CA, but client TLS config is not nil: %#v", transport.TLSClientConfig)
+		}
+	}
+}

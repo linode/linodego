@@ -738,7 +738,7 @@ func NewClient(hc *http.Client) (client Client) {
 
 	certPath, certPathExists := os.LookupEnv(APIHostCert)
 
-	if certPathExists && !isCustomTransport(hc.Transport) {
+	if certPathExists && !(hc != nil && isCustomTransport(hc.Transport)) {
 		cert, err := os.ReadFile(filepath.Clean(certPath))
 		if err != nil {
 			log.Fatalf("[ERROR] Error when reading cert at %s: %s\n", certPath, err.Error())
