@@ -11,14 +11,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/volumes/4979073
+    url: https://api.linode.com/v4beta/volumes/7301562
     method: GET
   response:
-    body: '{"id": 4979073, "status": "active", "label": "go-vol-test-def", "created":
+    body: '{"id": 7301562, "status": "active", "label": "go-vol-test-def", "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
       "/dev/disk/by-id/scsi-0Linode_Volume_go-vol-test-def", "size": 20, "linode_id":
-      61342082, "linode_label": "go-test-ins-8w21pl1h4n1x", "region": "ap-west", "tags":
-      [], "hardware_type": "nvme"}'
+      67701824, "linode_label": "go-test-ins-4n57ej5b4bz0", "region": "ap-west", "tags":
+      [], "hardware_type": "nvme", "encryption": "disabled"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -37,13 +37,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "342"
+      - "368"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 11 Jul 2024 20:02:05 GMT
+      - Thu, 28 Nov 2024 05:53:18 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -61,7 +61,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
