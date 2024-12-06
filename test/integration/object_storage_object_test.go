@@ -73,8 +73,8 @@ func deleteObjectStorageObject(t *testing.T, client *linodego.Client, bucket *li
 	}
 }
 
-func TestObjectStorageObject_ACLConfig_Update(t *testing.T) {
-	client, bucket, teardown, err := setupObjectStorageBucket(t, nil, "fixtures/TestObjectStorageObject_ACLConfig_Update", nil, nil)
+func TestObjectStorageObject_Smoke(t *testing.T) {
+	client, bucket, teardown, err := setupObjectStorageBucket(t, nil, "fixtures/TestObjectStorageObject_Smoke", nil, nil)
 	if err != nil {
 		t.Fatalf("failed to create Object Storage Object: %s", err)
 	}
@@ -94,6 +94,15 @@ func TestObjectStorageObject_ACLConfig_Update(t *testing.T) {
 	}
 	if config.ACLXML == "" {
 		t.Error("expected ACL XML to be included")
+	}
+
+	content, err := client.ListObjectStorageBucketContents(context.TODO(), bucket.Cluster, bucket.Label, nil)
+	if err != nil {
+		t.Errorf("failed to get bucket contents: %s", err)
+	}
+
+	if content.Data[0].Name != object {
+		t.Errorf("ObjectStorageBucket contents name does not match, expected %s, got %s", "test", content.Data[0].Name)
 	}
 
 	updateOpts := linodego.ObjectStorageObjectACLConfigUpdateOptions{ACL: "public-read", Name: object}

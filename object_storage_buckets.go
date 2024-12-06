@@ -3,8 +3,10 @@ package linodego
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"time"
 
+	"github.com/google/go-querystring/query"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -32,6 +34,22 @@ type ObjectStorageBucket struct {
 type ObjectStorageBucketAccess struct {
 	ACL         ObjectStorageACL `json:"acl"`
 	CorsEnabled bool             `json:"cors_enabled"`
+}
+
+// ObjectStorageBucketContent holds the content of an ObjectStorageBucket
+type ObjectStorageBucketContent struct {
+	Data        []ObjectStorageBucketContentData `json:"data"`
+	IsTruncated bool                             `json:"is_truncated"`
+	NextMarker  *string                          `json:"next_marker"`
+}
+
+// ObjectStorageBucketContentData holds the data of the content of an ObjectStorageBucket
+type ObjectStorageBucketContentData struct {
+	Etag         string     `json:"etag"`
+	LastModified *time.Time `json:"last_modified"`
+	Name         string     `json:"name"`
+	Owner        string     `json:"owner"`
+	Size         int        `json:"size"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
@@ -74,6 +92,14 @@ type ObjectStorageBucketCreateOptions struct {
 type ObjectStorageBucketUpdateAccessOptions struct {
 	ACL         ObjectStorageACL `json:"acl,omitempty"`
 	CorsEnabled *bool            `json:"cors_enabled,omitempty"`
+}
+
+// ObjectStorageBucketListContentsParams fields are the query parameters for ListObjectStorageBucketContents
+type ObjectStorageBucketListContentsParams struct {
+	Marker    *string
+	Delimiter *string
+	Prefix    *string
+	PageSize  *int
 }
 
 // ObjectStorageACL options start with ACL and include all known ACL types
@@ -153,4 +179,21 @@ func (c *Client) DeleteObjectStorageBucket(ctx context.Context, clusterOrRegionI
 	e := formatAPIPath("object-storage/buckets/%s/%s", clusterOrRegionID, label)
 	err := doDELETERequest(ctx, c, e)
 	return err
+}
+
+// Lists the contents of the specified ObjectStorageBucket
+func (c *Client) ListObjectStorageBucketContents(ctx context.Context, clusterOrRegionID, label string, params *ObjectStorageBucketListContentsParams) (*ObjectStorageBucketContent, error) {
+	basePath := formatAPIPath("object-storage/buckets/%s/%s/object-list", clusterOrRegionID, label)
+
+	queryString := ""
+	if params != nil {
+		values, err := query.Values(params)
+		if err != nil {
+			return nil, fmt.Errorf("failed to encode query params: %w", err)
+		}
+		queryString = "?" + values.Encode()
+	}
+
+	e := basePath + queryString
+	return doGETRequest[ObjectStorageBucketContent](ctx, c, e)
 }
