@@ -2,6 +2,7 @@ package integration
 
 import (
 	"context"
+	"github.com/stretchr/testify/assert"
 	"testing"
 
 	"github.com/linode/linodego"
@@ -66,6 +67,25 @@ func TestOAuthClients_List(t *testing.T) {
 	if len(i) == 0 {
 		t.Errorf("Expected a list of oauthClients, but got none %v", i)
 	}
+}
+
+func TestOAuthClients_Reset(t *testing.T) {
+	createOpts := linodego.OAuthClientCreateOptions{
+		Public:      true,
+		RedirectURI: "https://example.com",
+		Label:       "go-client-test",
+	}
+	client, oauthClient, teardown, err := setupOAuthClient(t, createOpts, "fixtures/TestOAuthClients_Reset")
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+	oauthClientAfterReset, err := client.ResetOAuthClientSecret(context.Background(), oauthClient.ID)
+	if err != nil {
+		t.Errorf("Error resetting oauthClient secret, expected struct, got error %v", err)
+	}
+
+	assert.NotEqual(t, oauthClient.Secret, oauthClientAfterReset.Secret, "Secret should have been reset")
 }
 
 func setupOAuthClient(t *testing.T, createOpts linodego.OAuthClientCreateOptions, fixturesYaml string) (*linodego.Client, *linodego.OAuthClient, func(), error) {
