@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/google/go-querystring/query"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -183,27 +184,14 @@ func (c *Client) DeleteObjectStorageBucket(ctx context.Context, clusterOrRegionI
 // Lists the contents of the specified ObjectStorageBucket
 func (c *Client) ListObjectStorageBucketContents(ctx context.Context, clusterOrRegionID, label string, params *ObjectStorageBucketListContentsParams) (*ObjectStorageBucketContent, error) {
 	basePath := formatAPIPath("object-storage/buckets/%s/%s/object-list", clusterOrRegionID, label)
+
 	queryString := ""
-
-	// nolint:nestif
 	if params != nil {
-		if params.Marker != nil && *params.Marker != "" {
-			queryString += fmt.Sprintf("marker=%s&", *params.Marker)
+		values, err := query.Values(params)
+		if err != nil {
+			return nil, fmt.Errorf("failed to encode query params: %w", err)
 		}
-		if params.Delimiter != nil && *params.Delimiter != "" {
-			queryString += fmt.Sprintf("delimiter=%s&", *params.Delimiter)
-		}
-		if params.Prefix != nil && *params.Prefix != "" {
-			queryString += fmt.Sprintf("prefix=%s&", *params.Prefix)
-		}
-		if params.PageSize != nil && *params.PageSize > 0 {
-			queryString += fmt.Sprintf("page_size=%d&", *params.PageSize)
-		}
-
-		// Remove trailing '&' and prepend '?' if parameters exist
-		if len(queryString) > 0 {
-			queryString = "?" + queryString[:len(queryString)-1]
-		}
+		queryString = "?" + values.Encode()
 	}
 
 	e := basePath + queryString
