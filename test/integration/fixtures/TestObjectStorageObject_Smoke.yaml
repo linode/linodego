@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-east"}'
+    body: '{"cluster":"us-east-1","label":"go-bucket-test-def"}'
     form: {}
     headers:
       Accept:
@@ -11,12 +11,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips
+    url: https://api.linode.com/v4beta/object-storage/buckets
     method: POST
   response:
-    body: '{"address": "69.164.211.224", "gateway": "69.164.211.1", "subnet_mask":
-      "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true, "rdns": "69-164-211-224.ip.linodeusercontent.com",
-      "linode_id": null, "region": "us-east", "vpc_nat_1_1": null, "reserved": true}'
+    body: '{"hostname": "go-bucket-test-def.us-east-1.linodeobjects.com", "label":
+      "go-bucket-test-def", "created": "2018-01-02T03:04:05", "region": "us-east",
+      "cluster": "us-east-1", "size": 0, "objects": 0}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -35,13 +35,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "264"
+      - "197"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 30 Sep 2024 16:52:04 GMT
+      - Wed, 27 Nov 2024 14:21:38 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -49,7 +49,7 @@ interactions:
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - ips:read_write
+      - object_storage:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -58,14 +58,14 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-c1t2pb490c1p","root_pass":"TxEZAoyb0\u003eH7P\\[l0L\u003ccr?9y[UD5u\u003eH(Rv6v}A0u]9L1j0w0:4|E$6^]39M[K4yx","image":"linode/alpine3.17","interfaces":[{"purpose":"public"}],"booted":false,"ipv4":["69.164.211.224"]}'
+    body: '{"name":"test","method":"PUT","content_type":"text/plain","expires_in":360}'
     form: {}
     headers:
       Accept:
@@ -74,80 +74,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/go-bucket-test-def/object-url
     method: POST
   response:
-    body: '{"id": 64649882, "label": "go-test-ins-reserved-ip-c1t2pb490c1p", "group":
-      "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["69.164.211.224"], "ipv6": "1234::5678/128",
-      "image": "linode/alpine3.17", "region": "us-east", "site_type": "core", "specs":
-      {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts":
-      {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io":
-      10000}, "backups": {"enabled": false, "available": false, "schedule": {"day":
-      null, "window": null}, "last_successful": null}, "hypervisor": "kvm", "watchdog_enabled":
-      true, "tags": [], "host_uuid": "091414d3185b27660e1fe9157da7bcc48d9f51cd", "has_user_data":
-      false, "placement_group": null, "disk_encryption": "disabled", "lke_cluster_id":
-      null, "capabilities": []}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Mon, 30 Sep 2024 16:52:06 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Accept-Encoding
-      X-Accepted-Oauth-Scopes:
-      - linodes:read_write
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "10"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/64649882
-    method: DELETE
-  response:
-    body: '{}'
+    body: '{"url": "https://us-east-1.linodeobjects.com:443/go-bucket-test-def/test?Signature=k0XyLLvzmzaHLogj2FDHySorg6E%3D&Expires=1732717660&AWSAccessKeyID=SANITIZED",
+      "exists": false}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -166,13 +97,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "2"
+      - "187"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 30 Sep 2024 16:52:08 GMT
+      - Wed, 27 Nov 2024 14:21:40 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -180,7 +111,7 @@ interactions:
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - linodes:read_write
+      - object_storage:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -189,7 +120,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -205,12 +136,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips/69.164.211.224
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/go-bucket-test-def/object-acl?name=test
     method: GET
   response:
-    body: '{"address": "69.164.211.224", "gateway": "69.164.211.1", "subnet_mask":
-      "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true, "rdns": "69-164-211-224.ip.linodeusercontent.com",
-      "linode_id": null, "region": "us-east", "vpc_nat_1_1": null, "reserved": true}'
+    body: '{"acl": "private", "acl_xml": "<AccessControlPolicy xmlns=\"http://s3.amazonaws.com/doc/2006-03-01/\"><Owner><ID>640757b5-ebe9-45b1-abd5-581f215ef89e</ID><DisplayName>640757b5-ebe9-45b1-abd5-581f215ef89e</DisplayName></Owner><AccessControlList><Grant><Grantee
+      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"CanonicalUser\"><ID>640757b5-ebe9-45b1-abd5-581f215ef89e</ID><DisplayName>640757b5-ebe9-45b1-abd5-581f215ef89e</DisplayName></Grantee><Permission>FULL_CONTROL</Permission></Grant></AccessControlList></AccessControlPolicy>"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -229,13 +159,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "264"
+      - "550"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 30 Sep 2024 16:52:08 GMT
+      - Wed, 27 Nov 2024 14:21:42 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -244,7 +174,7 @@ interactions:
       - Authorization, X-Filter
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - ips:read_only
+      - object_storage:read_only
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -253,78 +183,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "10"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"test-instance-freed-ip","root_pass":"Bqlo\u003e*1IBe57500Tc50e0\u003eNqESxQ4Z!Ea,\u0026+h`\u003e\u00264l2$0XD`QM(t`2uO/(a66Wyj","ipv4":["69.164.211.224"]}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances
-    method: POST
-  response:
-    body: '{"id": 64649889, "label": "test-instance-freed-ip", "group": "", "status":
-      "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["69.164.211.224"], "ipv6": "1234::5678/128",
-      "image": null, "region": "us-east", "site_type": "core", "specs": {"disk": 25600,
-      "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu":
-      90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io": 10000},
-      "backups": {"enabled": false, "available": false, "schedule": {"day": null,
-      "window": null}, "last_successful": null}, "hypervisor": "kvm", "watchdog_enabled":
-      true, "tags": [], "host_uuid": "a452b4b8a90dc1c3f7a916bd423079b94bd11772", "has_user_data":
-      false, "placement_group": null, "disk_encryption": "disabled", "lke_cluster_id":
-      null, "capabilities": []}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "849"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Mon, 30 Sep 2024 16:52:08 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - linodes:read_write
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "10"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -340,13 +199,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips/69.164.211.224
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/go-bucket-test-def/object-list
     method: GET
   response:
-    body: '{"address": "69.164.211.224", "gateway": "69.164.211.1", "subnet_mask":
-      "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true, "rdns": "69-164-211-224.ip.linodeusercontent.com",
-      "linode_id": 64649889, "region": "us-east", "vpc_nat_1_1": null, "reserved":
-      true}'
+    body: '{"data": [{"name": "test", "size": 10, "last_modified": "2018-01-02T03:04:05.263Z",
+      "etag": "7f2ababa423061c509f4923dd04b6cf1", "owner": "640757b5-ebe9-45b1-abd5-581f215ef89e"}],
+      "next_marker": null, "is_truncated": false}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -365,13 +223,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "268"
+      - "222"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 30 Sep 2024 16:52:08 GMT
+      - Wed, 27 Nov 2024 14:21:43 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -380,7 +238,7 @@ interactions:
       - Authorization, X-Filter
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - ips:read_only
+      - object_storage:read_only
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -389,14 +247,14 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "10"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"ephemeral-ip-test","root_pass":"?b7~}tJqzQ8/GsT1\u003c1BS3Zn9R67nhsA[kZ@g=X3}B-^z88x\u003eRG^08CzOp*2\\:97g"}'
+    body: '{"name":"test","acl":"public-read"}'
     form: {}
     headers:
       Accept:
@@ -405,20 +263,136 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/go-bucket-test-def/object-acl
+    method: PUT
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Wed, 27 Nov 2024 14:21:44 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1600"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/go-bucket-test-def/object-acl?name=test
+    method: GET
+  response:
+    body: '{"acl": "public-read", "acl_xml": "<AccessControlPolicy xmlns=\"http://s3.amazonaws.com/doc/2006-03-01/\"><Owner><ID>640757b5-ebe9-45b1-abd5-581f215ef89e</ID><DisplayName>640757b5-ebe9-45b1-abd5-581f215ef89e</DisplayName></Owner><AccessControlList><Grant><Grantee
+      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"Group\"><URI>http://acs.amazonaws.com/groups/global/AllUsers</URI></Grantee><Permission>READ</Permission></Grant><Grant><Grantee
+      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"CanonicalUser\"><ID>640757b5-ebe9-45b1-abd5-581f215ef89e</ID><DisplayName>640757b5-ebe9-45b1-abd5-581f215ef89e</DisplayName></Grantee><Permission>FULL_CONTROL</Permission></Grant></AccessControlList></AccessControlPolicy>"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "750"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Wed, 27 Nov 2024 14:21:46 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1600"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"name":"test","method":"DELETE","expires_in":360}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/go-bucket-test-def/object-url
     method: POST
   response:
-    body: '{"id": 64649890, "label": "ephemeral-ip-test", "group": "", "status": "provisioning",
-      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "type":
-      "g6-nanode-1", "ipv4": ["69.164.215.150"], "ipv6": "1234::5678/128",
-      "image": null, "region": "us-east", "site_type": "core", "specs": {"disk": 25600,
-      "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu":
-      90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io": 10000},
-      "backups": {"enabled": false, "available": false, "schedule": {"day": null,
-      "window": null}, "last_successful": null}, "hypervisor": "kvm", "watchdog_enabled":
-      true, "tags": [], "host_uuid": "58a354ebdb494a9193cafdc0920899b2b5ce7333", "has_user_data":
-      false, "placement_group": null, "disk_encryption": "disabled", "lke_cluster_id":
-      null, "capabilities": []}'
+    body: '{"url": "https://us-east-1.linodeobjects.com:443/go-bucket-test-def/test?Signature=IRuyHRdpyXWhh2aQjNZwsCI4Zw0%3D&Expires=1732717668&AWSAccessKeyID=SANITIZED",
+      "exists": true}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -437,13 +411,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "844"
+      - "186"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 30 Sep 2024 16:52:09 GMT
+      - Wed, 27 Nov 2024 14:21:48 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -451,7 +425,7 @@ interactions:
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - linodes:read_write
+      - object_storage:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -460,7 +434,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "10"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -476,7 +450,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/64649890
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/go-bucket-test-def
     method: DELETE
   response:
     body: '{}'
@@ -504,7 +478,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 30 Sep 2024 16:52:11 GMT
+      - Wed, 27 Nov 2024 14:21:54 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -512,7 +486,7 @@ interactions:
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - linodes:read_write
+      - object_storage:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -521,129 +495,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/64649889
-    method: DELETE
-  response:
-    body: '{}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "2"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Mon, 30 Sep 2024 16:52:13 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - linodes:read_write
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "800"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips/69.164.211.224
-    method: DELETE
-  response:
-    body: '{}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "2"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Mon, 30 Sep 2024 16:52:13 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - ips:read_write
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "10"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
