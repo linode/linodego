@@ -215,9 +215,12 @@ func TestVolume_WaitForLinodeID(t *testing.T) {
 	client, teardownWait := createTestClient(t, "fixtures/TestVolume_WaitForLinodeID_waiting")
 	defer teardownWait()
 
-	_, errWait = client.WaitForVolumeLinodeID(context.Background(), volume.ID, &instance.ID, 20)
+	v, errWait := client.WaitForVolumeLinodeID(context.Background(), volume.ID, &instance.ID, 20)
 	if errWait != nil {
 		t.Errorf("Error waiting for volume %d to attach to instance %d: %s", volume.ID, instance.ID, errWait)
+	}
+	if v.LinodeLabel != instance.Label {
+		t.Error("Error linode label mismatched")
 	}
 }
 
