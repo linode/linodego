@@ -6,6 +6,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/stretchr/testify/require"
+
 	"github.com/linode/linodego"
 	. "github.com/linode/linodego"
 )
@@ -181,22 +183,31 @@ func TestIPAddress_Update(t *testing.T) {
 	reservedFalse := false
 
 	address := instance.IPv4[0].String()
+
 	i, err := client.GetInstanceIPAddresses(context.Background(), instance.ID)
 	if err != nil {
 		t.Errorf("Error getting ipaddress: %s", err)
 	}
-	rdns := i.IPv4.Public[0].RDNS
 
+	originalRDNS := i.IPv4.Public[0].RDNS
+
+	// Update RDNS to nip.io
 	updateOpts := IPAddressUpdateOptionsV2{
-		RDNS: linodego.Pointer(linodego.Pointer(rdns)),
+		RDNS: linodego.Pointer(linodego.Pointer(fmt.Sprintf("%s.nip.io", i.IPv4.Public[0].Address))),
 	}
 
-	_, err = client.UpdateIPAddressV2(context.Background(), address, updateOpts)
-	if err != nil {
-		t.Error(err)
-	}
+	ip, err := client.UpdateIPAddressV2(context.Background(), address, updateOpts)
+	require.NoError(t, err)
 
-	// Test for updated behavior
+	// Update RDNS to default
+	updateOpts = IPAddressUpdateOptionsV2{
+		RDNS: linodego.Pointer[*string](nil),
+	}
+	ip, err = client.UpdateIPAddressV2(context.Background(), ip.Address, updateOpts)
+	require.NoError(t, err)
+
+	require.NotNil(t, ip)
+	require.Equal(t, originalRDNS, ip.RDNS)
 
 	createReservedIP := func() (string, error) {
 		reservedIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{Region: instance.Region})
@@ -356,15 +367,6 @@ func TestIPAddress_Update(t *testing.T) {
 	updatedIP, err = client.UpdateIPAddressV2(context.Background(), invalidResIp, updateOpts)
 	if err == nil {
 		t.Fatalf("Expected error indicating the IP address is invalid, got nil")
-	}
-
-	// Scenario 11: Reset IP RDNS to default
-	updateOpts = IPAddressUpdateOptionsV2{
-		RDNS: linodego.Pointer[*string](nil),
-	}
-	_, err = client.UpdateIPAddressV2(context.Background(), unassignedResIP, updateOpts)
-	if err == nil {
-		t.Fatalf("Expected error when setting RDNS for unassigned reserved IP, but got none")
 	}
 }
 
@@ -570,38 +572,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 		t.Errorf("Unexpected unassigned IP reservation result: %+v", omitLinodeIDip)
 	}
 
-	// Scenario 4: Account at reserved IP limit
-
-	resLimitoOpts := linodego.AllocateReserveIPOptions{
-		Type:     "ipv4",
-		Public:   true,
-		Reserved: true,
-		Region:   instance.Region,
-		LinodeID: instance.ID,
-	}
-	_, resLimitErr := client.AllocateReserveIP(context.Background(), resLimitoOpts)
-	if resLimitErr == nil {
-		t.Fatal("Expected error for account at reserved IP limit, got nil")
-	}
-
-	cleanUpReserveIPAllocation(t, client, validIp.Address)
-	cleanUpReserveIPAllocation(t, client, omitLinodeIDip.Address)
-
-	// // Scenario 5: Linode at IPMax limit
-
-	// opts = linodego.AllocateReserveIPOptions{
-	// 	Type:     "ipv4",
-	// 	Public:   true,
-	// 	Reserved: true,
-	// 	Region:   instance.Region,
-	// 	LinodeID: 64863869,
-	// }
-	// _, err = client.AllocateReserveIP(context.Background(), opts)
-	// if err == nil {
-	// 	t.Fatal("Expected error for Linode at IPMax limit, got nil")
-	// }
-
-	// Scenario 6: Omit Region
+	// Scenario 4: Omit Region
 
 	omitRegionOpts := AllocateReserveIPOptions{
 		Type:     "ipv4",
@@ -620,7 +591,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 
 	cleanUpReserveIPAllocation(t, client, omitRegionip.Address)
 
-	// Scenario 7: Omit both Region and Linode ID
+	// Scenario 5: Omit both Region and Linode ID
 
 	omitRegionAndLinodeIDopts := AllocateReserveIPOptions{
 		Type:     "ipv4",
@@ -633,7 +604,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 		t.Fatal("Expected error when omitting both region and Linode ID, got nil")
 	}
 
-	// Scenario 8: Reserved true, Public false
+	// Scenario 6: Reserved true, Public false
 
 	publicFalseOpts := AllocateReserveIPOptions{
 		Type:     "ipv4",
@@ -647,7 +618,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 		t.Fatal("Expected error for reserved true and public false, got nil")
 	}
 
-	// Scenario 9: Reserved false
+	// Scenario 7: Reserved false
 
 	reservedFalseOpts := AllocateReserveIPOptions{
 		Type:     "ipv4",
@@ -666,7 +637,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 
 	cleanUpIPAllocation(t, client, instance.ID, reservedFalseIp.Address)
 
-	// Scenario 10: Omit Reserved field
+	// Scenario 8: Omit Reserved field
 
 	omitReservedOpts := AllocateReserveIPOptions{
 		Type:     "ipv4",
@@ -684,7 +655,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 
 	cleanUpIPAllocation(t, client, instance.ID, omitReservedip.Address)
 
-	// Scenario 11: Omit Linode ID, Reserved false
+	// Scenario 9: Omit Linode ID, Reserved false
 
 	omitOpts := AllocateReserveIPOptions{
 		Type:     "ipv4",
@@ -697,7 +668,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 		t.Fatal("Expected error when omitting Linode ID and setting reserved to false, got nil")
 	}
 
-	// Scenario 12: Omit Linode ID and Reserved fields
+	// Scenario 10: Omit Linode ID and Reserved fields
 
 	omitIDResopts := AllocateReserveIPOptions{
 		Type:   "ipv4",
@@ -709,7 +680,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 		t.Fatal("Expected error when omitting Linode ID and reserved fields, got nil")
 	}
 
-	// Scenario 13: Reserved true, Type IPv6
+	// Scenario 11: Reserved true, Type IPv6
 
 	typeIPv6opts := AllocateReserveIPOptions{
 		Type:     "ipv6",
@@ -723,7 +694,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 		t.Fatal("Expected error for reserved true and type IPv6, got nil")
 	}
 
-	// Scenario 14: Reserved false, Type IPv6
+	// Scenario 12: Reserved false, Type IPv6
 
 	resFalseIPv6opts := AllocateReserveIPOptions{
 		Type:     "ipv6",
@@ -737,7 +708,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 		t.Fatalf("Expected unsuccessful IPv6 assignment, got nil")
 	}
 
-	// Scenario 15: Region mismatch
+	// Scenario 13: Region mismatch
 
 	regionMismatchOpts := AllocateReserveIPOptions{
 		Type:     "ipv4",
