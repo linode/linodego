@@ -2,9 +2,10 @@ package unit
 
 import (
 	"context"
+	"testing"
+
 	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestProfileApps_Get(t *testing.T) {

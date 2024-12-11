@@ -576,7 +576,7 @@ func TestInstance_NodeBalancers_List(t *testing.T) {
 		t.Error(err)
 	}
 
-	var linodeID = 0
+	linodeID := 0
 
 	for _, instanceIP := range instanceIPs {
 		if instanceIP.Address == privateIP {

@@ -2,8 +2,9 @@ package integration
 
 import (
 	"context"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 
 	"github.com/linode/linodego"
 	. "github.com/linode/linodego"

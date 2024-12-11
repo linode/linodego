@@ -3,9 +3,10 @@ package unit
 import (
 	"context"
 	"fmt"
+	"testing"
+
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestAccountLogins_List(t *testing.T) {
