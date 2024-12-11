@@ -2,11 +2,12 @@ package unit
 
 import (
 	"context"
+	"testing"
+	"time"
+
 	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
-	"testing"
-	"time"
 )
 
 func TestAccountServiceTransfer_List(t *testing.T) {

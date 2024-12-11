@@ -96,8 +96,8 @@ func TestIPAddresses_List_smoke(t *testing.T) {
 		}
 
 		rdns := fmt.Sprintf("%s.nip.io", ip.Address)
-		_, err = client.UpdateIPAddress(context.Background(), ip.Address, IPAddressUpdateOptions{
-			RDNS: &rdns,
+		_, err = client.UpdateIPAddressV2(context.Background(), ip.Address, IPAddressUpdateOptionsV2{
+			RDNS: linodego.Pointer(linodego.Pointer(rdns)),
 		})
 		if err != nil {
 			t.Fatalf("Failed to set RDNS for IPv6 address: %v", err)
@@ -187,11 +187,11 @@ func TestIPAddress_Update(t *testing.T) {
 	}
 	rdns := i.IPv4.Public[0].RDNS
 
-	updateOpts := IPAddressUpdateOptions{
-		RDNS: &rdns,
+	updateOpts := IPAddressUpdateOptionsV2{
+		RDNS: linodego.Pointer(linodego.Pointer(rdns)),
 	}
 
-	_, err = client.UpdateIPAddress(context.Background(), address, updateOpts)
+	_, err = client.UpdateIPAddressV2(context.Background(), address, updateOpts)
 	if err != nil {
 		t.Error(err)
 	}
@@ -209,10 +209,10 @@ func TestIPAddress_Update(t *testing.T) {
 	// Scenario 1: Convert ephemeral IP to reserved IP
 
 	ephemeralIP := instance.IPv4[0].String()
-	updateOpts = IPAddressUpdateOptions{
+	updateOpts = IPAddressUpdateOptionsV2{
 		Reserved: &reservedTrue,
 	}
-	updatedIP, err := client.UpdateIPAddress(context.Background(), ephemeralIP, updateOpts)
+	updatedIP, err := client.UpdateIPAddressV2(context.Background(), ephemeralIP, updateOpts)
 	if err != nil {
 		t.Fatalf("Failed to convert ephemeral IP to reserved: %v", err)
 	}
@@ -228,10 +228,10 @@ func TestIPAddress_Update(t *testing.T) {
 	}
 	defer client.DeleteReservedIPAddress(context.Background(), reservedIP)
 
-	updateOpts = IPAddressUpdateOptions{
+	updateOpts = IPAddressUpdateOptionsV2{
 		Reserved: &reservedTrue,
 	}
-	updatedIP, err = client.UpdateIPAddress(context.Background(), reservedIP, updateOpts)
+	updatedIP, err = client.UpdateIPAddressV2(context.Background(), reservedIP, updateOpts)
 	if err != nil {
 		t.Fatalf("Failed to update reserved IP: %v", err)
 	}
@@ -242,10 +242,10 @@ func TestIPAddress_Update(t *testing.T) {
 	// Scenario 3: Convert reserved to ephemeral
 
 	ephemeralIP = instance.IPv4[0].String()
-	updateOpts = IPAddressUpdateOptions{
+	updateOpts = IPAddressUpdateOptionsV2{
 		Reserved: &reservedFalse,
 	}
-	updatedIP, err = client.UpdateIPAddress(context.Background(), ephemeralIP, updateOpts)
+	updatedIP, err = client.UpdateIPAddressV2(context.Background(), ephemeralIP, updateOpts)
 	if err != nil {
 		t.Fatalf("Failed to update ephemeral IP: %v", err)
 	}
@@ -275,10 +275,10 @@ func TestIPAddress_Update(t *testing.T) {
 		t.Fatalf("Failed to assign reserved IP: %v", err)
 	}
 
-	updateOpts = IPAddressUpdateOptions{
+	updateOpts = IPAddressUpdateOptionsV2{
 		Reserved: &reservedFalse,
 	}
-	updatedIP, err = client.UpdateIPAddress(context.Background(), reservedIP, updateOpts)
+	updatedIP, err = client.UpdateIPAddressV2(context.Background(), reservedIP, updateOpts)
 	if err != nil {
 		t.Fatalf("Failed to convert assigned reserved IP to ephemeral: %v", err)
 	}
@@ -286,18 +286,18 @@ func TestIPAddress_Update(t *testing.T) {
 		t.Errorf("Expected IP to be converted to ephemeral, but it's still reserved")
 	}
 
-	// Sceanrio 5: Cannot set RDNS for unassigned reserved IP
+	// Scenario 5: Cannot set RDNS for unassigned reserved IP
 
 	unassignedResIP, unassignedResIpErr := createReservedIP()
 	if unassignedResIpErr != nil {
 		t.Fatalf("Failed to create reserved IP: %v", unassignedResIpErr)
 	}
 
-	updateOpts = IPAddressUpdateOptions{
+	updateOpts = IPAddressUpdateOptionsV2{
 		Reserved: &reservedTrue,
-		RDNS:     String("sample rdns"),
+		RDNS:     linodego.Pointer(linodego.Pointer("sample rdns")),
 	}
-	_, err = client.UpdateIPAddress(context.Background(), unassignedResIP, updateOpts)
+	_, err = client.UpdateIPAddressV2(context.Background(), unassignedResIP, updateOpts)
 	if err == nil {
 		t.Fatalf("Expected error when setting RDNS for unassigned reserved IP, but got none")
 	}
@@ -311,10 +311,10 @@ func TestIPAddress_Update(t *testing.T) {
 		t.Fatalf("Failed to create reserved IP: %v", err)
 	}
 
-	updateOpts = IPAddressUpdateOptions{
+	updateOpts = IPAddressUpdateOptionsV2{
 		Reserved: &reservedTrue,
 	}
-	updatedIP, err = client.UpdateIPAddress(context.Background(), reservedIP, updateOpts)
+	updatedIP, err = client.UpdateIPAddressV2(context.Background(), reservedIP, updateOpts)
 	if err != nil {
 		t.Fatalf("Failed to update unassigned reserved IP: %v", err)
 	}
@@ -331,10 +331,10 @@ func TestIPAddress_Update(t *testing.T) {
 		t.Fatalf("Failed to create reserved IP: %v", err)
 	}
 
-	updateOpts = IPAddressUpdateOptions{
+	updateOpts = IPAddressUpdateOptionsV2{
 		Reserved: &reservedFalse,
 	}
-	_, err = client.UpdateIPAddress(context.Background(), reservedIP, updateOpts)
+	_, err = client.UpdateIPAddressV2(context.Background(), reservedIP, updateOpts)
 	if err != nil {
 		t.Fatalf("Failed to convert unassigned reserved IP to unassigned: %v", err)
 	}
@@ -349,15 +349,23 @@ func TestIPAddress_Update(t *testing.T) {
 
 	invalidResIp := "123.72.121.76"
 
-	updateOpts = IPAddressUpdateOptions{
+	updateOpts = IPAddressUpdateOptionsV2{
 		Reserved: &reservedFalse,
 	}
 
-	updatedIP, err = client.UpdateIPAddress(context.Background(), invalidResIp, updateOpts)
+	updatedIP, err = client.UpdateIPAddressV2(context.Background(), invalidResIp, updateOpts)
 	if err == nil {
 		t.Fatalf("Expected error indicating the IP address is invalid, got nil")
 	}
 
+	// Scenario 11: Reset IP RDNS to default
+	updateOpts = IPAddressUpdateOptionsV2{
+		RDNS: linodego.Pointer[*string](nil),
+	}
+	_, err = client.UpdateIPAddressV2(context.Background(), unassignedResIP, updateOpts)
+	if err == nil {
+		t.Fatalf("Expected error when setting RDNS for unassigned reserved IP, but got none")
+	}
 }
 
 // TestIPAddress_Instance_Delete requires the customer account to have
@@ -742,7 +750,6 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 	if regionMismatchErr == nil {
 		t.Fatal("Expected error for region mismatch, got nil")
 	}
-
 }
 
 func cleanUpReserveIPAllocation(t *testing.T, client *linodego.Client, address string) {
