@@ -3,10 +3,11 @@ package unit
 import (
 	"context"
 	"fmt"
+	"testing"
+
 	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestAccountOauthClient_List(t *testing.T) {
