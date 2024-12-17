@@ -869,6 +869,23 @@ func TestInstance_withBlockStorageEncryption(t *testing.T) {
 	require.True(t, slices.Contains(inst.Capabilities, "Block Storage Encryption"))
 }
 
+func TestInstance_withVPU(t *testing.T) {
+	client, clientTeardown := createTestClient(t, "fixtures/TestInstance_withVPU")
+
+	inst, err := createInstance(t, client, true, func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+		options.Region = getRegionsWithCaps(t, client, []string{"Linodes", "NETINT Quadra T1U"})[0]
+		options.Label = "go-inst-test-create-vpu"
+	})
+	require.NoError(t, err)
+
+	defer func() {
+		client.DeleteInstance(context.Background(), inst.ID)
+		clientTeardown()
+	}()
+
+	require.NotNil(t, inst.Specs.AcceleratedDevices)
+}
+
 func TestInstance_withPG(t *testing.T) {
 	client, clientTeardown := createTestClient(t, "fixtures/TestInstance_withPG")
 
