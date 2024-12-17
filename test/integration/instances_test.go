@@ -873,7 +873,8 @@ func TestInstance_withVPU(t *testing.T) {
 	client, clientTeardown := createTestClient(t, "fixtures/TestInstance_withVPU")
 
 	inst, err := createInstance(t, client, true, func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-		options.Region = getRegionsWithCaps(t, client, []string{"Linodes", "NETINT Quadra T1U"})[0]
+		options.Region = "us-lax"
+		options.Type = "g1-accelerated-netint-vpu-t1u1-s"
 		options.Label = "go-inst-test-create-vpu"
 	})
 	require.NoError(t, err)
