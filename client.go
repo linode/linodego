@@ -881,7 +881,7 @@ func generateListCacheURL(endpoint string, opts *ListOptions) (string, error) {
 	return fmt.Sprintf("%s:%s", endpoint, hashedOpts), nil
 }
 
-func isCustomTransport(hc *http.Client) bool {
+func hasCustomTransport(hc *http.Client) bool {
 	if hc == nil {
 		return false
 	}
