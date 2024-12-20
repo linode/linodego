@@ -43,14 +43,12 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 		t.Errorf("got wrong db from GetMySQLDatabase: %v", db)
 	}
 
-	week := 3
-
 	updatedWindow := linodego.DatabaseMaintenanceWindow{
-		DayOfWeek:   linodego.DatabaseMaintenanceDayWednesday,
-		Duration:    1,
-		Frequency:   linodego.DatabaseMaintenanceFrequencyMonthly,
-		HourOfDay:   8,
-		WeekOfMonth: &week,
+		DayOfWeek: linodego.DatabaseMaintenanceDayWednesday,
+		Duration:  4,
+		Frequency: linodego.DatabaseMaintenanceFrequencyWeekly,
+		HourOfDay: 8,
+		Pending:   []linodego.DatabaseMaintenanceWindowPending{},
 	}
 
 	allowList := []string{"128.173.205.21", "123.177.200.20"}
@@ -130,45 +128,6 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 		linodego.DatabaseStatusActive, 2400); err != nil {
 		t.Fatalf("failed to wait for database updating: %s", err)
 	}
-
-	backupLabel := "mysqlbackupforlinodego"
-	backupOptions := linodego.MySQLBackupCreateOptions{
-		Label:  backupLabel,
-		Target: linodego.MySQLDatabaseTargetPrimary,
-	}
-
-	if err := client.CreateMySQLDatabaseBackup(context.Background(), database.ID, backupOptions); err != nil {
-		t.Errorf("failed to create db backup: %v", err)
-	}
-
-	backup, err := client.WaitForMySQLDatabaseBackup(context.Background(), database.ID, backupLabel, 1200)
-	if err != nil {
-		t.Fatalf("failed to wait for backup: %s", err)
-	}
-
-	if backup.Label != backupLabel {
-		t.Fatalf("backup label mismatch: %v != %v", backupLabel, backup.Label)
-	}
-
-	backup, err = client.GetMySQLDatabaseBackup(context.Background(), database.ID, backup.ID)
-	if err != nil {
-		t.Errorf("failed to get backup %d for db: %v", backup.ID, err)
-	}
-
-	if backup.Label != backupLabel {
-		t.Fatalf("backup label mismatch: %v != %v", backupLabel, backup.Label)
-	}
-
-	if backup.Created == nil {
-		t.Fatalf("expected value for created, got nil")
-	}
-
-	// Wait for the DB to re-enter active status after backup
-	if err := client.WaitForDatabaseStatus(
-		context.Background(), database.ID, linodego.DatabaseEngineTypeMySQL,
-		linodego.DatabaseStatusActive, 2400); err != nil {
-		t.Fatalf("failed to wait for database updating: %s", err)
-	}
 }
 
 type mysqlDatabaseModifier func(options *linodego.MySQLCreateOptions)
@@ -179,15 +138,12 @@ func createMySQLDatabase(t *testing.T, client *linodego.Client,
 	t.Helper()
 
 	createOpts := linodego.MySQLCreateOptions{
-		Label:           "go-mysql-test-def" + randLabel(),
-		Region:          getRegionsWithCaps(t, client, []string{"Managed Databases"})[0],
-		Type:            "g6-nanode-1",
-		Engine:          "mysql/8.0.30",
-		Encrypted:       false,
-		ClusterSize:     3,
-		ReplicationType: "semi_synch",
-		SSLConnection:   false,
-		AllowList:       []string{"203.0.113.1", "192.0.1.0/24"},
+		Label:       "go-mysql-test-def" + randLabel(),
+		Region:      getRegionsWithCaps(t, client, []string{"Managed Databases"})[0],
+		Type:        "g6-nanode-1",
+		Engine:      "mysql/8",
+		ClusterSize: 3,
+		AllowList:   []string{"203.0.113.1", "192.0.1.0/24"},
 	}
 
 	for _, modifier := range databaseMofidiers {
@@ -242,7 +198,7 @@ func setupMySQLDatabase(t *testing.T, databaseMofidiers []mysqlDatabaseModifier,
 	}
 
 	_, err = client.WaitForEventFinished(context.Background(), database.ID, linodego.EntityDatabase,
-		linodego.ActionDatabaseCreate, now, 3600)
+		linodego.ActionDatabaseCreate, now, 5400)
 	if err != nil {
 		t.Fatalf("failed to wait for db create event: %s", err)
 	}

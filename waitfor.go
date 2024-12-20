@@ -477,6 +477,7 @@ func (client Client) WaitForImageRegionStatus(ctx context.Context, imageID, regi
 }
 
 // WaitForMySQLDatabaseBackup waits for the backup with the given label to be available.
+// Deprecated: WaitForMySQLDatabaseBackup is a deprecated method.
 func (client Client) WaitForMySQLDatabaseBackup(ctx context.Context, dbID int, label string, timeoutSeconds int) (*MySQLDatabaseBackup, error) {
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
@@ -504,6 +505,7 @@ func (client Client) WaitForMySQLDatabaseBackup(ctx context.Context, dbID int, l
 }
 
 // WaitForPostgresDatabaseBackup waits for the backup with the given label to be available.
+// Deprecated: WaitForPostgresDatabaseBackup is a deprecated method.
 func (client Client) WaitForPostgresDatabaseBackup(ctx context.Context, dbID int, label string, timeoutSeconds int) (*PostgresDatabaseBackup, error) {
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()

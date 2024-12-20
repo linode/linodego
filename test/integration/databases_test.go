@@ -32,7 +32,7 @@ func TestDatabase_Engine(t *testing.T) {
 	}
 
 	if engine.Engine != response.Engine {
-		t.Fatal("recieved engine does not match source")
+		t.Fatal("received engine does not match source")
 	}
 }
 
@@ -57,7 +57,7 @@ func TestDatabase_Type(t *testing.T) {
 	}
 
 	if aType.Label != response.Label {
-		t.Fatal("recieved type does not match source")
+		t.Fatal("received type does not match source")
 	}
 
 	if response.Engines.MySQL[0].Quantity != aType.Engines.MySQL[0].Quantity {
