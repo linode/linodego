@@ -13,6 +13,8 @@ type (
 	DatabaseDayOfWeek            int
 	DatabaseMaintenanceFrequency string
 	DatabaseStatus               string
+	DatabasePlatform             string
+	DatabaseMemberType           string
 )
 
 const (
@@ -50,24 +52,43 @@ const (
 	DatabaseStatusBackingUp    DatabaseStatus = "backing_up"
 )
 
+const (
+	DatabasePlatformRDBMSLegacy  DatabasePlatform = "rdbms-legacy"
+	DatabasePlatformRDBMSDefault DatabasePlatform = "rdbms-default"
+)
+
+const (
+	DatabaseMemberTypePrimary  DatabaseMemberType = "primary"
+	DatabaseMemberTypeFailover DatabaseMemberType = "failover"
+)
+
 // A Database is a instance of Linode Managed Databases
 type Database struct {
-	ID              int            `json:"id"`
-	Status          DatabaseStatus `json:"status"`
-	Label           string         `json:"label"`
-	Hosts           DatabaseHost   `json:"hosts"`
-	Region          string         `json:"region"`
-	Type            string         `json:"type"`
-	Engine          string         `json:"engine"`
-	Version         string         `json:"version"`
-	ClusterSize     int            `json:"cluster_size"`
-	ReplicationType string         `json:"replication_type"`
-	SSLConnection   bool           `json:"ssl_connection"`
-	Encrypted       bool           `json:"encrypted"`
-	AllowList       []string       `json:"allow_list"`
-	InstanceURI     string         `json:"instance_uri"`
-	Created         *time.Time     `json:"-"`
-	Updated         *time.Time     `json:"-"`
+	ID          int              `json:"id"`
+	Status      DatabaseStatus   `json:"status"`
+	Label       string           `json:"label"`
+	Hosts       DatabaseHost     `json:"hosts"`
+	Region      string           `json:"region"`
+	Type        string           `json:"type"`
+	Engine      string           `json:"engine"`
+	Version     string           `json:"version"`
+	ClusterSize int              `json:"cluster_size"`
+	Platform    DatabasePlatform `json:"platform"`
+
+	// Members has dynamic keys so it is a map
+	Members map[string]DatabaseMemberType `json:"members"`
+
+	// Deprecated: ReplicationType is a deprecated property.
+	ReplicationType string `json:"replication_type,omitempty"`
+	// Deprecated: SSLConnection is a deprecated property.
+	SSLConnection bool `json:"ssl_connection,omitempty"`
+	// Deprecated: Encrypted is a deprecated property.
+	Encrypted bool `json:"encrypted,omitempty"`
+
+	AllowList   []string   `json:"allow_list"`
+	InstanceURI string     `json:"instance_uri"`
+	Created     *time.Time `json:"-"`
+	Updated     *time.Time `json:"-"`
 }
 
 // DatabaseHost for Primary/Secondary of Database
@@ -85,11 +106,21 @@ type DatabaseEngine struct {
 
 // DatabaseMaintenanceWindow stores information about a MySQL cluster's maintenance window
 type DatabaseMaintenanceWindow struct {
-	DayOfWeek   DatabaseDayOfWeek            `json:"day_of_week"`
-	Duration    int                          `json:"duration"`
-	Frequency   DatabaseMaintenanceFrequency `json:"frequency"`
-	HourOfDay   int                          `json:"hour_of_day"`
-	WeekOfMonth *int                         `json:"week_of_month"`
+	DayOfWeek DatabaseDayOfWeek            `json:"day_of_week"`
+	Duration  int                          `json:"duration"`
+	Frequency DatabaseMaintenanceFrequency `json:"frequency"`
+	HourOfDay int                          `json:"hour_of_day"`
+
+	Pending []DatabaseMaintenanceWindowPending `json:"pending,omitempty"`
+
+	// Deprecated: WeekOfMonth is a deprecated property.
+	WeekOfMonth *int `json:"week_of_month,omitempty"` // This field doesn't exist in v2
+}
+
+type DatabaseMaintenanceWindowPending struct {
+	Deadline    *time.Time `json:"-"`
+	Description string     `json:"description"`
+	PlannedFor  *time.Time `json:"-"`
 }
 
 // DatabaseType is information about the supported Database Types by Linode Managed Databases
@@ -120,6 +151,12 @@ type ClusterPrice struct {
 	Monthly float32 `json:"monthly"`
 }
 
+// DatabaseFork describes the source and restore time for the fork for forked DBs
+type DatabaseFork struct {
+	Source      int        `json:"source"`
+	RestoreTime *time.Time `json:"-,omitempty"`
+}
+
 func (d *Database) UnmarshalJSON(b []byte) error {
 	type Mask Database
 
@@ -137,6 +174,44 @@ func (d *Database) UnmarshalJSON(b []byte) error {
 
 	d.Created = (*time.Time)(p.Created)
 	d.Updated = (*time.Time)(p.Updated)
+	return nil
+}
+
+func (d *DatabaseFork) UnmarshalJSON(b []byte) error {
+	type Mask DatabaseFork
+
+	p := struct {
+		*Mask
+		RestoreTime *parseabletime.ParseableTime `json:"restore_time"`
+	}{
+		Mask: (*Mask)(d),
+	}
+
+	if err := json.Unmarshal(b, &p); err != nil {
+		return err
+	}
+
+	d.RestoreTime = (*time.Time)(p.RestoreTime)
+	return nil
+}
+
+func (d *DatabaseMaintenanceWindowPending) UnmarshalJSON(b []byte) error {
+	type Mask DatabaseMaintenanceWindowPending
+
+	p := struct {
+		*Mask
+		Deadline   *parseabletime.ParseableTime `json:"deadline"`
+		PlannedFor *parseabletime.ParseableTime `json:"planned_for"`
+	}{
+		Mask: (*Mask)(d),
+	}
+
+	if err := json.Unmarshal(b, &p); err != nil {
+		return err
+	}
+
+	d.Deadline = (*time.Time)(p.Deadline)
+	d.PlannedFor = (*time.Time)(p.PlannedFor)
 	return nil
 }
 
