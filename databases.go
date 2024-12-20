@@ -74,6 +74,7 @@ type Database struct {
 	Version     string           `json:"version"`
 	ClusterSize int              `json:"cluster_size"`
 	Platform    DatabasePlatform `json:"platform"`
+	Fork        *Database        `json:"fork,omitempty"`
 
 	// Members has dynamic keys so it is a map
 	Members map[string]DatabaseMemberType `json:"members"`
