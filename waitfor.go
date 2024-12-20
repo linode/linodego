@@ -741,7 +741,7 @@ func (p *EventPoller) WaitForFinished(
 	for {
 		select {
 		case <-ticker.C:
-			event, err := p.client.GetEvent(ctx, event.ID)
+			event, err = p.client.GetEvent(ctx, event.ID)
 			if err != nil {
 				return nil, fmt.Errorf("failed to get event: %w", err)
 			}

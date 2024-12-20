@@ -794,7 +794,7 @@ func NewClientFromEnv(hc *http.Client) (*Client, error) {
 	client.selectedProfile = configProfile
 
 	// We should only load the config if the config file exists
-	if _, err := os.Stat(configPath); err != nil {
+	if _, err = os.Stat(configPath); err != nil {
 		return nil, fmt.Errorf("error loading config file %s: %w", configPath, err)
 	}
 

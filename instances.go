@@ -90,9 +90,10 @@ type InstanceAlert struct {
 
 // InstanceBackup represents backup settings for an instance
 type InstanceBackup struct {
-	Available bool `json:"available,omitempty"` // read-only
-	Enabled   bool `json:"enabled,omitempty"`   // read-only
-	Schedule  struct {
+	Available      bool       `json:"available,omitempty"` // read-only
+	Enabled        bool       `json:"enabled,omitempty"`   // read-only
+	LastSuccessful *time.Time `json:"-"`                   // read-only
+	Schedule       struct {
 		Day    string `json:"day,omitempty"`
 		Window string `json:"window,omitempty"`
 	} `json:"schedule,omitempty"`
@@ -117,6 +118,18 @@ type InstanceTransfer struct {
 	Quota int `json:"quota"`
 }
 
+// MonthlyInstanceTransferStats pool stats for a Linode Instance network transfer statistics for a specific month
+type MonthlyInstanceTransferStats struct {
+	// The amount of inbound public network traffic received by this Linode, in bytes, for a specific year/month.
+	BytesIn int `json:"bytes_in"`
+
+	// The amount of outbound public network traffic sent by this Linode, in bytes, for a specific year/month.
+	BytesOut int `json:"bytes_out"`
+
+	// The total amount of public network traffic sent and received by this Linode, in bytes, for a specific year/month.
+	BytesTotal int `json:"bytes_total"`
+}
+
 // InstancePlacementGroup represents information about the placement group
 // this Linode is a part of.
 type InstancePlacementGroup struct {
@@ -124,6 +137,7 @@ type InstancePlacementGroup struct {
 	Label                string               `json:"label"`
 	PlacementGroupType   PlacementGroupType   `json:"placement_group_type"`
 	PlacementGroupPolicy PlacementGroupPolicy `json:"placement_group_policy"`
+	MigratingTo          string               `json:"migrating_to"` // read-only
 }
 
 // InstanceMetadataOptions specifies various Instance creation fields
@@ -131,6 +145,11 @@ type InstancePlacementGroup struct {
 type InstanceMetadataOptions struct {
 	// UserData expects a Base64-encoded string
 	UserData string `json:"user_data,omitempty"`
+}
+
+// InstancePasswordResetOptions specifies the new password for the Linode
+type InstancePasswordResetOptions struct {
+	RootPass string `json:"root_pass"`
 }
 
 // InstanceCreateOptions require only Region and Type
@@ -208,6 +227,26 @@ func (i *Instance) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// UnmarshalJSON implements the json.Unmarshaler interface
+func (backup *InstanceBackup) UnmarshalJSON(b []byte) error {
+	type Mask InstanceBackup
+
+	p := struct {
+		*Mask
+		LastSuccessful *parseabletime.ParseableTime `json:"last_successful"`
+	}{
+		Mask: (*Mask)(backup),
+	}
+
+	if err := json.Unmarshal(b, &p); err != nil {
+		return err
+	}
+
+	backup.LastSuccessful = (*time.Time)(p.LastSuccessful)
+
+	return nil
+}
+
 // GetUpdateOptions converts an Instance to InstanceUpdateOptions for use in UpdateInstance
 func (i *Instance) GetUpdateOptions() InstanceUpdateOptions {
 	return InstanceUpdateOptions{
@@ -278,7 +317,7 @@ func (c *Client) GetInstance(ctx context.Context, linodeID int) (*Instance, erro
 	return response, nil
 }
 
-// GetInstanceTransfer gets the instance with the provided ID
+// GetInstanceTransfer gets the instance's network transfer pool statistics for the current month.
 func (c *Client) GetInstanceTransfer(ctx context.Context, linodeID int) (*InstanceTransfer, error) {
 	e := formatAPIPath("linode/instances/%d/transfer", linodeID)
 	response, err := doGETRequest[InstanceTransfer](ctx, c, e)
@@ -287,6 +326,12 @@ func (c *Client) GetInstanceTransfer(ctx context.Context, linodeID int) (*Instan
 	}
 
 	return response, nil
+}
+
+// GetInstanceTransferMonthly gets the instance's network transfer pool statistics for a specific month.
+func (c *Client) GetInstanceTransferMonthly(ctx context.Context, linodeID, year, month int) (*MonthlyInstanceTransferStats, error) {
+	e := formatAPIPath("linode/instances/%d/transfer/%d/%d", linodeID, year, month)
+	return doGETRequest[MonthlyInstanceTransferStats](ctx, c, e)
 }
 
 // CreateInstance creates a Linode instance
@@ -346,6 +391,14 @@ func (c *Client) CloneInstance(ctx context.Context, linodeID int, opts InstanceC
 	}
 
 	return response, nil
+}
+
+// ResetInstancePassword resets a Linode instance's root password
+func (c *Client) ResetInstancePassword(ctx context.Context, linodeID int, opts InstancePasswordResetOptions) error {
+	e := formatAPIPath("linode/instances/%d/password", linodeID)
+	_, err := doPOSTRequest[Instance](ctx, c, e, opts)
+
+	return err
 }
 
 // RebootInstance reboots a Linode instance
@@ -417,9 +470,24 @@ func (c *Client) ShutdownInstance(ctx context.Context, id int) error {
 	return c.simpleInstanceAction(ctx, "shutdown", id)
 }
 
+// Deprecated: Please use UpgradeInstance instead.
 // MutateInstance Upgrades a Linode to its next generation.
 func (c *Client) MutateInstance(ctx context.Context, id int) error {
 	return c.simpleInstanceAction(ctx, "mutate", id)
+}
+
+// InstanceUpgradeOptions is a struct representing the options for upgrading a Linode
+type InstanceUpgradeOptions struct {
+	// Automatically resize disks when resizing a Linode.
+	// When resizing down to a smaller plan your Linode's data must fit within the smaller disk size.
+	AllowAutoDiskResize bool `json:"allow_auto_disk_resize"`
+}
+
+// UpgradeInstance upgrades a Linode to its next generation.
+func (c *Client) UpgradeInstance(ctx context.Context, linodeID int, opts InstanceUpgradeOptions) error {
+	e := formatAPIPath("linode/instances/%d/mutate", linodeID)
+	_, err := doPOSTRequest[Instance](ctx, c, e, opts)
+	return err
 }
 
 // MigrateInstance - Migrate an instance

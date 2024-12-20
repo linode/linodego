@@ -23,7 +23,7 @@ func TestInstanceStats_Get(t *testing.T) {
 
 	assert.Equal(t, "linode.com - my-linode (linode123456) - day (5 min avg)", stats.Title)
 
-	fmt.Printf("Stats: %+v\n", stats) //TODO:: Debug for assertion remove later
+	fmt.Printf("Stats: %+v\n", stats) // TODO:: Debug for assertion remove later
 
 	assert.Len(t, stats.Data.CPU, 1)
 

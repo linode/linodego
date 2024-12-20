@@ -2,9 +2,10 @@ package unit
 
 import (
 	"context"
-	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 
 	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"
