@@ -459,5 +459,4 @@ func TestReservedIPAddresses_GetIPReservationStatus(t *testing.T) {
 			t.Errorf("Expected 'Reserved' field to be false for ephemeral IP %s, but it was true", ip.Address)
 		}
 	}
-
 }

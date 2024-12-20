@@ -110,7 +110,6 @@ func setupDomain(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 
 func TestDomain_Clone_smoke(t *testing.T) {
 	client, domainToClone, teardown, err := setupDomain(t, "fixtures/TestDomain_Clone")
-
 	if err != nil {
 		t.Errorf("Error creating domain: %v", err)
 	}
