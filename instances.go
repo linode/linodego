@@ -72,11 +72,12 @@ type Instance struct {
 
 // InstanceSpec represents a linode spec
 type InstanceSpec struct {
-	Disk     int `json:"disk"`
-	Memory   int `json:"memory"`
-	VCPUs    int `json:"vcpus"`
-	Transfer int `json:"transfer"`
-	GPUs     int `json:"gpus"`
+	Disk               int `json:"disk"`
+	Memory             int `json:"memory"`
+	VCPUs              int `json:"vcpus"`
+	Transfer           int `json:"transfer"`
+	GPUs               int `json:"gpus"`
+	AcceleratedDevices int `json:"accelerated_devices"`
 }
 
 // InstanceAlert represents a metric alert
