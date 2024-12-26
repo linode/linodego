@@ -74,22 +74,23 @@ type Database struct {
 	Version     string           `json:"version"`
 	ClusterSize int              `json:"cluster_size"`
 	Platform    DatabasePlatform `json:"platform"`
-	Fork        *Database        `json:"fork,omitempty"`
+	Fork        *DatabaseFork    `json:"fork,omitempty"`
 
 	// Members has dynamic keys so it is a map
 	Members map[string]DatabaseMemberType `json:"members"`
 
-	// Deprecated: ReplicationType is a deprecated property.
+	// Deprecated: ReplicationType is a deprecated property, as it is no longer supported in DBaaS V2.
 	ReplicationType string `json:"replication_type,omitempty"`
-	// Deprecated: SSLConnection is a deprecated property.
+	// Deprecated: SSLConnection is a deprecated property, as it is no longer supported in DBaaS V2.
 	SSLConnection bool `json:"ssl_connection,omitempty"`
-	// Deprecated: Encrypted is a deprecated property.
+	// Deprecated: Encrypted is a deprecated property, as it is no longer supported in DBaaS V2.
 	Encrypted bool `json:"encrypted,omitempty"`
 
-	AllowList   []string   `json:"allow_list"`
-	InstanceURI string     `json:"instance_uri"`
-	Created     *time.Time `json:"-"`
-	Updated     *time.Time `json:"-"`
+	AllowList         []string   `json:"allow_list"`
+	InstanceURI       string     `json:"instance_uri"`
+	Created           *time.Time `json:"-"`
+	Updated           *time.Time `json:"-"`
+	OldestRestoreTime *time.Time `json:"-"`
 }
 
 // DatabaseHost for Primary/Secondary of Database
@@ -114,8 +115,8 @@ type DatabaseMaintenanceWindow struct {
 
 	Pending []DatabaseMaintenanceWindowPending `json:"pending,omitempty"`
 
-	// Deprecated: WeekOfMonth is a deprecated property.
-	WeekOfMonth *int `json:"week_of_month,omitempty"` // This field doesn't exist in v2
+	// Deprecated: WeekOfMonth is a deprecated property, as it is no longer supported in DBaaS V2.
+	WeekOfMonth *int `json:"week_of_month,omitempty"`
 }
 
 type DatabaseMaintenanceWindowPending struct {
@@ -163,8 +164,9 @@ func (d *Database) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
-		Created *parseabletime.ParseableTime `json:"created"`
-		Updated *parseabletime.ParseableTime `json:"updated"`
+		Created           *parseabletime.ParseableTime `json:"created"`
+		Updated           *parseabletime.ParseableTime `json:"updated"`
+		OldestRestoreTime *parseabletime.ParseableTime `json:"oldest_restore_time"`
 	}{
 		Mask: (*Mask)(d),
 	}
@@ -175,6 +177,7 @@ func (d *Database) UnmarshalJSON(b []byte) error {
 
 	d.Created = (*time.Time)(p.Created)
 	d.Updated = (*time.Time)(p.Updated)
+	d.OldestRestoreTime = (*time.Time)(p.OldestRestoreTime)
 	return nil
 }
 

@@ -51,13 +51,13 @@ type PostgresDatabase struct {
 	// Members has dynamic keys so it is a map
 	Members map[string]DatabaseMemberType `json:"members"`
 
-	// Deprecated: ReplicationCommitType is a deprecated property.
+	// Deprecated: ReplicationCommitType is a deprecated property, as it is no longer supported in DBaaS V2.
 	ReplicationCommitType PostgresCommitType `json:"replication_commit_type,omitempty"`
-	// Deprecated: ReplicationType is a deprecated property.
+	// Deprecated: ReplicationType is a deprecated property, as it is no longer supported in DBaaS V2.
 	ReplicationType PostgresReplicationType `json:"replication_type,omitempty"`
-	// Deprecated: SSLConnection is a deprecated property.
+	// Deprecated: SSLConnection is a deprecated property, as it is no longer supported in DBaaS V2.
 	SSLConnection bool `json:"ssl_connection,omitempty"`
-	// Deprecated: Encrypted is a deprecated property.
+	// Deprecated: Encrypted is a deprecated property, as it is no longer supported in DBaaS V2.
 	Encrypted bool `json:"encrypted,omitempty"`
 
 	Hosts             DatabaseHost              `json:"hosts"`
@@ -99,14 +99,14 @@ type PostgresCreateOptions struct {
 	AllowList   []string `json:"allow_list,omitempty"`
 	ClusterSize int      `json:"cluster_size,omitempty"`
 
-	// Deprecated: Encrypted is a deprecated property.
-	Encrypted bool `json:"encrypted,omitempty"` // This field doesn't exist in DBaaS v2
-	// Deprecated: SSLConnection is a deprecated property.
-	SSLConnection bool `json:"ssl_connection,omitempty"` // This field doesn't exist in DBaaS v2
-	// Deprecated: ReplicationType is a deprecated property.
-	ReplicationType PostgresReplicationType `json:"replication_type,omitempty"` // This field doesn't exist in DBaaS v2
-	// Deprecated: ReplicationCommitType is a deprecated property.
-	ReplicationCommitType PostgresCommitType `json:"replication_commit_type,omitempty"` // This field doesn't exist in DBaaS v2
+	// Deprecated: Encrypted is a deprecated property, as it is no longer supported in DBaaS V2.
+	Encrypted bool `json:"encrypted,omitempty"`
+	// Deprecated: SSLConnection is a deprecated property, as it is no longer supported in DBaaS V2.
+	SSLConnection bool `json:"ssl_connection,omitempty"`
+	// Deprecated: ReplicationType is a deprecated property, as it is no longer supported in DBaaS V2.
+	ReplicationType PostgresReplicationType `json:"replication_type,omitempty"`
+	// Deprecated: ReplicationCommitType is a deprecated property, as it is no longer supported in DBaaS V2.
+	ReplicationCommitType PostgresCommitType `json:"replication_commit_type,omitempty"`
 
 	Fork *DatabaseFork `json:"fork,omitempty"`
 }
@@ -139,7 +139,8 @@ func (c *Client) ListPostgresDatabases(ctx context.Context, opts *ListOptions) (
 }
 
 // PostgresDatabaseBackup is information for interacting with a backup for the existing Postgres Database
-// Deprecated: PostgresDatabaseBackup is a deprecated struct.
+// Deprecated: PostgresDatabaseBackup is a deprecated struct, as the backup endpoints are no longer supported in DBaaS V2.
+// In DBaaS V2, databases can be backed up via database forking.
 type PostgresDatabaseBackup struct {
 	ID      int        `json:"id"`
 	Label   string     `json:"label"`
@@ -166,14 +167,16 @@ func (d *PostgresDatabaseBackup) UnmarshalJSON(b []byte) error {
 }
 
 // PostgresBackupCreateOptions are options used for CreatePostgresDatabaseBackup(...)
-// Deprecated: PostgresBackupCreateOptions is a deprecated struct.
+// Deprecated: PostgresBackupCreateOptions is a deprecated struct, as the backup endpoints are no longer supported in DBaaS V2.
+// In DBaaS V2, databases can be backed up via database forking.
 type PostgresBackupCreateOptions struct {
 	Label  string                 `json:"label"`
 	Target PostgresDatabaseTarget `json:"target"`
 }
 
 // ListPostgresDatabaseBackups lists all Postgres Database Backups associated with the given Postgres Database
-// Deprecated: ListPostgresDatabaseBackups is a deprecated method.
+// Deprecated: ListPostgresDatabaseBackups is a deprecated method, as the backup endpoints are no longer supported in DBaaS V2.
+// In DBaaS V2, databases can be backed up via database forking.
 func (c *Client) ListPostgresDatabaseBackups(ctx context.Context, databaseID int, opts *ListOptions) ([]PostgresDatabaseBackup, error) {
 	response, err := getPaginatedResults[PostgresDatabaseBackup](ctx, c, formatAPIPath("databases/postgresql/instances/%d/backups", databaseID), opts)
 	return response, err
@@ -236,7 +239,8 @@ func (c *Client) GetPostgresDatabaseSSL(ctx context.Context, databaseID int) (*P
 }
 
 // GetPostgresDatabaseBackup returns a specific Postgres Database Backup with the given ids
-// Deprecated: GetPostgresDatabaseBackup is a deprecated method.
+// Deprecated: GetPostgresDatabaseBackup is a deprecated method, as the backup endpoints are no longer supported in DBaaS V2.
+// In DBaaS V2, databases can be backed up via database forking.
 func (c *Client) GetPostgresDatabaseBackup(ctx context.Context, databaseID int, backupID int) (*PostgresDatabaseBackup, error) {
 	e := formatAPIPath("databases/postgresql/instances/%d/backups/%d", databaseID, backupID)
 	response, err := doGETRequest[PostgresDatabaseBackup](ctx, c, e)
@@ -244,7 +248,8 @@ func (c *Client) GetPostgresDatabaseBackup(ctx context.Context, databaseID int, 
 }
 
 // RestorePostgresDatabaseBackup returns the given Postgres Database with the given Backup
-// Deprecated: RestorePostgresDatabaseBackup is a deprecated method.
+// Deprecated: RestorePostgresDatabaseBackup is a deprecated method, as the backup endpoints are no longer supported in DBaaS V2.
+// In DBaaS V2, databases can be backed up via database forking.
 func (c *Client) RestorePostgresDatabaseBackup(ctx context.Context, databaseID int, backupID int) error {
 	e := formatAPIPath("databases/postgresql/instances/%d/backups/%d/restore", databaseID, backupID)
 	_, err := doPOSTRequest[PostgresDatabaseBackup, any](ctx, c, e)
@@ -252,7 +257,8 @@ func (c *Client) RestorePostgresDatabaseBackup(ctx context.Context, databaseID i
 }
 
 // CreatePostgresDatabaseBackup creates a snapshot for the given Postgres database
-// Deprecated: CreatePostgresDatabaseBackup is a deprecated method.
+// Deprecated: CreatePostgresDatabaseBackup is a deprecated method, as the backup endpoints are no longer supported in DBaaS V2.
+// In DBaaS V2, databases can be backed up via database forking.
 func (c *Client) CreatePostgresDatabaseBackup(ctx context.Context, databaseID int, opts PostgresBackupCreateOptions) error {
 	e := formatAPIPath("databases/postgresql/instances/%d/backups", databaseID)
 	_, err := doPOSTRequest[PostgresDatabaseBackup](ctx, c, e, opts)

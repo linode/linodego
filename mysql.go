@@ -33,11 +33,11 @@ type MySQLDatabase struct {
 	// Members has dynamic keys so it is a map
 	Members map[string]DatabaseMemberType `json:"members"`
 
-	// Deprecated: ReplicationType is a deprecated property.
+	// Deprecated: ReplicationType is a deprecated property, as it is no longer supported in DBaaS V2.
 	ReplicationType string `json:"replication_type,omitempty"`
-	// Deprecated: SSLConnection is a deprecated property.
+	// Deprecated: SSLConnection is a deprecated property, as it is no longer supported in DBaaS V2.
 	SSLConnection bool `json:"ssl_connection,omitempty"`
-	// Deprecated: Encrypted is a deprecated property.
+	// Deprecated: Encrypted is a deprecated property, as it is no longer supported in DBaaS V2.
 	Encrypted bool `json:"encrypted,omitempty"`
 
 	AllowList         []string                  `json:"allow_list"`
@@ -80,11 +80,11 @@ type MySQLCreateOptions struct {
 	AllowList   []string `json:"allow_list,omitempty"`
 	ClusterSize int      `json:"cluster_size,omitempty"`
 
-	// Deprecated: ReplicationType is a deprecated property.
+	// Deprecated: ReplicationType is a deprecated property, as it is no longer supported in DBaaS V2.
 	ReplicationType string `json:"replication_type,omitempty"`
-	// Deprecated: Encrypted is a deprecated property.
+	// Deprecated: Encrypted is a deprecated property, as it is no longer supported in DBaaS V2.
 	Encrypted bool `json:"encrypted,omitempty"`
-	// Deprecated: SSLConnection is a deprecated property.
+	// Deprecated: SSLConnection is a deprecated property, as it is no longer supported in DBaaS V2.
 	SSLConnection bool `json:"ssl_connection,omitempty"`
 
 	Fork *DatabaseFork `json:"fork,omitempty"`
@@ -101,7 +101,8 @@ type MySQLUpdateOptions struct {
 }
 
 // MySQLDatabaseBackup is information for interacting with a backup for the existing MySQL Database
-// Deprecated: MySQLDatabaseBackup is a deprecated struct.
+// Deprecated: MySQLDatabaseBackup is a deprecated struct, as the backup endpoints are no longer supported in DBaaS V2.
+// In DBaaS V2, databases can be backed up via database forking.
 type MySQLDatabaseBackup struct {
 	ID      int        `json:"id"`
 	Label   string     `json:"label"`
@@ -110,7 +111,8 @@ type MySQLDatabaseBackup struct {
 }
 
 // MySQLBackupCreateOptions are options used for CreateMySQLDatabaseBackup(...)
-// Deprecated: MySQLBackupCreateOptions is a deprecated struct.
+// Deprecated: MySQLBackupCreateOptions is a deprecated struct, as the backup endpoints are no longer supported in DBaaS V2.
+// In DBaaS V2, databases can be backed up via database forking.
 type MySQLBackupCreateOptions struct {
 	Label  string              `json:"label"`
 	Target MySQLDatabaseTarget `json:"target"`
@@ -156,7 +158,8 @@ func (c *Client) ListMySQLDatabases(ctx context.Context, opts *ListOptions) ([]M
 }
 
 // ListMySQLDatabaseBackups lists all MySQL Database Backups associated with the given MySQL Database
-// Deprecated: ListMySQLDatabaseBackups is a deprecated method.
+// Deprecated: ListMySQLDatabaseBackups is a deprecated method, as the backup endpoints are no longer supported in DBaaS V2.
+// In DBaaS V2, databases can be backed up via database forking.
 func (c *Client) ListMySQLDatabaseBackups(ctx context.Context, databaseID int, opts *ListOptions) ([]MySQLDatabaseBackup, error) {
 	response, err := getPaginatedResults[MySQLDatabaseBackup](ctx, c, formatAPIPath("databases/mysql/instances/%d/backups", databaseID), opts)
 	if err != nil {
@@ -236,7 +239,8 @@ func (c *Client) ResetMySQLDatabaseCredentials(ctx context.Context, databaseID i
 }
 
 // GetMySQLDatabaseBackup returns a specific MySQL Database Backup with the given ids
-// Deprecated: GetMySQLDatabaseBackup is a deprecated method.
+// Deprecated: GetMySQLDatabaseBackup is a deprecated method, as the backup endpoints are no longer supported in DBaaS V2.
+// In DBaaS V2, databases can be backed up via database forking.
 func (c *Client) GetMySQLDatabaseBackup(ctx context.Context, databaseID int, backupID int) (*MySQLDatabaseBackup, error) {
 	e := formatAPIPath("databases/mysql/instances/%d/backups/%d", databaseID, backupID)
 	response, err := doGETRequest[MySQLDatabaseBackup](ctx, c, e)
@@ -248,7 +252,8 @@ func (c *Client) GetMySQLDatabaseBackup(ctx context.Context, databaseID int, bac
 }
 
 // RestoreMySQLDatabaseBackup returns the given MySQL Database with the given Backup
-// Deprecated: RestoreMySQLDatabaseBackup is a deprecated method.
+// Deprecated: RestoreMySQLDatabaseBackup is a deprecated method, as the backup endpoints are no longer supported in DBaaS V2.
+// In DBaaS V2, databases can be backed up via database forking.
 func (c *Client) RestoreMySQLDatabaseBackup(ctx context.Context, databaseID int, backupID int) error {
 	e := formatAPIPath("databases/mysql/instances/%d/backups/%d/restore", databaseID, backupID)
 	_, err := doPOSTRequest[MySQLDatabaseBackup, any](ctx, c, e)
@@ -256,7 +261,8 @@ func (c *Client) RestoreMySQLDatabaseBackup(ctx context.Context, databaseID int,
 }
 
 // CreateMySQLDatabaseBackup creates a snapshot for the given MySQL database
-// Deprecated: CreateMySQLDatabaseBackup is a deprecated method.
+// Deprecated: CreateMySQLDatabaseBackup is a deprecated method, as the backup endpoints are no longer supported in DBaaS V2.
+// In DBaaS V2, databases can be backed up via database forking.
 func (c *Client) CreateMySQLDatabaseBackup(ctx context.Context, databaseID int, opts MySQLBackupCreateOptions) error {
 	e := formatAPIPath("databases/mysql/instances/%d/backups", databaseID)
 	_, err := doPOSTRequest[MySQLDatabaseBackup](ctx, c, e, opts)
