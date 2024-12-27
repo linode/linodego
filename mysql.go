@@ -34,11 +34,11 @@ type MySQLDatabase struct {
 	Members map[string]DatabaseMemberType `json:"members"`
 
 	// Deprecated: ReplicationType is a deprecated property, as it is no longer supported in DBaaS V2.
-	ReplicationType string `json:"replication_type,omitempty"`
+	ReplicationType string `json:"replication_type"`
 	// Deprecated: SSLConnection is a deprecated property, as it is no longer supported in DBaaS V2.
-	SSLConnection bool `json:"ssl_connection,omitempty"`
+	SSLConnection bool `json:"ssl_connection"`
 	// Deprecated: Encrypted is a deprecated property, as it is no longer supported in DBaaS V2.
-	Encrypted bool `json:"encrypted,omitempty"`
+	Encrypted bool `json:"encrypted"`
 
 	AllowList         []string                  `json:"allow_list"`
 	InstanceURI       string                    `json:"instance_uri"`

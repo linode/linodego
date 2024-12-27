@@ -52,13 +52,13 @@ type PostgresDatabase struct {
 	Members map[string]DatabaseMemberType `json:"members"`
 
 	// Deprecated: ReplicationCommitType is a deprecated property, as it is no longer supported in DBaaS V2.
-	ReplicationCommitType PostgresCommitType `json:"replication_commit_type,omitempty"`
+	ReplicationCommitType PostgresCommitType `json:"replication_commit_type"`
 	// Deprecated: ReplicationType is a deprecated property, as it is no longer supported in DBaaS V2.
-	ReplicationType PostgresReplicationType `json:"replication_type,omitempty"`
+	ReplicationType PostgresReplicationType `json:"replication_type"`
 	// Deprecated: SSLConnection is a deprecated property, as it is no longer supported in DBaaS V2.
-	SSLConnection bool `json:"ssl_connection,omitempty"`
+	SSLConnection bool `json:"ssl_connection"`
 	// Deprecated: Encrypted is a deprecated property, as it is no longer supported in DBaaS V2.
-	Encrypted bool `json:"encrypted,omitempty"`
+	Encrypted bool `json:"encrypted"`
 
 	Hosts             DatabaseHost              `json:"hosts"`
 	Updates           DatabaseMaintenanceWindow `json:"updates"`
