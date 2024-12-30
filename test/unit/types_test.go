@@ -6,6 +6,8 @@ import (
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
 	"testing"
+	"golang.org/x/exp/slices" 
+
 )
 
 func TestLinodeTypes_List(t *testing.T) {
@@ -22,18 +24,15 @@ func TestLinodeTypes_List(t *testing.T) {
 	types, err := base.Client.ListTypes(context.Background(), &linodego.ListOptions{})
 	assert.NoError(t, err)
 
-	// Verify a specific type exists in the list
-	var nanodeType *linodego.LinodeType
-	for _, t := range types {
-		if t.ID == "g6-nanode-1" {
-			nanodeType = &t
-			break
-		}
-	}
+	// Use slices.IndexFunc to find the index of the specific type
+	index := slices.IndexFunc(types, func(t linodego.LinodeType) bool {
+		return t.ID == "g6-nanode-1"
+	})
 
-	if nanodeType == nil {
+	if index == -1 {
 		t.Errorf("Expected type 'g6-nanode-1' to be in the response, but it was not found")
 	} else {
+		nanodeType := types[index]
 		assert.Equal(t, "nanode", string(nanodeType.Class), "Expected class to be 'nanode'")
 		assert.Equal(t, 1, nanodeType.VCPUs, "Expected VCPUs for 'g6-nanode-1' to be 1")
 		assert.Equal(t, 250, nanodeType.Transfer, "Expected transfer for 'g6-nanode-1' to be 250GB")

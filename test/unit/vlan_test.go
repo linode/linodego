@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
+	"golang.org/x/exp/slices" 
 	"testing"
 )
 
@@ -24,18 +25,15 @@ func TestVLAN_List(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotEmpty(t, vlans, "Expected non-empty VLAN list")
 
-	// Verify a specific VLAN exists in the list
-	var testVLAN *linodego.VLAN
-	for _, v := range vlans {
-		if v.Label == "test-vlan" {
-			testVLAN = &v
-			break
-		}
-	}
+	// Use slices.IndexFunc to find the index of the specific VLAN
+	index := slices.IndexFunc(vlans, func(v linodego.VLAN) bool {
+		return v.Label == "test-vlan"
+	})
 
-	if testVLAN == nil {
+	if index == -1 {
 		t.Errorf("Expected VLAN 'test-vlan' to be in the response, but it was not found")
 	} else {
+		testVLAN := vlans[index]
 		assert.Equal(t, "us-east", testVLAN.Region, "Expected region to be 'us-east'")
 		assert.Contains(t, testVLAN.Linodes, 12345, "Expected Linodes to include 12345")
 		assert.NotNil(t, testVLAN.Created, "Expected 'test-vlan' to have a created timestamp")

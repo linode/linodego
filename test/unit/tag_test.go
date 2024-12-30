@@ -7,6 +7,7 @@ import (
 
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
+	"golang.org/x/exp/slices"
 )
 
 func TestListTags(t *testing.T) {
@@ -24,8 +25,15 @@ func TestListTags(t *testing.T) {
 	assert.NoError(t, err)
 
 	assert.NotEmpty(t, tags, "Expected non-empty tag list")
-	assert.Equal(t, "example-tag", tags[0].Label, "Expected tag label to be 'example-tag'")
+
+	// Check if a specific tag exists using slices.ContainsFunc
+	exists := slices.ContainsFunc(tags, func(tag linodego.Tag) bool {
+		return tag.Label == "example-tag"
+	})
+
+	assert.True(t, exists, "Expected tag list to contain 'example-tag'")
 }
+
 
 func TestCreateTag(t *testing.T) {
 	// Load the fixture data for tag creation
@@ -78,8 +86,18 @@ func TestListTaggedObjects(t *testing.T) {
 	assert.NoError(t, err)
 
 	assert.NotEmpty(t, taggedObjects, "Expected non-empty tagged objects list")
-	assert.Equal(t, "linode", taggedObjects[0].Type, "Expected tagged object type to be 'linode'")
+
+	// Find the specific tagged object using slices.IndexFunc
+	index := slices.IndexFunc(taggedObjects, func(obj linodego.TaggedObject) bool {
+		return obj.Type == "linode"
+	})
+
+	assert.NotEqual(t, -1, index, "Expected to find a tagged object of type 'linode'")
+	if index != -1 {
+		assert.Equal(t, "linode", taggedObjects[index].Type, "Expected tagged object type to be 'linode'")
+	}
 }
+
 
 func TestSortedObjects(t *testing.T) {
 	// Load the fixture data for tagged objects
