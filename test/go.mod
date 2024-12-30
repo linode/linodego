@@ -7,7 +7,8 @@ require (
 	github.com/linode/linodego v1.33.0
 	github.com/linode/linodego/k8s v0.0.0-00010101000000-000000000000
 	github.com/stretchr/testify v1.10.0
-	golang.org/x/net v0.32.0
+	golang.org/x/exp v0.0.0-20241217172543-b2144cdd0a67
+	golang.org/x/net v0.33.0
 	golang.org/x/oauth2 v0.24.0
 	k8s.io/client-go v0.29.4
 )
@@ -42,7 +43,7 @@ require (
 	golang.org/x/time v0.6.0 // indirect
 	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
-	gopkg.in/ini.v1 v1.66.6 // indirect
+	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	k8s.io/api v0.29.4 // indirect
@@ -55,7 +56,9 @@ require (
 	sigs.k8s.io/yaml v1.3.0 // indirect
 )
 
-go 1.22
+go 1.22.0
+
+toolchain go1.22.1
 
 replace github.com/linode/linodego => ../
 
