@@ -22,7 +22,7 @@ const (
 	CapabilityVlans                  string = "Vlans"
 	CapabilityVPCs                   string = "VPCs"
 	CapabilityVPCsExtra              string = "VPCs Extra"
-	CapabilityVPU                    string = "NETINT Quadra T1U"
+	CapabilityQuadraT1UVPU           string = "NETINT Quadra T1U"
 	CapabilityMachineImages          string = "Machine Images"
 	CapabilityBareMetal              string = "Bare Metal"
 	CapabilityDBAAS                  string = "Managed Databases"
