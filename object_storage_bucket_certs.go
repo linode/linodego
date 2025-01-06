@@ -5,7 +5,7 @@ import (
 )
 
 type ObjectStorageBucketCert struct {
-	SSL bool `json:"ssl"`
+	SSL *bool `json:"ssl"`
 }
 
 type ObjectStorageBucketCertUploadOptions struct {

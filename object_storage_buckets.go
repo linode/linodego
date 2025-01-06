@@ -24,16 +24,20 @@ type ObjectStorageBucket struct {
 	Cluster string `json:"cluster"`
 	Region  string `json:"region"`
 
-	Created  *time.Time `json:"-"`
-	Hostname string     `json:"hostname"`
-	Objects  int        `json:"objects"`
-	Size     int        `json:"size"`
+	S3Endpoint   string                    `json:"s3_endpoint"`
+	EndpointType ObjectStorageEndpointType `json:"endpoint_type"`
+	Created      *time.Time                `json:"-"`
+	Hostname     string                    `json:"hostname"`
+	Objects      int                       `json:"objects"`
+	Size         int                       `json:"size"`
 }
 
 // ObjectStorageBucketAccess holds Object Storage access info
 type ObjectStorageBucketAccess struct {
 	ACL         ObjectStorageACL `json:"acl"`
+	ACLXML      string           `json:"acl_xml"`
 	CorsEnabled bool             `json:"cors_enabled"`
+	CorsXML     *string          `json:"cors_xml"`
 }
 
 // ObjectStorageBucketContent holds the content of an ObjectStorageBucket
@@ -82,7 +86,9 @@ type ObjectStorageBucketCreateOptions struct {
 	Cluster string `json:"cluster,omitempty"`
 	Region  string `json:"region,omitempty"`
 
-	Label string `json:"label"`
+	Label        string                    `json:"label"`
+	S3Endpoint   string                    `json:"s3_endpoint,omitempty"`
+	EndpointType ObjectStorageEndpointType `json:"endpoint_type,omitempty"`
 
 	ACL         ObjectStorageACL `json:"acl,omitempty"`
 	CorsEnabled *bool            `json:"cors_enabled,omitempty"`
