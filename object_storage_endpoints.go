@@ -15,8 +15,8 @@ const (
 
 // ObjectStorageEndpoint represents a linode object storage endpoint object
 type ObjectStorageEndpoint struct {
-	Region       string                     `json:"region"`
-	S3Endpoint   *string                     `json:"s3_endpoint"`
+	Region       string                    `json:"region"`
+	S3Endpoint   *string                   `json:"s3_endpoint"`
 	EndpointType ObjectStorageEndpointType `json:"endpoint_type"`
 }
 
