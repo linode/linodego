@@ -63,6 +63,25 @@ func TestLKECluster_GetFound_smoke(t *testing.T) {
 	}
 }
 
+func TestLKECluster_Enterprise_smoke(t *testing.T) {
+	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
+		createOpts.Tier = "enterprise"
+		createOpts.Region = "us-lax"
+		createOpts.K8sVersion = "v1.31.1+lke1"
+	}}, "fixtures/TestLKECluster_Enterprise_smoke")
+	defer teardown()
+	i, err := client.GetLKECluster(context.Background(), lkeCluster.ID)
+	if err != nil {
+		t.Errorf("Error getting lkeCluster, expected struct, got %v and error %v", i, err)
+	}
+	if i.ID != lkeCluster.ID {
+		t.Errorf("Expected a specific lkeCluster, but got a different one %v", i)
+	}
+	if i.Tier != "enterprise" {
+		t.Errorf("Expected a lkeCluster to have enterprise tier")
+	}
+}
+
 func TestLKECluster_Update(t *testing.T) {
 	client, cluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = "go-lke-test-update"
