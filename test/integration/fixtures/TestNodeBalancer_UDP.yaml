@@ -277,7 +277,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 07 Jan 2025 15:53:55 GMT
+      - Tue, 07 Jan 2025 15:53:57 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -303,7 +303,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-def","region":"ap-west","client_conn_throttle":20,"tags":null,"firewall_id":1510645}'
+    body: '{"label":"go-test-def","region":"ap-west","client_conn_throttle":20,"client_udp_sess_throttle":5,"tags":null,"firewall_id":1510645}'
     form: {}
     headers:
       Accept:
@@ -315,11 +315,11 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 1176176, "label": "go-test-def", "region": "ap-west", "hostname":
-      "172-232-87-233.ip.linodeusercontent.com", "ipv4": "172.232.87.233", "ipv6":
-      "1234::5678", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "client_conn_throttle": 20, "client_udp_sess_throttle": 0, "tags": [], "transfer":
-      {"in": null, "out": null, "total": null}}'
+    body: '{"id": 1176178, "label": "go-test-def", "region": "ap-west", "hostname":
+      "172-105-46-40.ip.linodeusercontent.com", "ipv4": "172.105.46.40", "ipv6": "1234::5678",
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "client_conn_throttle":
+      20, "client_udp_sess_throttle": 5, "tags": [], "transfer": {"in": null, "out":
+      null, "total": null}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -338,13 +338,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "368"
+      - "366"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Tue, 07 Jan 2025 15:53:55 GMT
+      - Tue, 07 Jan 2025 15:53:58 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -377,74 +377,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers?page=1
-    method: GET
-  response:
-    body: '{"data": [{"id": 1176176, "label": "go-test-def", "region": "ap-west",
-      "hostname": "172-232-87-233.ip.linodeusercontent.com", "ipv4": "172.232.87.233",
-      "ipv6": "1234::5678", "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "client_conn_throttle": 20, "client_udp_sess_throttle":
-      0, "tags": [], "transfer": {"in": null, "out": null, "total": null}}], "page":
-      1, "pages": 1, "results": 1}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "417"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Tue, 07 Jan 2025 15:53:55 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - nodebalancers:read_only
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "1600"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/1176176
+    url: https://api.linode.com/v4beta/nodebalancers/1176178
     method: DELETE
   response:
     body: '{}'
@@ -472,7 +405,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 07 Jan 2025 15:53:56 GMT
+      - Tue, 07 Jan 2025 15:53:58 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

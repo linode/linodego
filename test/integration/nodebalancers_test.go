@@ -5,6 +5,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/stretchr/testify/require"
+
 	"github.com/linode/linodego"
 )
 
@@ -80,7 +82,27 @@ func TestNodeBalancer_Get(t *testing.T) {
 	}
 }
 
-func setupNodeBalancer(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.NodeBalancer, func(), error) {
+func TestNodeBalancer_UDP(t *testing.T) {
+	_, nodebalancer, teardown, err := setupNodeBalancer(
+		t,
+		"fixtures/TestNodeBalancer_UDP",
+		func(options *linodego.NodeBalancerCreateOptions) {
+			options.ClientUDPSessThrottle = linodego.Pointer(5)
+		},
+	)
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	require.Equal(t, 5, nodebalancer.ClientUDPSessThrottle)
+}
+
+func setupNodeBalancer(
+	t *testing.T,
+	fixturesYaml string,
+	modifiers ...func(options *linodego.NodeBalancerCreateOptions),
+) (*linodego.Client, *linodego.NodeBalancer, func(), error) {
 	t.Helper()
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
@@ -89,6 +111,10 @@ func setupNodeBalancer(t *testing.T, fixturesYaml string) (*linodego.Client, *li
 		Region:             getRegionsWithCaps(t, client, []string{"NodeBalancers"})[0],
 		ClientConnThrottle: &clientConnThrottle,
 		FirewallID:         GetFirewallID(),
+	}
+
+	for _, modifier := range modifiers {
+		modifier(&createOpts)
 	}
 
 	nodebalancer, err := client.CreateNodeBalancer(context.Background(), createOpts)
