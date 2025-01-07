@@ -257,7 +257,7 @@ func TestInstance_MigrateToPG(t *testing.T) {
 		RootPass: randPassword(),
 		Region:   regions[0],
 		Type:     "g6-nanode-1",
-		Image:    "linode/debian9",
+		Image:    "linode/debian10",
 		Booted:   linodego.Pointer(true),
 		PlacementGroup: &linodego.InstanceCreatePlacementGroupOptions{
 			ID: pgOutbound.ID,
@@ -499,7 +499,7 @@ func TestInstance_Disk_Clone(t *testing.T) {
 	disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
 		Label:      "go-disk-test-" + randLabel(),
 		Filesystem: "ext4",
-		Image:      "linode/debian9",
+		Image:      "linode/debian10",
 		RootPass:   randPassword(),
 		Size:       2000,
 	})
@@ -539,7 +539,7 @@ func TestInstance_Disk_ResetPassword(t *testing.T) {
 	disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
 		Label:      "go-disk-test-" + randLabel(),
 		Filesystem: "ext4",
-		Image:      "linode/debian9",
+		Image:      "linode/debian10",
 		RootPass:   randPassword(),
 		Size:       2000,
 	})
@@ -907,7 +907,7 @@ func createInstance(t *testing.T, client *linodego.Client, enableCloudFirewall b
 		RootPass: randPassword(),
 		Region:   getRegionsWithCaps(t, client, []string{"linodes"})[0],
 		Type:     "g6-nanode-1",
-		Image:    "linode/debian9",
+		Image:    "linode/debian12",
 		Booted:   linodego.Pointer(false),
 	}
 
