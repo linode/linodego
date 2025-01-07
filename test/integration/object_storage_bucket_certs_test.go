@@ -137,7 +137,7 @@ func TestObjectStorageBucketCert_smoke(t *testing.T) {
 		t.Fatalf("failed to get bucket cert: %s", err)
 	}
 
-	if !cert.SSL {
+	if cert.SSL!= nil && !*cert.SSL {
 		t.Fatalf("expected cert.SSL to be true; got false")
 	}
 }
