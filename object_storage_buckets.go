@@ -35,8 +35,13 @@ type ObjectStorageBucket struct {
 // ObjectStorageBucketAccess holds Object Storage access info
 type ObjectStorageBucketAccess struct {
 	ACL         ObjectStorageACL `json:"acl"`
-	ACLXML      string           `json:"acl_xml"`
 	CorsEnabled bool             `json:"cors_enabled"`
+}
+
+type ObjectStorageBucketAccessV2 struct {
+	ACL         ObjectStorageACL `json:"acl"`
+	ACLXML      string           `json:"acl_xml"`
+	CorsEnabled *bool            `json:"cors_enabled"`
 	CorsXML     *string          `json:"cors_xml"`
 }
 
@@ -121,55 +126,31 @@ const (
 
 // ListObjectStorageBuckets lists ObjectStorageBuckets
 func (c *Client) ListObjectStorageBuckets(ctx context.Context, opts *ListOptions) ([]ObjectStorageBucket, error) {
-	response, err := getPaginatedResults[ObjectStorageBucket](ctx, c, "object-storage/buckets", opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return getPaginatedResults[ObjectStorageBucket](ctx, c, "object-storage/buckets", opts)
 }
 
 // ListObjectStorageBucketsInCluster lists all ObjectStorageBuckets of a cluster
 func (c *Client) ListObjectStorageBucketsInCluster(ctx context.Context, opts *ListOptions, clusterOrRegionID string) ([]ObjectStorageBucket, error) {
-	response, err := getPaginatedResults[ObjectStorageBucket](ctx, c, formatAPIPath("object-storage/buckets/%s", clusterOrRegionID), opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return getPaginatedResults[ObjectStorageBucket](ctx, c, formatAPIPath("object-storage/buckets/%s", clusterOrRegionID), opts)
 }
 
 // GetObjectStorageBucket gets the ObjectStorageBucket with the provided label
 func (c *Client) GetObjectStorageBucket(ctx context.Context, clusterOrRegionID, label string) (*ObjectStorageBucket, error) {
 	e := formatAPIPath("object-storage/buckets/%s/%s", clusterOrRegionID, label)
-	response, err := doGETRequest[ObjectStorageBucket](ctx, c, e)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doGETRequest[ObjectStorageBucket](ctx, c, e)
 }
 
 // CreateObjectStorageBucket creates an ObjectStorageBucket
 func (c *Client) CreateObjectStorageBucket(ctx context.Context, opts ObjectStorageBucketCreateOptions) (*ObjectStorageBucket, error) {
 	e := "object-storage/buckets"
-	response, err := doPOSTRequest[ObjectStorageBucket](ctx, c, e, opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doPOSTRequest[ObjectStorageBucket](ctx, c, e, opts)
 }
 
 // GetObjectStorageBucketAccess gets the current access config for a bucket
+// Deprecated: use GetObjectStorageBucketAccessV2 for new implementations
 func (c *Client) GetObjectStorageBucketAccess(ctx context.Context, clusterOrRegionID, label string) (*ObjectStorageBucketAccess, error) {
 	e := formatAPIPath("object-storage/buckets/%s/%s/access", clusterOrRegionID, label)
-	response, err := doGETRequest[ObjectStorageBucketAccess](ctx, c, e)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doGETRequest[ObjectStorageBucketAccess](ctx, c, e)
 }
 
 // UpdateObjectStorageBucketAccess updates the access configuration for an ObjectStorageBucket
@@ -180,11 +161,16 @@ func (c *Client) UpdateObjectStorageBucketAccess(ctx context.Context, clusterOrR
 	return err
 }
 
+// GetObjectStorageBucketAccess gets the current access config for a bucket
+func (c *Client) GetObjectStorageBucketAccessV2(ctx context.Context, clusterOrRegionID, label string) (*ObjectStorageBucketAccessV2, error) {
+	e := formatAPIPath("object-storage/buckets/%s/%s/access", clusterOrRegionID, label)
+	return doGETRequest[ObjectStorageBucketAccessV2](ctx, c, e)
+}
+
 // DeleteObjectStorageBucket deletes the ObjectStorageBucket with the specified label
 func (c *Client) DeleteObjectStorageBucket(ctx context.Context, clusterOrRegionID, label string) error {
 	e := formatAPIPath("object-storage/buckets/%s/%s", clusterOrRegionID, label)
-	err := doDELETERequest(ctx, c, e)
-	return err
+	return doDELETERequest(ctx, c, e)
 }
 
 // Lists the contents of the specified ObjectStorageBucket
