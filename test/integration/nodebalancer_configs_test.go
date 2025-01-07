@@ -124,7 +124,7 @@ func TestNodeBalancerConfig_UDP(t *testing.T) {
 		t.Errorf("Error creating NodeBalancer Config, got error %v", err)
 	}
 
-	require.Equal(t, linodego.ProtocolUDP, config.UDPCheckPort)
+	require.Equal(t, linodego.ProtocolUDP, config.Protocol)
 	require.Equal(t, 1234, config.UDPCheckPort)
 	require.NotZero(t, config.UDPSessionTimeout)
 }
