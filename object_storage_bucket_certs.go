@@ -38,7 +38,7 @@ func (c *Client) UploadObjectStorageBucketCertV2(ctx context.Context, clusterOrR
 	return doPOSTRequest[ObjectStorageBucketCertV2](ctx, c, e, opts)
 }
 
-// GetObjectStorageBucketCert gets an ObjectStorageBucketCert
+// GetObjectStorageBucketCertV2 gets an ObjectStorageBucketCert
 func (c *Client) GetObjectStorageBucketCertV2(ctx context.Context, clusterOrRegionID, bucket string) (*ObjectStorageBucketCertV2, error) {
 	e := formatAPIPath("object-storage/buckets/%s/%s/ssl", clusterOrRegionID, bucket)
 	return doGETRequest[ObjectStorageBucketCertV2](ctx, c, e)

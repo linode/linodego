@@ -22,10 +22,5 @@ type ObjectStorageEndpoint struct {
 
 // ListObjectStorageEndpoints lists all endpoints in all regions
 func (c *Client) ListObjectStorageEndpoints(ctx context.Context, opts *ListOptions) ([]ObjectStorageEndpoint, error) {
-	response, err := getPaginatedResults[ObjectStorageEndpoint](ctx, c, "object-storage/endpoints", opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return getPaginatedResults[ObjectStorageEndpoint](ctx, c, "object-storage/endpoints", opts)
 }
