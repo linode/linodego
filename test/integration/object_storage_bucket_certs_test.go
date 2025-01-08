@@ -2,6 +2,7 @@ package integration
 
 import (
 	"context"
+	"slices"
 	"testing"
 
 	"github.com/linode/linodego"
@@ -101,16 +102,22 @@ HMuBpZsWkNKLh0hjC5i7YBZYtXGYPG2JCEE4mpiV8ClxTvmijsr8sYUOtnmIBXfG
 
 func TestObjectStorageBucketCert_smoke(t *testing.T) {
 	client, fixtureTeardown := createTestClient(t, "fixtures/TestObjectStorageBucketCert")
+	endpoints, err := client.ListObjectStorageEndpoints(context.Background(), nil)
+	selectedEndpoint := endpoints[slices.IndexFunc(endpoints, func(e linodego.ObjectStorageEndpoint) bool {
+		return e.EndpointType == linodego.ObjectStorageEndpointE1
+	})]
+
 	bucket, err := client.CreateObjectStorageBucket(context.Background(), linodego.ObjectStorageBucketCreateOptions{
-		Cluster: "us-east-1",
-		Label:   "linode-obj-bucket-cert-test.xyz",
+		Region:       selectedEndpoint.Region,
+		EndpointType: selectedEndpoint.EndpointType,
+		Label:        "linode-obj-bucket-cert-test.xyz",
 	})
 	if err != nil {
 		t.Fatalf("failed to create bucket: %s", err)
 	}
 
 	defer func() {
-		if err := client.DeleteObjectStorageBucket(context.Background(), bucket.Cluster, bucket.Label); err != nil {
+		if err := client.DeleteObjectStorageBucket(context.Background(), bucket.Region, bucket.Label); err != nil {
 			if t != nil {
 				t.Errorf("Error deleting test Bucket: %s", err)
 			}
@@ -118,7 +125,7 @@ func TestObjectStorageBucketCert_smoke(t *testing.T) {
 		fixtureTeardown()
 	}()
 
-	_, err = client.UploadObjectStorageBucketCert(context.TODO(), bucket.Cluster, bucket.Label, linodego.ObjectStorageBucketCertUploadOptions{
+	_, err = client.UploadObjectStorageBucketCert(context.TODO(), bucket.Region, bucket.Label, linodego.ObjectStorageBucketCertUploadOptions{
 		Certificate: testCertifcate,
 		PrivateKey:  testPrivateKey,
 	})
@@ -127,12 +134,12 @@ func TestObjectStorageBucketCert_smoke(t *testing.T) {
 	}
 
 	defer func() {
-		if err := client.DeleteObjectStorageBucketCert(context.TODO(), bucket.Cluster, bucket.Label); err != nil {
+		if err := client.DeleteObjectStorageBucketCert(context.TODO(), bucket.Region, bucket.Label); err != nil {
 			t.Errorf("failed to delete bucket cert: %s", err)
 		}
 	}()
 
-	cert, err := client.GetObjectStorageBucketCert(context.TODO(), bucket.Cluster, bucket.Label)
+	cert, err := client.GetObjectStorageBucketCert(context.TODO(), bucket.Region, bucket.Label)
 	if err != nil {
 		t.Fatalf("failed to get bucket cert: %s", err)
 	}

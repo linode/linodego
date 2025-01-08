@@ -2,25 +2,29 @@ package integration
 
 import (
 	"context"
+	"slices"
 	"testing"
 
+	"github.com/linode/linodego"
 	. "github.com/linode/linodego"
 )
 
+var objectStorageBucketTestLabel = "go-bucket-test-def"
+
 var testObjectStorageBucketCreateOpts = ObjectStorageBucketCreateOptions{
 	Cluster: "us-east-1",
-	Label:   "go-bucket-test-def",
+	Label:   objectStorageBucketTestLabel,
 }
 
 var testRegionalObjectStorageBucketCreateOpts = ObjectStorageBucketCreateOptions{
 	Region: "us-east",
-	Label:  "go-bucket-test-def",
+	Label:  objectStorageBucketTestLabel,
 }
 
 func TestObjectStorageBucket_Create_smoke(t *testing.T) {
 	_, bucket, teardown, err := setupObjectStorageBucket(t,
 		nil,
-		"fixtures/TestObjectStorageBucket_Create", nil, nil)
+		"fixtures/TestObjectStorageBucket_Create", nil, nil, nil)
 	defer teardown()
 
 	if err != nil {
@@ -55,7 +59,7 @@ func TestObjectStorageBucket_Regional(t *testing.T) {
 			},
 		},
 		"fixtures/TestObjectStorageBucket_Regional",
-		client, teardown,
+		client, teardown, nil,
 	)
 	defer teardown()
 
@@ -82,7 +86,7 @@ func TestObjectStorageBucket_Regional(t *testing.T) {
 func TestObjectStorageBucket_GetMissing(t *testing.T) {
 	client, bucket, teardown, err := setupObjectStorageBucket(t,
 		nil,
-		"fixtures/TestObjectStorageBucket_GetMissing", nil, nil)
+		"fixtures/TestObjectStorageBucket_GetMissing", nil, nil, nil)
 	defer teardown()
 
 	sameLabel := bucket.Label
@@ -105,7 +109,7 @@ func TestObjectStorageBucket_GetMissing(t *testing.T) {
 func TestObjectStorageBucket_GetFound(t *testing.T) {
 	client, bucket, teardown, err := setupObjectStorageBucket(t,
 		nil,
-		"fixtures/TestObjectStorageBucket_GetFound", nil, nil)
+		"fixtures/TestObjectStorageBucket_GetFound", nil, nil, nil)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -130,7 +134,7 @@ func TestObjectStorageBucket_GetFound(t *testing.T) {
 func TestObjectStorageBuckets_List_smoke(t *testing.T) {
 	client, _, teardown, err := setupObjectStorageBucket(t,
 		nil,
-		"fixtures/TestObjectStorageBuckets_List", nil, nil)
+		"fixtures/TestObjectStorageBuckets_List", nil, nil, nil)
 	defer teardown()
 
 	i, err := client.ListObjectStorageBuckets(context.Background(), nil)
@@ -148,7 +152,7 @@ func TestObjectStorageBuckets_List_smoke(t *testing.T) {
 func TestObjectStorageBucketsInCluster_List(t *testing.T) {
 	client, bucket, teardown, err := setupObjectStorageBucket(t,
 		nil,
-		"fixtures/TestObjectStorageBucketsInCluster_List", nil, nil)
+		"fixtures/TestObjectStorageBucketsInCluster_List", nil, nil, nil)
 	defer teardown()
 
 	i, err := client.ListObjectStorageBucketsInCluster(context.Background(), nil, bucket.Cluster)
@@ -178,10 +182,10 @@ func TestObjectStorageBucket_Access_Get(t *testing.T) {
 				opts.CorsEnabled = createOpts.CorsEnabled
 			},
 		},
-		"fixtures/TestObjectStorageBucket_Access_Get", nil, nil)
+		"fixtures/TestObjectStorageBucket_Access_Get", nil, nil, nil)
 	defer teardown()
 
-	newBucket, err := client.GetObjectStorageBucketAccess(context.Background(), bucket.Cluster, bucket.Label)
+	newBucket, err := client.GetObjectStorageBucketAccess(context.Background(), bucket.Region, bucket.Label)
 	if err != nil {
 		t.Errorf("Error getting ObjectStorageBucket access, got error %s", err)
 	}
@@ -198,9 +202,12 @@ func TestObjectStorageBucket_Access_Get(t *testing.T) {
 }
 
 func TestObjectStorageBucket_Access_Update(t *testing.T) {
+	endpointType := linodego.ObjectStorageEndpointE1
 	client, bucket, teardown, err := setupObjectStorageBucket(t,
 		nil,
-		"fixtures/TestObjectStorageBucket_Access_Update", nil, nil)
+		"fixtures/TestObjectStorageBucket_Access_Update",
+		nil, nil, &endpointType,
+	)
 	defer teardown()
 
 	corsEnabled := false
@@ -210,12 +217,12 @@ func TestObjectStorageBucket_Access_Update(t *testing.T) {
 		CorsEnabled: &corsEnabled,
 	}
 
-	err = client.UpdateObjectStorageBucketAccess(context.Background(), bucket.Cluster, bucket.Label, opts)
+	err = client.UpdateObjectStorageBucketAccess(context.Background(), bucket.Region, bucket.Label, opts)
 	if err != nil {
 		t.Errorf("Error updating ObjectStorageBucket access, got error %s", err)
 	}
 
-	newBucket, err := client.GetObjectStorageBucketAccess(context.Background(), bucket.Cluster, bucket.Label)
+	newBucket, err := client.GetObjectStorageBucketAccess(context.Background(), bucket.Region, bucket.Label)
 	if err != nil {
 		t.Errorf("Error getting ObjectStorageBucket access, got error %s", err)
 	}
@@ -231,17 +238,18 @@ func TestObjectStorageBucket_Access_Update(t *testing.T) {
 
 type objectStorageBucketModifier func(*ObjectStorageBucketCreateOptions)
 
-func setupObjectStorageBucket(t *testing.T, bucketModifiers []objectStorageBucketModifier, fixturesYaml string, client *Client, teardown func()) (*Client, *ObjectStorageBucket, func(), error) {
+func setupObjectStorageBucket(
+	t *testing.T,
+	bucketModifiers []objectStorageBucketModifier,
+	fixturesYaml string,
+	client *Client,
+	teardown func(),
+	endpointType *linodego.ObjectStorageEndpointType,
+) (*Client, *ObjectStorageBucket, func(), error) {
 	t.Helper()
 
-	createOpts := testObjectStorageBucketCreateOpts
-
-	for _, modifier := range bucketModifiers {
-		modifier(&createOpts)
-	}
-
 	if (client == nil) != (teardown == nil) {
-		t.Error(
+		t.Fatalf(
 			"The client and fixtureTeardown variables must either both be nil or both " +
 				"have a value. They cannot have one set to nil and the other set to a non-nil value.",
 		)
@@ -251,9 +259,29 @@ func setupObjectStorageBucket(t *testing.T, bucketModifiers []objectStorageBucke
 		client, teardown = createTestClient(t, fixturesYaml)
 	}
 
+	createOpts := testRegionalObjectStorageBucketCreateOpts
+
+	if endpointType != nil {
+		endpoints, err := client.ListObjectStorageEndpoints(context.Background(), nil)
+		if err != nil {
+			t.Fatalf("Error listing endpoints: %s", err)
+		} else {
+			selectedEndpoint := endpoints[slices.IndexFunc(endpoints, func(e linodego.ObjectStorageEndpoint) bool {
+				return e.EndpointType == linodego.ObjectStorageEndpointE1
+			})]
+			createOpts.Region = selectedEndpoint.Region
+			createOpts.EndpointType = selectedEndpoint.EndpointType
+		}
+
+	}
+
+	for _, modifier := range bucketModifiers {
+		modifier(&createOpts)
+	}
+
 	bucket, err := client.CreateObjectStorageBucket(context.Background(), createOpts)
 	if err != nil {
-		t.Errorf("Error creating test Bucket: %s", err)
+		t.Fatalf("Error creating test Bucket: %s", err)
 	}
 
 	newTeardown := func() {

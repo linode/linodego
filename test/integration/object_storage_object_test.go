@@ -74,7 +74,10 @@ func deleteObjectStorageObject(t *testing.T, client *linodego.Client, bucket *li
 }
 
 func TestObjectStorageObject_Smoke(t *testing.T) {
-	client, bucket, teardown, err := setupObjectStorageBucket(t, nil, "fixtures/TestObjectStorageObject_Smoke", nil, nil)
+	client, bucket, teardown, err := setupObjectStorageBucket(
+		t, nil, "fixtures/TestObjectStorageObject_Smoke",
+		nil, nil, nil,
+	)
 	if err != nil {
 		t.Fatalf("failed to create Object Storage Object: %s", err)
 	}

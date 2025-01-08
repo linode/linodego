@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"cluster":"us-east-1","label":"go-bucket-test-def"}'
+    body: '{"region":"us-east","label":"go-bucket-test-def"}'
     form: {}
     headers:
       Accept:
@@ -16,7 +16,8 @@ interactions:
   response:
     body: '{"hostname": "go-bucket-test-def.us-east-1.linodeobjects.com", "label":
       "go-bucket-test-def", "created": "2018-01-02T03:04:05", "region": "us-east",
-      "cluster": "us-east-1", "size": 0, "objects": 0}'
+      "cluster": "us-east-1", "size": 0, "objects": 0, "endpoint_type": "E0", "s3_endpoint":
+      "us-east-1.linodeobjects.com"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -28,18 +29,20 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "197"
+      - "266"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Jul 2024 15:13:40 GMT
+      - Wed, 08 Jan 2025 06:03:13 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -56,7 +59,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -77,7 +80,8 @@ interactions:
   response:
     body: '{"hostname": "go-bucket-test-def.us-east-1.linodeobjects.com", "label":
       "go-bucket-test-def", "created": "2018-01-02T03:04:05", "region": "us-east",
-      "cluster": "us-east-1", "size": 0, "objects": 0}'
+      "cluster": "us-east-1", "size": 0, "objects": 0, "endpoint_type": "E0", "s3_endpoint":
+      "us-east-1.linodeobjects.com"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -89,18 +93,20 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "197"
+      - "266"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Jul 2024 15:13:41 GMT
+      - Wed, 08 Jan 2025 06:03:14 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -118,7 +124,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -149,6 +155,8 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -160,7 +168,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Jul 2024 15:13:43 GMT
+      - Wed, 08 Jan 2025 06:03:17 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -177,7 +185,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
