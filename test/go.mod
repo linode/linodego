@@ -8,8 +8,6 @@ require (
 	github.com/linode/linodego/k8s v0.0.0-00010101000000-000000000000
 	github.com/stretchr/testify v1.10.0
 	golang.org/x/exp v0.0.0-20241217172543-b2144cdd0a67
-	golang.org/x/net v0.33.0
-	golang.org/x/oauth2 v0.24.0
 	golang.org/x/net v0.34.0
 	golang.org/x/oauth2 v0.25.0
 	k8s.io/client-go v0.29.4
