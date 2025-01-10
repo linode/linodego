@@ -74,7 +74,10 @@ func deleteObjectStorageObject(t *testing.T, client *linodego.Client, bucket *li
 }
 
 func TestObjectStorageObject_Smoke(t *testing.T) {
-	client, bucket, teardown, err := setupObjectStorageBucket(t, nil, "fixtures/TestObjectStorageObject_Smoke", nil, nil)
+	client, bucket, teardown, err := setupObjectStorageBucket(
+		t, nil, "fixtures/TestObjectStorageObject_Smoke",
+		nil, nil, nil,
+	)
 	if err != nil {
 		t.Fatalf("failed to create Object Storage Object: %s", err)
 	}
@@ -92,8 +95,22 @@ func TestObjectStorageObject_Smoke(t *testing.T) {
 	if config.ACL != "private" {
 		t.Errorf("expected ACL to be private; got %s", config.ACL)
 	}
+
 	if config.ACLXML == "" {
 		t.Error("expected ACL XML to be included")
+	}
+
+	configv2, err := client.GetObjectStorageObjectACLConfigV2(context.TODO(), bucket.Cluster, bucket.Label, object)
+	if err != nil {
+		t.Errorf("failed to get ACL config: %s", err)
+	}
+
+	if configv2.ACL == nil {
+		t.Errorf("expected ACL to be private; got nil")
+	}
+
+	if configv2.ACL != nil && *configv2.ACL != "private" {
+		t.Errorf("expected ACL to be private; got %s", *configv2.ACL)
 	}
 
 	content, err := client.ListObjectStorageBucketContents(context.TODO(), bucket.Cluster, bucket.Label, nil)
@@ -110,6 +127,10 @@ func TestObjectStorageObject_Smoke(t *testing.T) {
 		t.Errorf("failed to update ACL config: %s", err)
 	}
 
+	if _, err = client.UpdateObjectStorageObjectACLConfigV2(context.TODO(), bucket.Cluster, bucket.Label, updateOpts); err != nil {
+		t.Errorf("failed to update ACL config: %s", err)
+	}
+
 	config, err = client.GetObjectStorageObjectACLConfig(context.TODO(), bucket.Cluster, bucket.Label, object)
 	if err != nil {
 		t.Errorf("failed to get updated ACL config: %s", err)
@@ -119,6 +140,27 @@ func TestObjectStorageObject_Smoke(t *testing.T) {
 		t.Errorf("expected ACL config to be %s; got %s", updateOpts.ACL, config.ACL)
 	}
 	if config.ACLXML == "" {
+		t.Error("expected ACL XML to be included")
+	}
+
+	configv2, err = client.GetObjectStorageObjectACLConfigV2(context.TODO(), bucket.Cluster, bucket.Label, object)
+	if err != nil {
+		t.Errorf("failed to get ACL config: %s", err)
+	}
+
+	if configv2.ACL == nil {
+		t.Errorf("expected ACL config to be %s; got nil", updateOpts.ACL)
+	}
+
+	if configv2.ACL != nil && *configv2.ACL != updateOpts.ACL {
+		t.Errorf("expected ACL config to be %s; got nil", updateOpts.ACL)
+	}
+
+	if configv2.ACLXML == nil {
+		t.Error("expected ACL XML to be included")
+	}
+
+	if configv2.ACLXML != nil && *configv2.ACLXML == "" {
 		t.Error("expected ACL XML to be included")
 	}
 }

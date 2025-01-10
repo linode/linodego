@@ -2,11 +2,13 @@ package integration
 
 import (
 	"context"
+	"slices"
 	"strings"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
 
+	"github.com/linode/linodego"
 	. "github.com/linode/linodego"
 )
 
@@ -106,7 +108,10 @@ func TestObjectStorageKeys_List(t *testing.T) {
 }
 
 func TestObjectStorageKeys_Limited(t *testing.T) {
-	_, bucket, teardown, err := setupObjectStorageBucket(t, nil, "fixtures/TestObjectStorageKeys_Limited_Bucket", nil, nil)
+	_, bucket, teardown, err := setupObjectStorageBucket(
+		t, nil, "fixtures/TestObjectStorageKeys_Limited_Bucket",
+		nil, nil, nil,
+	)
 	defer teardown()
 
 	createOpts := testBasicObjectStorageKeyCreateOpts
@@ -166,7 +171,8 @@ func TestObjectStorageKeys_Regional_Limited(t *testing.T) {
 			createOpts.Cluster = ""
 			createOpts.Region = region
 		},
-	}, "fixtures/TestObjectStorageKeys_Regional_Limited", client, teardown)
+	}, "fixtures/TestObjectStorageKeys_Regional_Limited",
+		client, teardown, nil)
 	if err != nil {
 		t.Error(err)
 	}
@@ -179,8 +185,10 @@ func TestObjectStorageKeys_Regional_Limited(t *testing.T) {
 			Permissions: "read_only",
 		},
 	}
-	initialRegion := "us-east"
+
+	initialRegion := bucket.Region
 	createOpts.Regions = []string{initialRegion}
+
 	_, key, teardown, err := setupObjectStorageKey(t, createOpts, "fixtures/TestObjectStorageKeys_Regional_Limited", client, teardown)
 	defer teardown()
 	if err != nil {
@@ -204,16 +212,24 @@ func TestObjectStorageKeys_Regional_Limited(t *testing.T) {
 		t.Errorf("Unexpected key regions, expected regions: %v, actual regions: %v", createOpts.Regions, key.Regions)
 	}
 
-	updatedRegion := "us-east"
+	var addedRegion string
+	if initialRegion != "us-mia" {
+		addedRegion = "us-mia"
+	} else {
+		addedRegion = "us-iad"
+	}
+
 	updateOpts := ObjectStorageKeyUpdateOptions{
-		Regions: []string{updatedRegion},
+		Regions: []string{initialRegion, addedRegion},
 	}
 	key, err = client.UpdateObjectStorageKey(context.Background(), key.ID, updateOpts)
 	if err != nil {
 		t.Fatalf("error updating the obj regional key: %v", err)
 	}
 
-	if len(key.Regions) == 0 || key.Regions[0].ID != updatedRegion {
+	if !slices.ContainsFunc(key.Regions, func(r linodego.ObjectStorageKeyRegion) bool {
+		return r.ID == addedRegion
+	}) {
 		t.Errorf("Unexpected key regions, expected regions: %v, actual regions: %v", updateOpts.Regions, key.Regions)
 	}
 }
