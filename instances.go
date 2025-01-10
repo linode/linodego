@@ -487,15 +487,13 @@ type InstanceUpgradeOptions struct {
 // UpgradeInstance upgrades a Linode to its next generation.
 func (c *Client) UpgradeInstance(ctx context.Context, linodeID int, opts InstanceUpgradeOptions) error {
 	e := formatAPIPath("linode/instances/%d/mutate", linodeID)
-	_, err := doPOSTRequest[Instance](ctx, c, e, opts)
-	return err
+	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
 
 // MigrateInstance - Migrate an instance
 func (c *Client) MigrateInstance(ctx context.Context, linodeID int, opts InstanceMigrateOptions) error {
 	e := formatAPIPath("linode/instances/%d/migrate", linodeID)
-	_, err := doPOSTRequest[Instance](ctx, c, e, opts)
-	return err
+	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
 
 // simpleInstanceAction is a helper for Instance actions that take no parameters
