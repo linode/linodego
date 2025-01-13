@@ -37,6 +37,7 @@ const (
 	CapabilityPlacementGroup         string = "Placement Group"
 	CapabilityDiskEncryption         string = "Disk Encryption"
 	CapabilityBlockStorageEncryption string = "Block Storage Encryption"
+	CapabilityKubernetesEnterprise   string = "Kubernetes Enterprise"
 )
 
 // Region-related endpoints have a custom expiry time as the
