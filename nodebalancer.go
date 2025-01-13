@@ -12,18 +12,28 @@ import (
 type NodeBalancer struct {
 	// This NodeBalancer's unique ID.
 	ID int `json:"id"`
+
 	// This NodeBalancer's label. These must be unique on your Account.
 	Label *string `json:"label"`
+
 	// The Region where this NodeBalancer is located. NodeBalancers only support backends in the same Region.
 	Region string `json:"region"`
+
 	// This NodeBalancer's hostname, ending with .nodebalancer.linode.com
 	Hostname *string `json:"hostname"`
+
 	// This NodeBalancer's public IPv4 address.
 	IPv4 *string `json:"ipv4"`
+
 	// This NodeBalancer's public IPv6 address.
 	IPv6 *string `json:"ipv6"`
+
 	// Throttle connections per second (0-20). Set to 0 (zero) to disable throttling.
 	ClientConnThrottle int `json:"client_conn_throttle"`
+
+	// ClientUDPSessThrottle throttles UDP sessions per second. Set to 0 (zero) to disable throttling.
+	ClientUDPSessThrottle int `json:"client_udp_sess_throttle"`
+
 	// Information about the amount of transfer this NodeBalancer has had so far this month.
 	Transfer NodeBalancerTransfer `json:"transfer"`
 
@@ -46,19 +56,21 @@ type NodeBalancerTransfer struct {
 
 // NodeBalancerCreateOptions are the options permitted for CreateNodeBalancer
 type NodeBalancerCreateOptions struct {
-	Label              *string                            `json:"label,omitempty"`
-	Region             string                             `json:"region,omitempty"`
-	ClientConnThrottle *int                               `json:"client_conn_throttle,omitempty"`
-	Configs            []*NodeBalancerConfigCreateOptions `json:"configs,omitempty"`
-	Tags               []string                           `json:"tags"`
-	FirewallID         int                                `json:"firewall_id,omitempty"`
+	Label                 *string                            `json:"label,omitempty"`
+	Region                string                             `json:"region,omitempty"`
+	ClientConnThrottle    *int                               `json:"client_conn_throttle,omitempty"`
+	ClientUDPSessThrottle *int                               `json:"client_udp_sess_throttle,omitempty"`
+	Configs               []*NodeBalancerConfigCreateOptions `json:"configs,omitempty"`
+	Tags                  []string                           `json:"tags"`
+	FirewallID            int                                `json:"firewall_id,omitempty"`
 }
 
 // NodeBalancerUpdateOptions are the options permitted for UpdateNodeBalancer
 type NodeBalancerUpdateOptions struct {
-	Label              *string   `json:"label,omitempty"`
-	ClientConnThrottle *int      `json:"client_conn_throttle,omitempty"`
-	Tags               *[]string `json:"tags,omitempty"`
+	Label                 *string   `json:"label,omitempty"`
+	ClientConnThrottle    *int      `json:"client_conn_throttle,omitempty"`
+	ClientUDPSessThrottle *int      `json:"client_udp_sess_throttle,omitempty"`
+	Tags                  *[]string `json:"tags,omitempty"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
@@ -86,19 +98,21 @@ func (i *NodeBalancer) UnmarshalJSON(b []byte) error {
 // GetCreateOptions converts a NodeBalancer to NodeBalancerCreateOptions for use in CreateNodeBalancer
 func (i NodeBalancer) GetCreateOptions() NodeBalancerCreateOptions {
 	return NodeBalancerCreateOptions{
-		Label:              i.Label,
-		Region:             i.Region,
-		ClientConnThrottle: &i.ClientConnThrottle,
-		Tags:               i.Tags,
+		Label:                 i.Label,
+		Region:                i.Region,
+		ClientConnThrottle:    &i.ClientConnThrottle,
+		ClientUDPSessThrottle: &i.ClientUDPSessThrottle,
+		Tags:                  i.Tags,
 	}
 }
 
 // GetUpdateOptions converts a NodeBalancer to NodeBalancerUpdateOptions for use in UpdateNodeBalancer
 func (i NodeBalancer) GetUpdateOptions() NodeBalancerUpdateOptions {
 	return NodeBalancerUpdateOptions{
-		Label:              i.Label,
-		ClientConnThrottle: &i.ClientConnThrottle,
-		Tags:               &i.Tags,
+		Label:                 i.Label,
+		ClientConnThrottle:    &i.ClientConnThrottle,
+		ClientUDPSessThrottle: &i.ClientUDPSessThrottle,
+		Tags:                  &i.Tags,
 	}
 }
 
