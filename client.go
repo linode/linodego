@@ -293,11 +293,16 @@ func (c *httpClient) logRequest(req *http.Request, method, url string, bodyBuffe
 		reqBody = "nil"
 	}
 
+	headers := req.Header.Clone()
+
+	// Sanitize the header for logging purposes
+	headers.Set("Authorization", "Bearer *******************************")
+
 	var logBuf bytes.Buffer
 	err := reqLogTemplate.Execute(&logBuf, map[string]interface{}{
 		"Method":  method,
 		"URL":     url,
-		"Headers": req.Header,
+		"Headers": headers,
 		"Body":    reqBody,
 	})
 	if err == nil {
@@ -699,16 +704,6 @@ func (c *Client) SetHeader(name, value string) {
 	c.resty.SetHeader(name, value)
 }
 
-func (c *Client) enableLogSanitization() *Client {
-	c.resty.OnRequestLog(func(r *resty.RequestLog) error {
-		// masking authorization header
-		r.Header.Set("Authorization", "Bearer *******************************")
-		return nil
-	})
-
-	return c
-}
-
 // NewClient factory to create new Client struct
 func NewClient(hc *http.Client) (client Client) {
 	if hc != nil {
@@ -755,8 +750,7 @@ func NewClient(hc *http.Client) (client Client) {
 		SetRetryWaitTime(APISecondsPerPoll * time.Second).
 		SetPollDelay(APISecondsPerPoll * time.Second).
 		SetRetries().
-		SetDebug(envDebug).
-		enableLogSanitization()
+		SetDebug(envDebug)
 
 	return
 }
