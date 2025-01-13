@@ -1,0 +1,37 @@
+{
+    "data": [
+        {
+            "id": 123,
+            "username": "testuser",
+            "label": "Test Stackscript",
+            "description": "A test Stackscript",
+            "images": ["linode/ubuntu20.04"],
+            "deployments_total": 10,
+            "deployments_active": 5,
+            "is_public": true,
+            "mine": true,
+            "rev_note": "Initial version",
+            "script": "#!/bin/bash\necho Hello",
+            "user_defined_fields": [],
+            "user_gravatar_id": "abc123"
+        },
+        {
+            "id": 456,
+            "username": "anotheruser",
+            "label": "Another Stackscript",
+            "description": "Another test Stackscript",
+            "images": ["linode/debian10"],
+            "deployments_total": 3,
+            "deployments_active": 1,
+            "is_public": false,
+            "mine": false,
+            "rev_note": "Another version",
+            "script": "#!/bin/bash\necho Another",
+            "user_defined_fields": [],
+            "user_gravatar_id": "xyz456"
+        }
+    ],
+    "page": 1,
+    "pages": 1,
+    "results": 2
+}
