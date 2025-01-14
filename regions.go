@@ -21,6 +21,7 @@ const (
 	CapabilityDiskEncryption                string = "Disk Encryption"
 	CapabilityEdgePlans                     string = "Edge Plans"
 	CapabilityGPU                           string = "GPU Linodes"
+	CapabilityKubernetesEnterprise          string = "Kubernetes Enterprise"
 	CapabilityLKE                           string = "Kubernetes"
 	CapabilityLKEControlPlaneACL            string = "LKE Network Access Control List (IP ACL)"
 	CapabilityLinodes                       string = "Linodes"
