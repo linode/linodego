@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"cluster":"us-east-1","label":"go-bucket-test-def","acl":"authenticated-read","cors_enabled":false}'
+    body: ""
     form: {}
     headers:
       Accept:
@@ -11,12 +11,28 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets
-    method: POST
+    url: https://api.linode.com/v4beta/object-storage/endpoints?page=1
+    method: GET
   response:
-    body: '{"hostname": "go-bucket-test-def.us-east-1.linodeobjects.com", "label":
-      "go-bucket-test-def", "created": "2018-01-02T03:04:05", "region": "us-east",
-      "cluster": "us-east-1", "size": 0, "objects": 0}'
+    body: '{"pages": 1, "page": 1, "results": 18, "data": [{"region": "us-iad", "endpoint_type":
+      "E1", "s3_endpoint": "us-iad-1.linodeobjects.com"}, {"region": "in-maa", "endpoint_type":
+      "E1", "s3_endpoint": "in-maa-1.linodeobjects.com"}, {"region": "us-east", "endpoint_type":
+      "E0", "s3_endpoint": "us-east-1.linodeobjects.com"}, {"region": "eu-central",
+      "endpoint_type": "E0", "s3_endpoint": "eu-central-1.linodeobjects.com"}, {"region":
+      "us-mia", "endpoint_type": "E1", "s3_endpoint": "us-mia-1.linodeobjects.com"},
+      {"region": "br-gru", "endpoint_type": "E1", "s3_endpoint": "br-gru-1.linodeobjects.com"},
+      {"region": "fr-par", "endpoint_type": "E1", "s3_endpoint": "fr-par-1.linodeobjects.com"},
+      {"region": "nl-ams", "endpoint_type": "E1", "s3_endpoint": "nl-ams-1.linodeobjects.com"},
+      {"region": "se-sto", "endpoint_type": "E1", "s3_endpoint": "se-sto-1.linodeobjects.com"},
+      {"region": "us-sea", "endpoint_type": "E1", "s3_endpoint": "us-sea-1.linodeobjects.com"},
+      {"region": "jp-osa", "endpoint_type": "E1", "s3_endpoint": "jp-osa-1.linodeobjects.com"},
+      {"region": "ap-south", "endpoint_type": "E0", "s3_endpoint": "ap-south-1.linodeobjects.com"},
+      {"region": "us-ord", "endpoint_type": "E1", "s3_endpoint": "us-ord-1.linodeobjects.com"},
+      {"region": "id-cgk", "endpoint_type": "E1", "s3_endpoint": "id-cgk-1.linodeobjects.com"},
+      {"region": "us-lax", "endpoint_type": "E1", "s3_endpoint": "us-lax-1.linodeobjects.com"},
+      {"region": "es-mad", "endpoint_type": "E1", "s3_endpoint": "es-mad-1.linodeobjects.com"},
+      {"region": "it-mil", "endpoint_type": "E1", "s3_endpoint": "it-mil-1.linodeobjects.com"},
+      {"region": "us-southeast", "endpoint_type": "E0", "s3_endpoint": "us-southeast-1.linodeobjects.com"}]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -28,18 +44,84 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
-      Content-Length:
-      - "197"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Jul 2024 15:14:08 GMT
+      - Wed, 08 Jan 2025 07:40:53 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1600"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"region":"us-iad","label":"go-bucket-test-def","endpoint_type":"E1","acl":"authenticated-read","cors_enabled":false}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/buckets
+    method: POST
+  response:
+    body: '{"hostname": "go-bucket-test-def.us-iad-1.linodeobjects.com", "label":
+      "go-bucket-test-def", "created": "2018-01-02T03:04:05", "region": "us-iad",
+      "cluster": "us-iad-1", "size": 0, "objects": 0, "endpoint_type": "E1", "s3_endpoint":
+      "us-iad-1.linodeobjects.com"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "262"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Wed, 08 Jan 2025 07:40:55 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -56,7 +138,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -72,12 +154,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/go-bucket-test-def/access
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-iad/go-bucket-test-def/access
     method: GET
   response:
-    body: '{"acl": "authenticated-read", "acl_xml": "<AccessControlPolicy xmlns=\"http://s3.amazonaws.com/doc/2006-03-01/\"><Owner><ID>640757b5-ebe9-45b1-abd5-581f215ef89e</ID><DisplayName>640757b5-ebe9-45b1-abd5-581f215ef89e</DisplayName></Owner><AccessControlList><Grant><Grantee
+    body: '{"acl": "authenticated-read", "acl_xml": "<AccessControlPolicy xmlns=\"http://s3.amazonaws.com/doc/2006-03-01/\"><Owner><ID>c9539a32-3ece-47dd-a9a4-40bbfa5a2936</ID><DisplayName>c9539a32-3ece-47dd-a9a4-40bbfa5a2936</DisplayName></Owner><AccessControlList><Grant><Grantee
       xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"Group\"><URI>http://acs.amazonaws.com/groups/global/AuthenticatedUsers</URI></Grantee><Permission>READ</Permission></Grant><Grant><Grantee
-      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"CanonicalUser\"><ID>640757b5-ebe9-45b1-abd5-581f215ef89e</ID><DisplayName>640757b5-ebe9-45b1-abd5-581f215ef89e</DisplayName></Grantee><Permission>FULL_CONTROL</Permission></Grant></AccessControlList></AccessControlPolicy>",
+      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"CanonicalUser\"><ID>c9539a32-3ece-47dd-a9a4-40bbfa5a2936</ID><DisplayName>c9539a32-3ece-47dd-a9a4-40bbfa5a2936</DisplayName></Grantee><Permission>FULL_CONTROL</Permission></Grant></AccessControlList></AccessControlPolicy>",
       "cors_enabled": false, "cors_xml": null}'
     headers:
       Access-Control-Allow-Credentials:
@@ -90,6 +172,8 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -101,7 +185,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Jul 2024 15:14:09 GMT
+      - Wed, 08 Jan 2025 07:40:57 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -119,7 +203,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -135,7 +219,72 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/go-bucket-test-def
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-iad/go-bucket-test-def/access
+    method: GET
+  response:
+    body: '{"acl": "authenticated-read", "acl_xml": "<AccessControlPolicy xmlns=\"http://s3.amazonaws.com/doc/2006-03-01/\"><Owner><ID>c9539a32-3ece-47dd-a9a4-40bbfa5a2936</ID><DisplayName>c9539a32-3ece-47dd-a9a4-40bbfa5a2936</DisplayName></Owner><AccessControlList><Grant><Grantee
+      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"Group\"><URI>http://acs.amazonaws.com/groups/global/AuthenticatedUsers</URI></Grantee><Permission>READ</Permission></Grant><Grant><Grantee
+      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"CanonicalUser\"><ID>c9539a32-3ece-47dd-a9a4-40bbfa5a2936</ID><DisplayName>c9539a32-3ece-47dd-a9a4-40bbfa5a2936</DisplayName></Grantee><Permission>FULL_CONTROL</Permission></Grant></AccessControlList></AccessControlPolicy>",
+      "cors_enabled": false, "cors_xml": null}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "808"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Wed, 08 Jan 2025 07:40:58 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1600"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-iad-1/go-bucket-test-def
     method: DELETE
   response:
     body: '{}'
@@ -150,6 +299,8 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -161,7 +312,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Jul 2024 15:14:13 GMT
+      - Wed, 08 Jan 2025 07:41:08 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -178,7 +329,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
