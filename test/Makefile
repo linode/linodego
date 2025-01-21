@@ -1,28 +1,23 @@
-.PHONY: testint
+.PHONY: test-int
 
-testint:
+test-int:
 	@LINODE_FIXTURE_MODE="play" \
 	LINODE_TOKEN="awesometokenawesometokenawesometoken" \
 	LINODE_API_VERSION="v4beta" \
 	GO111MODULE="on" \
-	go test -v ./integration $(ARGS)
+	go test -v ./integration $(TEST_ARGS)
 
-.PHONY: testunit
+.PHONY: test-unit
 
-testunit:
+test-unit:
 	go test -v ./unit/...
 
-.PHONY: smoketest
+.PHONY: test-smoke
 
-smoketest:
+test-smoke:
 	@LINODE_FIXTURE_MODE="record" \
 	LINODE_TOKEN=$(LINODE_TOKEN) \
 	LINODE_API_VERSION="v4beta" \
 	LINODE_URL="$(LINODE_URL)" \
 	GO111MODULE="on" \
 	go test -v -run smoke ./integration/...
-
-
-.PHONY: unit-test
-unit-test:
-	go test -v ./unit $(ARGS)
