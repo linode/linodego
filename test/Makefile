@@ -10,7 +10,7 @@ test-int:
 .PHONY: test-unit
 
 test-unit:
-	go test -v ./unit/...
+	go test -v ./unit/... $(TEST_ARGS)
 
 .PHONY: test-smoke
 

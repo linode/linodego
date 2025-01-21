@@ -25,10 +25,10 @@ citest: lint test
 
 test-unit:
 	go test -v $(PACKAGES) $(TEST_ARGS)
-	cd test && make test-unit
+	cd test && make test-unit $(TEST_ARGS)
 
 test-int:
-	cd test && make test-int
+	cd test && make test-int $(TEST_ARGS)
 
 testcov-func:
 	@go test -v -coverprofile="coverage.txt" . > /dev/null 2>&1
