@@ -64,17 +64,21 @@ const (
 
 // A Database is a instance of Linode Managed Databases
 type Database struct {
-	ID          int              `json:"id"`
-	Status      DatabaseStatus   `json:"status"`
-	Label       string           `json:"label"`
-	Hosts       DatabaseHost     `json:"hosts"`
-	Region      string           `json:"region"`
-	Type        string           `json:"type"`
-	Engine      string           `json:"engine"`
-	Version     string           `json:"version"`
-	ClusterSize int              `json:"cluster_size"`
-	Platform    DatabasePlatform `json:"platform"`
-	Fork        *DatabaseFork    `json:"fork"`
+	ID              int                       `json:"id"`
+	Status          DatabaseStatus            `json:"status"`
+	Label           string                    `json:"label"`
+	Hosts           DatabaseHost              `json:"hosts"`
+	Region          string                    `json:"region"`
+	Type            string                    `json:"type"`
+	Engine          string                    `json:"engine"`
+	Version         string                    `json:"version"`
+	ClusterSize     int                       `json:"cluster_size"`
+	Platform        DatabasePlatform          `json:"platform"`
+	Fork            *DatabaseFork             `json:"fork"`
+	Updates         DatabaseMaintenanceWindow `json:"updates"`
+	UsedDiskSizeGB  int                       `json:"used_disk_size_gb"`
+	TotalDiskSizeGB int                       `json:"total_disk_size_gb"`
+	Port            int                       `json:"port"`
 
 	// Members has dynamic keys so it is a map
 	Members map[string]DatabaseMemberType `json:"members"`
@@ -134,11 +138,13 @@ type DatabaseType struct {
 	Disk        int                   `json:"disk"`
 	Memory      int                   `json:"memory"`
 	Engines     DatabaseTypeEngineMap `json:"engines"`
+	Deprecated  bool                  `json:"deprecated"`
 }
 
 // DatabaseTypeEngineMap stores a list of Database Engine types by engine
 type DatabaseTypeEngineMap struct {
-	MySQL []DatabaseTypeEngine `json:"mysql"`
+	MySQL      []DatabaseTypeEngine `json:"mysql"`
+	PostgreSQL []DatabaseTypeEngine `json:"postgresql"`
 }
 
 // DatabaseTypeEngine Sizes and Prices
