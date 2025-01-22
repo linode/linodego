@@ -3,10 +3,11 @@ package unit
 import (
 	"context"
 	"fmt"
+	"testing"
+
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
-	"golang.org/x/exp/slices" 
-	"testing"
+	"golang.org/x/exp/slices"
 )
 
 func TestVLAN_List(t *testing.T) {
