@@ -56,7 +56,9 @@ require (
 	sigs.k8s.io/yaml v1.3.0 // indirect
 )
 
-go 1.22
+go 1.22.0
+
+toolchain go1.22.1
 
 replace github.com/linode/linodego => ../
 
