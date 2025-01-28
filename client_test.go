@@ -597,17 +597,12 @@ func TestClient_CustomRootCAWithoutCustomRoundTripper(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		if test.name != "set CA, use timeout" {
-			continue
-		}
 		t.Run(test.name, func(t *testing.T) {
 			if test.setCA {
 				t.Setenv(APIHostCert, caFile.Name())
 			}
 
 			client := NewClient(test.httpClient)
-			t.Logf("YALLO: %v", test.httpClient.Transport == http.DefaultTransport)
-
 			transport, err := client.resty.Transport()
 			if err != nil {
 				t.Fatal(err)
