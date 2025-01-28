@@ -12,6 +12,7 @@ import (
 	"reflect"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/jarcoal/httpmock"
@@ -584,22 +585,39 @@ func TestClient_CustomRootCAWithoutCustomRoundTripper(t *testing.T) {
 	}
 	defer os.Remove(caFile.Name())
 
-	for _, setCA := range []bool{false, true} {
-		if setCA {
-			t.Setenv(APIHostCert, caFile.Name())
-		}
+	tests := []struct {
+		name       string
+		setCA      bool
+		httpClient *http.Client
+	}{
+		{"do not set CA", false, nil},
+		{"set CA", true, nil},
+		{"do not set CA, use timeout", false, &http.Client{Timeout: time.Second}},
+		{"set CA, use timeout", true, &http.Client{Timeout: time.Second}},
+	}
 
-		client := NewClient(nil)
+	for _, test := range tests {
+		if test.name != "set CA, use timeout" {
+			continue
+		}
+		t.Run(test.name, func(t *testing.T) {
+			if test.setCA {
+				t.Setenv(APIHostCert, caFile.Name())
+			}
 
-		transport, err := client.resty.Transport()
-		if err != nil {
-			t.Fatal(err)
-		}
-		if setCA && (transport.TLSClientConfig == nil || transport.TLSClientConfig.RootCAs == nil) {
-			t.Error("expected root CAs to be set")
-		}
-		if !setCA && transport.TLSClientConfig != nil {
-			t.Errorf("didn't set a custom CA, but client TLS config is not nil: %#v", transport.TLSClientConfig)
-		}
+			client := NewClient(test.httpClient)
+			t.Logf("YALLO: %v", test.httpClient.Transport == http.DefaultTransport)
+
+			transport, err := client.resty.Transport()
+			if err != nil {
+				t.Fatal(err)
+			}
+			if test.setCA && (transport.TLSClientConfig == nil || transport.TLSClientConfig.RootCAs == nil) {
+				t.Error("expected root CAs to be set")
+			}
+			if !test.setCA && transport.TLSClientConfig != nil {
+				t.Errorf("didn't set a custom CA, but client TLS config is not nil: %#v", transport.TLSClientConfig)
+			}
+		})
 	}
 }
