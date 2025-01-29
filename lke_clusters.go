@@ -295,7 +295,6 @@ func (c *Client) DeleteLKEClusterServiceToken(ctx context.Context, clusterID int
 // GetLKEClusterAPLConsoleURL gets the URL of this cluster's APL installation if this cluster is APL-enabled.
 func (c *Client) GetLKEClusterAPLConsoleURL(ctx context.Context, clusterID int) (string, error) {
 	cluster, err := c.GetLKECluster(ctx, clusterID)
-
 	if err != nil {
 		return "", err
 	}
@@ -310,7 +309,6 @@ func (c *Client) GetLKEClusterAPLConsoleURL(ctx context.Context, clusterID int) 
 // GetLKEClusterAPLHealthCheckURL gets the URL of this cluster's APL health check endpoint if this cluster is APL-enabled.
 func (c *Client) GetLKEClusterAPLHealthCheckURL(ctx context.Context, clusterID int) (string, error) {
 	cluster, err := c.GetLKECluster(ctx, clusterID)
-
 	if err != nil {
 		return "", err
 	}
