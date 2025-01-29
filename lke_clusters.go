@@ -3,6 +3,7 @@ package linodego
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"time"
 
 	"github.com/linode/linodego/internal/parseabletime"
@@ -31,6 +32,9 @@ type LKECluster struct {
 
 	// NOTE: Tier may not currently be available to all users and can only be used with v4beta.
 	Tier string `json:"tier"`
+
+	// NOTE: APLEnabled is currently in beta and may only function with API version v4beta.
+	APLEnabled bool `json:"apl_enabled"`
 }
 
 // LKEClusterCreateOptions fields are those accepted by CreateLKECluster
@@ -44,6 +48,9 @@ type LKEClusterCreateOptions struct {
 
 	// NOTE: Tier may not currently be available to all users and can only be used with v4beta.
 	Tier string `json:"tier,omitempty"`
+
+	// NOTE: APLEnabled is currently in beta and may only function with API version v4beta.
+	APLEnabled bool `json:"apl_enabled,omitempty"`
 }
 
 // LKEClusterUpdateOptions fields are those accepted by UpdateLKECluster
@@ -283,4 +290,34 @@ func (c *Client) RegenerateLKECluster(ctx context.Context, clusterID int, opts L
 func (c *Client) DeleteLKEClusterServiceToken(ctx context.Context, clusterID int) error {
 	e := formatAPIPath("lke/clusters/%d/servicetoken", clusterID)
 	return doDELETERequest(ctx, c, e)
+}
+
+// GetLKEClusterAPLConsoleURL gets the URL of this cluster's APL installation if this cluster is APL-enabled.
+func (c *Client) GetLKEClusterAPLConsoleURL(ctx context.Context, clusterID int) (string, error) {
+	cluster, err := c.GetLKECluster(ctx, clusterID)
+
+	if err != nil {
+		return "", err
+	}
+
+	if cluster.APLEnabled {
+		return fmt.Sprintf("https://console.lke%v.akamai-apl.net", cluster.ID), nil
+	}
+
+	return "", nil
+}
+
+// GetLKEClusterAPLHealthCheckURL gets the URL of this cluster's APL health check endpoint if this cluster is APL-enabled.
+func (c *Client) GetLKEClusterAPLHealthCheckURL(ctx context.Context, clusterID int) (string, error) {
+	cluster, err := c.GetLKECluster(ctx, clusterID)
+
+	if err != nil {
+		return "", err
+	}
+
+	if cluster.APLEnabled {
+		return fmt.Sprintf("https://auth.lke%v.akamai-apl.net/ready", cluster.ID), nil
+	}
+
+	return "", nil
 }

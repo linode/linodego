@@ -2,6 +2,7 @@ package integration
 
 import (
 	"context"
+	"fmt"
 	"net/url"
 	"reflect"
 	"testing"
@@ -329,4 +330,38 @@ func setupLKECluster(t *testing.T, clusterModifiers []clusterModifier, fixturesY
 		fixtureTeardown()
 	}
 	return client, lkeCluster, teardown, err
+}
+
+func TestLKECluster_APLEnabled_smoke(t *testing.T) {
+	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{
+		func(createOpts *linodego.LKEClusterCreateOptions) {
+			createOpts.Label = "go-lke-test-apl-enabled"
+		},
+		func(createOpts *linodego.LKEClusterCreateOptions) {
+			createOpts.APLEnabled = true
+		},
+		func(createOpts *linodego.LKEClusterCreateOptions) {
+			// NOTE: g6-dedicated-4 is the minimum APL-compatible Linode type
+			createOpts.NodePools = []linodego.LKENodePoolCreateOptions{{Count: 3, Type: "g6-dedicated-4", Tags: []string{"test"}}}
+		}},
+		"fixtures/TestLKECluster_APLEnabled")
+	defer teardown()
+
+	expectedConsoleURL := fmt.Sprintf("https://console.lke%v.akamai-apl.net", lkeCluster.ID)
+	consoleURL, err := client.GetLKEClusterAPLConsoleURL(context.Background(), lkeCluster.ID)
+	if err != nil {
+		t.Errorf("Error getting LKE APL console URL, expected string, got %v and error %v", consoleURL, err)
+	}
+	if consoleURL != expectedConsoleURL {
+		t.Errorf("Expected an APL console URL %v, but got a different one %v", expectedConsoleURL, consoleURL)
+	}
+
+	expectedHealthCheckURL := fmt.Sprintf("https://auth.lke%v.akamai-apl.net/ready", lkeCluster.ID)
+	healthCheckURL, err := client.GetLKEClusterAPLHealthCheckURL(context.Background(), lkeCluster.ID)
+	if err != nil {
+		t.Errorf("Error getting LKE APL health check URL, expected string, got %v and error %v", healthCheckURL, err)
+	}
+	if healthCheckURL != expectedHealthCheckURL {
+		t.Errorf("Expected an APL health check URL %v, but got a different one %v", expectedHealthCheckURL, healthCheckURL)
+	}
 }
