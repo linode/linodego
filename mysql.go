@@ -47,6 +47,9 @@ type MySQLDatabase struct {
 	Updates           DatabaseMaintenanceWindow `json:"updates"`
 	Fork              *DatabaseFork             `json:"fork"`
 	OldestRestoreTime *time.Time                `json:"-"`
+	UsedDiskSizeGB    int                       `json:"used_disk_size_gb"`
+	TotalDiskSizeGB   int                       `json:"total_disk_size_gb"`
+	Port              int                       `json:"port"`
 }
 
 func (d *MySQLDatabase) UnmarshalJSON(b []byte) error {
