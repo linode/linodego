@@ -66,6 +66,8 @@ type PostgresDatabase struct {
 	Updated           *time.Time                `json:"-"`
 	Fork              *DatabaseFork             `json:"fork"`
 	OldestRestoreTime *time.Time                `json:"-"`
+	UsedDiskSizeGB    int                       `json:"used_disk_size_gb"`
+	TotalDiskSizeGB   int                       `json:"total_disk_size_gb"`
 }
 
 func (d *PostgresDatabase) UnmarshalJSON(b []byte) error {
