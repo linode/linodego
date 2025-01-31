@@ -26,6 +26,8 @@ type NodeBalancer struct {
 	ClientConnThrottle int `json:"client_conn_throttle"`
 	// Information about the amount of transfer this NodeBalancer has had so far this month.
 	Transfer NodeBalancerTransfer `json:"transfer"`
+	// This NodeBalancer's plan Type
+	Type NodeBalancerPlanType `json:"type"`
 
 	// An array of tags applied to this object. Tags are for organizational purposes only.
 	Tags []string `json:"tags"`
@@ -58,6 +60,7 @@ type NodeBalancerCreateOptions struct {
 	Configs            []*NodeBalancerConfigCreateOptions `json:"configs,omitempty"`
 	Tags               []string                           `json:"tags"`
 	FirewallID         int                                `json:"firewall_id,omitempty"`
+	Type               NodeBalancerPlanType               `json:"type,omitempty"`
 	VPCs               []NodeBalancerVPCOptions           `json:"vpcs,omitempty"`
 }
 
@@ -67,6 +70,15 @@ type NodeBalancerUpdateOptions struct {
 	ClientConnThrottle *int      `json:"client_conn_throttle,omitempty"`
 	Tags               *[]string `json:"tags,omitempty"`
 }
+
+// NodeBalancerPlanType constants start with NBType and include Linode API NodeBalancer's plan types
+type NodeBalancerPlanType string
+
+// NodeBalancerPlanType constants reflect the plan type used by a NodeBalancer Config
+const (
+	NBTypePremium NodeBalancerPlanType = "premium"
+	NBTypeCommon  NodeBalancerPlanType = "common"
+)
 
 // UnmarshalJSON implements the json.Unmarshaler interface
 func (i *NodeBalancer) UnmarshalJSON(b []byte) error {
@@ -96,6 +108,7 @@ func (i NodeBalancer) GetCreateOptions() NodeBalancerCreateOptions {
 		Label:              i.Label,
 		Region:             i.Region,
 		ClientConnThrottle: &i.ClientConnThrottle,
+		Type:               i.Type,
 		Tags:               i.Tags,
 	}
 }
