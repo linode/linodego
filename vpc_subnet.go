@@ -75,8 +75,7 @@ func (c *Client) CreateVPCSubnet(
 	vpcID int,
 ) (*VPCSubnet, error) {
 	e := formatAPIPath("vpcs/%d/subnets", vpcID)
-	response, err := doPOSTRequest[VPCSubnet](ctx, c, e, opts)
-	return response, err
+	return doPOSTRequest[VPCSubnet](ctx, c, e, opts)
 }
 
 func (c *Client) GetVPCSubnet(
@@ -85,8 +84,7 @@ func (c *Client) GetVPCSubnet(
 	subnetID int,
 ) (*VPCSubnet, error) {
 	e := formatAPIPath("vpcs/%d/subnets/%d", vpcID, subnetID)
-	response, err := doGETRequest[VPCSubnet](ctx, c, e)
-	return response, err
+	return doGETRequest[VPCSubnet](ctx, c, e)
 }
 
 func (c *Client) ListVPCSubnets(
@@ -94,8 +92,7 @@ func (c *Client) ListVPCSubnets(
 	vpcID int,
 	opts *ListOptions,
 ) ([]VPCSubnet, error) {
-	response, err := getPaginatedResults[VPCSubnet](ctx, c, formatAPIPath("vpcs/%d/subnets", vpcID), opts)
-	return response, err
+	return getPaginatedResults[VPCSubnet](ctx, c, formatAPIPath("vpcs/%d/subnets", vpcID), opts)
 }
 
 func (c *Client) UpdateVPCSubnet(
@@ -105,12 +102,10 @@ func (c *Client) UpdateVPCSubnet(
 	opts VPCSubnetUpdateOptions,
 ) (*VPCSubnet, error) {
 	e := formatAPIPath("vpcs/%d/subnets/%d", vpcID, subnetID)
-	response, err := doPUTRequest[VPCSubnet](ctx, c, e, opts)
-	return response, err
+	return doPUTRequest[VPCSubnet](ctx, c, e, opts)
 }
 
 func (c *Client) DeleteVPCSubnet(ctx context.Context, vpcID int, subnetID int) error {
 	e := formatAPIPath("vpcs/%d/subnets/%d", vpcID, subnetID)
-	err := doDELETERequest(ctx, c, e)
-	return err
+	return doDELETERequest(ctx, c, e)
 }
