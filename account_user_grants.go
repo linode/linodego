@@ -74,20 +74,10 @@ type UserGrantsUpdateOptions struct {
 
 func (c *Client) GetUserGrants(ctx context.Context, username string) (*UserGrants, error) {
 	e := formatAPIPath("account/users/%s/grants", username)
-	response, err := doGETRequest[UserGrants](ctx, c, e)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doGETRequest[UserGrants](ctx, c, e)
 }
 
 func (c *Client) UpdateUserGrants(ctx context.Context, username string, opts UserGrantsUpdateOptions) (*UserGrants, error) {
 	e := formatAPIPath("account/users/%s/grants", username)
-	response, err := doPUTRequest[UserGrants](ctx, c, e, opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doPUTRequest[UserGrants](ctx, c, e, opts)
 }

@@ -115,56 +115,31 @@ func (l LKENodePool) GetUpdateOptions() (o LKENodePoolUpdateOptions) {
 
 // ListLKENodePools lists LKENodePools
 func (c *Client) ListLKENodePools(ctx context.Context, clusterID int, opts *ListOptions) ([]LKENodePool, error) {
-	response, err := getPaginatedResults[LKENodePool](ctx, c, formatAPIPath("lke/clusters/%d/pools", clusterID), opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return getPaginatedResults[LKENodePool](ctx, c, formatAPIPath("lke/clusters/%d/pools", clusterID), opts)
 }
 
 // GetLKENodePool gets the LKENodePool with the provided ID
 func (c *Client) GetLKENodePool(ctx context.Context, clusterID, poolID int) (*LKENodePool, error) {
 	e := formatAPIPath("lke/clusters/%d/pools/%d", clusterID, poolID)
-	response, err := doGETRequest[LKENodePool](ctx, c, e)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doGETRequest[LKENodePool](ctx, c, e)
 }
 
 // CreateLKENodePool creates a LKENodePool
 func (c *Client) CreateLKENodePool(ctx context.Context, clusterID int, opts LKENodePoolCreateOptions) (*LKENodePool, error) {
 	e := formatAPIPath("lke/clusters/%d/pools", clusterID)
-	response, err := doPOSTRequest[LKENodePool](ctx, c, e, opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doPOSTRequest[LKENodePool](ctx, c, e, opts)
 }
 
 // RecycleLKENodePool recycles a LKENodePool
 func (c *Client) RecycleLKENodePool(ctx context.Context, clusterID, poolID int) error {
 	e := formatAPIPath("lke/clusters/%d/pools/%d/recycle", clusterID, poolID)
-	_, err := doPOSTRequest[LKENodePool, any](ctx, c, e)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
 }
 
 // UpdateLKENodePool updates the LKENodePool with the specified id
 func (c *Client) UpdateLKENodePool(ctx context.Context, clusterID, poolID int, opts LKENodePoolUpdateOptions) (*LKENodePool, error) {
 	e := formatAPIPath("lke/clusters/%d/pools/%d", clusterID, poolID)
-	response, err := doPUTRequest[LKENodePool](ctx, c, e, opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doPUTRequest[LKENodePool](ctx, c, e, opts)
 }
 
 // DeleteLKENodePool deletes the LKENodePool with the specified id
@@ -176,23 +151,13 @@ func (c *Client) DeleteLKENodePool(ctx context.Context, clusterID, poolID int) e
 // GetLKENodePoolNode gets the LKENodePoolLinode with the provided ID
 func (c *Client) GetLKENodePoolNode(ctx context.Context, clusterID int, nodeID string) (*LKENodePoolLinode, error) {
 	e := formatAPIPath("lke/clusters/%d/nodes/%s", clusterID, nodeID)
-	response, err := doGETRequest[LKENodePoolLinode](ctx, c, e)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doGETRequest[LKENodePoolLinode](ctx, c, e)
 }
 
 // RecycleLKENodePoolNode recycles a LKENodePoolLinode
 func (c *Client) RecycleLKENodePoolNode(ctx context.Context, clusterID int, nodeID string) error {
 	e := formatAPIPath("lke/clusters/%d/nodes/%s/recycle", clusterID, nodeID)
-	_, err := doPOSTRequest[LKENodePoolLinode, any](ctx, c, e)
-	if err != nil {
-		return err
-	}
-
-	return nil
+	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
 }
 
 // DeleteLKENodePoolNode deletes a given node from a node pool
