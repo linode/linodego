@@ -227,52 +227,27 @@ func (d *DatabaseMaintenanceWindowPending) UnmarshalJSON(b []byte) error {
 
 // ListDatabases lists all Database instances in Linode Managed Databases for the account
 func (c *Client) ListDatabases(ctx context.Context, opts *ListOptions) ([]Database, error) {
-	response, err := getPaginatedResults[Database](ctx, c, "databases/instances", opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return getPaginatedResults[Database](ctx, c, "databases/instances", opts)
 }
 
 // ListDatabaseEngines lists all Database Engines. This endpoint is cached by default.
 func (c *Client) ListDatabaseEngines(ctx context.Context, opts *ListOptions) ([]DatabaseEngine, error) {
-	response, err := getPaginatedResults[DatabaseEngine](ctx, c, "databases/engines", opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return getPaginatedResults[DatabaseEngine](ctx, c, "databases/engines", opts)
 }
 
 // GetDatabaseEngine returns a specific Database Engine. This endpoint is cached by default.
 func (c *Client) GetDatabaseEngine(ctx context.Context, _ *ListOptions, engineID string) (*DatabaseEngine, error) {
 	e := formatAPIPath("databases/engines/%s", engineID)
-	response, err := doGETRequest[DatabaseEngine](ctx, c, e)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doGETRequest[DatabaseEngine](ctx, c, e)
 }
 
 // ListDatabaseTypes lists all Types of Database provided in Linode Managed Databases. This endpoint is cached by default.
 func (c *Client) ListDatabaseTypes(ctx context.Context, opts *ListOptions) ([]DatabaseType, error) {
-	response, err := getPaginatedResults[DatabaseType](ctx, c, "databases/types", opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return getPaginatedResults[DatabaseType](ctx, c, "databases/types", opts)
 }
 
 // GetDatabaseType returns a specific Database Type. This endpoint is cached by default.
 func (c *Client) GetDatabaseType(ctx context.Context, _ *ListOptions, typeID string) (*DatabaseType, error) {
 	e := formatAPIPath("databases/types/%s", typeID)
-	response, err := doGETRequest[DatabaseType](ctx, c, e)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doGETRequest[DatabaseType](ctx, c, e)
 }

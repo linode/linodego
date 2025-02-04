@@ -47,6 +47,5 @@ func (c *Client) GetObjectStorageBucketCertV2(ctx context.Context, clusterOrRegi
 // DeleteObjectStorageBucketCert deletes an ObjectStorageBucketCert
 func (c *Client) DeleteObjectStorageBucketCert(ctx context.Context, clusterOrRegionID, bucket string) error {
 	e := formatAPIPath("object-storage/buckets/%s/%s/ssl", clusterOrRegionID, bucket)
-	err := doDELETERequest(ctx, c, e)
-	return err
+	return doDELETERequest(ctx, c, e)
 }

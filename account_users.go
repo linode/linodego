@@ -110,51 +110,29 @@ func (i User) GetUpdateOptions() (o UserUpdateOptions) {
 
 // ListUsers lists Users on the account
 func (c *Client) ListUsers(ctx context.Context, opts *ListOptions) ([]User, error) {
-	response, err := getPaginatedResults[User](ctx, c, "account/users", opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return getPaginatedResults[User](ctx, c, "account/users", opts)
 }
 
 // GetUser gets the user with the provided ID
 func (c *Client) GetUser(ctx context.Context, userID string) (*User, error) {
 	e := formatAPIPath("account/users/%s", userID)
-	response, err := doGETRequest[User](ctx, c, e)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doGETRequest[User](ctx, c, e)
 }
 
 // CreateUser creates a User.  The email address must be confirmed before the
 // User account can be accessed.
 func (c *Client) CreateUser(ctx context.Context, opts UserCreateOptions) (*User, error) {
-	e := "account/users"
-	response, err := doPOSTRequest[User](ctx, c, e, opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doPOSTRequest[User](ctx, c, "account/users", opts)
 }
 
 // UpdateUser updates the User with the specified id
 func (c *Client) UpdateUser(ctx context.Context, userID string, opts UserUpdateOptions) (*User, error) {
 	e := formatAPIPath("account/users/%s", userID)
-	response, err := doPUTRequest[User](ctx, c, e, opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doPUTRequest[User](ctx, c, e, opts)
 }
 
 // DeleteUser deletes the User with the specified id
 func (c *Client) DeleteUser(ctx context.Context, userID string) error {
 	e := formatAPIPath("account/users/%s", userID)
-	err := doDELETERequest(ctx, c, e)
-	return err
+	return doDELETERequest(ctx, c, e)
 }
