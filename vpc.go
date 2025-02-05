@@ -74,20 +74,16 @@ func (c *Client) CreateVPC(
 	ctx context.Context,
 	opts VPCCreateOptions,
 ) (*VPC, error) {
-	e := "vpcs"
-	response, err := doPOSTRequest[VPC](ctx, c, e, opts)
-	return response, err
+	return doPOSTRequest[VPC](ctx, c, "vpcs", opts)
 }
 
 func (c *Client) GetVPC(ctx context.Context, vpcID int) (*VPC, error) {
 	e := formatAPIPath("/vpcs/%d", vpcID)
-	response, err := doGETRequest[VPC](ctx, c, e)
-	return response, err
+	return doGETRequest[VPC](ctx, c, e)
 }
 
 func (c *Client) ListVPCs(ctx context.Context, opts *ListOptions) ([]VPC, error) {
-	response, err := getPaginatedResults[VPC](ctx, c, "vpcs", opts)
-	return response, err
+	return getPaginatedResults[VPC](ctx, c, "vpcs", opts)
 }
 
 func (c *Client) UpdateVPC(
@@ -96,12 +92,10 @@ func (c *Client) UpdateVPC(
 	opts VPCUpdateOptions,
 ) (*VPC, error) {
 	e := formatAPIPath("vpcs/%d", vpcID)
-	response, err := doPUTRequest[VPC](ctx, c, e, opts)
-	return response, err
+	return doPUTRequest[VPC](ctx, c, e, opts)
 }
 
 func (c *Client) DeleteVPC(ctx context.Context, vpcID int) error {
 	e := formatAPIPath("vpcs/%d", vpcID)
-	err := doDELETERequest(ctx, c, e)
-	return err
+	return doDELETERequest(ctx, c, e)
 }
