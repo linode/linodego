@@ -149,7 +149,7 @@ func doPOSTRequest[T, O any](
 	return r.Result().(*T), nil
 }
 
-// doPOSTRequest runs a POST request using the given client, API endpoint,
+// doPOSTRequestNoResponseBody runs a POST request using the given client, API endpoint,
 // and options/body. It expects only empty response from the endpoint.
 func doPOSTRequestNoResponseBody[T any](
 	ctx context.Context,
@@ -159,6 +159,16 @@ func doPOSTRequestNoResponseBody[T any](
 ) error {
 	_, err := doPOSTRequest[any, T](ctx, client, endpoint, options...)
 	return err
+}
+
+// doPOSTRequestNoRequestResponseBody runs a POST request where no request body is needed and no response body
+// is expected from the endpoints.
+func doPOSTRequestNoRequestResponseBody(
+	ctx context.Context,
+	client *Client,
+	endpoint string,
+) error {
+	return doPOSTRequestNoResponseBody(ctx, client, endpoint, struct{}{})
 }
 
 // doPUTRequest runs a PUT request using the given client, API endpoint,

@@ -882,10 +882,10 @@ func generateListCacheURL(endpoint string, opts *ListOptions) (string, error) {
 }
 
 func hasCustomTransport(hc *http.Client) bool {
-	if hc == nil {
+	if hc == nil || hc.Transport == nil {
 		return false
 	}
-	if hc.Transport != http.DefaultTransport.(*http.Transport) {
+	if _, ok := hc.Transport.(*http.Transport); !ok {
 		log.Println("[WARN] Custom transport is not allowed with a custom root CA.")
 		return true
 	}

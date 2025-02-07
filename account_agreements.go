@@ -32,6 +32,5 @@ func (c *Client) GetAccountAgreements(ctx context.Context) (*AccountAgreements, 
 
 // AcknowledgeAccountAgreements acknowledges account agreements for the Account
 func (c *Client) AcknowledgeAccountAgreements(ctx context.Context, opts AccountAgreementsUpdateOptions) error {
-	_, err := doPOSTRequest[AccountAgreements](ctx, c, "account/agreements", opts)
-	return err
+	return doPOSTRequestNoResponseBody(ctx, c, "account/agreements", opts)
 }
