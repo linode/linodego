@@ -347,7 +347,7 @@ func TestLKECluster_APLEnabled_smoke(t *testing.T) {
 		"fixtures/TestLKECluster_APLEnabled")
 	defer teardown()
 
-	expectedConsoleURL := fmt.Sprintf("https://console.lke%v.akamai-apl.net", lkeCluster.ID)
+	expectedConsoleURL := fmt.Sprintf("https://console.lke%d.akamai-apl.net", lkeCluster.ID)
 	consoleURL, err := client.GetLKEClusterAPLConsoleURL(context.Background(), lkeCluster.ID)
 	if err != nil {
 		t.Errorf("Error getting LKE APL console URL, expected string, got %v and error %v", consoleURL, err)
@@ -356,7 +356,7 @@ func TestLKECluster_APLEnabled_smoke(t *testing.T) {
 		t.Errorf("Expected an APL console URL %v, but got a different one %v", expectedConsoleURL, consoleURL)
 	}
 
-	expectedHealthCheckURL := fmt.Sprintf("https://auth.lke%v.akamai-apl.net/ready", lkeCluster.ID)
+	expectedHealthCheckURL := fmt.Sprintf("https://auth.lke%d.akamai-apl.net/ready", lkeCluster.ID)
 	healthCheckURL, err := client.GetLKEClusterAPLHealthCheckURL(context.Background(), lkeCluster.ID)
 	if err != nil {
 		t.Errorf("Error getting LKE APL health check URL, expected string, got %v and error %v", healthCheckURL, err)

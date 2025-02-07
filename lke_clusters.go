@@ -300,7 +300,7 @@ func (c *Client) GetLKEClusterAPLConsoleURL(ctx context.Context, clusterID int) 
 	}
 
 	if cluster.APLEnabled {
-		return fmt.Sprintf("https://console.lke%v.akamai-apl.net", cluster.ID), nil
+		return fmt.Sprintf("https://console.lke%d.akamai-apl.net", cluster.ID), nil
 	}
 
 	return "", nil
@@ -314,7 +314,7 @@ func (c *Client) GetLKEClusterAPLHealthCheckURL(ctx context.Context, clusterID i
 	}
 
 	if cluster.APLEnabled {
-		return fmt.Sprintf("https://auth.lke%v.akamai-apl.net/ready", cluster.ID), nil
+		return fmt.Sprintf("https://auth.lke%d.akamai-apl.net/ready", cluster.ID), nil
 	}
 
 	return "", nil
