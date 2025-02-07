@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stretchr/testify/assert"
 	"github.com/linode/linodego"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestListLongviewClients(t *testing.T) {
