@@ -37,8 +37,7 @@ func (v *VLAN) UnmarshalJSON(b []byte) error {
 
 // ListVLANs returns a paginated list of VLANs
 func (c *Client) ListVLANs(ctx context.Context, opts *ListOptions) ([]VLAN, error) {
-	response, err := getPaginatedResults[VLAN](ctx, c, "networking/vlans", opts)
-	return response, err
+	return getPaginatedResults[VLAN](ctx, c, "networking/vlans", opts)
 }
 
 // GetVLANIPAMAddress returns the IPAM Address for a given VLAN Label as a string (10.0.0.1/24)

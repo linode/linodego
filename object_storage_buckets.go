@@ -142,8 +142,7 @@ func (c *Client) GetObjectStorageBucket(ctx context.Context, clusterOrRegionID, 
 
 // CreateObjectStorageBucket creates an ObjectStorageBucket
 func (c *Client) CreateObjectStorageBucket(ctx context.Context, opts ObjectStorageBucketCreateOptions) (*ObjectStorageBucket, error) {
-	e := "object-storage/buckets"
-	return doPOSTRequest[ObjectStorageBucket](ctx, c, e, opts)
+	return doPOSTRequest[ObjectStorageBucket](ctx, c, "object-storage/buckets", opts)
 }
 
 // GetObjectStorageBucketAccess gets the current access config for a bucket
@@ -156,9 +155,7 @@ func (c *Client) GetObjectStorageBucketAccess(ctx context.Context, clusterOrRegi
 // UpdateObjectStorageBucketAccess updates the access configuration for an ObjectStorageBucket
 func (c *Client) UpdateObjectStorageBucketAccess(ctx context.Context, clusterOrRegionID, label string, opts ObjectStorageBucketUpdateAccessOptions) error {
 	e := formatAPIPath("object-storage/buckets/%s/%s/access", clusterOrRegionID, label)
-	_, err := doPOSTRequest[ObjectStorageBucketAccess](ctx, c, e, opts)
-
-	return err
+	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
 
 // GetObjectStorageBucketAccess gets the current access config for a bucket

@@ -52,8 +52,7 @@ func (i Tag) GetCreateOptions() (o TagCreateOptions) {
 
 // ListTags lists Tags
 func (c *Client) ListTags(ctx context.Context, opts *ListOptions) ([]Tag, error) {
-	response, err := getPaginatedResults[Tag](ctx, c, "tags", opts)
-	return response, err
+	return getPaginatedResults[Tag](ctx, c, "tags", opts)
 }
 
 // fixData stores an object of the type defined by Type in Data using RawData
@@ -152,14 +151,11 @@ func (t TaggedObjectList) SortedObjects() (SortedObjects, error) {
 
 // CreateTag creates a Tag
 func (c *Client) CreateTag(ctx context.Context, opts TagCreateOptions) (*Tag, error) {
-	e := "tags"
-	response, err := doPOSTRequest[Tag](ctx, c, e, opts)
-	return response, err
+	return doPOSTRequest[Tag](ctx, c, "tags", opts)
 }
 
 // DeleteTag deletes the Tag with the specified id
 func (c *Client) DeleteTag(ctx context.Context, label string) error {
 	e := formatAPIPath("tags/%s", label)
-	err := doDELETERequest(ctx, c, e)
-	return err
+	return doDELETERequest(ctx, c, e)
 }

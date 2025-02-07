@@ -180,51 +180,29 @@ func (c *Client) GetLKEVersion(ctx context.Context, version string) (*LKEVersion
 
 // ListLKEClusterAPIEndpoints gets the API Endpoint for the LKE Cluster specified
 func (c *Client) ListLKEClusterAPIEndpoints(ctx context.Context, clusterID int, opts *ListOptions) ([]LKEClusterAPIEndpoint, error) {
-	response, err := getPaginatedResults[LKEClusterAPIEndpoint](ctx, c, formatAPIPath("lke/clusters/%d/api-endpoints", clusterID), opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return getPaginatedResults[LKEClusterAPIEndpoint](ctx, c, formatAPIPath("lke/clusters/%d/api-endpoints", clusterID), opts)
 }
 
 // ListLKEClusters lists LKEClusters
 func (c *Client) ListLKEClusters(ctx context.Context, opts *ListOptions) ([]LKECluster, error) {
-	response, err := getPaginatedResults[LKECluster](ctx, c, "lke/clusters", opts)
-	return response, err
+	return getPaginatedResults[LKECluster](ctx, c, "lke/clusters", opts)
 }
 
 // GetLKECluster gets the lkeCluster with the provided ID
 func (c *Client) GetLKECluster(ctx context.Context, clusterID int) (*LKECluster, error) {
 	e := formatAPIPath("lke/clusters/%d", clusterID)
-	response, err := doGETRequest[LKECluster](ctx, c, e)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doGETRequest[LKECluster](ctx, c, e)
 }
 
 // CreateLKECluster creates a LKECluster
 func (c *Client) CreateLKECluster(ctx context.Context, opts LKEClusterCreateOptions) (*LKECluster, error) {
-	e := "lke/clusters"
-	response, err := doPOSTRequest[LKECluster](ctx, c, e, opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doPOSTRequest[LKECluster](ctx, c, "lke/clusters", opts)
 }
 
 // UpdateLKECluster updates the LKECluster with the specified id
 func (c *Client) UpdateLKECluster(ctx context.Context, clusterID int, opts LKEClusterUpdateOptions) (*LKECluster, error) {
 	e := formatAPIPath("lke/clusters/%d", clusterID)
-	response, err := doPUTRequest[LKECluster](ctx, c, e, opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doPUTRequest[LKECluster](ctx, c, e, opts)
 }
 
 // DeleteLKECluster deletes the LKECluster with the specified id
@@ -236,12 +214,7 @@ func (c *Client) DeleteLKECluster(ctx context.Context, clusterID int) error {
 // GetLKEClusterKubeconfig gets the Kubeconfig for the LKE Cluster specified
 func (c *Client) GetLKEClusterKubeconfig(ctx context.Context, clusterID int) (*LKEClusterKubeconfig, error) {
 	e := formatAPIPath("lke/clusters/%d/kubeconfig", clusterID)
-	response, err := doGETRequest[LKEClusterKubeconfig](ctx, c, e)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doGETRequest[LKEClusterKubeconfig](ctx, c, e)
 }
 
 // DeleteLKEClusterKubeconfig deletes the Kubeconfig for the LKE Cluster specified
@@ -253,30 +226,19 @@ func (c *Client) DeleteLKEClusterKubeconfig(ctx context.Context, clusterID int) 
 // GetLKEClusterDashboard gets information about the dashboard for an LKE cluster
 func (c *Client) GetLKEClusterDashboard(ctx context.Context, clusterID int) (*LKEClusterDashboard, error) {
 	e := formatAPIPath("lke/clusters/%d/dashboard", clusterID)
-	response, err := doGETRequest[LKEClusterDashboard](ctx, c, e)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doGETRequest[LKEClusterDashboard](ctx, c, e)
 }
 
 // RecycleLKEClusterNodes recycles all nodes in all pools of the specified LKE Cluster.
 func (c *Client) RecycleLKEClusterNodes(ctx context.Context, clusterID int) error {
 	e := formatAPIPath("lke/clusters/%d/recycle", clusterID)
-	_, err := doPOSTRequest[LKECluster, any](ctx, c, e)
-	return err
+	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
 }
 
 // RegenerateLKECluster regenerates the Kubeconfig file and/or the service account token for the specified LKE Cluster.
 func (c *Client) RegenerateLKECluster(ctx context.Context, clusterID int, opts LKEClusterRegenerateOptions) (*LKECluster, error) {
 	e := formatAPIPath("lke/clusters/%d/regenerate", clusterID)
-	response, err := doPOSTRequest[LKECluster](ctx, c, e, opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doPOSTRequest[LKECluster](ctx, c, e, opts)
 }
 
 // DeleteLKEClusterServiceToken deletes and regenerate the service account token for a Cluster.

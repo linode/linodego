@@ -36,6 +36,6 @@ jobs:
 
       - name: run tests
         run: |
-          make int-test
+          make test-int
         env:
           LINODE_TOKEN: ${{ secrets.DX_LINODE_TOKEN }}

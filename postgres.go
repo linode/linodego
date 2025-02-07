@@ -66,6 +66,8 @@ type PostgresDatabase struct {
 	Updated           *time.Time                `json:"-"`
 	Fork              *DatabaseFork             `json:"fork"`
 	OldestRestoreTime *time.Time                `json:"-"`
+	UsedDiskSizeGB    int                       `json:"used_disk_size_gb"`
+	TotalDiskSizeGB   int                       `json:"total_disk_size_gb"`
 }
 
 func (d *PostgresDatabase) UnmarshalJSON(b []byte) error {
@@ -134,8 +136,7 @@ type PostgresDatabaseCredential struct {
 
 // ListPostgresDatabases lists all Postgres Databases associated with the account
 func (c *Client) ListPostgresDatabases(ctx context.Context, opts *ListOptions) ([]PostgresDatabase, error) {
-	response, err := getPaginatedResults[PostgresDatabase](ctx, c, "databases/postgresql/instances", opts)
-	return response, err
+	return getPaginatedResults[PostgresDatabase](ctx, c, "databases/postgresql/instances", opts)
 }
 
 // PostgresDatabaseBackup is information for interacting with a backup for the existing Postgres Database
@@ -178,64 +179,54 @@ type PostgresBackupCreateOptions struct {
 // Deprecated: ListPostgresDatabaseBackups is a deprecated method, as the backup endpoints are no longer supported in DBaaS V2.
 // In DBaaS V2, databases can be backed up via database forking.
 func (c *Client) ListPostgresDatabaseBackups(ctx context.Context, databaseID int, opts *ListOptions) ([]PostgresDatabaseBackup, error) {
-	response, err := getPaginatedResults[PostgresDatabaseBackup](ctx, c, formatAPIPath("databases/postgresql/instances/%d/backups", databaseID), opts)
-	return response, err
+	return getPaginatedResults[PostgresDatabaseBackup](ctx, c, formatAPIPath("databases/postgresql/instances/%d/backups", databaseID), opts)
 }
 
 // GetPostgresDatabase returns a single Postgres Database matching the id
 func (c *Client) GetPostgresDatabase(ctx context.Context, databaseID int) (*PostgresDatabase, error) {
 	e := formatAPIPath("databases/postgresql/instances/%d", databaseID)
-	response, err := doGETRequest[PostgresDatabase](ctx, c, e)
-	return response, err
+	return doGETRequest[PostgresDatabase](ctx, c, e)
 }
 
 // CreatePostgresDatabase creates a new Postgres Database using the createOpts as configuration, returns the new Postgres Database
 func (c *Client) CreatePostgresDatabase(ctx context.Context, opts PostgresCreateOptions) (*PostgresDatabase, error) {
-	e := "databases/postgresql/instances"
-	response, err := doPOSTRequest[PostgresDatabase](ctx, c, e, opts)
-	return response, err
+	return doPOSTRequest[PostgresDatabase](ctx, c, "databases/postgresql/instances", opts)
 }
 
 // DeletePostgresDatabase deletes an existing Postgres Database with the given id
 func (c *Client) DeletePostgresDatabase(ctx context.Context, databaseID int) error {
 	e := formatAPIPath("databases/postgresql/instances/%d", databaseID)
-	err := doDELETERequest(ctx, c, e)
-	return err
+	return doDELETERequest(ctx, c, e)
 }
 
 // UpdatePostgresDatabase updates the given Postgres Database with the provided opts, returns the PostgresDatabase with the new settings
 func (c *Client) UpdatePostgresDatabase(ctx context.Context, databaseID int, opts PostgresUpdateOptions) (*PostgresDatabase, error) {
 	e := formatAPIPath("databases/postgresql/instances/%d", databaseID)
-	response, err := doPUTRequest[PostgresDatabase](ctx, c, e, opts)
-	return response, err
+	return doPUTRequest[PostgresDatabase](ctx, c, e, opts)
 }
 
 // PatchPostgresDatabase applies security patches and updates to the underlying operating system of the Managed Postgres Database
 func (c *Client) PatchPostgresDatabase(ctx context.Context, databaseID int) error {
 	e := formatAPIPath("databases/postgresql/instances/%d/patch", databaseID)
-	_, err := doPOSTRequest[PostgresDatabase, any](ctx, c, e)
-	return err
+	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
 }
 
 // GetPostgresDatabaseCredentials returns the Root Credentials for the given Postgres Database
 func (c *Client) GetPostgresDatabaseCredentials(ctx context.Context, databaseID int) (*PostgresDatabaseCredential, error) {
 	e := formatAPIPath("databases/postgresql/instances/%d/credentials", databaseID)
-	response, err := doGETRequest[PostgresDatabaseCredential](ctx, c, e)
-	return response, err
+	return doGETRequest[PostgresDatabaseCredential](ctx, c, e)
 }
 
 // ResetPostgresDatabaseCredentials returns the Root Credentials for the given Postgres Database (may take a few seconds to work)
 func (c *Client) ResetPostgresDatabaseCredentials(ctx context.Context, databaseID int) error {
 	e := formatAPIPath("databases/postgresql/instances/%d/credentials/reset", databaseID)
-	_, err := doPOSTRequest[PostgresDatabaseCredential, any](ctx, c, e)
-	return err
+	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
 }
 
 // GetPostgresDatabaseSSL returns the SSL Certificate for the given Postgres Database
 func (c *Client) GetPostgresDatabaseSSL(ctx context.Context, databaseID int) (*PostgresDatabaseSSL, error) {
 	e := formatAPIPath("databases/postgresql/instances/%d/ssl", databaseID)
-	response, err := doGETRequest[PostgresDatabaseSSL](ctx, c, e)
-	return response, err
+	return doGETRequest[PostgresDatabaseSSL](ctx, c, e)
 }
 
 // GetPostgresDatabaseBackup returns a specific Postgres Database Backup with the given ids
@@ -243,8 +234,7 @@ func (c *Client) GetPostgresDatabaseSSL(ctx context.Context, databaseID int) (*P
 // In DBaaS V2, databases can be backed up via database forking.
 func (c *Client) GetPostgresDatabaseBackup(ctx context.Context, databaseID int, backupID int) (*PostgresDatabaseBackup, error) {
 	e := formatAPIPath("databases/postgresql/instances/%d/backups/%d", databaseID, backupID)
-	response, err := doGETRequest[PostgresDatabaseBackup](ctx, c, e)
-	return response, err
+	return doGETRequest[PostgresDatabaseBackup](ctx, c, e)
 }
 
 // RestorePostgresDatabaseBackup returns the given Postgres Database with the given Backup
@@ -252,8 +242,7 @@ func (c *Client) GetPostgresDatabaseBackup(ctx context.Context, databaseID int, 
 // In DBaaS V2, databases can be backed up via database forking.
 func (c *Client) RestorePostgresDatabaseBackup(ctx context.Context, databaseID int, backupID int) error {
 	e := formatAPIPath("databases/postgresql/instances/%d/backups/%d/restore", databaseID, backupID)
-	_, err := doPOSTRequest[PostgresDatabaseBackup, any](ctx, c, e)
-	return err
+	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
 }
 
 // CreatePostgresDatabaseBackup creates a snapshot for the given Postgres database
@@ -261,6 +250,5 @@ func (c *Client) RestorePostgresDatabaseBackup(ctx context.Context, databaseID i
 // In DBaaS V2, databases can be backed up via database forking.
 func (c *Client) CreatePostgresDatabaseBackup(ctx context.Context, databaseID int, opts PostgresBackupCreateOptions) error {
 	e := formatAPIPath("databases/postgresql/instances/%d/backups", databaseID)
-	_, err := doPOSTRequest[PostgresDatabaseBackup](ctx, c, e, opts)
-	return err
+	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }

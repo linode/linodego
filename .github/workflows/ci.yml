@@ -55,7 +55,7 @@ jobs:
           python-version: '3.x'
 
       - name: Install Python deps
-        run: pip3 install requests wheel boto3
+        run: pip3 install requests wheel boto3==1.35.99
 
       - name: Install go-junit-report
         run: go install github.com/jstemmer/go-junit-report/v2@latest

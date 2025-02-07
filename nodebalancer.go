@@ -104,50 +104,28 @@ func (i NodeBalancer) GetUpdateOptions() NodeBalancerUpdateOptions {
 
 // ListNodeBalancers lists NodeBalancers
 func (c *Client) ListNodeBalancers(ctx context.Context, opts *ListOptions) ([]NodeBalancer, error) {
-	response, err := getPaginatedResults[NodeBalancer](ctx, c, "nodebalancers", opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return getPaginatedResults[NodeBalancer](ctx, c, "nodebalancers", opts)
 }
 
 // GetNodeBalancer gets the NodeBalancer with the provided ID
 func (c *Client) GetNodeBalancer(ctx context.Context, nodebalancerID int) (*NodeBalancer, error) {
 	e := formatAPIPath("nodebalancers/%d", nodebalancerID)
-	response, err := doGETRequest[NodeBalancer](ctx, c, e)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doGETRequest[NodeBalancer](ctx, c, e)
 }
 
 // CreateNodeBalancer creates a NodeBalancer
 func (c *Client) CreateNodeBalancer(ctx context.Context, opts NodeBalancerCreateOptions) (*NodeBalancer, error) {
-	e := "nodebalancers"
-	response, err := doPOSTRequest[NodeBalancer](ctx, c, e, opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doPOSTRequest[NodeBalancer](ctx, c, "nodebalancers", opts)
 }
 
 // UpdateNodeBalancer updates the NodeBalancer with the specified id
 func (c *Client) UpdateNodeBalancer(ctx context.Context, nodebalancerID int, opts NodeBalancerUpdateOptions) (*NodeBalancer, error) {
 	e := formatAPIPath("nodebalancers/%d", nodebalancerID)
-	response, err := doPUTRequest[NodeBalancer](ctx, c, e, opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doPUTRequest[NodeBalancer](ctx, c, e, opts)
 }
 
 // DeleteNodeBalancer deletes the NodeBalancer with the specified id
 func (c *Client) DeleteNodeBalancer(ctx context.Context, nodebalancerID int) error {
 	e := formatAPIPath("nodebalancers/%d", nodebalancerID)
-	err := doDELETERequest(ctx, c, e)
-	return err
+	return doDELETERequest(ctx, c, e)
 }

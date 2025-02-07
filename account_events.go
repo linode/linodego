@@ -300,35 +300,23 @@ func (i *Event) UnmarshalJSON(b []byte) error {
 // on the Account. The Events returned depend on the token grants and the grants
 // of the associated user.
 func (c *Client) ListEvents(ctx context.Context, opts *ListOptions) ([]Event, error) {
-	response, err := getPaginatedResults[Event](ctx, c, "account/events", opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return getPaginatedResults[Event](ctx, c, "account/events", opts)
 }
 
 // GetEvent gets the Event with the Event ID
 func (c *Client) GetEvent(ctx context.Context, eventID int) (*Event, error) {
 	e := formatAPIPath("account/events/%d", eventID)
-	response, err := doGETRequest[Event](ctx, c, e)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doGETRequest[Event](ctx, c, e)
 }
 
 // MarkEventRead marks a single Event as read.
 func (c *Client) MarkEventRead(ctx context.Context, event *Event) error {
 	e := formatAPIPath("account/events/%d/read", event.ID)
-	_, err := doPOSTRequest[Event](ctx, c, e, []any{})
-	return err
+	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
 }
 
 // MarkEventsSeen marks all Events up to and including this Event by ID as seen.
 func (c *Client) MarkEventsSeen(ctx context.Context, event *Event) error {
 	e := formatAPIPath("account/events/%d/seen", event.ID)
-	_, err := doPOSTRequest[Event](ctx, c, e, []any{})
-	return err
+	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
 }
