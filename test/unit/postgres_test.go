@@ -2,10 +2,11 @@ package unit
 
 import (
 	"context"
+	"testing"
+
 	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestListDatabasePostgreSQL_List(t *testing.T) {
