@@ -59,3 +59,17 @@ func TestRegions_blockStorageEncryption(t *testing.T) {
 	})
 	require.NotZero(t, regionIdx)
 }
+
+func TestRegions_kubernetesEnterprise(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestRegions_kubernetesEnterprise")
+	defer teardown()
+
+	regions, err := client.ListRegions(context.Background(), nil)
+	require.NoError(t, err)
+
+	// Filtering is not currently supported on capabilities
+	regionIdx := slices.IndexFunc(regions, func(region linodego.Region) bool {
+		return slices.Contains(region.Capabilities, "Kubernetes Enterprise")
+	})
+	require.NotZero(t, regionIdx)
+}

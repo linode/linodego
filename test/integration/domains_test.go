@@ -107,3 +107,31 @@ func setupDomain(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 	}
 	return client, domain, teardown, err
 }
+
+func TestDomain_Clone_smoke(t *testing.T) {
+	client, domainToClone, teardown, err := setupDomain(t, "fixtures/TestDomain_Clone")
+	if err != nil {
+		t.Errorf("Error creating domain: %v", err)
+	}
+
+	domain, err := client.CloneDomain(context.Background(), domainToClone.ID, linodego.DomainCloneOptions{
+		Domain: "linodego-domain-clone.com",
+	})
+	if err != nil {
+		t.Errorf("Error cloning domain, expected struct, got error %v", err)
+	}
+
+	cloneTeardown := func() {
+		if err := client.DeleteDomain(context.Background(), domain.ID); err != nil {
+			t.Errorf("Expected to delete a domain, but got %v", err)
+		}
+		teardown()
+	}
+
+	defer cloneTeardown()
+
+	// when comparing fixtures to random value Domain will differ
+	if domain.SOAEmail != domainToClone.SOAEmail {
+		t.Errorf("Domain returned does not match domain clone request")
+	}
+}

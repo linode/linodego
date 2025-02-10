@@ -1,127 +1,132 @@
 ---
 version: 1
 interactions:
-  - request:
-      body: ""
-      form: {}
-      headers:
-        Accept:
-          - application/json
-        Content-Type:
-          - application/json
-        User-Agent:
-          - linodego/dev https://github.com/linode/linodego
-      url: https://api.linode.com/v4beta/databases/engines?page=1
-      method: GET
-    response:
-      body: '{"data": [{"id": "mysql/8.0.30", "engine": "mysql", "version": "8.0.30"},
-      {"id": "postgresql/12.12", "engine": "postgresql", "version": "12.12"}, {"id":
-      "postgresql/13.8", "engine": "postgresql", "version": "13.8"}, {"id": "postgresql/14.6",
-      "engine": "postgresql", "version": "14.6"}], "page": 1, "pages": 1, "results":
-      4}'
-      headers:
-        Access-Control-Allow-Credentials:
-          - "true"
-        Access-Control-Allow-Headers:
-          - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-        Access-Control-Allow-Methods:
-          - HEAD, GET, OPTIONS, POST, PUT, DELETE
-        Access-Control-Allow-Origin:
-          - '*'
-        Access-Control-Expose-Headers:
-          - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-        Cache-Control:
-          - max-age=0, no-cache, no-store
-        Connection:
-          - keep-alive
-        Content-Length:
-          - "323"
-        Content-Security-Policy:
-          - default-src 'none'
-        Content-Type:
-          - application/json
-        Expires:
-          - Mon, 24 Jun 2024 16:45:40 GMT
-        Pragma:
-          - no-cache
-        Strict-Transport-Security:
-          - max-age=31536000
-        Vary:
-          - Authorization, X-Filter
-          - Authorization, X-Filter
-        X-Accepted-Oauth-Scopes:
-          - '*'
-        X-Content-Type-Options:
-          - nosniff
-        X-Frame-Options:
-          - DENY
-          - DENY
-        X-Oauth-Scopes:
-          - '*'
-        X-Ratelimit-Limit:
-          - "400"
-        X-Xss-Protection:
-          - 1; mode=block
-      status: 200 OK
-      code: 200
-      duration: ""
-  - request:
-      body: ""
-      form: {}
-      headers:
-        Accept:
-          - application/json
-        Content-Type:
-          - application/json
-        User-Agent:
-          - linodego/dev https://github.com/linode/linodego
-      url: https://api.linode.com/v4beta/databases/engines/mysql%2F8.0.30
-      method: GET
-    response:
-      body: '{"id": "mysql/8.0.30", "engine": "mysql", "version": "8.0.30"}'
-      headers:
-        Access-Control-Allow-Credentials:
-          - "true"
-        Access-Control-Allow-Headers:
-          - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-        Access-Control-Allow-Methods:
-          - HEAD, GET, OPTIONS, POST, PUT, DELETE
-        Access-Control-Allow-Origin:
-          - '*'
-        Access-Control-Expose-Headers:
-          - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-        Cache-Control:
-          - max-age=0, no-cache, no-store
-        Connection:
-          - keep-alive
-        Content-Length:
-          - "62"
-        Content-Security-Policy:
-          - default-src 'none'
-        Content-Type:
-          - application/json
-        Expires:
-          - Mon, 24 Jun 2024 16:45:40 GMT
-        Pragma:
-          - no-cache
-        Strict-Transport-Security:
-          - max-age=31536000
-        Vary:
-          - Authorization, X-Filter
-          - Authorization, X-Filter
-        X-Accepted-Oauth-Scopes:
-          - '*'
-        X-Content-Type-Options:
-          - nosniff
-        X-Frame-Options:
-          - DENY
-          - DENY
-        X-Oauth-Scopes:
-          - '*'
-        X-Ratelimit-Limit:
-          - "400"
-        X-Xss-Protection:
-          - 1; mode=block
-      status: 200 OK
-      code: 200
-      duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/databases/engines?page=1
+    method: GET
+  response:
+    body: '{"data": [{"engine": "mysql", "id": "mysql/8", "version": "8"}, {"engine":
+      "postgresql", "id": "postgresql/13", "version": "13"}, {"engine": "postgresql",
+      "id": "postgresql/14", "version": "14"}, {"engine": "postgresql", "id": "postgresql/15",
+      "version": "15"}, {"engine": "postgresql", "id": "postgresql/16", "version":
+      "16"}, {"engine": "postgresql", "id": "postgresql/17", "version": "17"}], "page":
+      1, "pages": 1, "results": 6}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "431"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Wed, 22 Jan 2025 15:05:07 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1600"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/databases/engines/mysql%2F8
+    method: GET
+  response:
+    body: '{"engine": "mysql", "id": "mysql/8", "version": "8"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "52"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Wed, 22 Jan 2025 15:05:08 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1600"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
