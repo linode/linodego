@@ -86,23 +86,13 @@ func (i Token) GetUpdateOptions() (o TokenUpdateOptions) {
 
 // ListTokens lists Tokens
 func (c *Client) ListTokens(ctx context.Context, opts *ListOptions) ([]Token, error) {
-	response, err := getPaginatedResults[Token](ctx, c, "profile/tokens", opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return getPaginatedResults[Token](ctx, c, "profile/tokens", opts)
 }
 
 // GetToken gets the token with the provided ID
 func (c *Client) GetToken(ctx context.Context, tokenID int) (*Token, error) {
 	e := formatAPIPath("profile/tokens/%d", tokenID)
-	response, err := doGETRequest[Token](ctx, c, e)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doGETRequest[Token](ctx, c, e)
 }
 
 // CreateToken creates a Token
@@ -120,29 +110,17 @@ func (c *Client) CreateToken(ctx context.Context, opts TokenCreateOptions) (*Tok
 		createOptsFixed.Expiry = &iso8601Expiry
 	}
 
-	e := "profile/tokens"
-	response, err := doPOSTRequest[Token](ctx, c, e, createOptsFixed)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doPOSTRequest[Token](ctx, c, "profile/tokens", createOptsFixed)
 }
 
 // UpdateToken updates the Token with the specified id
 func (c *Client) UpdateToken(ctx context.Context, tokenID int, opts TokenUpdateOptions) (*Token, error) {
 	e := formatAPIPath("profile/tokens/%d", tokenID)
-	response, err := doPUTRequest[Token](ctx, c, e, opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doPUTRequest[Token](ctx, c, e, opts)
 }
 
 // DeleteToken deletes the Token with the specified id
 func (c *Client) DeleteToken(ctx context.Context, tokenID int) error {
 	e := formatAPIPath("profile/tokens/%d", tokenID)
-	err := doDELETERequest(ctx, c, e)
-	return err
+	return doDELETERequest(ctx, c, e)
 }

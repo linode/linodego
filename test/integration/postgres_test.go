@@ -43,14 +43,12 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 		t.Errorf("got wrong db from GetPostgresDatabase: %v", db)
 	}
 
-	week := 3
-
 	updatedWindow := linodego.DatabaseMaintenanceWindow{
-		DayOfWeek:   linodego.DatabaseMaintenanceDayWednesday,
-		Duration:    1,
-		Frequency:   linodego.DatabaseMaintenanceFrequencyMonthly,
-		HourOfDay:   8,
-		WeekOfMonth: &week,
+		DayOfWeek: linodego.DatabaseMaintenanceDayWednesday,
+		Duration:  4,
+		Frequency: linodego.DatabaseMaintenanceFrequencyWeekly,
+		HourOfDay: 8,
+		Pending:   []linodego.DatabaseMaintenanceWindowPending{},
 	}
 
 	allowList := []string{"128.173.205.21", "123.177.200.20"}
@@ -134,41 +132,6 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 		linodego.DatabaseStatusActive, 2400); err != nil {
 		t.Fatalf("failed to wait for database updating: %s", err)
 	}
-
-	backupLabel := "postgresbackupforlinodego"
-	backupOptions := linodego.PostgresBackupCreateOptions{
-		Label:  backupLabel,
-		Target: linodego.PostgresDatabaseTargetPrimary,
-	}
-
-	if err := client.CreatePostgresDatabaseBackup(context.Background(), database.ID, backupOptions); err != nil {
-		t.Errorf("failed to create db backup: %v", err)
-	}
-
-	backup, err := client.WaitForPostgresDatabaseBackup(context.Background(), database.ID, backupLabel, 1200)
-	if err != nil {
-		t.Fatalf("failed to wait for backup: %s", err)
-	}
-
-	if backup.Label != backupLabel {
-		t.Fatalf("backup label mismatch: %v != %v", backupLabel, backup.Label)
-	}
-
-	backup, err = client.GetPostgresDatabaseBackup(context.Background(), database.ID, backup.ID)
-	if err != nil {
-		t.Errorf("failed to get backup %d for db: %v", backup.ID, err)
-	}
-
-	if backup.Label != backupLabel {
-		t.Fatalf("backup label mismatch: %v != %v", backupLabel, backup.Label)
-	}
-
-	// Wait for the DB to re-enter active status before final deletion
-	if err := client.WaitForDatabaseStatus(
-		context.Background(), database.ID, linodego.DatabaseEngineTypePostgres,
-		linodego.DatabaseStatusActive, 2400); err != nil {
-		t.Fatalf("failed to wait for database updating: %s", err)
-	}
 }
 
 type postgresDatabaseModifier func(options *linodego.PostgresCreateOptions)
@@ -179,15 +142,12 @@ func createPostgresDatabase(t *testing.T, client *linodego.Client,
 	t.Helper()
 
 	createOpts := linodego.PostgresCreateOptions{
-		Label:           "go-postgres-testing-def" + randLabel(),
-		Region:          getRegionsWithCaps(t, client, []string{"Managed Databases"})[0],
-		Type:            "g6-nanode-1",
-		Engine:          "postgresql/14.6",
-		Encrypted:       false,
-		SSLConnection:   false,
-		ClusterSize:     3,
-		ReplicationType: linodego.PostgresReplicationAsynch,
-		AllowList:       []string{"203.0.113.1", "192.0.1.0/24"},
+		Label:       "go-postgres-testing-def" + randLabel(),
+		Region:      getRegionsWithCaps(t, client, []string{"Managed Databases"})[0],
+		Type:        "g6-nanode-1",
+		Engine:      "postgresql/14",
+		ClusterSize: 3,
+		AllowList:   []string{"203.0.113.1", "192.0.1.0/24"},
 	}
 	for _, modifier := range databaseMofidiers {
 		modifier(&createOpts)

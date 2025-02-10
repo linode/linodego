@@ -387,3 +387,76 @@ func TestReservedIPAddresses_DeleteIPAddressVariants(t *testing.T) {
 		t.Errorf("Expected error when deleting unowned IP, got nil")
 	}
 }
+
+func TestReservedIPAddresses_GetIPReservationStatus(t *testing.T) {
+	client, teardown := createTestClient(t, "TestReservedIPAddresses_GetInstanceIPReservationStatus")
+	defer teardown()
+
+	// Create a Linode with a reserved IP
+	reservedIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{Region: "us-east"})
+	if err != nil {
+		t.Fatalf("Failed to reserve IP: %v", err)
+	}
+	defer func() {
+		err := client.DeleteReservedIPAddress(context.Background(), reservedIP.Address)
+		if err != nil {
+			t.Errorf("Failed to delete reserved IP: %v", err)
+		}
+	}()
+
+	instanceWithReservedIP, instanceTeardown, err := createInstanceWithReservedIP(t, client, reservedIP.Address)
+	if err != nil {
+		t.Fatalf("Error creating instance with reserved IP: %s", err)
+	}
+	defer instanceTeardown()
+
+	// Make GET request for the Linode with reserved IP
+	instanceAddresses, err := client.GetInstanceIPAddresses(context.Background(), instanceWithReservedIP.ID)
+	if err != nil {
+		t.Fatalf("Failed to get instance info for Linode with reserved IP: %v", err)
+	}
+
+	// Check if the 'reserved' field is set to true
+	foundReserved := false
+	for _, ip := range instanceAddresses.IPv4.Public {
+		if ip.Address == reservedIP.Address {
+			if !ip.Reserved {
+				t.Errorf("Expected 'Reserved' field to be true for reserved IP %s, but it was false", ip.Address)
+			}
+			foundReserved = true
+			break
+		}
+	}
+	if !foundReserved {
+		t.Errorf("Reserved IP %s not found in instance's public IP addresses", reservedIP.Address)
+	}
+
+	// Create a Linode with an ephemeral IP
+	instanceWithEphemeralIP, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
+		Region:   "us-east",
+		Type:     "g6-nanode-1",
+		Label:    "test-instance-ephemeral-ip",
+		RootPass: randPassword(),
+	})
+	if err != nil {
+		t.Fatalf("Failed to create Linode with ephemeral IP: %v", err)
+	}
+	defer func() {
+		if err := client.DeleteInstance(context.Background(), instanceWithEphemeralIP.ID); err != nil {
+			t.Errorf("Error deleting test Instance with ephemeral IP: %s", err)
+		}
+	}()
+
+	// Make GET request for the Linode with ephemeral IP
+	ephemeralInstanceAddresses, err := client.GetInstanceIPAddresses(context.Background(), instanceWithEphemeralIP.ID)
+	if err != nil {
+		t.Fatalf("Failed to get instance IP addresses for Linode with ephemeral IP: %v", err)
+	}
+
+	// Check that all public IPs have 'Reserved' field set to false
+	for _, ip := range ephemeralInstanceAddresses.IPv4.Public {
+		if ip.Reserved {
+			t.Errorf("Expected 'Reserved' field to be false for ephemeral IP %s, but it was true", ip.Address)
+		}
+	}
+}

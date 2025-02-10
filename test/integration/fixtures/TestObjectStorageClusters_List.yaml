@@ -49,8 +49,22 @@ interactions:
       "region": "us-mia", "status": "available", "domain": "us-mia-1.linodeobjects.com",
       "static_site_domain": "website-us-mia-1.linodeobjects.com"}, {"id": "es-mad-1",
       "region": "es-mad", "status": "available", "domain": "es-mad-1.linodeobjects.com",
-      "static_site_domain": "website-es-mad-1.linodeobjects.com"}], "page": 1, "pages":
-      1, "results": 18}'
+      "static_site_domain": "website-es-mad-1.linodeobjects.com"}, {"id": "us-iad-10",
+      "region": "us-iad", "status": "available", "domain": "us-iad-10.linodeobjects.com",
+      "static_site_domain": "website-us-iad-10.linodeobjects.com"}, {"id": "us-sea-9",
+      "region": "us-sea", "status": "hidden", "domain": "us-sea-9.linodeobjects.com",
+      "static_site_domain": "website-us-sea-9.linodeobjects.com"}, {"id": "au-mel-1",
+      "region": "au-mel", "status": "hidden", "domain": "au-mel-1.linodeobjects.com",
+      "static_site_domain": "website-au-mel-1.linodeobjects.com"}, {"id": "gb-lon-1",
+      "region": "gb-lon", "status": "hidden", "domain": "gb-lon-1.linodeobjects.com",
+      "static_site_domain": "website-gb-lon-1.linodeobjects.com"}, {"id": "in-bom-1",
+      "region": "in-bom-2", "status": "hidden", "domain": "in-bom-1.linodeobjects.com",
+      "static_site_domain": "website-in-bom-1.linodeobjects.com"}, {"id": "de-fra-1",
+      "region": "de-fra-2", "status": "hidden", "domain": "de-fra-1.linodeobjects.com",
+      "static_site_domain": "website-de-fra-1.linodeobjects.com"}, {"id": "sg-sin-1",
+      "region": "sg-sin-2", "status": "hidden", "domain": "sg-sin-1.linodeobjects.com",
+      "static_site_domain": "website-sg-sin-1.linodeobjects.com"}], "page": 1, "pages":
+      1, "results": 25}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -62,6 +76,8 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -71,7 +87,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Jul 2024 15:14:20 GMT
+      - Wed, 08 Jan 2025 06:03:49 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -90,7 +106,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

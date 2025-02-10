@@ -894,7 +894,10 @@ func NewClient(hc *http.Client) (client Client) {
 }
 
 func isCustomTransport(transport http.RoundTripper) bool {
-	if transport != http.DefaultTransport.(*http.Transport) {
+	if transport == nil {
+		return false
+	}
+	if _, ok := transport.(*http.Transport); !ok {
 		log.Println("[WARN] Custom transport is not allowed with a custom root CA.")
 		return true
 	}

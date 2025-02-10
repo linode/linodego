@@ -1,0 +1,50 @@
+{
+  "data": [
+    {
+      "allow_list": [
+        "192.0.2.101/24",
+        "192.0.2.29/24"
+      ],
+      "cluster_size": 3,
+      "created": "2022-01-01T00:01:01",
+      "encrypted": true,
+      "engine": "mysql",
+      "fork": {
+        "restore_time": "2024-10-14T19:55:12",
+        "source": 176881
+      },
+      "hosts": {
+        "primary": "lin-123-456-mysql-mysql-primary.servers.linodedb.net",
+        "secondary": "lin-123-456-mysql-primary-private.servers.linodedb.net"
+      },
+      "id": 123,
+      "label": "example-db",
+      "members": {
+        "45.56.110.70": "primary",
+        "45.79.159.239": "failover",
+        "69.164.209.80": "failover"
+      },
+      "oldest_restore_time": "2024-10-03T20:48:05",
+      "platform": "rdbms-default",
+      "port": 3306,
+      "region": "us-east",
+      "ssl_connection": true,
+      "status": "active",
+      "total_disk_size_gb": 15,
+      "type": "g6-dedicated-2",
+      "updated": "2022-01-01T00:01:01",
+      "updates": {
+        "day_of_week": 1,
+        "duration": 3,
+        "frequency": "weekly",
+        "hour_of_day": 0,
+        "pending": []
+      },
+      "used_disk_size_gb": 2,
+      "version": "8.0.26"
+    }
+  ],
+  "page": 1,
+  "pages": 1,
+  "results": 1
+}

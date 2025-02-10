@@ -2,6 +2,7 @@ package integration
 
 import (
 	"context"
+	"fmt"
 	"net/url"
 	"reflect"
 	"testing"
@@ -60,6 +61,25 @@ func TestLKECluster_GetFound_smoke(t *testing.T) {
 	}
 	if i.ID != lkeCluster.ID {
 		t.Errorf("Expected a specific lkeCluster, but got a different one %v", i)
+	}
+}
+
+func TestLKECluster_Enterprise_smoke(t *testing.T) {
+	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
+		createOpts.Tier = "enterprise"
+		createOpts.Region = "us-lax"
+		createOpts.K8sVersion = "v1.31.1+lke1"
+	}}, "fixtures/TestLKECluster_Enterprise_smoke")
+	defer teardown()
+	i, err := client.GetLKECluster(context.Background(), lkeCluster.ID)
+	if err != nil {
+		t.Errorf("Error getting lkeCluster, expected struct, got %v and error %v", i, err)
+	}
+	if i.ID != lkeCluster.ID {
+		t.Errorf("Expected a specific lkeCluster, but got a different one %v", i)
+	}
+	if i.Tier != "enterprise" {
+		t.Errorf("Expected a lkeCluster to have enterprise tier")
 	}
 }
 
@@ -290,7 +310,7 @@ func setupLKECluster(t *testing.T, clusterModifiers []clusterModifier, fixturesY
 	createOpts := linodego.LKEClusterCreateOptions{
 		Label:      label,
 		Region:     getRegionsWithCaps(t, client, []string{"Kubernetes", "Disk Encryption"})[0],
-		K8sVersion: "1.29",
+		K8sVersion: "1.31",
 		Tags:       []string{"testing"},
 		NodePools:  []linodego.LKENodePoolCreateOptions{{Count: 1, Type: "g6-standard-2", Tags: []string{"test"}}},
 	}
@@ -310,4 +330,38 @@ func setupLKECluster(t *testing.T, clusterModifiers []clusterModifier, fixturesY
 		fixtureTeardown()
 	}
 	return client, lkeCluster, teardown, err
+}
+
+func TestLKECluster_APLEnabled_smoke(t *testing.T) {
+	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{
+		func(createOpts *linodego.LKEClusterCreateOptions) {
+			createOpts.Label = "go-lke-test-apl-enabled"
+		},
+		func(createOpts *linodego.LKEClusterCreateOptions) {
+			createOpts.APLEnabled = true
+		},
+		func(createOpts *linodego.LKEClusterCreateOptions) {
+			// NOTE: g6-dedicated-4 is the minimum APL-compatible Linode type
+			createOpts.NodePools = []linodego.LKENodePoolCreateOptions{{Count: 3, Type: "g6-dedicated-4", Tags: []string{"test"}}}
+		}},
+		"fixtures/TestLKECluster_APLEnabled")
+	defer teardown()
+
+	expectedConsoleURL := fmt.Sprintf("https://console.lke%d.akamai-apl.net", lkeCluster.ID)
+	consoleURL, err := client.GetLKEClusterAPLConsoleURL(context.Background(), lkeCluster.ID)
+	if err != nil {
+		t.Errorf("Error getting LKE APL console URL, expected string, got %v and error %v", consoleURL, err)
+	}
+	if consoleURL != expectedConsoleURL {
+		t.Errorf("Expected an APL console URL %v, but got a different one %v", expectedConsoleURL, consoleURL)
+	}
+
+	expectedHealthCheckURL := fmt.Sprintf("https://auth.lke%d.akamai-apl.net/ready", lkeCluster.ID)
+	healthCheckURL, err := client.GetLKEClusterAPLHealthCheckURL(context.Background(), lkeCluster.ID)
+	if err != nil {
+		t.Errorf("Error getting LKE APL health check URL, expected string, got %v and error %v", healthCheckURL, err)
+	}
+	if healthCheckURL != expectedHealthCheckURL {
+		t.Errorf("Expected an APL health check URL %v, but got a different one %v", expectedHealthCheckURL, healthCheckURL)
+	}
 }
