@@ -191,3 +191,23 @@ func TestDatabasePostgreSQL_Patch(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestDatabasePostgreSQL_Suspend(t *testing.T) {
+	client := createMockClient(t)
+
+	httpmock.RegisterRegexpResponder("POST", mockRequestURL(t, "databases/postgresql/instances/123/suspend"), httpmock.NewStringResponder(200, "{}"))
+
+	if err := client.SuspendPostgresDatabase(context.Background(), 123); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestDatabasePostgreSQL_Resume(t *testing.T) {
+	client := createMockClient(t)
+
+	httpmock.RegisterRegexpResponder("POST", mockRequestURL(t, "databases/postgresql/instances/123/resume"), httpmock.NewStringResponder(200, "{}"))
+
+	if err := client.ResumePostgresDatabase(context.Background(), 123); err != nil {
+		t.Fatal(err)
+	}
+}
