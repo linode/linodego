@@ -278,3 +278,13 @@ func (c *Client) PatchMySQLDatabase(ctx context.Context, databaseID int) error {
 	_, err := doPOSTRequest[MySQLDatabase, any](ctx, c, e)
 	return err
 }
+
+func (c *Client) SuspendMySQLDatabase(ctx context.Context, databaseID int) error {
+	e := formatAPIPath("databases/mysql/instances/%d/suspend", databaseID)
+	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
+}
+
+func (c *Client) ResumeMySQLDatabase(ctx context.Context, databaseID int) error {
+	e := formatAPIPath("databases/mysql/instances/%d/resume", databaseID)
+	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
+}
