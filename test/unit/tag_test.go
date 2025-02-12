@@ -34,7 +34,6 @@ func TestListTags(t *testing.T) {
 	assert.True(t, exists, "Expected tag list to contain 'example-tag'")
 }
 
-
 func TestCreateTag(t *testing.T) {
 	// Load the fixture data for tag creation
 	fixtureData, err := fixtures.GetFixture("tag_create")
@@ -56,7 +55,6 @@ func TestCreateTag(t *testing.T) {
 	// Verify the created tag's label
 	assert.Equal(t, "new-tag", tag.Label, "Expected created tag label to match input")
 }
-
 
 func TestDeleteTag(t *testing.T) {
 	var base ClientBaseCase
@@ -97,7 +95,6 @@ func TestListTaggedObjects(t *testing.T) {
 		assert.Equal(t, "linode", taggedObjects[index].Type, "Expected tagged object type to be 'linode'")
 	}
 }
-
 
 func TestSortedObjects(t *testing.T) {
 	// Load the fixture data for tagged objects

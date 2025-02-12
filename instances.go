@@ -299,34 +299,19 @@ type InstanceMigrateOptions struct {
 
 // ListInstances lists linode instances
 func (c *Client) ListInstances(ctx context.Context, opts *ListOptions) ([]Instance, error) {
-	response, err := getPaginatedResults[Instance](ctx, c, "linode/instances", opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return getPaginatedResults[Instance](ctx, c, "linode/instances", opts)
 }
 
 // GetInstance gets the instance with the provided ID
 func (c *Client) GetInstance(ctx context.Context, linodeID int) (*Instance, error) {
 	e := formatAPIPath("linode/instances/%d", linodeID)
-	response, err := doGETRequest[Instance](ctx, c, e)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doGETRequest[Instance](ctx, c, e)
 }
 
 // GetInstanceTransfer gets the instance's network transfer pool statistics for the current month.
 func (c *Client) GetInstanceTransfer(ctx context.Context, linodeID int) (*InstanceTransfer, error) {
 	e := formatAPIPath("linode/instances/%d/transfer", linodeID)
-	response, err := doGETRequest[InstanceTransfer](ctx, c, e)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doGETRequest[InstanceTransfer](ctx, c, e)
 }
 
 // GetInstanceTransferMonthly gets the instance's network transfer pool statistics for a specific month.
@@ -337,24 +322,13 @@ func (c *Client) GetInstanceTransferMonthly(ctx context.Context, linodeID, year,
 
 // CreateInstance creates a Linode instance
 func (c *Client) CreateInstance(ctx context.Context, opts InstanceCreateOptions) (*Instance, error) {
-	e := "linode/instances"
-	response, err := doPOSTRequest[Instance](ctx, c, e, opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doPOSTRequest[Instance](ctx, c, "linode/instances", opts)
 }
 
 // UpdateInstance creates a Linode instance
 func (c *Client) UpdateInstance(ctx context.Context, linodeID int, opts InstanceUpdateOptions) (*Instance, error) {
 	e := formatAPIPath("linode/instances/%d", linodeID)
-	response, err := doPUTRequest[Instance](ctx, c, e, opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doPUTRequest[Instance](ctx, c, e, opts)
 }
 
 // RenameInstance renames an Instance
@@ -365,8 +339,7 @@ func (c *Client) RenameInstance(ctx context.Context, linodeID int, label string)
 // DeleteInstance deletes a Linode instance
 func (c *Client) DeleteInstance(ctx context.Context, linodeID int) error {
 	e := formatAPIPath("linode/instances/%d", linodeID)
-	err := doDELETERequest(ctx, c, e)
-	return err
+	return doDELETERequest(ctx, c, e)
 }
 
 // BootInstance will boot a Linode instance
@@ -379,27 +352,19 @@ func (c *Client) BootInstance(ctx context.Context, linodeID int, configID int) e
 	}
 
 	e := formatAPIPath("linode/instances/%d/boot", linodeID)
-	_, err := doPOSTRequest[Instance](ctx, c, e, opts)
-	return err
+	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
 
 // CloneInstance clone an existing Instances Disks and Configuration profiles to another Linode Instance
 func (c *Client) CloneInstance(ctx context.Context, linodeID int, opts InstanceCloneOptions) (*Instance, error) {
 	e := formatAPIPath("linode/instances/%d/clone", linodeID)
-	response, err := doPOSTRequest[Instance](ctx, c, e, opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doPOSTRequest[Instance](ctx, c, e, opts)
 }
 
 // ResetInstancePassword resets a Linode instance's root password
 func (c *Client) ResetInstancePassword(ctx context.Context, linodeID int, opts InstancePasswordResetOptions) error {
 	e := formatAPIPath("linode/instances/%d/password", linodeID)
-	_, err := doPOSTRequest[Instance](ctx, c, e, opts)
-
-	return err
+	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
 
 // RebootInstance reboots a Linode instance
@@ -412,8 +377,7 @@ func (c *Client) RebootInstance(ctx context.Context, linodeID int, configID int)
 	}
 
 	e := formatAPIPath("linode/instances/%d/reboot", linodeID)
-	_, err := doPOSTRequest[Instance](ctx, c, e, opts)
-	return err
+	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
 
 // InstanceRebuildOptions is a struct representing the options to send to the rebuild linode endpoint
@@ -436,12 +400,7 @@ type InstanceRebuildOptions struct {
 // then deploys a new Image to this Linode with the given attributes.
 func (c *Client) RebuildInstance(ctx context.Context, linodeID int, opts InstanceRebuildOptions) (*Instance, error) {
 	e := formatAPIPath("linode/instances/%d/rebuild", linodeID)
-	response, err := doPOSTRequest[Instance](ctx, c, e, opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doPOSTRequest[Instance](ctx, c, e, opts)
 }
 
 // InstanceRescueOptions fields are those accepted by RescueInstance
@@ -455,15 +414,13 @@ type InstanceRescueOptions struct {
 // copying data between disks, and downloading files from a disk via SSH and SFTP.
 func (c *Client) RescueInstance(ctx context.Context, linodeID int, opts InstanceRescueOptions) error {
 	e := formatAPIPath("linode/instances/%d/rescue", linodeID)
-	_, err := doPOSTRequest[Instance](ctx, c, e, opts)
-	return err
+	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
 
 // ResizeInstance resizes an instance to new Linode type
 func (c *Client) ResizeInstance(ctx context.Context, linodeID int, opts InstanceResizeOptions) error {
 	e := formatAPIPath("linode/instances/%d/resize", linodeID)
-	_, err := doPOSTRequest[Instance](ctx, c, e, opts)
-	return err
+	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
 
 // ShutdownInstance - Shutdown an instance
@@ -499,10 +456,6 @@ func (c *Client) MigrateInstance(ctx context.Context, linodeID int, opts Instanc
 // simpleInstanceAction is a helper for Instance actions that take no parameters
 // and return empty responses `{}` unless they return a standard error
 func (c *Client) simpleInstanceAction(ctx context.Context, action string, linodeID int) error {
-	_, err := doPOSTRequest[any, any](
-		ctx,
-		c,
-		formatAPIPath("linode/instances/%d/%s", linodeID, action),
-	)
-	return err
+	e := formatAPIPath("linode/instances/%d/%s", linodeID, action)
+	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
 }

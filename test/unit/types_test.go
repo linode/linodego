@@ -3,11 +3,11 @@ package unit
 import (
 	"context"
 	"fmt"
+	"testing"
+
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
-	"testing"
-	"golang.org/x/exp/slices" 
-
+	"golang.org/x/exp/slices"
 )
 
 func TestLinodeTypes_List(t *testing.T) {

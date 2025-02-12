@@ -153,13 +153,11 @@ func (c *Client) DeletePaymentMethod(ctx context.Context, paymentMethodID int) e
 
 // AddPaymentMethod adds the provided payment method to the account
 func (c *Client) AddPaymentMethod(ctx context.Context, opts PaymentMethodCreateOptions) error {
-	_, err := doPOSTRequest[PaymentMethod, any](ctx, c, "account/payment-methods", opts)
-	return err
+	return doPOSTRequestNoResponseBody(ctx, c, "account/payment-methods", opts)
 }
 
 // SetDefaultPaymentMethod sets the payment method with the provided ID as the default
 func (c *Client) SetDefaultPaymentMethod(ctx context.Context, paymentMethodID int) error {
 	e := formatAPIPath("account/payment-methods/%d", paymentMethodID)
-	_, err := doPOSTRequest[PaymentMethod, any](ctx, c, e)
-	return err
+	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
 }

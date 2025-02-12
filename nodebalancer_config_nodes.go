@@ -71,50 +71,29 @@ func (i NodeBalancerNode) GetUpdateOptions() NodeBalancerNodeUpdateOptions {
 
 // ListNodeBalancerNodes lists NodeBalancerNodes
 func (c *Client) ListNodeBalancerNodes(ctx context.Context, nodebalancerID int, configID int, opts *ListOptions) ([]NodeBalancerNode, error) {
-	response, err := getPaginatedResults[NodeBalancerNode](ctx, c, formatAPIPath("nodebalancers/%d/configs/%d/nodes", nodebalancerID, configID), opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return getPaginatedResults[NodeBalancerNode](ctx, c, formatAPIPath("nodebalancers/%d/configs/%d/nodes", nodebalancerID, configID), opts)
 }
 
 // GetNodeBalancerNode gets the template with the provided ID
 func (c *Client) GetNodeBalancerNode(ctx context.Context, nodebalancerID int, configID int, nodeID int) (*NodeBalancerNode, error) {
 	e := formatAPIPath("nodebalancers/%d/configs/%d/nodes/%d", nodebalancerID, configID, nodeID)
-	response, err := doGETRequest[NodeBalancerNode](ctx, c, e)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doGETRequest[NodeBalancerNode](ctx, c, e)
 }
 
 // CreateNodeBalancerNode creates a NodeBalancerNode
 func (c *Client) CreateNodeBalancerNode(ctx context.Context, nodebalancerID int, configID int, opts NodeBalancerNodeCreateOptions) (*NodeBalancerNode, error) {
 	e := formatAPIPath("nodebalancers/%d/configs/%d/nodes", nodebalancerID, configID)
-	response, err := doPOSTRequest[NodeBalancerNode](ctx, c, e, opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doPOSTRequest[NodeBalancerNode](ctx, c, e, opts)
 }
 
 // UpdateNodeBalancerNode updates the NodeBalancerNode with the specified id
 func (c *Client) UpdateNodeBalancerNode(ctx context.Context, nodebalancerID int, configID int, nodeID int, opts NodeBalancerNodeUpdateOptions) (*NodeBalancerNode, error) {
 	e := formatAPIPath("nodebalancers/%d/configs/%d/nodes/%d", nodebalancerID, configID, nodeID)
-	response, err := doPUTRequest[NodeBalancerNode](ctx, c, e, opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doPUTRequest[NodeBalancerNode](ctx, c, e, opts)
 }
 
 // DeleteNodeBalancerNode deletes the NodeBalancerNode with the specified id
 func (c *Client) DeleteNodeBalancerNode(ctx context.Context, nodebalancerID int, configID int, nodeID int) error {
 	e := formatAPIPath("nodebalancers/%d/configs/%d/nodes/%d", nodebalancerID, configID, nodeID)
-	err := doDELETERequest(ctx, c, e)
-	return err
+	return doDELETERequest(ctx, c, e)
 }
