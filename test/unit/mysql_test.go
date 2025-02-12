@@ -192,3 +192,23 @@ func TestDatabaseMySQL_Patch(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+func TestDatabaseMySQL_Suspend(t *testing.T) {
+	client := createMockClient(t)
+
+	httpmock.RegisterRegexpResponder("POST", mockRequestURL(t, "databases/mysql/instances/123/suspend"), httpmock.NewStringResponder(200, "{}"))
+
+	if err := client.SuspendMySQLDatabase(context.Background(), 123); err != nil {
+		t.Fatal(err)
+	}
+}
+
+func TestDatabaseMySQL_Resume(t *testing.T) {
+	client := createMockClient(t)
+
+	httpmock.RegisterRegexpResponder("POST", mockRequestURL(t, "databases/mysql/instances/123/resume"), httpmock.NewStringResponder(200, "{}"))
+
+	if err := client.ResumeMySQLDatabase(context.Background(), 123); err != nil {
+		t.Fatal(err)
+	}
+}
