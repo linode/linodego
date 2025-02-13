@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	"github.com/linode/linodego"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestReservedIPAddresses_List(t *testing.T) {

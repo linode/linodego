@@ -4,8 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	"github.com/linode/linodego"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestIPv6Ranges_List(t *testing.T) {
@@ -38,6 +38,7 @@ func TestIPv6Ranges_List(t *testing.T) {
 	assert.Len(t, ranges, 1, "Expected one IPv6 range in response")
 	assert.Equal(t, "2600:3c00::/64", ranges[0].Range, "Expected matching IPv6 range")
 }
+
 func TestIPv6Range_Get(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)
@@ -47,12 +48,12 @@ func TestIPv6Range_Get(t *testing.T) {
 
 	// Mock response for the GET request
 	mockResponse := struct {
-		Range       string   `json:"range"`
-		Region      string   `json:"region"`
-		Prefix      int      `json:"prefix"`
-		RouteTarget string   `json:"route_target"`
-		IsBGP       bool     `json:"is_bgp"`
-		Linodes     []int    `json:"linodes"`
+		Range       string `json:"range"`
+		Region      string `json:"region"`
+		Prefix      int    `json:"prefix"`
+		RouteTarget string `json:"route_target"`
+		IsBGP       bool   `json:"is_bgp"`
+		Linodes     []int  `json:"linodes"`
 	}{
 		Range:       id,
 		Region:      "us-east",
@@ -75,7 +76,6 @@ func TestIPv6Range_Get(t *testing.T) {
 	assert.False(t, rangeObj.IsBGP, "Expected IsBGP to be false")
 	assert.ElementsMatch(t, []int{54321}, rangeObj.Linodes, "Expected matching Linodes list")
 }
-
 
 func TestIPv6Range_Create(t *testing.T) {
 	var base ClientBaseCase
