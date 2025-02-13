@@ -139,7 +139,7 @@ func setupNodeBalancerWithVPC(t *testing.T, fixturesYaml string) (*linodego.Clie
 			{
 				IPv4Range: "192.168.0.64/30",
 				IPv6Range: "",
-				SubnetID: subnet.ID,
+				SubnetID:  subnet.ID,
 			},
 		},
 	}
