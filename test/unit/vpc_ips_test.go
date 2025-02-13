@@ -8,7 +8,7 @@ import (
 	"github.com/linode/linodego"
 )
 
-func TestVPCListAllIPAddresses(t *testing.T) {
+func TestVPCAllIPAddresses_List(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("vpc_ips_list")
 	assert.NoError(t, err)
 
@@ -29,7 +29,7 @@ func TestVPCListAllIPAddresses(t *testing.T) {
 	assert.Equal(t, 123, vpcIPs[0].VPCID, "Expected VPC ID to match")
 }
 
-func TestVPCListSpecificIPAddresses(t *testing.T) {
+func TestVPCSpecificIPAddresses_List(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("vpc_specific_ips_list")
 	assert.NoError(t, err)
 

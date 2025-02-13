@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestVPCCreateSubnet(t *testing.T) {
+func TestVPCSubnet_Create(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("vpc_subnet_create")
 	assert.NoError(t, err)
 
@@ -31,7 +31,7 @@ func TestVPCCreateSubnet(t *testing.T) {
 	assert.Equal(t, "192.168.1.0/24", subnet.IPv4, "Expected subnet IPv4 to match")
 }
 
-func TestVPCGetSubnet(t *testing.T) {
+func TestVPCSubnet_Get(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("vpc_subnet_get")
 	assert.NoError(t, err)
 
@@ -52,7 +52,7 @@ func TestVPCGetSubnet(t *testing.T) {
 	assert.True(t, subnet.Linodes[0].Interfaces[0].Active, "Expected interface to be active")
 }
 
-func TestVPCListSubnets(t *testing.T) {
+func TestVPCSubnets_List(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("vpc_subnets_list")
 	assert.NoError(t, err)
 
@@ -72,7 +72,7 @@ func TestVPCListSubnets(t *testing.T) {
 	assert.Equal(t, "192.168.3.0/24", subnets[0].IPv4, "Expected first subnet IPv4 to match")
 }
 
-func TestVPCUpdateSubnet(t *testing.T) {
+func TestVPCSubnet_Update(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("vpc_subnet_update")
 	assert.NoError(t, err)
 
@@ -93,7 +93,7 @@ func TestVPCUpdateSubnet(t *testing.T) {
 	assert.Equal(t, "Updated Subnet", subnet.Label, "Expected subnet label to match")
 }
 
-func TestVPCDeleteSubnet(t *testing.T) {
+func TestVPCSubnet_Delete(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)
 	defer base.TearDown(t)

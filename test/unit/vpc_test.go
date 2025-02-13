@@ -9,7 +9,7 @@ import (
 	"github.com/linode/linodego"
 )
 
-func TestVPCCreate(t *testing.T) {
+func TestVPC_Create(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)
 	defer base.TearDown(t)
@@ -44,7 +44,7 @@ func TestVPCCreate(t *testing.T) {
 	assert.Len(t, vpc.Subnets, 2, "Expected VPC to have 2 subnets")
 }
 
-func TestVPCGet(t *testing.T) {
+func TestVPC_Get(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)
 	defer base.TearDown(t)
@@ -63,7 +63,7 @@ func TestVPCGet(t *testing.T) {
 	assert.Equal(t, mockVPC.Label, vpc.Label, "Expected VPC label to match")
 }
 
-func TestVPCList(t *testing.T) {
+func TestVPC_List(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("vpc_list")
 	assert.NoError(t, err)
 
@@ -90,7 +90,7 @@ func TestVPCList(t *testing.T) {
 }
 
 
-func TestVPCUpdate(t *testing.T) {
+func TestVPC_Update(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)
 	defer base.TearDown(t)
@@ -115,7 +115,7 @@ func TestVPCUpdate(t *testing.T) {
 	assert.Equal(t, "Updated description", vpc.Description, "Expected VPC description to match")
 }
 
-func TestVPCDelete(t *testing.T) {
+func TestVPC_Delete(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)
 	defer base.TearDown(t)
