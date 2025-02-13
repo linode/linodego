@@ -78,13 +78,12 @@ func setupInstanceWithVPCAndNATOneToOne(t *testing.T, fixturesYaml string) (
 	}
 
 	updateConfigOpts := config.GetUpdateOptions()
-	NAT1To1Any := "any"
 	updateConfigOpts.Interfaces = []InstanceConfigInterfaceCreateOptions{
 		{
-			Purpose:  InterfacePurposeVPC,
+			Purpose:  Pointer(InterfacePurposeVPC),
 			SubnetID: &vpcSubnet.ID,
 			IPv4: &VPCIPv4{
-				NAT1To1: &NAT1To1Any,
+				NAT1To1: Pointer("any"),
 			},
 		},
 	}
@@ -121,20 +120,19 @@ func setupInstanceWith3Interfaces(t *testing.T, fixturesYaml string) (
 	}
 
 	updateConfigOpts := config.GetUpdateOptions()
-	NAT1To1Any := "any"
 	updateConfigOpts.Interfaces = []InstanceConfigInterfaceCreateOptions{
 		{
-			Purpose: InterfacePurposePublic,
+			Purpose: Pointer(InterfacePurposePublic),
 		},
 		{
-			Purpose: InterfacePurposeVLAN,
-			Label:   "testvlan",
+			Purpose: Pointer(InterfacePurposeVLAN),
+			Label:   Pointer("testvlan"),
 		},
 		{
-			Purpose:  InterfacePurposeVPC,
+			Purpose:  Pointer(InterfacePurposeVPC),
 			SubnetID: &vpcSubnet.ID,
 			IPv4: &VPCIPv4{
-				NAT1To1: &NAT1To1Any,
+				NAT1To1: Pointer("any"),
 			},
 		},
 	}
@@ -162,7 +160,7 @@ func TestInstance_ConfigInterfaces_AppendDelete(t *testing.T) {
 	}
 
 	appednOpts := InstanceConfigInterfaceCreateOptions{
-		Purpose:  InterfacePurposeVPC,
+		Purpose:  Pointer(InterfacePurposeVPC),
 		SubnetID: &subnet.ID,
 	}
 
@@ -177,7 +175,7 @@ func TestInstance_ConfigInterfaces_AppendDelete(t *testing.T) {
 	}
 
 	if intfc.ID == 0 ||
-		appednOpts.Purpose != intfc.Purpose ||
+		*appednOpts.Purpose != intfc.Purpose ||
 		*appednOpts.SubnetID != *intfc.SubnetID {
 		t.Errorf(
 			"failed to append an interface to instance %v config %v",
@@ -315,17 +313,17 @@ func TestInstance_ConfigInterfaces_Update(t *testing.T) {
 
 	updateConfigOpts.Interfaces = []InstanceConfigInterfaceCreateOptions{
 		{
-			Purpose: InterfacePurposePublic,
+			Purpose: Pointer(InterfacePurposePublic),
 		},
 		{
-			Purpose: InterfacePurposeVLAN,
-			Label:   "testvlan",
+			Purpose: Pointer(InterfacePurposeVLAN),
+			Label:   Pointer("testvlan"),
 		},
 		{
-			Purpose:  InterfacePurposeVPC,
+			Purpose:  Pointer(InterfacePurposeVPC),
 			SubnetID: &vpcSubnet.ID,
 			IPv4: &VPCIPv4{
-				VPC: "192.168.0.87",
+				VPC: Pointer("192.168.0.87"),
 			},
 		},
 	}
@@ -345,11 +343,10 @@ func TestInstance_ConfigInterfaces_Update(t *testing.T) {
 		interfaceOptsList[index] = configInterface.GetCreateOptions()
 	}
 
-	if !reflect.DeepEqual(
-		interfaceOptsList,
-		updateConfigOpts.Interfaces,
-	) {
-		t.Error("failed to update linode interfaces: configs do not match")
+	// Compare each interface in the result with the expected values
+	for i, instanceConfigInterface := range result.Interfaces {
+		expectedInstanceConfigInterface := updateConfigOpts.Interfaces[i]
+		checkInstanceConfigInterfaceMismatch(t, i, instanceConfigInterface, expectedInstanceConfigInterface)
 	}
 
 	// Ensure that a nil value will not update interfaces
@@ -362,11 +359,10 @@ func TestInstance_ConfigInterfaces_Update(t *testing.T) {
 		interfaceOptsList[index] = configInterface.GetCreateOptions()
 	}
 
-	if !reflect.DeepEqual(
-		interfaceOptsList,
-		updateConfigOpts.Interfaces,
-	) {
-		t.Error("failed to update linode interfaces: configs do not match")
+	// Compare each interface in the result with the expected values
+	for i, instanceConfigInterface := range result.Interfaces {
+		expectedInstanceConfigInterface := updateConfigOpts.Interfaces[i]
+		checkInstanceConfigInterfaceMismatch(t, i, instanceConfigInterface, expectedInstanceConfigInterface)
 	}
 }
 
@@ -390,16 +386,16 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 		instance.ID,
 		config.ID,
 		InstanceConfigInterfaceCreateOptions{
-			Purpose:  InterfacePurposeVPC,
+			Purpose:  Pointer(InterfacePurposeVPC),
 			SubnetID: &vpcSubnet.ID,
-			IPRanges: []string{"192.168.0.5/32"},
+			IPRanges: &[]string{"192.168.0.5/32"},
 		},
 	)
 	if err != nil {
 		t.Errorf("an error occurs when appending an interface to config %v: %v", config.ID, err)
 	}
 	updateOpts := intfc.GetUpdateOptions()
-	updateOpts.Primary = true
+	updateOpts.Primary = Pointer(true)
 
 	updatedIntfc, err := client.UpdateInstanceConfigInterface(
 		context.Background(),
@@ -412,7 +408,7 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 		t.Errorf("an error occurs when updating an interface in config %v", config.ID)
 	}
 
-	if !(updatedIntfc.Primary == updateOpts.Primary) {
+	if updateOpts.Primary == nil || updatedIntfc.Primary != *updateOpts.Primary {
 		t.Errorf("updating interface %v didn't succeed", intfc.ID)
 	}
 
@@ -420,10 +416,9 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 		t.Errorf("unexpected value for IPRanges: %s", updatedIntfc.IPRanges[0])
 	}
 
-	NAT1To1Any := "any"
 	updateOpts.IPv4 = &VPCIPv4{
-		VPC:     "192.168.0.10",
-		NAT1To1: &NAT1To1Any,
+		VPC:     Pointer("192.168.0.10"),
+		NAT1To1: Pointer("any"),
 	}
 	newIPRanges := make([]string, 0)
 	updateOpts.IPRanges = &newIPRanges
@@ -439,8 +434,8 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 		t.Errorf("an error occurs when updating an interface in config %v", config.ID)
 	}
 
-	if !(updatedIntfc.Primary == updateOpts.Primary &&
-		updateOpts.IPv4.VPC == updatedIntfc.IPv4.VPC) {
+	if !(updatedIntfc.Primary == *updateOpts.Primary &&
+		*updateOpts.IPv4.VPC == *updatedIntfc.IPv4.VPC) {
 		t.Errorf("updating interface %v didn't succeed", intfc.ID)
 	}
 
@@ -476,13 +471,40 @@ func TestInstance_Config_Update(t *testing.T) {
 	}
 
 	updateConfigOpts := InstanceConfigUpdateOptions{
-		Label:      "go-conf-test-" + randLabel(),
+		Label:      Pointer("go-conf-test-" + randLabel()),
 		Devices:    &InstanceConfigDeviceMap{},
-		RootDevice: "/dev/root",
+		RootDevice: Pointer("/dev/root"),
 	}
 
 	_, err = client.UpdateInstanceConfig(context.Background(), instance.ID, config.ID, updateConfigOpts)
 	if err != nil {
 		t.Error(err)
+	}
+}
+
+func checkInstanceConfigInterfaceMismatch(t *testing.T, i int, icf InstanceConfigInterface, expectedIcf InstanceConfigInterfaceCreateOptions) {
+	// Compare Purpose
+	if icf.Purpose != *expectedIcf.Purpose {
+		t.Errorf("Interface %d: Purpose mismatch: expected %v, got %v", i, *expectedIcf.Purpose, icf.Purpose)
+	}
+
+	// Compare Label
+	if expectedIcf.Label != nil && icf.Label != *expectedIcf.Label {
+		t.Errorf("Interface %d: Label mismatch: expected %v, got %v", i, *expectedIcf.Label, icf.Label)
+	}
+
+	// Compare SubnetID
+	if icf.SubnetID != nil && expectedIcf.SubnetID != nil && *icf.SubnetID != *expectedIcf.SubnetID {
+		t.Errorf("Interface %d: SubnetID mismatch: expected %v, got %v", i, *expectedIcf.SubnetID, *icf.SubnetID)
+	}
+
+	// Compare IPv4 VPC
+	if icf.IPv4 != nil && expectedIcf.IPv4 != nil && *icf.IPv4.VPC != *expectedIcf.IPv4.VPC {
+		t.Errorf("Interface %d: IPv4 VPC mismatch: expected %v, got %v", i, *expectedIcf.IPv4.VPC, *icf.IPv4.VPC)
+	}
+
+	// Compare IPRanges
+	if icf.IPRanges != nil && expectedIcf.IPRanges != nil && !reflect.DeepEqual(icf.IPRanges, *expectedIcf.IPRanges) {
+		t.Errorf("Interface %d: IPRanges mismatch: expected %v, got %v", i, *expectedIcf.IPRanges, icf.IPRanges)
 	}
 }

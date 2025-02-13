@@ -61,8 +61,10 @@ func TestDatabasePostgreSQL_Update(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
+	label := "example-db-updated"
+
 	requestData := linodego.PostgresUpdateOptions{
-		Label: "example-db-updated",
+		Label: &label,
 	}
 
 	base.MockPut("databases/postgresql/instances/123", fixtureData)

@@ -39,7 +39,7 @@ func TestPlacementGroup_basic_smoke(t *testing.T) {
 		context.Background(),
 		pg.ID,
 		linodego.PlacementGroupUpdateOptions{
-			Label: updatedLabel,
+			Label: &updatedLabel,
 		},
 	)
 	require.NoError(t, err)

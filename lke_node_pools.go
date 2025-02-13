@@ -45,7 +45,7 @@ const (
 // LKENodePoolTaint represents a corev1.Taint to add to an LKENodePool
 type LKENodePoolTaint struct {
 	Key    string                 `json:"key"`
-	Value  string                 `json:"value,omitempty"`
+	Value  *string                `json:"value,omitempty"`
 	Effect LKENodePoolTaintEffect `json:"effect"`
 }
 
@@ -66,7 +66,7 @@ type LKENodePool struct {
 	Autoscaler LKENodePoolAutoscaler `json:"autoscaler"`
 
 	// NOTE: Disk encryption may not currently be available to all users.
-	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitempty"`
+	DiskEncryption *InstanceDiskEncryption `json:"disk_encryption,omitempty"`
 }
 
 // LKENodePoolCreateOptions fields are those accepted by CreateLKENodePool
@@ -83,7 +83,7 @@ type LKENodePoolCreateOptions struct {
 
 // LKENodePoolUpdateOptions fields are those accepted by UpdateLKENodePoolUpdate
 type LKENodePoolUpdateOptions struct {
-	Count  int                 `json:"count,omitempty"`
+	Count  *int                `json:"count,omitempty"`
 	Tags   *[]string           `json:"tags,omitempty"`
 	Labels *LKENodePoolLabels  `json:"labels,omitempty"`
 	Taints *[]LKENodePoolTaint `json:"taints,omitempty"`
@@ -105,7 +105,7 @@ func (l LKENodePool) GetCreateOptions() (o LKENodePoolCreateOptions) {
 
 // GetUpdateOptions converts a LKENodePool to LKENodePoolUpdateOptions for use in UpdateLKENodePoolUpdate
 func (l LKENodePool) GetUpdateOptions() (o LKENodePoolUpdateOptions) {
-	o.Count = l.Count
+	o.Count = &l.Count
 	o.Tags = &l.Tags
 	o.Labels = &l.Labels
 	o.Taints = &l.Taints

@@ -117,10 +117,9 @@ func TestInstance_ResetPassword(t *testing.T) {
 		t,
 		"fixtures/TestInstance_ResetPassword", true,
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-			boot := false
 			options.Type = "g6-nanode-1"
-			options.Booted = &boot
-			options.RootPass = randPassword()
+			options.Booted = linodego.Pointer(false)
+			options.RootPass = linodego.Pointer(randPassword())
 		},
 	)
 
@@ -156,9 +155,8 @@ func TestInstance_Resize(t *testing.T) {
 		t,
 		"fixtures/TestInstance_Resize", true,
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-			boot := true
 			options.Type = "g6-nanode-1"
-			options.Booted = &boot
+			options.Booted = linodego.Pointer(true)
 		},
 	)
 
@@ -182,7 +180,7 @@ func TestInstance_Resize(t *testing.T) {
 		instance.ID,
 		linodego.InstanceResizeOptions{
 			Type:          "g6-standard-1",
-			MigrationType: "warm",
+			MigrationType: linodego.Pointer(linodego.WarmMigration),
 		},
 	)
 	if err != nil {
@@ -195,9 +193,8 @@ func TestInstance_Migrate(t *testing.T) {
 		t,
 		"fixtures/TestInstance_Migrate", true,
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-			boot := true
 			options.Type = "g6-nanode-1"
-			options.Booted = &boot
+			options.Booted = linodego.Pointer(true)
 		},
 	)
 
@@ -216,15 +213,13 @@ func TestInstance_Migrate(t *testing.T) {
 		t.Errorf("Error waiting for instance readiness for migration: %s", err.Error())
 	}
 
-	upgrade := false
-
 	err = client.MigrateInstance(
 		context.Background(),
 		instance.ID,
 		linodego.InstanceMigrateOptions{
-			Type:    "cold",
-			Region:  "us-west",
-			Upgrade: &upgrade,
+			Type:    linodego.Pointer(linodego.ColdMigration),
+			Region:  linodego.Pointer("us-west"),
+			Upgrade: linodego.Pointer(false),
 		},
 	)
 	if err != nil {
@@ -254,11 +249,11 @@ func TestInstance_MigrateToPG(t *testing.T) {
 	}
 
 	instanceCreateOpts := linodego.InstanceCreateOptions{
-		Label:    "go-test-ins-" + randLabel(),
-		RootPass: randPassword(),
+		Label:    linodego.Pointer("go-test-ins-" + randLabel()),
+		RootPass: linodego.Pointer(randPassword()),
 		Region:   regions[0],
 		Type:     "g6-nanode-1",
-		Image:    "linode/debian10",
+		Image:    linodego.Pointer("linode/debian10"),
 		Booted:   linodego.Pointer(true),
 		PlacementGroup: &linodego.InstanceCreatePlacementGroupOptions{
 			ID: pgOutbound.ID,
@@ -292,15 +287,13 @@ func TestInstance_MigrateToPG(t *testing.T) {
 		t.Fatalf("failed to create placement group: %s", err)
 	}
 
-	upgrade := false
-
 	err = client.MigrateInstance(
 		context.Background(),
 		instance.ID,
 		linodego.InstanceMigrateOptions{
-			Type:           "cold",
-			Region:         regions[1],
-			Upgrade:        &upgrade,
+			Type:           linodego.Pointer(linodego.ColdMigration),
+			Region:         &regions[1],
+			Upgrade:        linodego.Pointer(false),
 			PlacementGroup: &linodego.InstanceCreatePlacementGroupOptions{ID: pgInbound.ID},
 		},
 	)
@@ -390,7 +383,7 @@ func TestInstance_Disk_Resize(t *testing.T) {
 
 	disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
 		Label:      "disk-test-" + randLabel(),
-		Filesystem: "ext4",
+		Filesystem: linodego.Pointer("ext4"),
 		Size:       2000,
 	})
 	if err != nil {
@@ -460,8 +453,8 @@ func TestInstance_Disk_ListMultiple(t *testing.T) {
 
 	_, err = client.CreateInstanceDisk(context.Background(), instance2.ID, linodego.InstanceDiskCreateOptions{
 		Label:    "go-disk-test-" + randLabel(),
-		Image:    image.ID,
-		RootPass: randPassword(),
+		Image:    &image.ID,
+		RootPass: linodego.Pointer(randPassword()),
 		Size:     2000,
 	})
 	if err != nil {
@@ -499,9 +492,9 @@ func TestInstance_Disk_Clone(t *testing.T) {
 
 	disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
 		Label:      "go-disk-test-" + randLabel(),
-		Filesystem: "ext4",
-		Image:      "linode/debian10",
-		RootPass:   randPassword(),
+		Filesystem: linodego.Pointer("ext4"),
+		Image:      linodego.Pointer("linode/debian10"),
+		RootPass:   linodego.Pointer(randPassword()),
 		Size:       2000,
 	})
 	if err != nil {
@@ -539,9 +532,9 @@ func TestInstance_Disk_ResetPassword(t *testing.T) {
 
 	disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
 		Label:      "go-disk-test-" + randLabel(),
-		Filesystem: "ext4",
-		Image:      "linode/debian10",
-		RootPass:   randPassword(),
+		Filesystem: linodego.Pointer("ext4"),
+		Image:      linodego.Pointer("linode/debian10"),
+		RootPass:   linodego.Pointer(randPassword()),
 		Size:       2000,
 	})
 	if err != nil {
@@ -619,10 +612,10 @@ func TestInstance_Volumes_List(t *testing.T) {
 	}
 
 	configOpts := linodego.InstanceConfigUpdateOptions{
-		Label: "go-vol-test" + getUniqueText(),
+		Label: linodego.Pointer("go-vol-test" + getUniqueText()),
 		Devices: &linodego.InstanceConfigDeviceMap{
 			SDA: &linodego.InstanceConfigDevice{
-				VolumeID: volume.ID,
+				VolumeID: &volume.ID,
 			},
 		},
 	}
@@ -655,7 +648,7 @@ func TestInstance_CreateUnderFirewall(t *testing.T) {
 		t,
 		client, true,
 		func(_ *linodego.Client, options *linodego.InstanceCreateOptions) {
-			options.FirewallID = firewall.ID
+			options.FirewallID = &firewall.ID
 		},
 	)
 	defer teardownInstance()
@@ -685,12 +678,12 @@ func TestInstance_Rebuild(t *testing.T) {
 	}
 
 	rebuildOpts := linodego.InstanceRebuildOptions{
-		Image: "linode/alpine3.19",
+		Image: linodego.Pointer("linode/alpine3.19"),
 		Metadata: &linodego.InstanceMetadataOptions{
-			UserData: base64.StdEncoding.EncodeToString([]byte("cool")),
+			UserData: linodego.Pointer(base64.StdEncoding.EncodeToString([]byte("cool"))),
 		},
-		RootPass: randPassword(),
-		Type:     "g6-standard-2",
+		RootPass: linodego.Pointer(randPassword()),
+		Type:     linodego.Pointer("g6-standard-2"),
 	}
 	instance, err = client.RebuildInstance(context.Background(), instance.ID, rebuildOpts)
 	if err != nil {
@@ -709,7 +702,7 @@ func TestInstance_RebuildWithEncryption(t *testing.T) {
 		true,
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
 			options.Region = getRegionsWithCaps(t, client, []string{"Disk Encryption"})[0]
-			options.DiskEncryption = linodego.InstanceDiskEncryptionEnabled
+			options.DiskEncryption = linodego.Pointer(linodego.InstanceDiskEncryptionEnabled)
 		},
 	)
 	defer teardown()
@@ -724,10 +717,10 @@ func TestInstance_RebuildWithEncryption(t *testing.T) {
 	}
 
 	rebuildOpts := linodego.InstanceRebuildOptions{
-		Image:          "linode/alpine3.19",
-		RootPass:       randPassword(),
-		Type:           "g6-standard-2",
-		DiskEncryption: linodego.InstanceDiskEncryptionDisabled,
+		Image:          linodego.Pointer("linode/alpine3.19"),
+		RootPass:       linodego.Pointer(randPassword()),
+		Type:           linodego.Pointer("g6-standard-2"),
+		DiskEncryption: linodego.Pointer(linodego.InstanceDiskEncryptionDisabled),
 	}
 	instance, err = client.RebuildInstance(context.Background(), instance.ID, rebuildOpts)
 	if err != nil {
@@ -767,11 +760,11 @@ func TestInstance_Clone(t *testing.T) {
 	}
 
 	cloneOpts := linodego.InstanceCloneOptions{
-		Region:    targetRegion,
-		Type:      "g6-nanode-1",
-		PrivateIP: true,
+		Region:    &targetRegion,
+		Type:      linodego.Pointer("g6-nanode-1"),
+		PrivateIP: linodego.Pointer(true),
 		Metadata: &linodego.InstanceMetadataOptions{
-			UserData: base64.StdEncoding.EncodeToString([]byte("reallycooluserdata")),
+			UserData: linodego.Pointer(base64.StdEncoding.EncodeToString([]byte("reallycooluserdata"))),
 		},
 	}
 	clonedInstance, err := client.CloneInstance(context.Background(), instance.ID, cloneOpts)
@@ -821,7 +814,7 @@ func TestInstance_withMetadata(t *testing.T) {
 	_, inst, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_withMetadata", true,
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
 			options.Metadata = &linodego.InstanceMetadataOptions{
-				UserData: base64.StdEncoding.EncodeToString([]byte("reallycoolmetadata")),
+				UserData: linodego.Pointer(base64.StdEncoding.EncodeToString([]byte("reallycoolmetadata"))),
 			}
 			options.Region = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
 		})
@@ -838,7 +831,7 @@ func TestInstance_withMetadata(t *testing.T) {
 
 func TestInstance_DiskEncryption(t *testing.T) {
 	_, inst, teardown, err := setupInstance(t, "fixtures/TestInstance_DiskEncryption", true, func(c *linodego.Client, ico *linodego.InstanceCreateOptions) {
-		ico.DiskEncryption = linodego.InstanceDiskEncryptionEnabled
+		ico.DiskEncryption = linodego.Pointer(linodego.InstanceDiskEncryptionEnabled)
 		ico.Region = "us-east"
 	})
 	if err != nil {
@@ -857,7 +850,7 @@ func TestInstance_withBlockStorageEncryption(t *testing.T) {
 
 	inst, err := createInstance(t, client, true, func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
 		options.Region = getRegionsWithCaps(t, client, []string{"Linodes", "Block Storage Encryption"})[0]
-		options.Label = "go-inst-test-create-bde"
+		options.Label = linodego.Pointer("go-inst-test-create-bde")
 	})
 	require.NoError(t, err)
 
@@ -876,7 +869,7 @@ func TestInstance_withVPU(t *testing.T) {
 	inst, err := createInstance(t, client, true, func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
 		options.Region = "us-lax"
 		options.Type = "g1-accelerated-netint-vpu-t1u1-s"
-		options.Label = "go-inst-test-create-vpu"
+		options.Label = linodego.Pointer("go-inst-test-create-vpu")
 	})
 	require.NoError(t, err)
 
@@ -922,16 +915,16 @@ func createInstance(t *testing.T, client *linodego.Client, enableCloudFirewall b
 	}
 
 	createOpts := linodego.InstanceCreateOptions{
-		Label:    "go-test-ins-" + randLabel(),
-		RootPass: randPassword(),
+		Label:    linodego.Pointer("go-test-ins-" + randLabel()),
+		RootPass: linodego.Pointer(randPassword()),
 		Region:   getRegionsWithCaps(t, client, []string{"linodes"})[0],
 		Type:     "g6-nanode-1",
-		Image:    "linode/debian12",
+		Image:    linodego.Pointer("linode/debian12"),
 		Booted:   linodego.Pointer(false),
 	}
 
 	if enableCloudFirewall {
-		createOpts.FirewallID = firewallID
+		createOpts.FirewallID = &firewallID
 	}
 
 	for _, modifier := range modifiers {
@@ -971,14 +964,14 @@ func createInstanceWithoutDisks(
 	t.Helper()
 
 	createOpts := linodego.InstanceCreateOptions{
-		Label:  "go-test-ins-wo-disk-" + randLabel(),
+		Label:  linodego.Pointer("go-test-ins-wo-disk-" + randLabel()),
 		Region: getRegionsWithCaps(t, client, []string{"linodes"})[0],
 		Type:   "g6-nanode-1",
 		Booted: linodego.Pointer(false),
 	}
 
 	if enableCloudFirewall {
-		createOpts.FirewallID = GetFirewallID()
+		createOpts.FirewallID = linodego.Pointer(GetFirewallID())
 	}
 
 	for _, modifier := range modifiers {
@@ -991,7 +984,7 @@ func createInstanceWithoutDisks(
 		return nil, nil, func() {}, err
 	}
 	configOpts := linodego.InstanceConfigCreateOptions{
-		Label: "go-test-conf-" + randLabel(),
+		Label: linodego.Pointer("go-test-conf-" + randLabel()),
 	}
 	config, err := client.CreateInstanceConfig(context.Background(), instance.ID, configOpts)
 	if err != nil {

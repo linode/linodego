@@ -13,8 +13,8 @@ var (
 	testNodeWeight                 = 10
 	testNodeBalancerNodeCreateOpts = linodego.NodeBalancerNodeCreateOptions{
 		Label:  testNodeLabel,
-		Weight: testNodeWeight,
-		Mode:   linodego.ModeAccept,
+		Weight: &testNodeWeight,
+		Mode:   linodego.Pointer(linodego.ModeAccept),
 	}
 )
 
@@ -29,8 +29,8 @@ func TestNodeBalancerNode_Create_smoke(t *testing.T) {
 	expected := testNodeBalancerNodeCreateOpts
 
 	if node.Label != expected.Label ||
-		node.Weight != expected.Weight ||
-		node.Mode != expected.Mode {
+		node.Weight != *expected.Weight ||
+		node.Mode != *expected.Mode {
 		t.Errorf("NodeBalancerNode did not match CreateOptions - %v", node)
 	}
 }
@@ -43,9 +43,9 @@ func TestNodeBalancerNode_Update(t *testing.T) {
 	}
 
 	updateOpts := linodego.NodeBalancerNodeUpdateOptions{
-		Mode:   linodego.ModeDrain,
-		Weight: testNodeWeight + 90,
-		Label:  testNodeLabel + "_r",
+		Mode:   linodego.Pointer(linodego.ModeDrain),
+		Weight: linodego.Pointer(testNodeWeight + 90),
+		Label:  linodego.Pointer(testNodeLabel + "_r"),
 	}
 	nodeUpdated, err := client.UpdateNodeBalancerNode(context.Background(), nodebalancer.ID, config.ID, node.ID, updateOpts)
 	if err != nil {
@@ -53,9 +53,9 @@ func TestNodeBalancerNode_Update(t *testing.T) {
 	}
 
 	// fixture sanitization breaks predictability for this test, verify the prefix
-	if string(updateOpts.Mode) != string(nodeUpdated.Mode) ||
-		updateOpts.Label != nodeUpdated.Label ||
-		updateOpts.Weight != nodeUpdated.Weight {
+	if string(*updateOpts.Mode) != string(nodeUpdated.Mode) ||
+		*updateOpts.Label != nodeUpdated.Label ||
+		*updateOpts.Weight != nodeUpdated.Weight {
 		t.Errorf("NodeBalancerNode did not match UpdateOptions")
 	}
 }
@@ -125,7 +125,7 @@ func TestNodeBalancer_Rebuild(t *testing.T) {
 		nbcRebuildOpts.Nodes,
 		linodego.NodeBalancerConfigRebuildNodeOptions{
 			NodeBalancerNodeCreateOptions: node.GetCreateOptions(),
-			ID:                            node.ID,
+			ID:                            &node.ID,
 		},
 	)
 

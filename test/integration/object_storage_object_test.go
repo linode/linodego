@@ -17,7 +17,7 @@ func putObjectStorageObject(t *testing.T, client *linodego.Client, bucket *linod
 	url, err := client.CreateObjectStorageObjectURL(context.TODO(), bucket.Cluster, bucket.Label, linodego.ObjectStorageObjectURLCreateOptions{
 		Name:        name,
 		Method:      http.MethodPut,
-		ContentType: "text/plain",
+		ContentType: linodego.Pointer("text/plain"),
 		ExpiresIn:   &objectStorageObjectURLExpirySeconds,
 	})
 	if err != nil {

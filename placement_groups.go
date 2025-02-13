@@ -61,7 +61,7 @@ type PlacementGroupCreateOptions struct {
 // PlacementGroupUpdateOptions represents the options to use
 // when updating a placement group.
 type PlacementGroupUpdateOptions struct {
-	Label string `json:"label,omitempty"`
+	Label *string `json:"label,omitempty"`
 }
 
 // PlacementGroupAssignOptions represents options used when

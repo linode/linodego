@@ -62,8 +62,10 @@ func TestDatabaseMySQL_Update(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
+	label := "example-db-updated"
+
 	requestData := linodego.MySQLUpdateOptions{
-		Label: "example-db-updated",
+		Label: &label,
 	}
 
 	base.MockPut("databases/mysql/instances/123", fixtureData)

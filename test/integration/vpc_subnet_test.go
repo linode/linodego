@@ -83,7 +83,7 @@ func createVPCWithSubnet(t *testing.T, client *linodego.Client, vpcModifier ...v
 	createOpts := linodego.VPCCreateOptions{
 		Label:  "go-test-vpc-" + getUniqueText(),
 		Region: getRegionsWithCaps(t, client, []string{"Linodes", "VPCs"})[0],
-		Subnets: []VPCSubnetCreateOptions{
+		Subnets: &[]VPCSubnetCreateOptions{
 			{
 				Label: "linodego-vpc-test-" + getUniqueText(),
 				IPv4:  TestSubnet,
@@ -326,7 +326,7 @@ func TestVPC_Subnet_WithInstance(t *testing.T) {
 		t.Fatal("IP/VPC id mismatch")
 	}
 
-	if nat1To1.Address != config.Interfaces[2].IPv4.VPC {
+	if nat1To1.Address != *config.Interfaces[2].IPv4.VPC {
 		t.Fatalf("nat_1_1 subnet IP mismatch")
 	}
 }

@@ -8,11 +8,6 @@ import (
 	"github.com/linode/linodego"
 )
 
-var (
-	clientConnThrottle = 20
-	label              = "go-test-def"
-)
-
 func TestNodeBalancer_Create_create_smoke(t *testing.T) {
 	_, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancer_Create")
 	defer teardown()
@@ -22,7 +17,7 @@ func TestNodeBalancer_Create_create_smoke(t *testing.T) {
 	}
 
 	// when comparing fixtures to random value Label will differ, compare the known suffix
-	if !strings.Contains(*nodebalancer.Label, label) {
+	if !strings.Contains(*nodebalancer.Label, "go-test-def") {
 		t.Errorf("nodebalancer returned does not match nodebalancer create request")
 	}
 
@@ -85,10 +80,10 @@ func setupNodeBalancer(t *testing.T, fixturesYaml string) (*linodego.Client, *li
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := linodego.NodeBalancerCreateOptions{
-		Label:              &label,
-		Region:             getRegionsWithCaps(t, client, []string{"NodeBalancers"})[0],
-		ClientConnThrottle: &clientConnThrottle,
-		FirewallID:         GetFirewallID(),
+		Label:              linodego.Pointer("go-test-def"),
+		Region:             linodego.Pointer(getRegionsWithCaps(t, client, []string{"NodeBalancers"})[0]),
+		ClientConnThrottle: linodego.Pointer(20),
+		FirewallID:         linodego.Pointer(GetFirewallID()),
 	}
 
 	nodebalancer, err := client.CreateNodeBalancer(context.Background(), createOpts)

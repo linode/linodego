@@ -44,7 +44,7 @@ func TestDomainRecord_Update(t *testing.T) {
 	assertDateSet(t, record.Updated)
 
 	updateOpts := linodego.DomainRecordUpdateOptions{
-		Name: "renamed",
+		Name: linodego.Pointer("renamed"),
 	}
 	recordUpdated, err := client.UpdateDomainRecord(context.Background(), domain.ID, record.ID, updateOpts)
 	if err != nil {

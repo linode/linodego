@@ -20,7 +20,7 @@ type LKEClusterControlPlaneACLAddresses struct {
 type LKEClusterControlPlaneACL struct {
 	Enabled    bool                                `json:"enabled"`
 	Addresses  *LKEClusterControlPlaneACLAddresses `json:"addresses"`
-	RevisionID string                              `json:"revision_id,omitempty"`
+	RevisionID *string                             `json:"revision_id,omitempty"`
 }
 
 // LKEClusterControlPlaneACLAddressesOptions are the options used to

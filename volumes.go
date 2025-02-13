@@ -46,28 +46,28 @@ type Volume struct {
 
 // VolumeCreateOptions fields are those accepted by CreateVolume
 type VolumeCreateOptions struct {
-	Label    string `json:"label,omitempty"`
-	Region   string `json:"region,omitempty"`
-	LinodeID int    `json:"linode_id,omitempty"`
-	ConfigID int    `json:"config_id,omitempty"`
+	Label    *string `json:"label,omitempty"`
+	Region   *string `json:"region,omitempty"`
+	LinodeID *int    `json:"linode_id,omitempty"`
+	ConfigID *int    `json:"config_id,omitempty"`
 	// The Volume's size, in GiB. Minimum size is 10GiB, maximum size is 10240GiB. A "0" value will result in the default size.
-	Size int `json:"size,omitempty"`
+	Size *int `json:"size,omitempty"`
 	// An array of tags applied to this object. Tags are for organizational purposes only.
-	Tags               []string `json:"tags"`
-	PersistAcrossBoots *bool    `json:"persist_across_boots,omitempty"`
-	Encryption         string   `json:"encryption,omitempty"`
+	Tags               *[]string `json:"tags"`
+	PersistAcrossBoots *bool     `json:"persist_across_boots,omitempty"`
+	Encryption         *string   `json:"encryption,omitempty"`
 }
 
 // VolumeUpdateOptions fields are those accepted by UpdateVolume
 type VolumeUpdateOptions struct {
-	Label string    `json:"label,omitempty"`
+	Label *string   `json:"label,omitempty"`
 	Tags  *[]string `json:"tags,omitempty"`
 }
 
 // VolumeAttachOptions fields are those accepted by AttachVolume
 type VolumeAttachOptions struct {
 	LinodeID           int   `json:"linode_id"`
-	ConfigID           int   `json:"config_id,omitempty"`
+	ConfigID           *int  `json:"config_id,omitempty"`
 	PersistAcrossBoots *bool `json:"persist_across_boots,omitempty"`
 }
 
@@ -95,19 +95,19 @@ func (v *Volume) UnmarshalJSON(b []byte) error {
 
 // GetUpdateOptions converts a Volume to VolumeUpdateOptions for use in UpdateVolume
 func (v Volume) GetUpdateOptions() (updateOpts VolumeUpdateOptions) {
-	updateOpts.Label = v.Label
+	updateOpts.Label = &v.Label
 	updateOpts.Tags = &v.Tags
 	return
 }
 
 // GetCreateOptions converts a Volume to VolumeCreateOptions for use in CreateVolume
 func (v Volume) GetCreateOptions() (createOpts VolumeCreateOptions) {
-	createOpts.Label = v.Label
-	createOpts.Tags = v.Tags
-	createOpts.Region = v.Region
-	createOpts.Size = v.Size
+	createOpts.Label = &v.Label
+	createOpts.Tags = &v.Tags
+	createOpts.Region = &v.Region
+	createOpts.Size = &v.Size
 	if v.LinodeID != nil && *v.LinodeID > 0 {
-		createOpts.LinodeID = *v.LinodeID
+		createOpts.LinodeID = &*v.LinodeID
 	}
 	return
 }

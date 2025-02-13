@@ -83,19 +83,17 @@ func TestVLANs_GetIPAMAddress(t *testing.T) {
 func createVLANInstance(t *testing.T, client *linodego.Client, instanceName, vlanName string) (*linodego.Instance, func(), error) {
 	t.Helper()
 
-	trueBool := true
-
 	instance, err := createInstance(t, client, true, func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
-		opts.Interfaces = []linodego.InstanceConfigInterfaceCreateOptions{
+		opts.Interfaces = &[]linodego.InstanceConfigInterfaceCreateOptions{
 			{
-				Label:       vlanName,
-				Purpose:     linodego.InterfacePurposeVLAN,
-				IPAMAddress: "10.0.0.1/24",
+				Label:       &vlanName,
+				Purpose:     linodego.Pointer(linodego.InterfacePurposeVLAN),
+				IPAMAddress: linodego.Pointer("10.0.0.1/24"),
 			},
 		}
 
-		opts.Booted = &trueBool
-		opts.Label = instanceName
+		opts.Booted = linodego.Pointer(true)
+		opts.Label = &instanceName
 		opts.Region = getRegionsWithCaps(t, client, []string{"Vlans"})[0]
 	})
 	if err != nil {

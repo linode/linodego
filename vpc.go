@@ -19,15 +19,15 @@ type VPC struct {
 }
 
 type VPCCreateOptions struct {
-	Label       string                   `json:"label"`
-	Description string                   `json:"description,omitempty"`
-	Region      string                   `json:"region"`
-	Subnets     []VPCSubnetCreateOptions `json:"subnets,omitempty"`
+	Label       string                    `json:"label"`
+	Description *string                   `json:"description,omitempty"`
+	Region      string                    `json:"region"`
+	Subnets     *[]VPCSubnetCreateOptions `json:"subnets,omitempty"`
 }
 
 type VPCUpdateOptions struct {
-	Label       string `json:"label,omitempty"`
-	Description string `json:"description,omitempty"`
+	Label       *string `json:"label,omitempty"`
+	Description *string `json:"description,omitempty"`
 }
 
 func (v VPC) GetCreateOptions() VPCCreateOptions {
@@ -38,16 +38,16 @@ func (v VPC) GetCreateOptions() VPCCreateOptions {
 
 	return VPCCreateOptions{
 		Label:       v.Label,
-		Description: v.Description,
+		Description: &v.Description,
 		Region:      v.Region,
-		Subnets:     subnetCreations,
+		Subnets:     &subnetCreations,
 	}
 }
 
 func (v VPC) GetUpdateOptions() VPCUpdateOptions {
 	return VPCUpdateOptions{
-		Label:       v.Label,
-		Description: v.Description,
+		Label:       &v.Label,
+		Description: &v.Description,
 	}
 }
 

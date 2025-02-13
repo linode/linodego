@@ -76,31 +76,31 @@ func (d *MySQLDatabase) UnmarshalJSON(b []byte) error {
 
 // MySQLCreateOptions fields are used when creating a new MySQL Database
 type MySQLCreateOptions struct {
-	Label       string   `json:"label"`
-	Region      string   `json:"region"`
-	Type        string   `json:"type"`
-	Engine      string   `json:"engine"`
-	AllowList   []string `json:"allow_list,omitempty"`
-	ClusterSize int      `json:"cluster_size,omitempty"`
+	Label       string    `json:"label"`
+	Region      string    `json:"region"`
+	Type        string    `json:"type"`
+	Engine      string    `json:"engine"`
+	AllowList   *[]string `json:"allow_list,omitempty"`
+	ClusterSize *int      `json:"cluster_size,omitempty"`
 
 	// Deprecated: ReplicationType is a deprecated property, as it is no longer supported in DBaaS V2.
-	ReplicationType string `json:"replication_type,omitempty"`
+	ReplicationType *string `json:"replication_type,omitempty"`
 	// Deprecated: Encrypted is a deprecated property, as it is no longer supported in DBaaS V2.
-	Encrypted bool `json:"encrypted,omitempty"`
+	Encrypted *bool `json:"encrypted,omitempty"`
 	// Deprecated: SSLConnection is a deprecated property, as it is no longer supported in DBaaS V2.
-	SSLConnection bool `json:"ssl_connection,omitempty"`
+	SSLConnection *bool `json:"ssl_connection,omitempty"`
 
 	Fork *DatabaseFork `json:"fork,omitempty"`
 }
 
 // MySQLUpdateOptions fields are used when altering the existing MySQL Database
 type MySQLUpdateOptions struct {
-	Label       string                     `json:"label,omitempty"`
+	Label       *string                    `json:"label,omitempty"`
 	AllowList   *[]string                  `json:"allow_list,omitempty"`
 	Updates     *DatabaseMaintenanceWindow `json:"updates,omitempty"`
-	Type        string                     `json:"type,omitempty"`
-	ClusterSize int                        `json:"cluster_size,omitempty"`
-	Version     string                     `json:"version,omitempty"`
+	Type        *string                    `json:"type,omitempty"`
+	ClusterSize *int                       `json:"cluster_size,omitempty"`
+	Version     *string                    `json:"version,omitempty"`
 }
 
 // MySQLDatabaseBackup is information for interacting with a backup for the existing MySQL Database
