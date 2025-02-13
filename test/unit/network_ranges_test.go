@@ -8,7 +8,7 @@ import (
 	"github.com/linode/linodego"
 )
 
-func TestIPListIPv6Ranges(t *testing.T) {
+func TestIPv6Ranges_List(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)
 	defer base.TearDown(t)
@@ -38,7 +38,7 @@ func TestIPListIPv6Ranges(t *testing.T) {
 	assert.Len(t, ranges, 1, "Expected one IPv6 range in response")
 	assert.Equal(t, "2600:3c00::/64", ranges[0].Range, "Expected matching IPv6 range")
 }
-func TestIPGetIPv6Range(t *testing.T) {
+func TestIPv6Range_Get(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)
 	defer base.TearDown(t)
@@ -77,7 +77,7 @@ func TestIPGetIPv6Range(t *testing.T) {
 }
 
 
-func TestIPCreateIPv6Range(t *testing.T) {
+func TestIPv6Range_Create(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)
 	defer base.TearDown(t)
@@ -98,7 +98,7 @@ func TestIPCreateIPv6Range(t *testing.T) {
 	assert.Equal(t, createOpts.RouteTarget, createdRange.RouteTarget, "Expected matching route target")
 }
 
-func TestIPDeleteIPv6Range(t *testing.T) {
+func TestIPv6Range_Delete(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)
 	defer base.TearDown(t)

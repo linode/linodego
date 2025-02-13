@@ -8,7 +8,7 @@ import (
 	"github.com/linode/linodego"
 )
 
-func TestIPListReservedIPAddresses(t *testing.T) {
+func TestReservedIPAddresses_List(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)
 	defer base.TearDown(t)
@@ -45,7 +45,7 @@ func TestIPListReservedIPAddresses(t *testing.T) {
 	assert.Equal(t, 12345, reservedIPs[0].LinodeID, "Expected Linode ID to match")
 }
 
-func TestIPGetReservedIPAddress(t *testing.T) {
+func TestReservedIPAddress_Get(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)
 	defer base.TearDown(t)
@@ -99,7 +99,7 @@ func TestIPReserveIPAddress(t *testing.T) {
 	assert.Equal(t, 13579, reservedIP.LinodeID, "Expected Linode ID to match")
 }
 
-func TestIPDeleteReservedIPAddress(t *testing.T) {
+func TestReservedIPAddress_Delete(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)
 	defer base.TearDown(t)

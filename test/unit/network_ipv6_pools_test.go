@@ -8,7 +8,7 @@ import (
 	"github.com/linode/linodego"
 )
 
-func TestIPListIPv6Pools(t *testing.T) {
+func TestIPIPv6Pools_List(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)
 	defer base.TearDown(t)
@@ -43,7 +43,7 @@ func TestIPListIPv6Pools(t *testing.T) {
 	assert.ElementsMatch(t, []int{12345, 67890}, pools[0].Linodes, "Expected matching Linodes list")
 }
 
-func TestIPGetIPv6Pool(t *testing.T) {
+func TestIPIPv6Pool_Get(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)
 	defer base.TearDown(t)
