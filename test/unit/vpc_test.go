@@ -5,8 +5,8 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stretchr/testify/assert"
 	"github.com/linode/linodego"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestVPC_Create(t *testing.T) {
@@ -85,7 +85,6 @@ func TestVPC_List(t *testing.T) {
 	assert.Equal(t, "subnet-1", vpcs[0].Subnets[0].Label, "Expected subnet label to match")
 	assert.Equal(t, "192.168.1.0/24", vpcs[0].Subnets[0].IPv4, "Expected subnet IPv4 to match")
 }
-
 
 func TestVPC_Update(t *testing.T) {
 	var base ClientBaseCase

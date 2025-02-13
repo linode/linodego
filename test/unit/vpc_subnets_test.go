@@ -94,8 +94,8 @@ func TestVPCSubnet_Delete(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	base.MockDelete("vpcs/123/subnets/456",nil)
+	base.MockDelete("vpcs/123/subnets/456", nil)
 
 	err := base.Client.DeleteVPCSubnet(context.Background(), 123, 456)
-	assert.NoError(t, err,"Expected no error when deleting VPCSubnet")
+	assert.NoError(t, err, "Expected no error when deleting VPCSubnet")
 }
