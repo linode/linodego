@@ -126,7 +126,7 @@ func setupNodeBalancerWithVPC(t *testing.T, fixturesYaml string) (*linodego.Clie
 	t.Helper()
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
-	vpc, vpcTeardown, err := createVPC(t, client)
+	vpc, subnet, vpcTeardown, err := createVPCWithSubnet(t, client)
 	if err != nil {
 		t.Errorf("Error creating vpc, got error %v", err)
 	}
@@ -137,9 +137,9 @@ func setupNodeBalancerWithVPC(t *testing.T, fixturesYaml string) (*linodego.Clie
 		FirewallID:         GetFirewallID(),
 		VPCs: []*linodego.NodeBalancerVPCConfig{
 			{
-				IPv4Range: "10.100.0.0/24",
+				IPv4Range: "192.168.0.64/30",
 				IPv6Range: "",
-				SubnetID: vpc.Subnets[0].ID,
+				SubnetID: subnet.ID,
 			},
 		},
 	}
@@ -153,8 +153,8 @@ func setupNodeBalancerWithVPC(t *testing.T, fixturesYaml string) (*linodego.Clie
 		if err := client.DeleteNodeBalancer(context.Background(), nodebalancer.ID); err != nil {
 			t.Errorf("Expected to delete a nodebalancer, but got %v", err)
 		}
-		fixtureTeardown()
 		vpcTeardown()
+		fixtureTeardown()
 	}
 	return client, nodebalancer, teardown, err
 }

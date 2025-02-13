@@ -275,7 +275,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 13 Feb 2025 15:58:58 GMT
+      - Thu, 13 Feb 2025 16:20:18 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -301,7 +301,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-vpc-1739462337885339032","region":"us-iad","subnets":[{"label":"subnet1","ipv4":"10.0.0.0/8"}]}'
+    body: '{"label":"go-test-vpc-1739463618663350333","region":"us-iad","subnets":[{"label":"linodego-vpc-test-1739463618964814089","ipv4":"192.168.0.0/25"}]}'
     form: {}
     headers:
       Accept:
@@ -313,9 +313,9 @@ interactions:
     url: https://api.linode.com/v4beta/vpcs
     method: POST
   response:
-    body: '{"id": 153102, "label": "go-test-vpc-1739462337885339032", "description":
-      "", "region": "us-iad", "subnets": [{"id": 148380, "label": "subnet1", "ipv4":
-      "10.0.0.0/8", "ipv6": null, "linodes": [], "created": "2018-01-02T03:04:05",
+    body: '{"id": 153106, "label": "go-test-vpc-1739463618663350333", "description":
+      "", "region": "us-iad", "subnets": [{"id": 148386, "label": "linodego-vpc-test-1739463618964814089",
+      "ipv4": "192.168.0.0/25", "ipv6": null, "linodes": [], "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05"}], "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05"}'
     headers:
@@ -334,13 +334,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "333"
+      - "367"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 13 Feb 2025 15:58:58 GMT
+      - Thu, 13 Feb 2025 16:20:19 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -364,7 +364,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-def","region":"us-iad","client_conn_throttle":20,"tags":null,"firewall_id":1805809,"vpcs":[{"ipv4_range":"10.100.0.0/24","subnet_id":148380}]}'
+    body: '{"label":"go-test-def","region":"us-iad","client_conn_throttle":20,"tags":null,"firewall_id":1805985,"vpcs":[{"ipv4_range":"192.168.0.64/30","subnet_id":148386}]}'
     form: {}
     headers:
       Accept:
@@ -376,8 +376,8 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 1283200, "label": "go-test-def", "region": "us-iad", "hostname":
-      "172-234-69-122.ip.linodeusercontent.com", "ipv4": "172.234.69.122", "ipv6":
+    body: '{"id": 1283251, "label": "go-test-def", "region": "us-iad", "hostname":
+      "172-233-203-86.ip.linodeusercontent.com", "ipv4": "172.233.203.86", "ipv6":
       "1234::5678", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "client_conn_throttle": 20, "client_udp_sess_throttle": 0, "tags": [], "transfer":
       {"in": null, "out": null, "total": null}}'
@@ -403,7 +403,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 13 Feb 2025 15:58:59 GMT
+      - Thu, 13 Feb 2025 16:20:20 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -436,7 +436,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/1283200
+    url: https://api.linode.com/v4beta/nodebalancers/1283251
     method: DELETE
   response:
     body: '{}'
@@ -462,7 +462,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 13 Feb 2025 15:58:59 GMT
+      - Thu, 13 Feb 2025 16:20:20 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -471,6 +471,65 @@ interactions:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
       - nodebalancers:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1600"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/vpcs/153106
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 13 Feb 2025 16:20:21 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - vpc:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:

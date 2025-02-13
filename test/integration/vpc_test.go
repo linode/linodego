@@ -36,12 +36,6 @@ func createVPC(t *testing.T, client *linodego.Client, vpcModifier ...vpcModifier
 	createOpts := linodego.VPCCreateOptions{
 		Label:  "go-test-vpc-" + getUniqueText(),
 		Region: getRegionsWithCaps(t, client, []string{"VPCs"})[0],
-		Subnets: []linodego.VPCSubnetCreateOptions{
-			{
-				Label: "subnet1",
-				IPv4: "10.0.0.0/8",
-			},
-		},
 	}
 
 	for _, mod := range vpcModifier {
