@@ -30,6 +30,23 @@ func TestNodeBalancer_Create_create_smoke(t *testing.T) {
 	assertDateSet(t, nodebalancer.Updated)
 }
 
+func TestNodeBalancer_Create_with_vpc(t *testing.T) {
+	_, nodebalancer, teardown, err := setupNodeBalancerWithVPC(t, "fixtures/TestNodeBalancer_With_VPC_Create")
+	defer teardown()
+
+	if err != nil {
+		t.Errorf("Error creating nodebalancer: %v", err)
+	}
+
+	// when comparing fixtures to random value Label will differ, compare the known suffix
+	if !strings.Contains(*nodebalancer.Label, label) {
+		t.Errorf("nodebalancer returned does not match nodebalancer create request")
+	}
+
+	assertDateSet(t, nodebalancer.Created)
+	assertDateSet(t, nodebalancer.Updated)
+}
+
 func TestNodeBalancer_Update(t *testing.T) {
 	client, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancer_Update")
 	defer teardown()
@@ -101,6 +118,43 @@ func setupNodeBalancer(t *testing.T, fixturesYaml string) (*linodego.Client, *li
 			t.Errorf("Expected to delete a nodebalancer, but got %v", err)
 		}
 		fixtureTeardown()
+	}
+	return client, nodebalancer, teardown, err
+}
+
+func setupNodeBalancerWithVPC(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.NodeBalancer, func(), error) {
+	t.Helper()
+	var fixtureTeardown func()
+	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+	vpc, vpcTeardown, err := createVPC(t, client)
+	if err != nil {
+		t.Errorf("Error creating vpc, got error %v", err)
+	}
+	createOpts := linodego.NodeBalancerCreateOptions{
+		Label:              &label,
+		Region:             vpc.Region,
+		ClientConnThrottle: &clientConnThrottle,
+		FirewallID:         GetFirewallID(),
+		VPCs: []*linodego.NodeBalancerVPCConfig{
+			{
+				IPv4Range: "10.100.0.0/24",
+				IPv6Range: "",
+				SubnetID: vpc.Subnets[0].ID,
+			},
+		},
+	}
+
+	nodebalancer, err := client.CreateNodeBalancer(context.Background(), createOpts)
+	if err != nil {
+		t.Fatalf("Error listing nodebalancers, expected struct, got error %v", err)
+	}
+
+	teardown := func() {
+		if err := client.DeleteNodeBalancer(context.Background(), nodebalancer.ID); err != nil {
+			t.Errorf("Expected to delete a nodebalancer, but got %v", err)
+		}
+		fixtureTeardown()
+		vpcTeardown()
 	}
 	return client, nodebalancer, teardown, err
 }
