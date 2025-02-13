@@ -44,6 +44,12 @@ type NodeBalancerTransfer struct {
 	In *float64 `json:"in"`
 }
 
+type NodeBalancerVPCConfig struct {
+	IPv4Range string `json:"ipv4_range"`
+	IPv6Range string `json:"ipv6_range,omitempty"`
+	SubnetID  int    `json:"subnet_id"`
+}
+
 // NodeBalancerCreateOptions are the options permitted for CreateNodeBalancer
 type NodeBalancerCreateOptions struct {
 	Label              *string                            `json:"label,omitempty"`
@@ -52,6 +58,7 @@ type NodeBalancerCreateOptions struct {
 	Configs            []*NodeBalancerConfigCreateOptions `json:"configs,omitempty"`
 	Tags               []string                           `json:"tags"`
 	FirewallID         int                                `json:"firewall_id,omitempty"`
+	VPCs               []*NodeBalancerVPCConfig           `json:"vpcs,omitempty"`
 }
 
 // NodeBalancerUpdateOptions are the options permitted for UpdateNodeBalancer
