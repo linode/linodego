@@ -16,7 +16,6 @@ func TestVPCAllIPAddresses_List(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	// Mock the GET response with fixture data
 	base.MockGet("vpcs/ips", fixtureData)
 
 	vpcIPs, err := base.Client.ListAllVPCIPAddresses(context.Background(), &linodego.ListOptions{})
@@ -37,7 +36,6 @@ func TestVPCSpecificIPAddresses_List(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	// Mock the GET response for a specific VPC
 	vpcID := 123
 	base.MockGet("vpcs/123/ips", fixtureData)
 

@@ -16,7 +16,6 @@ func TestVPCSubnet_Create(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	// Mock the POST request with the fixture response
 	base.MockPost("vpcs/123/subnets", fixtureData)
 
 	subnetCreateOpts := linodego.VPCSubnetCreateOptions{
@@ -39,7 +38,6 @@ func TestVPCSubnet_Get(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	// Mock the GET request with the fixture response
 	base.MockGet("vpcs/123/subnets/456", fixtureData)
 
 	subnet, err := base.Client.GetVPCSubnet(context.Background(), 123, 456)
@@ -60,7 +58,6 @@ func TestVPCSubnets_List(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	// Mock the GET request with the fixture response
 	base.MockGet("vpcs/123/subnets", fixtureData)
 
 	subnets, err := base.Client.ListVPCSubnets(context.Background(), 123, &linodego.ListOptions{})
@@ -80,7 +77,6 @@ func TestVPCSubnet_Update(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	// Mock the PUT request with the fixture response
 	base.MockPut("vpcs/123/subnets/456", fixtureData)
 
 	subnetUpdateOpts := linodego.VPCSubnetUpdateOptions{
@@ -98,7 +94,6 @@ func TestVPCSubnet_Delete(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	// Mock the DELETE request
 	base.MockDelete("vpcs/123/subnets/456",nil)
 
 	err := base.Client.DeleteVPCSubnet(context.Background(), 123, 456)

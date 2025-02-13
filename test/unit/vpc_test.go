@@ -14,7 +14,6 @@ func TestVPC_Create(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	// Mock API response
 	base.MockPost("vpcs", linodego.VPC{
 		ID:          123,
 		Label:       "test-vpc",
@@ -49,7 +48,6 @@ func TestVPC_Get(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	// Mock API response
 	mockVPC := linodego.VPC{
 		ID:    123,
 		Label: "test-vpc",
@@ -71,7 +69,6 @@ func TestVPC_List(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	// Mock the GET response with fixture data
 	base.MockGet("vpcs", fixtureData)
 
 	vpcs, err := base.Client.ListVPCs(context.Background(), &linodego.ListOptions{})
@@ -95,7 +92,6 @@ func TestVPC_Update(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	// Mock API response
 	updatedMockVPC := linodego.VPC{
 		ID:          123,
 		Label:       "updated-vpc",
@@ -120,7 +116,6 @@ func TestVPC_Delete(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	// Mock API response
 	base.MockDelete("vpcs/123", nil)
 
 	err := base.Client.DeleteVPC(context.Background(), 123)
