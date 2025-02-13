@@ -343,7 +343,8 @@ func TestLKECluster_APLEnabled_smoke(t *testing.T) {
 		func(createOpts *linodego.LKEClusterCreateOptions) {
 			// NOTE: g6-dedicated-4 is the minimum APL-compatible Linode type
 			createOpts.NodePools = []linodego.LKENodePoolCreateOptions{{Count: 3, Type: "g6-dedicated-4", Tags: []string{"test"}}}
-		}},
+		},
+	},
 		"fixtures/TestLKECluster_APLEnabled")
 	defer teardown()
 
