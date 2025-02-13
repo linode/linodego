@@ -4,12 +4,11 @@ import (
 	"context"
 	"testing"
 
-	"github.com/linode/linodego"
 	"github.com/stretchr/testify/require"
 )
 
 func TestNodeBalancerVpcConfig_List(t *testing.T) {
-	client, nodebalancer, teardown, err := setupNodeBalancerVpcConfig(t, "fixtures/TestNodeBalancerVpcConfig_List")
+	client, nodebalancer, teardown, err := setupNodeBalancerWithVPC(t, "fixtures/TestNodeBalancerVpcConfig_List")
 	if err != nil {
 		t.Errorf("Error setting up nodebalancer: %s", err)
 	}
@@ -26,7 +25,7 @@ func TestNodeBalancerVpcConfig_List(t *testing.T) {
 }
 
 func TestNodeBalancerVpcConfig_Get(t *testing.T) {
-	client, nodebalancer, teardown, err := setupNodeBalancerVpcConfig(t, "fixtures/TestNodeBalancerVpcConfig_Get")
+	client, nodebalancer, teardown, err := setupNodeBalancerWithVPC(t, "fixtures/TestNodeBalancerVpcConfig_Get")
 	if err != nil {
 		t.Errorf("Error setting up nodebalancer: %s", err)
 	}
@@ -47,47 +46,4 @@ func TestNodeBalancerVpcConfig_Get(t *testing.T) {
 	}
 	require.NotNil(t, config)
 	require.Equal(t, configs[0].ID, config.ID)
-}
-
-func setupNodeBalancerVpcConfig(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.NodeBalancer, func(), error) {
-	t.Helper()
-	client, fixtureTeardown := createTestClient(t, fixturesYaml)
-
-	// 1. Create a VPC and Subnet.
-	_, vpcSubnet, vpcTeardown, err := createVPCWithSubnet(t, client)
-	if err != nil {
-		t.Errorf("Error creating VPC and subnet: %s", err)
-	}
-
-	// 2. Create a NodeBalancer
-	// We need a region that supports both NodeBalancers and VPC
-	nbCreateOpts := linodego.NodeBalancerCreateOptions{
-		Label:  &label,
-		Region: getRegionsWithCaps(t, client, []string{"NodeBalancers", "VPCs"})[0],
-		Vpcs: []*linodego.VPCConfig{ // We need to add this functionality to linodego
-			{
-				IPv4Range: vpcSubnet.IPv4,
-				SubnetID:  vpcSubnet.ID,
-			},
-		},
-	}
-	nodebalancer, err := client.CreateNodeBalancer(context.Background(), nbCreateOpts)
-	if err != nil {
-		t.Errorf("Error creating nodebalancer: %s", err)
-	}
-
-	teardown := func() {
-		// Delete resources in reverse order of creation.
-		if nodebalancer != nil {
-			err := client.DeleteNodeBalancer(context.Background(), nodebalancer.ID)
-			if err != nil {
-				t.Errorf("Error deleting nodebalancer: %s", err)
-			}
-		}
-		// Only need to call vpcTeardown, which deletes the VPC and subnet
-		vpcTeardown()
-
-		fixtureTeardown()
-	}
-	return client, nodebalancer, teardown, err
 }
