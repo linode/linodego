@@ -14,7 +14,7 @@ func TestAccountEvents_List_smoke(t *testing.T) {
 		t.Error(err)
 	}
 	configOpts := linodego.InstanceConfigCreateOptions{
-		Label: "test-config",
+		Label: linodego.Pointer("test-config"),
 	}
 	instanceConfig, err := client.CreateInstanceConfig(context.Background(), instance.ID, configOpts)
 	if err != nil {

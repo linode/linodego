@@ -11,15 +11,13 @@ import (
 )
 
 func TestLKECluster_withACL(t *testing.T) {
-	valueTrue := true
-
 	client, cluster, teardown, err := setupLKECluster(
 		t,
 		[]clusterModifier{
 			func(options *linodego.LKEClusterCreateOptions) {
 				options.ControlPlane = &linodego.LKEClusterControlPlaneOptions{
 					ACL: &linodego.LKEClusterControlPlaneACLOptions{
-						Enabled: &valueTrue,
+						Enabled: linodego.Pointer(true),
 						Addresses: &linodego.LKEClusterControlPlaneACLAddressesOptions{
 							IPv4: &[]string{"10.0.0.1/32"},
 							IPv6: &[]string{"1234::5678"},
@@ -45,7 +43,7 @@ func TestLKECluster_withACL(t *testing.T) {
 		cluster.ID,
 		linodego.LKEClusterControlPlaneACLUpdateOptions{
 			ACL: linodego.LKEClusterControlPlaneACLOptions{
-				Enabled: &valueTrue,
+				Enabled: linodego.Pointer(true),
 				Addresses: &linodego.LKEClusterControlPlaneACLAddressesOptions{
 					IPv4: &[]string{"10.0.0.2/32"},
 					IPv6: &[]string{},

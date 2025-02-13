@@ -30,10 +30,14 @@ func TestAccountAgreements_Get(t *testing.T) {
 func TestAccountAgreements_Acknowledge(t *testing.T) {
 	client := createMockClient(t)
 
+	euModel := true
+	masterServiceAgreement := true
+	privacyPolicy := true
+
 	requestData := linodego.AccountAgreementsUpdateOptions{
-		EUModel:                true,
-		MasterServiceAgreement: true,
-		PrivacyPolicy:          true,
+		EUModel:                &euModel,
+		MasterServiceAgreement: &masterServiceAgreement,
+		PrivacyPolicy:          &privacyPolicy,
 	}
 
 	httpmock.RegisterRegexpResponder("POST", mockRequestURL(t, "account/agreements"),

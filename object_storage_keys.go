@@ -26,8 +26,8 @@ type ObjectStorageKeyBucketAccess struct {
 	// Deprecated: Cluster field has been deprecated.
 	// Please consider switching to use the 'Region' field.
 	// If your Cluster is `us-mia-1`, then the region would be `us-mia`.
-	Cluster string `json:"cluster,omitempty"`
-	Region  string `json:"region,omitempty"`
+	Cluster *string `json:"cluster,omitempty"`
+	Region  *string `json:"region,omitempty"`
 
 	BucketName  string `json:"bucket_name"`
 	Permissions string `json:"permissions"`
@@ -37,13 +37,13 @@ type ObjectStorageKeyBucketAccess struct {
 type ObjectStorageKeyCreateOptions struct {
 	Label        string                          `json:"label"`
 	BucketAccess *[]ObjectStorageKeyBucketAccess `json:"bucket_access,omitempty"`
-	Regions      []string                        `json:"regions,omitempty"`
+	Regions      *[]string                       `json:"regions,omitempty"`
 }
 
 // ObjectStorageKeyUpdateOptions fields are those accepted by UpdateObjectStorageKey
 type ObjectStorageKeyUpdateOptions struct {
-	Label   string   `json:"label,omitempty"`
-	Regions []string `json:"regions,omitempty"`
+	Label   *string   `json:"label,omitempty"`
+	Regions *[]string `json:"regions,omitempty"`
 }
 
 // ListObjectStorageKeys lists ObjectStorageKeys

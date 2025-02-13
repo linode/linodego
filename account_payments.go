@@ -23,7 +23,7 @@ type Payment struct {
 // PaymentCreateOptions fields are those accepted by CreatePayment
 type PaymentCreateOptions struct {
 	// CVV (Card Verification Value) of the credit card to be used for the Payment
-	CVV string `json:"cvv,omitempty"`
+	CVV *string `json:"cvv,omitempty"`
 
 	// The amount, in US dollars, of the Payment
 	USD json.Number `json:"usd"`

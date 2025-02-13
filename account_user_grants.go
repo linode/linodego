@@ -57,17 +57,17 @@ type UserGrants struct {
 }
 
 type UserGrantsUpdateOptions struct {
-	Database       []GrantedEntity   `json:"database,omitempty"`
-	Domain         []EntityUserGrant `json:"domain,omitempty"`
-	Firewall       []EntityUserGrant `json:"firewall,omitempty"`
-	Image          []EntityUserGrant `json:"image,omitempty"`
-	Linode         []EntityUserGrant `json:"linode,omitempty"`
-	Longview       []EntityUserGrant `json:"longview,omitempty"`
-	NodeBalancer   []EntityUserGrant `json:"nodebalancer,omitempty"`
-	PlacementGroup []EntityUserGrant `json:"placement_group,omitempty"`
-	StackScript    []EntityUserGrant `json:"stackscript,omitempty"`
-	Volume         []EntityUserGrant `json:"volume,omitempty"`
-	VPC            []EntityUserGrant `json:"vpc,omitempty"`
+	Database       *[]GrantedEntity   `json:"database,omitempty"`
+	Domain         *[]EntityUserGrant `json:"domain,omitempty"`
+	Firewall       *[]EntityUserGrant `json:"firewall,omitempty"`
+	Image          *[]EntityUserGrant `json:"image,omitempty"`
+	Linode         *[]EntityUserGrant `json:"linode,omitempty"`
+	Longview       *[]EntityUserGrant `json:"longview,omitempty"`
+	NodeBalancer   *[]EntityUserGrant `json:"nodebalancer,omitempty"`
+	PlacementGroup *[]EntityUserGrant `json:"placement_group,omitempty"`
+	StackScript    *[]EntityUserGrant `json:"stackscript,omitempty"`
+	Volume         *[]EntityUserGrant `json:"volume,omitempty"`
+	VPC            *[]EntityUserGrant `json:"vpc,omitempty"`
 
 	Global GlobalUserGrants `json:"global"`
 }

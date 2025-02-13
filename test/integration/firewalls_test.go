@@ -10,9 +10,9 @@ import (
 )
 
 var testFirewallCreateOpts = linodego.FirewallCreateOptions{
-	Label: "linodego-fw-test",
+	Label: linodego.Pointer("linodego-fw-test"),
 	Rules: testFirewallRuleSet, // borrowed from firewall_rules.test.go
-	Tags:  []string{"testing"},
+	Tags:  &[]string{"testing"},
 }
 
 // ignoreNetworkAddresses negates comparing IP addresses. Because of fixture sanitization,
@@ -26,7 +26,7 @@ var ignoreFirewallTimestamps = cmpopts.IgnoreFields(linodego.Firewall{}, "Create
 func TestFirewalls_List_smoke(t *testing.T) {
 	client, _, teardown, err := setupFirewall(t, []firewallModifier{
 		func(createOpts *linodego.FirewallCreateOptions) {
-			createOpts.Label = "linodego-fw-test"
+			createOpts.Label = linodego.Pointer("linodego-fw-test")
 		},
 	}, "fixtures/TestFirewalls_List")
 	if err != nil {
@@ -62,7 +62,7 @@ func TestFirewall_Get(t *testing.T) {
 	}
 	client, created, teardown, err := setupFirewall(t, []firewallModifier{
 		func(createOpts *linodego.FirewallCreateOptions) {
-			createOpts.Label = "linodego-fw-test"
+			createOpts.Label = linodego.Pointer("linodego-fw-test")
 			createOpts.Rules = rules
 		},
 	}, "fixtures/TestFirewall_Get")
@@ -99,9 +99,9 @@ func TestFirewall_Update(t *testing.T) {
 
 	client, firewall, teardown, err := setupFirewall(t, []firewallModifier{
 		func(createOpts *linodego.FirewallCreateOptions) {
-			createOpts.Label = "linodego-fw-test"
+			createOpts.Label = linodego.Pointer("linodego-fw-test")
 			createOpts.Rules = rules
-			createOpts.Tags = []string{"test"}
+			createOpts.Tags = &[]string{"test"}
 		},
 	}, "fixtures/TestFirewall_Update")
 	if err != nil {
@@ -110,8 +110,8 @@ func TestFirewall_Update(t *testing.T) {
 	defer teardown()
 
 	updateOpts := firewall.GetUpdateOptions()
-	updateOpts.Status = linodego.FirewallDisabled
-	updateOpts.Label = firewall.Label + "-updated"
+	updateOpts.Status = linodego.Pointer(linodego.FirewallDisabled)
+	updateOpts.Label = linodego.Pointer(firewall.Label + "-updated")
 	updateOpts.Tags = &[]string{}
 
 	updated, err := client.UpdateFirewall(context.Background(), firewall.ID, updateOpts)
@@ -119,14 +119,14 @@ func TestFirewall_Update(t *testing.T) {
 		t.Error(err)
 	}
 
-	if !cmp.Equal(updated.Tags, *updateOpts.Tags) {
+	if !cmp.Equal(*updated.Tags, *updateOpts.Tags) {
 		t.Errorf("expected tags to be updated: %s", cmp.Diff(updated.Tags, *updateOpts.Tags))
 	}
-	if updated.Status != updateOpts.Status {
-		t.Errorf("expected status %s but got %s", updateOpts.Status, updated.Status)
+	if updateOpts.Status == nil || updated.Status != *updateOpts.Status {
+		t.Errorf("expected status %s but got %s", *updateOpts.Status, updated.Status)
 	}
-	if updated.Label != updateOpts.Label {
-		t.Errorf(`expected label to be "%s" but got "%s"`, updateOpts.Label, updated.Label)
+	if updateOpts.Label == nil || updated.Label != *updateOpts.Label {
+		t.Errorf(`expected label to be "%s" but got "%s"`, *updateOpts.Label, updated.Label)
 	}
 }
 

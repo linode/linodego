@@ -25,8 +25,8 @@ type NetworkAddresses struct {
 type FirewallRule struct {
 	Action      string           `json:"action"`
 	Label       string           `json:"label"`
-	Description string           `json:"description,omitempty"`
-	Ports       string           `json:"ports,omitempty"`
+	Description *string          `json:"description,omitempty"`
+	Ports       *string          `json:"ports,omitempty"`
 	Protocol    NetworkProtocol  `json:"protocol"`
 	Addresses   NetworkAddresses `json:"addresses"`
 }

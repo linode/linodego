@@ -95,10 +95,12 @@ func TestAccountUsers_Update(t *testing.T) {
 	defer base.TearDown(t)
 
 	restricted := true
+	username := "adevi"
+	email := "jkowalski@linode.com"
 
 	requestData := linodego.UserUpdateOptions{
-		Username:   "adevi",
-		Email:      "jkowalski@linode.com",
+		Username:   &username,
+		Email:      &email,
 		Restricted: &restricted,
 	}
 

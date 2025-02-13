@@ -13,7 +13,7 @@ import (
 )
 
 var testBasicObjectStorageKeyCreateOpts = ObjectStorageKeyCreateOptions{
-	Label: label,
+	Label: "go-test-def",
 }
 
 func TestObjectStorageKey_GetMissing(t *testing.T) {
@@ -66,7 +66,7 @@ func TestObjectStorageKey_Update(t *testing.T) {
 
 	renamedLabel := objectStorageKey.Label + "_r"
 	updateOpts := ObjectStorageKeyUpdateOptions{
-		Label: renamedLabel,
+		Label: &renamedLabel,
 	}
 	objectStorageKey, err = client.UpdateObjectStorageKey(context.Background(), objectStorageKey.ID, updateOpts)
 	if err != nil {
@@ -117,14 +117,14 @@ func TestObjectStorageKeys_Limited(t *testing.T) {
 	createOpts := testBasicObjectStorageKeyCreateOpts
 	createOpts.BucketAccess = &[]ObjectStorageKeyBucketAccess{
 		{
-			Cluster:     "us-east-1",
-			Region:      "us-east",
+			Cluster:     linodego.Pointer("us-east-1"),
+			Region:      linodego.Pointer("us-east"),
 			BucketName:  bucket.Label,
 			Permissions: "read_only",
 		},
 		{
-			Cluster:     "us-east-1",
-			Region:      "us-east",
+			Cluster:     linodego.Pointer("us-east-1"),
+			Region:      linodego.Pointer("us-east"),
 			BucketName:  bucket.Label,
 			Permissions: "read_write",
 		},
@@ -168,8 +168,8 @@ func TestObjectStorageKeys_Regional_Limited(t *testing.T) {
 
 	client, bucket, teardown, err := setupObjectStorageBucket(t, []objectStorageBucketModifier{
 		func(createOpts *ObjectStorageBucketCreateOptions) {
-			createOpts.Cluster = ""
-			createOpts.Region = region
+			createOpts.Cluster = linodego.Pointer("")
+			createOpts.Region = &region
 		},
 	}, "fixtures/TestObjectStorageKeys_Regional_Limited",
 		client, teardown, nil)
@@ -180,14 +180,14 @@ func TestObjectStorageKeys_Regional_Limited(t *testing.T) {
 	createOpts := testBasicObjectStorageKeyCreateOpts
 	createOpts.BucketAccess = &[]ObjectStorageKeyBucketAccess{
 		{
-			Region:      region,
+			Region:      &region,
 			BucketName:  bucket.Label,
 			Permissions: "read_only",
 		},
 	}
 
 	initialRegion := bucket.Region
-	createOpts.Regions = []string{initialRegion}
+	createOpts.Regions = &[]string{initialRegion}
 
 	_, key, teardown, err := setupObjectStorageKey(t, createOpts, "fixtures/TestObjectStorageKeys_Regional_Limited", client, teardown)
 	defer teardown()
@@ -220,7 +220,7 @@ func TestObjectStorageKeys_Regional_Limited(t *testing.T) {
 	}
 
 	updateOpts := ObjectStorageKeyUpdateOptions{
-		Regions: []string{initialRegion, addedRegion},
+		Regions: &[]string{initialRegion, addedRegion},
 	}
 	key, err = client.UpdateObjectStorageKey(context.Background(), key.ID, updateOpts)
 	if err != nil {

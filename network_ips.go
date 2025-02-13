@@ -29,11 +29,11 @@ type LinodeIPAssignment struct {
 }
 
 type AllocateReserveIPOptions struct {
-	Type     string `json:"type"`
-	Public   bool   `json:"public"`
-	Reserved bool   `json:"reserved,omitempty"`
-	Region   string `json:"region,omitempty"`
-	LinodeID int    `json:"linode_id,omitempty"`
+	Type     string  `json:"type"`
+	Public   bool    `json:"public"`
+	Reserved *bool   `json:"reserved,omitempty"`
+	Region   *string `json:"region,omitempty"`
+	LinodeID *int    `json:"linode_id,omitempty"`
 }
 
 // LinodesAssignIPsOptions fields are those accepted by InstancesAssignIPs.

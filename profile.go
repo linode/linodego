@@ -38,28 +38,28 @@ type Profile struct {
 	Referrals           ProfileReferrals `json:"referrals"`
 	AuthorizedKeys      []string         `json:"authorized_keys"`
 	AuthenticationType  string           `json:"authentication_type"`
-	VerifiedPhoneNumber string           `json:"verified_phone_number,omitempty"`
+	VerifiedPhoneNumber *string          `json:"verified_phone_number,omitempty"`
 }
 
 // ProfileUpdateOptions fields are those accepted by UpdateProfile
 type ProfileUpdateOptions struct {
-	Email              string         `json:"email,omitempty"`
-	Timezone           string         `json:"timezone,omitempty"`
-	EmailNotifications *bool          `json:"email_notifications,omitempty"`
-	IPWhitelistEnabled *bool          `json:"ip_whitelist_enabled,omitempty"`
-	LishAuthMethod     LishAuthMethod `json:"lish_auth_method,omitempty"`
-	AuthorizedKeys     *[]string      `json:"authorized_keys,omitempty"`
-	TwoFactorAuth      *bool          `json:"two_factor_auth,omitempty"`
-	Restricted         *bool          `json:"restricted,omitempty"`
+	Email              *string         `json:"email,omitempty"`
+	Timezone           *string         `json:"timezone,omitempty"`
+	EmailNotifications *bool           `json:"email_notifications,omitempty"`
+	IPWhitelistEnabled *bool           `json:"ip_whitelist_enabled,omitempty"`
+	LishAuthMethod     *LishAuthMethod `json:"lish_auth_method,omitempty"`
+	AuthorizedKeys     *[]string       `json:"authorized_keys,omitempty"`
+	TwoFactorAuth      *bool           `json:"two_factor_auth,omitempty"`
+	Restricted         *bool           `json:"restricted,omitempty"`
 }
 
 // GetUpdateOptions converts a Profile to ProfileUpdateOptions for use in UpdateProfile
 func (i Profile) GetUpdateOptions() (o ProfileUpdateOptions) {
-	o.Email = i.Email
-	o.Timezone = i.Timezone
+	o.Email = &i.Email
+	o.Timezone = &i.Timezone
 	o.EmailNotifications = copyBool(&i.EmailNotifications)
 	o.IPWhitelistEnabled = copyBool(&i.IPWhitelistEnabled)
-	o.LishAuthMethod = i.LishAuthMethod
+	o.LishAuthMethod = &i.LishAuthMethod
 	authorizedKeys := make([]string, len(i.AuthorizedKeys))
 	copy(authorizedKeys, i.AuthorizedKeys)
 	o.AuthorizedKeys = &authorizedKeys

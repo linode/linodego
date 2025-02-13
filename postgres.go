@@ -94,33 +94,33 @@ func (d *PostgresDatabase) UnmarshalJSON(b []byte) error {
 
 // PostgresCreateOptions fields are used when creating a new Postgres Database
 type PostgresCreateOptions struct {
-	Label       string   `json:"label"`
-	Region      string   `json:"region"`
-	Type        string   `json:"type"`
-	Engine      string   `json:"engine"`
-	AllowList   []string `json:"allow_list,omitempty"`
-	ClusterSize int      `json:"cluster_size,omitempty"`
+	Label       string    `json:"label"`
+	Region      string    `json:"region"`
+	Type        string    `json:"type"`
+	Engine      string    `json:"engine"`
+	AllowList   *[]string `json:"allow_list,omitempty"`
+	ClusterSize *int      `json:"cluster_size,omitempty"`
 
 	// Deprecated: Encrypted is a deprecated property, as it is no longer supported in DBaaS V2.
-	Encrypted bool `json:"encrypted,omitempty"`
+	Encrypted *bool `json:"encrypted,omitempty"`
 	// Deprecated: SSLConnection is a deprecated property, as it is no longer supported in DBaaS V2.
-	SSLConnection bool `json:"ssl_connection,omitempty"`
+	SSLConnection *bool `json:"ssl_connection,omitempty"`
 	// Deprecated: ReplicationType is a deprecated property, as it is no longer supported in DBaaS V2.
-	ReplicationType PostgresReplicationType `json:"replication_type,omitempty"`
+	ReplicationType *PostgresReplicationType `json:"replication_type,omitempty"`
 	// Deprecated: ReplicationCommitType is a deprecated property, as it is no longer supported in DBaaS V2.
-	ReplicationCommitType PostgresCommitType `json:"replication_commit_type,omitempty"`
+	ReplicationCommitType *PostgresCommitType `json:"replication_commit_type,omitempty"`
 
 	Fork *DatabaseFork `json:"fork,omitempty"`
 }
 
 // PostgresUpdateOptions fields are used when altering the existing Postgres Database
 type PostgresUpdateOptions struct {
-	Label       string                     `json:"label,omitempty"`
+	Label       *string                    `json:"label,omitempty"`
 	AllowList   *[]string                  `json:"allow_list,omitempty"`
 	Updates     *DatabaseMaintenanceWindow `json:"updates,omitempty"`
-	Type        string                     `json:"type,omitempty"`
-	ClusterSize int                        `json:"cluster_size,omitempty"`
-	Version     string                     `json:"version,omitempty"`
+	Type        *string                    `json:"type,omitempty"`
+	ClusterSize *int                       `json:"cluster_size,omitempty"`
+	Version     *string                    `json:"version,omitempty"`
 }
 
 // PostgresDatabaseSSL is the SSL Certificate to access the Linode Managed Postgres Database

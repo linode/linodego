@@ -88,21 +88,21 @@ type ObjectStorageBucketCreateOptions struct {
 	// Going forward, the 'Region' field will be the supported way to designate where an
 	// Object Storage Bucket should be created. For example, a 'Cluster' value of `us-mia-1`
 	// will translate to a Region value of `us-mia`.
-	Cluster string `json:"cluster,omitempty"`
-	Region  string `json:"region,omitempty"`
+	Cluster *string `json:"cluster,omitempty"`
+	Region  *string `json:"region,omitempty"`
 
-	Label        string                    `json:"label"`
-	S3Endpoint   string                    `json:"s3_endpoint,omitempty"`
-	EndpointType ObjectStorageEndpointType `json:"endpoint_type,omitempty"`
+	Label        string                     `json:"label"`
+	S3Endpoint   *string                    `json:"s3_endpoint,omitempty"`
+	EndpointType *ObjectStorageEndpointType `json:"endpoint_type,omitempty"`
 
-	ACL         ObjectStorageACL `json:"acl,omitempty"`
-	CorsEnabled *bool            `json:"cors_enabled,omitempty"`
+	ACL         *ObjectStorageACL `json:"acl,omitempty"`
+	CorsEnabled *bool             `json:"cors_enabled,omitempty"`
 }
 
 // ObjectStorageBucketUpdateAccessOptions fields are those accepted by UpdateObjectStorageBucketAccess
 type ObjectStorageBucketUpdateAccessOptions struct {
-	ACL         ObjectStorageACL `json:"acl,omitempty"`
-	CorsEnabled *bool            `json:"cors_enabled,omitempty"`
+	ACL         *ObjectStorageACL `json:"acl,omitempty"`
+	CorsEnabled *bool             `json:"cors_enabled,omitempty"`
 }
 
 // ObjectStorageBucketListContentsParams fields are the query parameters for ListObjectStorageBucketContents

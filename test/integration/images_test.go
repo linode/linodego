@@ -75,7 +75,7 @@ func TestImage_Upload(t *testing.T) {
 	image, uploadURL, err := client.CreateImageUpload(context.Background(), ImageCreateUploadOptions{
 		Region:      "us-ord",
 		Label:       "linodego-image-test",
-		Description: "An image that does stuff.",
+		Description: Pointer("An image that does stuff."),
 	})
 	if err != nil {
 		t.Errorf("Failed to create image upload: %v", err)
@@ -114,8 +114,8 @@ func TestImage_CreateUpload(t *testing.T) {
 		Region: getRegionsWithCaps(t, client, []string{"Metadata"})[0],
 
 		Label:       "linodego-image-create-upload",
-		Description: "An image that does stuff.",
-		CloudInit:   true,
+		Description: Pointer("An image that does stuff."),
+		CloudInit:   Pointer(true),
 		Tags:        &[]string{"foo", "bar"},
 	})
 	if err != nil {
@@ -159,7 +159,7 @@ func TestImage_CloudInit(t *testing.T) {
 	image, err := client.CreateImage(context.Background(), ImageCreateOptions{
 		DiskID:    instanceDisks[0].ID,
 		Label:     "linodego-test-cloud-init",
-		CloudInit: true,
+		CloudInit: Pointer(true),
 		Tags:      &[]string{"test1", "test2"},
 	})
 	if err != nil {
@@ -186,7 +186,7 @@ func TestImage_Replicate(t *testing.T) {
 	image, uploadURL, err := client.CreateImageUpload(context.Background(), ImageCreateUploadOptions{
 		Region:      availableRegions[1],
 		Label:       "linodego-image-replication",
-		Description: "An image that does stuff.",
+		Description: Pointer("An image that does stuff."),
 	})
 	if err != nil {
 		t.Errorf("Failed to create image upload: %v", err)

@@ -35,22 +35,22 @@ type DomainRecordCreateOptions struct {
 	Port     *int             `json:"port,omitempty"`
 	Service  *string          `json:"service,omitempty"`
 	Protocol *string          `json:"protocol,omitempty"`
-	TTLSec   int              `json:"ttl_sec,omitempty"` // 0 is not accepted by Linode, so can be omitted
+	TTLSec   *int             `json:"ttl_sec,omitempty"` // 0 is not accepted by Linode, so can be omitted
 	Tag      *string          `json:"tag,omitempty"`
 }
 
 // DomainRecordUpdateOptions fields are those accepted by UpdateDomainRecord
 type DomainRecordUpdateOptions struct {
-	Type     DomainRecordType `json:"type,omitempty"`
-	Name     string           `json:"name,omitempty"`
-	Target   string           `json:"target,omitempty"`
-	Priority *int             `json:"priority,omitempty"` // 0 is valid, so omit only nil values
-	Weight   *int             `json:"weight,omitempty"`   // 0 is valid, so omit only nil values
-	Port     *int             `json:"port,omitempty"`     // 0 is valid to spec, so omit only nil values
-	Service  *string          `json:"service,omitempty"`
-	Protocol *string          `json:"protocol,omitempty"`
-	TTLSec   int              `json:"ttl_sec,omitempty"` // 0 is not accepted by Linode, so can be omitted
-	Tag      *string          `json:"tag,omitempty"`
+	Type     *DomainRecordType `json:"type,omitempty"`
+	Name     *string           `json:"name,omitempty"`
+	Target   *string           `json:"target,omitempty"`
+	Priority *int              `json:"priority,omitempty"` // 0 is valid, so omit only nil values
+	Weight   *int              `json:"weight,omitempty"`   // 0 is valid, so omit only nil values
+	Port     *int              `json:"port,omitempty"`     // 0 is valid to spec, so omit only nil values
+	Service  *string           `json:"service,omitempty"`
+	Protocol *string           `json:"protocol,omitempty"`
+	TTLSec   *int              `json:"ttl_sec,omitempty"` // 0 is not accepted by Linode, so can be omitted
+	Tag      *string           `json:"tag,omitempty"`
 }
 
 // DomainRecordType constants start with RecordType and include Linode API Domain Record Types
@@ -92,15 +92,15 @@ func (d *DomainRecord) UnmarshalJSON(b []byte) error {
 
 // GetUpdateOptions converts a DomainRecord to DomainRecordUpdateOptions for use in UpdateDomainRecord
 func (d DomainRecord) GetUpdateOptions() (du DomainRecordUpdateOptions) {
-	du.Type = d.Type
-	du.Name = d.Name
-	du.Target = d.Target
+	du.Type = &d.Type
+	du.Name = &d.Name
+	du.Target = &d.Target
 	du.Priority = copyInt(&d.Priority)
 	du.Weight = copyInt(&d.Weight)
 	du.Port = copyInt(&d.Port)
 	du.Service = copyString(d.Service)
 	du.Protocol = copyString(d.Protocol)
-	du.TTLSec = d.TTLSec
+	du.TTLSec = &d.TTLSec
 	du.Tag = copyString(d.Tag)
 
 	return

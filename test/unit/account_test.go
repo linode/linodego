@@ -60,9 +60,12 @@ func TestAccount_Update(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
+	city := "Cambridge"
+	state := "MA"
+
 	requestData := linodego.AccountUpdateOptions{
-		City:  "Cambridge",
-		State: "MA",
+		City:  &city,
+		State: &state,
 	}
 
 	base.MockPut("account", fixtureData)

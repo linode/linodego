@@ -21,6 +21,8 @@ func TestProfile_Get(t *testing.T) {
 	profile, err := base.Client.GetProfile(context.Background())
 	assert.NoError(t, err)
 
+	verifiedPhoneNumber := "+5555555555"
+
 	assert.Equal(t, "password", profile.AuthenticationType)
 	assert.Equal(t, "example-user@gmail.com", profile.Email)
 	assert.Equal(t, true, profile.EmailNotifications)
@@ -36,7 +38,7 @@ func TestProfile_Get(t *testing.T) {
 	assert.Equal(t, true, profile.TwoFactorAuth)
 	assert.Equal(t, 1234, profile.UID)
 	assert.Equal(t, "exampleUser", profile.Username)
-	assert.Equal(t, "+5555555555", profile.VerifiedPhoneNumber)
+	assert.Equal(t, &verifiedPhoneNumber, profile.VerifiedPhoneNumber)
 }
 
 func TestProfile_Update(t *testing.T) {
@@ -47,14 +49,18 @@ func TestProfile_Update(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
+	email := "example-user-new@gmail.com"
+
 	requestData := linodego.ProfileUpdateOptions{
-		Email: "example-user-new@gmail.com",
+		Email: &email,
 	}
 
 	base.MockPut("profile", fixtureData)
 
 	profile, err := base.Client.UpdateProfile(context.Background(), requestData)
 	assert.NoError(t, err)
+
+	verifiedPhoneNumber := "+5555555555"
 
 	assert.Equal(t, "password", profile.AuthenticationType)
 	assert.Equal(t, "example-user-new@gmail.com", profile.Email)
@@ -71,5 +77,5 @@ func TestProfile_Update(t *testing.T) {
 	assert.Equal(t, true, profile.TwoFactorAuth)
 	assert.Equal(t, 1234, profile.UID)
 	assert.Equal(t, "exampleUser", profile.Username)
-	assert.Equal(t, "+5555555555", profile.VerifiedPhoneNumber)
+	assert.Equal(t, &verifiedPhoneNumber, profile.VerifiedPhoneNumber)
 }
