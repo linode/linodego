@@ -5,34 +5,34 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	"github.com/linode/linodego"
+	"github.com/stretchr/testify/assert"
 	"golang.org/x/exp/slices"
 )
 
 func TestListStackscripts(t *testing.T) {
-    // Mock the API response to match the expected structure for a paginated response
-    fixtureData, err := fixtures.GetFixture("stackscripts_list")
-    assert.NoError(t, err)
+	// Mock the API response to match the expected structure for a paginated response
+	fixtureData, err := fixtures.GetFixture("stackscripts_list")
+	assert.NoError(t, err)
 
-    var base ClientBaseCase
-    base.SetUp(t)
-    defer base.TearDown(t)
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
 
-    // Mock the request with a correct paginated structure
-    base.MockGet("linode/stackscripts", fixtureData)
+	// Mock the request with a correct paginated structure
+	base.MockGet("linode/stackscripts", fixtureData)
 
-    stackscripts, err := base.Client.ListStackscripts(context.Background(), &linodego.ListOptions{})
-    assert.NoError(t, err)
+	stackscripts, err := base.Client.ListStackscripts(context.Background(), &linodego.ListOptions{})
+	assert.NoError(t, err)
 
-    assert.NotEmpty(t, stackscripts, "Expected non-empty stackscripts list")
+	assert.NotEmpty(t, stackscripts, "Expected non-empty stackscripts list")
 
-    // Check if a specific stackscript exists using slices.ContainsFunc
-    exists := slices.ContainsFunc(stackscripts, func(stackscript linodego.Stackscript) bool {
-        return stackscript.Label == "Test Stackscript"
-    })
+	// Check if a specific stackscript exists using slices.ContainsFunc
+	exists := slices.ContainsFunc(stackscripts, func(stackscript linodego.Stackscript) bool {
+		return stackscript.Label == "Test Stackscript"
+	})
 
-    assert.True(t, exists, "Expected stackscripts list to contain 'Test Stackscript'")
+	assert.True(t, exists, "Expected stackscripts list to contain 'Test Stackscript'")
 }
 
 func TestCreateStackscript(t *testing.T) {
