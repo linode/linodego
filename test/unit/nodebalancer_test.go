@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestNodeBalancerCreate(t *testing.T) {
+func TestNodeBalancer_Create(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("nodebalancer_create")
 	assert.NoError(t, err)
 
@@ -34,7 +34,7 @@ func TestNodeBalancerCreate(t *testing.T) {
 	assert.Equal(t, []string{"test", "example"}, nodebalancer.Tags)
 }
 
-func TestNodeBalancerGet(t *testing.T) {
+func TestNodeBalancer_Get(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("nodebalancer_get")
 	assert.NoError(t, err)
 
@@ -53,7 +53,7 @@ func TestNodeBalancerGet(t *testing.T) {
 	assert.Equal(t, "us-west", nodebalancer.Region, "Expected NodeBalancer region to match")
 }
 
-func TestNodeBalancerList(t *testing.T) {
+func TestNodeBalancer_List(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("nodebalancers_list")
 	assert.NoError(t, err)
 
@@ -82,8 +82,7 @@ func TestNodeBalancerList(t *testing.T) {
 	assert.Equal(t, []string{"tag3"}, nodebalancers[1].Tags, "Expected second NodeBalancer tags to match")
 }
 
-
-func TestNodeBalancerUpdate(t *testing.T) {
+func TestNodeBalancer_Update(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("nodebalancer_update")
 	assert.NoError(t, err)
 
@@ -107,7 +106,7 @@ func TestNodeBalancerUpdate(t *testing.T) {
 	assert.Equal(t, []string{"updated", "production"}, nodebalancer.Tags)
 }
 
-func TestNodeBalancerDelete(t *testing.T) {
+func TestNodeBalancer_Delete(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)
 	defer base.TearDown(t)

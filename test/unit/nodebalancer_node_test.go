@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestNodeBalancerNodeCreate(t *testing.T) {
+func TestNodeBalancerNode_Create(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("nodebalancer_node_create")
 	assert.NoError(t, err)
 
@@ -35,7 +35,7 @@ func TestNodeBalancerNodeCreate(t *testing.T) {
 	assert.Equal(t, linodego.ModeAccept, node.Mode)
 }
 
-func TestNodeBalancerNodeUpdate(t *testing.T) {
+func TestNodeBalancerNode_Update(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("nodebalancer_node_update")
 	assert.NoError(t, err)
 
@@ -62,7 +62,7 @@ func TestNodeBalancerNodeUpdate(t *testing.T) {
 	assert.Equal(t, linodego.ModeDrain, node.Mode)
 }
 
-func TestNodeBalancerNodeList(t *testing.T) {
+func TestNodeBalancerNode_List(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("nodebalancer_node_list")
 	assert.NoError(t, err)
 
@@ -84,7 +84,7 @@ func TestNodeBalancerNodeList(t *testing.T) {
 	assert.Equal(t, linodego.ModeAccept, nodes[0].Mode)
 }
 
-func TestNodeBalancerNodeDelete(t *testing.T) {
+func TestNodeBalancerNode_Delete(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)
 	defer base.TearDown(t)
@@ -95,5 +95,3 @@ func TestNodeBalancerNodeDelete(t *testing.T) {
 	err := base.Client.DeleteNodeBalancerNode(context.Background(), 123, 456, 789)
 	assert.NoError(t, err)
 }
-
-

@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestNodeBalancerConfigList(t *testing.T) {
+func TestNodeBalancerConfig_List(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("nodebalancer_config_list")
 	assert.NoError(t, err)
 
@@ -27,7 +27,7 @@ func TestNodeBalancerConfigList(t *testing.T) {
 	assert.Equal(t, linodego.ProtocolHTTP, configs[0].Protocol)
 }
 
-func TestNodeBalancerConfigGet(t *testing.T) {
+func TestNodeBalancerConfig_Get(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("nodebalancer_config_get")
 	assert.NoError(t, err)
 
@@ -46,7 +46,7 @@ func TestNodeBalancerConfigGet(t *testing.T) {
 	assert.Equal(t, linodego.ProtocolHTTP, config.Protocol)
 }
 
-func TestNodeBalancerConfigCreate(t *testing.T) {
+func TestNodeBalancerConfig_Create(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("nodebalancer_config_create")
 	assert.NoError(t, err)
 
@@ -70,7 +70,7 @@ func TestNodeBalancerConfigCreate(t *testing.T) {
 	assert.Equal(t, linodego.ProtocolHTTP, config.Protocol)
 }
 
-func TestNodeBalancerConfigUpdate(t *testing.T) {
+func TestNodeBalancerConfig_Update(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("nodebalancer_config_update")
 	assert.NoError(t, err)
 
@@ -93,7 +93,7 @@ func TestNodeBalancerConfigUpdate(t *testing.T) {
 	assert.Equal(t, linodego.ProtocolHTTPS, config.Protocol)
 }
 
-func TestNodeBalancerConfigDelete(t *testing.T) {
+func TestNodeBalancerConfig_Delete(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)
 	defer base.TearDown(t)
@@ -104,7 +104,7 @@ func TestNodeBalancerConfigDelete(t *testing.T) {
 	assert.NoError(t, err)
 }
 
-func TestNodeBalancerConfigRebuild(t *testing.T) {
+func TestNodeBalancerConfig_Rebuild(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("nodebalancer_config_rebuild")
 	assert.NoError(t, err)
 
