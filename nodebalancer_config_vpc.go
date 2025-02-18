@@ -5,7 +5,7 @@ import (
 )
 
 // NodeBalancerVpcConfig objects represent a VPC config for a NodeBalancer
-type NodeBalancerVpcConfig struct {
+type NodeBalancerVPCConfig struct {
 	ID             int    `json:"id"`
 	IPv4Range      string `json:"ipv4_range"`
 	IPv6Range      string `json:"ipv6_range,omitempty"`
