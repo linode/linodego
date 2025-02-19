@@ -31,7 +31,7 @@ func TestNodeBalancer_Create_create_smoke(t *testing.T) {
 }
 
 func TestNodeBalancer_Create_with_vpc(t *testing.T) {
-	_, nodebalancer, teardown, err := setupNodeBalancerWithVPC(t, "fixtures/TestNodeBalancer_With_VPC_Create")
+	_, nodebalancer, _, _, teardown, err := setupNodeBalancerWithVPC(t, "fixtures/TestNodeBalancer_With_VPC_Create")
 	defer teardown()
 
 	if err != nil {
@@ -122,7 +122,7 @@ func setupNodeBalancer(t *testing.T, fixturesYaml string) (*linodego.Client, *li
 	return client, nodebalancer, teardown, err
 }
 
-func setupNodeBalancerWithVPC(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.NodeBalancer, func(), error) {
+func setupNodeBalancerWithVPC(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.NodeBalancer, *linodego.VPC, *linodego.VPCSubnet, func(), error) {
 	t.Helper()
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
@@ -156,5 +156,5 @@ func setupNodeBalancerWithVPC(t *testing.T, fixturesYaml string) (*linodego.Clie
 		vpcTeardown()
 		fixtureTeardown()
 	}
-	return client, nodebalancer, teardown, err
+	return client, nodebalancer, vpc, subnet, teardown, err
 }

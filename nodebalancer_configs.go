@@ -26,7 +26,6 @@ type NodeBalancerConfig struct {
 	SSLCert        string                  `json:"ssl_cert"`
 	SSLKey         string                  `json:"ssl_key"`
 	NodesStatus    *NodeBalancerNodeStatus `json:"nodes_status"`
-	Nodes          []NodeBalancerNode      `json:"nodes"`
 }
 
 // ConfigAlgorithm constants start with Algorithm and include Linode API NodeBalancer Config Algorithms

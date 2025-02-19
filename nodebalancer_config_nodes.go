@@ -14,7 +14,7 @@ type NodeBalancerNode struct {
 	Mode           NodeMode `json:"mode"`
 	ConfigID       int      `json:"config_id"`
 	NodeBalancerID int      `json:"nodebalancer_id"`
-	SubnetID       int      `json:"subnet_id,omitempty"`
+	VPCConfigID    int      `json:"vpc_config_id,omitempty"`
 }
 
 // NodeMode is the mode a NodeBalancer should use when sending traffic to a NodeBalancer Node
@@ -55,22 +55,20 @@ type NodeBalancerNodeUpdateOptions struct {
 // GetCreateOptions converts a NodeBalancerNode to NodeBalancerNodeCreateOptions for use in CreateNodeBalancerNode
 func (i NodeBalancerNode) GetCreateOptions() NodeBalancerNodeCreateOptions {
 	return NodeBalancerNodeCreateOptions{
-		Address:  i.Address,
-		Label:    i.Label,
-		Weight:   i.Weight,
-		Mode:     i.Mode,
-		SubnetID: i.SubnetID,
+		Address: i.Address,
+		Label:   i.Label,
+		Weight:  i.Weight,
+		Mode:    i.Mode,
 	}
 }
 
 // GetUpdateOptions converts a NodeBalancerNode to NodeBalancerNodeUpdateOptions for use in UpdateNodeBalancerNode
 func (i NodeBalancerNode) GetUpdateOptions() NodeBalancerNodeUpdateOptions {
 	return NodeBalancerNodeUpdateOptions{
-		Address:  i.Address,
-		Label:    i.Label,
-		Weight:   i.Weight,
-		Mode:     i.Mode,
-		SubnetID: i.SubnetID,
+		Address: i.Address,
+		Label:   i.Label,
+		Weight:  i.Weight,
+		Mode:    i.Mode,
 	}
 }
 
