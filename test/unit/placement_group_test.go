@@ -80,8 +80,10 @@ func TestPlacementGroups_Update(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
+	label := "PG_Miami_failover_new"
+
 	requestData := linodego.PlacementGroupUpdateOptions{
-		Label: "PG_Miami_failover_new",
+		Label: &label,
 	}
 
 	base.MockPut("placement/groups/528", fixtureData)

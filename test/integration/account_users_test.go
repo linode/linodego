@@ -87,10 +87,10 @@ func TestUser_Update(t *testing.T) {
 	defer teardown()
 
 	updatedUsername := username + "-updated"
-	restricted = true
+
 	updateOpts := UserUpdateOptions{
-		Username:   updatedUsername,
-		Restricted: &restricted,
+		Username:   linodego.Pointer(updatedUsername),
+		Restricted: linodego.Pointer(true),
 	}
 
 	updated, err := client.UpdateUser(context.TODO(), username, updateOpts)

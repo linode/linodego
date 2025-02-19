@@ -47,18 +47,18 @@ type NodeBalancerTransfer struct {
 // NodeBalancerCreateOptions are the options permitted for CreateNodeBalancer
 type NodeBalancerCreateOptions struct {
 	Label              *string                            `json:"label,omitempty"`
-	Region             string                             `json:"region,omitempty"`
+	Region             *string                            `json:"region,omitempty"`
 	ClientConnThrottle *int                               `json:"client_conn_throttle,omitempty"`
 	Configs            []*NodeBalancerConfigCreateOptions `json:"configs,omitempty"`
 	Tags               []string                           `json:"tags"`
-	FirewallID         int                                `json:"firewall_id,omitempty"`
+	FirewallID         *int                               `json:"firewall_id,omitempty"`
 }
 
 // NodeBalancerUpdateOptions are the options permitted for UpdateNodeBalancer
 type NodeBalancerUpdateOptions struct {
-	Label              *string   `json:"label,omitempty"`
-	ClientConnThrottle *int      `json:"client_conn_throttle,omitempty"`
-	Tags               *[]string `json:"tags,omitempty"`
+	Label              *string  `json:"label,omitempty"`
+	ClientConnThrottle *int     `json:"client_conn_throttle,omitempty"`
+	Tags               []string `json:"tags,omitempty"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
@@ -87,7 +87,7 @@ func (i *NodeBalancer) UnmarshalJSON(b []byte) error {
 func (i NodeBalancer) GetCreateOptions() NodeBalancerCreateOptions {
 	return NodeBalancerCreateOptions{
 		Label:              i.Label,
-		Region:             i.Region,
+		Region:             &i.Region,
 		ClientConnThrottle: &i.ClientConnThrottle,
 		Tags:               i.Tags,
 	}
@@ -98,7 +98,7 @@ func (i NodeBalancer) GetUpdateOptions() NodeBalancerUpdateOptions {
 	return NodeBalancerUpdateOptions{
 		Label:              i.Label,
 		ClientConnThrottle: &i.ClientConnThrottle,
-		Tags:               &i.Tags,
+		Tags:               i.Tags,
 	}
 }
 

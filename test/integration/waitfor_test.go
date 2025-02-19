@@ -20,9 +20,9 @@ func TestEventPoller_InstancePower(t *testing.T) {
 	instance, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
 		Region:   getRegionsWithCaps(t, client, []string{"Linodes"})[0],
 		Type:     "g6-nanode-1",
-		Image:    "linode/ubuntu22.04",
-		RootPass: randPassword(),
-		Label:    "go-ins-poll-test",
+		Image:    linodego.Pointer("linode/ubuntu22.04"),
+		RootPass: linodego.Pointer(randPassword()),
+		Label:    linodego.Pointer("go-ins-poll-test"),
 		Booted:   linodego.Pointer(false),
 	})
 	if err != nil {
@@ -104,9 +104,9 @@ func TestWaitForResourceFree(t *testing.T) {
 	instance, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
 		Region:   getRegionsWithCaps(t, client, []string{"Linodes"})[0],
 		Type:     "g6-nanode-1",
-		Image:    "linode/ubuntu22.04",
-		RootPass: randPassword(),
-		Label:    "linodego-waitforfree",
+		Image:    linodego.Pointer("linode/ubuntu22.04"),
+		RootPass: linodego.Pointer(randPassword()),
+		Label:    linodego.Pointer("linodego-waitforfree"),
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -147,7 +147,7 @@ func TestEventPoller_Secondary(t *testing.T) {
 	instance, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
 		Region: getRegionsWithCaps(t, client, []string{"Linodes"})[0],
 		Type:   "g6-nanode-1",
-		Label:  "go-ins-poll-test",
+		Label:  linodego.Pointer("go-ins-poll-test"),
 		Booted: linodego.Pointer(false),
 	})
 	if err != nil {

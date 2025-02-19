@@ -15,8 +15,8 @@ func TestVolume_Create_smoke(t *testing.T) {
 	defer teardown()
 
 	createOpts := linodego.VolumeCreateOptions{
-		Label:  "go-vol-test-create",
-		Region: getRegionsWithCaps(t, client, []string{"Linodes"})[0],
+		Label:  linodego.Pointer("go-vol-test-create"),
+		Region: linodego.Pointer(getRegionsWithCaps(t, client, []string{"Linodes"})[0]),
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
 	if err != nil {
@@ -41,9 +41,9 @@ func TestVolume_Create_withEncryption(t *testing.T) {
 	defer teardown()
 
 	createOpts := linodego.VolumeCreateOptions{
-		Label:      "go-vol-test-create-encryption",
-		Region:     getRegionsWithCaps(t, client, []string{"Linodes", "Block Storage Encryption"})[0],
-		Encryption: "enabled",
+		Label:      linodego.Pointer("go-vol-test-create-encryption"),
+		Region:     linodego.Pointer(getRegionsWithCaps(t, client, []string{"Linodes", "Block Storage Encryption"})[0]),
+		Encryption: linodego.Pointer("enabled"),
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
 	if err != nil {
@@ -120,9 +120,9 @@ func TestVolume_Get_withEncryption(t *testing.T) {
 	defer teardown()
 
 	createOpts := linodego.VolumeCreateOptions{
-		Label:      "go-vol-test-get-encryption",
-		Region:     getRegionsWithCaps(t, client, []string{"Linodes", "Block Storage Encryption"})[0],
-		Encryption: "enabled",
+		Label:      linodego.Pointer("go-vol-test-get-encryption"),
+		Region:     linodego.Pointer(getRegionsWithCaps(t, client, []string{"Linodes", "Block Storage Encryption"})[0]),
+		Encryption: linodego.Pointer("enabled"),
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
 	if err != nil {
@@ -186,7 +186,7 @@ func TestVolume_WaitForLinodeID(t *testing.T) {
 	defer teardownInstance()
 
 	createConfigOpts := linodego.InstanceConfigCreateOptions{
-		Label:   "go-config-test-wait",
+		Label:   linodego.Pointer("go-config-test-wait"),
 		Devices: linodego.InstanceConfigDeviceMap{},
 	}
 	config, errConfig := client.CreateInstanceConfig(context.Background(), instance.ID, createConfigOpts)
@@ -200,7 +200,7 @@ func TestVolume_WaitForLinodeID(t *testing.T) {
 	}
 	defer teardownVolume()
 
-	attachOptions := linodego.VolumeAttachOptions{LinodeID: instance.ID, ConfigID: config.ID}
+	attachOptions := linodego.VolumeAttachOptions{LinodeID: instance.ID, ConfigID: &config.ID}
 	if volumeAttached, err := client.AttachVolume(context.Background(), volume.ID, &attachOptions); err != nil {
 		t.Errorf("Error attaching volume, %s", err)
 	} else if volumeAttached.LinodeID == nil {
@@ -232,7 +232,7 @@ func TestVolume_Update(t *testing.T) {
 	defer teardown()
 	updatedLabel := volume.Label + "-updated"
 	updateOpts := linodego.VolumeUpdateOptions{
-		Label: updatedLabel,
+		Label: &updatedLabel,
 	}
 	volume, err = client.UpdateVolume(context.Background(), volume.ID, updateOpts)
 	if err != nil {
@@ -253,8 +253,8 @@ func setupVolume(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := linodego.VolumeCreateOptions{
-		Label:  "go-vol-test-def",
-		Region: getRegionsWithCaps(t, client, []string{"Linodes"})[0],
+		Label:  linodego.Pointer("go-vol-test-def"),
+		Region: linodego.Pointer(getRegionsWithCaps(t, client, []string{"Linodes"})[0]),
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
 	if err != nil {
@@ -279,8 +279,8 @@ func createVolume(
 ) (*linodego.Volume, func(), error) {
 	t.Helper()
 	createOpts := linodego.VolumeCreateOptions{
-		Label:  "go-vol-test" + randLabel(),
-		Region: getRegionsWithCaps(t, client, []string{"Linodes"})[0],
+		Label:  linodego.Pointer("go-vol-test" + randLabel()),
+		Region: linodego.Pointer(getRegionsWithCaps(t, client, []string{"Linodes"})[0]),
 	}
 
 	for _, mod := range vModifier {

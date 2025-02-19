@@ -47,17 +47,17 @@ type LKEClusterCreateOptions struct {
 	ControlPlane *LKEClusterControlPlaneOptions `json:"control_plane,omitempty"`
 
 	// NOTE: Tier may not currently be available to all users and can only be used with v4beta.
-	Tier string `json:"tier,omitempty"`
+	Tier *string `json:"tier,omitempty"`
 
 	// NOTE: APLEnabled is currently in beta and may only function with API version v4beta.
-	APLEnabled bool `json:"apl_enabled,omitempty"`
+	APLEnabled *bool `json:"apl_enabled,omitempty"`
 }
 
 // LKEClusterUpdateOptions fields are those accepted by UpdateLKECluster
 type LKEClusterUpdateOptions struct {
-	K8sVersion   string                         `json:"k8s_version,omitempty"`
-	Label        string                         `json:"label,omitempty"`
-	Tags         *[]string                      `json:"tags,omitempty"`
+	K8sVersion   *string                        `json:"k8s_version,omitempty"`
+	Label        *string                        `json:"label,omitempty"`
+	Tags         []string                       `json:"tags,omitempty"`
 	ControlPlane *LKEClusterControlPlaneOptions `json:"control_plane,omitempty"`
 }
 
@@ -129,9 +129,9 @@ func (i LKECluster) GetCreateOptions() (o LKEClusterCreateOptions) {
 
 // GetUpdateOptions converts a LKECluster to LKEClusterUpdateOptions for use in UpdateLKECluster
 func (i LKECluster) GetUpdateOptions() (o LKEClusterUpdateOptions) {
-	o.K8sVersion = i.K8sVersion
-	o.Label = i.Label
-	o.Tags = &i.Tags
+	o.K8sVersion = &i.K8sVersion
+	o.Label = &i.Label
+	o.Tags = i.Tags
 
 	isHA := i.ControlPlane.HighAvailability
 

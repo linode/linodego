@@ -10,7 +10,7 @@ import (
 func TestInstanceFirewalls_List(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceFirewall(t, []firewallModifier{
 		func(createOpts *linodego.FirewallCreateOptions) {
-			createOpts.Label = "linodego-fw-ins-test"
+			createOpts.Label = linodego.Pointer("linodego-fw-ins-test")
 		},
 	}, "fixtures/TestInstanceFirewalls_List")
 	if err != nil {
@@ -32,12 +32,12 @@ func setupInstanceFirewall(t *testing.T, firewallModifiers []firewallModifier, f
 	t.Helper()
 	client, instance, instanceTeardown, err := setupInstance(t, fixturesYaml, false,
 		func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
-			opts.Label = "linodego-fw-inst-test"
+			opts.Label = linodego.Pointer("linodego-fw-inst-test")
 		})
 	device := linodego.DevicesCreationOptions{Linodes: []int{instance.ID}}
 	firewallModifiers = append(firewallModifiers,
 		func(createOpts *linodego.FirewallCreateOptions) {
-			createOpts.Devices = device
+			createOpts.Devices = &device
 		})
 	firewall, firewallTeardown, err := createFirewall(t, client, firewallModifiers...)
 

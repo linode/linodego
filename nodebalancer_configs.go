@@ -97,40 +97,40 @@ type NodeBalancerNodeStatus struct {
 // NodeBalancerConfigCreateOptions are permitted by CreateNodeBalancerConfig
 type NodeBalancerConfigCreateOptions struct {
 	Port          int                             `json:"port"`
-	Protocol      ConfigProtocol                  `json:"protocol,omitempty"`
-	ProxyProtocol ConfigProxyProtocol             `json:"proxy_protocol,omitempty"`
-	Algorithm     ConfigAlgorithm                 `json:"algorithm,omitempty"`
-	Stickiness    ConfigStickiness                `json:"stickiness,omitempty"`
-	Check         ConfigCheck                     `json:"check,omitempty"`
-	CheckInterval int                             `json:"check_interval,omitempty"`
-	CheckAttempts int                             `json:"check_attempts,omitempty"`
-	CheckPath     string                          `json:"check_path,omitempty"`
-	CheckBody     string                          `json:"check_body,omitempty"`
+	Protocol      *ConfigProtocol                 `json:"protocol,omitempty"`
+	ProxyProtocol *ConfigProxyProtocol            `json:"proxy_protocol,omitempty"`
+	Algorithm     *ConfigAlgorithm                `json:"algorithm,omitempty"`
+	Stickiness    *ConfigStickiness               `json:"stickiness,omitempty"`
+	Check         *ConfigCheck                    `json:"check,omitempty"`
+	CheckInterval *int                            `json:"check_interval,omitempty"`
+	CheckAttempts *int                            `json:"check_attempts,omitempty"`
+	CheckPath     *string                         `json:"check_path,omitempty"`
+	CheckBody     *string                         `json:"check_body,omitempty"`
 	CheckPassive  *bool                           `json:"check_passive,omitempty"`
-	CheckTimeout  int                             `json:"check_timeout,omitempty"`
-	CipherSuite   ConfigCipher                    `json:"cipher_suite,omitempty"`
-	SSLCert       string                          `json:"ssl_cert,omitempty"`
-	SSLKey        string                          `json:"ssl_key,omitempty"`
+	CheckTimeout  *int                            `json:"check_timeout,omitempty"`
+	CipherSuite   *ConfigCipher                   `json:"cipher_suite,omitempty"`
+	SSLCert       *string                         `json:"ssl_cert,omitempty"`
+	SSLKey        *string                         `json:"ssl_key,omitempty"`
 	Nodes         []NodeBalancerNodeCreateOptions `json:"nodes,omitempty"`
 }
 
 // NodeBalancerConfigRebuildOptions used by RebuildNodeBalancerConfig
 type NodeBalancerConfigRebuildOptions struct {
 	Port          int                                    `json:"port"`
-	Protocol      ConfigProtocol                         `json:"protocol,omitempty"`
-	ProxyProtocol ConfigProxyProtocol                    `json:"proxy_protocol,omitempty"`
-	Algorithm     ConfigAlgorithm                        `json:"algorithm,omitempty"`
-	Stickiness    ConfigStickiness                       `json:"stickiness,omitempty"`
-	Check         ConfigCheck                            `json:"check,omitempty"`
-	CheckInterval int                                    `json:"check_interval,omitempty"`
-	CheckAttempts int                                    `json:"check_attempts,omitempty"`
-	CheckPath     string                                 `json:"check_path,omitempty"`
-	CheckBody     string                                 `json:"check_body,omitempty"`
+	Protocol      *ConfigProtocol                        `json:"protocol,omitempty"`
+	ProxyProtocol *ConfigProxyProtocol                   `json:"proxy_protocol,omitempty"`
+	Algorithm     *ConfigAlgorithm                       `json:"algorithm,omitempty"`
+	Stickiness    *ConfigStickiness                      `json:"stickiness,omitempty"`
+	Check         *ConfigCheck                           `json:"check,omitempty"`
+	CheckInterval *int                                   `json:"check_interval,omitempty"`
+	CheckAttempts *int                                   `json:"check_attempts,omitempty"`
+	CheckPath     *string                                `json:"check_path,omitempty"`
+	CheckBody     *string                                `json:"check_body,omitempty"`
 	CheckPassive  *bool                                  `json:"check_passive,omitempty"`
-	CheckTimeout  int                                    `json:"check_timeout,omitempty"`
-	CipherSuite   ConfigCipher                           `json:"cipher_suite,omitempty"`
-	SSLCert       string                                 `json:"ssl_cert,omitempty"`
-	SSLKey        string                                 `json:"ssl_key,omitempty"`
+	CheckTimeout  *int                                   `json:"check_timeout,omitempty"`
+	CipherSuite   *ConfigCipher                          `json:"cipher_suite,omitempty"`
+	SSLCert       *string                                `json:"ssl_cert,omitempty"`
+	SSLKey        *string                                `json:"ssl_key,omitempty"`
 	Nodes         []NodeBalancerConfigRebuildNodeOptions `json:"nodes"`
 }
 
@@ -139,7 +139,7 @@ type NodeBalancerConfigRebuildOptions struct {
 type NodeBalancerConfigRebuildNodeOptions struct {
 	NodeBalancerNodeCreateOptions
 
-	ID int `json:"id,omitempty"`
+	ID *int `json:"id,omitempty"`
 }
 
 // NodeBalancerConfigUpdateOptions are permitted by UpdateNodeBalancerConfig
@@ -149,20 +149,20 @@ type NodeBalancerConfigUpdateOptions NodeBalancerConfigCreateOptions
 func (i NodeBalancerConfig) GetCreateOptions() NodeBalancerConfigCreateOptions {
 	return NodeBalancerConfigCreateOptions{
 		Port:          i.Port,
-		Protocol:      i.Protocol,
-		ProxyProtocol: i.ProxyProtocol,
-		Algorithm:     i.Algorithm,
-		Stickiness:    i.Stickiness,
-		Check:         i.Check,
-		CheckInterval: i.CheckInterval,
-		CheckAttempts: i.CheckAttempts,
-		CheckTimeout:  i.CheckTimeout,
-		CheckPath:     i.CheckPath,
-		CheckBody:     i.CheckBody,
+		Protocol:      &i.Protocol,
+		ProxyProtocol: &i.ProxyProtocol,
+		Algorithm:     &i.Algorithm,
+		Stickiness:    &i.Stickiness,
+		Check:         &i.Check,
+		CheckInterval: &i.CheckInterval,
+		CheckAttempts: &i.CheckAttempts,
+		CheckTimeout:  &i.CheckTimeout,
+		CheckPath:     &i.CheckPath,
+		CheckBody:     &i.CheckBody,
 		CheckPassive:  copyBool(&i.CheckPassive),
-		CipherSuite:   i.CipherSuite,
-		SSLCert:       i.SSLCert,
-		SSLKey:        i.SSLKey,
+		CipherSuite:   &i.CipherSuite,
+		SSLCert:       &i.SSLCert,
+		SSLKey:        &i.SSLKey,
 	}
 }
 
@@ -170,20 +170,20 @@ func (i NodeBalancerConfig) GetCreateOptions() NodeBalancerConfigCreateOptions {
 func (i NodeBalancerConfig) GetUpdateOptions() NodeBalancerConfigUpdateOptions {
 	return NodeBalancerConfigUpdateOptions{
 		Port:          i.Port,
-		Protocol:      i.Protocol,
-		ProxyProtocol: i.ProxyProtocol,
-		Algorithm:     i.Algorithm,
-		Stickiness:    i.Stickiness,
-		Check:         i.Check,
-		CheckInterval: i.CheckInterval,
-		CheckAttempts: i.CheckAttempts,
-		CheckPath:     i.CheckPath,
-		CheckBody:     i.CheckBody,
+		Protocol:      &i.Protocol,
+		ProxyProtocol: &i.ProxyProtocol,
+		Algorithm:     &i.Algorithm,
+		Stickiness:    &i.Stickiness,
+		Check:         &i.Check,
+		CheckInterval: &i.CheckInterval,
+		CheckAttempts: &i.CheckAttempts,
+		CheckPath:     &i.CheckPath,
+		CheckBody:     &i.CheckBody,
 		CheckPassive:  copyBool(&i.CheckPassive),
-		CheckTimeout:  i.CheckTimeout,
-		CipherSuite:   i.CipherSuite,
-		SSLCert:       i.SSLCert,
-		SSLKey:        i.SSLKey,
+		CheckTimeout:  &i.CheckTimeout,
+		CipherSuite:   &i.CipherSuite,
+		SSLCert:       &i.SSLCert,
+		SSLKey:        &i.SSLKey,
 	}
 }
 
@@ -191,20 +191,20 @@ func (i NodeBalancerConfig) GetUpdateOptions() NodeBalancerConfigUpdateOptions {
 func (i NodeBalancerConfig) GetRebuildOptions() NodeBalancerConfigRebuildOptions {
 	return NodeBalancerConfigRebuildOptions{
 		Port:          i.Port,
-		Protocol:      i.Protocol,
-		ProxyProtocol: i.ProxyProtocol,
-		Algorithm:     i.Algorithm,
-		Stickiness:    i.Stickiness,
-		Check:         i.Check,
-		CheckInterval: i.CheckInterval,
-		CheckAttempts: i.CheckAttempts,
-		CheckTimeout:  i.CheckTimeout,
-		CheckPath:     i.CheckPath,
-		CheckBody:     i.CheckBody,
+		Protocol:      &i.Protocol,
+		ProxyProtocol: &i.ProxyProtocol,
+		Algorithm:     &i.Algorithm,
+		Stickiness:    &i.Stickiness,
+		Check:         &i.Check,
+		CheckInterval: &i.CheckInterval,
+		CheckAttempts: &i.CheckAttempts,
+		CheckTimeout:  &i.CheckTimeout,
+		CheckPath:     &i.CheckPath,
+		CheckBody:     &i.CheckBody,
 		CheckPassive:  copyBool(&i.CheckPassive),
-		CipherSuite:   i.CipherSuite,
-		SSLCert:       i.SSLCert,
-		SSLKey:        i.SSLKey,
+		CipherSuite:   &i.CipherSuite,
+		SSLCert:       &i.SSLCert,
+		SSLKey:        &i.SSLKey,
 		Nodes:         make([]NodeBalancerConfigRebuildNodeOptions, 0),
 	}
 }

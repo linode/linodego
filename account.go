@@ -34,34 +34,34 @@ type Account struct {
 
 // AccountUpdateOptions fields are those accepted by UpdateAccount
 type AccountUpdateOptions struct {
-	Address1  string `json:"address_1,omitempty"`
-	Address2  string `json:"address_2,omitempty"`
-	City      string `json:"city,omitempty"`
-	Company   string `json:"company,omitempty"`
-	Country   string `json:"country,omitempty"`
-	Email     string `json:"email,omitempty"`
-	FirstName string `json:"first_name,omitempty"`
-	LastName  string `json:"last_name,omitempty"`
-	Phone     string `json:"phone,omitempty"`
-	State     string `json:"state,omitempty"`
-	TaxID     string `json:"tax_id,omitempty"`
-	Zip       string `json:"zip,omitempty"`
+	Address1  *string `json:"address_1,omitempty"`
+	Address2  *string `json:"address_2,omitempty"`
+	City      *string `json:"city,omitempty"`
+	Company   *string `json:"company,omitempty"`
+	Country   *string `json:"country,omitempty"`
+	Email     *string `json:"email,omitempty"`
+	FirstName *string `json:"first_name,omitempty"`
+	LastName  *string `json:"last_name,omitempty"`
+	Phone     *string `json:"phone,omitempty"`
+	State     *string `json:"state,omitempty"`
+	TaxID     *string `json:"tax_id,omitempty"`
+	Zip       *string `json:"zip,omitempty"`
 }
 
 // GetUpdateOptions converts an Account to AccountUpdateOptions for use in UpdateAccount
 func (i Account) GetUpdateOptions() (o AccountUpdateOptions) {
-	o.Address1 = i.Address1
-	o.Address2 = i.Address2
-	o.City = i.City
-	o.Company = i.Company
-	o.Country = i.Country
-	o.Email = i.Email
-	o.FirstName = i.FirstName
-	o.LastName = i.LastName
-	o.Phone = i.Phone
-	o.State = i.State
-	o.TaxID = i.TaxID
-	o.Zip = i.Zip
+	o.Address1 = &i.Address1
+	o.Address2 = &i.Address2
+	o.City = &i.City
+	o.Company = &i.Company
+	o.Country = &i.Country
+	o.Email = &i.Email
+	o.FirstName = &i.FirstName
+	o.LastName = &i.LastName
+	o.Phone = &i.Phone
+	o.State = &i.State
+	o.TaxID = &i.TaxID
+	o.Zip = &i.Zip
 
 	return
 }

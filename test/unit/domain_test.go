@@ -76,19 +76,27 @@ func TestDomain_Create(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
+	description := ""
+	soaEmail := "admin@example.org"
+	retrySec := 300
+	expireSec := 300
+	refreshSec := 300
+	ttlSec := 300
+	status := linodego.DomainStatus("active")
+
 	requestData := linodego.DomainCreateOptions{
 		Domain:      "example.org",
 		Type:        linodego.DomainType("master"),
-		Description: "",
-		SOAEmail:    "admin@example.org",
-		RetrySec:    300,
+		Description: &description,
+		SOAEmail:    &soaEmail,
+		RetrySec:    &retrySec,
 		MasterIPs:   []string{},
 		AXfrIPs:     []string{},
 		Tags:        []string{"example tag", "another example"},
-		ExpireSec:   300,
-		RefreshSec:  300,
-		TTLSec:      300,
-		Status:      linodego.DomainStatus("active"),
+		ExpireSec:   &expireSec,
+		RefreshSec:  &refreshSec,
+		TTLSec:      &ttlSec,
+		Status:      &status,
 	}
 
 	base.MockPost(formatMockAPIPath("domains"), fixtureData)
@@ -121,19 +129,29 @@ func TestDomain_Update(t *testing.T) {
 
 	domainID := 1234
 
+	domainName := "example.org"
+	domainType := linodego.DomainType("master")
+	description := ""
+	soaEmail := "admin@example.org"
+	retrySec := 300
+	expireSec := 300
+	refreshSec := 300
+	ttlSec := 300
+	status := linodego.DomainStatus("active")
+
 	requestData := linodego.DomainUpdateOptions{
-		Domain:      "example.org",
-		Type:        linodego.DomainType("master"),
-		Description: "",
-		SOAEmail:    "admin@example.org",
-		RetrySec:    300,
+		Domain:      &domainName,
+		Type:        &domainType,
+		Description: &description,
+		SOAEmail:    &soaEmail,
+		RetrySec:    &retrySec,
 		MasterIPs:   []string{},
 		AXfrIPs:     []string{},
 		Tags:        []string{"example tag", "another example"},
-		ExpireSec:   300,
-		RefreshSec:  300,
-		TTLSec:      300,
-		Status:      linodego.DomainStatus("active"),
+		ExpireSec:   &expireSec,
+		RefreshSec:  &refreshSec,
+		TTLSec:      &ttlSec,
+		Status:      &status,
 	}
 
 	base.MockPut(formatMockAPIPath("domains/%d", domainID), fixtureData)

@@ -20,10 +20,8 @@ func TestUserGrants_Update(t *testing.T) {
 	}, "fixtures/TestUserGrants_Update")
 	defer teardown()
 
-	accessLevel := linodego.AccessLevelReadOnly
-
 	globalGrants := linodego.GlobalUserGrants{
-		AccountAccess:      &accessLevel,
+		AccountAccess:      linodego.Pointer(linodego.AccessLevelReadOnly),
 		AddDomains:         false,
 		AddDatabases:       true,
 		AddFirewalls:       true,

@@ -99,8 +99,8 @@ type Database struct {
 
 // DatabaseHost for Primary/Secondary of Database
 type DatabaseHost struct {
-	Primary   string `json:"primary"`
-	Secondary string `json:"secondary,omitempty"`
+	Primary   string  `json:"primary"`
+	Secondary *string `json:"secondary,omitempty"`
 }
 
 // DatabaseEngine is information about Engines supported by Linode Managed Databases

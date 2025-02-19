@@ -97,14 +97,14 @@ func vpcCreateOptionsCheck(
 	vpc *linodego.VPC,
 	t *testing.T,
 ) {
-	good := (opts.Description == vpc.Description &&
+	good := (*opts.Description == vpc.Description &&
 		opts.Label == vpc.Label &&
 		opts.Region == vpc.Region &&
 		len(opts.Subnets) == len(vpc.Subnets))
 
 	for i := 0; i < minInt(len(opts.Subnets), len(vpc.Subnets)); i++ {
-		good = good && (opts.Subnets[i].IPv4 == vpc.Subnets[i].IPv4 &&
-			opts.Subnets[i].Label == vpc.Subnets[i].Label)
+		good = good && ((opts.Subnets)[i].IPv4 == vpc.Subnets[i].IPv4 &&
+			(opts.Subnets)[i].Label == vpc.Subnets[i].Label)
 	}
 
 	if !good {
@@ -119,7 +119,7 @@ func vpcUpdateOptionsCheck(
 	vpc *linodego.VPC,
 	t *testing.T,
 ) {
-	if !(opts.Description == vpc.Description && opts.Label == vpc.Label) {
+	if !(*opts.Description == vpc.Description && *opts.Label == vpc.Label) {
 		t.Error("the VPC instance and VPC Update Options instance are mismatched")
 	}
 }
@@ -150,8 +150,8 @@ func TestVPC_Update(t *testing.T) {
 	updatedDescription := "updated description"
 	updatedLabel := "updated-label"
 
-	opts.Description = updatedDescription
-	opts.Label = updatedLabel
+	opts.Description = &updatedDescription
+	opts.Label = &updatedLabel
 	updatedVPC, err := client.UpdateVPC(context.Background(), vpc.ID, opts)
 	if err != nil {
 		t.Error(formatVPCError(err, "updating", &vpc.ID))
@@ -214,8 +214,8 @@ func TestVPC_Update_Invalid_data(t *testing.T) {
 	updatedDescription := "updated description"
 	updatedLabel := "updated_invalid_label"
 
-	opts.Description = updatedDescription
-	opts.Label = updatedLabel
+	opts.Description = &updatedDescription
+	opts.Label = &updatedLabel
 
 	_, err = client.UpdateVPC(context.Background(), vpc.ID, opts)
 
@@ -248,10 +248,10 @@ func TestVPC_ListAllIPAddresses(t *testing.T) {
 		t.Fatal("expecting 1 VPC IP address, but got 0")
 	}
 
-	if *vpcIPs[0].Address != config.Interfaces[0].IPv4.VPC {
+	if *vpcIPs[0].Address != *config.Interfaces[0].IPv4.VPC {
 		t.Fatalf(
 			"expecting VPC IP address on Linode %d to be %q, but got %q",
-			instance.ID, *vpcIPs[0].Address, config.Interfaces[0].IPv4.VPC,
+			instance.ID, *vpcIPs[0].Address, *config.Interfaces[0].IPv4.VPC,
 		)
 	}
 }
@@ -275,10 +275,10 @@ func TestVPC_ListIPAddresses(t *testing.T) {
 		t.Fatal("expecting 1 VPC IP address, but got 0")
 	}
 
-	if *vpcIPs[0].Address != config.Interfaces[0].IPv4.VPC {
+	if *vpcIPs[0].Address != *config.Interfaces[0].IPv4.VPC {
 		t.Fatalf(
 			"expecting VPC IP address on Linode %d to be %q, but got %q",
-			instance.ID, *vpcIPs[0].Address, config.Interfaces[0].IPv4.VPC,
+			instance.ID, *vpcIPs[0].Address, *config.Interfaces[0].IPv4.VPC,
 		)
 	}
 }

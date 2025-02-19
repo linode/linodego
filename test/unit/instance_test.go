@@ -47,9 +47,12 @@ func TestInstance_Migrate(t *testing.T) {
 
 	upgrade := false
 
+	migrationType := linodego.InstanceMigrationType("cold")
+	region := "us-west"
+
 	requestData := linodego.InstanceMigrateOptions{
-		Type:    "cold",
-		Region:  "us-west",
+		Type:    &migrationType,
+		Region:  &region,
 		Upgrade: &upgrade,
 	}
 

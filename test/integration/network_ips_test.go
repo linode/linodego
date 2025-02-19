@@ -167,7 +167,7 @@ func TestIPAddresses_Instance_Get(t *testing.T) {
 	if i.IPv4.Public[0].Address != instance.IPv4[0].String() {
 		t.Errorf("Expected matching public IP ipaddresses with GetInstanceIPAddress Instance IPAddress but got %v", i)
 	}
-	if *i.IPv4.VPC[0].Address != config.Interfaces[2].IPv4.VPC {
+	if *i.IPv4.VPC[0].Address != *config.Interfaces[2].IPv4.VPC {
 		t.Errorf("Expected matching VPC IP addresses with GetInstanceIPAddress Instance IPAddress but got %v", i)
 	}
 }
@@ -178,9 +178,6 @@ func TestIPAddress_Update(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-
-	reservedTrue := true
-	reservedFalse := false
 
 	address := instance.IPv4[0].String()
 
@@ -221,7 +218,7 @@ func TestIPAddress_Update(t *testing.T) {
 
 	ephemeralIP := instance.IPv4[0].String()
 	updateOpts = IPAddressUpdateOptionsV2{
-		Reserved: &reservedTrue,
+		Reserved: linodego.Pointer(true),
 	}
 	updatedIP, err := client.UpdateIPAddressV2(context.Background(), ephemeralIP, updateOpts)
 	if err != nil {
@@ -240,7 +237,7 @@ func TestIPAddress_Update(t *testing.T) {
 	defer client.DeleteReservedIPAddress(context.Background(), reservedIP)
 
 	updateOpts = IPAddressUpdateOptionsV2{
-		Reserved: &reservedTrue,
+		Reserved: linodego.Pointer(true),
 	}
 	updatedIP, err = client.UpdateIPAddressV2(context.Background(), reservedIP, updateOpts)
 	if err != nil {
@@ -254,7 +251,7 @@ func TestIPAddress_Update(t *testing.T) {
 
 	ephemeralIP = instance.IPv4[0].String()
 	updateOpts = IPAddressUpdateOptionsV2{
-		Reserved: &reservedFalse,
+		Reserved: linodego.Pointer(false),
 	}
 	updatedIP, err = client.UpdateIPAddressV2(context.Background(), ephemeralIP, updateOpts)
 	if err != nil {
@@ -287,7 +284,7 @@ func TestIPAddress_Update(t *testing.T) {
 	}
 
 	updateOpts = IPAddressUpdateOptionsV2{
-		Reserved: &reservedFalse,
+		Reserved: linodego.Pointer(false),
 	}
 	updatedIP, err = client.UpdateIPAddressV2(context.Background(), reservedIP, updateOpts)
 	if err != nil {
@@ -305,7 +302,7 @@ func TestIPAddress_Update(t *testing.T) {
 	}
 
 	updateOpts = IPAddressUpdateOptionsV2{
-		Reserved: &reservedTrue,
+		Reserved: linodego.Pointer(true),
 		RDNS:     linodego.Pointer(linodego.Pointer("sample rdns")),
 	}
 	_, err = client.UpdateIPAddressV2(context.Background(), unassignedResIP, updateOpts)
@@ -323,7 +320,7 @@ func TestIPAddress_Update(t *testing.T) {
 	}
 
 	updateOpts = IPAddressUpdateOptionsV2{
-		Reserved: &reservedTrue,
+		Reserved: linodego.Pointer(true),
 	}
 	updatedIP, err = client.UpdateIPAddressV2(context.Background(), reservedIP, updateOpts)
 	if err != nil {
@@ -343,7 +340,7 @@ func TestIPAddress_Update(t *testing.T) {
 	}
 
 	updateOpts = IPAddressUpdateOptionsV2{
-		Reserved: &reservedFalse,
+		Reserved: linodego.Pointer(false),
 	}
 	_, err = client.UpdateIPAddressV2(context.Background(), reservedIP, updateOpts)
 	if err != nil {
@@ -361,7 +358,7 @@ func TestIPAddress_Update(t *testing.T) {
 	invalidResIp := "123.72.121.76"
 
 	updateOpts = IPAddressUpdateOptionsV2{
-		Reserved: &reservedFalse,
+		Reserved: linodego.Pointer(false),
 	}
 
 	updatedIP, err = client.UpdateIPAddressV2(context.Background(), invalidResIp, updateOpts)
@@ -412,7 +409,7 @@ func TestIPAddress_Instance_Assign(t *testing.T) {
 	}
 
 	newInstance, err := createInstance(t, client, true, func(client *Client, options *InstanceCreateOptions) {
-		options.Label = "go-ins-test-assign"
+		options.Label = linodego.Pointer("go-ins-test-assign")
 		options.Region = instance.Region
 	})
 
@@ -430,7 +427,7 @@ func TestIPAddress_Instance_Assign(t *testing.T) {
 
 	ipRange, err := client.CreateIPv6Range(context.Background(), IPv6RangeCreateOptions{
 		PrefixLength: 64,
-		LinodeID:     newInstance.ID,
+		LinodeID:     &newInstance.ID,
 	})
 	if err != nil {
 		t.Error(err)
@@ -472,7 +469,7 @@ func TestIPAddress_Instance_Share(t *testing.T) {
 	}
 
 	newInstance, err := createInstance(t, client, true, func(client *Client, options *InstanceCreateOptions) {
-		options.Label = "go-ins-test-share"
+		options.Label = linodego.Pointer("go-ins-test-share")
 		options.Region = instance.Region
 	})
 
@@ -530,9 +527,9 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 	opts := AllocateReserveIPOptions{
 		Type:     "ipv4",
 		Public:   true,
-		Reserved: true,
-		Region:   instance.Region,
-		LinodeID: instance.ID,
+		Reserved: linodego.Pointer(true),
+		Region:   &instance.Region,
+		LinodeID: &instance.ID,
 	}
 	validIp, err := client.AllocateReserveIP(context.Background(), opts)
 	// defer cleanUpIPAllocation(t, client, validIp.Address)
@@ -547,9 +544,9 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 	nonOwnedLinodeOpts := AllocateReserveIPOptions{
 		Type:     "ipv4",
 		Public:   true,
-		Reserved: true,
-		Region:   instance.Region,
-		LinodeID: 99999, // Assume this is a non-owned Linode ID
+		Reserved: linodego.Pointer(true),
+		Region:   &instance.Region,
+		LinodeID: linodego.Pointer(99999), // Assume this is a non-owned Linode ID
 	}
 	_, nonOwnedLinodeErr := client.AllocateReserveIP(context.Background(), nonOwnedLinodeOpts)
 	if nonOwnedLinodeErr == nil {
@@ -561,8 +558,8 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 	omitLinodeIDOpts := AllocateReserveIPOptions{
 		Type:     "ipv4",
 		Public:   true,
-		Reserved: true,
-		Region:   instance.Region,
+		Reserved: linodego.Pointer(true),
+		Region:   &instance.Region,
 	}
 	omitLinodeIDip, omitLinodeErr := client.AllocateReserveIP(context.Background(), omitLinodeIDOpts)
 	if omitLinodeErr != nil {
@@ -577,8 +574,8 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 	omitRegionOpts := AllocateReserveIPOptions{
 		Type:     "ipv4",
 		Public:   true,
-		Reserved: true,
-		LinodeID: instance.ID,
+		Reserved: linodego.Pointer(true),
+		LinodeID: &instance.ID,
 	}
 	omitRegionip, omitRegionErr := client.AllocateReserveIP(context.Background(), omitRegionOpts)
 	// defer cleanUpIPAllocation(t, client, omitRegionip.Address)
@@ -596,7 +593,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 	omitRegionAndLinodeIDopts := AllocateReserveIPOptions{
 		Type:     "ipv4",
 		Public:   true,
-		Reserved: true,
+		Reserved: linodego.Pointer(true),
 	}
 	_, omitRegionAndLinodeIDerr := client.AllocateReserveIP(context.Background(), omitRegionAndLinodeIDopts)
 
@@ -609,9 +606,9 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 	publicFalseOpts := AllocateReserveIPOptions{
 		Type:     "ipv4",
 		Public:   false,
-		Reserved: true,
-		Region:   instance.Region,
-		LinodeID: instance.ID,
+		Reserved: linodego.Pointer(true),
+		Region:   &instance.Region,
+		LinodeID: &instance.ID,
 	}
 	_, publicFalseErr := client.AllocateReserveIP(context.Background(), publicFalseOpts)
 	if publicFalseErr == nil {
@@ -623,9 +620,9 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 	reservedFalseOpts := AllocateReserveIPOptions{
 		Type:     "ipv4",
 		Public:   true,
-		Reserved: false,
-		Region:   instance.Region,
-		LinodeID: instance.ID,
+		Reserved: linodego.Pointer(false),
+		Region:   &instance.Region,
+		LinodeID: &instance.ID,
 	}
 	reservedFalseIp, reservedFalseErr := client.AllocateReserveIP(context.Background(), reservedFalseOpts)
 	if reservedFalseErr != nil {
@@ -642,8 +639,8 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 	omitReservedOpts := AllocateReserveIPOptions{
 		Type:     "ipv4",
 		Public:   true,
-		Region:   instance.Region,
-		LinodeID: instance.ID,
+		Region:   &instance.Region,
+		LinodeID: &instance.ID,
 	}
 	omitReservedip, omitReservedErr := client.AllocateReserveIP(context.Background(), omitReservedOpts)
 	if omitReservedErr != nil {
@@ -660,8 +657,8 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 	omitOpts := AllocateReserveIPOptions{
 		Type:     "ipv4",
 		Public:   true,
-		Reserved: false,
-		Region:   instance.Region,
+		Reserved: linodego.Pointer(false),
+		Region:   &instance.Region,
 	}
 	_, omitOptsErr := client.AllocateReserveIP(context.Background(), omitOpts)
 	if omitOptsErr == nil {
@@ -673,7 +670,7 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 	omitIDResopts := AllocateReserveIPOptions{
 		Type:   "ipv4",
 		Public: true,
-		Region: instance.Region,
+		Region: &instance.Region,
 	}
 	_, omitIDResErr := client.AllocateReserveIP(context.Background(), omitIDResopts)
 	if omitIDResErr == nil {
@@ -685,9 +682,9 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 	typeIPv6opts := AllocateReserveIPOptions{
 		Type:     "ipv6",
 		Public:   true,
-		Reserved: true,
-		Region:   instance.Region,
-		LinodeID: instance.ID,
+		Reserved: linodego.Pointer(true),
+		Region:   &instance.Region,
+		LinodeID: &instance.ID,
 	}
 	_, typeIPv6Err := client.AllocateReserveIP(context.Background(), typeIPv6opts)
 	if typeIPv6Err == nil {
@@ -699,9 +696,9 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 	resFalseIPv6opts := AllocateReserveIPOptions{
 		Type:     "ipv6",
 		Public:   true,
-		Reserved: false,
-		Region:   instance.Region,
-		LinodeID: instance.ID,
+		Reserved: linodego.Pointer(false),
+		Region:   &instance.Region,
+		LinodeID: &instance.ID,
 	}
 	_, resFalseIPv6Err := client.AllocateReserveIP(context.Background(), resFalseIPv6opts)
 	if resFalseIPv6Err == nil {
@@ -713,9 +710,9 @@ func TestIPAddress_Instance_Allocate(t *testing.T) {
 	regionMismatchOpts := AllocateReserveIPOptions{
 		Type:     "ipv4",
 		Public:   true,
-		Reserved: true,
-		Region:   "us-west", // Assume this is different from instance.Region
-		LinodeID: instance.ID,
+		Reserved: linodego.Pointer(true),
+		Region:   linodego.Pointer("us-west"), // Assume this is different from instance.Region
+		LinodeID: &instance.ID,
 	}
 	_, regionMismatchErr := client.AllocateReserveIP(context.Background(), regionMismatchOpts)
 	if regionMismatchErr == nil {

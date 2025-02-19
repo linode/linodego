@@ -19,24 +19,24 @@ type InstanceConfigInterface struct {
 }
 
 type VPCIPv4 struct {
-	VPC     string  `json:"vpc,omitempty"`
+	VPC     *string `json:"vpc,omitempty"`
 	NAT1To1 *string `json:"nat_1_1,omitempty"`
 }
 
 type InstanceConfigInterfaceCreateOptions struct {
-	IPAMAddress string                 `json:"ipam_address,omitempty"`
-	Label       string                 `json:"label,omitempty"`
-	Purpose     ConfigInterfacePurpose `json:"purpose,omitempty"`
-	Primary     bool                   `json:"primary,omitempty"`
-	SubnetID    *int                   `json:"subnet_id,omitempty"`
-	IPv4        *VPCIPv4               `json:"ipv4,omitempty"`
-	IPRanges    []string               `json:"ip_ranges,omitempty"`
+	IPAMAddress *string                 `json:"ipam_address,omitempty"`
+	Label       *string                 `json:"label,omitempty"`
+	Purpose     *ConfigInterfacePurpose `json:"purpose,omitempty"`
+	Primary     *bool                   `json:"primary,omitempty"`
+	SubnetID    *int                    `json:"subnet_id,omitempty"`
+	IPv4        *VPCIPv4                `json:"ipv4,omitempty"`
+	IPRanges    []string                `json:"ip_ranges,omitempty"`
 }
 
 type InstanceConfigInterfaceUpdateOptions struct {
-	Primary  bool      `json:"primary,omitempty"`
-	IPv4     *VPCIPv4  `json:"ipv4,omitempty"`
-	IPRanges *[]string `json:"ip_ranges,omitempty"`
+	Primary  *bool    `json:"primary,omitempty"`
+	IPv4     *VPCIPv4 `json:"ipv4,omitempty"`
+	IPRanges []string `json:"ip_ranges,omitempty"`
 }
 
 type InstanceConfigInterfacesReorderOptions struct {
@@ -55,9 +55,9 @@ func getInstanceConfigInterfacesCreateOptionsList(
 
 func (i InstanceConfigInterface) GetCreateOptions() InstanceConfigInterfaceCreateOptions {
 	opts := InstanceConfigInterfaceCreateOptions{
-		Label:    i.Label,
-		Purpose:  i.Purpose,
-		Primary:  i.Primary,
+		Label:    &i.Label,
+		Purpose:  &i.Purpose,
+		Primary:  &i.Primary,
 		SubnetID: i.SubnetID,
 	}
 
@@ -72,14 +72,14 @@ func (i InstanceConfigInterface) GetCreateOptions() InstanceConfigInterfaceCreat
 		}
 	}
 
-	opts.IPAMAddress = i.IPAMAddress
+	opts.IPAMAddress = &i.IPAMAddress
 
 	return opts
 }
 
 func (i InstanceConfigInterface) GetUpdateOptions() InstanceConfigInterfaceUpdateOptions {
 	opts := InstanceConfigInterfaceUpdateOptions{
-		Primary: i.Primary,
+		Primary: &i.Primary,
 	}
 
 	if i.Purpose == InterfacePurposeVPC && i.IPv4 != nil {
@@ -95,7 +95,7 @@ func (i InstanceConfigInterface) GetUpdateOptions() InstanceConfigInterfaceUpdat
 		copiedIPRanges := make([]string, len(i.IPRanges))
 		copy(copiedIPRanges, i.IPRanges)
 
-		opts.IPRanges = &copiedIPRanges
+		opts.IPRanges = copiedIPRanges
 	}
 
 	return opts

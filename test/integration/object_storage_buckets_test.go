@@ -12,12 +12,12 @@ import (
 var objectStorageBucketTestLabel = "go-bucket-test-def"
 
 var testObjectStorageBucketCreateOpts = ObjectStorageBucketCreateOptions{
-	Cluster: "us-east-1",
+	Cluster: linodego.Pointer("us-east-1"),
 	Label:   objectStorageBucketTestLabel,
 }
 
 var testRegionalObjectStorageBucketCreateOpts = ObjectStorageBucketCreateOptions{
-	Region: "us-east",
+	Region: linodego.Pointer("us-east"),
 	Label:  objectStorageBucketTestLabel,
 }
 
@@ -35,7 +35,7 @@ func TestObjectStorageBucket_Create_smoke(t *testing.T) {
 
 	// when comparing fixtures to random value Label will differ, compare the known prefix
 	if bucket.Label != expected.Label ||
-		bucket.Cluster != expected.Cluster {
+		bucket.Cluster != *expected.Cluster {
 		t.Errorf("Object Storage Bucket did not match CreateOptions")
 	}
 
@@ -54,8 +54,8 @@ func TestObjectStorageBucket_Regional(t *testing.T) {
 	client, bucket, teardown, err := setupObjectStorageBucket(t,
 		[]objectStorageBucketModifier{
 			func(opts *ObjectStorageBucketCreateOptions) {
-				opts.Cluster = ""
-				opts.Region = region
+				opts.Cluster = linodego.Pointer("")
+				opts.Region = &region
 			},
 		},
 		"fixtures/TestObjectStorageBucket_Regional",
@@ -126,7 +126,7 @@ func TestObjectStorageBucket_GetFound(t *testing.T) {
 
 	// when comparing fixtures to random value Label will differ, compare the known prefix
 	if bucket.Label != expected.Label ||
-		bucket.Cluster != expected.Cluster {
+		bucket.Cluster != *expected.Cluster {
 		t.Errorf("Object Storage Bucket did not match CreateOptions")
 	}
 }
@@ -180,7 +180,7 @@ func TestObjectStorageBucket_Access_Get(t *testing.T) {
 	corsEnabled := false
 
 	createOpts := ObjectStorageBucketCreateOptions{
-		ACL:         ACLAuthenticatedRead,
+		ACL:         linodego.Pointer(ACLAuthenticatedRead),
 		CorsEnabled: &corsEnabled,
 	}
 	endpointType := linodego.ObjectStorageEndpointE1
@@ -218,14 +218,14 @@ func TestObjectStorageBucket_Access_Get(t *testing.T) {
 		t.Errorf("ObjectStorageBucket access CORS does not match update, expected %t, got %t", corsEnabled, *newBucketv2.CorsEnabled)
 	}
 
-	if newBucket.ACL != createOpts.ACL {
+	if createOpts.ACL == nil || newBucket.ACL != *createOpts.ACL {
 		t.Errorf("ObjectStorageBucket access ACL does not match update, expected %s, got %s",
-			createOpts.ACL,
+			*createOpts.ACL,
 			newBucket.ACL)
 	}
-	if newBucketv2.ACL != createOpts.ACL {
+	if createOpts.ACL == nil || newBucketv2.ACL != *createOpts.ACL {
 		t.Errorf("ObjectStorageBucket access ACL does not match update, expected %s, got %s",
-			createOpts.ACL,
+			*createOpts.ACL,
 			newBucketv2.ACL)
 	}
 }
@@ -242,7 +242,7 @@ func TestObjectStorageBucket_Access_Update(t *testing.T) {
 	corsEnabled := false
 
 	opts := ObjectStorageBucketUpdateAccessOptions{
-		ACL:         ACLPrivate,
+		ACL:         linodego.Pointer(ACLPrivate),
 		CorsEnabled: &corsEnabled,
 	}
 
@@ -260,8 +260,8 @@ func TestObjectStorageBucket_Access_Update(t *testing.T) {
 		t.Errorf("ObjectStorageBucket access CORS does not match update, expected %t, got %t", corsEnabled, newBucket.CorsEnabled)
 	}
 
-	if newBucket.ACL != opts.ACL {
-		t.Errorf("ObjectStorageBucket access ACL does not match update, expected %s, got %s", opts.ACL, newBucket.ACL)
+	if opts.ACL == nil || newBucket.ACL != *opts.ACL {
+		t.Errorf("ObjectStorageBucket access ACL does not match update, expected %s, got %s", *opts.ACL, newBucket.ACL)
 	}
 }
 
@@ -298,8 +298,8 @@ func setupObjectStorageBucket(
 			selectedEndpoint := endpoints[slices.IndexFunc(endpoints, func(e linodego.ObjectStorageEndpoint) bool {
 				return e.EndpointType == linodego.ObjectStorageEndpointE1
 			})]
-			createOpts.Region = selectedEndpoint.Region
-			createOpts.EndpointType = selectedEndpoint.EndpointType
+			createOpts.Region = &selectedEndpoint.Region
+			createOpts.EndpointType = &selectedEndpoint.EndpointType
 		}
 
 	}

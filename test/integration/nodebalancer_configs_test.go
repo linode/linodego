@@ -9,9 +9,9 @@ import (
 
 var testNodeBalancerConfigCreateOpts = linodego.NodeBalancerConfigCreateOptions{
 	Port:          80,
-	Protocol:      linodego.ProtocolHTTP,
-	Algorithm:     linodego.AlgorithmRoundRobin,
-	CheckInterval: 60,
+	Protocol:      linodego.Pointer(linodego.ProtocolHTTP),
+	Algorithm:     linodego.Pointer(linodego.AlgorithmRoundRobin),
+	CheckInterval: linodego.Pointer(60),
 }
 
 func TestNodeBalancerConfig_Create_smoke(t *testing.T) {
@@ -25,7 +25,7 @@ func TestNodeBalancerConfig_Create_smoke(t *testing.T) {
 	expected := testNodeBalancerConfigCreateOpts
 
 	// cant compare Target, fixture IPs are sanitized
-	if config.Port != expected.Port || config.Protocol != expected.Protocol {
+	if config.Port != expected.Port || config.Protocol != *expected.Protocol {
 		t.Errorf("NodeBalancerConfig did not match CreateOptions")
 	}
 }
@@ -39,18 +39,18 @@ func TestNodeBalancerConfig_Update(t *testing.T) {
 
 	updateOpts := linodego.NodeBalancerConfigUpdateOptions{
 		Port:          8080,
-		Protocol:      linodego.ProtocolTCP,
-		ProxyProtocol: linodego.ProxyProtocolV2,
-		Algorithm:     linodego.AlgorithmLeastConn,
+		Protocol:      linodego.Pointer(linodego.ProtocolTCP),
+		ProxyProtocol: linodego.Pointer(linodego.ProxyProtocolV2),
+		Algorithm:     linodego.Pointer(linodego.AlgorithmLeastConn),
 	}
 	configUpdated, err := client.UpdateNodeBalancerConfig(context.Background(), nodebalancer.ID, config.ID, updateOpts)
 	if err != nil {
 		t.Errorf("Error updating NodeBalancer Config, %s", err)
 	}
 	if configUpdated.Port != updateOpts.Port ||
-		string(updateOpts.Algorithm) != string(configUpdated.Algorithm) ||
-		string(updateOpts.Protocol) != string(configUpdated.Protocol) ||
-		string(updateOpts.ProxyProtocol) != string(configUpdated.ProxyProtocol) {
+		string(*updateOpts.Algorithm) != string(configUpdated.Algorithm) ||
+		string(*updateOpts.Protocol) != string(configUpdated.Protocol) ||
+		string(*updateOpts.ProxyProtocol) != string(configUpdated.ProxyProtocol) {
 		t.Errorf("NodeBalancerConfig did not match UpdateOptions")
 	}
 }

@@ -37,25 +37,25 @@ type DevicesCreationOptions struct {
 
 // FirewallCreateOptions fields are those accepted by CreateFirewall
 type FirewallCreateOptions struct {
-	Label   string                 `json:"label,omitempty"`
-	Rules   FirewallRuleSet        `json:"rules"`
-	Tags    []string               `json:"tags,omitempty"`
-	Devices DevicesCreationOptions `json:"devices,omitempty"`
+	Label   *string                 `json:"label,omitempty"`
+	Rules   FirewallRuleSet         `json:"rules"`
+	Tags    []string                `json:"tags,omitempty"`
+	Devices *DevicesCreationOptions `json:"devices,omitempty"`
 }
 
 // FirewallUpdateOptions is an options struct used when Updating a Firewall
 type FirewallUpdateOptions struct {
-	Label  string         `json:"label,omitempty"`
-	Status FirewallStatus `json:"status,omitempty"`
-	Tags   *[]string      `json:"tags,omitempty"`
+	Label  *string         `json:"label,omitempty"`
+	Status *FirewallStatus `json:"status,omitempty"`
+	Tags   []string        `json:"tags,omitempty"`
 }
 
 // GetUpdateOptions converts a Firewall to FirewallUpdateOptions for use in Client.UpdateFirewall.
 func (f *Firewall) GetUpdateOptions() FirewallUpdateOptions {
 	return FirewallUpdateOptions{
-		Label:  f.Label,
-		Status: f.Status,
-		Tags:   &f.Tags,
+		Label:  &f.Label,
+		Status: &f.Status,
+		Tags:   f.Tags,
 	}
 }
 

@@ -17,16 +17,16 @@ const (
 
 // NetworkAddresses are arrays of ipv4 and v6 addresses
 type NetworkAddresses struct {
-	IPv4 *[]string `json:"ipv4,omitempty"`
-	IPv6 *[]string `json:"ipv6,omitempty"`
+	IPv4 []string `json:"ipv4,omitempty"`
+	IPv6 []string `json:"ipv6,omitempty"`
 }
 
 // A FirewallRule is a whitelist of ports, protocols, and addresses for which traffic should be allowed.
 type FirewallRule struct {
 	Action      string           `json:"action"`
 	Label       string           `json:"label"`
-	Description string           `json:"description,omitempty"`
-	Ports       string           `json:"ports,omitempty"`
+	Description *string          `json:"description,omitempty"`
+	Ports       *string          `json:"ports,omitempty"`
 	Protocol    NetworkProtocol  `json:"protocol"`
 	Addresses   NetworkAddresses `json:"addresses"`
 }

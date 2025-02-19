@@ -41,13 +41,13 @@ type StackscriptUDF struct {
 	Example string `json:"example"`
 
 	// A list of acceptable single values for the field.
-	OneOf string `json:"oneOf,omitempty"`
+	OneOf *string `json:"oneOf,omitempty"`
 
 	// A list of acceptable values for the field in any quantity, combination or order.
-	ManyOf string `json:"manyOf,omitempty"`
+	ManyOf *string `json:"manyOf,omitempty"`
 
 	// The default value. If not specified, this value will be used.
-	Default string `json:"default,omitempty"`
+	Default *string `json:"default,omitempty"`
 }
 
 // StackscriptCreateOptions fields are those accepted by CreateStackscript

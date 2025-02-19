@@ -30,7 +30,7 @@ func TestInstanceBackups_List(t *testing.T) {
 		t.Fatalf("failed to get instance: %s", err)
 	}
 
-	if !instance.Backups.Available {
+	if instance.Backups.Available == nil || !*instance.Backups.Available {
 		t.Fatalf("expected Backups.Available to be true, got false")
 	}
 
@@ -96,7 +96,7 @@ func setupInstanceBackup(t *testing.T, fixturesYaml string) (*linodego.Client, *
 	createOpts := linodego.InstanceDiskCreateOptions{
 		Size:       10,
 		Label:      "linodego-disk-test",
-		Filesystem: "ext4",
+		Filesystem: linodego.Pointer("ext4"),
 	}
 	disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, createOpts)
 	if err != nil {

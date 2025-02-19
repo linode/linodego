@@ -66,7 +66,7 @@ func TestLKECluster_GetFound_smoke(t *testing.T) {
 
 func TestLKECluster_Enterprise_smoke(t *testing.T) {
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
-		createOpts.Tier = "enterprise"
+		createOpts.Tier = linodego.Pointer("enterprise")
 		createOpts.Region = "us-lax"
 		createOpts.K8sVersion = "v1.31.1+lke1"
 	}}, "fixtures/TestLKECluster_Enterprise_smoke")
@@ -97,9 +97,9 @@ func TestLKECluster_Update(t *testing.T) {
 	updatedK8sVersion := "1.30"
 
 	updatedCluster, err := client.UpdateLKECluster(context.Background(), cluster.ID, linodego.LKEClusterUpdateOptions{
-		Tags:       &updatedTags,
-		Label:      updatedLabel,
-		K8sVersion: updatedK8sVersion,
+		Tags:       updatedTags,
+		Label:      &updatedLabel,
+		K8sVersion: &updatedK8sVersion,
 	})
 	if err != nil {
 		t.Fatalf("failed to update LKE Cluster (%d): %s", cluster.ID, err)
@@ -308,7 +308,7 @@ func setupLKECluster(t *testing.T, clusterModifiers []clusterModifier, fixturesY
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 
 	createOpts := linodego.LKEClusterCreateOptions{
-		Label:      label,
+		Label:      "go-test-def",
 		Region:     getRegionsWithCaps(t, client, []string{"Kubernetes", "Disk Encryption"})[0],
 		K8sVersion: "1.31",
 		Tags:       []string{"testing"},
@@ -338,7 +338,7 @@ func TestLKECluster_APLEnabled_smoke(t *testing.T) {
 			createOpts.Label = "go-lke-test-apl-enabled"
 		},
 		func(createOpts *linodego.LKEClusterCreateOptions) {
-			createOpts.APLEnabled = true
+			createOpts.APLEnabled = linodego.Pointer(true)
 		},
 		func(createOpts *linodego.LKEClusterCreateOptions) {
 			// NOTE: g6-dedicated-4 is the minimum APL-compatible Linode type

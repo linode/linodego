@@ -17,6 +17,9 @@ func TestFirewallDevices_List_smoke(t *testing.T) {
 	defer teardown()
 
 	firewall, teardownFirewall, err := createFirewall(t, client, func(opts *linodego.FirewallCreateOptions) {
+		if opts.Devices == nil {
+			opts.Devices = &linodego.DevicesCreationOptions{}
+		}
 		opts.Devices.Linodes = []int{instance.ID}
 	})
 	if err != nil {
