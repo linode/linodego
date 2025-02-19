@@ -117,7 +117,7 @@ type DatabaseMaintenanceWindow struct {
 	Frequency DatabaseMaintenanceFrequency `json:"frequency"`
 	HourOfDay int                          `json:"hour_of_day"`
 
-	Pending *[]DatabaseMaintenanceWindowPending `json:"pending,omitempty"`
+	Pending []DatabaseMaintenanceWindowPending `json:"pending,omitempty"`
 
 	// Deprecated: WeekOfMonth is a deprecated property, as it is no longer supported in DBaaS V2.
 	WeekOfMonth *int `json:"week_of_month,omitempty"`

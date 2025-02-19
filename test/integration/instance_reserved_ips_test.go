@@ -45,14 +45,14 @@ func createInstanceWithReservedIP(
 		Booted:   linodego.Pointer(false),
 		Image:    linodego.Pointer("linode/alpine3.17"),
 		RootPass: linodego.Pointer(randPassword()),
-		Interfaces: &[]linodego.InstanceConfigInterfaceCreateOptions{
+		Interfaces: []linodego.InstanceConfigInterfaceCreateOptions{
 			{
 				Purpose:     linodego.Pointer(linodego.InterfacePurposePublic),
 				Label:       linodego.Pointer(""),
 				IPAMAddress: linodego.Pointer(""),
 			},
 		},
-		IPv4: &[]string{reservedIP},
+		IPv4: []string{reservedIP},
 	}
 
 	for _, modifier := range modifiers {
@@ -187,7 +187,7 @@ func TestInstance_CreateWithMultipleIPAddresses(t *testing.T) {
 	}()
 
 	_, instanceTeardown, err := createInstanceWithReservedIP(t, client, "", func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
-		opts.IPv4 = &[]string{reservedIP.Address, "192.0.2.2"}
+		opts.IPv4 = []string{reservedIP.Address, "192.0.2.2"}
 	})
 	defer instanceTeardown()
 	if err == nil {
@@ -500,7 +500,7 @@ func TestInstance_DeleteInstanceVariants(t *testing.T) {
 		Type:     "g6-nanode-1",
 		Label:    linodego.Pointer("test-instance-freed-ip"),
 		RootPass: linodego.Pointer(randPassword()),
-		IPv4:     &[]string{reservedIP.Address},
+		IPv4:     []string{reservedIP.Address},
 	})
 	if err != nil {
 		t.Fatalf("Failed to create new instance with freed reserved IP: %v", err)

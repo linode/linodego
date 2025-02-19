@@ -136,7 +136,7 @@ func TestObjectStorageKeys_Limited(t *testing.T) {
 		t.Error(err)
 	}
 	if !objectStorageKey.Limited || !cmp.Equal(objectStorageKey.BucketAccess, createOpts.BucketAccess) {
-		t.Errorf("objectStorageKey returned (%v) does not match objectStorageKey creation request (%v)", *objectStorageKey.BucketAccess, *createOpts.BucketAccess)
+		t.Errorf("objectStorageKey returned (%v) does not match objectStorageKey creation request (%v)", *objectStorageKey.BucketAccess, createOpts.BucketAccess)
 	}
 }
 
@@ -187,7 +187,7 @@ func TestObjectStorageKeys_Regional_Limited(t *testing.T) {
 	}
 
 	initialRegion := bucket.Region
-	createOpts.Regions = &[]string{initialRegion}
+	createOpts.Regions = []string{initialRegion}
 
 	_, key, teardown, err := setupObjectStorageKey(t, createOpts, "fixtures/TestObjectStorageKeys_Regional_Limited", client, teardown)
 	defer teardown()
@@ -220,7 +220,7 @@ func TestObjectStorageKeys_Regional_Limited(t *testing.T) {
 	}
 
 	updateOpts := ObjectStorageKeyUpdateOptions{
-		Regions: &[]string{initialRegion, addedRegion},
+		Regions: []string{initialRegion, addedRegion},
 	}
 	key, err = client.UpdateObjectStorageKey(context.Background(), key.ID, updateOpts)
 	if err != nil {

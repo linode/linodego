@@ -100,11 +100,11 @@ func vpcCreateOptionsCheck(
 	good := (*opts.Description == vpc.Description &&
 		opts.Label == vpc.Label &&
 		opts.Region == vpc.Region &&
-		len(*opts.Subnets) == len(vpc.Subnets))
+		len(opts.Subnets) == len(vpc.Subnets))
 
-	for i := 0; i < minInt(len(*opts.Subnets), len(vpc.Subnets)); i++ {
-		good = good && ((*opts.Subnets)[i].IPv4 == vpc.Subnets[i].IPv4 &&
-			(*opts.Subnets)[i].Label == vpc.Subnets[i].Label)
+	for i := 0; i < minInt(len(opts.Subnets), len(vpc.Subnets)); i++ {
+		good = good && ((opts.Subnets)[i].IPv4 == vpc.Subnets[i].IPv4 &&
+			(opts.Subnets)[i].Label == vpc.Subnets[i].Label)
 	}
 
 	if !good {

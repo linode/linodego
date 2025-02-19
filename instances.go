@@ -155,22 +155,22 @@ type InstancePasswordResetOptions struct {
 
 // InstanceCreateOptions require only Region and Type
 type InstanceCreateOptions struct {
-	Region          string                                  `json:"region"`
-	Type            string                                  `json:"type"`
-	Label           *string                                 `json:"label,omitempty"`
-	RootPass        *string                                 `json:"root_pass,omitempty"`
-	AuthorizedKeys  *[]string                               `json:"authorized_keys,omitempty"`
-	AuthorizedUsers *[]string                               `json:"authorized_users,omitempty"`
-	StackScriptID   *int                                    `json:"stackscript_id,omitempty"`
-	StackScriptData *map[string]string                      `json:"stackscript_data,omitempty"`
-	BackupID        *int                                    `json:"backup_id,omitempty"`
-	Image           *string                                 `json:"image,omitempty"`
-	Interfaces      *[]InstanceConfigInterfaceCreateOptions `json:"interfaces,omitempty"`
-	BackupsEnabled  *bool                                   `json:"backups_enabled,omitempty"`
-	PrivateIP       *bool                                   `json:"private_ip,omitempty"`
-	Tags            *[]string                               `json:"tags,omitempty"`
-	Metadata        *InstanceMetadataOptions                `json:"metadata,omitempty"`
-	FirewallID      *int                                    `json:"firewall_id,omitempty"`
+	Region          string                                 `json:"region"`
+	Type            string                                 `json:"type"`
+	Label           *string                                `json:"label,omitempty"`
+	RootPass        *string                                `json:"root_pass,omitempty"`
+	AuthorizedKeys  []string                               `json:"authorized_keys,omitempty"`
+	AuthorizedUsers []string                               `json:"authorized_users,omitempty"`
+	StackScriptID   *int                                   `json:"stackscript_id,omitempty"`
+	StackScriptData map[string]string                      `json:"stackscript_data,omitempty"`
+	BackupID        *int                                   `json:"backup_id,omitempty"`
+	Image           *string                                `json:"image,omitempty"`
+	Interfaces      []InstanceConfigInterfaceCreateOptions `json:"interfaces,omitempty"`
+	BackupsEnabled  *bool                                  `json:"backups_enabled,omitempty"`
+	PrivateIP       *bool                                  `json:"private_ip,omitempty"`
+	Tags            []string                               `json:"tags,omitempty"`
+	Metadata        *InstanceMetadataOptions               `json:"metadata,omitempty"`
+	FirewallID      *int                                   `json:"firewall_id,omitempty"`
 
 	// NOTE: Disk encryption may not currently be available to all users.
 	DiskEncryption *InstanceDiskEncryption `json:"disk_encryption,omitempty"`
@@ -184,7 +184,7 @@ type InstanceCreateOptions struct {
 	// Deprecated: group is a deprecated property denoting a group label for the Linode.
 	Group *string `json:"group,omitempty"`
 
-	IPv4 *[]string `json:"ipv4,omitempty"`
+	IPv4 []string `json:"ipv4,omitempty"`
 }
 
 // InstanceCreatePlacementGroupOptions represents the placement group
@@ -200,7 +200,7 @@ type InstanceUpdateOptions struct {
 	Backups         *InstanceBackup `json:"backups,omitempty"`
 	Alerts          *InstanceAlert  `json:"alerts,omitempty"`
 	WatchdogEnabled *bool           `json:"watchdog_enabled,omitempty"`
-	Tags            *[]string       `json:"tags,omitempty"`
+	Tags            []string        `json:"tags,omitempty"`
 
 	// Deprecated: group is a deprecated property denoting a group label for the Linode.
 	Group *string `json:"group,omitempty"`
@@ -256,7 +256,7 @@ func (i *Instance) GetUpdateOptions() InstanceUpdateOptions {
 		Backups:         i.Backups,
 		Alerts:          i.Alerts,
 		WatchdogEnabled: &i.WatchdogEnabled,
-		Tags:            &i.Tags,
+		Tags:            i.Tags,
 	}
 }
 
@@ -269,8 +269,8 @@ type InstanceCloneOptions struct {
 	LinodeID       *int                                 `json:"linode_id,omitempty"`
 	Label          *string                              `json:"label,omitempty"`
 	BackupsEnabled bool                                 `json:"backups_enabled"`
-	Disks          *[]int                               `json:"disks,omitempty"`
-	Configs        *[]int                               `json:"configs,omitempty"`
+	Disks          []int                                `json:"disks,omitempty"`
+	Configs        []int                                `json:"configs,omitempty"`
 	PrivateIP      *bool                                `json:"private_ip,omitempty"`
 	Metadata       *InstanceMetadataOptions             `json:"metadata,omitempty"`
 	PlacementGroup *InstanceCreatePlacementGroupOptions `json:"placement_group,omitempty"`
@@ -384,10 +384,10 @@ func (c *Client) RebootInstance(ctx context.Context, linodeID int, configID int)
 type InstanceRebuildOptions struct {
 	Image           *string                  `json:"image,omitempty"`
 	RootPass        *string                  `json:"root_pass,omitempty"`
-	AuthorizedKeys  *[]string                `json:"authorized_keys,omitempty"`
-	AuthorizedUsers *[]string                `json:"authorized_users,omitempty"`
+	AuthorizedKeys  []string                 `json:"authorized_keys,omitempty"`
+	AuthorizedUsers []string                 `json:"authorized_users,omitempty"`
 	StackScriptID   *int                     `json:"stackscript_id,omitempty"`
-	StackScriptData *map[string]string       `json:"stackscript_data,omitempty"`
+	StackScriptData map[string]string        `json:"stackscript_data,omitempty"`
 	Booted          *bool                    `json:"booted,omitempty"`
 	Metadata        *InstanceMetadataOptions `json:"metadata,omitempty"`
 	Type            *string                  `json:"type,omitempty"`

@@ -48,12 +48,12 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 		Duration:  4,
 		Frequency: linodego.DatabaseMaintenanceFrequencyWeekly,
 		HourOfDay: 8,
-		Pending:   &[]linodego.DatabaseMaintenanceWindowPending{},
+		Pending:   []linodego.DatabaseMaintenanceWindowPending{},
 	}
 
 	updatedLabel := database.Label + "-updated"
 	opts := linodego.MySQLUpdateOptions{
-		AllowList: &[]string{"128.173.205.21", "123.177.200.20"},
+		AllowList: []string{"128.173.205.21", "123.177.200.20"},
 		Label:     &updatedLabel,
 		Updates:   &updatedWindow,
 	}
@@ -141,7 +141,7 @@ func createMySQLDatabase(t *testing.T, client *linodego.Client,
 		Type:        "g6-nanode-1",
 		Engine:      "mysql/8",
 		ClusterSize: linodego.Pointer(3),
-		AllowList:   &[]string{"203.0.113.1", "192.0.1.0/24"},
+		AllowList:   []string{"203.0.113.1", "192.0.1.0/24"},
 	}
 
 	for _, modifier := range databaseMofidiers {

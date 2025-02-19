@@ -23,7 +23,7 @@ type Firewall struct {
 	ID      int             `json:"id"`
 	Label   string          `json:"label"`
 	Status  FirewallStatus  `json:"status"`
-	Tags    *[]string       `json:"tags,omitempty"`
+	Tags    []string        `json:"tags,omitempty"`
 	Rules   FirewallRuleSet `json:"rules"`
 	Created *time.Time      `json:"-"`
 	Updated *time.Time      `json:"-"`
@@ -31,15 +31,15 @@ type Firewall struct {
 
 // DevicesCreationOptions fields are used when adding devices during the Firewall creation process.
 type DevicesCreationOptions struct {
-	Linodes       *[]int `json:"linodes,omitempty"`
-	NodeBalancers *[]int `json:"nodebalancers,omitempty"`
+	Linodes       []int `json:"linodes,omitempty"`
+	NodeBalancers []int `json:"nodebalancers,omitempty"`
 }
 
 // FirewallCreateOptions fields are those accepted by CreateFirewall
 type FirewallCreateOptions struct {
 	Label   *string                 `json:"label,omitempty"`
 	Rules   FirewallRuleSet         `json:"rules"`
-	Tags    *[]string               `json:"tags,omitempty"`
+	Tags    []string                `json:"tags,omitempty"`
 	Devices *DevicesCreationOptions `json:"devices,omitempty"`
 }
 
@@ -47,7 +47,7 @@ type FirewallCreateOptions struct {
 type FirewallUpdateOptions struct {
 	Label  *string         `json:"label,omitempty"`
 	Status *FirewallStatus `json:"status,omitempty"`
-	Tags   *[]string       `json:"tags,omitempty"`
+	Tags   []string        `json:"tags,omitempty"`
 }
 
 // GetUpdateOptions converts a Firewall to FirewallUpdateOptions for use in Client.UpdateFirewall.

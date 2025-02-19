@@ -83,10 +83,10 @@ type LKENodePoolCreateOptions struct {
 
 // LKENodePoolUpdateOptions fields are those accepted by UpdateLKENodePoolUpdate
 type LKENodePoolUpdateOptions struct {
-	Count  *int                `json:"count,omitempty"`
-	Tags   *[]string           `json:"tags,omitempty"`
-	Labels *LKENodePoolLabels  `json:"labels,omitempty"`
-	Taints *[]LKENodePoolTaint `json:"taints,omitempty"`
+	Count  *int               `json:"count,omitempty"`
+	Tags   []string           `json:"tags,omitempty"`
+	Labels *LKENodePoolLabels `json:"labels,omitempty"`
+	Taints []LKENodePoolTaint `json:"taints,omitempty"`
 
 	Autoscaler *LKENodePoolAutoscaler `json:"autoscaler,omitempty"`
 }
@@ -106,9 +106,9 @@ func (l LKENodePool) GetCreateOptions() (o LKENodePoolCreateOptions) {
 // GetUpdateOptions converts a LKENodePool to LKENodePoolUpdateOptions for use in UpdateLKENodePoolUpdate
 func (l LKENodePool) GetUpdateOptions() (o LKENodePoolUpdateOptions) {
 	o.Count = &l.Count
-	o.Tags = &l.Tags
+	o.Tags = l.Tags
 	o.Labels = &l.Labels
-	o.Taints = &l.Taints
+	o.Taints = l.Taints
 	o.Autoscaler = &l.Autoscaler
 	return
 }

@@ -53,11 +53,11 @@ type InstanceDiskCreateOptions struct {
 	Image    *string `json:"image,omitempty"`
 	RootPass *string `json:"root_pass,omitempty"`
 
-	Filesystem      *string            `json:"filesystem,omitempty"`
-	AuthorizedKeys  *[]string          `json:"authorized_keys,omitempty"`
-	AuthorizedUsers *[]string          `json:"authorized_users,omitempty"`
-	StackscriptID   *int               `json:"stackscript_id,omitempty"`
-	StackscriptData *map[string]string `json:"stackscript_data,omitempty"`
+	Filesystem      *string           `json:"filesystem,omitempty"`
+	AuthorizedKeys  []string          `json:"authorized_keys,omitempty"`
+	AuthorizedUsers []string          `json:"authorized_users,omitempty"`
+	StackscriptID   *int              `json:"stackscript_id,omitempty"`
+	StackscriptData map[string]string `json:"stackscript_data,omitempty"`
 }
 
 // InstanceDiskUpdateOptions are InstanceDisk settings that can be used in updates

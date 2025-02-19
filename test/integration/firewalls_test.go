@@ -12,7 +12,7 @@ import (
 var testFirewallCreateOpts = linodego.FirewallCreateOptions{
 	Label: linodego.Pointer("linodego-fw-test"),
 	Rules: testFirewallRuleSet, // borrowed from firewall_rules.test.go
-	Tags:  &[]string{"testing"},
+	Tags:  []string{"testing"},
 }
 
 // ignoreNetworkAddresses negates comparing IP addresses. Because of fixture sanitization,
@@ -52,8 +52,8 @@ func TestFirewall_Get(t *testing.T) {
 				Action:   "DROP",
 				Protocol: linodego.ICMP,
 				Addresses: linodego.NetworkAddresses{
-					IPv4: &[]string{"0.0.0.0/0"},
-					IPv6: &[]string{"::/0"},
+					IPv4: []string{"0.0.0.0/0"},
+					IPv6: []string{"::/0"},
 				},
 			},
 		},
@@ -90,7 +90,7 @@ func TestFirewall_Update(t *testing.T) {
 				Action:   "DROP",
 				Protocol: linodego.ICMP,
 				Addresses: linodego.NetworkAddresses{
-					IPv4: &[]string{"0.0.0.0/0"},
+					IPv4: []string{"0.0.0.0/0"},
 				},
 			},
 		},
@@ -101,7 +101,7 @@ func TestFirewall_Update(t *testing.T) {
 		func(createOpts *linodego.FirewallCreateOptions) {
 			createOpts.Label = linodego.Pointer("linodego-fw-test")
 			createOpts.Rules = rules
-			createOpts.Tags = &[]string{"test"}
+			createOpts.Tags = []string{"test"}
 		},
 	}, "fixtures/TestFirewall_Update")
 	if err != nil {
@@ -112,15 +112,15 @@ func TestFirewall_Update(t *testing.T) {
 	updateOpts := firewall.GetUpdateOptions()
 	updateOpts.Status = linodego.Pointer(linodego.FirewallDisabled)
 	updateOpts.Label = linodego.Pointer(firewall.Label + "-updated")
-	updateOpts.Tags = &[]string{}
+	updateOpts.Tags = []string{}
 
 	updated, err := client.UpdateFirewall(context.Background(), firewall.ID, updateOpts)
 	if err != nil {
 		t.Error(err)
 	}
 
-	if !cmp.Equal(*updated.Tags, *updateOpts.Tags) {
-		t.Errorf("expected tags to be updated: %s", cmp.Diff(updated.Tags, *updateOpts.Tags))
+	if !cmp.Equal(updated.Tags, updateOpts.Tags) {
+		t.Errorf("expected tags to be updated: %s", cmp.Diff(updated.Tags, updateOpts.Tags))
 	}
 	if updateOpts.Status == nil || updated.Status != *updateOpts.Status {
 		t.Errorf("expected status %s but got %s", *updateOpts.Status, updated.Status)

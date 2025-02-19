@@ -388,7 +388,7 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 		InstanceConfigInterfaceCreateOptions{
 			Purpose:  Pointer(InterfacePurposeVPC),
 			SubnetID: &vpcSubnet.ID,
-			IPRanges: &[]string{"192.168.0.5/32"},
+			IPRanges: []string{"192.168.0.5/32"},
 		},
 	)
 	if err != nil {
@@ -421,7 +421,7 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 		NAT1To1: Pointer("any"),
 	}
 	newIPRanges := make([]string, 0)
-	updateOpts.IPRanges = &newIPRanges
+	updateOpts.IPRanges = newIPRanges
 
 	updatedIntfc, err = client.UpdateInstanceConfigInterface(
 		context.Background(),
@@ -504,7 +504,7 @@ func checkInstanceConfigInterfaceMismatch(t *testing.T, i int, icf InstanceConfi
 	}
 
 	// Compare IPRanges
-	if icf.IPRanges != nil && expectedIcf.IPRanges != nil && !reflect.DeepEqual(icf.IPRanges, *expectedIcf.IPRanges) {
-		t.Errorf("Interface %d: IPRanges mismatch: expected %v, got %v", i, *expectedIcf.IPRanges, icf.IPRanges)
+	if icf.IPRanges != nil && expectedIcf.IPRanges != nil && !reflect.DeepEqual(icf.IPRanges, expectedIcf.IPRanges) {
+		t.Errorf("Interface %d: IPRanges mismatch: expected %v, got %v", i, expectedIcf.IPRanges, icf.IPRanges)
 	}
 }

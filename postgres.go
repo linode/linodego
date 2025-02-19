@@ -94,12 +94,12 @@ func (d *PostgresDatabase) UnmarshalJSON(b []byte) error {
 
 // PostgresCreateOptions fields are used when creating a new Postgres Database
 type PostgresCreateOptions struct {
-	Label       string    `json:"label"`
-	Region      string    `json:"region"`
-	Type        string    `json:"type"`
-	Engine      string    `json:"engine"`
-	AllowList   *[]string `json:"allow_list,omitempty"`
-	ClusterSize *int      `json:"cluster_size,omitempty"`
+	Label       string   `json:"label"`
+	Region      string   `json:"region"`
+	Type        string   `json:"type"`
+	Engine      string   `json:"engine"`
+	AllowList   []string `json:"allow_list,omitempty"`
+	ClusterSize *int     `json:"cluster_size,omitempty"`
 
 	// Deprecated: Encrypted is a deprecated property, as it is no longer supported in DBaaS V2.
 	Encrypted *bool `json:"encrypted,omitempty"`
@@ -116,7 +116,7 @@ type PostgresCreateOptions struct {
 // PostgresUpdateOptions fields are used when altering the existing Postgres Database
 type PostgresUpdateOptions struct {
 	Label       *string                    `json:"label,omitempty"`
-	AllowList   *[]string                  `json:"allow_list,omitempty"`
+	AllowList   []string                   `json:"allow_list,omitempty"`
 	Updates     *DatabaseMaintenanceWindow `json:"updates,omitempty"`
 	Type        *string                    `json:"type,omitempty"`
 	ClusterSize *int                       `json:"cluster_size,omitempty"`

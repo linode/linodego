@@ -60,8 +60,8 @@ type VolumeCreateOptions struct {
 
 // VolumeUpdateOptions fields are those accepted by UpdateVolume
 type VolumeUpdateOptions struct {
-	Label *string   `json:"label,omitempty"`
-	Tags  *[]string `json:"tags,omitempty"`
+	Label *string  `json:"label,omitempty"`
+	Tags  []string `json:"tags,omitempty"`
 }
 
 // VolumeAttachOptions fields are those accepted by AttachVolume
@@ -96,7 +96,7 @@ func (v *Volume) UnmarshalJSON(b []byte) error {
 // GetUpdateOptions converts a Volume to VolumeUpdateOptions for use in UpdateVolume
 func (v Volume) GetUpdateOptions() (updateOpts VolumeUpdateOptions) {
 	updateOpts.Label = &v.Label
-	updateOpts.Tags = &v.Tags
+	updateOpts.Tags = v.Tags
 	return
 }
 

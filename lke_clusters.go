@@ -43,7 +43,7 @@ type LKEClusterCreateOptions struct {
 	Label        string                         `json:"label"`
 	Region       string                         `json:"region"`
 	K8sVersion   string                         `json:"k8s_version"`
-	Tags         *[]string                      `json:"tags,omitempty"`
+	Tags         []string                       `json:"tags,omitempty"`
 	ControlPlane *LKEClusterControlPlaneOptions `json:"control_plane,omitempty"`
 
 	// NOTE: Tier may not currently be available to all users and can only be used with v4beta.
@@ -57,7 +57,7 @@ type LKEClusterCreateOptions struct {
 type LKEClusterUpdateOptions struct {
 	K8sVersion   *string                        `json:"k8s_version,omitempty"`
 	Label        *string                        `json:"label,omitempty"`
-	Tags         *[]string                      `json:"tags,omitempty"`
+	Tags         []string                       `json:"tags,omitempty"`
 	ControlPlane *LKEClusterControlPlaneOptions `json:"control_plane,omitempty"`
 }
 
@@ -114,7 +114,7 @@ func (i LKECluster) GetCreateOptions() (o LKEClusterCreateOptions) {
 	o.Label = i.Label
 	o.Region = i.Region
 	o.K8sVersion = i.K8sVersion
-	o.Tags = &i.Tags
+	o.Tags = i.Tags
 
 	isHA := i.ControlPlane.HighAvailability
 
@@ -131,7 +131,7 @@ func (i LKECluster) GetCreateOptions() (o LKEClusterCreateOptions) {
 func (i LKECluster) GetUpdateOptions() (o LKEClusterUpdateOptions) {
 	o.K8sVersion = &i.K8sVersion
 	o.Label = &i.Label
-	o.Tags = &i.Tags
+	o.Tags = i.Tags
 
 	isHA := i.ControlPlane.HighAvailability
 

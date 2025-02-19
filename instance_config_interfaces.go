@@ -30,13 +30,13 @@ type InstanceConfigInterfaceCreateOptions struct {
 	Primary     *bool                   `json:"primary,omitempty"`
 	SubnetID    *int                    `json:"subnet_id,omitempty"`
 	IPv4        *VPCIPv4                `json:"ipv4,omitempty"`
-	IPRanges    *[]string               `json:"ip_ranges,omitempty"`
+	IPRanges    []string                `json:"ip_ranges,omitempty"`
 }
 
 type InstanceConfigInterfaceUpdateOptions struct {
-	Primary  *bool     `json:"primary,omitempty"`
-	IPv4     *VPCIPv4  `json:"ipv4,omitempty"`
-	IPRanges *[]string `json:"ip_ranges,omitempty"`
+	Primary  *bool    `json:"primary,omitempty"`
+	IPv4     *VPCIPv4 `json:"ipv4,omitempty"`
+	IPRanges []string `json:"ip_ranges,omitempty"`
 }
 
 type InstanceConfigInterfacesReorderOptions struct {
@@ -62,7 +62,7 @@ func (i InstanceConfigInterface) GetCreateOptions() InstanceConfigInterfaceCreat
 	}
 
 	if len(i.IPRanges) > 0 {
-		opts.IPRanges = &i.IPRanges
+		opts.IPRanges = i.IPRanges
 	}
 
 	if i.Purpose == InterfacePurposeVPC && i.IPv4 != nil {
@@ -95,7 +95,7 @@ func (i InstanceConfigInterface) GetUpdateOptions() InstanceConfigInterfaceUpdat
 		copiedIPRanges := make([]string, len(i.IPRanges))
 		copy(copiedIPRanges, i.IPRanges)
 
-		opts.IPRanges = &copiedIPRanges
+		opts.IPRanges = copiedIPRanges
 	}
 
 	return opts

@@ -37,13 +37,13 @@ type ObjectStorageKeyBucketAccess struct {
 type ObjectStorageKeyCreateOptions struct {
 	Label        string                          `json:"label"`
 	BucketAccess *[]ObjectStorageKeyBucketAccess `json:"bucket_access,omitempty"`
-	Regions      *[]string                       `json:"regions,omitempty"`
+	Regions      []string                        `json:"regions,omitempty"`
 }
 
 // ObjectStorageKeyUpdateOptions fields are those accepted by UpdateObjectStorageKey
 type ObjectStorageKeyUpdateOptions struct {
-	Label   *string   `json:"label,omitempty"`
-	Regions *[]string `json:"regions,omitempty"`
+	Label   *string  `json:"label,omitempty"`
+	Regions []string `json:"regions,omitempty"`
 }
 
 // ListObjectStorageKeys lists ObjectStorageKeys

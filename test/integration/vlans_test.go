@@ -84,7 +84,7 @@ func createVLANInstance(t *testing.T, client *linodego.Client, instanceName, vla
 	t.Helper()
 
 	instance, err := createInstance(t, client, true, func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
-		opts.Interfaces = &[]linodego.InstanceConfigInterfaceCreateOptions{
+		opts.Interfaces = []linodego.InstanceConfigInterfaceCreateOptions{
 			{
 				Label:       &vlanName,
 				Purpose:     linodego.Pointer(linodego.InterfacePurposeVLAN),

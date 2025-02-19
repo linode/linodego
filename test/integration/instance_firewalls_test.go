@@ -34,7 +34,7 @@ func setupInstanceFirewall(t *testing.T, firewallModifiers []firewallModifier, f
 		func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
 			opts.Label = linodego.Pointer("linodego-fw-inst-test")
 		})
-	device := linodego.DevicesCreationOptions{Linodes: &[]int{instance.ID}}
+	device := linodego.DevicesCreationOptions{Linodes: []int{instance.ID}}
 	firewallModifiers = append(firewallModifiers,
 		func(createOpts *linodego.FirewallCreateOptions) {
 			createOpts.Devices = &device

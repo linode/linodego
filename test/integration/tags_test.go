@@ -20,17 +20,17 @@ func TestTag_Create_create_smoke(t *testing.T) {
 
 	updateOpts := instance.GetUpdateOptions()
 	if updateOpts.Tags == nil {
-		updateOpts.Tags = new([]string)
+		updateOpts.Tags = []string{}
 	}
-	newTags := append(*updateOpts.Tags, "go-tag-test-bar")
-	updateOpts.Tags = &newTags
+	newTags := append(updateOpts.Tags, "go-tag-test-bar")
+	updateOpts.Tags = newTags
 	updateOpts.Backups = nil
 	instance, err = client.UpdateInstance(context.Background(), instance.ID, updateOpts)
 	if err != nil {
 		t.Errorf("should have updated instance tags, got %q", err)
 	}
 
-	tag, err := client.CreateTag(context.Background(), TagCreateOptions{Label: "go-tag-test-foo", Linodes: &[]int{instance.ID}})
+	tag, err := client.CreateTag(context.Background(), TagCreateOptions{Label: "go-tag-test-foo", Linodes: []int{instance.ID}})
 	if err != nil {
 		t.Errorf("should have created a tag, got %q", err)
 	}
@@ -97,7 +97,7 @@ func setupTaggedInstance(t *testing.T, fixturesYaml string) (*Client, *Instance,
 		Label:  Pointer("go-ins-test-tag"),
 		Region: getRegionsWithCaps(t, client, []string{"Linodes"})[0],
 		Type:   "g6-nanode-1",
-		Tags:   &[]string{"go-tag-test"},
+		Tags:   []string{"go-tag-test"},
 	}
 	instance, err := client.CreateInstance(context.Background(), createOpts)
 	if err != nil {
