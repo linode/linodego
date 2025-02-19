@@ -1,0 +1,53 @@
+{
+  "created": "2018-01-01T00:01:01",
+  "id": 123,
+  "label": "firewall123",
+  "rules": {
+    "fingerprint": "997dd135",
+    "inbound": [
+      {
+        "action": "ACCEPT",
+        "addresses": {
+          "ipv4": [
+            "192.0.2.0/24",
+            "198.51.100.2/32"
+          ],
+          "ipv6": [
+            "2001:DB8::/128"
+          ]
+        },
+        "description": "An example firewall rule description.",
+        "label": "firewallrule123",
+        "ports": "22-24, 80, 443",
+        "protocol": "TCP"
+      }
+    ],
+    "inbound_policy": "DROP",
+    "outbound": [
+      {
+        "action": "ACCEPT",
+        "addresses": {
+          "ipv4": [
+            "192.0.2.0/24",
+            "198.51.100.2/32"
+          ],
+          "ipv6": [
+            "2001:DB8::/128"
+          ]
+        },
+        "description": "An example firewall rule description.",
+        "label": "firewallrule123",
+        "ports": "22-24, 80, 443",
+        "protocol": "TCP"
+      }
+    ],
+    "outbound_policy": "DROP",
+    "version": 1
+  },
+  "status": "enabled",
+  "tags": [
+    "updated tag",
+    "another updated tag"
+  ],
+  "updated": "2018-01-02T00:01:01"
+}
