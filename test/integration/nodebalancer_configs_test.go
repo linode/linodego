@@ -198,7 +198,9 @@ func setupNodeBalancerConfig(t *testing.T, fixturesYaml string) (*linodego.Clien
 func setupNodeBalancerWithVPCAndInstance(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.NodeBalancer, *linodego.VPCSubnet, string, func(), error) {
 	t.Helper()
 	var fixtureTeardown func()
-	client, nodebalancer, _, subnet, fixtureTeardown, err := setupNodeBalancerWithVPC(t, fixturesYaml)
+	client, nodebalancer, _, subnet, fixtureTeardown, err := setupNodeBalancerWithVPC(t, fixturesYaml, func(client *linodego.Client, options *linodego.VPCCreateOptions) {
+		options.Region = getRegionsWithCaps(t, client, []string{"Linodes", "VPCs"})[1]
+	})
 	if err != nil {
 		t.Fatalf("Error creating nodebalancer, got error %v", err)
 	}
