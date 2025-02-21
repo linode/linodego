@@ -81,6 +81,22 @@ type LKEVersion struct {
 	ID string `json:"id"`
 }
 
+// LKETierVersion fields are those returned by GetLKETierVersion
+// NOTE: It may not currently be available to all users and can only be used with v4beta.
+type LKETierVersion struct {
+	ID   string         `json:"id"`
+	Tier LKEVersionTier `json:"tier"`
+}
+
+// LKEVersionTier enums represents different LKE tiers
+type LKEVersionTier string
+
+// LKEVersionTier enums start with LKEVersion
+const (
+	LKEVersionStandard   LKEVersionTier = "standard"
+	LKEVersionEnterprise LKEVersionTier = "enterprise"
+)
+
 // LKEClusterRegenerateOptions fields are those accepted by RegenerateLKECluster
 type LKEClusterRegenerateOptions struct {
 	KubeConfig   bool `json:"kubeconfig"`
@@ -183,6 +199,18 @@ func (c *Client) GetLKEVersion(ctx context.Context, version string) (*LKEVersion
 	c.addCachedResponse(e, response, &cacheExpiryTime)
 
 	return response, nil
+}
+
+// ListLKETierVersions lists all Kubernetes versions available given tier through LKE.
+// NOTE: This endpoint may not currently be available to all users and can only be used with v4beta.
+func (c *Client) ListLKETierVersions(ctx context.Context, tier string, opts *ListOptions) ([]LKETierVersion, error) {
+	return getPaginatedResults[LKETierVersion](ctx, c, formatAPIPath("lke/versions/%s", tier), opts)
+}
+
+// GetLKETierVersion gets the details of a specific LKE tier version.
+// NOTE: This endpoint may not currently be available to all users and can only be used with v4beta.
+func (c *Client) GetLKETierVersion(ctx context.Context, tier string, versionID string) (*LKETierVersion, error) {
+	return doGETRequest[LKETierVersion](ctx, c, formatAPIPath("lke/versions/%s/%s", tier, versionID))
 }
 
 // ListLKEClusterAPIEndpoints gets the API Endpoint for the LKE Cluster specified
