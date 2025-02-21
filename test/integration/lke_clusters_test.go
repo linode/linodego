@@ -373,7 +373,6 @@ func TestLKETierVersion_ListAndGet(t *testing.T) {
 
 	tier := "standard"
 	versions, err := client.ListLKETierVersions(context.Background(), tier, nil)
-
 	if err != nil {
 		t.Errorf("Error listing versions, expected struct, got %v and error %v", versions, err)
 	}
