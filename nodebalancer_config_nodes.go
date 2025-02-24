@@ -35,10 +35,11 @@ var (
 
 // NodeBalancerNodeCreateOptions fields are those accepted by CreateNodeBalancerNode
 type NodeBalancerNodeCreateOptions struct {
-	Address string   `json:"address"`
-	Label   string   `json:"label"`
-	Weight  int      `json:"weight,omitempty"`
-	Mode    NodeMode `json:"mode,omitempty"`
+	Address  string   `json:"address"`
+	Label    string   `json:"label"`
+	Weight   int      `json:"weight,omitempty"`
+	Mode     NodeMode `json:"mode,omitempty"`
+	SubnetID int      `json:"subnet_id,omitempty"`
 }
 
 // NodeBalancerNodeUpdateOptions fields are those accepted by UpdateNodeBalancerNode
