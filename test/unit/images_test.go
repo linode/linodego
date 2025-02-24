@@ -2,6 +2,8 @@ package unit
 
 import (
 	"context"
+	"fmt"
+	"github.com/jarcoal/httpmock"
 	"strings"
 	"testing"
 	"time"
@@ -211,6 +213,16 @@ func TestImage_Upload(t *testing.T) {
 }
 
 func TestImage_Delete(t *testing.T) {
+	client := createMockClient(t)
+
+	imageID := "123"
+
+	httpmock.RegisterRegexpResponder("DELETE", mockRequestURL(t, fmt.Sprintf("images/%s", imageID)),
+		httpmock.NewStringResponder(200, "{}"))
+
+	if err := client.DeleteImage(context.Background(), imageID); err != nil {
+		t.Fatal(err)
+	}
 }
 
 func TestImage_Replicate(t *testing.T) {
