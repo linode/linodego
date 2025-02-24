@@ -45,9 +45,9 @@ func TestNodeBalancer_Create_Type(t *testing.T) {
 		t.Errorf("nodebalancer returned does not match nodebalancer create request")
 	}
 	// add this test case once the api supports returning it
-	// if nodebalancer.Type != linodego.NBTypeCommon {
-	// 	t.Errorf("nodebalancer returned type does not match the type of the nodebalancer create request")
-	// }
+	if nodebalancer.Type != linodego.NBTypeCommon {
+		t.Errorf("nodebalancer returned type does not match the type of the nodebalancer create request")
+	}
 
 	assertDateSet(t, nodebalancer.Created)
 	assertDateSet(t, nodebalancer.Updated)
