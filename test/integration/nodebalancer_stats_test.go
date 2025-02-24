@@ -9,7 +9,7 @@ import (
 )
 
 func TestNodeBalancerStats_Get(t *testing.T) {
-	client, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancerStats_Get")
+	client, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancerStats_Get", nil)
 	defer teardown()
 	if err != nil {
 		t.Error(err)

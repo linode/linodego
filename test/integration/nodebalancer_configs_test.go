@@ -110,7 +110,7 @@ func TestNodeBalancerConfig_Get(t *testing.T) {
 func setupNodeBalancerConfig(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.NodeBalancer, *linodego.NodeBalancerConfig, func(), error) {
 	t.Helper()
 	var fixtureTeardown func()
-	client, nodebalancer, fixtureTeardown, err := setupNodeBalancer(t, fixturesYaml)
+	client, nodebalancer, fixtureTeardown, err := setupNodeBalancer(t, fixturesYaml, nil)
 	if err != nil {
 		t.Fatalf("Error creating nodebalancer, got error %v", err)
 	}
