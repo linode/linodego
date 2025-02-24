@@ -1,0 +1,23 @@
+{
+    "data": [
+      {
+        "id": 456,
+        "count": 3,
+        "type": "g6-standard-2",
+        "tags": ["tag1"],
+        "labels": {"env": "staging"},
+        "autoscaler": {"enabled": true, "min": 1, "max": 5}
+      },
+      {
+        "id": 789,
+        "count": 2,
+        "type": "g6-standard-4",
+        "tags": ["tag2"],
+        "labels": {"env": "prod"},
+        "autoscaler": {"enabled": false, "min": 0, "max": 0}
+      }
+    ],
+    "pages": 1,
+    "results": 2
+}
+  
