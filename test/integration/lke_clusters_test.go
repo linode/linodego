@@ -366,3 +366,33 @@ func TestLKECluster_APLEnabled_smoke(t *testing.T) {
 		t.Errorf("Expected an APL health check URL %v, but got a different one %v", expectedHealthCheckURL, healthCheckURL)
 	}
 }
+
+func TestLKETierVersion_ListAndGet(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestLKETierVersion_ListAndGet")
+	defer teardown()
+
+	tier := "standard"
+	versions, err := client.ListLKETierVersions(context.Background(), tier, nil)
+	if err != nil {
+		t.Errorf("Error listing versions, expected struct, got %v and error %v", versions, err)
+	}
+
+	if len(versions) == 0 {
+		t.Errorf("Expected a list of versions, but got none %v", versions)
+	}
+
+	for _, version := range versions {
+		if string(version.Tier) != tier {
+			t.Errorf("Expected version tier %v, but got %v", tier, version.Tier)
+		}
+	}
+
+	v, err := client.GetLKETierVersion(context.Background(), tier, versions[0].ID)
+	if err != nil {
+		t.Errorf("Error getting version, expected struct, got %v and error %v", v, err)
+	}
+
+	if v.ID != versions[0].ID {
+		t.Errorf("Expected a specific version %v, but got a different one %v", versions[0].ID, v.ID)
+	}
+}
