@@ -3,10 +3,11 @@ package unit
 import (
 	"context"
 	"fmt"
-	"github.com/jarcoal/httpmock"
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/jarcoal/httpmock"
 
 	"github.com/stretchr/testify/assert"
 
