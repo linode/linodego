@@ -157,6 +157,198 @@ func TestNodeBalancer_Rebuild(t *testing.T) {
 	}
 }
 
+func TestNodeBalancerNode_Create_InVPC(t *testing.T) {
+	client, nodebalancer, subnet, instanceVPCIP, teardown, err := setupNodeBalancerWithVPCAndInstance(t, "fixtures/TestNodeBalancerNode_Create_InVPC")
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	config, err := client.CreateNodeBalancerConfig(context.Background(), nodebalancer.ID, TestNodeBalancerConfigCreateOpts)
+	if err != nil {
+		t.Errorf("Error creating NodeBalancer Config, got error %v", err)
+	}
+
+	// Create a nodebalancer node in the VPC
+	node, err := client.CreateNodeBalancerNode(context.Background(), nodebalancer.ID, config.ID, linodego.NodeBalancerNodeCreateOptions{
+		Address:  instanceVPCIP + ":" + testNodePort,
+		Mode:     linodego.ModeAccept,
+		Weight:   10,
+		Label:    "go-node-test-def",
+		SubnetID: subnet.ID,
+	})
+	if err != nil {
+		t.Fatalf("Error creating NodeBalancer Node, got error %v", err)
+	}
+
+	// get nodebalancer vpc config - cross check the nodebalancer node VPC config ID
+	vpcConfigs, err := client.ListNodeBalancerVPCConfigs(context.Background(), nodebalancer.ID, nil)
+	if err != nil {
+		t.Errorf("Error listing nodebalancer VPC configs: %s", err)
+	}
+	if len(vpcConfigs) != 1 {
+		t.Errorf("Expected exactly one nodebalancer VPC config, got %d", len(vpcConfigs))
+	}
+	if vpcConfigs[0].ID != node.VPCConfigID {
+		t.Errorf("Expected nodebalancer VPC config ID to be the same as the nodebalancer node VPC config ID, got %d", vpcConfigs[0].ID)
+	}
+
+}
+
+func TestNodeBalancerNode_List_InVPC(t *testing.T) {
+	client, nodebalancer, subnet, instanceVPCIP, teardown, err := setupNodeBalancerWithVPCAndInstance(t, "fixtures/TestNodeBalancerNode_List_InVPC")
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	config, err := client.CreateNodeBalancerConfig(context.Background(), nodebalancer.ID, TestNodeBalancerConfigCreateOpts)
+	if err != nil {
+		t.Errorf("Error creating NodeBalancer Config, got error %v", err)
+	}
+
+	node, err := client.CreateNodeBalancerNode(context.Background(), nodebalancer.ID, config.ID, linodego.NodeBalancerNodeCreateOptions{
+		Address:  instanceVPCIP + ":" + testNodePort,
+		Mode:     linodego.ModeAccept,
+		Weight:   10,
+		Label:    "go-node-test-def",
+		SubnetID: subnet.ID,
+	})
+	if err != nil {
+		t.Errorf("Error creating NodeBalancer Node, got error %v", err)
+	}
+
+	// Test listing nodebalancer nodes method
+	nodes, err := client.ListNodeBalancerNodes(context.Background(), nodebalancer.ID, config.ID, nil)
+	if err != nil {
+		t.Fatalf("Error listing nodebalancer nodes: %s", err)
+	}
+	if len(nodes) != 1 {
+		t.Errorf("Expected exactly one nodebalancer node, got %d", len(nodes))
+	}
+	if nodes[0].Address != instanceVPCIP+":"+testNodePort {
+		t.Errorf("Expected nodebalancer node address to be the same as the instance VPC IP, got %s", nodes[0].Address)
+	}
+	if nodes[0].ID != node.ID {
+		t.Errorf("Expected nodebalancer node ID to be the same as the nodebalancer node ID, got %d", nodes[0].ID)
+	}
+	if nodes[0].VPCConfigID != node.VPCConfigID {
+		t.Errorf("Expected nodebalancer node VPC config ID to be the same as the nodebalancer node VPC config ID, got %d", nodes[0].VPCConfigID)
+	}
+
+	vpcConfigs, err := client.ListNodeBalancerVPCConfigs(context.Background(), nodebalancer.ID, nil)
+	if err != nil {
+		t.Errorf("Error listing nodebalancer VPC configs: %s", err)
+	}
+	if len(vpcConfigs) != 1 {
+		t.Errorf("Expected exactly one nodebalancer VPC config, got %d", len(vpcConfigs))
+	}
+	if vpcConfigs[0].ID != nodes[0].VPCConfigID {
+		t.Errorf("Expected nodebalancer VPC config ID to be the same as the nodebalancer node VPC config ID, got %d", vpcConfigs[0].ID)
+	}
+
+}
+
+func TestNodeBalancerNode_Update_InVPC(t *testing.T) {
+	client, nodebalancer, subnet, instanceVPCIP, teardown, err := setupNodeBalancerWithVPCAndInstance(t, "fixtures/TestNodeBalancerNode_Update_InVPC")
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	config, err := client.CreateNodeBalancerConfig(context.Background(), nodebalancer.ID, TestNodeBalancerConfigCreateOpts)
+	if err != nil {
+		t.Errorf("Error creating NodeBalancer Config, got error %v", err)
+	}
+
+	node, err := client.CreateNodeBalancerNode(context.Background(), nodebalancer.ID, config.ID, linodego.NodeBalancerNodeCreateOptions{
+		Address:  instanceVPCIP + ":" + testNodePort,
+		Mode:     linodego.ModeAccept,
+		Weight:   10,
+		Label:    "not-updated",
+		SubnetID: subnet.ID,
+	})
+	if err != nil {
+		t.Errorf("Error creating NodeBalancer Node, got error %v", err)
+	}
+
+	updateOpts := linodego.NodeBalancerNodeUpdateOptions{
+		Address:  instanceVPCIP + ":" + testNodePort,
+		Label:    "updated",
+		SubnetID: subnet.ID,
+	}
+
+	node, err = client.UpdateNodeBalancerNode(context.Background(), nodebalancer.ID, config.ID, node.ID, updateOpts)
+	if err != nil {
+		t.Fatalf("Error updating NodeBalancer Node, got error %v", err)
+	}
+	if node.Label != "updated" {
+		t.Errorf("Expected nodebalancer node label to be updated, got %s", node.Label)
+	}
+
+	vpcConfigs, err := client.ListNodeBalancerVPCConfigs(context.Background(), nodebalancer.ID, nil)
+	if err != nil {
+		t.Errorf("Error listing nodebalancer VPC configs: %s", err)
+	}
+	if len(vpcConfigs) != 1 {
+		t.Errorf("Expected exactly one nodebalancer VPC config, got %d", len(vpcConfigs))
+	}
+	if vpcConfigs[0].ID != node.VPCConfigID {
+		t.Errorf("Expected nodebalancer VPC config ID to be the same as the nodebalancer node VPC config ID, got %d", vpcConfigs[0].ID)
+	}
+
+}
+
+func TestNodeBalancerNode_Get_InVPC(t *testing.T) {
+	client, nodebalancer, subnet, instanceVPCIP, teardown, err := setupNodeBalancerWithVPCAndInstance(t, "fixtures/TestNodeBalancerNode_Get_InVPC")
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	config, err := client.CreateNodeBalancerConfig(context.Background(), nodebalancer.ID, TestNodeBalancerConfigCreateOpts)
+	if err != nil {
+		t.Errorf("Error creating NodeBalancer Config, got error %v", err)
+	}
+
+	node, err := client.CreateNodeBalancerNode(context.Background(), nodebalancer.ID, config.ID, linodego.NodeBalancerNodeCreateOptions{
+		Address:  instanceVPCIP + ":" + testNodePort,
+		Mode:     linodego.ModeAccept,
+		Weight:   10,
+		Label:    "go-node-test-def",
+		SubnetID: subnet.ID,
+	})
+	if err != nil {
+		t.Errorf("Error creating NodeBalancer Node, got error %v", err)
+	}
+
+	nodeGot, err := client.GetNodeBalancerNode(context.Background(), nodebalancer.ID, config.ID, node.ID)
+	if err != nil {
+		t.Fatalf("Error getting NodeBalancer Node, got error %v", err)
+	}
+	if nodeGot.ID != node.ID {
+		t.Errorf("Expected nodebalancer node ID to be the same as the nodebalancer node ID, got %d", nodeGot.ID)
+	}
+	if nodeGot.Address != node.Address {
+		t.Errorf("Expected nodebalancer node address to be the same as the nodebalancer node address, got %s", nodeGot.Address)
+	}
+	if nodeGot.VPCConfigID != node.VPCConfigID {
+		t.Errorf("Expected nodebalancer node VPC config ID to be the same as the nodebalancer node VPC config ID, got %d", nodeGot.VPCConfigID)
+	}
+
+	vpcConfigs, err := client.ListNodeBalancerVPCConfigs(context.Background(), nodebalancer.ID, nil)
+	if err != nil {
+		t.Errorf("Error listing nodebalancer VPC configs: %s", err)
+	}
+	if len(vpcConfigs) != 1 {
+		t.Errorf("Expected exactly one nodebalancer VPC config, got %d", len(vpcConfigs))
+	}
+	if vpcConfigs[0].ID != nodeGot.VPCConfigID {
+		t.Errorf("Expected nodebalancer VPC config ID to be the same as the nodebalancer node VPC config ID, got %d", vpcConfigs[0].ID)
+	}
+
+}
+
 func setupNodeBalancerNode(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.NodeBalancer, *linodego.NodeBalancerConfig, *linodego.NodeBalancerNode, func(), error) {
 	t.Helper()
 	var fixtureTeardown func()

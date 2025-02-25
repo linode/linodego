@@ -8,7 +8,7 @@ import (
 	"github.com/linode/linodego"
 )
 
-var testNodeBalancerConfigCreateOpts = linodego.NodeBalancerConfigCreateOptions{
+var TestNodeBalancerConfigCreateOpts = linodego.NodeBalancerConfigCreateOptions{
 	Port:          80,
 	Protocol:      linodego.ProtocolHTTP,
 	Algorithm:     linodego.AlgorithmRoundRobin,
@@ -23,7 +23,7 @@ func TestNodeBalancerConfig_Create_smoke(t *testing.T) {
 		t.Errorf("Error creating NodeBalancer Config, got error %v", err)
 	}
 
-	expected := testNodeBalancerConfigCreateOpts
+	expected := TestNodeBalancerConfigCreateOpts
 
 	// cant compare Target, fixture IPs are sanitized
 	if config.Port != expected.Port || config.Protocol != expected.Protocol {
@@ -116,7 +116,7 @@ func TestNodeBalancerConfig_Rebuild_InVPCWithInstance(t *testing.T) {
 	}
 
 	// Create a simple nodebalancer config
-	config, err := client.CreateNodeBalancerConfig(context.Background(), nodebalancer.ID, testNodeBalancerConfigCreateOpts)
+	config, err := client.CreateNodeBalancerConfig(context.Background(), nodebalancer.ID, TestNodeBalancerConfigCreateOpts)
 	if err != nil {
 		t.Fatalf("Error creating NodeBalancer Config, got error %v", err)
 	}
@@ -179,7 +179,7 @@ func setupNodeBalancerConfig(t *testing.T, fixturesYaml string) (*linodego.Clien
 		t.Fatalf("Error creating nodebalancer, got error %v", err)
 	}
 
-	createOpts := testNodeBalancerConfigCreateOpts
+	createOpts := TestNodeBalancerConfigCreateOpts
 	config, err := client.CreateNodeBalancerConfig(context.Background(), nodebalancer.ID, createOpts)
 	if err != nil {
 		t.Fatalf("Error creating NodeBalancer Config, got error %v", err)
