@@ -168,7 +168,6 @@ func TestNodeBalancerConfig_Rebuild_InVPCWithInstance(t *testing.T) {
 	if vpcConfigs[0].ID != nodes[0].VPCConfigID {
 		t.Errorf("Expected nodebalancer VPC config ID to be the same as the nodebalancer node VPC config ID, got %d", vpcConfigs[0].ID)
 	}
-
 }
 
 func setupNodeBalancerConfig(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.NodeBalancer, *linodego.NodeBalancerConfig, func(), error) {
