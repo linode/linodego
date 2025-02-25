@@ -135,7 +135,7 @@ func setupNodeBalancerWithVPC(t *testing.T, fixturesYaml string, vpcModifier ...
 		Region:             vpc.Region,
 		ClientConnThrottle: &clientConnThrottle,
 		FirewallID:         GetFirewallID(),
-		VPCs: []*linodego.NodeBalancerVPCOptions{
+		VPCs: []linodego.NodeBalancerVPCOptions{
 			{
 				IPv4Range: "192.168.0.64/30",
 				IPv6Range: "",

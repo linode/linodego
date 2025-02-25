@@ -58,7 +58,7 @@ type NodeBalancerCreateOptions struct {
 	Configs            []*NodeBalancerConfigCreateOptions `json:"configs,omitempty"`
 	Tags               []string                           `json:"tags"`
 	FirewallID         int                                `json:"firewall_id,omitempty"`
-	VPCs               []*NodeBalancerVPCOptions          `json:"vpcs,omitempty"`
+	VPCs               []NodeBalancerVPCOptions           `json:"vpcs,omitempty"`
 }
 
 // NodeBalancerUpdateOptions are the options permitted for UpdateNodeBalancer
