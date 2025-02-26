@@ -9,7 +9,7 @@ require (
 	github.com/stretchr/testify v1.10.0
 	golang.org/x/exp v0.0.0-20241217172543-b2144cdd0a67
 	golang.org/x/net v0.35.0
-	golang.org/x/oauth2 v0.26.0
+	golang.org/x/oauth2 v0.27.0
 	k8s.io/client-go v0.29.4
 )
 
@@ -56,9 +56,9 @@ require (
 	sigs.k8s.io/yaml v1.3.0 // indirect
 )
 
-go 1.22.0
+go 1.23.0
 
-toolchain go1.22.1
+toolchain go1.23.4
 
 replace github.com/linode/linodego => ../
 
