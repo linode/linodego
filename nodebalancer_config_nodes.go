@@ -14,7 +14,7 @@ type NodeBalancerNode struct {
 	Mode           NodeMode `json:"mode"`
 	ConfigID       int      `json:"config_id"`
 	NodeBalancerID int      `json:"nodebalancer_id"`
-	VPCConfigID    int      `json:"vpc_config_id,omitempty"`
+	VPCConfigID    int      `json:"vpc_config_id"`
 }
 
 // NodeMode is the mode a NodeBalancer should use when sending traffic to a NodeBalancer Node
