@@ -1,0 +1,50 @@
+{
+    "data": [
+      {
+        "id": 123,
+        "label": "my-key",
+        "access_key": "my-access-key",
+        "secret_key": "my-secret-key",
+        "limited": true,
+        "bucket_access": [
+          {
+            "region": "us-east-1",
+            "bucket_name": "my-bucket",
+            "permissions": "read-write"
+          }
+        ],
+        "regions": [
+          {
+            "id": "us-east-1",
+            "s3_endpoint": "https://s3.us-east-1.linodeobjects.com",
+            "endpoint_type": "E0"
+          }
+        ]
+      },
+      {
+        "id": 124,
+        "label": "my-second-key",
+        "access_key": "my-second-access-key",
+        "secret_key": "my-second-secret-key",
+        "limited": true,
+        "bucket_access": [
+          {
+            "region": "us-east-1",
+            "bucket_name": "my-second-bucket",
+            "permissions": "read-write"
+          }
+        ],
+        "regions": [
+          {
+            "id": "us-east-1",
+            "s3_endpoint": "https://s3.us-east-1.linodeobjects.com",
+            "endpoint_type": "E0"
+          }
+        ]
+      }
+    ],
+    "page": 1,
+    "pages": 1,
+    "results": 2
+}
+  
