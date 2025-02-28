@@ -233,11 +233,14 @@ func (c *Client) PatchMySQLDatabase(ctx context.Context, databaseID int) error {
 	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
 }
 
+// SuspendMySQLDatabase suspends a MySQL Managed Database, releasing idle resources and keeping only necessary data.
+// All service data is lost if there are no backups available.
 func (c *Client) SuspendMySQLDatabase(ctx context.Context, databaseID int) error {
 	e := formatAPIPath("databases/mysql/instances/%d/suspend", databaseID)
 	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
 }
 
+// ResumeMySQLDatabase resumes a suspended MySQL Managed Database
 func (c *Client) ResumeMySQLDatabase(ctx context.Context, databaseID int) error {
 	e := formatAPIPath("databases/mysql/instances/%d/resume", databaseID)
 	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
