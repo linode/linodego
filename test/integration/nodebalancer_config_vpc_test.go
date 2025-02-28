@@ -8,7 +8,7 @@ import (
 )
 
 func TestNodeBalancerVPCConfig_List(t *testing.T) {
-	client, nodebalancer, teardown, err := setupNodeBalancerWithVPC(t, "fixtures/TestNodeBalancerVpcConfig_List")
+	client, nodebalancer, _, _, teardown, err := setupNodeBalancerWithVPC(t, "fixtures/TestNodeBalancerVpcConfig_List")
 	if err != nil {
 		t.Errorf("Error setting up nodebalancer: %s", err)
 	}
@@ -25,7 +25,7 @@ func TestNodeBalancerVPCConfig_List(t *testing.T) {
 }
 
 func TestNodeBalancerVPCConfig_Get(t *testing.T) {
-	client, nodebalancer, teardown, err := setupNodeBalancerWithVPC(t, "fixtures/TestNodeBalancerVpcConfig_Get")
+	client, nodebalancer, _, _, teardown, err := setupNodeBalancerWithVPC(t, "fixtures/TestNodeBalancerVpcConfig_Get")
 	if err != nil {
 		t.Errorf("Error setting up nodebalancer: %s", err)
 	}
