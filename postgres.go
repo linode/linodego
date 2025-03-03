@@ -252,3 +252,16 @@ func (c *Client) CreatePostgresDatabaseBackup(ctx context.Context, databaseID in
 	e := formatAPIPath("databases/postgresql/instances/%d/backups", databaseID)
 	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
+
+// SuspendPostgresDatabase suspends a PostgreSQL Managed Database, releasing idle resources and keeping only necessary data.
+// All service data is lost if there are no backups available.
+func (c *Client) SuspendPostgresDatabase(ctx context.Context, databaseID int) error {
+	e := formatAPIPath("databases/postgresql/instances/%d/suspend", databaseID)
+	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
+}
+
+// ResumePostgresDatabase resumes a suspended PostgreSQL Managed Database
+func (c *Client) ResumePostgresDatabase(ctx context.Context, databaseID int) error {
+	e := formatAPIPath("databases/postgresql/instances/%d/resume", databaseID)
+	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
+}
