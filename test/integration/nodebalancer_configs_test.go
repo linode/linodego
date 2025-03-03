@@ -2,12 +2,13 @@ package integration
 
 import (
 	"context"
+	"fmt"
 	"testing"
 
 	"github.com/linode/linodego"
 )
 
-var testNodeBalancerConfigCreateOpts = linodego.NodeBalancerConfigCreateOptions{
+var TestNodeBalancerConfigCreateOpts = linodego.NodeBalancerConfigCreateOptions{
 	Port:          80,
 	Protocol:      linodego.ProtocolHTTP,
 	Algorithm:     linodego.AlgorithmRoundRobin,
@@ -22,7 +23,7 @@ func TestNodeBalancerConfig_Create_smoke(t *testing.T) {
 		t.Errorf("Error creating NodeBalancer Config, got error %v", err)
 	}
 
-	expected := testNodeBalancerConfigCreateOpts
+	expected := TestNodeBalancerConfigCreateOpts
 
 	// cant compare Target, fixture IPs are sanitized
 	if config.Port != expected.Port || config.Protocol != expected.Protocol {
@@ -107,15 +108,77 @@ func TestNodeBalancerConfig_Get(t *testing.T) {
 	}
 }
 
+func TestNodeBalancerConfig_Rebuild_InVPCWithInstance(t *testing.T) {
+	client, nodebalancer, subnet, instanceVPCIP, teardown, err := setupNodeBalancerWithVPCAndInstance(t, "fixtures/TestNodeBalancerConfig_Rebuild_InVPCWithInstance")
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	// Create a simple nodebalancer config
+	config, err := client.CreateNodeBalancerConfig(context.Background(), nodebalancer.ID, TestNodeBalancerConfigCreateOpts)
+	if err != nil {
+		t.Fatalf("Error creating NodeBalancer Config, got error %v", err)
+	}
+
+	// Rebuild the nodebalancer config with the instance
+	rebuildOpts := linodego.NodeBalancerConfigRebuildOptions{
+		Port:          80,
+		Protocol:      linodego.ProtocolHTTP,
+		Algorithm:     linodego.AlgorithmRoundRobin,
+		CheckInterval: 60,
+		Nodes: []linodego.NodeBalancerConfigRebuildNodeOptions{
+			{
+				NodeBalancerNodeCreateOptions: linodego.NodeBalancerNodeCreateOptions{
+					Address:  fmt.Sprintf("%s:80", instanceVPCIP),
+					Mode:     linodego.ModeAccept,
+					Weight:   1,
+					Label:    "test",
+					SubnetID: subnet.ID,
+				},
+			},
+		},
+	}
+
+	config, err = client.RebuildNodeBalancerConfig(context.Background(), nodebalancer.ID, config.ID, rebuildOpts)
+	if err != nil {
+		t.Fatalf("Error creating NodeBalancer Config, got error %v", err)
+	}
+
+	// List nodebalancer nodes
+	nodes, err := client.ListNodeBalancerNodes(context.Background(), nodebalancer.ID, config.ID, nil)
+	if err != nil {
+		t.Errorf("Error listing nodebalancer nodes: %s", err)
+	}
+	if len(nodes) != 1 {
+		t.Errorf("Expected exactly one nodebalancer node, got %d", len(nodes))
+	}
+	if nodes[0].Address == "" {
+		t.Errorf("Expected nodebalancer node address to be there, got %s", nodes[0].Address)
+	}
+
+	// get nodebalancer vpc config
+	vpcConfigs, err := client.ListNodeBalancerVPCConfigs(context.Background(), nodebalancer.ID, nil)
+	if err != nil {
+		t.Errorf("Error listing nodebalancer VPC configs: %s", err)
+	}
+	if len(vpcConfigs) != 1 {
+		t.Errorf("Expected exactly one nodebalancer VPC config, got %d", len(vpcConfigs))
+	}
+	if vpcConfigs[0].ID != nodes[0].VPCConfigID {
+		t.Errorf("Expected nodebalancer VPC config ID to be the same as the nodebalancer node VPC config ID, got %d", vpcConfigs[0].ID)
+	}
+}
+
 func setupNodeBalancerConfig(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.NodeBalancer, *linodego.NodeBalancerConfig, func(), error) {
 	t.Helper()
 	var fixtureTeardown func()
-	client, nodebalancer, fixtureTeardown, err := setupNodeBalancer(t, fixturesYaml)
+	client, nodebalancer, fixtureTeardown, err := setupNodeBalancer(t, fixturesYaml, nil)
 	if err != nil {
 		t.Fatalf("Error creating nodebalancer, got error %v", err)
 	}
 
-	createOpts := testNodeBalancerConfigCreateOpts
+	createOpts := TestNodeBalancerConfigCreateOpts
 	config, err := client.CreateNodeBalancerConfig(context.Background(), nodebalancer.ID, createOpts)
 	if err != nil {
 		t.Fatalf("Error creating NodeBalancer Config, got error %v", err)
@@ -129,4 +192,68 @@ func setupNodeBalancerConfig(t *testing.T, fixturesYaml string) (*linodego.Clien
 		fixtureTeardown()
 	}
 	return client, nodebalancer, config, teardown, err
+}
+
+func setupNodeBalancerWithVPCAndInstance(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.NodeBalancer, *linodego.VPCSubnet, string, func(), error) {
+	t.Helper()
+	var fixtureTeardown func()
+	client, nodebalancer, _, subnet, fixtureTeardown, err := setupNodeBalancerWithVPC(t, fixturesYaml, func(client *linodego.Client, options *linodego.VPCCreateOptions) {
+		options.Region = getRegionsWithCaps(t, client, []string{"Linodes", "VPCs"})[1]
+	})
+	if err != nil {
+		t.Fatalf("Error creating nodebalancer, got error %v", err)
+	}
+
+	// Create an instance in the VPC subnet
+	instance, _, instanceTeardown, err := createInstanceWithoutDisks(
+		t,
+		client,
+		true,
+		func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
+			opts.Region = getRegionsWithCaps(t, client, []string{"Linodes", "VPCs"})[1]
+			opts.Image = "linode/ubuntu22.04"
+			opts.RootPass = "0o37Klm56P4ssw0rd"
+
+			NAT1To1Any := "any"
+			opts.Interfaces = []linodego.InstanceConfigInterfaceCreateOptions{
+				{
+					Purpose:  "vpc",
+					SubnetID: &subnet.ID,
+					IPv4: &linodego.VPCIPv4{
+						NAT1To1: &NAT1To1Any,
+					},
+				},
+			}
+		},
+	)
+	if err != nil {
+		if instanceTeardown != nil {
+			instanceTeardown()
+		}
+		t.Fatal("Error creating instance: ", err)
+	}
+
+	instanceConfigs, err := client.ListInstanceConfigs(context.Background(), instance.ID, nil)
+	if err != nil {
+		t.Fatalf("Error listing instance configs: %s", err)
+	}
+
+	// Find the VPC interface and get its IP.
+	var instanceVPCIP string
+	for _, iface := range instanceConfigs[0].Interfaces {
+		if iface.Purpose == "vpc" && iface.IPv4 != nil {
+			instanceVPCIP = iface.IPv4.VPC
+			break
+		}
+	}
+	if instanceVPCIP == "" {
+		t.Fatal("Failed to find VPC IP address for instance")
+	}
+
+	teardown := func() {
+		instanceTeardown()
+		fixtureTeardown()
+	}
+
+	return client, nodebalancer, subnet, instanceVPCIP, teardown, err
 }
