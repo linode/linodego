@@ -2,6 +2,7 @@ package unit
 
 import (
 	"context"
+	"fmt"
 	"testing"
 
 	"github.com/jarcoal/httpmock"
@@ -10,7 +11,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestListInstances(t *testing.T) {
+func TestInstances_List(t *testing.T) {
 	fixtures := NewTestFixtures()
 
 	fixtureData, err := fixtures.GetFixture("linodes_list")
@@ -40,6 +41,37 @@ func TestListInstances(t *testing.T) {
 	assert.Equal(t, 4096, linode.Specs.Memory)
 	assert.Equal(t, "2018-01-01 00:01:01 +0000 UTC", linode.Backups.LastSuccessful.String())
 	assert.Equal(t, "2468", linode.PlacementGroup.MigratingTo)
+}
+
+func TestInstance_Get(t *testing.T) {
+	fixtures := NewTestFixtures()
+
+	fixtureData, err := fixtures.GetFixture("instance_get")
+	if err != nil {
+		t.Fatalf("Failed to load fixture: %v", err)
+	}
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	instanceID := 123
+	base.MockGet(fmt.Sprintf("linode/instances/%d", instanceID), fixtureData)
+
+	instance, err := base.Client.GetInstance(context.Background(), instanceID)
+	if err != nil {
+		t.Fatalf("Error fetching instance: %v", err)
+	}
+
+	assert.Equal(t, 123, instance.ID)
+	assert.Equal(t, "linode123", instance.Label)
+	assert.Equal(t, "running", string(instance.Status))
+	assert.Equal(t, "203.0.113.1", instance.IPv4[0].String())
+	assert.Equal(t, "g6-standard-1", instance.Type)
+	assert.Equal(t, "us-east", instance.Region)
+	assert.Equal(t, 4096, instance.Specs.Memory)
+	assert.Equal(t, "2018-01-01 00:01:01 +0000 UTC", instance.Backups.LastSuccessful.String())
+	assert.Equal(t, "2468", instance.PlacementGroup.MigratingTo)
 }
 
 func TestInstance_Migrate(t *testing.T) {
@@ -105,4 +137,147 @@ func TestInstance_Upgrade(t *testing.T) {
 		AllowAutoDiskResize: true,
 	})
 	assert.NoError(t, err)
+}
+
+func TestInstance_Create(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("instance_create")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	createOptions := linodego.InstanceCreateOptions{
+		Region:   "us-east",
+		Type:     "g6-standard-1",
+		Label:    "new-instance",
+		Image:    "linode/ubuntu22.04",
+		RootPass: "securepassword",
+	}
+
+	base.MockPost("linode/instances", fixtureData)
+
+	instance, err := base.Client.CreateInstance(context.Background(), createOptions)
+	assert.NoError(t, err)
+	assert.Equal(t, "new-instance", instance.Label)
+}
+
+func TestInstance_Update(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("instance_update")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	updateOptions := linodego.InstanceUpdateOptions{
+		Label: "updated-instance",
+	}
+
+	base.MockPut("linode/instances/123", fixtureData)
+
+	instance, err := base.Client.UpdateInstance(context.Background(), 123, updateOptions)
+	assert.NoError(t, err)
+	assert.Equal(t, "updated-instance", instance.Label)
+}
+
+func TestInstance_Delete(t *testing.T) {
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockDelete("linode/instances/123", nil)
+
+	err := base.Client.DeleteInstance(context.Background(), 123)
+	assert.NoError(t, err)
+}
+
+func TestInstance_Boot(t *testing.T) {
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockPost("linode/instances/123/boot", nil)
+
+	err := base.Client.BootInstance(context.Background(), 123, 0)
+	assert.NoError(t, err)
+}
+
+func TestInstance_Reboot(t *testing.T) {
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockPost("linode/instances/123/reboot", nil)
+
+	err := base.Client.RebootInstance(context.Background(), 123, 0)
+	assert.NoError(t, err)
+}
+
+func TestInstance_Clone(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("instance_clone")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	cloneOptions := linodego.InstanceCloneOptions{
+		Region: "us-east",
+		Type:   "g6-standard-1",
+		Label:  "cloned-instance",
+	}
+
+	base.MockPost("linode/instances/123/clone", fixtureData)
+
+	instance, err := base.Client.CloneInstance(context.Background(), 123, cloneOptions)
+	assert.NoError(t, err)
+	assert.Equal(t, "cloned-instance", instance.Label)
+}
+
+func TestInstance_Resize(t *testing.T) {
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	resizeOptions := linodego.InstanceResizeOptions{
+		Type: "g6-standard-2",
+	}
+
+	base.MockPost("linode/instances/123/resize", "{}")
+
+	err := base.Client.ResizeInstance(context.Background(), 123, resizeOptions)
+	assert.NoError(t, err)
+}
+
+func TestInstance_Rescue(t *testing.T) {
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	rescueOptions := linodego.InstanceRescueOptions{}
+
+	base.MockPost("linode/instances/123/rescue", nil)
+
+	err := base.Client.RescueInstance(context.Background(), 123, rescueOptions)
+	assert.NoError(t, err)
+}
+
+func TestInstance_Rebuild(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("instance_rebuild")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	rebuildOptions := linodego.InstanceRebuildOptions{
+		Image: "linode/ubuntu22.04",
+	}
+
+	base.MockPost("linode/instances/123/rebuild", fixtureData)
+
+	instance, err := base.Client.RebuildInstance(context.Background(), 123, rebuildOptions)
+	assert.NoError(t, err)
+	assert.Equal(t, "linode/ubuntu22.04", instance.Image)
 }
