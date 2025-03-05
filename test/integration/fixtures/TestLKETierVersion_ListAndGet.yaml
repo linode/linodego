@@ -11,11 +11,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/versions/standard?page=1
+    url: https://api.linode.com/v4beta/lke/tiers/standard/versions?page=1
     method: GET
   response:
-    body: '{"data": [{"id": "1.31", "tier": "standard"}, {"id": "1.30", "tier": "standard"}],
-      "page": 1, "pages": 1, "results": 2}'
+    body: '{"data": [{"id": "1.32", "tier": "standard"}, {"id": "1.31", "tier": "standard"},
+      {"id": "1.30", "tier": "standard"}], "page": 1, "pages": 1, "results": 3}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -34,13 +34,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "119"
+      - "155"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 10 Feb 2025 17:36:11 GMT
+      - Tue, 04 Mar 2025 15:10:20 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -75,10 +75,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/versions/standard/1.31
+    url: https://api.linode.com/v4beta/lke/tiers/standard/versions/1.32
     method: GET
   response:
-    body: '{"id": "1.31", "tier": "standard"}'
+    body: '{"id": "1.32", "tier": "standard"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -103,7 +103,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 10 Feb 2025 17:36:12 GMT
+      - Tue, 04 Mar 2025 15:10:20 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
