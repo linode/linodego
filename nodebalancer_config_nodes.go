@@ -35,18 +35,18 @@ var (
 
 // NodeBalancerNodeCreateOptions fields are those accepted by CreateNodeBalancerNode
 type NodeBalancerNodeCreateOptions struct {
-	Address string   `json:"address"`
-	Label   string   `json:"label"`
-	Weight  int      `json:"weight,omitempty"`
-	Mode    NodeMode `json:"mode,omitempty"`
+	Address string    `json:"address"`
+	Label   string    `json:"label"`
+	Weight  *int      `json:"weight,omitempty"`
+	Mode    *NodeMode `json:"mode,omitempty"`
 }
 
 // NodeBalancerNodeUpdateOptions fields are those accepted by UpdateNodeBalancerNode
 type NodeBalancerNodeUpdateOptions struct {
-	Address string   `json:"address,omitempty"`
-	Label   string   `json:"label,omitempty"`
-	Weight  int      `json:"weight,omitempty"`
-	Mode    NodeMode `json:"mode,omitempty"`
+	Address *string   `json:"address,omitempty"`
+	Label   *string   `json:"label,omitempty"`
+	Weight  *int      `json:"weight,omitempty"`
+	Mode    *NodeMode `json:"mode,omitempty"`
 }
 
 // GetCreateOptions converts a NodeBalancerNode to NodeBalancerNodeCreateOptions for use in CreateNodeBalancerNode
@@ -54,18 +54,18 @@ func (i NodeBalancerNode) GetCreateOptions() NodeBalancerNodeCreateOptions {
 	return NodeBalancerNodeCreateOptions{
 		Address: i.Address,
 		Label:   i.Label,
-		Weight:  i.Weight,
-		Mode:    i.Mode,
+		Weight:  &i.Weight,
+		Mode:    &i.Mode,
 	}
 }
 
 // GetUpdateOptions converts a NodeBalancerNode to NodeBalancerNodeUpdateOptions for use in UpdateNodeBalancerNode
 func (i NodeBalancerNode) GetUpdateOptions() NodeBalancerNodeUpdateOptions {
 	return NodeBalancerNodeUpdateOptions{
-		Address: i.Address,
-		Label:   i.Label,
-		Weight:  i.Weight,
-		Mode:    i.Mode,
+		Address: &i.Address,
+		Label:   &i.Label,
+		Weight:  &i.Weight,
+		Mode:    &i.Mode,
 	}
 }
 

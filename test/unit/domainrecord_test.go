@@ -91,6 +91,7 @@ func TestDomainRecord_Create(t *testing.T) {
 	service := (*string)(nil)
 	protocol := (*string)(nil)
 	tag := (*string)(nil)
+	ttlSec := 604800
 
 	requestData := linodego.DomainRecordCreateOptions{
 		Type:     linodego.RecordTypeA,
@@ -101,7 +102,7 @@ func TestDomainRecord_Create(t *testing.T) {
 		Port:     &port,
 		Service:  service,
 		Protocol: protocol,
-		TTLSec:   604800,
+		TTLSec:   &ttlSec,
 		Tag:      tag,
 	}
 
@@ -141,17 +142,21 @@ func TestDomainRecord_Update(t *testing.T) {
 	service := (*string)(nil)
 	protocol := (*string)(nil)
 	tag := (*string)(nil)
+	recordType := linodego.RecordTypeA
+	name := "test"
+	target := "192.0.2.0"
+	ttlSec := 604800
 
 	requestData := linodego.DomainRecordUpdateOptions{
-		Type:     linodego.RecordTypeA,
-		Name:     "test",
-		Target:   "192.0.2.0",
+		Type:     &recordType,
+		Name:     &name,
+		Target:   &target,
 		Priority: &priority,
 		Weight:   &weight,
 		Port:     &port,
 		Service:  service,
 		Protocol: protocol,
-		TTLSec:   604800,
+		TTLSec:   &ttlSec,
 		Tag:      tag,
 	}
 

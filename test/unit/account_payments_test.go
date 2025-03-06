@@ -19,8 +19,10 @@ func TestAccountPayments_Create(t *testing.T) {
 
 	base.MockPost("account/payments", fixtureData)
 
+	cvv := "123"
+
 	requestData := linodego.PaymentCreateOptions{
-		CVV: "123",
+		CVV: &cvv,
 		USD: json.Number("120.50"),
 	}
 

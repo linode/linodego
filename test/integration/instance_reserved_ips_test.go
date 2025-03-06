@@ -39,17 +39,17 @@ func createInstanceWithReservedIP(
 	t.Helper()
 
 	createOpts := linodego.InstanceCreateOptions{
-		Label:    "go-test-ins-reserved-ip-" + randLabel(),
+		Label:    linodego.Pointer("go-test-ins-reserved-ip-" + randLabel()),
 		Region:   "us-east",
 		Type:     "g6-nanode-1",
 		Booted:   linodego.Pointer(false),
-		Image:    "linode/alpine3.17",
-		RootPass: randPassword(),
+		Image:    linodego.Pointer("linode/alpine3.17"),
+		RootPass: linodego.Pointer(randPassword()),
 		Interfaces: []linodego.InstanceConfigInterfaceCreateOptions{
 			{
-				Purpose:     linodego.InterfacePurposePublic,
-				Label:       "",
-				IPAMAddress: "",
+				Purpose:     linodego.Pointer(linodego.InterfacePurposePublic),
+				Label:       linodego.Pointer(""),
+				IPAMAddress: linodego.Pointer(""),
 			},
 		},
 		IPv4: []string{reservedIP},
@@ -216,8 +216,8 @@ func TestInstance_AddReservedIPToInstance(t *testing.T) {
 	instance, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
 		Region:   "us-east",
 		Type:     "g6-nanode-1",
-		Label:    "test-instance-for-ip-reservation",
-		RootPass: randPassword(),
+		Label:    linodego.Pointer("test-instance-for-ip-reservation"),
+		RootPass: linodego.Pointer(randPassword()),
 	})
 	if err != nil {
 		t.Fatalf("Error creating test instance: %v", err)
@@ -279,8 +279,8 @@ func TestInstance_AddReservedIPToInstanceVariants(t *testing.T) {
 	instance, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
 		Region:   "us-east",
 		Type:     "g6-nanode-1",
-		Label:    "test-instance-for-ip-reservation",
-		RootPass: randPassword(),
+		Label:    linodego.Pointer("test-instance-for-ip-reservation"),
+		RootPass: linodego.Pointer(randPassword()),
 	})
 	if err != nil {
 		t.Fatalf("Error creating test instance: %v", err)
@@ -498,8 +498,8 @@ func TestInstance_DeleteInstanceVariants(t *testing.T) {
 	newInstance, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
 		Region:   "us-east",
 		Type:     "g6-nanode-1",
-		Label:    "test-instance-freed-ip",
-		RootPass: randPassword(),
+		Label:    linodego.Pointer("test-instance-freed-ip"),
+		RootPass: linodego.Pointer(randPassword()),
 		IPv4:     []string{reservedIP.Address},
 	})
 	if err != nil {
@@ -527,8 +527,8 @@ func TestInstance_DeleteInstanceVariants(t *testing.T) {
 	ephemeralInstance, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
 		Region:   "us-east",
 		Type:     "g6-nanode-1",
-		Label:    "ephemeral-ip-test",
-		RootPass: randPassword(),
+		Label:    linodego.Pointer("ephemeral-ip-test"),
+		RootPass: linodego.Pointer(randPassword()),
 	})
 	if err != nil {
 		t.Fatalf("Failed to create Linode with ephemeral IP: %v", err)

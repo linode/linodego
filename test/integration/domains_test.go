@@ -9,7 +9,7 @@ import (
 
 var testDomainCreateOpts = linodego.DomainCreateOptions{
 	Type:     linodego.DomainTypeMaster,
-	SOAEmail: "example@example.com",
+	SOAEmail: linodego.Pointer("example@example.com"),
 }
 
 func TestDomain_Create_smoke(t *testing.T) {
@@ -21,7 +21,7 @@ func TestDomain_Create_smoke(t *testing.T) {
 	}
 
 	// when comparing fixtures to random value Domain will differ
-	if domain.SOAEmail != testDomainCreateOpts.SOAEmail {
+	if testDomainCreateOpts.SOAEmail == nil || domain.SOAEmail != *testDomainCreateOpts.SOAEmail {
 		t.Errorf("Domain returned does not match domain create request")
 	}
 }
@@ -34,12 +34,12 @@ func TestDomain_Update(t *testing.T) {
 	}
 
 	updateOpts := linodego.DomainUpdateOptions{
-		Domain: "linodego-renamed-domain.com",
+		Domain: linodego.Pointer("linodego-renamed-domain.com"),
 	}
 	domain, err = client.UpdateDomain(context.Background(), domain.ID, updateOpts)
 	if err != nil {
 		t.Errorf("Error renaming domain, %s", err)
-	} else if domain.Domain != updateOpts.Domain {
+	} else if updateOpts.Domain == nil || domain.Domain != *updateOpts.Domain {
 		t.Errorf("Error renaming domain: Domain does not match")
 	}
 }

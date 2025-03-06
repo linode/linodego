@@ -11,16 +11,16 @@ type AccountAgreements struct {
 
 // AccountAgreementsUpdateOptions fields are those accepted by UpdateAccountAgreements
 type AccountAgreementsUpdateOptions struct {
-	EUModel                bool `json:"eu_model,omitempty"`
-	MasterServiceAgreement bool `json:"master_service_agreement,omitempty"`
-	PrivacyPolicy          bool `json:"privacy_policy,omitempty"`
+	EUModel                *bool `json:"eu_model,omitempty"`
+	MasterServiceAgreement *bool `json:"master_service_agreement,omitempty"`
+	PrivacyPolicy          *bool `json:"privacy_policy,omitempty"`
 }
 
 // GetUpdateOptions converts an AccountAgreements to AccountAgreementsUpdateOptions for use in UpdateAccountAgreements
 func (i AccountAgreements) GetUpdateOptions() (o AccountAgreementsUpdateOptions) {
-	o.EUModel = i.EUModel
-	o.MasterServiceAgreement = i.MasterServiceAgreement
-	o.PrivacyPolicy = i.PrivacyPolicy
+	o.EUModel = copyBool(&i.EUModel)
+	o.MasterServiceAgreement = copyBool(&i.MasterServiceAgreement)
+	o.PrivacyPolicy = copyBool(&i.PrivacyPolicy)
 
 	return
 }

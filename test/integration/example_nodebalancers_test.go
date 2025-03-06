@@ -57,11 +57,10 @@ func ExampleClient_CreateNodeBalancerConfig() {
 	defer teardown()
 
 	fmt.Println("## NodeBalancer create")
-	clientConnThrottle := 20
 	nb, err := linodeClient.CreateNodeBalancer(context.Background(), linodego.NodeBalancerCreateOptions{
-		ClientConnThrottle: &clientConnThrottle,
-		Region:             "us-southeast",
-		FirewallID:         GetFirewallID(),
+		ClientConnThrottle: linodego.Pointer(20),
+		Region:             linodego.Pointer("us-southeast"),
+		FirewallID:         linodego.Pointer(GetFirewallID()),
 	})
 	if err != nil {
 		log.Fatal(err)
@@ -77,9 +76,9 @@ func ExampleClient_CreateNodeBalancerConfig() {
 		   Check:         linodego.CheckHTTP,
 		   CipherSuite:   linodego.CipherRecommended,
 		*/
-		CheckTimeout:  5,
-		CheckInterval: 30,
-		CheckAttempts: 5,
+		CheckTimeout:  linodego.Pointer(5),
+		CheckInterval: linodego.Pointer(30),
+		CheckAttempts: linodego.Pointer(5),
 	}
 	nbc, err := linodeClient.CreateNodeBalancerConfig(context.Background(), nb.ID, createOpts)
 	if err != nil {
@@ -134,11 +133,10 @@ func ExampleClient_CreateNodeBalancerNode() {
 	defer teardown()
 
 	fmt.Println("## NodeBalancer create")
-	clientConnThrottle := 20
 	nb, err := linodeClient.CreateNodeBalancer(context.Background(), linodego.NodeBalancerCreateOptions{
-		ClientConnThrottle: &clientConnThrottle,
-		Region:             "us-southeast",
-		FirewallID:         GetFirewallID(),
+		ClientConnThrottle: linodego.Pointer(20),
+		Region:             linodego.Pointer("us-southeast"),
+		FirewallID:         linodego.Pointer(GetFirewallID()),
 	})
 	if err != nil {
 		log.Fatal(err)
@@ -154,13 +152,13 @@ func ExampleClient_CreateNodeBalancerNode() {
 	}
 
 	instanceOpts := linodego.InstanceCreateOptions{
-		Label:      "nodebalancer-example-instance",
-		RootPass:   randPassword(),
+		Label:      linodego.Pointer("nodebalancer-example-instance"),
+		RootPass:   linodego.Pointer(randPassword()),
 		Region:     "us-southeast",
 		Type:       "g6-nanode-1",
-		Image:      "linode/debian9",
+		Image:      linodego.Pointer("linode/debian9"),
 		Booted:     linodego.Pointer(false),
-		FirewallID: GetFirewallID(),
+		FirewallID: linodego.Pointer(GetFirewallID()),
 	}
 	instance, err := linodeClient.CreateInstance(context.Background(), instanceOpts)
 	if err != nil {
@@ -185,7 +183,7 @@ func ExampleClient_CreateNodeBalancerNode() {
 
 	fmt.Println("## NodeBalancer Node update")
 	updateOpts := nbn.GetUpdateOptions()
-	updateOpts.Address = fmt.Sprintf("%s:8080", ip.Address)
+	updateOpts.Address = linodego.Pointer(fmt.Sprintf("%s:8080", ip.Address))
 	nbn, err = linodeClient.UpdateNodeBalancerNode(context.Background(), nb.ID, nbc.ID, nbn.ID, updateOpts)
 	if err != nil {
 		log.Fatal(err)

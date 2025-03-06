@@ -108,8 +108,8 @@ func TestObjectStorageBucketCert_smoke(t *testing.T) {
 	})]
 
 	bucket, err := client.CreateObjectStorageBucket(context.Background(), linodego.ObjectStorageBucketCreateOptions{
-		Region:       selectedEndpoint.Region,
-		EndpointType: selectedEndpoint.EndpointType,
+		Region:       &selectedEndpoint.Region,
+		EndpointType: &selectedEndpoint.EndpointType,
 		Label:        "linode-obj-bucket-cert-test.xyz",
 	})
 	if err != nil {

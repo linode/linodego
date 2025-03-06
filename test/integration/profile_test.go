@@ -28,7 +28,7 @@ func TestProfile_Update(t *testing.T) {
 	}
 
 	updateOpts := profile.GetUpdateOptions()
-	if updateOpts.Email != profile.Email {
+	if updateOpts.Email == nil || *updateOpts.Email != profile.Email {
 		t.Errorf("Expected matching Username from GetUpdateOptions, got: %v", updateOpts)
 	}
 
@@ -36,7 +36,7 @@ func TestProfile_Update(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error updating profile: %s", err)
 	}
-	if i.Email != updateOpts.Email {
+	if updateOpts.Email == nil || i.Email != *updateOpts.Email {
 		t.Errorf("Expected profile email to be changed, but found %v", i)
 	}
 }

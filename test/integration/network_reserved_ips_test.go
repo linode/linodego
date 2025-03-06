@@ -389,7 +389,7 @@ func TestReservedIPAddresses_DeleteIPAddressVariants(t *testing.T) {
 }
 
 func TestReservedIPAddresses_GetIPReservationStatus(t *testing.T) {
-	client, teardown := createTestClient(t, "TestReservedIPAddresses_GetInstanceIPReservationStatus")
+	client, teardown := createTestClient(t, "fixtures/TestReservedIPAddresses_GetInstanceIPReservationStatus")
 	defer teardown()
 
 	// Create a Linode with a reserved IP
@@ -435,8 +435,8 @@ func TestReservedIPAddresses_GetIPReservationStatus(t *testing.T) {
 	instanceWithEphemeralIP, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
 		Region:   "us-east",
 		Type:     "g6-nanode-1",
-		Label:    "test-instance-ephemeral-ip",
-		RootPass: randPassword(),
+		Label:    linodego.Pointer("test-instance-ephemeral-ip"),
+		RootPass: linodego.Pointer(randPassword()),
 	})
 	if err != nil {
 		t.Fatalf("Failed to create Linode with ephemeral IP: %v", err)

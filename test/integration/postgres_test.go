@@ -51,12 +51,10 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 		Pending:   []linodego.DatabaseMaintenanceWindowPending{},
 	}
 
-	allowList := []string{"128.173.205.21", "123.177.200.20"}
-
 	updatedLabel := database.Label + "-updated"
 	opts := linodego.PostgresUpdateOptions{
-		AllowList: &allowList,
-		Label:     updatedLabel,
+		AllowList: []string{"128.173.205.21", "123.177.200.20"},
+		Label:     &updatedLabel,
 		Updates:   &updatedWindow,
 	}
 	db, err = client.UpdatePostgresDatabase(context.Background(), database.ID, opts)
@@ -146,7 +144,7 @@ func createPostgresDatabase(t *testing.T, client *linodego.Client,
 		Region:      getRegionsWithCaps(t, client, []string{"Managed Databases"})[0],
 		Type:        "g6-nanode-1",
 		Engine:      "postgresql/14",
-		ClusterSize: 3,
+		ClusterSize: linodego.Pointer(3),
 		AllowList:   []string{"203.0.113.1", "192.0.1.0/24"},
 	}
 	for _, modifier := range databaseMofidiers {

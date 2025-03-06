@@ -51,7 +51,7 @@ func setupCloudFirewall(t *testing.T) {
 	firewallLabel := fmt.Sprintf("cloudfw-%d", time.Now().UnixNano())
 
 	firewall, err := client.CreateFirewall(context.Background(), linodego.FirewallCreateOptions{
-		Label: firewallLabel,
+		Label: &firewallLabel,
 		Rules: firewallRuleSet,
 	})
 	if err != nil {
@@ -78,9 +78,9 @@ func getDefaultFirewallRuleSet(publicIPv4 string) linodego.FirewallRuleSet {
 	cloudFirewallRule := linodego.FirewallRule{
 		Label:     "ssh-inbound-accept-local",
 		Action:    "ACCEPT",
-		Ports:     "22",
+		Ports:     linodego.Pointer("22"),
 		Protocol:  "TCP",
-		Addresses: linodego.NetworkAddresses{IPv4: &[]string{publicIPv4}},
+		Addresses: linodego.NetworkAddresses{IPv4: []string{publicIPv4}},
 	}
 
 	return linodego.FirewallRuleSet{

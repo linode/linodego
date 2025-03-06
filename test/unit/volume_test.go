@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	"github.com/linode/linodego"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestListVolumes(t *testing.T) {
@@ -70,9 +70,12 @@ func TestCreateVolume(t *testing.T) {
 
 	base.MockPost("volumes", fixtureData)
 
+	label := "new-volume"
+	size := 20
+
 	opts := linodego.VolumeCreateOptions{
-		Label: "new-volume",
-		Size:  20,
+		Label: &label,
+		Size:  &size,
 		Tags:  []string{"test"},
 	}
 
@@ -100,9 +103,11 @@ func TestUpdateVolume(t *testing.T) {
 	volumeID := 123
 	base.MockPut(fmt.Sprintf("volumes/%d", volumeID), fixtureData)
 
+	label := "new-volume"
+
 	opts := linodego.VolumeUpdateOptions{
-		Label: "updated-volume",
-		Tags:  &[]string{"updated"},
+		Label: &label,
+		Tags:  []string{"updated"},
 	}
 
 	updatedVolume, err := base.Client.UpdateVolume(context.Background(), volumeID, opts)
@@ -128,30 +133,30 @@ func TestDeleteVolume(t *testing.T) {
 }
 
 func TestAttachVolume(t *testing.T) {
-    // Mock the API response for attaching a volume
-    fixtureData, err := fixtures.GetFixture("volume_attach")
-    assert.NoError(t, err)
+	// Mock the API response for attaching a volume
+	fixtureData, err := fixtures.GetFixture("volume_attach")
+	assert.NoError(t, err)
 
-    var base ClientBaseCase
-    base.SetUp(t)
-    defer base.TearDown(t)
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
 
-    volumeID := 123
-    base.MockPost(fmt.Sprintf("volumes/%d/attach", volumeID), fixtureData)
+	volumeID := 123
+	base.MockPost(fmt.Sprintf("volumes/%d/attach", volumeID), fixtureData)
 
-    // Use direct pointer assignment for PersistAcrossBoots
-    persistAcrossBoots := true
-    opts := &linodego.VolumeAttachOptions{
-        LinodeID:           456,
-        PersistAcrossBoots: &persistAcrossBoots,
-    }
+	// Use direct pointer assignment for PersistAcrossBoots
+	persistAcrossBoots := true
+	opts := &linodego.VolumeAttachOptions{
+		LinodeID:           456,
+		PersistAcrossBoots: &persistAcrossBoots,
+	}
 
-    attachedVolume, err := base.Client.AttachVolume(context.Background(), volumeID, opts)
-    assert.NoError(t, err, "Expected no error when attaching volume")
+	attachedVolume, err := base.Client.AttachVolume(context.Background(), volumeID, opts)
+	assert.NoError(t, err, "Expected no error when attaching volume")
 
-    // Verify the attached volume's LinodeID and filesystem path
-    assert.Equal(t, 456, *attachedVolume.LinodeID, "Expected LinodeID to match input")
-    assert.Equal(t, "/dev/disk/by-id/volume-123", attachedVolume.FilesystemPath, "Expected filesystem path to match fixture")
+	// Verify the attached volume's LinodeID and filesystem path
+	assert.Equal(t, 456, *attachedVolume.LinodeID, "Expected LinodeID to match input")
+	assert.Equal(t, "/dev/disk/by-id/volume-123", attachedVolume.FilesystemPath, "Expected filesystem path to match fixture")
 }
 
 func TestDetachVolume(t *testing.T) {

@@ -67,14 +67,14 @@ type Image struct {
 type ImageCreateOptions struct {
 	DiskID      int       `json:"disk_id"`
 	Label       string    `json:"label"`
-	Description string    `json:"description,omitempty"`
-	CloudInit   bool      `json:"cloud_init,omitempty"`
+	Description *string   `json:"description,omitempty"`
+	CloudInit   *bool     `json:"cloud_init,omitempty"`
 	Tags        *[]string `json:"tags,omitempty"`
 }
 
 // ImageUpdateOptions fields are those accepted by UpdateImage
 type ImageUpdateOptions struct {
-	Label       string    `json:"label,omitempty"`
+	Label       *string   `json:"label,omitempty"`
 	Description *string   `json:"description,omitempty"`
 	Tags        *[]string `json:"tags,omitempty"`
 }
@@ -95,8 +95,8 @@ type ImageCreateUploadResponse struct {
 type ImageCreateUploadOptions struct {
 	Region      string    `json:"region"`
 	Label       string    `json:"label"`
-	Description string    `json:"description,omitempty"`
-	CloudInit   bool      `json:"cloud_init,omitempty"`
+	Description *string   `json:"description,omitempty"`
+	CloudInit   *bool     `json:"cloud_init,omitempty"`
 	Tags        *[]string `json:"tags,omitempty"`
 }
 
@@ -104,7 +104,7 @@ type ImageCreateUploadOptions struct {
 type ImageUploadOptions struct {
 	Region      string    `json:"region"`
 	Label       string    `json:"label"`
-	Description string    `json:"description,omitempty"`
+	Description *string   `json:"description,omitempty"`
 	CloudInit   bool      `json:"cloud_init"`
 	Tags        *[]string `json:"tags,omitempty"`
 	Image       io.Reader
@@ -138,7 +138,7 @@ func (i *Image) UnmarshalJSON(b []byte) error {
 
 // GetUpdateOptions converts an Image to ImageUpdateOptions for use in UpdateImage
 func (i Image) GetUpdateOptions() (iu ImageUpdateOptions) {
-	iu.Label = i.Label
+	iu.Label = &i.Label
 	iu.Description = copyString(&i.Description)
 	return
 }
@@ -265,7 +265,7 @@ func (c *Client) UploadImage(ctx context.Context, opts ImageUploadOptions) (*Ima
 		Label:       opts.Label,
 		Region:      opts.Region,
 		Description: opts.Description,
-		CloudInit:   opts.CloudInit,
+		CloudInit:   &opts.CloudInit,
 		Tags:        opts.Tags,
 	})
 	if err != nil {
