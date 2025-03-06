@@ -76,7 +76,7 @@ func TestCreateVolume(t *testing.T) {
 	opts := linodego.VolumeCreateOptions{
 		Label: &label,
 		Size:  &size,
-		Tags:  &[]string{"test"},
+		Tags:  []string{"test"},
 	}
 
 	volume, err := base.Client.CreateVolume(context.Background(), opts)

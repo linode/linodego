@@ -35,7 +35,7 @@ type DomainRecordCreateOptions struct {
 	Port     *int             `json:"port,omitempty"`
 	Service  *string          `json:"service,omitempty"`
 	Protocol *string          `json:"protocol,omitempty"`
-	TTLSec   *int             `json:"ttl_sec,omitempty"` // 0 is not accepted by Linode, so can be omitted
+	TTLSec   *int             `json:"ttl_sec,omitempty"`
 	Tag      *string          `json:"tag,omitempty"`
 }
 
@@ -44,12 +44,12 @@ type DomainRecordUpdateOptions struct {
 	Type     *DomainRecordType `json:"type,omitempty"`
 	Name     *string           `json:"name,omitempty"`
 	Target   *string           `json:"target,omitempty"`
-	Priority *int              `json:"priority,omitempty"` // 0 is valid, so omit only nil values
-	Weight   *int              `json:"weight,omitempty"`   // 0 is valid, so omit only nil values
-	Port     *int              `json:"port,omitempty"`     // 0 is valid to spec, so omit only nil values
+	Priority *int              `json:"priority,omitempty"`
+	Weight   *int              `json:"weight,omitempty"`
+	Port     *int              `json:"port,omitempty"`
 	Service  *string           `json:"service,omitempty"`
 	Protocol *string           `json:"protocol,omitempty"`
-	TTLSec   *int              `json:"ttl_sec,omitempty"` // 0 is not accepted by Linode, so can be omitted
+	TTLSec   *int              `json:"ttl_sec,omitempty"`
 	Tag      *string           `json:"tag,omitempty"`
 }
 

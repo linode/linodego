@@ -53,9 +53,9 @@ type VolumeCreateOptions struct {
 	// The Volume's size, in GiB. Minimum size is 10GiB, maximum size is 10240GiB. A "0" value will result in the default size.
 	Size *int `json:"size,omitempty"`
 	// An array of tags applied to this object. Tags are for organizational purposes only.
-	Tags               *[]string `json:"tags"`
-	PersistAcrossBoots *bool     `json:"persist_across_boots,omitempty"`
-	Encryption         *string   `json:"encryption,omitempty"`
+	Tags               []string `json:"tags"`
+	PersistAcrossBoots *bool    `json:"persist_across_boots,omitempty"`
+	Encryption         *string  `json:"encryption,omitempty"`
 }
 
 // VolumeUpdateOptions fields are those accepted by UpdateVolume
@@ -103,7 +103,7 @@ func (v Volume) GetUpdateOptions() (updateOpts VolumeUpdateOptions) {
 // GetCreateOptions converts a Volume to VolumeCreateOptions for use in CreateVolume
 func (v Volume) GetCreateOptions() (createOpts VolumeCreateOptions) {
 	createOpts.Label = &v.Label
-	createOpts.Tags = &v.Tags
+	createOpts.Tags = v.Tags
 	createOpts.Region = &v.Region
 	createOpts.Size = &v.Size
 	if v.LinodeID != nil && *v.LinodeID > 0 {
