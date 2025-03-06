@@ -9,7 +9,7 @@ require (
 	github.com/stretchr/testify v1.10.0
 	golang.org/x/exp v0.0.0-20241217172543-b2144cdd0a67
 	golang.org/x/net v0.35.0
-	golang.org/x/oauth2 v0.27.0
+	golang.org/x/oauth2 v0.28.0
 	k8s.io/client-go v0.29.4
 )
 
