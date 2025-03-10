@@ -42,7 +42,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 30 Jan 2025 19:34:04 GMT
+      - Mon, 10 Mar 2025 19:39:02 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -78,50 +78,10 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/buckets?page=1
     method: GET
   response:
-    body: '{"data": [{"hostname": "bucket-1736798274052633022.gb-lon-1.linodeobjects.com",
-      "label": "bucket-1736798274052633022", "created": "2018-01-02T03:04:05", "region":
-      "gb-lon", "cluster": "", "size": 0, "objects": 0, "endpoint_type": "E3", "s3_endpoint":
-      "gb-lon-1.linodeobjects.com"}, {"hostname": "bucket-1738000793614673680.gb-lon-1.linodeobjects.com",
-      "label": "bucket-1738000793614673680", "created": "2018-01-02T03:04:05", "region":
-      "gb-lon", "cluster": "", "size": 0, "objects": 0, "endpoint_type": "E3", "s3_endpoint":
-      "gb-lon-1.linodeobjects.com"}, {"hostname": "go-bucket-test-def.us-east-1.linodeobjects.com",
+    body: '{"data": [{"hostname": "go-bucket-test-def.us-east-1.linodeobjects.com",
       "label": "go-bucket-test-def", "created": "2018-01-02T03:04:05", "region": "us-east",
       "cluster": "us-east-1", "size": 0, "objects": 0, "endpoint_type": "E0", "s3_endpoint":
-      "us-east-1.linodeobjects.com"}, {"hostname": "tf-test-1543819153442410267.sg-sin-1.linodeobjects.com",
-      "label": "tf-test-1543819153442410267", "created": "2018-01-02T03:04:05", "region":
-      "sg-sin-2", "cluster": "", "size": 0, "objects": 0, "endpoint_type": "E2", "s3_endpoint":
-      "sg-sin-1.linodeobjects.com"}, {"hostname": "tf-test-2484676038142344857.it-mil-1.linodeobjects.com",
-      "label": "tf-test-2484676038142344857", "created": "2018-01-02T03:04:05", "region":
-      "it-mil", "cluster": "it-mil-1", "size": 0, "objects": 0, "endpoint_type": "E1",
-      "s3_endpoint": "it-mil-1.linodeobjects.com"}, {"hostname": "tf-test-3502349996573909406.us-iad-1.linodeobjects.com",
-      "label": "tf-test-3502349996573909406", "created": "2018-01-02T03:04:05", "region":
-      "us-iad", "cluster": "us-iad-1", "size": 0, "objects": 0, "endpoint_type": "E1",
-      "s3_endpoint": "us-iad-1.linodeobjects.com"}, {"hostname": "tf-test-3632911602253826896.gb-lon-1.linodeobjects.com",
-      "label": "tf-test-3632911602253826896", "created": "2018-01-02T03:04:05", "region":
-      "gb-lon", "cluster": "", "size": 0, "objects": 0, "endpoint_type": "E3", "s3_endpoint":
-      "gb-lon-1.linodeobjects.com"}, {"hostname": "tf-test-3691810287020261631.us-iad-1.linodeobjects.com",
-      "label": "tf-test-3691810287020261631", "created": "2018-01-02T03:04:05", "region":
-      "us-iad", "cluster": "us-iad-1", "size": 0, "objects": 0, "endpoint_type": "E1",
-      "s3_endpoint": "us-iad-1.linodeobjects.com"}, {"hostname": "tf-test-3847259615974034792.us-iad-1.linodeobjects.com",
-      "label": "tf-test-3847259615974034792", "created": "2018-01-02T03:04:05", "region":
-      "us-iad", "cluster": "us-iad-1", "size": 0, "objects": 0, "endpoint_type": "E1",
-      "s3_endpoint": "us-iad-1.linodeobjects.com"}, {"hostname": "tf-test-5629732048996817677.us-iad-1.linodeobjects.com",
-      "label": "tf-test-5629732048996817677", "created": "2018-01-02T03:04:05", "region":
-      "us-iad", "cluster": "us-iad-1", "size": 0, "objects": 0, "endpoint_type": "E1",
-      "s3_endpoint": "us-iad-1.linodeobjects.com"}, {"hostname": "tf-test-6566002079784759866.us-iad-1.linodeobjects.com",
-      "label": "tf-test-6566002079784759866", "created": "2018-01-02T03:04:05", "region":
-      "us-iad", "cluster": "us-iad-1", "size": 0, "objects": 0, "endpoint_type": "E1",
-      "s3_endpoint": "us-iad-1.linodeobjects.com"}, {"hostname": "tf-test-6680232593917341773.us-iad-1.linodeobjects.com",
-      "label": "tf-test-6680232593917341773", "created": "2018-01-02T03:04:05", "region":
-      "us-iad", "cluster": "us-iad-1", "size": 0, "objects": 0, "endpoint_type": "E1",
-      "s3_endpoint": "us-iad-1.linodeobjects.com"}, {"hostname": "tf-test-6921913936824551527.id-cgk-1.linodeobjects.com",
-      "label": "tf-test-6921913936824551527", "created": "2018-01-02T03:04:05", "region":
-      "id-cgk", "cluster": "id-cgk-1", "size": 0, "objects": 0, "endpoint_type": "E1",
-      "s3_endpoint": "id-cgk-1.linodeobjects.com"}, {"hostname": "tf-test-8637208670123446138.us-iad-1.linodeobjects.com",
-      "label": "tf-test-8637208670123446138", "created": "2018-01-02T03:04:05", "region":
-      "us-iad", "cluster": "us-iad-1", "size": 0, "objects": 0, "endpoint_type": "E1",
-      "s3_endpoint": "us-iad-1.linodeobjects.com"}], "page": 1, "pages": 1, "results":
-      14}'
+      "us-east-1.linodeobjects.com"}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -139,12 +99,14 @@ interactions:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
+      Content-Length:
+      - "315"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 30 Jan 2025 19:34:09 GMT
+      - Mon, 10 Mar 2025 19:39:07 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -152,7 +114,6 @@ interactions:
       Vary:
       - Authorization, X-Filter
       - Authorization, X-Filter
-      - Accept-Encoding
       X-Accepted-Oauth-Scopes:
       - object_storage:read_only
       X-Content-Type-Options:
@@ -179,7 +140,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/go-bucket-test-def
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east/go-bucket-test-def
     method: DELETE
   response:
     body: '{}'
@@ -207,7 +168,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 30 Jan 2025 19:34:13 GMT
+      - Mon, 10 Mar 2025 19:39:10 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

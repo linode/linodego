@@ -14,7 +14,7 @@ var objectStorageObjectURLExpirySeconds = 360
 func putObjectStorageObject(t *testing.T, client *linodego.Client, bucket *linodego.ObjectStorageBucket, name, content string) {
 	t.Helper()
 
-	url, err := client.CreateObjectStorageObjectURL(context.TODO(), bucket.Cluster, bucket.Label, linodego.ObjectStorageObjectURLCreateOptions{
+	url, err := client.CreateObjectStorageObjectURL(context.TODO(), bucket.Region, bucket.Label, linodego.ObjectStorageObjectURLCreateOptions{
 		Name:        name,
 		Method:      http.MethodPut,
 		ContentType: linodego.Pointer("text/plain"),
@@ -48,7 +48,7 @@ func putObjectStorageObject(t *testing.T, client *linodego.Client, bucket *linod
 func deleteObjectStorageObject(t *testing.T, client *linodego.Client, bucket *linodego.ObjectStorageBucket, name string) {
 	t.Helper()
 
-	url, err := client.CreateObjectStorageObjectURL(context.TODO(), bucket.Cluster, bucket.Label, linodego.ObjectStorageObjectURLCreateOptions{
+	url, err := client.CreateObjectStorageObjectURL(context.TODO(), bucket.Region, bucket.Label, linodego.ObjectStorageObjectURLCreateOptions{
 		Name:      name,
 		Method:    http.MethodDelete,
 		ExpiresIn: &objectStorageObjectURLExpirySeconds,
@@ -87,20 +87,7 @@ func TestObjectStorageObject_Smoke(t *testing.T) {
 	putObjectStorageObject(t, client, bucket, object, "testing123")
 	defer deleteObjectStorageObject(t, client, bucket, object)
 
-	config, err := client.GetObjectStorageObjectACLConfig(context.TODO(), bucket.Cluster, bucket.Label, object)
-	if err != nil {
-		t.Errorf("failed to get ACL config: %s", err)
-	}
-
-	if config.ACL != "private" {
-		t.Errorf("expected ACL to be private; got %s", config.ACL)
-	}
-
-	if config.ACLXML == "" {
-		t.Error("expected ACL XML to be included")
-	}
-
-	configv2, err := client.GetObjectStorageObjectACLConfigV2(context.TODO(), bucket.Cluster, bucket.Label, object)
+	configv2, err := client.GetObjectStorageObjectACLConfigV2(context.TODO(), bucket.Region, bucket.Label, object)
 	if err != nil {
 		t.Errorf("failed to get ACL config: %s", err)
 	}
@@ -113,7 +100,7 @@ func TestObjectStorageObject_Smoke(t *testing.T) {
 		t.Errorf("expected ACL to be private; got %s", *configv2.ACL)
 	}
 
-	content, err := client.ListObjectStorageBucketContents(context.TODO(), bucket.Cluster, bucket.Label, nil)
+	content, err := client.ListObjectStorageBucketContents(context.TODO(), bucket.Region, bucket.Label, nil)
 	if err != nil {
 		t.Errorf("failed to get bucket contents: %s", err)
 	}
@@ -123,27 +110,12 @@ func TestObjectStorageObject_Smoke(t *testing.T) {
 	}
 
 	updateOpts := linodego.ObjectStorageObjectACLConfigUpdateOptions{ACL: "public-read", Name: object}
-	if _, err = client.UpdateObjectStorageObjectACLConfig(context.TODO(), bucket.Cluster, bucket.Label, updateOpts); err != nil {
+
+	if _, err = client.UpdateObjectStorageObjectACLConfigV2(context.TODO(), bucket.Region, bucket.Label, updateOpts); err != nil {
 		t.Errorf("failed to update ACL config: %s", err)
 	}
 
-	if _, err = client.UpdateObjectStorageObjectACLConfigV2(context.TODO(), bucket.Cluster, bucket.Label, updateOpts); err != nil {
-		t.Errorf("failed to update ACL config: %s", err)
-	}
-
-	config, err = client.GetObjectStorageObjectACLConfig(context.TODO(), bucket.Cluster, bucket.Label, object)
-	if err != nil {
-		t.Errorf("failed to get updated ACL config: %s", err)
-	}
-
-	if config.ACL != updateOpts.ACL {
-		t.Errorf("expected ACL config to be %s; got %s", updateOpts.ACL, config.ACL)
-	}
-	if config.ACLXML == "" {
-		t.Error("expected ACL XML to be included")
-	}
-
-	configv2, err = client.GetObjectStorageObjectACLConfigV2(context.TODO(), bucket.Cluster, bucket.Label, object)
+	configv2, err = client.GetObjectStorageObjectACLConfigV2(context.TODO(), bucket.Region, bucket.Label, object)
 	if err != nil {
 		t.Errorf("failed to get ACL config: %s", err)
 	}

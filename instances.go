@@ -178,13 +178,9 @@ type InstanceCreateOptions struct {
 	PlacementGroup *InstanceCreatePlacementGroupOptions `json:"placement_group,omitempty"`
 
 	// Creation fields that need to be set explicitly false, "", or 0 use pointers
-	SwapSize *int  `json:"swap_size,omitempty"`
-	Booted   *bool `json:"booted,omitempty"`
-
-	// Deprecated: group is a deprecated property denoting a group label for the Linode.
-	Group *string `json:"group,omitempty"`
-
-	IPv4 []string `json:"ipv4,omitempty"`
+	SwapSize *int     `json:"swap_size,omitempty"`
+	Booted   *bool    `json:"booted,omitempty"`
+	IPv4     []string `json:"ipv4,omitempty"`
 }
 
 // InstanceCreatePlacementGroupOptions represents the placement group
@@ -201,9 +197,6 @@ type InstanceUpdateOptions struct {
 	Alerts          *InstanceAlert  `json:"alerts,omitempty"`
 	WatchdogEnabled *bool           `json:"watchdog_enabled,omitempty"`
 	Tags            []string        `json:"tags,omitempty"`
-
-	// Deprecated: group is a deprecated property denoting a group label for the Linode.
-	Group *string `json:"group,omitempty"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
@@ -252,7 +245,6 @@ func (backup *InstanceBackup) UnmarshalJSON(b []byte) error {
 func (i *Instance) GetUpdateOptions() InstanceUpdateOptions {
 	return InstanceUpdateOptions{
 		Label:           &i.Label,
-		Group:           &i.Group,
 		Backups:         i.Backups,
 		Alerts:          i.Alerts,
 		WatchdogEnabled: &i.WatchdogEnabled,
@@ -274,9 +266,6 @@ type InstanceCloneOptions struct {
 	PrivateIP      *bool                                `json:"private_ip,omitempty"`
 	Metadata       *InstanceMetadataOptions             `json:"metadata,omitempty"`
 	PlacementGroup *InstanceCreatePlacementGroupOptions `json:"placement_group,omitempty"`
-
-	// Deprecated: group is a deprecated property denoting a group label for the Linode.
-	Group *string `json:"group,omitempty"`
 }
 
 // InstanceResizeOptions is an options struct used when resizing an instance
@@ -426,12 +415,6 @@ func (c *Client) ResizeInstance(ctx context.Context, linodeID int, opts Instance
 // ShutdownInstance - Shutdown an instance
 func (c *Client) ShutdownInstance(ctx context.Context, id int) error {
 	return c.simpleInstanceAction(ctx, "shutdown", id)
-}
-
-// Deprecated: Please use UpgradeInstance instead.
-// MutateInstance Upgrades a Linode to its next generation.
-func (c *Client) MutateInstance(ctx context.Context, id int) error {
-	return c.simpleInstanceAction(ctx, "mutate", id)
 }
 
 // InstanceUpgradeOptions is a struct representing the options for upgrading a Linode
