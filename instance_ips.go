@@ -120,7 +120,7 @@ func (c *Client) AddInstanceIPAddress(ctx context.Context, linodeID int, public 
 }
 
 // UpdateInstanceIPAddress updates the IPAddress with the specified instance id and IP address
-func (c *Client) UpdateInstanceIPAddress(ctx context.Context, linodeID int, ipAddress string, opts IPAddressUpdateOptions) (*InstanceIP, error) {
+func (c *Client) UpdateInstanceIPAddress(ctx context.Context, linodeID int, ipAddress string, opts IPAddressUpdateOptionsV2) (*InstanceIP, error) {
 	e := formatAPIPath("linode/instances/%d/ips/%s", linodeID, ipAddress)
 	return doPUTRequest[InstanceIP](ctx, c, e, opts)
 }

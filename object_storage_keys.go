@@ -23,11 +23,7 @@ type ObjectStorageKey struct {
 
 // ObjectStorageKeyBucketAccess represents a linode limited object storage key's bucket access
 type ObjectStorageKeyBucketAccess struct {
-	// Deprecated: Cluster field has been deprecated.
-	// Please consider switching to use the 'Region' field.
-	// If your Cluster is `us-mia-1`, then the region would be `us-mia`.
-	Cluster *string `json:"cluster,omitempty"`
-	Region  *string `json:"region,omitempty"`
+	Region *string `json:"region,omitempty"`
 
 	BucketName  string `json:"bucket_name"`
 	Permissions string `json:"permissions"`

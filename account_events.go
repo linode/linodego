@@ -207,14 +207,6 @@ const (
 	ActionVPCSubnetCreate                         EventAction = "subnet_create"
 	ActionVPCSubnetDelete                         EventAction = "subnet_delete"
 	ActionVPCSubnetUpdate                         EventAction = "subnet_update"
-
-	// Deprecated: incorrect spelling,
-	// to be removed in the next major version release.
-	ActionVolumeDelte EventAction = "volume_delete"
-
-	// Deprecated: incorrect spelling,
-	// to be removed in the next major version
-	ActionCreateCardUpdated = ActionCreditCardUpdated
 )
 
 // EntityType constants start with Entity and include Linode API Event Entity Types

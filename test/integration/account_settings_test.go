@@ -51,9 +51,8 @@ func TestAccountSettings_Update(t *testing.T) {
 	defer httpmock.DeactivateAndReset()
 
 	opts := linodego.AccountSettingsUpdateOptions{
-		BackupsEnabled:       linodego.Pointer(false),
-		LongviewSubscription: linodego.Pointer("longview-10"),
-		NetworkHelper:        linodego.Pointer(false),
+		BackupsEnabled: linodego.Pointer(false),
+		NetworkHelper:  linodego.Pointer(false),
 	}
 
 	mockSettings := linodego.AccountSettings{

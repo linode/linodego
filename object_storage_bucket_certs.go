@@ -4,11 +4,6 @@ import (
 	"context"
 )
 
-// Deprecated: Please use ObjectStorageBucketCertV2 for all new implementations.
-type ObjectStorageBucketCert struct {
-	SSL bool `json:"ssl"`
-}
-
 type ObjectStorageBucketCertV2 struct {
 	SSL *bool `json:"ssl"`
 }
@@ -16,20 +11,6 @@ type ObjectStorageBucketCertV2 struct {
 type ObjectStorageBucketCertUploadOptions struct {
 	Certificate string `json:"certificate"`
 	PrivateKey  string `json:"private_key"`
-}
-
-// UploadObjectStorageBucketCert uploads a TLS/SSL Cert to be used with an Object Storage Bucket.
-// Deprecated: Please use UploadObjectStorageBucketCertV2 for all new implementations.
-func (c *Client) UploadObjectStorageBucketCert(ctx context.Context, clusterOrRegionID, bucket string, opts ObjectStorageBucketCertUploadOptions) (*ObjectStorageBucketCert, error) {
-	e := formatAPIPath("object-storage/buckets/%s/%s/ssl", clusterOrRegionID, bucket)
-	return doPOSTRequest[ObjectStorageBucketCert](ctx, c, e, opts)
-}
-
-// GetObjectStorageBucketCert gets an ObjectStorageBucketCert
-// Deprecated: Please use GetObjectStorageBucketCertV2 for all new implementations.
-func (c *Client) GetObjectStorageBucketCert(ctx context.Context, clusterOrRegionID, bucket string) (*ObjectStorageBucketCert, error) {
-	e := formatAPIPath("object-storage/buckets/%s/%s/ssl", clusterOrRegionID, bucket)
-	return doGETRequest[ObjectStorageBucketCert](ctx, c, e)
 }
 
 // UploadObjectStorageBucketCert uploads a TLS/SSL Cert to be used with an Object Storage Bucket.

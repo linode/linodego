@@ -39,10 +39,6 @@ const (
 	CapabilityVPCs                          string = "VPCs"
 	CapabilityVPCsExtra                     string = "VPCs Extra"
 	CapabilityVlans                         string = "Vlans"
-
-	// Deprecated: CapabilityObjectStorageRegions constant has been
-	// renamed to `CapabilityObjectStorageAccessKeyRegions`.
-	CapabilityObjectStorageRegions string = CapabilityObjectStorageAccessKeyRegions
 )
 
 // Region-related endpoints have a custom expiry time as the
