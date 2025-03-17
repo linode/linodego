@@ -16,12 +16,6 @@ type IPAddressUpdateOptionsV2 struct {
 	RDNS     **string `json:"rdns,omitempty"`
 }
 
-// IPAddressUpdateOptions fields are those accepted by UpdateIPAddress.
-// Deprecated: Please use IPAddressUpdateOptionsV2 for all new implementations.
-type IPAddressUpdateOptions struct {
-	RDNS *string `json:"rdns"`
-}
-
 // LinodeIPAssignment stores an assignment between an IP address and a Linode instance.
 type LinodeIPAssignment struct {
 	Address  string `json:"address"`
@@ -65,13 +59,6 @@ func (i InstanceIP) GetUpdateOptionsV2() IPAddressUpdateOptionsV2 {
 	}
 }
 
-// GetUpdateOptions converts a IPAddress to IPAddressUpdateOptions for use in UpdateIPAddress.
-// Deprecated: Please use GetUpdateOptionsV2 for all new implementations.
-func (i InstanceIP) GetUpdateOptions() (o IPAddressUpdateOptions) {
-	o.RDNS = copyString(&i.RDNS)
-	return
-}
-
 // ListIPAddresses lists IPAddresses.
 func (c *Client) ListIPAddresses(ctx context.Context, opts *ListOptions) ([]InstanceIP, error) {
 	return getPaginatedResults[InstanceIP](ctx, c, "networking/ips", opts)
@@ -86,13 +73,6 @@ func (c *Client) GetIPAddress(ctx context.Context, id string) (*InstanceIP, erro
 // UpdateIPAddressV2 updates the IP address with the specified address.
 func (c *Client) UpdateIPAddressV2(ctx context.Context, address string, opts IPAddressUpdateOptionsV2) (*InstanceIP, error) {
 	e := formatAPIPath("networking/ips/%s", address)
-	return doPUTRequest[InstanceIP](ctx, c, e, opts)
-}
-
-// UpdateIPAddress updates the IP address with the specified id.
-// Deprecated: Please use UpdateIPAddressV2 for all new implementation.
-func (c *Client) UpdateIPAddress(ctx context.Context, id string, opts IPAddressUpdateOptions) (*InstanceIP, error) {
-	e := formatAPIPath("networking/ips/%s", id)
 	return doPUTRequest[InstanceIP](ctx, c, e, opts)
 }
 

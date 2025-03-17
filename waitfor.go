@@ -476,64 +476,6 @@ func (client Client) WaitForImageRegionStatus(ctx context.Context, imageID, regi
 	}
 }
 
-// WaitForMySQLDatabaseBackup waits for the backup with the given label to be available.
-// Deprecated: WaitForMySQLDatabaseBackup is a deprecated method, as the backup endpoints are no longer supported in DBaaS V2.
-// In DBaaS V2, databases can be backed up via database forking.
-func (client Client) WaitForMySQLDatabaseBackup(ctx context.Context, dbID int, label string, timeoutSeconds int) (*MySQLDatabaseBackup, error) {
-	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
-	defer cancel()
-
-	ticker := time.NewTicker(client.pollInterval)
-	defer ticker.Stop()
-
-	for {
-		select {
-		case <-ticker.C:
-			backups, err := client.ListMySQLDatabaseBackups(ctx, dbID, nil)
-			if err != nil {
-				return nil, err
-			}
-
-			for _, backup := range backups {
-				if backup.Label == label {
-					return &backup, nil
-				}
-			}
-		case <-ctx.Done():
-			return nil, fmt.Errorf("failed to wait for backup %s: %w", label, ctx.Err())
-		}
-	}
-}
-
-// WaitForPostgresDatabaseBackup waits for the backup with the given label to be available.
-// Deprecated: WaitForPostgresDatabaseBackup is a deprecated method, as the backup endpoints are no longer supported in DBaaS V2.
-// In DBaaS V2, databases can be backed up via database forking.
-func (client Client) WaitForPostgresDatabaseBackup(ctx context.Context, dbID int, label string, timeoutSeconds int) (*PostgresDatabaseBackup, error) {
-	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
-	defer cancel()
-
-	ticker := time.NewTicker(client.pollInterval)
-	defer ticker.Stop()
-
-	for {
-		select {
-		case <-ticker.C:
-			backups, err := client.ListPostgresDatabaseBackups(ctx, dbID, nil)
-			if err != nil {
-				return nil, err
-			}
-
-			for _, backup := range backups {
-				if backup.Label == label {
-					return &backup, nil
-				}
-			}
-		case <-ctx.Done():
-			return nil, fmt.Errorf("failed to wait for backup %s: %w", label, ctx.Err())
-		}
-	}
-}
-
 type databaseStatusFunc func(ctx context.Context, client Client, dbID int) (DatabaseStatus, error)
 
 var databaseStatusHandlers = map[DatabaseEngineType]databaseStatusFunc{

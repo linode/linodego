@@ -170,8 +170,3 @@ func queryFieldToString(value reflect.Value) (string, error) {
 		return "", fmt.Errorf("unsupported query param type: %s", value.Type().Name())
 	}
 }
-
-type legacyPagedResponse[T any] struct {
-	*PageOptions
-	Data []T `json:"data"`
-}
