@@ -64,6 +64,14 @@ type VolumeUpdateOptions struct {
 	Tags  []string `json:"tags,omitempty"`
 }
 
+type VolumeCloneOptions struct {
+	Label string `json:"label"`
+}
+
+type VolumeResizeOptions struct {
+	Size int `json:"size"`
+}
+
 // VolumeAttachOptions fields are those accepted by AttachVolume
 type VolumeAttachOptions struct {
 	LinodeID           int   `json:"linode_id"`
@@ -141,11 +149,7 @@ func (c *Client) UpdateVolume(ctx context.Context, volumeID int, opts VolumeUpda
 }
 
 // CloneVolume clones a Linode volume
-func (c *Client) CloneVolume(ctx context.Context, volumeID int, label string) (*Volume, error) {
-	opts := map[string]any{
-		"label": label,
-	}
-
+func (c *Client) CloneVolume(ctx context.Context, volumeID int, opts VolumeCloneOptions) (*Volume, error) {
 	e := formatAPIPath("volumes/%d/clone", volumeID)
 	return doPOSTRequest[Volume](ctx, c, e, opts)
 }
@@ -157,11 +161,7 @@ func (c *Client) DetachVolume(ctx context.Context, volumeID int) error {
 }
 
 // ResizeVolume resizes an instance to new Linode type
-func (c *Client) ResizeVolume(ctx context.Context, volumeID int, size int) error {
-	opts := map[string]int{
-		"size": size,
-	}
-
+func (c *Client) ResizeVolume(ctx context.Context, volumeID int, opts VolumeResizeOptions) error {
 	e := formatAPIPath("volumes/%d/resize", volumeID)
 	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }

@@ -17,10 +17,6 @@ type Login struct {
 	Status     string     `json:"status"`
 }
 
-func (c *Client) ListLogins(ctx context.Context, opts *ListOptions) ([]Login, error) {
-	return getPaginatedResults[Login](ctx, c, "account/logins", opts)
-}
-
 // UnmarshalJSON implements the json.Unmarshaler interface
 func (i *Login) UnmarshalJSON(b []byte) error {
 	type Mask Login
@@ -39,6 +35,10 @@ func (i *Login) UnmarshalJSON(b []byte) error {
 	i.Datetime = (*time.Time)(l.Datetime)
 
 	return nil
+}
+
+func (c *Client) ListLogins(ctx context.Context, opts *ListOptions) ([]Login, error) {
+	return getPaginatedResults[Login](ctx, c, "account/logins", opts)
 }
 
 func (c *Client) GetLogin(ctx context.Context, loginID int) (*Login, error) {

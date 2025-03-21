@@ -56,15 +56,6 @@ const (
 	NotificationMaintenance        NotificationType = "maintenance"
 )
 
-// ListNotifications gets a collection of Notification objects representing important,
-// often time-sensitive items related to the Account. An account cannot interact directly with
-// Notifications, and a Notification will disappear when the circumstances causing it
-// have been resolved. For example, if the account has an important Ticket open, a response
-// to the Ticket will dismiss the Notification.
-func (c *Client) ListNotifications(ctx context.Context, opts *ListOptions) ([]Notification, error) {
-	return getPaginatedResults[Notification](ctx, c, "account/notifications", opts)
-}
-
 // UnmarshalJSON implements the json.Unmarshaler interface
 func (i *Notification) UnmarshalJSON(b []byte) error {
 	type Mask Notification
@@ -85,4 +76,13 @@ func (i *Notification) UnmarshalJSON(b []byte) error {
 	i.When = (*time.Time)(p.When)
 
 	return nil
+}
+
+// ListNotifications gets a collection of Notification objects representing important,
+// often time-sensitive items related to the Account. An account cannot interact directly with
+// Notifications, and a Notification will disappear when the circumstances causing it
+// have been resolved. For example, if the account has an important Ticket open, a response
+// to the Ticket will dismiss the Notification.
+func (c *Client) ListNotifications(ctx context.Context, opts *ListOptions) ([]Notification, error) {
+	return getPaginatedResults[Notification](ctx, c, "account/notifications", opts)
 }
