@@ -85,6 +85,11 @@ type InstanceReserveIPOptions struct {
 	Address string `json:"address"`
 }
 
+type InstanceIPAddOptions struct {
+	Type   string `json:"type"`
+	Public bool   `json:"public"`
+}
+
 // InstanceIPType constants start with IPType and include Linode Instance IP Types
 type InstanceIPType string
 
@@ -109,14 +114,10 @@ func (c *Client) GetInstanceIPAddress(ctx context.Context, linodeID int, ipaddre
 }
 
 // AddInstanceIPAddress adds a public or private IP to a Linode instance
-func (c *Client) AddInstanceIPAddress(ctx context.Context, linodeID int, public bool) (*InstanceIP, error) {
-	instanceipRequest := struct {
-		Type   string `json:"type"`
-		Public bool   `json:"public"`
-	}{"ipv4", public}
-
+func (c *Client) AddInstanceIPAddress(ctx context.Context, linodeID int, opts InstanceIPAddOptions) (*InstanceIP, error) {
+	opts.Type = "ipv4"
 	e := formatAPIPath("linode/instances/%d/ips", linodeID)
-	return doPOSTRequest[InstanceIP](ctx, c, e, instanceipRequest)
+	return doPOSTRequest[InstanceIP](ctx, c, e, opts)
 }
 
 // UpdateInstanceIPAddress updates the IPAddress with the specified instance id and IP address

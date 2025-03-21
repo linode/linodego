@@ -26,6 +26,10 @@ type RestoreInstanceOptions struct {
 	Overwrite bool `json:"overwrite"`
 }
 
+type InstanceSnapshotCreateOptions struct {
+	Label string `json:"label"`
+}
+
 // InstanceSnapshot represents a linode backup snapshot
 type InstanceSnapshot struct {
 	ID        int                     `json:"id"`
@@ -92,9 +96,7 @@ func (c *Client) GetInstanceSnapshot(ctx context.Context, linodeID int, snapshot
 }
 
 // CreateInstanceSnapshot Creates or Replaces the snapshot Backup of a Linode. If a previous snapshot exists for this Linode, it will be deleted.
-func (c *Client) CreateInstanceSnapshot(ctx context.Context, linodeID int, label string) (*InstanceSnapshot, error) {
-	opts := map[string]string{"label": label}
-
+func (c *Client) CreateInstanceSnapshot(ctx context.Context, linodeID int, opts InstanceSnapshotCreateOptions) (*InstanceSnapshot, error) {
 	e := formatAPIPath("linode/instances/%d/backups", linodeID)
 	return doPOSTRequest[InstanceSnapshot](ctx, c, e, opts)
 }

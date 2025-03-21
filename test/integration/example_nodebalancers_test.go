@@ -165,7 +165,10 @@ func ExampleClient_CreateNodeBalancerNode() {
 		log.Fatal(err)
 	}
 
-	ip, err := linodeClient.AddInstanceIPAddress(context.Background(), instance.ID, false)
+	opts := linodego.InstanceIPAddOptions{
+		Public: false,
+	}
+	ip, err := linodeClient.AddInstanceIPAddress(context.Background(), instance.ID, opts)
 	if err != nil {
 		log.Fatal(err)
 	}

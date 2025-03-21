@@ -39,7 +39,7 @@ func (c *Client) GetChildAccount(ctx context.Context, euuid string) (*ChildAccou
 // The attributes of this token are not currently configurable.
 // NOTE: Parent/Child related features may not be generally available.
 func (c *Client) CreateChildAccountToken(ctx context.Context, euuid string) (*ChildAccountToken, error) {
-	return doPOSTRequest[ChildAccountToken, any](
+	return doPOSTRequestNoRequestBody[ChildAccountToken](
 		ctx,
 		c,
 		formatAPIPath("account/child-accounts/%s/token", euuid),

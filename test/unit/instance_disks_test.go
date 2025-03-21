@@ -18,9 +18,7 @@ func TestInstance_Disks_Clone(t *testing.T) {
 
 	base.MockPost("linode/instances/12345/disks/123/clone", fixtureData)
 
-	opts := linodego.InstanceDiskCloneOptions{}
-
-	disk, err := base.Client.CloneInstanceDisk(context.Background(), 12345, 123, opts)
+	disk, err := base.Client.CloneInstanceDisk(context.Background(), 12345, 123)
 	assert.NoError(t, err)
 
 	assert.Equal(t, linodego.DiskFilesystem("ext4"), disk.Filesystem)

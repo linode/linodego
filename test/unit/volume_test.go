@@ -179,6 +179,10 @@ func TestResizeVolume(t *testing.T) {
 	volumeID := 123
 	base.MockPost(fmt.Sprintf("volumes/%d/resize", volumeID), nil)
 
-	err := base.Client.ResizeVolume(context.Background(), volumeID, 50)
+	opts := linodego.VolumeResizeOptions{
+		Size: 50,
+	}
+
+	err := base.Client.ResizeVolume(context.Background(), volumeID, opts)
 	assert.NoError(t, err, "Expected no error when resizing volume")
 }

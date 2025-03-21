@@ -39,11 +39,6 @@ type InvoiceItem struct {
 	Total     float32    `json:"total"`
 }
 
-// ListInvoices gets a paginated list of Invoices against the Account
-func (c *Client) ListInvoices(ctx context.Context, opts *ListOptions) ([]Invoice, error) {
-	return getPaginatedResults[Invoice](ctx, c, "account/invoices", opts)
-}
-
 // UnmarshalJSON implements the json.Unmarshaler interface
 func (i *Invoice) UnmarshalJSON(b []byte) error {
 	type Mask Invoice
@@ -84,6 +79,11 @@ func (i *InvoiceItem) UnmarshalJSON(b []byte) error {
 	i.To = (*time.Time)(p.To)
 
 	return nil
+}
+
+// ListInvoices gets a paginated list of Invoices against the Account
+func (c *Client) ListInvoices(ctx context.Context, opts *ListOptions) ([]Invoice, error) {
+	return getPaginatedResults[Invoice](ctx, c, "account/invoices", opts)
 }
 
 // GetInvoice gets a single Invoice matching the provided ID

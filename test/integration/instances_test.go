@@ -395,7 +395,11 @@ func TestInstance_Disk_Resize(t *testing.T) {
 		t.Errorf("Error waiting for disk readiness for resize: %s", err)
 	}
 
-	err = client.ResizeInstanceDisk(context.Background(), instance.ID, disk.ID, 4000)
+	opts := linodego.InstanceDiskResizeOptions{
+		Size: 4000,
+	}
+
+	err = client.ResizeInstanceDisk(context.Background(), instance.ID, disk.ID, opts)
 	if err != nil {
 		t.Errorf("Error resizing instance disk: %s", err)
 	}
@@ -408,7 +412,11 @@ func TestInstance_Disk_ListMultiple(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	err = client.BootInstance(context.Background(), instance1.ID, 0)
+
+	opts := linodego.InstanceBootOptions{
+		ConfigID: 0,
+	}
+	err = client.BootInstance(context.Background(), instance1.ID, opts)
 	if err != nil {
 		t.Error(err)
 	}
@@ -510,9 +518,7 @@ func TestInstance_Disk_Clone(t *testing.T) {
 		t.Errorf("Error waiting for disk readiness for disk clone: %s", err)
 	}
 
-	opts := linodego.InstanceDiskCloneOptions{}
-
-	_, err = client.CloneInstanceDisk(context.Background(), instance.ID, disk.ID, opts)
+	_, err = client.CloneInstanceDisk(context.Background(), instance.ID, disk.ID)
 	if err != nil {
 		t.Errorf("Error cloning instance disk: %s", err)
 	}
@@ -550,7 +556,10 @@ func TestInstance_Disk_ResetPassword(t *testing.T) {
 		t.Errorf("Error waiting for disk readiness for password reset: %s", err)
 	}
 
-	err = client.PasswordResetInstanceDisk(context.Background(), instance.ID, disk.ID, "r34!_b4d_p455")
+	opts := linodego.InstanceDiskPasswordResetOptions{
+		Password: "r34!_b4d_p455",
+	}
+	err = client.PasswordResetInstanceDisk(context.Background(), instance.ID, disk.ID, opts)
 	if err != nil {
 		t.Errorf("Error reseting password on instance disk: %s", err)
 	}

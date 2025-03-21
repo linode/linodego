@@ -376,7 +376,10 @@ func TestIPAddress_Instance_Delete(t *testing.T) {
 		t.Error(err)
 	}
 
-	ip, err := client.AddInstanceIPAddress(context.TODO(), instance.ID, true)
+	opts := linodego.InstanceIPAddOptions{
+		Public: true,
+	}
+	ip, err := client.AddInstanceIPAddress(context.TODO(), instance.ID, opts)
 	if err != nil {
 		t.Fatalf("failed to allocate public IPv4 for instance (%d): %s", instance.ID, err)
 	}
@@ -485,7 +488,10 @@ func TestIPAddress_Instance_Share(t *testing.T) {
 		t.Error(err)
 	}
 
-	ip, err := client.AddInstanceIPAddress(context.Background(), newInstance.ID, true)
+	opts := linodego.InstanceIPAddOptions{
+		Public: true,
+	}
+	ip, err := client.AddInstanceIPAddress(context.Background(), newInstance.ID, opts)
 	if err != nil {
 		t.Error(err)
 	}

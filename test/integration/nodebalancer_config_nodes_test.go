@@ -170,7 +170,10 @@ func setupNodeBalancerNode(t *testing.T, fixturesYaml string) (*linodego.Client,
 		t.Errorf("failed to create test instance: %s", err)
 	}
 
-	instanceIP, err := client.AddInstanceIPAddress(context.Background(), instance.ID, false)
+	opts := linodego.InstanceIPAddOptions{
+		Public: false,
+	}
+	instanceIP, err := client.AddInstanceIPAddress(context.Background(), instance.ID, opts)
 	if err != nil {
 		t.Fatal(err)
 	}

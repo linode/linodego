@@ -76,7 +76,10 @@ func TestVolume_Resize(t *testing.T) {
 		t.Errorf("Error waiting for volume to be active, %s", err)
 	}
 
-	if err := client.ResizeVolume(context.Background(), volume.ID, volume.Size+1); err != nil {
+	opts := linodego.VolumeResizeOptions{
+		Size: volume.Size + 1,
+	}
+	if err := client.ResizeVolume(context.Background(), volume.ID, opts); err != nil {
 		t.Errorf("Error resizing volume, %s", err)
 	}
 }

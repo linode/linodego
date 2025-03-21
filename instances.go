@@ -277,6 +277,14 @@ type InstanceResizeOptions struct {
 	AllowAutoDiskResize *bool `json:"allow_auto_disk_resize,omitempty"`
 }
 
+type InstanceBootOptions struct {
+	ConfigID int `json:"config_id"`
+}
+
+type InstanceRebootOptions struct {
+	ConfigID int `json:"config_id"`
+}
+
 // InstanceMigrateOptions is an options struct used when migrating an instance
 type InstanceMigrateOptions struct {
 	Type    *InstanceMigrationType `json:"type,omitempty"`
@@ -333,15 +341,17 @@ func (c *Client) DeleteInstance(ctx context.Context, linodeID int) error {
 
 // BootInstance will boot a Linode instance
 // A configID of 0 will cause Linode to choose the last/best config
-func (c *Client) BootInstance(ctx context.Context, linodeID int, configID int) error {
-	opts := make(map[string]int)
+func (c *Client) BootInstance(ctx context.Context, linodeID int, opts InstanceBootOptions) error {
+	var payload InstanceBootOptions
 
-	if configID != 0 {
-		opts = map[string]int{"config_id": configID}
+	if opts.ConfigID != 0 {
+		payload = opts // Use the struct when ConfigID is set
+	} else {
+		payload = InstanceBootOptions{} // Send an empty JSON object when ConfigID is 0
 	}
 
 	e := formatAPIPath("linode/instances/%d/boot", linodeID)
-	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
+	return doPOSTRequestNoResponseBody(ctx, c, e, payload)
 }
 
 // CloneInstance clone an existing Instances Disks and Configuration profiles to another Linode Instance
@@ -358,15 +368,17 @@ func (c *Client) ResetInstancePassword(ctx context.Context, linodeID int, opts I
 
 // RebootInstance reboots a Linode instance
 // A configID of 0 will cause Linode to choose the last/best config
-func (c *Client) RebootInstance(ctx context.Context, linodeID int, configID int) error {
-	opts := make(map[string]int)
+func (c *Client) RebootInstance(ctx context.Context, linodeID int, opts InstanceRebootOptions) error {
+	var payload InstanceRebootOptions
 
-	if configID != 0 {
-		opts = map[string]int{"config_id": configID}
+	if opts.ConfigID != 0 {
+		payload = opts // Use the struct when ConfigID is set
+	} else {
+		payload = InstanceRebootOptions{} // Send an empty JSON object when ConfigID is 0
 	}
 
 	e := formatAPIPath("linode/instances/%d/reboot", linodeID)
-	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
+	return doPOSTRequestNoResponseBody(ctx, c, e, payload)
 }
 
 // InstanceRebuildOptions is a struct representing the options to send to the rebuild linode endpoint
