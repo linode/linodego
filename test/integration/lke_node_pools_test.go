@@ -312,3 +312,77 @@ func setupLKENodePool(t *testing.T, fixturesYaml string, nodePoolCreateOpts *lin
 	}
 	return client, lkeCluster, pool, teardown, err
 }
+
+func TestLKEEnterpriseNodePoolK8sUpgrade_Get(t *testing.T) {
+	testLKENodePoolCreateOpts.K8sVersion = linodego.Pointer("v1.31.1+lke1")
+	testLKENodePoolCreateOpts.UpdateStrategy = linodego.Pointer(linodego.LKENodePoolRollingUpdate)
+
+	_, _, nodePool, teardown, err := setupLKEEnterpriseNodePool(t, "fixtures/TestLKENodeEnterprisePoolNode_Get", &testLKENodePoolCreateOpts)
+	if err != nil {
+		t.Error(err)
+	}
+	defer teardown()
+
+	if diff := cmp.Diff(testLKENodePoolCreateOpts.K8sVersion, nodePool.K8sVersion); diff != "" {
+		t.Errorf("unexpected k8s version:\n%s", diff)
+	}
+
+	if diff := cmp.Diff(testLKENodePoolCreateOpts.UpdateStrategy, nodePool.UpdateStrategy); diff != "" {
+		t.Errorf("unexpected update strategy:\n%s", diff)
+	}
+}
+
+func TestLKEEnterpriseNodePoolK8sUpgrade_Update(t *testing.T) {
+	testLKENodePoolCreateOpts.K8sVersion = linodego.Pointer("v1.31.1+lke1")
+	testLKENodePoolCreateOpts.UpdateStrategy = linodego.Pointer(linodego.LKENodePoolRollingUpdate)
+
+	client, lkeCluster, nodePool, teardown, err := setupLKEEnterpriseNodePool(t, "fixtures/TestLKENodeEnterprisePoolNode_Update", &testLKENodePoolCreateOpts)
+	if err != nil {
+		t.Error(err)
+	}
+	defer teardown()
+
+	updated, err := client.UpdateLKENodePool(context.TODO(), lkeCluster.ID, nodePool.ID, linodego.LKENodePoolUpdateOptions{
+		UpdateStrategy: linodego.Pointer(linodego.LKENodePoolOnRecycle),
+	})
+
+	if err != nil {
+		t.Errorf("Failed to update LKE node pool update strategy: %v", err.Error())
+	}
+
+	updatedNodePool, err := client.GetLKENodePool(context.TODO(), lkeCluster.ID, nodePool.ID)
+	if err != nil {
+		t.Errorf("Failed to get updated LKE node pool update strategy: %v", err.Error())
+	}
+
+	if diff := cmp.Diff(updated.UpdateStrategy, updatedNodePool.UpdateStrategy); diff != "" {
+		t.Errorf("unexpected update strategy:\n%s", diff)
+	}
+}
+
+func setupLKEEnterpriseNodePool(t *testing.T, fixturesYaml string, nodePoolCreateOpts *linodego.LKENodePoolCreateOptions) (*linodego.Client, *linodego.LKECluster, *linodego.LKENodePool, func(), error) {
+	t.Helper()
+	var fixtureTeardown func()
+	client, lkeCluster, fixtureTeardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
+		createOpts.Tier = "enterprise"
+		createOpts.Region = "us-lax"
+		createOpts.K8sVersion = "v1.31.1+lke1"
+	}}, fixturesYaml)
+	if err != nil {
+		t.Errorf("Error creating LKE enterprise cluster, got error %v", err)
+	}
+
+	pool, err := client.CreateLKENodePool(context.Background(), lkeCluster.ID, *nodePoolCreateOpts)
+	if err != nil {
+		t.Errorf("Error creating Node Pool under LKE-E, got error %v", err)
+	}
+
+	teardown := func() {
+		// delete the LKENodePool to exercise the code
+		if err := client.DeleteLKENodePool(context.Background(), lkeCluster.ID, pool.ID); err != nil {
+			t.Errorf("Expected to delete a LKE Node Pool, but got %v", err)
+		}
+		fixtureTeardown()
+	}
+	return client, lkeCluster, pool, teardown, err
+}
