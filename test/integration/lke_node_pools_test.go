@@ -345,7 +345,6 @@ func TestLKEEnterpriseNodePoolK8sUpgrade_Update(t *testing.T) {
 	updated, err := client.UpdateLKENodePool(context.TODO(), lkeCluster.ID, nodePool.ID, linodego.LKENodePoolUpdateOptions{
 		UpdateStrategy: linodego.Pointer(linodego.LKENodePoolOnRecycle),
 	})
-
 	if err != nil {
 		t.Errorf("Failed to update LKE node pool update strategy: %v", err.Error())
 	}
