@@ -10,7 +10,7 @@ type MonitorServices struct {
 	ServiceType string `json:"service_type"`
 }
 
-// ListLongviewClients lists LongviewClients
+// ListMonitorDashboards lists MonitorDashboards
 func (c *Client) ListMonitorServices(ctx context.Context, opts *ListOptions) ([]MonitorServices, error) {
 	return getPaginatedResults[MonitorServices](ctx, c, "monitor/services", opts)
 }
