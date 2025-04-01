@@ -25,10 +25,6 @@ func TestListMonitorDashboards(t *testing.T) {
 	assert.NoError(t, err, "Expected no error when listing monitor dashboards")
 	assert.NotEmpty(t, clients, "Expected non-empty monitor dashboard list")
 
-	// if len(clients) > 0 {
-	// 	t.Log("First client details:", clients[0])
-	// }
-
 	assert.Equal(t, "standard", clients[0].Type, "Expected dashboard type to match")
 	assert.Equal(t, "dbaas", clients[0].ServiceType, "Expected service_type to match")
 }
