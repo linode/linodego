@@ -25,10 +25,6 @@ func TestListMonitorServices(t *testing.T) {
 	assert.NoError(t, err, "Expected no error when listing monitor services")
 	assert.NotEmpty(t, clients, "Expected non-empty monitor services list")
 
-	// Validate the first monitor service details
-	if len(clients) > 0 {
-		t.Log("First client details:", clients[0])
-	}
 	assert.Equal(t, "Databases", clients[0].Label, "Expected services label to match")
 	assert.Equal(t, "dbaas", clients[0].ServiceType, "Expected service_type to match")
 }
@@ -50,10 +46,6 @@ func TestListMonitorServicesByType(t *testing.T) {
 	assert.NoError(t, err, "Expected no error when listing monitor services by type")
 	assert.NotEmpty(t, clients, "Expected non-empty monitor services list")
 
-	// Validate the first monitor service details
-	if len(clients) > 0 {
-		t.Log("First client details:", clients[0])
-	}
 	assert.Equal(t, "Databases", clients[0].Label, "Expected services label to match")
 	assert.Equal(t, "dbaas", clients[0].ServiceType, "Expected service_type to match")
 }
