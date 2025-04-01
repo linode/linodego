@@ -67,9 +67,12 @@ func TestVPC_Get(t *testing.T) {
 	base.MockGet("vpcs/123", fixtureData)
 
 	vpc, err := base.Client.GetVPC(context.Background(), 123)
-
 	assert.NoError(t, err, "Expected no error when getting VPC")
 	assert.NotNil(t, vpc, "Expected non-nil VPC")
+
+	assertJSONObjectsSimilar(t, vpc, vpc.GetCreateOptions())
+	assertJSONObjectsSimilar(t, vpc, vpc.GetUpdateOptions())
+
 	assert.Equal(t, 123, vpc.ID, "Expected VPC ID to match")
 	assert.Equal(t, "test-vpc", vpc.Label, "Expected VPC label to match")
 	assert.Equal(t, "Test VPC description", vpc.Description)
@@ -97,6 +100,9 @@ func TestVPC_List(t *testing.T) {
 	assert.NoError(t, err)
 
 	assert.NotEmpty(t, vpcs, "Expected non-empty VPC list")
+
+	assertJSONObjectsSimilar(t, vpcs[0], vpcs[0].GetCreateOptions())
+	assertJSONObjectsSimilar(t, vpcs[0], vpcs[0].GetUpdateOptions())
 
 	assert.Equal(t, 123, vpcs[0].ID, "Expected VPC ID to match")
 	assert.Equal(t, "test-vpc", vpcs[0].Label, "Expected VPC label to match")
@@ -132,6 +138,10 @@ func TestVPC_Update(t *testing.T) {
 	vpc, err := base.Client.UpdateVPC(context.Background(), 123, opts)
 	assert.NoError(t, err, "Expected no error when updating VPC")
 	assert.NotNil(t, vpc, "Expected non-nil updated VPC")
+
+	assertJSONObjectsSimilar(t, vpc, vpc.GetCreateOptions())
+	assertJSONObjectsSimilar(t, vpc, vpc.GetUpdateOptions())
+
 	assert.Equal(t, "updated-vpc", vpc.Label, "Expected VPC label to match")
 	assert.Equal(t, "Updated description", vpc.Description, "Expected VPC description to match")
 }

@@ -31,6 +31,9 @@ func TestVPCSubnet_Create(t *testing.T) {
 	subnet, err := base.Client.CreateVPCSubnet(context.Background(), subnetCreateOpts, 123)
 	assert.NoError(t, err)
 
+	assertJSONObjectsSimilar(t, subnet, subnet.GetCreateOptions())
+	assertJSONObjectsSimilar(t, subnet, subnet.GetUpdateOptions())
+
 	assert.Equal(t, 789, subnet.ID, "Expected subnet ID to match")
 	assert.Equal(t, "Test Subnet", subnet.Label, "Expected subnet label to match")
 	assert.Equal(t, "192.168.1.0/24", subnet.IPv4, "Expected subnet IPv4 to match")
@@ -49,6 +52,9 @@ func TestVPCSubnet_Get(t *testing.T) {
 
 	subnet, err := base.Client.GetVPCSubnet(context.Background(), 123, 456)
 	assert.NoError(t, err)
+
+	assertJSONObjectsSimilar(t, subnet, subnet.GetCreateOptions())
+	assertJSONObjectsSimilar(t, subnet, subnet.GetUpdateOptions())
 
 	assert.Equal(t, 456, subnet.ID, "Expected subnet ID to match")
 	assert.Equal(t, "Existing Subnet", subnet.Label, "Expected subnet label to match")
@@ -72,6 +78,9 @@ func TestVPCSubnets_List(t *testing.T) {
 	assert.NoError(t, err, "Expected no error when listing subnets")
 	assert.Len(t, subnets, 2, "Expected two subnets in the list")
 
+	assertJSONObjectsSimilar(t, subnets[0], subnets[0].GetCreateOptions())
+	assertJSONObjectsSimilar(t, subnets[0], subnets[0].GetUpdateOptions())
+
 	assert.Equal(t, 123, subnets[0].ID, "Expected first subnet ID to match")
 	assert.Equal(t, "Subnet A", subnets[0].Label, "Expected first subnet label to match")
 	assert.Equal(t, "192.168.3.0/24", subnets[0].IPv4, "Expected first subnet IPv4 to match")
@@ -94,6 +103,9 @@ func TestVPCSubnet_Update(t *testing.T) {
 	}
 	subnet, err := base.Client.UpdateVPCSubnet(context.Background(), 123, 456, subnetUpdateOpts)
 	assert.NoError(t, err)
+
+	assertJSONObjectsSimilar(t, subnet, subnet.GetCreateOptions())
+	assertJSONObjectsSimilar(t, subnet, subnet.GetUpdateOptions())
 
 	assert.Equal(t, 456, subnet.ID, "Expected subnet ID to match")
 	assert.Equal(t, "Updated Subnet", subnet.Label, "Expected subnet label to match")

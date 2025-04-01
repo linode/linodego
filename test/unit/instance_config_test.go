@@ -61,6 +61,9 @@ func TestInstanceConfig_Get(t *testing.T) {
 	config, err := base.Client.GetInstanceConfig(context.Background(), 123, 1)
 	assert.NoError(t, err)
 
+	assertJSONObjectsSimilar(t, config, config.GetCreateOptions())
+	assertJSONObjectsSimilar(t, config, config.GetUpdateOptions())
+
 	assert.Equal(t, 1, config.ID)
 	assert.Equal(t, "config-1", config.Label)
 
@@ -108,6 +111,9 @@ func TestInstanceConfig_Create(t *testing.T) {
 	config, err := base.Client.CreateInstanceConfig(context.Background(), 123, createOptions)
 	assert.NoError(t, err)
 
+	assertJSONObjectsSimilar(t, config, config.GetCreateOptions())
+	assertJSONObjectsSimilar(t, config, config.GetUpdateOptions())
+
 	assert.Equal(t, "new-config", config.Label)
 
 	iface := config.Interfaces[0]
@@ -150,6 +156,9 @@ func TestInstanceConfig_Update(t *testing.T) {
 
 	config, err := base.Client.UpdateInstanceConfig(context.Background(), 123, 1, updateOptions)
 	assert.NoError(t, err)
+
+	assertJSONObjectsSimilar(t, config, config.GetCreateOptions())
+	assertJSONObjectsSimilar(t, config, config.GetUpdateOptions())
 
 	assert.Equal(t, "updated-config", config.Label)
 
