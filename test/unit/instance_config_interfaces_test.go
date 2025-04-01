@@ -24,6 +24,11 @@ func TestInstanceConfigInterface_List(t *testing.T) {
 
 	assert.Equal(t, 1, interfaces[0].ID)
 	assert.Equal(t, "eth0", interfaces[0].Label)
+
+	assert.Equal(t, "1234::5678/64", interfaces[0].IPv6.SLAAC[0].Range)
+	assert.Equal(t, "1234::5678", interfaces[0].IPv6.SLAAC[0].Address)
+	assert.Equal(t, "1234::5678/64", interfaces[0].IPv6.Ranges[0].Range)
+	assert.True(t, interfaces[0].IPv6.IsPublic)
 }
 
 func TestInstanceConfigInterface_Get(t *testing.T) {
@@ -40,6 +45,11 @@ func TestInstanceConfigInterface_Get(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, 1, iface.ID)
 	assert.Equal(t, "eth0", iface.Label)
+
+	assert.Equal(t, "1234::5678/64", iface.IPv6.SLAAC[0].Range)
+	assert.Equal(t, "1234::5678", iface.IPv6.SLAAC[0].Address)
+	assert.Equal(t, "1234::5678/64", iface.IPv6.Ranges[0].Range)
+	assert.True(t, iface.IPv6.IsPublic)
 }
 
 func TestInstanceConfigInterface_Create(t *testing.T) {
@@ -70,6 +80,11 @@ func TestInstanceConfigInterface_Create(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "eth0", iface.Label)
 	assert.True(t, iface.Primary)
+
+	assert.Equal(t, "1234::5678/64", iface.IPv6.SLAAC[0].Range)
+	assert.Equal(t, "1234::5678", iface.IPv6.SLAAC[0].Address)
+	assert.Equal(t, "1234::5678/64", iface.IPv6.Ranges[0].Range)
+	assert.True(t, iface.IPv6.IsPublic)
 }
 
 func TestInstanceConfigInterface_Update(t *testing.T) {
@@ -96,6 +111,11 @@ func TestInstanceConfigInterface_Update(t *testing.T) {
 	iface, err := base.Client.UpdateInstanceConfigInterface(context.Background(), 123, 456, 1, updateOptions)
 	assert.NoError(t, err)
 	assert.True(t, iface.Primary)
+
+	assert.Equal(t, "1234::5678/64", iface.IPv6.SLAAC[0].Range)
+	assert.Equal(t, "1234::5678", iface.IPv6.SLAAC[0].Address)
+	assert.Equal(t, "1234::5678/64", iface.IPv6.Ranges[0].Range)
+	assert.True(t, iface.IPv6.IsPublic)
 }
 
 func TestInstanceConfigInterface_Delete(t *testing.T) {

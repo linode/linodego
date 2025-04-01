@@ -5,6 +5,8 @@ import (
 	"testing"
 	"time"
 
+	"github.com/stretchr/testify/require"
+
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
 )
@@ -19,6 +21,11 @@ func TestVPC_Create(t *testing.T) {
 		Label:       "test-vpc",
 		Description: "Test VPC description",
 		Region:      "us-east",
+		IPv6: []linodego.VPCIPv6Range{
+			{
+				Range: "fd71:1140:a9d0::/52",
+			},
+		},
 		Subnets: []linodego.VPCSubnet{
 			{ID: 1, Label: "subnet-1"},
 			{ID: 2, Label: "subnet-2"},
@@ -31,6 +38,12 @@ func TestVPC_Create(t *testing.T) {
 		Label:       "test-vpc",
 		Description: "Test VPC description",
 		Region:      "us-east",
+		IPv6: []linodego.VPCCreateOptionsIPv6{
+			{
+				Range:           linodego.Pointer("/52"),
+				AllocationClass: linodego.Pointer("test"),
+			},
+		},
 		Subnets: []linodego.VPCSubnetCreateOptions{
 			{Label: "subnet-1"},
 			{Label: "subnet-2"},
@@ -48,17 +61,26 @@ func TestVPC_Get(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	mockVPC := linodego.VPC{
-		ID:    123,
-		Label: "test-vpc",
-	}
-	base.MockGet("vpcs/123", mockVPC)
+	fixtureData, err := fixtures.GetFixture("vpc_get")
+	require.NoError(t, err)
+
+	base.MockGet("vpcs/123", fixtureData)
 
 	vpc, err := base.Client.GetVPC(context.Background(), 123)
+
 	assert.NoError(t, err, "Expected no error when getting VPC")
 	assert.NotNil(t, vpc, "Expected non-nil VPC")
-	assert.Equal(t, mockVPC.ID, vpc.ID, "Expected VPC ID to match")
-	assert.Equal(t, mockVPC.Label, vpc.Label, "Expected VPC label to match")
+	assert.Equal(t, 123, vpc.ID, "Expected VPC ID to match")
+	assert.Equal(t, "test-vpc", vpc.Label, "Expected VPC label to match")
+	assert.Equal(t, "Test VPC description", vpc.Description)
+	assert.Equal(t, "us-east", vpc.Region)
+
+	assert.Equal(t, "fd71:1140:a9d0::/52", vpc.IPv6[0].Range)
+
+	assert.NotEmpty(t, vpc.Subnets)
+	assert.Equal(t, 456, vpc.Subnets[0].ID)
+	assert.Equal(t, "subnet-1", vpc.Subnets[0].Label)
+	assert.Equal(t, "192.168.1.0/24", vpc.Subnets[0].IPv4)
 }
 
 func TestVPC_List(t *testing.T) {
@@ -80,6 +102,9 @@ func TestVPC_List(t *testing.T) {
 	assert.Equal(t, "test-vpc", vpcs[0].Label, "Expected VPC label to match")
 	assert.Equal(t, "Test VPC description", vpcs[0].Description, "Expected VPC description to match")
 	assert.Equal(t, "us-east", vpcs[0].Region, "Expected VPC region to match")
+
+	assert.Equal(t, "fd71:1140:a9d0::/52", vpcs[0].IPv6[0].Range)
+
 	assert.NotEmpty(t, vpcs[0].Subnets, "Expected VPC to have subnets")
 	assert.Equal(t, 456, vpcs[0].Subnets[0].ID, "Expected subnet ID to match")
 	assert.Equal(t, "subnet-1", vpcs[0].Subnets[0].Label, "Expected subnet label to match")
@@ -96,6 +121,7 @@ func TestVPC_Update(t *testing.T) {
 		Label:       "updated-vpc",
 		Description: "Updated description",
 	}
+
 	base.MockPut("vpcs/123", updatedMockVPC)
 
 	opts := linodego.VPCUpdateOptions{
