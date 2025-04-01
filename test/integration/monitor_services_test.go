@@ -33,7 +33,7 @@ func TestMonitorServices_Get_smoke(t *testing.T) {
 		log.Printf("[INFO] element.ServiceType : %#+v", element.ServiceType)
 		log.Printf("[INFO] monitorServicesClient.ServiceType : %#+v", monitorServicesClient)
 		if element.ServiceType == "dbaas" {
-			log.Printf("[WARN] event.Created is nil when API returned: %#+v", element.ServiceType)
+			log.Printf("[INFO] found services for service_type: %#+v", element.ServiceType)
 			found = true
 		}
 	}
