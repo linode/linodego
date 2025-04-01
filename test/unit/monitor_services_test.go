@@ -9,7 +9,7 @@ import (
 )
 
 func TestListMonitorServices(t *testing.T) {
-	// Load the mock fixture for Longview clients
+	// Load the mock fixture for monitor services
 	fixtureData, err := fixtures.GetFixture("monitor_services")
 	assert.NoError(t, err, "Expected no error when getting fixture")
 
@@ -17,7 +17,7 @@ func TestListMonitorServices(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	// Mock the GET request for the longview clients endpoint
+	// Mock the GET request for the monitor services endpoint
 	base.MockGet("monitor/services", fixtureData)
 
 	// Call the ListMonitorServices method
@@ -25,13 +25,16 @@ func TestListMonitorServices(t *testing.T) {
 	assert.NoError(t, err, "Expected no error when listing monitor services")
 	assert.NotEmpty(t, clients, "Expected non-empty monitor services list")
 
-	// Validate the first longview client details
+	// Validate the first monitor service details
+	if len(clients) > 0 {
+		t.Log("First client details:", clients[0])
+	}
 	assert.Equal(t, "Databases", clients[0].Label, "Expected services label to match")
 	assert.Equal(t, "dbaas", clients[0].ServiceType, "Expected service_type to match")
 }
 
 func TestListMonitorServicesByType(t *testing.T) {
-	// Load the mock fixture for Longview clients
+	// Load the mock fixture for monitor services
 	fixtureData, err := fixtures.GetFixture("monitor_services")
 	assert.NoError(t, err, "Expected no error when getting fixture")
 
@@ -39,15 +42,18 @@ func TestListMonitorServicesByType(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	// Mock the GET request for the longview clients endpoint
+	// Mock the GET request for the monitor services by type (dbaas)
 	base.MockGet("monitor/services/dbaas", fixtureData)
 
-	// Call the ListMonitorServices method
+	// Call the GetMonitorServiceByType method
 	clients, err := base.Client.GetMonitorServiceByType(context.Background(), "dbaas", &linodego.ListOptions{})
-	assert.NoError(t, err, "Expected no error when listing monitor services")
+	assert.NoError(t, err, "Expected no error when listing monitor services by type")
 	assert.NotEmpty(t, clients, "Expected non-empty monitor services list")
 
-	// Validate the first longview client details
+	// Validate the first monitor service details
+	if len(clients) > 0 {
+		t.Log("First client details:", clients[0])
+	}
 	assert.Equal(t, "Databases", clients[0].Label, "Expected services label to match")
 	assert.Equal(t, "dbaas", clients[0].ServiceType, "Expected service_type to match")
 }

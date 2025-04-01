@@ -40,6 +40,11 @@ func (c *Client) GetMonitorDashboardsByID(ctx context.Context, dashboard_id int)
 	return doGETRequest[MonitorDashboards](ctx, c, e)
 }
 
+func (c *Client) GetMonitorDashboardsByServiceType(ctx context.Context, service_type string, opts *ListOptions) ([]MonitorDashboards, error) {
+	e := formatAPIPath("monitor/services/%s/dashboards", service_type)
+	return getPaginatedResults[MonitorDashboards](ctx, c, e, opts)
+}
+
 // UnmarshalJSON implements the json.Unmarshaler interface
 func (i *MonitorDashboards) UnmarshalJSON(b []byte) error {
 	type Mask MonitorDashboards

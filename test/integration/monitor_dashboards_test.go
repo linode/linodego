@@ -37,6 +37,22 @@ func TestMonitorDashboards_Get_smoke(t *testing.T) {
 		t.Errorf("Monitor dashboard not found in list.")
 	}
 
+	monitorDashhboardClientST, listErr := client.GetMonitorDashboardsByServiceType(context.Background(), "dbaas", nil)
+	if listErr != nil {
+		t.Errorf("Error listing monitor dashboards:%s", listErr)
+	}
+
+	found_st := false
+	for _, element := range monitorDashhboardClientST {
+		if element.ServiceType == monitorDashhboardClient.ServiceType {
+			found_st = true
+		}
+	}
+
+	if !found_st {
+		t.Errorf("Monitor dashboard not found in list.")
+	}
+
 }
 
 func validateDashboards(
