@@ -70,7 +70,7 @@ func (v VPCSubnet) GetCreateOptions() VPCSubnetCreateOptions {
 	return VPCSubnetCreateOptions{
 		Label: v.Label,
 		IPv4:  v.IPv4,
-		IPv6: MapSlice(v.IPv6, func(i VPCIPv6Range) VPCSubnetCreateOptionsIPv6 {
+		IPv6: mapSlice(v.IPv6, func(i VPCIPv6Range) VPCSubnetCreateOptionsIPv6 {
 			return VPCSubnetCreateOptionsIPv6{
 				Range: copyValue(&i.Range),
 			}

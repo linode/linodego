@@ -127,36 +127,34 @@ func (i InstanceConfigInterface) GetCreateOptions() InstanceConfigInterfaceCreat
 		opts.IPRanges = i.IPRanges
 	}
 
-	if i.Purpose == InterfacePurposeVPC {
-		if i.IPv4 != nil {
-			opts.IPv4 = &VPCIPv4{
-				VPC:     i.IPv4.VPC,
-				NAT1To1: i.IPv4.NAT1To1,
-			}
+	if i.IPv4 != nil {
+		opts.IPv4 = &VPCIPv4{
+			VPC:     i.IPv4.VPC,
+			NAT1To1: i.IPv4.NAT1To1,
 		}
+	}
 
-		if i.IPv6 != nil {
-			ipv6 := *i.IPv6
+	if i.IPv6 != nil {
+		ipv6 := *i.IPv6
 
-			opts.IPv6 = &InstanceConfigInterfaceCreateOptionsIPv6{
-				SLAAC: MapSlice(
-					ipv6.SLAAC,
-					func(i InstanceConfigInterfaceIPv6SLAAC) InstanceConfigInterfaceCreateOptionsIPv6SLAAC {
-						return InstanceConfigInterfaceCreateOptionsIPv6SLAAC{
-							Range: i.Range,
-						}
-					},
-				),
-				Ranges: MapSlice(
-					ipv6.Ranges,
-					func(i InstanceConfigInterfaceIPv6Range) InstanceConfigInterfaceCreateOptionsIPv6Range {
-						return InstanceConfigInterfaceCreateOptionsIPv6Range{
-							Range: copyValue(&i.Range),
-						}
-					},
-				),
-				IsPublic: copyValue(&ipv6.IsPublic),
-			}
+		opts.IPv6 = &InstanceConfigInterfaceCreateOptionsIPv6{
+			SLAAC: mapSlice(
+				ipv6.SLAAC,
+				func(i InstanceConfigInterfaceIPv6SLAAC) InstanceConfigInterfaceCreateOptionsIPv6SLAAC {
+					return InstanceConfigInterfaceCreateOptionsIPv6SLAAC{
+						Range: i.Range,
+					}
+				},
+			),
+			Ranges: mapSlice(
+				ipv6.Ranges,
+				func(i InstanceConfigInterfaceIPv6Range) InstanceConfigInterfaceCreateOptionsIPv6Range {
+					return InstanceConfigInterfaceCreateOptionsIPv6Range{
+						Range: copyValue(&i.Range),
+					}
+				},
+			),
+			IsPublic: copyValue(&ipv6.IsPublic),
 		}
 	}
 
@@ -181,7 +179,7 @@ func (i InstanceConfigInterface) GetUpdateOptions() InstanceConfigInterfaceUpdat
 		if i.IPv6 != nil {
 			ipv6 := *i.IPv6
 
-			newSLAAC := MapSlice(
+			newSLAAC := mapSlice(
 				ipv6.SLAAC,
 				func(i InstanceConfigInterfaceIPv6SLAAC) InstanceConfigInterfaceUpdateOptionsIPv6SLAAC {
 					return InstanceConfigInterfaceUpdateOptionsIPv6SLAAC{
@@ -190,7 +188,7 @@ func (i InstanceConfigInterface) GetUpdateOptions() InstanceConfigInterfaceUpdat
 				},
 			)
 
-			newRanges := MapSlice(
+			newRanges := mapSlice(
 				ipv6.Ranges,
 				func(i InstanceConfigInterfaceIPv6Range) InstanceConfigInterfaceUpdateOptionsIPv6Range {
 					return InstanceConfigInterfaceUpdateOptionsIPv6Range{

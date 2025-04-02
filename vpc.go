@@ -55,7 +55,7 @@ func (v VPC) GetCreateOptions() VPCCreateOptions {
 		Description: v.Description,
 		Region:      v.Region,
 		Subnets:     subnetCreations,
-		IPv6: MapSlice(v.IPv6, func(i VPCIPv6Range) VPCCreateOptionsIPv6 {
+		IPv6: mapSlice(v.IPv6, func(i VPCIPv6Range) VPCCreateOptionsIPv6 {
 			return VPCCreateOptionsIPv6{
 				Range: copyValue(&i.Range),
 			}
