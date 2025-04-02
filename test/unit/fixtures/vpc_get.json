@@ -3,7 +3,19 @@
     "label": "test-vpc",
     "description": "Test VPC description",
     "region": "us-east",
-    "subnets": [],
+    "ipv6": [
+        {
+            "range": "fd71:1140:a9d0::/52"
+        }
+    ],
+    "subnets": [
+        {
+            "id": 456,
+            "label": "subnet-1",
+            "ipv4": "192.168.1.0/24",
+            "linodes": []
+        }
+    ],
     "created": "2023-01-01T12:00:00",
     "updated": "2023-01-02T12:00:00"
 }

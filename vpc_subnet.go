@@ -25,14 +25,22 @@ type VPCSubnet struct {
 	ID      int               `json:"id"`
 	Label   string            `json:"label"`
 	IPv4    string            `json:"ipv4"`
+	IPv6    []VPCIPv6Range    `json:"ipv6"`
 	Linodes []VPCSubnetLinode `json:"linodes"`
 	Created *time.Time        `json:"-"`
 	Updated *time.Time        `json:"-"`
 }
 
 type VPCSubnetCreateOptions struct {
-	Label string `json:"label"`
-	IPv4  string `json:"ipv4"`
+	Label string                       `json:"label"`
+	IPv4  string                       `json:"ipv4"`
+	IPv6  []VPCSubnetCreateOptionsIPv6 `json:"ipv6,omitempty"`
+}
+
+// VPCSubnetCreateOptionsIPv6 represents a single IPv6 range assigned to a VPC
+// which is specified during a VPC subnet's creation.
+type VPCSubnetCreateOptionsIPv6 struct {
+	Range *string `json:"range,omitempty"`
 }
 
 type VPCSubnetUpdateOptions struct {
@@ -62,6 +70,11 @@ func (v VPCSubnet) GetCreateOptions() VPCSubnetCreateOptions {
 	return VPCSubnetCreateOptions{
 		Label: v.Label,
 		IPv4:  v.IPv4,
+		IPv6: mapSlice(v.IPv6, func(i VPCIPv6Range) VPCSubnetCreateOptionsIPv6 {
+			return VPCSubnetCreateOptionsIPv6{
+				Range: copyValue(&i.Range),
+			}
+		}),
 	}
 }
 
