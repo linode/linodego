@@ -178,3 +178,50 @@ func TestLKENodePoolNode_Delete(t *testing.T) {
 	err := base.Client.DeleteLKENodePoolNode(context.Background(), 123, "abc123")
 	assert.NoError(t, err)
 }
+
+func TestLKEEnterpriseNodePool_Create(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("lke_e_node_pool_create")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	createOptions := linodego.LKENodePoolCreateOptions{
+		Count:          2,
+		Type:           "g6-standard-2",
+		Tags:           []string{"testing"},
+		K8sVersion:     linodego.Pointer("v1.31.1+lke1"),
+		UpdateStrategy: linodego.Pointer(linodego.LKENodePoolOnRecycle),
+	}
+
+	base.MockPost("lke/clusters/123/pools", fixtureData)
+
+	nodePool, err := base.Client.CreateLKENodePool(context.Background(), 123, createOptions)
+	assert.NoError(t, err)
+	assert.Equal(t, "g6-standard-2", nodePool.Type)
+	assert.Equal(t, 2, nodePool.Count)
+	assert.Equal(t, "v1.31.1+lke1", *nodePool.K8sVersion)
+	assert.Equal(t, "on_recycle", string(*nodePool.UpdateStrategy))
+}
+
+func TestLKEEnterpriseNodePool_Update(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("lke_e_node_pool_update")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	updateOptions := linodego.LKENodePoolUpdateOptions{
+		K8sVersion:     linodego.Pointer("v1.31.1+lke1"),
+		UpdateStrategy: linodego.Pointer(linodego.LKENodePoolRollingUpdate),
+	}
+
+	base.MockPut("lke/clusters/123/pools/12345", fixtureData)
+
+	nodePool, err := base.Client.UpdateLKENodePool(context.Background(), 123, 12345, updateOptions)
+	assert.NoError(t, err)
+	assert.Equal(t, "v1.31.1+lke1", *nodePool.K8sVersion)
+	assert.Equal(t, "rolling_update", string(*nodePool.UpdateStrategy))
+}
