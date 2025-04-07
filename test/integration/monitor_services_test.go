@@ -13,6 +13,7 @@ func TestMonitorServices_Get_smoke(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestMonitorServices_Get")
 	defer teardown()
 
+	// List the all the regsitered ACLP services
 	monitorServicesClientList, listErr := client.ListMonitorServices(context.Background(), nil)
 	if listErr != nil {
 		t.Errorf("Error listing monitor services:%s", listErr)
@@ -23,6 +24,7 @@ func TestMonitorServices_Get_smoke(t *testing.T) {
 		validateServiceTypes(t, services)
 	}
 
+	// Get the deatils of the regsitered ACLP services based on serviceType
 	monitorServicesClient, getErr := client.GetMonitorServiceByType(context.Background(), "dbaas", nil)
 	if getErr != nil {
 		t.Errorf("Error getting monitor services : %s", getErr)
@@ -46,7 +48,7 @@ func TestMonitorServices_Get_smoke(t *testing.T) {
 
 func validateServiceTypes(
 	t *testing.T,
-	serviceType linodego.MonitorServices,
+	serviceType linodego.MonitorService,
 ) {
 	require.NotEmpty(t, serviceType.ServiceType)
 	require.NotEmpty(t, serviceType.Label)

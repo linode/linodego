@@ -4,7 +4,7 @@ import (
 	"context"
 )
 
-// MonitorMetricsDefinition represents a MonitorMetricsDefinition object
+// MonitorMetricsDefinition represents an ACLP MetricsDefinition object
 type MonitorMetricsDefinition struct {
 	AvailableAggregateFunctions []AggregateFunction `json:"available_aggregate_functions"`
 	Dimensions                  []MonitorDimensions `json:"dimensions"`
@@ -16,6 +16,7 @@ type MonitorMetricsDefinition struct {
 	Unit                        Unit                `json:"unit"`
 }
 
+// Enum object for MetricType
 type MetricType string
 
 const (
@@ -25,6 +26,7 @@ const (
 	Summary   MetricType = "summary"
 )
 
+// Enum object for Unit
 type Unit string
 
 const (
@@ -45,6 +47,7 @@ const (
 	Iops           Unit = "iops"
 )
 
+// MonitorDimensions represents an ACLP MonitorDimensions object
 type MonitorDimensions struct {
 	DimensionLabel string   `json:"dimension_label"`
 	Label          string   `json:"label"`
@@ -52,7 +55,7 @@ type MonitorDimensions struct {
 }
 
 // ListMonitorMetricsDefinitionByServiceType lists metric definitions
-func (c *Client) ListMonitorMetricsDefinitionByServiceType(ctx context.Context, service_type string, opts *ListOptions) ([]MonitorMetricsDefinition, error) {
-	e := formatAPIPath("monitor/services/%s/metric-definitions", service_type)
+func (c *Client) ListMonitorMetricsDefinitionByServiceType(ctx context.Context, serviceType string, opts *ListOptions) ([]MonitorMetricsDefinition, error) {
+	e := formatAPIPath("monitor/services/%s/metric-definitions", serviceType)
 	return getPaginatedResults[MonitorMetricsDefinition](ctx, c, e, opts)
 }

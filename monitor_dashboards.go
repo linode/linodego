@@ -8,17 +8,18 @@ import (
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
-// MonitorDashboard represents a MonitorDashboard object
+// MonitorDashboard represents an ACLP Dashboard object
 type MonitorDashboard struct {
-	ID          int                `json:"id"`
-	Type        DashboardType      `json:"type"`
-	ServiceType ServiceType        `json:"service_type"`
-	Label       string             `json:"label"`
-	Created     *time.Time         `json:"-"`
-	Updated     *time.Time         `json:"-"`
-	Widgets     []DashboardWidgets `json:"widgets"`
+	ID          int               `json:"id"`
+	Type        DashboardType     `json:"type"`
+	ServiceType ServiceType       `json:"service_type"`
+	Label       string            `json:"label"`
+	Created     *time.Time        `json:"-"`
+	Updated     *time.Time        `json:"-"`
+	Widgets     []DashboardWidget `json:"widgets"`
 }
 
+// enum object for serviceType
 type ServiceType string
 
 const (
@@ -32,6 +33,7 @@ const (
 	FirewallService ServiceType = "firewall"
 )
 
+// enum object for DashboardType
 type DashboardType string
 
 const (
@@ -39,6 +41,7 @@ const (
 	Custom   DashboardType = "custom"
 )
 
+// DashboardWidget represents an ACLP DashboardWidget object
 type DashboardWidget struct {
 	Metric            string            `json:"metric"`
 	Unit              string            `json:"unit"`
@@ -50,6 +53,7 @@ type DashboardWidget struct {
 	AggregateFunction AggregateFunction `json:"aggregate_function"`
 }
 
+// Enum object for AggregateFunction
 type AggregateFunction string
 
 const (
@@ -63,6 +67,7 @@ const (
 	Last     AggregateFunction = "last"
 )
 
+// Enum object for Chart type
 type ChartType string
 
 const (
@@ -70,18 +75,20 @@ const (
 	Area ChartType = "area"
 )
 
-// ListMonitorDashboards lists MonitorDashboard
+// ListMonitorDashboards lists all the ACLP Monitor Dashboards
 func (c *Client) ListMonitorDashboards(ctx context.Context, opts *ListOptions) ([]MonitorDashboard, error) {
 	return getPaginatedResults[MonitorDashboard](ctx, c, "monitor/dashboards", opts)
 }
 
-func (c *Client) GetMonitorDashboardsByID(ctx context.Context, dashboard_id int) (*MonitorDashboard, error) {
-	e := formatAPIPath("monitor/dashboards/%d", dashboard_id)
+// GetMonitorDashboardsByID gets an ACLP Monitor Dashboard for a given dashboardID
+func (c *Client) GetMonitorDashboardsByID(ctx context.Context, dashboardID int) (*MonitorDashboard, error) {
+	e := formatAPIPath("monitor/dashboards/%d", dashboardID)
 	return doGETRequest[MonitorDashboard](ctx, c, e)
 }
 
-func (c *Client) GetMonitorDashboardsByServiceType(ctx context.Context, service_type string, opts *ListOptions) ([]MonitorDashboard, error) {
-	e := formatAPIPath("monitor/services/%s/dashboards", service_type)
+// GetMonitorDashboardsByServiceType gets an ACLP Monitor Dashboard for a given serviceType
+func (c *Client) GetMonitorDashboardsByServiceType(ctx context.Context, serviceType string, opts *ListOptions) ([]MonitorDashboard, error) {
+	e := formatAPIPath("monitor/services/%s/dashboards", serviceType)
 	return getPaginatedResults[MonitorDashboard](ctx, c, e, opts)
 }
 

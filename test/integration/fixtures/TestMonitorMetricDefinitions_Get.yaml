@@ -16,30 +16,30 @@ interactions:
   response:
     body: '{"data": [{"label": "CPU Usage", "metric": "cpu_usage", "unit": "percent",
       "metric_type": "gauge", "scrape_interval": "60s", "is_alertable": true, "available_aggregate_functions":
-      ["sum", "min", "avg", "max"], "dimensions": [{"label": "Node Type", "dimension_label":
+      ["sum", "max", "avg", "min"], "dimensions": [{"label": "Node Type", "dimension_label":
       "node_type", "values": ["primary", "secondary"]}]}, {"label": "Disk I/O Read",
       "metric": "read_iops", "unit": "iops", "metric_type": "gauge", "scrape_interval":
-      "60s", "is_alertable": false, "available_aggregate_functions": ["sum", "min",
-      "avg", "max"], "dimensions": [{"label": "Node Type", "dimension_label": "node_type",
+      "60s", "is_alertable": false, "available_aggregate_functions": ["sum", "max",
+      "avg", "min"], "dimensions": [{"label": "Node Type", "dimension_label": "node_type",
       "values": ["primary", "secondary"]}]}, {"label": "Disk I/O Write", "metric":
       "write_iops", "unit": "iops", "metric_type": "gauge", "scrape_interval": "60s",
-      "is_alertable": false, "available_aggregate_functions": ["sum", "min", "avg",
-      "max"], "dimensions": [{"label": "Node Type", "dimension_label": "node_type",
+      "is_alertable": false, "available_aggregate_functions": ["sum", "max", "avg",
+      "min"], "dimensions": [{"label": "Node Type", "dimension_label": "node_type",
       "values": ["primary", "secondary"]}]}, {"label": "Memory Usage", "metric": "memory_usage",
       "unit": "percent", "metric_type": "gauge", "scrape_interval": "60s", "is_alertable":
-      true, "available_aggregate_functions": ["sum", "min", "avg", "max"], "dimensions":
+      true, "available_aggregate_functions": ["sum", "max", "avg", "min"], "dimensions":
       [{"label": "Node Type", "dimension_label": "node_type", "values": ["primary",
       "secondary"]}]}, {"label": "Available Memory", "metric": "available_memory",
       "unit": "GB", "metric_type": "gauge", "scrape_interval": "60s", "is_alertable":
-      false, "available_aggregate_functions": ["sum", "min", "avg", "max"], "dimensions":
+      false, "available_aggregate_functions": ["sum", "max", "avg", "min"], "dimensions":
       [{"label": "Node Type", "dimension_label": "node_type", "values": ["primary",
       "secondary"]}]}, {"label": "Disk Space Usage", "metric": "disk_usage", "unit":
       "percent", "metric_type": "gauge", "scrape_interval": "60s", "is_alertable":
-      true, "available_aggregate_functions": ["sum", "min", "avg", "max"], "dimensions":
+      true, "available_aggregate_functions": ["sum", "max", "avg", "min"], "dimensions":
       [{"label": "Node Type", "dimension_label": "node_type", "values": ["primary",
       "secondary"]}]}, {"label": "Available Disk Space", "metric": "available_disk",
       "unit": "GB", "metric_type": "gauge", "scrape_interval": "60s", "is_alertable":
-      false, "available_aggregate_functions": ["sum", "min", "avg", "max"], "dimensions":
+      false, "available_aggregate_functions": ["sum", "max", "avg", "min"], "dimensions":
       [{"label": "Node Type", "dimension_label": "node_type", "values": ["primary",
       "secondary"]}]}], "page": 1, "pages": 1, "results": 7}'
     headers:
@@ -64,7 +64,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 07 Apr 2025 09:49:58 GMT
+      - Mon, 07 Apr 2025 10:19:27 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -106,19 +106,19 @@ interactions:
   response:
     body: '{"data": [{"label": "Disk I/O Read", "metric": "read_iops", "unit": "iops",
       "metric_type": "gauge", "scrape_interval": "60s", "is_alertable": false, "available_aggregate_functions":
-      ["sum", "min", "avg", "max"], "dimensions": [{"label": "Node Type", "dimension_label":
+      ["sum", "max", "avg", "min"], "dimensions": [{"label": "Node Type", "dimension_label":
       "node_type", "values": ["primary", "secondary"]}]}, {"label": "Disk I/O Write",
       "metric": "write_iops", "unit": "iops", "metric_type": "gauge", "scrape_interval":
-      "60s", "is_alertable": false, "available_aggregate_functions": ["sum", "min",
-      "avg", "max"], "dimensions": [{"label": "Node Type", "dimension_label": "node_type",
+      "60s", "is_alertable": false, "available_aggregate_functions": ["sum", "max",
+      "avg", "min"], "dimensions": [{"label": "Node Type", "dimension_label": "node_type",
       "values": ["primary", "secondary"]}]}, {"label": "Available Memory", "metric":
       "available_memory", "unit": "GB", "metric_type": "gauge", "scrape_interval":
-      "60s", "is_alertable": false, "available_aggregate_functions": ["sum", "min",
-      "avg", "max"], "dimensions": [{"label": "Node Type", "dimension_label": "node_type",
+      "60s", "is_alertable": false, "available_aggregate_functions": ["sum", "max",
+      "avg", "min"], "dimensions": [{"label": "Node Type", "dimension_label": "node_type",
       "values": ["primary", "secondary"]}]}, {"label": "Available Disk Space", "metric":
       "available_disk", "unit": "GB", "metric_type": "gauge", "scrape_interval": "60s",
-      "is_alertable": false, "available_aggregate_functions": ["sum", "min", "avg",
-      "max"], "dimensions": [{"label": "Node Type", "dimension_label": "node_type",
+      "is_alertable": false, "available_aggregate_functions": ["sum", "max", "avg",
+      "min"], "dimensions": [{"label": "Node Type", "dimension_label": "node_type",
       "values": ["primary", "secondary"]}]}], "page": 1, "pages": 1, "results": 4}'
     headers:
       Access-Control-Allow-Credentials:
@@ -142,7 +142,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 07 Apr 2025 09:49:59 GMT
+      - Mon, 07 Apr 2025 10:19:28 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
