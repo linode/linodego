@@ -52,6 +52,332 @@ type MySQLDatabase struct {
 	Port              int                       `json:"port"`
 }
 
+type MySQLDatabaseConfig struct {
+	MySQL                 MySQLDatabaseConfigMySQL                 `json:"mysql"`
+	BinlogRetentionPeriod MySQLDatabaseConfigBinlogRetentionPeriod `json:"binlog_retention_period"`
+	ServiceLog            MySQLDatabaseConfigServiceLog            `json:"service_log"`
+}
+
+type MySQLDatabaseConfigMySQL struct {
+	ConnectTimeout               ConnectTimeout               `json:"connect_timeout"`
+	DefaultTimeZone              DefaultTimeZone              `json:"default_time_zone"`
+	GroupConcatMaxLen            GroupConcatMaxLen            `json:"group_concat_max_len"`
+	InformationSchemaStatsExpiry InformationSchemaStatsExpiry `json:"information_schema_stats_expiry"`
+	InnoDBChangeBufferMaxSize    InnoDBChangeBufferMaxSize    `json:"innodb_change_buffer_max_size"`
+	InnoDBFlushNeighbors         InnoDBFlushNeighbors         `json:"innodb_flush_neighbors"`
+	InnoDBFTMinTokenSize         InnoDBFTMinTokenSize         `json:"innodb_ft_min_token_size"`
+	InnoDBFTServerStopwordTable  InnoDBFTServerStopwordTable  `json:"innodb_ft_server_stopword_table"`
+	InnoDBLockWaitTimeout        InnoDBLockWaitTimeout        `json:"innodb_lock_wait_timeout"`
+	InnoDBLogBufferSize          InnoDBLogBufferSize          `json:"innodb_log_buffer_size"`
+	InnoDBOnlineAlterLogMaxSize  InnoDBOnlineAlterLogMaxSize  `json:"innodb_online_alter_log_max_size"`
+	InnoDBPrintAllDeadlocks      InnoDBPrintAllDeadlocks      `json:"innodb_print_all_deadlocks"`
+	InnoDBReadIOThreads          InnoDBReadIOThreads          `json:"innodb_read_io_threads"`
+	InnoDBRollbackOnTimeout      InnoDBRollbackOnTimeout      `json:"innodb_rollback_on_timeout"`
+	InnoDBThreadConcurrency      InnoDBThreadConcurrency      `json:"innodb_thread_concurrency"`
+	InnoDBWriteIOThreads         InnoDBWriteIOThreads         `json:"innodb_write_io_threads"`
+	InteractiveTimeout           InteractiveTimeout           `json:"interactive_timeout"`
+	InternalTmpMemStorageEngine  InternalTmpMemStorageEngine  `json:"internal_tmp_mem_storage_engine"`
+	LogOutput                    LogOutput                    `json:"log_output"`
+	LongQueryTime                LongQueryTime                `json:"long_query_time"`
+	MaxAllowedPacket             MaxAllowedPacket             `json:"max_allowed_packet"`
+	MaxHeapTableSize             MaxHeapTableSize             `json:"max_heap_table_size"`
+	NetBufferLength              NetBufferLength              `json:"net_buffer_length"`
+	NetReadTimeout               NetReadTimeout               `json:"net_read_timeout"`
+	NetWriteTimeout              NetWriteTimeout              `json:"net_write_timeout"`
+	SlowQueryLog                 SlowQueryLog                 `json:"slow_query_log"`
+	SortBufferSize               SortBufferSize               `json:"sort_buffer_size"`
+	SQLMode                      SQLMode                      `json:"sql_mode"`
+	SQLRequirePrimaryKey         SQLRequirePrimaryKey         `json:"sql_require_primary_key"`
+	TmpTableSize                 TmpTableSize                 `json:"tmp_table_size"`
+	WaitTimeout                  WaitTimeout                  `json:"wait_timeout"`
+}
+
+type ConnectTimeout struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type DefaultTimeZone struct {
+	Description     string `json:"description"`
+	Example         string `json:"example"`
+	MaxLength       int    `json:"maxLength"`
+	MinLength       int    `json:"minLength"`
+	Pattern         string `json:"pattern"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type GroupConcatMaxLen struct {
+	Description     string  `json:"description"`
+	Example         float64 `json:"example"`
+	Maximum         float64 `json:"maximum"`
+	Minimum         float64 `json:"minimum"`
+	RequiresRestart bool    `json:"requires_restart"`
+	Type            string  `json:"type"`
+}
+
+type InformationSchemaStatsExpiry struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type InnoDBChangeBufferMaxSize struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type InnoDBFlushNeighbors struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type InnoDBFTMinTokenSize struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type InnoDBFTServerStopwordTable struct {
+	Description     string   `json:"description"`
+	Example         string   `json:"example"`
+	MaxLength       int      `json:"maxLength"`
+	Pattern         string   `json:"pattern"`
+	RequiresRestart bool     `json:"requires_restart"`
+	Type            []string `json:"type"`
+}
+
+type InnoDBLockWaitTimeout struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type InnoDBLogBufferSize struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type InnoDBOnlineAlterLogMaxSize struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type InnoDBPrintAllDeadlocks struct {
+	Description     string `json:"description"`
+	Example         bool   `json:"example"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type InnoDBReadIOThreads struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type InnoDBRollbackOnTimeout struct {
+	Description     string `json:"description"`
+	Example         bool   `json:"example"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type InnoDBThreadConcurrency struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type InnoDBWriteIOThreads struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type InteractiveTimeout struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type InternalTmpMemStorageEngine struct {
+	Description     string   `json:"description"`
+	Enum            []string `json:"enum"`
+	Example         string   `json:"example"`
+	RequiresRestart bool     `json:"requires_restart"`
+	Type            string   `json:"type"`
+}
+
+type LogOutput struct {
+	Description     string   `json:"description"`
+	Enum            []string `json:"enum"`
+	Example         string   `json:"example"`
+	RequiresRestart bool     `json:"requires_restart"`
+	Type            string   `json:"type"`
+}
+
+type LongQueryTime struct {
+	Description     string  `json:"description"`
+	Example         float64 `json:"example"`
+	Maximum         float64 `json:"maximum"`
+	Minimum         float64 `json:"minimum"`
+	RequiresRestart bool    `json:"requires_restart"`
+	Type            string  `json:"type"`
+}
+
+type MaxAllowedPacket struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type MaxHeapTableSize struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type NetBufferLength struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type NetReadTimeout struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type NetWriteTimeout struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type SlowQueryLog struct {
+	Description     string `json:"description"`
+	Example         bool   `json:"example"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type SortBufferSize struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type SQLMode struct {
+	Description     string `json:"description"`
+	Example         string `json:"example"`
+	MaxLength       int    `json:"maxLength"`
+	Pattern         string `json:"pattern"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type SQLRequirePrimaryKey struct {
+	Description     string `json:"description"`
+	Example         bool   `json:"example"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type TmpTableSize struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type WaitTimeout struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type MySQLDatabaseConfigBinlogRetentionPeriod struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type MySQLDatabaseConfigServiceLog struct {
+	Description     string   `json:"description"`
+	Example         bool     `json:"example"`
+	RequiresRestart bool     `json:"requires_restart"`
+	Type            []string `json:"type"`
+}
+
 func (d *MySQLDatabase) UnmarshalJSON(b []byte) error {
 	type Mask MySQLDatabase
 
@@ -244,4 +570,9 @@ func (c *Client) SuspendMySQLDatabase(ctx context.Context, databaseID int) error
 func (c *Client) ResumeMySQLDatabase(ctx context.Context, databaseID int) error {
 	e := formatAPIPath("databases/mysql/instances/%d/resume", databaseID)
 	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
+}
+
+// GetMySQLDatabaseConfig returns a detailed list of all the configuration options for MySQL Databases
+func (c *Client) GetMySQLDatabaseConfig(ctx context.Context) (*MySQLDatabaseConfig, error) {
+	return doGETRequest[MySQLDatabaseConfig](ctx, c, "databases/mysql/config")
 }

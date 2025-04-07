@@ -70,6 +70,526 @@ type PostgresDatabase struct {
 	TotalDiskSizeGB   int                       `json:"total_disk_size_gb"`
 }
 
+type PostgresDatabaseConfig struct {
+	PG                      PostgresDatabaseConfigPG                      `json:"pg"`
+	PGStatMonitorEnable     PostgresDatabaseConfigPGStatMonitorEnable     `json:"pg_stat_monitor_enable"`
+	PGLookout               PostgresDatabaseConfigPGLookout               `json:"pglookout"`
+	ServiceLog              PostgresDatabaseConfigServiceLog              `json:"service_log"`
+	SharedBuffersPercentage PostgresDatabaseConfigSharedBuffersPercentage `json:"shared_buffers_percentage"`
+	SynchronousReplication  PostgresDatabaseConfigSynchronousReplication  `json:"synchronous_replication"`
+	WorkMem                 PostgresDatabaseConfigWorkMem                 `json:"work_mem"`
+}
+
+type PostgresDatabaseConfigPG struct {
+	AutovacuumAnalyzeScaleFactor     AutovacuumAnalyzeScaleFactor     `json:"autovacuum_analyze_scale_factor"`
+	AutovacuumAnalyzeThreshold       AutovacuumAnalyzeThreshold       `json:"autovacuum_analyze_threshold"`
+	AutovacuumFreezeMaxAge           AutovacuumFreezeMaxAge           `json:"autovacuum_freeze_max_age"`
+	AutovacuumMaxWorkers             AutovacuumMaxWorkers             `json:"autovacuum_max_workers"`
+	AutovacuumNaptime                AutovacuumNaptime                `json:"autovacuum_naptime"`
+	AutovacuumVacuumCostDelay        AutovacuumVacuumCostDelay        `json:"autovacuum_vacuum_cost_delay"`
+	AutovacuumVacuumCostLimit        AutovacuumVacuumCostLimit        `json:"autovacuum_vacuum_cost_limit"`
+	AutovacuumVacuumScaleFactor      AutovacuumVacuumScaleFactor      `json:"autovacuum_vacuum_scale_factor"`
+	AutovacuumVacuumThreshold        AutovacuumVacuumThreshold        `json:"autovacuum_vacuum_threshold"`
+	BGWriterDelay                    BGWriterDelay                    `json:"bgwriter_delay"`
+	BGWriterFlushAfter               BGWriterFlushAfter               `json:"bgwriter_flush_after"`
+	BGWriterLRUMaxPages              BGWriterLRUMaxPages              `json:"bgwriter_lru_maxpages"`
+	BGWriterLRUMultiplier            BGWriterLRUMultiplier            `json:"bgwriter_lru_multiplier"`
+	DeadlockTimeout                  DeadlockTimeout                  `json:"deadlock_timeout"`
+	DefaultToastCompression          DefaultToastCompression          `json:"default_toast_compression"`
+	IdleInTransactionSessionTimeout  IdleInTransactionSessionTimeout  `json:"idle_in_transaction_session_timeout"`
+	JIT                              JIT                              `json:"jit"`
+	LogAutovacuumMinDuration         LogAutovacuumMinDuration         `json:"log_autovacuum_min_duration"`
+	LogErrorVerbosity                LogErrorVerbosity                `json:"log_error_verbosity"`
+	LogLinePrefix                    LogLinePrefix                    `json:"log_line_prefix"`
+	LogMinDurationStatement          LogMinDurationStatement          `json:"log_min_duration_statement"`
+	LogTempFiles                     LogTempFiles                     `json:"log_temp_files"`
+	MaxFilesPerProcess               MaxFilesPerProcess               `json:"max_files_per_process"`
+	MaxLocksPerTransaction           MaxLocksPerTransaction           `json:"max_locks_per_transaction"`
+	MaxLogicalReplicationWorkers     MaxLogicalReplicationWorkers     `json:"max_logical_replication_workers"`
+	MaxParallelWorkers               MaxParallelWorkers               `json:"max_parallel_workers"`
+	MaxParallelWorkersPerGather      MaxParallelWorkersPerGather      `json:"max_parallel_workers_per_gather"`
+	MaxPredLocksPerTransaction       MaxPredLocksPerTransaction       `json:"max_pred_locks_per_transaction"`
+	MaxPreparedTransactions          MaxPreparedTransactions          `json:"max_prepared_transactions"`
+	MaxReplicationSlots              MaxReplicationSlots              `json:"max_replication_slots"`
+	MaxSlotWALKeepSize               MaxSlotWALKeepSize               `json:"max_slot_wal_keep_size"`
+	MaxStackDepth                    MaxStackDepth                    `json:"max_stack_depth"`
+	MaxStandbyArchiveDelay           MaxStandbyArchiveDelay           `json:"max_standby_archive_delay"`
+	MaxStandbyStreamingDelay         MaxStandbyStreamingDelay         `json:"max_standby_streaming_delay"`
+	MaxWALSenders                    MaxWALSenders                    `json:"max_wal_senders"`
+	MaxWorkerProcesses               MaxWorkerProcesses               `json:"max_worker_processes"`
+	PasswordEncryption               PasswordEncryption               `json:"password_encryption"`
+	PGPartmanBGWInterval             PGPartmanBGWInterval             `json:"pg_partman_bgw.interval"`
+	PGPartmanBGWRole                 PGPartmanBGWRole                 `json:"pg_partman_bgw.role"`
+	PGStatMonitorPGSMEnableQueryPlan PGStatMonitorPGSMEnableQueryPlan `json:"pg_stat_monitor.pgsm_enable_query_plan"`
+	PGStatMonitorPGSMMaxBuckets      PGStatMonitorPGSMMaxBuckets      `json:"pg_stat_monitor.pgsm_max_buckets"`
+	PGStatStatementsTrack            PGStatStatementsTrack            `json:"pg_stat_statements.track"`
+	TempFileLimit                    TempFileLimit                    `json:"temp_file_limit"`
+	Timezone                         Timezone                         `json:"timezone"`
+	TrackActivityQuerySize           TrackActivityQuerySize           `json:"track_activity_query_size"`
+	TrackCommitTimestamp             TrackCommitTimestamp             `json:"track_commit_timestamp"`
+	TrackFunctions                   TrackFunctions                   `json:"track_functions"`
+	TrackIOTiming                    TrackIOTiming                    `json:"track_io_timing"`
+	WALSenderTimeout                 WALSenderTimeout                 `json:"wal_sender_timeout"`
+	WALWriterDelay                   WALWriterDelay                   `json:"wal_writer_delay"`
+}
+
+type AutovacuumAnalyzeScaleFactor struct {
+	Description     string  `json:"description"`
+	Maximum         float64 `json:"maximum"`
+	Minimum         float64 `json:"minimum"`
+	RequiresRestart bool    `json:"requires_restart"`
+	Type            string  `json:"type"`
+}
+
+type AutovacuumAnalyzeThreshold struct {
+	Description     string `json:"description"`
+	Maximum         int32  `json:"maximum"`
+	Minimum         int32  `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type AutovacuumFreezeMaxAge struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type AutovacuumMaxWorkers struct {
+	Description     string `json:"description"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type AutovacuumNaptime struct {
+	Description     string `json:"description"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type AutovacuumVacuumCostDelay struct {
+	Description     string `json:"description"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type AutovacuumVacuumCostLimit struct {
+	Description     string `json:"description"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type AutovacuumVacuumScaleFactor struct {
+	Description     string  `json:"description"`
+	Maximum         float64 `json:"maximum"`
+	Minimum         float64 `json:"minimum"`
+	RequiresRestart bool    `json:"requires_restart"`
+	Type            string  `json:"type"`
+}
+
+type AutovacuumVacuumThreshold struct {
+	Description     string `json:"description"`
+	Maximum         int32  `json:"maximum"`
+	Minimum         int32  `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type BGWriterDelay struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type BGWriterFlushAfter struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type BGWriterLRUMaxPages struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type BGWriterLRUMultiplier struct {
+	Description     string  `json:"description"`
+	Example         float64 `json:"example"`
+	Maximum         float64 `json:"maximum"`
+	Minimum         float64 `json:"minimum"`
+	RequiresRestart bool    `json:"requires_restart"`
+	Type            string  `json:"type"`
+}
+
+type DeadlockTimeout struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type DefaultToastCompression struct {
+	Description     string   `json:"description"`
+	Enum            []string `json:"enum"`
+	Example         string   `json:"example"`
+	RequiresRestart bool     `json:"requires_restart"`
+	Type            string   `json:"type"`
+}
+
+type IdleInTransactionSessionTimeout struct {
+	Description     string `json:"description"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type JIT struct {
+	Description     string `json:"description"`
+	Example         bool   `json:"example"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type LogAutovacuumMinDuration struct {
+	Description     string `json:"description"`
+	Maximum         int32  `json:"maximum"`
+	Minimum         int32  `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type LogErrorVerbosity struct {
+	Description     string   `json:"description"`
+	Enum            []string `json:"enum"`
+	RequiresRestart bool     `json:"requires_restart"`
+	Type            string   `json:"type"`
+}
+
+type LogLinePrefix struct {
+	Description     string   `json:"description"`
+	Enum            []string `json:"enum"`
+	RequiresRestart bool     `json:"requires_restart"`
+	Type            string   `json:"type"`
+}
+
+type LogMinDurationStatement struct {
+	Description     string `json:"description"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type LogTempFiles struct {
+	Description     string `json:"description"`
+	Maximum         int32  `json:"maximum"`
+	Minimum         int32  `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type MaxFilesPerProcess struct {
+	Description     string `json:"description"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type MaxLocksPerTransaction struct {
+	Description     string `json:"description"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type MaxLogicalReplicationWorkers struct {
+	Description     string `json:"description"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type MaxParallelWorkers struct {
+	Description     string `json:"description"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type MaxParallelWorkersPerGather struct {
+	Description     string `json:"description"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type MaxPredLocksPerTransaction struct {
+	Description     string `json:"description"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type MaxPreparedTransactions struct {
+	Description     string `json:"description"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type MaxReplicationSlots struct {
+	Description     string `json:"description"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type MaxSlotWALKeepSize struct {
+	Description     string `json:"description"`
+	Maximum         int32  `json:"maximum"`
+	Minimum         int32  `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type MaxStackDepth struct {
+	Description     string `json:"description"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type MaxStandbyArchiveDelay struct {
+	Description     string `json:"description"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type MaxStandbyStreamingDelay struct {
+	Description     string `json:"description"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type MaxWALSenders struct {
+	Description     string `json:"description"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type MaxWorkerProcesses struct {
+	Description     string `json:"description"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type PasswordEncryption struct {
+	Description     string   `json:"description"`
+	Enum            []string `json:"enum"`
+	Example         string   `json:"example"`
+	RequiresRestart bool     `json:"requires_restart"`
+	Type            []string `json:"type"`
+}
+
+type PGPartmanBGWInterval struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type PGPartmanBGWRole struct {
+	Description     string `json:"description"`
+	Example         string `json:"example"`
+	MaxLength       int    `json:"maxLength"`
+	Pattern         string `json:"pattern"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type PGStatMonitorPGSMEnableQueryPlan struct {
+	Description     string `json:"description"`
+	Example         bool   `json:"example"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type PGStatMonitorPGSMMaxBuckets struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type PGStatStatementsTrack struct {
+	Description     string   `json:"description"`
+	Enum            []string `json:"enum"`
+	RequiresRestart bool     `json:"requires_restart"`
+	Type            []string `json:"type"`
+}
+
+type TempFileLimit struct {
+	Description     string `json:"description"`
+	Example         int32  `json:"example"`
+	Maximum         int32  `json:"maximum"`
+	Minimum         int32  `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type Timezone struct {
+	Description     string `json:"description"`
+	Example         string `json:"example"`
+	MaxLength       int    `json:"maxLength"`
+	Pattern         string `json:"pattern"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type TrackActivityQuerySize struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type TrackCommitTimestamp struct {
+	Description     string   `json:"description"`
+	Enum            []string `json:"enum"`
+	Example         string   `json:"example"`
+	RequiresRestart bool     `json:"requires_restart"`
+	Type            string   `json:"type"`
+}
+
+type TrackFunctions struct {
+	Description     string   `json:"description"`
+	Enum            []string `json:"enum"`
+	RequiresRestart bool     `json:"requires_restart"`
+	Type            string   `json:"type"`
+}
+
+type TrackIOTiming struct {
+	Description     string   `json:"description"`
+	Enum            []string `json:"enum"`
+	Example         string   `json:"example"`
+	RequiresRestart bool     `json:"requires_restart"`
+	Type            string   `json:"type"`
+}
+
+type WALSenderTimeout struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type WALWriterDelay struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type PostgresDatabaseConfigPGStatMonitorEnable struct {
+	Description     string `json:"description"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type PostgresDatabaseConfigPGLookout struct {
+	PGLookoutMaxFailoverReplicationTimeLag PGLookoutMaxFailoverReplicationTimeLag `json:"max_failover_replication_time_lag"`
+}
+
+type PGLookoutMaxFailoverReplicationTimeLag struct {
+	Description     string `json:"description"`
+	Maximum         int64  `json:"maximum"`
+	Minimum         int64  `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
+type PostgresDatabaseConfigServiceLog struct {
+	Description     string   `json:"description"`
+	Example         bool     `json:"example"`
+	RequiresRestart bool     `json:"requires_restart"`
+	Type            []string `json:"type"`
+}
+
+type PostgresDatabaseConfigSharedBuffersPercentage struct {
+	Description     string  `json:"description"`
+	Example         float64 `json:"example"`
+	Maximum         float64 `json:"maximum"`
+	Minimum         float64 `json:"minimum"`
+	RequiresRestart bool    `json:"requires_restart"`
+	Type            string  `json:"type"`
+}
+
+type PostgresDatabaseConfigSynchronousReplication struct {
+	Description     string   `json:"description"`
+	Enum            []string `json:"enum"`
+	Example         string   `json:"example"`
+	RequiresRestart bool     `json:"requires_restart"`
+	Type            string   `json:"type"`
+}
+
+type PostgresDatabaseConfigWorkMem struct {
+	Description     string `json:"description"`
+	Example         int    `json:"example"`
+	Maximum         int    `json:"maximum"`
+	Minimum         int    `json:"minimum"`
+	RequiresRestart bool   `json:"requires_restart"`
+	Type            string `json:"type"`
+}
+
 func (d *PostgresDatabase) UnmarshalJSON(b []byte) error {
 	type Mask PostgresDatabase
 
@@ -264,4 +784,9 @@ func (c *Client) SuspendPostgresDatabase(ctx context.Context, databaseID int) er
 func (c *Client) ResumePostgresDatabase(ctx context.Context, databaseID int) error {
 	e := formatAPIPath("databases/postgresql/instances/%d/resume", databaseID)
 	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
+}
+
+// GetPostgresDatabaseConfig returns a detailed list of all the configuration options for PostgreSQL Databases
+func (c *Client) GetPostgresDatabaseConfig(ctx context.Context) (*PostgresDatabaseConfig, error) {
+	return doGETRequest[PostgresDatabaseConfig](ctx, c, "databases/postgresql/config")
 }
