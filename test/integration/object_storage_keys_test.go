@@ -158,7 +158,6 @@ func TestObjectStorageKeys_Limited_NoAccess(t *testing.T) {
 }
 
 func TestObjectStorageKeys_Regional_Limited(t *testing.T) {
-	// t.Skip("skipping region test before GA")
 	client, teardown := createTestClient(t, "fixtures/TestObjectStorageKeys_Regional_Limited")
 	regions := getRegionsWithCaps(t, client, []string{"Object Storage"})
 	if len(regions) < 1 {
