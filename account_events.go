@@ -72,6 +72,7 @@ const (
 	ActionDatabaseDelete                          EventAction = "database_delete"
 	ActionDatabaseFailed                          EventAction = "database_failed"
 	ActionDatabaseUpdate                          EventAction = "database_update"
+	ActionDatabaseResize                          EventAction = "database_resize"
 	ActionDatabaseCreateFailed                    EventAction = "database_create_failed"
 	ActionDatabaseUpdateFailed                    EventAction = "database_update_failed"
 	ActionDatabaseBackupCreate                    EventAction = "database_backup_create"
