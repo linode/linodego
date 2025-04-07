@@ -19,6 +19,7 @@ func TestCreateMonitorServicesToken(t *testing.T) {
 
 	base.MockPost("monitor/services/dbaas/token", fixtureData)
 
+	// Create request data for POST request
 	opts := linodego.MonitorTokenCreateOptions{
 		EntityIds: []int{187468, 188020},
 	}

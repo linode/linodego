@@ -4,18 +4,19 @@ import (
 	"context"
 )
 
-// MonitorServicesClient represents a MonitorServicesClient object
-type MonitorServices struct {
+// MonitorService represents a MonitorService object
+type MonitorService struct {
 	Label       string `json:"label"`
 	ServiceType string `json:"service_type"`
 }
 
-// ListMonitorDashboards lists MonitorDashboards
-func (c *Client) ListMonitorServices(ctx context.Context, opts *ListOptions) ([]MonitorServices, error) {
-	return getPaginatedResults[MonitorServices](ctx, c, "monitor/services", opts)
+// ListMonitorServices lists all the registered ACLP MonitorServices
+func (c *Client) ListMonitorServices(ctx context.Context, opts *ListOptions) ([]MonitorService, error) {
+	return getPaginatedResults[MonitorService](ctx, c, "monitor/services", opts)
 }
 
-func (c *Client) GetMonitorServiceByType(ctx context.Context, service_type string, opts *ListOptions) ([]MonitorServices, error) {
-	e := formatAPIPath("monitor/services/%s", service_type)
-	return getPaginatedResults[MonitorServices](ctx, c, e, opts)
+// GetMonitorServiceByType get the details of a given service_type
+func (c *Client) GetMonitorServiceByType(ctx context.Context, serviceType string, opts *ListOptions) ([]MonitorService, error) {
+	e := formatAPIPath("monitor/services/%s", serviceType)
+	return getPaginatedResults[MonitorService](ctx, c, e, opts)
 }

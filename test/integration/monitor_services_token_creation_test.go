@@ -12,6 +12,7 @@ func TestMonitorServicesTokenCreation_Get_smoke(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestMonitorServiceToken_POST")
 	defer teardown()
 
+	// Create a JWE token for the given entity IDs
 	createOpts := linodego.MonitorTokenCreateOptions{
 		EntityIds: []int{187468, 188020},
 	}
