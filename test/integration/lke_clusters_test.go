@@ -68,7 +68,7 @@ func TestLKECluster_Enterprise_smoke(t *testing.T) {
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Tier = "enterprise"
 		createOpts.Region = "us-lax"
-		createOpts.K8sVersion = "v1.31.1+lke1"
+		createOpts.K8sVersion = "v1.31.1+lke4"
 	}}, "fixtures/TestLKECluster_Enterprise_smoke")
 	defer teardown()
 	i, err := client.GetLKECluster(context.Background(), lkeCluster.ID)
