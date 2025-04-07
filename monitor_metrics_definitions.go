@@ -6,15 +6,44 @@ import (
 
 // MonitorMetricsDefinition represents a MonitorMetricsDefinition object
 type MonitorMetricsDefinition struct {
-	AvailableAggregateFunctions []string            `json:"available_aggregate_functions"`
+	AvailableAggregateFunctions []AggregateFunction `json:"available_aggregate_functions"`
 	Dimensions                  []MonitorDimensions `json:"dimensions"`
 	IsAlertable                 bool                `json:"is_alertable"`
 	Label                       string              `json:"label"`
 	Metric                      string              `json:"metric"`
-	MetricType                  string              `json:"metric_type"`
+	MetricType                  MetricType          `json:"metric_type"`
 	ScrapeInterval              string              `json:"scrape_interval"`
-	Unit                        string              `json:"unit"`
+	Unit                        Unit                `json:"unit"`
 }
+
+type MetricType string
+
+const (
+	Counter   MetricType = "counter"
+	Histogram MetricType = "histogram"
+	Gauge     MetricType = "gauge"
+	Summary   MetricType = "summary"
+)
+
+type Unit string
+
+const (
+	CountUnit      Unit = "count"
+	Percent        Unit = "percent"
+	Byte           Unit = "byte"
+	Second         Unit = "second"
+	BitsPerSecond  Unit = "bits_per_second"
+	Millisecond    Unit = "millisecond"
+	KB             Unit = "KB"
+	MB             Unit = "MB"
+	GB             Unit = "GB"
+	RateUnit       Unit = "rate"
+	BytesPerSecond Unit = "bytes_per_second"
+	Percentile     Unit = "percentile"
+	Ratio          Unit = "ratio"
+	OpsPerSecond   Unit = "ops_per_second"
+	Iops           Unit = "iops"
+)
 
 type MonitorDimensions struct {
 	DimensionLabel string   `json:"dimension_label"`

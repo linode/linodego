@@ -57,7 +57,7 @@ func TestMonitorDashboards_Get_smoke(t *testing.T) {
 
 func validateDashboards(
 	t *testing.T,
-	dashboards linodego.MonitorDashboards,
+	dashboards linodego.MonitorDashboard,
 ) {
 	require.NotEmpty(t, dashboards.ID)
 	require.NotEmpty(t, dashboards.ServiceType)

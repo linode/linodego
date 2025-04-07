@@ -26,5 +26,5 @@ func TestListMonitorMetricDefinitionsByType(t *testing.T) {
 	assert.NotEmpty(t, clients, "Expected non-empty monitor metric-definitions list")
 
 	assert.Equal(t, "cpu_usage", clients[0].Metric, "Expected Metric to match")
-	assert.Equal(t, "gauge", clients[0].MetricType, "Expected MetricType to match")
+	assert.Equal(t, linodego.MetricType("gauge"), clients[0].MetricType, "Expected MetricType to match")
 }

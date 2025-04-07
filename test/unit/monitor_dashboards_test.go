@@ -25,8 +25,8 @@ func TestListMonitorDashboards(t *testing.T) {
 	assert.NoError(t, err, "Expected no error when listing monitor dashboards")
 	assert.NotEmpty(t, clients, "Expected non-empty monitor dashboard list")
 
-	assert.Equal(t, "standard", clients[0].Type, "Expected dashboard type to match")
-	assert.Equal(t, "dbaas", clients[0].ServiceType, "Expected service_type to match")
+	assert.Equal(t, linodego.DashboardType("standard"), clients[0].Type, "Expected dashboard type to match")
+	assert.Equal(t, linodego.ServiceType("dbaas"), clients[0].ServiceType, "Expected service_type to match")
 }
 
 func TestListMonitorDashboardsByID(t *testing.T) {
@@ -46,8 +46,8 @@ func TestListMonitorDashboardsByID(t *testing.T) {
 	assert.NoError(t, err, "Expected no error when listing monitor dashboard by type")
 	assert.NotEmpty(t, clients, "Expected non-empty monitor dashboard list")
 
-	assert.Equal(t, "standard", clients.Type, "Expected dashboard type to match")
-	assert.Equal(t, "dbaas", clients.ServiceType, "Expected service_type to match")
+	assert.Equal(t, linodego.DashboardType("standard"), clients.Type, "Expected dashboard type to match")
+	assert.Equal(t, linodego.ServiceType("dbaas"), clients.ServiceType, "Expected service_type to match")
 }
 
 // monitor_dashboard_by_service_type
@@ -63,11 +63,11 @@ func TestListMonitorDashboardsByServiceType(t *testing.T) {
 	// Mock the GET request for the monitor dashboard by type (dbaas)
 	base.MockGet("monitor/services/dbaas/dashboards", fixtureData)
 
-	// Call the GetMonitorDashboardsByServiceType method
+	// Call the GetMonitorDashcdboardsByServiceType method
 	clients, err := base.Client.GetMonitorDashboardsByServiceType(context.Background(), "dbaas", nil)
 	assert.NoError(t, err, "Expected no error when listing monitor dashboard by type")
 	assert.NotEmpty(t, clients, "Expected non-empty monitor dashboard list")
 
-	assert.Equal(t, "standard", clients[0].Type, "Expected dashboard type to match")
-	assert.Equal(t, "dbaas", clients[0].ServiceType, "Expected service_type to match")
+	assert.Equal(t, linodego.DashboardType("standard"), clients[0].Type, "Expected dashboard type to match")
+	assert.Equal(t, linodego.ServiceType("dbaas"), clients[0].ServiceType, "Expected service_type to match")
 }
