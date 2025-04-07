@@ -39,7 +39,7 @@ const (
 	Custom   DashboardType = "custom"
 )
 
-type DashboardWidgets struct {
+type DashboardWidget struct {
 	Metric            string            `json:"metric"`
 	Unit              string            `json:"unit"`
 	Label             string            `json:"label"`
