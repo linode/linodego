@@ -10,7 +10,7 @@ import (
 
 func TestCreateMonitorServicesToken(t *testing.T) {
 	// Load the mock fixture for monitor services
-	fixtureData, err := fixtures.GetFixture("service_token_create")
+	fixtureData, err := fixtures.GetFixture("monitor_service_token_create")
 	assert.NoError(t, err)
 
 	var base ClientBaseCase
@@ -21,7 +21,7 @@ func TestCreateMonitorServicesToken(t *testing.T) {
 
 	// Create request data for POST request
 	opts := linodego.MonitorTokenCreateOptions{
-		EntityIds: []int{187468, 188020},
+		EntityIDs: []int{12345, 54321},
 	}
 
 	token, err := base.Client.CreateMonitorServiceTokenForServiceType(context.Background(), "dbaas", opts)
