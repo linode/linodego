@@ -30,7 +30,6 @@ func TestObjectStorageQuotas_Get(t *testing.T) {
 	assert.Equal(t, "us-iad-1.linodeobjects.com", quota.S3Endpoint)
 	assert.Equal(t, 50, quota.QuotaLimit)
 	assert.Equal(t, "object", quota.ResourceMetric)
-
 }
 
 func TestObjectStorageQuotas_List(t *testing.T) {
@@ -59,7 +58,6 @@ func TestObjectStorageQuotas_List(t *testing.T) {
 	assert.Equal(t, "us-iad-1.linodeobjects.com", quotas[0].S3Endpoint)
 	assert.Equal(t, 50, quotas[0].QuotaLimit)
 	assert.Equal(t, "object", quotas[0].ResourceMetric)
-
 }
 
 func TestObjectStorageQuotaUsage_Get(t *testing.T) {
