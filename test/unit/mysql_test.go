@@ -487,7 +487,8 @@ func TestDatabaseMySQLConfig_Get(t *testing.T) {
 		"INSIGHTS",
 		"NONE",
 		"TABLE",
-		"INSIGHTS,TABLE"}, config.MySQL.LogOutput.Enum)
+		"INSIGHTS,TABLE",
+	}, config.MySQL.LogOutput.Enum)
 	assert.False(t, config.MySQL.LogOutput.RequiresRestart)
 	assert.Equal(t, "string", config.MySQL.LogOutput.Type)
 
