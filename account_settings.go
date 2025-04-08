@@ -4,6 +4,15 @@ import (
 	"context"
 )
 
+type InterfacesForNewLinodes string
+
+const (
+	LegacyConfigOnly                    InterfacesForNewLinodes = "legacy_config_only"
+	LegacyConfigDefaultButLinodeAllowed InterfacesForNewLinodes = "legacy_config_default_but_linode_allowed"
+	LinodeDefaultButLegacyConfigAllowed InterfacesForNewLinodes = "linode_default_but_legacy_config_allowed"
+	LinodeOnly                          InterfacesForNewLinodes = "linode_only"
+)
+
 // AccountSettings are the account wide flags or plans that effect new resources
 type AccountSettings struct {
 	// The default backups enrollment status for all new Linodes for all users on the account.  When enabled, backups are mandatory per instance.
@@ -20,6 +29,9 @@ type AccountSettings struct {
 
 	// A string like "disabled", "suspended", or "active" describing the status of this account’s Object Storage service enrollment.
 	ObjectStorage *string `json:"object_storage"`
+
+	// A new configuration flag defines whether new Linodes can use Linode and/or legacy config interfaces.
+	InterfacesForNewLinodes InterfacesForNewLinodes `json:"interfaces_for_new_linodes"`
 }
 
 // AccountSettingsUpdateOptions are the updateable account wide flags or plans that effect new resources.
@@ -27,12 +39,11 @@ type AccountSettingsUpdateOptions struct {
 	// The default backups enrollment status for all new Linodes for all users on the account.  When enabled, backups are mandatory per instance.
 	BackupsEnabled *bool `json:"backups_enabled,omitempty"`
 
-	// A plan name like "longview-3"..."longview-100", or a nil value for to cancel any existing subscription plan.
-	// Deprecated: Use PUT /longview/plan instead to update the LongviewSubscription
-	LongviewSubscription *string `json:"longview_subscription,omitempty"`
-
 	// The default network helper setting for all new Linodes and Linode Configs for all users on the account.
 	NetworkHelper *bool `json:"network_helper,omitempty"`
+
+	// A new configuration flag defines whether new Linodes can use Linode and/or legacy config interfaces.
+	InterfacesForNewLinodes *InterfacesForNewLinodes `json:"interfaces_for_new_linodes"`
 }
 
 // GetAccountSettings gets the account wide flags or plans that effect new resources
