@@ -60,27 +60,95 @@ type PostgresDatabase struct {
 	// Deprecated: Encrypted is a deprecated property, as it is no longer supported in DBaaS V2.
 	Encrypted bool `json:"encrypted"`
 
-	Hosts             DatabaseHost              `json:"hosts"`
-	Updates           DatabaseMaintenanceWindow `json:"updates"`
-	Created           *time.Time                `json:"-"`
-	Updated           *time.Time                `json:"-"`
-	Fork              *DatabaseFork             `json:"fork"`
-	OldestRestoreTime *time.Time                `json:"-"`
-	UsedDiskSizeGB    int                       `json:"used_disk_size_gb"`
-	TotalDiskSizeGB   int                       `json:"total_disk_size_gb"`
+	Hosts             DatabaseHost                 `json:"hosts"`
+	Updates           DatabaseMaintenanceWindow    `json:"updates"`
+	Created           *time.Time                   `json:"-"`
+	Updated           *time.Time                   `json:"-"`
+	Fork              *DatabaseFork                `json:"fork"`
+	OldestRestoreTime *time.Time                   `json:"-"`
+	UsedDiskSizeGB    int                          `json:"used_disk_size_gb"`
+	TotalDiskSizeGB   int                          `json:"total_disk_size_gb"`
+	EngineConfig      PostgresDatabaseEngineConfig `json:"engine_config"`
 }
 
-type PostgresDatabaseConfig struct {
-	PG                      PostgresDatabaseConfigPG                      `json:"pg"`
-	PGStatMonitorEnable     PostgresDatabaseConfigPGStatMonitorEnable     `json:"pg_stat_monitor_enable"`
-	PGLookout               PostgresDatabaseConfigPGLookout               `json:"pglookout"`
-	ServiceLog              PostgresDatabaseConfigServiceLog              `json:"service_log"`
-	SharedBuffersPercentage PostgresDatabaseConfigSharedBuffersPercentage `json:"shared_buffers_percentage"`
-	SynchronousReplication  PostgresDatabaseConfigSynchronousReplication  `json:"synchronous_replication"`
-	WorkMem                 PostgresDatabaseConfigWorkMem                 `json:"work_mem"`
+type PostgresDatabaseEngineConfig struct {
+	PG                      *PostgresDatabaseEngineConfigPG        `json:"pg,omitempty"`
+	PGStatMonitorEnable     *bool                                  `json:"pg_stat_monitor_enable,omitempty"`
+	PGLookout               *PostgresDatabaseEngineConfigPGLookout `json:"pglookout,omitempty"`
+	ServiceLog              *bool                                  `json:"service_log,omitempty"`
+	SharedBuffersPercentage *float64                               `json:"shared_buffers_percentage,omitempty"`
+	SynchronousReplication  *string                                `json:"synchronous_replication,omitempty"`
+	WorkMem                 *int                                   `json:"work_mem,omitempty"`
 }
 
-type PostgresDatabaseConfigPG struct {
+type PostgresDatabaseEngineConfigPG struct {
+	AutovacuumAnalyzeScaleFactor     *float64 `json:"autovacuum_analyze_scale_factor,omitempty"`
+	AutovacuumAnalyzeThreshold       *int32   `json:"autovacuum_analyze_threshold,omitempty"`
+	AutovacuumFreezeMaxAge           *int     `json:"autovacuum_freeze_max_age,omitempty"`
+	AutovacuumMaxWorkers             *int     `json:"autovacuum_max_workers,omitempty"`
+	AutovacuumNaptime                *int     `json:"autovacuum_naptime,omitempty"`
+	AutovacuumVacuumCostDelay        *int     `json:"autovacuum_vacuum_cost_delay,omitempty"`
+	AutovacuumVacuumCostLimit        *int     `json:"autovacuum_vacuum_cost_limit,omitempty"`
+	AutovacuumVacuumScaleFactor      *float64 `json:"autovacuum_vacuum_scale_factor,omitempty"`
+	AutovacuumVacuumThreshold        *int32   `json:"autovacuum_vacuum_threshold,omitempty"`
+	BGWriterDelay                    *int     `json:"bgwriter_delay,omitempty"`
+	BGWriterFlushAfter               *int     `json:"bgwriter_flush_after,omitempty"`
+	BGWriterLRUMaxPages              *int     `json:"bgwriter_lru_maxpages,omitempty"`
+	BGWriterLRUMultiplier            *float64 `json:"bgwriter_lru_multiplier,omitempty"`
+	DeadlockTimeout                  *int     `json:"deadlock_timeout,omitempty"`
+	DefaultToastCompression          *string  `json:"default_toast_compression,omitempty"`
+	IdleInTransactionSessionTimeout  *int     `json:"idle_in_transaction_session_timeout,omitempty"`
+	JIT                              *bool    `json:"jit,omitempty"`
+	LogAutovacuumMinDuration         *int32   `json:"log_autovacuum_min_duration,omitempty"`
+	LogErrorVerbosity                *string  `json:"log_error_verbosity,omitempty"`
+	LogLinePrefix                    *string  `json:"log_line_prefix,omitempty"`
+	LogMinDurationStatement          *int     `json:"log_min_duration_statement,omitempty"`
+	LogTempFiles                     *int32   `json:"log_temp_files,omitempty"`
+	MaxFilesPerProcess               *int     `json:"max_files_per_process,omitempty"`
+	MaxLocksPerTransaction           *int     `json:"max_locks_per_transaction,omitempty"`
+	MaxLogicalReplicationWorkers     *int     `json:"max_logical_replication_workers,omitempty"`
+	MaxParallelWorkers               *int     `json:"max_parallel_workers,omitempty"`
+	MaxParallelWorkersPerGather      *int     `json:"max_parallel_workers_per_gather,omitempty"`
+	MaxPredLocksPerTransaction       *int     `json:"max_pred_locks_per_transaction,omitempty"`
+	MaxPreparedTransactions          *int     `json:"max_prepared_transactions,omitempty"`
+	MaxReplicationSlots              *int     `json:"max_replication_slots,omitempty"`
+	MaxSlotWALKeepSize               *int32   `json:"max_slot_wal_keep_size,omitempty"`
+	MaxStackDepth                    *int     `json:"max_stack_depth,omitempty"`
+	MaxStandbyArchiveDelay           *int     `json:"max_standby_archive_delay,omitempty"`
+	MaxStandbyStreamingDelay         *int     `json:"max_standby_streaming_delay,omitempty"`
+	MaxWALSenders                    *int     `json:"max_wal_senders,omitempty"`
+	MaxWorkerProcesses               *int     `json:"max_worker_processes,omitempty"`
+	PasswordEncryption               *string  `json:"password_encryption,omitempty"`
+	PGPartmanBGWInterval             *int     `json:"pg_partman_bgw.interval,omitempty"`
+	PGPartmanBGWRole                 *string  `json:"pg_partman_bgw.role,omitempty"`
+	PGStatMonitorPGSMEnableQueryPlan *bool    `json:"pg_stat_monitor.pgsm_enable_query_plan,omitempty"`
+	PGStatMonitorPGSMMaxBuckets      *int     `json:"pg_stat_monitor.pgsm_max_buckets,omitempty"`
+	PGStatStatementsTrack            *string  `json:"pg_stat_statements.track,omitempty"`
+	TempFileLimit                    *int32   `json:"temp_file_limit,omitempty"`
+	Timezone                         *string  `json:"timezone,omitempty"`
+	TrackActivityQuerySize           *int     `json:"track_activity_query_size,omitempty"`
+	TrackCommitTimestamp             *string  `json:"track_commit_timestamp,omitempty"`
+	TrackFunctions                   *string  `json:"track_functions,omitempty"`
+	TrackIOTiming                    *string  `json:"track_io_timing,omitempty"`
+	WALSenderTimeout                 *int     `json:"wal_sender_timeout,omitempty"`
+	WALWriterDelay                   *int     `json:"wal_writer_delay,omitempty"`
+}
+
+type PostgresDatabaseEngineConfigPGLookout struct {
+	MaxFailoverReplicationTimeLag *int64 `json:"max_failover_replication_time_lag,omitempty"`
+}
+
+type PostgresDatabaseConfigInfo struct {
+	PG                      PostgresDatabaseConfigInfoPG                      `json:"pg"`
+	PGStatMonitorEnable     PostgresDatabaseConfigInfoPGStatMonitorEnable     `json:"pg_stat_monitor_enable"`
+	PGLookout               PostgresDatabaseConfigInfoPGLookout               `json:"pglookout"`
+	ServiceLog              PostgresDatabaseConfigInfoServiceLog              `json:"service_log"`
+	SharedBuffersPercentage PostgresDatabaseConfigInfoSharedBuffersPercentage `json:"shared_buffers_percentage"`
+	SynchronousReplication  PostgresDatabaseConfigInfoSynchronousReplication  `json:"synchronous_replication"`
+	WorkMem                 PostgresDatabaseConfigInfoWorkMem                 `json:"work_mem"`
+}
+
+type PostgresDatabaseConfigInfoPG struct {
 	AutovacuumAnalyzeScaleFactor     AutovacuumAnalyzeScaleFactor     `json:"autovacuum_analyze_scale_factor"`
 	AutovacuumAnalyzeThreshold       AutovacuumAnalyzeThreshold       `json:"autovacuum_analyze_threshold"`
 	AutovacuumFreezeMaxAge           AutovacuumFreezeMaxAge           `json:"autovacuum_freeze_max_age"`
@@ -539,13 +607,13 @@ type WALWriterDelay struct {
 	Type            string `json:"type"`
 }
 
-type PostgresDatabaseConfigPGStatMonitorEnable struct {
+type PostgresDatabaseConfigInfoPGStatMonitorEnable struct {
 	Description     string `json:"description"`
 	RequiresRestart bool   `json:"requires_restart"`
 	Type            string `json:"type"`
 }
 
-type PostgresDatabaseConfigPGLookout struct {
+type PostgresDatabaseConfigInfoPGLookout struct {
 	PGLookoutMaxFailoverReplicationTimeLag PGLookoutMaxFailoverReplicationTimeLag `json:"max_failover_replication_time_lag"`
 }
 
@@ -557,14 +625,14 @@ type PGLookoutMaxFailoverReplicationTimeLag struct {
 	Type            string `json:"type"`
 }
 
-type PostgresDatabaseConfigServiceLog struct {
+type PostgresDatabaseConfigInfoServiceLog struct {
 	Description     string   `json:"description"`
 	Example         bool     `json:"example"`
 	RequiresRestart bool     `json:"requires_restart"`
 	Type            []string `json:"type"`
 }
 
-type PostgresDatabaseConfigSharedBuffersPercentage struct {
+type PostgresDatabaseConfigInfoSharedBuffersPercentage struct {
 	Description     string  `json:"description"`
 	Example         float64 `json:"example"`
 	Maximum         float64 `json:"maximum"`
@@ -573,7 +641,7 @@ type PostgresDatabaseConfigSharedBuffersPercentage struct {
 	Type            string  `json:"type"`
 }
 
-type PostgresDatabaseConfigSynchronousReplication struct {
+type PostgresDatabaseConfigInfoSynchronousReplication struct {
 	Description     string   `json:"description"`
 	Enum            []string `json:"enum"`
 	Example         string   `json:"example"`
@@ -581,7 +649,7 @@ type PostgresDatabaseConfigSynchronousReplication struct {
 	Type            string   `json:"type"`
 }
 
-type PostgresDatabaseConfigWorkMem struct {
+type PostgresDatabaseConfigInfoWorkMem struct {
 	Description     string `json:"description"`
 	Example         int    `json:"example"`
 	Maximum         int    `json:"maximum"`
@@ -631,16 +699,19 @@ type PostgresCreateOptions struct {
 	ReplicationCommitType PostgresCommitType `json:"replication_commit_type,omitempty"`
 
 	Fork *DatabaseFork `json:"fork,omitempty"`
+
+	EngineConfig *PostgresDatabaseEngineConfig `json:"engine_config,omitempty"`
 }
 
 // PostgresUpdateOptions fields are used when altering the existing Postgres Database
 type PostgresUpdateOptions struct {
-	Label       string                     `json:"label,omitempty"`
-	AllowList   *[]string                  `json:"allow_list,omitempty"`
-	Updates     *DatabaseMaintenanceWindow `json:"updates,omitempty"`
-	Type        string                     `json:"type,omitempty"`
-	ClusterSize int                        `json:"cluster_size,omitempty"`
-	Version     string                     `json:"version,omitempty"`
+	Label        string                        `json:"label,omitempty"`
+	AllowList    *[]string                     `json:"allow_list,omitempty"`
+	Updates      *DatabaseMaintenanceWindow    `json:"updates,omitempty"`
+	Type         string                        `json:"type,omitempty"`
+	ClusterSize  int                           `json:"cluster_size,omitempty"`
+	Version      string                        `json:"version,omitempty"`
+	EngineConfig *PostgresDatabaseEngineConfig `json:"engine_config,omitempty"`
 }
 
 // PostgresDatabaseSSL is the SSL Certificate to access the Linode Managed Postgres Database
@@ -787,6 +858,6 @@ func (c *Client) ResumePostgresDatabase(ctx context.Context, databaseID int) err
 }
 
 // GetPostgresDatabaseConfig returns a detailed list of all the configuration options for PostgreSQL Databases
-func (c *Client) GetPostgresDatabaseConfig(ctx context.Context) (*PostgresDatabaseConfig, error) {
-	return doGETRequest[PostgresDatabaseConfig](ctx, c, "databases/postgresql/config")
+func (c *Client) GetPostgresDatabaseConfig(ctx context.Context) (*PostgresDatabaseConfigInfo, error) {
+	return doGETRequest[PostgresDatabaseConfigInfo](ctx, c, "databases/postgresql/config")
 }

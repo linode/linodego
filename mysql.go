@@ -50,15 +50,57 @@ type MySQLDatabase struct {
 	UsedDiskSizeGB    int                       `json:"used_disk_size_gb"`
 	TotalDiskSizeGB   int                       `json:"total_disk_size_gb"`
 	Port              int                       `json:"port"`
+
+	EngineConfig MySQLDatabaseEngineConfig `json:"engine_config"`
 }
 
-type MySQLDatabaseConfig struct {
-	MySQL                 MySQLDatabaseConfigMySQL                 `json:"mysql"`
-	BinlogRetentionPeriod MySQLDatabaseConfigBinlogRetentionPeriod `json:"binlog_retention_period"`
-	ServiceLog            MySQLDatabaseConfigServiceLog            `json:"service_log"`
+type MySQLDatabaseEngineConfig struct {
+	MySQL                 *MySQLDatabaseEngineConfigMySQL `json:"mysql,omitempty"`
+	BinlogRetentionPeriod *int                            `json:"binlog_retention_period,omitempty"`
+	ServiceLog            *bool                           `json:"service_log,omitempty"`
 }
 
-type MySQLDatabaseConfigMySQL struct {
+type MySQLDatabaseEngineConfigMySQL struct {
+	ConnectTimeout               *int     `json:"connect_timeout"`
+	DefaultTimeZone              *string  `json:"default_time_zone"`
+	GroupConcatMaxLen            *float64 `json:"group_concat_max_len"`
+	InformationSchemaStatsExpiry *int     `json:"information_schema_stats_expiry"`
+	InnoDBChangeBufferMaxSize    *int     `json:"innodb_change_buffer_max_size"`
+	InnoDBFlushNeighbors         *int     `json:"innodb_flush_neighbors"`
+	InnoDBFTMinTokenSize         *int     `json:"innodb_ft_min_token_size"`
+	InnoDBFTServerStopwordTable  *string  `json:"innodb_ft_server_stopword_table"`
+	InnoDBLockWaitTimeout        *int     `json:"innodb_lock_wait_timeout"`
+	InnoDBLogBufferSize          *int     `json:"innodb_log_buffer_size"`
+	InnoDBOnlineAlterLogMaxSize  *int     `json:"innodb_online_alter_log_max_size"`
+	InnoDBPrintAllDeadlocks      *bool    `json:"innodb_print_all_deadlocks"`
+	InnoDBReadIOThreads          *int     `json:"innodb_read_io_threads"`
+	InnoDBRollbackOnTimeout      *bool    `json:"innodb_rollback_on_timeout"`
+	InnoDBThreadConcurrency      *int     `json:"innodb_thread_concurrency"`
+	InnoDBWriteIOThreads         *int     `json:"innodb_write_io_threads"`
+	InteractiveTimeout           *int     `json:"interactive_timeout"`
+	InternalTmpMemStorageEngine  *string  `json:"internal_tmp_mem_storage_engine"`
+	LogOutput                    *string  `json:"log_output"`
+	LongQueryTime                *float64 `json:"long_query_time"`
+	MaxAllowedPacket             *int     `json:"max_allowed_packet"`
+	MaxHeapTableSize             *int     `json:"max_heap_table_size"`
+	NetBufferLength              *int     `json:"net_buffer_length"`
+	NetReadTimeout               *int     `json:"net_read_timeout"`
+	NetWriteTimeout              *int     `json:"net_write_timeout"`
+	SlowQueryLog                 *bool    `json:"slow_query_log"`
+	SortBufferSize               *int     `json:"sort_buffer_size"`
+	SQLMode                      *string  `json:"sql_mode"`
+	SQLRequirePrimaryKey         *bool    `json:"sql_require_primary_key"`
+	TmpTableSize                 *int     `json:"tmp_table_size"`
+	WaitTimeout                  *int     `json:"wait_timeout"`
+}
+
+type MySQLDatabaseConfigInfo struct {
+	MySQL                 MySQLDatabaseConfigInfoMySQL                 `json:"mysql"`
+	BinlogRetentionPeriod MySQLDatabaseConfigInfoBinlogRetentionPeriod `json:"binlog_retention_period"`
+	ServiceLog            MySQLDatabaseConfigInfoServiceLog            `json:"service_log"`
+}
+
+type MySQLDatabaseConfigInfoMySQL struct {
 	ConnectTimeout               ConnectTimeout               `json:"connect_timeout"`
 	DefaultTimeZone              DefaultTimeZone              `json:"default_time_zone"`
 	GroupConcatMaxLen            GroupConcatMaxLen            `json:"group_concat_max_len"`
@@ -362,7 +404,7 @@ type WaitTimeout struct {
 	Type            string `json:"type"`
 }
 
-type MySQLDatabaseConfigBinlogRetentionPeriod struct {
+type MySQLDatabaseConfigInfoBinlogRetentionPeriod struct {
 	Description     string `json:"description"`
 	Example         int    `json:"example"`
 	Maximum         int    `json:"maximum"`
@@ -371,7 +413,7 @@ type MySQLDatabaseConfigBinlogRetentionPeriod struct {
 	Type            string `json:"type"`
 }
 
-type MySQLDatabaseConfigServiceLog struct {
+type MySQLDatabaseConfigInfoServiceLog struct {
 	Description     string   `json:"description"`
 	Example         bool     `json:"example"`
 	RequiresRestart bool     `json:"requires_restart"`
@@ -416,17 +458,19 @@ type MySQLCreateOptions struct {
 	// Deprecated: SSLConnection is a deprecated property, as it is no longer supported in DBaaS V2.
 	SSLConnection bool `json:"ssl_connection,omitempty"`
 
-	Fork *DatabaseFork `json:"fork,omitempty"`
+	Fork         *DatabaseFork              `json:"fork,omitempty"`
+	EngineConfig *MySQLDatabaseEngineConfig `json:"engine_config,omitempty"`
 }
 
 // MySQLUpdateOptions fields are used when altering the existing MySQL Database
 type MySQLUpdateOptions struct {
-	Label       string                     `json:"label,omitempty"`
-	AllowList   *[]string                  `json:"allow_list,omitempty"`
-	Updates     *DatabaseMaintenanceWindow `json:"updates,omitempty"`
-	Type        string                     `json:"type,omitempty"`
-	ClusterSize int                        `json:"cluster_size,omitempty"`
-	Version     string                     `json:"version,omitempty"`
+	Label        string                     `json:"label,omitempty"`
+	AllowList    *[]string                  `json:"allow_list,omitempty"`
+	Updates      *DatabaseMaintenanceWindow `json:"updates,omitempty"`
+	Type         string                     `json:"type,omitempty"`
+	ClusterSize  int                        `json:"cluster_size,omitempty"`
+	Version      string                     `json:"version,omitempty"`
+	EngineConfig *MySQLDatabaseEngineConfig `json:"engine_config,omitempty"`
 }
 
 // MySQLDatabaseBackup is information for interacting with a backup for the existing MySQL Database
@@ -573,6 +617,6 @@ func (c *Client) ResumeMySQLDatabase(ctx context.Context, databaseID int) error 
 }
 
 // GetMySQLDatabaseConfig returns a detailed list of all the configuration options for MySQL Databases
-func (c *Client) GetMySQLDatabaseConfig(ctx context.Context) (*MySQLDatabaseConfig, error) {
-	return doGETRequest[MySQLDatabaseConfig](ctx, c, "databases/mysql/config")
+func (c *Client) GetMySQLDatabaseConfig(ctx context.Context) (*MySQLDatabaseConfigInfo, error) {
+	return doGETRequest[MySQLDatabaseConfigInfo](ctx, c, "databases/mysql/config")
 }

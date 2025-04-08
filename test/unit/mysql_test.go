@@ -53,6 +53,40 @@ func TestDatabaseMySQL_Get(t *testing.T) {
 	assert.Equal(t, 0, db.Updates.HourOfDay)
 	assert.Equal(t, 2, db.UsedDiskSizeGB)
 	assert.Equal(t, "8.0.26", db.Version)
+
+	assert.Equal(t, 600, *db.EngineConfig.BinlogRetentionPeriod)
+	assert.Equal(t, true, *db.EngineConfig.ServiceLog)
+	assert.Equal(t, 10, *db.EngineConfig.MySQL.ConnectTimeout)
+	assert.Equal(t, "+03:00", *db.EngineConfig.MySQL.DefaultTimeZone)
+	assert.Equal(t, float64(1024), *db.EngineConfig.MySQL.GroupConcatMaxLen)
+	assert.Equal(t, 86400, *db.EngineConfig.MySQL.InformationSchemaStatsExpiry)
+	assert.Equal(t, 30, *db.EngineConfig.MySQL.InnoDBChangeBufferMaxSize)
+	assert.Equal(t, 0, *db.EngineConfig.MySQL.InnoDBFlushNeighbors)
+	assert.Equal(t, 3, *db.EngineConfig.MySQL.InnoDBFTMinTokenSize)
+	assert.Equal(t, "db_name/table_name", *db.EngineConfig.MySQL.InnoDBFTServerStopwordTable)
+	assert.Equal(t, 50, *db.EngineConfig.MySQL.InnoDBLockWaitTimeout)
+	assert.Equal(t, 16777216, *db.EngineConfig.MySQL.InnoDBLogBufferSize)
+	assert.Equal(t, 134217728, *db.EngineConfig.MySQL.InnoDBOnlineAlterLogMaxSize)
+	assert.Equal(t, true, *db.EngineConfig.MySQL.InnoDBPrintAllDeadlocks)
+	assert.Equal(t, 10, *db.EngineConfig.MySQL.InnoDBReadIOThreads)
+	assert.Equal(t, true, *db.EngineConfig.MySQL.InnoDBRollbackOnTimeout)
+	assert.Equal(t, 10, *db.EngineConfig.MySQL.InnoDBThreadConcurrency)
+	assert.Equal(t, 10, *db.EngineConfig.MySQL.InnoDBWriteIOThreads)
+	assert.Equal(t, 3600, *db.EngineConfig.MySQL.InteractiveTimeout)
+	assert.Equal(t, "TempTable", *db.EngineConfig.MySQL.InternalTmpMemStorageEngine)
+	assert.Equal(t, "INSIGHTS", *db.EngineConfig.MySQL.LogOutput)
+	assert.Equal(t, float64(10), *db.EngineConfig.MySQL.LongQueryTime)
+	assert.Equal(t, 67108864, *db.EngineConfig.MySQL.MaxAllowedPacket)
+	assert.Equal(t, 16777216, *db.EngineConfig.MySQL.MaxHeapTableSize)
+	assert.Equal(t, 16384, *db.EngineConfig.MySQL.NetBufferLength)
+	assert.Equal(t, 30, *db.EngineConfig.MySQL.NetReadTimeout)
+	assert.Equal(t, 30, *db.EngineConfig.MySQL.NetWriteTimeout)
+	assert.Equal(t, true, *db.EngineConfig.MySQL.SlowQueryLog)
+	assert.Equal(t, 262144, *db.EngineConfig.MySQL.SortBufferSize)
+	assert.Equal(t, "ANSI,TRADITIONAL", *db.EngineConfig.MySQL.SQLMode)
+	assert.Equal(t, true, *db.EngineConfig.MySQL.SQLRequirePrimaryKey)
+	assert.Equal(t, 16777216, *db.EngineConfig.MySQL.TmpTableSize)
+	assert.Equal(t, 28800, *db.EngineConfig.MySQL.WaitTimeout)
 }
 
 func TestDatabaseMySQL_Update(t *testing.T) {
@@ -65,6 +99,12 @@ func TestDatabaseMySQL_Update(t *testing.T) {
 
 	requestData := linodego.MySQLUpdateOptions{
 		Label: "example-db-updated",
+		EngineConfig: &linodego.MySQLDatabaseEngineConfig{
+			MySQL: &linodego.MySQLDatabaseEngineConfigMySQL{
+				ConnectTimeout: linodego.Pointer(20),
+			},
+			ServiceLog: linodego.Pointer(false),
+		},
 	}
 
 	base.MockPut("databases/mysql/instances/123", fixtureData)
@@ -88,6 +128,40 @@ func TestDatabaseMySQL_Update(t *testing.T) {
 	assert.Equal(t, 0, db.Updates.HourOfDay)
 	assert.Equal(t, 2, db.UsedDiskSizeGB)
 	assert.Equal(t, "8.0.26", db.Version)
+
+	assert.Equal(t, 600, *db.EngineConfig.BinlogRetentionPeriod)
+	assert.Equal(t, false, *db.EngineConfig.ServiceLog)
+	assert.Equal(t, 20, *db.EngineConfig.MySQL.ConnectTimeout)
+	assert.Equal(t, "+03:00", *db.EngineConfig.MySQL.DefaultTimeZone)
+	assert.Equal(t, float64(1024), *db.EngineConfig.MySQL.GroupConcatMaxLen)
+	assert.Equal(t, 86400, *db.EngineConfig.MySQL.InformationSchemaStatsExpiry)
+	assert.Equal(t, 30, *db.EngineConfig.MySQL.InnoDBChangeBufferMaxSize)
+	assert.Equal(t, 0, *db.EngineConfig.MySQL.InnoDBFlushNeighbors)
+	assert.Equal(t, 3, *db.EngineConfig.MySQL.InnoDBFTMinTokenSize)
+	assert.Equal(t, "db_name/table_name", *db.EngineConfig.MySQL.InnoDBFTServerStopwordTable)
+	assert.Equal(t, 50, *db.EngineConfig.MySQL.InnoDBLockWaitTimeout)
+	assert.Equal(t, 16777216, *db.EngineConfig.MySQL.InnoDBLogBufferSize)
+	assert.Equal(t, 134217728, *db.EngineConfig.MySQL.InnoDBOnlineAlterLogMaxSize)
+	assert.Equal(t, true, *db.EngineConfig.MySQL.InnoDBPrintAllDeadlocks)
+	assert.Equal(t, 10, *db.EngineConfig.MySQL.InnoDBReadIOThreads)
+	assert.Equal(t, true, *db.EngineConfig.MySQL.InnoDBRollbackOnTimeout)
+	assert.Equal(t, 10, *db.EngineConfig.MySQL.InnoDBThreadConcurrency)
+	assert.Equal(t, 10, *db.EngineConfig.MySQL.InnoDBWriteIOThreads)
+	assert.Equal(t, 3600, *db.EngineConfig.MySQL.InteractiveTimeout)
+	assert.Equal(t, "TempTable", *db.EngineConfig.MySQL.InternalTmpMemStorageEngine)
+	assert.Equal(t, "INSIGHTS", *db.EngineConfig.MySQL.LogOutput)
+	assert.Equal(t, float64(10), *db.EngineConfig.MySQL.LongQueryTime)
+	assert.Equal(t, 67108864, *db.EngineConfig.MySQL.MaxAllowedPacket)
+	assert.Equal(t, 16777216, *db.EngineConfig.MySQL.MaxHeapTableSize)
+	assert.Equal(t, 16384, *db.EngineConfig.MySQL.NetBufferLength)
+	assert.Equal(t, 30, *db.EngineConfig.MySQL.NetReadTimeout)
+	assert.Equal(t, 30, *db.EngineConfig.MySQL.NetWriteTimeout)
+	assert.Equal(t, true, *db.EngineConfig.MySQL.SlowQueryLog)
+	assert.Equal(t, 262144, *db.EngineConfig.MySQL.SortBufferSize)
+	assert.Equal(t, "ANSI,TRADITIONAL", *db.EngineConfig.MySQL.SQLMode)
+	assert.Equal(t, true, *db.EngineConfig.MySQL.SQLRequirePrimaryKey)
+	assert.Equal(t, 16777216, *db.EngineConfig.MySQL.TmpTableSize)
+	assert.Equal(t, 28800, *db.EngineConfig.MySQL.WaitTimeout)
 }
 
 func TestDatabaseMySQL_Create(t *testing.T) {
@@ -103,6 +177,12 @@ func TestDatabaseMySQL_Create(t *testing.T) {
 		Region: "us-east",
 		Type:   "g6-dedicated-2",
 		Engine: "mysql",
+		EngineConfig: &linodego.MySQLDatabaseEngineConfig{
+			MySQL: &linodego.MySQLDatabaseEngineConfigMySQL{
+				ConnectTimeout: linodego.Pointer(20),
+			},
+			ServiceLog: linodego.Pointer(false),
+		},
 	}
 
 	base.MockPost("databases/mysql/instances", fixtureData)
@@ -126,6 +206,40 @@ func TestDatabaseMySQL_Create(t *testing.T) {
 	assert.Equal(t, 0, db.Updates.HourOfDay)
 	assert.Equal(t, 2, db.UsedDiskSizeGB)
 	assert.Equal(t, "8.0.26", db.Version)
+
+	assert.Equal(t, 600, *db.EngineConfig.BinlogRetentionPeriod)
+	assert.Equal(t, false, *db.EngineConfig.ServiceLog)
+	assert.Equal(t, 20, *db.EngineConfig.MySQL.ConnectTimeout)
+	assert.Equal(t, "+03:00", *db.EngineConfig.MySQL.DefaultTimeZone)
+	assert.Equal(t, float64(1024), *db.EngineConfig.MySQL.GroupConcatMaxLen)
+	assert.Equal(t, 86400, *db.EngineConfig.MySQL.InformationSchemaStatsExpiry)
+	assert.Equal(t, 30, *db.EngineConfig.MySQL.InnoDBChangeBufferMaxSize)
+	assert.Equal(t, 0, *db.EngineConfig.MySQL.InnoDBFlushNeighbors)
+	assert.Equal(t, 3, *db.EngineConfig.MySQL.InnoDBFTMinTokenSize)
+	assert.Equal(t, "db_name/table_name", *db.EngineConfig.MySQL.InnoDBFTServerStopwordTable)
+	assert.Equal(t, 50, *db.EngineConfig.MySQL.InnoDBLockWaitTimeout)
+	assert.Equal(t, 16777216, *db.EngineConfig.MySQL.InnoDBLogBufferSize)
+	assert.Equal(t, 134217728, *db.EngineConfig.MySQL.InnoDBOnlineAlterLogMaxSize)
+	assert.Equal(t, true, *db.EngineConfig.MySQL.InnoDBPrintAllDeadlocks)
+	assert.Equal(t, 10, *db.EngineConfig.MySQL.InnoDBReadIOThreads)
+	assert.Equal(t, true, *db.EngineConfig.MySQL.InnoDBRollbackOnTimeout)
+	assert.Equal(t, 10, *db.EngineConfig.MySQL.InnoDBThreadConcurrency)
+	assert.Equal(t, 10, *db.EngineConfig.MySQL.InnoDBWriteIOThreads)
+	assert.Equal(t, 3600, *db.EngineConfig.MySQL.InteractiveTimeout)
+	assert.Equal(t, "TempTable", *db.EngineConfig.MySQL.InternalTmpMemStorageEngine)
+	assert.Equal(t, "INSIGHTS", *db.EngineConfig.MySQL.LogOutput)
+	assert.Equal(t, float64(10), *db.EngineConfig.MySQL.LongQueryTime)
+	assert.Equal(t, 67108864, *db.EngineConfig.MySQL.MaxAllowedPacket)
+	assert.Equal(t, 16777216, *db.EngineConfig.MySQL.MaxHeapTableSize)
+	assert.Equal(t, 16384, *db.EngineConfig.MySQL.NetBufferLength)
+	assert.Equal(t, 30, *db.EngineConfig.MySQL.NetReadTimeout)
+	assert.Equal(t, 30, *db.EngineConfig.MySQL.NetWriteTimeout)
+	assert.Equal(t, true, *db.EngineConfig.MySQL.SlowQueryLog)
+	assert.Equal(t, 262144, *db.EngineConfig.MySQL.SortBufferSize)
+	assert.Equal(t, "ANSI,TRADITIONAL", *db.EngineConfig.MySQL.SQLMode)
+	assert.Equal(t, true, *db.EngineConfig.MySQL.SQLRequirePrimaryKey)
+	assert.Equal(t, 16777216, *db.EngineConfig.MySQL.TmpTableSize)
+	assert.Equal(t, 28800, *db.EngineConfig.MySQL.WaitTimeout)
 }
 
 func TestDatabaseMySQL_Delete(t *testing.T) {
