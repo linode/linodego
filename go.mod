@@ -5,7 +5,7 @@ require (
 	github.com/google/go-cmp v0.7.0
 	github.com/google/go-querystring v1.1.0
 	github.com/jarcoal/httpmock v1.3.1
-	golang.org/x/net v0.37.0
+	golang.org/x/net v0.38.0
 	golang.org/x/oauth2 v0.28.0
 	golang.org/x/text v0.23.0
 	gopkg.in/ini.v1 v1.66.6
@@ -20,6 +20,6 @@ require (
 
 go 1.23.0
 
-toolchain go1.23.6
+toolchain go1.24.1
 
 retract v1.0.0 // Accidental branch push
