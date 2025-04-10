@@ -24,8 +24,8 @@ func TestMonitorServices_Get_smoke(t *testing.T) {
 		validateServiceTypes(t, services)
 	}
 
-	// Get the deatils of the regsitered ACLP services based on serviceType
-	monitorServicesClient, getErr := client.GetMonitorServiceByType(context.Background(), "dbaas", nil)
+	// Get the details of the registered ACLP services based on serviceType
+	monitorServicesClient, getErr := client.ListMonitorServiceByType(context.Background(), "dbaas", nil)
 	if getErr != nil {
 		t.Errorf("Error getting monitor services : %s", getErr)
 	}

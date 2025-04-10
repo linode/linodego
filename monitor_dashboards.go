@@ -25,10 +25,10 @@ type ServiceType string
 const (
 	Linode          ServiceType = "linode"
 	LKE             ServiceType = "lke"
-	Dbaas           ServiceType = "dbaas"
+	DBaaS           ServiceType = "dbaas"
 	ACLB            ServiceType = "aclb"
-	nodebalancer    ServiceType = "nodebalancer"
-	objectstorage   ServiceType = "objectstorage"
+	Nodebalancer    ServiceType = "nodebalancer"
+	ObjectStorage   ServiceType = "objectstorage"
 	Vpc             ServiceType = "vpc"
 	FirewallService ServiceType = "firewall"
 )
@@ -80,14 +80,14 @@ func (c *Client) ListMonitorDashboards(ctx context.Context, opts *ListOptions) (
 	return getPaginatedResults[MonitorDashboard](ctx, c, "monitor/dashboards", opts)
 }
 
-// GetMonitorDashboardsByID gets an ACLP Monitor Dashboard for a given dashboardID
-func (c *Client) GetMonitorDashboardsByID(ctx context.Context, dashboardID int) (*MonitorDashboard, error) {
+// GetMonitorDashboard gets an ACLP Monitor Dashboard for a given dashboardID
+func (c *Client) GetMonitorDashboard(ctx context.Context, dashboardID int) (*MonitorDashboard, error) {
 	e := formatAPIPath("monitor/dashboards/%d", dashboardID)
 	return doGETRequest[MonitorDashboard](ctx, c, e)
 }
 
-// GetMonitorDashboardsByServiceType gets an ACLP Monitor Dashboard for a given serviceType
-func (c *Client) GetMonitorDashboardsByServiceType(ctx context.Context, serviceType string, opts *ListOptions) ([]MonitorDashboard, error) {
+// ListMonitorDashboardsByServiceType lists ACLP Monitor Dashboards for a given serviceType
+func (c *Client) ListMonitorDashboardsByServiceType(ctx context.Context, serviceType string, opts *ListOptions) ([]MonitorDashboard, error) {
 	e := formatAPIPath("monitor/services/%s/dashboards", serviceType)
 	return getPaginatedResults[MonitorDashboard](ctx, c, e, opts)
 }
