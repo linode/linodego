@@ -14,7 +14,7 @@ type MonitorTokenCreateOptions struct {
 	EntityIDs []int `json:"entity_ids"`
 }
 
-// ListMonitorServiceTokenByServiceType to create token for a given serviceType
+// CreateMonitorServiceTokenForServiceType to create token for a given serviceType
 func (c *Client) CreateMonitorServiceTokenForServiceType(ctx context.Context, serviceType string, opts MonitorTokenCreateOptions) (*MonitorServiceToken, error) {
 	e := formatAPIPath("monitor/services/%s/token", serviceType)
 	return doPOSTRequest[MonitorServiceToken](ctx, c, e, opts)

@@ -7,7 +7,7 @@ import (
 // MonitorMetricsDefinition represents an ACLP MetricsDefinition object
 type MonitorMetricsDefinition struct {
 	AvailableAggregateFunctions []AggregateFunction `json:"available_aggregate_functions"`
-	Dimensions                  []MonitorDimensions `json:"dimensions"`
+	Dimensions                  []MonitorDimension  `json:"dimensions"`
 	IsAlertable                 bool                `json:"is_alertable"`
 	Label                       string              `json:"label"`
 	Metric                      string              `json:"metric"`
@@ -47,8 +47,8 @@ const (
 	Iops           Unit = "iops"
 )
 
-// MonitorDimensions represents an ACLP MonitorDimensions object
-type MonitorDimensions struct {
+// MonitorDimension represents an ACLP MonitorDimension object
+type MonitorDimension struct {
 	DimensionLabel string   `json:"dimension_label"`
 	Label          string   `json:"label"`
 	Values         []string `json:"values"`

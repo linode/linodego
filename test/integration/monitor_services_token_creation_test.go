@@ -10,7 +10,7 @@ import (
 
 func TestMonitorServicesTokenCreation_Get_smoke(t *testing.T) {
 
-	client, _, teardown, err := setupPostgresDatabase(t, nil, "fixtures/TestDatabase_List")
+	client, _, teardown, err := setupPostgresDatabase(t, nil, "fixtures/TestDatabaseACLP_List")
 	if err != nil {
 		t.Error(err)
 	}
@@ -38,10 +38,19 @@ func TestMonitorServicesTokenCreation_Get_smoke(t *testing.T) {
 		EntityIDs: entityIDs,
 	}
 
-	token, getErr := client1.CreateMonitorServiceTokenForServiceType(context.Background(), "dbaas", createOpts)
-	if getErr != nil {
-		t.Errorf("Error creating token : %s", getErr)
+	// Use the same context with timeout for the token creation
+	token, createErr := client1.CreateMonitorServiceTokenForServiceType(context.Background(), "dbaas", createOpts)
+	if createErr != nil {
+		t.Errorf("Error creating token : %s", createErr)
 	}
 
+	// Validate the token
+	validateToken(t, *token)
+}
+
+func validateToken(
+	t *testing.T,
+	token linodego.MonitorServiceToken,
+) {
 	require.NotEmpty(t, token.Token)
 }

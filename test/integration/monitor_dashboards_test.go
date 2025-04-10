@@ -24,7 +24,7 @@ func TestMonitorDashboards_Get_smoke(t *testing.T) {
 	}
 
 	// Get an ACLP Dashboard by dashboardID
-	monitorDashhboardClient, getErr := client.GetMonitorDashboardsByID(context.Background(), 1)
+	monitorDashhboardClient, getErr := client.GetMonitorDashboard(context.Background(), 1)
 	if getErr != nil {
 		t.Errorf("Error getting dashboard by ID :%s", getErr)
 	}
@@ -40,8 +40,8 @@ func TestMonitorDashboards_Get_smoke(t *testing.T) {
 		t.Errorf("Monitor dashboard not found in list.")
 	}
 
-	// Get an ACLP Dashboard by serviceType
-	monitorDashhboardClientST, listErr := client.GetMonitorDashboardsByServiceType(context.Background(), "dbaas", nil)
+	// List ACLP Dashboards by serviceType
+	monitorDashhboardClientST, listErr := client.ListMonitorDashboardsByServiceType(context.Background(), "dbaas", nil)
 	if listErr != nil {
 		t.Errorf("Error listing monitor dashboards:%s", listErr)
 	}

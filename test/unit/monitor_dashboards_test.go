@@ -41,8 +41,8 @@ func TestListMonitorDashboardsByID(t *testing.T) {
 	// Mock the GET request for the monitor dashboard by ID (1)
 	base.MockGet("monitor/dashboards/1", fixtureData)
 
-	// Call the ListMonitorDashboardsByID method
-	clients, err := base.Client.GetMonitorDashboardsByID(context.Background(), 1)
+	// Call the GetMonitorDashboard method
+	clients, err := base.Client.GetMonitorDashboard(context.Background(), 1)
 	assert.NoError(t, err, "Expected no error when listing monitor dashboard by type")
 	assert.NotEmpty(t, clients, "Expected non-empty monitor dashboard list")
 
@@ -63,8 +63,8 @@ func TestListMonitorDashboardsByServiceType(t *testing.T) {
 	// Mock the GET request for the monitor dashboard by type (dbaas)
 	base.MockGet("monitor/services/dbaas/dashboards", fixtureData)
 
-	// Call the GetMonitorDashcdboardsByServiceType method
-	clients, err := base.Client.GetMonitorDashboardsByServiceType(context.Background(), "dbaas", nil)
+	// Call the ListMonitorDashcdboardsByServiceType method
+	clients, err := base.Client.ListMonitorDashboardsByServiceType(context.Background(), "dbaas", nil)
 	assert.NoError(t, err, "Expected no error when listing monitor dashboard by type")
 	assert.NotEmpty(t, clients, "Expected non-empty monitor dashboard list")
 
