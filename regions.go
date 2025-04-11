@@ -18,7 +18,7 @@ const (
 	CapabilityBlockStorageMigrations        string = "Block Storage Migrations"
 	CapabilityCloudFirewall                 string = "Cloud Firewall"
 	CapabilityDBAAS                         string = "Managed Databases"
-	CapabilityDiskEncryption                string = "Disk Encryption"
+	CapabilityDiskEncryption                string = "LA Disk Encryption"
 	CapabilityEdgePlans                     string = "Edge Plans"
 	CapabilityGPU                           string = "GPU Linodes"
 	CapabilityKubernetesEnterprise          string = "Kubernetes Enterprise"
