@@ -1,0 +1,87 @@
+{
+   "data": [
+      {
+         "id": 1,
+         "type": "standard",
+         "service_type": "dbaas",
+         "label": "Resource Usage",
+         "created": "2024-11-05T01:13:34",
+         "updated": "2024-11-05T01:13:34",
+         "widgets": [
+            {
+               "metric": "cpu_usage",
+               "unit": "%",
+               "label": "CPU Usage",
+               "color": "default",
+               "size": 12,
+               "chart_type": "area",
+               "y_label": "cpu_usage",
+               "aggregate_function": "sum"
+            },
+            {
+               "metric": "memory_usage",
+               "unit": "%",
+               "label": "Memory Usage",
+               "color": "default",
+               "size": 6,
+               "chart_type": "area",
+               "y_label": "memory_usage",
+               "aggregate_function": "sum"
+            },
+            {
+               "metric": "available_memory",
+               "unit": "GB",
+               "label": "Available Memory",
+               "color": "default",
+               "size": 6,
+               "chart_type": "area",
+               "y_label": "available_memory",
+               "aggregate_function": "sum"
+            },
+            {
+               "metric": "disk_usage",
+               "unit": "%",
+               "label": "Disk Space Usage",
+               "color": "default",
+               "size": 6,
+               "chart_type": "area",
+               "y_label": "disk_usage",
+               "aggregate_function": "sum"
+            },
+            {
+               "metric": "available_disk",
+               "unit": "GB",
+               "label": "Available Disk Space",
+               "color": "default",
+               "size": 6,
+               "chart_type": "area",
+               "y_label": "available_disk",
+               "aggregate_function": "sum"
+            },
+            {
+               "metric": "read_iops",
+               "unit": "IOPS",
+               "label": "Disk I/O Read",
+               "color": "default",
+               "size": 6,
+               "chart_type": "area",
+               "y_label": "read_iops",
+               "aggregate_function": "sum"
+            },
+            {
+               "metric": "write_iops",
+               "unit": "IOPS",
+               "label": "Disk I/O Write",
+               "color": "default",
+               "size": 6,
+               "chart_type": "area",
+               "y_label": "write_iops",
+               "aggregate_function": "sum"
+            }
+         ]
+      }
+   ],
+   "page": 1,
+   "pages": 1,
+   "results": 1
+}
