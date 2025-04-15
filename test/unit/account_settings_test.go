@@ -31,6 +31,10 @@ func TestAccountSettings_Get(t *testing.T) {
 	assert.Nil(t, accountSettings.LongviewSubscription, "Expected 'longview_subscription' to be nil")
 	assert.True(t, accountSettings.BackupsEnabled, "Expected 'backups_enabled' to be true")
 	assert.Equal(t, "active", *accountSettings.ObjectStorage, "Expected 'object_storage' to be 'active'")
+	assert.Equal(
+		t, linodego.LegacyConfigDefaultButLinodeAllowed, accountSettings.InterfacesForNewLinodes,
+		"Expected 'object_storage' to be 'active'",
+	)
 }
 
 func TestAccountSettings_Update(t *testing.T) {
@@ -41,9 +45,11 @@ func TestAccountSettings_Update(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
+	i := linodego.LegacyConfigDefaultButLinodeAllowed
 	requestData := linodego.AccountSettingsUpdateOptions{
 		BackupsEnabled: Bool(true),
 		NetworkHelper:  Bool(true),
+		InterfacesForNewLinodes: &i,
 	}
 	base.MockPut("account/settings", fixtureData)
 
@@ -55,4 +61,8 @@ func TestAccountSettings_Update(t *testing.T) {
 	assert.Nil(t, accountSettings.LongviewSubscription, "Expected 'longview_subscription' to be nil")
 	assert.True(t, accountSettings.BackupsEnabled, "Expected 'backups_enabled' to be true")
 	assert.Equal(t, "active", *accountSettings.ObjectStorage, "Expected 'object_storage' to be 'active'")
+	assert.Equal(
+		t, linodego.LegacyConfigDefaultButLinodeAllowed, accountSettings.InterfacesForNewLinodes,
+		"Expected 'object_storage' to be 'active'",
+	)
 }
