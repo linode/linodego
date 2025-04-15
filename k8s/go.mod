@@ -30,7 +30,7 @@ require (
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/spf13/pflag v1.0.5 // indirect
 	golang.org/x/net v0.39.0 // indirect
-	golang.org/x/oauth2 v0.28.0 // indirect
+	golang.org/x/oauth2 v0.29.0 // indirect
 	golang.org/x/sys v0.32.0 // indirect
 	golang.org/x/term v0.31.0 // indirect
 	golang.org/x/text v0.24.0 // indirect
