@@ -2,8 +2,9 @@ package unit
 
 import (
 	"context"
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestMaintenancePolicies_List(t *testing.T) {
@@ -27,7 +28,6 @@ func TestMaintenancePolicies_List(t *testing.T) {
 	assert.Equal(t, "migrate", policies[0].Type)
 	assert.Equal(t, 3600, policies[0].NotificationPeriodSec)
 	assert.Equal(t, true, policies[0].IsDefault)
-
 	assert.Equal(t, "2", policies[1].ID)
 	assert.Equal(t, "Default Power On/Off", policies[1].Name)
 	assert.Equal(t, "predefined maintenance policy for general use cases", policies[1].Description)
