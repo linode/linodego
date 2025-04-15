@@ -1,19 +1,30 @@
 {
+  "pages": 1,
+  "page": 1,
+  "results": 1,
   "data": [
     {
+      "body": "Scheduled upgrade to faster NVMe hardware. This will affect Linode #1234.",
       "entity": {
         "id": 1234,
-        "label": "demo-linode",
-        "type": "Linode",
-        "url": "https://api.linode.com/v4/linode/instances/{linodeId}"
+        "label": "Linode #1234",
+        "type": "linode",
+        "url": "/linodes/1234"
       },
-      "reason": "This maintenance will allow us to update the BIOS on the host's motherboard.",
-      "status": "started",
-      "type": "reboot",
-      "when": "2020-07-09T00:01:01"
+      "label": "Scheduled Maintenance for Linode #1234",
+      "message": "Scheduled upgrade to faster NVMe hardware.",
+      "severity": "major",
+      "type": "maintenance_scheduled",
+      "event_type": "linode_migrate",
+      "maintenance_policy_set": "Power on/off",
+      "description": "Scheduled Maintenance",
+      "source": "platform",
+      "not_before": "2025-03-25T10:00:00",
+      "start_time": "2025-03-25T12:00:00",
+      "complete_time": "2025-03-25T14:00:00",
+      "status": "scheduled",
+      "when": "2025-03-25T12:00:00",
+      "until": "2025-03-25T14:00:00"
     }
-  ],
-  "page": 1,
-  "pages": 1,
-  "results": 1
+  ]
 }

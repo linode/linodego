@@ -2,7 +2,7 @@
   "data": [
     {
       "action": "ticket_create",
-      "created": "2018-01-01T00:01:01",
+      "created": "2025-03-25T12:00:00",
       "duration": 300.56,
       "entity": {
         "id": 11111,
@@ -11,7 +11,7 @@
         "url": "/v4/support/tickets/11111"
       },
       "id": 123,
-      "message": "None",
+      "message": "Ticket created for user issue.",
       "percent_complete": null,
       "rate": null,
       "read": true,
@@ -22,9 +22,14 @@
         "url": "/v4/linode/instances/1234"
       },
       "seen": true,
-      "status": "failed",
-      "time_remaining": null,
-      "username": "exampleUser"
+      "status": "completed",
+      "username": "exampleUser",
+      "maintenance_policy_set": "Tentative",
+      "description": "Scheduled maintenance",
+      "source": "user",
+      "not_before": "2025-03-25T12:00:00",
+      "start_time": "2025-03-25T12:30:00",
+      "complete_time": "2025-03-25T13:00:00"
     }
   ],
   "page": 1,
