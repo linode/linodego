@@ -3,7 +3,7 @@ module github.com/linode/linodego/test
 require (
 	github.com/dnaeon/go-vcr v1.2.0
 	github.com/google/go-cmp v0.7.0
-	github.com/jarcoal/httpmock v1.3.1
+	github.com/jarcoal/httpmock v1.4.0
 	github.com/linode/linodego v1.33.0
 	github.com/linode/linodego/k8s v0.0.0-00010101000000-000000000000
 	github.com/stretchr/testify v1.10.0
