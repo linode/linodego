@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
+	"github.com/linode/linodego/internal/duration"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -30,6 +31,10 @@ type Event struct {
 
 	// If this Event has been seen.
 	Seen bool `json:"seen"`
+
+	// The estimated time remaining until the completion of this Event. This value is only returned for in-progress events.
+	// Deprecated: TimeRemaining is a deprecated property.
+	TimeRemaining *int `json:"-"`
 
 	// The username of the User who caused the Event.
 	Username string `json:"username"`
@@ -295,10 +300,11 @@ func (i *Event) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
-		Created      *parseabletime.ParseableTime `json:"created"`
-		NotBefore    *parseabletime.ParseableTime `json:"not_before"`
-		StartTime    *parseabletime.ParseableTime `json:"start_time"`
-		CompleteTime *parseabletime.ParseableTime `json:"complete_time"`
+		TimeRemaining json.RawMessage              `json:"time_remaining"`
+		Created       *parseabletime.ParseableTime `json:"created"`
+		NotBefore     *parseabletime.ParseableTime `json:"not_before"`
+		StartTime     *parseabletime.ParseableTime `json:"start_time"`
+		CompleteTime  *parseabletime.ParseableTime `json:"complete_time"`
 	}{
 		Mask: (*Mask)(i),
 	}
@@ -308,6 +314,7 @@ func (i *Event) UnmarshalJSON(b []byte) error {
 	}
 
 	i.Created = (*time.Time)(p.Created)
+	i.TimeRemaining = duration.UnmarshalTimeRemaining(p.TimeRemaining)
 	i.NotBefore = (*time.Time)(p.NotBefore)
 	i.StartTime = (*time.Time)(p.StartTime)
 	i.CompleteTime = (*time.Time)(p.CompleteTime)

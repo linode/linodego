@@ -10,8 +10,12 @@ import (
 
 // AccountMaintenance represents a Maintenance object for any entity a user has permissions to view
 type AccountMaintenance struct {
-	Body                 string     `json:"body"`
-	Entity               *Entity    `json:"entity"`
+	Body   string  `json:"body"`
+	Entity *Entity `json:"entity"`
+
+	// Deprecated: Reason is a deprecated property.
+	Reason string `json:"reason"`
+
 	Label                string     `json:"label"`
 	Message              string     `json:"message"`
 	Severity             string     `json:"severity"`
