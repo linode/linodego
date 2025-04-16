@@ -30,8 +30,8 @@ func TestMonitorServicesTokenCreation_Get_smoke(t *testing.T) {
 		entityIDs = append(entityIDs, db.ID)
 	}
 
-	client1, teardown1 := createTestClient(t, "fixtures/TestMonitorServiceToken_POST")
-	defer teardown1()
+	client, teardown = createTestClient(t, "fixtures/TestServiceToken_POST")
+	defer teardown()
 
 	// Create a JWE token for the given entity IDs
 	createOpts := linodego.MonitorTokenCreateOptions{
@@ -39,7 +39,7 @@ func TestMonitorServicesTokenCreation_Get_smoke(t *testing.T) {
 	}
 
 	// Use the same context with timeout for the token creation
-	token, createErr := client1.CreateMonitorServiceTokenForServiceType(context.Background(), "dbaas", createOpts)
+	token, createErr := client.CreateMonitorServiceTokenForServiceType(context.Background(), "dbaas", createOpts)
 	if createErr != nil {
 		t.Errorf("Error creating token : %s", createErr)
 	}

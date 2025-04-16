@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: ""
+    body: '{"entity_ids":[138534,187468,188020,188680,189690,278588]}'
     form: {}
     headers:
       Accept:
@@ -11,17 +11,21 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/0
-    method: GET
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/token
+    method: POST
   response:
-    body: '{"errors": [{"reason": "Not found"}]}'
+    body: '{"token": "test_token"}'
     headers:
+      Access-Control-Allow-Credentials:
+      - "true"
       Access-Control-Allow-Headers:
       - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
       Access-Control-Allow-Methods:
       - HEAD, GET, OPTIONS, POST, PUT, DELETE
       Access-Control-Allow-Origin:
       - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
@@ -29,23 +33,32 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "37"
+      - "663"
+      Content-Security-Policy:
+      - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 11 Apr 2025 16:52:16 GMT
+      - Wed, 16 Apr 2025 07:43:36 GMT
       Pragma:
       - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - lke:read_only
+      - databases:read_only
+      X-Content-Type-Options:
+      - nosniff
       X-Frame-Options:
+      - DENY
       - DENY
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
       - "1600"
-    status: 404 Not Found
-    code: 404
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
     duration: ""

@@ -2,7 +2,6 @@ package integration
 
 import (
 	"context"
-	"log"
 	"testing"
 
 	"github.com/linode/linodego"
@@ -32,10 +31,7 @@ func TestMonitorServices_Get_smoke(t *testing.T) {
 
 	found := false
 	for _, element := range monitorServicesClient {
-		log.Printf("[INFO] element.ServiceType : %#+v", element.ServiceType)
-		log.Printf("[INFO] monitorServicesClient.ServiceType : %#+v", monitorServicesClient)
 		if element.ServiceType == "dbaas" {
-			log.Printf("[INFO] found services for service_type: %#+v", element.ServiceType)
 			found = true
 		}
 	}
