@@ -47,8 +47,8 @@ func TestAccountSettings_Update(t *testing.T) {
 
 	i := linodego.LegacyConfigDefaultButLinodeAllowed
 	requestData := linodego.AccountSettingsUpdateOptions{
-		BackupsEnabled: Bool(true),
-		NetworkHelper:  Bool(true),
+		BackupsEnabled:          Bool(true),
+		NetworkHelper:           Bool(true),
 		InterfacesForNewLinodes: &i,
 	}
 	base.MockPut("account/settings", fixtureData)
