@@ -10,11 +10,26 @@ import (
 
 // AccountMaintenance represents a Maintenance object for any entity a user has permissions to view
 type AccountMaintenance struct {
-	Entity *Entity    `json:"entity"`
-	Reason string     `json:"reason"`
-	Status string     `json:"status"`
-	Type   string     `json:"type"`
-	When   *time.Time `json:"when"`
+	Body   string  `json:"body"`
+	Entity *Entity `json:"entity"`
+
+	// Deprecated: Reason is a deprecated property.
+	Reason string `json:"reason"`
+
+	Label                string     `json:"label"`
+	Message              string     `json:"message"`
+	Severity             string     `json:"severity"`
+	Type                 string     `json:"type"`
+	EventType            string     `json:"event_type"`
+	MaintenancePolicySet string     `json:"maintenance_policy_set"`
+	Description          string     `json:"description"`
+	Source               string     `json:"source"`
+	NotBefore            *time.Time `json:"-"`
+	StartTime            *time.Time `json:"-"`
+	CompleteTime         *time.Time `json:"-"`
+	Status               string     `json:"status"`
+	When                 *time.Time `json:"-"`
+	Until                *time.Time `json:"-"`
 }
 
 // The entity being affected by maintenance
@@ -31,7 +46,11 @@ func (accountMaintenance *AccountMaintenance) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
-		When *parseabletime.ParseableTime `json:"when"`
+		NotBefore    *parseabletime.ParseableTime `json:"not_before"`
+		StartTime    *parseabletime.ParseableTime `json:"start_time"`
+		CompleteTime *parseabletime.ParseableTime `json:"complete_time"`
+		When         *parseabletime.ParseableTime `json:"when"`
+		Until        *parseabletime.ParseableTime `json:"until"`
 	}{
 		Mask: (*Mask)(accountMaintenance),
 	}
@@ -40,7 +59,11 @@ func (accountMaintenance *AccountMaintenance) UnmarshalJSON(b []byte) error {
 		return err
 	}
 
+	accountMaintenance.NotBefore = (*time.Time)(p.NotBefore)
+	accountMaintenance.StartTime = (*time.Time)(p.StartTime)
+	accountMaintenance.CompleteTime = (*time.Time)(p.CompleteTime)
 	accountMaintenance.When = (*time.Time)(p.When)
+	accountMaintenance.Until = (*time.Time)(p.Until)
 
 	return nil
 }
