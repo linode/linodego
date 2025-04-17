@@ -56,7 +56,6 @@ func TestMonitorDashboards_Get_smoke(t *testing.T) {
 	if !found_st {
 		t.Errorf("Monitor dashboard not found in list.")
 	}
-
 }
 
 func validateDashboards(

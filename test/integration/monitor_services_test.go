@@ -39,7 +39,6 @@ func TestMonitorServices_Get_smoke(t *testing.T) {
 	if !found {
 		t.Errorf("Monitor service not found in list.")
 	}
-
 }
 
 func validateServiceTypes(

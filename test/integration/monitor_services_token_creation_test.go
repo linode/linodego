@@ -9,7 +9,6 @@ import (
 )
 
 func TestMonitorServicesTokenCreation_Get_smoke(t *testing.T) {
-
 	client, _, teardown, err := setupPostgresDatabase(t, nil, "fixtures/TestDatabaseACLP_List")
 	if err != nil {
 		t.Error(err)
