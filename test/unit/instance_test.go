@@ -3,6 +3,7 @@ package unit
 import (
 	"context"
 	"fmt"
+	"strconv"
 	"testing"
 
 	"github.com/jarcoal/httpmock"
@@ -109,6 +110,9 @@ func TestInstance_ResetPassword(t *testing.T) {
 }
 
 func TestInstance_Get_MonthlyTransfer(t *testing.T) {
+	if strconv.IntSize < 64 {
+		t.Skip("V1 monthly transfer doesn't work on 32 or lower bits system")
+	}
 	fixtureData, err := fixtures.GetFixture("instance_monthly_transfer_get")
 	assert.NoError(t, err)
 
