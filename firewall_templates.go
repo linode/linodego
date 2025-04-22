@@ -9,13 +9,15 @@ type FirewallTemplate struct {
 	Rules FirewallRuleSet `json:"rules"`
 }
 
-// GetFirewallDevice gets a FirewallDevice given an ID
+// NOTE: This feature may not currently be available to all users.
+// GetFirewallTemplate gets a FirewallTemplate given a slug.
 func (c *Client) GetFirewallTemplate(ctx context.Context, slug string) (*FirewallTemplate, error) {
 	e := formatAPIPath("networking/firewalls/templates/%s", slug)
 	return doGETRequest[FirewallTemplate](ctx, c, e)
 }
 
-// ListFirewallDevices get devices associated with a given Firewall
+// NOTE: This feature may not currently be available to all users.
+// ListFirewallTemplates gets all available firewall templates for the account.
 func (c *Client) ListFirewallTemplates(ctx context.Context, opts *ListOptions) ([]FirewallTemplate, error) {
 	return getPaginatedResults[FirewallTemplate](ctx, c, "networking/firewalls/templates", opts)
 }
