@@ -399,6 +399,26 @@ func createPostgresOptionsModifier() postgresDatabaseModifier {
 	}
 }
 
+func TestDatabasePostgres_EngineConfig_Create_LZ4Unsupported_Postgres13(t *testing.T) {
+	invalidRequestData := linodego.PostgresCreateOptions{
+		Label:  "example-db-created-fails",
+		Region: "us-east",
+		Type:   "g6-dedicated-2",
+		Engine: "postgresql/13",
+		EngineConfig: &linodego.PostgresDatabaseEngineConfig{
+			PG: &linodego.PostgresDatabaseEngineConfigPG{
+				DefaultToastCompression: linodego.Pointer("lz4"),
+			},
+		},
+	}
+
+	client, _ := createTestClient(t, "")
+
+	_, err := client.CreatePostgresDatabase(context.Background(), invalidRequestData)
+
+	assert.Contains(t, err.Error(), "This setting is only available for postgresql version 14+")
+}
+
 func newExpectedPostgresEngineConfig() map[string]any {
 	return map[string]any{
 		"AutovacuumAnalyzeScaleFactor":     0.1,
