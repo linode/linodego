@@ -57,22 +57,22 @@ type DashboardWidget struct {
 type AggregateFunction string
 
 const (
-	Min      AggregateFunction = "min"
-	Max      AggregateFunction = "max"
-	Avg      AggregateFunction = "avg"
-	Sum      AggregateFunction = "sum"
-	Rate     AggregateFunction = "rate"
-	Increase AggregateFunction = "increase"
-	Count    AggregateFunction = "count"
-	Last     AggregateFunction = "last"
+	AggregateFunctionMin      AggregateFunction = "min"
+	AggregateFunctionMax      AggregateFunction = "max"
+	AggregateFunctionAvg      AggregateFunction = "avg"
+	AggregateFunctionSum      AggregateFunction = "sum"
+	AggregateFunctionRate     AggregateFunction = "rate"
+	AggregateFunctionIncrease AggregateFunction = "increase"
+	AggregateFunctionCount    AggregateFunction = "count"
+	AggregateFunctionLast     AggregateFunction = "last"
 )
 
 // Enum object for Chart type
 type ChartType string
 
 const (
-	Line ChartType = "line"
-	Area ChartType = "area"
+	ChartTypeLine ChartType = "line"
+	ChartTypeArea ChartType = "area"
 )
 
 // ListMonitorDashboards lists all the ACLP Monitor Dashboards
