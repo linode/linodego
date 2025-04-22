@@ -178,7 +178,6 @@ func TestDatabaseMySQL_EngineConfig_Suite(t *testing.T) {
 				InnoDBLockWaitTimeout: linodego.Pointer(60),
 				NetReadTimeout:        linodego.Pointer(40),
 			},
-			// ServiceLog: linodego.Pointer(false),
 		},
 	}
 

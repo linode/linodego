@@ -32,13 +32,6 @@ func TestDatabasePostgresConfig_Get(t *testing.T) {
 	assert.IsType(t, bool(false), config.PG.AutovacuumAnalyzeThreshold.RequiresRestart)
 	assert.IsType(t, string(""), config.PG.AutovacuumAnalyzeThreshold.Type)
 
-	assert.IsType(t, string(""), config.PG.AutovacuumFreezeMaxAge.Description)
-	assert.IsType(t, int(200000000), config.PG.AutovacuumFreezeMaxAge.Example)
-	assert.IsType(t, int(1500000000), config.PG.AutovacuumFreezeMaxAge.Maximum)
-	assert.IsType(t, int(200000000), config.PG.AutovacuumFreezeMaxAge.Minimum)
-	assert.IsType(t, bool(true), config.PG.AutovacuumFreezeMaxAge.RequiresRestart)
-	assert.IsType(t, string(""), config.PG.AutovacuumFreezeMaxAge.Type)
-
 	assert.IsType(t, string(""), config.PG.AutovacuumMaxWorkers.Description)
 	assert.IsType(t, int(20), config.PG.AutovacuumMaxWorkers.Maximum)
 	assert.IsType(t, int(1), config.PG.AutovacuumMaxWorkers.Minimum)
@@ -329,7 +322,6 @@ func TestDatabasePostgres_EngineConfig_Suite(t *testing.T) {
 		Label: "example-db-updated",
 		EngineConfig: &linodego.PostgresDatabaseEngineConfig{
 			PG: &linodego.PostgresDatabaseEngineConfigPG{
-				AutovacuumFreezeMaxAge:    linodego.Pointer(300000000),
 				AutovacuumVacuumThreshold: linodego.Pointer(int32(500)),
 				DeadlockTimeout:           linodego.Pointer(3000),
 			},
@@ -355,35 +347,28 @@ func createPostgresOptionsModifier() postgresDatabaseModifier {
 		options.Engine = "postgresql/17"
 		options.EngineConfig = &linodego.PostgresDatabaseEngineConfig{
 			PG: &linodego.PostgresDatabaseEngineConfigPG{
-				AutovacuumAnalyzeScaleFactor:    linodego.Pointer(0.1),
-				AutovacuumAnalyzeThreshold:      linodego.Pointer(int32(500)),
-				AutovacuumFreezeMaxAge:          linodego.Pointer(200000000),
-				AutovacuumMaxWorkers:            linodego.Pointer(3),
-				AutovacuumNaptime:               linodego.Pointer(60),
-				AutovacuumVacuumCostDelay:       linodego.Pointer(100), // Reduced to <= 100
-				AutovacuumVacuumCostLimit:       linodego.Pointer(2000),
-				AutovacuumVacuumScaleFactor:     linodego.Pointer(0.2),
-				AutovacuumVacuumThreshold:       linodego.Pointer(int32(500)),
-				BGWriterDelay:                   linodego.Pointer(100),
-				BGWriterFlushAfter:              linodego.Pointer(1000),
-				BGWriterLRUMaxPages:             linodego.Pointer(100),
-				BGWriterLRUMultiplier:           linodego.Pointer(2.0),
-				DeadlockTimeout:                 linodego.Pointer(1000),
-				DefaultToastCompression:         linodego.Pointer("lz4"),
-				IdleInTransactionSessionTimeout: linodego.Pointer(600),
-				JIT:                             linodego.Pointer(true),
-				// LogAutovacuumMinDuration:        nil, // Removed invalid parameter
-				// LogErrorVerbosity:               nil, // Removed invalid parameter
-				// LogLinePrefix:                   nil, // Removed invalid parameter
-				// LogMinDurationStatement:         nil, // Removed invalid parameter
-				// LogTempFiles:                    nil, // Removed invalid parameter
-				MaxFilesPerProcess:           linodego.Pointer(1000),
-				MaxLocksPerTransaction:       linodego.Pointer(64),
-				MaxLogicalReplicationWorkers: linodego.Pointer(4),
-				MaxParallelWorkers:           linodego.Pointer(8),
-				MaxParallelWorkersPerGather:  linodego.Pointer(2),
-				MaxPredLocksPerTransaction:   linodego.Pointer(64),
-				// MaxPreparedTransactions:          linodego.Pointer(8), // Adjusted to >= 8
+				AutovacuumAnalyzeScaleFactor:     linodego.Pointer(0.1),
+				AutovacuumAnalyzeThreshold:       linodego.Pointer(int32(500)),
+				AutovacuumMaxWorkers:             linodego.Pointer(3),
+				AutovacuumNaptime:                linodego.Pointer(60),
+				AutovacuumVacuumCostDelay:        linodego.Pointer(100), // Reduced to <= 100
+				AutovacuumVacuumCostLimit:        linodego.Pointer(2000),
+				AutovacuumVacuumScaleFactor:      linodego.Pointer(0.2),
+				AutovacuumVacuumThreshold:        linodego.Pointer(int32(500)),
+				BGWriterDelay:                    linodego.Pointer(100),
+				BGWriterFlushAfter:               linodego.Pointer(1000),
+				BGWriterLRUMaxPages:              linodego.Pointer(100),
+				BGWriterLRUMultiplier:            linodego.Pointer(2.0),
+				DeadlockTimeout:                  linodego.Pointer(1000),
+				DefaultToastCompression:          linodego.Pointer("lz4"),
+				IdleInTransactionSessionTimeout:  linodego.Pointer(600),
+				JIT:                              linodego.Pointer(true),
+				MaxFilesPerProcess:               linodego.Pointer(1000),
+				MaxLocksPerTransaction:           linodego.Pointer(64),
+				MaxLogicalReplicationWorkers:     linodego.Pointer(4),
+				MaxParallelWorkers:               linodego.Pointer(8),
+				MaxParallelWorkersPerGather:      linodego.Pointer(2),
+				MaxPredLocksPerTransaction:       linodego.Pointer(64),
 				MaxReplicationSlots:              linodego.Pointer(8), // Adjusted to >= 8
 				MaxSlotWALKeepSize:               linodego.Pointer(int32(512)),
 				MaxStackDepth:                    linodego.Pointer(2097152), // Adjusted to >= 2MB
@@ -418,7 +403,6 @@ func newExpectedPostgresEngineConfig() map[string]any {
 	return map[string]any{
 		"AutovacuumAnalyzeScaleFactor":     0.1,
 		"AutovacuumAnalyzeThreshold":       int32(500),
-		"AutovacuumFreezeMaxAge":           200000000,
 		"AutovacuumMaxWorkers":             3,
 		"AutovacuumNaptime":                60,
 		"AutovacuumVacuumCostDelay":        100,
@@ -498,7 +482,6 @@ func assertPostgresEngineConfigEqual(t *testing.T, cfg *linodego.PostgresDatabas
 	// Autovacuum
 	assert.Equal(t, expected["AutovacuumAnalyzeScaleFactor"], *cfg.AutovacuumAnalyzeScaleFactor)
 	assert.Equal(t, expected["AutovacuumAnalyzeThreshold"], *cfg.AutovacuumAnalyzeThreshold)
-	assert.Equal(t, expected["AutovacuumFreezeMaxAge"], *cfg.AutovacuumFreezeMaxAge)
 	assert.Equal(t, expected["AutovacuumMaxWorkers"], *cfg.AutovacuumMaxWorkers)
 	assert.Equal(t, expected["AutovacuumNaptime"], *cfg.AutovacuumNaptime)
 	assert.Equal(t, expected["AutovacuumVacuumCostDelay"], *cfg.AutovacuumVacuumCostDelay)
@@ -583,7 +566,6 @@ func assertPostgresEngineConfigEqual(t *testing.T, cfg *linodego.PostgresDatabas
 }
 
 func assertUpdatedPostgresFields(t *testing.T, updatedConfig *linodego.PostgresDatabaseEngineConfigPG) {
-	assert.Equal(t, int(300000000), *updatedConfig.AutovacuumFreezeMaxAge)
 	assert.Equal(t, int32(500), *updatedConfig.AutovacuumVacuumThreshold)
 	assert.Equal(t, int(3000), *updatedConfig.DeadlockTimeout)
 }
