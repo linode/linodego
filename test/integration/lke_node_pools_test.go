@@ -72,8 +72,8 @@ func TestLKENodePool_GetFound(t *testing.T) {
 		t.Errorf("unexpected tags:\n%s", diff)
 	}
 
-	if i.DiskEncryption != linodego.InstanceDiskEncryptionEnabled {
-		t.Errorf("DiskEncryption not enabled, got: %s, want: %s", i.DiskEncryption, linodego.InstanceDiskEncryptionEnabled)
+	if i.DiskEncryption != linodego.InstanceDiskEncryptionDisabled {
+		t.Errorf("DiskEncryption enabled, got: %s, want: %s", i.DiskEncryption, linodego.InstanceDiskEncryptionEnabled)
 	}
 
 	wrapper, teardownClusterClient := transportRecorderWrapper(t, "fixtures/TestLKENodePool_GetFound_k8s")
@@ -314,7 +314,7 @@ func setupLKENodePool(t *testing.T, fixturesYaml string, nodePoolCreateOpts *lin
 }
 
 func TestLKEEnterpriseNodePoolK8sUpgrade_Get(t *testing.T) {
-	testLKENodePoolCreateOpts.K8sVersion = linodego.Pointer("v1.31.1+lke1")
+	testLKENodePoolCreateOpts.K8sVersion = linodego.Pointer("v1.31.1+lke4")
 	testLKENodePoolCreateOpts.UpdateStrategy = linodego.Pointer(linodego.LKENodePoolRollingUpdate)
 
 	_, _, nodePool, teardown, err := setupLKEEnterpriseNodePool(t, "fixtures/TestLKENodeEnterprisePoolNode_Get", &testLKENodePoolCreateOpts)
@@ -333,7 +333,7 @@ func TestLKEEnterpriseNodePoolK8sUpgrade_Get(t *testing.T) {
 }
 
 func TestLKEEnterpriseNodePoolK8sUpgrade_Update(t *testing.T) {
-	testLKENodePoolCreateOpts.K8sVersion = linodego.Pointer("v1.31.1+lke1")
+	testLKENodePoolCreateOpts.K8sVersion = linodego.Pointer("v1.31.1+lke4")
 	testLKENodePoolCreateOpts.UpdateStrategy = linodego.Pointer(linodego.LKENodePoolRollingUpdate)
 
 	client, lkeCluster, nodePool, teardown, err := setupLKEEnterpriseNodePool(t, "fixtures/TestLKENodeEnterprisePoolNode_Update", &testLKENodePoolCreateOpts)
@@ -365,7 +365,7 @@ func setupLKEEnterpriseNodePool(t *testing.T, fixturesYaml string, nodePoolCreat
 	client, lkeCluster, fixtureTeardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Tier = "enterprise"
 		createOpts.Region = "us-lax"
-		createOpts.K8sVersion = "v1.31.1+lke1"
+		createOpts.K8sVersion = "v1.31.1+lke4"
 	}}, fixturesYaml)
 	if err != nil {
 		t.Errorf("Error creating LKE enterprise cluster, got error %v", err)
