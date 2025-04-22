@@ -57,7 +57,6 @@ type MySQLDatabase struct {
 type MySQLDatabaseEngineConfig struct {
 	MySQL                 *MySQLDatabaseEngineConfigMySQL `json:"mysql,omitempty"`
 	BinlogRetentionPeriod *int                            `json:"binlog_retention_period,omitempty"`
-	ServiceLog            *bool                           `json:"service_log,omitempty"`
 }
 
 type MySQLDatabaseEngineConfigMySQL struct {
@@ -72,21 +71,17 @@ type MySQLDatabaseEngineConfigMySQL struct {
 	InnoDBLockWaitTimeout        *int     `json:"innodb_lock_wait_timeout,omitempty"`
 	InnoDBLogBufferSize          *int     `json:"innodb_log_buffer_size,omitempty"`
 	InnoDBOnlineAlterLogMaxSize  *int     `json:"innodb_online_alter_log_max_size,omitempty"`
-	InnoDBPrintAllDeadlocks      *bool    `json:"innodb_print_all_deadlocks,omitempty"`
 	InnoDBReadIOThreads          *int     `json:"innodb_read_io_threads,omitempty"`
 	InnoDBRollbackOnTimeout      *bool    `json:"innodb_rollback_on_timeout,omitempty"`
 	InnoDBThreadConcurrency      *int     `json:"innodb_thread_concurrency,omitempty"`
 	InnoDBWriteIOThreads         *int     `json:"innodb_write_io_threads,omitempty"`
 	InteractiveTimeout           *int     `json:"interactive_timeout,omitempty"`
 	InternalTmpMemStorageEngine  *string  `json:"internal_tmp_mem_storage_engine,omitempty"`
-	LogOutput                    *string  `json:"log_output,omitempty"`
-	LongQueryTime                *float64 `json:"long_query_time,omitempty"`
 	MaxAllowedPacket             *int     `json:"max_allowed_packet,omitempty"`
 	MaxHeapTableSize             *int     `json:"max_heap_table_size,omitempty"`
 	NetBufferLength              *int     `json:"net_buffer_length,omitempty"`
 	NetReadTimeout               *int     `json:"net_read_timeout,omitempty"`
 	NetWriteTimeout              *int     `json:"net_write_timeout,omitempty"`
-	SlowQueryLog                 *bool    `json:"slow_query_log,omitempty"`
 	SortBufferSize               *int     `json:"sort_buffer_size,omitempty"`
 	SQLMode                      *string  `json:"sql_mode,omitempty"`
 	SQLRequirePrimaryKey         *bool    `json:"sql_require_primary_key,omitempty"`
@@ -97,7 +92,6 @@ type MySQLDatabaseEngineConfigMySQL struct {
 type MySQLDatabaseConfigInfo struct {
 	MySQL                 MySQLDatabaseConfigInfoMySQL                 `json:"mysql"`
 	BinlogRetentionPeriod MySQLDatabaseConfigInfoBinlogRetentionPeriod `json:"binlog_retention_period"`
-	ServiceLog            MySQLDatabaseConfigInfoServiceLog            `json:"service_log"`
 }
 
 type MySQLDatabaseConfigInfoMySQL struct {
@@ -112,21 +106,17 @@ type MySQLDatabaseConfigInfoMySQL struct {
 	InnoDBLockWaitTimeout        InnoDBLockWaitTimeout        `json:"innodb_lock_wait_timeout"`
 	InnoDBLogBufferSize          InnoDBLogBufferSize          `json:"innodb_log_buffer_size"`
 	InnoDBOnlineAlterLogMaxSize  InnoDBOnlineAlterLogMaxSize  `json:"innodb_online_alter_log_max_size"`
-	InnoDBPrintAllDeadlocks      InnoDBPrintAllDeadlocks      `json:"innodb_print_all_deadlocks"`
 	InnoDBReadIOThreads          InnoDBReadIOThreads          `json:"innodb_read_io_threads"`
 	InnoDBRollbackOnTimeout      InnoDBRollbackOnTimeout      `json:"innodb_rollback_on_timeout"`
 	InnoDBThreadConcurrency      InnoDBThreadConcurrency      `json:"innodb_thread_concurrency"`
 	InnoDBWriteIOThreads         InnoDBWriteIOThreads         `json:"innodb_write_io_threads"`
 	InteractiveTimeout           InteractiveTimeout           `json:"interactive_timeout"`
 	InternalTmpMemStorageEngine  InternalTmpMemStorageEngine  `json:"internal_tmp_mem_storage_engine"`
-	LogOutput                    LogOutput                    `json:"log_output"`
-	LongQueryTime                LongQueryTime                `json:"long_query_time"`
 	MaxAllowedPacket             MaxAllowedPacket             `json:"max_allowed_packet"`
 	MaxHeapTableSize             MaxHeapTableSize             `json:"max_heap_table_size"`
 	NetBufferLength              NetBufferLength              `json:"net_buffer_length"`
 	NetReadTimeout               NetReadTimeout               `json:"net_read_timeout"`
 	NetWriteTimeout              NetWriteTimeout              `json:"net_write_timeout"`
-	SlowQueryLog                 SlowQueryLog                 `json:"slow_query_log"`
 	SortBufferSize               SortBufferSize               `json:"sort_buffer_size"`
 	SQLMode                      SQLMode                      `json:"sql_mode"`
 	SQLRequirePrimaryKey         SQLRequirePrimaryKey         `json:"sql_require_primary_key"`
@@ -234,13 +224,6 @@ type InnoDBOnlineAlterLogMaxSize struct {
 	Type            string `json:"type"`
 }
 
-type InnoDBPrintAllDeadlocks struct {
-	Description     string `json:"description"`
-	Example         bool   `json:"example"`
-	RequiresRestart bool   `json:"requires_restart"`
-	Type            string `json:"type"`
-}
-
 type InnoDBReadIOThreads struct {
 	Description     string `json:"description"`
 	Example         int    `json:"example"`
@@ -292,23 +275,6 @@ type InternalTmpMemStorageEngine struct {
 	Type            string   `json:"type"`
 }
 
-type LogOutput struct {
-	Description     string   `json:"description"`
-	Enum            []string `json:"enum"`
-	Example         string   `json:"example"`
-	RequiresRestart bool     `json:"requires_restart"`
-	Type            string   `json:"type"`
-}
-
-type LongQueryTime struct {
-	Description     string  `json:"description"`
-	Example         float64 `json:"example"`
-	Maximum         float64 `json:"maximum"`
-	Minimum         float64 `json:"minimum"`
-	RequiresRestart bool    `json:"requires_restart"`
-	Type            string  `json:"type"`
-}
-
 type MaxAllowedPacket struct {
 	Description     string `json:"description"`
 	Example         int    `json:"example"`
@@ -350,13 +316,6 @@ type NetWriteTimeout struct {
 	Example         int    `json:"example"`
 	Maximum         int    `json:"maximum"`
 	Minimum         int    `json:"minimum"`
-	RequiresRestart bool   `json:"requires_restart"`
-	Type            string `json:"type"`
-}
-
-type SlowQueryLog struct {
-	Description     string `json:"description"`
-	Example         bool   `json:"example"`
 	RequiresRestart bool   `json:"requires_restart"`
 	Type            string `json:"type"`
 }
@@ -411,13 +370,6 @@ type MySQLDatabaseConfigInfoBinlogRetentionPeriod struct {
 	Minimum         int    `json:"minimum"`
 	RequiresRestart bool   `json:"requires_restart"`
 	Type            string `json:"type"`
-}
-
-type MySQLDatabaseConfigInfoServiceLog struct {
-	Description     string   `json:"description"`
-	Example         bool     `json:"example"`
-	RequiresRestart bool     `json:"requires_restart"`
-	Type            []string `json:"type"`
 }
 
 func (d *MySQLDatabase) UnmarshalJSON(b []byte) error {
