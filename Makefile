@@ -4,6 +4,7 @@ BIN_DIR := $(GOPATH)/bin
 INTEGRATION_DIR := ./test/integration
 FIXTURES_DIR    := $(INTEGRATION_DIR)/fixtures
 
+TEST_TAGS := integration
 TEST_TIMEOUT := 5h
 
 SKIP_DOCKER       ?= 0

@@ -2,6 +2,7 @@ package integration
 
 import (
 	"context"
+	"fmt"
 	"reflect"
 	"testing"
 	"time"
@@ -221,6 +222,74 @@ func setupPostgresDatabase(t *testing.T, databaseMofidiers []postgresDatabaseMod
 	if err != nil {
 		t.Fatalf("failed to create db: %s", err)
 	}
+
+	// After creating the database using the modifier
+	fmt.Printf("Database: %+v\n", database)
+	fmt.Printf("Database Region: %+v\n", database.Region)
+	fmt.Printf("Database Type: %+v\n", database.Type)
+	fmt.Printf("Database Engine: %+v\n", database.Engine)
+	fmt.Printf("Database EngineConfig: %+v\n", database.EngineConfig)
+
+	// Print PG Engine Config
+	fmt.Printf("PG EngineConfig: %+v\n", *database.EngineConfig.PG)
+	fmt.Printf("AutovacuumAnalyzeScaleFactor: %+v\n", *database.EngineConfig.PG.AutovacuumAnalyzeScaleFactor)
+	fmt.Printf("AutovacuumAnalyzeThreshold: %+v\n", *database.EngineConfig.PG.AutovacuumAnalyzeThreshold)
+	fmt.Printf("AutovacuumFreezeMaxAge: %+v\n", *database.EngineConfig.PG.AutovacuumFreezeMaxAge)
+	fmt.Printf("AutovacuumMaxWorkers: %+v\n", *database.EngineConfig.PG.AutovacuumMaxWorkers)
+	fmt.Printf("AutovacuumNaptime: %+v\n", *database.EngineConfig.PG.AutovacuumNaptime)
+	fmt.Printf("AutovacuumVacuumCostDelay: %+v\n", *database.EngineConfig.PG.AutovacuumVacuumCostDelay)
+	fmt.Printf("AutovacuumVacuumCostLimit: %+v\n", *database.EngineConfig.PG.AutovacuumVacuumCostLimit)
+	fmt.Printf("AutovacuumVacuumScaleFactor: %+v\n", *database.EngineConfig.PG.AutovacuumVacuumScaleFactor)
+	fmt.Printf("AutovacuumVacuumThreshold: %+v\n", *database.EngineConfig.PG.AutovacuumVacuumThreshold)
+	fmt.Printf("BGWriterDelay: %+v\n", *database.EngineConfig.PG.BGWriterDelay)
+	fmt.Printf("BGWriterFlushAfter: %+v\n", *database.EngineConfig.PG.BGWriterFlushAfter)
+	fmt.Printf("BGWriterLRUMaxPages: %+v\n", *database.EngineConfig.PG.BGWriterLRUMaxPages)
+	fmt.Printf("BGWriterLRUMultiplier: %+v\n", *database.EngineConfig.PG.BGWriterLRUMultiplier)
+	fmt.Printf("DeadlockTimeout: %+v\n", *database.EngineConfig.PG.DeadlockTimeout)
+	fmt.Printf("DefaultToastCompression: %+v\n", *database.EngineConfig.PG.DefaultToastCompression)
+	fmt.Printf("IdleInTransactionSessionTimeout: %+v\n", *database.EngineConfig.PG.IdleInTransactionSessionTimeout)
+	fmt.Printf("JIT: %+v\n", *database.EngineConfig.PG.JIT)
+	fmt.Printf("MaxFilesPerProcess: %+v\n", *database.EngineConfig.PG.MaxFilesPerProcess)
+	fmt.Printf("MaxLocksPerTransaction: %+v\n", *database.EngineConfig.PG.MaxLocksPerTransaction)
+	fmt.Printf("MaxLogicalReplicationWorkers: %+v\n", *database.EngineConfig.PG.MaxLogicalReplicationWorkers)
+	fmt.Printf("MaxParallelWorkers: %+v\n", *database.EngineConfig.PG.MaxParallelWorkers)
+	fmt.Printf("MaxParallelWorkersPerGather: %+v\n", *database.EngineConfig.PG.MaxParallelWorkersPerGather)
+	fmt.Printf("MaxPredLocksPerTransaction: %+v\n", *database.EngineConfig.PG.MaxPredLocksPerTransaction)
+	fmt.Printf("MaxWALSenders: %+v\n", *database.EngineConfig.PG.MaxWALSenders)
+	fmt.Printf("MaxWorkerProcesses: %+v\n", *database.EngineConfig.PG.MaxWorkerProcesses)
+	fmt.Printf("PasswordEncryption: %+v\n", *database.EngineConfig.PG.PasswordEncryption)
+	fmt.Printf("PGPartmanBGWInterval: %+v\n", *database.EngineConfig.PG.PGPartmanBGWInterval)
+	fmt.Printf("PGPartmanBGWRole: %+v\n", *database.EngineConfig.PG.PGPartmanBGWRole)
+	fmt.Printf("PGStatMonitorPGSMEnableQueryPlan: %+v\n", *database.EngineConfig.PG.PGStatMonitorPGSMEnableQueryPlan)
+	fmt.Printf("PGStatMonitorPGSMMaxBuckets: %+v\n", *database.EngineConfig.PG.PGStatMonitorPGSMMaxBuckets)
+	fmt.Printf("PGStatStatementsTrack: %+v\n", *database.EngineConfig.PG.PGStatStatementsTrack)
+	fmt.Printf("TempFileLimit: %+v\n", *database.EngineConfig.PG.TempFileLimit)
+	fmt.Printf("Timezone: %+v\n", *database.EngineConfig.PG.Timezone)
+	fmt.Printf("TrackActivityQuerySize: %+v\n", *database.EngineConfig.PG.TrackActivityQuerySize)
+	fmt.Printf("TrackCommitTimestamp: %+v\n", *database.EngineConfig.PG.TrackCommitTimestamp)
+	fmt.Printf("TrackIOTiming: %+v\n", *database.EngineConfig.PG.TrackIOTiming)
+	fmt.Printf("WALSenderTimeout: %+v\n", *database.EngineConfig.PG.WALSenderTimeout)
+
+	// Removed print statements for the following parameters:
+	// LogAutovacuumMinDuration
+	// LogErrorVerbosity
+	// LogLinePrefix
+	// LogMinDurationStatement
+	// LogTempFiles
+	// MaxPreparedTransactions
+	// MaxReplicationSlots
+	// MaxStackDepth
+	// TrackFunctions
+	// WALWriterDelay
+	// SynchronousReplication
+	// WorkMem
+
+	// Print additional engine config
+	fmt.Printf("PGStatMonitorEnable: %+v\n", *database.EngineConfig.PGStatMonitorEnable)
+	fmt.Printf("PGLookout: %+v\n", *database.EngineConfig.PGLookout.MaxFailoverReplicationTimeLag)
+	//fmt.Printf("ServiceLog: %+v\n", *database.EngineConfig.ServiceLog)
+	fmt.Printf("SharedBuffersPercentage: %+v\n", *database.EngineConfig.SharedBuffersPercentage)
+	fmt.Printf("WorkMem: %+v\n", *database.EngineConfig.WorkMem)
 
 	_, err = client.WaitForEventFinished(context.Background(), database.ID, linodego.EntityDatabase,
 		linodego.ActionDatabaseCreate, now, 5400)
