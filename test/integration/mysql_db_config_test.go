@@ -2,9 +2,10 @@ package integration
 
 import (
 	"context"
+	"testing"
+
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestDatabaseMySQLConfig_Get(t *testing.T) {
@@ -177,7 +178,7 @@ func TestDatabaseMySQL_EngineConfig_Suite(t *testing.T) {
 				InnoDBLockWaitTimeout: linodego.Pointer(60),
 				NetReadTimeout:        linodego.Pointer(40),
 			},
-			//ServiceLog: linodego.Pointer(false),
+			// ServiceLog: linodego.Pointer(false),
 		},
 	}
 

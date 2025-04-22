@@ -2,9 +2,10 @@ package integration
 
 import (
 	"context"
+	"testing"
+
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
 func TestDatabasePostgresConfig_Get(t *testing.T) {
@@ -332,7 +333,7 @@ func TestDatabasePostgres_EngineConfig_Suite(t *testing.T) {
 				AutovacuumVacuumThreshold: linodego.Pointer(int32(500)),
 				DeadlockTimeout:           linodego.Pointer(3000),
 			},
-			//ServiceLog: linodego.Pointer(false),
+			// ServiceLog: linodego.Pointer(false),
 		},
 	}
 
@@ -371,18 +372,18 @@ func createPostgresOptionsModifier() postgresDatabaseModifier {
 				DefaultToastCompression:         linodego.Pointer("lz4"),
 				IdleInTransactionSessionTimeout: linodego.Pointer(600),
 				JIT:                             linodego.Pointer(true),
-				//LogAutovacuumMinDuration:        nil, // Removed invalid parameter
-				//LogErrorVerbosity:               nil, // Removed invalid parameter
-				//LogLinePrefix:                   nil, // Removed invalid parameter
-				//LogMinDurationStatement:         nil, // Removed invalid parameter
-				//LogTempFiles:                    nil, // Removed invalid parameter
+				// LogAutovacuumMinDuration:        nil, // Removed invalid parameter
+				// LogErrorVerbosity:               nil, // Removed invalid parameter
+				// LogLinePrefix:                   nil, // Removed invalid parameter
+				// LogMinDurationStatement:         nil, // Removed invalid parameter
+				// LogTempFiles:                    nil, // Removed invalid parameter
 				MaxFilesPerProcess:           linodego.Pointer(1000),
 				MaxLocksPerTransaction:       linodego.Pointer(64),
 				MaxLogicalReplicationWorkers: linodego.Pointer(4),
 				MaxParallelWorkers:           linodego.Pointer(8),
 				MaxParallelWorkersPerGather:  linodego.Pointer(2),
 				MaxPredLocksPerTransaction:   linodego.Pointer(64),
-				//MaxPreparedTransactions:          linodego.Pointer(8), // Adjusted to >= 8
+				// MaxPreparedTransactions:          linodego.Pointer(8), // Adjusted to >= 8
 				MaxReplicationSlots:              linodego.Pointer(8), // Adjusted to >= 8
 				MaxSlotWALKeepSize:               linodego.Pointer(int32(512)),
 				MaxStackDepth:                    linodego.Pointer(2097152), // Adjusted to >= 2MB
