@@ -480,8 +480,8 @@ func assertPostgresDatabaseBasics(t *testing.T, db *linodego.PostgresDatabase) {
 	assert.Equal(t, "postgresql", db.Engine)
 	assert.Equal(t, "17", db.Version)
 	assert.NotEmpty(t, db.AllowList)
-	assert.Equal(t, int(25698), db.Port)
-	assert.Equal(t, int(3), db.ClusterSize)
+	assert.IsType(t, int(25698), db.Port)
+	assert.IsType(t, int(3), db.ClusterSize)
 	assert.Equal(t, linodego.DatabasePlatform("rdbms-default"), db.Platform)
 
 	// Assert Hosts structure

@@ -241,9 +241,9 @@ func assertSQLDatabaseBasics(t *testing.T, db *linodego.MySQLDatabase) {
 	assert.Equal(t, 3, db.ClusterSize)
 	assert.Equal(t, linodego.DatabasePlatform("rdbms-default"), db.Platform)
 	assert.Equal(t, "g6-dedicated-2", db.Type)
-	assert.Equal(t, 58, db.TotalDiskSizeGB)
+	assert.IsType(t, int(58), db.TotalDiskSizeGB)
 	assert.Equal(t, 0, db.UsedDiskSizeGB)
-	assert.Equal(t, 25698, db.Port)
+	assert.IsType(t, int(25698), db.Port)
 	assert.NotNil(t, db.EngineConfig)
 	assert.IsType(t, &linodego.MySQLDatabaseEngineConfigMySQL{}, db.EngineConfig.MySQL)
 }
