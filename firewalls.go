@@ -51,9 +51,9 @@ type FirewallUpdateOptions struct {
 	Tags   *[]string      `json:"tags,omitempty"`
 }
 
-// DefaultFirewalls represents the default firewalls for Linodes,
+// FirewallSettings represents the default firewalls for Linodes,
 // Linode VPC and public interfaces, and NodeBalancers.
-type DefaultFirewalls struct {
+type FirewallSettings struct {
 	DefaultFirewallIDs DefaultFirewallIDs `json:"default_firewall_ids"`
 }
 
@@ -64,8 +64,8 @@ type DefaultFirewallIDs struct {
 	VPCInterface    int `json:"vpc_interface"`
 }
 
-// DefaultFirewallsUpdateOptions is an options struct used when Updating DefaultFirewalls
-type DefaultFirewallsUpdateOptions struct {
+// FirewallSettingsUpdateOptions is an options struct used when Updating FirewallSettings
+type FirewallSettingsUpdateOptions struct {
 	DefaultFirewallIDs DefaultFirewallIDsOptions `json:"default_firewall_ids"`
 }
 
@@ -134,12 +134,12 @@ func (c *Client) DeleteFirewall(ctx context.Context, firewallID int) error {
 	return doDELETERequest(ctx, c, e)
 }
 
-// GetDefaultFirewalls returns default firewalls for Linodes, Linode VPC and public interfaces, and NodeBalancers.
-func (c *Client) GetDefaultFirewalls(ctx context.Context) (*DefaultFirewalls, error) {
-	return doGETRequest[DefaultFirewalls](ctx, c, "networking/firewalls/settings")
+// GetFirewallSettings returns default firewalls for Linodes, Linode VPC and public interfaces, and NodeBalancers.
+func (c *Client) GetFirewallSettings(ctx context.Context) (*FirewallSettings, error) {
+	return doGETRequest[FirewallSettings](ctx, c, "networking/firewalls/settings")
 }
 
-// UpdateDefaultFirewalls updates the default firewalls for Linodes, Linode VPC and public interfaces, and NodeBalancers.
-func (c *Client) UpdateDefaultFirewalls(ctx context.Context, opts DefaultFirewallsUpdateOptions) (*DefaultFirewalls, error) {
-	return doPUTRequest[DefaultFirewalls](ctx, c, "networking/firewalls/settings", opts)
+// UpdateFirewallSettings updates the default firewalls for Linodes, Linode VPC and public interfaces, and NodeBalancers.
+func (c *Client) UpdateFirewallSettings(ctx context.Context, opts FirewallSettingsUpdateOptions) (*FirewallSettings, error) {
+	return doPUTRequest[FirewallSettings](ctx, c, "networking/firewalls/settings", opts)
 }

@@ -264,7 +264,7 @@ func TestDefaultFirewall_Get(t *testing.T) {
 
 	base.MockGet(formatMockAPIPath("networking/firewalls/settings"), fixtureData)
 
-	defaultFirewalls, err := base.Client.GetDefaultFirewalls(context.Background())
+	defaultFirewalls, err := base.Client.GetFirewallSettings(context.Background())
 
 	assert.NoError(t, err)
 	assert.NotNil(t, defaultFirewalls)
@@ -285,7 +285,7 @@ func TestDefaultFirewall_Update(t *testing.T) {
 
 	base.MockPut(formatMockAPIPath("networking/firewalls/settings"), fixtureData)
 
-	requestData := linodego.DefaultFirewallsUpdateOptions{
+	requestData := linodego.FirewallSettingsUpdateOptions{
 		DefaultFirewallIDs: linodego.DefaultFirewallIDsOptions{
 			Linode:          linodego.Pointer(1),
 			NodeBalancer:    linodego.Pointer(1),
@@ -294,7 +294,7 @@ func TestDefaultFirewall_Update(t *testing.T) {
 		},
 	}
 
-	defaultFirewalls, err := base.Client.UpdateDefaultFirewalls(context.Background(), requestData)
+	defaultFirewalls, err := base.Client.UpdateFirewallSettings(context.Background(), requestData)
 
 	assert.NoError(t, err)
 	assert.NotNil(t, defaultFirewalls)
