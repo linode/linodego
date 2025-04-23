@@ -20,31 +20,31 @@ type MonitorMetricsDefinition struct {
 type MetricType string
 
 const (
-	Counter   MetricType = "counter"
-	Histogram MetricType = "histogram"
-	Gauge     MetricType = "gauge"
-	Summary   MetricType = "summary"
+	MetricTypeCounter   MetricType = "counter"
+	MetricTypeHistogram MetricType = "histogram"
+	MetricTypeGauge     MetricType = "gauge"
+	MetricTypeSummary   MetricType = "summary"
 )
 
 // Enum object for Unit
 type Unit string
 
 const (
-	CountUnit      Unit = "count"
-	Percent        Unit = "percent"
-	Byte           Unit = "byte"
-	Second         Unit = "second"
-	BitsPerSecond  Unit = "bits_per_second"
-	Millisecond    Unit = "millisecond"
-	KB             Unit = "KB"
-	MB             Unit = "MB"
-	GB             Unit = "GB"
-	RateUnit       Unit = "rate"
-	BytesPerSecond Unit = "bytes_per_second"
-	Percentile     Unit = "percentile"
-	Ratio          Unit = "ratio"
-	OpsPerSecond   Unit = "ops_per_second"
-	Iops           Unit = "iops"
+	UnitCount          Unit = "count"
+	UnitPercent        Unit = "percent"
+	UnitByte           Unit = "byte"
+	UnitSecond         Unit = "second"
+	UnitBitsPerSecond  Unit = "bits_per_second"
+	UnitMillisecond    Unit = "millisecond"
+	UnitKB             Unit = "KB"
+	UnitMB             Unit = "MB"
+	UnitGB             Unit = "GB"
+	UnitRate           Unit = "rate"
+	UnitBytesPerSecond Unit = "bytes_per_second"
+	UnitPercentile     Unit = "percentile"
+	UnitRatio          Unit = "ratio"
+	UnitOpsPerSecond   Unit = "ops_per_second"
+	UnitIops           Unit = "iops"
 )
 
 // MonitorDimension represents an ACLP MonitorDimension object
