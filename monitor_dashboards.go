@@ -23,14 +23,14 @@ type MonitorDashboard struct {
 type ServiceType string
 
 const (
-	Linode          ServiceType = "linode"
-	LKE             ServiceType = "lke"
-	DBaaS           ServiceType = "dbaas"
-	ACLB            ServiceType = "aclb"
-	Nodebalancer    ServiceType = "nodebalancer"
-	ObjectStorage   ServiceType = "objectstorage"
-	Vpc             ServiceType = "vpc"
-	FirewallService ServiceType = "firewall"
+	ServiceTypeLinode          ServiceType = "linode"
+	ServiceTypeLKE             ServiceType = "lke"
+	ServiceTypeDBaaS           ServiceType = "dbaas"
+	ServiceTypeACLB            ServiceType = "aclb"
+	ServiceTypeNodebalancer    ServiceType = "nodebalancer"
+	ServiceTypeObjectStorage   ServiceType = "objectstorage"
+	ServiceTypeVPC             ServiceType = "vpc"
+	ServiceTypeFirewallService ServiceType = "firewall"
 )
 
 // enum object for DashboardType
