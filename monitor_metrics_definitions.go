@@ -13,7 +13,7 @@ type MonitorMetricsDefinition struct {
 	Metric                      string              `json:"metric"`
 	MetricType                  MetricType          `json:"metric_type"`
 	ScrapeInterval              string              `json:"scrape_interval"`
-	Unit                        Unit                `json:"unit"`
+	Unit                        MetricUnit          `json:"unit"`
 }
 
 // Enum object for MetricType
@@ -27,24 +27,24 @@ const (
 )
 
 // Enum object for Unit
-type Unit string
+type MetricUnit string
 
 const (
-	UnitCount          Unit = "count"
-	UnitPercent        Unit = "percent"
-	UnitByte           Unit = "byte"
-	UnitSecond         Unit = "second"
-	UnitBitsPerSecond  Unit = "bits_per_second"
-	UnitMillisecond    Unit = "millisecond"
-	UnitKB             Unit = "KB"
-	UnitMB             Unit = "MB"
-	UnitGB             Unit = "GB"
-	UnitRate           Unit = "rate"
-	UnitBytesPerSecond Unit = "bytes_per_second"
-	UnitPercentile     Unit = "percentile"
-	UnitRatio          Unit = "ratio"
-	UnitOpsPerSecond   Unit = "ops_per_second"
-	UnitIops           Unit = "iops"
+	UnitCount          MetricUnit = "count"
+	UnitPercent        MetricUnit = "percent"
+	UnitByte           MetricUnit = "byte"
+	UnitSecond         MetricUnit = "second"
+	UnitBitsPerSecond  MetricUnit = "bits_per_second"
+	UnitMillisecond    MetricUnit = "millisecond"
+	UnitKB             MetricUnit = "KB"
+	UnitMB             MetricUnit = "MB"
+	UnitGB             MetricUnit = "GB"
+	UnitRate           MetricUnit = "rate"
+	UnitBytesPerSecond MetricUnit = "bytes_per_second"
+	UnitPercentile     MetricUnit = "percentile"
+	UnitRatio          MetricUnit = "ratio"
+	UnitOpsPerSecond   MetricUnit = "ops_per_second"
+	UnitIops           MetricUnit = "iops"
 )
 
 // MonitorDimension represents an ACLP MonitorDimension object
