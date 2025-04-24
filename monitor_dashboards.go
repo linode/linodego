@@ -37,8 +37,8 @@ const (
 type DashboardType string
 
 const (
-	Standard DashboardType = "standard"
-	Custom   DashboardType = "custom"
+	DashboardTypeStandard DashboardType = "standard"
+	DashboardTypeCustom   DashboardType = "custom"
 )
 
 // DashboardWidget represents an ACLP DashboardWidget object
