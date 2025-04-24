@@ -94,7 +94,7 @@ func TestLKECluster_Update(t *testing.T) {
 
 	updatedTags := []string{"test=true"}
 	updatedLabel := cluster.Label + "-updated"
-	updatedK8sVersion := "1.30"
+	updatedK8sVersion := "1.31"
 
 	updatedCluster, err := client.UpdateLKECluster(context.Background(), cluster.ID, linodego.LKEClusterUpdateOptions{
 		Tags:       &updatedTags,
@@ -309,7 +309,7 @@ func setupLKECluster(t *testing.T, clusterModifiers []clusterModifier, fixturesY
 
 	createOpts := linodego.LKEClusterCreateOptions{
 		Label:      label,
-		Region:     getRegionsWithCaps(t, client, []string{"Kubernetes", "Disk Encryption"})[0],
+		Region:     getRegionsWithCaps(t, client, []string{"Kubernetes", "LA Disk Encryption"})[0],
 		K8sVersion: "1.31",
 		Tags:       []string{"testing"},
 		NodePools:  []linodego.LKENodePoolCreateOptions{{Count: 1, Type: "g6-standard-2", Tags: []string{"test"}}},

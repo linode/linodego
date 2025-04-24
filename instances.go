@@ -120,6 +120,7 @@ type InstanceTransfer struct {
 }
 
 // MonthlyInstanceTransferStats pool stats for a Linode Instance network transfer statistics for a specific month
+// Deprecated: use MonthlyInstanceTransferStatsV2 for new implementations
 type MonthlyInstanceTransferStats struct {
 	// The amount of inbound public network traffic received by this Linode, in bytes, for a specific year/month.
 	BytesIn int `json:"bytes_in"`
@@ -129,6 +130,18 @@ type MonthlyInstanceTransferStats struct {
 
 	// The total amount of public network traffic sent and received by this Linode, in bytes, for a specific year/month.
 	BytesTotal int `json:"bytes_total"`
+}
+
+// MonthlyInstanceTransferStatsV2 pool stats for a Linode Instance network transfer statistics for a specific month
+type MonthlyInstanceTransferStatsV2 struct {
+	// The amount of inbound public network traffic received by this Linode, in bytes, for a specific year/month.
+	BytesIn uint64 `json:"bytes_in"`
+
+	// The amount of outbound public network traffic sent by this Linode, in bytes, for a specific year/month.
+	BytesOut uint64 `json:"bytes_out"`
+
+	// The total amount of public network traffic sent and received by this Linode, in bytes, for a specific year/month.
+	BytesTotal uint64 `json:"bytes_total"`
 }
 
 // InstancePlacementGroup represents information about the placement group
@@ -318,6 +331,12 @@ func (c *Client) GetInstanceTransfer(ctx context.Context, linodeID int) (*Instan
 func (c *Client) GetInstanceTransferMonthly(ctx context.Context, linodeID, year, month int) (*MonthlyInstanceTransferStats, error) {
 	e := formatAPIPath("linode/instances/%d/transfer/%d/%d", linodeID, year, month)
 	return doGETRequest[MonthlyInstanceTransferStats](ctx, c, e)
+}
+
+// GetInstanceTransferMonthlyV2 gets the instance's network transfer pool statistics for a specific month.
+func (c *Client) GetInstanceTransferMonthlyV2(ctx context.Context, linodeID, year, month int) (*MonthlyInstanceTransferStatsV2, error) {
+	e := formatAPIPath("linode/instances/%d/transfer/%d/%d", linodeID, year, month)
+	return doGETRequest[MonthlyInstanceTransferStatsV2](ctx, c, e)
 }
 
 // CreateInstance creates a Linode instance
