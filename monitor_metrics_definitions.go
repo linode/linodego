@@ -33,7 +33,7 @@ const (
 	MetricUnitCount          MetricUnit = "count"
 	MetricUnitPercent        MetricUnit = "percent"
 	MetricUnitByte           MetricUnit = "byte"
-	UMetricUnitSecond        MetricUnit = "second"
+	MetricUnitSecond         MetricUnit = "second"
 	MetricUnitBitsPerSecond  MetricUnit = "bits_per_second"
 	MetricUnitMillisecond    MetricUnit = "millisecond"
 	MetricUnitKB             MetricUnit = "KB"
