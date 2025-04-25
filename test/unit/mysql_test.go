@@ -55,7 +55,6 @@ func TestDatabaseMySQL_Get(t *testing.T) {
 	assert.Equal(t, "8.0.26", db.Version)
 
 	assert.Equal(t, 600, *db.EngineConfig.BinlogRetentionPeriod)
-	assert.Equal(t, true, *db.EngineConfig.ServiceLog)
 	assert.Equal(t, 10, *db.EngineConfig.MySQL.ConnectTimeout)
 	assert.Equal(t, "+03:00", *db.EngineConfig.MySQL.DefaultTimeZone)
 	assert.Equal(t, float64(1024), *db.EngineConfig.MySQL.GroupConcatMaxLen)
@@ -67,21 +66,17 @@ func TestDatabaseMySQL_Get(t *testing.T) {
 	assert.Equal(t, 50, *db.EngineConfig.MySQL.InnoDBLockWaitTimeout)
 	assert.Equal(t, 16777216, *db.EngineConfig.MySQL.InnoDBLogBufferSize)
 	assert.Equal(t, 134217728, *db.EngineConfig.MySQL.InnoDBOnlineAlterLogMaxSize)
-	assert.Equal(t, true, *db.EngineConfig.MySQL.InnoDBPrintAllDeadlocks)
 	assert.Equal(t, 10, *db.EngineConfig.MySQL.InnoDBReadIOThreads)
 	assert.Equal(t, true, *db.EngineConfig.MySQL.InnoDBRollbackOnTimeout)
 	assert.Equal(t, 10, *db.EngineConfig.MySQL.InnoDBThreadConcurrency)
 	assert.Equal(t, 10, *db.EngineConfig.MySQL.InnoDBWriteIOThreads)
 	assert.Equal(t, 3600, *db.EngineConfig.MySQL.InteractiveTimeout)
 	assert.Equal(t, "TempTable", *db.EngineConfig.MySQL.InternalTmpMemStorageEngine)
-	assert.Equal(t, "INSIGHTS", *db.EngineConfig.MySQL.LogOutput)
-	assert.Equal(t, float64(10), *db.EngineConfig.MySQL.LongQueryTime)
 	assert.Equal(t, 67108864, *db.EngineConfig.MySQL.MaxAllowedPacket)
 	assert.Equal(t, 16777216, *db.EngineConfig.MySQL.MaxHeapTableSize)
 	assert.Equal(t, 16384, *db.EngineConfig.MySQL.NetBufferLength)
 	assert.Equal(t, 30, *db.EngineConfig.MySQL.NetReadTimeout)
 	assert.Equal(t, 30, *db.EngineConfig.MySQL.NetWriteTimeout)
-	assert.Equal(t, true, *db.EngineConfig.MySQL.SlowQueryLog)
 	assert.Equal(t, 262144, *db.EngineConfig.MySQL.SortBufferSize)
 	assert.Equal(t, "ANSI,TRADITIONAL", *db.EngineConfig.MySQL.SQLMode)
 	assert.Equal(t, true, *db.EngineConfig.MySQL.SQLRequirePrimaryKey)
@@ -103,7 +98,6 @@ func TestDatabaseMySQL_Update(t *testing.T) {
 			MySQL: &linodego.MySQLDatabaseEngineConfigMySQL{
 				ConnectTimeout: linodego.Pointer(20),
 			},
-			ServiceLog: linodego.Pointer(false),
 		},
 	}
 
@@ -130,7 +124,6 @@ func TestDatabaseMySQL_Update(t *testing.T) {
 	assert.Equal(t, "8.0.26", db.Version)
 
 	assert.Equal(t, 600, *db.EngineConfig.BinlogRetentionPeriod)
-	assert.Equal(t, false, *db.EngineConfig.ServiceLog)
 	assert.Equal(t, 20, *db.EngineConfig.MySQL.ConnectTimeout)
 	assert.Equal(t, "+03:00", *db.EngineConfig.MySQL.DefaultTimeZone)
 	assert.Equal(t, float64(1024), *db.EngineConfig.MySQL.GroupConcatMaxLen)
@@ -142,21 +135,17 @@ func TestDatabaseMySQL_Update(t *testing.T) {
 	assert.Equal(t, 50, *db.EngineConfig.MySQL.InnoDBLockWaitTimeout)
 	assert.Equal(t, 16777216, *db.EngineConfig.MySQL.InnoDBLogBufferSize)
 	assert.Equal(t, 134217728, *db.EngineConfig.MySQL.InnoDBOnlineAlterLogMaxSize)
-	assert.Equal(t, true, *db.EngineConfig.MySQL.InnoDBPrintAllDeadlocks)
 	assert.Equal(t, 10, *db.EngineConfig.MySQL.InnoDBReadIOThreads)
 	assert.Equal(t, true, *db.EngineConfig.MySQL.InnoDBRollbackOnTimeout)
 	assert.Equal(t, 10, *db.EngineConfig.MySQL.InnoDBThreadConcurrency)
 	assert.Equal(t, 10, *db.EngineConfig.MySQL.InnoDBWriteIOThreads)
 	assert.Equal(t, 3600, *db.EngineConfig.MySQL.InteractiveTimeout)
 	assert.Equal(t, "TempTable", *db.EngineConfig.MySQL.InternalTmpMemStorageEngine)
-	assert.Equal(t, "INSIGHTS", *db.EngineConfig.MySQL.LogOutput)
-	assert.Equal(t, float64(10), *db.EngineConfig.MySQL.LongQueryTime)
 	assert.Equal(t, 67108864, *db.EngineConfig.MySQL.MaxAllowedPacket)
 	assert.Equal(t, 16777216, *db.EngineConfig.MySQL.MaxHeapTableSize)
 	assert.Equal(t, 16384, *db.EngineConfig.MySQL.NetBufferLength)
 	assert.Equal(t, 30, *db.EngineConfig.MySQL.NetReadTimeout)
 	assert.Equal(t, 30, *db.EngineConfig.MySQL.NetWriteTimeout)
-	assert.Equal(t, true, *db.EngineConfig.MySQL.SlowQueryLog)
 	assert.Equal(t, 262144, *db.EngineConfig.MySQL.SortBufferSize)
 	assert.Equal(t, "ANSI,TRADITIONAL", *db.EngineConfig.MySQL.SQLMode)
 	assert.Equal(t, true, *db.EngineConfig.MySQL.SQLRequirePrimaryKey)
@@ -181,7 +170,6 @@ func TestDatabaseMySQL_Create(t *testing.T) {
 			MySQL: &linodego.MySQLDatabaseEngineConfigMySQL{
 				ConnectTimeout: linodego.Pointer(20),
 			},
-			ServiceLog: linodego.Pointer(false),
 		},
 	}
 
@@ -208,7 +196,6 @@ func TestDatabaseMySQL_Create(t *testing.T) {
 	assert.Equal(t, "8.0.26", db.Version)
 
 	assert.Equal(t, 600, *db.EngineConfig.BinlogRetentionPeriod)
-	assert.Equal(t, false, *db.EngineConfig.ServiceLog)
 	assert.Equal(t, 20, *db.EngineConfig.MySQL.ConnectTimeout)
 	assert.Equal(t, "+03:00", *db.EngineConfig.MySQL.DefaultTimeZone)
 	assert.Equal(t, float64(1024), *db.EngineConfig.MySQL.GroupConcatMaxLen)
@@ -220,21 +207,17 @@ func TestDatabaseMySQL_Create(t *testing.T) {
 	assert.Equal(t, 50, *db.EngineConfig.MySQL.InnoDBLockWaitTimeout)
 	assert.Equal(t, 16777216, *db.EngineConfig.MySQL.InnoDBLogBufferSize)
 	assert.Equal(t, 134217728, *db.EngineConfig.MySQL.InnoDBOnlineAlterLogMaxSize)
-	assert.Equal(t, true, *db.EngineConfig.MySQL.InnoDBPrintAllDeadlocks)
 	assert.Equal(t, 10, *db.EngineConfig.MySQL.InnoDBReadIOThreads)
 	assert.Equal(t, true, *db.EngineConfig.MySQL.InnoDBRollbackOnTimeout)
 	assert.Equal(t, 10, *db.EngineConfig.MySQL.InnoDBThreadConcurrency)
 	assert.Equal(t, 10, *db.EngineConfig.MySQL.InnoDBWriteIOThreads)
 	assert.Equal(t, 3600, *db.EngineConfig.MySQL.InteractiveTimeout)
 	assert.Equal(t, "TempTable", *db.EngineConfig.MySQL.InternalTmpMemStorageEngine)
-	assert.Equal(t, "INSIGHTS", *db.EngineConfig.MySQL.LogOutput)
-	assert.Equal(t, float64(10), *db.EngineConfig.MySQL.LongQueryTime)
 	assert.Equal(t, 67108864, *db.EngineConfig.MySQL.MaxAllowedPacket)
 	assert.Equal(t, 16777216, *db.EngineConfig.MySQL.MaxHeapTableSize)
 	assert.Equal(t, 16384, *db.EngineConfig.MySQL.NetBufferLength)
 	assert.Equal(t, 30, *db.EngineConfig.MySQL.NetReadTimeout)
 	assert.Equal(t, 30, *db.EngineConfig.MySQL.NetWriteTimeout)
-	assert.Equal(t, true, *db.EngineConfig.MySQL.SlowQueryLog)
 	assert.Equal(t, 262144, *db.EngineConfig.MySQL.SortBufferSize)
 	assert.Equal(t, "ANSI,TRADITIONAL", *db.EngineConfig.MySQL.SQLMode)
 	assert.Equal(t, true, *db.EngineConfig.MySQL.SQLRequirePrimaryKey)
@@ -429,12 +412,6 @@ func TestDatabaseMySQLConfig_Get(t *testing.T) {
 	assert.False(t, config.MySQL.InnoDBOnlineAlterLogMaxSize.RequiresRestart)
 	assert.Equal(t, "integer", config.MySQL.InnoDBOnlineAlterLogMaxSize.Type)
 
-	assert.Equal(t, "When enabled, information about all deadlocks in InnoDB user transactions is recorded in the error log. Disabled by default.",
-		config.MySQL.InnoDBPrintAllDeadlocks.Description)
-	assert.Equal(t, true, config.MySQL.InnoDBPrintAllDeadlocks.Example)
-	assert.False(t, config.MySQL.InnoDBPrintAllDeadlocks.RequiresRestart)
-	assert.Equal(t, "boolean", config.MySQL.InnoDBPrintAllDeadlocks.Type)
-
 	assert.Equal(t, "The number of I/O threads for read operations in InnoDB. Default is 4. Changing this parameter will lead to a restart of the MySQL service.",
 		config.MySQL.InnoDBReadIOThreads.Description)
 	assert.Equal(t, 10, config.MySQL.InnoDBReadIOThreads.Example)
@@ -480,26 +457,6 @@ func TestDatabaseMySQLConfig_Get(t *testing.T) {
 	assert.False(t, config.MySQL.InternalTmpMemStorageEngine.RequiresRestart)
 	assert.Equal(t, "string", config.MySQL.InternalTmpMemStorageEngine.Type)
 
-	assert.Equal(t, "The slow log output destination when slow_query_log is ON. To enable MySQL AI Insights, choose INSIGHTS. To use MySQL AI Insights and the mysql.slow_log table at the same time, choose INSIGHTS,TABLE. To only use the mysql.slow_log table, choose TABLE. To silence slow logs, choose NONE.",
-		config.MySQL.LogOutput.Description)
-	assert.Equal(t, "INSIGHTS", config.MySQL.LogOutput.Example)
-	assert.Equal(t, []string{
-		"INSIGHTS",
-		"NONE",
-		"TABLE",
-		"INSIGHTS,TABLE",
-	}, config.MySQL.LogOutput.Enum)
-	assert.False(t, config.MySQL.LogOutput.RequiresRestart)
-	assert.Equal(t, "string", config.MySQL.LogOutput.Type)
-
-	assert.Equal(t, "The slow_query_logs work as SQL statements that take more than long_query_time seconds to execute.",
-		config.MySQL.LongQueryTime.Description)
-	assert.Equal(t, float64(10), config.MySQL.LongQueryTime.Example)
-	assert.Equal(t, float64(3600), config.MySQL.LongQueryTime.Maximum)
-	assert.Equal(t, float64(0.0), config.MySQL.LongQueryTime.Minimum)
-	assert.False(t, config.MySQL.LongQueryTime.RequiresRestart)
-	assert.Equal(t, "number", config.MySQL.LongQueryTime.Type)
-
 	assert.Equal(t, "Size of the largest message in bytes that can be received by the server. Default is 67108864 (64M)",
 		config.MySQL.MaxAllowedPacket.Description)
 	assert.Equal(t, 67108864, config.MySQL.MaxAllowedPacket.Example)
@@ -539,12 +496,6 @@ func TestDatabaseMySQLConfig_Get(t *testing.T) {
 	assert.Equal(t, 1, config.MySQL.NetWriteTimeout.Minimum)
 	assert.False(t, config.MySQL.NetWriteTimeout.RequiresRestart)
 	assert.Equal(t, "integer", config.MySQL.NetWriteTimeout.Type)
-
-	assert.Equal(t, "Slow query log enables capturing of slow queries. Setting slow_query_log to false also truncates the mysql.slow_log table.",
-		config.MySQL.SlowQueryLog.Description)
-	assert.Equal(t, true, config.MySQL.SlowQueryLog.Example)
-	assert.False(t, config.MySQL.SlowQueryLog.RequiresRestart)
-	assert.Equal(t, "boolean", config.MySQL.SlowQueryLog.Type)
 
 	assert.Equal(t, "Sort buffer size in bytes for ORDER BY optimization. Default is 262144 (256K)",
 		config.MySQL.SortBufferSize.Description)
@@ -591,10 +542,4 @@ func TestDatabaseMySQLConfig_Get(t *testing.T) {
 	assert.Equal(t, 600, config.BinlogRetentionPeriod.Minimum)
 	assert.False(t, config.BinlogRetentionPeriod.RequiresRestart)
 	assert.Equal(t, "integer", config.BinlogRetentionPeriod.Type)
-
-	assert.Equal(t, "Store logs for the service so that they are available in the HTTP API and console.",
-		config.ServiceLog.Description)
-	assert.Equal(t, true, config.ServiceLog.Example)
-	assert.False(t, config.ServiceLog.RequiresRestart)
-	assert.Equal(t, []string{"boolean", "null"}, config.ServiceLog.Type)
 }

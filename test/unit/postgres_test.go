@@ -55,13 +55,10 @@ func TestDatabasePostgreSQL_Get(t *testing.T) {
 
 	assert.Equal(t, true, *db.EngineConfig.PGStatMonitorEnable)
 	assert.Equal(t, int64(1000), *db.EngineConfig.PGLookout.MaxFailoverReplicationTimeLag)
-	assert.Equal(t, true, *db.EngineConfig.ServiceLog)
 	assert.Equal(t, 41.5, *db.EngineConfig.SharedBuffersPercentage)
-	assert.Equal(t, "off", *db.EngineConfig.SynchronousReplication)
 	assert.Equal(t, 4, *db.EngineConfig.WorkMem)
 	assert.Equal(t, 0.5, *db.EngineConfig.PG.AutovacuumAnalyzeScaleFactor)
 	assert.Equal(t, int32(100), *db.EngineConfig.PG.AutovacuumAnalyzeThreshold)
-	assert.Equal(t, 200000000, *db.EngineConfig.PG.AutovacuumFreezeMaxAge)
 	assert.Equal(t, 10, *db.EngineConfig.PG.AutovacuumMaxWorkers)
 	assert.Equal(t, 100, *db.EngineConfig.PG.AutovacuumNaptime)
 	assert.Equal(t, 50, *db.EngineConfig.PG.AutovacuumVacuumCostDelay)
@@ -76,18 +73,12 @@ func TestDatabasePostgreSQL_Get(t *testing.T) {
 	assert.Equal(t, "lz4", *db.EngineConfig.PG.DefaultToastCompression)
 	assert.Equal(t, 100, *db.EngineConfig.PG.IdleInTransactionSessionTimeout)
 	assert.Equal(t, true, *db.EngineConfig.PG.JIT)
-	assert.Equal(t, int32(100), *db.EngineConfig.PG.LogAutovacuumMinDuration)
-	assert.Equal(t, "DEFAULT", *db.EngineConfig.PG.LogErrorVerbosity)
-	assert.Equal(t, "'pid=%p,user=%u,db=%d,app=%a,client=%h '", *db.EngineConfig.PG.LogLinePrefix)
-	assert.Equal(t, 100, *db.EngineConfig.PG.LogMinDurationStatement)
-	assert.Equal(t, int32(100), *db.EngineConfig.PG.LogTempFiles)
 	assert.Equal(t, 100, *db.EngineConfig.PG.MaxFilesPerProcess)
 	assert.Equal(t, 100, *db.EngineConfig.PG.MaxLocksPerTransaction)
 	assert.Equal(t, 32, *db.EngineConfig.PG.MaxLogicalReplicationWorkers)
 	assert.Equal(t, 64, *db.EngineConfig.PG.MaxParallelWorkers)
 	assert.Equal(t, 64, *db.EngineConfig.PG.MaxParallelWorkersPerGather)
 	assert.Equal(t, 1000, *db.EngineConfig.PG.MaxPredLocksPerTransaction)
-	assert.Equal(t, 5000, *db.EngineConfig.PG.MaxPreparedTransactions)
 	assert.Equal(t, 32, *db.EngineConfig.PG.MaxReplicationSlots)
 	assert.Equal(t, int32(100), *db.EngineConfig.PG.MaxSlotWALKeepSize)
 	assert.Equal(t, 3507152, *db.EngineConfig.PG.MaxStackDepth)
@@ -123,9 +114,8 @@ func TestDatabasePostgreSQL_Update(t *testing.T) {
 		Label: "example-db-updated",
 		EngineConfig: &linodego.PostgresDatabaseEngineConfig{
 			PG: &linodego.PostgresDatabaseEngineConfigPG{
-				AutovacuumFreezeMaxAge: linodego.Pointer(400000000),
+				AutovacuumMaxWorkers: linodego.Pointer(10),
 			},
-			ServiceLog: linodego.Pointer(false),
 		},
 	}
 
@@ -153,13 +143,10 @@ func TestDatabasePostgreSQL_Update(t *testing.T) {
 
 	assert.Equal(t, true, *db.EngineConfig.PGStatMonitorEnable)
 	assert.Equal(t, int64(1000), *db.EngineConfig.PGLookout.MaxFailoverReplicationTimeLag)
-	assert.Equal(t, false, *db.EngineConfig.ServiceLog)
 	assert.Equal(t, 41.5, *db.EngineConfig.SharedBuffersPercentage)
-	assert.Equal(t, "off", *db.EngineConfig.SynchronousReplication)
 	assert.Equal(t, 4, *db.EngineConfig.WorkMem)
 	assert.Equal(t, 0.5, *db.EngineConfig.PG.AutovacuumAnalyzeScaleFactor)
 	assert.Equal(t, int32(100), *db.EngineConfig.PG.AutovacuumAnalyzeThreshold)
-	assert.Equal(t, 400000000, *db.EngineConfig.PG.AutovacuumFreezeMaxAge)
 	assert.Equal(t, 10, *db.EngineConfig.PG.AutovacuumMaxWorkers)
 	assert.Equal(t, 100, *db.EngineConfig.PG.AutovacuumNaptime)
 	assert.Equal(t, 50, *db.EngineConfig.PG.AutovacuumVacuumCostDelay)
@@ -174,18 +161,12 @@ func TestDatabasePostgreSQL_Update(t *testing.T) {
 	assert.Equal(t, "lz4", *db.EngineConfig.PG.DefaultToastCompression)
 	assert.Equal(t, 100, *db.EngineConfig.PG.IdleInTransactionSessionTimeout)
 	assert.Equal(t, true, *db.EngineConfig.PG.JIT)
-	assert.Equal(t, int32(100), *db.EngineConfig.PG.LogAutovacuumMinDuration)
-	assert.Equal(t, "DEFAULT", *db.EngineConfig.PG.LogErrorVerbosity)
-	assert.Equal(t, "'pid=%p,user=%u,db=%d,app=%a,client=%h '", *db.EngineConfig.PG.LogLinePrefix)
-	assert.Equal(t, 100, *db.EngineConfig.PG.LogMinDurationStatement)
-	assert.Equal(t, int32(100), *db.EngineConfig.PG.LogTempFiles)
 	assert.Equal(t, 100, *db.EngineConfig.PG.MaxFilesPerProcess)
 	assert.Equal(t, 100, *db.EngineConfig.PG.MaxLocksPerTransaction)
 	assert.Equal(t, 32, *db.EngineConfig.PG.MaxLogicalReplicationWorkers)
 	assert.Equal(t, 64, *db.EngineConfig.PG.MaxParallelWorkers)
 	assert.Equal(t, 64, *db.EngineConfig.PG.MaxParallelWorkersPerGather)
 	assert.Equal(t, 1000, *db.EngineConfig.PG.MaxPredLocksPerTransaction)
-	assert.Equal(t, 5000, *db.EngineConfig.PG.MaxPreparedTransactions)
 	assert.Equal(t, 32, *db.EngineConfig.PG.MaxReplicationSlots)
 	assert.Equal(t, int32(100), *db.EngineConfig.PG.MaxSlotWALKeepSize)
 	assert.Equal(t, 3507152, *db.EngineConfig.PG.MaxStackDepth)
@@ -224,9 +205,8 @@ func TestDatabasePostgreSQL_Create(t *testing.T) {
 		Engine: "postgresql",
 		EngineConfig: &linodego.PostgresDatabaseEngineConfig{
 			PG: &linodego.PostgresDatabaseEngineConfigPG{
-				AutovacuumFreezeMaxAge: linodego.Pointer(400000000),
+				AutovacuumMaxWorkers: linodego.Pointer(10),
 			},
-			ServiceLog: linodego.Pointer(false),
 		},
 	}
 
@@ -254,13 +234,10 @@ func TestDatabasePostgreSQL_Create(t *testing.T) {
 
 	assert.Equal(t, true, *db.EngineConfig.PGStatMonitorEnable)
 	assert.Equal(t, int64(1000), *db.EngineConfig.PGLookout.MaxFailoverReplicationTimeLag)
-	assert.Equal(t, false, *db.EngineConfig.ServiceLog)
 	assert.Equal(t, 41.5, *db.EngineConfig.SharedBuffersPercentage)
-	assert.Equal(t, "off", *db.EngineConfig.SynchronousReplication)
 	assert.Equal(t, 4, *db.EngineConfig.WorkMem)
 	assert.Equal(t, 0.5, *db.EngineConfig.PG.AutovacuumAnalyzeScaleFactor)
 	assert.Equal(t, int32(100), *db.EngineConfig.PG.AutovacuumAnalyzeThreshold)
-	assert.Equal(t, 400000000, *db.EngineConfig.PG.AutovacuumFreezeMaxAge)
 	assert.Equal(t, 10, *db.EngineConfig.PG.AutovacuumMaxWorkers)
 	assert.Equal(t, 100, *db.EngineConfig.PG.AutovacuumNaptime)
 	assert.Equal(t, 50, *db.EngineConfig.PG.AutovacuumVacuumCostDelay)
@@ -275,18 +252,12 @@ func TestDatabasePostgreSQL_Create(t *testing.T) {
 	assert.Equal(t, "lz4", *db.EngineConfig.PG.DefaultToastCompression)
 	assert.Equal(t, 100, *db.EngineConfig.PG.IdleInTransactionSessionTimeout)
 	assert.Equal(t, true, *db.EngineConfig.PG.JIT)
-	assert.Equal(t, int32(100), *db.EngineConfig.PG.LogAutovacuumMinDuration)
-	assert.Equal(t, "DEFAULT", *db.EngineConfig.PG.LogErrorVerbosity)
-	assert.Equal(t, "'pid=%p,user=%u,db=%d,app=%a,client=%h '", *db.EngineConfig.PG.LogLinePrefix)
-	assert.Equal(t, 100, *db.EngineConfig.PG.LogMinDurationStatement)
-	assert.Equal(t, int32(100), *db.EngineConfig.PG.LogTempFiles)
 	assert.Equal(t, 100, *db.EngineConfig.PG.MaxFilesPerProcess)
 	assert.Equal(t, 100, *db.EngineConfig.PG.MaxLocksPerTransaction)
 	assert.Equal(t, 32, *db.EngineConfig.PG.MaxLogicalReplicationWorkers)
 	assert.Equal(t, 64, *db.EngineConfig.PG.MaxParallelWorkers)
 	assert.Equal(t, 64, *db.EngineConfig.PG.MaxParallelWorkersPerGather)
 	assert.Equal(t, 1000, *db.EngineConfig.PG.MaxPredLocksPerTransaction)
-	assert.Equal(t, 5000, *db.EngineConfig.PG.MaxPreparedTransactions)
 	assert.Equal(t, 32, *db.EngineConfig.PG.MaxReplicationSlots)
 	assert.Equal(t, int32(100), *db.EngineConfig.PG.MaxSlotWALKeepSize)
 	assert.Equal(t, 3507152, *db.EngineConfig.PG.MaxStackDepth)
@@ -423,14 +394,6 @@ func TestDatabasePostgreSQLConfig_Get(t *testing.T) {
 	assert.False(t, config.PG.AutovacuumAnalyzeThreshold.RequiresRestart)
 	assert.Equal(t, "integer", config.PG.AutovacuumAnalyzeThreshold.Type)
 
-	assert.Equal(t, "Specifies the maximum age (in transactions) that a table's pg_class.relfrozenxid field can attain before a VACUUM operation is forced to prevent transaction ID wraparound within the table. Note that the system will launch autovacuum processes to prevent wraparound even when autovacuum is otherwise disabled. This parameter will cause the server to be restarted.",
-		config.PG.AutovacuumFreezeMaxAge.Description)
-	assert.Equal(t, 200000000, config.PG.AutovacuumFreezeMaxAge.Example)
-	assert.Equal(t, 1500000000, config.PG.AutovacuumFreezeMaxAge.Maximum)
-	assert.Equal(t, 200000000, config.PG.AutovacuumFreezeMaxAge.Minimum)
-	assert.True(t, config.PG.AutovacuumFreezeMaxAge.RequiresRestart)
-	assert.Equal(t, "integer", config.PG.AutovacuumFreezeMaxAge.Type)
-
 	assert.Equal(t, "Specifies the maximum number of autovacuum processes (other than the autovacuum launcher) that may be running at any one time. The default is three. This parameter can only be set at server start.",
 		config.PG.AutovacuumMaxWorkers.Description)
 	assert.Equal(t, 20, config.PG.AutovacuumMaxWorkers.Maximum)
@@ -533,46 +496,6 @@ func TestDatabasePostgreSQLConfig_Get(t *testing.T) {
 	assert.False(t, config.PG.JIT.RequiresRestart)
 	assert.Equal(t, "boolean", config.PG.JIT.Type)
 
-	assert.Equal(t, "Causes each action executed by autovacuum to be logged if it ran for at least the specified number of milliseconds. Setting this to zero logs all autovacuum actions. Minus-one (the default) disables logging autovacuum actions.",
-		config.PG.LogAutovacuumMinDuration.Description)
-	assert.Equal(t, int32(2147483647), config.PG.LogAutovacuumMinDuration.Maximum)
-	assert.Equal(t, int32(-1), config.PG.LogAutovacuumMinDuration.Minimum)
-	assert.False(t, config.PG.LogAutovacuumMinDuration.RequiresRestart)
-	assert.Equal(t, "integer", config.PG.LogAutovacuumMinDuration.Type)
-
-	assert.Equal(t, "Controls the amount of detail written in the server log for each message that is logged.",
-		config.PG.LogErrorVerbosity.Description)
-	assert.Equal(t, []string{"TERSE", "DEFAULT", "VERBOSE"},
-		config.PG.LogErrorVerbosity.Enum)
-	assert.False(t, config.PG.LogErrorVerbosity.RequiresRestart)
-	assert.Equal(t, "string", config.PG.LogErrorVerbosity.Type)
-
-	assert.Equal(t, "Choose from one of the available log formats.",
-		config.PG.LogLinePrefix.Description)
-	assert.Equal(t, []string{
-		"'pid=%p,user=%u,db=%d,app=%a,client=%h '",
-		"'pid=%p,user=%u,db=%d,app=%a,client=%h,txid=%x,qid=%Q '",
-		"'%t [%p]: [%l-1] user=%u,db=%d,app=%a,client=%h '",
-		"'%m [%p] %q[user=%u,db=%d,app=%a] '",
-	},
-		config.PG.LogLinePrefix.Enum)
-	assert.False(t, config.PG.LogLinePrefix.RequiresRestart)
-	assert.Equal(t, "string", config.PG.LogLinePrefix.Type)
-
-	assert.Equal(t, "Log statements that take more than this number of milliseconds to run, -1 disables",
-		config.PG.LogMinDurationStatement.Description)
-	assert.Equal(t, 86400000, config.PG.LogMinDurationStatement.Maximum)
-	assert.Equal(t, -1, config.PG.LogMinDurationStatement.Minimum)
-	assert.False(t, config.PG.LogMinDurationStatement.RequiresRestart)
-	assert.Equal(t, "integer", config.PG.LogMinDurationStatement.Type)
-
-	assert.Equal(t, "Log statements for each temporary file created larger than this number of kilobytes, -1 disables",
-		config.PG.LogTempFiles.Description)
-	assert.Equal(t, int32(2147483647), config.PG.LogTempFiles.Maximum)
-	assert.Equal(t, int32(-1), config.PG.LogTempFiles.Minimum)
-	assert.False(t, config.PG.LogTempFiles.RequiresRestart)
-	assert.Equal(t, "integer", config.PG.LogTempFiles.Type)
-
 	assert.Equal(t, "PostgreSQL maximum number of files that can be open per process",
 		config.PG.MaxFilesPerProcess.Description)
 	assert.Equal(t, 4096, config.PG.MaxFilesPerProcess.Maximum)
@@ -614,13 +537,6 @@ func TestDatabasePostgreSQLConfig_Get(t *testing.T) {
 	assert.Equal(t, 64, config.PG.MaxPredLocksPerTransaction.Minimum)
 	assert.False(t, config.PG.MaxPredLocksPerTransaction.RequiresRestart)
 	assert.Equal(t, "integer", config.PG.MaxPredLocksPerTransaction.Type)
-
-	assert.Equal(t, "PostgreSQL maximum prepared transactions",
-		config.PG.MaxPreparedTransactions.Description)
-	assert.Equal(t, 10000, config.PG.MaxPreparedTransactions.Maximum)
-	assert.Equal(t, 0, config.PG.MaxPreparedTransactions.Minimum)
-	assert.False(t, config.PG.MaxPreparedTransactions.RequiresRestart)
-	assert.Equal(t, "integer", config.PG.MaxPreparedTransactions.Type)
 
 	assert.Equal(t, "PostgreSQL maximum replication slots",
 		config.PG.MaxReplicationSlots.Description)
@@ -784,12 +700,6 @@ func TestDatabasePostgreSQLConfig_Get(t *testing.T) {
 	assert.False(t, config.PGLookout.PGLookoutMaxFailoverReplicationTimeLag.RequiresRestart)
 	assert.Equal(t, "integer", config.PGLookout.PGLookoutMaxFailoverReplicationTimeLag.Type)
 
-	assert.Equal(t, "Store logs for the service so that they are available in the HTTP API and console.",
-		config.ServiceLog.Description)
-	assert.Equal(t, true, config.ServiceLog.Example)
-	assert.False(t, config.ServiceLog.RequiresRestart)
-	assert.Equal(t, []string{"boolean", "null"}, config.ServiceLog.Type)
-
 	assert.Equal(t, "Percentage of total RAM that the database server uses for shared memory buffers. Valid range is 20-60 (float), which corresponds to 20% - 60%. This setting adjusts the shared_buffers configuration value.",
 		config.SharedBuffersPercentage.Description)
 	assert.Equal(t, 41.5, config.SharedBuffersPercentage.Example)
@@ -797,13 +707,6 @@ func TestDatabasePostgreSQLConfig_Get(t *testing.T) {
 	assert.Equal(t, 20.0, config.SharedBuffersPercentage.Minimum)
 	assert.False(t, config.SharedBuffersPercentage.RequiresRestart)
 	assert.Equal(t, "number", config.SharedBuffersPercentage.Type)
-
-	assert.Equal(t, "Synchronous replication type. Note that the service plan also needs to support synchronous replication.",
-		config.SynchronousReplication.Description)
-	assert.Equal(t, "off", config.SynchronousReplication.Example)
-	assert.Equal(t, []string{"quorum", "off"}, config.SynchronousReplication.Enum)
-	assert.False(t, config.SynchronousReplication.RequiresRestart)
-	assert.Equal(t, "string", config.SynchronousReplication.Type)
 
 	assert.Equal(t, "Sets the maximum amount of memory to be used by a query operation (such as a sort or hash table) before writing to temporary disk files, in MB. Default is 1MB + 0.075% of total RAM (up to 32MB).",
 		config.WorkMem.Description)
