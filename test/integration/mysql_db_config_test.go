@@ -9,7 +9,7 @@ import (
 )
 
 func TestDatabaseMySQLConfig_Get(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestDatabase_MySQL_Config_Get")
+	client, teardown := createTestClient(t, "fixtures/TestDatabaseMySQLConfig_Get")
 	defer teardown()
 
 	config, err := client.GetMySQLDatabaseConfig(context.Background())

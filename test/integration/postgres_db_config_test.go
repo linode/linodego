@@ -2,6 +2,7 @@ package integration
 
 import (
 	"context"
+	"os"
 	"testing"
 
 	"github.com/linode/linodego"
@@ -9,7 +10,7 @@ import (
 )
 
 func TestDatabasePostgresConfig_Get(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestDatabase_Postgres_Config_Get")
+	client, teardown := createTestClient(t, "fixtures/TestDatabasePostgresConfig_Get")
 	defer teardown()
 
 	config, err := client.GetPostgresDatabaseConfig(context.Background())
@@ -302,7 +303,7 @@ func TestDatabasePostgres_EngineConfig_Suite(t *testing.T) {
 		createPostgresOptionsModifier(),
 	}
 
-	_, database, teardown, err := setupPostgresDatabase(t, databaseModifiers, "fixtures/TestDatabasePostgres_EngineConfig_Suite")
+	client, database, teardown, err := setupPostgresDatabase(t, databaseModifiers, "fixtures/TestDatabasePostgres_EngineConfig_Suite")
 	if err != nil {
 		t.Error(err)
 	}
@@ -325,7 +326,6 @@ func TestDatabasePostgres_EngineConfig_Suite(t *testing.T) {
 				AutovacuumVacuumThreshold: linodego.Pointer(int32(500)),
 				DeadlockTimeout:           linodego.Pointer(3000),
 			},
-			// ServiceLog: linodego.Pointer(false),
 		},
 	}
 
@@ -400,6 +400,10 @@ func createPostgresOptionsModifier() postgresDatabaseModifier {
 }
 
 func TestDatabasePostgres_EngineConfig_Create_LZ4Unsupported_Postgres13(t *testing.T) {
+	if os.Getenv("LINODE_FIXTURE_MODE") == "play" {
+		t.Skip("Skipping negative test scenario: LINODE_FIXTURE_MODE is 'play'")
+	}
+
 	invalidRequestData := linodego.PostgresCreateOptions{
 		Label:  "example-db-created-fails",
 		Region: "us-east",
