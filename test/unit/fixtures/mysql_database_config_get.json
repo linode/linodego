@@ -92,12 +92,6 @@
       "requires_restart": false,
       "type": "integer"
     },
-    "innodb_print_all_deadlocks": {
-      "description": "When enabled, information about all deadlocks in InnoDB user transactions is recorded in the error log. Disabled by default.",
-      "example": true,
-      "requires_restart": false,
-      "type": "boolean"
-    },
     "innodb_read_io_threads": {
       "description": "The number of I/O threads for read operations in InnoDB. Default is 4. Changing this parameter will lead to a restart of the MySQL service.",
       "example": 10,
@@ -146,26 +140,6 @@
       "requires_restart": false,
       "type": "string"
     },
-    "log_output": {
-      "description": "The slow log output destination when slow_query_log is ON. To enable MySQL AI Insights, choose INSIGHTS. To use MySQL AI Insights and the mysql.slow_log table at the same time, choose INSIGHTS,TABLE. To only use the mysql.slow_log table, choose TABLE. To silence slow logs, choose NONE.",
-      "enum": [
-        "INSIGHTS",
-        "NONE",
-        "TABLE",
-        "INSIGHTS,TABLE"
-      ],
-      "example": "INSIGHTS",
-      "requires_restart": false,
-      "type": "string"
-    },
-    "long_query_time": {
-      "description": "The slow_query_logs work as SQL statements that take more than long_query_time seconds to execute.",
-      "example": 10,
-      "maximum": 3600,
-      "minimum": 0.0,
-      "requires_restart": false,
-      "type": "number"
-    },
     "max_allowed_packet": {
       "description": "Size of the largest message in bytes that can be received by the server. Default is 67108864 (64M)",
       "example": 67108864,
@@ -205,12 +179,6 @@
       "minimum": 1,
       "requires_restart": false,
       "type": "integer"
-    },
-    "slow_query_log": {
-      "description": "Slow query log enables capturing of slow queries. Setting slow_query_log to false also truncates the mysql.slow_log table.",
-      "example": true,
-      "requires_restart": false,
-      "type": "boolean"
     },
     "sort_buffer_size": {
       "description": "Sort buffer size in bytes for ORDER BY optimization. Default is 262144 (256K)",
@@ -258,14 +226,5 @@
     "minimum": 600,
     "requires_restart": false,
     "type": "integer"
-  },
-  "service_log": {
-    "description": "Store logs for the service so that they are available in the HTTP API and console.",
-    "example": true,
-    "requires_restart": false,
-    "type": [
-      "boolean",
-      "null"
-    ]
   }
 }

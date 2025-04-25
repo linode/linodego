@@ -75,16 +75,13 @@ type PostgresDatabaseEngineConfig struct {
 	PG                      *PostgresDatabaseEngineConfigPG        `json:"pg,omitempty"`
 	PGStatMonitorEnable     *bool                                  `json:"pg_stat_monitor_enable,omitempty"`
 	PGLookout               *PostgresDatabaseEngineConfigPGLookout `json:"pglookout,omitempty"`
-	ServiceLog              *bool                                  `json:"service_log,omitempty"`
 	SharedBuffersPercentage *float64                               `json:"shared_buffers_percentage,omitempty"`
-	SynchronousReplication  *string                                `json:"synchronous_replication,omitempty"`
 	WorkMem                 *int                                   `json:"work_mem,omitempty"`
 }
 
 type PostgresDatabaseEngineConfigPG struct {
 	AutovacuumAnalyzeScaleFactor     *float64 `json:"autovacuum_analyze_scale_factor,omitempty"`
 	AutovacuumAnalyzeThreshold       *int32   `json:"autovacuum_analyze_threshold,omitempty"`
-	AutovacuumFreezeMaxAge           *int     `json:"autovacuum_freeze_max_age,omitempty"`
 	AutovacuumMaxWorkers             *int     `json:"autovacuum_max_workers,omitempty"`
 	AutovacuumNaptime                *int     `json:"autovacuum_naptime,omitempty"`
 	AutovacuumVacuumCostDelay        *int     `json:"autovacuum_vacuum_cost_delay,omitempty"`
@@ -99,18 +96,12 @@ type PostgresDatabaseEngineConfigPG struct {
 	DefaultToastCompression          *string  `json:"default_toast_compression,omitempty"`
 	IdleInTransactionSessionTimeout  *int     `json:"idle_in_transaction_session_timeout,omitempty"`
 	JIT                              *bool    `json:"jit,omitempty"`
-	LogAutovacuumMinDuration         *int32   `json:"log_autovacuum_min_duration,omitempty"`
-	LogErrorVerbosity                *string  `json:"log_error_verbosity,omitempty"`
-	LogLinePrefix                    *string  `json:"log_line_prefix,omitempty"`
-	LogMinDurationStatement          *int     `json:"log_min_duration_statement,omitempty"`
-	LogTempFiles                     *int32   `json:"log_temp_files,omitempty"`
 	MaxFilesPerProcess               *int     `json:"max_files_per_process,omitempty"`
 	MaxLocksPerTransaction           *int     `json:"max_locks_per_transaction,omitempty"`
 	MaxLogicalReplicationWorkers     *int     `json:"max_logical_replication_workers,omitempty"`
 	MaxParallelWorkers               *int     `json:"max_parallel_workers,omitempty"`
 	MaxParallelWorkersPerGather      *int     `json:"max_parallel_workers_per_gather,omitempty"`
 	MaxPredLocksPerTransaction       *int     `json:"max_pred_locks_per_transaction,omitempty"`
-	MaxPreparedTransactions          *int     `json:"max_prepared_transactions,omitempty"`
 	MaxReplicationSlots              *int     `json:"max_replication_slots,omitempty"`
 	MaxSlotWALKeepSize               *int32   `json:"max_slot_wal_keep_size,omitempty"`
 	MaxStackDepth                    *int     `json:"max_stack_depth,omitempty"`
@@ -142,16 +133,13 @@ type PostgresDatabaseConfigInfo struct {
 	PG                      PostgresDatabaseConfigInfoPG                      `json:"pg"`
 	PGStatMonitorEnable     PostgresDatabaseConfigInfoPGStatMonitorEnable     `json:"pg_stat_monitor_enable"`
 	PGLookout               PostgresDatabaseConfigInfoPGLookout               `json:"pglookout"`
-	ServiceLog              PostgresDatabaseConfigInfoServiceLog              `json:"service_log"`
 	SharedBuffersPercentage PostgresDatabaseConfigInfoSharedBuffersPercentage `json:"shared_buffers_percentage"`
-	SynchronousReplication  PostgresDatabaseConfigInfoSynchronousReplication  `json:"synchronous_replication"`
 	WorkMem                 PostgresDatabaseConfigInfoWorkMem                 `json:"work_mem"`
 }
 
 type PostgresDatabaseConfigInfoPG struct {
 	AutovacuumAnalyzeScaleFactor     AutovacuumAnalyzeScaleFactor     `json:"autovacuum_analyze_scale_factor"`
 	AutovacuumAnalyzeThreshold       AutovacuumAnalyzeThreshold       `json:"autovacuum_analyze_threshold"`
-	AutovacuumFreezeMaxAge           AutovacuumFreezeMaxAge           `json:"autovacuum_freeze_max_age"`
 	AutovacuumMaxWorkers             AutovacuumMaxWorkers             `json:"autovacuum_max_workers"`
 	AutovacuumNaptime                AutovacuumNaptime                `json:"autovacuum_naptime"`
 	AutovacuumVacuumCostDelay        AutovacuumVacuumCostDelay        `json:"autovacuum_vacuum_cost_delay"`
@@ -166,18 +154,12 @@ type PostgresDatabaseConfigInfoPG struct {
 	DefaultToastCompression          DefaultToastCompression          `json:"default_toast_compression"`
 	IdleInTransactionSessionTimeout  IdleInTransactionSessionTimeout  `json:"idle_in_transaction_session_timeout"`
 	JIT                              JIT                              `json:"jit"`
-	LogAutovacuumMinDuration         LogAutovacuumMinDuration         `json:"log_autovacuum_min_duration"`
-	LogErrorVerbosity                LogErrorVerbosity                `json:"log_error_verbosity"`
-	LogLinePrefix                    LogLinePrefix                    `json:"log_line_prefix"`
-	LogMinDurationStatement          LogMinDurationStatement          `json:"log_min_duration_statement"`
-	LogTempFiles                     LogTempFiles                     `json:"log_temp_files"`
 	MaxFilesPerProcess               MaxFilesPerProcess               `json:"max_files_per_process"`
 	MaxLocksPerTransaction           MaxLocksPerTransaction           `json:"max_locks_per_transaction"`
 	MaxLogicalReplicationWorkers     MaxLogicalReplicationWorkers     `json:"max_logical_replication_workers"`
 	MaxParallelWorkers               MaxParallelWorkers               `json:"max_parallel_workers"`
 	MaxParallelWorkersPerGather      MaxParallelWorkersPerGather      `json:"max_parallel_workers_per_gather"`
 	MaxPredLocksPerTransaction       MaxPredLocksPerTransaction       `json:"max_pred_locks_per_transaction"`
-	MaxPreparedTransactions          MaxPreparedTransactions          `json:"max_prepared_transactions"`
 	MaxReplicationSlots              MaxReplicationSlots              `json:"max_replication_slots"`
 	MaxSlotWALKeepSize               MaxSlotWALKeepSize               `json:"max_slot_wal_keep_size"`
 	MaxStackDepth                    MaxStackDepth                    `json:"max_stack_depth"`
@@ -213,15 +195,6 @@ type AutovacuumAnalyzeThreshold struct {
 	Description     string `json:"description"`
 	Maximum         int32  `json:"maximum"`
 	Minimum         int32  `json:"minimum"`
-	RequiresRestart bool   `json:"requires_restart"`
-	Type            string `json:"type"`
-}
-
-type AutovacuumFreezeMaxAge struct {
-	Description     string `json:"description"`
-	Example         int    `json:"example"`
-	Maximum         int    `json:"maximum"`
-	Minimum         int    `json:"minimum"`
 	RequiresRestart bool   `json:"requires_restart"`
 	Type            string `json:"type"`
 }
@@ -342,44 +315,6 @@ type JIT struct {
 	Type            string `json:"type"`
 }
 
-type LogAutovacuumMinDuration struct {
-	Description     string `json:"description"`
-	Maximum         int32  `json:"maximum"`
-	Minimum         int32  `json:"minimum"`
-	RequiresRestart bool   `json:"requires_restart"`
-	Type            string `json:"type"`
-}
-
-type LogErrorVerbosity struct {
-	Description     string   `json:"description"`
-	Enum            []string `json:"enum"`
-	RequiresRestart bool     `json:"requires_restart"`
-	Type            string   `json:"type"`
-}
-
-type LogLinePrefix struct {
-	Description     string   `json:"description"`
-	Enum            []string `json:"enum"`
-	RequiresRestart bool     `json:"requires_restart"`
-	Type            string   `json:"type"`
-}
-
-type LogMinDurationStatement struct {
-	Description     string `json:"description"`
-	Maximum         int    `json:"maximum"`
-	Minimum         int    `json:"minimum"`
-	RequiresRestart bool   `json:"requires_restart"`
-	Type            string `json:"type"`
-}
-
-type LogTempFiles struct {
-	Description     string `json:"description"`
-	Maximum         int32  `json:"maximum"`
-	Minimum         int32  `json:"minimum"`
-	RequiresRestart bool   `json:"requires_restart"`
-	Type            string `json:"type"`
-}
-
 type MaxFilesPerProcess struct {
 	Description     string `json:"description"`
 	Maximum         int    `json:"maximum"`
@@ -421,14 +356,6 @@ type MaxParallelWorkersPerGather struct {
 }
 
 type MaxPredLocksPerTransaction struct {
-	Description     string `json:"description"`
-	Maximum         int    `json:"maximum"`
-	Minimum         int    `json:"minimum"`
-	RequiresRestart bool   `json:"requires_restart"`
-	Type            string `json:"type"`
-}
-
-type MaxPreparedTransactions struct {
 	Description     string `json:"description"`
 	Maximum         int    `json:"maximum"`
 	Minimum         int    `json:"minimum"`
@@ -625,13 +552,6 @@ type PGLookoutMaxFailoverReplicationTimeLag struct {
 	Type            string `json:"type"`
 }
 
-type PostgresDatabaseConfigInfoServiceLog struct {
-	Description     string   `json:"description"`
-	Example         bool     `json:"example"`
-	RequiresRestart bool     `json:"requires_restart"`
-	Type            []string `json:"type"`
-}
-
 type PostgresDatabaseConfigInfoSharedBuffersPercentage struct {
 	Description     string  `json:"description"`
 	Example         float64 `json:"example"`
@@ -639,14 +559,6 @@ type PostgresDatabaseConfigInfoSharedBuffersPercentage struct {
 	Minimum         float64 `json:"minimum"`
 	RequiresRestart bool    `json:"requires_restart"`
 	Type            string  `json:"type"`
-}
-
-type PostgresDatabaseConfigInfoSynchronousReplication struct {
-	Description     string   `json:"description"`
-	Enum            []string `json:"enum"`
-	Example         string   `json:"example"`
-	RequiresRestart bool     `json:"requires_restart"`
-	Type            string   `json:"type"`
 }
 
 type PostgresDatabaseConfigInfoWorkMem struct {
