@@ -164,13 +164,13 @@ interactions:
       67108864, "max_heap_table_size": 16777216, "net_buffer_length": 16384, "net_read_timeout":
       30, "net_write_timeout": 30, "sort_buffer_size": 262144, "sql_mode": "TRADITIONAL",
       "sql_require_primary_key": true, "tmp_table_size": 16777216, "wait_timeout":
-      28800}}, "hosts": {"primary": "a16584-akamai-alpha-1000126-default.g2a.akamaidb.net",
-      "standby": "replica-a16584-akamai-alpha-1000126-default.g2a.akamaidb.net"},
-      "id": 16584, "label": "example-db-created-with-config", "members": {}, "port":
+      28800}}, "hosts": {"primary": "a16588-akamai-alpha-1000126-default.g2a.akamaidb.net",
+      "standby": "replica-a16588-akamai-alpha-1000126-default.g2a.akamaidb.net"},
+      "id": 16588, "label": "example-db-created-with-config", "members": {}, "port":
       25698, "region": "us-east", "ssl_connection": true, "status": "provisioning",
       "total_disk_size_gb": 58, "type": "g6-dedicated-2", "updated": "2018-01-02T03:04:05",
-      "updates": {"day_of_week": 4, "duration": 4, "frequency": "weekly", "hour_of_day":
-      23, "pending": []}, "used_disk_size_gb": null, "version": "8", "platform": "rdbms-default"}'
+      "updates": {"day_of_week": 5, "duration": 4, "frequency": "weekly", "hour_of_day":
+      18, "pending": []}, "used_disk_size_gb": null, "version": "8", "platform": "rdbms-default"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -226,15 +226,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database"}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database"}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -293,15 +293,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -360,15 +360,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -427,15 +427,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -494,15 +494,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -561,15 +561,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -628,15 +628,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -695,15 +695,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -762,15 +762,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -829,15 +829,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -896,15 +896,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -963,15 +963,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1030,15 +1030,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1097,15 +1097,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1164,15 +1164,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1231,15 +1231,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1298,15 +1298,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1365,15 +1365,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1432,15 +1432,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1499,15 +1499,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1566,15 +1566,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1633,15 +1633,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1700,15 +1700,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1767,15 +1767,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1834,15 +1834,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1901,15 +1901,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -1968,15 +1968,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -2035,15 +2035,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -2102,15 +2102,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -2169,15 +2169,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -2236,15 +2236,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -2303,15 +2303,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -2370,15 +2370,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -2437,15 +2437,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -2504,15 +2504,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -2571,15 +2571,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -2638,15 +2638,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
       "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "notification", "secondary_entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -2705,15 +2705,1623 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T17:25:14"},"entity.id":16584,"entity.type":"database","id":{"+gte":31676720}}'
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676720, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
+      "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "468"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.22.1
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
+      "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "468"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.22.1
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
+      "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "468"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.22.1
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
+      "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "468"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.22.1
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
+      "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "468"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.22.1
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
+      "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "468"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.22.1
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
+      "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "468"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.22.1
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
+      "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "468"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.22.1
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
+      "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "468"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.22.1
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
+      "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "468"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.22.1
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
+      "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "468"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.22.1
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
+      "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "468"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.22.1
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
+      "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "468"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.22.1
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
+      "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "468"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.22.1
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
+      "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "468"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.22.1
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
+      "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "468"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.22.1
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
+      "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "468"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.22.1
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
+      "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "468"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.22.1
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
+      "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "468"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.22.1
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
+      "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "468"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.22.1
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
+      "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "468"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.22.1
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
+      "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "468"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.22.1
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
+      "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "468"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.22.1
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
+      "read": false, "percent_complete": null, "time_remaining": null, "rate": null,
+      "duration": null, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "notification", "secondary_entity":
+      null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "468"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.22.1
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - events:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"+order":"desc","+order_by":"created","action":"database_create","created":{"+gte":"2025-04-25T19:00:40"},"entity.id":16588,"entity.type":"database","id":{"+gte":31676759}}'
+    url: https://api.linode.com/v4beta/account/events?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 31676759, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 100, "time_remaining": null, "rate": null,
-      "duration": 539, "action": "database_create", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "finished", "secondary_entity":
+      "duration": 535, "action": "database_create", "username": "ykim_akamai", "entity":
+      {"label": "example-db-created-with-config", "id": 16588, "type": "database",
+      "url": "/v4/databases/mysql/instances/16588"}, "status": "finished", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -2771,7 +4379,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/databases/mysql/instances/16584
+    url: https://api.linode.com/v4beta/databases/mysql/instances/16588
     method: GET
   response:
     body: '{"allow_list": ["192.0.1.0/24", "203.0.113.1/32"], "cluster_size": 3, "created":
@@ -2787,14 +4395,15 @@ interactions:
       67108864, "max_heap_table_size": 16777216, "net_buffer_length": 16384, "net_read_timeout":
       30, "net_write_timeout": 30, "sort_buffer_size": 262144, "sql_mode": "TRADITIONAL",
       "sql_require_primary_key": true, "tmp_table_size": 16777216, "wait_timeout":
-      28800}}, "hosts": {"primary": "a16584-akamai-alpha-1000126-default.g2a.akamaidb.net",
-      "standby": "replica-a16584-akamai-alpha-1000126-default.g2a.akamaidb.net"},
-      "id": 16584, "label": "example-db-created-with-config", "members": {"69.164.213.71":
-      "failover"}, "oldest_restore_time": "2018-01-02T03:04:05", "port": 25698, "region":
-      "us-east", "ssl_connection": true, "status": "active", "total_disk_size_gb":
-      58, "type": "g6-dedicated-2", "updated": "2018-01-02T03:04:05", "updates": {"day_of_week":
-      4, "duration": 4, "frequency": "weekly", "hour_of_day": 23, "pending": []},
-      "used_disk_size_gb": 1, "version": "8.0.35", "platform": "rdbms-default"}'
+      28800}}, "hosts": {"primary": "a16588-akamai-alpha-1000126-default.g2a.akamaidb.net",
+      "standby": "replica-a16588-akamai-alpha-1000126-default.g2a.akamaidb.net"},
+      "id": 16588, "label": "example-db-created-with-config", "members": {"172.104.211.166":
+      "primary", "45.56.105.33": "failover", "45.56.105.59": "failover"}, "oldest_restore_time":
+      "2018-01-02T03:04:05", "port": 25698, "region": "us-east", "ssl_connection":
+      true, "status": "active", "total_disk_size_gb": 58, "type": "g6-dedicated-2",
+      "updated": "2018-01-02T03:04:05", "updates": {"day_of_week": 5, "duration":
+      4, "frequency": "weekly", "hour_of_day": 18, "pending": []}, "used_disk_size_gb":
+      1, "version": "8.0.35", "platform": "rdbms-default"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -2812,7 +4421,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "1722"
+      - "1779"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -2851,7 +4460,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/databases/mysql/instances/16584
+    url: https://api.linode.com/v4beta/databases/mysql/instances/16588
     method: PUT
   response:
     body: '{"allow_list": ["192.0.1.0/24", "203.0.113.1/32"], "cluster_size": 3, "created":
@@ -2867,14 +4476,15 @@ interactions:
       67108864, "max_heap_table_size": 16777216, "net_buffer_length": 16384, "net_read_timeout":
       40, "net_write_timeout": 30, "sort_buffer_size": 262144, "sql_mode": "TRADITIONAL",
       "sql_require_primary_key": true, "tmp_table_size": 16777216, "wait_timeout":
-      28800}}, "hosts": {"primary": "a16584-akamai-alpha-1000126-default.g2a.akamaidb.net",
-      "standby": "replica-a16584-akamai-alpha-1000126-default.g2a.akamaidb.net"},
-      "id": 16584, "label": "db-engine-config-updated", "members": {"69.164.213.71":
-      "failover"}, "oldest_restore_time": "2018-01-02T03:04:05", "port": 25698, "region":
-      "us-east", "ssl_connection": true, "status": "active", "total_disk_size_gb":
-      58, "type": "g6-dedicated-2", "updated": "2018-01-02T03:04:05", "updates": {"day_of_week":
-      4, "duration": 4, "frequency": "weekly", "hour_of_day": 23, "pending": []},
-      "used_disk_size_gb": 1, "version": "8.0.35", "platform": "rdbms-default"}'
+      28800}}, "hosts": {"primary": "a16588-akamai-alpha-1000126-default.g2a.akamaidb.net",
+      "standby": "replica-a16588-akamai-alpha-1000126-default.g2a.akamaidb.net"},
+      "id": 16588, "label": "db-engine-config-updated", "members": {"172.104.211.166":
+      "primary", "45.56.105.33": "failover", "45.56.105.59": "failover"}, "oldest_restore_time":
+      "2018-01-02T03:04:05", "port": 25698, "region": "us-east", "ssl_connection":
+      true, "status": "active", "total_disk_size_gb": 58, "type": "g6-dedicated-2",
+      "updated": "2018-01-02T03:04:05", "updates": {"day_of_week": 5, "duration":
+      4, "frequency": "weekly", "hour_of_day": 18, "pending": []}, "used_disk_size_gb":
+      1, "version": "8.0.35", "platform": "rdbms-default"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -2891,7 +4501,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "1716"
+      - "1773"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -2930,15 +4540,15 @@ interactions:
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
-      - '{"+order":"desc","+order_by":"created","action":"database_update","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":16584,"entity.type":"database"}'
+      - '{"+order":"desc","+order_by":"created","action":"database_update","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":16588,"entity.type":"database"}'
     url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 31676725, "created": "2018-01-02T03:04:05", "seen": false,
+    body: '{"data": [{"id": 31676761, "created": "2018-01-02T03:04:05", "seen": false,
       "read": false, "percent_complete": 100, "time_remaining": null, "rate": null,
       "duration": 0, "action": "database_update", "username": "ykim_akamai", "entity":
-      {"label": "example-db-created-with-config", "id": 16584, "type": "database",
-      "url": "/v4/databases/mysql/instances/16584"}, "status": "finished", "secondary_entity":
+      {"label": "db-engine-config-updated", "id": 16588, "type": "database", "url":
+      "/v4/databases/mysql/instances/16588"}, "status": "finished", "secondary_entity":
       null, "message": ""}], "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -2957,7 +4567,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "460"
+      - "454"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -2996,7 +4606,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/databases/mysql/instances/16584
+    url: https://api.linode.com/v4beta/databases/mysql/instances/16588
     method: GET
   response:
     body: '{"allow_list": ["192.0.1.0/24", "203.0.113.1/32"], "cluster_size": 3, "created":
@@ -3012,14 +4622,14 @@ interactions:
       67108864, "max_heap_table_size": 16777216, "net_buffer_length": 16384, "net_read_timeout":
       40, "net_write_timeout": 30, "sort_buffer_size": 262144, "sql_mode": "TRADITIONAL",
       "sql_require_primary_key": true, "tmp_table_size": 16777216, "wait_timeout":
-      28800}}, "hosts": {"primary": "a16584-akamai-alpha-1000126-default.g2a.akamaidb.net",
-      "standby": "replica-a16584-akamai-alpha-1000126-default.g2a.akamaidb.net"},
-      "id": 16584, "label": "example-db-created-with-config", "members": {"45.33.94.62":
-      "failover", "45.33.94.71": "failover", "69.164.213.71": "primary"}, "oldest_restore_time":
+      28800}}, "hosts": {"primary": "a16588-akamai-alpha-1000126-default.g2a.akamaidb.net",
+      "standby": "replica-a16588-akamai-alpha-1000126-default.g2a.akamaidb.net"},
+      "id": 16588, "label": "db-engine-config-updated", "members": {"172.104.211.166":
+      "primary", "45.56.105.33": "failover", "45.56.105.59": "failover"}, "oldest_restore_time":
       "2018-01-02T03:04:05", "port": 25698, "region": "us-east", "ssl_connection":
       true, "status": "active", "total_disk_size_gb": 58, "type": "g6-dedicated-2",
-      "updated": "2018-01-02T03:04:05", "updates": {"day_of_week": 4, "duration":
-      4, "frequency": "weekly", "hour_of_day": 23, "pending": []}, "used_disk_size_gb":
+      "updated": "2018-01-02T03:04:05", "updates": {"day_of_week": 5, "duration":
+      4, "frequency": "weekly", "hour_of_day": 18, "pending": []}, "used_disk_size_gb":
       1, "version": "8.0.35", "platform": "rdbms-default"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -3038,7 +4648,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "1775"
+      - "1773"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -3077,7 +4687,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/databases/mysql/instances/16584
+    url: https://api.linode.com/v4beta/databases/mysql/instances/16588
     method: DELETE
   response:
     body: '{}'

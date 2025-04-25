@@ -121,34 +121,6 @@ func TestDatabasePostgresConfig_Get(t *testing.T) {
 	assert.IsType(t, false, config.PG.JIT.RequiresRestart)
 	assert.IsType(t, string(""), config.PG.JIT.Type)
 
-	assert.IsType(t, string(""), config.PG.LogAutovacuumMinDuration.Description)
-	assert.IsType(t, int32(0), config.PG.LogAutovacuumMinDuration.Maximum)
-	assert.IsType(t, int32(0), config.PG.LogAutovacuumMinDuration.Minimum)
-	assert.IsType(t, false, config.PG.LogAutovacuumMinDuration.RequiresRestart)
-	assert.IsType(t, string(""), config.PG.LogAutovacuumMinDuration.Type)
-
-	assert.IsType(t, string(""), config.PG.LogErrorVerbosity.Description)
-	assert.IsType(t, []string{}, config.PG.LogErrorVerbosity.Enum)
-	assert.IsType(t, false, config.PG.LogErrorVerbosity.RequiresRestart)
-	assert.IsType(t, string(""), config.PG.LogErrorVerbosity.Type)
-
-	assert.IsType(t, string(""), config.PG.LogLinePrefix.Description)
-	assert.IsType(t, []string{}, config.PG.LogLinePrefix.Enum)
-	assert.IsType(t, false, config.PG.LogLinePrefix.RequiresRestart)
-	assert.IsType(t, string(""), config.PG.LogLinePrefix.Type)
-
-	assert.IsType(t, string(""), config.PG.LogMinDurationStatement.Description)
-	assert.IsType(t, int(0), config.PG.LogMinDurationStatement.Maximum)
-	assert.IsType(t, int(0), config.PG.LogMinDurationStatement.Minimum)
-	assert.IsType(t, false, config.PG.LogMinDurationStatement.RequiresRestart)
-	assert.IsType(t, string(""), config.PG.LogMinDurationStatement.Type)
-
-	assert.IsType(t, string(""), config.PG.LogTempFiles.Description)
-	assert.IsType(t, int32(0), config.PG.LogTempFiles.Maximum)
-	assert.IsType(t, int32(0), config.PG.LogTempFiles.Minimum)
-	assert.IsType(t, false, config.PG.LogTempFiles.RequiresRestart)
-	assert.IsType(t, string(""), config.PG.LogTempFiles.Type)
-
 	assert.IsType(t, string(""), config.PG.MaxFilesPerProcess.Description)
 	assert.IsType(t, int(0), config.PG.MaxFilesPerProcess.Maximum)
 	assert.IsType(t, int(0), config.PG.MaxFilesPerProcess.Minimum)
@@ -184,12 +156,6 @@ func TestDatabasePostgresConfig_Get(t *testing.T) {
 	assert.IsType(t, int(0), config.PG.MaxPredLocksPerTransaction.Minimum)
 	assert.IsType(t, false, config.PG.MaxPredLocksPerTransaction.RequiresRestart)
 	assert.IsType(t, string(""), config.PG.MaxPredLocksPerTransaction.Type)
-
-	assert.IsType(t, string(""), config.PG.MaxPreparedTransactions.Description)
-	assert.IsType(t, int(0), config.PG.MaxPreparedTransactions.Maximum)
-	assert.IsType(t, int(0), config.PG.MaxPreparedTransactions.Minimum)
-	assert.IsType(t, false, config.PG.MaxPreparedTransactions.RequiresRestart)
-	assert.IsType(t, string(""), config.PG.MaxPreparedTransactions.Type)
 
 	assert.IsType(t, string(""), config.PG.MaxReplicationSlots.Description)
 	assert.IsType(t, int(0), config.PG.MaxReplicationSlots.Maximum)
@@ -530,13 +496,6 @@ func assertPostgresEngineConfigEqual(t *testing.T, cfg *linodego.PostgresDatabas
 
 	// JIT
 	assert.Equal(t, expected["JIT"], *cfg.JIT)
-
-	// Skipping nil fields for the removed fields in the new configuration
-	assert.Nil(t, cfg.LogAutovacuumMinDuration)
-	assert.Nil(t, cfg.LogErrorVerbosity)
-	assert.Nil(t, cfg.LogLinePrefix)
-	assert.Nil(t, cfg.LogMinDurationStatement)
-	assert.Nil(t, cfg.LogTempFiles)
 
 	// Max files and locks
 	assert.Equal(t, expected["MaxFilesPerProcess"], *cfg.MaxFilesPerProcess)

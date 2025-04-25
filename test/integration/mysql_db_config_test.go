@@ -98,12 +98,6 @@ func TestDatabaseMySQLConfig_Get(t *testing.T) {
 	assert.IsType(t, bool(false), config.MySQL.InnoDBOnlineAlterLogMaxSize.RequiresRestart)
 	assert.Equal(t, "integer", config.MySQL.InnoDBOnlineAlterLogMaxSize.Type)
 
-	assert.IsType(t, string("When enabled, information about all deadlocks in InnoDB user transactions is recorded in the error log. Disabled by default."), config.MySQL.InnoDBPrintAllDeadlocks.Description)
-	assert.IsType(t, bool(true), config.MySQL.InnoDBPrintAllDeadlocks.Example)
-	assert.IsType(t, bool(false), config.MySQL.InnoDBPrintAllDeadlocks.RequiresRestart)
-	if config.MySQL.InnoDBPrintAllDeadlocks.Type != "" {
-		assert.Equal(t, "boolean", config.MySQL.InnoDBPrintAllDeadlocks.Type)
-	}
 	assert.IsType(t, string("The number of I/O threads for read operations in InnoDB. Default is 4. Changing this parameter will lead to a restart of the MySQL service."), config.MySQL.InnoDBReadIOThreads.Description)
 	assert.IsType(t, int(10), config.MySQL.InnoDBReadIOThreads.Example)
 	assert.IsType(t, int(64), config.MySQL.InnoDBReadIOThreads.Maximum)
