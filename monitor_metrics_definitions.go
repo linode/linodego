@@ -30,21 +30,21 @@ const (
 type MetricUnit string
 
 const (
-	UnitCount          MetricUnit = "count"
-	UnitPercent        MetricUnit = "percent"
-	UnitByte           MetricUnit = "byte"
-	UnitSecond         MetricUnit = "second"
-	UnitBitsPerSecond  MetricUnit = "bits_per_second"
-	UnitMillisecond    MetricUnit = "millisecond"
-	UnitKB             MetricUnit = "KB"
-	UnitMB             MetricUnit = "MB"
-	UnitGB             MetricUnit = "GB"
-	UnitRate           MetricUnit = "rate"
-	UnitBytesPerSecond MetricUnit = "bytes_per_second"
-	UnitPercentile     MetricUnit = "percentile"
-	UnitRatio          MetricUnit = "ratio"
-	UnitOpsPerSecond   MetricUnit = "ops_per_second"
-	UnitIops           MetricUnit = "iops"
+	MetricUnitCount          MetricUnit = "count"
+	MetricUnitPercent        MetricUnit = "percent"
+	MetricUnitByte           MetricUnit = "byte"
+	UMetricUnitSecond        MetricUnit = "second"
+	MetricUnitBitsPerSecond  MetricUnit = "bits_per_second"
+	MetricUnitMillisecond    MetricUnit = "millisecond"
+	MetricUnitKB             MetricUnit = "KB"
+	MetricUnitMB             MetricUnit = "MB"
+	MetricUnitGB             MetricUnit = "GB"
+	MetricUnitRate           MetricUnit = "rate"
+	MetricUnitBytesPerSecond MetricUnit = "bytes_per_second"
+	MetricUnitPercentile     MetricUnit = "percentile"
+	MetricUnitRatio          MetricUnit = "ratio"
+	MetricUnitOpsPerSecond   MetricUnit = "ops_per_second"
+	MetricUnitIops           MetricUnit = "iops"
 )
 
 // MonitorDimension represents an ACLP MonitorDimension object
