@@ -1,0 +1,237 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/dashboards?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 1, "type": "standard", "service_type": "dbaas", "label":
+      "Resource Usage", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "widgets": [{"metric": "cpu_usage", "unit": "%", "label": "CPU Usage", "color":
+      "default", "size": 12, "chart_type": "area", "y_label": "cpu_usage", "aggregate_function":
+      "sum"}, {"metric": "memory_usage", "unit": "%", "label": "Memory Usage", "color":
+      "default", "size": 6, "chart_type": "area", "y_label": "memory_usage", "aggregate_function":
+      "sum"}, {"metric": "available_memory", "unit": "GB", "label": "Available Memory",
+      "color": "default", "size": 6, "chart_type": "area", "y_label": "available_memory",
+      "aggregate_function": "sum"}, {"metric": "disk_usage", "unit": "%", "label":
+      "Disk Space Usage", "color": "default", "size": 6, "chart_type": "area", "y_label":
+      "disk_usage", "aggregate_function": "sum"}, {"metric": "available_disk", "unit":
+      "GB", "label": "Available Disk Space", "color": "default", "size": 6, "chart_type":
+      "area", "y_label": "available_disk", "aggregate_function": "sum"}, {"metric":
+      "read_iops", "unit": "IOPS", "label": "Disk I/O Read", "color": "default", "size":
+      6, "chart_type": "area", "y_label": "read_iops", "aggregate_function": "sum"},
+      {"metric": "write_iops", "unit": "IOPS", "label": "Disk I/O Write", "color":
+      "default", "size": 6, "chart_type": "area", "y_label": "write_iops", "aggregate_function":
+      "sum"}]}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 07 Apr 2025 10:18:32 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1600"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/dashboards/1
+    method: GET
+  response:
+    body: '{"id": 1, "type": "standard", "service_type": "dbaas", "label": "Resource
+      Usage", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "widgets": [{"metric": "cpu_usage", "unit": "%", "label": "CPU Usage", "color":
+      "default", "size": 12, "chart_type": "area", "y_label": "cpu_usage", "aggregate_function":
+      "sum"}, {"metric": "memory_usage", "unit": "%", "label": "Memory Usage", "color":
+      "default", "size": 6, "chart_type": "area", "y_label": "memory_usage", "aggregate_function":
+      "sum"}, {"metric": "available_memory", "unit": "GB", "label": "Available Memory",
+      "color": "default", "size": 6, "chart_type": "area", "y_label": "available_memory",
+      "aggregate_function": "sum"}, {"metric": "disk_usage", "unit": "%", "label":
+      "Disk Space Usage", "color": "default", "size": 6, "chart_type": "area", "y_label":
+      "disk_usage", "aggregate_function": "sum"}, {"metric": "available_disk", "unit":
+      "GB", "label": "Available Disk Space", "color": "default", "size": 6, "chart_type":
+      "area", "y_label": "available_disk", "aggregate_function": "sum"}, {"metric":
+      "read_iops", "unit": "IOPS", "label": "Disk I/O Read", "color": "default", "size":
+      6, "chart_type": "area", "y_label": "read_iops", "aggregate_function": "sum"},
+      {"metric": "write_iops", "unit": "IOPS", "label": "Disk I/O Write", "color":
+      "default", "size": 6, "chart_type": "area", "y_label": "write_iops", "aggregate_function":
+      "sum"}]}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 07 Apr 2025 10:18:33 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1600"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/dashboards?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 1, "type": "standard", "service_type": "dbaas", "label":
+      "Resource Usage", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "widgets": [{"metric": "cpu_usage", "unit": "%", "label": "CPU Usage", "color":
+      "default", "size": 12, "chart_type": "area", "y_label": "cpu_usage", "aggregate_function":
+      "sum"}, {"metric": "memory_usage", "unit": "%", "label": "Memory Usage", "color":
+      "default", "size": 6, "chart_type": "area", "y_label": "memory_usage", "aggregate_function":
+      "sum"}, {"metric": "available_memory", "unit": "GB", "label": "Available Memory",
+      "color": "default", "size": 6, "chart_type": "area", "y_label": "available_memory",
+      "aggregate_function": "sum"}, {"metric": "disk_usage", "unit": "%", "label":
+      "Disk Space Usage", "color": "default", "size": 6, "chart_type": "area", "y_label":
+      "disk_usage", "aggregate_function": "sum"}, {"metric": "available_disk", "unit":
+      "GB", "label": "Available Disk Space", "color": "default", "size": 6, "chart_type":
+      "area", "y_label": "available_disk", "aggregate_function": "sum"}, {"metric":
+      "read_iops", "unit": "IOPS", "label": "Disk I/O Read", "color": "default", "size":
+      6, "chart_type": "area", "y_label": "read_iops", "aggregate_function": "sum"},
+      {"metric": "write_iops", "unit": "IOPS", "label": "Disk I/O Write", "color":
+      "default", "size": 6, "chart_type": "area", "y_label": "write_iops", "aggregate_function":
+      "sum"}]}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 07 Apr 2025 10:18:34 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1600"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
