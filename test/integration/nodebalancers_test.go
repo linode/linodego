@@ -53,6 +53,23 @@ func TestNodeBalancer_Create_Type(t *testing.T) {
 	assertDateSet(t, nodebalancer.Updated)
 }
 
+func TestNodeBalancer_Create_with_ReservedIP(t *testing.T) {
+	_, nodebalancer, teardown, err := setupNodeBalancerWithReservedIP(t, "fixtures/TestNodeBalancer_With_IPv4_Create")
+	defer teardown()
+
+	if err != nil {
+		t.Errorf("Error creating nodebalancer: %v", err)
+	}
+
+	// when comparing fixtures to random value Label will differ, compare the known suffix
+	if !strings.Contains(*nodebalancer.Label, label) {
+		t.Errorf("nodebalancer returned does not match nodebalancer create request")
+	}
+
+	assertDateSet(t, nodebalancer.Created)
+	assertDateSet(t, nodebalancer.Updated)
+}
+
 func TestNodeBalancer_Create_with_vpc(t *testing.T) {
 	_, nodebalancer, _, _, teardown, err := setupNodeBalancerWithVPC(t, "fixtures/TestNodeBalancer_With_VPC_Create")
 	defer teardown()
@@ -134,6 +151,40 @@ func setupNodeBalancer(t *testing.T, fixturesYaml string, nbModifiers []nbModifi
 	}
 	for _, modifier := range nbModifiers {
 		modifier(&createOpts)
+	}
+
+	nodebalancer, err := client.CreateNodeBalancer(context.Background(), createOpts)
+	if err != nil {
+		t.Fatalf("Error listing nodebalancers, expected struct, got error %v", err)
+	}
+
+	teardown := func() {
+		if err := client.DeleteNodeBalancer(context.Background(), nodebalancer.ID); err != nil {
+			t.Errorf("Expected to delete a nodebalancer, but got %v", err)
+		}
+		fixtureTeardown()
+	}
+	return client, nodebalancer, teardown, err
+}
+
+func setupNodeBalancerWithReservedIP(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.NodeBalancer, func(), error) {
+	t.Helper()
+	var fixtureTeardown func()
+	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+	reserveIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{
+		Region: "us-east",
+	})
+	if err != nil {
+		t.Fatalf("Failed to reserve IP %v", err)
+	}
+	t.Logf("Successfully reserved IP: %s", reserveIP.Address)
+
+	createOpts := linodego.NodeBalancerCreateOptions{
+		Label:              &label,
+		Region:             "us-east",
+		ClientConnThrottle: &clientConnThrottle,
+		FirewallID:         GetFirewallID(),
+		IPv4:               &reserveIP.Address,
 	}
 
 	nodebalancer, err := client.CreateNodeBalancer(context.Background(), createOpts)
