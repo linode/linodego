@@ -172,7 +172,7 @@ func setupNodeBalancerWithReservedIP(t *testing.T, fixturesYaml string) (*linode
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	reserveIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{
-		Region: "us-east",
+		Region: "us-lax",
 	})
 	if err != nil {
 		t.Fatalf("Failed to reserve IP %v", err)
@@ -181,7 +181,7 @@ func setupNodeBalancerWithReservedIP(t *testing.T, fixturesYaml string) (*linode
 
 	createOpts := linodego.NodeBalancerCreateOptions{
 		Label:              &label,
-		Region:             "us-east",
+		Region:             "us-lax",
 		ClientConnThrottle: &clientConnThrottle,
 		FirewallID:         GetFirewallID(),
 		IPv4:               &reserveIP.Address,
@@ -195,6 +195,9 @@ func setupNodeBalancerWithReservedIP(t *testing.T, fixturesYaml string) (*linode
 	teardown := func() {
 		if err := client.DeleteNodeBalancer(context.Background(), nodebalancer.ID); err != nil {
 			t.Errorf("Expected to delete a nodebalancer, but got %v", err)
+		}
+		if err := client.DeleteReservedIPAddress(context.Background(), reserveIP.Address); err != nil {
+			t.Errorf("Expected to delete a reserved IP, but got %v", err)
 		}
 		fixtureTeardown()
 	}

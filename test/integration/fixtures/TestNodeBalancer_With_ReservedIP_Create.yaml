@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-east"}'
+    body: '{"region":"us-lax"}'
     form: {}
     headers:
       Accept:
@@ -11,12 +11,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips
+    url: https://api.lindev.local/v4beta/networking/reserved/ips
     method: POST
   response:
     body: '{"address": "45.56.109.241", "gateway": "45.56.109.1", "subnet_mask": "255.255.255.0",
       "prefix": 24, "type": "ipv4", "public": true, "rdns": "45-56-109-241.ip.linodeusercontent.com",
-      "linode_id": null, "region": "us-east", "vpc_nat_1_1": null, "reserved": true}'
+      "linode_id": null, "region": "us-lax", "vpc_nat_1_1": null, "reserved": true}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -74,7 +74,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips/45.56.109.241
+    url: https://api.lindev.local/v4beta/networking/reserved/ips/45.56.109.241
     method: DELETE
   response:
     body: '{}'
@@ -136,7 +136,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips/45.56.109.241
+    url: https://api.lindev.local/v4beta/networking/reserved/ips/45.56.109.241
     method: DELETE
   response:
     body: '{}'
@@ -188,7 +188,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-def","region":"ap-west","client_conn_throttle":20,"ipv4":"45.56.109.241"}'
+    body: '{"label":"go-test-def","region":"us-lax","client_conn_throttle":20,"ipv4":"45.56.109.241"}'
     form: {}
     headers:
       Accept:
@@ -200,7 +200,7 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 1514285, "label": "go-test-def", "region": "ap-west", "type": "common",
+    body: '{"id": 1514285, "label": "go-test-def", "region": "us-lax", "type": "common",
       "hostname": "45.56.109.241.ip.linodeusercontent.com", "ipv4": "45.56.109.241",
       "ipv6": "2400:8904:1::ace8:54ea", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "client_conn_throttle": 20, "client_udp_sess_throttle":
