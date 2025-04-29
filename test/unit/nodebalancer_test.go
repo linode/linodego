@@ -10,10 +10,10 @@ import (
 
 func TestNodeBalancer_Create(t *testing.T) {
 	tests := []struct {
-		name        string
-		createOpts  linodego.NodeBalancerCreateOptions
-		fixture     string
-		expectIPv4  string
+		name       string
+		createOpts linodego.NodeBalancerCreateOptions
+		fixture    string
+		expectIPv4 string
 	}{
 		{
 			name: "basic creation",
