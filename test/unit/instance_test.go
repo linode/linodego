@@ -41,7 +41,7 @@ func TestInstances_List(t *testing.T) {
 	assert.Equal(t, "us-east", linode.Region)
 	assert.Equal(t, 4096, linode.Specs.Memory)
 	assert.Equal(t, "2018-01-01 00:01:01 +0000 UTC", linode.Backups.LastSuccessful.String())
-	assert.Equal(t, "2468", linode.PlacementGroup.MigratingTo)
+	assert.Equal(t, 2468, linode.PlacementGroup.MigratingTo)
 }
 
 func TestInstance_Get(t *testing.T) {
@@ -72,7 +72,7 @@ func TestInstance_Get(t *testing.T) {
 	assert.Equal(t, "us-east", instance.Region)
 	assert.Equal(t, 4096, instance.Specs.Memory)
 	assert.Equal(t, "2018-01-01 00:01:01 +0000 UTC", instance.Backups.LastSuccessful.String())
-	assert.Equal(t, "2468", instance.PlacementGroup.MigratingTo)
+	assert.Equal(t, 2468, instance.PlacementGroup.MigratingTo)
 }
 
 func TestInstance_Migrate(t *testing.T) {
