@@ -262,7 +262,7 @@ func TestInstance_MigrateToPG(t *testing.T) {
 		RootPass: randPassword(),
 		Region:   regions[0],
 		Type:     "g6-nanode-1",
-		Image:    "linode/debian10",
+		Image:    "linode/debian12",
 		Booted:   linodego.Pointer(true),
 		PlacementGroup: &linodego.InstanceCreatePlacementGroupOptions{
 			ID: pgOutbound.ID,
