@@ -69,7 +69,7 @@ type InterfacesIPv6Range struct {
 
 type InterfacesIPv6Slaac struct {
 	Prefix  *int    `json:"prefix,omitempty"`
-	Address *string `json:"prefix,omitempty"`
+	Address *string `json:"address,omitempty"`
 }
 
 type LinodeInterfaceCreateOptions struct {
@@ -82,7 +82,7 @@ type LinodeInterfaceCreateOptions struct {
 
 type InterfacesCreatePublic struct {
 	IPv4 []*InterfacesIPv4       `json:"ipv4,omitempty"`
-	IPv6 []*InterfacesIPv6Create `json:"ipv4,omitempty"`
+	IPv6 []*InterfacesIPv6Create `json:"ipv6,omitempty"`
 }
 
 type InterfacesIPv6Create struct {
