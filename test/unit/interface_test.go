@@ -29,7 +29,7 @@ func TestInterface_Get(t *testing.T) {
 
 	assert.Equal(t, 123, iface.ID)
 	assert.Equal(t, 1, iface.Version)
-	assert.Equal(t, false, iface.DefaultRoute.IPv4)
+	assert.Equal(t, false, *iface.DefaultRoute.IPv4)
 	assert.Equal(t, "my_vlan", iface.VLAN.Label)
 }
 
@@ -82,7 +82,7 @@ func TestInterface_Create(t *testing.T) {
 	base.MockPost("linode/instances/123/interfaces", fixtureData)
 
 	opts := linodego.LinodeInterfaceCreateOptions{
-		FirewallID: 123,
+		FirewallID: linodego.Pointer(123),
 		Public:     nil,
 	}
 
@@ -111,7 +111,7 @@ func TestInterface_Update(t *testing.T) {
 
 	opts := linodego.LinodeInterfaceUpdateOptions{
 		DefaultRoute: &linodego.InterfacesDefaultRoute{
-			IPv6: true,
+			IPv6: linodego.Pointer(true),
 		},
 	}
 
@@ -121,8 +121,8 @@ func TestInterface_Update(t *testing.T) {
 	}
 
 	assert.Equal(t, 123, iface.ID)
-	assert.Equal(t, false, iface.DefaultRoute.IPv4)
-	assert.Equal(t, true, iface.DefaultRoute.IPv6)
+	assert.Equal(t, false, *iface.DefaultRoute.IPv4)
+	assert.Equal(t, true, *iface.DefaultRoute.IPv6)
 }
 
 func TestInterface_Upgrade(t *testing.T) {
@@ -141,7 +141,7 @@ func TestInterface_Upgrade(t *testing.T) {
 
 	opts := linodego.LinodeInterfacesUpgradeOptions{
 		ConfigID: 123,
-		DryRun:   false,
+		DryRun:   linodego.Pointer(false),
 	}
 
 	iface, err := base.Client.UpgradeInterfaces(context.Background(), 123, opts)
@@ -166,7 +166,7 @@ func TestInteface_ListFirewalls(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	base.MockPost("linode/instances/123/interfaces/123/firewalls", fixtureData)
+	base.MockGet("linode/instances/123/interfaces/123/firewalls", fixtureData)
 
 	firewalls, err := base.Client.ListInterfaceFirewalls(context.Background(), 123, 123, nil)
 	if err != nil {
@@ -188,7 +188,7 @@ func TestInteface_GetSettings(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	base.MockPost("linode/instances/123/interfaces/settings", fixtureData)
+	base.MockGet("linode/instances/123/interfaces/settings", fixtureData)
 
 	settings, err := base.Client.GetInterfaceSettings(context.Background(), 123)
 	if err != nil {
