@@ -200,7 +200,7 @@ func createMySQLOptionsModifier() mysqlDatabaseModifier {
 				InnoDBChangeBufferMaxSize:    linodego.Pointer(30),
 				InnoDBFlushNeighbors:         linodego.Pointer(1),
 				InnoDBFTMinTokenSize:         linodego.Pointer(3),
-				InnoDBFTServerStopwordTable:  linodego.Pointer("mydb/stopwords"),
+				InnoDBFTServerStopwordTable:  linodego.Pointer(linodego.Pointer("mydb/stopwords")),
 				InnoDBLockWaitTimeout:        linodego.Pointer(50),
 				InnoDBLogBufferSize:          linodego.Pointer(16777216),
 				InnoDBOnlineAlterLogMaxSize:  linodego.Pointer(134217728),

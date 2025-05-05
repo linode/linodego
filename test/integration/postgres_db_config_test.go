@@ -342,7 +342,7 @@ func createPostgresOptionsModifier() postgresDatabaseModifier {
 				MaxStandbyStreamingDelay:         linodego.Pointer(30000),
 				MaxWALSenders:                    linodego.Pointer(20), // Adjusted to >= 20
 				MaxWorkerProcesses:               linodego.Pointer(8),
-				PasswordEncryption:               linodego.Pointer("scram-sha-256"),
+				PasswordEncryption:               linodego.Pointer(linodego.Pointer("scram-sha-256")),
 				PGPartmanBGWInterval:             linodego.Pointer(3600),
 				PGPartmanBGWRole:                 linodego.Pointer("pg_partman_bgw"),
 				PGStatMonitorPGSMEnableQueryPlan: linodego.Pointer(true),
