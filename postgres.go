@@ -109,7 +109,7 @@ type PostgresDatabaseEngineConfigPG struct {
 	MaxStandbyStreamingDelay         *int     `json:"max_standby_streaming_delay,omitempty"`
 	MaxWALSenders                    *int     `json:"max_wal_senders,omitempty"`
 	MaxWorkerProcesses               *int     `json:"max_worker_processes,omitempty"`
-	PasswordEncryption               *string  `json:"password_encryption,omitempty"`
+	PasswordEncryption               **string `json:"password_encryption,omitempty"`
 	PGPartmanBGWInterval             *int     `json:"pg_partman_bgw.interval,omitempty"`
 	PGPartmanBGWRole                 *string  `json:"pg_partman_bgw.role,omitempty"`
 	PGStatMonitorPGSMEnableQueryPlan *bool    `json:"pg_stat_monitor.pgsm_enable_query_plan,omitempty"`
