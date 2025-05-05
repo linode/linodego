@@ -3,6 +3,7 @@ package unit
 import (
 	"context"
 	"fmt"
+	"strconv"
 	"testing"
 
 	"github.com/jarcoal/httpmock"
@@ -109,6 +110,9 @@ func TestInstance_ResetPassword(t *testing.T) {
 }
 
 func TestInstance_Get_MonthlyTransfer(t *testing.T) {
+	if strconv.IntSize < 64 {
+		t.Skip("V1 monthly transfer doesn't work on 32 or lower bits system")
+	}
 	fixtureData, err := fixtures.GetFixture("instance_monthly_transfer_get")
 	assert.NoError(t, err)
 
@@ -124,6 +128,24 @@ func TestInstance_Get_MonthlyTransfer(t *testing.T) {
 	assert.Equal(t, 30471077120, stats.BytesIn)
 	assert.Equal(t, 22956600198, stats.BytesOut)
 	assert.Equal(t, 53427677318, stats.BytesTotal)
+}
+
+func TestInstance_Get_MonthlyTransferV2(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("instance_monthly_transfer_get")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockGet("linode/instances/12345/transfer/2024/11", fixtureData)
+
+	stats, err := base.Client.GetInstanceTransferMonthlyV2(context.Background(), 12345, 2024, 11)
+	assert.NoError(t, err)
+
+	assert.Equal(t, uint64(30471077120), stats.BytesIn)
+	assert.Equal(t, uint64(22956600198), stats.BytesOut)
+	assert.Equal(t, uint64(53427677318), stats.BytesTotal)
 }
 
 func TestInstance_Upgrade(t *testing.T) {
