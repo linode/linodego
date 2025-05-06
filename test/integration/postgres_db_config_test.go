@@ -305,11 +305,11 @@ func TestDatabasePostgres_EngineConfig_Suite(t *testing.T) {
 	assertUpdatedPostgresFields(t, updatedDB.EngineConfig.PG)
 }
 
-func TestDatabasePostgres_EngineConfig_Create_NullableFieldAsNilValue(t *testing.T) {
+func TestDatabasePostgres_EngineConfig_Create_PasswordEncryption_DefaultsToMD5(t *testing.T) {
 	databaseModifiers := []postgresDatabaseModifier{
-		createPostgresOptionsModifierWithNullableField(),
+		createPostgresOptionsModifierWithNullField(),
 	}
-	client, fixtureTeardown := createTestClient(t, "fixtures/TestDatabasePostgres_EngineConfig_Create_NullableFieldAsNilValue")
+	client, fixtureTeardown := createTestClient(t, "fixtures/TestDatabasePostgres_EngineConfig_Create_PasswordEncryption_DefaultsToMD5")
 
 	database, databaseTeardown, err := createPostgresDatabase(t, client, databaseModifiers)
 	if err != nil {
@@ -433,7 +433,7 @@ func createPostgresOptionsModifier() postgresDatabaseModifier {
 	}
 }
 
-func createPostgresOptionsModifierWithNullableField() postgresDatabaseModifier {
+func createPostgresOptionsModifierWithNullField() postgresDatabaseModifier {
 	return func(options *linodego.PostgresCreateOptions) {
 		options.Label = "postgres-db-created-with-config"
 		options.Region = "us-east"
