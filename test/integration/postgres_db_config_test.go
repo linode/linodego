@@ -342,7 +342,7 @@ func createPostgresOptionsModifier() postgresDatabaseModifier {
 				MaxStandbyStreamingDelay:         linodego.Pointer(30000),
 				MaxWALSenders:                    linodego.Pointer(20), // Adjusted to >= 20
 				MaxWorkerProcesses:               linodego.Pointer(8),
-				PasswordEncryption:               linodego.Pointer("scram-sha-256"),
+				PasswordEncryption:               DoublePointer(linodego.Pointer("scram-sha-256")),
 				PGPartmanBGWInterval:             linodego.Pointer(3600),
 				PGPartmanBGWRole:                 linodego.Pointer("pg_partman_bgw"),
 				PGStatMonitorPGSMEnableQueryPlan: linodego.Pointer(true),
@@ -387,6 +387,30 @@ func TestDatabasePostgres_EngineConfig_Create_LZ4Unsupported_Postgres13(t *testi
 	_, err := client.CreatePostgresDatabase(context.Background(), invalidRequestData)
 
 	assert.Contains(t, err.Error(), "This setting is only available for postgresql version 14+")
+}
+
+func TestPostgresEngineConfig_CreateFailsWithEmptyDoublePointerValue(t *testing.T) {
+	if os.Getenv("LINODE_FIXTURE_MODE") == "play" {
+		t.Skip("Skipping negative test scenario: LINODE_FIXTURE_MODE is 'play'")
+	}
+
+	invalidRequestData := linodego.PostgresCreateOptions{
+		Label:  "example-db-created-fails",
+		Region: "us-east",
+		Type:   "g6-dedicated-2",
+		Engine: "postgresql/14",
+		EngineConfig: &linodego.PostgresDatabaseEngineConfig{
+			PG: &linodego.PostgresDatabaseEngineConfigPG{
+				PasswordEncryption: DoublePointer(linodego.Pointer("")),
+			},
+		},
+	}
+
+	client, _ := createTestClient(t, "")
+
+	_, err := client.CreatePostgresDatabase(context.Background(), invalidRequestData)
+
+	assert.Contains(t, err.Error(), "Invalid value: expected one of ['md5', 'scram-sha-256']")
 }
 
 func newExpectedPostgresEngineConfig() map[string]any {

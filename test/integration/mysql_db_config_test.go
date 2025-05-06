@@ -2,6 +2,7 @@ package integration
 
 import (
 	"context"
+	"os"
 	"testing"
 
 	"github.com/linode/linodego"
@@ -168,9 +169,10 @@ func TestDatabaseMySQL_EngineConfig_Suite(t *testing.T) {
 		Label: "db-engine-config-updated",
 		EngineConfig: &linodego.MySQLDatabaseEngineConfig{
 			MySQL: &linodego.MySQLDatabaseEngineConfigMySQL{
-				ConnectTimeout:        linodego.Pointer(20),
-				InnoDBLockWaitTimeout: linodego.Pointer(60),
-				NetReadTimeout:        linodego.Pointer(40),
+				ConnectTimeout:              linodego.Pointer(20),
+				InnoDBLockWaitTimeout:       linodego.Pointer(60),
+				NetReadTimeout:              linodego.Pointer(40),
+				InnoDBFTServerStopwordTable: linodego.Pointer[*string](nil),
 			},
 		},
 	}
@@ -183,6 +185,62 @@ func TestDatabaseMySQL_EngineConfig_Suite(t *testing.T) {
 	waitForDatabaseUpdated(t, client, updatedDB.ID, linodego.DatabaseEngineTypeMySQL, updatedDB.Created)
 
 	assertUpdatedSQLFields(t, updatedDB.EngineConfig.MySQL)
+}
+
+func TestDatabaseMySQL_EngineConfig_CreateFailsWithEmptyDoublePointerValue(t *testing.T) {
+	if os.Getenv("LINODE_FIXTURE_MODE") == "play" {
+		t.Skip("Skipping negative test scenario: LINODE_FIXTURE_MODE is 'play'")
+	}
+
+	invalidRequestData := linodego.MySQLCreateOptions{
+		Label:  "db-with-engine-config",
+		Region: "us-east",
+		Type:   "g6-dedicated-2",
+		Engine: "mysql/8",
+		EngineConfig: &linodego.MySQLDatabaseEngineConfig{
+
+			MySQL: &linodego.MySQLDatabaseEngineConfigMySQL{
+				InnoDBFTServerStopwordTable: DoublePointer(linodego.Pointer("")),
+			},
+		},
+	}
+
+	client, _ := createTestClient(t, "")
+
+	_, err := client.CreateMySQLDatabase(context.Background(), invalidRequestData)
+
+	assert.Contains(t, err.Error(), "Invalid format: must match pattern ^.+/.+$")
+}
+
+func TestDatabaseMySQL_EngineConfig_CreateWithNullableFieldAsNilValue(t *testing.T) {
+	if os.Getenv("LINODE_FIXTURE_MODE") == "play" {
+		t.Skip("Skipping negative test scenario: LINODE_FIXTURE_MODE is 'play'")
+	}
+
+	createOptions := linodego.MySQLCreateOptions{
+		Label:  "db-with-engine-config",
+		Region: "us-east",
+		Type:   "g6-dedicated-2",
+		Engine: "mysql/8",
+		EngineConfig: &linodego.MySQLDatabaseEngineConfig{
+
+			MySQL: &linodego.MySQLDatabaseEngineConfigMySQL{
+				InnoDBFTServerStopwordTable: linodego.Pointer[*string](nil),
+			},
+		},
+	}
+
+	client, _ := createTestClient(t, "")
+
+	_, err := client.CreateMySQLDatabase(context.Background(), createOptions)
+
+	if err != nil {
+		t.Errorf("failed to create db: %v", err)
+	}
+}
+
+func DoublePointer[T any](v *T) **T {
+	return &v
 }
 
 func createMySQLOptionsModifier() mysqlDatabaseModifier {
@@ -200,7 +258,7 @@ func createMySQLOptionsModifier() mysqlDatabaseModifier {
 				InnoDBChangeBufferMaxSize:    linodego.Pointer(30),
 				InnoDBFlushNeighbors:         linodego.Pointer(1),
 				InnoDBFTMinTokenSize:         linodego.Pointer(3),
-				InnoDBFTServerStopwordTable:  linodego.Pointer("mydb/stopwords"),
+				InnoDBFTServerStopwordTable:  DoublePointer(linodego.Pointer("mydb/stopwords")),
 				InnoDBLockWaitTimeout:        linodego.Pointer(50),
 				InnoDBLogBufferSize:          linodego.Pointer(16777216),
 				InnoDBOnlineAlterLogMaxSize:  linodego.Pointer(134217728),
@@ -282,7 +340,7 @@ func assertMySQLEngineConfigEqual(t *testing.T, cfg *linodego.MySQLDatabaseEngin
 	assert.Equal(t, expected["InnoDBChangeBufferMaxSize"], *cfg.InnoDBChangeBufferMaxSize)
 	assert.Equal(t, expected["InnoDBFlushNeighbors"], *cfg.InnoDBFlushNeighbors)
 	assert.Equal(t, expected["InnoDBFTMinTokenSize"], *cfg.InnoDBFTMinTokenSize)
-	assert.Equal(t, expected["InnoDBFTServerStopwordTable"], *cfg.InnoDBFTServerStopwordTable)
+	assert.Equal(t, expected["InnoDBFTServerStopwordTable"], **cfg.InnoDBFTServerStopwordTable)
 	assert.Equal(t, expected["InnoDBLockWaitTimeout"], *cfg.InnoDBLockWaitTimeout)
 	assert.Equal(t, expected["InnoDBLogBufferSize"], *cfg.InnoDBLogBufferSize)
 	assert.Equal(t, expected["InnoDBOnlineAlterLogMaxSize"], *cfg.InnoDBOnlineAlterLogMaxSize)
@@ -308,4 +366,5 @@ func assertUpdatedSQLFields(t *testing.T, cfg *linodego.MySQLDatabaseEngineConfi
 	assert.Equal(t, 20, *cfg.ConnectTimeout)
 	assert.Equal(t, 60, *cfg.InnoDBLockWaitTimeout)
 	assert.Equal(t, 40, *cfg.NetReadTimeout)
+	assert.Equal(t, linodego.Pointer[*string](nil), *cfg.InnoDBFTServerStopwordTable)
 }
