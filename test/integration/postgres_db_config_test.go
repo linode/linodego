@@ -312,7 +312,6 @@ func TestDatabasePostgres_EngineConfig_Create_NullableFieldAsNilValue(t *testing
 	client, fixtureTeardown := createTestClient(t, "fixtures/TestDatabasePostgres_EngineConfig_Create_NullableFieldAsNilValue")
 
 	database, databaseTeardown, err := createPostgresDatabase(t, client, databaseModifiers)
-
 	if err != nil {
 		t.Fatalf("failed to create db: %s", err)
 	}

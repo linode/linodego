@@ -218,7 +218,6 @@ func TestDatabaseMySQL_EngineConfig_Create_Fails_EmptyDoublePointerValue(t *test
 		Type:   "g6-dedicated-2",
 		Engine: "mysql/8",
 		EngineConfig: &linodego.MySQLDatabaseEngineConfig{
-
 			MySQL: &linodego.MySQLDatabaseEngineConfigMySQL{
 				InnoDBFTServerStopwordTable: DoublePointer(linodego.Pointer("")),
 			},
