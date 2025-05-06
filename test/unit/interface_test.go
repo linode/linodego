@@ -92,7 +92,7 @@ func TestInterface_Create(t *testing.T) {
 	}
 
 	assert.Equal(t, 123, iface.ID)
-	assert.Equal(t, "auto", *iface.Public.IPv4.Addresses[0].Address)
+	assert.Equal(t, "auto", iface.Public.IPv4.Addresses[0].Address)
 }
 
 func TestInterface_Update(t *testing.T) {
