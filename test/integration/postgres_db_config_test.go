@@ -9,8 +9,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestDatabasePostgresConfig_Get(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestDatabasePostgresConfig_Get")
+func TestDatabasePostgres_EngineConfig_Get(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestDatabasePostgres_EngineConfig_Get")
 	defer teardown()
 
 	config, err := client.GetPostgresDatabaseConfig(context.Background())
@@ -305,6 +305,75 @@ func TestDatabasePostgres_EngineConfig_Suite(t *testing.T) {
 	assertUpdatedPostgresFields(t, updatedDB.EngineConfig.PG)
 }
 
+func TestDatabasePostgres_EngineConfig_Create_NullableFieldAsNilValue(t *testing.T) {
+	databaseModifiers := []postgresDatabaseModifier{
+		createPostgresOptionsModifierWithNullableField(),
+	}
+	client, fixtureTeardown := createTestClient(t, "fixtures/TestDatabasePostgres_EngineConfig_Create_NullableFieldAsNilValue")
+
+	database, databaseTeardown, err := createPostgresDatabase(t, client, databaseModifiers)
+
+	if err != nil {
+		t.Fatalf("failed to create db: %s", err)
+	}
+
+	defer func() {
+		databaseTeardown()
+		fixtureTeardown()
+	}()
+
+	// Password Encryption Value will default to md5 if initial input is null
+	assert.Contains(t, *database.EngineConfig.PG.PasswordEncryption, "md5")
+}
+
+func TestDatabasePostgres_EngineConfig_Create_Fails_LZ4Unsupported_Postgres13(t *testing.T) {
+	if os.Getenv("LINODE_FIXTURE_MODE") == "play" {
+		t.Skip("Skipping negative test scenario: LINODE_FIXTURE_MODE is 'play'")
+	}
+
+	invalidRequestData := linodego.PostgresCreateOptions{
+		Label:  "example-db-created-fails",
+		Region: "us-east",
+		Type:   "g6-dedicated-2",
+		Engine: "postgresql/13",
+		EngineConfig: &linodego.PostgresDatabaseEngineConfig{
+			PG: &linodego.PostgresDatabaseEngineConfigPG{
+				DefaultToastCompression: linodego.Pointer("lz4"),
+			},
+		},
+	}
+
+	client, _ := createTestClient(t, "")
+
+	_, err := client.CreatePostgresDatabase(context.Background(), invalidRequestData)
+
+	assert.Contains(t, err.Error(), "This setting is only available for postgresql version 14+")
+}
+
+func TestDatabasePostgres_EngineConfig_Create_Fails_EmptyDoublePointerValue(t *testing.T) {
+	if os.Getenv("LINODE_FIXTURE_MODE") == "play" {
+		t.Skip("Skipping negative test scenario: LINODE_FIXTURE_MODE is 'play'")
+	}
+
+	invalidRequestData := linodego.PostgresCreateOptions{
+		Label:  "example-db-created-fails",
+		Region: "us-east",
+		Type:   "g6-dedicated-2",
+		Engine: "postgresql/14",
+		EngineConfig: &linodego.PostgresDatabaseEngineConfig{
+			PG: &linodego.PostgresDatabaseEngineConfigPG{
+				PasswordEncryption: linodego.Pointer(""),
+			},
+		},
+	}
+
+	client, _ := createTestClient(t, "")
+
+	_, err := client.CreatePostgresDatabase(context.Background(), invalidRequestData)
+
+	assert.Contains(t, err.Error(), "Invalid value: expected one of ['md5', 'scram-sha-256']")
+}
+
 func createPostgresOptionsModifier() postgresDatabaseModifier {
 	return func(options *linodego.PostgresCreateOptions) {
 		options.Label = "postgres-db-created-with-config"
@@ -342,7 +411,7 @@ func createPostgresOptionsModifier() postgresDatabaseModifier {
 				MaxStandbyStreamingDelay:         linodego.Pointer(30000),
 				MaxWALSenders:                    linodego.Pointer(20), // Adjusted to >= 20
 				MaxWorkerProcesses:               linodego.Pointer(8),
-				PasswordEncryption:               DoublePointer(linodego.Pointer("scram-sha-256")),
+				PasswordEncryption:               linodego.Pointer("scram-sha-256"),
 				PGPartmanBGWInterval:             linodego.Pointer(3600),
 				PGPartmanBGWRole:                 linodego.Pointer("pg_partman_bgw"),
 				PGStatMonitorPGSMEnableQueryPlan: linodego.Pointer(true),
@@ -365,52 +434,18 @@ func createPostgresOptionsModifier() postgresDatabaseModifier {
 	}
 }
 
-func TestDatabasePostgres_EngineConfig_Create_LZ4Unsupported_Postgres13(t *testing.T) {
-	if os.Getenv("LINODE_FIXTURE_MODE") == "play" {
-		t.Skip("Skipping negative test scenario: LINODE_FIXTURE_MODE is 'play'")
-	}
-
-	invalidRequestData := linodego.PostgresCreateOptions{
-		Label:  "example-db-created-fails",
-		Region: "us-east",
-		Type:   "g6-dedicated-2",
-		Engine: "postgresql/13",
-		EngineConfig: &linodego.PostgresDatabaseEngineConfig{
+func createPostgresOptionsModifierWithNullableField() postgresDatabaseModifier {
+	return func(options *linodego.PostgresCreateOptions) {
+		options.Label = "postgres-db-created-with-config"
+		options.Region = "us-east"
+		options.Type = "g6-dedicated-2"
+		options.Engine = "postgresql/17"
+		options.EngineConfig = &linodego.PostgresDatabaseEngineConfig{
 			PG: &linodego.PostgresDatabaseEngineConfigPG{
-				DefaultToastCompression: linodego.Pointer("lz4"),
+				PasswordEncryption: nil,
 			},
-		},
+		}
 	}
-
-	client, _ := createTestClient(t, "")
-
-	_, err := client.CreatePostgresDatabase(context.Background(), invalidRequestData)
-
-	assert.Contains(t, err.Error(), "This setting is only available for postgresql version 14+")
-}
-
-func TestPostgresEngineConfig_CreateFailsWithEmptyDoublePointerValue(t *testing.T) {
-	if os.Getenv("LINODE_FIXTURE_MODE") == "play" {
-		t.Skip("Skipping negative test scenario: LINODE_FIXTURE_MODE is 'play'")
-	}
-
-	invalidRequestData := linodego.PostgresCreateOptions{
-		Label:  "example-db-created-fails",
-		Region: "us-east",
-		Type:   "g6-dedicated-2",
-		Engine: "postgresql/14",
-		EngineConfig: &linodego.PostgresDatabaseEngineConfig{
-			PG: &linodego.PostgresDatabaseEngineConfigPG{
-				PasswordEncryption: DoublePointer(linodego.Pointer("")),
-			},
-		},
-	}
-
-	client, _ := createTestClient(t, "")
-
-	_, err := client.CreatePostgresDatabase(context.Background(), invalidRequestData)
-
-	assert.Contains(t, err.Error(), "Invalid value: expected one of ['md5', 'scram-sha-256']")
 }
 
 func newExpectedPostgresEngineConfig() map[string]any {

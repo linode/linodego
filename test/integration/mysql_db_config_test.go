@@ -9,8 +9,8 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestDatabaseMySQLConfig_Get(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestDatabaseMySQLConfig_Get")
+func TestDatabaseMySQL_EngineConfig_Get(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestDatabaseMySQL_EngineConfig_Get")
 	defer teardown()
 
 	config, err := client.GetMySQLDatabaseConfig(context.Background())
@@ -187,7 +187,27 @@ func TestDatabaseMySQL_EngineConfig_Suite(t *testing.T) {
 	assertUpdatedSQLFields(t, updatedDB.EngineConfig.MySQL)
 }
 
-func TestDatabaseMySQL_EngineConfig_CreateFailsWithEmptyDoublePointerValue(t *testing.T) {
+func TestDatabaseMySQL_EngineConfig_Create_NullableFieldAsNilValue(t *testing.T) {
+	databaseModifiers := []mysqlDatabaseModifier{
+		createMySQLOptionsModifierNullableField(),
+	}
+
+	client, fixtureTeardown := createTestClient(t, "fixtures/TestDatabaseMySQL_EngineConfig_Create_NullableFieldAsNilValue")
+
+	database, databaseTeardown, err := createMySQLDatabase(t, client, databaseModifiers)
+	if err != nil {
+		t.Fatalf("failed to create db: %s", err)
+	}
+
+	defer func() {
+		databaseTeardown()
+		fixtureTeardown()
+	}()
+
+	assert.Nil(t, database.EngineConfig.MySQL.InnoDBFTServerStopwordTable)
+}
+
+func TestDatabaseMySQL_EngineConfig_Create_Fails_EmptyDoublePointerValue(t *testing.T) {
 	if os.Getenv("LINODE_FIXTURE_MODE") == "play" {
 		t.Skip("Skipping negative test scenario: LINODE_FIXTURE_MODE is 'play'")
 	}
@@ -212,35 +232,22 @@ func TestDatabaseMySQL_EngineConfig_CreateFailsWithEmptyDoublePointerValue(t *te
 	assert.Contains(t, err.Error(), "Invalid format: must match pattern ^.+/.+$")
 }
 
-func TestDatabaseMySQL_EngineConfig_CreateWithNullableFieldAsNilValue(t *testing.T) {
-	if os.Getenv("LINODE_FIXTURE_MODE") == "play" {
-		t.Skip("Skipping negative test scenario: LINODE_FIXTURE_MODE is 'play'")
-	}
-
-	createOptions := linodego.MySQLCreateOptions{
-		Label:  "db-with-engine-config",
-		Region: "us-east",
-		Type:   "g6-dedicated-2",
-		Engine: "mysql/8",
-		EngineConfig: &linodego.MySQLDatabaseEngineConfig{
-
-			MySQL: &linodego.MySQLDatabaseEngineConfigMySQL{
-				InnoDBFTServerStopwordTable: linodego.Pointer[*string](nil),
-			},
-		},
-	}
-
-	client, _ := createTestClient(t, "")
-
-	_, err := client.CreateMySQLDatabase(context.Background(), createOptions)
-
-	if err != nil {
-		t.Errorf("failed to create db: %v", err)
-	}
-}
-
 func DoublePointer[T any](v *T) **T {
 	return &v
+}
+
+func createMySQLOptionsModifierNullableField() mysqlDatabaseModifier {
+	return func(options *linodego.MySQLCreateOptions) {
+		options.Label = "example-db-created-with-config"
+		options.Region = "us-east"
+		options.Type = "g6-dedicated-2"
+		options.Engine = "mysql/8"
+		options.EngineConfig = &linodego.MySQLDatabaseEngineConfig{
+			MySQL: &linodego.MySQLDatabaseEngineConfigMySQL{
+				InnoDBFTServerStopwordTable: nil,
+			},
+		}
+	}
 }
 
 func createMySQLOptionsModifier() mysqlDatabaseModifier {
@@ -366,5 +373,5 @@ func assertUpdatedSQLFields(t *testing.T, cfg *linodego.MySQLDatabaseEngineConfi
 	assert.Equal(t, 20, *cfg.ConnectTimeout)
 	assert.Equal(t, 60, *cfg.InnoDBLockWaitTimeout)
 	assert.Equal(t, 40, *cfg.NetReadTimeout)
-	assert.Equal(t, linodego.Pointer[*string](nil), *cfg.InnoDBFTServerStopwordTable)
+	assert.Nil(t, cfg.InnoDBFTServerStopwordTable)
 }
