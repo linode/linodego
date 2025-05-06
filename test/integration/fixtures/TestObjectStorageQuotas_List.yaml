@@ -1,0 +1,275 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/quotas?page=1
+    method: GET
+  response:
+    body: '{"data": [{"quota_id": "obj-buckets-br-gru-1.linodeobjects.com", "quota_name":
+      "max_buckets", "endpoint_type": "E1", "s3_endpoint": "br-gru-1.linodeobjects.com",
+      "description": "Maximum number of buckets this customer is allowed to have on
+      this endpoint", "quota_limit": 1000, "resource_metric": "bucket"}, {"quota_id":
+      "obj-bytes-br-gru-1.linodeobjects.com", "quota_name": "max_bytes", "endpoint_type":
+      "E1", "s3_endpoint": "br-gru-1.linodeobjects.com", "description": "Maximum number
+      of bytes this customer is allowed to have on this endpoint", "quota_limit":
+      107374182400, "resource_metric": "byte"}, {"quota_id": "obj-objects-br-gru-1.linodeobjects.com",
+      "quota_name": "max_objects", "endpoint_type": "E1", "s3_endpoint": "br-gru-1.linodeobjects.com",
+      "description": "Maximum number of objects this customer is allowed to have on
+      this endpoint", "quota_limit": 100000000, "resource_metric": "object"}, {"quota_id":
+      "obj-buckets-us-iad-10.linodeobjects.com", "quota_name": "max_buckets", "endpoint_type":
+      "E1", "s3_endpoint": "us-iad-10.linodeobjects.com", "description": "Maximum
+      number of buckets this customer is allowed to have on this endpoint", "quota_limit":
+      1000, "resource_metric": "bucket"}, {"quota_id": "obj-bytes-us-iad-10.linodeobjects.com",
+      "quota_name": "max_bytes", "endpoint_type": "E1", "s3_endpoint": "us-iad-10.linodeobjects.com",
+      "description": "Maximum number of bytes this customer is allowed to have on
+      this endpoint", "quota_limit": 107374182400, "resource_metric": "byte"}, {"quota_id":
+      "obj-objects-us-iad-10.linodeobjects.com", "quota_name": "max_objects", "endpoint_type":
+      "E1", "s3_endpoint": "us-iad-10.linodeobjects.com", "description": "Maximum
+      number of objects this customer is allowed to have on this endpoint", "quota_limit":
+      100000000, "resource_metric": "object"}, {"quota_id": "obj-buckets-nl-ams-1.linodeobjects.com",
+      "quota_name": "max_buckets", "endpoint_type": "E1", "s3_endpoint": "nl-ams-1.linodeobjects.com",
+      "description": "Maximum number of buckets this customer is allowed to have on
+      this endpoint", "quota_limit": 1000, "resource_metric": "bucket"}, {"quota_id":
+      "obj-bytes-nl-ams-1.linodeobjects.com", "quota_name": "max_bytes", "endpoint_type":
+      "E1", "s3_endpoint": "nl-ams-1.linodeobjects.com", "description": "Maximum number
+      of bytes this customer is allowed to have on this endpoint", "quota_limit":
+      107374182400, "resource_metric": "byte"}, {"quota_id": "obj-objects-nl-ams-1.linodeobjects.com",
+      "quota_name": "max_objects", "endpoint_type": "E1", "s3_endpoint": "nl-ams-1.linodeobjects.com",
+      "description": "Maximum number of objects this customer is allowed to have on
+      this endpoint", "quota_limit": 100000000, "resource_metric": "object"}, {"quota_id":
+      "obj-buckets-us-east-1.linodeobjects.com", "quota_name": "max_buckets", "endpoint_type":
+      "E0", "s3_endpoint": "us-east-1.linodeobjects.com", "description": "Maximum
+      number of buckets this customer is allowed to have on this endpoint", "quota_limit":
+      1000, "resource_metric": "bucket"}, {"quota_id": "obj-bytes-us-east-1.linodeobjects.com",
+      "quota_name": "max_bytes", "endpoint_type": "E0", "s3_endpoint": "us-east-1.linodeobjects.com",
+      "description": "Maximum number of bytes this customer is allowed to have on
+      this endpoint", "quota_limit": 5368709120, "resource_metric": "byte"}, {"quota_id":
+      "obj-objects-us-east-1.linodeobjects.com", "quota_name": "max_objects", "endpoint_type":
+      "E0", "s3_endpoint": "us-east-1.linodeobjects.com", "description": "Maximum
+      number of objects this customer is allowed to have on this endpoint", "quota_limit":
+      50000000, "resource_metric": "object"}, {"quota_id": "obj-buckets-us-mia-1.linodeobjects.com",
+      "quota_name": "max_buckets", "endpoint_type": "E1", "s3_endpoint": "us-mia-1.linodeobjects.com",
+      "description": "Maximum number of buckets this customer is allowed to have on
+      this endpoint", "quota_limit": 1000, "resource_metric": "bucket"}, {"quota_id":
+      "obj-bytes-us-mia-1.linodeobjects.com", "quota_name": "max_bytes", "endpoint_type":
+      "E1", "s3_endpoint": "us-mia-1.linodeobjects.com", "description": "Maximum number
+      of bytes this customer is allowed to have on this endpoint", "quota_limit":
+      107374182400, "resource_metric": "byte"}, {"quota_id": "obj-objects-us-mia-1.linodeobjects.com",
+      "quota_name": "max_objects", "endpoint_type": "E1", "s3_endpoint": "us-mia-1.linodeobjects.com",
+      "description": "Maximum number of objects this customer is allowed to have on
+      this endpoint", "quota_limit": 100000000, "resource_metric": "object"}, {"quota_id":
+      "obj-buckets-us-lax-1.linodeobjects.com", "quota_name": "max_buckets", "endpoint_type":
+      "E1", "s3_endpoint": "us-lax-1.linodeobjects.com", "description": "Maximum number
+      of buckets this customer is allowed to have on this endpoint", "quota_limit":
+      1000, "resource_metric": "bucket"}, {"quota_id": "obj-bytes-us-lax-1.linodeobjects.com",
+      "quota_name": "max_bytes", "endpoint_type": "E1", "s3_endpoint": "us-lax-1.linodeobjects.com",
+      "description": "Maximum number of bytes this customer is allowed to have on
+      this endpoint", "quota_limit": 107374182400, "resource_metric": "byte"}, {"quota_id":
+      "obj-objects-us-lax-1.linodeobjects.com", "quota_name": "max_objects", "endpoint_type":
+      "E1", "s3_endpoint": "us-lax-1.linodeobjects.com", "description": "Maximum number
+      of objects this customer is allowed to have on this endpoint", "quota_limit":
+      100000000, "resource_metric": "object"}, {"quota_id": "obj-buckets-es-mad-1.linodeobjects.com",
+      "quota_name": "max_buckets", "endpoint_type": "E1", "s3_endpoint": "es-mad-1.linodeobjects.com",
+      "description": "Maximum number of buckets this customer is allowed to have on
+      this endpoint", "quota_limit": 1000, "resource_metric": "bucket"}, {"quota_id":
+      "obj-bytes-es-mad-1.linodeobjects.com", "quota_name": "max_bytes", "endpoint_type":
+      "E1", "s3_endpoint": "es-mad-1.linodeobjects.com", "description": "Maximum number
+      of bytes this customer is allowed to have on this endpoint", "quota_limit":
+      107374182400, "resource_metric": "byte"}, {"quota_id": "obj-objects-es-mad-1.linodeobjects.com",
+      "quota_name": "max_objects", "endpoint_type": "E1", "s3_endpoint": "es-mad-1.linodeobjects.com",
+      "description": "Maximum number of objects this customer is allowed to have on
+      this endpoint", "quota_limit": 100000000, "resource_metric": "object"}, {"quota_id":
+      "obj-buckets-us-southeast-1.linodeobjects.com", "quota_name": "max_buckets",
+      "endpoint_type": "E0", "s3_endpoint": "us-southeast-1.linodeobjects.com", "description":
+      "Maximum number of buckets this customer is allowed to have on this endpoint",
+      "quota_limit": 1000, "resource_metric": "bucket"}, {"quota_id": "obj-bytes-us-southeast-1.linodeobjects.com",
+      "quota_name": "max_bytes", "endpoint_type": "E0", "s3_endpoint": "us-southeast-1.linodeobjects.com",
+      "description": "Maximum number of bytes this customer is allowed to have on
+      this endpoint", "quota_limit": 5368709120, "resource_metric": "byte"}, {"quota_id":
+      "obj-objects-us-southeast-1.linodeobjects.com", "quota_name": "max_objects",
+      "endpoint_type": "E0", "s3_endpoint": "us-southeast-1.linodeobjects.com", "description":
+      "Maximum number of objects this customer is allowed to have on this endpoint",
+      "quota_limit": 50000000, "resource_metric": "object"}, {"quota_id": "obj-buckets-ap-south-1.linodeobjects.com",
+      "quota_name": "max_buckets", "endpoint_type": "E0", "s3_endpoint": "ap-south-1.linodeobjects.com",
+      "description": "Maximum number of buckets this customer is allowed to have on
+      this endpoint", "quota_limit": 1000, "resource_metric": "bucket"}, {"quota_id":
+      "obj-bytes-ap-south-1.linodeobjects.com", "quota_name": "max_bytes", "endpoint_type":
+      "E0", "s3_endpoint": "ap-south-1.linodeobjects.com", "description": "Maximum
+      number of bytes this customer is allowed to have on this endpoint", "quota_limit":
+      5368709120, "resource_metric": "byte"}, {"quota_id": "obj-objects-ap-south-1.linodeobjects.com",
+      "quota_name": "max_objects", "endpoint_type": "E0", "s3_endpoint": "ap-south-1.linodeobjects.com",
+      "description": "Maximum number of objects this customer is allowed to have on
+      this endpoint", "quota_limit": 50000000, "resource_metric": "object"}, {"quota_id":
+      "obj-buckets-gb-lon-1.linodeobjects.com", "quota_name": "max_buckets", "endpoint_type":
+      "E3", "s3_endpoint": "gb-lon-1.linodeobjects.com", "description": "Maximum number
+      of buckets this customer is allowed to have on this endpoint", "quota_limit":
+      1000, "resource_metric": "bucket"}, {"quota_id": "obj-bytes-gb-lon-1.linodeobjects.com",
+      "quota_name": "max_bytes", "endpoint_type": "E3", "s3_endpoint": "gb-lon-1.linodeobjects.com",
+      "description": "Maximum number of bytes this customer is allowed to have on
+      this endpoint", "quota_limit": 536870912000, "resource_metric": "byte"}, {"quota_id":
+      "obj-objects-gb-lon-1.linodeobjects.com", "quota_name": "max_objects", "endpoint_type":
+      "E3", "s3_endpoint": "gb-lon-1.linodeobjects.com", "description": "Maximum number
+      of objects this customer is allowed to have on this endpoint", "quota_limit":
+      500000000, "resource_metric": "object"}, {"quota_id": "obj-buckets-us-ord-10.linodeobjects.com",
+      "quota_name": "max_buckets", "endpoint_type": "E3", "s3_endpoint": "us-ord-10.linodeobjects.com",
+      "description": "Maximum number of buckets this customer is allowed to have on
+      this endpoint", "quota_limit": 1000, "resource_metric": "bucket"}, {"quota_id":
+      "obj-bytes-us-ord-10.linodeobjects.com", "quota_name": "max_bytes", "endpoint_type":
+      "E3", "s3_endpoint": "us-ord-10.linodeobjects.com", "description": "Maximum
+      number of bytes this customer is allowed to have on this endpoint", "quota_limit":
+      536870912000, "resource_metric": "byte"}, {"quota_id": "obj-objects-us-ord-10.linodeobjects.com",
+      "quota_name": "max_objects", "endpoint_type": "E3", "s3_endpoint": "us-ord-10.linodeobjects.com",
+      "description": "Maximum number of objects this customer is allowed to have on
+      this endpoint", "quota_limit": 500000000, "resource_metric": "object"}, {"quota_id":
+      "obj-buckets-fr-par-1.linodeobjects.com", "quota_name": "max_buckets", "endpoint_type":
+      "E1", "s3_endpoint": "fr-par-1.linodeobjects.com", "description": "Maximum number
+      of buckets this customer is allowed to have on this endpoint", "quota_limit":
+      1000, "resource_metric": "bucket"}, {"quota_id": "obj-bytes-fr-par-1.linodeobjects.com",
+      "quota_name": "max_bytes", "endpoint_type": "E1", "s3_endpoint": "fr-par-1.linodeobjects.com",
+      "description": "Maximum number of bytes this customer is allowed to have on
+      this endpoint", "quota_limit": 107374182400, "resource_metric": "byte"}, {"quota_id":
+      "obj-objects-fr-par-1.linodeobjects.com", "quota_name": "max_objects", "endpoint_type":
+      "E1", "s3_endpoint": "fr-par-1.linodeobjects.com", "description": "Maximum number
+      of objects this customer is allowed to have on this endpoint", "quota_limit":
+      100000000, "resource_metric": "object"}, {"quota_id": "obj-buckets-us-ord-1.linodeobjects.com",
+      "quota_name": "max_buckets", "endpoint_type": "E1", "s3_endpoint": "us-ord-1.linodeobjects.com",
+      "description": "Maximum number of buckets this customer is allowed to have on
+      this endpoint", "quota_limit": 1000, "resource_metric": "bucket"}, {"quota_id":
+      "obj-bytes-us-ord-1.linodeobjects.com", "quota_name": "max_bytes", "endpoint_type":
+      "E1", "s3_endpoint": "us-ord-1.linodeobjects.com", "description": "Maximum number
+      of bytes this customer is allowed to have on this endpoint", "quota_limit":
+      107374182400, "resource_metric": "byte"}, {"quota_id": "obj-objects-us-ord-1.linodeobjects.com",
+      "quota_name": "max_objects", "endpoint_type": "E1", "s3_endpoint": "us-ord-1.linodeobjects.com",
+      "description": "Maximum number of objects this customer is allowed to have on
+      this endpoint", "quota_limit": 100000000, "resource_metric": "object"}, {"quota_id":
+      "obj-buckets-in-maa-1.linodeobjects.com", "quota_name": "max_buckets", "endpoint_type":
+      "E1", "s3_endpoint": "in-maa-1.linodeobjects.com", "description": "Maximum number
+      of buckets this customer is allowed to have on this endpoint", "quota_limit":
+      1000, "resource_metric": "bucket"}, {"quota_id": "obj-bytes-in-maa-1.linodeobjects.com",
+      "quota_name": "max_bytes", "endpoint_type": "E1", "s3_endpoint": "in-maa-1.linodeobjects.com",
+      "description": "Maximum number of bytes this customer is allowed to have on
+      this endpoint", "quota_limit": 107374182400, "resource_metric": "byte"}, {"quota_id":
+      "obj-objects-in-maa-1.linodeobjects.com", "quota_name": "max_objects", "endpoint_type":
+      "E1", "s3_endpoint": "in-maa-1.linodeobjects.com", "description": "Maximum number
+      of objects this customer is allowed to have on this endpoint", "quota_limit":
+      100000000, "resource_metric": "object"}, {"quota_id": "obj-buckets-se-sto-1.linodeobjects.com",
+      "quota_name": "max_buckets", "endpoint_type": "E1", "s3_endpoint": "se-sto-1.linodeobjects.com",
+      "description": "Maximum number of buckets this customer is allowed to have on
+      this endpoint", "quota_limit": 1000, "resource_metric": "bucket"}, {"quota_id":
+      "obj-bytes-se-sto-1.linodeobjects.com", "quota_name": "max_bytes", "endpoint_type":
+      "E1", "s3_endpoint": "se-sto-1.linodeobjects.com", "description": "Maximum number
+      of bytes this customer is allowed to have on this endpoint", "quota_limit":
+      107374182400, "resource_metric": "byte"}, {"quota_id": "obj-objects-se-sto-1.linodeobjects.com",
+      "quota_name": "max_objects", "endpoint_type": "E1", "s3_endpoint": "se-sto-1.linodeobjects.com",
+      "description": "Maximum number of objects this customer is allowed to have on
+      this endpoint", "quota_limit": 100000000, "resource_metric": "object"}, {"quota_id":
+      "obj-buckets-it-mil-1.linodeobjects.com", "quota_name": "max_buckets", "endpoint_type":
+      "E1", "s3_endpoint": "it-mil-1.linodeobjects.com", "description": "Maximum number
+      of buckets this customer is allowed to have on this endpoint", "quota_limit":
+      1000, "resource_metric": "bucket"}, {"quota_id": "obj-bytes-it-mil-1.linodeobjects.com",
+      "quota_name": "max_bytes", "endpoint_type": "E1", "s3_endpoint": "it-mil-1.linodeobjects.com",
+      "description": "Maximum number of bytes this customer is allowed to have on
+      this endpoint", "quota_limit": 107374182400, "resource_metric": "byte"}, {"quota_id":
+      "obj-objects-it-mil-1.linodeobjects.com", "quota_name": "max_objects", "endpoint_type":
+      "E1", "s3_endpoint": "it-mil-1.linodeobjects.com", "description": "Maximum number
+      of objects this customer is allowed to have on this endpoint", "quota_limit":
+      100000000, "resource_metric": "object"}, {"quota_id": "obj-buckets-eu-central-1.linodeobjects.com",
+      "quota_name": "max_buckets", "endpoint_type": "E0", "s3_endpoint": "eu-central-1.linodeobjects.com",
+      "description": "Maximum number of buckets this customer is allowed to have on
+      this endpoint", "quota_limit": 1000, "resource_metric": "bucket"}, {"quota_id":
+      "obj-bytes-eu-central-1.linodeobjects.com", "quota_name": "max_bytes", "endpoint_type":
+      "E0", "s3_endpoint": "eu-central-1.linodeobjects.com", "description": "Maximum
+      number of bytes this customer is allowed to have on this endpoint", "quota_limit":
+      5368709120, "resource_metric": "byte"}, {"quota_id": "obj-objects-eu-central-1.linodeobjects.com",
+      "quota_name": "max_objects", "endpoint_type": "E0", "s3_endpoint": "eu-central-1.linodeobjects.com",
+      "description": "Maximum number of objects this customer is allowed to have on
+      this endpoint", "quota_limit": 50000000, "resource_metric": "object"}, {"quota_id":
+      "obj-buckets-us-sea-1.linodeobjects.com", "quota_name": "max_buckets", "endpoint_type":
+      "E1", "s3_endpoint": "us-sea-1.linodeobjects.com", "description": "Maximum number
+      of buckets this customer is allowed to have on this endpoint", "quota_limit":
+      1000, "resource_metric": "bucket"}, {"quota_id": "obj-bytes-us-sea-1.linodeobjects.com",
+      "quota_name": "max_bytes", "endpoint_type": "E1", "s3_endpoint": "us-sea-1.linodeobjects.com",
+      "description": "Maximum number of bytes this customer is allowed to have on
+      this endpoint", "quota_limit": 107374182400, "resource_metric": "byte"}, {"quota_id":
+      "obj-objects-us-sea-1.linodeobjects.com", "quota_name": "max_objects", "endpoint_type":
+      "E1", "s3_endpoint": "us-sea-1.linodeobjects.com", "description": "Maximum number
+      of objects this customer is allowed to have on this endpoint", "quota_limit":
+      100000000, "resource_metric": "object"}, {"quota_id": "obj-buckets-id-cgk-1.linodeobjects.com",
+      "quota_name": "max_buckets", "endpoint_type": "E1", "s3_endpoint": "id-cgk-1.linodeobjects.com",
+      "description": "Maximum number of buckets this customer is allowed to have on
+      this endpoint", "quota_limit": 1000, "resource_metric": "bucket"}, {"quota_id":
+      "obj-bytes-id-cgk-1.linodeobjects.com", "quota_name": "max_bytes", "endpoint_type":
+      "E1", "s3_endpoint": "id-cgk-1.linodeobjects.com", "description": "Maximum number
+      of bytes this customer is allowed to have on this endpoint", "quota_limit":
+      107374182400, "resource_metric": "byte"}, {"quota_id": "obj-objects-id-cgk-1.linodeobjects.com",
+      "quota_name": "max_objects", "endpoint_type": "E1", "s3_endpoint": "id-cgk-1.linodeobjects.com",
+      "description": "Maximum number of objects this customer is allowed to have on
+      this endpoint", "quota_limit": 100000000, "resource_metric": "object"}, {"quota_id":
+      "obj-buckets-jp-osa-1.linodeobjects.com", "quota_name": "max_buckets", "endpoint_type":
+      "E1", "s3_endpoint": "jp-osa-1.linodeobjects.com", "description": "Maximum number
+      of buckets this customer is allowed to have on this endpoint", "quota_limit":
+      1000, "resource_metric": "bucket"}, {"quota_id": "obj-bytes-jp-osa-1.linodeobjects.com",
+      "quota_name": "max_bytes", "endpoint_type": "E1", "s3_endpoint": "jp-osa-1.linodeobjects.com",
+      "description": "Maximum number of bytes this customer is allowed to have on
+      this endpoint", "quota_limit": 107374182400, "resource_metric": "byte"}, {"quota_id":
+      "obj-objects-jp-osa-1.linodeobjects.com", "quota_name": "max_objects", "endpoint_type":
+      "E1", "s3_endpoint": "jp-osa-1.linodeobjects.com", "description": "Maximum number
+      of objects this customer is allowed to have on this endpoint", "quota_limit":
+      100000000, "resource_metric": "object"}], "page": 1, "pages": 1, "results":
+      60}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 24 Apr 2025 17:38:47 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
