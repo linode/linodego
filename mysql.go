@@ -67,7 +67,7 @@ type MySQLDatabaseEngineConfigMySQL struct {
 	InnoDBChangeBufferMaxSize    *int     `json:"innodb_change_buffer_max_size,omitempty"`
 	InnoDBFlushNeighbors         *int     `json:"innodb_flush_neighbors,omitempty"`
 	InnoDBFTMinTokenSize         *int     `json:"innodb_ft_min_token_size,omitempty"`
-	InnoDBFTServerStopwordTable  *string  `json:"innodb_ft_server_stopword_table,omitempty"`
+	InnoDBFTServerStopwordTable  **string `json:"innodb_ft_server_stopword_table,omitempty"`
 	InnoDBLockWaitTimeout        *int     `json:"innodb_lock_wait_timeout,omitempty"`
 	InnoDBLogBufferSize          *int     `json:"innodb_log_buffer_size,omitempty"`
 	InnoDBOnlineAlterLogMaxSize  *int     `json:"innodb_online_alter_log_max_size,omitempty"`
