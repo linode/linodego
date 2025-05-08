@@ -54,7 +54,7 @@ func TestNodeBalancer_Create_Type(t *testing.T) {
 }
 
 func TestNodeBalancer_Create_with_ReservedIP(t *testing.T) {
-	_, reserveIP, nodebalancer, teardown, err := setupNodeBalancerWithReservedIP(t, "fixtures/TestNodeBalancer_With_IPv4_Create")
+	_, reserveIP, nodebalancer, teardown, err := setupNodeBalancerWithReservedIP(t, "fixtures/TestNodeBalancer_With_ReservedIP_Create")
 	defer teardown()
 
 	if err != nil {
