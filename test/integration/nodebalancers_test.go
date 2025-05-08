@@ -54,7 +54,7 @@ func TestNodeBalancer_Create_Type(t *testing.T) {
 }
 
 func TestNodeBalancer_Create_with_ReservedIP(t *testing.T) {
-	_, nodebalancer, teardown, err := setupNodeBalancerWithReservedIP(t, "fixtures/TestNodeBalancer_With_IPv4_Create")
+	_, reserveIP, nodebalancer, teardown, err := setupNodeBalancerWithReservedIP(t, "fixtures/TestNodeBalancer_With_IPv4_Create")
 	defer teardown()
 
 	if err != nil {
@@ -64,6 +64,10 @@ func TestNodeBalancer_Create_with_ReservedIP(t *testing.T) {
 	// when comparing fixtures to random value Label will differ, compare the known suffix
 	if !strings.Contains(*nodebalancer.Label, label) {
 		t.Errorf("nodebalancer returned does not match nodebalancer create request")
+	}
+
+	if reserveIP.Address != *nodebalancer.IPv4 {
+		t.Errorf("nodebalancer address: %s does not matched requested reserved IP: %s", *nodebalancer.IPv4, reserveIP.Address)
 	}
 
 	assertDateSet(t, nodebalancer.Created)
@@ -167,7 +171,7 @@ func setupNodeBalancer(t *testing.T, fixturesYaml string, nbModifiers []nbModifi
 	return client, nodebalancer, teardown, err
 }
 
-func setupNodeBalancerWithReservedIP(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.NodeBalancer, func(), error) {
+func setupNodeBalancerWithReservedIP(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.InstanceIP, *linodego.NodeBalancer, func(), error) {
 	t.Helper()
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
@@ -201,7 +205,7 @@ func setupNodeBalancerWithReservedIP(t *testing.T, fixturesYaml string) (*linode
 		}
 		fixtureTeardown()
 	}
-	return client, nodebalancer, teardown, err
+	return client, reserveIP, nodebalancer, teardown, err
 }
 
 func setupNodeBalancerWithVPC(t *testing.T, fixturesYaml string, vpcModifier ...vpcModifier) (*linodego.Client, *linodego.NodeBalancer, *linodego.VPC, *linodego.VPCSubnet, func(), error) {
