@@ -11,7 +11,7 @@ type MonitorServiceToken struct {
 
 // Create token options
 type MonitorTokenCreateOptions struct {
-	EntityIDs []int `json:"entity_ids"`
+	EntityIDs []any `json:"entity_ids"`
 }
 
 // CreateMonitorServiceTokenForServiceType to create token for a given serviceType
