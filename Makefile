@@ -28,7 +28,7 @@ test-unit:
 	cd test && make test-unit
 
 test-int:
-	cd test && make test-int
+	cd test && make test-int TEST_TIMEOUT=$(TEST_TIMEOUT)
 
 testcov-func:
 	@go test -v -coverprofile="coverage.txt" . > /dev/null 2>&1
@@ -40,7 +40,7 @@ testcov-html:
 	@go tool cover -html coverage.txt
 
 test-smoke:
-	cd test && make test-smoke
+	cd test && make test-smoke TEST_TIMEOUT=$(TEST_TIMEOUT)
 
 build: vet lint
 	go build ./...
