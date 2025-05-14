@@ -9,143 +9,172 @@ import (
 )
 
 type LinodeInterface struct {
-	ID           int                     `json:"id"`
-	Version      int                     `json:"version"`
-	MACAddress   string                  `json:"mac_address"`
-	Created      *time.Time              `json:"-"`
-	Updated      *time.Time              `json:"-"`
-	DefaultRoute *InterfacesDefaultRoute `json:"default_route,omitempty"`
-	Public       *InterfacesPublic       `json:"public,omitempty"`
-	VPC          *InterfacesVPC          `json:"vpc,omitempty"`
-	VLAN         *InterfacesVLAN         `json:"vlan,omitempty"`
+	ID           int                    `json:"id"`
+	Version      int                    `json:"version"`
+	MACAddress   string                 `json:"mac_address"`
+	Created      *time.Time             `json:"-"`
+	Updated      *time.Time             `json:"-"`
+	DefaultRoute *InterfaceDefaultRoute `json:"default_route"`
+	Public       *PublicInterface       `json:"public"`
+	VPC          *VPCInterface          `json:"vpc"`
+	VLAN         *VLANInterface         `json:"vlan"`
 }
 
-type InterfacesDefaultRoute struct {
+type InterfaceDefaultRoute struct {
 	IPv4 *bool `json:"ipv4,omitempty"`
 	IPv6 *bool `json:"ipv6,omitempty"`
 }
 
-type InterfacesPublic struct {
-	IPv4 *InterfacesIPv4 `json:"ipv4,omitempty"`
-	IPv6 *InterfacesIPv6 `json:"ipv6,omitempty"`
+type PublicInterface struct {
+	IPv4 *PublicInterfaceIPv4 `json:"ipv4"`
+	IPv6 *PublicInterfaceIPv6 `json:"ipv6"`
 }
 
-type InterfacesIPv4 struct {
-	Addresses []InterfacesIPv4Address `json:"addresses"`
-	Shared    []InterfacesIPv4Shared  `json:"shared"`
+type PublicInterfaceIPv4 struct {
+	Addresses []PublicInterfaceIPv4Address `json:"addresses"`
+	Shared    []PublicInterfaceIPv4Shared  `json:"shared"`
 }
 
-type InterfacesIPv6 struct {
-	Ranges []InterfacesIPv6Range `json:"ranges"`
-	Shared []InterfacesIPv6Range `json:"shared"`
-	Slaac  []InterfacesIPv6Slaac `json:"slaac"`
+type PublicInterfaceIPv6 struct {
+	Ranges []PublicInterfaceIPv6Range `json:"ranges"`
+	Shared []PublicInterfaceIPv6Range `json:"shared"`
+	SLAAC  []PublicInterfaceIPv6SLAAC `json:"slaac"`
 }
 
-type InterfacesIPv4Address struct {
+type PublicInterfaceIPv4Address struct {
 	Address string `json:"address"`
 	Primary bool   `json:"primary"`
 }
 
-type InterfacesIPv4Shared struct {
+type PublicInterfaceIPv4Shared struct {
 	Address  string `json:"address"`
 	LinodeID string `json:"linode_id"`
 }
 
-type InterfacesIPv6Range struct {
+type PublicInterfaceIPv6Range struct {
 	Range       string `json:"range"`
 	RouteTarget string `json:"route_target"`
 }
 
-type InterfacesIPv6Slaac struct {
+type PublicInterfaceIPv6SLAAC struct {
 	Prefix  int    `json:"prefix"`
 	Address string `json:"address"`
 }
 
-type InterfacesVPC struct {
-	VPCID    int               `json:"vpc_id"`
-	SubnetID int               `json:"subnet_id"`
-	IPv4     InterfacesVPCIPv4 `json:"ipv4"`
+type VPCInterface struct {
+	VPCID    int              `json:"vpc_id"`
+	SubnetID int              `json:"subnet_id"`
+	IPv4     VPCInterfaceIPv4 `json:"ipv4"`
 }
 
-type InterfacesVPCIPv4 struct {
-	Addresses []InterfacesVPCIPv4Address `json:"addresses"`
-	Ranges    []InterfacesVPCIPv4Range   `json:"ranges"`
+type VPCInterfaceIPv4 struct {
+	Addresses []VPCInterfaceIPv4Address `json:"addresses"`
+	Ranges    []VPCInterfaceIPv4Range   `json:"ranges"`
 }
 
-type InterfacesVPCIPv4Address struct {
+type VPCInterfaceIPv4Address struct {
 	Address        string  `json:"address"`
 	Primary        bool    `json:"primary"`
-	NAT1to1Address *string `json:"nat_1_1_address,omitempty"`
+	NAT1To1Address *string `json:"nat_1_1_address"`
 }
 
-type InterfacesVPCIPv4Range struct {
+type VPCInterfaceIPv4Range struct {
 	Range string `json:"range"`
 }
 
-type InterfacesVLAN struct {
+type VLANInterface struct {
 	Label       string  `json:"vlan_label"`
 	IPAMAddress *string `json:"ipam_address,omitempty"`
 }
 
 type LinodeInterfaceCreateOptions struct {
-	FirewallID   *int                           `json:"firewall_id,omitempty"`
-	DefaultRoute *InterfacesDefaultRoute        `json:"default_route,omitempty"`
-	Public       *InterfacesPublicCreateOptions `json:"public,omitempty"`
-	VPC          *InterfacesVPCCreateOptions    `json:"vpc,omitempty"`
-	VLAN         *InterfacesVLAN                `json:"vlan,omitempty"`
+	FirewallID   *int                          `json:"firewall_id,omitempty"`
+	DefaultRoute *InterfaceDefaultRoute        `json:"default_route,omitempty"`
+	Public       *PublicInterfaceCreateOptions `json:"public,omitempty"`
+	VPC          *VPCInterfaceCreateOptions    `json:"vpc,omitempty"`
+	VLAN         *VLANInterface                `json:"vlan,omitempty"`
 }
 
-type InterfacesPublicCreateOptions struct {
-	IPv4 []*InterfacesIPv4              `json:"ipv4,omitempty"`
-	IPv6 []*InterfacesIPv6CreateOptions `json:"ipv6,omitempty"`
+type PublicInterfaceCreateOptions struct {
+	IPv4 []PublicInterfaceIPv4CreateOptions `json:"ipv4,omitempty"`
+	IPv6 []PublicInterfaceIPv6CreateOptions `json:"ipv6,omitempty"`
 }
 
-type InterfacesIPv6CreateOptions struct {
-	Ranges []InterfacesIPv6RangeCreateOptions `json:"ranges"`
+type PublicInterfaceIPv4CreateOptions struct {
+	Addresses []PublicInterfaceIPv4AddressCreateOptions `json:"addresses,omitempty"`
 }
 
-type InterfacesIPv6RangeCreateOptions struct {
+type PublicInterfaceIPv4AddressCreateOptions struct {
+	Address string `json:"address"`
+	Primary *bool  `json:"primary,omitempty"`
+}
+
+type PublicInterfaceIPv6CreateOptions struct {
+	Ranges []PublicInterfaceIPv6RangeCreateOptions `json:"ranges,omitempty"`
+}
+
+type PublicInterfaceIPv6RangeCreateOptions struct {
 	Range string `json:"range"`
 }
 
-type InterfacesVPCCreateOptions struct {
-	SubnetID int               `json:"subnet_id"`
-	IPv4     []*InterfacesIPv4 `json:"ipv4,omitempty"`
+type LinodeInterfaceUpdateOptions struct {
+	DefaultRoute *InterfaceDefaultRoute        `json:"default_route,omitempty"`
+	Public       *PublicInterfaceCreateOptions `json:"public,omitempty"`
+	VPC          *VPCInterfaceCreateOptions    `json:"vpc,omitempty"`
+	VLAN         *VLANInterface                `json:"vlan,omitempty"`
 }
 
-type LinodeInterfaceUpdateOptions struct {
-	DefaultRoute *InterfacesDefaultRoute        `json:"default_route,omitempty"`
-	Public       *InterfacesPublicCreateOptions `json:"public,omitempty"`
-	VPC          *InterfacesVPCCreateOptions    `json:"vpc,omitempty"`
-	VLAN         *InterfacesVLAN                `json:"vlan,omitempty"`
+type VPCInterfaceCreateOptions struct {
+	SubnetID int                             `json:"subnet_id"`
+	IPv4     []VPCInterfaceIPv4CreateOptions `json:"ipv4,omitempty"`
+}
+
+type VPCInterfaceIPv4CreateOptions struct {
+	Addresses []VPCInterfaceIPv4AddressCreateOptions `json:"addresses,omitempty"`
+	Ranges    []VPCInterfaceIPv4RangeCreateOptions   `json:"ranges,omitempty"`
+}
+
+type VPCInterfaceIPv4AddressCreateOptions struct {
+	Address        string  `json:"address"`
+	Primary        *bool   `json:"primary,omitempty"`
+	NAT1To1Address *string `json:"nat_1_1_address,omitempty"`
+}
+
+type VPCInterfaceIPv4RangeCreateOptions struct {
+	Range string `json:"range"`
 }
 
 type LinodeInterfacesUpgrade struct {
-	ConfigID   int               `json:"config_id,omitempty"`
-	DryRun     *bool             `json:"dry_run,omitempty"`
+	ConfigID   int               `json:"config_id"`
+	DryRun     bool              `json:"dry_run"`
 	Interfaces []LinodeInterface `json:"interfaces"`
 }
 
 type LinodeInterfacesUpgradeOptions struct {
-	ConfigID int   `json:"config_id,omitempty"`
+	ConfigID *int  `json:"config_id,omitempty"`
 	DryRun   *bool `json:"dry_run,omitempty"`
 }
 
 type InterfaceSettings struct {
-	NetworkHelper bool                  `json:"network_helper"`
-	DefaultRoute  *SettingsDefaultRoute `json:"default_route,omitempty"`
+	NetworkHelper bool                          `json:"network_helper"`
+	DefaultRoute  *InterfaceDefaultRouteSetting `json:"default_route"`
 }
 
 type InterfaceSettingsUpdateOptions struct {
-	NetworkHelper bool                  `json:"network_helper"`
-	DefaultRoute  *SettingsDefaultRoute `json:"default_route,omitempty"`
+	NetworkHelper *bool                                      `json:"network_helper,omitempty"`
+	DefaultRoute  *InterfaceDefaultRouteSettingUpdateOptions `json:"default_route,omitempty"`
 }
 
-type SettingsDefaultRoute struct {
-	IPv4InterfaceID          int   `json:"ipv4_interface_id,omitempty"`
-	IPv4EligibleInterfaceIDs []int `json:"ipv4_eligible_interface_ids,omitempty"`
-	IPv6InterfaceID          int   `json:"ipv6_interface_id,omitempty"`
-	IPv6EligibleInterfaceIDs []int `json:"ipv6_eligible_interface_ids,omitempty"`
+type InterfaceDefaultRouteSettingUpdateOptions struct {
+	IPv4InterfaceID *int `json:"ipv4_interface_id,omitempty"`
+	IPv6InterfaceID *int `json:"ipv6_interface_id,omitempty"`
+}
+
+type InterfaceDefaultRouteSetting struct {
+	IPv4InterfaceID          int   `json:"ipv4_interface_id"`
+	IPv4EligibleInterfaceIDs []int `json:"ipv4_eligible_interface_ids"`
+	IPv6InterfaceID          int   `json:"ipv6_interface_id"`
+	IPv6EligibleInterfaceIDs []int `json:"ipv6_eligible_interface_ids"`
 }
 
 func (i *LinodeInterface) UnmarshalJSON(b []byte) error {

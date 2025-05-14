@@ -110,7 +110,7 @@ func TestInterface_Update(t *testing.T) {
 	base.MockPut("linode/instances/123/interfaces/123", fixtureData)
 
 	opts := linodego.LinodeInterfaceUpdateOptions{
-		DefaultRoute: &linodego.InterfacesDefaultRoute{
+		DefaultRoute: &linodego.InterfaceDefaultRoute{
 			IPv6: linodego.Pointer(true),
 		},
 	}
@@ -140,7 +140,7 @@ func TestInterface_Upgrade(t *testing.T) {
 	base.MockPost("linode/instances/123/upgrade-interfaces", fixtureData)
 
 	opts := linodego.LinodeInterfacesUpgradeOptions{
-		ConfigID: 123,
+		ConfigID: linodego.Pointer(123),
 		DryRun:   linodego.Pointer(false),
 	}
 
@@ -150,7 +150,7 @@ func TestInterface_Upgrade(t *testing.T) {
 	}
 
 	assert.Equal(t, 123, iface.ConfigID)
-	assert.Equal(t, false, *iface.DryRun)
+	assert.Equal(t, false, iface.DryRun)
 	assert.Equal(t, 123, iface.Interfaces[0].ID)
 }
 
@@ -213,7 +213,7 @@ func TestInterface_UpdateSettings(t *testing.T) {
 	base.MockPut("linode/instances/123/interfaces/settings", fixtureData)
 
 	opts := linodego.InterfaceSettingsUpdateOptions{
-		NetworkHelper: true,
+		NetworkHelper: linodego.Pointer(true),
 	}
 
 	settings, err := base.Client.UpdateInterfaceSettings(context.Background(), 123, opts)
