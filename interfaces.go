@@ -52,8 +52,8 @@ type PublicInterfaceIPv4Shared struct {
 }
 
 type PublicInterfaceIPv6Range struct {
-	Range       string `json:"range"`
-	RouteTarget string `json:"route_target"`
+	Range       string  `json:"range"`
+	RouteTarget *string `json:"route_target"`
 }
 
 type PublicInterfaceIPv6SLAAC struct {
@@ -156,8 +156,8 @@ type LinodeInterfacesUpgradeOptions struct {
 }
 
 type InterfaceSettings struct {
-	NetworkHelper bool                          `json:"network_helper"`
-	DefaultRoute  *InterfaceDefaultRouteSetting `json:"default_route"`
+	NetworkHelper bool                         `json:"network_helper"`
+	DefaultRoute  InterfaceDefaultRouteSetting `json:"default_route"`
 }
 
 type InterfaceSettingsUpdateOptions struct {
@@ -171,9 +171,9 @@ type InterfaceDefaultRouteSettingUpdateOptions struct {
 }
 
 type InterfaceDefaultRouteSetting struct {
-	IPv4InterfaceID          int   `json:"ipv4_interface_id"`
+	IPv4InterfaceID          *int  `json:"ipv4_interface_id"`
 	IPv4EligibleInterfaceIDs []int `json:"ipv4_eligible_interface_ids"`
-	IPv6InterfaceID          int   `json:"ipv6_interface_id"`
+	IPv6InterfaceID          *int  `json:"ipv6_interface_id"`
 	IPv6EligibleInterfaceIDs []int `json:"ipv6_eligible_interface_ids"`
 }
 
