@@ -95,6 +95,13 @@ type LinodeInterfaceCreateOptions struct {
 	VLAN         *VLANInterface                `json:"vlan,omitempty"`
 }
 
+type LinodeInterfaceUpdateOptions struct {
+	DefaultRoute *InterfaceDefaultRoute        `json:"default_route,omitempty"`
+	Public       *PublicInterfaceCreateOptions `json:"public,omitempty"`
+	VPC          *VPCInterfaceCreateOptions    `json:"vpc,omitempty"`
+	VLAN         *VLANInterface                `json:"vlan,omitempty"`
+}
+
 type PublicInterfaceCreateOptions struct {
 	IPv4 []PublicInterfaceIPv4CreateOptions `json:"ipv4,omitempty"`
 	IPv6 []PublicInterfaceIPv6CreateOptions `json:"ipv6,omitempty"`
@@ -115,13 +122,6 @@ type PublicInterfaceIPv6CreateOptions struct {
 
 type PublicInterfaceIPv6RangeCreateOptions struct {
 	Range string `json:"range"`
-}
-
-type LinodeInterfaceUpdateOptions struct {
-	DefaultRoute *InterfaceDefaultRoute        `json:"default_route,omitempty"`
-	Public       *PublicInterfaceCreateOptions `json:"public,omitempty"`
-	VPC          *VPCInterfaceCreateOptions    `json:"vpc,omitempty"`
-	VLAN         *VLANInterface                `json:"vlan,omitempty"`
 }
 
 type VPCInterfaceCreateOptions struct {
