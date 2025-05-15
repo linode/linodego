@@ -41,12 +41,10 @@ func (i *ProfileLogin) UnmarshalJSON(b []byte) error {
 // GetProfileLogin returns the Profile Login of the authenticated user
 func (c *Client) GetProfileLogin(ctx context.Context, id int) (*ProfileLogin, error) {
 	e := formatAPIPath("profile/logins/%d", id)
-	response, err := doGETRequest[ProfileLogin](ctx, c, e)
-	return response, err
+	return doGETRequest[ProfileLogin](ctx, c, e)
 }
 
 // ListProfileLogins lists Profile Logins of the authenticated user
 func (c *Client) ListProfileLogins(ctx context.Context, opts *ListOptions) ([]ProfileLogin, error) {
-	response, err := getPaginatedResults[ProfileLogin](ctx, c, "profile/logins", opts)
-	return response, err
+	return getPaginatedResults[ProfileLogin](ctx, c, "profile/logins", opts)
 }

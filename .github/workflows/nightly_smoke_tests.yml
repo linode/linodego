@@ -32,13 +32,13 @@ jobs:
       - name: Run smoke tests
         id: smoke_tests
         run: |
-          make smoketest
+          make test-smoke
         env:
           LINODE_TOKEN: ${{ secrets.DX_LINODE_TOKEN }}
 
       - name: Notify Slack
         if: (success() || failure()) && github.repository == 'linode/linodego'
-        uses: slackapi/slack-github-action@v2.0.0
+        uses: slackapi/slack-github-action@v2.1.0
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_BOT_TOKEN }}

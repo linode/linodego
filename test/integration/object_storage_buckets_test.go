@@ -43,7 +43,6 @@ func TestObjectStorageBucket_Create_smoke(t *testing.T) {
 }
 
 func TestObjectStorageBucket_Regional(t *testing.T) {
-	// t.Skip("skipping region test before GA")
 	client, teardown := createTestClient(t, "fixtures/TestObjectStorageBucket_Regional")
 	regions := getRegionsWithCaps(t, client, []string{"Object Storage"})
 	if len(regions) < 1 {
@@ -137,15 +136,24 @@ func TestObjectStorageBuckets_List_smoke(t *testing.T) {
 		"fixtures/TestObjectStorageBuckets_List", nil, nil, nil)
 	defer teardown()
 
-	i, err := client.ListObjectStorageBuckets(context.Background(), nil)
 	if err != nil {
-		t.Errorf("Error listing ObjectStorageBuckets, expected struct, got error %v", err)
+		t.Fatalf("Failed to set up test: %v", err)
 	}
-	if len(i) == 0 {
-		t.Errorf("Expected a list of ObjectStorageBuckets, but got none %v", i)
-	} else if i[0].Label == "" ||
-		i[0].Cluster == "" {
-		t.Errorf("Listed Object Storage Bucket did not have attribuets %v", i)
+
+	buckets, err := client.ListObjectStorageBuckets(context.Background(), nil)
+	if err != nil {
+		t.Fatalf("Error listing Object Storage Buckets: %v", err)
+	}
+
+	if len(buckets) == 0 {
+		t.Fatalf("Expected at least one Object Storage Bucket, but got none.")
+	}
+
+	for index, bucket := range buckets {
+		if bucket.Label == "" {
+			t.Errorf("Bucket at index %d is missing attributes: Label=%q, Full Bucket Data: %+v",
+				index, bucket.Label, bucket)
+		}
 	}
 }
 
@@ -163,7 +171,7 @@ func TestObjectStorageBucketsInCluster_List(t *testing.T) {
 		t.Errorf("Expected a list of ObjectStorageBucketsInCluster, but got none %v", i)
 	} else if i[0].Label == "" ||
 		i[0].Cluster == "" {
-		t.Errorf("Listed Object Storage Bucket in Cluster did not have attribuets %v", i)
+		t.Errorf("Listed Object Storage Bucket in Cluster did not have attributes %v", i)
 	}
 }
 

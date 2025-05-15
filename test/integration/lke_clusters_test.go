@@ -2,6 +2,7 @@ package integration
 
 import (
 	"context"
+	"fmt"
 	"net/url"
 	"reflect"
 	"testing"
@@ -67,7 +68,7 @@ func TestLKECluster_Enterprise_smoke(t *testing.T) {
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Tier = "enterprise"
 		createOpts.Region = "us-lax"
-		createOpts.K8sVersion = "v1.31.1+lke1"
+		createOpts.K8sVersion = "v1.31.1+lke4"
 	}}, "fixtures/TestLKECluster_Enterprise_smoke")
 	defer teardown()
 	i, err := client.GetLKECluster(context.Background(), lkeCluster.ID)
@@ -93,7 +94,7 @@ func TestLKECluster_Update(t *testing.T) {
 
 	updatedTags := []string{"test=true"}
 	updatedLabel := cluster.Label + "-updated"
-	updatedK8sVersion := "1.30"
+	updatedK8sVersion := "1.31"
 
 	updatedCluster, err := client.UpdateLKECluster(context.Background(), cluster.ID, linodego.LKEClusterUpdateOptions{
 		Tags:       &updatedTags,
@@ -308,7 +309,7 @@ func setupLKECluster(t *testing.T, clusterModifiers []clusterModifier, fixturesY
 
 	createOpts := linodego.LKEClusterCreateOptions{
 		Label:      label,
-		Region:     getRegionsWithCaps(t, client, []string{"Kubernetes", "Disk Encryption"})[0],
+		Region:     getRegionsWithCaps(t, client, []string{"Kubernetes", "LA Disk Encryption"})[0],
 		K8sVersion: "1.31",
 		Tags:       []string{"testing"},
 		NodePools:  []linodego.LKENodePoolCreateOptions{{Count: 1, Type: "g6-standard-2", Tags: []string{"test"}}},
@@ -329,4 +330,69 @@ func setupLKECluster(t *testing.T, clusterModifiers []clusterModifier, fixturesY
 		fixtureTeardown()
 	}
 	return client, lkeCluster, teardown, err
+}
+
+func TestLKECluster_APLEnabled_smoke(t *testing.T) {
+	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{
+		func(createOpts *linodego.LKEClusterCreateOptions) {
+			createOpts.Label = "go-lke-test-apl-enabled"
+		},
+		func(createOpts *linodego.LKEClusterCreateOptions) {
+			createOpts.APLEnabled = true
+		},
+		func(createOpts *linodego.LKEClusterCreateOptions) {
+			// NOTE: g6-dedicated-4 is the minimum APL-compatible Linode type
+			createOpts.NodePools = []linodego.LKENodePoolCreateOptions{{Count: 3, Type: "g6-dedicated-4", Tags: []string{"test"}}}
+		},
+	},
+		"fixtures/TestLKECluster_APLEnabled")
+	defer teardown()
+
+	expectedConsoleURL := fmt.Sprintf("https://console.lke%d.akamai-apl.net", lkeCluster.ID)
+	consoleURL, err := client.GetLKEClusterAPLConsoleURL(context.Background(), lkeCluster.ID)
+	if err != nil {
+		t.Errorf("Error getting LKE APL console URL, expected string, got %v and error %v", consoleURL, err)
+	}
+	if consoleURL != expectedConsoleURL {
+		t.Errorf("Expected an APL console URL %v, but got a different one %v", expectedConsoleURL, consoleURL)
+	}
+
+	expectedHealthCheckURL := fmt.Sprintf("https://auth.lke%d.akamai-apl.net/ready", lkeCluster.ID)
+	healthCheckURL, err := client.GetLKEClusterAPLHealthCheckURL(context.Background(), lkeCluster.ID)
+	if err != nil {
+		t.Errorf("Error getting LKE APL health check URL, expected string, got %v and error %v", healthCheckURL, err)
+	}
+	if healthCheckURL != expectedHealthCheckURL {
+		t.Errorf("Expected an APL health check URL %v, but got a different one %v", expectedHealthCheckURL, healthCheckURL)
+	}
+}
+
+func TestLKETierVersion_ListAndGet(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestLKETierVersion_ListAndGet")
+	defer teardown()
+
+	tier := "standard"
+	versions, err := client.ListLKETierVersions(context.Background(), tier, nil)
+	if err != nil {
+		t.Errorf("Error listing versions, expected struct, got %v and error %v", versions, err)
+	}
+
+	if len(versions) == 0 {
+		t.Errorf("Expected a list of versions, but got none %v", versions)
+	}
+
+	for _, version := range versions {
+		if string(version.Tier) != tier {
+			t.Errorf("Expected version tier %v, but got %v", tier, version.Tier)
+		}
+	}
+
+	v, err := client.GetLKETierVersion(context.Background(), tier, versions[0].ID)
+	if err != nil {
+		t.Errorf("Error getting version, expected struct, got %v and error %v", v, err)
+	}
+
+	if v.ID != versions[0].ID {
+		t.Errorf("Expected a specific version %v, but got a different one %v", versions[0].ID, v.ID)
+	}
 }

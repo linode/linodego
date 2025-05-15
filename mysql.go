@@ -47,6 +47,9 @@ type MySQLDatabase struct {
 	Updates           DatabaseMaintenanceWindow `json:"updates"`
 	Fork              *DatabaseFork             `json:"fork"`
 	OldestRestoreTime *time.Time                `json:"-"`
+	UsedDiskSizeGB    int                       `json:"used_disk_size_gb"`
+	TotalDiskSizeGB   int                       `json:"total_disk_size_gb"`
+	Port              int                       `json:"port"`
 }
 
 func (d *MySQLDatabase) UnmarshalJSON(b []byte) error {
@@ -149,93 +152,55 @@ type MySQLDatabaseSSL struct {
 
 // ListMySQLDatabases lists all MySQL Databases associated with the account
 func (c *Client) ListMySQLDatabases(ctx context.Context, opts *ListOptions) ([]MySQLDatabase, error) {
-	response, err := getPaginatedResults[MySQLDatabase](ctx, c, "databases/mysql/instances", opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return getPaginatedResults[MySQLDatabase](ctx, c, "databases/mysql/instances", opts)
 }
 
 // ListMySQLDatabaseBackups lists all MySQL Database Backups associated with the given MySQL Database
 // Deprecated: ListMySQLDatabaseBackups is a deprecated method, as the backup endpoints are no longer supported in DBaaS V2.
 // In DBaaS V2, databases can be backed up via database forking.
 func (c *Client) ListMySQLDatabaseBackups(ctx context.Context, databaseID int, opts *ListOptions) ([]MySQLDatabaseBackup, error) {
-	response, err := getPaginatedResults[MySQLDatabaseBackup](ctx, c, formatAPIPath("databases/mysql/instances/%d/backups", databaseID), opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return getPaginatedResults[MySQLDatabaseBackup](ctx, c, formatAPIPath("databases/mysql/instances/%d/backups", databaseID), opts)
 }
 
 // GetMySQLDatabase returns a single MySQL Database matching the id
 func (c *Client) GetMySQLDatabase(ctx context.Context, databaseID int) (*MySQLDatabase, error) {
 	e := formatAPIPath("databases/mysql/instances/%d", databaseID)
-	response, err := doGETRequest[MySQLDatabase](ctx, c, e)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doGETRequest[MySQLDatabase](ctx, c, e)
 }
 
 // CreateMySQLDatabase creates a new MySQL Database using the createOpts as configuration, returns the new MySQL Database
 func (c *Client) CreateMySQLDatabase(ctx context.Context, opts MySQLCreateOptions) (*MySQLDatabase, error) {
-	e := "databases/mysql/instances"
-	response, err := doPOSTRequest[MySQLDatabase](ctx, c, e, opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doPOSTRequest[MySQLDatabase](ctx, c, "databases/mysql/instances", opts)
 }
 
 // DeleteMySQLDatabase deletes an existing MySQL Database with the given id
 func (c *Client) DeleteMySQLDatabase(ctx context.Context, databaseID int) error {
 	e := formatAPIPath("databases/mysql/instances/%d", databaseID)
-	err := doDELETERequest(ctx, c, e)
-	return err
+	return doDELETERequest(ctx, c, e)
 }
 
 // UpdateMySQLDatabase updates the given MySQL Database with the provided opts, returns the MySQLDatabase with the new settings
 func (c *Client) UpdateMySQLDatabase(ctx context.Context, databaseID int, opts MySQLUpdateOptions) (*MySQLDatabase, error) {
 	e := formatAPIPath("databases/mysql/instances/%d", databaseID)
-	response, err := doPUTRequest[MySQLDatabase](ctx, c, e, opts)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doPUTRequest[MySQLDatabase](ctx, c, e, opts)
 }
 
 // GetMySQLDatabaseSSL returns the SSL Certificate for the given MySQL Database
 func (c *Client) GetMySQLDatabaseSSL(ctx context.Context, databaseID int) (*MySQLDatabaseSSL, error) {
 	e := formatAPIPath("databases/mysql/instances/%d/ssl", databaseID)
-	response, err := doGETRequest[MySQLDatabaseSSL](ctx, c, e)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doGETRequest[MySQLDatabaseSSL](ctx, c, e)
 }
 
 // GetMySQLDatabaseCredentials returns the Root Credentials for the given MySQL Database
 func (c *Client) GetMySQLDatabaseCredentials(ctx context.Context, databaseID int) (*MySQLDatabaseCredential, error) {
 	e := formatAPIPath("databases/mysql/instances/%d/credentials", databaseID)
-	response, err := doGETRequest[MySQLDatabaseCredential](ctx, c, e)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doGETRequest[MySQLDatabaseCredential](ctx, c, e)
 }
 
 // ResetMySQLDatabaseCredentials returns the Root Credentials for the given MySQL Database (may take a few seconds to work)
 func (c *Client) ResetMySQLDatabaseCredentials(ctx context.Context, databaseID int) error {
 	e := formatAPIPath("databases/mysql/instances/%d/credentials/reset", databaseID)
-	_, err := doPOSTRequest[MySQLDatabaseCredential, any](ctx, c, e)
-	return err
+	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
 }
 
 // GetMySQLDatabaseBackup returns a specific MySQL Database Backup with the given ids
@@ -243,12 +208,7 @@ func (c *Client) ResetMySQLDatabaseCredentials(ctx context.Context, databaseID i
 // In DBaaS V2, databases can be backed up via database forking.
 func (c *Client) GetMySQLDatabaseBackup(ctx context.Context, databaseID int, backupID int) (*MySQLDatabaseBackup, error) {
 	e := formatAPIPath("databases/mysql/instances/%d/backups/%d", databaseID, backupID)
-	response, err := doGETRequest[MySQLDatabaseBackup](ctx, c, e)
-	if err != nil {
-		return nil, err
-	}
-
-	return response, nil
+	return doGETRequest[MySQLDatabaseBackup](ctx, c, e)
 }
 
 // RestoreMySQLDatabaseBackup returns the given MySQL Database with the given Backup
@@ -256,8 +216,7 @@ func (c *Client) GetMySQLDatabaseBackup(ctx context.Context, databaseID int, bac
 // In DBaaS V2, databases can be backed up via database forking.
 func (c *Client) RestoreMySQLDatabaseBackup(ctx context.Context, databaseID int, backupID int) error {
 	e := formatAPIPath("databases/mysql/instances/%d/backups/%d/restore", databaseID, backupID)
-	_, err := doPOSTRequest[MySQLDatabaseBackup, any](ctx, c, e)
-	return err
+	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
 }
 
 // CreateMySQLDatabaseBackup creates a snapshot for the given MySQL database
@@ -265,13 +224,24 @@ func (c *Client) RestoreMySQLDatabaseBackup(ctx context.Context, databaseID int,
 // In DBaaS V2, databases can be backed up via database forking.
 func (c *Client) CreateMySQLDatabaseBackup(ctx context.Context, databaseID int, opts MySQLBackupCreateOptions) error {
 	e := formatAPIPath("databases/mysql/instances/%d/backups", databaseID)
-	_, err := doPOSTRequest[MySQLDatabaseBackup](ctx, c, e, opts)
-	return err
+	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
 
 // PatchMySQLDatabase applies security patches and updates to the underlying operating system of the Managed MySQL Database
 func (c *Client) PatchMySQLDatabase(ctx context.Context, databaseID int) error {
 	e := formatAPIPath("databases/mysql/instances/%d/patch", databaseID)
-	_, err := doPOSTRequest[MySQLDatabase, any](ctx, c, e)
-	return err
+	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
+}
+
+// SuspendMySQLDatabase suspends a MySQL Managed Database, releasing idle resources and keeping only necessary data.
+// All service data is lost if there are no backups available.
+func (c *Client) SuspendMySQLDatabase(ctx context.Context, databaseID int) error {
+	e := formatAPIPath("databases/mysql/instances/%d/suspend", databaseID)
+	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
+}
+
+// ResumeMySQLDatabase resumes a suspended MySQL Managed Database
+func (c *Client) ResumeMySQLDatabase(ctx context.Context, databaseID int) error {
+	e := formatAPIPath("databases/mysql/instances/%d/resume", databaseID)
+	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
 }

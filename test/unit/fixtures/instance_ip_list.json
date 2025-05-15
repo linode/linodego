@@ -1,0 +1,35 @@
+{
+    "ipv4": {
+      "public": [
+        {
+          "address": "192.0.2.1",
+          "gateway": "192.0.2.254",
+          "subnet_mask": "255.255.255.0",
+          "prefix": 24,
+          "type": "ipv4",
+          "public": true,
+          "rdns": "example.com",
+          "linode_id": 123,
+          "region": "us-east"
+        }
+      ],
+      "private": [],
+      "shared": [],
+      "reserved": [],
+      "vpc": []
+    },
+    "ipv6": {
+      "link_local": {
+        "address": "fe80::1",
+        "gateway": "fe80::ff",
+        "prefix": 64
+      },
+      "slaac": {
+        "address": "2001:db8::1",
+        "gateway": "2001:db8::ff",
+        "prefix": 64
+      },
+      "global": []
+    }
+}
+  

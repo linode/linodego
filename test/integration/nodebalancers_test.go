@@ -16,7 +16,47 @@ var (
 )
 
 func TestNodeBalancer_Create_create_smoke(t *testing.T) {
-	_, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancer_Create")
+	_, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancer_Create", nil)
+	defer teardown()
+
+	if err != nil {
+		t.Errorf("Error creating nodebalancer: %v", err)
+	}
+
+	// when comparing fixtures to random value Label will differ, compare the known suffix
+	if !strings.Contains(*nodebalancer.Label, label) {
+		t.Errorf("nodebalancer returned does not match nodebalancer create request")
+	}
+
+	assertDateSet(t, nodebalancer.Created)
+	assertDateSet(t, nodebalancer.Updated)
+}
+
+func TestNodeBalancer_Create_Type(t *testing.T) {
+	_, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancer_Create_Type", []nbModifier{func(createOpts *linodego.NodeBalancerCreateOptions) {
+		createOpts.Type = linodego.NBTypeCommon
+	}})
+	defer teardown()
+
+	if err != nil {
+		t.Errorf("Error creating nodebalancer: %v", err)
+	}
+
+	// when comparing fixtures to random value Label will differ, compare the known suffix
+	if !strings.Contains(*nodebalancer.Label, label) {
+		t.Errorf("nodebalancer returned does not match nodebalancer create request")
+	}
+	// add this test case once the api supports returning it
+	if nodebalancer.Type != linodego.NBTypeCommon {
+		t.Errorf("nodebalancer returned type does not match the type of the nodebalancer create request")
+	}
+
+	assertDateSet(t, nodebalancer.Created)
+	assertDateSet(t, nodebalancer.Updated)
+}
+
+func TestNodeBalancer_Create_with_vpc(t *testing.T) {
+	_, nodebalancer, _, _, teardown, err := setupNodeBalancerWithVPC(t, "fixtures/TestNodeBalancer_With_VPC_Create")
 	defer teardown()
 
 	if err != nil {
@@ -33,7 +73,7 @@ func TestNodeBalancer_Create_create_smoke(t *testing.T) {
 }
 
 func TestNodeBalancer_Update(t *testing.T) {
-	client, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancer_Update")
+	client, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancer_Update", nil)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -54,7 +94,7 @@ func TestNodeBalancer_Update(t *testing.T) {
 }
 
 func TestNodeBalancers_List_smoke(t *testing.T) {
-	client, _, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancers_List")
+	client, _, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancers_List", nil)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -70,7 +110,7 @@ func TestNodeBalancers_List_smoke(t *testing.T) {
 }
 
 func TestNodeBalancer_Get(t *testing.T) {
-	client, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancer_Get")
+	client, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancer_Get", nil)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -86,8 +126,10 @@ func TestNodeBalancer_UDP(t *testing.T) {
 	_, nodebalancer, teardown, err := setupNodeBalancer(
 		t,
 		"fixtures/TestNodeBalancer_UDP",
-		func(options *linodego.NodeBalancerCreateOptions) {
-			options.ClientUDPSessThrottle = linodego.Pointer(5)
+		[]nbModifier{
+			func(options *linodego.NodeBalancerCreateOptions) {
+				options.ClientUDPSessThrottle = linodego.Pointer(5)
+			},
 		},
 	)
 	defer teardown()
@@ -98,11 +140,9 @@ func TestNodeBalancer_UDP(t *testing.T) {
 	require.Equal(t, 5, nodebalancer.ClientUDPSessThrottle)
 }
 
-func setupNodeBalancer(
-	t *testing.T,
-	fixturesYaml string,
-	modifiers ...func(options *linodego.NodeBalancerCreateOptions),
-) (*linodego.Client, *linodego.NodeBalancer, func(), error) {
+type nbModifier func(options *linodego.NodeBalancerCreateOptions)
+
+func setupNodeBalancer(t *testing.T, fixturesYaml string, nbModifiers []nbModifier) (*linodego.Client, *linodego.NodeBalancer, func(), error) {
 	t.Helper()
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
@@ -112,8 +152,7 @@ func setupNodeBalancer(
 		ClientConnThrottle: &clientConnThrottle,
 		FirewallID:         GetFirewallID(),
 	}
-
-	for _, modifier := range modifiers {
+	for _, modifier := range nbModifiers {
 		modifier(&createOpts)
 	}
 
@@ -129,4 +168,41 @@ func setupNodeBalancer(
 		fixtureTeardown()
 	}
 	return client, nodebalancer, teardown, err
+}
+
+func setupNodeBalancerWithVPC(t *testing.T, fixturesYaml string, vpcModifier ...vpcModifier) (*linodego.Client, *linodego.NodeBalancer, *linodego.VPC, *linodego.VPCSubnet, func(), error) {
+	t.Helper()
+	var fixtureTeardown func()
+	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+	vpc, subnet, vpcTeardown, err := createVPCWithSubnet(t, client, vpcModifier...)
+	if err != nil {
+		t.Errorf("Error creating vpc, got error %v", err)
+	}
+	createOpts := linodego.NodeBalancerCreateOptions{
+		Label:              &label,
+		Region:             vpc.Region,
+		ClientConnThrottle: &clientConnThrottle,
+		FirewallID:         GetFirewallID(),
+		VPCs: []linodego.NodeBalancerVPCOptions{
+			{
+				IPv4Range: "192.168.0.64/30",
+				IPv6Range: "",
+				SubnetID:  subnet.ID,
+			},
+		},
+	}
+
+	nodebalancer, err := client.CreateNodeBalancer(context.Background(), createOpts)
+	if err != nil {
+		t.Fatalf("Error listing nodebalancers, expected struct, got error %v", err)
+	}
+
+	teardown := func() {
+		if err := client.DeleteNodeBalancer(context.Background(), nodebalancer.ID); err != nil {
+			t.Errorf("Expected to delete a nodebalancer, but got %v", err)
+		}
+		vpcTeardown()
+		fixtureTeardown()
+	}
+	return client, nodebalancer, vpc, subnet, teardown, err
 }
