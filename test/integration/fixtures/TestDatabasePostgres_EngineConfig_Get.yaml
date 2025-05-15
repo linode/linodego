@@ -104,59 +104,58 @@ interactions:
       "maximum": 96, "minimum": 8, "requires_restart": true, "type": "integer"}, "password_encryption":
       {"default": "md5", "description": "Chooses the algorithm for encrypting passwords.",
       "enum": ["md5", "scram-sha-256"], "example": "scram-sha-256", "requires_restart":
-      false, "type": ["string", "null"]}, "pg_partman_bgw.interval": {"description":
-      "Sets the time interval to run pg_partman''s scheduled tasks", "example": 3600,
-      "maximum": 604800, "minimum": 3600, "requires_restart": false, "type": "integer"},
-      "pg_partman_bgw.role": {"description": "Controls which role to use for pg_partman''s
-      scheduled background tasks.", "example": "myrolename", "maxLength": 64, "pattern":
-      "^[_A-Za-z0-9][-._A-Za-z0-9]{0,63}$", "requires_restart": false, "type": "string"},
-      "pg_stat_monitor.pgsm_enable_query_plan": {"description": "Enables or disables
-      query plan monitoring", "example": false, "requires_restart": false, "type":
-      "boolean"}, "pg_stat_monitor.pgsm_max_buckets": {"description": "Sets the maximum
-      number of buckets ", "example": 10, "maximum": 10, "minimum": 1, "requires_restart":
-      true, "type": "integer"}, "pg_stat_statements.track": {"description": "Controls
-      which statements are counted. Specify top to track top-level statements (those
-      issued directly by clients), all to also track nested statements (such as statements
-      invoked within functions), or none to disable statement statistics collection.
-      The default value is top.", "enum": ["all", "top", "none"], "requires_restart":
-      false, "type": ["string"]}, "temp_file_limit": {"description": "PostgreSQL temporary
-      file limit in KiB, -1 for unlimited", "example": 5000000, "maximum": 2147483647,
-      "minimum": -1, "requires_restart": false, "type": "integer"}, "timezone": {"description":
-      "PostgreSQL service timezone", "example": "Europe/Helsinki", "maxLength": 64,
-      "pattern": "^[\\w/]*$", "requires_restart": false, "type": "string"}, "track_activity_query_size":
-      {"description": "Specifies the number of bytes reserved to track the currently
-      executing command for each active session.", "example": 1024, "maximum": 10240,
-      "minimum": 1024, "requires_restart": true, "type": "integer"}, "track_commit_timestamp":
-      {"description": "Record commit time of transactions.", "enum": ["off", "on"],
-      "example": "off", "requires_restart": true, "type": "string"}, "track_functions":
-      {"description": "Enables tracking of function call counts and time used.", "enum":
-      ["all", "pl", "none"], "requires_restart": false, "type": "string"}, "track_io_timing":
-      {"description": "Enables timing of database I/O calls. This parameter is off
-      by default, because it will repeatedly query the operating system for the current
-      time, which may cause significant overhead on some platforms.", "enum": ["off",
-      "on"], "example": "off", "requires_restart": false, "type": "string"}, "wal_sender_timeout":
-      {"description": "Terminate replication connections that are inactive for longer
-      than this amount of time, in milliseconds. Setting this value to zero disables
-      the timeout.", "example": 60000, "requires_restart": false, "type": "integer"},
-      "wal_writer_delay": {"description": "WAL flush interval in milliseconds. Note
-      that setting this value to lower than the default 200ms may negatively impact
-      performance", "example": 50, "maximum": 200, "minimum": 10, "requires_restart":
-      false, "type": "integer"}}, "pg_stat_monitor_enable": {"default": false, "description":
-      "Enable the pg_stat_monitor extension. Enabling this extension will cause the
-      cluster to be restarted.When this extension is enabled, pg_stat_statements results
-      for utility commands are unreliable", "requires_restart": true, "type": "boolean"},
-      "pglookout": {"max_failover_replication_time_lag": {"default": 60, "description":
-      "Number of seconds of master unavailability before triggering database failover
-      to standby", "maximum": 999999, "minimum": 10, "requires_restart": false, "type":
-      "integer"}}, "shared_buffers_percentage": {"description": "Percentage of total
-      RAM that the database server uses for shared memory buffers. Valid range is
-      20-60 (float), which corresponds to 20% - 60%. This setting adjusts the shared_buffers
-      configuration value.", "example": 41.5, "maximum": 60.0, "minimum": 20.0, "requires_restart":
-      true, "type": "number"}, "work_mem": {"description": "Sets the maximum amount
-      of memory to be used by a query operation (such as a sort or hash table) before
-      writing to temporary disk files, in MB. Default is 1MB + 0.075% of total RAM
-      (up to 32MB).", "example": 4, "maximum": 1024, "minimum": 1, "requires_restart":
-      false, "type": "integer"}}'
+      false, "type": "string"}, "pg_partman_bgw.interval": {"description": "Sets the
+      time interval to run pg_partman''s scheduled tasks", "example": 3600, "maximum":
+      604800, "minimum": 3600, "requires_restart": false, "type": "integer"}, "pg_partman_bgw.role":
+      {"description": "Controls which role to use for pg_partman''s scheduled background
+      tasks.", "example": "myrolename", "maxLength": 64, "pattern": "^[_A-Za-z0-9][-._A-Za-z0-9]{0,63}$",
+      "requires_restart": false, "type": "string"}, "pg_stat_monitor.pgsm_enable_query_plan":
+      {"description": "Enables or disables query plan monitoring", "example": false,
+      "requires_restart": true, "type": "boolean"}, "pg_stat_monitor.pgsm_max_buckets":
+      {"description": "Sets the maximum number of buckets ", "example": 10, "maximum":
+      10, "minimum": 1, "requires_restart": true, "type": "integer"}, "pg_stat_statements.track":
+      {"description": "Controls which statements are counted. Specify top to track
+      top-level statements (those issued directly by clients), all to also track nested
+      statements (such as statements invoked within functions), or none to disable
+      statement statistics collection. The default value is top.", "enum": ["all",
+      "top", "none"], "requires_restart": false, "type": "string"}, "temp_file_limit":
+      {"description": "PostgreSQL temporary file limit in KiB, -1 for unlimited",
+      "example": 5000000, "maximum": 2147483647, "minimum": -1, "requires_restart":
+      false, "type": "integer"}, "timezone": {"description": "PostgreSQL service timezone",
+      "example": "Europe/Helsinki", "maxLength": 64, "pattern": "^[\\w/]*$", "requires_restart":
+      false, "type": "string"}, "track_activity_query_size": {"description": "Specifies
+      the number of bytes reserved to track the currently executing command for each
+      active session.", "example": 1024, "maximum": 10240, "minimum": 1024, "requires_restart":
+      true, "type": "integer"}, "track_commit_timestamp": {"description": "Record
+      commit time of transactions.", "enum": ["off", "on"], "example": "off", "requires_restart":
+      true, "type": "string"}, "track_functions": {"description": "Enables tracking
+      of function call counts and time used.", "enum": ["all", "pl", "none"], "requires_restart":
+      false, "type": "string"}, "track_io_timing": {"description": "Enables timing
+      of database I/O calls. This parameter is off by default, because it will repeatedly
+      query the operating system for the current time, which may cause significant
+      overhead on some platforms.", "enum": ["off", "on"], "example": "off", "requires_restart":
+      false, "type": "string"}, "wal_sender_timeout": {"description": "Terminate replication
+      connections that are inactive for longer than this amount of time, in milliseconds.
+      Setting this value to zero disables the timeout.", "example": 60000, "requires_restart":
+      false, "type": "integer"}, "wal_writer_delay": {"description": "WAL flush interval
+      in milliseconds. Note that setting this value to lower than the default 200ms
+      may negatively impact performance", "example": 50, "maximum": 200, "minimum":
+      10, "requires_restart": false, "type": "integer"}}, "pg_stat_monitor_enable":
+      {"default": false, "description": "Enable the pg_stat_monitor extension. Enabling
+      this extension will cause the cluster to be restarted.When this extension is
+      enabled, pg_stat_statements results for utility commands are unreliable", "requires_restart":
+      true, "type": "boolean"}, "pglookout": {"max_failover_replication_time_lag":
+      {"default": 60, "description": "Number of seconds of master unavailability before
+      triggering database failover to standby", "maximum": 999999, "minimum": 10,
+      "requires_restart": false, "type": "integer"}}, "shared_buffers_percentage":
+      {"description": "Percentage of total RAM that the database server uses for shared
+      memory buffers. Valid range is 20-60 (float), which corresponds to 20% - 60%.
+      This setting adjusts the shared_buffers configuration value.", "example": 41.5,
+      "maximum": 60.0, "minimum": 20.0, "requires_restart": true, "type": "number"},
+      "work_mem": {"description": "Sets the maximum amount of memory to be used by
+      a query operation (such as a sort or hash table) before writing to temporary
+      disk files, in MB. Default is 1MB + 0.075% of total RAM (up to 32MB).", "example":
+      4, "maximum": 1024, "minimum": 1, "requires_restart": false, "type": "integer"}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -174,7 +173,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "11676"
+      - "11663"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:

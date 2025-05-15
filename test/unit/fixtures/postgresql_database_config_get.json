@@ -218,10 +218,7 @@
       ],
       "example": "scram-sha-256",
       "requires_restart": false,
-      "type": [
-        "string",
-        "null"
-      ]
+      "type": "string"
     },
     "pg_partman_bgw.interval": {
       "description": "Sets the time interval to run pg_partman's scheduled tasks",
@@ -261,9 +258,7 @@
         "none"
       ],
       "requires_restart": false,
-      "type": [
-        "string"
-      ]
+      "type": "string"
     },
     "temp_file_limit": {
       "description": "PostgreSQL temporary file limit in KiB, -1 for unlimited",
