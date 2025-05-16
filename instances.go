@@ -9,6 +9,13 @@ import (
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
+type InterfaceGeneration string
+
+const (
+	GenerationLegacyConfig InterfaceGeneration = "legacy_config"
+	GenerationLinode       InterfaceGeneration = "linode"
+)
+
 /*
  * https://techdocs.akamai.com/linode-api/reference/post-linode-instance
  */
@@ -68,6 +75,9 @@ type Instance struct {
 
 	LKEClusterID int      `json:"lke_cluster_id"`
 	Capabilities []string `json:"capabilities"`
+
+	// Note: Linode interfaces may not currently be available to all users.
+	InterfaceGeneration InterfaceGeneration `json:"interface_generation"`
 }
 
 // InstanceSpec represents a linode spec
@@ -198,6 +208,39 @@ type InstanceCreateOptions struct {
 	Group string `json:"group,omitempty"`
 
 	IPv4 []string `json:"ipv4,omitempty"`
+}
+
+type InstanceCreateOptionsWithLinodeInterfaces struct {
+	Region          string                   `json:"region"`
+	Type            string                   `json:"type"`
+	Label           string                   `json:"label,omitempty"`
+	RootPass        string                   `json:"root_pass,omitempty"`
+	AuthorizedKeys  []string                 `json:"authorized_keys,omitempty"`
+	AuthorizedUsers []string                 `json:"authorized_users,omitempty"`
+	StackScriptID   int                      `json:"stackscript_id,omitempty"`
+	StackScriptData map[string]string        `json:"stackscript_data,omitempty"`
+	BackupID        int                      `json:"backup_id,omitempty"`
+	Image           string                   `json:"image,omitempty"`
+	Interfaces      []LinodeInterface        `json:"interfaces,omitempty"`
+	BackupsEnabled  bool                     `json:"backups_enabled,omitempty"`
+	PrivateIP       bool                     `json:"private_ip,omitempty"`
+	Tags            []string                 `json:"tags,omitempty"`
+	Metadata        *InstanceMetadataOptions `json:"metadata,omitempty"`
+	FirewallID      int                      `json:"firewall_id,omitempty"`
+
+	// NOTE: Disk encryption may not currently be available to all users.
+	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitempty"`
+
+	PlacementGroup *InstanceCreatePlacementGroupOptions `json:"placement_group,omitempty"`
+
+	// Creation fields that need to be set explicitly false, "", or 0 use pointers
+	SwapSize *int  `json:"swap_size,omitempty"`
+	Booted   *bool `json:"booted,omitempty"`
+
+	IPv4 []string `json:"ipv4,omitempty"`
+
+	// Note: Linode interfaces may not currently be available to all users.
+	InterfaceGeneration InterfaceGeneration `json:"interface_generation"`
 }
 
 // InstanceCreatePlacementGroupOptions represents the placement group
@@ -341,6 +384,12 @@ func (c *Client) GetInstanceTransferMonthlyV2(ctx context.Context, linodeID, yea
 
 // CreateInstance creates a Linode instance
 func (c *Client) CreateInstance(ctx context.Context, opts InstanceCreateOptions) (*Instance, error) {
+	return doPOSTRequest[Instance](ctx, c, "linode/instances", opts)
+}
+
+// Create a Linode instance with Linode interfaces.
+// Note: Linode interfaces may not currently be available to all users.
+func (c *Client) CreateInstanceWithLinodeInterfaces(ctx context.Context, opts InstanceCreateOptionsWithLinodeInterfaces) (*Instance, error) {
 	return doPOSTRequest[Instance](ctx, c, "linode/instances", opts)
 }
 
