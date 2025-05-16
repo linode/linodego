@@ -68,7 +68,7 @@ func TestLKECluster_Enterprise_smoke(t *testing.T) {
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Tier = "enterprise"
 		createOpts.Region = "us-lax"
-		createOpts.K8sVersion = "v1.31.1+lke4"
+		createOpts.K8sVersion = ""
 	}}, "fixtures/TestLKECluster_Enterprise_smoke")
 	defer teardown()
 	i, err := client.GetLKECluster(context.Background(), lkeCluster.ID)
@@ -86,6 +86,7 @@ func TestLKECluster_Enterprise_smoke(t *testing.T) {
 func TestLKECluster_Update(t *testing.T) {
 	client, cluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = "go-lke-test-update"
+		createOpts.K8sVersion = "1.31"
 	}}, "fixtures/TestLKECluster_Update")
 	defer teardown()
 	if err != nil {
@@ -94,7 +95,7 @@ func TestLKECluster_Update(t *testing.T) {
 
 	updatedTags := []string{"test=true"}
 	updatedLabel := cluster.Label + "-updated"
-	updatedK8sVersion := "1.31"
+	updatedK8sVersion := "1.32"
 
 	updatedCluster, err := client.UpdateLKECluster(context.Background(), cluster.ID, linodego.LKEClusterUpdateOptions{
 		Tags:       &updatedTags,
@@ -300,38 +301,6 @@ func TestLKEVersions_List(t *testing.T) {
 	}
 }
 
-type clusterModifier func(*linodego.LKEClusterCreateOptions)
-
-func setupLKECluster(t *testing.T, clusterModifiers []clusterModifier, fixturesYaml string) (*linodego.Client, *linodego.LKECluster, func(), error) {
-	t.Helper()
-	var fixtureTeardown func()
-	client, fixtureTeardown := createTestClient(t, fixturesYaml)
-
-	createOpts := linodego.LKEClusterCreateOptions{
-		Label:      label,
-		Region:     getRegionsWithCaps(t, client, []string{"Kubernetes", "LA Disk Encryption"})[0],
-		K8sVersion: "1.31",
-		Tags:       []string{"testing"},
-		NodePools:  []linodego.LKENodePoolCreateOptions{{Count: 1, Type: "g6-standard-2", Tags: []string{"test"}}},
-	}
-
-	for _, modifier := range clusterModifiers {
-		modifier(&createOpts)
-	}
-	lkeCluster, err := client.CreateLKECluster(context.Background(), createOpts)
-	if err != nil {
-		t.Errorf("failed to create LKE cluster: %s", err)
-	}
-
-	teardown := func() {
-		if err := client.DeleteLKECluster(context.Background(), lkeCluster.ID); err != nil {
-			t.Errorf("failed to delete LKE cluster: %s", err)
-		}
-		fixtureTeardown()
-	}
-	return client, lkeCluster, teardown, err
-}
-
 func TestLKECluster_APLEnabled_smoke(t *testing.T) {
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{
 		func(createOpts *linodego.LKEClusterCreateOptions) {
@@ -371,28 +340,94 @@ func TestLKETierVersion_ListAndGet(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestLKETierVersion_ListAndGet")
 	defer teardown()
 
-	tier := "standard"
+	testCases := []string{"standard", "enterprise"}
+
+	for _, tier := range testCases {
+		t.Run(fmt.Sprintf("Tier=%s", tier), func(t *testing.T) {
+			versions, err := client.ListLKETierVersions(context.Background(), tier, nil)
+			if err != nil {
+				t.Fatalf("Error listing versions: %v", err)
+			}
+
+			if len(versions) == 0 {
+				t.Fatalf("Expected a list of versions for tier %s, but got none", tier)
+			}
+
+			for _, version := range versions {
+				if string(version.Tier) != tier {
+					t.Errorf("Expected version tier %q, but got %q", tier, version.Tier)
+				}
+			}
+
+			v, err := client.GetLKETierVersion(context.Background(), tier, versions[0].ID)
+			if err != nil {
+				t.Fatalf("Error getting version %s for tier %s: %v", versions[0].ID, tier, err)
+			}
+
+			if v.ID != versions[0].ID {
+				t.Errorf("Expected version ID %q, but got %q", versions[0].ID, v.ID)
+			}
+		})
+	}
+}
+
+type clusterModifier func(*linodego.LKEClusterCreateOptions)
+
+func setupLKECluster(t *testing.T, clusterModifiers []clusterModifier, fixturesYaml string) (*linodego.Client, *linodego.LKECluster, func(), error) {
+	t.Helper()
+	var fixtureTeardown func()
+	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+
+	createOpts := linodego.LKEClusterCreateOptions{
+		Label:      label,
+		Tier:       "standard", // default, can be overridden
+		Tags:       []string{"testing"},
+		Region:     "", // region will be resolved below
+		K8sVersion: "", // will be resolved if empty
+		NodePools: []linodego.LKENodePoolCreateOptions{{
+			Count: 1,
+			Type:  "g6-standard-2",
+			Tags:  []string{"test"},
+		}},
+	}
+
+	for _, modifier := range clusterModifiers {
+		modifier(&createOpts)
+	}
+
+	if createOpts.Region == "" {
+		createOpts.Region = getRegionsWithCaps(t, client, []string{"Kubernetes", "LA Disk Encryption"})[0]
+	}
+
+	if createOpts.K8sVersion == "" {
+		createOpts.K8sVersion = getK8sVersion(t, client, createOpts.Tier)
+	}
+
+	lkeCluster, err := client.CreateLKECluster(context.Background(), createOpts)
+	if err != nil {
+		t.Errorf("failed to create LKE cluster: %s", err)
+	}
+
+	teardown := func() {
+		if err := client.DeleteLKECluster(context.Background(), lkeCluster.ID); err != nil {
+			t.Errorf("failed to delete LKE cluster: %s", err)
+		}
+		fixtureTeardown()
+	}
+	return client, lkeCluster, teardown, err
+}
+
+func getK8sVersion(t *testing.T, client *linodego.Client, tier string) string {
+	t.Helper()
+
 	versions, err := client.ListLKETierVersions(context.Background(), tier, nil)
 	if err != nil {
-		t.Errorf("Error listing versions, expected struct, got %v and error %v", versions, err)
+		t.Fatalf("Error listing versions for tier %q: %v", tier, err)
 	}
 
 	if len(versions) == 0 {
-		t.Errorf("Expected a list of versions, but got none %v", versions)
+		t.Fatalf("Expected a list of versions for tier %q, but got none", tier)
 	}
 
-	for _, version := range versions {
-		if string(version.Tier) != tier {
-			t.Errorf("Expected version tier %v, but got %v", tier, version.Tier)
-		}
-	}
-
-	v, err := client.GetLKETierVersion(context.Background(), tier, versions[0].ID)
-	if err != nil {
-		t.Errorf("Error getting version, expected struct, got %v and error %v", v, err)
-	}
-
-	if v.ID != versions[0].ID {
-		t.Errorf("Expected a specific version %v, but got a different one %v", versions[0].ID, v.ID)
-	}
+	return versions[0].ID
 }
