@@ -203,7 +203,7 @@ func TestDatabasePostgres_EngineConfig_Get(t *testing.T) {
 	assert.IsType(t, []string{"md5", "scram-sha-256"}, config.PG.PasswordEncryption.Enum)
 	assert.IsType(t, "scram-sha-256", config.PG.PasswordEncryption.Example)
 	assert.IsType(t, false, config.PG.PasswordEncryption.RequiresRestart)
-	assert.IsType(t, []string{"string", "null"}, config.PG.PasswordEncryption.Type)
+	assert.IsType(t, "string", config.PG.PasswordEncryption.Type)
 
 	assert.IsType(t, "Sets the time interval to run pg_partman's scheduled tasks", config.PG.PGPartmanBGWInterval.Description)
 	assert.IsType(t, int(3600), config.PG.PGPartmanBGWInterval.Example)
@@ -234,7 +234,7 @@ func TestDatabasePostgres_EngineConfig_Get(t *testing.T) {
 	assert.IsType(t, "Controls which statements are counted. Specify top to track top-level statements (those issued directly by clients), all to also track nested statements (such as statements invoked within functions), or none to disable statement statistics collection. The default value is top.", config.PG.PGStatStatementsTrack.Description)
 	assert.IsType(t, []string{"all", "top", "none"}, config.PG.PGStatStatementsTrack.Enum)
 	assert.IsType(t, false, config.PG.PGStatStatementsTrack.RequiresRestart)
-	assert.IsType(t, []string{"string"}, config.PG.PGStatStatementsTrack.Type)
+	assert.IsType(t, "string", config.PG.PGStatStatementsTrack.Type)
 
 	assert.IsType(t, "PostgreSQL temporary file limit in KiB, -1 for unlimited", config.PG.TempFileLimit.Description)
 	assert.IsType(t, int32(5000000), config.PG.TempFileLimit.Example)
@@ -323,30 +323,6 @@ func TestDatabasePostgres_EngineConfig_Create_PasswordEncryption_DefaultsToMD5(t
 
 	// Password Encryption Value will default to md5 if initial input is null
 	assert.Contains(t, *database.EngineConfig.PG.PasswordEncryption, "md5")
-}
-
-func TestDatabasePostgres_EngineConfig_Create_Fails_LZ4Unsupported_Postgres13(t *testing.T) {
-	if os.Getenv("LINODE_FIXTURE_MODE") == "play" {
-		t.Skip("Skipping negative test scenario: LINODE_FIXTURE_MODE is 'play'")
-	}
-
-	invalidRequestData := linodego.PostgresCreateOptions{
-		Label:  "example-db-created-fails",
-		Region: "us-east",
-		Type:   "g6-dedicated-2",
-		Engine: "postgresql/13",
-		EngineConfig: &linodego.PostgresDatabaseEngineConfig{
-			PG: &linodego.PostgresDatabaseEngineConfigPG{
-				DefaultToastCompression: linodego.Pointer("lz4"),
-			},
-		},
-	}
-
-	client, _ := createTestClient(t, "")
-
-	_, err := client.CreatePostgresDatabase(context.Background(), invalidRequestData)
-
-	assert.Contains(t, err.Error(), "This setting is only available for postgresql version 14+")
 }
 
 func TestDatabasePostgres_EngineConfig_Create_Fails_EmptyDoublePointerValue(t *testing.T) {

@@ -592,7 +592,7 @@ func TestDatabasePostgreSQLConfig_Get(t *testing.T) {
 	assert.Equal(t, []string{"md5", "scram-sha-256"}, config.PG.PasswordEncryption.Enum)
 	assert.Equal(t, "scram-sha-256", config.PG.PasswordEncryption.Example)
 	assert.False(t, config.PG.PasswordEncryption.RequiresRestart)
-	assert.Equal(t, []string{"string", "null"}, config.PG.PasswordEncryption.Type)
+	assert.Equal(t, "string", config.PG.PasswordEncryption.Type)
 
 	assert.Equal(t, "Sets the time interval to run pg_partman's scheduled tasks",
 		config.PG.PGPartmanBGWInterval.Description)
@@ -628,7 +628,7 @@ func TestDatabasePostgreSQLConfig_Get(t *testing.T) {
 		config.PG.PGStatStatementsTrack.Description)
 	assert.Equal(t, []string{"all", "top", "none"}, config.PG.PGStatStatementsTrack.Enum)
 	assert.False(t, config.PG.PGStatStatementsTrack.RequiresRestart)
-	assert.Equal(t, []string{"string"}, config.PG.PGStatStatementsTrack.Type)
+	assert.Equal(t, "string", config.PG.PGStatStatementsTrack.Type)
 
 	assert.Equal(t, "PostgreSQL temporary file limit in KiB, -1 for unlimited",
 		config.PG.TempFileLimit.Description)

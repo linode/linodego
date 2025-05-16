@@ -424,7 +424,7 @@ type PasswordEncryption struct {
 	Enum            []string `json:"enum"`
 	Example         string   `json:"example"`
 	RequiresRestart bool     `json:"requires_restart"`
-	Type            []string `json:"type"`
+	Type            string   `json:"type"`
 }
 
 type PGPartmanBGWInterval struct {
@@ -465,7 +465,7 @@ type PGStatStatementsTrack struct {
 	Description     string   `json:"description"`
 	Enum            []string `json:"enum"`
 	RequiresRestart bool     `json:"requires_restart"`
-	Type            []string `json:"type"`
+	Type            string   `json:"type"`
 }
 
 type TempFileLimit struct {
