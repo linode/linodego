@@ -19,9 +19,6 @@ func TestInstances_List_smoke(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(
 		t,
 		"fixtures/TestInstances_List", true,
-		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-			options.Region = "eu-west" // Override for metadata availability
-		},
 	)
 
 	defer teardown()
@@ -262,7 +259,7 @@ func TestInstance_MigrateToPG(t *testing.T) {
 		RootPass: randPassword(),
 		Region:   regions[0],
 		Type:     "g6-nanode-1",
-		Image:    "linode/debian10",
+		Image:    "linode/debian12",
 		Booted:   linodego.Pointer(true),
 		PlacementGroup: &linodego.InstanceCreatePlacementGroupOptions{
 			ID: pgOutbound.ID,
