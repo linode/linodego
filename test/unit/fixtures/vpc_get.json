@@ -1,9 +1,29 @@
 {
+    "created": "2023-07-11T00:00:00",
+    "description": "A description of my VPC.",
     "id": 123,
-    "label": "test-vpc",
-    "description": "Test VPC description",
+    "label": "cool-vpc",
     "region": "us-east",
-    "subnets": [],
-    "created": "2023-01-01T12:00:00",
-    "updated": "2023-01-02T12:00:00"
+    "subnets": [
+        {
+            "created": "2023-07-11T00:00:00",
+            "id": 456,
+            "ipv4": "10.0.1.0/24",
+            "label": "cool-vpc-subnet",
+            "linodes": [
+                {
+                    "id": 111,
+                    "interfaces": [
+                        {
+                            "active": true,
+                            "config_id": 4567,
+                            "id": 421
+                        }
+                    ]
+                }
+            ],
+            "updated": "2023-09-11T00:00:00"
+        }
+    ],
+    "updated": "2023-09-11T00:00:00"
 }
