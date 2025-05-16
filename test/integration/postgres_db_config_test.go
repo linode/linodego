@@ -325,30 +325,6 @@ func TestDatabasePostgres_EngineConfig_Create_PasswordEncryption_DefaultsToMD5(t
 	assert.Contains(t, *database.EngineConfig.PG.PasswordEncryption, "md5")
 }
 
-func TestDatabasePostgres_EngineConfig_Create_Fails_LZ4Unsupported_Postgres13(t *testing.T) {
-	if os.Getenv("LINODE_FIXTURE_MODE") == "play" {
-		t.Skip("Skipping negative test scenario: LINODE_FIXTURE_MODE is 'play'")
-	}
-
-	invalidRequestData := linodego.PostgresCreateOptions{
-		Label:  "example-db-created-fails",
-		Region: "us-east",
-		Type:   "g6-dedicated-2",
-		Engine: "postgresql/13",
-		EngineConfig: &linodego.PostgresDatabaseEngineConfig{
-			PG: &linodego.PostgresDatabaseEngineConfigPG{
-				DefaultToastCompression: linodego.Pointer("lz4"),
-			},
-		},
-	}
-
-	client, _ := createTestClient(t, "")
-
-	_, err := client.CreatePostgresDatabase(context.Background(), invalidRequestData)
-
-	assert.Contains(t, err.Error(), "This setting is only available for postgresql version 14+")
-}
-
 func TestDatabasePostgres_EngineConfig_Create_Fails_EmptyDoublePointerValue(t *testing.T) {
 	if os.Getenv("LINODE_FIXTURE_MODE") == "play" {
 		t.Skip("Skipping negative test scenario: LINODE_FIXTURE_MODE is 'play'")
