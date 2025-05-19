@@ -348,8 +348,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 13 May 2025 16:37:23 GMT
-
+      - Mon, 19 May 2025 16:22:55 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -375,7 +374,68 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"],"labels":null,"taints":null}],"label":"go-test-def","region":"ap-west","k8s_version":"1.31","tags":["testing"],"control_plane":{"acl":{"enabled":true,"addresses":{"ipv4":["10.0.0.1/32"],"ipv6":["1234::5678"]}}}}'
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/tiers/standard/versions?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": "1.32", "tier": "standard"}, {"id": "1.31", "tier": "standard"}],
+      "page": 1, "pages": 1, "results": 2}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "119"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 19 May 2025 16:22:55 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - lke:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"],"labels":null,"taints":null}],"label":"go-test-def","region":"ap-west","k8s_version":"1.32","tags":["testing"],"control_plane":{"acl":{"enabled":true,"addresses":{"ipv4":["10.0.0.1/32"],"ipv6":["1234::5678"]}}},"tier":"standard"}'
     form: {}
     headers:
       Accept:
@@ -387,7 +447,7 @@ interactions:
     url: https://api.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 434839, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+    body: '{"id": 444268, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "label": "go-test-def", "region": "ap-west", "k8s_version":
       "1.32", "tier": "standard", "control_plane": {"high_availability": false}, "apl_enabled":
       false, "tags": ["testing"]}'
@@ -415,7 +475,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 13 May 2025 16:37:33 GMT
+      - Mon, 19 May 2025 16:23:07 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -448,10 +508,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/434839/control_plane_acl
+    url: https://api.linode.com/v4beta/lke/clusters/444268/control_plane_acl
     method: GET
   response:
-    body: '{"acl": {"enabled": true, "revision-id": "841754c98b3d4ad9a17b34e78ad54ca1",
+    body: '{"acl": {"enabled": true, "revision-id": "8caa3c9d3da6426abcb99afde35e50b8",
       "addresses": {"ipv4": ["10.0.0.1/32"], "ipv6": ["1234::5678/128"]}}}'
     headers:
       Access-Control-Allow-Credentials:
@@ -477,7 +537,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 13 May 2025 16:37:34 GMT
+      - Mon, 19 May 2025 16:23:08 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -511,7 +571,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/434839/control_plane_acl
+    url: https://api.linode.com/v4beta/lke/clusters/444268/control_plane_acl
     method: PUT
   response:
     body: '{"acl": {"enabled": true, "revision-id": "test-revision-id", "addresses":
@@ -540,7 +600,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 13 May 2025 16:37:38 GMT
+      - Mon, 19 May 2025 16:23:12 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -573,7 +633,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/434839/control_plane_acl
+    url: https://api.linode.com/v4beta/lke/clusters/444268/control_plane_acl
     method: DELETE
   response:
     body: '{}'
@@ -601,7 +661,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 13 May 2025 16:37:41 GMT
+      - Mon, 19 May 2025 16:23:15 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -634,7 +694,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/434839/control_plane_acl
+    url: https://api.linode.com/v4beta/lke/clusters/444268/control_plane_acl
     method: GET
   response:
     body: '{"acl": {"enabled": false, "addresses": {"ipv4": [], "ipv6": []}}}'
@@ -662,7 +722,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 13 May 2025 16:37:43 GMT
+      - Mon, 19 May 2025 16:23:16 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -696,7 +756,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/434839
+    url: https://api.linode.com/v4beta/lke/clusters/444268
     method: DELETE
   response:
     body: '{}'
@@ -724,7 +784,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 13 May 2025 16:37:47 GMT
+      - Mon, 19 May 2025 16:23:20 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
