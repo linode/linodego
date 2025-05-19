@@ -151,7 +151,7 @@ type InstancePlacementGroup struct {
 	Label                string               `json:"label"`
 	PlacementGroupType   PlacementGroupType   `json:"placement_group_type"`
 	PlacementGroupPolicy PlacementGroupPolicy `json:"placement_group_policy"`
-	MigratingTo          string               `json:"migrating_to"` // read-only
+	MigratingTo          *int                 `json:"migrating_to"` // read-only
 }
 
 // InstanceMetadataOptions specifies various Instance creation fields
