@@ -22,20 +22,17 @@ type ObjectStorageQuotaUsage struct {
 }
 
 // ListObjectStorageQuotas lists the active ObjectStorage-related quotas applied to your account.
-// Object Storage Quota related features are under v4beta and may not currently be available to all users.
 func (c *Client) ListObjectStorageQuotas(ctx context.Context, opts *ListOptions) ([]ObjectStorageQuota, error) {
 	return getPaginatedResults[ObjectStorageQuota](ctx, c, formatAPIPath("object-storage/quotas"), opts)
 }
 
 // GetObjectStorageQuota gets information about a specific ObjectStorage-related quota on your account.
-// Object Storage Quota related features are under v4beta and may not currently be available to all users.
 func (c *Client) GetObjectStorageQuota(ctx context.Context, quotaID string) (*ObjectStorageQuota, error) {
 	e := formatAPIPath("object-storage/quotas/%s", quotaID)
 	return doGETRequest[ObjectStorageQuota](ctx, c, e)
 }
 
 // GetObjectStorageQuotaUsage gets usage data for a specific ObjectStorage Quota resource you can have on your account and the current usage for that resource.
-// Object Storage Quota related features are under v4beta and may not currently be available to all users.
 func (c *Client) GetObjectStorageQuotaUsage(ctx context.Context, quotaID string) (*ObjectStorageQuotaUsage, error) {
 	e := formatAPIPath("object-storage/quotas/%s/usage", quotaID)
 	return doGETRequest[ObjectStorageQuotaUsage](ctx, c, e)

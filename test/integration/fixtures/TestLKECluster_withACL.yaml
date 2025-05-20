@@ -348,7 +348,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 12 May 2025 18:58:03 GMT
+      - Mon, 19 May 2025 16:22:55 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -412,7 +412,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 12 May 2025 18:58:03 GMT
+      - Mon, 19 May 2025 16:22:55 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -435,7 +435,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"],"labels":null,"taints":null}],"label":"go-test-def","region":"ap-west","k8s_version":"1.32","tags":["testing"],"control_plane":{"acl":{"enabled":true,"addresses":{"ipv4":["10.0.0.1/32"],"ipv6":["1234::5678"]},"revision_id":""}},"tier":"standard"}'
+    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"],"labels":null,"taints":null}],"label":"go-test-def","region":"ap-west","k8s_version":"1.32","tags":["testing"],"control_plane":{"acl":{"enabled":true,"addresses":{"ipv4":["10.0.0.1/32"],"ipv6":["1234::5678"]}}},"tier":"standard"}'
     form: {}
     headers:
       Accept:
@@ -447,7 +447,7 @@ interactions:
     url: https://api.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 433088, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+    body: '{"id": 444268, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "label": "go-test-def", "region": "ap-west", "k8s_version":
       "1.32", "tier": "standard", "control_plane": {"high_availability": false}, "apl_enabled":
       false, "tags": ["testing"]}'
@@ -475,7 +475,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 12 May 2025 18:58:16 GMT
+      - Mon, 19 May 2025 16:23:07 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -508,10 +508,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/433088/control_plane_acl
+    url: https://api.linode.com/v4beta/lke/clusters/444268/control_plane_acl
     method: GET
   response:
-    body: '{"acl": {"enabled": true, "revision-id": "293cf17f455143a2b1aa7274b828fffd",
+    body: '{"acl": {"enabled": true, "revision-id": "8caa3c9d3da6426abcb99afde35e50b8",
       "addresses": {"ipv4": ["10.0.0.1/32"], "ipv6": ["1234::5678/128"]}}}'
     headers:
       Access-Control-Allow-Credentials:
@@ -537,7 +537,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 12 May 2025 18:58:17 GMT
+      - Mon, 19 May 2025 16:23:08 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -562,7 +562,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"acl":{"enabled":true,"addresses":{"ipv4":["10.0.0.2/32"],"ipv6":[]},"revision_id":"test-revision-id"}}'
+    body: '{"acl":{"enabled":true,"addresses":{"ipv4":["10.0.0.2/32"],"ipv6":[]},"revision-id":"test-revision-id"}}'
     form: {}
     headers:
       Accept:
@@ -571,11 +571,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/433088/control_plane_acl
+    url: https://api.linode.com/v4beta/lke/clusters/444268/control_plane_acl
     method: PUT
   response:
-    body: '{"acl": {"enabled": true, "revision-id": "c6eb994b52604b0bb61c4e49f11a12e0",
-      "addresses": {"ipv4": ["10.0.0.2/32"], "ipv6": []}}}'
+    body: '{"acl": {"enabled": true, "revision-id": "test-revision-id", "addresses":
+      {"ipv4": ["10.0.0.2/32"], "ipv6": []}}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -594,13 +594,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "129"
+      - "113"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 12 May 2025 18:58:22 GMT
+      - Mon, 19 May 2025 16:23:12 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -633,7 +633,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/433088/control_plane_acl
+    url: https://api.linode.com/v4beta/lke/clusters/444268/control_plane_acl
     method: DELETE
   response:
     body: '{}'
@@ -661,7 +661,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 12 May 2025 18:58:25 GMT
+      - Mon, 19 May 2025 16:23:15 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -694,7 +694,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/433088/control_plane_acl
+    url: https://api.linode.com/v4beta/lke/clusters/444268/control_plane_acl
     method: GET
   response:
     body: '{"acl": {"enabled": false, "addresses": {"ipv4": [], "ipv6": []}}}'
@@ -722,7 +722,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 12 May 2025 18:58:26 GMT
+      - Mon, 19 May 2025 16:23:16 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -740,7 +740,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -756,7 +756,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/433088
+    url: https://api.linode.com/v4beta/lke/clusters/444268
     method: DELETE
   response:
     body: '{}'
@@ -784,7 +784,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 12 May 2025 18:58:30 GMT
+      - Mon, 19 May 2025 16:23:20 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
