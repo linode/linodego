@@ -9,6 +9,13 @@ import (
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
+type InterfaceGeneration string
+
+const (
+	GenerationLegacyConfig InterfaceGeneration = "legacy_config"
+	GenerationLinode       InterfaceGeneration = "linode"
+)
+
 /*
  * https://techdocs.akamai.com/linode-api/reference/post-linode-instance
  */
@@ -41,33 +48,35 @@ const (
 
 // Instance represents a linode object
 type Instance struct {
-	ID              int             `json:"id"`
-	Created         *time.Time      `json:"-"`
-	Updated         *time.Time      `json:"-"`
-	Region          string          `json:"region"`
-	Alerts          *InstanceAlert  `json:"alerts"`
-	Backups         *InstanceBackup `json:"backups"`
-	Image           string          `json:"image"`
-	Group           string          `json:"group"`
-	IPv4            []*net.IP       `json:"ipv4"`
-	IPv6            string          `json:"ipv6"`
-	Label           string          `json:"label"`
-	Type            string          `json:"type"`
-	Status          InstanceStatus  `json:"status"`
-	HasUserData     bool            `json:"has_user_data"`
-	Hypervisor      string          `json:"hypervisor"`
-	HostUUID        string          `json:"host_uuid"`
-	Specs           *InstanceSpec   `json:"specs"`
-	WatchdogEnabled bool            `json:"watchdog_enabled"`
-	Tags            []string        `json:"tags"`
-
-	PlacementGroup *InstancePlacementGroup `json:"placement_group"`
+	ID              int                     `json:"id"`
+	Created         *time.Time              `json:"-"`
+	Updated         *time.Time              `json:"-"`
+	Region          string                  `json:"region"`
+	Alerts          *InstanceAlert          `json:"alerts"`
+	Backups         *InstanceBackup         `json:"backups"`
+	Image           string                  `json:"image"`
+	Group           string                  `json:"group"`
+	IPv4            []*net.IP               `json:"ipv4"`
+	IPv6            string                  `json:"ipv6"`
+	Label           string                  `json:"label"`
+	Type            string                  `json:"type"`
+	Status          InstanceStatus          `json:"status"`
+	HasUserData     bool                    `json:"has_user_data"`
+	Hypervisor      string                  `json:"hypervisor"`
+	HostUUID        string                  `json:"host_uuid"`
+	Specs           *InstanceSpec           `json:"specs"`
+	WatchdogEnabled bool                    `json:"watchdog_enabled"`
+	Tags            []string                `json:"tags"`
+	PlacementGroup  *InstancePlacementGroup `json:"placement_group"`
 
 	// NOTE: Disk encryption may not currently be available to all users.
 	DiskEncryption InstanceDiskEncryption `json:"disk_encryption"`
 
 	LKEClusterID int      `json:"lke_cluster_id"`
 	Capabilities []string `json:"capabilities"`
+
+	// Note: Linode interfaces may not currently be available to all users.
+	InterfaceGeneration InterfaceGeneration `json:"interface_generation"`
 }
 
 // InstanceSpec represents a linode spec
@@ -198,6 +207,15 @@ type InstanceCreateOptions struct {
 	Group string `json:"group,omitempty"`
 
 	IPv4 []string `json:"ipv4,omitempty"`
+}
+
+// Note: Linode interfaces may not currently be available to all users.
+type InstanceCreateOptionsWithLinodeInterfaces struct {
+	InstanceCreateOptions
+	InterfaceGeneration InterfaceGeneration `json:"interface_generation"`
+
+	// This slice of Linode Interfaces conflicts with InstanceCreateOptions.Interfaces
+	Interfaces []LinodeInterfaceCreateOptions `json:"interfaces,omitempty"`
 }
 
 // InstanceCreatePlacementGroupOptions represents the placement group
@@ -341,6 +359,12 @@ func (c *Client) GetInstanceTransferMonthlyV2(ctx context.Context, linodeID, yea
 
 // CreateInstance creates a Linode instance
 func (c *Client) CreateInstance(ctx context.Context, opts InstanceCreateOptions) (*Instance, error) {
+	return doPOSTRequest[Instance](ctx, c, "linode/instances", opts)
+}
+
+// Create a Linode instance with Linode interfaces.
+// Note: Linode interfaces may not currently be available to all users.
+func (c *Client) CreateInstanceWithLinodeInterfaces(ctx context.Context, opts InstanceCreateOptionsWithLinodeInterfaces) (*Instance, error) {
 	return doPOSTRequest[Instance](ctx, c, "linode/instances", opts)
 }
 
