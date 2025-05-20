@@ -140,6 +140,7 @@ func createSubnetInVPC(
 func setupVPCWithSubnet(
 	t *testing.T,
 	fixturesYaml string,
+	modifiers ...vpcModifier,
 ) (
 	*linodego.Client,
 	*linodego.VPC,
@@ -150,7 +151,7 @@ func setupVPCWithSubnet(
 	t.Helper()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 
-	vpc, vpcSubnet, vpcSubnetTeardown, err := createVPCWithSubnet(t, client)
+	vpc, vpcSubnet, vpcSubnetTeardown, err := createVPCWithSubnet(t, client, modifiers...)
 	if err != nil {
 		if vpcSubnetTeardown != nil {
 			vpcSubnetTeardown()
