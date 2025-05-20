@@ -1,0 +1,81 @@
+{
+    "account_access": [
+        {
+            "type": "account",
+            "roles": [
+                {
+                    "name": "account_admin",
+                    "description": "Access to perform any supported action on all entities of the account",
+                    "permissions": [
+                        "create_linode",
+                        "update_linode",
+                        "update_firewall"
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "linode",
+            "roles": [
+                {
+                    "name": "account_linode_admin",
+                    "description": "Access to perform any supported action on all linode instances of the account",
+                    "permissions": [
+                        "create_linode",
+                        "update_linode",
+                        "delete_linode"
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "firewall",
+            "roles": [
+                {
+                    "name": "firewall_creator",
+                    "description": "Access to create a firewall instance",
+                    "permissions": [
+                        "update_linode",
+                        "view_linode"
+                    ]
+                }
+            ]
+        }
+    ],
+    "entity_access": [
+        {
+            "type": "linode",
+            "roles": [
+                {
+                    "name": "linode_contributor",
+                    "description": "Access to update a linode instance",
+                    "permissions": [
+                        "update_linode",
+                        "view_linode"
+                    ]
+                }
+            ]
+        },
+        {
+            "type": "firewall",
+            "roles": [
+                {
+                    "name": "firewall_viewer",
+                    "description": "Access to view a firewall instance",
+                    "permissions": [
+                        "update_linode",
+                        "view_linode"
+                    ]
+                },
+                {
+                    "name": "firewall_admin",
+                    "description": "Access to perform any supported action on a firewall instance",
+                    "permissions": [
+                        "update_linode",
+                        "view_linode"
+                    ]
+                }
+            ]
+        }
+    ]
+}
