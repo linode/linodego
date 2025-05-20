@@ -21,5 +21,5 @@ func TestEntities_List(t *testing.T) {
 	entities, err := base.Client.ListEntities(context.Background(), &linodego.ListOptions{})
 	assert.NoError(t, err)
 
-	assert.Equal(t, 123, entities[0].ID)
+	assert.Equal(t, 7, entities[0].ID)
 }

@@ -7,6 +7,13 @@ type UserRolePermissions struct {
 	EntityAccess  []UserAccess `json:"entity_access"`
 }
 
+func (p *UserRolePermissions) GetUpdateOptions() UserRolePermissionsUpdateOptions {
+	return UserRolePermissionsUpdateOptions{
+		AccountAccess: p.AccountAccess,
+		EntityAccess:  p.EntityAccess,
+	}
+}
+
 type UserRolePermissionsUpdateOptions struct {
 	AccountAccess []string     `json:"account_access"`
 	EntityAccess  []UserAccess `json:"entity_access"`
@@ -24,7 +31,6 @@ type AccountRolePermissions struct {
 }
 
 type AccountAccess struct {
-	ID    int    `json:"id"`
 	Type  string `json:"type"`
 	Roles []Role `json:"roles"`
 }
@@ -47,8 +53,6 @@ func (c *Client) UpdateUserRolePermissions(ctx context.Context, username string,
 		opts,
 	)
 }
-
-// TODO: GET UPDATE USER ROLE OPTIONS
 
 func (c *Client) GetAccountRolePermissions(ctx context.Context) (*AccountRolePermissions, error) {
 	return doGETRequest[AccountRolePermissions](ctx, c, "iam/role-permissions")
