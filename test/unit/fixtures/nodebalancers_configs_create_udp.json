@@ -1,0 +1,24 @@
+{
+  "algorithm": "ring_hash",
+  "check": "http_body",
+  "check_attempts": 3,
+  "check_body": "it works",
+  "check_interval": 90,
+  "check_path": "/test",
+  "check_timeout": 10,
+  "cipher_suite": "recommended",
+  "id": 4567,
+  "nodebalancer_id": 1234,
+  "nodes_status": {
+    "down": 0,
+    "up": 4
+  },
+  "port": 1234,
+  "protocol": "udp",
+  "ssl_commonname": "www.example.com",
+  "ssl_fingerprint": "00:01:02:03:04:05:06:07:08:09:0A:0B:0C:0D:0E:0F:10:11:12:13",
+  "ssl_key": "<REDACTED>",
+  "stickiness": "source_ip",
+  "udp_check_port": 12345,
+  "udp_session_timeout": 10
+}

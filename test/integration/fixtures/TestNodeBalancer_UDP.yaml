@@ -292,7 +292,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:41:54 GMT
+      - Thu, 15 May 2025 18:41:59 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -318,7 +318,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-def","region":"ap-west","client_conn_throttle":20,"tags":null,"firewall_id":2572045,"type":"common"}'
+    body: '{"label":"go-test-def","region":"ap-west","client_conn_throttle":20,"client_udp_sess_throttle":5,"tags":null,"firewall_id":2572045}'
     form: {}
     headers:
       Accept:
@@ -330,11 +330,11 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 1560935, "label": "go-test-def", "region": "ap-west", "type": "common",
-      "hostname": "172-232-85-68.ip.linodeusercontent.com", "ipv4": "172.232.85.68",
+    body: '{"id": 1560940, "label": "go-test-def", "region": "ap-west", "type": "common",
+      "hostname": "172-232-86-192.ip.linodeusercontent.com", "ipv4": "172.232.86.192",
       "ipv6": "1234::5678", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "client_conn_throttle": 20, "client_udp_sess_throttle":
-      0, "lke_cluster": null, "tags": [], "transfer": {"in": null, "out": null, "total":
+      5, "lke_cluster": null, "tags": [], "transfer": {"in": null, "out": null, "total":
       null}}'
     headers:
       Access-Control-Allow-Credentials:
@@ -354,13 +354,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "405"
+      - "407"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:41:54 GMT
+      - Thu, 15 May 2025 18:41:59 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -393,7 +393,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/1560935
+    url: https://api.linode.com/v4beta/nodebalancers/1560940
     method: DELETE
   response:
     body: '{}'
@@ -421,7 +421,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:41:55 GMT
+      - Thu, 15 May 2025 18:41:59 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
