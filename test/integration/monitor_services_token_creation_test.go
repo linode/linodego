@@ -23,7 +23,7 @@ func TestMonitorServicesTokenCreation_Get_smoke(t *testing.T) {
 		t.Errorf("Error listing Databases, expected struct, got error %v", err)
 	}
 
-	var entityIDs []int
+	var entityIDs []any
 	for _, db := range dbs {
 		entityIDs = append(entityIDs, db.ID)
 	}
