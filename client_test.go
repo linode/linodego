@@ -126,14 +126,12 @@ func TestClient_UseURL(t *testing.T) {
 		{
 			name:        "Standard v4 URL",
 			inputURL:    "https://api.test1.linode.com/",
-			wantBaseURL: "api.test1.linode.com",
-			wantVersion: "v4",
+			wantBaseURL: "https://api.test1.linode.com/v4",
 		},
 		{
 			name:        "Beta v4 URL",
 			inputURL:    "https://api.test2.linode.com/v4beta",
-			wantBaseURL: "api.test2.linode.com",
-			wantVersion: "v4beta",
+			wantBaseURL: "https://api.test2.linode.com/v4beta",
 		},
 		{
 			name:     "Missing scheme",
@@ -173,12 +171,8 @@ func TestClient_UseURL(t *testing.T) {
 				t.Fatalf("unexpected error: %v", err)
 			}
 
-			if client.baseURL != tt.wantBaseURL {
-				t.Fatalf("mismatched base url: got %s, want %s", client.baseURL, tt.wantBaseURL)
-			}
-
-			if client.apiVersion != tt.wantVersion {
-				t.Fatalf("mismatched API version: got %s, want %s", client.apiVersion, tt.wantVersion)
+			if client.resty.BaseURL != tt.wantBaseURL {
+				t.Fatalf("mismatched base url: got %s, want %s", client.resty.BaseURL, tt.wantBaseURL)
 			}
 		})
 	}
