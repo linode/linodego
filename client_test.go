@@ -120,7 +120,6 @@ func TestClient_UseURL(t *testing.T) {
 		name        string
 		inputURL    string
 		wantBaseURL string
-		wantVersion string
 		wantErr     string
 	}{
 		{
