@@ -190,6 +190,7 @@ type InstanceCreateOptions struct {
 	Image               string                   `json:"image,omitempty"`
 	BackupsEnabled      bool                     `json:"backups_enabled,omitempty"`
 	PrivateIP           bool                     `json:"private_ip,omitempty"`
+	NetworkHelper       *bool                    `json:"network_helper,omitempty"`
 	Tags                []string                 `json:"tags,omitempty"`
 	Metadata            *InstanceMetadataOptions `json:"metadata,omitempty"`
 	FirewallID          int                      `json:"firewall_id,omitempty"`
