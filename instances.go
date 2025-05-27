@@ -266,6 +266,48 @@ func (i *InstanceCreateOptions) MarshalJSON() ([]byte, error) {
 	return json.Marshal(resultData)
 }
 
+// UnmarshalJSON contains logic necessary to populate the Interfaces field
+// depending on the value of interface_generation.
+func (i *InstanceCreateOptions) UnmarshalJSON(b []byte) error {
+	p := struct {
+		*InstanceCreateOptions
+		GenericInterfaces any `json:"interfaces,omitempty"`
+	}{
+		InstanceCreateOptions: i,
+	}
+
+	if err := json.Unmarshal(b, &p); err != nil {
+		return err
+	}
+
+	if p.GenericInterfaces == nil {
+		// No interfaces were given - nothing to do here.
+		return nil
+	}
+
+	if i.InterfaceGeneration == GenerationLinode {
+		data := struct {
+			Interfaces []LinodeInterfaceCreateOptions `json:"interfaces"`
+		}{}
+
+		err := json.Unmarshal(b, &data)
+		i.LinodeInterfaces = data.Interfaces
+		return err
+	}
+
+	if i.InterfaceGeneration == GenerationLegacyConfig {
+		data := struct {
+			Interfaces []InstanceConfigInterfaceCreateOptions `json:"interfaces"`
+		}{}
+
+		err := json.Unmarshal(b, &data)
+		i.Interfaces = data.Interfaces
+		return err
+	}
+
+	return fmt.Errorf("cannot unmarshal interfaces without valid value for interface_generation")
+}
+
 // UnmarshalJSON implements the json.Unmarshaler interface
 func (i *Instance) UnmarshalJSON(b []byte) error {
 	type Mask Instance
