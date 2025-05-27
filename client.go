@@ -531,6 +531,9 @@ func (c *Client) UseURL(apiURL string) (*Client, error) {
 	if err != nil {
 		return nil, fmt.Errorf("failed to parse URL: %w", err)
 	}
+	if parsedURL.Scheme == "" || parsedURL.Host == "" {
+		return nil, fmt.Errorf("need both scheme and host in API URL, got %q", apiURL)
+	}
 
 	// Create a new URL excluding the path to use as the base URL
 	baseURL := &url.URL{
