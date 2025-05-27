@@ -166,7 +166,7 @@ type NodeBalancerConfigUpdateOptions NodeBalancerConfigCreateOptions
 
 // GetCreateOptions converts a NodeBalancerConfig to NodeBalancerConfigCreateOptions for use in CreateNodeBalancerConfig
 func (i NodeBalancerConfig) GetCreateOptions() NodeBalancerConfigCreateOptions {
-	var udpCheckPort *int = nil
+	var udpCheckPort *int
 	if i.UDPCheckPort != 0 {
 		udpCheckPort = &i.UDPCheckPort
 	}
