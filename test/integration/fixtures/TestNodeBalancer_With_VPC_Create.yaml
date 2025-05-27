@@ -292,7 +292,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:41:55 GMT
+      - Tue, 27 May 2025 15:01:33 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -318,7 +318,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-vpc-1747334515081265000","region":"us-iad","subnets":[{"label":"linodego-vpc-test-1747334515183969000","ipv4":"192.168.0.0/25"}]}'
+    body: '{"label":"go-test-vpc-1748358093511510000","region":"us-iad","subnets":[{"label":"linodego-vpc-test-1748358093799100000","ipv4":"192.168.0.0/25"}]}'
     form: {}
     headers:
       Accept:
@@ -330,8 +330,8 @@ interactions:
     url: https://api.linode.com/v4beta/vpcs
     method: POST
   response:
-    body: '{"id": 186866, "label": "go-test-vpc-1747334515081265000", "description":
-      "", "region": "us-iad", "subnets": [{"id": 184800, "label": "linodego-vpc-test-1747334515183969000",
+    body: '{"id": 191522, "label": "go-test-vpc-1748358093511510000", "description":
+      "", "region": "us-iad", "subnets": [{"id": 190226, "label": "linodego-vpc-test-1748358093799100000",
       "ipv4": "192.168.0.0/25", "linodes": [], "nodebalancers": [], "databases": [],
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}], "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
@@ -359,7 +359,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:41:55 GMT
+      - Tue, 27 May 2025 15:01:34 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -383,7 +383,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-def","region":"us-iad","client_conn_throttle":20,"tags":null,"firewall_id":2572045,"vpcs":[{"ipv4_range":"192.168.0.64/30","subnet_id":184800}]}'
+    body: '{"label":"go-test-def","region":"us-iad","client_conn_throttle":20,"tags":null,"firewall_id":2677728,"vpcs":[{"ipv4_range":"192.168.0.64/30","subnet_id":190226}]}'
     form: {}
     headers:
       Accept:
@@ -395,8 +395,8 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 1560936, "label": "go-test-def", "region": "us-iad", "type": "common",
-      "hostname": "139-144-208-35.ip.linodeusercontent.com", "ipv4": "139.144.208.35",
+    body: '{"id": 1595487, "label": "go-test-def", "region": "us-iad", "type": "common",
+      "hostname": "172-234-158-16.ip.linodeusercontent.com", "ipv4": "172.234.158.16",
       "ipv6": "1234::5678", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "client_conn_throttle": 20, "client_udp_sess_throttle":
       0, "lke_cluster": null, "tags": [], "transfer": {"in": null, "out": null, "total":
@@ -425,7 +425,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:41:55 GMT
+      - Tue, 27 May 2025 15:01:34 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -458,7 +458,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/1560936
+    url: https://api.linode.com/v4beta/nodebalancers/1595487
     method: DELETE
   response:
     body: '{}'
@@ -486,7 +486,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:41:56 GMT
+      - Tue, 27 May 2025 15:01:34 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -519,7 +519,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/vpcs/186866
+    url: https://api.linode.com/v4beta/vpcs/191522
     method: DELETE
   response:
     body: '{}'
@@ -547,7 +547,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:41:56 GMT
+      - Tue, 27 May 2025 15:01:35 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

@@ -292,7 +292,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:41:12 GMT
+      - Tue, 27 May 2025 15:00:49 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -318,7 +318,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-vpc-1747334472844673000","region":"us-iad","subnets":[{"label":"linodego-vpc-test-1747334472943355000","ipv4":"192.168.0.0/25"}]}'
+    body: '{"label":"go-test-vpc-1748358049020737000","region":"us-iad","subnets":[{"label":"linodego-vpc-test-1748358049124539000","ipv4":"192.168.0.0/25"}]}'
     form: {}
     headers:
       Accept:
@@ -330,8 +330,8 @@ interactions:
     url: https://api.linode.com/v4beta/vpcs
     method: POST
   response:
-    body: '{"id": 186864, "label": "go-test-vpc-1747334472844673000", "description":
-      "", "region": "us-iad", "subnets": [{"id": 184796, "label": "linodego-vpc-test-1747334472943355000",
+    body: '{"id": 191520, "label": "go-test-vpc-1748358049020737000", "description":
+      "", "region": "us-iad", "subnets": [{"id": 190222, "label": "linodego-vpc-test-1748358049124539000",
       "ipv4": "192.168.0.0/25", "linodes": [], "nodebalancers": [], "databases": [],
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}], "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
@@ -359,7 +359,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:41:13 GMT
+      - Tue, 27 May 2025 15:00:49 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -383,7 +383,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-def","region":"us-iad","client_conn_throttle":20,"tags":null,"firewall_id":2572045,"vpcs":[{"ipv4_range":"192.168.0.64/30","subnet_id":184796}]}'
+    body: '{"label":"go-test-def","region":"us-iad","client_conn_throttle":20,"tags":null,"firewall_id":2677728,"vpcs":[{"ipv4_range":"192.168.0.64/30","subnet_id":190222}]}'
     form: {}
     headers:
       Accept:
@@ -395,8 +395,8 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 1560924, "label": "go-test-def", "region": "us-iad", "type": "common",
-      "hostname": "172-234-157-12.ip.linodeusercontent.com", "ipv4": "172.234.157.12",
+    body: '{"id": 1595474, "label": "go-test-def", "region": "us-iad", "type": "common",
+      "hostname": "172-233-239-94.ip.linodeusercontent.com", "ipv4": "172.233.239.94",
       "ipv6": "1234::5678", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "client_conn_throttle": 20, "client_udp_sess_throttle":
       0, "lke_cluster": null, "tags": [], "transfer": {"in": null, "out": null, "total":
@@ -425,7 +425,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:41:13 GMT
+      - Tue, 27 May 2025 15:00:50 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -458,11 +458,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/1560924/vpcs?page=1
+    url: https://api.linode.com/v4beta/nodebalancers/1595474/vpcs?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 2544, "nodebalancer_id": 1560924, "vpc_id": 186864, "subnet_id":
-      184796, "ipv4_range": "192.168.0.64/30"}], "page": 1, "pages": 1, "results":
+    body: '{"data": [{"id": 2730, "nodebalancer_id": 1595474, "vpc_id": 191520, "subnet_id":
+      190222, "ipv4_range": "192.168.0.64/30"}], "page": 1, "pages": 1, "results":
       1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -488,7 +488,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:41:13 GMT
+      - Tue, 27 May 2025 15:00:50 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -522,11 +522,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/1560924/vpcs/2544
+    url: https://api.linode.com/v4beta/nodebalancers/1595474/vpcs/2730
     method: GET
   response:
-    body: '{"id": 2544, "nodebalancer_id": 1560924, "vpc_id": 186864, "subnet_id":
-      184796, "ipv4_range": "192.168.0.64/30"}'
+    body: '{"id": 2730, "nodebalancer_id": 1595474, "vpc_id": 191520, "subnet_id":
+      190222, "ipv4_range": "192.168.0.64/30"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -551,7 +551,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:41:22 GMT
+      - Tue, 27 May 2025 15:00:59 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -585,7 +585,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/1560924
+    url: https://api.linode.com/v4beta/nodebalancers/1595474
     method: DELETE
   response:
     body: '{}'
@@ -613,7 +613,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:41:22 GMT
+      - Tue, 27 May 2025 15:01:00 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -646,7 +646,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/vpcs/186864
+    url: https://api.linode.com/v4beta/vpcs/191520
     method: DELETE
   response:
     body: '{}'
@@ -674,7 +674,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:41:22 GMT
+      - Tue, 27 May 2025 15:01:00 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -691,7 +691,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

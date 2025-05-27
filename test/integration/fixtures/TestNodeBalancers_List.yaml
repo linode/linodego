@@ -292,7 +292,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:41:57 GMT
+      - Tue, 27 May 2025 15:01:36 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -318,7 +318,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-def","region":"ap-west","client_conn_throttle":20,"tags":null,"firewall_id":2572045}'
+    body: '{"label":"go-test-def","region":"ap-west","client_conn_throttle":20,"tags":null,"firewall_id":2677728}'
     form: {}
     headers:
       Accept:
@@ -330,8 +330,8 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 1560938, "label": "go-test-def", "region": "ap-west", "type": "common",
-      "hostname": "172-232-87-208.ip.linodeusercontent.com", "ipv4": "172.232.87.208",
+    body: '{"id": 1595489, "label": "go-test-def", "region": "ap-west", "type": "common",
+      "hostname": "172-105-45-47.ip.linodeusercontent.com", "ipv4": "172.105.45.47",
       "ipv6": "1234::5678", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "client_conn_throttle": 20, "client_udp_sess_throttle":
       0, "lke_cluster": null, "tags": [], "transfer": {"in": null, "out": null, "total":
@@ -354,13 +354,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "407"
+      - "405"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:41:57 GMT
+      - Tue, 27 May 2025 15:01:36 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -396,9 +396,9 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 1560938, "label": "go-test-def", "region": "ap-west",
-      "type": "common", "hostname": "172-232-87-208.ip.linodeusercontent.com", "ipv4":
-      "172.232.87.208", "ipv6": "1234::5678", "created": "2018-01-02T03:04:05",
+    body: '{"data": [{"id": 1595489, "label": "go-test-def", "region": "ap-west",
+      "type": "common", "hostname": "172-105-45-47.ip.linodeusercontent.com", "ipv4":
+      "172.105.45.47", "ipv6": "1234::5678", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "client_conn_throttle": 20, "client_udp_sess_throttle":
       0, "lke_cluster": null, "tags": [], "transfer": {"in": null, "out": null, "total":
       null}}], "page": 1, "pages": 1, "results": 1}'
@@ -420,13 +420,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "456"
+      - "454"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:41:58 GMT
+      - Tue, 27 May 2025 15:01:37 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -460,7 +460,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/1560938
+    url: https://api.linode.com/v4beta/nodebalancers/1595489
     method: DELETE
   response:
     body: '{}'
@@ -488,7 +488,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:41:58 GMT
+      - Tue, 27 May 2025 15:01:37 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

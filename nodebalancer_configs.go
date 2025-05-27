@@ -193,6 +193,11 @@ func (i NodeBalancerConfig) GetCreateOptions() NodeBalancerConfigCreateOptions {
 
 // GetUpdateOptions converts a NodeBalancerConfig to NodeBalancerConfigUpdateOptions for use in UpdateNodeBalancerConfig
 func (i NodeBalancerConfig) GetUpdateOptions() NodeBalancerConfigUpdateOptions {
+	var udpCheckPort *int
+	if i.UDPCheckPort != 0 {
+		udpCheckPort = &i.UDPCheckPort
+	}
+
 	return NodeBalancerConfigUpdateOptions{
 		Port:          i.Port,
 		Protocol:      i.Protocol,
@@ -206,7 +211,7 @@ func (i NodeBalancerConfig) GetUpdateOptions() NodeBalancerConfigUpdateOptions {
 		CheckBody:     i.CheckBody,
 		CheckPassive:  copyBool(&i.CheckPassive),
 		CheckTimeout:  i.CheckTimeout,
-		UDPCheckPort:  copyInt(&i.UDPCheckPort),
+		UDPCheckPort:  udpCheckPort,
 		CipherSuite:   i.CipherSuite,
 		SSLCert:       i.SSLCert,
 		SSLKey:        i.SSLKey,
@@ -215,6 +220,11 @@ func (i NodeBalancerConfig) GetUpdateOptions() NodeBalancerConfigUpdateOptions {
 
 // GetRebuildOptions converts a NodeBalancerConfig to NodeBalancerConfigRebuildOptions for use in RebuildNodeBalancerConfig
 func (i NodeBalancerConfig) GetRebuildOptions() NodeBalancerConfigRebuildOptions {
+	var udpCheckPort *int
+	if i.UDPCheckPort != 0 {
+		udpCheckPort = &i.UDPCheckPort
+	}
+
 	return NodeBalancerConfigRebuildOptions{
 		Port:          i.Port,
 		Protocol:      i.Protocol,
@@ -228,7 +238,7 @@ func (i NodeBalancerConfig) GetRebuildOptions() NodeBalancerConfigRebuildOptions
 		CheckPath:     i.CheckPath,
 		CheckBody:     i.CheckBody,
 		CheckPassive:  copyBool(&i.CheckPassive),
-		UDPCheckPort:  copyInt(&i.UDPCheckPort),
+		UDPCheckPort:  udpCheckPort,
 		CipherSuite:   i.CipherSuite,
 		SSLCert:       i.SSLCert,
 		SSLKey:        i.SSLKey,

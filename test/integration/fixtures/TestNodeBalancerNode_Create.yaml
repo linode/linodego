@@ -292,7 +292,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:40:08 GMT
+      - Tue, 27 May 2025 14:59:38 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -318,7 +318,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-def","region":"ap-west","client_conn_throttle":20,"tags":null,"firewall_id":2572045}'
+    body: '{"label":"go-test-def","region":"ap-west","client_conn_throttle":20,"tags":null,"firewall_id":2677728}'
     form: {}
     headers:
       Accept:
@@ -330,8 +330,8 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 1560907, "label": "go-test-def", "region": "ap-west", "type": "common",
-      "hostname": "172-232-84-133.ip.linodeusercontent.com", "ipv4": "172.232.84.133",
+    body: '{"id": 1595462, "label": "go-test-def", "region": "ap-west", "type": "common",
+      "hostname": "172-232-85-63.ip.linodeusercontent.com", "ipv4": "172.232.85.63",
       "ipv6": "1234::5678", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "client_conn_throttle": 20, "client_udp_sess_throttle":
       0, "lke_cluster": null, "tags": [], "transfer": {"in": null, "out": null, "total":
@@ -354,13 +354,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "407"
+      - "405"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:40:09 GMT
+      - Tue, 27 May 2025 14:59:39 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -393,14 +393,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/1560907/configs
+    url: https://api.linode.com/v4beta/nodebalancers/1595462/configs
     method: POST
   response:
-    body: '{"id": 2401477, "port": 80, "protocol": "http", "algorithm": "roundrobin",
+    body: '{"id": 2450685, "port": 80, "protocol": "http", "algorithm": "roundrobin",
       "stickiness": "none", "check": "none", "check_interval": 60, "check_timeout":
       30, "check_attempts": 3, "check_path": "", "check_body": "", "check_passive":
       true, "proxy_protocol": "none", "cipher_suite": "recommended", "nodebalancer_id":
-      1560907, "ssl_commonname": "", "ssl_fingerprint": "", "ssl_cert": null, "ssl_key":
+      1595462, "ssl_commonname": "", "ssl_fingerprint": "", "ssl_cert": null, "ssl_key":
       null, "nodes_status": {"up": 0, "down": 0}, "udp_check_port": 80, "udp_session_timeout":
       16}'
     headers:
@@ -427,7 +427,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:40:09 GMT
+      - Tue, 27 May 2025 14:59:39 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -451,7 +451,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"ap-west","type":"g6-nanode-1","label":"go-test-ins-yryys000f590","root_pass":"}5i''CZ3J:mjB0RO62esvkG\\88*5;KInX@l''f89Wm[s4,2$2Is3r![P6pNiNN$''[7","image":"linode/debian12","firewall_id":2572045,"booted":false}'
+    body: '{"region":"ap-west","type":"g6-nanode-1","label":"go-test-ins-7okg788wd28p","root_pass":"H230^05e''By~qu(V[}n4,)V+VnQNQSKz$MP5nF.S0W5=4)Fm#y01`kv82pruc7\u00262","image":"linode/debian12","firewall_id":2677728,"booted":false}'
     form: {}
     headers:
       Accept:
@@ -463,15 +463,15 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 77049332, "label": "go-test-ins-yryys000f590", "group": "", "status":
+    body: '{"id": 77644900, "label": "go-test-ins-7okg788wd28p", "group": "", "status":
       "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.105.35.81"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["170.187.250.188"], "ipv6": "1234::5678/128",
       "image": "linode/debian12", "region": "ap-west", "site_type": "core", "specs":
       {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
       0}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota":
       80, "io": 10000}, "backups": {"enabled": true, "available": false, "schedule":
       {"day": null, "window": null}, "last_successful": null}, "hypervisor": "kvm",
-      "watchdog_enabled": true, "tags": [], "host_uuid": "ba09224f0d362f1083b6e9f34174ce049765dc23",
+      "watchdog_enabled": true, "tags": [], "host_uuid": "cf06d6e1fd3fcd5eb9c72b18e554f026aaa5e21a",
       "has_user_data": false, "placement_group": null, "disk_encryption": "enabled",
       "lke_cluster_id": null, "capabilities": ["SMTP Enabled"], "interface_generation":
       "legacy_config"}'
@@ -497,7 +497,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:40:11 GMT
+      - Tue, 27 May 2025 14:59:40 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -531,14 +531,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/77049332/ips
+    url: https://api.linode.com/v4beta/linode/instances/77644900/ips
     method: POST
   response:
-    body: '{"address": "192.168.130.223", "gateway": null, "subnet_mask": "255.255.128.0",
-      "prefix": 17, "type": "ipv4", "public": false, "rdns": null, "linode_id": 77049332,
+    body: '{"address": "192.168.136.9", "gateway": null, "subnet_mask": "255.255.128.0",
+      "prefix": 17, "type": "ipv4", "public": false, "rdns": null, "linode_id": 77644900,
       "interface_id": null, "region": "ap-west", "vpc_nat_1_1": null, "reserved":
-      false, "assigned_entity": {"id": 77049332, "type": "linode", "label": "go-test-ins-yryys000f590",
-      "url": "/v4/linode/instances/77049332"}}'
+      false, "assigned_entity": {"id": 77644900, "type": "linode", "label": "go-test-ins-7okg788wd28p",
+      "url": "/v4/linode/instances/77644900"}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -557,13 +557,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "378"
+      - "376"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:40:11 GMT
+      - Tue, 27 May 2025 14:59:40 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -587,7 +587,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"address":"192.168.130.223:8080","label":"go-node-test-def","weight":10,"mode":"accept"}'
+    body: '{"address":"192.168.136.9:8080","label":"go-node-test-def","weight":10,"mode":"accept"}'
     form: {}
     headers:
       Accept:
@@ -596,12 +596,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/1560907/configs/2401477/nodes
+    url: https://api.linode.com/v4beta/nodebalancers/1595462/configs/2450685/nodes
     method: POST
   response:
-    body: '{"id": 2101835210, "address": "192.168.130.223:8080", "label": "go-node-test-def",
-      "status": "Unknown", "weight": 10, "mode": "accept", "config_id": 2401477, "nodebalancer_id":
-      1560907, "vpc_config_id": null}'
+    body: '{"id": 2104036758, "address": "192.168.136.9:8080", "label": "go-node-test-def",
+      "status": "Unknown", "weight": 10, "mode": "accept", "config_id": 2450685, "nodebalancer_id":
+      1595462, "vpc_config_id": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -620,13 +620,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "208"
+      - "206"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:40:11 GMT
+      - Tue, 27 May 2025 14:59:40 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -659,7 +659,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/1560907/configs/2401477/nodes/2101835210
+    url: https://api.linode.com/v4beta/nodebalancers/1595462/configs/2450685/nodes/2104036758
     method: DELETE
   response:
     body: '{}'
@@ -687,7 +687,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:40:11 GMT
+      - Tue, 27 May 2025 14:59:40 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -720,7 +720,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/77049332
+    url: https://api.linode.com/v4beta/linode/instances/77644900
     method: DELETE
   response:
     body: '{}'
@@ -748,7 +748,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:40:14 GMT
+      - Tue, 27 May 2025 14:59:42 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -781,7 +781,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/1560907/configs/2401477
+    url: https://api.linode.com/v4beta/nodebalancers/1595462/configs/2450685
     method: DELETE
   response:
     body: '{}'
@@ -809,7 +809,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:40:14 GMT
+      - Tue, 27 May 2025 14:59:42 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -842,7 +842,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/1560907
+    url: https://api.linode.com/v4beta/nodebalancers/1595462
     method: DELETE
   response:
     body: '{}'
@@ -870,7 +870,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 15 May 2025 18:40:14 GMT
+      - Tue, 27 May 2025 14:59:42 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -887,7 +887,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
