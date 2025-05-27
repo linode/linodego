@@ -242,13 +242,15 @@ type InstanceUpdateOptions struct {
 // MarshalJSON contains logic necessary to populate the `interfaces` field of
 // InstanceCreateOptions depending on whether Interfaces or LinodeInterfaces
 // is specified.
-func (i *InstanceCreateOptions) MarshalJSON() ([]byte, error) {
+func (i InstanceCreateOptions) MarshalJSON() ([]byte, error) {
+	type Mask InstanceCreateOptions
+
 	resultData := struct {
-		*InstanceCreateOptions
+		*Mask
 		Interfaces any `json:"interfaces,omitempty"`
 	}{
-		InstanceCreateOptions: i,
-		Interfaces:            nil,
+		Mask:       (*Mask)(&i),
+		Interfaces: nil,
 	}
 
 	if i.Interfaces != nil && i.LinodeInterfaces != nil {
@@ -260,7 +262,7 @@ func (i *InstanceCreateOptions) MarshalJSON() ([]byte, error) {
 	}
 
 	if i.LinodeInterfaces != nil {
-		resultData.Interfaces = i.Interfaces
+		resultData.Interfaces = i.LinodeInterfaces
 	}
 
 	return json.Marshal(resultData)
@@ -269,11 +271,13 @@ func (i *InstanceCreateOptions) MarshalJSON() ([]byte, error) {
 // UnmarshalJSON contains logic necessary to populate the Interfaces field
 // depending on the value of interface_generation.
 func (i *InstanceCreateOptions) UnmarshalJSON(b []byte) error {
+	type Mask InstanceCreateOptions
+
 	p := struct {
-		*InstanceCreateOptions
+		*Mask
 		GenericInterfaces any `json:"interfaces,omitempty"`
 	}{
-		InstanceCreateOptions: i,
+		Mask: (*Mask)(i),
 	}
 
 	if err := json.Unmarshal(b, &p); err != nil {

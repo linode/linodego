@@ -280,7 +280,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 27 May 2025 17:21:35 GMT
+      - Tue, 27 May 2025 18:26:21 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -306,7 +306,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-vpc-1748366495103245000","region":"us-iad","subnets":[{"label":"linodego-vpc-test-1748366495103385000","ipv4":"192.168.0.0/25"}]}'
+    body: '{"label":"go-test-vpc-1748370381134185000","region":"us-iad","subnets":[{"label":"linodego-vpc-test-1748370381135042000","ipv4":"192.168.0.0/25"}]}'
     form: {}
     headers:
       Accept:
@@ -318,8 +318,8 @@ interactions:
     url: https://api.linode.com/v4beta/vpcs
     method: POST
   response:
-    body: '{"id": 191626, "label": "go-test-vpc-1748366495103245000", "description":
-      "", "region": "us-iad", "subnets": [{"id": 190374, "label": "linodego-vpc-test-1748366495103385000",
+    body: '{"id": 191693, "label": "go-test-vpc-1748370381134185000", "description":
+      "", "region": "us-iad", "subnets": [{"id": 190465, "label": "linodego-vpc-test-1748370381135042000",
       "ipv4": "192.168.0.0/25", "linodes": [], "nodebalancers": [], "databases": [],
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}], "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
@@ -347,7 +347,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 27 May 2025 17:21:35 GMT
+      - Tue, 27 May 2025 18:26:21 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -371,7 +371,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"us-iad","type":"g6-nanode-1","label":"go-test-intf-3kt6a1l3a23t","root_pass":"0k31z`4L-V2kDMLm~r38VizBOs{Gd4ntO8J@''3,*2}F57g^XO}#*qm0;aAa47''C^","image":"linode/debian12","interface_generation":"linode","booted":false}'
+    body: '{"region":"us-iad","type":"g6-nanode-1","label":"go-test-intf-0155mkrjhz94","root_pass":"jOy0AsZ''o8usw4UW'')J9\u003eM-2\u003eIq$Eh|[9k50)1#B1)!q6qB;v^k8KPEq54{z6YW4","image":"linode/debian12","interface_generation":"linode","booted":false,"interfaces":[{"firewall_id":2679897,"public":{"ipv4":{"addresses":[{"address":"auto","primary":true}]},"ipv6":{}}},{"firewall_id":2679897,"vpc":{"subnet_id":190465,"ipv4":{"addresses":[{"address":"auto","primary":true,"nat_1_1_address":"auto"}]}}}]}'
     form: {}
     headers:
       Accept:
@@ -383,17 +383,18 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 77652536, "label": "go-test-intf-3kt6a1l3a23t", "group": "", "status":
+    body: '{"id": 77656032, "label": "go-test-intf-0155mkrjhz94", "group": "", "status":
       "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.234.129.185"], "ipv6": "1234::5678/128",
-      "image": "linode/debian12", "region": "us-iad", "site_type": "core", "specs":
-      {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
-      0}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota":
-      80, "io": 10000}, "backups": {"enabled": false, "available": false, "schedule":
-      {"day": null, "window": null}, "last_successful": null}, "hypervisor": "kvm",
-      "watchdog_enabled": true, "tags": [], "host_uuid": "a1eb2d58d98497bfcc5f3c660efc0dcfcbe8f962",
-      "has_user_data": false, "placement_group": null, "disk_encryption": "enabled",
-      "lke_cluster_id": null, "capabilities": ["Block Storage Encryption"], "interface_generation":
+      "type": "g6-nanode-1", "ipv4": ["172.237.171.158", "172.237.171.160"], "ipv6":
+      "1234::5678/128", "image": "linode/debian12", "region":
+      "us-iad", "site_type": "core", "specs": {"disk": 25600, "memory": 1024, "vcpus":
+      1, "gpus": 0, "transfer": 1000, "accelerated_devices": 0}, "alerts": {"cpu":
+      90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io": 10000},
+      "backups": {"enabled": false, "available": false, "schedule": {"day": null,
+      "window": null}, "last_successful": null}, "hypervisor": "kvm", "watchdog_enabled":
+      true, "tags": [], "host_uuid": "a1eb2d58d98497bfcc5f3c660efc0dcfcbe8f962", "has_user_data":
+      false, "placement_group": null, "disk_encryption": "enabled", "lke_cluster_id":
+      null, "capabilities": ["Block Storage Encryption"], "interface_generation":
       "linode"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -417,7 +418,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 27 May 2025 17:21:36 GMT
+      - Tue, 27 May 2025 18:26:23 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -451,7 +452,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/77652536
+    url: https://api.linode.com/v4beta/linode/instances/77656032
     method: DELETE
   response:
     body: '{}'
@@ -479,7 +480,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 27 May 2025 17:21:38 GMT
+      - Tue, 27 May 2025 18:26:25 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -512,7 +513,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/vpcs/191626
+    url: https://api.linode.com/v4beta/vpcs/191693
     method: DELETE
   response:
     body: '{}'
@@ -540,7 +541,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 27 May 2025 17:21:38 GMT
+      - Tue, 27 May 2025 18:26:26 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
