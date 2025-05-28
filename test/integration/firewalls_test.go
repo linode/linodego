@@ -3,6 +3,7 @@ package integration
 import (
 	"context"
 	"testing"
+	"fmt"
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
@@ -163,4 +164,123 @@ func setupFirewall(t *testing.T, firewallModifiers []firewallModifier, fixturesY
 		fixtureTeardown()
 	}
 	return client, firewall, teardown, err
+}
+
+func TestFirewallSettings_Get(t *testing.T) {
+	client, fixtureTeardown := createTestClient(t, "fixtures/TestFirewallSettings_Get")
+	defer fixtureTeardown()
+
+	settings, err := client.GetFirewallSettings(context.Background())
+	if err != nil {
+		t.Fatalf("Error getting firewall settings: %v", err)
+	}
+
+	if settings.DefaultFirewallIDs.Linode == 0 &&
+	settings.DefaultFirewallIDs.NodeBalancer == 0 &&
+	settings.DefaultFirewallIDs.PublicInterface == 0 &&
+	settings.DefaultFirewallIDs.VPCInterface == 0 {
+	t.Log("No default firewall IDs set — this is acceptable in a fresh test environment.")
+	}
+
+}
+
+func TestFirewallSettings_UpdateAllFields(t *testing.T) {
+	label := fmt.Sprintf("fw-allfields-%s", getUniqueText())
+	if len(label) < 3 || len(label) > 32 {
+		t.Fatalf("generated label %q is %d chars; must be 3–32", label, len(label))
+	}
+
+	client, created, teardown, err := setupFirewall(t, []firewallModifier{
+		func(opts *linodego.FirewallCreateOptions) {
+			opts.Label = label
+		},
+	}, "fixtures/TestFirewallSettings_UpdateAllFields")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if created == nil {
+		teardown()
+		t.Fatal("setupFirewall returned nil firewall")
+	}
+
+	// Unset default firewall slots after test
+	defer func() {
+		updateOpts := linodego.FirewallSettingsUpdateOptions{
+			DefaultFirewallIDs: linodego.DefaultFirewallIDsOptions{
+				Linode:          nil,
+				NodeBalancer:    nil,
+				PublicInterface: nil,
+				VPCInterface:    nil,
+			},
+		}
+		_, err := client.UpdateFirewallSettings(context.Background(), updateOpts)
+		if err != nil {
+			t.Fatalf("failed to unset default firewall IDs: %v", err)
+		}
+	}()
+
+	opts := linodego.FirewallSettingsUpdateOptions{
+		DefaultFirewallIDs: linodego.DefaultFirewallIDsOptions{
+			Linode:          &created.ID,
+			NodeBalancer:    &created.ID,
+			PublicInterface: &created.ID,
+			VPCInterface:    &created.ID,
+		},
+	}
+	updated, err := client.UpdateFirewallSettings(context.Background(), opts)
+	if err != nil {
+		t.Fatalf("Error updating firewall settings: %v", err)
+	}
+	if updated.DefaultFirewallIDs.Linode != created.ID {
+		t.Errorf("Expected Linode default firewall ID %d, got %d", created.ID, updated.DefaultFirewallIDs.Linode)
+	}
+}
+
+func TestFirewallSettings_UpdatePartial(t *testing.T) {
+	label := fmt.Sprintf("fw-partial-%s", getUniqueText())
+	if len(label) < 3 || len(label) > 32 {
+		t.Fatalf("generated label %q is %d chars; must be 3–32", label, len(label))
+	}
+
+	client, created, teardown, err := setupFirewall(t, []firewallModifier{
+		func(opts *linodego.FirewallCreateOptions) {
+			opts.Label = label
+		},
+	}, "fixtures/TestFirewallSettings_UpdatePartial")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if created == nil {
+		teardown()
+		t.Fatal("setupFirewall returned nil firewall")
+	}
+
+	// Unset default firewall slots after test
+	defer func() {
+		updateOpts := linodego.FirewallSettingsUpdateOptions{
+			DefaultFirewallIDs: linodego.DefaultFirewallIDsOptions{
+				Linode:          nil,
+				NodeBalancer:    nil,
+				PublicInterface: nil,
+				VPCInterface:    nil,
+			},
+		}
+		_, err := client.UpdateFirewallSettings(context.Background(), updateOpts)
+		if err != nil {
+			t.Fatalf("failed to unset default firewall IDs: %v", err)
+		}
+	}()
+
+	opts := linodego.FirewallSettingsUpdateOptions{
+		DefaultFirewallIDs: linodego.DefaultFirewallIDsOptions{
+			Linode: &created.ID,
+		},
+	}
+	updated, err := client.UpdateFirewallSettings(context.Background(), opts)
+	if err != nil {
+		t.Fatalf("Error updating firewall settings: %v", err)
+	}
+	if updated.DefaultFirewallIDs.Linode != created.ID {
+		t.Errorf("Expected Linode default firewall ID %d, got %d", created.ID, updated.DefaultFirewallIDs.Linode)
+	}
 }
