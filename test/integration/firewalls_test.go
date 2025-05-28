@@ -2,8 +2,8 @@ package integration
 
 import (
 	"context"
-	"testing"
 	"fmt"
+	"testing"
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"
@@ -176,12 +176,11 @@ func TestFirewallSettings_Get(t *testing.T) {
 	}
 
 	if settings.DefaultFirewallIDs.Linode == 0 &&
-	settings.DefaultFirewallIDs.NodeBalancer == 0 &&
-	settings.DefaultFirewallIDs.PublicInterface == 0 &&
-	settings.DefaultFirewallIDs.VPCInterface == 0 {
-	t.Log("No default firewall IDs set — this is acceptable in a fresh test environment.")
+		settings.DefaultFirewallIDs.NodeBalancer == 0 &&
+		settings.DefaultFirewallIDs.PublicInterface == 0 &&
+		settings.DefaultFirewallIDs.VPCInterface == 0 {
+		t.Log("No default firewall IDs set — this is acceptable in a fresh test environment.")
 	}
-
 }
 
 func TestFirewallSettings_UpdateAllFields(t *testing.T) {
