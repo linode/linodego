@@ -203,7 +203,6 @@ func TestFirewallSettings_UpdateAllFields(t *testing.T) {
 		t.Fatal("setupFirewall returned nil firewall")
 	}
 
-	// Unset default firewall slots after test
 	defer func() {
 		updateOpts := linodego.FirewallSettingsUpdateOptions{
 			DefaultFirewallIDs: linodego.DefaultFirewallIDsOptions{
@@ -255,7 +254,6 @@ func TestFirewallSettings_UpdatePartial(t *testing.T) {
 		t.Fatal("setupFirewall returned nil firewall")
 	}
 
-	// Unset default firewall slots after test
 	defer func() {
 		updateOpts := linodego.FirewallSettingsUpdateOptions{
 			DefaultFirewallIDs: linodego.DefaultFirewallIDsOptions{
