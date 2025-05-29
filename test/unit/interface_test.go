@@ -8,31 +8,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestInterface_Get(t *testing.T) {
-	fixtures := NewTestFixtures()
-
-	fixtureData, err := fixtures.GetFixture("interface_get")
-	if err != nil {
-		t.Fatalf("Failed to load fixture: %v", err)
-	}
-
-	var base ClientBaseCase
-	base.SetUp(t)
-	defer base.TearDown(t)
-
-	base.MockGet("linode/instances/123/interfaces/123", fixtureData)
-
-	iface, err := base.Client.GetInterface(context.Background(), 123, 123)
-	if err != nil {
-		t.Fatalf("Error fetching interfaces: %v", err)
-	}
-
-	assert.Equal(t, 123, iface.ID)
-	assert.Equal(t, 1, iface.Version)
-	assert.Equal(t, false, *iface.DefaultRoute.IPv4)
-	assert.Equal(t, "my_vlan", iface.VLAN.Label)
-}
-
 func TestInterface_List(t *testing.T) {
 	fixtures := NewTestFixtures()
 
@@ -54,6 +29,12 @@ func TestInterface_List(t *testing.T) {
 
 	assert.Equal(t, 123, ifaces[0].ID)
 	assert.Equal(t, 1, ifaces[0].Version)
+
+	assert.Equal(t, 456, ifaces[1].ID)
+	assert.Equal(t, 1, ifaces[1].Version)
+
+	assert.Equal(t, 789, ifaces[2].ID)
+	assert.Equal(t, 1, ifaces[2].Version)
 }
 
 func TestInterface_Delete(t *testing.T) {
@@ -67,10 +48,77 @@ func TestInterface_Delete(t *testing.T) {
 	assert.NoError(t, err)
 }
 
-func TestInterface_Create(t *testing.T) {
+func TestInterface_GetVLAN(t *testing.T) {
 	fixtures := NewTestFixtures()
 
-	fixtureData, err := fixtures.GetFixture("interface_create")
+	fixtureData, err := fixtures.GetFixture("interface_get_vlan")
+	if err != nil {
+		t.Fatalf("Failed to load fixture: %v", err)
+	}
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockGet("linode/instances/123/interfaces/123", fixtureData)
+
+	iface, err := base.Client.GetInterface(context.Background(), 123, 123)
+	if err != nil {
+		t.Fatalf("Error fetching interfaces: %v", err)
+	}
+
+	assert.Equal(t, 123, iface.ID)
+	assert.Equal(t, 1, iface.Version)
+	assert.Equal(t, false, *iface.DefaultRoute.IPv4)
+	assert.Equal(t, "my_vlan", iface.VLAN.Label)
+}
+
+func TestInterface_GetVPC(t *testing.T) {
+	fixtures := NewTestFixtures()
+
+	fixtureData, err := fixtures.GetFixture("interface_get_vpc")
+	if err != nil {
+		t.Fatalf("Failed to load fixture: %v", err)
+	}
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockGet("linode/instances/123/interfaces/456", fixtureData)
+
+	iface, err := base.Client.GetInterface(context.Background(), 123, 456)
+	if err != nil {
+		t.Fatalf("Error fetching interfaces: %v", err)
+	}
+
+	assert.Equal(t, 456, iface.ID)
+	assert.Equal(t, 1, iface.Version)
+
+	assert.Equal(t, true, *iface.DefaultRoute.IPv4)
+	assert.Equal(t, true, *iface.DefaultRoute.IPv6)
+
+	assert.Equal(t, 123456, iface.VPC.VPCID)
+	assert.Equal(t, 789, iface.VPC.SubnetID)
+
+	assert.Equal(t, "192.168.22.3", iface.VPC.IPv4.Addresses[0].Address)
+	assert.Equal(t, true, iface.VPC.IPv4.Addresses[0].Primary)
+
+	assert.Equal(t, "192.168.22.16/28", iface.VPC.IPv4.Ranges[0].Range)
+	assert.Equal(t, "192.168.22.32/28", iface.VPC.IPv4.Ranges[1].Range)
+
+	assert.Equal(t, "1234::/64", iface.VPC.IPv6.SLAAC[0].Range)
+	assert.Equal(t, "1234::5678", iface.VPC.IPv6.SLAAC[0].Address)
+
+	assert.Equal(t, "4321::/64", iface.VPC.IPv6.Ranges[0].Range)
+
+	assert.Equal(t, true, iface.VPC.IPv6.IsPublic)
+}
+
+func TestInterface_CreatePublic(t *testing.T) {
+	fixtures := NewTestFixtures()
+
+	fixtureData, err := fixtures.GetFixture("interface_create_public")
 	if err != nil {
 		t.Fatalf("Failed to load fixture: %v", err)
 	}
@@ -83,7 +131,16 @@ func TestInterface_Create(t *testing.T) {
 
 	opts := linodego.LinodeInterfaceCreateOptions{
 		FirewallID: linodego.Pointer(123),
-		Public:     nil,
+		Public: &linodego.PublicInterfaceCreateOptions{
+			IPv4: linodego.PublicInterfaceIPv4CreateOptions{
+				Addresses: []linodego.PublicInterfaceIPv4AddressCreateOptions{
+					{
+						Address: "auto",
+						Primary: linodego.Pointer(true),
+					},
+				},
+			},
+		},
 	}
 
 	iface, err := base.Client.CreateInterface(context.Background(), 123, opts)
@@ -91,14 +148,14 @@ func TestInterface_Create(t *testing.T) {
 		t.Fatalf("Error fetching interfaces: %v", err)
 	}
 
-	assert.Equal(t, 123, iface.ID)
+	assert.Equal(t, 789, iface.ID)
 	assert.Equal(t, "auto", iface.Public.IPv4.Addresses[0].Address)
 }
 
-func TestInterface_Update(t *testing.T) {
+func TestInterface_UpdateVLAN(t *testing.T) {
 	fixtures := NewTestFixtures()
 
-	fixtureData, err := fixtures.GetFixture("interface_update")
+	fixtureData, err := fixtures.GetFixture("interface_update_vlan")
 	if err != nil {
 		t.Fatalf("Failed to load fixture: %v", err)
 	}
@@ -123,6 +180,80 @@ func TestInterface_Update(t *testing.T) {
 	assert.Equal(t, 123, iface.ID)
 	assert.Equal(t, false, *iface.DefaultRoute.IPv4)
 	assert.Equal(t, true, *iface.DefaultRoute.IPv6)
+}
+
+func TestInterface_UpdateVPC(t *testing.T) {
+	fixtures := NewTestFixtures()
+
+	fixtureData, err := fixtures.GetFixture("interface_update_vpc")
+	if err != nil {
+		t.Fatalf("Failed to load fixture: %v", err)
+	}
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockPut("linode/instances/123/interfaces/456", fixtureData)
+
+	opts := linodego.LinodeInterfaceUpdateOptions{
+		DefaultRoute: &linodego.InterfaceDefaultRoute{
+			IPv4: linodego.Pointer(true),
+			IPv6: linodego.Pointer(true),
+		},
+		VPC: &linodego.VPCInterfaceCreateOptions{
+			IPv4: linodego.VPCInterfaceIPv4CreateOptions{
+				Addresses: []linodego.VPCInterfaceIPv4AddressCreateOptions{
+					{
+						Address: "192.168.23.4",
+						Primary: linodego.Pointer(true),
+					},
+				},
+				Ranges: []linodego.VPCInterfaceIPv4RangeCreateOptions{
+					{
+						Range: "192.168.23.16/28",
+					},
+					{
+						Range: "192.168.23.32/28",
+					},
+				},
+			},
+			IPv6: linodego.VPCInterfaceIPv6CreateOptions{
+				SLAAC: []linodego.VPCInterfaceIPv6SLAACCreateOptions{
+					{
+						Range: "1235::/64",
+					},
+				},
+				Ranges: []linodego.VPCInterfaceIPv6RangeCreateOptions{
+					{
+						"4322::/64",
+					},
+				},
+			},
+		},
+	}
+
+	iface, err := base.Client.UpdateInterface(context.Background(), 123, 456, opts)
+	if err != nil {
+		t.Fatalf("Error fetching interfaces: %v", err)
+	}
+
+	assert.Equal(t, 456, iface.ID)
+	assert.Equal(t, true, *iface.DefaultRoute.IPv4)
+	assert.Equal(t, true, *iface.DefaultRoute.IPv6)
+
+	assert.Equal(t, "192.168.23.4", iface.VPC.IPv4.Addresses[0].Address)
+	assert.Equal(t, true, iface.VPC.IPv4.Addresses[0].Primary)
+
+	assert.Equal(t, "192.168.23.16/28", iface.VPC.IPv4.Ranges[0].Range)
+	assert.Equal(t, "192.168.23.32/28", iface.VPC.IPv4.Ranges[1].Range)
+
+	assert.Equal(t, "1235::/64", iface.VPC.IPv6.SLAAC[0].Range)
+	assert.Equal(t, "1235::5678", iface.VPC.IPv6.SLAAC[0].Address)
+
+	assert.Equal(t, "4322::/64", iface.VPC.IPv6.Ranges[0].Range)
+
+	assert.Equal(t, false, iface.VPC.IPv6.IsPublic)
 }
 
 func TestInterface_Upgrade(t *testing.T) {
