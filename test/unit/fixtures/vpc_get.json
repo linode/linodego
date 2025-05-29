@@ -1,7 +1,8 @@
 {
+    "created": "2023-07-11T00:00:00",
+    "description": "A description of my VPC.",
     "id": 123,
-    "label": "test-vpc",
-    "description": "Test VPC description",
+    "label": "cool-vpc",
     "region": "us-east",
     "ipv6": [
         {
@@ -13,9 +14,19 @@
             "id": 456,
             "label": "subnet-1",
             "ipv4": "192.168.1.0/24",
-            "linodes": []
+            "linodes": [
+                {
+                    "id": 111,
+                    "interfaces": [
+                        {
+                            "active": true,
+                            "config_id": 4567,
+                            "id": 421
+                        }
+                    ]
+                }
+            ]
         }
     ],
-    "created": "2023-01-01T12:00:00",
     "updated": "2023-01-02T12:00:00"
 }

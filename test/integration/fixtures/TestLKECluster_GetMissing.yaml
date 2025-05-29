@@ -22,14 +22,20 @@ interactions:
       - HEAD, GET, OPTIONS, POST, PUT, DELETE
       Access-Control-Allow-Origin:
       - '*'
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
       - "37"
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Mon, 12 May 2025 18:58:30 GMT
+      Pragma:
+      - no-cache
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
@@ -39,7 +45,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
     status: 404 Not Found
     code: 404
     duration: ""
