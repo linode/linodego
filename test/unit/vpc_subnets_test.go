@@ -43,11 +43,13 @@ func TestVPCSubnet_Get(t *testing.T) {
 	subnet, err := base.Client.GetVPCSubnet(context.Background(), 123, 456)
 	assert.NoError(t, err)
 
-	assert.Equal(t, 456, subnet.ID, "Expected subnet ID to match")
-	assert.Equal(t, "Existing Subnet", subnet.Label, "Expected subnet label to match")
-	assert.Equal(t, "192.168.2.0/24", subnet.IPv4, "Expected subnet IPv4 to match")
-	assert.Equal(t, 101, subnet.Linodes[0].ID, "Expected Linode ID to match")
-	assert.True(t, subnet.Linodes[0].Interfaces[0].Active, "Expected interface to be active")
+	assert.Equal(t, 456, subnet.ID)
+	assert.Equal(t, "10.0.1.0/24", subnet.IPv4)
+	assert.Equal(t, "cool-vpc-subnet", subnet.Label)
+	assert.Equal(t, 111, subnet.Linodes[0].ID)
+	assert.Equal(t, true, subnet.Linodes[0].Interfaces[0].Active)
+	assert.Equal(t, 4567, *subnet.Linodes[0].Interfaces[0].ConfigID)
+	assert.Equal(t, 421, subnet.Linodes[0].Interfaces[0].ID)
 }
 
 func TestVPCSubnets_List(t *testing.T) {
@@ -61,12 +63,17 @@ func TestVPCSubnets_List(t *testing.T) {
 	base.MockGet("vpcs/123/subnets", fixtureData)
 
 	subnets, err := base.Client.ListVPCSubnets(context.Background(), 123, &linodego.ListOptions{})
+	subnet := subnets[0]
 	assert.NoError(t, err, "Expected no error when listing subnets")
-	assert.Len(t, subnets, 2, "Expected two subnets in the list")
+	assert.Len(t, subnets, 1, "Expected two subnets in the list")
 
-	assert.Equal(t, 123, subnets[0].ID, "Expected first subnet ID to match")
-	assert.Equal(t, "Subnet A", subnets[0].Label, "Expected first subnet label to match")
-	assert.Equal(t, "192.168.3.0/24", subnets[0].IPv4, "Expected first subnet IPv4 to match")
+	assert.Equal(t, 456, subnet.ID)
+	assert.Equal(t, "192.0.2.13/24", subnet.IPv4)
+	assert.Equal(t, "cool-vpc-subnet", subnet.Label)
+	assert.Equal(t, 111, subnet.Linodes[0].ID)
+	assert.Equal(t, true, subnet.Linodes[0].Interfaces[0].Active)
+	assert.Nil(t, subnet.Linodes[0].Interfaces[0].ConfigID)
+	assert.Equal(t, 421, subnet.Linodes[0].Interfaces[0].ID)
 }
 
 func TestVPCSubnet_Update(t *testing.T) {
