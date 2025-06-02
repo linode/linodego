@@ -158,7 +158,7 @@ func ExampleClient_CreateNodeBalancerNode() {
 		RootPass:   randPassword(),
 		Region:     "us-southeast",
 		Type:       "g6-nanode-1",
-		Image:      "linode/debian9",
+		Image:      "linode/debian12",
 		Booted:     linodego.Pointer(false),
 		FirewallID: GetFirewallID(),
 	}
