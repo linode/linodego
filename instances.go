@@ -368,7 +368,7 @@ func (c *Client) CreateInstanceWithLinodeInterfaces(ctx context.Context, opts In
 	return doPOSTRequest[Instance](ctx, c, "linode/instances", opts)
 }
 
-// UpdateInstance creates a Linode instance
+// UpdateInstance updates a Linode instance
 func (c *Client) UpdateInstance(ctx context.Context, linodeID int, opts InstanceUpdateOptions) (*Instance, error) {
 	e := formatAPIPath("linode/instances/%d", linodeID)
 	return doPUTRequest[Instance](ctx, c, e, opts)
