@@ -273,7 +273,6 @@ func TestFirewallSettings_UpdateAllFields(t *testing.T) {
 	}
 }
 
-
 func TestFirewallSettings_UpdatePartial(t *testing.T) {
 	label := fmt.Sprintf("fw-partial-%s", getUniqueText())
 
