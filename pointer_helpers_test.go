@@ -85,3 +85,32 @@ func TestDoublePointer(t *testing.T) {
 		t.Errorf("Expected %+v, got %+v", structValue, **structDoublePtr)
 	}
 }
+
+func TestDoublePointerNull(t *testing.T) {
+	// Test with an integer
+	intDoublePtr := DoublePointerNull[int]()
+	if intDoublePtr == nil || *intDoublePtr != nil {
+		t.Errorf("Expected nil pointer, got %v", intDoublePtr)
+	}
+
+	// Test with a string
+	stringDoublePtr := DoublePointerNull[string]()
+	if stringDoublePtr == nil || *stringDoublePtr != nil {
+		t.Errorf("Expected nil pointer, got %v", stringDoublePtr)
+	}
+
+	// Test with a boolean
+	boolDoublePtr := DoublePointerNull[bool]()
+	if boolDoublePtr == nil || *boolDoublePtr != nil {
+		t.Errorf("Expected nil pointer, got %v", boolDoublePtr)
+	}
+
+	// Test with a struct
+	type myStruct struct {
+		Field int
+	}
+	structDoublePtr := DoublePointerNull[myStruct]()
+	if structDoublePtr == nil || *structDoublePtr != nil {
+		t.Errorf("Expected nil pointer, got %v", structDoublePtr)
+	}
+}
