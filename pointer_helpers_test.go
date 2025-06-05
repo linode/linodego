@@ -45,3 +45,43 @@ func TestPointer(t *testing.T) {
 		t.Errorf("Expected %+v, got %+v", structValue, *structPtr)
 	}
 }
+
+// TestDoublePointer tests the DoublePointer helper function with various types
+func TestDoublePointer(t *testing.T) {
+	// Test with an integer
+	intValue := 42
+	intDoublePtr := DoublePointer(intValue)
+	if **intDoublePtr != intValue {
+		t.Errorf("Expected %d, got %d", intValue, **intDoublePtr)
+	}
+
+	// Test nil pointer for int (should be nil if explicitly set)
+	nilIntPtr := Pointer[*int](nil)
+	if *nilIntPtr != nil {
+		t.Errorf("Expected nil pointer, got %v", nilIntPtr)
+	}
+
+	// Test with a string
+	strValue := "double"
+	strDoublePtr := DoublePointer(strValue)
+	if **strDoublePtr != strValue {
+		t.Errorf("Expected %s, got %s", strValue, **strDoublePtr)
+	}
+
+	// Test with a boolean
+	boolValue := false
+	boolDoublePtr := DoublePointer(boolValue)
+	if **boolDoublePtr != boolValue {
+		t.Errorf("Expected %t, got %t", boolValue, **boolDoublePtr)
+	}
+
+	// Test with a struct
+	type myStruct struct {
+		Field int
+	}
+	structValue := myStruct{Field: 7}
+	structDoublePtr := DoublePointer(structValue)
+	if (**structDoublePtr).Field != structValue.Field {
+		t.Errorf("Expected %+v, got %+v", structValue, **structDoublePtr)
+	}
+}
