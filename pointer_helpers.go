@@ -25,17 +25,17 @@ func Pointer[T any](value T) *T {
 }
 
 // DoublePointer creates a double pointer to a value of type T.
-// It returns a **T, where a nil double pointer (**T == nil) represents a null field,
-// and omitting the field entirely indicates that the field won't be included in the request body.
 // This is useful for APIs that distinguish between null and omitted fields.
 //
 // Example:
 //
-//	// For a field that should be null in the API payload:
-//	value := DoublePointer(42) // Returns **int pointing to 42
+//	// For a field that should be non-null value in the API payload:
+//	value := linodego.DoublePointer(42) // Returns **int pointing a *int pointer pointing to 42
 //
-//	// Omit the field in the struct to indicate it won't be included in the request body.
-//	nullValue := DoublePointer[int](nil) // Returns **int that is nil
+//	// For a field that should be null in the API payload, use `Pointer` function instead:
+//	nullValue := linodego.Pointer[*int](nil) // Returns **int that is nil
+//
+//	// For a field that should not be included in the API payload, simply not include it in the struct.
 func DoublePointer[T any](value T) **T {
 	valuePtr := &value
 	return &valuePtr

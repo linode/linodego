@@ -6,6 +6,12 @@ import (
 
 // TestPointer tests the Pointer helper function with various types
 func TestPointer(t *testing.T) {
+	// Test nil pointer for int (should be nil if explicitly set)
+	nilIntPtr := Pointer[*int](nil)
+	if nilIntPtr == nil || *nilIntPtr != nil {
+		t.Errorf("Expected nil pointer, got %v", nilIntPtr)
+	}
+
 	// Test with an integer
 	intValue := 11
 	intPtr := Pointer(intValue)
@@ -53,12 +59,6 @@ func TestDoublePointer(t *testing.T) {
 	intDoublePtr := DoublePointer(intValue)
 	if **intDoublePtr != intValue {
 		t.Errorf("Expected %d, got %d", intValue, **intDoublePtr)
-	}
-
-	// Test nil pointer for int (should be nil if explicitly set)
-	nilIntPtr := Pointer[*int](nil)
-	if *nilIntPtr != nil {
-		t.Errorf("Expected nil pointer, got %v", nilIntPtr)
 	}
 
 	// Test with a string
