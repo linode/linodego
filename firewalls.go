@@ -58,10 +58,10 @@ type FirewallSettings struct {
 }
 
 type DefaultFirewallIDs struct {
-	Linode          int `json:"linode"`
-	NodeBalancer    int `json:"nodebalancer"`
-	PublicInterface int `json:"public_interface"`
-	VPCInterface    int `json:"vpc_interface"`
+	Linode          *int `json:"linode"`
+	NodeBalancer    *int `json:"nodebalancer"`
+	PublicInterface *int `json:"public_interface"`
+	VPCInterface    *int `json:"vpc_interface"`
 }
 
 // FirewallSettingsUpdateOptions is an options struct used when Updating FirewallSettings
