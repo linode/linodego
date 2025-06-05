@@ -70,10 +70,10 @@ type FirewallSettingsUpdateOptions struct {
 }
 
 type DefaultFirewallIDsOptions struct {
-	Linode          *int `json:"linode,omitempty"`
-	NodeBalancer    *int `json:"nodebalancer,omitempty"`
-	PublicInterface *int `json:"public_interface,omitempty"`
-	VPCInterface    *int `json:"vpc_interface,omitempty"`
+	Linode          **int `json:"linode,omitempty"`
+	NodeBalancer    **int `json:"nodebalancer,omitempty"`
+	PublicInterface **int `json:"public_interface,omitempty"`
+	VPCInterface    **int `json:"vpc_interface,omitempty"`
 }
 
 // GetUpdateOptions converts a Firewall to FirewallUpdateOptions for use in Client.UpdateFirewall.
