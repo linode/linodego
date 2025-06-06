@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-southeast","client_conn_throttle":20,"tags":null,"firewall_id":640319}'
+    body: '{"region":"us-southeast","client_conn_throttle":20,"tags":null,"firewall_id":2677167}'
     form: {}
     headers:
       Accept:
@@ -14,10 +14,12 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 767905, "label": "balancer767905", "region": "us-southeast", "hostname":
-      "45-79-244-22.ip.linodeusercontent.com", "ipv4": "45.79.244.22", "ipv6": "1234::5678",
-      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "client_conn_throttle":
-      20, "tags": [], "transfer": {"in": null, "out": null, "total": null}}'
+    body: '{"id": 1595317, "label": "balancer1595317", "region": "us-southeast", "type":
+      "common", "hostname": "139-144-166-98.ip.linodeusercontent.com", "ipv4": "139.144.166.98",
+      "ipv6": "1234::5678", "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "client_conn_throttle": 20, "client_udp_sess_throttle":
+      0, "lke_cluster": null, "tags": [], "transfer": {"in": null, "out": null, "total":
+      null}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -29,18 +31,20 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "340"
+      - "416"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Jul 2024 13:57:50 GMT
+      - Tue, 27 May 2025 14:05:06 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -57,7 +61,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -73,15 +77,16 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/767905/configs
+    url: https://api.linode.com/v4beta/nodebalancers/1595317/configs
     method: POST
   response:
-    body: '{"id": 1266954, "port": 80, "protocol": "http", "algorithm": "roundrobin",
+    body: '{"id": 2450488, "port": 80, "protocol": "http", "algorithm": "roundrobin",
       "stickiness": "none", "check": "none", "check_interval": 31, "check_timeout":
       30, "check_attempts": 3, "check_path": "", "check_body": "", "check_passive":
       true, "proxy_protocol": "none", "cipher_suite": "recommended", "nodebalancer_id":
-      767905, "ssl_commonname": "", "ssl_fingerprint": "", "ssl_cert": null, "ssl_key":
-      null, "nodes_status": {"up": 0, "down": 0}}'
+      1595317, "ssl_commonname": "", "ssl_fingerprint": "", "ssl_cert": null, "ssl_key":
+      null, "nodes_status": {"up": 0, "down": 0}, "udp_check_port": 80, "udp_session_timeout":
+      16}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -93,18 +98,20 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "438"
+      - "488"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Jul 2024 13:57:50 GMT
+      - Tue, 27 May 2025 14:05:06 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -121,14 +128,14 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"region":"us-southeast","type":"g6-nanode-1","label":"nodebalancer-example-instance","root_pass":"o\u003cF.F29=e\u003c2:{U28l5z2[w96()3TM\\bxaxjAUV*FhAfk2[-2YrC43E^H\u0026I8Hb}r0","image":"linode/debian9","firewall_id":640319,"booted":false}'
+    body: '{"region":"us-southeast","type":"g6-nanode-1","label":"nodebalancer-example-instance","root_pass":"X''9kGnlSpG8\\2X[6]P6k}r716kEd9AD(I;xGu#6s?2-,C*;s`N*f{0uS7Ygi107T","image":"linode/debian12","firewall_id":2677167,"booted":false}'
     form: {}
     headers:
       Accept:
@@ -140,16 +147,17 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 61170530, "label": "nodebalancer-example-instance", "group": "",
+    body: '{"id": 77641926, "label": "nodebalancer-example-instance", "group": "",
       "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.105.159.61"], "ipv6": "1234::5678/128",
-      "image": "linode/debian9", "region": "us-southeast", "specs": {"disk": 25600,
-      "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts": {"cpu":
-      90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io": 10000},
-      "backups": {"enabled": true, "available": false, "schedule": {"day": null, "window":
-      null}, "last_successful": null}, "hypervisor": "kvm", "watchdog_enabled": true,
-      "tags": [], "host_uuid": "69f0154caa24252c418222748af95908224f0aeb", "has_user_data":
-      false, "placement_group": null, "lke_cluster_id": null}'
+      "type": "g6-nanode-1", "ipv4": ["172.105.159.223"], "ipv6": "1234::5678/128",
+      "image": "linode/debian12", "region": "us-southeast", "site_type": "core", "specs":
+      {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
+      0}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota":
+      80, "io": 10000}, "backups": {"enabled": false, "available": false, "schedule":
+      {"day": null, "window": null}, "last_successful": null}, "hypervisor": "kvm",
+      "watchdog_enabled": true, "tags": [], "host_uuid": "cbc420fe867d435bccf07a10228d423527722e59",
+      "has_user_data": false, "placement_group": null, "disk_encryption": "enabled",
+      "lke_cluster_id": null, "capabilities": [], "interface_generation": "legacy_config"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -161,24 +169,25 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
-      Content-Length:
-      - "800"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Jul 2024 13:57:50 GMT
+      - Tue, 27 May 2025 14:05:07 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
+      - Accept-Encoding
       X-Accepted-Oauth-Scopes:
       - linodes:read_write
       X-Content-Type-Options:
@@ -189,7 +198,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "10"
+      - "20"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -205,12 +214,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/61170530/ips
+    url: https://api.linode.com/v4beta/linode/instances/77641926/ips
     method: POST
   response:
-    body: '{"address": "192.168.230.18", "gateway": null, "subnet_mask": "255.255.128.0",
-      "prefix": 17, "type": "ipv4", "public": false, "rdns": null, "linode_id": 61170530,
-      "region": "us-southeast", "vpc_nat_1_1": null}'
+    body: '{"address": "192.168.230.214", "gateway": null, "subnet_mask": "255.255.128.0",
+      "prefix": 17, "type": "ipv4", "public": false, "rdns": null, "linode_id": 77641926,
+      "interface_id": null, "region": "us-southeast", "vpc_nat_1_1": null, "reserved":
+      false, "assigned_entity": {"id": 77641926, "type": "linode", "label": "nodebalancer-example-instance",
+      "url": "/v4/linode/instances/77641926"}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -222,18 +233,20 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "209"
+      - "388"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Jul 2024 13:57:51 GMT
+      - Tue, 27 May 2025 14:05:08 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -250,14 +263,14 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"address":"192.168.230.18:80","label":"node-192.168.230.18"}'
+    body: '{"address":"192.168.230.214:80","label":"node-192.168.230.214"}'
     form: {}
     headers:
       Accept:
@@ -266,12 +279,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/767905/configs/1266954/nodes
+    url: https://api.linode.com/v4beta/nodebalancers/1595317/configs/2450488/nodes
     method: POST
   response:
-    body: '{"id": 2051559125, "address": "192.168.230.18:80", "label": "node-192.168.230.18",
-      "status": "Unknown", "weight": 50, "mode": "accept", "config_id": 1266954, "nodebalancer_id":
-      767905}'
+    body: '{"id": 2104029484, "address": "192.168.230.214:80", "label": "node-192.168.230.214",
+      "status": "Unknown", "weight": 50, "mode": "accept", "config_id": 2450488, "nodebalancer_id":
+      1595317, "vpc_config_id": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -283,18 +296,20 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "184"
+      - "210"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Jul 2024 13:57:51 GMT
+      - Tue, 27 May 2025 14:05:08 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -311,14 +326,14 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"address":"192.168.230.18:8080","label":"node-192.168.230.18","weight":50,"mode":"accept"}'
+    body: '{"address":"192.168.230.214:8080","label":"node-192.168.230.214","weight":50,"mode":"accept"}'
     form: {}
     headers:
       Accept:
@@ -327,12 +342,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/767905/configs/1266954/nodes/2051559125
+    url: https://api.linode.com/v4beta/nodebalancers/1595317/configs/2450488/nodes/2104029484
     method: PUT
   response:
-    body: '{"id": 2051559125, "address": "192.168.230.18:8080", "label": "node-192.168.230.18",
-      "status": "Unknown", "weight": 50, "mode": "accept", "config_id": 1266954, "nodebalancer_id":
-      767905}'
+    body: '{"id": 2104029484, "address": "192.168.230.214:8080", "label": "node-192.168.230.214",
+      "status": "Unknown", "weight": 50, "mode": "accept", "config_id": 2450488, "nodebalancer_id":
+      1595317, "vpc_config_id": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -344,18 +359,20 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "186"
+      - "212"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Jul 2024 13:57:51 GMT
+      - Tue, 27 May 2025 14:05:08 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -372,7 +389,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -388,13 +405,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/767905/configs/1266954/nodes?page=1
+    url: https://api.linode.com/v4beta/nodebalancers/1595317/configs/2450488/nodes?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 2051559125, "address": "192.168.230.18:8080", "label":
-      "node-192.168.230.18", "status": "Unknown", "weight": 50, "mode": "accept",
-      "config_id": 1266954, "nodebalancer_id": 767905}], "page": 1, "pages": 1, "results":
-      1}'
+    body: '{"data": [{"id": 2104029484, "address": "192.168.230.214:8080", "label":
+      "node-192.168.230.214", "status": "Unknown", "weight": 50, "mode": "accept",
+      "config_id": 2450488, "nodebalancer_id": 1595317, "vpc_config_id": null}], "page":
+      1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -406,18 +423,20 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "235"
+      - "261"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Jul 2024 13:57:52 GMT
+      - Tue, 27 May 2025 14:05:08 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -435,7 +454,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -451,12 +470,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/767905/configs/1266954/nodes/2051559125
+    url: https://api.linode.com/v4beta/nodebalancers/1595317/configs/2450488/nodes/2104029484
     method: GET
   response:
-    body: '{"id": 2051559125, "address": "192.168.230.18:8080", "label": "node-192.168.230.18",
-      "status": "Unknown", "weight": 50, "mode": "accept", "config_id": 1266954, "nodebalancer_id":
-      767905}'
+    body: '{"id": 2104029484, "address": "192.168.230.214:8080", "label": "node-192.168.230.214",
+      "status": "Unknown", "weight": 50, "mode": "accept", "config_id": 2450488, "nodebalancer_id":
+      1595317, "vpc_config_id": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -468,18 +487,20 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "186"
+      - "212"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Jul 2024 13:57:52 GMT
+      - Tue, 27 May 2025 14:05:08 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -497,7 +518,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -513,7 +534,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/767905/configs/1266954/nodes/2051559125
+    url: https://api.linode.com/v4beta/nodebalancers/1595317/configs/2450488/nodes/2104029484
     method: DELETE
   response:
     body: '{}'
@@ -528,6 +549,8 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -539,7 +562,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Jul 2024 13:57:52 GMT
+      - Tue, 27 May 2025 14:05:08 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -556,7 +579,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -572,7 +595,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/767905/configs/1266954
+    url: https://api.linode.com/v4beta/nodebalancers/1595317/configs/2450488
     method: DELETE
   response:
     body: '{}'
@@ -587,6 +610,8 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -598,7 +623,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Jul 2024 13:57:52 GMT
+      - Tue, 27 May 2025 14:05:09 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -615,7 +640,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -631,7 +656,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/767905
+    url: https://api.linode.com/v4beta/nodebalancers/1595317
     method: DELETE
   response:
     body: '{}'
@@ -646,6 +671,8 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -657,7 +684,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Jul 2024 13:57:52 GMT
+      - Tue, 27 May 2025 14:05:09 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -674,7 +701,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -690,7 +717,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/61170530
+    url: https://api.linode.com/v4beta/linode/instances/77641926
     method: DELETE
   response:
     body: '{}'
@@ -705,6 +732,8 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -716,7 +745,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Jul 2024 13:57:53 GMT
+      - Tue, 27 May 2025 14:05:11 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -733,7 +762,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

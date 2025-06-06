@@ -219,7 +219,7 @@ func TestDatabaseMySQL_EngineConfig_Create_Fails_EmptyDoublePointerValue(t *test
 		Engine: "mysql/8",
 		EngineConfig: &linodego.MySQLDatabaseEngineConfig{
 			MySQL: &linodego.MySQLDatabaseEngineConfigMySQL{
-				InnoDBFTServerStopwordTable: DoublePointer(linodego.Pointer("")),
+				InnoDBFTServerStopwordTable: linodego.DoublePointer(""),
 			},
 		},
 	}
@@ -229,10 +229,6 @@ func TestDatabaseMySQL_EngineConfig_Create_Fails_EmptyDoublePointerValue(t *test
 	_, err := client.CreateMySQLDatabase(context.Background(), invalidRequestData)
 
 	assert.Contains(t, err.Error(), "Invalid format: must match pattern ^.+/.+$")
-}
-
-func DoublePointer[T any](v *T) **T {
-	return &v
 }
 
 func createMySQLOptionsModifierNullableField() mysqlDatabaseModifier {
@@ -264,7 +260,7 @@ func createMySQLOptionsModifier() mysqlDatabaseModifier {
 				InnoDBChangeBufferMaxSize:    linodego.Pointer(30),
 				InnoDBFlushNeighbors:         linodego.Pointer(1),
 				InnoDBFTMinTokenSize:         linodego.Pointer(3),
-				InnoDBFTServerStopwordTable:  DoublePointer(linodego.Pointer("mydb/stopwords")),
+				InnoDBFTServerStopwordTable:  linodego.DoublePointer("mydb/stopwords"),
 				InnoDBLockWaitTimeout:        linodego.Pointer(50),
 				InnoDBLogBufferSize:          linodego.Pointer(16777216),
 				InnoDBOnlineAlterLogMaxSize:  linodego.Pointer(134217728),
