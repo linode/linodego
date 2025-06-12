@@ -42,6 +42,37 @@ type TokenCreateOptions struct {
 	Expiry *time.Time `json:"expiry"`
 }
 
+func (i *TokenCreateOptions) UnmarshalJSON(b []byte) error {
+	type Mask TokenCreateOptions
+
+	p := struct {
+		*Mask
+		Expiry *parseabletime.ParseableTime `json:"expiry"`
+	}{
+		Mask: (*Mask)(i),
+	}
+
+	if err := json.Unmarshal(b, &p); err != nil {
+		return err
+	}
+
+	i.Expiry = (*time.Time)(p.Expiry)
+
+	return nil
+}
+
+func (i *TokenCreateOptions) MarshalJSON() ([]byte, error) {
+	type Mask TokenCreateOptions
+	p := struct {
+		*Mask
+		Expiry *parseabletime.ParseableTime `json:"expiry"`
+	}{
+		Mask:   (*Mask)(i),
+		Expiry: (*parseabletime.ParseableTime)(i.Expiry),
+	}
+	return json.Marshal(p)
+}
+
 // TokenUpdateOptions fields are those accepted by UpdateToken
 type TokenUpdateOptions struct {
 	// This token's label. This is for display purposes only, but can be used to more easily track what you're using each token for. (1-100 Characters)
