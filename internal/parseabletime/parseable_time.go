@@ -1,6 +1,7 @@
 package parseabletime
 
 import (
+	"encoding/json"
 	"time"
 )
 
@@ -19,4 +20,12 @@ func (p *ParseableTime) UnmarshalJSON(b []byte) error {
 	*p = ParseableTime(t)
 
 	return nil
+}
+
+func (p *ParseableTime) MarshalJSON() ([]byte, error) {
+	if p == nil {
+		return []byte("null"), nil
+	}
+	t := time.Time(*p)
+	return json.Marshal(t.Format(dateLayout))
 }

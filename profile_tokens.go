@@ -24,10 +24,10 @@ type Token struct {
 	Token string `json:"token"`
 
 	// The date and time this token was created.
-	Created *time.Time `json:"-"`
+	Created *time.Time `json:"created"`
 
 	// When this token will expire. Personal Access Tokens cannot be renewed, so after this time the token will be completely unusable and a new token will need to be generated. Tokens may be created with "null" as their expiry and will never expire unless revoked.
-	Expiry *time.Time `json:"-"`
+	Expiry *time.Time `json:"expiry"`
 }
 
 // TokenCreateOptions fields are those accepted by CreateToken
@@ -68,6 +68,22 @@ func (i *Token) UnmarshalJSON(b []byte) error {
 	i.Expiry = (*time.Time)(p.Expiry)
 
 	return nil
+}
+
+func (i *Token) MarshalJSON() ([]byte, error) {
+	type Mask Token
+
+	p := struct {
+		*Mask
+		Created *parseabletime.ParseableTime `json:"created"`
+		Expiry  *parseabletime.ParseableTime `json:"expiry"`
+	}{
+		Mask:    (*Mask)(i),
+		Created: (*parseabletime.ParseableTime)(i.Created),
+		Expiry:  (*parseabletime.ParseableTime)(i.Expiry),
+	}
+
+	return json.Marshal(p)
 }
 
 // GetCreateOptions converts a Token to TokenCreateOptions for use in CreateToken
