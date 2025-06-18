@@ -2,9 +2,10 @@ package unit
 
 import (
 	"context"
-	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestAccountMaintenances_List(t *testing.T) {
