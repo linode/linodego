@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"fw-partial-1748931588820549000","rules":{"inbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
+    body: '{"label":"fw-partial-1750453219295619000","rules":{"inbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
     form: {}
     headers:
       Accept:
@@ -14,12 +14,12 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 2742476, "label": "fw-partial-1748931588820549000", "created": "2018-01-02T03:04:05",
+    body: '{"id": 2898497, "label": "fw-partial-1750453219295619000", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
-      [{"action": "ACCEPT", "label": "go-fwrule-test", "ports": "22", "protocol":
-      "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy":
-      "ACCEPT", "outbound": [{"action": "ACCEPT", "label": "go-fwrule-test", "ports":
-      "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}],
+      [{"protocol": "TCP", "addresses": {"ipv6": ["1234::5678/0"], "ipv4": ["0.0.0.0/0"]},
+      "action": "ACCEPT", "label": "go-fwrule-test", "ports": "22"}], "inbound_policy":
+      "ACCEPT", "outbound": [{"protocol": "TCP", "addresses": {"ipv6": ["1234::5678/0"], "ipv4":
+      ["0.0.0.0/0"]}, "action": "ACCEPT", "label": "go-fwrule-test", "ports": "22"}],
       "outbound_policy": "ACCEPT", "version": 1, "fingerprint": "7bcc0f03"}, "tags":
       ["testing"], "entities": []}'
     headers:
@@ -46,7 +46,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 03 Jun 2025 06:19:49 GMT
+      - Fri, 20 Jun 2025 21:00:19 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -82,8 +82,8 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls/settings
     method: GET
   response:
-    body: '{"default_firewall_ids": {"linode": 2742453, "nodebalancer": 2742408, "public_interface":
-      2742408, "vpc_interface": 2742408}}'
+    body: '{"default_firewall_ids": {"linode": 2630203, "nodebalancer": 1629606, "public_interface":
+      1629606, "vpc_interface": 1629606}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -108,7 +108,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 03 Jun 2025 06:19:49 GMT
+      - Fri, 20 Jun 2025 21:00:19 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -133,7 +133,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"default_firewall_ids":{"linode":2742476}}'
+    body: '{"default_firewall_ids":{"linode":2898497}}'
     form: {}
     headers:
       Accept:
@@ -145,8 +145,8 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls/settings
     method: PUT
   response:
-    body: '{"default_firewall_ids": {"linode": 2742476, "nodebalancer": 2742408, "public_interface":
-      2742408, "vpc_interface": 2742408}}'
+    body: '{"default_firewall_ids": {"linode": 2898497, "nodebalancer": 1629606, "public_interface":
+      1629606, "vpc_interface": 1629606}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -171,7 +171,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 03 Jun 2025 06:19:49 GMT
+      - Fri, 20 Jun 2025 21:00:19 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -195,7 +195,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"default_firewall_ids":{"linode":2742453,"nodebalancer":2742408,"public_interface":2742408,"vpc_interface":2742408}}'
+    body: '{"default_firewall_ids":{"linode":2630203,"nodebalancer":1629606,"public_interface":1629606,"vpc_interface":1629606}}'
     form: {}
     headers:
       Accept:
@@ -207,8 +207,8 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls/settings
     method: PUT
   response:
-    body: '{"default_firewall_ids": {"linode": 2742453, "nodebalancer": 2742408, "public_interface":
-      2742408, "vpc_interface": 2742408}}'
+    body: '{"default_firewall_ids": {"linode": 2630203, "nodebalancer": 1629606, "public_interface":
+      1629606, "vpc_interface": 1629606}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -233,7 +233,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 03 Jun 2025 06:19:50 GMT
+      - Fri, 20 Jun 2025 21:00:19 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -266,7 +266,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/2742476
+    url: https://api.linode.com/v4beta/networking/firewalls/2898497
     method: DELETE
   response:
     body: '{}'
@@ -294,7 +294,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 03 Jun 2025 06:19:50 GMT
+      - Fri, 20 Jun 2025 21:00:19 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

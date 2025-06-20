@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"fw-allfields-1748931586989409000","rules":{"inbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
+    body: '{"label":"fw-allfields-1750453218573434000","rules":{"inbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
     form: {}
     headers:
       Accept:
@@ -14,13 +14,13 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 2742475, "label": "fw-allfields-1748931586989409000", "created":
+    body: '{"id": 2898496, "label": "fw-allfields-1750453218573434000", "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "status": "enabled",
-      "rules": {"inbound": [{"action": "ACCEPT", "label": "go-fwrule-test", "ports":
-      "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}],
-      "inbound_policy": "ACCEPT", "outbound": [{"action": "ACCEPT", "label": "go-fwrule-test",
-      "ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6":
-      ["1234::5678/0"]}}], "outbound_policy": "ACCEPT", "version": 1, "fingerprint": "7bcc0f03"},
+      "rules": {"inbound": [{"protocol": "TCP", "addresses": {"ipv6": ["1234::5678/0"], "ipv4":
+      ["0.0.0.0/0"]}, "action": "ACCEPT", "label": "go-fwrule-test", "ports": "22"}],
+      "inbound_policy": "ACCEPT", "outbound": [{"protocol": "TCP", "addresses": {"ipv6":
+      ["1234::5678/0"], "ipv4": ["0.0.0.0/0"]}, "action": "ACCEPT", "label": "go-fwrule-test",
+      "ports": "22"}], "outbound_policy": "ACCEPT", "version": 1, "fingerprint": "7bcc0f03"},
       "tags": ["testing"], "entities": []}'
     headers:
       Access-Control-Allow-Credentials:
@@ -46,7 +46,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 03 Jun 2025 06:19:47 GMT
+      - Fri, 20 Jun 2025 21:00:18 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -82,8 +82,8 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls/settings
     method: GET
   response:
-    body: '{"default_firewall_ids": {"linode": 2742453, "nodebalancer": 2742408, "public_interface":
-      2742408, "vpc_interface": 2742408}}'
+    body: '{"default_firewall_ids": {"linode": 2630203, "nodebalancer": 1629606, "public_interface":
+      1629606, "vpc_interface": 1629606}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -108,7 +108,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 03 Jun 2025 06:19:47 GMT
+      - Fri, 20 Jun 2025 21:00:18 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -133,7 +133,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"default_firewall_ids":{"linode":2742475,"nodebalancer":2742475,"public_interface":2742475,"vpc_interface":2742475}}'
+    body: '{"default_firewall_ids":{"linode":2898496,"nodebalancer":2898496,"public_interface":2898496,"vpc_interface":2898496}}'
     form: {}
     headers:
       Accept:
@@ -145,8 +145,8 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls/settings
     method: PUT
   response:
-    body: '{"default_firewall_ids": {"linode": 2742475, "nodebalancer": 2742475, "public_interface":
-      2742475, "vpc_interface": 2742475}}'
+    body: '{"default_firewall_ids": {"linode": 2898496, "nodebalancer": 2898496, "public_interface":
+      2898496, "vpc_interface": 2898496}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -171,7 +171,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 03 Jun 2025 06:19:48 GMT
+      - Fri, 20 Jun 2025 21:00:19 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -195,7 +195,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"default_firewall_ids":{"linode":2742453,"nodebalancer":2742408,"public_interface":2742408,"vpc_interface":2742408}}'
+    body: '{"default_firewall_ids":{"linode":2630203,"nodebalancer":1629606,"public_interface":1629606,"vpc_interface":1629606}}'
     form: {}
     headers:
       Accept:
@@ -207,8 +207,8 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls/settings
     method: PUT
   response:
-    body: '{"default_firewall_ids": {"linode": 2742453, "nodebalancer": 2742408, "public_interface":
-      2742408, "vpc_interface": 2742408}}'
+    body: '{"default_firewall_ids": {"linode": 2630203, "nodebalancer": 1629606, "public_interface":
+      1629606, "vpc_interface": 1629606}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -233,7 +233,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 03 Jun 2025 06:19:48 GMT
+      - Fri, 20 Jun 2025 21:00:19 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -266,7 +266,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/2742475
+    url: https://api.linode.com/v4beta/networking/firewalls/2898496
     method: DELETE
   response:
     body: '{}'
@@ -294,7 +294,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 03 Jun 2025 06:19:48 GMT
+      - Fri, 20 Jun 2025 21:00:19 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

@@ -10,14 +10,6 @@ import (
 	"github.com/linode/linodego"
 )
 
-// Helper to convert int to *int (for restoring firewall IDs)
-func intToPtr(i int) *int {
-	if i == 0 {
-		return nil
-	}
-	return &i
-}
-
 var testFirewallCreateOpts = linodego.FirewallCreateOptions{
 	Label: "linodego-fw-test",
 	Rules: testFirewallRuleSet, // borrowed from firewall_rules.test.go
@@ -187,25 +179,25 @@ func TestFirewallSettings_Get(t *testing.T) {
 		t.Fatal("Expected firewall settings, got nil")
 	}
 
-	// Validate each individual default firewall ID is present (≥0)
-	if settings.DefaultFirewallIDs.Linode < 0 {
-		t.Errorf("Invalid Linode default firewall ID: %d", settings.DefaultFirewallIDs.Linode)
+	// Validate each individual default firewall ID is present (>0 or nil)
+	if settings.DefaultFirewallIDs.Linode != nil && *settings.DefaultFirewallIDs.Linode <= 0 {
+		t.Errorf("Invalid Linode default firewall ID: %d", *settings.DefaultFirewallIDs.Linode)
 	}
-	if settings.DefaultFirewallIDs.NodeBalancer < 0 {
-		t.Errorf("Invalid NodeBalancer default firewall ID: %d", settings.DefaultFirewallIDs.NodeBalancer)
+	if settings.DefaultFirewallIDs.NodeBalancer != nil && *settings.DefaultFirewallIDs.NodeBalancer < 0 {
+		t.Errorf("Invalid NodeBalancer default firewall ID: %d", *settings.DefaultFirewallIDs.NodeBalancer)
 	}
-	if settings.DefaultFirewallIDs.PublicInterface < 0 {
-		t.Errorf("Invalid PublicInterface default firewall ID: %d", settings.DefaultFirewallIDs.PublicInterface)
+	if settings.DefaultFirewallIDs.PublicInterface != nil && *settings.DefaultFirewallIDs.PublicInterface < 0 {
+		t.Errorf("Invalid PublicInterface default firewall ID: %d", *settings.DefaultFirewallIDs.PublicInterface)
 	}
-	if settings.DefaultFirewallIDs.VPCInterface < 0 {
-		t.Errorf("Invalid VPCInterface default firewall ID: %d", settings.DefaultFirewallIDs.VPCInterface)
+	if settings.DefaultFirewallIDs.VPCInterface != nil && *settings.DefaultFirewallIDs.VPCInterface < 0 {
+		t.Errorf("Invalid VPCInterface default firewall ID: %d", *settings.DefaultFirewallIDs.VPCInterface)
 	}
 
 	// Optional: ensure at least one ID is non-zero
-	if settings.DefaultFirewallIDs.Linode == 0 &&
-		settings.DefaultFirewallIDs.NodeBalancer == 0 &&
-		settings.DefaultFirewallIDs.PublicInterface == 0 &&
-		settings.DefaultFirewallIDs.VPCInterface == 0 {
+	if settings.DefaultFirewallIDs.Linode == nil &&
+		settings.DefaultFirewallIDs.NodeBalancer == nil &&
+		settings.DefaultFirewallIDs.PublicInterface == nil &&
+		settings.DefaultFirewallIDs.VPCInterface == nil {
 		t.Log("No default firewall IDs are set — may be acceptable in a fresh or isolated environment.")
 	}
 }
@@ -221,7 +213,7 @@ func TestFirewallSettings_UpdateAllFields(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer teardown()
+	t.Cleanup(teardown)
 
 	// Backup original firewall settings before changing them
 	originalSettings, err := client.GetFirewallSettings(context.Background())
@@ -229,28 +221,28 @@ func TestFirewallSettings_UpdateAllFields(t *testing.T) {
 		t.Fatalf("Failed to get original firewall settings: %v", err)
 	}
 
-	defer func() {
+	t.Cleanup(func() {
 		restoreOpts := linodego.FirewallSettingsUpdateOptions{
 			DefaultFirewallIDs: linodego.DefaultFirewallIDsOptions{
-				Linode:          intToPtr(originalSettings.DefaultFirewallIDs.Linode),
-				NodeBalancer:    intToPtr(originalSettings.DefaultFirewallIDs.NodeBalancer),
-				PublicInterface: intToPtr(originalSettings.DefaultFirewallIDs.PublicInterface),
-				VPCInterface:    intToPtr(originalSettings.DefaultFirewallIDs.VPCInterface),
+				Linode:          linodego.Pointer(originalSettings.DefaultFirewallIDs.Linode),
+				NodeBalancer:    linodego.Pointer(originalSettings.DefaultFirewallIDs.NodeBalancer),
+				PublicInterface: linodego.Pointer(originalSettings.DefaultFirewallIDs.PublicInterface),
+				VPCInterface:    linodego.Pointer(originalSettings.DefaultFirewallIDs.VPCInterface),
 			},
 		}
 		_, err := client.UpdateFirewallSettings(context.Background(), restoreOpts)
 		if err != nil {
 			t.Fatalf("Failed to restore original default firewall IDs: %v", err)
 		}
-	}()
+	})
 
 	// Update all default firewall settings to the test firewall
 	updateOpts := linodego.FirewallSettingsUpdateOptions{
 		DefaultFirewallIDs: linodego.DefaultFirewallIDsOptions{
-			Linode:          &firewall.ID,
-			NodeBalancer:    &firewall.ID,
-			PublicInterface: &firewall.ID,
-			VPCInterface:    &firewall.ID,
+			Linode:          linodego.DoublePointer(firewall.ID),
+			NodeBalancer:    linodego.DoublePointer(firewall.ID),
+			PublicInterface: linodego.DoublePointer(firewall.ID),
+			VPCInterface:    linodego.DoublePointer(firewall.ID),
 		},
 	}
 	updated, err := client.UpdateFirewallSettings(context.Background(), updateOpts)
@@ -259,17 +251,17 @@ func TestFirewallSettings_UpdateAllFields(t *testing.T) {
 	}
 
 	// Validate the updates
-	if updated.DefaultFirewallIDs.Linode != firewall.ID {
-		t.Errorf("Expected Linode default firewall ID %d, got %d", firewall.ID, updated.DefaultFirewallIDs.Linode)
+	if *updated.DefaultFirewallIDs.Linode != firewall.ID {
+		t.Errorf("Expected Linode default firewall ID %d, got %d", firewall.ID, *updated.DefaultFirewallIDs.Linode)
 	}
-	if updated.DefaultFirewallIDs.NodeBalancer != firewall.ID {
-		t.Errorf("Expected NodeBalancer default firewall ID %d, got %d", firewall.ID, updated.DefaultFirewallIDs.NodeBalancer)
+	if *updated.DefaultFirewallIDs.NodeBalancer != firewall.ID {
+		t.Errorf("Expected NodeBalancer default firewall ID %d, got %d", firewall.ID, *updated.DefaultFirewallIDs.NodeBalancer)
 	}
-	if updated.DefaultFirewallIDs.PublicInterface != firewall.ID {
-		t.Errorf("Expected PublicInterface default firewall ID %d, got %d", firewall.ID, updated.DefaultFirewallIDs.PublicInterface)
+	if *updated.DefaultFirewallIDs.PublicInterface != firewall.ID {
+		t.Errorf("Expected PublicInterface default firewall ID %d, got %d", firewall.ID, *updated.DefaultFirewallIDs.PublicInterface)
 	}
-	if updated.DefaultFirewallIDs.VPCInterface != firewall.ID {
-		t.Errorf("Expected VPCInterface default firewall ID %d, got %d", firewall.ID, updated.DefaultFirewallIDs.VPCInterface)
+	if *updated.DefaultFirewallIDs.VPCInterface != firewall.ID {
+		t.Errorf("Expected VPCInterface default firewall ID %d, got %d", firewall.ID, *updated.DefaultFirewallIDs.VPCInterface)
 	}
 }
 
@@ -284,7 +276,7 @@ func TestFirewallSettings_UpdatePartial(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	defer teardown()
+	t.Cleanup(teardown)
 
 	if firewall == nil {
 		t.Fatal("setupFirewall returned nil firewall")
@@ -297,25 +289,25 @@ func TestFirewallSettings_UpdatePartial(t *testing.T) {
 	}
 
 	// Restore original settings after test
-	defer func() {
+	t.Cleanup(func() {
 		restoreOpts := linodego.FirewallSettingsUpdateOptions{
 			DefaultFirewallIDs: linodego.DefaultFirewallIDsOptions{
-				Linode:          intToPtr(originalSettings.DefaultFirewallIDs.Linode),
-				NodeBalancer:    intToPtr(originalSettings.DefaultFirewallIDs.NodeBalancer),
-				PublicInterface: intToPtr(originalSettings.DefaultFirewallIDs.PublicInterface),
-				VPCInterface:    intToPtr(originalSettings.DefaultFirewallIDs.VPCInterface),
+				Linode:          linodego.Pointer(originalSettings.DefaultFirewallIDs.Linode),
+				NodeBalancer:    linodego.Pointer(originalSettings.DefaultFirewallIDs.NodeBalancer),
+				PublicInterface: linodego.Pointer(originalSettings.DefaultFirewallIDs.PublicInterface),
+				VPCInterface:    linodego.Pointer(originalSettings.DefaultFirewallIDs.VPCInterface),
 			},
 		}
 		_, err := client.UpdateFirewallSettings(context.Background(), restoreOpts)
 		if err != nil {
 			t.Fatalf("Failed to restore original default firewall IDs: %v", err)
 		}
-	}()
+	})
 
 	// Update only the Linode default firewall ID
 	opts := linodego.FirewallSettingsUpdateOptions{
 		DefaultFirewallIDs: linodego.DefaultFirewallIDsOptions{
-			Linode: &firewall.ID,
+			Linode: linodego.DoublePointer(firewall.ID),
 		},
 	}
 	updated, err := client.UpdateFirewallSettings(context.Background(), opts)
@@ -323,7 +315,7 @@ func TestFirewallSettings_UpdatePartial(t *testing.T) {
 		t.Fatalf("Error updating firewall settings: %v", err)
 	}
 
-	if updated.DefaultFirewallIDs.Linode != firewall.ID {
-		t.Errorf("Expected Linode default firewall ID %d, got %d", firewall.ID, updated.DefaultFirewallIDs.Linode)
+	if *updated.DefaultFirewallIDs.Linode != firewall.ID {
+		t.Errorf("Expected Linode default firewall ID %d, got %d", firewall.ID, *updated.DefaultFirewallIDs.Linode)
 	}
 }
