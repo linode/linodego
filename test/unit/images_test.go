@@ -3,6 +3,8 @@ package unit
 import (
 	"context"
 	"fmt"
+	"net/http"
+	"net/http/httptest"
 	"strings"
 	"testing"
 	"time"
@@ -94,8 +96,8 @@ func TestImage_Create(t *testing.T) {
 	requestData := linodego.ImageCreateOptions{
 		DiskID:      123456,
 		Label:       "Debian 11",
-		Description: "Example image description.",
-		CloudInit:   true,
+		Description: linodego.Pointer("Example image description."),
+		CloudInit:   linodego.Pointer(true),
 		Tags:        &[]string{"repair-image", "fix-1"},
 	}
 
@@ -136,7 +138,7 @@ func TestImage_Update(t *testing.T) {
 
 	desc := "Example image description."
 	requestData := linodego.ImageUpdateOptions{
-		Label:       "Debian 11",
+		Label:       linodego.Pointer("Debian 11"),
 		Description: &desc,
 		Tags:        &[]string{"repair-image", "fix-1"},
 	}
@@ -171,8 +173,16 @@ func TestImage_Update(t *testing.T) {
 }
 
 func TestImage_Upload(t *testing.T) {
-	fixtureData, err := fixtures.GetFixture("image_upload")
+	uploadServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	}))
+	defer uploadServer.Close()
+
+	fixtureDataRaw, err := fixtures.GetFixture("image_upload")
 	assert.NoError(t, err)
+
+	fixtureData := fixtureDataRaw.(map[string]interface{})
+	fixtureData["upload_to"] = uploadServer.URL
 
 	var base ClientBaseCase
 	base.SetUp(t)
@@ -181,7 +191,7 @@ func TestImage_Upload(t *testing.T) {
 	requestData := linodego.ImageUploadOptions{
 		Region:      "us-iad",
 		Label:       "Debian 11",
-		Description: "Example image description.",
+		Description: linodego.Pointer("Example image description."),
 		CloudInit:   true,
 		Tags:        &[]string{"repair-image", "fix-1"},
 		Image:       strings.NewReader("mock image data"),

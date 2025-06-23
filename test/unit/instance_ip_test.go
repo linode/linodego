@@ -62,7 +62,11 @@ func TestInstanceIPAddress_Add(t *testing.T) {
 
 	base.MockPost("linode/instances/123/ips", fixtureData)
 
-	ip, err := base.Client.AddInstanceIPAddress(context.Background(), 123, true)
+	opts := linodego.InstanceIPAddOptions{
+		Public: true,
+	}
+
+	ip, err := base.Client.AddInstanceIPAddress(context.Background(), 123, opts)
 	assert.NoError(t, err)
 	assert.NotNil(t, ip)
 	assert.Equal(t, "198.51.100.1", ip.Address)
@@ -78,8 +82,8 @@ func TestInstanceIPAddress_Update(t *testing.T) {
 	defer base.TearDown(t)
 
 	rdns := "custom.reverse.dns"
-	updateOpts := linodego.IPAddressUpdateOptions{
-		RDNS: &rdns,
+	updateOpts := linodego.IPAddressUpdateOptionsV2{
+		RDNS: linodego.DoublePointer(rdns),
 	}
 
 	base.MockPut("linode/instances/123/ips/192.0.2.1", fixtureData)

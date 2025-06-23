@@ -23,14 +23,14 @@ func TestNodeBalancers_UDP(t *testing.T) {
 
 	opts := linodego.NodeBalancerCreateOptions{
 		Label:                 linodego.Pointer("foobar"),
-		Region:                "us-mia",
+		Region:                linodego.Pointer("us-mia"),
 		ClientUDPSessThrottle: linodego.Pointer(5),
 		Configs: []*linodego.NodeBalancerConfigCreateOptions{
 			{
-				Protocol:     linodego.ProtocolUDP,
+				Protocol:     linodego.Pointer(linodego.ProtocolUDP),
 				Port:         1234,
-				Algorithm:    linodego.AlgorithmRingHash,
-				Stickiness:   linodego.StickinessSourceIP,
+				Algorithm:    linodego.Pointer(linodego.AlgorithmRingHash),
+				Stickiness:   linodego.Pointer(linodego.StickinessSourceIP),
 				UDPCheckPort: linodego.Pointer(80),
 			},
 		},

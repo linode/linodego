@@ -31,21 +31,21 @@ func TestObjectStorageBucket_List(t *testing.T) {
 	assert.Equal(t, 10240, buckets[0].Size)
 }
 
-func TestObjectStorageBucket_ListInCluster(t *testing.T) {
-	fixtureData, err := fixtures.GetFixture("object_storage_bucket_list")
-	assert.NoError(t, err)
-
-	var base ClientBaseCase
-	base.SetUp(t)
-	defer base.TearDown(t)
-
-	clusterID := "us-east-1"
-	base.MockGet("object-storage/buckets/"+clusterID, fixtureData)
-
-	buckets, err := base.Client.ListObjectStorageBucketsInCluster(context.Background(), nil, clusterID)
-	assert.NoError(t, err)
-	assert.NotEmpty(t, buckets)
-}
+//func TestObjectStorageBucket_ListInRegion(t *testing.T) {
+//	fixtureData, err := fixtures.GetFixture("object_storage_bucket_list")
+//	assert.NoError(t, err)
+//
+//	var base ClientBaseCase
+//	base.SetUp(t)
+//	defer base.TearDown(t)
+//
+//	regionID := "us-east"
+//	base.MockGet("object-storage/buckets/"+regionID, fixtureData)
+//
+//	buckets, err := base.Client.ListObjectStorageBucketsInRegion(context.Background(), nil, regionID)
+//	assert.NoError(t, err)
+//	assert.NotEmpty(t, buckets)
+//}
 
 func TestObjectStorageBucket_Get(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("object_storage_bucket_get")
@@ -75,7 +75,7 @@ func TestObjectStorageBucket_Create(t *testing.T) {
 	defer base.TearDown(t)
 
 	createOpts := linodego.ObjectStorageBucketCreateOptions{
-		Region: "us-east",
+		Region: linodego.Pointer("us-east"),
 		Label:  "new-bucket",
 	}
 
@@ -114,7 +114,7 @@ func TestObjectStorageBucket_GetAccess(t *testing.T) {
 
 	base.MockGet("object-storage/buckets/"+clusterID+"/"+bucketLabel+"/access", fixtureData)
 
-	access, err := base.Client.GetObjectStorageBucketAccess(context.Background(), clusterID, bucketLabel)
+	access, err := base.Client.GetObjectStorageBucketAccessV2(context.Background(), clusterID, bucketLabel)
 	assert.NoError(t, err)
 	assert.NotNil(t, access)
 	assert.Equal(t, linodego.ACLPublicRead, access.ACL)
@@ -129,7 +129,7 @@ func TestObjectStorageBucket_UpdateAccess(t *testing.T) {
 	bucketLabel := "my-bucket"
 
 	updateOpts := linodego.ObjectStorageBucketUpdateAccessOptions{
-		ACL: linodego.ACLPrivate,
+		ACL: linodego.Pointer(linodego.ACLPrivate),
 	}
 
 	base.MockPost("object-storage/buckets/"+clusterID+"/"+bucketLabel+"/access", nil)

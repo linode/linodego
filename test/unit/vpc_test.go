@@ -29,7 +29,7 @@ func TestVPC_Create(t *testing.T) {
 
 	vpc, err := base.Client.CreateVPC(context.Background(), linodego.VPCCreateOptions{
 		Label:       "test-vpc",
-		Description: "Test VPC description",
+		Description: linodego.Pointer("Test VPC description"),
 		Region:      "us-east",
 		Subnets: []linodego.VPCSubnetCreateOptions{
 			{Label: "subnet-1"},
@@ -99,8 +99,8 @@ func TestVPC_Update(t *testing.T) {
 	base.MockPut("vpcs/123", updatedMockVPC)
 
 	opts := linodego.VPCUpdateOptions{
-		Label:       "updated-vpc",
-		Description: "Updated description",
+		Label:       linodego.Pointer("updated-vpc"),
+		Description: linodego.Pointer("Updated description"),
 	}
 
 	vpc, err := base.Client.UpdateVPC(context.Background(), 123, opts)

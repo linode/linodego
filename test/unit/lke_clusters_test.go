@@ -112,8 +112,8 @@ func TestLKECluster_Update(t *testing.T) {
 	defer base.TearDown(t)
 
 	updateOptions := linodego.LKEClusterUpdateOptions{
-		Label: "updated-cluster",
-		Tags:  &[]string{"new-tag"},
+		Label: linodego.Pointer("updated-cluster"),
+		Tags:  []string{"new-tag"},
 	}
 
 	base.MockPut("lke/clusters/123", fixtureData)

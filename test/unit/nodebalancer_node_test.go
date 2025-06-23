@@ -22,8 +22,8 @@ func TestNodeBalancerNode_Create(t *testing.T) {
 	createOpts := linodego.NodeBalancerNodeCreateOptions{
 		Address: "192.168.1.1",
 		Label:   "Test Node",
-		Weight:  50,
-		Mode:    linodego.ModeAccept,
+		Weight:  linodego.Pointer(50),
+		Mode:    linodego.Pointer(linodego.ModeAccept),
 	}
 	node, err := base.Client.CreateNodeBalancerNode(context.Background(), 123, 456, createOpts)
 	assert.NoError(t, err)
@@ -47,10 +47,10 @@ func TestNodeBalancerNode_Update(t *testing.T) {
 	base.MockPut("nodebalancers/123/configs/456/nodes/789", fixtureData)
 
 	updateOpts := linodego.NodeBalancerNodeUpdateOptions{
-		Address: "192.168.1.2",
-		Label:   "Updated Node",
-		Weight:  60,
-		Mode:    linodego.ModeDrain,
+		Address: linodego.Pointer("192.168.1.2"),
+		Label:   linodego.Pointer("Updated Node"),
+		Weight:  linodego.Pointer(60),
+		Mode:    linodego.Pointer(linodego.ModeDrain),
 	}
 	node, err := base.Client.UpdateNodeBalancerNode(context.Background(), 123, 456, 789, updateOpts)
 	assert.NoError(t, err)

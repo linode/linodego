@@ -83,9 +83,9 @@ func TestIPv6Range_Create(t *testing.T) {
 	defer base.TearDown(t)
 
 	createOpts := linodego.IPv6RangeCreateOptions{
-		LinodeID:     12345,
+		LinodeID:     linodego.Pointer(12345),
 		PrefixLength: 64,
-		RouteTarget:  "2600:3c00::1",
+		RouteTarget:  linodego.Pointer("2600:3c00::1"),
 	}
 
 	// Mock the POST request
@@ -95,7 +95,7 @@ func TestIPv6Range_Create(t *testing.T) {
 
 	assert.NoError(t, err, "Expected no error when creating IPv6 range")
 	assert.NotNil(t, createdRange, "Expected non-nil IPv6 range response")
-	assert.Equal(t, createOpts.RouteTarget, createdRange.RouteTarget, "Expected matching route target")
+	assert.Equal(t, *createOpts.RouteTarget, createdRange.RouteTarget, "Expected matching route target")
 }
 
 func TestIPv6Range_Delete(t *testing.T) {

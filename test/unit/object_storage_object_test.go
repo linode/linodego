@@ -20,7 +20,7 @@ func TestObjectStorageObjectURL_Create(t *testing.T) {
 		Name:        "test-object",
 		Method:      "GET",
 		ExpiresIn:   nil,
-		ContentType: "application/json",
+		ContentType: linodego.Pointer("application/json"),
 	}
 
 	base.MockPost("object-storage/buckets/my-bucket/test-label/object-url", fixtureData)

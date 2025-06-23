@@ -22,7 +22,7 @@ func TestNodeBalancer_Create(t *testing.T) {
 	label := "Test NodeBalancer"
 	createOpts := linodego.NodeBalancerCreateOptions{
 		Label:  &label,
-		Region: "us-east",
+		Region: linodego.Pointer("us-east"),
 		Tags:   []string{"test", "example"},
 	}
 	nodebalancer, err := base.Client.CreateNodeBalancer(context.Background(), createOpts)
@@ -96,7 +96,7 @@ func TestNodeBalancer_Update(t *testing.T) {
 	label := "Updated NodeBalancer"
 	updateOpts := linodego.NodeBalancerUpdateOptions{
 		Label: &label,
-		Tags:  &[]string{"updated", "production"},
+		Tags:  []string{"updated", "production"},
 	}
 	nodebalancer, err := base.Client.UpdateNodeBalancer(context.Background(), 123, updateOpts)
 	assert.NoError(t, err)

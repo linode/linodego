@@ -21,10 +21,10 @@ func TestNodeBalancerConfigs_UDP(t *testing.T) {
 	base.MockPost("nodebalancers/12345/configs", createFixture)
 
 	opts := linodego.NodeBalancerConfigCreateOptions{
-		Protocol:     linodego.ProtocolUDP,
+		Protocol:     linodego.Pointer(linodego.ProtocolUDP),
 		Port:         1234,
-		Algorithm:    linodego.AlgorithmRingHash,
-		Stickiness:   linodego.StickinessSourceIP,
+		Algorithm:    linodego.Pointer(linodego.AlgorithmRingHash),
+		Stickiness:   linodego.Pointer(linodego.StickinessSourceIP),
 		UDPCheckPort: linodego.Pointer(12345),
 	}
 

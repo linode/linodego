@@ -58,9 +58,9 @@ func TestNodeBalancerConfig_Create(t *testing.T) {
 
 	createOpts := linodego.NodeBalancerConfigCreateOptions{
 		Port:       80,
-		Protocol:   linodego.ProtocolHTTP,
-		Algorithm:  linodego.AlgorithmRoundRobin,
-		Stickiness: linodego.StickinessTable,
+		Protocol:   linodego.Pointer(linodego.ProtocolHTTP),
+		Algorithm:  linodego.Pointer(linodego.AlgorithmRoundRobin),
+		Stickiness: linodego.Pointer(linodego.StickinessTable),
 	}
 	config, err := base.Client.CreateNodeBalancerConfig(context.Background(), 123, createOpts)
 	assert.NoError(t, err)
@@ -82,8 +82,8 @@ func TestNodeBalancerConfig_Update(t *testing.T) {
 
 	updateOpts := linodego.NodeBalancerConfigUpdateOptions{
 		Port:       443,
-		Protocol:   linodego.ProtocolHTTPS,
-		Stickiness: linodego.StickinessNone,
+		Protocol:   linodego.Pointer(linodego.ProtocolHTTPS),
+		Stickiness: linodego.Pointer(linodego.StickinessNone),
 	}
 	config, err := base.Client.UpdateNodeBalancerConfig(context.Background(), 123, 456, updateOpts)
 	assert.NoError(t, err)
@@ -116,8 +116,8 @@ func TestNodeBalancerConfig_Rebuild(t *testing.T) {
 
 	rebuildOpts := linodego.NodeBalancerConfigRebuildOptions{
 		Port:       443,
-		Protocol:   linodego.ProtocolHTTPS,
-		Stickiness: linodego.StickinessNone,
+		Protocol:   linodego.Pointer(linodego.ProtocolHTTPS),
+		Stickiness: linodego.Pointer(linodego.StickinessNone),
 	}
 	config, err := base.Client.RebuildNodeBalancerConfig(context.Background(), 123, 456, rebuildOpts)
 	assert.NoError(t, err)

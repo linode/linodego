@@ -45,8 +45,8 @@ func TestIPAllocateReserve(t *testing.T) {
 	ip, err := base.Client.AllocateReserveIP(context.Background(), linodego.AllocateReserveIPOptions{
 		Type:     "ipv4",
 		Public:   true,
-		Region:   "us-east",
-		LinodeID: 12345,
+		Region:   linodego.Pointer("us-east"),
+		LinodeID: linodego.Pointer(12345),
 	})
 	assert.NoError(t, err, "Expected no error when allocating reserve IP")
 	assert.NotNil(t, ip, "Expected non-nil allocated IP")

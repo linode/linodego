@@ -82,7 +82,7 @@ func TestInstanceDisk_Create(t *testing.T) {
 	createOptions := linodego.InstanceDiskCreateOptions{
 		Label:      "New Disk",
 		Size:       20480,
-		Filesystem: "ext4",
+		Filesystem: linodego.Pointer("ext4"),
 	}
 
 	base.MockPost("linode/instances/123/disks", fixtureData)
@@ -143,7 +143,11 @@ func TestInstanceDisk_Resize(t *testing.T) {
 
 	base.MockPost("linode/instances/123/disks/1/resize", nil)
 
-	err := base.Client.ResizeInstanceDisk(context.Background(), 123, 1, 40960)
+	opts := linodego.InstanceDiskResizeOptions{
+		Size: 40960,
+	}
+
+	err := base.Client.ResizeInstanceDisk(context.Background(), 123, 1, opts)
 	assert.NoError(t, err)
 }
 
@@ -154,6 +158,10 @@ func TestInstanceDisk_PasswordReset(t *testing.T) {
 
 	base.MockPost("linode/instances/123/disks/1/password", nil)
 
-	err := base.Client.PasswordResetInstanceDisk(context.Background(), 123, 1, "new-password")
+	opts := linodego.InstanceDiskPasswordResetOptions{
+		Password: "new-password",
+	}
+
+	err := base.Client.PasswordResetInstanceDisk(context.Background(), 123, 1, opts)
 	assert.NoError(t, err)
 }

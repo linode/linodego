@@ -53,8 +53,8 @@ func TestInstanceConfig_Create(t *testing.T) {
 	rootDevice := "/dev/sda"
 
 	createOptions := linodego.InstanceConfigCreateOptions{
-		Label:      "new-config",
-		Kernel:     "linode/latest-64bit",
+		Label:      linodego.Pointer("new-config"),
+		Kernel:     linodego.Pointer("linode/latest-64bit"),
 		RootDevice: &rootDevice,
 	}
 
@@ -74,8 +74,8 @@ func TestInstanceConfig_Update(t *testing.T) {
 	defer base.TearDown(t)
 
 	updateOptions := linodego.InstanceConfigUpdateOptions{
-		Label:      "updated-config",
-		RootDevice: "/dev/sdb",
+		Label:      linodego.Pointer("updated-config"),
+		RootDevice: linodego.Pointer("/dev/sdb"),
 	}
 
 	base.MockPut("linode/instances/123/configs/1", fixtureData)

@@ -90,7 +90,7 @@ func TestLKENodePool_Create(t *testing.T) {
 		Tags:   []string{"tag1"},
 		Labels: map[string]string{"env": "dev"},
 		Taints: []linodego.LKENodePoolTaint{
-			{Key: "taintKey", Value: "taintValue", Effect: linodego.LKENodePoolTaintEffectNoSchedule},
+			{Key: "taintKey", Value: linodego.Pointer("taintValue"), Effect: linodego.LKENodePoolTaintEffectNoSchedule},
 		},
 		Autoscaler: &linodego.LKENodePoolAutoscaler{
 			Enabled: true,
@@ -119,8 +119,8 @@ func TestLKENodePool_Update(t *testing.T) {
 	defer base.TearDown(t)
 
 	updateOptions := linodego.LKENodePoolUpdateOptions{
-		Count:  5,
-		Tags:   &[]string{"updated-tag"},
+		Count:  linodego.Pointer(5),
+		Tags:   []string{"updated-tag"},
 		Labels: Ptr(linodego.LKENodePoolLabels{"env": "prod"}),
 		Autoscaler: &linodego.LKENodePoolAutoscaler{
 			Enabled: true,

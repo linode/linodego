@@ -178,9 +178,9 @@ func TestInstance_Create(t *testing.T) {
 	createOptions := linodego.InstanceCreateOptions{
 		Region:   "us-east",
 		Type:     "g6-standard-1",
-		Label:    "new-instance",
-		Image:    "linode/ubuntu22.04",
-		RootPass: "securepassword",
+		Label:    linodego.Pointer("new-instance"),
+		Image:    linodego.Pointer("linode/ubuntu22.04"),
+		RootPass: linodego.Pointer("securepassword"),
 	}
 
 	base.MockPost("linode/instances", fixtureData)
@@ -199,7 +199,7 @@ func TestInstance_Update(t *testing.T) {
 	defer base.TearDown(t)
 
 	updateOptions := linodego.InstanceUpdateOptions{
-		Label: "updated-instance",
+		Label: linodego.Pointer("updated-instance"),
 	}
 
 	base.MockPut("linode/instances/123", fixtureData)
@@ -227,7 +227,11 @@ func TestInstance_Boot(t *testing.T) {
 
 	base.MockPost("linode/instances/123/boot", nil)
 
-	err := base.Client.BootInstance(context.Background(), 123, 0)
+	opts := linodego.InstanceBootOptions{
+		ConfigID: 0,
+	}
+
+	err := base.Client.BootInstance(context.Background(), 123, opts)
 	assert.NoError(t, err)
 }
 
@@ -238,7 +242,11 @@ func TestInstance_Reboot(t *testing.T) {
 
 	base.MockPost("linode/instances/123/reboot", nil)
 
-	err := base.Client.RebootInstance(context.Background(), 123, 0)
+	opts := linodego.InstanceRebootOptions{
+		ConfigID: 0,
+	}
+
+	err := base.Client.RebootInstance(context.Background(), 123, opts)
 	assert.NoError(t, err)
 }
 
@@ -251,9 +259,9 @@ func TestInstance_Clone(t *testing.T) {
 	defer base.TearDown(t)
 
 	cloneOptions := linodego.InstanceCloneOptions{
-		Region: "us-east",
-		Type:   "g6-standard-1",
-		Label:  "cloned-instance",
+		Region: linodego.Pointer("us-east"),
+		Type:   linodego.Pointer("g6-standard-1"),
+		Label:  linodego.Pointer("cloned-instance"),
 	}
 
 	base.MockPost("linode/instances/123/clone", fixtureData)
@@ -300,7 +308,7 @@ func TestInstance_Rebuild(t *testing.T) {
 	defer base.TearDown(t)
 
 	rebuildOptions := linodego.InstanceRebuildOptions{
-		Image: "linode/ubuntu22.04",
+		Image: linodego.Pointer("linode/ubuntu22.04"),
 	}
 
 	base.MockPost("linode/instances/123/rebuild", fixtureData)

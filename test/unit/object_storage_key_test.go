@@ -76,7 +76,7 @@ func TestObjectStorageKey_Update(t *testing.T) {
 	defer base.TearDown(t)
 
 	updateOptions := linodego.ObjectStorageKeyUpdateOptions{
-		Label:   "updated-key",
+		Label:   linodego.Pointer("updated-key"),
 		Regions: []string{"us-west-1"},
 	}
 
