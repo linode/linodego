@@ -3,11 +3,12 @@ package unit
 import (
 	"context"
 	"fmt"
+	"testing"
+	"time"
+
 	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
-	"testing"
-	"time"
 )
 
 func TestDomainRecord_List(t *testing.T) {

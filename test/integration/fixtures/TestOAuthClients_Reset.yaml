@@ -2,7 +2,11 @@
 version: 1
 interactions:
 - request:
+<<<<<<<< HEAD:test/integration/fixtures/TestOAuthClients_Reset.yaml
     body: '{"redirect_uri":"https://example.com","label":"go-client-test","public":true}'
+========
+    body: '{"region":"us-east","label":"go-bucket-test-def"}'
+>>>>>>>> main:test/integration/fixtures/TestObjectStorageBucketsInCluster_List.yaml
     form: {}
     headers:
       Accept:
@@ -14,9 +18,16 @@ interactions:
     url: https://api.linode.com/v4beta/account/oauth-clients
     method: POST
   response:
+<<<<<<<< HEAD:test/integration/fixtures/TestOAuthClients_Reset.yaml
     body: '{"id": "757a5af92718d7369687", "redirect_uri": "https://example.com", "label":
       "go-client-test", "status": "active", "secret": "1950e1df7217e8f8f1543ba8b1d12c03e6088eb1429e10549e18c650b677015f",
       "thumbnail_url": null, "public": true}'
+========
+    body: '{"hostname": "go-bucket-test-def.us-east-1.linodeobjects.com", "label":
+      "go-bucket-test-def", "created": "2018-01-02T03:04:05", "region": "us-east",
+      "cluster": "us-east-1", "size": 0, "objects": 0, "endpoint_type": "E0", "s3_endpoint":
+      "us-east-1.linodeobjects.com"}'
+>>>>>>>> main:test/integration/fixtures/TestObjectStorageBucketsInCluster_List.yaml
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -35,13 +46,21 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
+<<<<<<<< HEAD:test/integration/fixtures/TestOAuthClients_Reset.yaml
       - "233"
+========
+      - "266"
+>>>>>>>> main:test/integration/fixtures/TestObjectStorageBucketsInCluster_List.yaml
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
+<<<<<<<< HEAD:test/integration/fixtures/TestOAuthClients_Reset.yaml
       - Tue, 03 Dec 2024 01:14:47 GMT
+========
+      - Wed, 08 Jan 2025 06:03:28 GMT
+>>>>>>>> main:test/integration/fixtures/TestObjectStorageBucketsInCluster_List.yaml
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -77,9 +96,16 @@ interactions:
     url: https://api.linode.com/v4beta/account/oauth-clients/757a5af92718d7369687/reset-secret
     method: POST
   response:
+<<<<<<<< HEAD:test/integration/fixtures/TestOAuthClients_Reset.yaml
     body: '{"id": "757a5af92718d7369687", "redirect_uri": "https://example.com", "label":
       "go-client-test", "status": "active", "secret": "af3ccc4a7d881a8a858593080d0bffb1e9c6b1917cb88e28bd2b10ad885679cb",
       "thumbnail_url": null, "public": true}'
+========
+    body: '{"data": [{"hostname": "go-bucket-test-def.us-east-1.linodeobjects.com",
+      "label": "go-bucket-test-def", "created": "2018-01-02T03:04:05", "region": "us-east",
+      "cluster": "us-east-1", "size": 0, "objects": 0, "endpoint_type": "E0", "s3_endpoint":
+      "us-east-1.linodeobjects.com"}], "page": 1, "pages": 1, "results": 1}'
+>>>>>>>> main:test/integration/fixtures/TestObjectStorageBucketsInCluster_List.yaml
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -98,13 +124,21 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
+<<<<<<<< HEAD:test/integration/fixtures/TestOAuthClients_Reset.yaml
       - "233"
+========
+      - "315"
+>>>>>>>> main:test/integration/fixtures/TestObjectStorageBucketsInCluster_List.yaml
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
+<<<<<<<< HEAD:test/integration/fixtures/TestOAuthClients_Reset.yaml
       - Tue, 03 Dec 2024 01:14:47 GMT
+========
+      - Wed, 08 Jan 2025 06:03:29 GMT
+>>>>>>>> main:test/integration/fixtures/TestObjectStorageBucketsInCluster_List.yaml
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -165,7 +199,11 @@ interactions:
       Content-Type:
       - application/json
       Expires:
+<<<<<<<< HEAD:test/integration/fixtures/TestOAuthClients_Reset.yaml
       - Tue, 03 Dec 2024 01:14:48 GMT
+========
+      - Wed, 08 Jan 2025 06:03:33 GMT
+>>>>>>>> main:test/integration/fixtures/TestObjectStorageBucketsInCluster_List.yaml
       Pragma:
       - no-cache
       Strict-Transport-Security:

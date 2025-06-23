@@ -17,12 +17,17 @@ jobs:
           go-version: stable
 
       - name: golangci-lint
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@v8
         with:
           version: latest
 
       - name: Run tidy
         run: make tidy
+
+      - name: Run formatter
+        run: |
+          go install mvdan.cc/gofumpt@86bffd62437a3c437c0b84d5d5ab244824e762fc
+          gofumpt -l -w .
 
       - name: Fail if changes
         run: git diff-index --exit-code HEAD
@@ -85,7 +90,7 @@ jobs:
 
     steps:
       - name: Notify Slack
-        uses: slackapi/slack-github-action@v2.0.0
+        uses: slackapi/slack-github-action@v2.1.0
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_BOT_TOKEN }}

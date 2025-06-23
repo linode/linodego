@@ -3,8 +3,9 @@ package unit
 import (
 	"context"
 	"fmt"
-	"github.com/jarcoal/httpmock"
 	"testing"
+
+	"github.com/jarcoal/httpmock"
 
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"

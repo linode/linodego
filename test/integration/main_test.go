@@ -21,18 +21,20 @@ var (
 )
 
 func TestMain(m *testing.M) {
-	if envFixtureMode, ok := os.LookupEnv("LINODE_FIXTURE_MODE"); ok {
-		switch envFixtureMode {
-		case "record":
-			setupCloudFirewall(nil)
-		case "play":
-			log.Printf("[INFO] Fixture mode play - Test Linode Cloud Firewall not created")
-		}
+	envFixtureMode, _ := os.LookupEnv("LINODE_FIXTURE_MODE")
+	enableCloudFW := os.Getenv("ENABLE_CLOUD_FW") != "false" // default true unless explicitly "false"
+
+	if envFixtureMode == "record" && enableCloudFW {
+		setupCloudFirewall(nil)
+	} else if envFixtureMode == "record" {
+		log.Printf("[INFO] ENABLE_CLOUD_FW is false - skipping Cloud Firewall setup")
+	} else if envFixtureMode == "play" {
+		log.Printf("[INFO] Fixture mode play - Test Linode Cloud Firewall not created")
 	}
 
 	code := m.Run()
 
-	if envFixtureMode, ok := os.LookupEnv("LINODE_FIXTURE_MODE"); ok && envFixtureMode == "record" {
+	if envFixtureMode == "record" && enableCloudFW {
 		deleteCloudFirewall()
 	}
 

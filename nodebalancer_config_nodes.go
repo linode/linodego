@@ -14,6 +14,7 @@ type NodeBalancerNode struct {
 	Mode           NodeMode `json:"mode"`
 	ConfigID       int      `json:"config_id"`
 	NodeBalancerID int      `json:"nodebalancer_id"`
+	VPCConfigID    int      `json:"vpc_config_id"`
 }
 
 // NodeMode is the mode a NodeBalancer should use when sending traffic to a NodeBalancer Node
@@ -39,6 +40,7 @@ type NodeBalancerNodeCreateOptions struct {
 	Label   string    `json:"label"`
 	Weight  *int      `json:"weight,omitempty"`
 	Mode    *NodeMode `json:"mode,omitempty"`
+	SubnetID *int      `json:"subnet_id,omitempty"`
 }
 
 // NodeBalancerNodeUpdateOptions fields are those accepted by UpdateNodeBalancerNode
@@ -47,6 +49,7 @@ type NodeBalancerNodeUpdateOptions struct {
 	Label   *string   `json:"label,omitempty"`
 	Weight  *int      `json:"weight,omitempty"`
 	Mode    *NodeMode `json:"mode,omitempty"`
+	SubnetID *int      `json:"subnet_id,omitempty"`
 }
 
 // GetCreateOptions converts a NodeBalancerNode to NodeBalancerNodeCreateOptions for use in CreateNodeBalancerNode

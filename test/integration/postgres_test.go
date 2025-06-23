@@ -130,6 +130,28 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 		linodego.DatabaseStatusActive, 2400); err != nil {
 		t.Fatalf("failed to wait for database updating: %s", err)
 	}
+
+	if err := client.SuspendPostgresDatabase(context.Background(), database.ID); err != nil {
+		t.Fatalf("failed to suspend database: %s", err)
+	}
+
+	// Wait for the DB to enter suspended status
+	if err := client.WaitForDatabaseStatus(
+		context.Background(), database.ID, linodego.DatabaseEngineTypePostgres,
+		linodego.DatabaseStatusSuspended, 2400); err != nil {
+		t.Fatalf("failed to wait for database suspended: %s", err)
+	}
+
+	if err := client.ResumePostgresDatabase(context.Background(), database.ID); err != nil {
+		t.Fatalf("failed to resume database: %s", err)
+	}
+
+	// Wait for the DB to re-enter active status
+	if err := client.WaitForDatabaseStatus(
+		context.Background(), database.ID, linodego.DatabaseEngineTypePostgres,
+		linodego.DatabaseStatusActive, 2400); err != nil {
+		t.Fatalf("failed to wait for database active: %s", err)
+	}
 }
 
 type postgresDatabaseModifier func(options *linodego.PostgresCreateOptions)
