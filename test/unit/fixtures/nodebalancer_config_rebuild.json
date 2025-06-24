@@ -1,0 +1,25 @@
+{
+    "id": 456,
+    "port": 443,
+    "protocol": "https",
+    "algorithm": "roundrobin",
+    "stickiness": "none",
+    "check": "connection",
+    "check_interval": 5,
+    "check_attempts": 3,
+    "check_path": "/",
+    "check_body": "",
+    "check_passive": true,
+    "check_timeout": 30,
+    "cipher_suite": "recommended",
+    "nodebalancer_id": 123,
+    "ssl_commonname": "",
+    "ssl_fingerprint": "",
+    "ssl_cert": "",
+    "ssl_key": "",
+    "nodes_status": {
+      "up": 2,
+      "down": 1
+    }
+}
+  

@@ -4,8 +4,9 @@ import (
 	"context"
 	"testing"
 
-	"github.com/linode/linodego"
 	"github.com/stretchr/testify/require"
+
+	"github.com/linode/linodego"
 )
 
 func TestNodeBalancerType_List(t *testing.T) {

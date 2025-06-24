@@ -5,8 +5,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/linode/linodego"
 )
 
 func TestAccountLogins_List(t *testing.T) {

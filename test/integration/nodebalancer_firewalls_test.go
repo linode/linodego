@@ -7,7 +7,7 @@ import (
 
 func TestNodeBalancerFirewalls_List_smoke(t *testing.T) {
 	client, nodebalancer, teardown, err := setupNodeBalancer(t,
-		"fixtures/TestNodeBalancerFirewalls_List")
+		"fixtures/TestNodeBalancerFirewalls_List", nil)
 	if err != nil {
 		t.Error(err)
 	}

@@ -5,8 +5,9 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/linode/linodego"
 	"github.com/stretchr/testify/require"
+
+	"github.com/linode/linodego"
 )
 
 func TestRegions_List(t *testing.T) {

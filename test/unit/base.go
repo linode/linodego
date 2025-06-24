@@ -5,9 +5,10 @@ import (
 	"testing"
 
 	"github.com/jarcoal/httpmock"
+	"github.com/stretchr/testify/mock"
+
 	"github.com/linode/linodego"
 	"github.com/linode/linodego/internal/testutil"
-	"github.com/stretchr/testify/mock"
 )
 
 type MockResponse struct {

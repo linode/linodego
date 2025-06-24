@@ -3,17 +3,17 @@ package linodego
 import (
 	"context"
 	"fmt"
-	"github.com/stretchr/testify/require"
 	"math"
 	"net/http"
 	"reflect"
 	"strconv"
 	"testing"
 
-	"github.com/linode/linodego/internal/testutil"
-
 	"github.com/google/go-cmp/cmp"
 	"github.com/jarcoal/httpmock"
+	"github.com/stretchr/testify/require"
+
+	"github.com/linode/linodego/internal/testutil"
 )
 
 type testResultNestedType struct {

@@ -6,10 +6,10 @@ import (
 	"regexp"
 	"testing"
 
+	"github.com/jarcoal/httpmock"
+
 	"github.com/linode/linodego"
 	"github.com/linode/linodego/internal/testutil"
-
-	"github.com/jarcoal/httpmock"
 )
 
 func mockRequestBodyValidate(t *testing.T, expected interface{}, response interface{}) httpmock.Responder {

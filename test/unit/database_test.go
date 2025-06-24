@@ -7,8 +7,9 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/linode/linodego"
 )
 
 func TestListDatabases(t *testing.T) {

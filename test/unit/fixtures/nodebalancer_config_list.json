@@ -1,0 +1,31 @@
+{
+    "data": [
+        {
+            "id": 456,
+            "address": "192.168.1.1",
+            "label": "Test Node",
+            "status": "UP",
+            "weight": 50,
+            "mode": "accept",
+            "config_id": 456,
+            "nodebalancer_id": 123,
+            "port": 80,
+            "protocol": "http"
+        },
+        {
+            "id": 457,
+            "address": "192.168.1.2",
+            "label": "Backup Node",
+            "status": "UP",
+            "weight": 40,
+            "mode": "backup",
+            "config_id": 456,
+            "nodebalancer_id": 123,
+            "port": 80,
+            "protocol": "http"
+        }
+    ],
+    "page": 1,
+    "pages": 1,
+    "results": 2
+}
