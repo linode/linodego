@@ -5,8 +5,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/linode/linodego"
 )
 
 func TestDatabasePostgres_EngineConfig_Get(t *testing.T) {
@@ -286,7 +287,7 @@ func TestDatabasePostgres_EngineConfig_Suite(t *testing.T) {
 	assertPostgresEngineConfigEqual(t, fetchedDB.EngineConfig.PG, expected)
 
 	updateOptions := linodego.PostgresUpdateOptions{
-		Label: "example-db-updated",
+		Label: linodego.Pointer("example-db-updated"),
 		EngineConfig: &linodego.PostgresDatabaseEngineConfig{
 			PG: &linodego.PostgresDatabaseEngineConfigPG{
 				AutovacuumVacuumThreshold: linodego.Pointer(int32(500)),

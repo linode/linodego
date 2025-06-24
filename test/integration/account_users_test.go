@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp/cmpopts"
+
 	"github.com/linode/linodego"
 	. "github.com/linode/linodego"
 )

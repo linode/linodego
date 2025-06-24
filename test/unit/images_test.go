@@ -10,7 +10,6 @@ import (
 	"time"
 
 	"github.com/jarcoal/httpmock"
-
 	"github.com/stretchr/testify/assert"
 
 	"github.com/linode/linodego"

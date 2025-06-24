@@ -5,8 +5,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/jarcoal/httpmock"
-	"github.com/linode/linodego/internal/testutil"
 	"log"
 	"net/http"
 	"net/http/httptest"
@@ -16,6 +14,9 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
+	"github.com/jarcoal/httpmock"
+
+	"github.com/linode/linodego/internal/testutil"
 )
 
 func TestClient_SetAPIVersion(t *testing.T) {

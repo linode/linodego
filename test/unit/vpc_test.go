@@ -5,8 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/linode/linodego"
 )
 
 func TestVPC_Create(t *testing.T) {

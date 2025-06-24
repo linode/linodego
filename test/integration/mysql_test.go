@@ -8,6 +8,7 @@ import (
 
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/google/go-cmp/cmp"
+
 	"github.com/linode/linodego"
 )
 

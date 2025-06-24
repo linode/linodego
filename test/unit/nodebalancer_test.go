@@ -4,8 +4,9 @@ import (
 	"context"
 	"testing"
 
-	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/linode/linodego"
 )
 
 func TestNodeBalancer_Create(t *testing.T) {

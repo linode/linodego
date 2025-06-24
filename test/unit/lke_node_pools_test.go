@@ -4,10 +4,10 @@ import (
 	"context"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/jarcoal/httpmock"
+	"github.com/linode/linodego"
 )
 
 func Ptr[T any](v T) *T {

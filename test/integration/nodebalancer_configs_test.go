@@ -115,7 +115,7 @@ func TestNodeBalancerConfig_UDP(t *testing.T) {
 		t,
 		"fixtures/TestNodeBalancerConfig_UDP",
 		func(options *linodego.NodeBalancerConfigCreateOptions) {
-			options.Protocol = linodego.ProtocolUDP
+			options.Protocol = linodego.Pointer(linodego.ProtocolUDP)
 			options.UDPCheckPort = linodego.Pointer(1234)
 		},
 	)
@@ -146,17 +146,17 @@ func TestNodeBalancerConfig_Rebuild_InVPCWithInstance(t *testing.T) {
 	// Rebuild the nodebalancer config with the instance
 	rebuildOpts := linodego.NodeBalancerConfigRebuildOptions{
 		Port:          80,
-		Protocol:      linodego.ProtocolHTTP,
-		Algorithm:     linodego.AlgorithmRoundRobin,
-		CheckInterval: 60,
+		Protocol:      linodego.Pointer(linodego.ProtocolHTTP),
+		Algorithm:     linodego.Pointer(linodego.AlgorithmRoundRobin),
+		CheckInterval: linodego.Pointer(60),
 		Nodes: []linodego.NodeBalancerConfigRebuildNodeOptions{
 			{
 				NodeBalancerNodeCreateOptions: linodego.NodeBalancerNodeCreateOptions{
 					Address:  fmt.Sprintf("%s:80", instanceVPCIP),
-					Mode:     linodego.ModeAccept,
-					Weight:   1,
+					Mode:     linodego.Pointer(linodego.ModeAccept),
+					Weight:   linodego.Pointer(1),
 					Label:    "test",
-					SubnetID: subnet.ID,
+					SubnetID: linodego.Pointer(subnet.ID),
 				},
 			},
 		},
@@ -257,13 +257,13 @@ func setupNodeBalancerWithVPCAndInstance(t *testing.T, fixturesYaml string) (*li
 		true,
 		func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
 			opts.Region = getRegionsWithCaps(t, client, []string{"Linodes", "VPCs"})[1]
-			opts.Image = "linode/ubuntu22.04"
-			opts.RootPass = "0o37Klm56P4ssw0rd"
+			opts.Image = linodego.Pointer("linode/ubuntu22.04")
+			opts.RootPass = linodego.Pointer("0o37Klm56P4ssw0rd")
 
 			NAT1To1Any := "any"
 			opts.Interfaces = []linodego.InstanceConfigInterfaceCreateOptions{
 				{
-					Purpose:  "vpc",
+					Purpose:  linodego.Pointer(linodego.ConfigInterfacePurpose("vpc")),
 					SubnetID: &subnet.ID,
 					IPv4: &linodego.VPCIPv4{
 						NAT1To1: &NAT1To1Any,
@@ -287,8 +287,8 @@ func setupNodeBalancerWithVPCAndInstance(t *testing.T, fixturesYaml string) (*li
 	// Find the VPC interface and get its IP.
 	var instanceVPCIP string
 	for _, iface := range instanceConfigs[0].Interfaces {
-		if iface.Purpose == "vpc" && iface.IPv4 != nil {
-			instanceVPCIP = iface.IPv4.VPC
+		if iface.Purpose == "vpc" && iface.IPv4 != nil && iface.IPv4.VPC != nil {
+			instanceVPCIP = *iface.IPv4.VPC
 			break
 		}
 	}

@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"go-test-def","bucket_access":[{"cluster":"us-east-1","region":"us-east","bucket_name":"go-bucket-test-def","permissions":"read_only"},{"cluster":"us-east-1","region":"us-east","bucket_name":"go-bucket-test-def","permissions":"read_write"}]}'
+    body: '{"label":"go-test-def","bucket_access":[{"region":"us-east","bucket_name":"go-bucket-test-def","permissions":"read_only"},{"region":"us-east","bucket_name":"go-bucket-test-def","permissions":"read_write"}]}'
     form: {}
     headers:
       Accept:
@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/keys
     method: POST
   response:
-    body: '{"id": 1654586, "label": "go-test-def", "access_key": "[SANITIZED]", "secret_key":
+    body: '{"id": 2252198, "label": "go-test-def", "access_key": "[SANITIZED]", "secret_key":
       "[SANITIZED]", "limited": true, "bucket_access": [{"cluster": "us-east-1", "bucket_name":
       "go-bucket-test-def", "permissions": "read_only", "region": "us-east"}, {"cluster":
       "us-east-1", "bucket_name": "go-bucket-test-def", "permissions": "read_write",
@@ -44,7 +44,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 08 Jan 2025 06:04:05 GMT
+      - Tue, 24 Jun 2025 14:45:26 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -61,7 +61,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
+      - "60"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -77,7 +77,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/1654586
+    url: https://api.linode.com/v4beta/object-storage/keys/2252198
     method: DELETE
   response:
     body: '{}'
@@ -105,7 +105,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 08 Jan 2025 06:04:07 GMT
+      - Tue, 24 Jun 2025 14:45:28 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -122,7 +122,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
+      - "60"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

@@ -4,10 +4,10 @@ import (
 	"context"
 	"testing"
 
-	k8scondition "github.com/linode/linodego/k8s/pkg/condition"
-
 	"github.com/google/go-cmp/cmp"
+
 	"github.com/linode/linodego"
+	k8scondition "github.com/linode/linodego/k8s/pkg/condition"
 )
 
 var testLKENodePoolCreateOpts = linodego.LKENodePoolCreateOptions{
@@ -363,7 +363,7 @@ func setupLKEEnterpriseNodePool(t *testing.T, fixturesYaml string, nodePoolCreat
 	t.Helper()
 	var fixtureTeardown func()
 	client, lkeCluster, fixtureTeardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
-		createOpts.Tier = "enterprise"
+		createOpts.Tier = linodego.Pointer("enterprise")
 		createOpts.Region = "us-lax"
 		createOpts.K8sVersion = "v1.31.1+lke4"
 	}}, fixturesYaml)

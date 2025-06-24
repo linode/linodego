@@ -10,6 +10,11 @@ import (
 	"github.com/linode/linodego"
 )
 
+var (
+	clientConnThrottle = 20
+	label              = "go-test-def"
+)
+
 func TestNodeBalancer_Create_create_smoke(t *testing.T) {
 	_, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancer_Create", nil)
 	defer teardown()
@@ -29,7 +34,7 @@ func TestNodeBalancer_Create_create_smoke(t *testing.T) {
 
 func TestNodeBalancer_Create_Type(t *testing.T) {
 	_, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancer_Create_Type", []nbModifier{func(createOpts *linodego.NodeBalancerCreateOptions) {
-		createOpts.Type = linodego.NBTypeCommon
+		createOpts.Type = linodego.Pointer(linodego.NBTypeCommon)
 	}})
 	defer teardown()
 
@@ -175,9 +180,9 @@ func setupNodeBalancerWithVPC(t *testing.T, fixturesYaml string, vpcModifier ...
 	}
 	createOpts := linodego.NodeBalancerCreateOptions{
 		Label:              &label,
-		Region:             vpc.Region,
+		Region:             linodego.Pointer(vpc.Region),
 		ClientConnThrottle: &clientConnThrottle,
-		FirewallID:         GetFirewallID(),
+		FirewallID:         linodego.Pointer(GetFirewallID()),
 		VPCs: []linodego.NodeBalancerVPCOptions{
 			{
 				IPv4Range: "192.168.0.64/30",

@@ -5,8 +5,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/linode/linodego"
 )
 
 func TestDatabaseMySQL_EngineConfig_Get(t *testing.T) {
@@ -166,7 +167,7 @@ func TestDatabaseMySQL_EngineConfig_Suite(t *testing.T) {
 	assertMySQLEngineConfigEqual(t, fetchedDB.EngineConfig.MySQL, expected)
 
 	updateOptions := linodego.MySQLUpdateOptions{
-		Label: "db-engine-config-updated",
+		Label: linodego.Pointer("db-engine-config-updated"),
 		EngineConfig: &linodego.MySQLDatabaseEngineConfig{
 			MySQL: &linodego.MySQLDatabaseEngineConfigMySQL{
 				ConnectTimeout:              linodego.Pointer(20),

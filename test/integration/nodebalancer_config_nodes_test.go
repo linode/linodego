@@ -172,10 +172,10 @@ func TestNodeBalancerNode_Create_InVPC(t *testing.T) {
 	// Create a nodebalancer node in the VPC
 	node, err := client.CreateNodeBalancerNode(context.Background(), nodebalancer.ID, config.ID, linodego.NodeBalancerNodeCreateOptions{
 		Address:  instanceVPCIP + ":" + testNodePort,
-		Mode:     linodego.ModeAccept,
-		Weight:   10,
+		Mode:     linodego.Pointer(linodego.ModeAccept),
+		Weight:   linodego.Pointer(10),
 		Label:    "go-node-test-def",
-		SubnetID: subnet.ID,
+		SubnetID: linodego.Pointer(subnet.ID),
 	})
 	if err != nil {
 		t.Fatalf("Error creating NodeBalancer Node, got error %v", err)
@@ -208,10 +208,10 @@ func TestNodeBalancerNode_List_InVPC(t *testing.T) {
 
 	node, err := client.CreateNodeBalancerNode(context.Background(), nodebalancer.ID, config.ID, linodego.NodeBalancerNodeCreateOptions{
 		Address:  instanceVPCIP + ":" + testNodePort,
-		Mode:     linodego.ModeAccept,
-		Weight:   10,
+		Mode:     linodego.Pointer(linodego.ModeAccept),
+		Weight:   linodego.Pointer(10),
 		Label:    "go-node-test-def",
-		SubnetID: subnet.ID,
+		SubnetID: linodego.Pointer(subnet.ID),
 	})
 	if err != nil {
 		t.Errorf("Error creating NodeBalancer Node, got error %v", err)
@@ -261,19 +261,19 @@ func TestNodeBalancerNode_Update_InVPC(t *testing.T) {
 
 	node, err := client.CreateNodeBalancerNode(context.Background(), nodebalancer.ID, config.ID, linodego.NodeBalancerNodeCreateOptions{
 		Address:  instanceVPCIP + ":" + testNodePort,
-		Mode:     linodego.ModeAccept,
-		Weight:   10,
+		Mode:     linodego.Pointer(linodego.ModeAccept),
+		Weight:   linodego.Pointer(10),
 		Label:    "not-updated",
-		SubnetID: subnet.ID,
+		SubnetID: linodego.Pointer(subnet.ID),
 	})
 	if err != nil {
 		t.Errorf("Error creating NodeBalancer Node, got error %v", err)
 	}
 
 	updateOpts := linodego.NodeBalancerNodeUpdateOptions{
-		Address:  instanceVPCIP + ":" + testNodePort,
-		Label:    "updated",
-		SubnetID: subnet.ID,
+		Address:  linodego.Pointer(instanceVPCIP + ":" + testNodePort),
+		Label:    linodego.Pointer("updated"),
+		SubnetID: linodego.Pointer(subnet.ID),
 	}
 
 	node, err = client.UpdateNodeBalancerNode(context.Background(), nodebalancer.ID, config.ID, node.ID, updateOpts)
@@ -310,10 +310,10 @@ func TestNodeBalancerNode_Get_InVPC(t *testing.T) {
 
 	node, err := client.CreateNodeBalancerNode(context.Background(), nodebalancer.ID, config.ID, linodego.NodeBalancerNodeCreateOptions{
 		Address:  instanceVPCIP + ":" + testNodePort,
-		Mode:     linodego.ModeAccept,
-		Weight:   10,
+		Mode:     linodego.Pointer(linodego.ModeAccept),
+		Weight:   linodego.Pointer(10),
 		Label:    "go-node-test-def",
-		SubnetID: subnet.ID,
+		SubnetID: linodego.Pointer(subnet.ID),
 	})
 	if err != nil {
 		t.Errorf("Error creating NodeBalancer Node, got error %v", err)

@@ -4,8 +4,9 @@ import (
 	"context"
 	"testing"
 
-	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/linode/linodego"
 )
 
 func TestIPv6Ranges_List(t *testing.T) {

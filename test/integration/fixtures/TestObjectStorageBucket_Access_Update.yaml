@@ -14,25 +14,29 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/endpoints?page=1
     method: GET
   response:
-    body: '{"pages": 1, "page": 1, "results": 18, "data": [{"region": "us-lax", "endpoint_type":
-      "E1", "s3_endpoint": "us-lax-1.linodeobjects.com"}, {"region": "us-southeast",
-      "endpoint_type": "E0", "s3_endpoint": "us-southeast-1.linodeobjects.com"}, {"region":
-      "in-maa", "endpoint_type": "E1", "s3_endpoint": "in-maa-1.linodeobjects.com"},
-      {"region": "jp-osa", "endpoint_type": "E1", "s3_endpoint": "jp-osa-1.linodeobjects.com"},
-      {"region": "nl-ams", "endpoint_type": "E1", "s3_endpoint": "nl-ams-1.linodeobjects.com"},
-      {"region": "it-mil", "endpoint_type": "E1", "s3_endpoint": "it-mil-1.linodeobjects.com"},
-      {"region": "fr-par", "endpoint_type": "E1", "s3_endpoint": "fr-par-1.linodeobjects.com"},
-      {"region": "us-ord", "endpoint_type": "E1", "s3_endpoint": "us-ord-1.linodeobjects.com"},
-      {"region": "us-iad", "endpoint_type": "E1", "s3_endpoint": "us-iad-1.linodeobjects.com"},
-      {"region": "br-gru", "endpoint_type": "E1", "s3_endpoint": "br-gru-1.linodeobjects.com"},
-      {"region": "ap-south", "endpoint_type": "E0", "s3_endpoint": "ap-south-1.linodeobjects.com"},
-      {"region": "es-mad", "endpoint_type": "E1", "s3_endpoint": "es-mad-1.linodeobjects.com"},
-      {"region": "eu-central", "endpoint_type": "E0", "s3_endpoint": "eu-central-1.linodeobjects.com"},
-      {"region": "se-sto", "endpoint_type": "E1", "s3_endpoint": "se-sto-1.linodeobjects.com"},
-      {"region": "us-east", "endpoint_type": "E0", "s3_endpoint": "us-east-1.linodeobjects.com"},
-      {"region": "us-mia", "endpoint_type": "E1", "s3_endpoint": "us-mia-1.linodeobjects.com"},
+    body: '{"pages": 1, "page": 1, "results": 22, "data": [{"region": "au-mel", "endpoint_type":
+      "E2", "s3_endpoint": "au-mel-1.linodeobjects.com"}, {"region": "us-ord", "endpoint_type":
+      "E1", "s3_endpoint": "us-ord-1.linodeobjects.com"}, {"region": "us-east", "endpoint_type":
+      "E0", "s3_endpoint": "us-east-1.linodeobjects.com"}, {"region": "br-gru", "endpoint_type":
+      "E1", "s3_endpoint": "br-gru-1.linodeobjects.com"}, {"region": "sg-sin-2", "endpoint_type":
+      "E3", "s3_endpoint": "sg-sin-1.linodeobjects.com"}, {"region": "us-sea", "endpoint_type":
+      "E1", "s3_endpoint": "us-sea-1.linodeobjects.com"}, {"region": "us-lax", "endpoint_type":
+      "E1", "s3_endpoint": "us-lax-1.linodeobjects.com"}, {"region": "gb-lon", "endpoint_type":
+      "E3", "s3_endpoint": "gb-lon-1.linodeobjects.com"}, {"region": "eu-central",
+      "endpoint_type": "E0", "s3_endpoint": "eu-central-1.linodeobjects.com"}, {"region":
+      "us-iad", "endpoint_type": "E1", "s3_endpoint": "us-iad-1.linodeobjects.com"},
       {"region": "id-cgk", "endpoint_type": "E1", "s3_endpoint": "id-cgk-1.linodeobjects.com"},
-      {"region": "us-sea", "endpoint_type": "E1", "s3_endpoint": "us-sea-1.linodeobjects.com"}]}'
+      {"region": "es-mad", "endpoint_type": "E1", "s3_endpoint": "es-mad-1.linodeobjects.com"},
+      {"region": "us-mia", "endpoint_type": "E1", "s3_endpoint": "us-mia-1.linodeobjects.com"},
+      {"region": "ap-south", "endpoint_type": "E0", "s3_endpoint": "ap-south-1.linodeobjects.com"},
+      {"region": "jp-osa", "endpoint_type": "E1", "s3_endpoint": "jp-osa-1.linodeobjects.com"},
+      {"region": "us-southeast", "endpoint_type": "E0", "s3_endpoint": "us-southeast-1.linodeobjects.com"},
+      {"region": "fr-par", "endpoint_type": "E1", "s3_endpoint": "fr-par-1.linodeobjects.com"},
+      {"region": "in-maa", "endpoint_type": "E1", "s3_endpoint": "in-maa-1.linodeobjects.com"},
+      {"region": "it-mil", "endpoint_type": "E1", "s3_endpoint": "it-mil-1.linodeobjects.com"},
+      {"region": "se-sto", "endpoint_type": "E1", "s3_endpoint": "se-sto-1.linodeobjects.com"},
+      {"region": "nl-ams", "endpoint_type": "E1", "s3_endpoint": "nl-ams-1.linodeobjects.com"},
+      {"region": "jp-tyo-3", "endpoint_type": "E2", "s3_endpoint": null}]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -55,7 +59,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 08 Jan 2025 06:03:41 GMT
+      - Tue, 24 Jun 2025 14:43:29 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -74,14 +78,14 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"region":"us-lax","label":"go-bucket-test-def","endpoint_type":"E1"}'
+    body: '{"region":"us-ord","label":"go-bucket-test-def","endpoint_type":"E1"}'
     form: {}
     headers:
       Accept:
@@ -93,10 +97,10 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/buckets
     method: POST
   response:
-    body: '{"hostname": "go-bucket-test-def.us-lax-1.linodeobjects.com", "label":
-      "go-bucket-test-def", "created": "2018-01-02T03:04:05", "region": "us-lax",
-      "cluster": "us-lax-1", "size": 0, "objects": 0, "endpoint_type": "E1", "s3_endpoint":
-      "us-lax-1.linodeobjects.com"}'
+    body: '{"hostname": "go-bucket-test-def.us-ord-1.linodeobjects.com", "label":
+      "go-bucket-test-def", "created": "2018-01-02T03:04:05", "region": "us-ord",
+      "cluster": "us-ord-1", "size": 0, "objects": 0, "endpoint_type": "E1", "s3_endpoint":
+      "us-ord-1.linodeobjects.com"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -121,7 +125,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 08 Jan 2025 06:03:42 GMT
+      - Tue, 24 Jun 2025 14:43:32 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -138,7 +142,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
+      - "60"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -154,7 +158,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-lax/go-bucket-test-def/access
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-ord/go-bucket-test-def/access
     method: POST
   response:
     body: '{}'
@@ -182,7 +186,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 08 Jan 2025 06:03:43 GMT
+      - Tue, 24 Jun 2025 14:43:34 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -199,7 +203,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -215,11 +219,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-lax/go-bucket-test-def/access
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-ord/go-bucket-test-def/access
     method: GET
   response:
-    body: '{"acl": "private", "acl_xml": "<AccessControlPolicy xmlns=\"http://s3.amazonaws.com/doc/2006-03-01/\"><Owner><ID>c9539a32-3ece-47dd-a9a4-40bbfa5a2936</ID><DisplayName>c9539a32-3ece-47dd-a9a4-40bbfa5a2936</DisplayName></Owner><AccessControlList><Grant><Grantee
-      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"CanonicalUser\"><ID>c9539a32-3ece-47dd-a9a4-40bbfa5a2936</ID><DisplayName>c9539a32-3ece-47dd-a9a4-40bbfa5a2936</DisplayName></Grantee><Permission>FULL_CONTROL</Permission></Grant></AccessControlList></AccessControlPolicy>",
+    body: '{"acl": "private", "acl_xml": "<AccessControlPolicy xmlns=\"http://s3.amazonaws.com/doc/2006-03-01/\"><Owner><ID>640757b5-ebe9-45b1-abd5-581f215ef89e</ID><DisplayName>640757b5-ebe9-45b1-abd5-581f215ef89e</DisplayName></Owner><AccessControlList><Grant><Grantee
+      xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"CanonicalUser\"><ID>640757b5-ebe9-45b1-abd5-581f215ef89e</ID><DisplayName>640757b5-ebe9-45b1-abd5-581f215ef89e</DisplayName></Grantee><Permission>FULL_CONTROL</Permission></Grant></AccessControlList></AccessControlPolicy>",
       "cors_enabled": false, "cors_xml": null}'
     headers:
       Access-Control-Allow-Credentials:
@@ -245,7 +249,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 08 Jan 2025 06:03:45 GMT
+      - Tue, 24 Jun 2025 14:43:36 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -263,7 +267,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -279,7 +283,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-lax-1/go-bucket-test-def
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-ord/go-bucket-test-def
     method: DELETE
   response:
     body: '{}'
@@ -307,7 +311,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 08 Jan 2025 06:03:48 GMT
+      - Tue, 24 Jun 2025 14:43:43 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -324,7 +328,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

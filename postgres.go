@@ -60,7 +60,7 @@ type PostgresDatabase struct {
 	UsedDiskSizeGB    int                       `json:"used_disk_size_gb"`
 	TotalDiskSizeGB   int                       `json:"total_disk_size_gb"`
 
-	EngineConfig      PostgresDatabaseEngineConfig `json:"engine_config"`
+	EngineConfig PostgresDatabaseEngineConfig `json:"engine_config"`
 }
 
 type PostgresDatabaseEngineConfig struct {
@@ -600,12 +600,12 @@ type PostgresCreateOptions struct {
 
 // PostgresUpdateOptions fields are used when altering the existing Postgres Database
 type PostgresUpdateOptions struct {
-	Label       *string                    `json:"label,omitempty"`
-	AllowList   []string                   `json:"allow_list,omitempty"`
-	Updates     *DatabaseMaintenanceWindow `json:"updates,omitempty"`
-	Type        *string                    `json:"type,omitempty"`
-	ClusterSize *int                       `json:"cluster_size,omitempty"`
-	Version     *string                    `json:"version,omitempty"`
+	Label        *string                       `json:"label,omitempty"`
+	AllowList    []string                      `json:"allow_list,omitempty"`
+	Updates      *DatabaseMaintenanceWindow    `json:"updates,omitempty"`
+	Type         *string                       `json:"type,omitempty"`
+	ClusterSize  *int                          `json:"cluster_size,omitempty"`
+	Version      *string                       `json:"version,omitempty"`
 	EngineConfig *PostgresDatabaseEngineConfig `json:"engine_config,omitempty"`
 }
 

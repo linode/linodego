@@ -4,10 +4,11 @@ import (
 	"encoding/base64"
 	"fmt"
 
-	"github.com/linode/linodego"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/clientcmd"
 	"k8s.io/client-go/transport"
+
+	"github.com/linode/linodego"
 )
 
 // NewClientsetFromBytes builds a Clientset from a given Kubeconfig.
