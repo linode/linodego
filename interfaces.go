@@ -103,8 +103,8 @@ type LinodeInterfaceUpdateOptions struct {
 }
 
 type PublicInterfaceCreateOptions struct {
-	IPv4 PublicInterfaceIPv4CreateOptions `json:"ipv4,omitempty"`
-	IPv6 PublicInterfaceIPv6CreateOptions `json:"ipv6,omitempty"`
+	IPv4 *PublicInterfaceIPv4CreateOptions `json:"ipv4,omitempty"`
+	IPv6 *PublicInterfaceIPv6CreateOptions `json:"ipv6,omitempty"`
 }
 
 type PublicInterfaceIPv4CreateOptions struct {
@@ -125,8 +125,8 @@ type PublicInterfaceIPv6RangeCreateOptions struct {
 }
 
 type VPCInterfaceCreateOptions struct {
-	SubnetID int                           `json:"subnet_id"`
-	IPv4     VPCInterfaceIPv4CreateOptions `json:"ipv4,omitempty"`
+	SubnetID int                            `json:"subnet_id"`
+	IPv4     *VPCInterfaceIPv4CreateOptions `json:"ipv4,omitempty"`
 }
 
 type VPCInterfaceIPv4CreateOptions struct {

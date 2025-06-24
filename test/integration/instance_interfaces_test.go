@@ -101,7 +101,7 @@ func TestInstance_CreateWithLinodeInterfaces(
 			{
 				FirewallID: linodego.Pointer(firewallID),
 				Public: &linodego.PublicInterfaceCreateOptions{
-					IPv4: linodego.PublicInterfaceIPv4CreateOptions{
+					IPv4: &linodego.PublicInterfaceIPv4CreateOptions{
 						Addresses: []linodego.PublicInterfaceIPv4AddressCreateOptions{
 							{
 								Address: "auto",
@@ -109,14 +109,14 @@ func TestInstance_CreateWithLinodeInterfaces(
 							},
 						},
 					},
-					IPv6: linodego.PublicInterfaceIPv6CreateOptions{},
+					IPv6: &linodego.PublicInterfaceIPv6CreateOptions{},
 				},
 			},
 			{
 				FirewallID: linodego.Pointer(firewallID),
 				VPC: &linodego.VPCInterfaceCreateOptions{
 					SubnetID: vpcSubnet.ID,
-					IPv4: linodego.VPCInterfaceIPv4CreateOptions{
+					IPv4: &linodego.VPCInterfaceIPv4CreateOptions{
 						Addresses: []linodego.VPCInterfaceIPv4AddressCreateOptions{
 							{
 								Address:        "auto",
