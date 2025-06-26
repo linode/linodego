@@ -151,7 +151,7 @@ type InstancePlacementGroup struct {
 	Label                string               `json:"label"`
 	PlacementGroupType   PlacementGroupType   `json:"placement_group_type"`
 	PlacementGroupPolicy PlacementGroupPolicy `json:"placement_group_policy"`
-	MigratingTo          string               `json:"migrating_to"` // read-only
+	MigratingTo          *int                 `json:"migrating_to"` // read-only
 }
 
 // InstanceMetadataOptions specifies various Instance creation fields
@@ -344,7 +344,7 @@ func (c *Client) CreateInstance(ctx context.Context, opts InstanceCreateOptions)
 	return doPOSTRequest[Instance](ctx, c, "linode/instances", opts)
 }
 
-// UpdateInstance creates a Linode instance
+// UpdateInstance updates a Linode instance
 func (c *Client) UpdateInstance(ctx context.Context, linodeID int, opts InstanceUpdateOptions) (*Instance, error) {
 	e := formatAPIPath("linode/instances/%d", linodeID)
 	return doPUTRequest[Instance](ctx, c, e, opts)

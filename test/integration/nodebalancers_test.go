@@ -5,6 +5,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/stretchr/testify/require"
+
 	"github.com/linode/linodego"
 )
 
@@ -139,6 +141,24 @@ func TestNodeBalancer_Get(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error getting nodebalancer %d, expected *NodeBalancer, got error %v", nodebalancer.ID, err)
 	}
+}
+
+func TestNodeBalancer_UDP(t *testing.T) {
+	_, nodebalancer, teardown, err := setupNodeBalancer(
+		t,
+		"fixtures/TestNodeBalancer_UDP",
+		[]nbModifier{
+			func(options *linodego.NodeBalancerCreateOptions) {
+				options.ClientUDPSessThrottle = linodego.Pointer(5)
+			},
+		},
+	)
+	defer teardown()
+	if err != nil {
+		t.Error(err)
+	}
+
+	require.Equal(t, 5, nodebalancer.ClientUDPSessThrottle)
 }
 
 type nbModifier func(options *linodego.NodeBalancerCreateOptions)
