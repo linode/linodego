@@ -140,6 +140,7 @@ const (
 	ActionLinodeMigrateDatacenterCreate           EventAction = "linode_migrate_datacenter_create"
 	ActionLinodeMutate                            EventAction = "linode_mutate"
 	ActionLinodeMutateCreate                      EventAction = "linode_mutate_create"
+	ActionLinodePowerOffOn                        EventAction = "linode_poweroff_on"
 	ActionLinodeReboot                            EventAction = "linode_reboot"
 	ActionLinodeRebuild                           EventAction = "linode_rebuild"
 	ActionLinodeResize                            EventAction = "linode_resize"
@@ -280,6 +281,7 @@ const (
 	EventNotification EventStatus = "notification"
 	EventScheduled    EventStatus = "scheduled"
 	EventStarted      EventStatus = "started"
+	EventCancelled    EventStatus = "cancelled"
 )
 
 // EventEntity provides detailed information about the Event's

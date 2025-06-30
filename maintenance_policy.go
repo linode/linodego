@@ -5,8 +5,8 @@ import (
 )
 
 type MaintenancePolicy struct {
-	ID                    string `json:"id"`
-	Name                  string `json:"name"`
+	Slug                  string `json:"slug"`
+	Label                 string `json:"label"`
 	Description           string `json:"description"`
 	Type                  string `json:"type"`
 	NotificationPeriodSec int    `json:"notification_period_sec"`

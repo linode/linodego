@@ -69,7 +69,7 @@ type Instance struct {
 	LKEClusterID int      `json:"lke_cluster_id"`
 	Capabilities []string `json:"capabilities"`
 
-	MaintenancePolicyID int `json:"maintenance_policy_id"`
+	MaintenancePolicy string `json:"maintenance_policy"`
 }
 
 // InstanceSpec represents a linode spec
@@ -188,7 +188,7 @@ type InstanceCreateOptions struct {
 
 	IPv4 []string `json:"ipv4,omitempty"`
 
-	MaintenancePolicyID *int `json:"maintenance_policy_id,omitempty"`
+	MaintenancePolicy *string `json:"maintenance_policy,omitempty"`
 }
 
 // InstanceCreatePlacementGroupOptions represents the placement group
@@ -209,7 +209,7 @@ type InstanceUpdateOptions struct {
 	// Deprecated: group is a deprecated property denoting a group label for the Linode.
 	Group *string `json:"group,omitempty"`
 
-	MaintenancePolicyID *int `json:"maintenance_policy_id,omitempty"`
+	MaintenancePolicy *string `json:"maintenance_policy,omitempty"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
@@ -257,13 +257,13 @@ func (backup *InstanceBackup) UnmarshalJSON(b []byte) error {
 // GetUpdateOptions converts an Instance to InstanceUpdateOptions for use in UpdateInstance
 func (i *Instance) GetUpdateOptions() InstanceUpdateOptions {
 	return InstanceUpdateOptions{
-		Label:               i.Label,
-		Group:               &i.Group,
-		Backups:             i.Backups,
-		Alerts:              i.Alerts,
-		WatchdogEnabled:     &i.WatchdogEnabled,
-		Tags:                &i.Tags,
-		MaintenancePolicyID: &i.MaintenancePolicyID,
+		Label:             i.Label,
+		Group:             &i.Group,
+		Backups:           i.Backups,
+		Alerts:            i.Alerts,
+		WatchdogEnabled:   &i.WatchdogEnabled,
+		Tags:              &i.Tags,
+		MaintenancePolicy: &i.MaintenancePolicy,
 	}
 }
 

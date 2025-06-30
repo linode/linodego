@@ -31,7 +31,7 @@ func TestAccountSettings_Get(t *testing.T) {
 	assert.Nil(t, accountSettings.LongviewSubscription, "Expected 'longview_subscription' to be nil")
 	assert.True(t, accountSettings.BackupsEnabled, "Expected 'backups_enabled' to be true")
 	assert.Equal(t, "active", *accountSettings.ObjectStorage, "Expected 'object_storage' to be 'active'")
-	assert.Equal(t, 1, accountSettings.MaintenancePolicyID, "Expected 'maintenance_policy_id' to be 1")
+	assert.Equal(t, "linode/migrate", accountSettings.MaintenancePolicy, "Expected 'maintenance_policy' to be 'linode/migrate'")
 }
 
 func TestAccountSettings_Update(t *testing.T) {
@@ -43,9 +43,9 @@ func TestAccountSettings_Update(t *testing.T) {
 	defer base.TearDown(t)
 
 	requestData := linodego.AccountSettingsUpdateOptions{
-		BackupsEnabled:      Bool(true),
-		NetworkHelper:       Bool(true),
-		MaintenancePolicyID: linodego.Pointer(2),
+		BackupsEnabled:    Bool(true),
+		NetworkHelper:     Bool(true),
+		MaintenancePolicy: linodego.Pointer("linode/power_off_on"),
 	}
 	base.MockPut("account/settings", fixtureData)
 
@@ -57,5 +57,5 @@ func TestAccountSettings_Update(t *testing.T) {
 	assert.Nil(t, accountSettings.LongviewSubscription, "Expected 'longview_subscription' to be nil")
 	assert.True(t, accountSettings.BackupsEnabled, "Expected 'backups_enabled' to be true")
 	assert.Equal(t, "active", *accountSettings.ObjectStorage, "Expected 'object_storage' to be 'active'")
-	assert.Equal(t, 2, accountSettings.MaintenancePolicyID, "Expected 'maintenance_policy_id' to be 2")
+	assert.Equal(t, "linode/power_off_on", accountSettings.MaintenancePolicy, "Expected 'maintenance_policy' to be 'linode/power_off_on'")
 }

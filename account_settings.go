@@ -21,8 +21,8 @@ type AccountSettings struct {
 	// A string like "disabled", "suspended", or "active" describing the status of this account’s Object Storage service enrollment.
 	ObjectStorage *string `json:"object_storage"`
 
-	// The ID of the maintenance policy associated with the account.
-	MaintenancePolicyID int `json:"maintenance_policy_id"`
+	// The slug of the maintenance policy associated with the account.
+	MaintenancePolicy string `json:"maintenance_policy"`
 }
 
 // AccountSettingsUpdateOptions are the updateable account wide flags or plans that effect new resources.
@@ -37,8 +37,8 @@ type AccountSettingsUpdateOptions struct {
 	// The default network helper setting for all new Linodes and Linode Configs for all users on the account.
 	NetworkHelper *bool `json:"network_helper,omitempty"`
 
-	// The ID of the maintenance policy to set the account to.
-	MaintenancePolicyID *int `json:"maintenance_policy_id,omitempty"`
+	// The slug of the maintenance policy to set the account to.
+	MaintenancePolicy *string `json:"maintenance_policy,omitempty"`
 }
 
 // GetAccountSettings gets the account wide flags or plans that effect new resources
