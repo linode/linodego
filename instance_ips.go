@@ -48,8 +48,10 @@ type VPCIP struct {
 	NAT1To1      *string `json:"nat_1_1"`
 	VPCID        int     `json:"vpc_id"`
 	SubnetID     int     `json:"subnet_id"`
-	ConfigID     int     `json:"config_id"`
 	InterfaceID  int     `json:"interface_id"`
+
+	// Scheduled breaking change: ConfigID is now nullable from the API and will become a pointer in the next major version.
+	ConfigID int `json:"config_id"`
 }
 
 // InstanceIPv6Response contains the IPv6 addresses and ranges for an Instance
