@@ -83,7 +83,7 @@ type VPCInterfaceIPv4Range struct {
 }
 
 type VLANInterface struct {
-	Label       string  `json:"vlan_label"`
+	VLANLabel   string  `json:"vlan_label"`
 	IPAMAddress *string `json:"ipam_address,omitempty"`
 }
 

@@ -30,7 +30,7 @@ func TestInterface_Get(t *testing.T) {
 	assert.Equal(t, 123, iface.ID)
 	assert.Equal(t, 1, iface.Version)
 	assert.Equal(t, false, *iface.DefaultRoute.IPv4)
-	assert.Equal(t, "my_vlan", iface.VLAN.Label)
+	assert.Equal(t, "my_vlan", iface.VLAN.VLANLabel)
 }
 
 func TestInterface_List(t *testing.T) {
