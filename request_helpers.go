@@ -65,6 +65,7 @@ func getPaginatedResults[T any](
 		opts.Results = response.Results
 
 		result = append(result, response.Data...)
+
 		return nil
 	}
 
@@ -107,6 +108,7 @@ func doGETRequest[T any](
 	var resultType T
 
 	req := client.R(ctx).SetResult(&resultType)
+
 	r, err := coupleAPIErrors(req.Get(endpoint))
 	if err != nil {
 		return nil, err
@@ -138,6 +140,7 @@ func doPOSTRequest[T, O any](
 		if err != nil {
 			return nil, err
 		}
+
 		req.SetBody(string(body))
 	}
 
@@ -194,6 +197,7 @@ func doPUTRequest[T, O any](
 		if err != nil {
 			return nil, err
 		}
+
 		req.SetBody(string(body))
 	}
 
@@ -214,6 +218,7 @@ func doDELETERequest(
 ) error {
 	req := client.R(ctx)
 	_, err := coupleAPIErrors(req.Delete(endpoint))
+
 	return err
 }
 
@@ -238,5 +243,6 @@ func isNil(i interface{}) bool {
 
 	// Check for nil pointers
 	v := reflect.ValueOf(i)
+
 	return v.Kind() == reflect.Ptr && v.IsNil()
 }

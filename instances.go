@@ -247,6 +247,7 @@ func (i InstanceCreateOptions) MarshalJSON() ([]byte, error) {
 
 	resultData := struct {
 		*Mask
+
 		Interfaces any `json:"interfaces,omitempty"`
 	}{
 		Mask:       (*Mask)(&i),
@@ -275,6 +276,7 @@ func (i *InstanceCreateOptions) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		GenericInterfaces any `json:"interfaces,omitempty"`
 	}{
 		Mask: (*Mask)(i),
@@ -296,6 +298,7 @@ func (i *InstanceCreateOptions) UnmarshalJSON(b []byte) error {
 
 		err := json.Unmarshal(b, &data)
 		i.LinodeInterfaces = data.Interfaces
+
 		return err
 	}
 
@@ -306,6 +309,7 @@ func (i *InstanceCreateOptions) UnmarshalJSON(b []byte) error {
 
 		err := json.Unmarshal(b, &data)
 		i.Interfaces = data.Interfaces
+
 		return err
 	}
 
@@ -318,6 +322,7 @@ func (i *Instance) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		Created *parseabletime.ParseableTime `json:"created"`
 		Updated *parseabletime.ParseableTime `json:"updated"`
 	}{
@@ -340,6 +345,7 @@ func (backup *InstanceBackup) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		LastSuccessful *parseabletime.ParseableTime `json:"last_successful"`
 	}{
 		Mask: (*Mask)(backup),
@@ -464,6 +470,7 @@ func (c *Client) BootInstance(ctx context.Context, linodeID int, configID int) e
 	}
 
 	e := formatAPIPath("linode/instances/%d/boot", linodeID)
+
 	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
 
@@ -489,6 +496,7 @@ func (c *Client) RebootInstance(ctx context.Context, linodeID int, configID int)
 	}
 
 	e := formatAPIPath("linode/instances/%d/reboot", linodeID)
+
 	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
 
