@@ -31,6 +31,7 @@ func (accountMaintenance *AccountMaintenance) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		When *parseabletime.ParseableTime `json:"when"`
 	}{
 		Mask: (*Mask)(accountMaintenance),

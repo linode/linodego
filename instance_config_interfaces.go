@@ -50,6 +50,7 @@ func getInstanceConfigInterfacesCreateOptionsList(
 	for index, configInterface := range interfaces {
 		interfaceOptsList[index] = configInterface.GetCreateOptions()
 	}
+
 	return interfaceOptsList
 }
 
@@ -123,6 +124,7 @@ func (c *Client) GetInstanceConfigInterface(
 		configID,
 		interfaceID,
 	)
+
 	return doGETRequest[InstanceConfigInterface](ctx, c, e)
 }
 
@@ -136,6 +138,7 @@ func (c *Client) ListInstanceConfigInterfaces(
 		linodeID,
 		configID,
 	)
+
 	response, err := doGETRequest[[]InstanceConfigInterface](ctx, c, e)
 	if err != nil {
 		return nil, err
@@ -157,6 +160,7 @@ func (c *Client) UpdateInstanceConfigInterface(
 		configID,
 		interfaceID,
 	)
+
 	return doPUTRequest[InstanceConfigInterface](ctx, c, e, opts)
 }
 
@@ -172,6 +176,7 @@ func (c *Client) DeleteInstanceConfigInterface(
 		configID,
 		interfaceID,
 	)
+
 	return doDELETERequest(ctx, c, e)
 }
 
@@ -186,5 +191,6 @@ func (c *Client) ReorderInstanceConfigInterfaces(
 		linodeID,
 		configID,
 	)
+
 	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
