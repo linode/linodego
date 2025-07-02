@@ -223,7 +223,7 @@ func TestFirewallSettings_UpdateAllFields(t *testing.T) {
 
 	t.Cleanup(func() {
 		restoreOpts := linodego.FirewallSettingsUpdateOptions{
-			DefaultFirewallIDs: linodego.DefaultFirewallIDsOptions{
+			DefaultFirewallIDs: &linodego.DefaultFirewallIDsOptions{
 				Linode:          linodego.Pointer(originalSettings.DefaultFirewallIDs.Linode),
 				NodeBalancer:    linodego.Pointer(originalSettings.DefaultFirewallIDs.NodeBalancer),
 				PublicInterface: linodego.Pointer(originalSettings.DefaultFirewallIDs.PublicInterface),
@@ -238,7 +238,7 @@ func TestFirewallSettings_UpdateAllFields(t *testing.T) {
 
 	// Update all default firewall settings to the test firewall
 	updateOpts := linodego.FirewallSettingsUpdateOptions{
-		DefaultFirewallIDs: linodego.DefaultFirewallIDsOptions{
+		DefaultFirewallIDs: &linodego.DefaultFirewallIDsOptions{
 			Linode:          linodego.DoublePointer(firewall.ID),
 			NodeBalancer:    linodego.DoublePointer(firewall.ID),
 			PublicInterface: linodego.DoublePointer(firewall.ID),
@@ -291,7 +291,7 @@ func TestFirewallSettings_UpdatePartial(t *testing.T) {
 	// Restore original settings after test
 	t.Cleanup(func() {
 		restoreOpts := linodego.FirewallSettingsUpdateOptions{
-			DefaultFirewallIDs: linodego.DefaultFirewallIDsOptions{
+			DefaultFirewallIDs: &linodego.DefaultFirewallIDsOptions{
 				Linode:          linodego.Pointer(originalSettings.DefaultFirewallIDs.Linode),
 				NodeBalancer:    linodego.Pointer(originalSettings.DefaultFirewallIDs.NodeBalancer),
 				PublicInterface: linodego.Pointer(originalSettings.DefaultFirewallIDs.PublicInterface),
@@ -306,7 +306,7 @@ func TestFirewallSettings_UpdatePartial(t *testing.T) {
 
 	// Update only the Linode default firewall ID
 	opts := linodego.FirewallSettingsUpdateOptions{
-		DefaultFirewallIDs: linodego.DefaultFirewallIDsOptions{
+		DefaultFirewallIDs: &linodego.DefaultFirewallIDsOptions{
 			Linode: linodego.DoublePointer(firewall.ID),
 		},
 	}
