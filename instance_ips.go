@@ -50,7 +50,7 @@ type VPCIP struct {
 	SubnetID     int     `json:"subnet_id"`
 	InterfaceID  int     `json:"interface_id"`
 
-	// Scheduled breaking change: ConfigID is now nullable from the API and will become a pointer in the next major version.
+	// The type of this field will be made a pointer in the next major release of linodego.
 	ConfigID int `json:"config_id"`
 }
 
