@@ -71,6 +71,7 @@ func (i *Notification) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		Until *parseabletime.ParseableTime `json:"until"`
 		When  *parseabletime.ParseableTime `json:"when"`
 	}{

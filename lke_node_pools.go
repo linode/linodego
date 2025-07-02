@@ -127,6 +127,7 @@ func (l LKENodePool) GetCreateOptions() (o LKENodePoolCreateOptions) {
 	o.Autoscaler = &l.Autoscaler
 	o.K8sVersion = l.K8sVersion
 	o.UpdateStrategy = l.UpdateStrategy
+
 	return
 }
 
@@ -139,6 +140,7 @@ func (l LKENodePool) GetUpdateOptions() (o LKENodePoolUpdateOptions) {
 	o.Autoscaler = &l.Autoscaler
 	o.K8sVersion = l.K8sVersion
 	o.UpdateStrategy = l.UpdateStrategy
+
 	return
 }
 

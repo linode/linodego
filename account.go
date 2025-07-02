@@ -72,6 +72,7 @@ func (i *Account) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		ActiveSince *parseabletime.ParseableTime `json:"active_since"`
 	}{
 		Mask: (*Mask)(i),
