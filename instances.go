@@ -225,6 +225,7 @@ func (i *Instance) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		Created *parseabletime.ParseableTime `json:"created"`
 		Updated *parseabletime.ParseableTime `json:"updated"`
 	}{
@@ -247,6 +248,7 @@ func (backup *InstanceBackup) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		LastSuccessful *parseabletime.ParseableTime `json:"last_successful"`
 	}{
 		Mask: (*Mask)(backup),
@@ -371,6 +373,7 @@ func (c *Client) BootInstance(ctx context.Context, linodeID int, configID int) e
 	}
 
 	e := formatAPIPath("linode/instances/%d/boot", linodeID)
+
 	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
 
@@ -396,6 +399,7 @@ func (c *Client) RebootInstance(ctx context.Context, linodeID int, configID int)
 	}
 
 	e := formatAPIPath("linode/instances/%d/reboot", linodeID)
+
 	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
 

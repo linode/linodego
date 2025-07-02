@@ -221,7 +221,7 @@ const (
 // EntityType constants start with Entity and include Linode API Event Entity Types
 type EntityType string
 
-// EntityType contants are the entities an Event can be related to.
+// EntityType constants are the entities an Event can be related to.
 const (
 	EntityAccount        EntityType = "account"
 	EntityBackups        EntityType = "backups"
@@ -281,6 +281,7 @@ func (i *Event) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		Created       *parseabletime.ParseableTime `json:"created"`
 		TimeRemaining json.RawMessage              `json:"time_remaining"`
 	}{
