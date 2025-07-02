@@ -67,6 +67,7 @@ func (i *ObjectStorageBucket) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		Created *parseabletime.ParseableTime `json:"created"`
 	}{
 		Mask: (*Mask)(i),
@@ -175,14 +176,17 @@ func (c *Client) ListObjectStorageBucketContents(ctx context.Context, clusterOrR
 	basePath := formatAPIPath("object-storage/buckets/%s/%s/object-list", clusterOrRegionID, label)
 
 	queryString := ""
+
 	if params != nil {
 		values, err := query.Values(params)
 		if err != nil {
 			return nil, fmt.Errorf("failed to encode query params: %w", err)
 		}
+
 		queryString = "?" + values.Encode()
 	}
 
 	e := basePath + queryString
+
 	return doGETRequest[ObjectStorageBucketContent](ctx, c, e)
 }
