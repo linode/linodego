@@ -66,7 +66,7 @@ type DefaultFirewallIDs struct {
 
 // FirewallSettingsUpdateOptions is an options struct used when Updating FirewallSettings
 type FirewallSettingsUpdateOptions struct {
-	DefaultFirewallIDs DefaultFirewallIDsOptions `json:"default_firewall_ids"`
+	DefaultFirewallIDs *DefaultFirewallIDsOptions `json:"default_firewall_ids,omitempty"`
 }
 
 type DefaultFirewallIDsOptions struct {
