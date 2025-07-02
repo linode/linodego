@@ -247,6 +247,7 @@ func (i InstanceCreateOptions) MarshalJSON() ([]byte, error) {
 
 	resultData := struct {
 		*Mask
+
 		Interfaces any `json:"interfaces,omitempty"`
 	}{
 		Mask:       (*Mask)(&i),
@@ -275,6 +276,7 @@ func (i *InstanceCreateOptions) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		GenericInterfaces any `json:"interfaces,omitempty"`
 	}{
 		Mask: (*Mask)(i),
@@ -296,6 +298,7 @@ func (i *InstanceCreateOptions) UnmarshalJSON(b []byte) error {
 
 		err := json.Unmarshal(b, &data)
 		i.LinodeInterfaces = data.Interfaces
+
 		return err
 	}
 
@@ -306,6 +309,7 @@ func (i *InstanceCreateOptions) UnmarshalJSON(b []byte) error {
 
 		err := json.Unmarshal(b, &data)
 		i.Interfaces = data.Interfaces
+
 		return err
 	}
 
