@@ -1,0 +1,37 @@
+---
+version: 1
+interactions:
+- request:
+    body: '{"entity_ids":[222628,278180,279705,305998],"filters":null,"metrics":[{"name":"avg_read_iops","aggregate_function":"avg"}],"time_granularity":null,"relative_time_duration":{"unit":"hr","value":1},"absolute_time_duration":{"start":"0001-01-01T00:00:00Z","end":"0001-01-01T00:00:00Z"}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://monitor-api.linode.com/v2beta/monitor/services/dbaas/metrics
+    method: POST
+  response:
+    body: '{"errors":[{"reason":"Invalid Token"}]}'
+    headers:
+      Alt-Svc:
+      - h3=":443"; ma=93600
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Content-Length:
+      - "39"
+      Content-Type:
+      - application/json
+      Expires:
+      - Wed, 02 Jul 2025 15:22:23 GMT
+      Mime-Version:
+      - "1.0"
+      Pragma:
+      - no-cache
+      Server:
+      - AkamaiGHost
+    status: 401 Unauthorized
+    code: 401
+    duration: ""

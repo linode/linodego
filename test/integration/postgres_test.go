@@ -177,7 +177,7 @@ func createPostgresDatabase(t *testing.T, client *linodego.Client,
 
 	database, err := client.CreatePostgresDatabase(context.Background(), createOpts)
 	if err != nil {
-		t.Fatalf("failed to create database: %s", err)
+		t.Fatalf("failed to create db: %s", err)
 	}
 
 	// We should retry on db cleanup
@@ -218,6 +218,7 @@ func setupPostgresDatabase(t *testing.T, databaseMofidiers []postgresDatabaseMod
 	now := time.Now()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	database, databaseTeardown, err := createPostgresDatabase(t, client, databaseMofidiers)
+
 	if err != nil {
 		t.Fatalf("failed to create db: %s", err)
 	}
@@ -229,6 +230,9 @@ func setupPostgresDatabase(t *testing.T, databaseMofidiers []postgresDatabaseMod
 	}
 
 	teardown := func() {
+		if err := client.DeletePostgresDatabase(context.Background(), database.ID); err != nil {
+			t.Errorf("Error deleting the postgres database: %s", err)
+		}
 		databaseTeardown()
 		fixtureTeardown()
 	}
