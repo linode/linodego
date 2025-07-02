@@ -56,6 +56,7 @@ func (ll *LastLogin) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		LoginDatetime *parseabletime.ParseableTime `json:"login_datetime"`
 	}{
 		Mask: (*Mask)(ll),
@@ -76,6 +77,7 @@ func (i *User) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		PasswordCreated *parseabletime.ParseableTime `json:"password_created"`
 	}{
 		Mask: (*Mask)(i),
