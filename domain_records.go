@@ -56,7 +56,7 @@ type DomainRecordUpdateOptions struct {
 // DomainRecordType constants start with RecordType and include Linode API Domain Record Types
 type DomainRecordType string
 
-// DomainRecordType contants are the DNS record types a DomainRecord can assign
+// DomainRecordType constants are the DNS record types a DomainRecord can assign
 const (
 	RecordTypeA     DomainRecordType = "A"
 	RecordTypeAAAA  DomainRecordType = "AAAA"
