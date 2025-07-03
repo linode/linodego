@@ -218,6 +218,7 @@ func setupPostgresDatabase(t *testing.T, databaseMofidiers []postgresDatabaseMod
 	now := time.Now()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	database, databaseTeardown, err := createPostgresDatabase(t, client, databaseMofidiers)
+
 	if err != nil {
 		t.Fatalf("failed to create db: %s", err)
 	}
