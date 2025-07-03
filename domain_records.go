@@ -75,6 +75,7 @@ func (d *DomainRecord) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		Created *parseabletime.ParseableTime `json:"created"`
 		Updated *parseabletime.ParseableTime `json:"updated"`
 	}{
@@ -87,6 +88,7 @@ func (d *DomainRecord) UnmarshalJSON(b []byte) error {
 
 	d.Created = (*time.Time)(p.Created)
 	d.Updated = (*time.Time)(p.Updated)
+
 	return nil
 }
 

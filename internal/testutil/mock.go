@@ -87,6 +87,7 @@ func CreateMockClient[T any](t *testing.T, createFunc func(*http.Client) T) *T {
 	})
 
 	result := createFunc(client)
+
 	return &result
 }
 
@@ -124,5 +125,6 @@ func (l *TestLogger) outputf(format string, v ...interface{}) {
 		l.L.Print(format)
 		return
 	}
+
 	l.L.Printf(format, v...)
 }

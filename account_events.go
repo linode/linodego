@@ -281,6 +281,7 @@ func (i *Event) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		Created       *parseabletime.ParseableTime `json:"created"`
 		TimeRemaining json.RawMessage              `json:"time_remaining"`
 	}{
