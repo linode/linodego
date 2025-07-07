@@ -35,6 +35,7 @@ func (beta *BetaProgram) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		Started *parseabletime.ParseableTime `json:"started"`
 		Ended   *parseabletime.ParseableTime `json:"ended"`
 	}{

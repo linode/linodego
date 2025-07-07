@@ -8,7 +8,7 @@ import (
 )
 
 func TestInstanceFirewalls_List(t *testing.T) {
-	client, instance, _, teardown, err := setupInstanceFirewall(t, []firewallModifier{
+	client, instance, _, err := setupInstanceFirewall(t, []firewallModifier{
 		func(createOpts *linodego.FirewallCreateOptions) {
 			createOpts.Label = "linodego-fw-ins-test"
 		},
@@ -16,7 +16,6 @@ func TestInstanceFirewalls_List(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	defer teardown()
 
 	result, err := client.ListInstanceFirewalls(context.Background(), instance.ID, nil)
 	if err != nil {
@@ -28,22 +27,26 @@ func TestInstanceFirewalls_List(t *testing.T) {
 	}
 }
 
-func setupInstanceFirewall(t *testing.T, firewallModifiers []firewallModifier, fixturesYaml string) (*linodego.Client, *linodego.Instance, *linodego.Firewall, func(), error) {
+func setupInstanceFirewall(t *testing.T, firewallModifiers []firewallModifier, fixturesYaml string) (*linodego.Client, *linodego.Instance, *linodego.Firewall, error) {
 	t.Helper()
-	client, instance, instanceTeardown, err := setupInstance(t, fixturesYaml, false,
+	client, firewall, firewallTeardown, err := setupFirewall(t, firewallModifiers, fixturesYaml)
+
+	instance, err := createInstance(t, client, false,
 		func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
 			opts.Label = "linodego-fw-inst-test"
-		})
-	device := linodego.DevicesCreationOptions{Linodes: []int{instance.ID}}
-	firewallModifiers = append(firewallModifiers,
-		func(createOpts *linodego.FirewallCreateOptions) {
-			createOpts.Devices = device
-		})
-	firewall, firewallTeardown, err := createFirewall(t, client, firewallModifiers...)
+			opts.FirewallID = firewall.ID
+		},
+	)
 
-	teardown := func() {
-		firewallTeardown()
-		instanceTeardown()
-	}
-	return client, instance, firewall, teardown, err
+	t.Cleanup(
+		func() {
+			if err := client.DeleteInstance(context.Background(), instance.ID); err != nil {
+				if t != nil {
+					t.Errorf("failed deleting test Instance: %s", err)
+				}
+			}
+			firewallTeardown()
+		},
+	)
+	return client, instance, firewall, err
 }

@@ -33,7 +33,6 @@ type Event struct {
 	Seen bool `json:"seen"`
 
 	// The estimated time remaining until the completion of this Event. This value is only returned for in-progress events.
-	// Deprecated: TimeRemaining is a deprecated property.
 	TimeRemaining *int `json:"-"`
 
 	// The username of the User who caused the Event.
@@ -241,7 +240,7 @@ const (
 // EntityType constants start with Entity and include Linode API Event Entity Types
 type EntityType string
 
-// EntityType contants are the entities an Event can be related to.
+// EntityType constants are the entities an Event can be related to.
 const (
 	EntityAccount        EntityType = "account"
 	EntityBackups        EntityType = "backups"
@@ -281,7 +280,7 @@ const (
 	EventNotification EventStatus = "notification"
 	EventScheduled    EventStatus = "scheduled"
 	EventStarted      EventStatus = "started"
-	EventCancelled    EventStatus = "cancelled"
+	EventCanceled    EventStatus = "canceled"
 )
 
 // EventEntity provides detailed information about the Event's
@@ -302,8 +301,8 @@ func (i *Event) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
-		TimeRemaining json.RawMessage              `json:"time_remaining"`
 		Created       *parseabletime.ParseableTime `json:"created"`
+		TimeRemaining json.RawMessage              `json:"time_remaining"`
 		NotBefore     *parseabletime.ParseableTime `json:"not_before"`
 		StartTime     *parseabletime.ParseableTime `json:"start_time"`
 		CompleteTime  *parseabletime.ParseableTime `json:"complete_time"`
@@ -338,6 +337,9 @@ func (c *Client) GetEvent(ctx context.Context, eventID int) (*Event, error) {
 }
 
 // MarkEventRead marks a single Event as read.
+// Deprecated: `MarkEventRead` is a deprecated API, please consider using `MarkEventsSeen` instead.
+// Please note that the `MarkEventsSeen` API functions differently and will mark all events up to and
+// including the referenced event-id as "seen" rather than individual events.
 func (c *Client) MarkEventRead(ctx context.Context, event *Event) error {
 	e := formatAPIPath("account/events/%d/read", event.ID)
 	return doPOSTRequestNoRequestResponseBody(ctx, c, e)

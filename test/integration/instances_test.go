@@ -19,9 +19,6 @@ func TestInstances_List_smoke(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(
 		t,
 		"fixtures/TestInstances_List", true,
-		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-			options.Region = "eu-west" // Override for metadata availability
-		},
 	)
 
 	defer teardown()
@@ -97,7 +94,6 @@ func TestInstance_GetTransfer(t *testing.T) {
 }
 
 func TestInstance_GetMonthlyTransfer(t *testing.T) {
-	t.Skip("Skipping test due to invalid token issue")
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_GetMonthlyTransfer", true)
 	defer teardown()
 	if err != nil {
@@ -107,6 +103,11 @@ func TestInstance_GetMonthlyTransfer(t *testing.T) {
 	currentYear, currentMonth := time.Now().Year(), int(time.Now().Month())
 
 	_, err = client.GetInstanceTransferMonthly(context.Background(), instance.ID, currentYear, currentMonth)
+	if err != nil {
+		t.Errorf("Error getting monthly instance transfer, expected struct, got error %v", err)
+	}
+
+	_, err = client.GetInstanceTransferMonthlyV2(context.Background(), instance.ID, currentYear, currentMonth)
 	if err != nil {
 		t.Errorf("Error getting monthly instance transfer, expected struct, got error %v", err)
 	}
@@ -258,7 +259,7 @@ func TestInstance_MigrateToPG(t *testing.T) {
 		RootPass: randPassword(),
 		Region:   regions[0],
 		Type:     "g6-nanode-1",
-		Image:    "linode/debian10",
+		Image:    "linode/debian12",
 		Booted:   linodego.Pointer(true),
 		PlacementGroup: &linodego.InstanceCreatePlacementGroupOptions{
 			ID: pgOutbound.ID,

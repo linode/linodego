@@ -1,0 +1,169 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/metric-definitions?page=1
+    method: GET
+  response:
+    body: '{"data": [{"label": "CPU Usage", "metric": "cpu_usage", "unit": "percent",
+      "metric_type": "gauge", "scrape_interval": "60s", "is_alertable": true, "available_aggregate_functions":
+      ["sum", "max", "avg", "min"], "dimensions": [{"label": "Node Type", "dimension_label":
+      "node_type", "values": ["primary", "secondary"]}]}, {"label": "Disk I/O Read",
+      "metric": "read_iops", "unit": "iops", "metric_type": "gauge", "scrape_interval":
+      "60s", "is_alertable": false, "available_aggregate_functions": ["sum", "max",
+      "avg", "min"], "dimensions": [{"label": "Node Type", "dimension_label": "node_type",
+      "values": ["primary", "secondary"]}]}, {"label": "Disk I/O Write", "metric":
+      "write_iops", "unit": "iops", "metric_type": "gauge", "scrape_interval": "60s",
+      "is_alertable": false, "available_aggregate_functions": ["sum", "max", "avg",
+      "min"], "dimensions": [{"label": "Node Type", "dimension_label": "node_type",
+      "values": ["primary", "secondary"]}]}, {"label": "Memory Usage", "metric": "memory_usage",
+      "unit": "percent", "metric_type": "gauge", "scrape_interval": "60s", "is_alertable":
+      true, "available_aggregate_functions": ["sum", "max", "avg", "min"], "dimensions":
+      [{"label": "Node Type", "dimension_label": "node_type", "values": ["primary",
+      "secondary"]}]}, {"label": "Available Memory", "metric": "available_memory",
+      "unit": "GB", "metric_type": "gauge", "scrape_interval": "60s", "is_alertable":
+      false, "available_aggregate_functions": ["sum", "max", "avg", "min"], "dimensions":
+      [{"label": "Node Type", "dimension_label": "node_type", "values": ["primary",
+      "secondary"]}]}, {"label": "Disk Space Usage", "metric": "disk_usage", "unit":
+      "percent", "metric_type": "gauge", "scrape_interval": "60s", "is_alertable":
+      true, "available_aggregate_functions": ["sum", "max", "avg", "min"], "dimensions":
+      [{"label": "Node Type", "dimension_label": "node_type", "values": ["primary",
+      "secondary"]}]}, {"label": "Available Disk Space", "metric": "available_disk",
+      "unit": "GB", "metric_type": "gauge", "scrape_interval": "60s", "is_alertable":
+      false, "available_aggregate_functions": ["sum", "max", "avg", "min"], "dimensions":
+      [{"label": "Node Type", "dimension_label": "node_type", "values": ["primary",
+      "secondary"]}]}], "page": 1, "pages": 1, "results": 7}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 07 Apr 2025 10:19:27 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1600"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+      X-Filter:
+      - '{"is_alertable":false}'
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/metric-definitions?page=1
+    method: GET
+  response:
+    body: '{"data": [{"label": "Disk I/O Read", "metric": "read_iops", "unit": "iops",
+      "metric_type": "gauge", "scrape_interval": "60s", "is_alertable": false, "available_aggregate_functions":
+      ["sum", "max", "avg", "min"], "dimensions": [{"label": "Node Type", "dimension_label":
+      "node_type", "values": ["primary", "secondary"]}]}, {"label": "Disk I/O Write",
+      "metric": "write_iops", "unit": "iops", "metric_type": "gauge", "scrape_interval":
+      "60s", "is_alertable": false, "available_aggregate_functions": ["sum", "max",
+      "avg", "min"], "dimensions": [{"label": "Node Type", "dimension_label": "node_type",
+      "values": ["primary", "secondary"]}]}, {"label": "Available Memory", "metric":
+      "available_memory", "unit": "GB", "metric_type": "gauge", "scrape_interval":
+      "60s", "is_alertable": false, "available_aggregate_functions": ["sum", "max",
+      "avg", "min"], "dimensions": [{"label": "Node Type", "dimension_label": "node_type",
+      "values": ["primary", "secondary"]}]}, {"label": "Available Disk Space", "metric":
+      "available_disk", "unit": "GB", "metric_type": "gauge", "scrape_interval": "60s",
+      "is_alertable": false, "available_aggregate_functions": ["sum", "max", "avg",
+      "min"], "dimensions": [{"label": "Node Type", "dimension_label": "node_type",
+      "values": ["primary", "secondary"]}]}], "page": 1, "pages": 1, "results": 4}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 07 Apr 2025 10:19:28 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1600"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
