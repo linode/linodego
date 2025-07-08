@@ -11,7 +11,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/maintenance?page=1
+    url: https://api.devcloud.linode.com/v4beta/account/maintenance?page=1
     method: GET
   response:
     body: '{"data": [], "page": 1, "pages": 1, "results": 0}'
@@ -26,10 +26,9 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
       Cache-Control:
-      - max-age=0, no-cache, no-store
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
       Connection:
       - keep-alive
       Content-Length:
@@ -38,11 +37,10 @@ interactions:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Wed, 30 Oct 2024 14:06:55 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx/1.18.0
       Strict-Transport-Security:
+      - max-age=31536000
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
@@ -57,7 +55,7 @@ interactions:
       X-Oauth-Scopes:
       - unknown
       X-Ratelimit-Limit:
-      - "800"
+      - "240"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
