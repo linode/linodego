@@ -32,8 +32,8 @@ func TestAccountMaintenancePolicies_List(t *testing.T) {
 	}
 
 	for _, policy := range policies {
-		if policy.Sulg == "" {
-			t.Error("Policy Sulg should not be empty")
+		if policy.Slug == "" {
+			t.Error("Policy Slug should not be empty")
 		}
 		if policy.Label == "" {
 			t.Error("Policy Label should not be empty")
