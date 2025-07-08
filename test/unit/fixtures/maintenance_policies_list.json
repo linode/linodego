@@ -1,26 +1,23 @@
-[
-  {
-    "slug": "linode/migrate",
-    "label": "Migrate",
-    "description": "Migrates the Linode to a new host while it remains fully operational. Recommended for maximizing availability.",
-    "type": "migrate",
-    "notification_period_sec": 3600,
-    "is_default": true
-  },
-  {
-    "slug": "linode/power_off_on",
-    "label": "Power Off/Power On",
-    "description": "Powers off the Linode at the start of the maintenance event and reboots it once the maintenance finishes. Recommended for maximizing performance.",
-    "type": "power_off_on",
-    "notification_period_sec": 1800,
-    "is_default": false
-  },
-  {
-    "slug": "private/12345",
-    "label": "Critical Workload - Avoid Migration",
-    "description": "Custom policy designed to power off and perform maintenance during user-defined windows only.",
-    "type": "power_off_on",
-    "notification_period_sec": 7200,
-    "is_default": false
-  }
-]
+{
+  "data": [
+    {
+      "slug": "linode/migrate",
+      "label": "Migrate",
+      "description": "Migrates the Linode to a new host while it remains fully operational. Recommended for maximizing availability.",
+      "type": "migrate",
+      "notification_period_sec": 300,
+      "is_default": true
+    },
+    {
+      "slug": "linode/power_off_on",
+      "label": "Power-off/on",
+      "description": "Powers off the Linode at the start of the maintenance event and reboots it once the maintenance finishes. Recommended for maximizing performance.",
+      "type": "power_off_on",
+      "notification_period_sec": 1800,
+      "is_default": false
+    }
+  ],
+  "page": 1,
+  "pages": 1,
+  "results": 2
+}

@@ -13,11 +13,6 @@ type MaintenancePolicy struct {
 	IsDefault             bool   `json:"is_default"`
 }
 
-func (c *Client) ListMaintenancePolicies(ctx context.Context) ([]MaintenancePolicy, error) {
-	response, err := doGETRequest[[]MaintenancePolicy](ctx, c, "maintenance/policies")
-	if err != nil {
-		return nil, err
-	}
-
-	return *response, nil
+func (c *Client) ListMaintenancePolicies(ctx context.Context, opts *ListOptions) ([]MaintenancePolicy, error) {
+	return getPaginatedResults[MaintenancePolicy](ctx, c, "maintenance/policies", opts)
 }
