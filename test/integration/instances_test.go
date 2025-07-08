@@ -1018,3 +1018,59 @@ func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string, enableCloudFir
 	}
 	return client, instance, config, teardown, err
 }
+
+func TestInstance_MaintenancePolicy(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestInstance_MaintenancePolicy")
+	defer teardown()
+
+	// test default maintenance policy (should be empty string)
+	instDefault, err := createInstance(t, client, false)
+	require.NoError(t, err)
+	defer func() {
+		err := client.DeleteInstance(context.Background(), instDefault.ID)
+		require.NoError(t, err)
+	}()
+	require.Equal(t, "linode/migrate", instDefault.MaintenancePolicy)
+
+	// test creation with a valid maintenance policy
+	validPolicy := "linode/power_off_on"
+	instWithPolicy, err := createInstance(t, client, false, func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+		options.MaintenancePolicy = &validPolicy
+	})
+	require.NoError(t, err)
+	defer func() {
+		err := client.DeleteInstance(context.Background(), instWithPolicy.ID)
+		require.NoError(t, err)
+	}()
+	require.Equal(t, validPolicy, instWithPolicy.MaintenancePolicy)
+
+	// test updating maintenance policy on another fresh instance
+	instToUpdate, err := createInstance(t, client, false)
+	require.NoError(t, err)
+	defer func() {
+		err := client.DeleteInstance(context.Background(), instToUpdate.ID)
+		require.NoError(t, err)
+	}()
+
+	newPolicy := "linode/migrate"
+	updateOpts := instToUpdate.GetUpdateOptions()
+	updateOpts.MaintenancePolicy = &newPolicy
+	updateOpts.Backups = nil
+	updated, err := client.UpdateInstance(context.Background(), instToUpdate.ID, updateOpts)
+	require.NoError(t, err)
+	require.Equal(t, newPolicy, updated.MaintenancePolicy)
+
+	// test invalid maintenance policy during create
+	invalidPolicy := "invalid_policy"
+	_, err = createInstance(t, client, false, func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+		options.MaintenancePolicy = &invalidPolicy
+	})
+	require.Error(t, err)
+	require.Contains(t, err.Error(), "Unsupported maintenance policy slug format")
+
+	//  test invalid maintenance policy during update
+	updateOpts.MaintenancePolicy = &invalidPolicy
+	_, err = client.UpdateInstance(context.Background(), instToUpdate.ID, updateOpts)
+	require.Error(t, err)
+	require.Contains(t, err.Error(), "Unsupported maintenance policy slug format")
+}

@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: ""
+    body: '{"backups_enabled":false,"network_helper":false,"maintenance_policy":"linode/migrate"}'
     form: {}
     headers:
       Accept:
@@ -11,10 +11,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/account/maintenance?page=1
-    method: GET
+    url: https://api.devcloud.linode.com/v4beta/account/settings
+    method: PUT
   response:
-    body: '{"data": [], "page": 1, "pages": 1, "results": 0}'
+    body: '{"managed": true, "network_helper": false, "longview_subscription": "longview-100",
+      "backups_enabled": false, "object_storage": "active", "interfaces_for_new_linodes":
+      "legacy_config_default_but_linode_allowed", "maintenance_policy": "linode/migrate"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -27,12 +29,11 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Connection:
       - keep-alive
       Content-Length:
-      - "49"
+      - "251"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -44,16 +45,15 @@ interactions:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
-      - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - '*'
+      - account:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - unknown
+      - '*'
       X-Ratelimit-Limit:
       - "240"
       X-Xss-Protection:

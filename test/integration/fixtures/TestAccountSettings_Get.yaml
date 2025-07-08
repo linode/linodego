@@ -11,10 +11,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/account/maintenance?page=1
+    url: https://api.devcloud.linode.com/v4beta/account/settings
     method: GET
   response:
-    body: '{"data": [], "page": 1, "pages": 1, "results": 0}'
+    body: '{"managed": true, "network_helper": true, "longview_subscription": "longview-100",
+      "backups_enabled": true, "object_storage": "active", "interfaces_for_new_linodes":
+      "legacy_config_default_but_linode_allowed", "maintenance_policy": "linode/migrate"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -32,7 +34,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "49"
+      - "249"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -46,14 +48,14 @@ interactions:
       - Authorization, X-Filter
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - '*'
+      - account:read_only
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - unknown
+      - '*'
       X-Ratelimit-Limit:
       - "240"
       X-Xss-Protection:
