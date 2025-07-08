@@ -52,19 +52,19 @@ func TestAccountSettings_Update(t *testing.T) {
 	httpmock.Activate()
 	defer httpmock.DeactivateAndReset()
 
- 	// longview_subscription editing at this location is no longer available
+	// longview_subscription editing at this location is no longer available
 	opts := linodego.AccountSettingsUpdateOptions{
-		BackupsEnabled:       Bool(false),
+		BackupsEnabled: Bool(false),
 		// LongviewSubscription: String("longview-40"),
-		NetworkHelper:        Bool(false),
-		MaintenancePolicy:    String("linode/migrate"),
+		NetworkHelper:     Bool(false),
+		MaintenancePolicy: String("linode/migrate"),
 	}
 
 	mockSettings := linodego.AccountSettings{
-		BackupsEnabled:       false,
-		NetworkHelper:        false,
+		BackupsEnabled: false,
+		NetworkHelper:  false,
 		// LongviewSubscription: String("longview-40"),
-		MaintenancePolicy:    "linode/migrate",
+		MaintenancePolicy: "linode/migrate",
 	}
 	mockResponse, _ := json.Marshal(mockSettings)
 
