@@ -7,42 +7,38 @@ import (
 	"github.com/linode/linodego"
 )
 
-type instanceWithLinodeInterfacesModifier func(*linodego.Client, *linodego.InstanceCreateOptionsWithLinodeInterfaces)
-
 func createInstanceWithLinodeInterfaces(
 	t *testing.T,
 	client *linodego.Client,
 	enableCloudFirewall bool,
 	interfaces []linodego.LinodeInterfaceCreateOptions,
-	modifiers ...instanceWithLinodeInterfacesModifier,
+	modifiers ...instanceModifier,
 ) (*linodego.Instance, func(), error) {
 	if t != nil {
 		t.Helper()
 	}
 
-	createOpts := linodego.InstanceCreateOptionsWithLinodeInterfaces{
-		InstanceCreateOptions: linodego.InstanceCreateOptions{
-			Label:    "go-test-intf-" + randLabel(),
-			RootPass: randPassword(),
-			Region:   getRegionsWithCaps(t, client, []string{linodego.CapabilityLinodeInterfaces})[0],
-			Type:     "g6-nanode-1",
-			Image:    "linode/debian12",
-			Booted:   linodego.Pointer(false),
-		},
+	createOpts := linodego.InstanceCreateOptions{
+		Label:               "go-test-intf-" + randLabel(),
+		RootPass:            randPassword(),
+		Region:              getRegionsWithCaps(t, client, []string{linodego.CapabilityLinodeInterfaces})[0],
+		Type:                "g6-nanode-1",
+		Image:               "linode/debian12",
+		Booted:              linodego.Pointer(false),
 		InterfaceGeneration: linodego.GenerationLinode,
-		Interfaces:          interfaces,
+		LinodeInterfaces:    interfaces,
 	}
 
 	if enableCloudFirewall {
 		for i := range createOpts.Interfaces {
-			createOpts.Interfaces[i].FirewallID = linodego.Pointer(firewallID)
+			createOpts.LinodeInterfaces[i].FirewallID = linodego.Pointer(firewallID)
 		}
 	}
 
 	for _, modifier := range modifiers {
 		modifier(client, &createOpts)
 	}
-	instance, err := client.CreateInstanceWithLinodeInterfaces(context.Background(), createOpts)
+	instance, err := client.CreateInstance(context.Background(), createOpts)
 	teardown := func() {
 		if err := client.DeleteInstance(context.Background(), instance.ID); err != nil {
 			if t != nil {
@@ -58,7 +54,7 @@ func setupInstanceWithLinodeInterfaces(
 	fixturesYaml string,
 	EnableCloudFirewall bool,
 	interfaces []linodego.LinodeInterfaceCreateOptions,
-	modifiers ...instanceWithLinodeInterfacesModifier,
+	modifiers ...instanceModifier,
 ) (*linodego.Client, *linodego.Instance, func(), error) {
 	if t != nil {
 		t.Helper()
@@ -103,8 +99,9 @@ func TestInstance_CreateWithLinodeInterfaces(
 		true,
 		[]linodego.LinodeInterfaceCreateOptions{
 			{
+				FirewallID: linodego.Pointer(firewallID),
 				Public: &linodego.PublicInterfaceCreateOptions{
-					IPv4: linodego.PublicInterfaceIPv4CreateOptions{
+					IPv4: &linodego.PublicInterfaceIPv4CreateOptions{
 						Addresses: []linodego.PublicInterfaceIPv4AddressCreateOptions{
 							{
 								Address: "auto",
@@ -112,13 +109,14 @@ func TestInstance_CreateWithLinodeInterfaces(
 							},
 						},
 					},
-					IPv6: linodego.PublicInterfaceIPv6CreateOptions{},
+					IPv6: &linodego.PublicInterfaceIPv6CreateOptions{},
 				},
 			},
 			{
+				FirewallID: linodego.Pointer(firewallID),
 				VPC: &linodego.VPCInterfaceCreateOptions{
 					SubnetID: vpcSubnet.ID,
-					IPv4: linodego.VPCInterfaceIPv4CreateOptions{
+					IPv4: &linodego.VPCInterfaceIPv4CreateOptions{
 						Addresses: []linodego.VPCInterfaceIPv4AddressCreateOptions{
 							{
 								Address:        "auto",
@@ -130,7 +128,7 @@ func TestInstance_CreateWithLinodeInterfaces(
 				},
 			},
 		},
-		func(c *linodego.Client, opts *linodego.InstanceCreateOptionsWithLinodeInterfaces) {
+		func(c *linodego.Client, opts *linodego.InstanceCreateOptions) {
 			opts.Region = testRegion
 		},
 	)

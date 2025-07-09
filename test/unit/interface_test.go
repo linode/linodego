@@ -70,7 +70,7 @@ func TestInterface_GetVLAN(t *testing.T) {
 	assert.Equal(t, 123, iface.ID)
 	assert.Equal(t, 1, iface.Version)
 	assert.Equal(t, false, *iface.DefaultRoute.IPv4)
-	assert.Equal(t, "my_vlan", iface.VLAN.Label)
+	assert.Equal(t, "my_vlan", iface.VLAN.VLANLabel)
 }
 
 func TestInterface_GetVPC(t *testing.T) {
@@ -132,7 +132,7 @@ func TestInterface_CreatePublic(t *testing.T) {
 	opts := linodego.LinodeInterfaceCreateOptions{
 		FirewallID: linodego.Pointer(123),
 		Public: &linodego.PublicInterfaceCreateOptions{
-			IPv4: linodego.PublicInterfaceIPv4CreateOptions{
+			IPv4: &linodego.PublicInterfaceIPv4CreateOptions{
 				Addresses: []linodego.PublicInterfaceIPv4AddressCreateOptions{
 					{
 						Address: "auto",
@@ -202,7 +202,7 @@ func TestInterface_UpdateVPC(t *testing.T) {
 			IPv6: linodego.Pointer(true),
 		},
 		VPC: &linodego.VPCInterfaceCreateOptions{
-			IPv4: linodego.VPCInterfaceIPv4CreateOptions{
+			IPv4: &linodego.VPCInterfaceIPv4CreateOptions{
 				Addresses: []linodego.VPCInterfaceIPv4AddressCreateOptions{
 					{
 						Address: "192.168.23.4",
@@ -218,7 +218,7 @@ func TestInterface_UpdateVPC(t *testing.T) {
 					},
 				},
 			},
-			IPv6: linodego.VPCInterfaceIPv6CreateOptions{
+			IPv6: &linodego.VPCInterfaceIPv6CreateOptions{
 				SLAAC: []linodego.VPCInterfaceIPv6SLAACCreateOptions{
 					{
 						Range: "1235::/64",

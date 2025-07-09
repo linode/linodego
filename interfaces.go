@@ -99,7 +99,7 @@ type VPCInterfaceIPv6Range struct {
 }
 
 type VLANInterface struct {
-	Label       string  `json:"vlan_label"`
+	VLANLabel   string  `json:"vlan_label"`
 	IPAMAddress *string `json:"ipam_address,omitempty"`
 }
 
@@ -119,8 +119,8 @@ type LinodeInterfaceUpdateOptions struct {
 }
 
 type PublicInterfaceCreateOptions struct {
-	IPv4 PublicInterfaceIPv4CreateOptions `json:"ipv4,omitempty"`
-	IPv6 PublicInterfaceIPv6CreateOptions `json:"ipv6,omitempty"`
+	IPv4 *PublicInterfaceIPv4CreateOptions `json:"ipv4,omitempty"`
+	IPv6 *PublicInterfaceIPv6CreateOptions `json:"ipv6,omitempty"`
 }
 
 type PublicInterfaceIPv4CreateOptions struct {
@@ -141,9 +141,9 @@ type PublicInterfaceIPv6RangeCreateOptions struct {
 }
 
 type VPCInterfaceCreateOptions struct {
-	SubnetID int                           `json:"subnet_id"`
-	IPv4     VPCInterfaceIPv4CreateOptions `json:"ipv4,omitempty"`
-	IPv6     VPCInterfaceIPv6CreateOptions `json:"ipv6,omitempty"`
+	SubnetID int                            `json:"subnet_id"`
+	IPv4     *VPCInterfaceIPv4CreateOptions `json:"ipv4,omitempty"`
+	IPv6     *VPCInterfaceIPv6CreateOptions `json:"ipv6,omitempty"`
 }
 
 type VPCInterfaceIPv4CreateOptions struct {
@@ -213,6 +213,7 @@ func (i *LinodeInterface) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		Created *parseabletime.ParseableTime `json:"created"`
 		Updated *parseabletime.ParseableTime `json:"updated"`
 	}{
