@@ -286,7 +286,7 @@ func TestDefaultFirewall_Update(t *testing.T) {
 	base.MockPut(formatMockAPIPath("networking/firewalls/settings"), fixtureData)
 
 	requestData := linodego.FirewallSettingsUpdateOptions{
-		DefaultFirewallIDs: linodego.DefaultFirewallIDsOptions{
+		DefaultFirewallIDs: &linodego.DefaultFirewallIDsOptions{
 			Linode:          linodego.DoublePointer(1),
 			NodeBalancer:    linodego.DoublePointer(1),
 			VPCInterface:    linodego.DoublePointer(1),
