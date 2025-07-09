@@ -50,8 +50,10 @@ type VPCSubnetUpdateOptions struct {
 
 func (v *VPCSubnet) UnmarshalJSON(b []byte) error {
 	type Mask VPCSubnet
+
 	p := struct {
 		*Mask
+
 		Created *parseabletime.ParseableTime `json:"created"`
 		Updated *parseabletime.ParseableTime `json:"updated"`
 	}{

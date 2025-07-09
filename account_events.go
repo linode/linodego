@@ -221,7 +221,7 @@ const (
 // EntityType constants start with Entity and include Linode API Event Entity Types
 type EntityType string
 
-// EntityType contants are the entities an Event can be related to.
+// EntityType constants are the entities an Event can be related to.
 const (
 	EntityAccount        EntityType = "account"
 	EntityBackups        EntityType = "backups"
@@ -281,6 +281,7 @@ func (i *Event) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		Created       *parseabletime.ParseableTime `json:"created"`
 		TimeRemaining json.RawMessage              `json:"time_remaining"`
 	}{
@@ -311,6 +312,9 @@ func (c *Client) GetEvent(ctx context.Context, eventID int) (*Event, error) {
 }
 
 // MarkEventRead marks a single Event as read.
+// Deprecated: `MarkEventRead` is a deprecated API, please consider using `MarkEventsSeen` instead.
+// Please note that the `MarkEventsSeen` API functions differently and will mark all events up to and
+// including the referenced event-id as "seen" rather than individual events.
 func (c *Client) MarkEventRead(ctx context.Context, event *Event) error {
 	e := formatAPIPath("account/events/%d/read", event.ID)
 	return doPOSTRequestNoRequestResponseBody(ctx, c, e)

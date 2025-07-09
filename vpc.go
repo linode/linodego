@@ -72,8 +72,10 @@ func (v VPC) GetUpdateOptions() VPCUpdateOptions {
 
 func (v *VPC) UnmarshalJSON(b []byte) error {
 	type Mask VPC
+
 	p := struct {
 		*Mask
+
 		Created *parseabletime.ParseableTime `json:"created"`
 		Updated *parseabletime.ParseableTime `json:"updated"`
 	}{

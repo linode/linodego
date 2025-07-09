@@ -125,6 +125,7 @@ func (c *Client) AddInstanceIPAddress(ctx context.Context, linodeID int, public 
 	}{"ipv4", public}
 
 	e := formatAPIPath("linode/instances/%d/ips", linodeID)
+
 	return doPOSTRequest[InstanceIP](ctx, c, e, instanceipRequest)
 }
 

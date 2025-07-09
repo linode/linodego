@@ -177,22 +177,23 @@ type InstancePasswordResetOptions struct {
 
 // InstanceCreateOptions require only Region and Type
 type InstanceCreateOptions struct {
-	Region          string                                 `json:"region"`
-	Type            string                                 `json:"type"`
-	Label           string                                 `json:"label,omitempty"`
-	RootPass        string                                 `json:"root_pass,omitempty"`
-	AuthorizedKeys  []string                               `json:"authorized_keys,omitempty"`
-	AuthorizedUsers []string                               `json:"authorized_users,omitempty"`
-	StackScriptID   int                                    `json:"stackscript_id,omitempty"`
-	StackScriptData map[string]string                      `json:"stackscript_data,omitempty"`
-	BackupID        int                                    `json:"backup_id,omitempty"`
-	Image           string                                 `json:"image,omitempty"`
-	Interfaces      []InstanceConfigInterfaceCreateOptions `json:"interfaces,omitempty"`
-	BackupsEnabled  bool                                   `json:"backups_enabled,omitempty"`
-	PrivateIP       bool                                   `json:"private_ip,omitempty"`
-	Tags            []string                               `json:"tags,omitempty"`
-	Metadata        *InstanceMetadataOptions               `json:"metadata,omitempty"`
-	FirewallID      int                                    `json:"firewall_id,omitempty"`
+	Region              string                                 `json:"region"`
+	Type                string                                 `json:"type"`
+	Label               string                                 `json:"label,omitempty"`
+	RootPass            string                                 `json:"root_pass,omitempty"`
+	AuthorizedKeys      []string                               `json:"authorized_keys,omitempty"`
+	AuthorizedUsers     []string                               `json:"authorized_users,omitempty"`
+	StackScriptID       int                                    `json:"stackscript_id,omitempty"`
+	StackScriptData     map[string]string                      `json:"stackscript_data,omitempty"`
+	BackupID            int                                    `json:"backup_id,omitempty"`
+	Image               string                                 `json:"image,omitempty"`
+	Interfaces          []InstanceConfigInterfaceCreateOptions `json:"interfaces,omitempty"`
+	BackupsEnabled      bool                                   `json:"backups_enabled,omitempty"`
+	PrivateIP           bool                                   `json:"private_ip,omitempty"`
+	Tags                []string                               `json:"tags,omitempty"`
+	Metadata            *InstanceMetadataOptions               `json:"metadata,omitempty"`
+	FirewallID          int                                    `json:"firewall_id,omitempty"`
+	InterfaceGeneration InterfaceGeneration                    `json:"interface_generation,omitempty"`
 
 	// NOTE: Disk encryption may not currently be available to all users.
 	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitempty"`
@@ -243,6 +244,7 @@ func (i *Instance) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		Created *parseabletime.ParseableTime `json:"created"`
 		Updated *parseabletime.ParseableTime `json:"updated"`
 	}{
@@ -265,6 +267,7 @@ func (backup *InstanceBackup) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		LastSuccessful *parseabletime.ParseableTime `json:"last_successful"`
 	}{
 		Mask: (*Mask)(backup),
@@ -362,13 +365,13 @@ func (c *Client) CreateInstance(ctx context.Context, opts InstanceCreateOptions)
 	return doPOSTRequest[Instance](ctx, c, "linode/instances", opts)
 }
 
-// Create a Linode instance with Linode interfaces.
+// CreateInstanceWithLinodeInterfaces creates a Linode instance with Linode interfaces.
 // Note: Linode interfaces may not currently be available to all users.
 func (c *Client) CreateInstanceWithLinodeInterfaces(ctx context.Context, opts InstanceCreateOptionsWithLinodeInterfaces) (*Instance, error) {
 	return doPOSTRequest[Instance](ctx, c, "linode/instances", opts)
 }
 
-// UpdateInstance creates a Linode instance
+// UpdateInstance updates a Linode instance
 func (c *Client) UpdateInstance(ctx context.Context, linodeID int, opts InstanceUpdateOptions) (*Instance, error) {
 	e := formatAPIPath("linode/instances/%d", linodeID)
 	return doPUTRequest[Instance](ctx, c, e, opts)
@@ -395,6 +398,7 @@ func (c *Client) BootInstance(ctx context.Context, linodeID int, configID int) e
 	}
 
 	e := formatAPIPath("linode/instances/%d/boot", linodeID)
+
 	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
 
@@ -420,6 +424,7 @@ func (c *Client) RebootInstance(ctx context.Context, linodeID int, configID int)
 	}
 
 	e := formatAPIPath("linode/instances/%d/reboot", linodeID)
+
 	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
 
