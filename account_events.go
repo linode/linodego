@@ -280,7 +280,7 @@ const (
 	EventNotification EventStatus = "notification"
 	EventScheduled    EventStatus = "scheduled"
 	EventStarted      EventStatus = "started"
-	EventCanceled    EventStatus = "canceled"
+	EventCanceled     EventStatus = "canceled"
 )
 
 // EventEntity provides detailed information about the Event's
@@ -301,6 +301,7 @@ func (i *Event) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		Created       *parseabletime.ParseableTime `json:"created"`
 		TimeRemaining json.RawMessage              `json:"time_remaining"`
 		NotBefore     *parseabletime.ParseableTime `json:"not_before"`
