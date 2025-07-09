@@ -26,6 +26,11 @@ func TestVPCAllIPAddresses_List(t *testing.T) {
 	assert.NotNil(t, vpcIPs[0].Address, "Expected IP address to be non-nil")
 	assert.Equal(t, "192.168.1.10", *vpcIPs[0].Address, "Expected IP address to match")
 	assert.Equal(t, 123, vpcIPs[0].VPCID, "Expected VPC ID to match")
+
+	assert.Equal(t, "fd71:1140:a9d0::/52", *vpcIPs[2].IPv6Range)
+	assert.Equal(t, true, *vpcIPs[2].IPv6IsPublic)
+	assert.Equal(t, "fd71:1140:a9d0::/52", vpcIPs[2].IPv6Addresses[0].SLAACAddress)
+	assert.Equal(t, 125, vpcIPs[2].VPCID)
 }
 
 func TestVPCSpecificIPAddresses_List(t *testing.T) {
@@ -47,4 +52,9 @@ func TestVPCSpecificIPAddresses_List(t *testing.T) {
 	assert.NotNil(t, vpcIPs[0].Address, "Expected IP address to be non-nil")
 	assert.Equal(t, "192.168.1.20", *vpcIPs[0].Address, "Expected IP address to match")
 	assert.Equal(t, vpcID, vpcIPs[0].VPCID, "Expected VPC ID to match")
+
+	assert.Equal(t, "fd71:1140:a9d0::/52", *vpcIPs[2].IPv6Range)
+	assert.Equal(t, true, *vpcIPs[2].IPv6IsPublic)
+	assert.Equal(t, "fd71:1140:a9d0::/52", vpcIPs[2].IPv6Addresses[0].SLAACAddress)
+	assert.Equal(t, 123, vpcIPs[2].VPCID)
 }

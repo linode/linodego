@@ -1,22 +1,29 @@
 {
-    "id": 456,
-    "label": "Existing Subnet",
-    "ipv4": "192.168.2.0/24",
-    "linodes": [
-      {
-        "id": 101,
-        "interfaces": [
-          {
-            "id": 1,
-            "active": true
-          },
-          {
-            "id": 2,
-            "active": false
-          }
-        ]
-      }
-    ],
-    "created": "2025-01-01T10:00:00",
-    "updated": "2025-01-02T10:00:00"
+  "id": 456,
+  "label": "Existing Subnet",
+  "ipv4": "192.168.2.0/24",
+  "ipv6": [
+    {
+      "range": "fd71:1140:a9d0::/52"
+    }
+  ],
+  "linodes": [
+    {
+      "id": 101,
+      "interfaces": [
+        {
+          "id": 1,
+          "config_id": 4567,
+          "active": true
+        },
+        {
+          "id": 2,
+          "config_id": 4567,
+          "active": false
+        }
+      ]
+    }
+  ],
+  "created": "2025-01-01T10:00:00",
+  "updated": "2025-01-02T10:00:00"
 }
