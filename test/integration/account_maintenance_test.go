@@ -17,4 +17,3 @@ func TestAccountMaintenances_List(t *testing.T) {
 		t.Errorf("Error listing maintenances, expected array, got error %v", err)
 	}
 }
-
