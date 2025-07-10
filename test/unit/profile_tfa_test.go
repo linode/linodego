@@ -5,10 +5,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/stretchr/testify/assert"
-
 	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestTwoFactor_CreateSecret_smoke(t *testing.T) {

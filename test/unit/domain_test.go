@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/jarcoal/httpmock"
-
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
 )

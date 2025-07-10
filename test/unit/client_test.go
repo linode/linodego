@@ -5,10 +5,9 @@ import (
 	"net/http"
 	"testing"
 
-	"golang.org/x/net/http2"
-
 	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"
+	"golang.org/x/net/http2"
 )
 
 func TestClient_NGINXRetry(t *testing.T) {
