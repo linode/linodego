@@ -60,6 +60,19 @@ func TestInstance_Get_smoke(t *testing.T) {
 		t.Error(err)
 	}
 
+	settings, err := client.GetAccountSettings(context.Background())
+	if err != nil {
+		t.Fatalf("Failed to get account settings: %s", err)
+	}
+	defaultPolicy := settings.MaintenancePolicy
+
+	_, err = client.UpdateInstance(context.Background(), instance.ID, linodego.InstanceUpdateOptions{
+		MaintenancePolicy: &defaultPolicy,
+	})
+	if err != nil {
+		t.Fatalf("Error setting maintenance policy: %s", err)
+	}
+
 	instanceGot, err := client.GetInstance(context.Background(), instance.ID)
 	if err != nil {
 		t.Errorf("Error getting instance: %s", err)
@@ -67,17 +80,18 @@ func TestInstance_Get_smoke(t *testing.T) {
 	if instanceGot.ID != instance.ID {
 		t.Errorf("Expected instance ID %d to match %d", instanceGot.ID, instance.ID)
 	}
-
-	if instance.Specs.Disk <= 0 {
-		t.Errorf("Error parsing instance spec for disk size: %v", instance.Specs)
+	if instanceGot.MaintenancePolicy != defaultPolicy {
+		t.Errorf("Expected maintenance policy %q, got %q", defaultPolicy, instanceGot.MaintenancePolicy)
 	}
-
-	if instance.HostUUID == "" {
+	if instanceGot.Specs.Disk <= 0 {
+		t.Errorf("Error parsing instance spec for disk size: %v", instanceGot.Specs)
+	}
+	if instanceGot.HostUUID == "" {
 		t.Errorf("failed to get instance HostUUID")
 	}
 
-	assertDateSet(t, instance.Created)
-	assertDateSet(t, instance.Updated)
+	assertDateSet(t, instanceGot.Created)
+	assertDateSet(t, instanceGot.Updated)
 }
 
 func TestInstance_GetTransfer(t *testing.T) {
@@ -498,6 +512,14 @@ func TestInstance_Disk_Clone(t *testing.T) {
 		t.Errorf("Error waiting for instance readiness for disk clone: %s", err)
 	}
 
+	customPolicy := "linode/migrate"
+	_, err = client.UpdateInstance(context.Background(), instance.ID, linodego.InstanceUpdateOptions{
+		MaintenancePolicy: &customPolicy,
+	})
+	if err != nil {
+		t.Fatalf("Error setting maintenance policy: %s", err)
+	}
+
 	disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
 		Label:      "go-disk-test-" + randLabel(),
 		Filesystem: "ext4",
@@ -519,10 +541,33 @@ func TestInstance_Disk_Clone(t *testing.T) {
 	}
 
 	opts := linodego.InstanceDiskCloneOptions{}
-
-	_, err = client.CloneInstanceDisk(context.Background(), instance.ID, disk.ID, opts)
+	clonedDisk, err := client.CloneInstanceDisk(context.Background(), instance.ID, disk.ID, opts)
 	if err != nil {
 		t.Errorf("Error cloning instance disk: %s", err)
+	}
+	if clonedDisk == nil {
+		t.Error("Expected cloned disk to be returned, got nil")
+	}
+
+	cloneLabel := "go-clone-" + randLabel()
+	clonedInstance, err := client.CloneInstance(context.Background(), instance.ID, linodego.InstanceCloneOptions{
+		Label:  cloneLabel,
+		Region: instance.Region,
+		Type:   instance.Type,
+	})
+	if err != nil {
+		t.Fatalf("Error cloning instance: %s", err)
+	}
+	defer func() {
+		_ = client.DeleteInstance(context.Background(), clonedInstance.ID)
+	}()
+
+	clonedInstance, err = client.GetInstance(context.Background(), clonedInstance.ID)
+	if err != nil {
+		t.Fatalf("Error fetching cloned instance: %s", err)
+	}
+	if clonedInstance.MaintenancePolicy != customPolicy {
+		t.Errorf("Expected maintenance policy %q in clone, got %q", customPolicy, clonedInstance.MaintenancePolicy)
 	}
 }
 
@@ -1024,16 +1069,17 @@ func TestInstance_MaintenancePolicy(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestInstance_MaintenancePolicy")
 	defer teardown()
 
-	// test default maintenance policy (should be empty string)
+	settings, err := client.GetAccountSettings(context.Background())
+	require.NoError(t, err)
+
 	instDefault, err := createInstance(t, client, false)
 	require.NoError(t, err)
 	defer func() {
 		err := client.DeleteInstance(context.Background(), instDefault.ID)
 		require.NoError(t, err)
 	}()
-	require.Equal(t, "linode/migrate", instDefault.MaintenancePolicy)
+	require.Equal(t, settings.MaintenancePolicy, instDefault.MaintenancePolicy)
 
-	// test creation with a valid maintenance policy
 	validPolicy := "linode/power_off_on"
 	instWithPolicy, err := createInstance(t, client, false, func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
 		options.MaintenancePolicy = &validPolicy
@@ -1045,7 +1091,6 @@ func TestInstance_MaintenancePolicy(t *testing.T) {
 	}()
 	require.Equal(t, validPolicy, instWithPolicy.MaintenancePolicy)
 
-	// test updating maintenance policy on another fresh instance
 	instToUpdate, err := createInstance(t, client, false)
 	require.NoError(t, err)
 	defer func() {
@@ -1061,7 +1106,6 @@ func TestInstance_MaintenancePolicy(t *testing.T) {
 	require.NoError(t, err)
 	require.Equal(t, newPolicy, updated.MaintenancePolicy)
 
-	// test invalid maintenance policy during create
 	invalidPolicy := "invalid_policy"
 	_, err = createInstance(t, client, false, func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
 		options.MaintenancePolicy = &invalidPolicy
@@ -1069,7 +1113,6 @@ func TestInstance_MaintenancePolicy(t *testing.T) {
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "Unsupported maintenance policy slug format")
 
-	//  test invalid maintenance policy during update
 	updateOpts.MaintenancePolicy = &invalidPolicy
 	_, err = client.UpdateInstance(context.Background(), instToUpdate.ID, updateOpts)
 	require.Error(t, err)
