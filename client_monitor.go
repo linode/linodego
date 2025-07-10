@@ -20,8 +20,8 @@ const (
 	MonitorAPIVersion = "v2beta"
 	// MonitorAPIVersionVar is the env var to check for the alternate Monitor API version
 	MonitorAPIVersionVar = "MONITOR_API_VERSION"
-	// MonitorAPITokenVar is the env var to check for Monitor API token
-	MonitorAPITokenVar = "MONITOR_API_TOKEN"
+	// MonitorAPIEnvVar is the env var to check for Monitor API token
+	MonitorAPIEnvVar = "MONITOR_API_TOKEN"
 )
 
 // MonitorClient is a wrapper around the Resty client
@@ -59,7 +59,7 @@ func NewMonitorClient(hc *http.Client) (mClient MonitorClient) {
 		mClient.SetAPIVersion(MonitorAPIVersion)
 	}
 
-	token, apiTokenExists := os.LookupEnv(MonitorAPITokenVar)
+	token, apiTokenExists := os.LookupEnv(MonitorAPIEnvVar)
 	if apiTokenExists {
 		mClient.SetToken(token)
 	}
