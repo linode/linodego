@@ -10,7 +10,7 @@ import (
 )
 
 func TestMaintenancePolicies_List(t *testing.T) {
-	client, fixtureTeardown := createTestClient(t, "fixtures/TestAccountMaintenancePolicies_List")
+	client, fixtureTeardown := createTestClient(t, "fixtures/TestMaintenancePolicies_List")
 	defer fixtureTeardown()
 
 	resp, err := client.R(context.Background()).Get("maintenance/policies")
