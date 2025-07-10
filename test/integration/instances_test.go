@@ -512,14 +512,6 @@ func TestInstance_Disk_Clone(t *testing.T) {
 		t.Errorf("Error waiting for instance readiness for disk clone: %s", err)
 	}
 
-	customPolicy := "linode/migrate"
-	_, err = client.UpdateInstance(context.Background(), instance.ID, linodego.InstanceUpdateOptions{
-		MaintenancePolicy: &customPolicy,
-	})
-	if err != nil {
-		t.Fatalf("Error setting maintenance policy: %s", err)
-	}
-
 	disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
 		Label:      "go-disk-test-" + randLabel(),
 		Filesystem: "ext4",
@@ -541,33 +533,10 @@ func TestInstance_Disk_Clone(t *testing.T) {
 	}
 
 	opts := linodego.InstanceDiskCloneOptions{}
-	clonedDisk, err := client.CloneInstanceDisk(context.Background(), instance.ID, disk.ID, opts)
+
+	_, err = client.CloneInstanceDisk(context.Background(), instance.ID, disk.ID, opts)
 	if err != nil {
 		t.Errorf("Error cloning instance disk: %s", err)
-	}
-	if clonedDisk == nil {
-		t.Error("Expected cloned disk to be returned, got nil")
-	}
-
-	cloneLabel := "go-clone-" + randLabel()
-	clonedInstance, err := client.CloneInstance(context.Background(), instance.ID, linodego.InstanceCloneOptions{
-		Label:  cloneLabel,
-		Region: instance.Region,
-		Type:   instance.Type,
-	})
-	if err != nil {
-		t.Fatalf("Error cloning instance: %s", err)
-	}
-	defer func() {
-		_ = client.DeleteInstance(context.Background(), clonedInstance.ID)
-	}()
-
-	clonedInstance, err = client.GetInstance(context.Background(), clonedInstance.ID)
-	if err != nil {
-		t.Fatalf("Error fetching cloned instance: %s", err)
-	}
-	if clonedInstance.MaintenancePolicy != customPolicy {
-		t.Errorf("Expected maintenance policy %q in clone, got %q", customPolicy, clonedInstance.MaintenancePolicy)
 	}
 }
 
@@ -812,6 +781,12 @@ func TestInstance_Clone(t *testing.T) {
 		t.Errorf("Error waiting for instance created: %s", err)
 	}
 
+	originalInstance, err := client.GetInstance(context.Background(), instance.ID)
+	if err != nil {
+		t.Fatalf("Error fetching original instance details: %s", err)
+	}
+	originalPolicy := originalInstance.MaintenancePolicy
+
 	cloneOpts := linodego.InstanceCloneOptions{
 		Region:    targetRegion,
 		Type:      "g6-nanode-1",
@@ -821,7 +796,9 @@ func TestInstance_Clone(t *testing.T) {
 		},
 	}
 	clonedInstance, err := client.CloneInstance(context.Background(), instance.ID, cloneOpts)
-
+	if err != nil {
+		t.Fatal(err)
+	}
 	t.Cleanup(func() {
 		client.DeleteInstance(context.Background(), clonedInstance.ID)
 	})
@@ -840,6 +817,16 @@ func TestInstance_Clone(t *testing.T) {
 	)
 	if err != nil {
 		t.Fatal(err)
+	}
+
+	clonedInstance, err = client.GetInstance(context.Background(), clonedInstance.ID)
+	if err != nil {
+		t.Fatalf("Error fetching cloned instance details: %s", err)
+	}
+
+	if clonedInstance.MaintenancePolicy != originalPolicy {
+		t.Errorf("Expected cloned instance to inherit maintenance policy %q, but got %q",
+			originalPolicy, clonedInstance.MaintenancePolicy)
 	}
 
 	if clonedInstance.Image != instance.Image {

@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestAccountMaintenancePolicies_List(t *testing.T) {
+func TestMaintenancePolicies_List(t *testing.T) {
 	client, fixtureTeardown := createTestClient(t, "fixtures/TestAccountMaintenancePolicies_List")
 	defer fixtureTeardown()
 
