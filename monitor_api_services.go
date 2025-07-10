@@ -108,6 +108,7 @@ func (mc *MonitorClient) FetchEntityMetrics(ctx context.Context, serviceType str
 		if err != nil {
 			return nil, err
 		}
+
 		req.SetBody(string(body))
 	}
 
