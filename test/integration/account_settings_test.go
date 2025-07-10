@@ -24,6 +24,7 @@ func TestAccountSettings_Get(t *testing.T) {
 		NetworkHelper:        true,
 		LongviewSubscription: String("longview-3"),
 		ObjectStorage:        String("active"),
+		MaintenancePolicy:    "linode/migrate",
 	}
 	mockResponse, _ := json.Marshal(mockSettings)
 
@@ -40,6 +41,7 @@ func TestAccountSettings_Get(t *testing.T) {
 	require.Equal(t, "longview-3", *settings.LongviewSubscription, "Expected LongviewSubscription to be 'longview-3'")
 	require.NotNil(t, settings.ObjectStorage, "Expected ObjectStorage to be non-nil")
 	require.Equal(t, "active", *settings.ObjectStorage, "Expected ObjectStorage to be 'active'")
+	require.Equal(t, "linode/migrate", settings.MaintenancePolicy, "Expected MaintenancePolicy to be 'linode/migrate'")
 }
 
 func TestAccountSettings_Update(t *testing.T) {
@@ -54,12 +56,14 @@ func TestAccountSettings_Update(t *testing.T) {
 		BackupsEnabled:       Bool(false),
 		LongviewSubscription: String("longview-10"),
 		NetworkHelper:        Bool(false),
+		MaintenancePolicy:    String("linode/migrate"),
 	}
 
 	mockSettings := linodego.AccountSettings{
 		BackupsEnabled:       false,
 		NetworkHelper:        false,
 		LongviewSubscription: String("longview-10"),
+		MaintenancePolicy:    "linode/migrate",
 	}
 	mockResponse, _ := json.Marshal(mockSettings)
 
@@ -73,6 +77,7 @@ func TestAccountSettings_Update(t *testing.T) {
 	require.False(t, settings.NetworkHelper, "Expected NetworkHelper to be false")
 	require.NotNil(t, settings.LongviewSubscription, "Expected LongviewSubscription to be non-nil")
 	require.Equal(t, "longview-10", *settings.LongviewSubscription, "Expected LongviewSubscription to be 'longview-10'")
+	require.Equal(t, "linode/migrate", settings.MaintenancePolicy, "Expected MaintenancePolicy to be 'linode/migrate'")
 }
 
 func Bool(v bool) *bool       { return &v }

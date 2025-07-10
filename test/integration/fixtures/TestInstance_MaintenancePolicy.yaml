@@ -11,6 +11,68 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
+    url: https://api.devcloud.linode.com/v4beta/account/settings
+    method: GET
+  response:
+    body: '{"managed": true, "network_helper": true, "longview_subscription": "longview-100",
+      "backups_enabled": false, "object_storage": "active", "interfaces_for_new_linodes":
+      "legacy_config_default_but_linode_allowed", "maintenance_policy": "linode/migrate"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "250"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - account:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "240"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.devcloud.linode.com/v4beta/regions?page=1
     method: GET
   response:
@@ -72,7 +134,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"pl-labkrk-2","type":"g6-nanode-1","label":"go-test-ins-wo-disk-1633db8ua5mw","firewall_id":172737,"booted":false}'
+    body: '{"region":"pl-labkrk-2","type":"g6-nanode-1","label":"go-test-ins-00w7bb5yv73e","root_pass":"8lhY~E7M=''7.s7L48nVd0BA0ViNa;uV*{-?joa38gP,NpY(87\u0026lE*SO:3z680'':w","image":"linode/debian12","booted":false}'
     form: {}
     headers:
       Accept:
@@ -84,11 +146,81 @@ interactions:
     url: https://api.devcloud.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 99592160, "label": "go-test-ins-wo-disk-1633db8ua5mw", "group":
-      "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.24.237.14"], "ipv6": "1234::5678/128",
-      "image": null, "region": "pl-labkrk-2", "site_type": "core", "specs": {"disk":
-      25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
+    body: '{"id": 99593553, "label": "go-test-ins-00w7bb5yv73e", "group": "", "status":
+      "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "type": "g6-nanode-1", "ipv4": ["172.24.235.67"], "ipv6": "1234::5678/128",
+      "image": "linode/debian12", "region": "pl-labkrk-2", "site_type": "core", "specs":
+      {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
+      0}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota":
+      80, "io": 10000}, "backups": {"enabled": true, "available": false, "schedule":
+      {"day": null, "window": null}, "last_successful": null}, "hypervisor": "kvm",
+      "watchdog_enabled": true, "tags": [], "host_uuid": "b4b877ffbb588c8945d8a96add50f2c4f416bfc0",
+      "has_user_data": false, "placement_group": null, "disk_encryption": "enabled",
+      "lke_cluster_id": null, "capabilities": ["Block Storage Encryption", "SMTP Enabled",
+      "Maintenance Policy"], "interface_generation": "legacy_config", "maintenance_policy":
+      "linode/migrate"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "1036"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - linodes:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "240"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"region":"pl-labkrk-2","type":"g6-nanode-1","label":"go-test-ins-r6jy27s2z7r1","root_pass":"J\u002602fJ(84\u00264\u003eFa7r''M7B''oy=M@73gP`8JECb$47[5xq3velq`!X[tGc#4nMHU^7K","image":"linode/debian12","booted":false,"maintenance_policy":"linode/power_off_on"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.devcloud.linode.com/v4beta/linode/instances
+    method: POST
+  response:
+    body: '{"id": 99593554, "label": "go-test-ins-r6jy27s2z7r1", "group": "", "status":
+      "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "type": "g6-nanode-1", "ipv4": ["172.24.235.103"], "ipv6": "1234::5678/128",
+      "image": "linode/debian12", "region": "pl-labkrk-2", "site_type": "core", "specs":
+      {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
       0}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota":
       80, "io": 10000}, "backups": {"enabled": true, "available": false, "schedule":
       {"day": null, "window": null}, "last_successful": null}, "hypervisor": "kvm",
@@ -96,7 +228,7 @@ interactions:
       "has_user_data": false, "placement_group": null, "disk_encryption": "enabled",
       "lke_cluster_id": null, "capabilities": ["Block Storage Encryption", "SMTP Enabled",
       "Maintenance Policy"], "interface_generation": "legacy_config", "maintenance_policy":
-      "linode/migrate"}'
+      "linode/power_off_on"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -113,7 +245,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "1031"
+      - "1042"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -142,7 +274,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-conf-3m99g070qtuk","devices":{},"interfaces":null}'
+    body: '{"region":"pl-labkrk-2","type":"g6-nanode-1","label":"go-test-ins-0nx1x580afo4","root_pass":"K20\u0026;c*\u0026k(VnAQK:n!94[#8AC20^.p\u003e14mo8Vkhza5D45Z8;h*M!p(jfM75qZAXY","image":"linode/debian12","booted":false}'
     form: {}
     headers:
       Accept:
@@ -151,16 +283,22 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/linode/instances/99592160/configs
+    url: https://api.devcloud.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 558393, "label": "go-test-conf-3m99g070qtuk", "helpers": {"updatedb_disabled":
-      true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
-      true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
-      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
-      "devices": {"sda": null, "sdb": null, "sdc": null, "sdd": null, "sde": null,
-      "sdf": null, "sdg": null, "sdh": null}, "initrd": null, "run_level": "default",
-      "virt_mode": "paravirt", "interfaces": []}'
+    body: '{"id": 99593555, "label": "go-test-ins-0nx1x580afo4", "group": "", "status":
+      "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "type": "g6-nanode-1", "ipv4": ["172.24.235.114"], "ipv6": "1234::5678/128",
+      "image": "linode/debian12", "region": "pl-labkrk-2", "site_type": "core", "specs":
+      {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
+      0}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota":
+      80, "io": 10000}, "backups": {"enabled": true, "available": false, "schedule":
+      {"day": null, "window": null}, "last_successful": null}, "hypervisor": "kvm",
+      "watchdog_enabled": true, "tags": [], "host_uuid": "3064c6a34b8c18f5d651cfa6d4ff47fdd9da1327",
+      "has_user_data": false, "placement_group": null, "disk_encryption": "enabled",
+      "lke_cluster_id": null, "capabilities": ["Block Storage Encryption", "SMTP Enabled",
+      "Maintenance Policy"], "interface_generation": "legacy_config", "maintenance_policy":
+      "linode/migrate"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -177,7 +315,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "537"
+      - "1037"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -206,7 +344,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: ""
+    body: '{"label":"go-test-ins-0nx1x580afo4","alerts":{"cpu":90,"io":10000,"network_in":10,"network_out":10,"transfer_quota":80},"watchdog_enabled":true,"tags":[],"group":"","maintenance_policy":"linode/migrate"}'
     form: {}
     headers:
       Accept:
@@ -215,80 +353,18 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/account/settings
-    method: GET
-  response:
-    body: '{"managed": true, "network_helper": true, "longview_subscription": "longview-100",
-      "backups_enabled": false, "object_storage": "active", "interfaces_for_new_linodes":
-      "legacy_config_default_but_linode_allowed", "maintenance_policy": "linode/migrate"}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "250"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Server:
-      - nginx/1.18.0
-      Strict-Transport-Security:
-      - max-age=31536000
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - account:read_only
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "240"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: '{"maintenance_policy":"linode/migrate"}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/linode/instances/99592160
+    url: https://api.devcloud.linode.com/v4beta/linode/instances/99593555
     method: PUT
   response:
-    body: '{"id": 99592160, "label": "go-test-ins-wo-disk-1633db8ua5mw", "group":
-      "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.24.237.14"], "ipv6": "1234::5678/128",
-      "image": null, "region": "pl-labkrk-2", "site_type": "core", "specs": {"disk":
-      25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
+    body: '{"id": 99593555, "label": "go-test-ins-0nx1x580afo4", "group": "", "status":
+      "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "type": "g6-nanode-1", "ipv4": ["172.24.235.114"], "ipv6": "1234::5678/128",
+      "image": "linode/debian12", "region": "pl-labkrk-2", "site_type": "core", "specs":
+      {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
       0}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota":
       80, "io": 10000}, "backups": {"enabled": true, "available": false, "schedule":
       {"day": "Scheduling", "window": "Scheduling"}, "last_successful": null}, "hypervisor":
-      "kvm", "watchdog_enabled": true, "tags": [], "host_uuid": "c6a84401030a8a5a3cf1b07e8152033ff27390b0",
+      "kvm", "watchdog_enabled": true, "tags": [], "host_uuid": "3064c6a34b8c18f5d651cfa6d4ff47fdd9da1327",
       "has_user_data": false, "placement_group": null, "disk_encryption": "enabled",
       "lke_cluster_id": null, "capabilities": ["Block Storage Encryption", "SMTP Enabled",
       "Maintenance Policy"], "interface_generation": "legacy_config", "maintenance_policy":
@@ -309,7 +385,150 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "1047"
+      - "1053"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - linodes:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "240"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"region":"pl-labkrk-2","type":"g6-nanode-1","label":"go-test-ins-6155k7g8zqch","root_pass":"4\u003ce#0[=KfB!I|fBX''v\u0026!''q$M5c8+3M3fNYCF7*yd8F2Cb5:JP8b!k+306wlt2No6","image":"linode/debian12","booted":false,"maintenance_policy":"invalid_policy"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.devcloud.linode.com/v4beta/linode/instances
+    method: POST
+  response:
+    body: '{"errors": [{"reason": "Unsupported maintenance policy slug format."}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "71"
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Accepted-Oauth-Scopes:
+      - linodes:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "240"
+    status: 400 BAD REQUEST
+    code: 400
+    duration: ""
+- request:
+    body: '{"label":"go-test-ins-0nx1x580afo4","alerts":{"cpu":90,"io":10000,"network_in":10,"network_out":10,"transfer_quota":80},"watchdog_enabled":true,"tags":[],"group":"","maintenance_policy":"invalid_policy"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.devcloud.linode.com/v4beta/linode/instances/99593555
+    method: PUT
+  response:
+    body: '{"errors": [{"reason": "Unsupported maintenance policy slug format."},
+      {"reason": "Invalid value", "field": "maintenance_policy"}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "131"
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Accepted-Oauth-Scopes:
+      - linodes:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "240"
+    status: 400 BAD REQUEST
+    code: 400
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.devcloud.linode.com/v4beta/linode/instances/99593555
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -347,22 +566,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/linode/instances/99592160
-    method: GET
+    url: https://api.devcloud.linode.com/v4beta/linode/instances/99593554
+    method: DELETE
   response:
-    body: '{"id": 99592160, "label": "go-test-ins-wo-disk-1633db8ua5mw", "group":
-      "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.24.237.14"], "ipv6": "1234::5678/128",
-      "image": null, "region": "pl-labkrk-2", "site_type": "core", "specs": {"disk":
-      25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
-      0}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota":
-      80, "io": 10000}, "backups": {"enabled": true, "available": false, "schedule":
-      {"day": "Scheduling", "window": "Scheduling"}, "last_successful": null}, "hypervisor":
-      "kvm", "watchdog_enabled": true, "tags": [], "host_uuid": "c6a84401030a8a5a3cf1b07e8152033ff27390b0",
-      "has_user_data": false, "placement_group": null, "disk_encryption": "enabled",
-      "lke_cluster_id": null, "capabilities": ["Block Storage Encryption", "SMTP Enabled",
-      "Maintenance Policy"], "interface_generation": "legacy_config", "maintenance_policy":
-      "linode/migrate"}'
+    body: '{}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -375,12 +582,11 @@ interactions:
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
       - private, max-age=60, s-maxage=60
       Connection:
       - keep-alive
       Content-Length:
-      - "1047"
+      - "2"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -392,9 +598,8 @@ interactions:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
-      - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - linodes:read_only
+      - linodes:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -419,7 +624,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/linode/instances/99592160
+    url: https://api.devcloud.linode.com/v4beta/linode/instances/99593553
     method: DELETE
   response:
     body: '{}'
