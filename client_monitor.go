@@ -3,12 +3,12 @@ package linodego
 import (
 	"context"
 	"fmt"
+	"net/http"
+	"net/url"
 	"os"
 	"path"
 
 	"github.com/go-resty/resty/v2"
-	"net/http"
-	"net/url"
 )
 
 const (

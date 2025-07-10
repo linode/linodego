@@ -1,9 +1,10 @@
 package integration
 
 import (
+	"testing"
+
 	"github.com/linode/linodego"
 	"golang.org/x/net/context"
-	"testing"
 )
 
 func TestMonitorAPI_Fetch_Entity_Metrics(t *testing.T) {
