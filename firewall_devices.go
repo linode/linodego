@@ -15,6 +15,7 @@ type FirewallDeviceType string
 const (
 	FirewallDeviceLinode       FirewallDeviceType = "linode"
 	FirewallDeviceNodeBalancer FirewallDeviceType = "nodebalancer"
+	FirewallDeviceInterface    FirewallDeviceType = "interface"
 )
 
 // FirewallDevice represents a device governed by a Firewall
