@@ -1,16 +1,24 @@
 {
     "data": [
         {
-            "address": "192.168.1.1",
-            "linode_id": 12345,
-            "reserved": false
-        },
-        {
-            "address": "192.168.1.2",
-            "linode_id": 67890,
-            "reserved": true
+            "address": "197.1O7.143.141",
+            "gateway": "197.1O7.143.1",
+            "interface_id": 456,
+            "linode_id": 123,
+            "prefix": 24,
+            "public": true,
+            "rdns": "test.example.org",
+            "region": "us-east",
+            "subnet_mask": "192.0.2.139",
+            "type": "ipv4",
+            "vpc_nat_1_1": {
+                "address": "192.0.2.1",
+                "subnet_id": 101,
+                "vpc_id": 111
+            }
         }
     ],
+    "page": 1,
     "pages": 1,
-    "results": 2
+    "results": 1
 }
