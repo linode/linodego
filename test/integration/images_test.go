@@ -6,11 +6,10 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
-
 	"github.com/dnaeon/go-vcr/recorder"
 	. "github.com/linode/linodego"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 // testImageBytes is a minimal Gzipped image.

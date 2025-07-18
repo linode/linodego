@@ -5,9 +5,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/stretchr/testify/require"
-
 	"github.com/linode/linodego"
+	"github.com/stretchr/testify/require"
 )
 
 var TestNodeBalancerConfigCreateOpts = linodego.NodeBalancerConfigCreateOptions{
