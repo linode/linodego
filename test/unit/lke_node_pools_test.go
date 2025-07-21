@@ -85,6 +85,7 @@ func TestLKENodePool_Create(t *testing.T) {
 	defer base.TearDown(t)
 
 	createOptions := linodego.LKENodePoolCreateOptions{
+		Label:  "test-pool",
 		Count:  2,
 		Type:   "g6-standard-2",
 		Tags:   []string{"tag1"},
@@ -108,6 +109,7 @@ func TestLKENodePool_Create(t *testing.T) {
 	assert.True(t, nodePool.Autoscaler.Enabled)
 	assert.Equal(t, 1, nodePool.Autoscaler.Min)
 	assert.Equal(t, 5, nodePool.Autoscaler.Max)
+	assert.Equal(t, "test-pool", nodePool.Label)
 }
 
 func TestLKENodePool_Update(t *testing.T) {
