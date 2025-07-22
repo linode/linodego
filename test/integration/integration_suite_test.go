@@ -303,7 +303,7 @@ func createTestMonitorClient(t *testing.T, fixturesYaml string, token *linodego.
 		t.Helper()
 	}
 
-	apiKey = &validTestAPIKey
+	apiKey = &token.Token
 
 	var recordStopper func()
 	var r http.RoundTripper

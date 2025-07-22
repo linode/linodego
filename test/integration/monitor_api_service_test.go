@@ -1,10 +1,10 @@
 package integration
 
 import (
+	"context"
 	"testing"
 
 	"github.com/linode/linodego"
-	"golang.org/x/net/context"
 )
 
 func TestMonitorAPI_Fetch_Entity_Metrics(t *testing.T) {
@@ -18,17 +18,15 @@ func TestMonitorAPI_Fetch_Entity_Metrics(t *testing.T) {
 		EntityIDs: entityIDs,
 		Metrics: []linodego.EntityMetric{
 			{
-				Name:              "avg_read_iops",
+				Name:              "read_iops",
 				AggregateFunction: linodego.AggregateFunctionAvg,
 			},
 		},
-		RelativeTimeDuration: linodego.MetricRelativeTimeDuration{
+		RelativeTimeDuration: &linodego.MetricRelativeTimeDuration{
 			Unit:  linodego.MetricTimeUnitHr,
 			Value: 1,
 		},
 	}
-
-	mClient.SetDebug(true)
 
 	metrics, err := mClient.FetchEntityMetrics(context.Background(), "dbaas", &opts)
 	if err != nil {
@@ -43,23 +41,35 @@ func TestMonitorAPI_Fetch_Entity_Metrics(t *testing.T) {
 func setup(t *testing.T, fixturesYaml string) (*linodego.MonitorClient, []any, func(), error) {
 	t.Helper()
 
-	// create a DB entity to generate token
-	client, _, teardown, err := setupPostgresDatabase(t, nil, fixturesYaml)
-	if err != nil {
-		t.Error(err)
-	}
-
 	dbs, err := client.ListDatabases(context.Background(), nil)
-	if len(dbs) == 0 {
-		t.Errorf("Expected a list of Databases, but got none: %v", err)
-	}
 	if err != nil {
 		t.Errorf("Error listing Databases, expected struct, got error %v", err)
 	}
 
+	var teardown func()
+	if len(dbs) < 1 {
+		// create a DB entity to generate token
+		client, _, teardown, err = setupPostgresDatabase(t, nil, fixturesYaml)
+		if err != nil {
+			t.Error(err)
+		}
+	}
+
+	// refresh the DB list
+	dbs, err = client.ListDatabases(context.Background(), nil)
+	if err != nil {
+		t.Errorf("Error listing Databases, expected struct, got error %v", err)
+	}
+	if len(dbs) == 0 {
+		t.Errorf("Expected a list of Databases, but got none: %v", err)
+	}
+
 	var entityIDs []any
 	for _, db := range dbs {
-		entityIDs = append(entityIDs, db.ID)
+		// DB entities must from the same region
+		if db.Region == dbs[0].Region {
+			entityIDs = append(entityIDs, db.ID)
+		}
 	}
 
 	// Create a JWE token for the given entity IDs
@@ -69,7 +79,7 @@ func setup(t *testing.T, fixturesYaml string) (*linodego.MonitorClient, []any, f
 
 	token, createErr := client.CreateMonitorServiceTokenForServiceType(context.Background(), "dbaas", createOpts)
 	if createErr != nil {
-		t.Errorf("Error creating token : %s", createErr)
+		t.Errorf("Error creating monitor-api token : %s", createErr)
 	}
 
 	if token == nil {
@@ -78,9 +88,13 @@ func setup(t *testing.T, fixturesYaml string) (*linodego.MonitorClient, []any, f
 
 	mClient, fixtureTeardown := createTestMonitorClient(t, fixturesYaml, token)
 
-	td := func() {
-		teardown()
-		fixtureTeardown()
+	if teardown != nil {
+		td := func() {
+			teardown()
+			fixtureTeardown()
+		}
+		return mClient, entityIDs, td, err
+	} else {
+		return mClient, entityIDs, fixtureTeardown, err
 	}
-	return mClient, entityIDs, td, err
 }

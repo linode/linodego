@@ -59,11 +59,11 @@ type EntityMetricsFetchOptions struct {
 	// EntityIDs are expected to be type "any" as different service_types have different variable type for their entity_ids. For example, Linode has "int" entity_ids whereas object storage has "string" as entity_ids.
 	EntityIDs []any `json:"entity_ids"`
 
-	Filters              []MetricFilter             `json:"filters,omitempty"`
-	Metrics              []EntityMetric             `json:"metrics"`
-	TimeGranularity      []MetricTimeGranularity    `json:"time_granularity,omitempty"`
-	RelativeTimeDuration MetricRelativeTimeDuration `json:"relative_time_duration,omitempty"`
-	AbsoluteTimeDuration MetricAbsoluteTimeDuration `json:"absolute_time_duration,omitempty"`
+	Filters              []MetricFilter              `json:"filters,omitempty"`
+	Metrics              []EntityMetric              `json:"metrics"`
+	TimeGranularity      []MetricTimeGranularity     `json:"time_granularity,omitempty"`
+	RelativeTimeDuration *MetricRelativeTimeDuration `json:"relative_time_duration,omitempty"`
+	AbsoluteTimeDuration *MetricAbsoluteTimeDuration `json:"absolute_time_duration,omitempty"`
 }
 
 // MetricFilter describes individual objects that define dimension filters for the query.
@@ -93,8 +93,8 @@ type MetricRelativeTimeDuration struct {
 
 // MetricAbsoluteTimeDuration specifies an absolute time range for data queries
 type MetricAbsoluteTimeDuration struct {
-	Start time.Time `json:"start"`
-	End   time.Time `json:"end"`
+	Start *time.Time `json:"start,omitempty"`
+	End   *time.Time `json:"end,omitempty"`
 }
 
 // FetchEntityMetrics returns metrics information for the individual entities within a specific service type
