@@ -32,7 +32,7 @@ func TestFetchEntityMetrics(t *testing.T) {
 				AggregateFunction: linodego.AggregateFunctionAvg,
 			},
 		},
-		RelativeTimeDuration: linodego.MetricRelativeTimeDuration{
+		RelativeTimeDuration: &linodego.MetricRelativeTimeDuration{
 			Unit:  linodego.MetricTimeUnitHr,
 			Value: 1,
 		},
