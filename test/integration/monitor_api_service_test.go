@@ -41,6 +41,8 @@ func TestMonitorAPI_Fetch_Entity_Metrics(t *testing.T) {
 func setup(t *testing.T, fixturesYaml string) (*linodego.MonitorClient, []any, func(), error) {
 	t.Helper()
 
+	client, clientFixtureTeardown := createTestClient(t, "fixtures/TestMonitorAPI_Get_Entity_Metrics_ListDB")
+
 	dbs, err := client.ListDatabases(context.Background(), nil)
 	if err != nil {
 		t.Errorf("Error listing Databases, expected struct, got error %v", err)
@@ -49,7 +51,7 @@ func setup(t *testing.T, fixturesYaml string) (*linodego.MonitorClient, []any, f
 	var teardown func()
 	if len(dbs) < 1 {
 		// create a DB entity to generate token
-		client, _, teardown, err = setupPostgresDatabase(t, nil, fixturesYaml)
+		client, _, teardown, err = setupPostgresDatabase(t, nil, "fixtures/TestMonitorAPI_Get_Entity_Metrics_setupPostgres")
 		if err != nil {
 			t.Error(err)
 		}
@@ -88,13 +90,19 @@ func setup(t *testing.T, fixturesYaml string) (*linodego.MonitorClient, []any, f
 
 	mClient, fixtureTeardown := createTestMonitorClient(t, fixturesYaml, token)
 
+	var td func()
 	if teardown != nil {
-		td := func() {
+		td = func() {
+			clientFixtureTeardown()
 			teardown()
 			fixtureTeardown()
 		}
-		return mClient, entityIDs, td, err
 	} else {
-		return mClient, entityIDs, fixtureTeardown, err
+		td = func() {
+			clientFixtureTeardown()
+			fixtureTeardown()
+		}
 	}
+
+	return mClient, entityIDs, td, err
 }
