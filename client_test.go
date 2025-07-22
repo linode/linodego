@@ -650,3 +650,56 @@ func TestClient_CustomRootCAWithoutCustomRoundTripper(t *testing.T) {
 		})
 	}
 }
+
+func TestMonitorClient_SetAPIBasics(t *testing.T) {
+	defaultURL := "https://monitor-api.linode.com/v2beta"
+
+	baseURL := "api.very.cool.com"
+	apiVersion := "v4beta"
+	expectedHost := fmt.Sprintf("https://%s/%s", baseURL, apiVersion)
+
+	updatedBaseURL := "api.more.cool.com"
+	updatedAPIVersion := "v4beta_changed"
+	updatedExpectedHost := fmt.Sprintf("https://%s/%s", updatedBaseURL, updatedAPIVersion)
+
+	protocolBaseURL := "http://api.more.cool.com"
+	protocolAPIVersion := "v4_http"
+	protocolExpectedHost := fmt.Sprintf("%s/%s", protocolBaseURL, protocolAPIVersion)
+
+	client := NewMonitorClient(nil)
+
+	if client.resty.BaseURL != defaultURL {
+		t.Fatal(cmp.Diff(client.resty.BaseURL, defaultURL))
+	}
+
+	client.SetBaseURL(baseURL)
+	client.SetAPIVersion(apiVersion)
+
+	if client.resty.BaseURL != expectedHost {
+		t.Fatal(cmp.Diff(client.resty.BaseURL, expectedHost))
+	}
+
+	// Ensure setting twice does not cause conflicts
+	client.SetBaseURL(updatedBaseURL)
+	client.SetAPIVersion(updatedAPIVersion)
+
+	if client.resty.BaseURL != updatedExpectedHost {
+		t.Fatal(cmp.Diff(client.resty.BaseURL, updatedExpectedHost))
+	}
+
+	// Revert
+	client.SetBaseURL(baseURL)
+	client.SetAPIVersion(apiVersion)
+
+	if client.resty.BaseURL != expectedHost {
+		t.Fatal(cmp.Diff(client.resty.BaseURL, expectedHost))
+	}
+
+	// Custom protocol
+	client.SetBaseURL(protocolBaseURL)
+	client.SetAPIVersion(protocolAPIVersion)
+
+	if client.resty.BaseURL != protocolExpectedHost {
+		t.Fatal(cmp.Diff(client.resty.BaseURL, expectedHost))
+	}
+}

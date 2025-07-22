@@ -1,0 +1,232 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/databases/instances?page=1
+    method: GET
+  response:
+    body: '{"data": [{"allow_list": ["172.232.103.253/32", "172.232.151.31/32", "172.232.151.158/32",
+      "172.232.151.171/32", "172.232.151.205/32", "172.232.151.216/32", "172.232.151.230/32",
+      "172.233.129.184/32", "172.233.149.254/32", "172.235.25.10/32", "172.235.25.38/32",
+      "172.235.25.109/32", "172.235.25.208/32", "172.235.54.188/32", "172.236.234.32/32",
+      "172.236.234.37/32", "172.236.234.92/32", "172.236.235.67/32", "172.236.235.152/32",
+      "172.236.236.57/32", "1234::5678/128", "1234::5678/128",
+      "1234::5678/128", "1234::5678/128",
+      "1234::5678/128", "1234::5678/128", "1234::5678/128",
+      "1234::5678/128", "1234::5678/128",
+      "1234::5678/128", "1234::5678/128",
+      "1234::5678/128", "1234::5678/128", "1234::5678/128",
+      "1234::5678/128", "1234::5678/128",
+      "1234::5678/128", "1234::5678/128",
+      "1234::5678/128", "1234::5678/128"],
+      "cluster_size": 1, "created": "2018-01-02T03:04:05", "encrypted": true, "engine":
+      "mysql", "engine_config": {"mysql": {"sql_mode": "ANSI,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE,STRICT_ALL_TABLES",
+      "sql_require_primary_key": true}}, "hosts": {"primary": "a332472-akamai-prod-3583917-default.g2a.akamaidb.net"},
+      "id": 332472, "label": "test", "members": {"45.56.118.61": "primary"}, "oldest_restore_time":
+      "2018-01-02T03:04:05", "port": 25360, "region": "us-southeast", "ssl_connection":
+      true, "status": "active", "total_disk_size_gb": 58, "type": "g6-dedicated-2",
+      "updated": "2018-01-02T03:04:05", "updates": {"day_of_week": 2, "duration":
+      4, "frequency": "weekly", "hour_of_day": 19, "pending": []}, "used_disk_size_gb":
+      1, "version": "8.0.35", "platform": "rdbms-default"}], "page": 1, "pages": 1,
+      "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Tue, 22 Jul 2025 17:33:18 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - databases:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/databases/instances?page=1
+    method: GET
+  response:
+    body: '{"data": [{"allow_list": ["172.232.103.253/32", "172.232.151.31/32", "172.232.151.158/32",
+      "172.232.151.171/32", "172.232.151.205/32", "172.232.151.216/32", "172.232.151.230/32",
+      "172.233.129.184/32", "172.233.149.254/32", "172.235.25.10/32", "172.235.25.38/32",
+      "172.235.25.109/32", "172.235.25.208/32", "172.235.54.188/32", "172.236.234.32/32",
+      "172.236.234.37/32", "172.236.234.92/32", "172.236.235.67/32", "172.236.235.152/32",
+      "172.236.236.57/32", "1234::5678/128", "1234::5678/128",
+      "1234::5678/128", "1234::5678/128",
+      "1234::5678/128", "1234::5678/128", "1234::5678/128",
+      "1234::5678/128", "1234::5678/128",
+      "1234::5678/128", "1234::5678/128",
+      "1234::5678/128", "1234::5678/128", "1234::5678/128",
+      "1234::5678/128", "1234::5678/128",
+      "1234::5678/128", "1234::5678/128",
+      "1234::5678/128", "1234::5678/128"],
+      "cluster_size": 1, "created": "2018-01-02T03:04:05", "encrypted": true, "engine":
+      "mysql", "engine_config": {"mysql": {"sql_mode": "ANSI,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE,STRICT_ALL_TABLES",
+      "sql_require_primary_key": true}}, "hosts": {"primary": "a332472-akamai-prod-3583917-default.g2a.akamaidb.net"},
+      "id": 332472, "label": "test", "members": {"45.56.118.61": "primary"}, "oldest_restore_time":
+      "2018-01-02T03:04:05", "port": 25360, "region": "us-southeast", "ssl_connection":
+      true, "status": "active", "total_disk_size_gb": 58, "type": "g6-dedicated-2",
+      "updated": "2018-01-02T03:04:05", "updates": {"day_of_week": 2, "duration":
+      4, "frequency": "weekly", "hour_of_day": 19, "pending": []}, "used_disk_size_gb":
+      1, "version": "8.0.35", "platform": "rdbms-default"}], "page": 1, "pages": 1,
+      "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Tue, 22 Jul 2025 17:33:19 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - databases:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"entity_ids":[332472]}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/token
+    method: POST
+  response:
+    body: '{"token": "eyJhbGciOiAiZGlyIiwgImVuYyI6ICJBMTI4Q0JDLUhTMjU2IiwgImtpZCI6IDEsICJleHAiOiAxNzUzMjI3MTk5fQ..0zBOb1RXJv9siUbfPN4IBQ.B2yWls9LYmYTjbOGIzLb8ap1N-q4c7kWGRIGHWdYc7e_jBXskV1Q42eVSBiTqyrqjGBM3449XDDN3qCnLhAJy_i8kqyhndrzBy5DGloN7-1T6RGMz6M5YjY_RcipiCxjnCJGA9It_TcODMUBN5XKjQiDuqW9IjdY6k8dvs7RW0_aXejNjVJdWoFQhgRggWIeAVsmDUdVnVqe6GZNPGGe4S4uk7TVthhTyFIBp5-eWDDHOc72L_UdTAUydBSr8TD4zkgeVMTws136azOwv0TISFmfkeG_a79yJKHGAUC497ZbjYCXIcrLE2l0iH3S8rQ6w_0Zr64oT3J1_ty-XY8b9SgyZrG89Lviud82_lzM2njGzEA_tqf-TBdfFr7qVmrCWoyE5TfH6aTQ0gm7_5uZuii8p295fmOcfER4GRIW7FA.B1ZY2AoxudGYPygUWosnpg"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "578"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Tue, 22 Jul 2025 17:33:20 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - databases:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
