@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/exp/slices"
+
+	"github.com/linode/linodego"
 )
 
 func TestListRegions(t *testing.T) {

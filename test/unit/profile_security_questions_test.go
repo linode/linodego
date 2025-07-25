@@ -4,9 +4,9 @@ import (
 	"context"
 	"testing"
 
+	"github.com/jarcoal/httpmock"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"
 )
 

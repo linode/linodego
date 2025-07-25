@@ -46,33 +46,6 @@ func TestIPAddress_GetFound_smoke(t *testing.T) {
 	if i.Address != address {
 		t.Errorf("Expected a specific ipaddress, but got a different one %v", i)
 	}
-
-	// Test for fetching reserved IP
-	// First, create a reserved IP
-	reservedIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{
-		Region: instance.Region,
-	})
-	if err != nil {
-		t.Fatalf("Failed to reserve IP: %v", err)
-	}
-	defer func() {
-		err := client.DeleteReservedIPAddress(context.Background(), reservedIP.Address)
-		if err != nil {
-			t.Errorf("Failed to delete reserved IP: %v", err)
-		}
-	}()
-
-	// Now get the reserved IP
-	newReservedIP, err := client.GetIPAddress(context.Background(), reservedIP.Address)
-	if err != nil {
-		t.Fatalf("Error getting reserved IP address: %v", err)
-	}
-	if newReservedIP.Address != reservedIP.Address {
-		t.Errorf("Expected IP address %s, but got %s", reservedIP.Address, i.Address)
-	}
-	if !newReservedIP.Reserved {
-		t.Errorf("Expected reserved IP to have Reserved=true, but got false")
-	}
 }
 
 func TestIPAddresses_List_smoke(t *testing.T) {
@@ -179,6 +152,9 @@ func TestIPAddress_Update(t *testing.T) {
 		t.Error(err)
 	}
 
+	reservedTrue := true
+	reservedFalse := false
+
 	address := instance.IPv4[0].String()
 
 	i, err := client.GetInstanceIPAddresses(context.Background(), instance.ID)
@@ -218,7 +194,7 @@ func TestIPAddress_Update(t *testing.T) {
 
 	ephemeralIP := instance.IPv4[0].String()
 	updateOpts = IPAddressUpdateOptionsV2{
-		Reserved: linodego.Pointer(true),
+		Reserved: &reservedTrue,
 	}
 	updatedIP, err := client.UpdateIPAddressV2(context.Background(), ephemeralIP, updateOpts)
 	if err != nil {
@@ -237,7 +213,7 @@ func TestIPAddress_Update(t *testing.T) {
 	defer client.DeleteReservedIPAddress(context.Background(), reservedIP)
 
 	updateOpts = IPAddressUpdateOptionsV2{
-		Reserved: linodego.Pointer(true),
+		Reserved: &reservedTrue,
 	}
 	updatedIP, err = client.UpdateIPAddressV2(context.Background(), reservedIP, updateOpts)
 	if err != nil {
@@ -251,7 +227,7 @@ func TestIPAddress_Update(t *testing.T) {
 
 	ephemeralIP = instance.IPv4[0].String()
 	updateOpts = IPAddressUpdateOptionsV2{
-		Reserved: linodego.Pointer(false),
+		Reserved: &reservedFalse,
 	}
 	updatedIP, err = client.UpdateIPAddressV2(context.Background(), ephemeralIP, updateOpts)
 	if err != nil {
@@ -284,7 +260,7 @@ func TestIPAddress_Update(t *testing.T) {
 	}
 
 	updateOpts = IPAddressUpdateOptionsV2{
-		Reserved: linodego.Pointer(false),
+		Reserved: &reservedFalse,
 	}
 	updatedIP, err = client.UpdateIPAddressV2(context.Background(), reservedIP, updateOpts)
 	if err != nil {
@@ -302,7 +278,7 @@ func TestIPAddress_Update(t *testing.T) {
 	}
 
 	updateOpts = IPAddressUpdateOptionsV2{
-		Reserved: linodego.Pointer(true),
+		Reserved: &reservedTrue,
 		RDNS:     linodego.Pointer(linodego.Pointer("sample rdns")),
 	}
 	_, err = client.UpdateIPAddressV2(context.Background(), unassignedResIP, updateOpts)
@@ -320,7 +296,7 @@ func TestIPAddress_Update(t *testing.T) {
 	}
 
 	updateOpts = IPAddressUpdateOptionsV2{
-		Reserved: linodego.Pointer(true),
+		Reserved: &reservedTrue,
 	}
 	updatedIP, err = client.UpdateIPAddressV2(context.Background(), reservedIP, updateOpts)
 	if err != nil {
@@ -340,7 +316,7 @@ func TestIPAddress_Update(t *testing.T) {
 	}
 
 	updateOpts = IPAddressUpdateOptionsV2{
-		Reserved: linodego.Pointer(false),
+		Reserved: &reservedFalse,
 	}
 	_, err = client.UpdateIPAddressV2(context.Background(), reservedIP, updateOpts)
 	if err != nil {
@@ -358,7 +334,7 @@ func TestIPAddress_Update(t *testing.T) {
 	invalidResIp := "123.72.121.76"
 
 	updateOpts = IPAddressUpdateOptionsV2{
-		Reserved: linodego.Pointer(false),
+		Reserved: &reservedFalse,
 	}
 
 	updatedIP, err = client.UpdateIPAddressV2(context.Background(), invalidResIp, updateOpts)

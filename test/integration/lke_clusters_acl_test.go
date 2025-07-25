@@ -38,6 +38,8 @@ func TestLKECluster_withACL(t *testing.T) {
 	require.Equal(t, "10.0.0.1/32", acl.ACL.Addresses.IPv4[0])
 	require.Equal(t, "1234::5678/128", acl.ACL.Addresses.IPv6[0])
 
+	testRevisionID := "test-revision-id"
+
 	acl, err = client.UpdateLKEClusterControlPlaneACL(
 		context.Background(),
 		cluster.ID,
@@ -48,7 +50,7 @@ func TestLKECluster_withACL(t *testing.T) {
 					IPv4: []string{"10.0.0.2/32"},
 					IPv6: []string{},
 				},
-				RevisionID: "test-revision-id",
+				RevisionID: testRevisionID,
 			},
 		},
 	)
@@ -57,6 +59,7 @@ func TestLKECluster_withACL(t *testing.T) {
 	require.Equal(t, true, acl.ACL.Enabled)
 	require.Equal(t, "10.0.0.2/32", acl.ACL.Addresses.IPv4[0])
 	require.Equal(t, 0, len(acl.ACL.Addresses.IPv6))
+	assert.Equal(t, testRevisionID, acl.ACL.RevisionID)
 
 	err = client.DeleteLKEClusterControlPlaneACL(context.Background(), cluster.ID)
 	require.NoError(t, err)

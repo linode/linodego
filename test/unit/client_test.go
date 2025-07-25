@@ -2,11 +2,13 @@ package unit
 
 import (
 	"context"
-	"github.com/jarcoal/httpmock"
-	"github.com/linode/linodego"
-	"golang.org/x/net/http2"
 	"net/http"
 	"testing"
+
+	"github.com/jarcoal/httpmock"
+	"golang.org/x/net/http2"
+
+	"github.com/linode/linodego"
 )
 
 func TestClient_NGINXRetry(t *testing.T) {

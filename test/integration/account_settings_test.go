@@ -6,8 +6,9 @@ import (
 	"testing"
 
 	"github.com/jarcoal/httpmock"
-	"github.com/linode/linodego"
 	"github.com/stretchr/testify/require"
+
+	"github.com/linode/linodego"
 )
 
 func TestAccountSettings_Get(t *testing.T) {

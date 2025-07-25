@@ -4,10 +4,11 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/linode/linodego"
-	"github.com/linode/linodego/k8s"
 	corev1 "k8s.io/api/core/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+
+	"github.com/linode/linodego"
+	"github.com/linode/linodego/k8s"
 )
 
 // ClusterHasReadyNode is a ClusterConditionFunc which polls for at least one node to have the

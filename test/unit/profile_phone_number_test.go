@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/jarcoal/httpmock"
+
 	"github.com/linode/linodego"
 )
 

@@ -1,0 +1,26 @@
+[
+    {
+      "id": 1,
+      "ipam_address": "192.168.1.2",
+      "label": "eth0",
+      "purpose": "vpc",
+      "primary": true,
+      "active": true,
+      "vpc_id": 100,
+      "subnet_id": 123,
+      "ipv4": {
+        "vpc": "10.0.0.1",
+        "nat_1_1": "192.168.1.1"
+      },
+      "ip_ranges": ["192.168.1.0/24"]
+    },
+    {
+      "id": 2,
+      "ipam_address": "192.168.1.3",
+      "label": "eth1",
+      "purpose": "public",
+      "primary": false,
+      "active": true
+    }
+]
+  
