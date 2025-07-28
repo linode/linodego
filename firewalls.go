@@ -65,6 +65,7 @@ func (f *Firewall) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		Created *parseabletime.ParseableTime `json:"created"`
 		Updated *parseabletime.ParseableTime `json:"updated"`
 	}{
@@ -77,6 +78,7 @@ func (f *Firewall) UnmarshalJSON(b []byte) error {
 
 	f.Created = (*time.Time)(p.Created)
 	f.Updated = (*time.Time)(p.Updated)
+
 	return nil
 }
 

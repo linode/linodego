@@ -5,9 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/stretchr/testify/require"
-
 	"github.com/linode/linodego"
+	"github.com/stretchr/testify/require"
 )
 
 var (
@@ -33,9 +32,13 @@ func TestNodeBalancer_Create_create_smoke(t *testing.T) {
 }
 
 func TestNodeBalancer_Create_Type(t *testing.T) {
-	_, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancer_Create_Type", []nbModifier{func(createOpts *linodego.NodeBalancerCreateOptions) {
-		createOpts.Type = linodego.NBTypeCommon
-	}})
+	_, nodebalancer, teardown, err := setupNodeBalancer(
+		t,
+		"fixtures/TestNodeBalancer_Create_Type",
+		[]nbModifier{func(createOpts *linodego.NodeBalancerCreateOptions) {
+			createOpts.Type = linodego.NBTypeCommon
+		}},
+	)
 	defer teardown()
 
 	if err != nil {
@@ -228,7 +231,11 @@ func setupNodeBalancerWithReservedIP(t *testing.T, fixturesYaml string) (*linode
 	return client, reserveIP, nodebalancer, teardown, err
 }
 
-func setupNodeBalancerWithVPC(t *testing.T, fixturesYaml string, vpcModifier ...vpcModifier) (*linodego.Client, *linodego.NodeBalancer, *linodego.VPC, *linodego.VPCSubnet, func(), error) {
+func setupNodeBalancerWithVPC(
+	t *testing.T,
+	fixturesYaml string,
+	vpcModifier ...vpcModifier,
+) (*linodego.Client, *linodego.NodeBalancer, *linodego.VPC, *linodego.VPCSubnet, func(), error) {
 	t.Helper()
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)

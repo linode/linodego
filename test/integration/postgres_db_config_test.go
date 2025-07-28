@@ -231,7 +231,11 @@ func TestDatabasePostgres_EngineConfig_Get(t *testing.T) {
 	assert.IsType(t, false, config.PG.PGStatMonitorPGSMMaxBuckets.RequiresRestart)
 	assert.IsType(t, "integer", config.PG.PGStatMonitorPGSMMaxBuckets.Type)
 
-	assert.IsType(t, "Controls which statements are counted. Specify top to track top-level statements (those issued directly by clients), all to also track nested statements (such as statements invoked within functions), or none to disable statement statistics collection. The default value is top.", config.PG.PGStatStatementsTrack.Description)
+	assert.IsType(
+		t,
+		"Controls which statements are counted. Specify top to track top-level statements (those issued directly by clients), all to also track nested statements (such as statements invoked within functions), or none to disable statement statistics collection. The default value is top.",
+		config.PG.PGStatStatementsTrack.Description,
+	)
 	assert.IsType(t, []string{"all", "top", "none"}, config.PG.PGStatStatementsTrack.Enum)
 	assert.IsType(t, false, config.PG.PGStatStatementsTrack.RequiresRestart)
 	assert.IsType(t, "string", config.PG.PGStatStatementsTrack.Type)
@@ -250,7 +254,11 @@ func TestDatabasePostgres_EngineConfig_Get(t *testing.T) {
 	assert.IsType(t, false, config.PG.Timezone.RequiresRestart)
 	assert.IsType(t, "string", config.PG.Timezone.Type)
 
-	assert.IsType(t, "Specifies the number of bytes reserved to track the currently executing command for each active session.", config.PG.TrackActivityQuerySize.Description)
+	assert.IsType(
+		t,
+		"Specifies the number of bytes reserved to track the currently executing command for each active session.",
+		config.PG.TrackActivityQuerySize.Description,
+	)
 	assert.IsType(t, int(1024), config.PG.TrackActivityQuerySize.Example)
 	assert.IsType(t, int(10240), config.PG.TrackActivityQuerySize.Maximum)
 	assert.IsType(t, int(1024), config.PG.TrackActivityQuerySize.Minimum)
