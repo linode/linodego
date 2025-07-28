@@ -892,6 +892,18 @@ func copyString(sPtr *string) *string {
 	return &t
 }
 
+// copyValue returns a pointer to a new value copied from the value
+// at the given pointer.
+func copyValue[T any](ptr *T) *T {
+	if ptr == nil {
+		return nil
+	}
+
+	t := *ptr
+
+	return &t
+}
+
 func copyTime(tPtr *time.Time) *time.Time {
 	if tPtr == nil {
 		return nil
