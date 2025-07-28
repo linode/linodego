@@ -4,10 +4,9 @@ import (
 	"context"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
-
 	"github.com/linode/linodego"
 	. "github.com/linode/linodego"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestOAuthClient_GetMissing(t *testing.T) {
@@ -89,7 +88,11 @@ func TestOAuthClients_Reset(t *testing.T) {
 	assert.NotEqual(t, oauthClient.Secret, oauthClientAfterReset.Secret, "Secret should have been reset")
 }
 
-func setupOAuthClient(t *testing.T, createOpts linodego.OAuthClientCreateOptions, fixturesYaml string) (*linodego.Client, *linodego.OAuthClient, func(), error) {
+func setupOAuthClient(
+	t *testing.T,
+	createOpts linodego.OAuthClientCreateOptions,
+	fixturesYaml string,
+) (*linodego.Client, *linodego.OAuthClient, func(), error) {
 	t.Helper()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	oauthClient, err := client.CreateOAuthClient(context.Background(), createOpts)

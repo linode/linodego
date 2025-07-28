@@ -23,7 +23,11 @@ func TestProfileDevices_Get(t *testing.T) {
 
 	assert.Equal(t, 123, device.ID)
 	assert.Equal(t, "203.0.113.1", device.LastRemoteAddr)
-	assert.Equal(t, "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36 Vivaldi/2.1.1337.36", device.UserAgent)
+	assert.Equal(
+		t,
+		"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36 Vivaldi/2.1.1337.36",
+		device.UserAgent,
+	)
 }
 
 func TestProfileDevices_List(t *testing.T) {
@@ -44,7 +48,11 @@ func TestProfileDevices_List(t *testing.T) {
 
 	assert.Equal(t, 123, device.ID)
 	assert.Equal(t, "203.0.113.1", device.LastRemoteAddr)
-	assert.Equal(t, "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36 Vivaldi/2.1.1337.36", device.UserAgent)
+	assert.Equal(
+		t,
+		"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.77 Safari/537.36 Vivaldi/2.1.1337.36",
+		device.UserAgent,
+	)
 }
 
 func TestProfileDevices_Delete(t *testing.T) {

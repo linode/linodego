@@ -4,9 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
-
 	"github.com/linode/linodego"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestObjectStorageQuotas_Get(t *testing.T) {

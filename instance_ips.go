@@ -51,8 +51,10 @@ type VPCIP struct {
 	NAT1To1       *string            `json:"nat_1_1"`
 	VPCID         int                `json:"vpc_id"`
 	SubnetID      int                `json:"subnet_id"`
-	ConfigID      int                `json:"config_id"`
 	InterfaceID   int                `json:"interface_id"`
+
+	// The type of this field will be made a pointer in the next major release of linodego.
+	ConfigID int `json:"config_id"`
 }
 
 // VPCIPIPv6Address represents a single IPv6 address under a VPCIP.
