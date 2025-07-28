@@ -39,13 +39,21 @@ func TestAccount_Get(t *testing.T) {
 	}
 	assert.Equal(t, "E1AF5EEC-526F-487D-B317EBEB34C87D71", accountInfo.EUUID)
 	assert.Equal(t, "akamai", accountInfo.BillingSource)
-	assert.Equal(t, []string{"Linodes", "NodeBalancers", "Block Storage", "Object Storage", "Placement Groups", "Block Storage Encryption"}, accountInfo.Capabilities)
+	assert.Equal(
+		t,
+		[]string{"Linodes", "NodeBalancers", "Block Storage", "Object Storage", "Placement Groups", "Block Storage Encryption"},
+		accountInfo.Capabilities,
+	)
 	assert.Equal(t, "Philadelphia", accountInfo.City)
 	assert.Equal(t, "PA", accountInfo.State)
 
 	assert.Equal(t, "10.00", accountInfo.ActivePromotions[0].CreditMonthlyCap)
 	assert.Equal(t, "50.00", accountInfo.ActivePromotions[0].CreditRemaining)
-	assert.Equal(t, "Receive up to $10 off your services every month for 6 months! Unused credits will expire once this promotion period ends.", accountInfo.ActivePromotions[0].Description)
+	assert.Equal(
+		t,
+		"Receive up to $10 off your services every month for 6 months! Unused credits will expire once this promotion period ends.",
+		accountInfo.ActivePromotions[0].Description,
+	)
 	assert.Equal(t, "https://linode.com/10_a_month_promotion.svg", accountInfo.ActivePromotions[0].ImageURL)
 	assert.Equal(t, "all", accountInfo.ActivePromotions[0].ServiceType)
 	assert.Equal(t, "$10 off your Linode a month!", accountInfo.ActivePromotions[0].Summary)
@@ -88,7 +96,11 @@ func TestAccount_Update(t *testing.T) {
 	}
 	assert.Equal(t, "E1AF5EEC-526F-487D-B317EBEB34C87D71", accountInfo.EUUID)
 	assert.Equal(t, "akamai", accountInfo.BillingSource)
-	assert.Equal(t, []string{"Linodes", "NodeBalancers", "Block Storage", "Object Storage", "Placement Groups", "Block Storage Encryption"}, accountInfo.Capabilities)
+	assert.Equal(
+		t,
+		[]string{"Linodes", "NodeBalancers", "Block Storage", "Object Storage", "Placement Groups", "Block Storage Encryption"},
+		accountInfo.Capabilities,
+	)
 
 	assert.Equal(t, "Cambridge", accountInfo.City)
 	assert.Equal(t, "MA", accountInfo.State)

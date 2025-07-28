@@ -122,7 +122,13 @@ func (client Client) WaitForVolumeStatus(ctx context.Context, volumeID int, stat
 
 // WaitForSnapshotStatus waits for the Snapshot to reach the desired state
 // before returning. It will timeout with an error after timeoutSeconds.
-func (client Client) WaitForSnapshotStatus(ctx context.Context, instanceID int, snapshotID int, status InstanceSnapshotStatus, timeoutSeconds int) (*InstanceSnapshot, error) {
+func (client Client) WaitForSnapshotStatus(
+	ctx context.Context,
+	instanceID int,
+	snapshotID int,
+	status InstanceSnapshotStatus,
+	timeoutSeconds int,
+) (*InstanceSnapshot, error) {
 	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
 	defer cancel()
 
