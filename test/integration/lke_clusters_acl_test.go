@@ -4,10 +4,9 @@ import (
 	"context"
 	"testing"
 
+	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-
-	"github.com/linode/linodego"
 )
 
 func TestLKECluster_withACL(t *testing.T) {
