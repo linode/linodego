@@ -363,8 +363,11 @@ func TestDatabaseMySQLConfig_Get(t *testing.T) {
 	assert.False(t, config.MySQL.InnoDBChangeBufferMaxSize.RequiresRestart)
 	assert.Equal(t, "integer", config.MySQL.InnoDBChangeBufferMaxSize.Type)
 
-	assert.Equal(t, "Specifies whether flushing a page from the InnoDB buffer pool also flushes other dirty pages in the same extent (default is 1): 0 - dirty pages in the same extent are not flushed, 1 - flush contiguous dirty pages in the same extent, 2 - flush dirty pages in the same extent",
-		config.MySQL.InnoDBFlushNeighbors.Description)
+	assert.Equal(
+		t,
+		"Specifies whether flushing a page from the InnoDB buffer pool also flushes other dirty pages in the same extent (default is 1): 0 - dirty pages in the same extent are not flushed, 1 - flush contiguous dirty pages in the same extent, 2 - flush dirty pages in the same extent",
+		config.MySQL.InnoDBFlushNeighbors.Description,
+	)
 	assert.Equal(t, 0, config.MySQL.InnoDBFlushNeighbors.Example)
 	assert.Equal(t, 2, config.MySQL.InnoDBFlushNeighbors.Maximum)
 	assert.Equal(t, 0, config.MySQL.InnoDBFlushNeighbors.Minimum)
@@ -411,16 +414,22 @@ func TestDatabaseMySQLConfig_Get(t *testing.T) {
 	assert.False(t, config.MySQL.InnoDBOnlineAlterLogMaxSize.RequiresRestart)
 	assert.Equal(t, "integer", config.MySQL.InnoDBOnlineAlterLogMaxSize.Type)
 
-	assert.Equal(t, "The number of I/O threads for read operations in InnoDB. Default is 4. Changing this parameter will lead to a restart of the MySQL service.",
-		config.MySQL.InnoDBReadIOThreads.Description)
+	assert.Equal(
+		t,
+		"The number of I/O threads for read operations in InnoDB. Default is 4. Changing this parameter will lead to a restart of the MySQL service.",
+		config.MySQL.InnoDBReadIOThreads.Description,
+	)
 	assert.Equal(t, 10, config.MySQL.InnoDBReadIOThreads.Example)
 	assert.Equal(t, 64, config.MySQL.InnoDBReadIOThreads.Maximum)
 	assert.Equal(t, 1, config.MySQL.InnoDBReadIOThreads.Minimum)
 	assert.True(t, config.MySQL.InnoDBReadIOThreads.RequiresRestart)
 	assert.Equal(t, "integer", config.MySQL.InnoDBReadIOThreads.Type)
 
-	assert.Equal(t, "When enabled a transaction timeout causes InnoDB to abort and roll back the entire transaction. Changing this parameter will lead to a restart of the MySQL service.",
-		config.MySQL.InnoDBRollbackOnTimeout.Description)
+	assert.Equal(
+		t,
+		"When enabled a transaction timeout causes InnoDB to abort and roll back the entire transaction. Changing this parameter will lead to a restart of the MySQL service.",
+		config.MySQL.InnoDBRollbackOnTimeout.Description,
+	)
 	assert.Equal(t, true, config.MySQL.InnoDBRollbackOnTimeout.Example)
 	assert.True(t, config.MySQL.InnoDBRollbackOnTimeout.RequiresRestart)
 	assert.Equal(t, "boolean", config.MySQL.InnoDBRollbackOnTimeout.Type)
@@ -433,8 +442,11 @@ func TestDatabaseMySQLConfig_Get(t *testing.T) {
 	assert.False(t, config.MySQL.InnoDBThreadConcurrency.RequiresRestart)
 	assert.Equal(t, "integer", config.MySQL.InnoDBThreadConcurrency.Type)
 
-	assert.Equal(t, "The number of I/O threads for write operations in InnoDB. Default is 4. Changing this parameter will lead to a restart of the MySQL service.",
-		config.MySQL.InnoDBWriteIOThreads.Description)
+	assert.Equal(
+		t,
+		"The number of I/O threads for write operations in InnoDB. Default is 4. Changing this parameter will lead to a restart of the MySQL service.",
+		config.MySQL.InnoDBWriteIOThreads.Description,
+	)
 	assert.Equal(t, 10, config.MySQL.InnoDBWriteIOThreads.Example)
 	assert.Equal(t, 64, config.MySQL.InnoDBWriteIOThreads.Maximum)
 	assert.Equal(t, 1, config.MySQL.InnoDBWriteIOThreads.Minimum)
@@ -472,8 +484,11 @@ func TestDatabaseMySQLConfig_Get(t *testing.T) {
 	assert.False(t, config.MySQL.MaxHeapTableSize.RequiresRestart)
 	assert.Equal(t, "integer", config.MySQL.MaxHeapTableSize.Type)
 
-	assert.Equal(t, "Start sizes of connection buffer and result buffer. Default is 16384 (16K). Changing this parameter will lead to a restart of the MySQL service.",
-		config.MySQL.NetBufferLength.Description)
+	assert.Equal(
+		t,
+		"Start sizes of connection buffer and result buffer. Default is 16384 (16K). Changing this parameter will lead to a restart of the MySQL service.",
+		config.MySQL.NetBufferLength.Description,
+	)
 	assert.Equal(t, 16384, config.MySQL.NetBufferLength.Example)
 	assert.Equal(t, 1048576, config.MySQL.NetBufferLength.Maximum)
 	assert.Equal(t, 1024, config.MySQL.NetBufferLength.Minimum)
@@ -504,16 +519,22 @@ func TestDatabaseMySQLConfig_Get(t *testing.T) {
 	assert.False(t, config.MySQL.SortBufferSize.RequiresRestart)
 	assert.Equal(t, "integer", config.MySQL.SortBufferSize.Type)
 
-	assert.Equal(t, "Global SQL mode. Set to empty to use MySQL server defaults. When creating a new service and not setting this field Akamai default SQL mode (strict, SQL standard compliant) will be assigned.",
-		config.MySQL.SQLMode.Description)
+	assert.Equal(
+		t,
+		"Global SQL mode. Set to empty to use MySQL server defaults. When creating a new service and not setting this field Akamai default SQL mode (strict, SQL standard compliant) will be assigned.",
+		config.MySQL.SQLMode.Description,
+	)
 	assert.Equal(t, "ANSI,TRADITIONAL", config.MySQL.SQLMode.Example)
 	assert.Equal(t, 1024, config.MySQL.SQLMode.MaxLength)
 	assert.Equal(t, "^[A-Z_]*(,[A-Z_]+)*$", config.MySQL.SQLMode.Pattern)
 	assert.False(t, config.MySQL.SQLMode.RequiresRestart)
 	assert.Equal(t, "string", config.MySQL.SQLMode.Type)
 
-	assert.Equal(t, "Require primary key to be defined for new tables or old tables modified with ALTER TABLE and fail if missing. It is recommended to always have primary keys because various functionality may break if any large table is missing them.",
-		config.MySQL.SQLRequirePrimaryKey.Description)
+	assert.Equal(
+		t,
+		"Require primary key to be defined for new tables or old tables modified with ALTER TABLE and fail if missing. It is recommended to always have primary keys because various functionality may break if any large table is missing them.",
+		config.MySQL.SQLRequirePrimaryKey.Description,
+	)
 	assert.Equal(t, true, config.MySQL.SQLRequirePrimaryKey.Example)
 	assert.False(t, config.MySQL.SQLRequirePrimaryKey.RequiresRestart)
 	assert.Equal(t, "boolean", config.MySQL.SQLRequirePrimaryKey.Type)
@@ -534,8 +555,11 @@ func TestDatabaseMySQLConfig_Get(t *testing.T) {
 	assert.False(t, config.MySQL.WaitTimeout.RequiresRestart)
 	assert.Equal(t, "integer", config.MySQL.WaitTimeout.Type)
 
-	assert.Equal(t, "The minimum amount of time in seconds to keep binlog entries before deletion. This may be extended for services that require binlog entries for longer than the default for example if using the MySQL Debezium Kafka connector.",
-		config.BinlogRetentionPeriod.Description)
+	assert.Equal(
+		t,
+		"The minimum amount of time in seconds to keep binlog entries before deletion. This may be extended for services that require binlog entries for longer than the default for example if using the MySQL Debezium Kafka connector.",
+		config.BinlogRetentionPeriod.Description,
+	)
 	assert.Equal(t, 600, config.BinlogRetentionPeriod.Example)
 	assert.Equal(t, 86400, config.BinlogRetentionPeriod.Maximum)
 	assert.Equal(t, 600, config.BinlogRetentionPeriod.Minimum)

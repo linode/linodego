@@ -27,7 +27,11 @@ func TestInstanceFirewalls_List(t *testing.T) {
 	}
 }
 
-func setupInstanceFirewall(t *testing.T, firewallModifiers []firewallModifier, fixturesYaml string) (*linodego.Client, *linodego.Instance, *linodego.Firewall, error) {
+func setupInstanceFirewall(
+	t *testing.T,
+	firewallModifiers []firewallModifier,
+	fixturesYaml string,
+) (*linodego.Client, *linodego.Instance, *linodego.Firewall, error) {
 	t.Helper()
 	client, firewall, firewallTeardown, err := setupFirewall(t, firewallModifiers, fixturesYaml)
 
