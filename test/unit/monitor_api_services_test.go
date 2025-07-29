@@ -24,11 +24,11 @@ func TestFetchEntityMetrics(t *testing.T) {
 		EntityIDs: []any{13217, 13316},
 		Metrics: []linodego.EntityMetric{
 			{
-				Name:              "avg_read_iops",
+				Name:              "read_iops",
 				AggregateFunction: linodego.AggregateFunctionAvg,
 			},
 			{
-				Name:              "avg_cpu_usage",
+				Name:              "cpu_usage",
 				AggregateFunction: linodego.AggregateFunctionAvg,
 			},
 		},
