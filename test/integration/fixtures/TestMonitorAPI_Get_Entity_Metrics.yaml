@@ -1,0 +1,307 @@
+---
+version: 1
+interactions:
+- request:
+    body: '{"entity_ids":[332472],"metrics":[{"name":"read_iops","aggregate_function":"avg"}],"relative_time_duration":{"unit":"hr","value":1}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://monitor-api.linode.com/v2beta/monitor/services/dbaas/metrics
+    method: POST
+  response:
+    body: |
+      {
+        "data": {
+          "result": [
+            {
+              "metric": {
+                "entity_id": "332472",
+                "metric_name": "avg_read_iops",
+                "node_id": "primary-1"
+              },
+              "values": [
+                [
+                  1753201980,
+                  "0"
+                ],
+                [
+                  1753202040,
+                  "0"
+                ],
+                [
+                  1753202100,
+                  "0"
+                ],
+                [
+                  1753202160,
+                  "0"
+                ],
+                [
+                  1753202220,
+                  "0"
+                ],
+                [
+                  1753202280,
+                  "0"
+                ],
+                [
+                  1753202340,
+                  "0"
+                ],
+                [
+                  1753202400,
+                  "0"
+                ],
+                [
+                  1753202460,
+                  "0"
+                ],
+                [
+                  1753202520,
+                  "0"
+                ],
+                [
+                  1753202580,
+                  "0"
+                ],
+                [
+                  1753202640,
+                  "0"
+                ],
+                [
+                  1753202700,
+                  "0"
+                ],
+                [
+                  1753202760,
+                  "0"
+                ],
+                [
+                  1753202820,
+                  "0"
+                ],
+                [
+                  1753202880,
+                  "0"
+                ],
+                [
+                  1753202940,
+                  "0"
+                ],
+                [
+                  1753203000,
+                  "0"
+                ],
+                [
+                  1753203060,
+                  "0"
+                ],
+                [
+                  1753203120,
+                  "0"
+                ],
+                [
+                  1753203180,
+                  "0"
+                ],
+                [
+                  1753203240,
+                  "0"
+                ],
+                [
+                  1753203300,
+                  "0"
+                ],
+                [
+                  1753203360,
+                  "0"
+                ],
+                [
+                  1753203420,
+                  "0"
+                ],
+                [
+                  1753203480,
+                  "0"
+                ],
+                [
+                  1753203540,
+                  "0"
+                ],
+                [
+                  1753203600,
+                  "0"
+                ],
+                [
+                  1753203660,
+                  "0"
+                ],
+                [
+                  1753203720,
+                  "0"
+                ],
+                [
+                  1753203780,
+                  "0"
+                ],
+                [
+                  1753203840,
+                  "0"
+                ],
+                [
+                  1753203900,
+                  "0"
+                ],
+                [
+                  1753203960,
+                  "0"
+                ],
+                [
+                  1753204020,
+                  "0"
+                ],
+                [
+                  1753204080,
+                  "0"
+                ],
+                [
+                  1753204140,
+                  "0"
+                ],
+                [
+                  1753204200,
+                  "0"
+                ],
+                [
+                  1753204260,
+                  "0"
+                ],
+                [
+                  1753204320,
+                  "0"
+                ],
+                [
+                  1753204380,
+                  "0"
+                ],
+                [
+                  1753204440,
+                  "0"
+                ],
+                [
+                  1753204500,
+                  "0"
+                ],
+                [
+                  1753204560,
+                  "0"
+                ],
+                [
+                  1753204620,
+                  "0"
+                ],
+                [
+                  1753204680,
+                  "0"
+                ],
+                [
+                  1753204740,
+                  "0"
+                ],
+                [
+                  1753204800,
+                  "0"
+                ],
+                [
+                  1753204860,
+                  "0"
+                ],
+                [
+                  1753204920,
+                  "0"
+                ],
+                [
+                  1753204980,
+                  "0"
+                ],
+                [
+                  1753205040,
+                  "0"
+                ],
+                [
+                  1753205100,
+                  "0"
+                ],
+                [
+                  1753205160,
+                  "0"
+                ],
+                [
+                  1753205220,
+                  "0"
+                ],
+                [
+                  1753205280,
+                  "0"
+                ],
+                [
+                  1753205340,
+                  "0"
+                ],
+                [
+                  1753205400,
+                  "0"
+                ],
+                [
+                  1753205460,
+                  "0"
+                ],
+                [
+                  1753205520,
+                  "0"
+                ],
+                [
+                  1753205580,
+                  "0"
+                ]
+              ]
+            }
+          ],
+          "resultType": "matrix"
+        },
+        "isPartial": false,
+        "stats": {
+          "executionTimeMsec": 3,
+          "seriesFetched": "2"
+        },
+        "status": "success"
+      }
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Alt-Svc:
+      - h3=":443"; ma=93600
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Content-Type:
+      - application/json
+      Expires:
+      - Tue, 22 Jul 2025 17:33:20 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000; includeSubDomains
+      Vary:
+      - Accept-Encoding
+    status: 200 OK
+    code: 200
+    duration: ""
