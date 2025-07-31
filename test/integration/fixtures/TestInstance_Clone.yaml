@@ -11,7 +11,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/regions?page=1
+    url: https://api.linode.com/v4beta/regions?page=1
     method: GET
   response:
     body: '{"data": [{"id": "pl-labkrk-2", "label": "Krakow, PL", "country": "pl",
@@ -81,7 +81,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/linode/instances
+    url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
     body: '{"id": 99592698, "label": "go-test-ins-x379rroe8m56", "group": "", "status":
@@ -153,7 +153,7 @@ interactions:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
       - '{"+order":"desc","+order_by":"created","action":"linode_create","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":99592698,"entity.type":"linode"}'
-    url: https://api.devcloud.linode.com/v4beta/account/events?page=1
+    url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
     body: '{"data": [{"id": 5711986, "created": "2018-01-02T03:04:05", "seen": false,
@@ -221,7 +221,7 @@ interactions:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
       - '{"+order":"desc","+order_by":"created","action":"linode_create","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":99592698,"entity.type":"linode","id":{"+gte":5711986}}'
-    url: https://api.devcloud.linode.com/v4beta/account/events?page=1
+    url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
     body: '{"data": [{"id": 5711986, "created": "2018-01-02T03:04:05", "seen": false,
@@ -289,7 +289,7 @@ interactions:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
       - '{"+order":"desc","+order_by":"created","action":"linode_create","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":99592698,"entity.type":"linode","id":{"+gte":5711986}}'
-    url: https://api.devcloud.linode.com/v4beta/account/events?page=1
+    url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
     body: '{"data": [{"id": 5711986, "created": "2018-01-02T03:04:05", "seen": false,
@@ -355,7 +355,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/linode/instances/99592698
+    url: https://api.linode.com/v4beta/linode/instances/99592698
     method: GET
   response:
     body: '{"id": 99592698, "label": "go-test-ins-x379rroe8m56", "group": "", "status":
@@ -427,7 +427,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/linode/instances/99592698/clone
+    url: https://api.linode.com/v4beta/linode/instances/99592698/clone
     method: POST
   response:
     body: '{"id": 99592699, "label": "linode99592699", "group": "", "status": "offline",
@@ -499,7 +499,7 @@ interactions:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
       - '{"+order":"desc","+order_by":"created","action":"linode_clone","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":99592698,"entity.type":"linode"}'
-    url: https://api.devcloud.linode.com/v4beta/account/events?page=1
+    url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
     body: '{"data": [{"id": 5711994, "created": "2018-01-02T03:04:05", "seen": false,
@@ -567,7 +567,7 @@ interactions:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
       - '{"+order":"desc","+order_by":"created","action":"linode_clone","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":99592698,"entity.type":"linode","id":{"+gte":5711994}}'
-    url: https://api.devcloud.linode.com/v4beta/account/events?page=1
+    url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
     body: '{"data": [{"id": 5711994, "created": "2018-01-02T03:04:05", "seen": false,
@@ -635,7 +635,7 @@ interactions:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
       - '{"+order":"desc","+order_by":"created","action":"linode_clone","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":99592698,"entity.type":"linode","id":{"+gte":5711994}}'
-    url: https://api.devcloud.linode.com/v4beta/account/events?page=1
+    url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
     body: '{"data": [{"id": 5711994, "created": "2018-01-02T03:04:05", "seen": false,
@@ -703,7 +703,7 @@ interactions:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
       - '{"+order":"desc","+order_by":"created","action":"linode_clone","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":99592698,"entity.type":"linode","id":{"+gte":5711994}}'
-    url: https://api.devcloud.linode.com/v4beta/account/events?page=1
+    url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
     body: '{"data": [{"id": 5711994, "created": "2018-01-02T03:04:05", "seen": false,
@@ -771,7 +771,7 @@ interactions:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
       - '{"+order":"desc","+order_by":"created","action":"linode_clone","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":99592698,"entity.type":"linode","id":{"+gte":5711994}}'
-    url: https://api.devcloud.linode.com/v4beta/account/events?page=1
+    url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
     body: '{"data": [{"id": 5711994, "created": "2018-01-02T03:04:05", "seen": false,
@@ -839,7 +839,7 @@ interactions:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
       - '{"+order":"desc","+order_by":"created","action":"linode_clone","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":99592698,"entity.type":"linode","id":{"+gte":5711994}}'
-    url: https://api.devcloud.linode.com/v4beta/account/events?page=1
+    url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
     body: '{"data": [{"id": 5711994, "created": "2018-01-02T03:04:05", "seen": false,
@@ -907,7 +907,7 @@ interactions:
       - linodego/dev https://github.com/linode/linodego
       X-Filter:
       - '{"+order":"desc","+order_by":"created","action":"linode_clone","created":{"+gte":"2018-01-02T03:04:05"},"entity.id":99592698,"entity.type":"linode","id":{"+gte":5711994}}'
-    url: https://api.devcloud.linode.com/v4beta/account/events?page=1
+    url: https://api.linode.com/v4beta/account/events?page=1
     method: GET
   response:
     body: '{"data": [{"id": 5711994, "created": "2018-01-02T03:04:05", "seen": false,
@@ -973,7 +973,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/linode/instances/99592699
+    url: https://api.linode.com/v4beta/linode/instances/99592699
     method: GET
   response:
     body: '{"id": 99592699, "label": "linode99592699", "group": "", "status": "offline",
@@ -1045,7 +1045,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/linode/instances/99592699/ips
+    url: https://api.linode.com/v4beta/linode/instances/99592699/ips
     method: GET
   response:
     body: '{"ipv4": {"public": [{"address": "172.24.233.19", "gateway": "172.24.233.1",
@@ -1121,7 +1121,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/linode/instances/99592699
+    url: https://api.linode.com/v4beta/linode/instances/99592699
     method: DELETE
   response:
     body: '{}'
@@ -1179,7 +1179,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/linode/instances/99592698
+    url: https://api.linode.com/v4beta/linode/instances/99592698
     method: DELETE
   response:
     body: '{}'

@@ -11,7 +11,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/regions?page=1
+    url: https://api.linode.com/v4beta/regions?page=1
     method: GET
   response:
     body: '{"data": [{"id": "pl-labkrk-2", "label": "Krakow, PL", "country": "pl",
@@ -81,7 +81,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/linode/instances
+    url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
     body: '{"id": 99592160, "label": "go-test-ins-wo-disk-1633db8ua5mw", "group":
@@ -151,7 +151,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/linode/instances/99592160/configs
+    url: https://api.linode.com/v4beta/linode/instances/99592160/configs
     method: POST
   response:
     body: '{"id": 558393, "label": "go-test-conf-3m99g070qtuk", "helpers": {"updatedb_disabled":
@@ -215,7 +215,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/account/settings
+    url: https://api.linode.com/v4beta/account/settings
     method: GET
   response:
     body: '{"managed": true, "network_helper": true, "longview_subscription": "longview-100",
@@ -277,7 +277,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/linode/instances/99592160
+    url: https://api.linode.com/v4beta/linode/instances/99592160
     method: PUT
   response:
     body: '{"id": 99592160, "label": "go-test-ins-wo-disk-1633db8ua5mw", "group":
@@ -347,7 +347,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/linode/instances/99592160
+    url: https://api.linode.com/v4beta/linode/instances/99592160
     method: GET
   response:
     body: '{"id": 99592160, "label": "go-test-ins-wo-disk-1633db8ua5mw", "group":
@@ -419,7 +419,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/linode/instances/99592160
+    url: https://api.linode.com/v4beta/linode/instances/99592160
     method: DELETE
   response:
     body: '{}'

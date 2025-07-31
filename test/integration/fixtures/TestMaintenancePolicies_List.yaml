@@ -11,7 +11,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/maintenance/policies
+    url: https://api.linode.com/v4beta/maintenance/policies
     method: GET
   response:
     body: '{"data": [{"slug": "linode/migrate", "label": "Migrate", "description":
@@ -62,7 +62,7 @@ interactions:
       X-Oauth-Scopes:
       - unknown
       X-Ratelimit-Limit:
-      - "240"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
