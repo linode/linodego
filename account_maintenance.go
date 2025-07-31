@@ -39,6 +39,7 @@ func (accountMaintenance *AccountMaintenance) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		NotBefore    *parseabletime.ParseableTime `json:"not_before"`
 		StartTime    *parseabletime.ParseableTime `json:"start_time"`
 		CompleteTime *parseabletime.ParseableTime `json:"complete_time"`

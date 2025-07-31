@@ -1,51 +1,47 @@
+---
 version: 1
 interactions:
 - request:
-    body: ""
+    body: '{"backups_enabled":false,"longview_subscription":"longview-10","network_helper":false,"maintenance_policy":"linode/migrate"}'
     form: {}
     headers:
       Accept:
       - application/json
       Content-Type:
       - application/json
-    url: https://api.linode.com/v4beta/account/settings
-    method: GET
-  response:
-    body: '{
-      "backups_enabled": true,
-      "managed": true,
-      "network_helper": true,
-      "longview_subscription": "longview-3",
-      "object_storage": "active"
-    }'
-    headers:
-      Content-Type:
-      - application/json
-    status: 200
-    code: 200
-    duration: ""
-
-- request:
-    body: '{"backups_enabled":false,"longview_subscription":"longview-10","network_helper":false}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
     url: https://api.linode.com/v4beta/account/settings
     method: PUT
   response:
-    body: '{
-      "backups_enabled": false,
-      "managed": true,
-      "network_helper": false,
-      "longview_subscription": "longview-10",
-      "object_storage": "active"
-    }'
+    body: '{"errors": [{"reason": "longview_subscription editing at this location
+      is no longer available. Please use the /longview/plan endpoint instead.", "field":
+      "longview_subscription"}]}'
     headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "180"
       Content-Type:
       - application/json
-    status: 200
-    code: 200
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Accepted-Oauth-Scopes:
+      - account:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+    status: 400 BAD REQUEST
+    code: 400
     duration: ""

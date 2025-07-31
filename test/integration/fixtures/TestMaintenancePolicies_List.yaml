@@ -11,10 +11,17 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/maintenance?page=1
+    url: https://api.linode.com/v4beta/maintenance/policies
     method: GET
   response:
-    body: '{"data": [], "page": 1, "pages": 1, "results": 0}'
+    body: '{"data": [{"slug": "linode/migrate", "label": "Migrate", "description":
+      "Migrates the Linode to a new host while it remains fully operational. Recommended
+      for maximizing availability.", "type": "migrate", "notification_period_sec":
+      300, "is_default": true}, {"slug": "linode/power_off_on", "label": "Power-off/on",
+      "description": "Powers off the Linode at the start of the maintenance event
+      and reboots it once the maintenance finishes. Recommended for maximizing performance.",
+      "type": "power_off_on", "notification_period_sec": 1800, "is_default": false}],
+      "page": 1, "pages": 1, "results": 2}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -26,23 +33,21 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
       Cache-Control:
-      - max-age=0, no-cache, no-store
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
       Connection:
       - keep-alive
       Content-Length:
-      - "49"
+      - "595"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Wed, 30 Oct 2024 14:06:55 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx/1.18.0
       Strict-Transport-Security:
+      - max-age=31536000
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
@@ -57,7 +62,7 @@ interactions:
       X-Oauth-Scopes:
       - unknown
       X-Ratelimit-Limit:
-      - "800"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
