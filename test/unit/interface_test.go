@@ -82,7 +82,7 @@ func TestInterface_Create(t *testing.T) {
 	base.MockPost("linode/instances/123/interfaces", fixtureData)
 
 	opts := linodego.LinodeInterfaceCreateOptions{
-		FirewallID: linodego.Pointer(123),
+		FirewallID: linodego.DoublePointer(123),
 		Public:     nil,
 	}
 
