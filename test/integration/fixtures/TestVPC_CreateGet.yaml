@@ -19,7 +19,8 @@ interactions:
       "NodeBalancers", "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes",
       "Cloud Firewall", "Vlans", "VPCs", "Block Storage Migrations", "Managed Databases",
       "Metadata", "Premium Plans", "Placement Group", "StackScripts", "NETINT Quadra
-      T1U", "Maintenance Policy", "Linode Interfaces"], "status": "ok", "resolvers":
+      T1U", "Maintenance Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed
+      Databases"], "metrics": ["Managed Databases"]}, "status": "ok", "resolvers":
       {"ipv4": "172.24.224.240,172.24.224.229,172.24.224.236,172.24.224.238,172.24.224.235,172.24.224.241,172.24.224.230,172.24.224.239,172.24.224.233,172.24.224.234",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
@@ -44,7 +45,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "1024"
+      - "1105"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -74,7 +75,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-vpc-1753810228640795000","region":"pl-labkrk-2"}'
+    body: '{"label":"go-test-vpc-1754414010654257000","region":"pl-labkrk-2"}'
     form: {}
     headers:
       Accept:
@@ -86,7 +87,7 @@ interactions:
     url: https://api.linode.com/v4beta/vpcs
     method: POST
   response:
-    body: '{"id": 33788, "label": "go-test-vpc-1753810228640795000", "description":
+    body: '{"id": 40599, "label": "go-test-vpc-1754414010654257000", "description":
       "", "region": "pl-labkrk-2", "ipv6": null, "subnets": [], "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05"}'
     headers:
@@ -145,10 +146,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/vpcs/33788
+    url: https://api.linode.com/v4beta/vpcs/40599
     method: GET
   response:
-    body: '{"id": 33788, "label": "go-test-vpc-1753810228640795000", "description":
+    body: '{"id": 40599, "label": "go-test-vpc-1754414010654257000", "description":
       "", "region": "pl-labkrk-2", "ipv6": null, "subnets": [], "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05"}'
     headers:
@@ -209,7 +210,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/vpcs/33788
+    url: https://api.linode.com/v4beta/vpcs/40599
     method: DELETE
   response:
     body: '{}'

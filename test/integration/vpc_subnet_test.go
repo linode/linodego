@@ -12,7 +12,6 @@ import (
 
 const (
 	TestSubnetIPv4 = "192.168.0.0/25"
-	TestSubnetIPv6 = "2600:3c11:e4df::/52"
 )
 
 func formatVPCSubnetError(err error, action string, vpcID, vpcSubnetID *int) error {
@@ -130,7 +129,7 @@ func createVPCWithDualStackSubnet(t *testing.T, client *linodego.Client, vpcModi
 				IPv4:  TestSubnetIPv4,
 				IPv6: []VPCSubnetCreateOptionsIPv6{
 					{
-						Range: linodego.Pointer(TestSubnetIPv6),
+						Range: linodego.Pointer("/62"),
 					},
 				},
 			},

@@ -19,7 +19,8 @@ interactions:
       "NodeBalancers", "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes",
       "Cloud Firewall", "Vlans", "VPCs", "Block Storage Migrations", "Managed Databases",
       "Metadata", "Premium Plans", "Placement Group", "StackScripts", "NETINT Quadra
-      T1U", "Maintenance Policy", "Linode Interfaces"], "status": "ok", "resolvers":
+      T1U", "Maintenance Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed
+      Databases"], "metrics": ["Managed Databases"]}, "status": "ok", "resolvers":
       {"ipv4": "172.24.224.240,172.24.224.229,172.24.224.236,172.24.224.238,172.24.224.235,172.24.224.241,172.24.224.230,172.24.224.239,172.24.224.233,172.24.224.234",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
@@ -44,7 +45,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "1024"
+      - "1105"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -74,7 +75,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"pl-labkrk-2","type":"g6-nanode-1","label":"go-test-ins-wo-disk-p0wal0sj2479","firewall_id":215370,"booted":false}'
+    body: '{"region":"pl-labkrk-2","type":"g6-nanode-1","label":"go-test-ins-wo-disk-jq4077e4t5fv","firewall_id":236592,"booted":false}'
     form: {}
     headers:
       Accept:
@@ -86,15 +87,15 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 99664516, "label": "go-test-ins-wo-disk-p0wal0sj2479", "group":
+    body: '{"id": 99744872, "label": "go-test-ins-wo-disk-jq4077e4t5fv", "group":
       "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.24.232.46"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["172.24.241.193"], "ipv6": "1234::5678/128",
       "image": null, "region": "pl-labkrk-2", "site_type": "core", "specs": {"disk":
       25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
       0}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota":
       80, "io": 10000}, "backups": {"enabled": false, "available": false, "schedule":
       {"day": null, "window": null}, "last_successful": null}, "hypervisor": "kvm",
-      "watchdog_enabled": true, "tags": [], "host_uuid": "f1c3f35567b57cae2edb24374c42dcf00b0adf07",
+      "watchdog_enabled": true, "tags": [], "host_uuid": "2f8b58161c136ebbb8750d11a016f90df3372d7e",
       "has_user_data": false, "placement_group": null, "disk_encryption": "enabled",
       "lke_cluster_id": null, "capabilities": ["Block Storage Encryption", "SMTP Enabled",
       "Maintenance Policy"], "interface_generation": "legacy_config", "maintenance_policy":
@@ -117,7 +118,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "1032"
+      - "1033"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -146,7 +147,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-conf-0o5ikg70np21","devices":{},"interfaces":null}'
+    body: '{"label":"go-test-conf-xq251gjl3l40","devices":{},"interfaces":null}'
     form: {}
     headers:
       Accept:
@@ -155,10 +156,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/99664516/configs
+    url: https://api.linode.com/v4beta/linode/instances/99744872/configs
     method: POST
   response:
-    body: '{"id": 629924, "label": "go-test-conf-0o5ikg70np21", "helpers": {"updatedb_disabled":
+    body: '{"id": 709880, "label": "go-test-conf-xq251gjl3l40", "helpers": {"updatedb_disabled":
       true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
       true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
@@ -212,7 +213,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-vpc-1753810226128406000","region":"pl-labkrk-2","subnets":[{"label":"linodego-vpc-test-1753810226128429000","ipv4":"192.168.0.0/25"}]}'
+    body: '{"label":"go-test-vpc-1754414007844273000","region":"pl-labkrk-2","subnets":[{"label":"linodego-vpc-test-1754414007844280000","ipv4":"192.168.0.0/25"}]}'
     form: {}
     headers:
       Accept:
@@ -224,9 +225,9 @@ interactions:
     url: https://api.linode.com/v4beta/vpcs
     method: POST
   response:
-    body: '{"id": 33787, "label": "go-test-vpc-1753810226128406000", "description":
-      "", "region": "pl-labkrk-2", "ipv6": null, "subnets": [{"id": 47825, "label":
-      "linodego-vpc-test-1753810226128429000", "ipv4": "192.168.0.0/25", "ipv6": null,
+    body: '{"id": 40598, "label": "go-test-vpc-1754414007844273000", "description":
+      "", "region": "pl-labkrk-2", "ipv6": null, "subnets": [{"id": 56792, "label":
+      "linodego-vpc-test-1754414007844280000", "ipv4": "192.168.0.0/25", "ipv6": null,
       "linodes": [], "databases": [], "nodebalancers": [], "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05"}], "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05"}'
@@ -277,7 +278,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-conf-0o5ikg70np21","comments":"","devices":{},"helpers":{"updatedb_disabled":true,"distro":true,"modules_dep":true,"network":true,"devtmpfs_automount":true},"interfaces":[{"purpose":"public"},{"label":"testvlan","purpose":"vlan"},{"purpose":"vpc","subnet_id":47825,"ipv4":{"nat_1_1":"any"}}],"memory_limit":0,"kernel":"linode/latest-64bit","init_rd":null,"root_device":"/dev/sda","run_level":"default","virt_mode":"paravirt"}'
+    body: '{"label":"go-test-conf-xq251gjl3l40","comments":"","devices":{},"helpers":{"updatedb_disabled":true,"distro":true,"modules_dep":true,"network":true,"devtmpfs_automount":true},"interfaces":[{"purpose":"public"},{"label":"testvlan","purpose":"vlan"},{"purpose":"vpc","subnet_id":56792,"ipv4":{"nat_1_1":"any"}}],"memory_limit":0,"kernel":"linode/latest-64bit","init_rd":null,"root_device":"/dev/sda","run_level":"default","virt_mode":"paravirt"}'
     form: {}
     headers:
       Accept:
@@ -286,23 +287,23 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/99664516/configs/629924
+    url: https://api.linode.com/v4beta/linode/instances/99744872/configs/709880
     method: PUT
   response:
-    body: '{"id": 629924, "label": "go-test-conf-0o5ikg70np21", "helpers": {"updatedb_disabled":
+    body: '{"id": 709880, "label": "go-test-conf-xq251gjl3l40", "helpers": {"updatedb_disabled":
       true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
       true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
       "devices": {"sda": null, "sdb": null, "sdc": null, "sdd": null, "sde": null,
       "sdf": null, "sdg": null, "sdh": null}, "initrd": null, "run_level": "default",
-      "virt_mode": "paravirt", "interfaces": [{"id": 230820, "purpose": "public",
+      "virt_mode": "paravirt", "interfaces": [{"id": 340000, "purpose": "public",
       "primary": false, "active": false, "ipam_address": null, "label": null, "vpc_id":
       null, "subnet_id": null, "ipv4": null, "ip_ranges": null, "ipv6": null}, {"id":
-      230821, "purpose": "vlan", "primary": false, "active": false, "ipam_address":
+      340001, "purpose": "vlan", "primary": false, "active": false, "ipam_address":
       "", "label": "testvlan", "vpc_id": null, "subnet_id": null, "ipv4": null, "ip_ranges":
-      null, "ipv6": null}, {"id": 230822, "purpose": "vpc", "primary": false, "active":
-      false, "ipam_address": null, "label": null, "vpc_id": 33787, "subnet_id": 47825,
-      "ipv4": {"vpc": "192.168.0.2", "nat_1_1": "172.24.232.46"}, "ip_ranges": [],
+      null, "ipv6": null}, {"id": 340002, "purpose": "vpc", "primary": false, "active":
+      false, "ipam_address": null, "label": null, "vpc_id": 40598, "subnet_id": 56792,
+      "ipv4": {"vpc": "192.168.0.2", "nat_1_1": "172.24.241.193"}, "ip_ranges": [],
       "ipv6": null}]}'
     headers:
       Access-Control-Allow-Credentials:
@@ -322,7 +323,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "1153"
+      - "1154"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -360,12 +361,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/vpcs/33787/subnets/47825
+    url: https://api.linode.com/v4beta/vpcs/40598/subnets/56792
     method: GET
   response:
-    body: '{"id": 47825, "label": "linodego-vpc-test-1753810226128429000", "ipv4":
-      "192.168.0.0/25", "ipv6": null, "linodes": [{"id": 99664516, "interfaces": [{"id":
-      230822, "config_id": 629924, "active": false}]}], "databases": [], "nodebalancers":
+    body: '{"id": 56792, "label": "linodego-vpc-test-1754414007844280000", "ipv4":
+      "192.168.0.0/25", "ipv6": null, "linodes": [{"id": 99744872, "interfaces": [{"id":
+      340002, "config_id": 709880, "active": false}]}], "databases": [], "nodebalancers":
       [], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -425,25 +426,25 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/99664516/ips
+    url: https://api.linode.com/v4beta/linode/instances/99744872/ips
     method: GET
   response:
-    body: '{"ipv4": {"public": [{"address": "172.24.232.46", "gateway": "172.24.232.1",
+    body: '{"ipv4": {"public": [{"address": "172.24.241.193", "gateway": "172.24.241.1",
       "subnet_mask": "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true,
-      "rdns": "172-24-232-46.ip.linodeusercontent.com", "linode_id": 99664516, "interface_id":
-      null, "region": "pl-labkrk-2", "vpc_nat_1_1": {"vpc_id": 33787, "subnet_id":
-      47825, "address": "192.168.0.2"}, "assigned_entity": {"id": 99664516, "type":
-      "linode", "label": "go-test-ins-wo-disk-p0wal0sj2479", "url": "/v4/linode/instances/99664516"}}],
+      "rdns": "172-24-241-193.ip.linodeusercontent.com", "linode_id": 99744872, "interface_id":
+      null, "region": "pl-labkrk-2", "vpc_nat_1_1": {"vpc_id": 40598, "subnet_id":
+      56792, "address": "192.168.0.2"}, "assigned_entity": {"id": 99744872, "type":
+      "linode", "label": "go-test-ins-wo-disk-jq4077e4t5fv", "url": "/v4/linode/instances/99744872"}}],
       "private": [], "shared": [], "reserved": [], "vpc": [{"address": "192.168.0.2",
-      "address_range": null, "vpc_id": 33787, "subnet_id": 47825, "region": "pl-labkrk-2",
-      "linode_id": 99664516, "config_id": 629924, "interface_id": 230822, "nodebalancer_id":
-      null, "database_id": null, "active": false, "nat_1_1": "172.24.232.46", "gateway":
+      "address_range": null, "vpc_id": 40598, "subnet_id": 56792, "region": "pl-labkrk-2",
+      "linode_id": 99744872, "config_id": 709880, "interface_id": 340002, "nodebalancer_id":
+      null, "database_id": null, "active": false, "nat_1_1": "172.24.241.193", "gateway":
       "192.168.0.1", "prefix": 25, "subnet_mask": "255.255.255.128"}]}, "ipv6": {"slaac":
       {"address": "1234::5678", "gateway": "1234::5678", "subnet_mask":
       "1234::5678", "prefix": 64, "type": "ipv6", "rdns": null, "linode_id":
-      99664516, "region": "pl-labkrk-2", "public": true}, "link_local": {"address":
+      99744872, "region": "pl-labkrk-2", "public": true}, "link_local": {"address":
       "1234::5678", "gateway": "1234::5678", "subnet_mask": "1234::5678",
-      "prefix": 64, "type": "ipv6", "rdns": null, "linode_id": 99664516, "region":
+      "prefix": 64, "type": "ipv6", "rdns": null, "linode_id": 99744872, "region":
       "pl-labkrk-2", "public": false}, "global": [], "vpc": []}}'
     headers:
       Access-Control-Allow-Credentials:
@@ -464,7 +465,7 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "1385"
+      - "1388"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
@@ -503,7 +504,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/99664516
+    url: https://api.linode.com/v4beta/linode/instances/99744872
     method: DELETE
   response:
     body: '{}'
@@ -563,7 +564,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/vpcs/33787
+    url: https://api.linode.com/v4beta/vpcs/40598
     method: DELETE
   response:
     body: '{}'
