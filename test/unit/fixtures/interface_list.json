@@ -1,0 +1,90 @@
+{
+    "data": [
+        {
+            "id": 123,
+            "mac_address": "22:00:AB:CD:EF:01",
+            "created": "2024-01-01T00:01:01",
+            "updated": "2024-01-01T00:01:01",
+            "default_route": {
+                "ipv4": false,
+                "ipv6": false
+            },
+            "version": 1,
+            "vpc": null,
+            "public": null,
+            "vlan": {
+                "vlan_label": "my_vlan",
+                "ipam_address": "10.0.0.1/24"
+            }
+        },
+        {
+            "id": 456,
+            "mac_address": "22:00:AB:CD:EF:01",
+            "created": "2024-01-01T00:01:01",
+            "updated": "2024-01-01T00:01:01",
+            "default_route": {
+                "ipv4": true,
+                "ipv6": true
+            },
+            "version": 1,
+            "vpc": {
+                "vpc_id": 123456,
+                "subnet_id": 789,
+                "ipv4" : {
+                    "addresses": [
+                        {
+                            "address": "192.168.22.3",
+                            "primary": true
+                        }
+                    ],
+                    "ranges": [
+                        { "range": "192.168.22.16/28"},
+                        { "range": "192.168.22.32/28"}
+                    ]
+                },
+                "ipv6": {
+                    "slaac": [
+                        {
+                            "range": "1234::/64",
+                            "address": "1234::5678"
+                        }
+                    ],
+                    "ranges": [
+                        {
+                            "range": "4321::/64"
+                        }
+                    ],
+                    "is_public": true
+                }
+            },
+            "public": null,
+            "vlan": null
+        },
+        {
+            "id": 789,
+            "mac_address": "22:00:AB:CD:EF:01",
+            "created": "2024-01-01T00:01:01",
+            "updated": "2024-01-01T00:01:01",
+            "default_route": {
+                "ipv4": false,
+                "ipv6": false
+            },
+            "version": 1,
+            "vpc": null,
+            "public": {
+                "ipv4": {
+                    "addresses": [
+                        {
+                            "address": "auto",
+                            "primary": true
+                        }
+                    ]
+                }
+            },
+            "vlan": null
+        }
+    ],
+    "page": 1,
+    "pages": 1,
+    "results": 2
+}

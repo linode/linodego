@@ -21,34 +21,45 @@ type InstanceIPv4Response struct {
 
 // InstanceIP represents an Instance IP with additional DNS and networking details
 type InstanceIP struct {
-	Address    string             `json:"address"`
-	Gateway    string             `json:"gateway"`
-	SubnetMask string             `json:"subnet_mask"`
-	Prefix     int                `json:"prefix"`
-	Type       InstanceIPType     `json:"type"`
-	Public     bool               `json:"public"`
-	RDNS       string             `json:"rdns"`
-	LinodeID   int                `json:"linode_id"`
-	Region     string             `json:"region"`
-	VPCNAT1To1 *InstanceIPNAT1To1 `json:"vpc_nat_1_1"`
-	Reserved   bool               `json:"reserved"`
+	Address     string             `json:"address"`
+	Gateway     string             `json:"gateway"`
+	SubnetMask  string             `json:"subnet_mask"`
+	Prefix      int                `json:"prefix"`
+	Type        InstanceIPType     `json:"type"`
+	Public      bool               `json:"public"`
+	RDNS        string             `json:"rdns"`
+	LinodeID    int                `json:"linode_id"`
+	InterfaceID *int               `json:"interface_id"`
+	Region      string             `json:"region"`
+	VPCNAT1To1  *InstanceIPNAT1To1 `json:"vpc_nat_1_1"`
+	Reserved    bool               `json:"reserved"`
 }
 
 // VPCIP represents a private IP address in a VPC subnet with additional networking details
 type VPCIP struct {
-	Address      *string `json:"address"`
-	AddressRange *string `json:"address_range"`
-	Gateway      string  `json:"gateway"`
-	SubnetMask   string  `json:"subnet_mask"`
-	Prefix       int     `json:"prefix"`
-	LinodeID     int     `json:"linode_id"`
-	Region       string  `json:"region"`
-	Active       bool    `json:"active"`
-	NAT1To1      *string `json:"nat_1_1"`
-	VPCID        int     `json:"vpc_id"`
-	SubnetID     int     `json:"subnet_id"`
-	ConfigID     int     `json:"config_id"`
-	InterfaceID  int     `json:"interface_id"`
+	Address       *string            `json:"address"`
+	AddressRange  *string            `json:"address_range"`
+	IPv6Range     *string            `json:"ipv6_range"`
+	IPv6IsPublic  *bool              `json:"ipv6_is_public"`
+	IPv6Addresses []VPCIPIPv6Address `json:"ipv6_addresses"`
+	Gateway       string             `json:"gateway"`
+	SubnetMask    string             `json:"subnet_mask"`
+	Prefix        int                `json:"prefix"`
+	LinodeID      int                `json:"linode_id"`
+	Region        string             `json:"region"`
+	Active        bool               `json:"active"`
+	NAT1To1       *string            `json:"nat_1_1"`
+	VPCID         int                `json:"vpc_id"`
+	SubnetID      int                `json:"subnet_id"`
+	InterfaceID   int                `json:"interface_id"`
+
+	// The type of this field will be made a pointer in the next major release of linodego.
+	ConfigID int `json:"config_id"`
+}
+
+// VPCIPIPv6Address represents a single IPv6 address under a VPCIP.
+type VPCIPIPv6Address struct {
+	SLAACAddress string `json:"slaac_address"`
 }
 
 // InstanceIPv6Response contains the IPv6 addresses and ranges for an Instance
