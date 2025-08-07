@@ -1,0 +1,94 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/firewalls/templates?page=1
+    method: GET
+  response:
+    body: '{"data": [{"slug": "akamai-non-prod", "rules": {"inbound": [{"action":
+      "ACCEPT", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}, "protocol":
+      "ICMP", "label": "accept-inbound-icmp", "description": "Accept inbound ICMP"},
+      {"action": "ACCEPT", "addresses": {"ipv4": ["172.236.119.4/30", "172.234.160.4/30",
+      "172.236.94.4/30"], "ipv6": ["1234::5678/128", "1234::5678/128",
+      "1234::5678/128", "1234::5678/128",
+      "1234::5678/128", "1234::5678/128",
+      "1234::5678/128", "1234::5678/128",
+      "1234::5678/128"]}, "ports": "22,443", "protocol": "TCP",
+      "label": "accept-inbound-tcp-ssh-proxies", "description": "Accept inbound TCP
+      from SSH proxies"}, {"action": "ACCEPT", "addresses": {"ipv4": ["139.144.212.168/31",
+      "172.232.23.164/31"]}, "ports": "22,443", "protocol": "TCP", "label": "accept-inbound-tcp-eaa-proxies",
+      "description": "Accept inbound TCP from EAA proxies"}], "inbound_policy": "DROP",
+      "outbound": [], "outbound_policy": "ACCEPT"}}, {"slug": "vpc", "rules": {"inbound":
+      [{"action": "ACCEPT", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]},
+      "ports": "22", "protocol": "TCP", "label": "accept-inbound-ssh", "description":
+      "Accept inbound SSH"}, {"action": "ACCEPT", "addresses": {"ipv4": ["0.0.0.0/0"],
+      "ipv6": ["1234::5678/0"]}, "protocol": "ICMP", "label": "accept-inbound-icmp", "description":
+      "Accept inbound ICMP"}, {"action": "ACCEPT", "addresses": {"ipv4": ["10.0.0.0/8",
+      "192.168.0.0/17", "172.16.0.0/12"]}, "ports": "1-65535", "protocol": "TCP",
+      "label": "accept-inbound-rfc1918", "description": "Accept inbound RFC-1918"},
+      {"action": "ACCEPT", "addresses": {"ipv4": ["10.0.0.0/8", "192.168.0.0/17",
+      "172.16.0.0/12"]}, "description": "Accept inbound RFC-1918", "label": "accept-inbound-rfc1918",
+      "ports": "1-65535", "protocol": "UDP"}], "inbound_policy": "DROP", "outbound":
+      [], "outbound_policy": "ACCEPT"}}, {"slug": "public", "rules": {"inbound": [{"action":
+      "ACCEPT", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}, "ports": "22",
+      "protocol": "TCP", "label": "accept-inbound-ssh", "description": "Accept inbound
+      SSH"}, {"action": "ACCEPT", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]},
+      "protocol": "ICMP", "label": "accept-inbound-icmp", "description": "Accept inbound
+      ICMP"}], "inbound_policy": "DROP", "outbound": [], "outbound_policy": "ACCEPT"}}],
+      "page": 1, "pages": 1, "results": 3}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 21 Apr 2025 07:03:52 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1600"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
