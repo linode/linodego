@@ -31,7 +31,7 @@ func createInstanceWithLinodeInterfaces(
 
 	if enableCloudFirewall {
 		for i := range createOpts.Interfaces {
-			createOpts.LinodeInterfaces[i].FirewallID = linodego.Pointer(firewallID)
+			createOpts.LinodeInterfaces[i].FirewallID = linodego.DoublePointer(firewallID)
 		}
 	}
 
@@ -99,7 +99,7 @@ func TestInstance_CreateWithLinodeInterfaces(
 		true,
 		[]linodego.LinodeInterfaceCreateOptions{
 			{
-				FirewallID: linodego.Pointer(firewallID),
+				FirewallID: linodego.DoublePointer(firewallID),
 				Public: &linodego.PublicInterfaceCreateOptions{
 					IPv4: &linodego.PublicInterfaceIPv4CreateOptions{
 						Addresses: []linodego.PublicInterfaceIPv4AddressCreateOptions{
@@ -113,7 +113,7 @@ func TestInstance_CreateWithLinodeInterfaces(
 				},
 			},
 			{
-				FirewallID: linodego.Pointer(firewallID),
+				FirewallID: linodego.DoublePointer(firewallID),
 				VPC: &linodego.VPCInterfaceCreateOptions{
 					SubnetID: vpcSubnet.ID,
 					IPv4: &linodego.VPCInterfaceIPv4CreateOptions{
