@@ -353,9 +353,14 @@ func TestInstance_Disks_List(t *testing.T) {
 }
 
 func TestInstance_Disks_List_WithEncryption(t *testing.T) {
-	client, instance, teardown, err := setupInstance(t, "fixtures/TestInstance_Disks_List_WithEncryption", true, func(c *linodego.Client, ico *linodego.InstanceCreateOptions) {
-		ico.Region = getRegionsWithCaps(t, c, []string{"Disk Encryption"})[0]
-	})
+	client, instance, teardown, err := setupInstance(
+		t,
+		"fixtures/TestInstance_Disks_List_WithEncryption",
+		true,
+		func(c *linodego.Client, ico *linodego.InstanceCreateOptions) {
+			ico.Region = getRegionsWithCaps(t, c, []string{"Disk Encryption"})[0]
+		},
+	)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -941,7 +946,12 @@ func createInstance(t *testing.T, client *linodego.Client, enableCloudFirewall b
 	return client.CreateInstance(context.Background(), createOpts)
 }
 
-func setupInstance(t *testing.T, fixturesYaml string, EnableCloudFirewall bool, modifiers ...instanceModifier) (*linodego.Client, *linodego.Instance, func(), error) {
+func setupInstance(
+	t *testing.T,
+	fixturesYaml string,
+	EnableCloudFirewall bool,
+	modifiers ...instanceModifier,
+) (*linodego.Client, *linodego.Instance, func(), error) {
 	if t != nil {
 		t.Helper()
 	}
@@ -1008,7 +1018,12 @@ func createInstanceWithoutDisks(
 	return instance, config, teardown, err
 }
 
-func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string, enableCloudFirewall bool, modifiers ...instanceModifier) (*linodego.Client, *linodego.Instance, *linodego.InstanceConfig, func(), error) {
+func setupInstanceWithoutDisks(
+	t *testing.T,
+	fixturesYaml string,
+	enableCloudFirewall bool,
+	modifiers ...instanceModifier,
+) (*linodego.Client, *linodego.Instance, *linodego.InstanceConfig, func(), error) {
 	t.Helper()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	instance, config, instanceTeardown, err := createInstanceWithoutDisks(t, client, enableCloudFirewall, modifiers...)

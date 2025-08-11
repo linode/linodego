@@ -172,7 +172,11 @@ func (c *Client) DeleteObjectStorageBucket(ctx context.Context, clusterOrRegionI
 }
 
 // Lists the contents of the specified ObjectStorageBucket
-func (c *Client) ListObjectStorageBucketContents(ctx context.Context, clusterOrRegionID, label string, params *ObjectStorageBucketListContentsParams) (*ObjectStorageBucketContent, error) {
+func (c *Client) ListObjectStorageBucketContents(
+	ctx context.Context,
+	clusterOrRegionID, label string,
+	params *ObjectStorageBucketListContentsParams,
+) (*ObjectStorageBucketContent, error) {
 	basePath := formatAPIPath("object-storage/buckets/%s/%s/object-list", clusterOrRegionID, label)
 
 	queryString := ""
