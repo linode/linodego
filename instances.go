@@ -78,6 +78,7 @@ type Instance struct {
 	// Note: Linode interfaces may not currently be available to all users.
 	InterfaceGeneration InterfaceGeneration `json:"interface_generation"`
 
+	// NOTE: MaintenancePolicy can only be used with v4beta.
 	MaintenancePolicy string `json:"maintenance_policy"`
 }
 
@@ -211,6 +212,7 @@ type InstanceCreateOptions struct {
 
 	IPv4 []string `json:"ipv4,omitempty"`
 
+	// NOTE: MaintenancePolicy can only be used with v4beta.
 	MaintenancePolicy *string `json:"maintenance_policy,omitempty"`
 }
 
@@ -232,6 +234,7 @@ type InstanceUpdateOptions struct {
 	// Deprecated: group is a deprecated property denoting a group label for the Linode.
 	Group *string `json:"group,omitempty"`
 
+	// NOTE: MaintenancePolicy can only be used with v4beta.
 	MaintenancePolicy *string `json:"maintenance_policy,omitempty"`
 }
 

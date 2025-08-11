@@ -22,6 +22,7 @@ type AccountSettings struct {
 	ObjectStorage *string `json:"object_storage"`
 
 	// The slug of the maintenance policy associated with the account.
+	// NOTE: MaintenancePolicy can only be used with v4beta.
 	MaintenancePolicy string `json:"maintenance_policy"`
 }
 
@@ -38,6 +39,7 @@ type AccountSettingsUpdateOptions struct {
 	NetworkHelper *bool `json:"network_helper,omitempty"`
 
 	// The slug of the maintenance policy to set the account to.
+	// NOTE: MaintenancePolicy can only be used with v4beta.
 	MaintenancePolicy *string `json:"maintenance_policy,omitempty"`
 }
 
