@@ -21,17 +21,18 @@ type InstanceIPv4Response struct {
 
 // InstanceIP represents an Instance IP with additional DNS and networking details
 type InstanceIP struct {
-	Address    string             `json:"address"`
-	Gateway    string             `json:"gateway"`
-	SubnetMask string             `json:"subnet_mask"`
-	Prefix     int                `json:"prefix"`
-	Type       InstanceIPType     `json:"type"`
-	Public     bool               `json:"public"`
-	RDNS       string             `json:"rdns"`
-	LinodeID   int                `json:"linode_id"`
-	Region     string             `json:"region"`
-	VPCNAT1To1 *InstanceIPNAT1To1 `json:"vpc_nat_1_1"`
-	Reserved   bool               `json:"reserved"`
+	Address     string             `json:"address"`
+	Gateway     string             `json:"gateway"`
+	SubnetMask  string             `json:"subnet_mask"`
+	Prefix      int                `json:"prefix"`
+	Type        InstanceIPType     `json:"type"`
+	Public      bool               `json:"public"`
+	RDNS        string             `json:"rdns"`
+	LinodeID    int                `json:"linode_id"`
+	InterfaceID *int               `json:"interface_id"`
+	Region      string             `json:"region"`
+	VPCNAT1To1  *InstanceIPNAT1To1 `json:"vpc_nat_1_1"`
+	Reserved    bool               `json:"reserved"`
 }
 
 // VPCIP represents a private IP address in a VPC subnet with additional networking details
@@ -47,8 +48,10 @@ type VPCIP struct {
 	NAT1To1      *string `json:"nat_1_1"`
 	VPCID        int     `json:"vpc_id"`
 	SubnetID     int     `json:"subnet_id"`
-	ConfigID     int     `json:"config_id"`
 	InterfaceID  int     `json:"interface_id"`
+
+	// The type of this field will be made a pointer in the next major release of linodego.
+	ConfigID int `json:"config_id"`
 }
 
 // InstanceIPv6Response contains the IPv6 addresses and ranges for an Instance
