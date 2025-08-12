@@ -1,17 +1,36 @@
 {
-    "data": [
-      {
-        "id": 123,
-        "label": "Subnet A",
-        "ipv4": "192.168.3.0/24"
-      },
-      {
-        "id": 124,
-        "label": "Subnet B",
-        "ipv4": "192.168.4.0/24"
-      }
-    ],
-    "page": 1,
-    "pages": 1
+  "data": [
+    {
+      "id": 123,
+      "label": "Subnet A",
+      "ipv4": "192.168.3.0/24",
+      "ipv6": [
+        {
+          "range": "fd71:1140:a9d0::/52"
+        }
+      ],
+      "linodes": [
+        {
+          "id": 111,
+          "interfaces": [
+            {
+              "active": true,
+              "config_id": null,
+              "id": 421
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": 124,
+      "label": "Subnet B",
+      "ipv4": "192.168.4.0/24",
+      "ipv6": [],
+      "linodes": []
+    }
+  ],
+  "page": 1,
+  "pages": 1,
+  "results": 2
 }
-  

@@ -97,6 +97,103 @@ func setupInstanceWithVPCAndNATOneToOne(t *testing.T, fixturesYaml string) (
 	return client, vpc, vpcSubnet, instance, config, teardown
 }
 
+func setupDualStackVPCWithInstance(
+	t *testing.T,
+	fixturesYaml string,
+	modifiers ...instanceModifier,
+) (
+	*Client,
+	*VPC,
+	*VPCSubnet,
+	*Instance,
+	*InstanceConfig,
+	func(),
+	error,
+) {
+	t.Helper()
+	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+	instance, instanceConfig, instanceTeardown, err := createInstanceWithoutDisks(
+		t,
+		client, true,
+		modifiers...,
+	)
+	if err != nil {
+		if instanceTeardown != nil {
+			instanceTeardown()
+		}
+		t.Fatal(err)
+	}
+
+	vpc, vpcSubnet, vpcWithSubnetTeardown, err := createVPCWithDualStackSubnet(
+		t,
+		client,
+		func(client *Client, options *VPCCreateOptions) {
+			options.Region = instance.Region
+		},
+	)
+	if err != nil {
+		t.Error(err)
+	}
+
+	teardownAll := func() {
+		instanceTeardown()
+		vpcWithSubnetTeardown()
+		fixtureTeardown()
+	}
+	return client, vpc, vpcSubnet, instance, instanceConfig, teardownAll, err
+}
+
+func setupInstanceWithDualStackVPCAndNAT11(t *testing.T, fixturesYaml string) (
+	*Client,
+	*VPC,
+	*VPCSubnet,
+	*Instance,
+	*InstanceConfig,
+	func(),
+) {
+	t.Helper()
+	client, vpc, vpcSubnet, instance, config, teardown, err := setupDualStackVPCWithInstance(
+		t,
+		fixturesYaml,
+		func(client *Client, opts *InstanceCreateOptions) {
+			opts.Region = getRegionsWithCaps(t, client, []string{"Linodes", "VPCs"})[0]
+		},
+	)
+	if err != nil {
+		if teardown != nil {
+			teardown()
+		}
+		t.Fatal(err)
+	}
+
+	updateConfigOpts := config.GetUpdateOptions()
+	NAT1To1Any := "any"
+	updateConfigOpts.Interfaces = []InstanceConfigInterfaceCreateOptions{
+		{
+			Purpose:  InterfacePurposeVPC,
+			SubnetID: &vpcSubnet.ID,
+			IPv4: &VPCIPv4{
+				NAT1To1: &NAT1To1Any,
+			},
+			IPv6: &InstanceConfigInterfaceCreateOptionsIPv6{
+				IsPublic: Pointer(true),
+				SLAAC: []InstanceConfigInterfaceCreateOptionsIPv6SLAAC{
+					{
+						Range: "/64",
+					},
+				},
+			},
+		},
+	}
+	config, err = client.UpdateInstanceConfig(context.Background(), instance.ID, config.ID, updateConfigOpts)
+	if err != nil {
+		teardown()
+		t.Fatal(err)
+	}
+
+	return client, vpc, vpcSubnet, instance, config, teardown
+}
+
 func setupInstanceWith3Interfaces(t *testing.T, fixturesYaml string) (
 	*Client,
 	*VPC,
