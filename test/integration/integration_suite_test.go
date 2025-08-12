@@ -289,3 +289,43 @@ func regionHasCaps(r linodego.Region, capabilities []string) bool {
 
 	return true
 }
+
+// createTestMonitorClient is a testing helper to creates a linodego.MonitorClient initialized using
+// environment variables and configured to record or playback testing fixtures.
+// The returned function should be deferred by the caller to ensure the fixture
+// recording is properly closed.
+func createTestMonitorClient(t *testing.T, fixturesYaml string, token *linodego.MonitorServiceToken) (*linodego.MonitorClient, func()) {
+	var (
+		c      linodego.MonitorClient
+		apiKey *string
+	)
+	if t != nil {
+		t.Helper()
+	}
+
+	apiKey = &token.Token
+
+	var recordStopper func()
+	var r http.RoundTripper
+
+	if len(fixturesYaml) > 0 {
+		r, recordStopper = testRecorder(t, fixturesYaml, testingMode, nil)
+	} else {
+		r = nil
+		recordStopper = func() {}
+	}
+
+	tokenSource := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: *apiKey})
+	oc := &http.Client{
+		Transport: &oauth2.Transport{
+			Source: tokenSource,
+			Base:   r,
+		},
+	}
+
+	c = linodego.NewMonitorClient(oc)
+	c.SetToken(token.Token).
+		SetDebug(debugAPI)
+
+	return &c, recordStopper
+}
