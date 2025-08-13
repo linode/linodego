@@ -31,7 +31,11 @@ func TestMaintenancePolicies_List(t *testing.T) {
 
 	assert.Equal(t, "linode/power_off_on", policies[1].Slug)
 	assert.Equal(t, "Power-off/on", policies[1].Label)
-	assert.Equal(t, "Powers off the Linode at the start of the maintenance event and reboots it once the maintenance finishes. Recommended for maximizing performance.", policies[1].Description)
+	assert.Equal(
+		t,
+		"Powers off the Linode at the start of the maintenance event and reboots it once the maintenance finishes. Recommended for maximizing performance.",
+		policies[1].Description,
+	)
 	assert.Equal(t, "power_off_on", policies[1].Type)
 	assert.Equal(t, 1800, policies[1].NotificationPeriodSec)
 	assert.Equal(t, false, policies[1].IsDefault)
