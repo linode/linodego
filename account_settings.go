@@ -9,10 +9,10 @@ type AccountSettings struct {
 	// The default backups enrollment status for all new Linodes for all users on the account.  When enabled, backups are mandatory per instance.
 	BackupsEnabled bool `json:"backups_enabled"`
 
-	// Wether or not Linode Managed service is enabled for the account.
+	// Whether or not Linode Managed service is enabled for the account.
 	Managed bool `json:"managed"`
 
-	// Wether or not the Network Helper is enabled for all new Linode Instance Configs on the account.
+	// Whether or not the Network Helper is enabled for all new Linode Instance Configs on the account.
 	NetworkHelper bool `json:"network_helper"`
 
 	// A plan name like "longview-3"..."longview-100", or a nil value for to cancel any existing subscription plan.
@@ -20,6 +20,10 @@ type AccountSettings struct {
 
 	// A string like "disabled", "suspended", or "active" describing the status of this account’s Object Storage service enrollment.
 	ObjectStorage *string `json:"object_storage"`
+
+	// The slug of the maintenance policy associated with the account.
+	// NOTE: MaintenancePolicy can only be used with v4beta.
+	MaintenancePolicy string `json:"maintenance_policy"`
 }
 
 // AccountSettingsUpdateOptions are the updateable account wide flags or plans that effect new resources.
@@ -29,6 +33,10 @@ type AccountSettingsUpdateOptions struct {
 
 	// The default network helper setting for all new Linodes and Linode Configs for all users on the account.
 	NetworkHelper *bool `json:"network_helper,omitempty"`
+
+	// The slug of the maintenance policy to set the account to.
+	// NOTE: MaintenancePolicy can only be used with v4beta.
+	MaintenancePolicy *string `json:"maintenance_policy,omitempty"`
 }
 
 // GetAccountSettings gets the account wide flags or plans that effect new resources

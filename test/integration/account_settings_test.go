@@ -51,13 +51,15 @@ func TestAccountSettings_Update(t *testing.T) {
 	defer httpmock.DeactivateAndReset()
 
 	opts := linodego.AccountSettingsUpdateOptions{
-		BackupsEnabled: Bool(false),
-		NetworkHelper:  Bool(false),
+		BackupsEnabled:    Bool(false),
+		NetworkHelper:     Bool(false),
+		MaintenancePolicy: String("linode/migrate"),
 	}
 
 	mockSettings := linodego.AccountSettings{
 		BackupsEnabled:       false,
 		NetworkHelper:        false,
+		MaintenancePolicy:    "linode/migrate",
 		LongviewSubscription: String("longview-100"),
 	}
 	mockResponse, _ := json.Marshal(mockSettings)
@@ -72,6 +74,7 @@ func TestAccountSettings_Update(t *testing.T) {
 	require.False(t, settings.NetworkHelper, "Expected NetworkHelper to be false")
 	require.NotNil(t, settings.LongviewSubscription, "Expected LongviewSubscription to be non-nil")
 	require.Equal(t, "longview-100", *settings.LongviewSubscription, "Expected LongviewSubscription to be 'longview-100'")
+	require.Equal(t, "linode/migrate", settings.MaintenancePolicy, "Expected MaintenancePolicy to be 'linode/migrate'")
 }
 
 func Bool(v bool) *bool       { return &v }
