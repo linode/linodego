@@ -10,16 +10,19 @@ import (
 
 // AccountMaintenance represents a Maintenance object for any entity a user has permissions to view
 type AccountMaintenance struct {
-	Entity               *Entity    `json:"entity"`
-	Reason               string     `json:"reason"`
-	Status               string     `json:"status"`
-	Type                 string     `json:"type"`
-	MaintenancePolicySet string     `json:"maintenance_policy_set"`
-	Description          string     `json:"description"`
-	Source               string     `json:"source"`
-	NotBefore            *time.Time `json:"-"`
-	StartTime            *time.Time `json:"-"`
-	CompleteTime         *time.Time `json:"-"`
+	Entity *Entity `json:"entity"`
+	Reason string  `json:"reason"`
+	Status string  `json:"status"`
+	Type   string  `json:"type"`
+
+	// NOTE: MaintenancePolicySet can only be used with v4beta.
+	MaintenancePolicySet string `json:"maintenance_policy_set"`
+
+	Description  string     `json:"description"`
+	Source       string     `json:"source"`
+	NotBefore    *time.Time `json:"-"`
+	StartTime    *time.Time `json:"-"`
+	CompleteTime *time.Time `json:"-"`
 
 	// Deprecated: When is a deprecated property
 	When *time.Time `json:"when"`

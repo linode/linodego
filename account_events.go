@@ -54,6 +54,7 @@ type Event struct {
 	Duration float64 `json:"duration"`
 
 	// The maintenance policy configured by the user for the event.
+	// NOTE: MaintenancePolicySet can only be used with v4beta.
 	MaintenancePolicySet string `json:"maintenance_policy_set"`
 
 	// Describes the nature of the event (e.g., whether it is scheduled or emergency).
