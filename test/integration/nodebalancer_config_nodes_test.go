@@ -345,7 +345,10 @@ func TestNodeBalancerNode_Get_InVPC(t *testing.T) {
 	}
 }
 
-func setupNodeBalancerNode(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.NodeBalancer, *linodego.NodeBalancerConfig, *linodego.NodeBalancerNode, func(), error) {
+func setupNodeBalancerNode(
+	t *testing.T,
+	fixturesYaml string,
+) (*linodego.Client, *linodego.NodeBalancer, *linodego.NodeBalancerConfig, *linodego.NodeBalancerNode, func(), error) {
 	t.Helper()
 	var fixtureTeardown func()
 	client, nodebalancer, config, fixtureTeardown, err := setupNodeBalancerConfig(t, fixturesYaml)
