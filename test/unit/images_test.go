@@ -35,7 +35,7 @@ func TestImage_List(t *testing.T) {
 	assert.Equal(t, true, image.IsPublic)
 	assert.Equal(t, "2026-07-01T04:00:00Z", image.EOL.Format(time.RFC3339))
 	assert.ElementsMatch(t, []string{"repair-image", "fix-1"}, image.Tags)
-	assert.Equal(t, "Debian", image.Vendor)
+	assert.Equal(t, "Debian", *image.Vendor)
 	assert.False(t, image.Deprecated)
 	expectedCapabilities := []string{"cloud-init", "distributed-sites"}
 	assert.ElementsMatch(t, expectedCapabilities, image.Capabilities)
@@ -62,7 +62,7 @@ func TestImage_Get(t *testing.T) {
 	assert.Equal(t, "linode/debian11", image.ID)
 	assert.Equal(t, "Debian 11", image.Label)
 	assert.Equal(t, "Example image description.", image.Description)
-	assert.Equal(t, "Debian", image.Vendor)
+	assert.Equal(t, "Debian", *image.Vendor)
 	assert.Equal(t, true, image.IsPublic)
 	assert.Equal(t, false, image.Deprecated)
 	assert.Equal(t, "available", string(image.Status))
@@ -71,6 +71,90 @@ func TestImage_Get(t *testing.T) {
 	assert.Equal(t, "2026-07-01T04:00:00Z", image.EOL.Format(time.RFC3339))
 	assert.Equal(t, 2500, image.Size)
 	assert.Equal(t, 1234567, image.TotalSize)
+
+	assert.ElementsMatch(t, []string{"cloud-init", "distributed-sites"}, image.Capabilities)
+
+	assert.Len(t, image.Regions, 1)
+	assert.Equal(t, "us-iad", image.Regions[0].Region)
+	assert.Equal(t, "available", string(image.Regions[0].Status))
+
+	assert.ElementsMatch(t, []string{"repair-image", "fix-1"}, image.Tags)
+}
+
+func TestImage_GetPrivateShared(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("image_get_private_shared")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	imageID := "123"
+
+	base.MockGet(formatMockAPIPath("images/%s", imageID), fixtureData)
+
+	image, err := base.Client.GetImage(context.Background(), imageID)
+	assert.NoError(t, err)
+
+	assert.Equal(t, "linode/debian11", image.ID)
+	assert.Equal(t, "Debian 11", image.Label)
+	assert.Equal(t, "Example image description.", image.Description)
+	assert.Nil(t, image.Vendor)
+	assert.Equal(t, true, image.IsPublic)
+	assert.Equal(t, false, image.Deprecated)
+	assert.Equal(t, "available", string(image.Status))
+	assert.Equal(t, "2021-08-14T22:44:02Z", image.Created.Format(time.RFC3339))
+	assert.Equal(t, "2021-08-14T22:44:02Z", image.Updated.Format(time.RFC3339))
+	assert.Nil(t, image.EOL)
+	assert.Equal(t, 2500, image.Size)
+	assert.Equal(t, 1234567, image.TotalSize)
+
+	assert.Equal(t, 1, image.ImageSharing.SharedWith.ShareGroupCount)
+	assert.Equal(t, "/images/private/28747995/sharegroups", image.ImageSharing.SharedWith.ImageShareGroupListURL)
+	assert.Nil(t, image.ImageSharing.SharedBy)
+
+	assert.ElementsMatch(t, []string{"cloud-init", "distributed-sites"}, image.Capabilities)
+
+	assert.Len(t, image.Regions, 1)
+	assert.Equal(t, "us-iad", image.Regions[0].Region)
+	assert.Equal(t, "available", string(image.Regions[0].Status))
+
+	assert.ElementsMatch(t, []string{"repair-image", "fix-1"}, image.Tags)
+}
+
+func TestImage_GetShared(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("image_get_shared")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	imageID := "123"
+
+	base.MockGet(formatMockAPIPath("images/%s", imageID), fixtureData)
+
+	image, err := base.Client.GetImage(context.Background(), imageID)
+	assert.NoError(t, err)
+
+	assert.Equal(t, "linode/debian11", image.ID)
+	assert.Equal(t, "Debian 11", image.Label)
+	assert.Equal(t, "Example image description.", image.Description)
+	assert.Nil(t, image.Vendor)
+	assert.Equal(t, true, image.IsPublic)
+	assert.Equal(t, false, image.Deprecated)
+	assert.Equal(t, "available", string(image.Status))
+	assert.Equal(t, "2021-08-14T22:44:02Z", image.Created.Format(time.RFC3339))
+	assert.Equal(t, "2021-08-14T22:44:02Z", image.Updated.Format(time.RFC3339))
+	assert.Equal(t, "2026-07-01T04:00:00Z", image.EOL.Format(time.RFC3339))
+	assert.Equal(t, 2500, image.Size)
+	assert.Equal(t, 1234567, image.TotalSize)
+
+	assert.Equal(t, 1, image.ImageSharing.SharedBy.ShareGroupID)
+	assert.Equal(t, "0ee8e1c1-b19b-4052-9487-e3b13faac111", image.ImageSharing.SharedBy.ShareGroupUUID)
+	assert.Equal(t, "test-group-minecraft-1", image.ImageSharing.SharedBy.ShareGroupLabel)
+	assert.Nil(t, image.ImageSharing.SharedBy.SourceImageID)
+	assert.Nil(t, image.ImageSharing.SharedWith)
 
 	assert.ElementsMatch(t, []string{"cloud-init", "distributed-sites"}, image.Capabilities)
 
@@ -105,7 +189,7 @@ func TestImage_Create(t *testing.T) {
 	assert.Equal(t, "linode/debian11", image.ID)
 	assert.Equal(t, "Debian 11", image.Label)
 	assert.Equal(t, "Example image description.", image.Description)
-	assert.Equal(t, "Debian", image.Vendor)
+	assert.Equal(t, "Debian", *image.Vendor)
 	assert.Equal(t, true, image.IsPublic)
 	assert.Equal(t, false, image.Deprecated)
 	assert.Equal(t, "available", string(image.Status))
@@ -149,7 +233,7 @@ func TestImage_Update(t *testing.T) {
 	assert.Equal(t, "linode/debian11", image.ID)
 	assert.Equal(t, "Debian 11", image.Label)
 	assert.Equal(t, "Example image description.", image.Description)
-	assert.Equal(t, "Debian", image.Vendor)
+	assert.Equal(t, "Debian", *image.Vendor)
 	assert.Equal(t, true, image.IsPublic)
 	assert.Equal(t, false, image.Deprecated)
 	assert.Equal(t, "available", string(image.Status))
@@ -199,7 +283,7 @@ func TestImage_Upload(t *testing.T) {
 	assert.Equal(t, true, image.IsPublic)
 	assert.Equal(t, "2026-07-01T04:00:00Z", image.EOL.Format(time.RFC3339))
 	assert.ElementsMatch(t, []string{"repair-image", "fix-1"}, image.Tags)
-	assert.Equal(t, "Debian", image.Vendor)
+	assert.Equal(t, "Debian", *image.Vendor)
 	assert.False(t, image.Deprecated)
 	expectedCapabilities := []string{"cloud-init", "distributed-sites"}
 	assert.ElementsMatch(t, expectedCapabilities, image.Capabilities)
@@ -247,7 +331,7 @@ func TestImage_Replicate(t *testing.T) {
 	assert.Equal(t, "linode/debian11", image.ID)
 	assert.Equal(t, "Debian 11", image.Label)
 	assert.Equal(t, "Example image description.", image.Description)
-	assert.Equal(t, "Debian", image.Vendor)
+	assert.Equal(t, "Debian", *image.Vendor)
 	assert.Equal(t, true, image.IsPublic)
 	assert.Equal(t, false, image.Deprecated)
 	assert.Equal(t, "available", string(image.Status))
