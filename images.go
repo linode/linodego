@@ -43,16 +43,17 @@ type ImageRegion struct {
 // Image represents a deployable Image object for use with Linode Instances
 type Image struct {
 	ID           string        `json:"id"`
-	CreatedBy    string        `json:"created_by"`
+	CreatedBy    *string       `json:"created_by,omitempty"`
 	Capabilities []string      `json:"capabilities"`
 	Label        string        `json:"label"`
 	Description  string        `json:"description"`
 	Type         string        `json:"type"`
-	Vendor       string        `json:"vendor"`
+	Vendor       *string       `json:"vendor,omitempty"`
 	Status       ImageStatus   `json:"status"`
 	Size         int           `json:"size"`
 	TotalSize    int           `json:"total_size"`
 	IsPublic     bool          `json:"is_public"`
+	IsShared     *bool         `json:"is_shared"`
 	Deprecated   bool          `json:"deprecated"`
 	Regions      []ImageRegion `json:"regions"`
 	Tags         []string      `json:"tags"`
@@ -61,6 +62,25 @@ type Image struct {
 	Created *time.Time `json:"-"`
 	Expiry  *time.Time `json:"-"`
 	EOL     *time.Time `json:"-"`
+
+	ImageSharing ImageSharing `json:"image_sharing"`
+}
+
+type ImageSharing struct {
+	SharedWith *ImageSharingSharedWith `json:"shared_with,omitempty"`
+	SharedBy   *ImageSharingSharedBy   `json:"shared_by,omitempty"`
+}
+
+type ImageSharingSharedWith struct {
+	ShareGroupCount        int    `json:"sharegroup_count"`
+	ImageShareGroupListURL string `json:"image_sharegroup_list_url"`
+}
+
+type ImageSharingSharedBy struct {
+	ShareGroupID    int     `json:"sharegroup_id"`
+	ShareGroupUUID  string  `json:"sharegroup_uuid"`
+	ShareGroupLabel string  `json:"sharegroup_label"`
+	SourceImageID   *string `json:"source_image_id,omitempty"`
 }
 
 // ImageCreateOptions fields are those accepted by CreateImage
