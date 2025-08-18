@@ -72,7 +72,7 @@ type LKENodePool struct {
 	Tags    []string            `json:"tags"`
 	Labels  LKENodePoolLabels   `json:"labels"`
 	Taints  []LKENodePoolTaint  `json:"taints"`
-	Label   *string             `json:"label,omitempty"`
+	Label   *string             `json:"label"`
 
 	Autoscaler LKENodePoolAutoscaler `json:"autoscaler"`
 
@@ -93,7 +93,7 @@ type LKENodePoolCreateOptions struct {
 	Tags   []string           `json:"tags"`
 	Labels LKENodePoolLabels  `json:"labels"`
 	Taints []LKENodePoolTaint `json:"taints"`
-	Label  *string            `json:"label,omitempty"`
+	Label  *string            `json:"label"`
 
 	Autoscaler *LKENodePoolAutoscaler `json:"autoscaler,omitempty"`
 
@@ -109,7 +109,7 @@ type LKENodePoolUpdateOptions struct {
 	Tags   *[]string           `json:"tags,omitempty"`
 	Labels *LKENodePoolLabels  `json:"labels,omitempty"`
 	Taints *[]LKENodePoolTaint `json:"taints,omitempty"`
-	Label  *string             `json:"label,omitempty"`
+	Label  *string             `json:"label"`
 
 	Autoscaler *LKENodePoolAutoscaler `json:"autoscaler,omitempty"`
 
