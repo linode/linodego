@@ -201,6 +201,20 @@ func (c *Client) DeleteImageShareGroup(ctx context.Context, imageShareGroupID in
 	)
 }
 
+// ImageShareGroupListImages lists the Images in a specified ImageShareGroup owned by the procuer.
+func (c *Client) ImageShareGroupListImages(
+	ctx context.Context,
+	imageShareGroupID int,
+	opts *ListOptions,
+) ([]Image, error) {
+	return getPaginatedResults[Image](
+		ctx,
+		c,
+		formatAPIPath("images/sharegroups/%d/images", imageShareGroupID),
+		opts,
+	)
+}
+
 // ImageShareGroupAddImages allows the producer to add images to a specific ImageShareGroup.
 func (c *Client) ImageShareGroupAddImages(
 	ctx context.Context,
