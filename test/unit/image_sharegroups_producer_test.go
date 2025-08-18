@@ -3,11 +3,12 @@ package unit
 import (
 	"context"
 	"fmt"
+	"testing"
+	"time"
+
 	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
-	"testing"
-	"time"
 )
 
 func TestImageShareGroup_Producer_Create(t *testing.T) {
