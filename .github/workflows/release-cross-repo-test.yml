@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout terraform repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           repository: linode/terraform-provider-linode
           fetch-depth: 0
@@ -22,7 +22,7 @@ jobs:
       - run: make deps
 
       - name: Clone Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
             path: linodego
 
