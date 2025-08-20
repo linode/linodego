@@ -29,6 +29,7 @@ const (
 	CapabilityLinodes                       string = "Linodes"
 	CapabilityLkeHaControlPlanes            string = "LKE HA Control Planes"
 	CapabilityMachineImages                 string = "Machine Images"
+	CapabilityMaintenancePolicy             string = "Maintenance Policy"
 	CapabilityMetadata                      string = "Metadata"
 	CapabilityNodeBalancers                 string = "NodeBalancers"
 	CapabilityObjectStorage                 string = "Object Storage"

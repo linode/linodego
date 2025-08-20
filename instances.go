@@ -78,6 +78,9 @@ type Instance struct {
 
 	// Note: Linode interfaces may not currently be available to all users.
 	InterfaceGeneration InterfaceGeneration `json:"interface_generation"`
+
+	// NOTE: MaintenancePolicy can only be used with v4beta.
+	MaintenancePolicy string `json:"maintenance_policy"`
 }
 
 // InstanceSpec represents a linode spec
@@ -218,6 +221,9 @@ type InstanceCreateOptions struct {
 	Group string `json:"group,omitempty"`
 
 	IPv4 []string `json:"ipv4,omitempty"`
+
+	// NOTE: MaintenancePolicy can only be used with v4beta.
+	MaintenancePolicy *string `json:"maintenance_policy,omitempty"`
 }
 
 // InstanceCreatePlacementGroupOptions represents the placement group
@@ -237,6 +243,9 @@ type InstanceUpdateOptions struct {
 
 	// Deprecated: group is a deprecated property denoting a group label for the Linode.
 	Group *string `json:"group,omitempty"`
+
+	// NOTE: MaintenancePolicy can only be used with v4beta.
+	MaintenancePolicy *string `json:"maintenance_policy,omitempty"`
 }
 
 // MarshalJSON contains logic necessary to populate the `interfaces` field of
@@ -363,12 +372,13 @@ func (backup *InstanceBackup) UnmarshalJSON(b []byte) error {
 // GetUpdateOptions converts an Instance to InstanceUpdateOptions for use in UpdateInstance
 func (i *Instance) GetUpdateOptions() InstanceUpdateOptions {
 	return InstanceUpdateOptions{
-		Label:           i.Label,
-		Group:           &i.Group,
-		Backups:         i.Backups,
-		Alerts:          i.Alerts,
-		WatchdogEnabled: &i.WatchdogEnabled,
-		Tags:            &i.Tags,
+		Label:             i.Label,
+		Group:             &i.Group,
+		Backups:           i.Backups,
+		Alerts:            i.Alerts,
+		WatchdogEnabled:   &i.WatchdogEnabled,
+		Tags:              &i.Tags,
+		MaintenancePolicy: &i.MaintenancePolicy,
 	}
 }
 

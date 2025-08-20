@@ -305,10 +305,10 @@ interactions:
       0, "maximum_linodes_per_pg": 0, "maximum_linodes_per_flexible_pg": 0}, "site_type":
       "distributed"}, {"id": "no-osl-1", "label": "Oslo, NO", "country": "no", "capabilities":
       ["Linodes", "Block Storage Encryption", "Disk Encryption", "Backups", "NodeBalancers",
-      "Block Storage", "Kubernetes", "Cloud Firewall", "Vlans", "VPCs", "Managed Databases",
-      "Metadata", "Premium Plans", "Placement Group", "StackScripts", "Linode Interfaces"],
-      "monitors": {"alerts": ["Managed Databases"], "metrics": ["Managed Databases"]},
-      "status": "ok", "resolvers": {"ipv4": "172.238.140.33,172.238.140.25,172.238.140.30,172.238.140.31,172.238.140.26,172.238.140.28,172.238.140.34,172.238.140.32,172.238.140.27,172.238.140.29",
+      "Block Storage", "Kubernetes", "Kubernetes Enterprise", "Cloud Firewall", "Vlans",
+      "VPCs", "Managed Databases", "Metadata", "Premium Plans", "Placement Group",
+      "StackScripts", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases"],
+      "metrics": ["Managed Databases"]}, "status": "ok", "resolvers": {"ipv4": "172.238.140.33,172.238.140.25,172.238.140.30,172.238.140.31,172.238.140.26,172.238.140.28,172.238.140.34,172.238.140.32,172.238.140.27,172.238.140.29",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "us-central",
@@ -365,8 +365,8 @@ interactions:
       ["Linodes", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
       "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
       "Vlans", "Block Storage Migrations", "Metadata", "Placement Group", "StackScripts",
-      "Linode Interfaces"], "monitors": {"alerts": [], "metrics": []}, "status": "ok",
-      "resolvers": {"ipv4": "139.162.11.5,139.162.13.5,139.162.14.5,139.162.15.5,139.162.16.5,139.162.21.5,139.162.27.5,103.3.60.18,103.3.60.19,103.3.60.20",
+      "Maintenance Policy", "Linode Interfaces"], "monitors": {"alerts": [], "metrics":
+      []}, "status": "ok", "resolvers": {"ipv4": "139.162.11.5,139.162.13.5,139.162.14.5,139.162.15.5,139.162.16.5,139.162.21.5,139.162.27.5,103.3.60.18,103.3.60.19,103.3.60.20",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "eu-central",
@@ -374,8 +374,9 @@ interactions:
       Encryption", "Disk Encryption", "Backups", "NodeBalancers", "Block Storage",
       "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall", "Vlans", "Block
       Storage Migrations", "Managed Databases", "Metadata", "Placement Group", "StackScripts",
-      "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases"], "metrics":
-      ["Managed Databases"]}, "status": "ok", "resolvers": {"ipv4": "139.162.130.5,139.162.131.5,139.162.132.5,139.162.133.5,139.162.134.5,139.162.135.5,139.162.136.5,139.162.137.5,139.162.138.5,139.162.139.5",
+      "Maintenance Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed
+      Databases"], "metrics": ["Managed Databases"]}, "status": "ok", "resolvers":
+      {"ipv4": "139.162.130.5,139.162.131.5,139.162.132.5,139.162.133.5,139.162.134.5,139.162.135.5,139.162.136.5,139.162.137.5,139.162.138.5,139.162.139.5",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "ap-northeast",
@@ -411,7 +412,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 04 Aug 2025 07:11:39 GMT
+      - Wed, 20 Aug 2025 21:21:21 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -437,7 +438,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"ap-west","type":"g6-nanode-1","label":"go-test-ins-wo-disk-1prcyf35g503","firewall_id":3034504,"booted":false}'
+    body: '{"region":"ap-west","type":"g6-nanode-1","label":"go-test-ins-wo-disk-h5k9y6s07n5c","firewall_id":3094431,"booted":false}'
     form: {}
     headers:
       Accept:
@@ -449,15 +450,15 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 81338322, "label": "go-test-ins-wo-disk-1prcyf35g503", "group":
+    body: '{"id": 82250125, "label": "go-test-ins-wo-disk-h5k9y6s07n5c", "group":
       "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["192.46.211.68"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["172.105.57.152"], "ipv6": "1234::5678/128",
       "image": null, "region": "ap-west", "site_type": "core", "specs": {"disk": 25600,
       "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
       0}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota":
       80, "io": 10000}, "backups": {"enabled": false, "available": false, "schedule":
       {"day": null, "window": null}, "last_successful": null}, "hypervisor": "kvm",
-      "watchdog_enabled": true, "tags": [], "host_uuid": "19ea6e3784e1b9ed5c96687703f93f845ac75051",
+      "watchdog_enabled": true, "tags": [], "host_uuid": "c1f03c8cca8c70543757445db49f6a6eaa71a41b",
       "has_user_data": false, "placement_group": null, "disk_encryption": "enabled",
       "lke_cluster_id": null, "capabilities": ["SMTP Enabled"], "interface_generation":
       "legacy_config"}'
@@ -483,7 +484,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 04 Aug 2025 07:11:39 GMT
+      - Wed, 20 Aug 2025 21:21:22 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -508,7 +509,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-conf-ux2a83e03w0f","devices":{},"interfaces":null}'
+    body: '{"label":"go-test-conf-u9l6u9vf59u6","devices":{},"interfaces":null}'
     form: {}
     headers:
       Accept:
@@ -517,10 +518,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/81338322/configs
+    url: https://api.linode.com/v4beta/linode/instances/82250125/configs
     method: POST
   response:
-    body: '{"id": 84797249, "label": "go-test-conf-ux2a83e03w0f", "helpers": {"updatedb_disabled":
+    body: '{"id": 85711617, "label": "go-test-conf-u9l6u9vf59u6", "helpers": {"updatedb_disabled":
       true, "distro": true, "modules_dep": true, "network": false, "devtmpfs_automount":
       true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
@@ -551,7 +552,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 04 Aug 2025 07:11:40 GMT
+      - Wed, 20 Aug 2025 21:21:22 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -584,7 +585,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/81338322/transfer/2025/8
+    url: https://api.linode.com/v4beta/linode/instances/82250125/transfer/2025/8
     method: GET
   response:
     body: '{"bytes_in": 0, "bytes_out": 0, "bytes_total": 0}'
@@ -612,7 +613,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 04 Aug 2025 07:11:40 GMT
+      - Wed, 20 Aug 2025 21:21:23 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -646,7 +647,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/81338322/transfer/2025/8
+    url: https://api.linode.com/v4beta/linode/instances/82250125/transfer/2025/8
     method: GET
   response:
     body: '{"bytes_in": 0, "bytes_out": 0, "bytes_total": 0}'
@@ -674,7 +675,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 04 Aug 2025 07:11:40 GMT
+      - Wed, 20 Aug 2025 21:21:23 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -708,7 +709,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/81338322
+    url: https://api.linode.com/v4beta/linode/instances/82250125
     method: DELETE
   response:
     body: '{}'
@@ -736,7 +737,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 04 Aug 2025 07:11:41 GMT
+      - Wed, 20 Aug 2025 21:21:25 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
