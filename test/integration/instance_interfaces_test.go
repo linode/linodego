@@ -104,7 +104,7 @@ func TestInstance_CreateWithLinodeInterfaces(
 					IPv4: &linodego.PublicInterfaceIPv4CreateOptions{
 						Addresses: []linodego.PublicInterfaceIPv4AddressCreateOptions{
 							{
-								Address: "auto",
+								Address: linodego.Pointer("auto"),
 								Primary: linodego.Pointer(true),
 							},
 						},
@@ -119,7 +119,7 @@ func TestInstance_CreateWithLinodeInterfaces(
 					IPv4: &linodego.VPCInterfaceIPv4CreateOptions{
 						Addresses: []linodego.VPCInterfaceIPv4AddressCreateOptions{
 							{
-								Address:        "auto",
+								Address:        linodego.Pointer("auto"),
 								Primary:        linodego.Pointer(true),
 								NAT1To1Address: linodego.Pointer("auto"),
 							},
