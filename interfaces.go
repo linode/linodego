@@ -135,7 +135,7 @@ type VPCInterfaceIPv4CreateOptions struct {
 }
 
 type VPCInterfaceIPv4AddressCreateOptions struct {
-	Address        *string `json:"address"`
+	Address        *string `json:"address,omitempty"`
 	Primary        *bool   `json:"primary,omitempty"`
 	NAT1To1Address *string `json:"nat_1_1_address,omitempty"`
 }
