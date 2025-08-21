@@ -11,8 +11,9 @@ import (
 // VPCSubnetLinodeInterface represents an interface on a Linode that is currently
 // assigned to this VPC subnet.
 type VPCSubnetLinodeInterface struct {
-	ID     int  `json:"id"`
-	Active bool `json:"active"`
+	ID       int  `json:"id"`
+	Active   bool `json:"active"`
+	ConfigID *int `json:"config_id"`
 }
 
 // VPCSubnetLinode represents a Linode currently assigned to a VPC subnet.

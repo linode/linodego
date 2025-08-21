@@ -280,7 +280,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 27 May 2025 18:26:08 GMT
+      - Tue, 27 May 2025 18:26:21 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -306,145 +306,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"us-iad","type":"g6-nanode-1","label":"go-test-ins-wo-disk-zbp0f5ib8481","firewall_id":2679897,"booted":false}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances
-    method: POST
-  response:
-    body: '{"id": 77656024, "label": "go-test-ins-wo-disk-zbp0f5ib8481", "group":
-      "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.237.171.130"], "ipv6": "1234::5678/128",
-      "image": null, "region": "us-iad", "site_type": "core", "specs": {"disk": 25600,
-      "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
-      0}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota":
-      80, "io": 10000}, "backups": {"enabled": false, "available": false, "schedule":
-      {"day": null, "window": null}, "last_successful": null}, "hypervisor": "kvm",
-      "watchdog_enabled": true, "tags": [], "host_uuid": "a1eb2d58d98497bfcc5f3c660efc0dcfcbe8f962",
-      "has_user_data": false, "placement_group": null, "disk_encryption": "enabled",
-      "lke_cluster_id": null, "capabilities": ["Block Storage Encryption"], "interface_generation":
-      "legacy_config"}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Tue, 27 May 2025 18:26:08 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Accept-Encoding
-      X-Accepted-Oauth-Scopes:
-      - linodes:read_write
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "20"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: '{"label":"go-test-conf-idpjzg416871","devices":{},"interfaces":null}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/77656024/configs
-    method: POST
-  response:
-    body: '{"id": 81085891, "label": "go-test-conf-idpjzg416871", "helpers": {"updatedb_disabled":
-      true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
-      true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
-      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
-      "devices": {"sda": null, "sdb": null, "sdc": null, "sdd": null, "sde": null,
-      "sdf": null, "sdg": null, "sdh": null}, "initrd": null, "run_level": "default",
-      "virt_mode": "paravirt", "interfaces": []}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "539"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Tue, 27 May 2025 18:26:09 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - linodes:read_write
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "1600"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: '{"label":"go-test-vpc-1748370368987562000","region":"us-iad","subnets":[{"label":"linodego-vpc-test-1748370368987714000","ipv4":"192.168.0.0/25"}]}'
+    body: '{"label":"go-test-vpc-1748370381134185000","region":"us-iad","subnets":[{"label":"linodego-vpc-test-1748370381135042000","ipv4":"192.168.0.0/25"}]}'
     form: {}
     headers:
       Accept:
@@ -456,8 +318,8 @@ interactions:
     url: https://api.linode.com/v4beta/vpcs
     method: POST
   response:
-    body: '{"id": 191690, "label": "go-test-vpc-1748370368987562000", "description":
-      "", "region": "us-iad", "subnets": [{"id": 190462, "label": "linodego-vpc-test-1748370368987714000",
+    body: '{"id": 191693, "label": "go-test-vpc-1748370381134185000", "description":
+      "", "region": "us-iad", "subnets": [{"id": 190465, "label": "linodego-vpc-test-1748370381135042000",
       "ipv4": "192.168.0.0/25", "linodes": [], "nodebalancers": [], "databases": [],
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}], "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
@@ -485,7 +347,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 27 May 2025 18:26:09 GMT
+      - Tue, 27 May 2025 18:26:21 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -509,7 +371,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-conf-idpjzg416871","comments":"","devices":{},"helpers":{"updatedb_disabled":true,"distro":true,"modules_dep":true,"network":true,"devtmpfs_automount":true},"interfaces":[{"purpose":"public"},{"label":"testvlan","purpose":"vlan"},{"purpose":"vpc","subnet_id":190462,"ipv4":{"nat_1_1":"any"}}],"memory_limit":0,"kernel":"linode/latest-64bit","init_rd":null,"root_device":"/dev/sda","run_level":"default","virt_mode":"paravirt"}'
+    body: '{"region":"us-iad","type":"g6-nanode-1","label":"go-test-intf-0155mkrjhz94","root_pass":"jOy0AsZ''o8usw4UW'')J9\u003eM-2\u003eIq$Eh|[9k50)1#B1)!q6qB;v^k8KPEq54{z6YW4","image":"linode/debian12","interface_generation":"linode","booted":false,"interfaces":[{"firewall_id":2679897,"public":{"ipv4":{"addresses":[{"address":"auto","primary":true}]},"ipv6":{}}},{"firewall_id":2679897,"vpc":{"subnet_id":190465,"ipv4":{"addresses":[{"address":"auto","primary":true,"nat_1_1_address":"auto"}]}}}]}'
     form: {}
     headers:
       Accept:
@@ -518,157 +380,22 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/77656024/configs/81085891
-    method: PUT
-  response:
-    body: '{"id": 81085891, "label": "go-test-conf-idpjzg416871", "helpers": {"updatedb_disabled":
-      true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
-      true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
-      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
-      "devices": {"sda": null, "sdb": null, "sdc": null, "sdd": null, "sde": null,
-      "sdf": null, "sdg": null, "sdh": null}, "initrd": null, "run_level": "default",
-      "virt_mode": "paravirt", "interfaces": [{"id": 5438166, "purpose": "public",
-      "primary": false, "active": false, "ipam_address": null, "label": null, "vpc_id":
-      null, "subnet_id": null, "ipv4": null, "ip_ranges": null}, {"id": 5438167, "purpose":
-      "vlan", "primary": false, "active": false, "ipam_address": "", "label": "testvlan",
-      "vpc_id": null, "subnet_id": null, "ipv4": null, "ip_ranges": null}, {"id":
-      5438168, "purpose": "vpc", "primary": false, "active": false, "ipam_address":
-      null, "label": null, "vpc_id": 191690, "subnet_id": 190462, "ipv4": {"vpc":
-      "192.168.0.2", "nat_1_1": "172.237.171.130"}, "ip_ranges": []}]}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Tue, 27 May 2025 18:26:09 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Accept-Encoding
-      X-Accepted-Oauth-Scopes:
-      - linodes:read_write
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "1600"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: '{"ids":[5438167,5438166,5438168]}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/77656024/configs/81085891/interfaces/order
+    url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "2"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Tue, 27 May 2025 18:26:09 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - linodes:read_write
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "1600"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/77656024/configs/81085891
-    method: GET
-  response:
-    body: '{"id": 81085891, "label": "go-test-conf-idpjzg416871", "helpers": {"updatedb_disabled":
-      true, "distro": true, "modules_dep": true, "network": true, "devtmpfs_automount":
-      true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
-      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
-      "devices": {"sda": null, "sdb": null, "sdc": null, "sdd": null, "sde": null,
-      "sdf": null, "sdg": null, "sdh": null}, "initrd": null, "run_level": "default",
-      "virt_mode": "paravirt", "interfaces": [{"id": 5438167, "purpose": "vlan", "primary":
-      false, "active": false, "ipam_address": "", "label": "testvlan", "vpc_id": null,
-      "subnet_id": null, "ipv4": null, "ip_ranges": null}, {"id": 5438166, "purpose":
-      "public", "primary": false, "active": false, "ipam_address": null, "label":
-      null, "vpc_id": null, "subnet_id": null, "ipv4": null, "ip_ranges": null}, {"id":
-      5438168, "purpose": "vpc", "primary": false, "active": false, "ipam_address":
-      null, "label": null, "vpc_id": 191690, "subnet_id": 190462, "ipv4": {"vpc":
-      "192.168.0.2", "nat_1_1": "172.237.171.130"}, "ip_ranges": []}]}'
+    body: '{"id": 77656032, "label": "go-test-intf-0155mkrjhz94", "group": "", "status":
+      "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "type": "g6-nanode-1", "ipv4": ["172.237.171.158", "172.237.171.160"], "ipv6":
+      "1234::5678/128", "image": "linode/debian12", "region":
+      "us-iad", "site_type": "core", "specs": {"disk": 25600, "memory": 1024, "vcpus":
+      1, "gpus": 0, "transfer": 1000, "accelerated_devices": 0}, "alerts": {"cpu":
+      90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io": 10000},
+      "backups": {"enabled": false, "available": false, "schedule": {"day": null,
+      "window": null}, "last_successful": null}, "hypervisor": "kvm", "watchdog_enabled":
+      true, "tags": [], "host_uuid": "a1eb2d58d98497bfcc5f3c660efc0dcfcbe8f962", "has_user_data":
+      false, "placement_group": null, "disk_encryption": "enabled", "lke_cluster_id":
+      null, "capabilities": ["Block Storage Encryption"], "interface_generation":
+      "linode"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -691,17 +418,16 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 27 May 2025 18:26:09 GMT
+      - Tue, 27 May 2025 18:26:23 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
-      - Authorization, X-Filter
       - Authorization, X-Filter
       - Accept-Encoding
       X-Accepted-Oauth-Scopes:
-      - linodes:read_only
+      - linodes:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -710,7 +436,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
+      - "20"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -726,7 +452,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/77656024
+    url: https://api.linode.com/v4beta/linode/instances/77656032
     method: DELETE
   response:
     body: '{}'
@@ -754,7 +480,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 27 May 2025 18:26:12 GMT
+      - Tue, 27 May 2025 18:26:25 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -787,7 +513,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/vpcs/191690
+    url: https://api.linode.com/v4beta/vpcs/191693
     method: DELETE
   response:
     body: '{}'
@@ -815,7 +541,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 27 May 2025 18:26:12 GMT
+      - Tue, 27 May 2025 18:26:26 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
