@@ -35,6 +35,11 @@ type LKECluster struct {
 
 	// NOTE: APLEnabled is currently in beta and may only function with API version v4beta.
 	APLEnabled bool `json:"apl_enabled"`
+
+	// NOTE: SubnetID, VpcID, and StackType may not currently be available to all users and can only be used with v4beta.
+	SubnetID  int    `json:"subnet_id"`
+	VpcID     int    `json:"vpc_id"`
+	StackType string `json:"stack_type"`
 }
 
 // LKEClusterCreateOptions fields are those accepted by CreateLKECluster
@@ -51,6 +56,11 @@ type LKEClusterCreateOptions struct {
 
 	// NOTE: APLEnabled is currently in beta and may only function with API version v4beta.
 	APLEnabled bool `json:"apl_enabled,omitempty"`
+
+	// NOTE: SubnetID, VpcID, and StackType may not currently be available to all users and can only be used with v4beta.
+	SubnetID  *int    `json:"subnet_id,omitempty"`
+	VpcID     *int    `json:"vpc_id,omitempty"`
+	StackType *string `json:"stack_type,omitempty"`
 }
 
 // LKEClusterUpdateOptions fields are those accepted by UpdateLKECluster
