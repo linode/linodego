@@ -6,6 +6,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/stretchr/testify/require"
+
 	"github.com/linode/linodego"
 	. "github.com/linode/linodego"
 )
@@ -281,4 +283,53 @@ func TestVPC_ListIPAddresses(t *testing.T) {
 			instance.ID, *vpcIPs[0].Address, config.Interfaces[0].IPv4.VPC,
 		)
 	}
+}
+
+func TestVPC_ListAllIPv6Addresses(t *testing.T) {
+	client, vpc, _, instance, config, teardown := setupInstanceWithDualStackVPCAndNAT11(
+		t, "fixtures/TestVPC_ListAllIPv6Addresses",
+	)
+	defer teardown()
+
+	vpcIPs, err := client.ListAllVPCIPv6Addresses(
+		context.Background(),
+		linodego.NewListOptions(1, fmt.Sprintf("{\"linode_id\": %d}", instance.ID)),
+	)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if len(vpcIPs) == 0 {
+		t.Fatal("expecting 1 VPC IP address, but got 0")
+	}
+
+	require.NotNil(t, vpc.IPv6[0].Range)
+	require.Equal(t, *vpcIPs[0].IPv6Range, config.Interfaces[0].IPv6.SLAAC[0].Range)
+	require.Equal(t, vpcIPs[0].IPv6Addresses[0].SLAACAddress, config.Interfaces[0].IPv6.SLAAC[0].Address)
+	require.True(t, *vpcIPs[0].IPv6IsPublic)
+}
+
+func TestVPC_ListIPv6Addresses(t *testing.T) {
+	client, vpc, _, _, config, teardown := setupInstanceWithDualStackVPCAndNAT11(
+		t, "fixtures/TestVPC_ListIPv6Addresses",
+	)
+	defer teardown()
+
+	vpcIPs, err := client.ListVPCIPv6Addresses(
+		context.Background(),
+		vpc.ID,
+		nil,
+	)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	if len(vpcIPs) == 0 {
+		t.Fatal("expecting 1 VPC IP address, but got 0")
+	}
+
+	require.NotNil(t, vpc.IPv6[0].Range)
+	require.Equal(t, *vpcIPs[0].IPv6Range, config.Interfaces[0].IPv6.SLAAC[0].Range)
+	require.Equal(t, vpcIPs[0].IPv6Addresses[0].SLAACAddress, config.Interfaces[0].IPv6.SLAAC[0].Address)
+	require.True(t, *vpcIPs[0].IPv6IsPublic)
 }

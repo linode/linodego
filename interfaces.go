@@ -65,6 +65,7 @@ type VPCInterface struct {
 	VPCID    int              `json:"vpc_id"`
 	SubnetID int              `json:"subnet_id"`
 	IPv4     VPCInterfaceIPv4 `json:"ipv4"`
+	IPv6     VPCInterfaceIPv6 `json:"ipv6"`
 }
 
 type VPCInterfaceIPv4 struct {
@@ -79,6 +80,21 @@ type VPCInterfaceIPv4Address struct {
 }
 
 type VPCInterfaceIPv4Range struct {
+	Range string `json:"range"`
+}
+
+type VPCInterfaceIPv6 struct {
+	SLAAC    []VPCInterfaceIPv6SLAAC `json:"slaac"`
+	Ranges   []VPCInterfaceIPv6Range `json:"ranges"`
+	IsPublic bool                    `json:"is_public"`
+}
+
+type VPCInterfaceIPv6SLAAC struct {
+	Range   string `json:"range"`
+	Address string `json:"address"`
+}
+
+type VPCInterfaceIPv6Range struct {
 	Range string `json:"range"`
 }
 
@@ -127,6 +143,7 @@ type PublicInterfaceIPv6RangeCreateOptions struct {
 type VPCInterfaceCreateOptions struct {
 	SubnetID int                            `json:"subnet_id"`
 	IPv4     *VPCInterfaceIPv4CreateOptions `json:"ipv4,omitempty"`
+	IPv6     *VPCInterfaceIPv6CreateOptions `json:"ipv6,omitempty"`
 }
 
 type VPCInterfaceIPv4CreateOptions struct {
@@ -141,6 +158,20 @@ type VPCInterfaceIPv4AddressCreateOptions struct {
 }
 
 type VPCInterfaceIPv4RangeCreateOptions struct {
+	Range string `json:"range"`
+}
+
+type VPCInterfaceIPv6CreateOptions struct {
+	SLAAC    []VPCInterfaceIPv6SLAACCreateOptions `json:"slaac,omitempty"`
+	Ranges   []VPCInterfaceIPv6RangeCreateOptions `json:"ranges,omitempty"`
+	IsPublic bool                                 `json:"is_public"`
+}
+
+type VPCInterfaceIPv6SLAACCreateOptions struct {
+	Range string `json:"range"`
+}
+
+type VPCInterfaceIPv6RangeCreateOptions struct {
 	Range string `json:"range"`
 }
 

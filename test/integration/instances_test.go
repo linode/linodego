@@ -520,7 +520,7 @@ func TestInstance_Disk_Clone(t *testing.T) {
 	disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
 		Label:      "go-disk-test-" + randLabel(),
 		Filesystem: "ext4",
-		Image:      "linode/debian10",
+		Image:      "linode/debian12",
 		RootPass:   randPassword(),
 		Size:       2000,
 	})
@@ -560,7 +560,7 @@ func TestInstance_Disk_ResetPassword(t *testing.T) {
 	disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
 		Label:      "go-disk-test-" + randLabel(),
 		Filesystem: "ext4",
-		Image:      "linode/debian10",
+		Image:      "linode/debian12",
 		RootPass:   randPassword(),
 		Size:       2000,
 	})
@@ -626,7 +626,9 @@ func TestInstance_Volumes_List(t *testing.T) {
 		t.Error(err)
 	}
 
-	volume, teardown, volErr := createVolume(t, client)
+	volume, teardown, volErr := createVolume(t, client, func(l *linodego.Client, options *linodego.VolumeCreateOptions) {
+		options.Region = instance.Region
+	})
 
 	_, err = client.WaitForVolumeStatus(context.Background(), volume.ID, linodego.VolumeActive, 500)
 	if err != nil {
@@ -1015,7 +1017,7 @@ func createInstanceWithoutDisks(
 
 	createOpts := linodego.InstanceCreateOptions{
 		Label:  "go-test-ins-wo-disk-" + randLabel(),
-		Region: getRegionsWithCaps(t, client, []string{"linodes"})[0],
+		Region: getRegionsWithCaps(t, client, []string{"Linodes", "Maintenance Policy"})[0],
 		Type:   "g6-nanode-1",
 		Booted: linodego.Pointer(false),
 	}
@@ -1071,10 +1073,24 @@ func TestInstance_MaintenancePolicy(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestInstance_MaintenancePolicy")
 	defer teardown()
 
+	region := getRegionsWithCapsAndSiteType(
+		t,
+		client,
+		[]string{"Linodes", "Maintenance Policy"},
+		"core",
+	)[0]
+
 	settings, err := client.GetAccountSettings(context.Background())
 	require.NoError(t, err)
 
-	instDefault, err := createInstance(t, client, false)
+	instDefault, err := createInstance(
+		t,
+		client,
+		false,
+		func(l *linodego.Client, options *linodego.InstanceCreateOptions) {
+			options.Region = region
+		},
+	)
 	require.NoError(t, err)
 	defer func() {
 		err := client.DeleteInstance(context.Background(), instDefault.ID)
@@ -1083,9 +1099,15 @@ func TestInstance_MaintenancePolicy(t *testing.T) {
 	require.Equal(t, settings.MaintenancePolicy, instDefault.MaintenancePolicy)
 
 	validPolicy := "linode/power_off_on"
-	instWithPolicy, err := createInstance(t, client, false, func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-		options.MaintenancePolicy = &validPolicy
-	})
+	instWithPolicy, err := createInstance(
+		t,
+		client,
+		false,
+		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+			options.Region = region
+			options.MaintenancePolicy = &validPolicy
+		},
+	)
 	require.NoError(t, err)
 	defer func() {
 		err := client.DeleteInstance(context.Background(), instWithPolicy.ID)
@@ -1093,7 +1115,14 @@ func TestInstance_MaintenancePolicy(t *testing.T) {
 	}()
 	require.Equal(t, validPolicy, instWithPolicy.MaintenancePolicy)
 
-	instToUpdate, err := createInstance(t, client, false)
+	instToUpdate, err := createInstance(
+		t,
+		client,
+		false,
+		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+			options.Region = region
+		},
+	)
 	require.NoError(t, err)
 	defer func() {
 		err := client.DeleteInstance(context.Background(), instToUpdate.ID)
