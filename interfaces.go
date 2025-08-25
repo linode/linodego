@@ -65,7 +65,9 @@ type VPCInterface struct {
 	VPCID    int              `json:"vpc_id"`
 	SubnetID int              `json:"subnet_id"`
 	IPv4     VPCInterfaceIPv4 `json:"ipv4"`
-	IPv6     VPCInterfaceIPv6 `json:"ipv6"`
+
+	// NOTE: IPv6 VPC interfaces may not currently be available to all users.
+	IPv6 VPCInterfaceIPv6 `json:"ipv6"`
 }
 
 type VPCInterfaceIPv4 struct {
@@ -83,17 +85,23 @@ type VPCInterfaceIPv4Range struct {
 	Range string `json:"range"`
 }
 
+// VPCInterfaceIPv6 contains the IPv6 configuration for a VPC.
+// NOTE: IPv6 VPC interfaces may not currently be available to all users.
 type VPCInterfaceIPv6 struct {
 	SLAAC    []VPCInterfaceIPv6SLAAC `json:"slaac"`
 	Ranges   []VPCInterfaceIPv6Range `json:"ranges"`
 	IsPublic bool                    `json:"is_public"`
 }
 
+// VPCInterfaceIPv6SLAAC contains the information for a single IPv6 SLAAC under a VPC.
+// NOTE: IPv6 VPC interfaces may not currently be available to all users.
 type VPCInterfaceIPv6SLAAC struct {
 	Range   string `json:"range"`
 	Address string `json:"address"`
 }
 
+// VPCInterfaceIPv6Range contains the information for a single IPv6 range under a VPC.
+// NOTE: IPv6 VPC interfaces may not currently be available to all users.
 type VPCInterfaceIPv6Range struct {
 	Range string `json:"range"`
 }
@@ -161,16 +169,22 @@ type VPCInterfaceIPv4RangeCreateOptions struct {
 	Range string `json:"range"`
 }
 
+// VPCInterfaceIPv6CreateOptions specifies IPv6 configuration parameters for VPC creation.
+// NOTE: IPv6 interfaces may not currently be available to all users.
 type VPCInterfaceIPv6CreateOptions struct {
 	SLAAC    []VPCInterfaceIPv6SLAACCreateOptions `json:"slaac,omitempty"`
 	Ranges   []VPCInterfaceIPv6RangeCreateOptions `json:"ranges,omitempty"`
 	IsPublic bool                                 `json:"is_public"`
 }
 
+// VPCInterfaceIPv6SLAACCreateOptions defines the IPv6 SLAAC configuration parameters for VPC creation.
+// NOTE: IPv6 interfaces may not currently be available to all users.
 type VPCInterfaceIPv6SLAACCreateOptions struct {
 	Range string `json:"range"`
 }
 
+// VPCInterfaceIPv6RangeCreateOptions defines the IPv6 range configuration parameters for VPC creation.
+// NOTE: IPv6 interfaces may not currently be available to all users.
 type VPCInterfaceIPv6RangeCreateOptions struct {
 	Range string `json:"range"`
 }
