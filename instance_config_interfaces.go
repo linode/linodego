@@ -17,8 +17,9 @@ type InstanceConfigInterface struct {
 	IPv4        *VPCIPv4               `json:"ipv4"`
 
 	// NOTE: IPv6 interfaces may not currently be available to all users.
-	IPv6     *InstanceConfigInterfaceIPv6 `json:"ipv6"`
-	IPRanges []string                     `json:"ip_ranges"`
+	IPv6 *InstanceConfigInterfaceIPv6 `json:"ipv6"`
+
+	IPRanges []string `json:"ip_ranges"`
 }
 
 // InstanceConfigInterfaceIPv6 represents the IPv6 configuration of a Linode interface.
