@@ -50,8 +50,19 @@ type VPCIP struct {
 	SubnetID     int     `json:"subnet_id"`
 	InterfaceID  int     `json:"interface_id"`
 
+	// NOTE: IPv6 VPCs may not currently be available to all users.
+	IPv6Range     *string            `json:"ipv6_range"`
+	IPv6IsPublic  *bool              `json:"ipv6_is_public"`
+	IPv6Addresses []VPCIPIPv6Address `json:"ipv6_addresses"`
+
 	// The type of this field will be made a pointer in the next major release of linodego.
 	ConfigID int `json:"config_id"`
+}
+
+// VPCIPIPv6Address represents a single IPv6 address under a VPCIP.
+// NOTE: IPv6 VPCs may not currently be available to all users.
+type VPCIPIPv6Address struct {
+	SLAACAddress string `json:"slaac_address"`
 }
 
 // InstanceIPv6Response contains the IPv6 addresses and ranges for an Instance
