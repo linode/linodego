@@ -48,7 +48,7 @@ type PublicInterfaceIPv4Address struct {
 
 type PublicInterfaceIPv4Shared struct {
 	Address  string `json:"address"`
-	LinodeID string `json:"linode_id"`
+	LinodeID int    `json:"linode_id"`
 }
 
 type PublicInterfaceIPv6Range struct {
