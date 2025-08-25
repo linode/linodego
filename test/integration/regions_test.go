@@ -73,3 +73,26 @@ func TestRegions_kubernetesEnterprise(t *testing.T) {
 	})
 	require.NotZero(t, regionIdx)
 }
+
+func TestRegionsMonitorsSection(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestRegions_List")
+	defer teardown()
+
+	regions, err := client.ListRegions(context.Background(), nil)
+	require.NoError(t, err)
+	found := false
+	for _, region := range regions {
+		if region.Monitors.Alerts != nil || region.Monitors.Metrics != nil {
+			found = true
+			// Validate Alerts
+			for _, alert := range region.Monitors.Alerts {
+				require.NotEmpty(t, alert, "Alert should not be empty")
+			}
+			// Validate Metrics
+			for _, metric := range region.Monitors.Metrics {
+				require.NotEmpty(t, metric, "Metric should not be empty")
+			}
+		}
+	}
+	require.True(t, found, "At least one region should have monitors section populated")
+}

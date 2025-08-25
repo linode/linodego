@@ -27,6 +27,15 @@ func TestListMonitorDashboards(t *testing.T) {
 
 	assert.Equal(t, linodego.DashboardType("standard"), clients[0].Type, "Expected dashboard type to match")
 	assert.Equal(t, linodego.ServiceType("dbaas"), clients[0].ServiceType, "Expected service_type to match")
+
+	// Assert group_by field (on first widget)
+	assert.NotNil(t, clients[0].Widgets[0].GroupBy, "Expected group_by to be present")
+	assert.NotEmpty(t, clients[0].Widgets[0].GroupBy, "group_by should not be empty if present")
+
+	// Assert filters field (optional, on first widget)
+	if clients[0].Widgets[0].Filters != nil {
+		assert.GreaterOrEqual(t, len(clients[0].Widgets[0].Filters), 0, "filters should be a slice (possibly empty)")
+	}
 }
 
 func TestListMonitorDashboardsByID(t *testing.T) {
@@ -70,4 +79,13 @@ func TestListMonitorDashboardsByServiceType(t *testing.T) {
 
 	assert.Equal(t, linodego.DashboardType("standard"), clients[0].Type, "Expected dashboard type to match")
 	assert.Equal(t, linodego.ServiceType("dbaas"), clients[0].ServiceType, "Expected service_type to match")
+
+	// Assert group_by field (on first widget)
+	assert.NotNil(t, clients[0].Widgets[0].GroupBy, "Expected group_by to be present")
+	assert.NotEmpty(t, clients[0].Widgets[0].GroupBy, "group_by should not be empty if present")
+
+	// Assert filters field (optional, on first widget)
+	if clients[0].Widgets[0].Filters != nil {
+		assert.GreaterOrEqual(t, len(clients[0].Widgets[0].Filters), 0, "filters should be a slice (possibly empty)")
+	}
 }

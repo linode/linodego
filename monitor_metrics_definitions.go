@@ -45,6 +45,11 @@ const (
 	MetricUnitRatio          MetricUnit = "ratio"
 	MetricUnitOpsPerSecond   MetricUnit = "ops_per_second"
 	MetricUnitIops           MetricUnit = "iops"
+	MetricUnitKiloBytesPerSecond MetricUnit = "kilo_bytes_per_second"
+	MetricUnitSessionsPerSecond MetricUnit = "sessions_per_second"
+	MetricUnitPacketsPerSecond MetricUnit = "packets_per_second"
+	MetricUnitKiloBitsPerSecond MetricUnit = "kilo_bits_per_second"
+
 )
 
 // MonitorDimension represents an ACLP MonitorDimension object
