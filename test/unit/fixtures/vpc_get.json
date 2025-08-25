@@ -4,12 +4,17 @@
     "id": 123,
     "label": "cool-vpc",
     "region": "us-east",
+    "ipv6": [
+        {
+            "range": "fd71:1140:a9d0::/52"
+        }
+    ],
     "subnets": [
         {
             "created": "2023-07-11T00:00:00",
-            "id": 456,
+            "id": 123,
             "ipv4": "10.0.1.0/24",
-            "label": "cool-vpc-subnet",
+            "label": "Subnet A",
             "linodes": [
                 {
                     "id": 111,
