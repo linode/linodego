@@ -16,7 +16,8 @@
                 "size": 12,
                 "chart_type": "area",
                 "y_label": "cpu_usage",
-                "aggregate_function": "sum"
+                "aggregate_function": "sum",
+                "group_by": ["entity_id"]
              },
              {
                 "metric": "memory_usage",
@@ -26,7 +27,8 @@
                 "size": 6,
                 "chart_type": "area",
                 "y_label": "memory_usage",
-                "aggregate_function": "sum"
+                "aggregate_function": "sum",
+                "group_by": ["entity_id"]
              },
              {
                 "metric": "available_memory",
@@ -36,7 +38,8 @@
                 "size": 6,
                 "chart_type": "area",
                 "y_label": "available_memory",
-                "aggregate_function": "sum"
+                "aggregate_function": "sum",
+                "group_by": ["entity_id"]
              },
              {
                 "metric": "disk_usage",
@@ -46,7 +49,8 @@
                 "size": 6,
                 "chart_type": "area",
                 "y_label": "disk_usage",
-                "aggregate_function": "sum"
+                "aggregate_function": "sum",
+                "group_by": ["entity_id"]
              },
              {
                 "metric": "available_disk",
@@ -56,7 +60,8 @@
                 "size": 6,
                 "chart_type": "area",
                 "y_label": "available_disk",
-                "aggregate_function": "sum"
+                "aggregate_function": "sum",
+                "group_by": ["entity_id"]
              },
              {
                 "metric": "read_iops",
@@ -66,7 +71,8 @@
                 "size": 6,
                 "chart_type": "area",
                 "y_label": "read_iops",
-                "aggregate_function": "sum"
+                "aggregate_function": "sum",
+                "group_by": ["entity_id"]
              },
              {
                 "metric": "write_iops",
@@ -76,7 +82,16 @@
                 "size": 6,
                 "chart_type": "area",
                 "y_label": "write_iops",
-                "aggregate_function": "sum"
+                "aggregate_function": "sum",
+                "group_by": ["entity_id"],
+                "filters": [
+                  {
+                     "dimension_label": "pattern",
+                     "operator": "in",
+                     "value": "publicout,privateout"
+                  }
+                  ]
+
              }
           ]
        }
