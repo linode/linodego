@@ -64,7 +64,7 @@ func TestLKECluster_List(t *testing.T) {
 	assert.Equal(t, "us-east", clusters[0].Region)
 	assert.Equal(t, 123, clusters[0].SubnetID)
 	assert.Equal(t, 456, clusters[0].VpcID)
-	assert.Equal(t, "ipv4", clusters[0].StackType)
+	assert.Equal(t, linodego.LKEClusterStackIPv4, clusters[0].StackType)
 	assert.Equal(t, false, clusters[0].ControlPlane.AuditLogsEnabled)
 }
 
@@ -84,7 +84,7 @@ func TestLKECluster_Get(t *testing.T) {
 	assert.Equal(t, "test-cluster", cluster.Label)
 	assert.Equal(t, 123, cluster.SubnetID)
 	assert.Equal(t, 456, cluster.VpcID)
-	assert.Equal(t, "ipv4", cluster.StackType)
+	assert.Equal(t, linodego.LKEClusterStackIPv4, cluster.StackType)
 	assert.Equal(t, false, cluster.ControlPlane.AuditLogsEnabled)
 }
 
@@ -103,7 +103,7 @@ func TestLKECluster_Create(t *testing.T) {
 		Tags:       []string{"tag1"},
 		SubnetID:   linodego.Pointer(123),
 		VpcID:      linodego.Pointer(456),
-		StackType:  linodego.Pointer("ipv4"),
+		StackType:  linodego.Pointer(linodego.LKEClusterStackIPv4),
 		ControlPlane: &linodego.LKEClusterControlPlaneOptions{
 			AuditLogsEnabled: linodego.Pointer(false),
 		},
@@ -117,7 +117,7 @@ func TestLKECluster_Create(t *testing.T) {
 	assert.Equal(t, "us-west", cluster.Region)
 	assert.Equal(t, 123, cluster.SubnetID)
 	assert.Equal(t, 456, cluster.VpcID)
-	assert.Equal(t, "ipv4", cluster.StackType)
+	assert.Equal(t, linodego.LKEClusterStackIPv4, cluster.StackType)
 	assert.Equal(t, false, cluster.ControlPlane.AuditLogsEnabled)
 }
 
