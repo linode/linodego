@@ -3,6 +3,7 @@ package linodego
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"net"
 	"time"
 
@@ -77,6 +78,9 @@ type Instance struct {
 
 	// Note: Linode interfaces may not currently be available to all users.
 	InterfaceGeneration InterfaceGeneration `json:"interface_generation"`
+
+	// NOTE: MaintenancePolicy can only be used with v4beta.
+	MaintenancePolicy string `json:"maintenance_policy"`
 }
 
 // InstanceSpec represents a linode spec
@@ -177,23 +181,32 @@ type InstancePasswordResetOptions struct {
 
 // InstanceCreateOptions require only Region and Type
 type InstanceCreateOptions struct {
-	Region              string                                 `json:"region"`
-	Type                string                                 `json:"type"`
-	Label               string                                 `json:"label,omitempty"`
-	RootPass            string                                 `json:"root_pass,omitempty"`
-	AuthorizedKeys      []string                               `json:"authorized_keys,omitempty"`
-	AuthorizedUsers     []string                               `json:"authorized_users,omitempty"`
-	StackScriptID       int                                    `json:"stackscript_id,omitempty"`
-	StackScriptData     map[string]string                      `json:"stackscript_data,omitempty"`
-	BackupID            int                                    `json:"backup_id,omitempty"`
-	Image               string                                 `json:"image,omitempty"`
-	Interfaces          []InstanceConfigInterfaceCreateOptions `json:"interfaces,omitempty"`
-	BackupsEnabled      bool                                   `json:"backups_enabled,omitempty"`
-	PrivateIP           bool                                   `json:"private_ip,omitempty"`
-	Tags                []string                               `json:"tags,omitempty"`
-	Metadata            *InstanceMetadataOptions               `json:"metadata,omitempty"`
-	FirewallID          int                                    `json:"firewall_id,omitempty"`
-	InterfaceGeneration InterfaceGeneration                    `json:"interface_generation,omitempty"`
+	Region              string                   `json:"region"`
+	Type                string                   `json:"type"`
+	Label               string                   `json:"label,omitempty"`
+	RootPass            string                   `json:"root_pass,omitempty"`
+	AuthorizedKeys      []string                 `json:"authorized_keys,omitempty"`
+	AuthorizedUsers     []string                 `json:"authorized_users,omitempty"`
+	StackScriptID       int                      `json:"stackscript_id,omitempty"`
+	StackScriptData     map[string]string        `json:"stackscript_data,omitempty"`
+	BackupID            int                      `json:"backup_id,omitempty"`
+	Image               string                   `json:"image,omitempty"`
+	BackupsEnabled      bool                     `json:"backups_enabled,omitempty"`
+	PrivateIP           bool                     `json:"private_ip,omitempty"`
+	NetworkHelper       *bool                    `json:"network_helper,omitempty"`
+	Tags                []string                 `json:"tags,omitempty"`
+	Metadata            *InstanceMetadataOptions `json:"metadata,omitempty"`
+	FirewallID          int                      `json:"firewall_id,omitempty"`
+	InterfaceGeneration InterfaceGeneration      `json:"interface_generation,omitempty"`
+
+	// Linode Interfaces to create the new instance with.
+	// Conflicts with Interfaces.
+	// NOTE: Linode Interfaces may not currently be available to all users.
+	LinodeInterfaces []LinodeInterfaceCreateOptions `json:"-"`
+
+	// Legacy (config) Interfaces to create the new instance with.
+	// Conflicts with LinodeInterfaces.
+	Interfaces []InstanceConfigInterfaceCreateOptions `json:"-"`
 
 	// NOTE: Disk encryption may not currently be available to all users.
 	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitempty"`
@@ -208,6 +221,9 @@ type InstanceCreateOptions struct {
 	Group string `json:"group,omitempty"`
 
 	IPv4 []string `json:"ipv4,omitempty"`
+
+	// NOTE: MaintenancePolicy can only be used with v4beta.
+	MaintenancePolicy *string `json:"maintenance_policy,omitempty"`
 }
 
 // InstanceCreatePlacementGroupOptions represents the placement group
@@ -227,6 +243,86 @@ type InstanceUpdateOptions struct {
 
 	// Deprecated: group is a deprecated property denoting a group label for the Linode.
 	Group *string `json:"group,omitempty"`
+
+	// NOTE: MaintenancePolicy can only be used with v4beta.
+	MaintenancePolicy *string `json:"maintenance_policy,omitempty"`
+}
+
+// MarshalJSON contains logic necessary to populate the `interfaces` field of
+// InstanceCreateOptions depending on whether Interfaces or LinodeInterfaces
+// is specified.
+func (i InstanceCreateOptions) MarshalJSON() ([]byte, error) {
+	type Mask InstanceCreateOptions
+
+	resultData := struct {
+		*Mask
+
+		Interfaces any `json:"interfaces,omitempty"`
+	}{
+		Mask:       (*Mask)(&i),
+		Interfaces: nil,
+	}
+
+	if i.Interfaces != nil && i.LinodeInterfaces != nil {
+		return nil, fmt.Errorf("fields Interfaces and LinodeInterfaces cannot be specified together")
+	}
+
+	if i.Interfaces != nil {
+		resultData.Interfaces = i.Interfaces
+	}
+
+	if i.LinodeInterfaces != nil {
+		resultData.Interfaces = i.LinodeInterfaces
+	}
+
+	return json.Marshal(resultData)
+}
+
+// UnmarshalJSON contains logic necessary to populate the Interfaces field
+// depending on the value of interface_generation.
+func (i *InstanceCreateOptions) UnmarshalJSON(b []byte) error {
+	type Mask InstanceCreateOptions
+
+	p := struct {
+		*Mask
+
+		GenericInterfaces any `json:"interfaces,omitempty"`
+	}{
+		Mask: (*Mask)(i),
+	}
+
+	if err := json.Unmarshal(b, &p); err != nil {
+		return err
+	}
+
+	if p.GenericInterfaces == nil {
+		// No interfaces were given - nothing to do here.
+		return nil
+	}
+
+	if i.InterfaceGeneration == GenerationLinode {
+		data := struct {
+			Interfaces []LinodeInterfaceCreateOptions `json:"interfaces"`
+		}{}
+
+		err := json.Unmarshal(b, &data)
+		i.LinodeInterfaces = data.Interfaces
+
+		return err
+	}
+
+	if i.InterfaceGeneration == GenerationLegacyConfig {
+		data := struct {
+			Interfaces []InstanceConfigInterfaceCreateOptions `json:"interfaces"`
+		}{}
+
+		err := json.Unmarshal(b, &data)
+		i.Interfaces = data.Interfaces
+
+		return err
+	}
+
+	return fmt.Errorf("cannot unmarshal interfaces without valid value for interface_generation")
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
@@ -276,12 +372,13 @@ func (backup *InstanceBackup) UnmarshalJSON(b []byte) error {
 // GetUpdateOptions converts an Instance to InstanceUpdateOptions for use in UpdateInstance
 func (i *Instance) GetUpdateOptions() InstanceUpdateOptions {
 	return InstanceUpdateOptions{
-		Label:           i.Label,
-		Group:           &i.Group,
-		Backups:         i.Backups,
-		Alerts:          i.Alerts,
-		WatchdogEnabled: &i.WatchdogEnabled,
-		Tags:            &i.Tags,
+		Label:             i.Label,
+		Group:             &i.Group,
+		Backups:           i.Backups,
+		Alerts:            i.Alerts,
+		WatchdogEnabled:   &i.WatchdogEnabled,
+		Tags:              &i.Tags,
+		MaintenancePolicy: &i.MaintenancePolicy,
 	}
 }
 

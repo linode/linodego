@@ -24,6 +24,28 @@ func TestInstanceConfig_List(t *testing.T) {
 
 	assert.Equal(t, 1, configs[0].ID)
 	assert.Equal(t, "config-1", configs[0].Label)
+
+	iface := configs[0].Interfaces[0]
+	assert.Equal(t, 1, iface.ID)
+	assert.Equal(t, "vpc", string(iface.Purpose))
+	assert.Equal(t, true, iface.Primary)
+	assert.Equal(t, true, iface.Active)
+	assert.Equal(t, 101, *iface.VPCID)
+	assert.Equal(t, 202, *iface.SubnetID)
+
+	assert.Equal(t, "vpc-1", iface.IPv4.VPC)
+	assert.Equal(t, "203.0.113.1", *iface.IPv4.NAT1To1)
+
+	assert.Len(t, iface.IPv6.SLAAC, 1)
+	assert.Equal(t, "1234::5678/64", iface.IPv6.SLAAC[0].Range)
+	assert.Equal(t, "1234::5678", iface.IPv6.SLAAC[0].Address)
+
+	assert.Len(t, iface.IPv6.Ranges, 1)
+	assert.Equal(t, "1234::5678/64", iface.IPv6.Ranges[0].Range)
+
+	assert.Equal(t, true, iface.IPv6.IsPublic)
+
+	assert.ElementsMatch(t, []string{"192.168.1.0/24"}, iface.IPRanges)
 }
 
 func TestInstanceConfig_Get(t *testing.T) {
@@ -38,8 +60,34 @@ func TestInstanceConfig_Get(t *testing.T) {
 
 	config, err := base.Client.GetInstanceConfig(context.Background(), 123, 1)
 	assert.NoError(t, err)
+
+	assertJSONObjectsSimilar(t, config, config.GetCreateOptions())
+	assertJSONObjectsSimilar(t, config, config.GetUpdateOptions())
+
 	assert.Equal(t, 1, config.ID)
 	assert.Equal(t, "config-1", config.Label)
+
+	iface := config.Interfaces[0]
+	assert.Equal(t, 1, iface.ID)
+	assert.Equal(t, "vpc", string(iface.Purpose))
+	assert.Equal(t, true, iface.Primary)
+	assert.Equal(t, true, iface.Active)
+	assert.Equal(t, 101, *iface.VPCID)
+	assert.Equal(t, 202, *iface.SubnetID)
+
+	assert.Equal(t, "vpc-1", iface.IPv4.VPC)
+	assert.Equal(t, "203.0.113.1", *iface.IPv4.NAT1To1)
+
+	assert.Len(t, iface.IPv6.SLAAC, 1)
+	assert.Equal(t, "1234::5678/64", iface.IPv6.SLAAC[0].Range)
+	assert.Equal(t, "1234::5678", iface.IPv6.SLAAC[0].Address)
+
+	assert.Len(t, iface.IPv6.Ranges, 1)
+	assert.Equal(t, "1234::5678/64", iface.IPv6.Ranges[0].Range)
+
+	assert.Equal(t, true, iface.IPv6.IsPublic)
+
+	assert.ElementsMatch(t, []string{"192.168.1.0/24"}, iface.IPRanges)
 }
 
 func TestInstanceConfig_Create(t *testing.T) {
@@ -62,7 +110,33 @@ func TestInstanceConfig_Create(t *testing.T) {
 
 	config, err := base.Client.CreateInstanceConfig(context.Background(), 123, createOptions)
 	assert.NoError(t, err)
+
+	assertJSONObjectsSimilar(t, config, config.GetCreateOptions())
+	assertJSONObjectsSimilar(t, config, config.GetUpdateOptions())
+
 	assert.Equal(t, "new-config", config.Label)
+
+	iface := config.Interfaces[0]
+	assert.Equal(t, 1, iface.ID)
+	assert.Equal(t, "vpc", string(iface.Purpose))
+	assert.Equal(t, true, iface.Primary)
+	assert.Equal(t, true, iface.Active)
+	assert.Equal(t, 101, *iface.VPCID)
+	assert.Equal(t, 202, *iface.SubnetID)
+
+	assert.Equal(t, "vpc-1", iface.IPv4.VPC)
+	assert.Equal(t, "203.0.113.1", *iface.IPv4.NAT1To1)
+
+	assert.Len(t, iface.IPv6.SLAAC, 1)
+	assert.Equal(t, "1234::5678/64", iface.IPv6.SLAAC[0].Range)
+	assert.Equal(t, "1234::5678", iface.IPv6.SLAAC[0].Address)
+
+	assert.Len(t, iface.IPv6.Ranges, 1)
+	assert.Equal(t, "1234::5678/64", iface.IPv6.Ranges[0].Range)
+
+	assert.Equal(t, true, iface.IPv6.IsPublic)
+
+	assert.ElementsMatch(t, []string{"192.168.1.0/24"}, iface.IPRanges)
 }
 
 func TestInstanceConfig_Update(t *testing.T) {
@@ -82,7 +156,33 @@ func TestInstanceConfig_Update(t *testing.T) {
 
 	config, err := base.Client.UpdateInstanceConfig(context.Background(), 123, 1, updateOptions)
 	assert.NoError(t, err)
+
+	assertJSONObjectsSimilar(t, config, config.GetCreateOptions())
+	assertJSONObjectsSimilar(t, config, config.GetUpdateOptions())
+
 	assert.Equal(t, "updated-config", config.Label)
+
+	iface := config.Interfaces[0]
+	assert.Equal(t, 1, iface.ID)
+	assert.Equal(t, "vpc", string(iface.Purpose))
+	assert.Equal(t, true, iface.Primary)
+	assert.Equal(t, true, iface.Active)
+	assert.Equal(t, 101, *iface.VPCID)
+	assert.Equal(t, 202, *iface.SubnetID)
+
+	assert.Equal(t, "vpc-1", iface.IPv4.VPC)
+	assert.Equal(t, "203.0.113.1", *iface.IPv4.NAT1To1)
+
+	assert.Len(t, iface.IPv6.SLAAC, 1)
+	assert.Equal(t, "1234::5678/64", iface.IPv6.SLAAC[0].Range)
+	assert.Equal(t, "1234::5678", iface.IPv6.SLAAC[0].Address)
+
+	assert.Len(t, iface.IPv6.Ranges, 1)
+	assert.Equal(t, "1234::5678/64", iface.IPv6.Ranges[0].Range)
+
+	assert.Equal(t, true, iface.IPv6.IsPublic)
+
+	assert.ElementsMatch(t, []string{"192.168.1.0/24"}, iface.IPRanges)
 }
 
 func TestInstanceConfig_Delete(t *testing.T) {
