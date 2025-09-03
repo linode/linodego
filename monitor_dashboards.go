@@ -53,7 +53,7 @@ type DashboardWidget struct {
 	YLabel            string            `json:"y_label"`
 	AggregateFunction AggregateFunction `json:"aggregate_function"`
 	GroupBy           []string          `json:"group_by"`
-	Filters           []DashboardFilter `json:"filters,omitempty"`
+	Filters           []DashboardFilter `json:"filters"`
 }
 
 // DashboardFilter represents a filter for dashboard widgets
