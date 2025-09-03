@@ -34,7 +34,7 @@ func TestListMonitorDashboards(t *testing.T) {
 
 	// Assert filters field (optional, on first widget)
 	if clients[0].Widgets[0].Filters != nil {
-		assert.GreaterOrEqual(t, len(clients[0].Widgets[0].Filters), 0, "filters should be a slice (possibly empty)")
+		assert.IsType(t, []linodego.DashboardFilter{}, clients[0].Widgets[0].Filters, "filters should be a slice of DashboardFilter")
 	}
 }
 
@@ -86,6 +86,6 @@ func TestListMonitorDashboardsByServiceType(t *testing.T) {
 
 	// Assert filters field (optional, on first widget)
 	if clients[0].Widgets[0].Filters != nil {
-		assert.GreaterOrEqual(t, len(clients[0].Widgets[0].Filters), 0, "filters should be a slice (possibly empty)")
+		assert.IsType(t, []linodego.DashboardFilter{}, clients[0].Widgets[0].Filters, "filters should be a slice of DashboardFilter")
 	}
 }
