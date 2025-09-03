@@ -2,6 +2,35 @@
     "id": 1,
     "label": "updated-config",
     "kernel": "linode/latest-64bit",
-    "root_device": "/dev/sdb"
+    "root_device": "/dev/sdb",
+    "interfaces": [
+        {
+            "id": 1,
+            "purpose": "vpc",
+            "primary": true,
+            "active": true,
+            "vpc_id": 101,
+            "subnet_id": 202,
+            "ipv4": {
+                "vpc": "vpc-1",
+                "nat_1_1": "203.0.113.1"
+            },
+            "ipv6": {
+                "slaac": [
+                    {
+                        "range": "1234::5678/64",
+                        "address": "1234::5678"
+                    }
+                ],
+                "ranges": [
+                    {
+                        "range": "1234::5678/64"
+                    }
+                ],
+                "is_public": true
+            },
+            "ip_ranges": ["192.168.1.0/24"]
+        }
+    ]
 }
   
