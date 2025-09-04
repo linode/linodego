@@ -54,7 +54,7 @@ func TestListMonitorServicesByType(t *testing.T) {
 	assert.Equal(t, "Databases", client.Label, "Expected services label to match")
 	assert.Equal(t, "dbaas", client.ServiceType, "Expected service_type to match")
 
-		// Assert alert details for the first service
+	// Assert alert details for the first service
 	assert.NotNil(t, client.Alert, "Expected alert to be present")
 	assert.NotEmpty(t, client.Alert.PollingIntervalSeconds, "Expected polling_interval_seconds to be present")
 	assert.NotEmpty(t, client.Alert.EvaluationPeriodSeconds, "Expected evaluation_period_seconds to be present")
