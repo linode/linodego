@@ -201,7 +201,7 @@ func (c *Client) DeleteImageShareGroup(ctx context.Context, imageShareGroupID in
 	)
 }
 
-// ImageShareGroupListImages lists the Images in a specified ImageShareGroup owned by the procuer.
+// ImageShareGroupListImages lists the Images in a specified ImageShareGroup owned by the producer.
 func (c *Client) ImageShareGroupListImages(
 	ctx context.Context,
 	imageShareGroupID int,

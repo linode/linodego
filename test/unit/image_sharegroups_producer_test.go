@@ -240,8 +240,8 @@ func TestImageShareGroup_Producer_List_ContainingPrivateImage(t *testing.T) {
 	assert.False(t, imageShareGroups[1].IsSuspended)
 	assert.Equal(t, 1, imageShareGroups[1].MembersCount)
 	assert.Equal(t, 1, imageShareGroups[1].ImagesCount)
-	assert.Equal(t, "2026-03-16T17:30:49Z", imageShareGroups[0].Created.Format(time.RFC3339))
-	assert.Equal(t, "2026-04-16T17:30:49Z", imageShareGroups[0].Updated.Format(time.RFC3339))
+	assert.Equal(t, "2026-01-16T17:30:49Z", imageShareGroups[1].Created.Format(time.RFC3339))
+	assert.Equal(t, "2026-09-16T17:30:49Z", imageShareGroups[1].Updated.Format(time.RFC3339))
 	assert.Nil(t, imageShareGroups[1].Expiry)
 }
 
@@ -280,8 +280,8 @@ func TestImageShareGroup_Producer_List(t *testing.T) {
 	assert.False(t, imageShareGroups[1].IsSuspended)
 	assert.Equal(t, 1, imageShareGroups[1].MembersCount)
 	assert.Equal(t, 1, imageShareGroups[1].ImagesCount)
-	assert.Equal(t, "2026-03-16T17:30:49Z", imageShareGroups[0].Created.Format(time.RFC3339))
-	assert.Equal(t, "2026-04-16T17:30:49Z", imageShareGroups[0].Updated.Format(time.RFC3339))
+	assert.Equal(t, "2026-01-16T17:30:49Z", imageShareGroups[1].Created.Format(time.RFC3339))
+	assert.Equal(t, "2026-09-16T17:30:49Z", imageShareGroups[1].Updated.Format(time.RFC3339))
 	assert.Nil(t, imageShareGroups[1].Expiry)
 }
 
