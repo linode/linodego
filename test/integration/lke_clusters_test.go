@@ -83,6 +83,48 @@ func TestLKECluster_Enterprise_smoke(t *testing.T) {
 	}
 }
 
+func TestLKECluster_Enterprise_BYOVPC_smoke(t *testing.T) {
+	// bring your own vpc
+	client, fixtureTeardown := createTestClient(t, "fixtures/TestLKECluster_Enterprise_VPC_smoke")
+
+	region := "no-osl-1"
+	vpc, vpcTeardown, err := createVPC(t, client, []vpcModifier{func(l *linodego.Client, options *linodego.VPCCreateOptions) {
+		options.Region = region
+	}}...)
+
+	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
+		createOpts.Tier = "enterprise"
+		createOpts.Region = region
+		createOpts.K8sVersion = ""
+		createOpts.VpcID = linodego.Pointer(vpc.ID)
+		createOpts.StackType = linodego.Pointer(linodego.LKEClusterDualStack)
+	}},
+		"fixtures/TestLKECluster_Enterprise_BYOVPC_smoke")
+	if err != nil {
+		t.Errorf("Error creating lke, GOT ERROR %v", err)
+	}
+
+	defer func() {
+		teardown()
+		vpcTeardown()
+		fixtureTeardown()
+	}()
+
+	cluster, err := client.GetLKECluster(context.Background(), lkeCluster.ID)
+	if err != nil {
+		t.Errorf("Error getting lkeCluster, expected struct, got %v and error %v", cluster, err)
+	}
+	if cluster.ID != lkeCluster.ID {
+		t.Errorf("Expected a specific lkeCluster, but got a different one %v", cluster)
+	}
+	if cluster.VpcID != vpc.ID {
+		t.Errorf("Expected an LKE cluster in VPC %v, but got in VPC %v.", vpc.ID, cluster.VpcID)
+	}
+	if cluster.StackType != linodego.LKEClusterDualStack {
+		t.Errorf("Expected an LKE cluster stack_type is %v, but got %v.", linodego.LKEClusterDualStack, cluster.StackType)
+	}
+}
+
 func TestLKECluster_Update(t *testing.T) {
 	client, cluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = "go-lke-test-update"
@@ -389,6 +431,9 @@ func setupLKECluster(t *testing.T, clusterModifiers []clusterModifier, fixturesY
 			Type:  "g6-standard-2",
 			Tags:  []string{"test"},
 		}},
+		VpcID:     nil, // default, overridden if needed
+		SubnetID:  nil, // default, overridden if needed
+		StackType: nil, // default, overridden if needed
 	}
 
 	for _, modifier := range clusterModifiers {
