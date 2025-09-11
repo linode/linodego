@@ -6,10 +6,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/stretchr/testify/require"
-
 	"github.com/linode/linodego"
 	. "github.com/linode/linodego"
+	"github.com/stretchr/testify/require"
 )
 
 type vpcModifier func(*linodego.Client, *linodego.VPCCreateOptions)
