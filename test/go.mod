@@ -39,7 +39,7 @@ require (
 	github.com/stretchr/objx v0.5.2 // indirect
 	golang.org/x/sys v0.35.0 // indirect
 	golang.org/x/term v0.34.0 // indirect
-	golang.org/x/text v0.28.0 // indirect
+	golang.org/x/text v0.29.0 // indirect
 	golang.org/x/time v0.6.0 // indirect
 	google.golang.org/protobuf v1.33.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
@@ -56,9 +56,7 @@ require (
 	sigs.k8s.io/yaml v1.3.0 // indirect
 )
 
-go 1.23.0
-
-toolchain go1.23.4
+go 1.24.0
 
 replace github.com/linode/linodego => ../
 
