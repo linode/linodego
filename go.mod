@@ -20,6 +20,6 @@ require (
 
 go 1.24.0
 
-toolchain go1.24.1
+toolchain go1.25.1
 
 retract v1.0.0 // Accidental branch push
