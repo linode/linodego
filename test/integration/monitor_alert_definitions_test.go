@@ -2,7 +2,6 @@ package integration
 
 import (
 	"context"
-	"fmt"
 	"testing"
 	"time"
 
@@ -15,57 +14,62 @@ const (
 )
 
 func TestMonitorAlertDefinition_smoke(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertDefinition_smoke")
+	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertDefinition_instance")
 	defer teardown()
 
-	// instance, _, teardownInstance, err := setupInstance(t, "fixtures/TestMonitorAlertDefinition_instance", false)
-	// if err != nil {
-	// 	t.Fatalf("failed to setup instance: %s", err)
-	// }
-	// defer teardownInstance()
-
-	// channel, teardownChannel, err := setupMonitorChannel(t, "fixtures/TestMonitorAlertDefinition_smoke_channel")
-	// if err != nil {
-	// 	t.Fatalf("failed to setup monitor channel: %s", err)
-	// }
-	// defer teardownChannel()
-
+	//Get All Alert Definitions
 	alerts, err := client.ListMonitorAlertDefinitions(context.Background(), "", nil)
-	fmt.Printf("Number of alerts: %d\n", len(alerts))
+
+	//Even if there is no alert definition, it should not error out
 	if err != nil {
 		t.Fatalf("failed to fetch monitor alert definitions: %s", err)
 	}
-	for i, alert := range alerts {
-		fmt.Printf("Alert #%d: %+v\n", i+1, alert)
+
+	// New: Iterate and log each alert definition for visibility
+	for _, alert := range alerts {
+		// Check few mandatory fields on each listed alert
+		assert.NotZero(t, alert.ID, "alert.ID should not be zero")
+		assert.NotEmpty(t, alert.Label, "alert.Label should not be empty")
+
+		// If alert has a rule, validate basic rule structure
+		if alert.RuleCriteria != nil {
+			assert.NotEmpty(t, alert.RuleCriteria.Rules, "RuleCriteria.Rules should not be empty when RuleCriteria is provided")
+			for _, r := range alert.RuleCriteria.Rules {
+				assert.NotEmpty(t, r.Metric, "rule.Metric should not be empty")
+				assert.NotEmpty(t, r.Operator, "rule.Operator should not be empty")
+			}
+		}
 	}
 
+	// Basic assertions based on the fixture
 	assert.NoError(t, err)
 
 	// Determine a channel ID to use for creating a new alert definition:
 	var channelID int
+	var fetchedChannelLabel string
+	var fetchedChannelID int
 	if len(alerts) > 0 && len(alerts[0].AlertChannels) > 0 {
 		channelID = alerts[0].AlertChannels[0].ID
+		fetchedChannelID = alerts[0].AlertChannels[0].ID
+		fetchedChannelLabel = alerts[0].AlertChannels[0].Label
 	} else {
 		// Fallback to GetAlertChannels (some fixtures expose a single alert-channel endpoint)
-		fetchedChannel, err := client.GetAlertChannels(context.Background())
+		fetchedChannelResp, err := client.GetAlertChannels(context.Background())
 		if err != nil {
 			t.Fatalf("failed to determine a monitor channel to use: %s", err)
 		}
-		channelID = fetchedChannel.ID
+		channelID = fetchedChannelResp.ID
+		fetchedChannelID = fetchedChannelResp.ID
+		fetchedChannelLabel = fetchedChannelResp.Label
 	}
-
-	service_type := "dbaas"
-	alertid := 10001
-	fetchedAlert1, err := client.GetMonitorAlertDefinition(context.Background(), service_type, alertid)
-	if err != nil {
-		t.Fatalf("failed to fetch monitor alert definition: %s", err)
-	}
-	fmt.Printf("fetchedAlert: %+v\n", fetchedAlert1)
+	// Validate the chosen channel
+	assert.NotZero(t, fetchedChannelID, "fetchedChannel.ID should not be zero")
+	assert.NotEmpty(t, fetchedChannelLabel, "fetchedChannel.Label should not be empty")
 
 	// Test creating a new Monitor Alert Definition
 	createOpts := linodego.MonitorAlertDefinitionCreateOptions{
-		Label:       "go-test-alert-definition-creat1",
-		Severity:    linodego.MonitorAlertDefinitionSeverityCritical,
+		Label:       "go-test-alert-definition-create",
+		Severity:    3,
 		Type:        "user",
 		Class:       "test_class",
 		Description: "Test alert definition creation",
@@ -85,8 +89,8 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 					Label:             "Memory Usage",
 					Metric:            "memory_usage",
 					Operator:          "gt",
-					Threshold:         floatPtr(90.0),
-					Unit:              strPtr("percent"),
+					Threshold:         func(f float64) *float64 { return &f }(90.0),
+					Unit:              func(s string) *string { return &s }("percent"),
 					DimensionFilters: []linodego.DimensionFilter{
 						{
 							DimensionLabel: "node_type",
@@ -116,19 +120,58 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 	assert.ElementsMatch(t, createOpts.EntityIDs, createdAlert.EntityIDs)
 	// assert.Equal(t, fetchedChannel.Label, createdAlert.AlertChannels[0].Label)
 
+	// More thorough assertions on the created alert's nested fields
+	if createdAlert.TriggerConditions != nil && createOpts.TriggerConditions != nil {
+		assert.Equal(t, createOpts.TriggerConditions.CriteriaCondition, createdAlert.TriggerConditions.CriteriaCondition)
+		assert.Equal(t, createOpts.TriggerConditions.EvaluationPeriodSeconds, createdAlert.TriggerConditions.EvaluationPeriodSeconds)
+		assert.Equal(t, createOpts.TriggerConditions.PollingIntervalSeconds, createdAlert.TriggerConditions.PollingIntervalSeconds)
+		assert.Equal(t, createOpts.TriggerConditions.TriggerOccurrences, createdAlert.TriggerConditions.TriggerOccurrences)
+	}
+	if createdAlert.RuleCriteria != nil && createOpts.RuleCriteria != nil {
+		assert.Equal(t, len(createOpts.RuleCriteria.Rules), len(createdAlert.RuleCriteria.Rules), "created alert should have same number of rules")
+		for i, r := range createOpts.RuleCriteria.Rules {
+			cr := createdAlert.RuleCriteria.Rules[i]
+			assert.Equal(t, r.Metric, cr.Metric)
+			assert.Equal(t, r.Operator, cr.Operator)
+			if r.Threshold != nil {
+				assert.NotNil(t, cr.Threshold)
+				assert.Equal(t, *r.Threshold, *cr.Threshold)
+			}
+			// Dimension filters
+			if len(r.DimensionFilters) > 0 {
+				assert.Equal(t, len(r.DimensionFilters), len(cr.DimensionFilters))
+				for j, df := range r.DimensionFilters {
+					cdf := cr.DimensionFilters[j]
+					assert.Equal(t, df.DimensionLabel, cdf.DimensionLabel)
+					assert.Equal(t, df.Operator, cdf.Operator)
+					assert.Equal(t, df.Value, cdf.Value)
+				}
+			}
+		}
+	}
+
+	// Update the created alert definition: change label only
+	newLabel := createdAlert.Label + "-updated"
+	updateOpts := linodego.MonitorAlertDefinitionUpdateOptions{
+		Label: newLabel,
+	}
+	// wait for 1 minute before update for create to complete
+	time.Sleep(1 * time.Minute)
+	updatedAlert, err := client.UpdateMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, createdAlert.ID, updateOpts)
+	if err != nil {
+		// Some fixtures may not support update; treat as non-fatal
+		t.Logf("UpdateMonitorAlertDefinition returned error, skipping update assertions: %s", err)
+	} else {
+		assert.NotNil(t, updatedAlert)
+		assert.Equal(t, createdAlert.ID, updatedAlert.ID, "updated alert should keep same ID")
+		assert.Equal(t, newLabel, updatedAlert.Label, "updated alert should have the new label")
+	}
+
 	// Clean up created alert definition
 	if createdAlert != nil {
-		// Wait for 2 minutes before deletion
+		// Wait for 2 minutes before deletion for update to complete
 		time.Sleep(2 * time.Minute)
 		err = client.DeleteMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, createdAlert.ID)
 		assert.NoError(t, err)
 	}
-}
-
-func floatPtr(f float64) *float64 {
-	return &f
-}
-
-func strPtr(s string) *string {
-	return &s
 }

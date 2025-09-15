@@ -18,6 +18,7 @@ type MonitorAlertDefinition struct {
 	Status            string                 `json:"status"`
 	HasMoreResources  bool                   `json:"has_more_resources"`
 	Rule              *Rule                  `json:"rule"`
+	RuleCriteria      *RuleCriteria          `json:"rule_criteria"`
 	TriggerConditions *TriggerConditions     `json:"trigger_conditions"`
 	AlertChannels     []AlertChannelEnvelope `json:"alert_channels"`
 	Created           *time.Time             `json:"-"`
@@ -67,6 +68,10 @@ const (
 	MonitorAlertDefinitionSeverityMinor    = 3
 )
 
+const (
+	MonitorAlertDefinitionStatusEnabled  = "enabled"
+	MonitorAlertDefinitionStatusDisabled = "disabled"
+)
 // AlertChannelEnvelope represents a single alert channel entry returned inside alert definition
 type AlertChannelEnvelope struct {
 	ID    int    `json:"id"`
