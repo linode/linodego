@@ -53,6 +53,8 @@ const (
 		"channel_ids": [1, 2],
 		"is_enabled": false
 	}`
+
+	monitorAlertDefinitionUpdateLabelOnlyResponseSingleLine = `{"id": 123, "label": "test-alert-definition-renamed-one-line", "severity": 1, "type": "some_type", "service_type": "dbaas", "status": "enabled", "entity_ids": ["12345"], "channel_ids": [1], "is_enabled": true}`
 )
 
 func TestCreateMonitorAlertDefinition(t *testing.T) {
@@ -148,6 +150,25 @@ func TestUpdateMonitorAlertDefinition(t *testing.T) {
 	assert.NotNil(t, alert)
 	assert.Equal(t, "test-alert-definition-renamed", alert.Label)
 	assert.Equal(t, 2, alert.Severity)
+}
+
+func TestUpdateMonitorAlertDefinition_LabelOnly(t *testing.T) {
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	// Mock a PUT that returns the single-line fixture
+	base.MockPut("monitor/services/dbaas/alert-definitions/123", json.RawMessage(monitorAlertDefinitionUpdateLabelOnlyResponseSingleLine))
+
+	updateOpts := linodego.MonitorAlertDefinitionUpdateOptions{
+		Label: "test-alert-definition-renamed-one-line",
+	}
+
+	alert, err := base.Client.UpdateMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, testMonitorAlertDefinitionID, updateOpts)
+	assert.NoError(t, err)
+	assert.NotNil(t, alert)
+	assert.Equal(t, "test-alert-definition-renamed-one-line", alert.Label)
+	assert.Equal(t, testMonitorAlertDefinitionID, alert.ID)
 }
 
 func TestDeleteMonitorAlertDefinition(t *testing.T) {
