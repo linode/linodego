@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/linode/linodego"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -44,6 +45,21 @@ func TestMonitorServicesTokenCreation_Get_smoke(t *testing.T) {
 
 	// Validate the token
 	validateToken(t, *token)
+}
+
+func TestMonitorServicesTokenCreation_TryCreateTokenWithInvalidEntityID(t *testing.T) {
+	var entityIDs []any
+	entityIDs = append(entityIDs, 999999999)
+
+	client, teardown := createTestClient(t, "fixtures/TestServiceToken_POST")
+	defer teardown()
+	createOptsWithInvalidID := linodego.MonitorTokenCreateOptions{
+		EntityIDs: entityIDs,
+	}
+	_, createErr := client.CreateMonitorServiceTokenForServiceType(context.Background(), "dbaas", createOptsWithInvalidID)
+	require.Error(t, createErr)
+	assert.Contains(t, createErr.Error(), "[403]")
+	assert.Contains(t, createErr.Error(), "The following entity_ids are not valid - [999999999]")
 }
 
 func validateToken(
