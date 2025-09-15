@@ -30,7 +30,7 @@ type MonitorAlertDefinition struct {
 	Class             string                 `json:"class"`
 }
 
-// AlertTriggerConditions represents the trigger conditions for an alert.
+// TriggerConditions represents the trigger conditions for an alert.
 type TriggerConditions struct {
 	CriteriaCondition       string `json:"criteria_condition,omitempty"`
 	EvaluationPeriodSeconds int    `json:"evaluation_period_seconds,omitempty"`
@@ -38,7 +38,7 @@ type TriggerConditions struct {
 	TriggerOccurrences      int    `json:"trigger_occurrences,omitempty"`
 }
 
-// AlertRuleCriteria represents the rule criteria for an alert.
+// RuleCriteria represents the rule criteria for an alert.
 type RuleCriteria struct {
 	Rules []Rule `json:"rules,omitempty"`
 }
@@ -63,15 +63,10 @@ type DimensionFilter struct {
 }
 
 const (
-	MonitorAlertDefinitionSeverityCritical = 1
-	MonitorAlertDefinitionSeverityMajor    = 2
-	MonitorAlertDefinitionSeverityMinor    = 3
-)
-
-const (
 	MonitorAlertDefinitionStatusEnabled  = "enabled"
 	MonitorAlertDefinitionStatusDisabled = "disabled"
 )
+
 // AlertChannelEnvelope represents a single alert channel entry returned inside alert definition
 type AlertChannelEnvelope struct {
 	ID    int    `json:"id"`
