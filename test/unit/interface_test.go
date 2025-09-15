@@ -225,7 +225,7 @@ func TestInterface_UpdateVPC(t *testing.T) {
 			IPv4: linodego.Pointer(true),
 			IPv6: linodego.Pointer(true),
 		},
-		VPC: &linodego.VPCInterfaceCreateOptions{
+		VPC: &linodego.VPCInterfaceUpdateOptions{
 			IPv4: &linodego.VPCInterfaceIPv4CreateOptions{
 				Addresses: []linodego.VPCInterfaceIPv4AddressCreateOptions{
 					{
