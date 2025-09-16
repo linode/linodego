@@ -43,7 +43,7 @@ func TestInstanceConfig_List(t *testing.T) {
 	assert.Len(t, iface.IPv6.Ranges, 1)
 	assert.Equal(t, "1234::5678/64", iface.IPv6.Ranges[0].Range)
 
-	assert.Equal(t, true, iface.IPv6.IsPublic)
+	assert.Equal(t, true, *iface.IPv6.IsPublic)
 
 	assert.ElementsMatch(t, []string{"192.168.1.0/24"}, iface.IPRanges)
 }
@@ -85,7 +85,7 @@ func TestInstanceConfig_Get(t *testing.T) {
 	assert.Len(t, iface.IPv6.Ranges, 1)
 	assert.Equal(t, "1234::5678/64", iface.IPv6.Ranges[0].Range)
 
-	assert.Equal(t, true, iface.IPv6.IsPublic)
+	assert.Equal(t, true, *iface.IPv6.IsPublic)
 
 	assert.ElementsMatch(t, []string{"192.168.1.0/24"}, iface.IPRanges)
 }
@@ -134,7 +134,7 @@ func TestInstanceConfig_Create(t *testing.T) {
 	assert.Len(t, iface.IPv6.Ranges, 1)
 	assert.Equal(t, "1234::5678/64", iface.IPv6.Ranges[0].Range)
 
-	assert.Equal(t, true, iface.IPv6.IsPublic)
+	assert.Equal(t, true, *iface.IPv6.IsPublic)
 
 	assert.ElementsMatch(t, []string{"192.168.1.0/24"}, iface.IPRanges)
 }
@@ -180,7 +180,7 @@ func TestInstanceConfig_Update(t *testing.T) {
 	assert.Len(t, iface.IPv6.Ranges, 1)
 	assert.Equal(t, "1234::5678/64", iface.IPv6.Ranges[0].Range)
 
-	assert.Equal(t, true, iface.IPv6.IsPublic)
+	assert.Equal(t, true, *iface.IPv6.IsPublic)
 
 	assert.ElementsMatch(t, []string{"192.168.1.0/24"}, iface.IPRanges)
 }
