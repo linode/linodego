@@ -90,7 +90,7 @@ type VPCInterfaceIPv4Range struct {
 type VPCInterfaceIPv6 struct {
 	SLAAC    []VPCInterfaceIPv6SLAAC `json:"slaac"`
 	Ranges   []VPCInterfaceIPv6Range `json:"ranges"`
-	IsPublic bool                    `json:"is_public"`
+	IsPublic *bool                   `json:"is_public"`
 }
 
 // VPCInterfaceIPv6SLAAC contains the information for a single IPv6 SLAAC under a VPC.
@@ -174,7 +174,7 @@ type VPCInterfaceIPv4RangeCreateOptions struct {
 type VPCInterfaceIPv6CreateOptions struct {
 	SLAAC    []VPCInterfaceIPv6SLAACCreateOptions `json:"slaac,omitempty"`
 	Ranges   []VPCInterfaceIPv6RangeCreateOptions `json:"ranges,omitempty"`
-	IsPublic bool                                 `json:"is_public"`
+	IsPublic *bool                                `json:"is_public"`
 }
 
 // VPCInterfaceIPv6SLAACCreateOptions defines the IPv6 SLAAC configuration parameters for VPC creation.
