@@ -43,12 +43,12 @@ type ImageRegion struct {
 // Image represents a deployable Image object for use with Linode Instances
 type Image struct {
 	ID           string        `json:"id"`
-	CreatedBy    *string       `json:"created_by,omitempty"`
+	CreatedBy    *string       `json:"created_by"`
 	Capabilities []string      `json:"capabilities"`
 	Label        string        `json:"label"`
 	Description  string        `json:"description"`
 	Type         string        `json:"type"`
-	Vendor       *string       `json:"vendor,omitempty"`
+	Vendor       *string       `json:"vendor"`
 	Status       ImageStatus   `json:"status"`
 	Size         int           `json:"size"`
 	TotalSize    int           `json:"total_size"`

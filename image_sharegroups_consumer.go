@@ -52,8 +52,8 @@ type ImageShareGroupToken struct {
 	Created                *time.Time `json:"-"`
 	Updated                *time.Time `json:"-"`
 	Expiry                 *time.Time `json:"-"`
-	ShareGroupUUID         *string    `json:"sharegroup_uuid,omitempty"`
-	ShareGroupLabel        *string    `json:"sharegroup_label,omitempty"`
+	ShareGroupUUID         *string    `json:"sharegroup_uuid"`
+	ShareGroupLabel        *string    `json:"sharegroup_label"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
@@ -94,8 +94,8 @@ type ImageShareGroupCreateTokenResponse struct {
 	Created                *time.Time `json:"-"`
 	Updated                *time.Time `json:"-"`
 	Expiry                 *time.Time `json:"-"`
-	ShareGroupUUID         *string    `json:"sharegroup_uuid,omitempty"`
-	ShareGroupLabel        *string    `json:"sharegroup_label,omitempty"`
+	ShareGroupUUID         *string    `json:"sharegroup_uuid"`
+	ShareGroupLabel        *string    `json:"sharegroup_label"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
