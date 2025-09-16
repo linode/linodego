@@ -70,8 +70,6 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 	createOpts := linodego.AlertDefinitionCreateOptions{
 		Label:       "go-test-alert-definition-create",
 		Severity:    int(linodego.SeverityLow),
-		Type:        string(linodego.AlertTypeUser),
-		Class:       "test_class",
 		Description: "Test alert definition creation",
 		ChannelIDs:  []int{channelID},
 		EntityIDs:   nil,
@@ -114,7 +112,6 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 	assert.NotNil(t, createdAlert)
 	assert.Equal(t, createOpts.Label, createdAlert.Label)
 	assert.Equal(t, createOpts.Severity, createdAlert.Severity)
-	assert.Equal(t, createOpts.Type, createdAlert.Type)
 	assert.Equal(t, createOpts.Description, createdAlert.Description)
 	assert.ElementsMatch(t, createOpts.EntityIDs, createdAlert.EntityIDs)
 	// assert.Equal(t, fetchedChannel.Label, createdAlert.AlertChannels[0].Label)
