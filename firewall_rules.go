@@ -30,7 +30,11 @@ type FirewallRule struct {
 	Ports       string           `json:"ports,omitempty"`
 	Protocol    NetworkProtocol  `json:"protocol"`
 	Addresses   NetworkAddresses `json:"addresses"`
-	Ruleset     *int             `json:"ruleset,omitempty"`
+
+	// Ruleset references a Firewall RuleSet (V2). When provided, this entry
+	// represents a reference to a Rule Set and should be mutually exclusive
+	// with ordinary rule fields.
+	Ruleset *int `json:"ruleset,omitempty"`
 }
 
 // MarshalJSON ensures that when a rule references a Rule Set (Ruleset != nil),
