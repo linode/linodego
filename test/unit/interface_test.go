@@ -138,7 +138,7 @@ func TestInterface_GetVPC(t *testing.T) {
 
 	assert.Equal(t, "4321::/64", iface.VPC.IPv6.Ranges[0].Range)
 
-	assert.Equal(t, true, iface.VPC.IPv6.IsPublic)
+	assert.Equal(t, true, *iface.VPC.IPv6.IsPublic)
 }
 
 func TestInterface_CreatePublic(t *testing.T) {
@@ -158,7 +158,7 @@ func TestInterface_CreatePublic(t *testing.T) {
 	opts := linodego.LinodeInterfaceCreateOptions{
 		Public: &linodego.PublicInterfaceCreateOptions{
 			IPv4: &linodego.PublicInterfaceIPv4CreateOptions{
-				Addresses: []linodego.PublicInterfaceIPv4AddressCreateOptions{
+				Addresses: &[]linodego.PublicInterfaceIPv4AddressCreateOptions{
 					{
 						Address: linodego.Pointer("auto"),
 						Primary: linodego.Pointer(true),
@@ -227,13 +227,13 @@ func TestInterface_UpdateVPC(t *testing.T) {
 		},
 		VPC: &linodego.VPCInterfaceUpdateOptions{
 			IPv4: &linodego.VPCInterfaceIPv4CreateOptions{
-				Addresses: []linodego.VPCInterfaceIPv4AddressCreateOptions{
+				Addresses: &[]linodego.VPCInterfaceIPv4AddressCreateOptions{
 					{
 						Address: linodego.Pointer("192.168.23.4"),
 						Primary: linodego.Pointer(true),
 					},
 				},
-				Ranges: []linodego.VPCInterfaceIPv4RangeCreateOptions{
+				Ranges: &[]linodego.VPCInterfaceIPv4RangeCreateOptions{
 					{
 						Range: "192.168.23.16/28",
 					},
@@ -243,14 +243,14 @@ func TestInterface_UpdateVPC(t *testing.T) {
 				},
 			},
 			IPv6: &linodego.VPCInterfaceIPv6CreateOptions{
-				SLAAC: []linodego.VPCInterfaceIPv6SLAACCreateOptions{
+				SLAAC: &[]linodego.VPCInterfaceIPv6SLAACCreateOptions{
 					{
 						Range: "1235::/64",
 					},
 				},
-				Ranges: []linodego.VPCInterfaceIPv6RangeCreateOptions{
+				Ranges: &[]linodego.VPCInterfaceIPv6RangeCreateOptions{
 					{
-						"4322::/64",
+						Range: "4322::/64",
 					},
 				},
 			},
@@ -277,7 +277,7 @@ func TestInterface_UpdateVPC(t *testing.T) {
 
 	assert.Equal(t, "4322::/64", iface.VPC.IPv6.Ranges[0].Range)
 
-	assert.Equal(t, false, iface.VPC.IPv6.IsPublic)
+	assert.Equal(t, false, *iface.VPC.IPv6.IsPublic)
 }
 
 func TestInterface_Upgrade(t *testing.T) {
