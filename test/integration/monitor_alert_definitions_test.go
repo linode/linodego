@@ -75,7 +75,6 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 		Description: "Test alert definition creation",
 		ChannelIDs:  []int{channelID},
 		EntityIDs:   nil,
-		IsEnabled:   true,
 		TriggerConditions: &linodego.TriggerConditions{
 			CriteriaCondition:       "ALL",
 			EvaluationPeriodSeconds: 300,

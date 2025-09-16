@@ -135,8 +135,8 @@ func TestUpdateMonitorAlertDefinition(t *testing.T) {
 	base.MockPut("monitor/services/dbaas/alert-definitions/123", json.RawMessage(monitorAlertDefinitionUpdateResponse))
 
 	updateOpts := linodego.AlertDefinitionUpdateOptions{
-		Label:      linodego.Pointer("test-alert-definition-renamed"),
-		Severity:   linodego.Pointer("low"),
+		Label:      "test-alert-definition-renamed",
+		Severity:   int(linodego.SeverityLow),
 		ChannelIDs: []int{1, 2},
 	}
 
@@ -156,7 +156,7 @@ func TestUpdateMonitorAlertDefinition_LabelOnly(t *testing.T) {
 	base.MockPut("monitor/services/dbaas/alert-definitions/123", json.RawMessage(monitorAlertDefinitionUpdateLabelOnlyResponseSingleLine))
 
 	updateOpts := linodego.AlertDefinitionUpdateOptions{
-		Label: linodego.Pointer("test-alert-definition-renamed-one-line"),
+		Label: "test-alert-definition-renamed-one-line",
 	}
 
 	alert, err := base.Client.UpdateMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, testMonitorAlertDefinitionID, updateOpts)
