@@ -250,7 +250,7 @@ func TestInterface_UpdateVPC(t *testing.T) {
 				},
 				Ranges: &[]linodego.VPCInterfaceIPv6RangeCreateOptions{
 					{
-						"4322::/64",
+						Range: "4322::/64",
 					},
 				},
 			},
