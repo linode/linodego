@@ -67,10 +67,10 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 	assert.NotEmpty(t, fetchedChannelLabel, "fetchedChannel.Label should not be empty")
 
 	// Test creating a new Monitor Alert Definition
-	createOpts := linodego.MonitorAlertDefinitionCreateOptions{
+	createOpts := linodego.AlertDefinitionCreateOptions{
 		Label:       "go-test-alert-definition-create",
-		Severity:    3,
-		Type:        "user",
+		Severity:    int(linodego.SeverityLow),
+		Type:        string(linodego.AlertTypeUser),
 		Class:       "test_class",
 		Description: "Test alert definition creation",
 		ChannelIDs:  []int{channelID},
@@ -152,7 +152,7 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 
 	// Update the created alert definition: change label only
 	newLabel := createdAlert.Label + "-updated"
-	updateOpts := linodego.MonitorAlertDefinitionUpdateOptions{
+	updateOpts := linodego.AlertDefinitionUpdateOptions{
 		Label: newLabel,
 	}
 	// wait for 1 minute before update for create to complete

@@ -64,13 +64,11 @@ func TestCreateMonitorAlertDefinition(t *testing.T) {
 
 	base.MockPost("monitor/services/dbaas/alert-definitions", json.RawMessage(monitorAlertDefinitionGetResponse))
 
-	createOpts := linodego.MonitorAlertDefinitionCreateOptions{
+	createOpts := linodego.AlertDefinitionCreateOptions{
 		Label:      "test-alert-definition",
-		Severity:   1,
-		Type:       "some_type",
+		Severity:   int(linodego.SeverityLow),
 		ChannelIDs: []int{1},
 		EntityIDs:  []string{"12345"},
-		IsEnabled:  true,
 	}
 
 	alert, err := base.Client.CreateMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, createOpts)
@@ -87,13 +85,11 @@ func TestCreateMonitorAlertDefinitionWithIdempotency(t *testing.T) {
 
 	base.MockPost("monitor/services/dbaas/alert-definitions", json.RawMessage(monitorAlertDefinitionGetResponse))
 
-	createOpts := linodego.MonitorAlertDefinitionCreateOptions{
+	createOpts := linodego.AlertDefinitionCreateOptions{
 		Label:      "test-alert-definition",
-		Severity:   1,
-		Type:       "some_type",
+		Severity:   int(linodego.SeverityLow),
 		ChannelIDs: []int{1},
 		EntityIDs:  []string{"12345"},
-		IsEnabled:  true,
 	}
 
 	alert, err := base.Client.CreateMonitorAlertDefinitionWithIdempotency(context.Background(), testMonitorAlertDefinitionServiceType, createOpts, "idempotency-key")
@@ -138,10 +134,9 @@ func TestUpdateMonitorAlertDefinition(t *testing.T) {
 
 	base.MockPut("monitor/services/dbaas/alert-definitions/123", json.RawMessage(monitorAlertDefinitionUpdateResponse))
 
-	updateOpts := linodego.MonitorAlertDefinitionUpdateOptions{
-		Label:      "test-alert-definition-renamed",
-		Severity:   2,
-		IsEnabled:  linodego.Pointer(false),
+	updateOpts := linodego.AlertDefinitionUpdateOptions{
+		Label:      linodego.Pointer("test-alert-definition-renamed"),
+		Severity:   linodego.Pointer("low"),
 		ChannelIDs: []int{1, 2},
 	}
 
@@ -160,8 +155,8 @@ func TestUpdateMonitorAlertDefinition_LabelOnly(t *testing.T) {
 	// Mock a PUT that returns the single-line fixture
 	base.MockPut("monitor/services/dbaas/alert-definitions/123", json.RawMessage(monitorAlertDefinitionUpdateLabelOnlyResponseSingleLine))
 
-	updateOpts := linodego.MonitorAlertDefinitionUpdateOptions{
-		Label: "test-alert-definition-renamed-one-line",
+	updateOpts := linodego.AlertDefinitionUpdateOptions{
+		Label: linodego.Pointer("test-alert-definition-renamed-one-line"),
 	}
 
 	alert, err := base.Client.UpdateMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, testMonitorAlertDefinitionID, updateOpts)

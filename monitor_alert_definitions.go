@@ -8,8 +8,8 @@ import (
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
-// MonitorAlertDefinition represents an ACLP Alert Definition object
-type MonitorAlertDefinition struct {
+// AlertDefinition represents an ACLP Alert Definition object
+type AlertDefinition struct {
 	ID                int                    `json:"id"`
 	Label             string                 `json:"label"`
 	Severity          int                    `json:"severity"`
@@ -29,6 +29,9 @@ type MonitorAlertDefinition struct {
 	Description       string                 `json:"description"`
 	Class             string                 `json:"class"`
 }
+
+// Backwards-compatible alias
+type MonitorAlertDefinition = AlertDefinition
 
 // TriggerConditions represents the trigger conditions for an alert.
 type TriggerConditions struct {
@@ -62,11 +65,6 @@ type DimensionFilter struct {
 	Value          interface{} `json:"value"`
 }
 
-const (
-	MonitorAlertDefinitionStatusEnabled  = "enabled"
-	MonitorAlertDefinitionStatusDisabled = "disabled"
-)
-
 // AlertChannelEnvelope represents a single alert channel entry returned inside alert definition
 type AlertChannelEnvelope struct {
 	ID    int    `json:"id"`
@@ -75,38 +73,53 @@ type AlertChannelEnvelope struct {
 	URL   string `json:"url"`
 }
 
-// MonitorAlertDefinitionCreateOptions are the options used to create a new alert definition.
-type MonitorAlertDefinitionCreateOptions struct {
-	Label             string             `json:"label"`
-	Severity          int                `json:"severity"`
-	Class             string             `json:"class"`
-	Type              string             `json:"type"`
-	Description       string             `json:"description,omitempty"`
-	ChannelIDs        []int              `json:"channel_ids"`
-	EntityIDs         []string           `json:"entity_ids"`
-	IsEnabled         bool               `json:"is_enabled"`
-	TriggerConditions *TriggerConditions `json:"trigger_conditions,omitempty"`
-	Rule              *Rule              `json:"rule,omitempty"`
-	RuleCriteria      *RuleCriteria      `json:"rule_criteria,omitempty"`
+// AlertType represents the type of alert: "user" or "system"
+type AlertType string
+
+const (
+	AlertTypeUser   AlertType = "user"
+	AlertTypeSystem AlertType = "system"
+)
+
+// Severity represents the severity level of an alert.
+// 0 = Severe, 1 = Medium, 2 = Low, 3 = Info
+type Severity int
+
+const (
+	SeveritySevere Severity = 0
+	SeverityMedium Severity = 1
+	SeverityLow    Severity = 2
+	SeverityInfo   Severity = 3
+)
+
+// AlertDefinitionCreateOptions are the options used to create a new alert definition.
+type AlertDefinitionCreateOptions struct {
+	ServiceType       string             `json:"service_type"`                 // mandatory
+	Label             string             `json:"label"`                        // mandatory
+	Severity          int                `json:"severity"`                     // mandatory
+	ChannelIDs        []int              `json:"channel_ids"`                  // mandatory
+	RuleCriteria      *RuleCriteria      `json:"rule_criteria,omitempty"`      // optional
+	TriggerConditions *TriggerConditions `json:"trigger_conditions,omitempty"` // optional
+	EntityIDs         []string           `json:"entity_ids,omitempty"`         // optional
+	Description       string             `json:"description,omitempty"`        // optional
 }
 
-// MonitorAlertDefinitionUpdateOptions are the options used to update an alert definition.
-type MonitorAlertDefinitionUpdateOptions struct {
-	Label             string             `json:"label,omitempty"`
-	Severity          int                `json:"severity,omitempty"`
-	Class             string             `json:"class,omitempty"`
-	Description       string             `json:"description,omitempty"`
-	ChannelIDs        []int              `json:"channel_ids,omitempty"`
-	EntityIDs         []string           `json:"entity_ids,omitempty"`
-	IsEnabled         *bool              `json:"is_enabled,omitempty"`
-	TriggerConditions *TriggerConditions `json:"trigger_conditions,omitempty"`
-	Rule              *Rule              `json:"rule,omitempty"`
-	RuleCriteria      *RuleCriteria      `json:"rule_criteria,omitempty"`
+// AlertDefinitionUpdateOptions are the options used to update an alert definition.
+type AlertDefinitionUpdateOptions struct {
+	ServiceType       string             `json:"service_type"`                 // mandatory, must not be empty
+	AlertID           int                `json:"alert_id"`                     // mandatory, must not be zero
+	Label             *string            `json:"label,omitempty"`              // optional
+	Severity          *int               `json:"severity,omitempty"`           // optional, should be int to match AlertDefinition
+	Description       *string            `json:"description,omitempty"`        // optional
+	RuleCriteria      *RuleCriteria      `json:"rule_criteria,omitempty"`      // optional
+	TriggerConditions *TriggerConditions `json:"trigger_conditions,omitempty"` // optional
+	EntityIDs         []string           `json:"entity_ids,omitempty"`         // optional
+	ChannelIDs        []int              `json:"channel_ids,omitempty"`        // optional
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
-func (i *MonitorAlertDefinition) UnmarshalJSON(b []byte) error {
-	type Mask MonitorAlertDefinition
+func (i *AlertDefinition) UnmarshalJSON(b []byte) error {
+	type Mask AlertDefinition
 
 	p := struct {
 		*Mask
@@ -134,27 +147,27 @@ func (c *Client) ListMonitorAlertDefinitions(ctx context.Context, serviceType st
 	} else {
 		endpoint = formatAPIV4BetaPath("monitor/alert-definitions")
 	}
-	return getPaginatedResults[MonitorAlertDefinition](ctx, c, endpoint, opts)
+	return getPaginatedResults[AlertDefinition](ctx, c, endpoint, opts)
 }
 
 // GetMonitorAlertDefinition gets an ACLP Monitor Alert Definition.
 func (c *Client) GetMonitorAlertDefinition(ctx context.Context, serviceType string, alertID int) (*MonitorAlertDefinition, error) {
 	e := formatAPIV4BetaPath("monitor/services/%s/alert-definitions/%d", serviceType, alertID)
-	return doGETRequest[MonitorAlertDefinition](ctx, c, e)
+	return doGETRequest[AlertDefinition](ctx, c, e)
 }
 
 // CreateMonitorAlertDefinition creates an ACLP Monitor Alert Definition.
-func (c *Client) CreateMonitorAlertDefinition(ctx context.Context, serviceType string, opts MonitorAlertDefinitionCreateOptions) (*MonitorAlertDefinition, error) {
+func (c *Client) CreateMonitorAlertDefinition(ctx context.Context, serviceType string, opts AlertDefinitionCreateOptions) (*MonitorAlertDefinition, error) {
 	e := formatAPIV4BetaPath("monitor/services/%s/alert-definitions", serviceType)
-	return doPOSTRequest[MonitorAlertDefinition](ctx, c, e, opts)
+	return doPOSTRequest[AlertDefinition](ctx, c, e, opts)
 }
 
 // CreateMonitorAlertDefinitionWithIdempotency creates an ACLP Monitor Alert Definition
 // and optionally sends an Idempotency-Key header to make the request idempotent.
-func (c *Client) CreateMonitorAlertDefinitionWithIdempotency(ctx context.Context, serviceType string, opts MonitorAlertDefinitionCreateOptions, idempotencyKey string) (*MonitorAlertDefinition, error) {
+func (c *Client) CreateMonitorAlertDefinitionWithIdempotency(ctx context.Context, serviceType string, opts AlertDefinitionCreateOptions, idempotencyKey string) (*MonitorAlertDefinition, error) {
 	e := formatAPIV4BetaPath("monitor/services/%s/alert-definitions", serviceType)
 
-	var result MonitorAlertDefinition
+	var result AlertDefinition
 	req := c.R(ctx).SetResult(&result)
 
 	if idempotencyKey != "" {
@@ -173,13 +186,13 @@ func (c *Client) CreateMonitorAlertDefinitionWithIdempotency(ctx context.Context
 		return nil, err
 	}
 
-	return r.Result().(*MonitorAlertDefinition), nil
+	return r.Result().(*AlertDefinition), nil
 }
 
 // UpdateMonitorAlertDefinition updates an ACLP Monitor Alert Definition.
-func (c *Client) UpdateMonitorAlertDefinition(ctx context.Context, serviceType string, alertID int, opts MonitorAlertDefinitionUpdateOptions) (*MonitorAlertDefinition, error) {
+func (c *Client) UpdateMonitorAlertDefinition(ctx context.Context, serviceType string, alertID int, opts AlertDefinitionUpdateOptions) (*AlertDefinition, error) {
 	e := formatAPIV4BetaPath("monitor/services/%s/alert-definitions/%d", serviceType, alertID)
-	return doPUTRequest[MonitorAlertDefinition, MonitorAlertDefinitionUpdateOptions](ctx, c, e, opts)
+	return doPUTRequest[AlertDefinition](ctx, c, e, opts)
 }
 
 // DeleteMonitorAlertDefinition deletes an ACLP Monitor Alert Definition.
