@@ -138,7 +138,7 @@ func TestInterface_GetVPC(t *testing.T) {
 
 	assert.Equal(t, "4321::/64", iface.VPC.IPv6.Ranges[0].Range)
 
-	assert.Equal(t, true, iface.VPC.IPv6.IsPublic)
+	assert.Equal(t, true, *iface.VPC.IPv6.IsPublic)
 }
 
 func TestInterface_CreatePublic(t *testing.T) {
@@ -277,7 +277,7 @@ func TestInterface_UpdateVPC(t *testing.T) {
 
 	assert.Equal(t, "4322::/64", iface.VPC.IPv6.Ranges[0].Range)
 
-	assert.Equal(t, false, iface.VPC.IPv6.IsPublic)
+	assert.Equal(t, false, *iface.VPC.IPv6.IsPublic)
 }
 
 func TestInterface_Upgrade(t *testing.T) {
