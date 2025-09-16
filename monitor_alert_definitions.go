@@ -108,9 +108,9 @@ type AlertDefinitionCreateOptions struct {
 type AlertDefinitionUpdateOptions struct {
 	ServiceType       string             `json:"service_type"`                 // mandatory, must not be empty
 	AlertID           int                `json:"alert_id"`                     // mandatory, must not be zero
-	Label             *string            `json:"label,omitempty"`              // optional
-	Severity          *int               `json:"severity,omitempty"`           // optional, should be int to match AlertDefinition
-	Description       *string            `json:"description,omitempty"`        // optional
+	Label             string             `json:"label,omitempty"`              // optional
+	Severity          int                `json:"severity,omitempty"`           // optional, should be int to match AlertDefinition
+	Description       string             `json:"description,omitempty"`        // optional
 	RuleCriteria      *RuleCriteria      `json:"rule_criteria,omitempty"`      // optional
 	TriggerConditions *TriggerConditions `json:"trigger_conditions,omitempty"` // optional
 	EntityIDs         []string           `json:"entity_ids,omitempty"`         // optional
