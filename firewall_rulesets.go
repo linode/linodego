@@ -19,23 +19,23 @@ const (
 
 // FirewallRuleSetV2 represents the Rule Set resource.
 // Note: created/updated/deleted are parsed via UnmarshalJSON into time.Time pointers.
-type FirewallRuleSetV2 struct {
-	ID               int                  `json:"id"`
-	Label            string               `json:"label"`
-	Description      string               `json:"description,omitempty"`
-	Type             FirewallRuleSetType  `json:"type"`
-	Rules            []FirewallRule       `json:"rules"`
-	IsServiceDefined bool                 `json:"is_service_defined"`
-	Version          int                  `json:"version"`
+type RuleSet struct {
+	ID               int                 `json:"id"`
+	Label            string              `json:"label"`
+	Description      string              `json:"description,omitempty"`
+	Type             FirewallRuleSetType `json:"type"`
+	Rules            []FirewallRule      `json:"rules"`
+	IsServiceDefined bool                `json:"is_service_defined"`
+	Version          int                 `json:"version"`
 
 	Created *time.Time `json:"-"`
 	Updated *time.Time `json:"-"`
 	Deleted *time.Time `json:"-"`
 }
 
-// UnmarshalJSON implements custom timestamp parsing for FirewallRuleSetV2.
-func (r *FirewallRuleSetV2) UnmarshalJSON(b []byte) error {
-	type Mask FirewallRuleSetV2
+// UnmarshalJSON implements custom timestamp parsing for RuleSet.
+func (r *RuleSet) UnmarshalJSON(b []byte) error {
+	type Mask RuleSet
 	aux := struct {
 		*Mask
 		Created *parseabletime.ParseableTime `json:"created"`
@@ -59,18 +59,18 @@ func (r *FirewallRuleSetV2) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// FirewallRuleSetV2CreateOptions fields accepted by CreateFirewallRuleSet.
-type FirewallRuleSetV2CreateOptions struct {
-	Label       string               `json:"label"`
-	Description string               `json:"description,omitempty"`
-	Type        FirewallRuleSetType  `json:"type"`
-	Rules       []FirewallRule       `json:"rules"`
+// RuleSetCreateOptions fields accepted by CreateRuleSet.
+type RuleSetCreateOptions struct {
+	Label       string              `json:"label"`
+	Description string              `json:"description,omitempty"`
+	Type        FirewallRuleSetType `json:"type"`
+	Rules       []FirewallRule      `json:"rules"`
 }
 
-// FirewallRuleSetV2UpdateOptions fields accepted by UpdateFirewallRuleSet.
+// RuleSetUpdateOptions fields accepted by UpdateRuleSet.
 // Omit a top-level field to leave it unchanged. If Rules is provided, it
 // replaces the entire ordered rules array.
-type FirewallRuleSetV2UpdateOptions struct {
+type RuleSetUpdateOptions struct {
 	Label       *string         `json:"label,omitempty"`
 	Description *string         `json:"description,omitempty"`
 	Rules       *[]FirewallRule `json:"rules,omitempty"`
@@ -78,25 +78,25 @@ type FirewallRuleSetV2UpdateOptions struct {
 
 // ListFirewallRuleSets returns a paginated list of Rule Sets.
 // Supports filtering (e.g., by label) via ListOptions.Filter.
-func (c *Client) ListFirewallRuleSets(ctx context.Context, opts *ListOptions) ([]FirewallRuleSetV2, error) {
-	return getPaginatedResults[FirewallRuleSetV2](ctx, c, "networking/firewalls/rulesets", opts)
+func (c *Client) ListFirewallRuleSets(ctx context.Context, opts *ListOptions) ([]RuleSet, error) {
+	return getPaginatedResults[RuleSet](ctx, c, "networking/firewalls/rulesets", opts)
 }
 
 // CreateFirewallRuleSet creates a new Rule Set.
-func (c *Client) CreateFirewallRuleSet(ctx context.Context, opts FirewallRuleSetV2CreateOptions) (*FirewallRuleSetV2, error) {
-	return doPOSTRequest[FirewallRuleSetV2](ctx, c, "networking/firewalls/rulesets", opts)
+func (c *Client) CreateFirewallRuleSet(ctx context.Context, opts RuleSetCreateOptions) (*RuleSet, error) {
+	return doPOSTRequest[RuleSet](ctx, c, "networking/firewalls/rulesets", opts)
 }
 
 // GetFirewallRuleSet fetches a Rule Set by ID.
-func (c *Client) GetFirewallRuleSet(ctx context.Context, rulesetID int) (*FirewallRuleSetV2, error) {
+func (c *Client) GetFirewallRuleSet(ctx context.Context, rulesetID int) (*RuleSet, error) {
 	e := formatAPIPath("networking/firewalls/rulesets/%d", rulesetID)
-	return doGETRequest[FirewallRuleSetV2](ctx, c, e)
+	return doGETRequest[RuleSet](ctx, c, e)
 }
 
 // UpdateFirewallRuleSet updates a Rule Set by ID.
-func (c *Client) UpdateFirewallRuleSet(ctx context.Context, rulesetID int, opts FirewallRuleSetV2UpdateOptions) (*FirewallRuleSetV2, error) {
+func (c *Client) UpdateFirewallRuleSet(ctx context.Context, rulesetID int, opts RuleSetUpdateOptions) (*RuleSet, error) {
 	e := formatAPIPath("networking/firewalls/rulesets/%d", rulesetID)
-	return doPUTRequest[FirewallRuleSetV2](ctx, c, e, opts)
+	return doPUTRequest[RuleSet](ctx, c, e, opts)
 }
 
 // DeleteFirewallRuleSet deletes a Rule Set by ID.
