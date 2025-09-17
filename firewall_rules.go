@@ -45,8 +45,10 @@ func (r FirewallRule) MarshalJSON() ([]byte, error) {
 		type rulesetOnly struct {
 			Ruleset int `json:"ruleset"`
 		}
+
 		return json.Marshal(rulesetOnly{Ruleset: r.Ruleset})
 	}
+
 	type normal struct {
 		Action      string           `json:"action"`
 		Label       string           `json:"label"`
@@ -55,6 +57,7 @@ func (r FirewallRule) MarshalJSON() ([]byte, error) {
 		Protocol    NetworkProtocol  `json:"protocol"`
 		Addresses   NetworkAddresses `json:"addresses"`
 	}
+
 	return json.Marshal(normal{
 		Action:      r.Action,
 		Label:       r.Label,

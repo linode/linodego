@@ -36,8 +36,10 @@ type RuleSet struct {
 // UnmarshalJSON implements custom timestamp parsing for RuleSet.
 func (r *RuleSet) UnmarshalJSON(b []byte) error {
 	type Mask RuleSet
+    
 	aux := struct {
 		*Mask
+        
 		Created *parseabletime.ParseableTime `json:"created"`
 		Updated *parseabletime.ParseableTime `json:"updated"`
 		Deleted *parseabletime.ParseableTime `json:"deleted"`
@@ -47,15 +49,19 @@ func (r *RuleSet) UnmarshalJSON(b []byte) error {
 	if err := json.Unmarshal(b, &aux); err != nil {
 		return err
 	}
+    
 	if aux.Created != nil {
 		r.Created = (*time.Time)(aux.Created)
 	}
+    
 	if aux.Updated != nil {
 		r.Updated = (*time.Time)(aux.Updated)
 	}
+    
 	if aux.Deleted != nil {
 		r.Deleted = (*time.Time)(aux.Deleted)
 	}
+    
 	return nil
 }
 
