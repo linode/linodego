@@ -19,9 +19,6 @@ func TestInstances_List_smoke(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(
 		t,
 		"fixtures/TestInstances_List", true,
-		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-			options.Region = "eu-west" // Override for metadata availability
-		},
 	)
 
 	defer teardown()
@@ -63,6 +60,19 @@ func TestInstance_Get_smoke(t *testing.T) {
 		t.Error(err)
 	}
 
+	settings, err := client.GetAccountSettings(context.Background())
+	if err != nil {
+		t.Fatalf("Failed to get account settings: %s", err)
+	}
+	defaultPolicy := settings.MaintenancePolicy
+
+	_, err = client.UpdateInstance(context.Background(), instance.ID, linodego.InstanceUpdateOptions{
+		MaintenancePolicy: &defaultPolicy,
+	})
+	if err != nil {
+		t.Fatalf("Error setting maintenance policy: %s", err)
+	}
+
 	instanceGot, err := client.GetInstance(context.Background(), instance.ID)
 	if err != nil {
 		t.Errorf("Error getting instance: %s", err)
@@ -70,17 +80,18 @@ func TestInstance_Get_smoke(t *testing.T) {
 	if instanceGot.ID != instance.ID {
 		t.Errorf("Expected instance ID %d to match %d", instanceGot.ID, instance.ID)
 	}
-
-	if instance.Specs.Disk <= 0 {
-		t.Errorf("Error parsing instance spec for disk size: %v", instance.Specs)
+	if instanceGot.MaintenancePolicy != defaultPolicy {
+		t.Errorf("Expected maintenance policy %q, got %q", defaultPolicy, instanceGot.MaintenancePolicy)
 	}
-
-	if instance.HostUUID == "" {
+	if instanceGot.Specs.Disk <= 0 {
+		t.Errorf("Error parsing instance spec for disk size: %v", instanceGot.Specs)
+	}
+	if instanceGot.HostUUID == "" {
 		t.Errorf("failed to get instance HostUUID")
 	}
 
-	assertDateSet(t, instance.Created)
-	assertDateSet(t, instance.Updated)
+	assertDateSet(t, instanceGot.Created)
+	assertDateSet(t, instanceGot.Updated)
 }
 
 func TestInstance_GetTransfer(t *testing.T) {
@@ -97,7 +108,6 @@ func TestInstance_GetTransfer(t *testing.T) {
 }
 
 func TestInstance_GetMonthlyTransfer(t *testing.T) {
-	t.Skip("Skipping test due to invalid token issue")
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_GetMonthlyTransfer", true)
 	defer teardown()
 	if err != nil {
@@ -107,6 +117,11 @@ func TestInstance_GetMonthlyTransfer(t *testing.T) {
 	currentYear, currentMonth := time.Now().Year(), int(time.Now().Month())
 
 	_, err = client.GetInstanceTransferMonthly(context.Background(), instance.ID, currentYear, currentMonth)
+	if err != nil {
+		t.Errorf("Error getting monthly instance transfer, expected struct, got error %v", err)
+	}
+
+	_, err = client.GetInstanceTransferMonthlyV2(context.Background(), instance.ID, currentYear, currentMonth)
 	if err != nil {
 		t.Errorf("Error getting monthly instance transfer, expected struct, got error %v", err)
 	}
@@ -258,7 +273,7 @@ func TestInstance_MigrateToPG(t *testing.T) {
 		RootPass: randPassword(),
 		Region:   regions[0],
 		Type:     "g6-nanode-1",
-		Image:    "linode/debian10",
+		Image:    "linode/debian12",
 		Booted:   linodego.Pointer(true),
 		PlacementGroup: &linodego.InstanceCreatePlacementGroupOptions{
 			ID: pgOutbound.ID,
@@ -352,9 +367,14 @@ func TestInstance_Disks_List(t *testing.T) {
 }
 
 func TestInstance_Disks_List_WithEncryption(t *testing.T) {
-	client, instance, teardown, err := setupInstance(t, "fixtures/TestInstance_Disks_List_WithEncryption", true, func(c *linodego.Client, ico *linodego.InstanceCreateOptions) {
-		ico.Region = getRegionsWithCaps(t, c, []string{"Disk Encryption"})[0]
-	})
+	client, instance, teardown, err := setupInstance(
+		t,
+		"fixtures/TestInstance_Disks_List_WithEncryption",
+		true,
+		func(c *linodego.Client, ico *linodego.InstanceCreateOptions) {
+			ico.Region = getRegionsWithCaps(t, c, []string{"Disk Encryption"})[0]
+		},
+	)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -500,7 +520,7 @@ func TestInstance_Disk_Clone(t *testing.T) {
 	disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
 		Label:      "go-disk-test-" + randLabel(),
 		Filesystem: "ext4",
-		Image:      "linode/debian10",
+		Image:      "linode/debian12",
 		RootPass:   randPassword(),
 		Size:       2000,
 	})
@@ -540,7 +560,7 @@ func TestInstance_Disk_ResetPassword(t *testing.T) {
 	disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
 		Label:      "go-disk-test-" + randLabel(),
 		Filesystem: "ext4",
-		Image:      "linode/debian10",
+		Image:      "linode/debian12",
 		RootPass:   randPassword(),
 		Size:       2000,
 	})
@@ -606,7 +626,9 @@ func TestInstance_Volumes_List(t *testing.T) {
 		t.Error(err)
 	}
 
-	volume, teardown, volErr := createVolume(t, client)
+	volume, teardown, volErr := createVolume(t, client, func(l *linodego.Client, options *linodego.VolumeCreateOptions) {
+		options.Region = instance.Region
+	})
 
 	_, err = client.WaitForVolumeStatus(context.Background(), volume.ID, linodego.VolumeActive, 500)
 	if err != nil {
@@ -766,6 +788,12 @@ func TestInstance_Clone(t *testing.T) {
 		t.Errorf("Error waiting for instance created: %s", err)
 	}
 
+	originalInstance, err := client.GetInstance(context.Background(), instance.ID)
+	if err != nil {
+		t.Fatalf("Error fetching original instance details: %s", err)
+	}
+	originalPolicy := originalInstance.MaintenancePolicy
+
 	cloneOpts := linodego.InstanceCloneOptions{
 		Region:    targetRegion,
 		Type:      "g6-nanode-1",
@@ -775,7 +803,9 @@ func TestInstance_Clone(t *testing.T) {
 		},
 	}
 	clonedInstance, err := client.CloneInstance(context.Background(), instance.ID, cloneOpts)
-
+	if err != nil {
+		t.Fatal(err)
+	}
 	t.Cleanup(func() {
 		client.DeleteInstance(context.Background(), clonedInstance.ID)
 	})
@@ -794,6 +824,16 @@ func TestInstance_Clone(t *testing.T) {
 	)
 	if err != nil {
 		t.Fatal(err)
+	}
+
+	clonedInstance, err = client.GetInstance(context.Background(), clonedInstance.ID)
+	if err != nil {
+		t.Fatalf("Error fetching cloned instance details: %s", err)
+	}
+
+	if clonedInstance.MaintenancePolicy != originalPolicy {
+		t.Errorf("Expected cloned instance to inherit maintenance policy %q, but got %q",
+			originalPolicy, clonedInstance.MaintenancePolicy)
 	}
 
 	if clonedInstance.Image != instance.Image {
@@ -940,7 +980,12 @@ func createInstance(t *testing.T, client *linodego.Client, enableCloudFirewall b
 	return client.CreateInstance(context.Background(), createOpts)
 }
 
-func setupInstance(t *testing.T, fixturesYaml string, EnableCloudFirewall bool, modifiers ...instanceModifier) (*linodego.Client, *linodego.Instance, func(), error) {
+func setupInstance(
+	t *testing.T,
+	fixturesYaml string,
+	EnableCloudFirewall bool,
+	modifiers ...instanceModifier,
+) (*linodego.Client, *linodego.Instance, func(), error) {
 	if t != nil {
 		t.Helper()
 	}
@@ -972,7 +1017,7 @@ func createInstanceWithoutDisks(
 
 	createOpts := linodego.InstanceCreateOptions{
 		Label:  "go-test-ins-wo-disk-" + randLabel(),
-		Region: getRegionsWithCaps(t, client, []string{"linodes"})[0],
+		Region: getRegionsWithCaps(t, client, []string{"Linodes", "Maintenance Policy"})[0],
 		Type:   "g6-nanode-1",
 		Booted: linodego.Pointer(false),
 	}
@@ -1007,7 +1052,12 @@ func createInstanceWithoutDisks(
 	return instance, config, teardown, err
 }
 
-func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string, enableCloudFirewall bool, modifiers ...instanceModifier) (*linodego.Client, *linodego.Instance, *linodego.InstanceConfig, func(), error) {
+func setupInstanceWithoutDisks(
+	t *testing.T,
+	fixturesYaml string,
+	enableCloudFirewall bool,
+	modifiers ...instanceModifier,
+) (*linodego.Client, *linodego.Instance, *linodego.InstanceConfig, func(), error) {
 	t.Helper()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	instance, config, instanceTeardown, err := createInstanceWithoutDisks(t, client, enableCloudFirewall, modifiers...)
@@ -1017,4 +1067,85 @@ func setupInstanceWithoutDisks(t *testing.T, fixturesYaml string, enableCloudFir
 		fixtureTeardown()
 	}
 	return client, instance, config, teardown, err
+}
+
+func TestInstance_MaintenancePolicy(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestInstance_MaintenancePolicy")
+	defer teardown()
+
+	region := getRegionsWithCapsAndSiteType(
+		t,
+		client,
+		[]string{"Linodes", "Maintenance Policy"},
+		"core",
+	)[0]
+
+	settings, err := client.GetAccountSettings(context.Background())
+	require.NoError(t, err)
+
+	instDefault, err := createInstance(
+		t,
+		client,
+		false,
+		func(l *linodego.Client, options *linodego.InstanceCreateOptions) {
+			options.Region = region
+		},
+	)
+	require.NoError(t, err)
+	defer func() {
+		err := client.DeleteInstance(context.Background(), instDefault.ID)
+		require.NoError(t, err)
+	}()
+	require.Equal(t, settings.MaintenancePolicy, instDefault.MaintenancePolicy)
+
+	validPolicy := "linode/power_off_on"
+	instWithPolicy, err := createInstance(
+		t,
+		client,
+		false,
+		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+			options.Region = region
+			options.MaintenancePolicy = &validPolicy
+		},
+	)
+	require.NoError(t, err)
+	defer func() {
+		err := client.DeleteInstance(context.Background(), instWithPolicy.ID)
+		require.NoError(t, err)
+	}()
+	require.Equal(t, validPolicy, instWithPolicy.MaintenancePolicy)
+
+	instToUpdate, err := createInstance(
+		t,
+		client,
+		false,
+		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+			options.Region = region
+		},
+	)
+	require.NoError(t, err)
+	defer func() {
+		err := client.DeleteInstance(context.Background(), instToUpdate.ID)
+		require.NoError(t, err)
+	}()
+
+	newPolicy := "linode/migrate"
+	updateOpts := instToUpdate.GetUpdateOptions()
+	updateOpts.MaintenancePolicy = &newPolicy
+	updateOpts.Backups = nil
+	updated, err := client.UpdateInstance(context.Background(), instToUpdate.ID, updateOpts)
+	require.NoError(t, err)
+	require.Equal(t, newPolicy, updated.MaintenancePolicy)
+
+	invalidPolicy := "invalid_policy"
+	_, err = createInstance(t, client, false, func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
+		options.MaintenancePolicy = &invalidPolicy
+	})
+	require.Error(t, err)
+	require.Contains(t, err.Error(), "Unsupported maintenance policy slug format")
+
+	updateOpts.MaintenancePolicy = &invalidPolicy
+	_, err = client.UpdateInstance(context.Background(), instToUpdate.ID, updateOpts)
+	require.Error(t, err)
+	require.Contains(t, err.Error(), "Unsupported maintenance policy slug format")
 }

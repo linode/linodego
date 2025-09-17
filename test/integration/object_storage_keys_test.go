@@ -7,7 +7,6 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-
 	"github.com/linode/linodego"
 	. "github.com/linode/linodego"
 )
@@ -136,7 +135,11 @@ func TestObjectStorageKeys_Limited(t *testing.T) {
 		t.Error(err)
 	}
 	if !objectStorageKey.Limited || !cmp.Equal(objectStorageKey.BucketAccess, createOpts.BucketAccess) {
-		t.Errorf("objectStorageKey returned (%v) does not match objectStorageKey creation request (%v)", *objectStorageKey.BucketAccess, *createOpts.BucketAccess)
+		t.Errorf(
+			"objectStorageKey returned (%v) does not match objectStorageKey creation request (%v)",
+			*objectStorageKey.BucketAccess,
+			*createOpts.BucketAccess,
+		)
 	}
 }
 
@@ -158,7 +161,6 @@ func TestObjectStorageKeys_Limited_NoAccess(t *testing.T) {
 }
 
 func TestObjectStorageKeys_Regional_Limited(t *testing.T) {
-	// t.Skip("skipping region test before GA")
 	client, teardown := createTestClient(t, "fixtures/TestObjectStorageKeys_Regional_Limited")
 	regions := getRegionsWithCaps(t, client, []string{"Object Storage"})
 	if len(regions) < 1 {
@@ -234,7 +236,13 @@ func TestObjectStorageKeys_Regional_Limited(t *testing.T) {
 	}
 }
 
-func setupObjectStorageKey(t *testing.T, createOpts ObjectStorageKeyCreateOptions, fixturesYaml string, client *Client, teardown func()) (*Client, *ObjectStorageKey, func(), error) {
+func setupObjectStorageKey(
+	t *testing.T,
+	createOpts ObjectStorageKeyCreateOptions,
+	fixturesYaml string,
+	client *Client,
+	teardown func(),
+) (*Client, *ObjectStorageKey, func(), error) {
 	t.Helper()
 
 	if (client == nil) != (teardown == nil) {

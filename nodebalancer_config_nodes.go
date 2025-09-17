@@ -14,6 +14,7 @@ type NodeBalancerNode struct {
 	Mode           NodeMode `json:"mode"`
 	ConfigID       int      `json:"config_id"`
 	NodeBalancerID int      `json:"nodebalancer_id"`
+	VPCConfigID    int      `json:"vpc_config_id"`
 }
 
 // NodeMode is the mode a NodeBalancer should use when sending traffic to a NodeBalancer Node
@@ -44,10 +45,11 @@ type NodeBalancerNodeCreateOptions struct {
 
 // NodeBalancerNodeUpdateOptions fields are those accepted by UpdateNodeBalancerNode
 type NodeBalancerNodeUpdateOptions struct {
-	Address string   `json:"address,omitempty"`
-	Label   string   `json:"label,omitempty"`
-	Weight  int      `json:"weight,omitempty"`
-	Mode    NodeMode `json:"mode,omitempty"`
+	Address  string   `json:"address,omitempty"`
+	Label    string   `json:"label,omitempty"`
+	Weight   int      `json:"weight,omitempty"`
+	Mode     NodeMode `json:"mode,omitempty"`
+	SubnetID int      `json:"subnet_id,omitempty"`
 }
 
 // GetCreateOptions converts a NodeBalancerNode to NodeBalancerNodeCreateOptions for use in CreateNodeBalancerNode
@@ -88,7 +90,13 @@ func (c *Client) CreateNodeBalancerNode(ctx context.Context, nodebalancerID int,
 }
 
 // UpdateNodeBalancerNode updates the NodeBalancerNode with the specified id
-func (c *Client) UpdateNodeBalancerNode(ctx context.Context, nodebalancerID int, configID int, nodeID int, opts NodeBalancerNodeUpdateOptions) (*NodeBalancerNode, error) {
+func (c *Client) UpdateNodeBalancerNode(
+	ctx context.Context,
+	nodebalancerID int,
+	configID int,
+	nodeID int,
+	opts NodeBalancerNodeUpdateOptions,
+) (*NodeBalancerNode, error) {
 	e := formatAPIPath("nodebalancers/%d/configs/%d/nodes/%d", nodebalancerID, configID, nodeID)
 	return doPUTRequest[NodeBalancerNode](ctx, c, e, opts)
 }

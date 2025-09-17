@@ -1,0 +1,30 @@
+{
+    "id": 1,
+    "ipam_address": "192.168.1.10",
+    "label": "eth0",
+    "purpose": "public",
+    "primary": true,
+    "active": true,
+    "vpc_id": 101,
+    "subnet_id": 202,
+    "ipv4": {
+      "vpc": "vpc-2",
+      "nat_1_1": "203.0.113.3"
+    },
+    "ipv6": {
+        "slaac": [
+            {
+                "range": "1234::5678/64",
+                "address": "1234::5678"
+            }
+        ],
+        "ranges": [
+            {
+                "range": "1234::5678/64"
+            }
+        ],
+        "is_public": true
+    },
+    "ip_ranges": ["192.168.1.0/24"]
+}
+  

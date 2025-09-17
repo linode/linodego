@@ -1,0 +1,70 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/firewalls/templates/public
+    method: GET
+  response:
+    body: '{"slug": "public", "rules": {"inbound": [{"action": "ACCEPT", "addresses":
+      {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}, "ports": "22", "protocol": "TCP",
+      "label": "accept-inbound-ssh", "description": "Accept inbound SSH"}, {"action":
+      "ACCEPT", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}, "protocol":
+      "ICMP", "label": "accept-inbound-icmp", "description": "Accept inbound ICMP"}],
+      "inbound_policy": "DROP", "outbound": [], "outbound_policy": "ACCEPT"}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "461"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 21 Apr 2025 07:03:52 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1600"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""

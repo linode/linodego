@@ -5,7 +5,7 @@ test-int:
 	LINODE_TOKEN="awesometokenawesometokenawesometoken" \
 	LINODE_API_VERSION="v4beta" \
 	GO111MODULE="on" \
-	go test -v ./integration $(TEST_ARGS)
+	go test -v ./integration $(TEST_ARGS) -timeout=$(TEST_TIMEOUT)
 
 .PHONY: test-unit
 
@@ -20,4 +20,4 @@ test-smoke:
 	LINODE_API_VERSION="v4beta" \
 	LINODE_URL="$(LINODE_URL)" \
 	GO111MODULE="on" \
-	go test -v -run smoke ./integration/...
+	go test -v -run smoke ./integration/... -timeout=$(TEST_TIMEOUT)

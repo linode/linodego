@@ -14,6 +14,16 @@ const (
 	LKELinodeNotReady LKELinodeStatus = "not_ready"
 )
 
+// LKENodePoolUpdateStrategy constants start with LKENodePool and include
+// LKE Node Pool upgrade strategy values
+type LKENodePoolUpdateStrategy string
+
+// LKENodePoolUpdateStrategy constants describe the available upgrade strategies for LKE Enterprise only
+const (
+	LKENodePoolRollingUpdate LKENodePoolUpdateStrategy = "rolling_update"
+	LKENodePoolOnRecycle     LKENodePoolUpdateStrategy = "on_recycle"
+)
+
 // LKENodePoolDisk represents a Node disk in an LKENodePool object
 type LKENodePoolDisk struct {
 	Size int    `json:"size"`
@@ -62,11 +72,17 @@ type LKENodePool struct {
 	Tags    []string            `json:"tags"`
 	Labels  LKENodePoolLabels   `json:"labels"`
 	Taints  []LKENodePoolTaint  `json:"taints"`
+	Label   *string             `json:"label"`
 
 	Autoscaler LKENodePoolAutoscaler `json:"autoscaler"`
 
 	// NOTE: Disk encryption may not currently be available to all users.
 	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitempty"`
+
+	// K8sVersion and UpdateStrategy are only for LKE Enterprise to support node pool upgrades.
+	// It may not currently be available to all users and is under v4beta.
+	K8sVersion     *string                    `json:"k8s_version,omitempty"`
+	UpdateStrategy *LKENodePoolUpdateStrategy `json:"update_strategy,omitempty"`
 }
 
 // LKENodePoolCreateOptions fields are those accepted by CreateLKENodePool
@@ -77,8 +93,14 @@ type LKENodePoolCreateOptions struct {
 	Tags   []string           `json:"tags"`
 	Labels LKENodePoolLabels  `json:"labels"`
 	Taints []LKENodePoolTaint `json:"taints"`
+	Label  *string            `json:"label,omitempty"`
 
 	Autoscaler *LKENodePoolAutoscaler `json:"autoscaler,omitempty"`
+
+	// K8sVersion and UpdateStrategy only works for LKE Enterprise to support node pool upgrades.
+	// It may not currently be available to all users and is under v4beta.
+	K8sVersion     *string                    `json:"k8s_version,omitempty"`
+	UpdateStrategy *LKENodePoolUpdateStrategy `json:"update_strategy,omitempty"`
 }
 
 // LKENodePoolUpdateOptions fields are those accepted by UpdateLKENodePoolUpdate
@@ -87,8 +109,14 @@ type LKENodePoolUpdateOptions struct {
 	Tags   *[]string           `json:"tags,omitempty"`
 	Labels *LKENodePoolLabels  `json:"labels,omitempty"`
 	Taints *[]LKENodePoolTaint `json:"taints,omitempty"`
+	Label  *string             `json:"label,omitempty"`
 
 	Autoscaler *LKENodePoolAutoscaler `json:"autoscaler,omitempty"`
+
+	// K8sVersion and UpdateStrategy only works for LKE Enterprise to support node pool upgrades.
+	// It may not currently be available to all users and is under v4beta.
+	K8sVersion     *string                    `json:"k8s_version,omitempty"`
+	UpdateStrategy *LKENodePoolUpdateStrategy `json:"update_strategy,omitempty"`
 }
 
 // GetCreateOptions converts a LKENodePool to LKENodePoolCreateOptions for
@@ -100,6 +128,10 @@ func (l LKENodePool) GetCreateOptions() (o LKENodePoolCreateOptions) {
 	o.Labels = l.Labels
 	o.Taints = l.Taints
 	o.Autoscaler = &l.Autoscaler
+	o.K8sVersion = l.K8sVersion
+	o.UpdateStrategy = l.UpdateStrategy
+	o.Label = l.Label
+
 	return
 }
 
@@ -110,6 +142,10 @@ func (l LKENodePool) GetUpdateOptions() (o LKENodePoolUpdateOptions) {
 	o.Labels = &l.Labels
 	o.Taints = &l.Taints
 	o.Autoscaler = &l.Autoscaler
+	o.K8sVersion = l.K8sVersion
+	o.UpdateStrategy = l.UpdateStrategy
+	o.Label = l.Label
+
 	return
 }
 

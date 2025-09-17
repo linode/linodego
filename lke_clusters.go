@@ -18,6 +18,13 @@ const (
 	LKEClusterNotReady LKEClusterStatus = "not_ready"
 )
 
+type LKEClusterStackType string
+
+const (
+	LKEClusterStackIPv4 LKEClusterStackType = "ipv4"
+	LKEClusterDualStack LKEClusterStackType = "ipv4-ipv6"
+)
+
 // LKECluster represents a LKECluster object
 type LKECluster struct {
 	ID           int                    `json:"id"`
@@ -35,6 +42,11 @@ type LKECluster struct {
 
 	// NOTE: APLEnabled is currently in beta and may only function with API version v4beta.
 	APLEnabled bool `json:"apl_enabled"`
+
+	// NOTE: SubnetID, VpcID, and StackType may not currently be available to all users and can only be used with v4beta.
+	SubnetID  int                 `json:"subnet_id"`
+	VpcID     int                 `json:"vpc_id"`
+	StackType LKEClusterStackType `json:"stack_type"`
 }
 
 // LKEClusterCreateOptions fields are those accepted by CreateLKECluster
@@ -51,6 +63,11 @@ type LKEClusterCreateOptions struct {
 
 	// NOTE: APLEnabled is currently in beta and may only function with API version v4beta.
 	APLEnabled bool `json:"apl_enabled,omitempty"`
+
+	// NOTE: SubnetID, VpcID, and StackType may not currently be available to all users and can only be used with v4beta.
+	SubnetID  *int                 `json:"subnet_id,omitempty"`
+	VpcID     *int                 `json:"vpc_id,omitempty"`
+	StackType *LKEClusterStackType `json:"stack_type,omitempty"`
 }
 
 // LKEClusterUpdateOptions fields are those accepted by UpdateLKECluster
@@ -109,6 +126,7 @@ func (i *LKECluster) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		Created *parseabletime.ParseableTime `json:"created"`
 		Updated *parseabletime.ParseableTime `json:"updated"`
 	}{
@@ -204,13 +222,13 @@ func (c *Client) GetLKEVersion(ctx context.Context, version string) (*LKEVersion
 // ListLKETierVersions lists all Kubernetes versions available given tier through LKE.
 // NOTE: This endpoint may not currently be available to all users and can only be used with v4beta.
 func (c *Client) ListLKETierVersions(ctx context.Context, tier string, opts *ListOptions) ([]LKETierVersion, error) {
-	return getPaginatedResults[LKETierVersion](ctx, c, formatAPIPath("lke/versions/%s", tier), opts)
+	return getPaginatedResults[LKETierVersion](ctx, c, formatAPIPath("lke/tiers/%s/versions", tier), opts)
 }
 
 // GetLKETierVersion gets the details of a specific LKE tier version.
 // NOTE: This endpoint may not currently be available to all users and can only be used with v4beta.
 func (c *Client) GetLKETierVersion(ctx context.Context, tier string, versionID string) (*LKETierVersion, error) {
-	return doGETRequest[LKETierVersion](ctx, c, formatAPIPath("lke/versions/%s/%s", tier, versionID))
+	return doGETRequest[LKETierVersion](ctx, c, formatAPIPath("lke/tiers/%s/versions/%s", tier, versionID))
 }
 
 // ListLKEClusterAPIEndpoints gets the API Endpoint for the LKE Cluster specified

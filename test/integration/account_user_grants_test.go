@@ -23,19 +23,18 @@ func TestUserGrants_Update(t *testing.T) {
 	accessLevel := linodego.AccessLevelReadOnly
 
 	globalGrants := linodego.GlobalUserGrants{
-		AccountAccess:      &accessLevel,
-		AddDomains:         false,
-		AddDatabases:       true,
-		AddFirewalls:       true,
-		AddImages:          true,
-		AddLinodes:         false,
-		AddLongview:        true,
-		AddNodeBalancers:   false,
-		AddPlacementGroups: false,
-		AddStackScripts:    true,
-		AddVolumes:         true,
-		AddVPCs:            true,
-		CancelAccount:      false,
+		AccountAccess:    &accessLevel,
+		AddDomains:       false,
+		AddDatabases:     true,
+		AddFirewalls:     true,
+		AddImages:        true,
+		AddLinodes:       false,
+		AddLongview:      true,
+		AddNodeBalancers: false,
+		AddStackScripts:  true,
+		AddVolumes:       true,
+		AddVPCs:          true,
+		CancelAccount:    false,
 	}
 
 	grants, err := client.UpdateUserGrants(context.TODO(), username, linodego.UserGrantsUpdateOptions{
