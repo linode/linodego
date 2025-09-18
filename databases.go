@@ -178,6 +178,7 @@ func (d *Database) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		Created           *parseabletime.ParseableTime `json:"created"`
 		Updated           *parseabletime.ParseableTime `json:"updated"`
 		OldestRestoreTime *parseabletime.ParseableTime `json:"oldest_restore_time"`
@@ -192,6 +193,7 @@ func (d *Database) UnmarshalJSON(b []byte) error {
 	d.Created = (*time.Time)(p.Created)
 	d.Updated = (*time.Time)(p.Updated)
 	d.OldestRestoreTime = (*time.Time)(p.OldestRestoreTime)
+
 	return nil
 }
 
@@ -200,6 +202,7 @@ func (d *DatabaseFork) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		RestoreTime *parseabletime.ParseableTime `json:"restore_time"`
 	}{
 		Mask: (*Mask)(d),
@@ -210,6 +213,7 @@ func (d *DatabaseFork) UnmarshalJSON(b []byte) error {
 	}
 
 	d.RestoreTime = (*time.Time)(p.RestoreTime)
+
 	return nil
 }
 
@@ -218,6 +222,7 @@ func (d *DatabaseMaintenanceWindowPending) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		Deadline   *parseabletime.ParseableTime `json:"deadline"`
 		PlannedFor *parseabletime.ParseableTime `json:"planned_for"`
 	}{
@@ -230,6 +235,7 @@ func (d *DatabaseMaintenanceWindowPending) UnmarshalJSON(b []byte) error {
 
 	d.Deadline = (*time.Time)(p.Deadline)
 	d.PlannedFor = (*time.Time)(p.PlannedFor)
+
 	return nil
 }
 
