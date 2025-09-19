@@ -67,8 +67,8 @@ type Image struct {
 }
 
 type ImageSharing struct {
-	SharedWith *ImageSharingSharedWith `json:"shared_with,omitempty"`
-	SharedBy   *ImageSharingSharedBy   `json:"shared_by,omitempty"`
+	SharedWith *ImageSharingSharedWith `json:"shared_with"`
+	SharedBy   *ImageSharingSharedBy   `json:"shared_by"`
 }
 
 type ImageSharingSharedWith struct {
@@ -80,7 +80,7 @@ type ImageSharingSharedBy struct {
 	ShareGroupID    int     `json:"sharegroup_id"`
 	ShareGroupUUID  string  `json:"sharegroup_uuid"`
 	ShareGroupLabel string  `json:"sharegroup_label"`
-	SourceImageID   *string `json:"source_image_id,omitempty"`
+	SourceImageID   *string `json:"source_image_id"`
 }
 
 // ImageCreateOptions fields are those accepted by CreateImage
