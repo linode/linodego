@@ -427,7 +427,7 @@ type MySQLUpdateOptions struct {
 	ClusterSize    int                        `json:"cluster_size,omitempty"`
 	Version        string                     `json:"version,omitempty"`
 	EngineConfig   *MySQLDatabaseEngineConfig `json:"engine_config,omitempty"`
-	PrivateNetwork *DatabasePrivateNetwork    `json:"private_network,omitempty"`
+	PrivateNetwork **DatabasePrivateNetwork   `json:"private_network,omitempty"`
 }
 
 // MySQLDatabaseBackup is information for interacting with a backup for the existing MySQL Database

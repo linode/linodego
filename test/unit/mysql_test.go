@@ -102,11 +102,13 @@ func TestDatabaseMySQL_Update(t *testing.T) {
 				ConnectTimeout: linodego.Pointer(20),
 			},
 		},
-		PrivateNetwork: &linodego.DatabasePrivateNetwork{
-			VPCID:        1234,
-			SubnetID:     5678,
-			PublicAccess: true,
-		},
+		PrivateNetwork: linodego.DoublePointer(
+			linodego.DatabasePrivateNetwork{
+				VPCID:        1234,
+				SubnetID:     5678,
+				PublicAccess: true,
+			},
+		),
 	}
 
 	base.MockPut("databases/mysql/instances/123", fixtureData)
