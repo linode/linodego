@@ -14,8 +14,14 @@ interactions:
     url: https://api.linode.com/v4beta/monitor/services?page=1
     method: GET
   response:
-    body: '{"data": [{"service_type": "dbaas", "label": "Databases"}], "page": 1,
-      "pages": 1, "results": 1}'
+    body: '{"data": [{"service_type": "dbaas", "label": "Databases", "alert": {"polling_interval_seconds":
+      [300], "evaluation_period_seconds": [300], "scope": ["entity"]}}, {"service_type":
+      "linode", "label": "Linodes", "alert": {"polling_interval_seconds": [300], "evaluation_period_seconds":
+      [300], "scope": ["entity"]}}, {"service_type": "nodebalancer", "label": "Nodebalancers",
+      "alert": {"polling_interval_seconds": [300], "evaluation_period_seconds": [300],
+      "scope": ["entity"]}}, {"service_type": "firewall", "label": "Firewalls", "alert":
+      {"polling_interval_seconds": [300], "evaluation_period_seconds": [300], "scope":
+      ["entity"]}}], "page": 1, "pages": 1, "results": 4}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -34,13 +40,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "96"
+      - "668"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 07 Apr 2025 10:17:22 GMT
+      - Mon, 25 Aug 2025 16:50:36 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -56,9 +62,12 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
+        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
+        monitor:read_only nodebalancers:read_only object_storage:read_only stackscripts:read_only
+        volumes:read_only
       X-Ratelimit-Limit:
-      - "1600"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -74,11 +83,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/services/dbaas?page=1
+    url: https://api.linode.com/v4beta/monitor/services/dbaas
     method: GET
   response:
-    body: '{"data": [{"service_type": "dbaas", "label": "Databases"}], "page": 1,
-      "pages": 1, "results": 1}'
+    body: '{"service_type": "dbaas", "label": "Databases", "alert": {"polling_interval_seconds":
+      [300], "evaluation_period_seconds": [300], "scope": ["entity"]}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -97,13 +106,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "96"
+      - "150"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 07 Apr 2025 10:17:22 GMT
+      - Mon, 25 Aug 2025 16:50:36 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -119,9 +128,12 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
+        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
+        monitor:read_only nodebalancers:read_only object_storage:read_only stackscripts:read_only
+        volumes:read_only
       X-Ratelimit-Limit:
-      - "1600"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
