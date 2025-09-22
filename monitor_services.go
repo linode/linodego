@@ -23,8 +23,8 @@ func (c *Client) ListMonitorServices(ctx context.Context, opts *ListOptions) ([]
 	return getPaginatedResults[MonitorService](ctx, c, "monitor/services", opts)
 }
 
-// ListMonitorServiceByType gets a monitor service by a given service_type
-func (c *Client) ListMonitorServiceByType(ctx context.Context, serviceType string, _ *ListOptions) (MonitorService, error) {
+// GetMonitorServiceByType gets a monitor service by a given service_type
+func (c *Client) GetMonitorServiceByType(ctx context.Context, serviceType string) (MonitorService, error) {
 	e := formatAPIPath("monitor/services/%s", serviceType)
 
 	result, err := doGETRequest[MonitorService](ctx, c, e)

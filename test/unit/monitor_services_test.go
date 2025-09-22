@@ -47,14 +47,13 @@ func TestListMonitorServicesByType(t *testing.T) {
 	// Mock the GET request for the monitor services by type (dbaas)
 	base.MockGet("monitor/services/dbaas", fixtureData)
 
-	// Call the ListMonitorServiceByType method
-	client, err := base.Client.ListMonitorServiceByType(context.Background(), "dbaas", &linodego.ListOptions{})
+	// Call the GetMonitorServiceByType method
+	client, err := base.Client.GetMonitorServiceByType(context.Background(), "dbaas")
 	assert.NoError(t, err, "Expected no error when listing monitor services by type")
-	// No need to check NotEmpty, just check fields directly
 	assert.Equal(t, "Databases", client.Label, "Expected services label to match")
 	assert.Equal(t, "dbaas", client.ServiceType, "Expected service_type to match")
 
-	// Assert alert details for the first service
+	// Assert alert details for the service
 	assert.NotNil(t, client.Alert, "Expected alert to be present")
 	assert.NotEmpty(t, client.Alert.PollingIntervalSeconds, "Expected polling_interval_seconds to be present")
 	assert.NotEmpty(t, client.Alert.EvaluationPeriodSeconds, "Expected evaluation_period_seconds to be present")
