@@ -2,8 +2,19 @@
     "data": [
       {
         "label": "Databases",
-        "service_type": "dbaas"
-      }
+        "service_type": "dbaas",
+        "alert": {
+            "polling_interval_seconds": [
+              300
+            ],
+            "evaluation_period_seconds": [
+              300
+            ],
+            "scope": [
+              "entity"
+            ]
+          }
+        }
     ],
     "page": 1,
     "pages": 1,
