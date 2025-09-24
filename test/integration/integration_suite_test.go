@@ -127,7 +127,7 @@ func testRecorder(t *testing.T, fixturesYaml string, testingMode recorder.Mode, 
 	recordStopper = func() {
 		r.Stop()
 	}
-	return
+	return r, recordStopper
 }
 
 // createTestClient is a testing helper to creates a linodego.Client initialized using

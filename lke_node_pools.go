@@ -132,7 +132,7 @@ func (l LKENodePool) GetCreateOptions() (o LKENodePoolCreateOptions) {
 	o.UpdateStrategy = l.UpdateStrategy
 	o.Label = l.Label
 
-	return
+	return o
 }
 
 // GetUpdateOptions converts a LKENodePool to LKENodePoolUpdateOptions for use in UpdateLKENodePoolUpdate
@@ -146,7 +146,7 @@ func (l LKENodePool) GetUpdateOptions() (o LKENodePoolUpdateOptions) {
 	o.UpdateStrategy = l.UpdateStrategy
 	o.Label = l.Label
 
-	return
+	return o
 }
 
 // ListLKENodePools lists LKENodePools
