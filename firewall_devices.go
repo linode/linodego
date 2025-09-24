@@ -74,7 +74,7 @@ func (c *Client) GetFirewallDevice(ctx context.Context, firewallID, deviceID int
 	return doGETRequest[FirewallDevice](ctx, c, e)
 }
 
-// AddFirewallDevice associates a Device with a given Firewall
+// CreateFirewallDevice associates a Device with a given Firewall
 func (c *Client) CreateFirewallDevice(ctx context.Context, firewallID int, opts FirewallDeviceCreateOptions) (*FirewallDevice, error) {
 	e := formatAPIPath("networking/firewalls/%d/devices", firewallID)
 	return doPOSTRequest[FirewallDevice](ctx, c, e, opts)
