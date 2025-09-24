@@ -158,7 +158,7 @@ func (i LKECluster) GetCreateOptions() (o LKEClusterCreateOptions) {
 	}
 
 	// @TODO copy NodePools?
-	return
+	return o
 }
 
 // GetUpdateOptions converts a LKECluster to LKEClusterUpdateOptions for use in UpdateLKECluster
@@ -174,7 +174,7 @@ func (i LKECluster) GetUpdateOptions() (o LKEClusterUpdateOptions) {
 		// ACL will not be populated in the control plane response
 	}
 
-	return
+	return o
 }
 
 // ListLKEVersions lists the Kubernetes versions available through LKE. This endpoint is cached by default.

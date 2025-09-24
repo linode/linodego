@@ -171,7 +171,7 @@ func NewClient(hc *http.Client) (client Client) {
 		SetDebug(envDebug).
 		enableLogSanitization()
 
-	return
+	return client
 }
 
 // NewClientFromEnv creates a Client and initializes it with values
