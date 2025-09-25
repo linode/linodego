@@ -72,8 +72,8 @@ type ImageSharing struct {
 }
 
 type ImageSharingSharedWith struct {
-	ShareGroupCount        int    `json:"sharegroup_count"`
-	ImageShareGroupListURL string `json:"image_sharegroup_list_url"`
+	ShareGroupCount   int    `json:"sharegroup_count"`
+	ShareGroupListURL string `json:"sharegroup_list_url"`
 }
 
 type ImageSharingSharedBy struct {

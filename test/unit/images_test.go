@@ -110,7 +110,7 @@ func TestImage_GetPrivateShared(t *testing.T) {
 	assert.Equal(t, 1234567, image.TotalSize)
 
 	assert.Equal(t, 1, image.ImageSharing.SharedWith.ShareGroupCount)
-	assert.Equal(t, "/images/private/28747995/sharegroups", image.ImageSharing.SharedWith.ImageShareGroupListURL)
+	assert.Equal(t, "/images/private/28747995/sharegroups", image.ImageSharing.SharedWith.ShareGroupListURL)
 	assert.Nil(t, image.ImageSharing.SharedBy)
 
 	assert.ElementsMatch(t, []string{"cloud-init", "distributed-sites"}, image.Capabilities)
