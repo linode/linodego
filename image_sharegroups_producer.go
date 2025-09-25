@@ -73,7 +73,7 @@ type ImageShareGroupUpdateImageOptions struct {
 
 // ImageShareGroupImage represents an Image to be included in a ProducerImageShareGroup.
 type ImageShareGroupImage struct {
-	ImageID     string  `json:"image_id"`
+	ID          string  `json:"id"`
 	Label       *string `json:"label,omitempty"`
 	Description *string `json:"description,omitempty"`
 }
@@ -142,13 +142,13 @@ func (c *Client) ListImageShareGroups(
 // the given private image is present.
 func (c *Client) ListImageShareGroupsContainingPrivateImage(
 	ctx context.Context,
-	privateImageID int,
+	privateImageID string,
 	opts *ListOptions,
 ) ([]ProducerImageShareGroup, error) {
 	return getPaginatedResults[ProducerImageShareGroup](
 		ctx,
 		c,
-		formatAPIPath("images/%d/sharegroups", privateImageID),
+		formatAPIPath("images/%s/sharegroups", privateImageID),
 		opts,
 	)
 }
@@ -221,17 +221,13 @@ func (c *Client) ImageShareGroupAddImages(
 	imageShareGroupID int,
 	opts ImageShareGroupAddImagesOptions,
 ) ([]Image, error) {
-	response, err := doPOSTRequest[[]Image](
+	return postPaginatedResults[Image, ImageShareGroupAddImagesOptions](
 		ctx,
 		c,
 		formatAPIPath("images/sharegroups/%d/images", imageShareGroupID),
+		nil,
 		opts,
 	)
-	if err != nil {
-		return nil, err
-	}
-
-	return *response, nil
 }
 
 // ImageShareGroupUpdateImage allows the producer to update the specified Image's description and label within an ImageShareGroup.

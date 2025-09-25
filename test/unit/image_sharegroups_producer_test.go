@@ -24,7 +24,7 @@ func TestImageShareGroup_Producer_Create(t *testing.T) {
 		Description: linodego.Pointer("This is the description."),
 		Images: []linodego.ImageShareGroupImage{
 			{
-				ImageID:     "linode/debian11",
+				ID:          "linode/debian11",
 				Label:       linodego.Pointer("image-label"),
 				Description: linodego.Pointer("A description."),
 			},
@@ -90,7 +90,7 @@ func TestImageShareGroup_Producer_AddImages(t *testing.T) {
 	requestData := linodego.ImageShareGroupAddImagesOptions{
 		Images: []linodego.ImageShareGroupImage{
 			{
-				ImageID:     "linode/debian11",
+				ID:          "linode/debian11",
 				Label:       linodego.Pointer("image-label"),
 				Description: linodego.Pointer("A description."),
 			},
@@ -213,9 +213,9 @@ func TestImageShareGroup_Producer_List_ContainingPrivateImage(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	base.MockGet("images/1234/sharegroups", fixtureData)
+	base.MockGet("images/private%2F1234/sharegroups", fixtureData)
 
-	imageShareGroups, err := base.Client.ListImageShareGroupsContainingPrivateImage(context.Background(), 1234, &linodego.ListOptions{})
+	imageShareGroups, err := base.Client.ListImageShareGroupsContainingPrivateImage(context.Background(), "private/1234", &linodego.ListOptions{})
 	assert.NoError(t, err)
 
 	assert.Len(t, imageShareGroups, 2)
