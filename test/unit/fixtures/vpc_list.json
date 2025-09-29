@@ -1,18 +1,43 @@
 {
     "data": [
         {
+            "created": "2023-07-11T00:00:00",
+            "description": "A description of my VPC.",
             "id": 123,
-            "label": "test-vpc",
-            "description": "Test VPC description",
+            "label": "cool-vpc",
             "region": "us-east",
+            "ipv6": [
+                {
+                    "range": "fd71:1140:a9d0::/52"
+                }
+            ],
             "subnets": [
                 {
-                    "id": 456,
-                    "label": "subnet-1",
-                    "ipv4": "192.168.1.0/24",
-                    "linodes": []
+                    "created": "2023-07-11T00:00:00",
+                    "id": 123,
+                    "ipv4": "192.0.2.210/24",
+                    "label": "Subnet A",
+                    "linodes": [
+                        {
+                            "id": 111,
+                            "interfaces": [
+                                {
+                                    "id": 421,
+                                    "active": true,
+                                    "config_id": 4567
+                                },
+                                {
+                                    "id": 422,
+                                    "config_id": 4567,
+                                    "active": false
+                                }
+                            ]
+                        }
+                    ],
+                    "updated": "2023-09-11T00:00:00"
                 }
-            ]
+            ],
+            "updated": "2023-09-11T00:00:00"
         }
     ],
     "page": 1,
