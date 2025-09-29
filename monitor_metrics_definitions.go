@@ -16,7 +16,7 @@ type MonitorMetricsDefinition struct {
 	Unit                        MetricUnit          `json:"unit"`
 }
 
-// MetricType Enum object for MetricType
+// MetricType is an enum object for MetricType
 type MetricType string
 
 const (
@@ -26,7 +26,7 @@ const (
 	MetricTypeSummary   MetricType = "summary"
 )
 
-// MetricUnit Enum object for Unit
+// MetricUnit is an enum object for Unit
 type MetricUnit string
 
 const (

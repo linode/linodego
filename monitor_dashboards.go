@@ -19,7 +19,7 @@ type MonitorDashboard struct {
 	Widgets     []DashboardWidget `json:"widgets"`
 }
 
-// ServiceType enum object for serviceType
+// ServiceType is an enum object for serviceType
 type ServiceType string
 
 const (
@@ -34,7 +34,7 @@ const (
 	ServiceTypeNetLoadBalancer ServiceType = "netloadbalancer"
 )
 
-// DashboardType enum object for DashboardType
+// DashboardType is an enum object for DashboardType
 type DashboardType string
 
 const (
@@ -63,7 +63,7 @@ type DashboardFilter struct {
 	Value          string `json:"value"`
 }
 
-// AggregateFunction Enum object for AggregateFunction
+// AggregateFunction is an enum object for AggregateFunction
 type AggregateFunction string
 
 const (
@@ -77,7 +77,7 @@ const (
 	AggregateFunctionLast     AggregateFunction = "last"
 )
 
-// ChartType Enum object for Chart type
+// ChartType is an enum object for Chart type
 type ChartType string
 
 const (
