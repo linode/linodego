@@ -162,7 +162,7 @@ func (i Image) GetUpdateOptions() (iu ImageUpdateOptions) {
 	iu.Label = i.Label
 	iu.Description = copyString(&i.Description)
 
-	return
+	return iu
 }
 
 // ListImages lists Images.

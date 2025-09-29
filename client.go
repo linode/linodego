@@ -45,7 +45,7 @@ const (
 	APIEnvVar = "LINODE_TOKEN"
 	// APISecondsPerPoll how frequently to poll for new Events or Status in WaitFor functions
 	APISecondsPerPoll = 3
-	// Maximum wait time for retries
+	// APIRetryMaxWaitTime is the maximum wait time for retries
 	APIRetryMaxWaitTime       = time.Duration(30) * time.Second
 	APIDefaultCacheExpiration = time.Minute * 15
 )
@@ -171,7 +171,7 @@ func NewClient(hc *http.Client) (client Client) {
 		SetDebug(envDebug).
 		enableLogSanitization()
 
-	return
+	return client
 }
 
 // NewClientFromEnv creates a Client and initializes it with values
@@ -888,6 +888,18 @@ func copyString(sPtr *string) *string {
 	}
 
 	t := *sPtr
+
+	return &t
+}
+
+// copyValue returns a pointer to a new value copied from the value
+// at the given pointer.
+func copyValue[T any](ptr *T) *T {
+	if ptr == nil {
+		return nil
+	}
+
+	t := *ptr
 
 	return &t
 }
