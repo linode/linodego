@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/linode/linodego"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -56,6 +57,15 @@ func TestMonitorDashboards_Get_smoke(t *testing.T) {
 	if !found_st {
 		t.Errorf("Monitor dashboard not found in list.")
 	}
+}
+
+func TestMonitorDashboards_GetNotExistingDashboardID(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestMonitorInvalidDashboard_Get")
+	defer teardown()
+
+	_, getErr := client.GetMonitorDashboard(context.Background(), 999999)
+	require.Error(t, getErr)
+	assert.Contains(t, getErr.Error(), "[404] Not found")
 }
 
 func validateDashboards(
