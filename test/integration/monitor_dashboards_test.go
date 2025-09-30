@@ -60,7 +60,7 @@ func TestMonitorDashboards_Get_smoke(t *testing.T) {
 }
 
 func TestMonitorDashboards_GetNotExistingDashboardID(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestMonitorDashboards_Get")
+	client, teardown := createTestClient(t, "fixtures/TestMonitorInvalidDashboard_Get")
 	defer teardown()
 
 	_, getErr := client.GetMonitorDashboard(context.Background(), 999999)

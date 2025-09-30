@@ -51,7 +51,7 @@ func TestMonitorServicesTokenCreation_TryCreateTokenWithInvalidEntityID(t *testi
 	var entityIDs []any
 	entityIDs = append(entityIDs, 999999999)
 
-	client, teardown := createTestClient(t, "fixtures/TestServiceToken_POST")
+	client, teardown := createTestClient(t, "fixtures/TestServiceTokenInvalidEntity_POST")
 	defer teardown()
 	createOptsWithInvalidID := linodego.MonitorTokenCreateOptions{
 		EntityIDs: entityIDs,

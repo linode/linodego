@@ -43,7 +43,7 @@ func TestMonitorServices_Get_smoke(t *testing.T) {
 }
 
 func TestMonitorServices_GetNotAllowedServiceType(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestMonitorServices_Get")
+	client, teardown := createTestClient(t, "fixtures/TestMonitorNotAllowedServiceType_Get")
 	defer teardown()
 
 	_, getErr := client.ListMonitorServiceByType(context.Background(), "saas", nil)
