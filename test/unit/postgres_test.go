@@ -100,6 +100,10 @@ func TestDatabasePostgreSQL_Get(t *testing.T) {
 	assert.Equal(t, "off", *db.EngineConfig.PG.TrackIOTiming)
 	assert.Equal(t, 60000, *db.EngineConfig.PG.WALSenderTimeout)
 	assert.Equal(t, 50, *db.EngineConfig.PG.WALWriterDelay)
+
+	assert.Equal(t, 1234, db.PrivateNetwork.VPCID)
+	assert.Equal(t, 5678, db.PrivateNetwork.SubnetID)
+	assert.Equal(t, true, db.PrivateNetwork.PublicAccess)
 }
 
 func TestDatabasePostgreSQL_Update(t *testing.T) {
@@ -116,6 +120,11 @@ func TestDatabasePostgreSQL_Update(t *testing.T) {
 			PG: &linodego.PostgresDatabaseEngineConfigPG{
 				AutovacuumMaxWorkers: linodego.Pointer(10),
 			},
+		},
+		PrivateNetwork: &linodego.DatabasePrivateNetwork{
+			VPCID:        1234,
+			SubnetID:     5678,
+			PublicAccess: true,
 		},
 	}
 
@@ -188,6 +197,10 @@ func TestDatabasePostgreSQL_Update(t *testing.T) {
 	assert.Equal(t, "off", *db.EngineConfig.PG.TrackIOTiming)
 	assert.Equal(t, 60000, *db.EngineConfig.PG.WALSenderTimeout)
 	assert.Equal(t, 50, *db.EngineConfig.PG.WALWriterDelay)
+
+	assert.Equal(t, 1234, db.PrivateNetwork.VPCID)
+	assert.Equal(t, 5678, db.PrivateNetwork.SubnetID)
+	assert.Equal(t, true, db.PrivateNetwork.PublicAccess)
 }
 
 func TestDatabasePostgreSQL_Create(t *testing.T) {
@@ -207,6 +220,11 @@ func TestDatabasePostgreSQL_Create(t *testing.T) {
 			PG: &linodego.PostgresDatabaseEngineConfigPG{
 				AutovacuumMaxWorkers: linodego.Pointer(10),
 			},
+		},
+		PrivateNetwork: &linodego.DatabasePrivateNetwork{
+			VPCID:        1234,
+			SubnetID:     5678,
+			PublicAccess: true,
 		},
 	}
 
@@ -279,6 +297,10 @@ func TestDatabasePostgreSQL_Create(t *testing.T) {
 	assert.Equal(t, "off", *db.EngineConfig.PG.TrackIOTiming)
 	assert.Equal(t, 60000, *db.EngineConfig.PG.WALSenderTimeout)
 	assert.Equal(t, 50, *db.EngineConfig.PG.WALWriterDelay)
+
+	assert.Equal(t, 1234, db.PrivateNetwork.VPCID)
+	assert.Equal(t, 5678, db.PrivateNetwork.SubnetID)
+	assert.Equal(t, true, db.PrivateNetwork.PublicAccess)
 }
 
 func TestDatabasePostgreSQL_Delete(t *testing.T) {

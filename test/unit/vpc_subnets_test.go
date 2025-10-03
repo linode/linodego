@@ -70,6 +70,10 @@ func TestVPCSubnet_Get(t *testing.T) {
 	assert.Equal(t, 422, subnet.Linodes[0].Interfaces[1].ID)
 	assert.False(t, subnet.Linodes[0].Interfaces[1].Active, "Expected interface to be inactive")
 	assert.Nil(t, subnet.Linodes[0].Interfaces[1].ConfigID)
+
+	assert.Equal(t, 123, subnet.Databases[0].ID)
+	assert.Equal(t, "10.0.0.4/32", *subnet.Databases[0].IPv4Range)
+	assert.Nil(t, subnet.Databases[0].IPv6Range)
 }
 
 func TestVPCSubnets_List(t *testing.T) {
@@ -112,6 +116,10 @@ func TestVPCSubnets_List(t *testing.T) {
 	assert.Equal(t, "192.168.4.0/24", subnet.IPv4, "Expected second subnet IPv4 to match")
 	assert.Empty(t, subnet.IPv6, 0, "Expected second subnet to not support IPv6")
 	assert.Empty(t, subnet.Linodes, 0, "Expected second subnet to not have Linodes")
+
+	assert.Equal(t, 123, subnet.Databases[0].ID)
+	assert.Equal(t, "10.0.0.4/32", *subnet.Databases[0].IPv4Range)
+	assert.Nil(t, subnet.Databases[0].IPv6Range)
 }
 
 func TestVPCSubnet_Update(t *testing.T) {

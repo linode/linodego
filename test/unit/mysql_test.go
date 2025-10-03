@@ -81,6 +81,10 @@ func TestDatabaseMySQL_Get(t *testing.T) {
 	assert.Equal(t, true, *db.EngineConfig.MySQL.SQLRequirePrimaryKey)
 	assert.Equal(t, 16777216, *db.EngineConfig.MySQL.TmpTableSize)
 	assert.Equal(t, 28800, *db.EngineConfig.MySQL.WaitTimeout)
+
+	assert.Equal(t, 1234, db.PrivateNetwork.VPCID)
+	assert.Equal(t, 5678, db.PrivateNetwork.SubnetID)
+	assert.Equal(t, true, db.PrivateNetwork.PublicAccess)
 }
 
 func TestDatabaseMySQL_Update(t *testing.T) {
@@ -98,6 +102,13 @@ func TestDatabaseMySQL_Update(t *testing.T) {
 				ConnectTimeout: linodego.Pointer(20),
 			},
 		},
+		PrivateNetwork: linodego.DoublePointer(
+			linodego.DatabasePrivateNetwork{
+				VPCID:        1234,
+				SubnetID:     5678,
+				PublicAccess: true,
+			},
+		),
 	}
 
 	base.MockPut("databases/mysql/instances/123", fixtureData)
@@ -150,6 +161,10 @@ func TestDatabaseMySQL_Update(t *testing.T) {
 	assert.Equal(t, true, *db.EngineConfig.MySQL.SQLRequirePrimaryKey)
 	assert.Equal(t, 16777216, *db.EngineConfig.MySQL.TmpTableSize)
 	assert.Equal(t, 28800, *db.EngineConfig.MySQL.WaitTimeout)
+
+	assert.Equal(t, 1234, db.PrivateNetwork.VPCID)
+	assert.Equal(t, 5678, db.PrivateNetwork.SubnetID)
+	assert.Equal(t, true, db.PrivateNetwork.PublicAccess)
 }
 
 func TestDatabaseMySQL_Create(t *testing.T) {
@@ -169,6 +184,11 @@ func TestDatabaseMySQL_Create(t *testing.T) {
 			MySQL: &linodego.MySQLDatabaseEngineConfigMySQL{
 				ConnectTimeout: linodego.Pointer(20),
 			},
+		},
+		PrivateNetwork: &linodego.DatabasePrivateNetwork{
+			VPCID:        1234,
+			SubnetID:     5678,
+			PublicAccess: true,
 		},
 	}
 
@@ -222,6 +242,10 @@ func TestDatabaseMySQL_Create(t *testing.T) {
 	assert.Equal(t, true, *db.EngineConfig.MySQL.SQLRequirePrimaryKey)
 	assert.Equal(t, 16777216, *db.EngineConfig.MySQL.TmpTableSize)
 	assert.Equal(t, 28800, *db.EngineConfig.MySQL.WaitTimeout)
+
+	assert.Equal(t, 1234, db.PrivateNetwork.VPCID)
+	assert.Equal(t, 5678, db.PrivateNetwork.SubnetID)
+	assert.Equal(t, true, db.PrivateNetwork.PublicAccess)
 }
 
 func TestDatabaseMySQL_Delete(t *testing.T) {
