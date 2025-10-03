@@ -89,6 +89,10 @@ func TestVPC_Get(t *testing.T) {
 	assert.Equal(t, true, vpc.Subnets[0].Linodes[0].Interfaces[0].Active)
 	assert.Equal(t, 4567, *vpc.Subnets[0].Linodes[0].Interfaces[0].ConfigID)
 	assert.Equal(t, 421, vpc.Subnets[0].Linodes[0].Interfaces[0].ID)
+
+	assert.Equal(t, 123, vpc.Subnets[0].Databases[0].ID)
+	assert.Equal(t, "10.0.0.4/32", *vpc.Subnets[0].Databases[0].IPv4Range)
+	assert.Nil(t, vpc.Subnets[0].Databases[0].IPv6Range)
 }
 
 func TestVPC_List(t *testing.T) {
@@ -127,6 +131,10 @@ func TestVPC_List(t *testing.T) {
 	assert.Equal(t, true, vpc.Subnets[0].Linodes[0].Interfaces[0].Active)
 	assert.Equal(t, 4567, *vpc.Subnets[0].Linodes[0].Interfaces[0].ConfigID)
 	assert.Equal(t, 421, vpc.Subnets[0].Linodes[0].Interfaces[0].ID)
+
+	assert.Equal(t, 123, vpc.Subnets[0].Databases[0].ID)
+	assert.Equal(t, "10.0.0.4/32", *vpc.Subnets[0].Databases[0].IPv4Range)
+	assert.Nil(t, vpc.Subnets[0].Databases[0].IPv6Range)
 }
 
 func TestVPC_Update(t *testing.T) {
