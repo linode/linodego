@@ -36,7 +36,7 @@ func (c *Client) GetObjectStorageBucketCert(ctx context.Context, clusterOrRegion
 	return doGETRequest[ObjectStorageBucketCert](ctx, c, e)
 }
 
-// UploadObjectStorageBucketCert uploads a TLS/SSL Cert to be used with an Object Storage Bucket.
+// UploadObjectStorageBucketCertV2 uploads a TLS/SSL Cert to be used with an Object Storage Bucket.
 func (c *Client) UploadObjectStorageBucketCertV2(
 	ctx context.Context,
 	clusterOrRegionID, bucket string,

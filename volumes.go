@@ -99,7 +99,7 @@ func (v Volume) GetUpdateOptions() (updateOpts VolumeUpdateOptions) {
 	updateOpts.Label = v.Label
 	updateOpts.Tags = &v.Tags
 
-	return
+	return updateOpts
 }
 
 // GetCreateOptions converts a Volume to VolumeCreateOptions for use in CreateVolume
@@ -113,7 +113,7 @@ func (v Volume) GetCreateOptions() (createOpts VolumeCreateOptions) {
 		createOpts.LinodeID = *v.LinodeID
 	}
 
-	return
+	return createOpts
 }
 
 // ListVolumes lists Volumes

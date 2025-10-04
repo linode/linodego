@@ -18,10 +18,10 @@ const (
 	defaultRetryCount = 1000
 )
 
-// type RetryConditional func(r *resty.Response) (shouldRetry bool)
+// RetryConditional func(r *resty.Response) (shouldRetry bool)
 type RetryConditional resty.RetryConditionFunc
 
-// type RetryAfter func(c *resty.Client, r *resty.Response) (time.Duration, error)
+// RetryAfter func(c *resty.Client, r *resty.Response) (time.Duration, error)
 type RetryAfter resty.RetryAfterFunc
 
 // Configures resty to

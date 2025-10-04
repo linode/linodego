@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"username":"linodegotest-updateusergrants","email":"linodegotest-updateusergrants@example.com","restricted":true}'
+    body: ""
     form: {}
     headers:
       Accept:
@@ -11,12 +11,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/users
-    method: POST
+    url: https://api.linode.com/v4beta/lke/tiers/enterprise/versions?page=1
+    method: GET
   response:
-    body: '{"username": "linodegotest-updateusergrants", "email": "linodegotest-updateusergrants@example.com",
-      "restricted": true, "ssh_keys": [], "tfa_enabled": false, "verified_phone_number":
-      null, "password_created": null, "last_login": null, "user_type": "default"}'
+    body: '{"data": [{"id": "v1.31.8+lke5", "tier": "enterprise"}], "page": 1, "pages":
+      1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -35,21 +34,22 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "258"
+      - "93"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Tue, 19 Nov 2024 20:30:59 GMT
+      - Tue, 19 Aug 2025 16:56:21 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
+      - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - account:read_write
+      - lke:read_only
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -57,15 +57,13 @@ interactions:
       - DENY
       X-Oauth-Scopes:
       - '*'
-      X-Ratelimit-Limit:
-      - "1600"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"global":{"account_access":"read_only","add_databases":true,"add_domains":false,"add_firewalls":true,"add_images":true,"add_linodes":false,"add_longview":true,"add_nodebalancers":false,"add_stackscripts":true,"add_volumes":true,"add_vpcs":true,"cancel_account":false,"child_account_access":false,"longview_subscription":false}}'
+    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"],"labels":null,"taints":null}],"label":"go-test-def","region":"no-osl-1","k8s_version":"v1.31.8+lke5","tags":["testing"],"tier":"enterprise","vpc_id":224219,"stack_type":"ipv4-ipv6"}'
     form: {}
     headers:
       Accept:
@@ -74,20 +72,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/users/linodegotest-updateusergrants/grants
-    method: PUT
+    url: https://api.linode.com/v4beta/lke/clusters
+    method: POST
   response:
-    body: '{"linode": [], "nodebalancer": [{"id": 1051282, "label": "balancer12345",
-      "permissions": null}], "domain": [{"id": 3162745, "label": "example.clone-1731948401076807000-inttestsdk.org",
-      "permissions": null}], "stackscript": [], "longview": [], "image": [], "volume":
-      [], "firewall": [{"id": 1214534, "label": "cloudfw-1731954852210218000", "permissions":
-      null}, {"id": 1222347, "label": "e2e-fw-1732043552", "permissions": null}, {"id":
-      1223238, "label": "cloudfw-1732048258071021000", "permissions": null}], "database":
-      [], "vpc": [], "global": {"add_nodebalancers": false, "child_account_access":
-      null, "add_longview": true, "add_volumes": true, "add_vpcs": true, "add_stackscripts":
-      true, "add_domains": false, "add_linodes": false, "add_images": true, "add_databases":
-      true, "longview_subscription": false, "add_firewalls": true, "account_access":
-      "read_only", "cancel_account": false}}'
+    body: '{"id": 508689, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "label": "go-test-def", "region": "no-osl-1", "k8s_version":
+      "v1.31.8+lke5", "tier": "enterprise", "control_plane": {"high_availability":
+      true, "audit_logs_enabled": false}, "apl_enabled": false, "vpc_id": 224219,
+      "subnet_id": null, "tags": ["testing"], "stack_type": "ipv4-ipv6"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -105,21 +97,22 @@ interactions:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
+      Content-Length:
+      - "382"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Tue, 19 Nov 2024 20:31:00 GMT
+      - Tue, 19 Aug 2025 16:56:27 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
-      - Accept-Encoding
       X-Accepted-Oauth-Scopes:
-      - account:read_write
+      - lke:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -128,7 +121,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -144,7 +137,73 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/users/linodegotest-updateusergrants
+    url: https://api.linode.com/v4beta/lke/clusters/508689
+    method: GET
+  response:
+    body: '{"id": 508689, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "label": "go-test-def", "region": "no-osl-1", "k8s_version":
+      "v1.31.8+lke5", "tier": "enterprise", "control_plane": {"high_availability":
+      true, "audit_logs_enabled": false}, "apl_enabled": false, "vpc_id": 224219,
+      "subnet_id": null, "tags": ["testing"], "stack_type": "ipv4-ipv6"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "382"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Tue, 19 Aug 2025 16:56:27 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - lke:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/lke/clusters/508689
     method: DELETE
   response:
     body: '{}'
@@ -172,7 +231,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 19 Nov 2024 20:31:00 GMT
+      - Tue, 19 Aug 2025 16:56:29 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -180,7 +239,7 @@ interactions:
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - account:read_write
+      - lke:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -189,7 +248,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

@@ -62,6 +62,10 @@ func TestLKECluster_List(t *testing.T) {
 	assert.Equal(t, 123, clusters[0].ID)
 	assert.Equal(t, "test-cluster", clusters[0].Label)
 	assert.Equal(t, "us-east", clusters[0].Region)
+	assert.Equal(t, 123, clusters[0].SubnetID)
+	assert.Equal(t, 456, clusters[0].VpcID)
+	assert.Equal(t, linodego.LKEClusterStackIPv4, clusters[0].StackType)
+	assert.Equal(t, false, clusters[0].ControlPlane.AuditLogsEnabled)
 }
 
 func TestLKECluster_Get(t *testing.T) {
@@ -78,6 +82,10 @@ func TestLKECluster_Get(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, 123, cluster.ID)
 	assert.Equal(t, "test-cluster", cluster.Label)
+	assert.Equal(t, 123, cluster.SubnetID)
+	assert.Equal(t, 456, cluster.VpcID)
+	assert.Equal(t, linodego.LKEClusterStackIPv4, cluster.StackType)
+	assert.Equal(t, false, cluster.ControlPlane.AuditLogsEnabled)
 }
 
 func TestLKECluster_Create(t *testing.T) {
@@ -93,6 +101,12 @@ func TestLKECluster_Create(t *testing.T) {
 		Region:     "us-west",
 		K8sVersion: "1.22",
 		Tags:       []string{"tag1"},
+		SubnetID:   linodego.Pointer(123),
+		VpcID:      linodego.Pointer(456),
+		StackType:  linodego.Pointer(linodego.LKEClusterStackIPv4),
+		ControlPlane: &linodego.LKEClusterControlPlaneOptions{
+			AuditLogsEnabled: linodego.Pointer(false),
+		},
 	}
 
 	base.MockPost("lke/clusters", fixtureData)
@@ -101,6 +115,10 @@ func TestLKECluster_Create(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "new-cluster", cluster.Label)
 	assert.Equal(t, "us-west", cluster.Region)
+	assert.Equal(t, 123, cluster.SubnetID)
+	assert.Equal(t, 456, cluster.VpcID)
+	assert.Equal(t, linodego.LKEClusterStackIPv4, cluster.StackType)
+	assert.Equal(t, false, cluster.ControlPlane.AuditLogsEnabled)
 }
 
 func TestLKECluster_Update(t *testing.T) {
@@ -114,6 +132,9 @@ func TestLKECluster_Update(t *testing.T) {
 	updateOptions := linodego.LKEClusterUpdateOptions{
 		Label: "updated-cluster",
 		Tags:  &[]string{"new-tag"},
+		ControlPlane: &linodego.LKEClusterControlPlaneOptions{
+			AuditLogsEnabled: linodego.Pointer(true),
+		},
 	}
 
 	base.MockPut("lke/clusters/123", fixtureData)
@@ -121,6 +142,7 @@ func TestLKECluster_Update(t *testing.T) {
 	cluster, err := base.Client.UpdateLKECluster(context.Background(), 123, updateOptions)
 	assert.NoError(t, err)
 	assert.Equal(t, "updated-cluster", cluster.Label)
+	assert.Equal(t, true, cluster.ControlPlane.AuditLogsEnabled)
 }
 
 func TestLKECluster_Delete(t *testing.T) {
