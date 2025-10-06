@@ -24,9 +24,9 @@ type VPCSubnetLinode struct {
 
 // VPCSubnetDatabase represents a Linode currently assigned to a VPC subnet.
 type VPCSubnetDatabase struct {
-	ID        int     `json:"id"`
-	IPv4Range *string `json:"ipv4_range"`
-	IPv6Range *string `json:"ipv6_range"`
+	ID         int      `json:"id"`
+	IPv4Range  *string  `json:"ipv4_range"`
+	IPv6Ranges []string `json:"ipv6_ranges"`
 }
 
 type VPCSubnet struct {
