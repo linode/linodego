@@ -43,17 +43,17 @@ type ImageRegion struct {
 // Image represents a deployable Image object for use with Linode Instances
 type Image struct {
 	ID           string        `json:"id"`
-	CreatedBy    *string       `json:"created_by"`
+	CreatedBy    string        `json:"created_by"`
 	Capabilities []string      `json:"capabilities"`
 	Label        string        `json:"label"`
 	Description  string        `json:"description"`
 	Type         string        `json:"type"`
-	Vendor       *string       `json:"vendor"`
+	Vendor       string        `json:"vendor"`
 	Status       ImageStatus   `json:"status"`
 	Size         int           `json:"size"`
 	TotalSize    int           `json:"total_size"`
 	IsPublic     bool          `json:"is_public"`
-	IsShared     *bool         `json:"is_shared"`
+	IsShared     bool          `json:"is_shared"`
 	Deprecated   bool          `json:"deprecated"`
 	Regions      []ImageRegion `json:"regions"`
 	Tags         []string      `json:"tags"`
@@ -81,6 +81,32 @@ type ImageSharingSharedBy struct {
 	ShareGroupUUID  string  `json:"sharegroup_uuid"`
 	ShareGroupLabel string  `json:"sharegroup_label"`
 	SourceImageID   *string `json:"source_image_id"`
+}
+
+// ImageShareEntry represents a row in the im_ImageShare entries for an ImageShareGroup
+type ImageShareEntry struct {
+	ID           string        `json:"id"`
+	CreatedBy    *string       `json:"created_by"`
+	Capabilities []string      `json:"capabilities"`
+	Label        string        `json:"label"`
+	Description  string        `json:"description"`
+	Type         string        `json:"type"`
+	Vendor       *string       `json:"vendor"`
+	Status       ImageStatus   `json:"status"`
+	Size         int           `json:"size"`
+	TotalSize    int           `json:"total_size"`
+	IsPublic     bool          `json:"is_public"`
+	IsShared     *bool         `json:"is_shared"`
+	Deprecated   bool          `json:"deprecated"`
+	Regions      []ImageRegion `json:"regions"`
+	Tags         []string      `json:"tags"`
+
+	Updated *time.Time `json:"-"`
+	Created *time.Time `json:"-"`
+	Expiry  *time.Time `json:"-"`
+	EOL     *time.Time `json:"-"`
+
+	ImageSharing ImageSharing `json:"image_sharing"`
 }
 
 // ImageCreateOptions fields are those accepted by CreateImage
@@ -153,6 +179,33 @@ func (i *Image) UnmarshalJSON(b []byte) error {
 	i.Created = (*time.Time)(p.Created)
 	i.Expiry = (*time.Time)(p.Expiry)
 	i.EOL = (*time.Time)(p.EOL)
+
+	return nil
+}
+
+// UnmarshalJSON implements the json.Unmarshaler interface
+func (ise *ImageShareEntry) UnmarshalJSON(b []byte) error {
+	type Mask ImageShareEntry
+
+	p := struct {
+		*Mask
+
+		Updated *parseabletime.ParseableTime `json:"updated"`
+		Created *parseabletime.ParseableTime `json:"created"`
+		Expiry  *parseabletime.ParseableTime `json:"expiry"`
+		EOL     *parseabletime.ParseableTime `json:"eol"`
+	}{
+		Mask: (*Mask)(ise),
+	}
+
+	if err := json.Unmarshal(b, &p); err != nil {
+		return err
+	}
+
+	ise.Updated = (*time.Time)(p.Updated)
+	ise.Created = (*time.Time)(p.Created)
+	ise.Expiry = (*time.Time)(p.Expiry)
+	ise.EOL = (*time.Time)(p.EOL)
 
 	return nil
 }

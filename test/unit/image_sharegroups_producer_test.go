@@ -147,7 +147,7 @@ func TestImageShareGroup_Producer_UpdateImage(t *testing.T) {
 
 	base.MockPut("images/sharegroups/1234/images/123", fixtureData)
 
-	image, err := base.Client.ImageShareGroupUpdateImage(context.Background(), 1234, "123", requestData)
+	image, err := base.Client.ImageShareGroupUpdateImageShareEntry(context.Background(), 1234, "123", requestData)
 	assert.NoError(t, err)
 
 	assert.Equal(t, "linode/debian11", image.ID)
@@ -320,7 +320,7 @@ func TestImageShareGroup_Producer_List_Images(t *testing.T) {
 
 	base.MockGet("images/sharegroups/1234/images", fixtureData)
 
-	images, err := base.Client.ImageShareGroupListImages(context.Background(), 1234, &linodego.ListOptions{})
+	images, err := base.Client.ImageShareGroupListImageShareEntries(context.Background(), 1234, &linodego.ListOptions{})
 	assert.NoError(t, err)
 
 	image := images[0]

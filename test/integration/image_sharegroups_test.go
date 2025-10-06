@@ -7,6 +7,7 @@ import (
 	"testing"
 
 	"github.com/linode/linodego"
+	"github.com/stretchr/testify/require"
 )
 
 func TestImageSharing_Suite(t *testing.T) {
@@ -35,22 +36,16 @@ func TestImageSharing_Suite(t *testing.T) {
 		DiskID: instanceDisks[0].ID,
 		Label:  "linodego-test-image-sharing-image",
 	})
-	if err != nil {
-		t.Errorf("Failed to create image: %v", err)
-	}
+	require.NoError(t, err)
 	t.Cleanup(func() {
-		if err := client.DeleteImage(context.Background(), image.ID); err != nil {
-			t.Errorf("Failed to delete image %s: %v", image.ID, err)
-		}
+		err := client.DeleteImage(context.Background(), image.ID)
+		require.NoError(t, err)
 	})
 
-	if _, err := client.WaitForImageStatus(context.Background(), image.ID, linodego.ImageStatusAvailable, 120); err != nil {
-		t.Errorf("Failed to wait for image available status: %v", err)
-	}
+	_, err = client.WaitForImageStatus(context.Background(), image.ID, linodego.ImageStatusAvailable, 120)
+	require.NoError(t, err)
 
-	if image.IsShared == nil {
-		t.Errorf("Expected field 'IsShared' to be present (false) for a new image, got nil")
-	} else if *image.IsShared {
+	if image.IsShared {
 		t.Errorf("Expected field 'IsShared' to be false for a new image, got true")
 	}
 
@@ -74,13 +69,10 @@ func TestImageSharing_Suite(t *testing.T) {
 	imageShareGroup, err := client.CreateImageShareGroup(context.Background(), linodego.ImageShareGroupCreateOptions{
 		Label: "linodego-test-image-sharing-image-share-group",
 	})
-	if err != nil {
-		t.Errorf("Failed to create image share group: %v", err)
-	}
+	require.NoError(t, err)
 	t.Cleanup(func() {
-		if err := client.DeleteImageShareGroup(context.Background(), imageShareGroup.ID); err != nil {
-			t.Errorf("Failed to delete image share group %d: %v", imageShareGroup.ID, err)
-		}
+		err := client.DeleteImageShareGroup(context.Background(), imageShareGroup.ID)
+		require.NoError(t, err)
 	})
 
 	// Next, add the previously created Private Image to the ImageShareGroup
@@ -95,9 +87,7 @@ func TestImageSharing_Suite(t *testing.T) {
 	}
 
 	imagesAdded, err := client.ImageShareGroupAddImages(context.Background(), imageShareGroup.ID, imagesToAdd)
-	if err != nil {
-		t.Errorf("Failed to add image to image share group: %v", err)
-	}
+	require.NoError(t, err)
 
 	if len(imagesAdded) != 1 {
 		t.Errorf("Expected to add 1 image to imageShareGroup, got %d", len(imagesAdded))
@@ -132,13 +122,9 @@ func TestImageSharing_Suite(t *testing.T) {
 	}
 
 	image, err = client.GetImage(context.Background(), image.ID)
-	if err != nil {
-		t.Errorf("Failed to get image: %v", err)
-	}
+	require.NoError(t, err)
 
-	if image.IsShared == nil {
-		t.Errorf("Expected field 'IsShared' to be present (true) for a shared image, got nil")
-	} else if !*image.IsShared {
+	if !image.IsShared {
 		t.Errorf("Expected field 'IsShared' to be true for a new image, got false")
 	}
 
@@ -159,54 +145,42 @@ func TestImageSharing_Suite(t *testing.T) {
 	}
 
 	images, err := client.ListImages(context.Background(), nil)
-	if err != nil {
-		t.Errorf("Failed to list images: %v", err)
-	}
+	require.NoError(t, err)
 	if !slices.ContainsFunc(images, func(img linodego.Image) bool { return img.ID == image.ID }) {
 		t.Errorf("Expected to find image with ID %s in listed images: ", image.ID)
 	}
 
 	// Next, list Share Groups where the previously created image exists
 	shareGroups, err := client.ListImageShareGroupsContainingPrivateImage(context.Background(), image.ID, nil)
-	if err != nil {
-		t.Errorf("Failed to list Share Groups: %v", err)
-	}
+	require.NoError(t, err)
 	if !slices.ContainsFunc(shareGroups, func(sg linodego.ProducerImageShareGroup) bool { return sg.ID == imageShareGroup.ID }) {
 		t.Errorf("Expected to find Share Group with ID %d in listed Share Groups: ", imageShareGroup.ID)
 	}
 
 	// Next, list all Share Groups in the account
 	shareGroups, err = client.ListImageShareGroups(context.Background(), nil)
-	if err != nil {
-		t.Errorf("Failed to list Share Groups: %v", err)
-	}
+	require.NoError(t, err)
 	if !slices.ContainsFunc(shareGroups, func(sg linodego.ProducerImageShareGroup) bool { return sg.ID == imageShareGroup.ID }) {
 		t.Errorf("Expected to find Share Group with ID %d in listed Share Groups: ", imageShareGroup.ID)
 	}
 
 	// Next, get the Share Group
 	shareGroup, err := client.GetImageShareGroup(context.Background(), imageShareGroup.ID)
-	if err != nil {
-		t.Errorf("Failed to get Share Group: %v", err)
-	}
+	require.NoError(t, err)
 	if shareGroup.ID != imageShareGroup.ID {
 		t.Errorf("Expected Share Group with ID %d:", imageShareGroup.ID)
 	}
 
 	// Next, list the images shared in the Share Group
-	sharedImages, err := client.ImageShareGroupListImages(context.Background(), imageShareGroup.ID, nil)
-	if err != nil {
-		t.Errorf("Failed to list shared images: %v", err)
-	}
-	if !slices.ContainsFunc(sharedImages, func(img linodego.Image) bool { return img.ID == imageShare.ID }) {
+	sharedImages, err := client.ImageShareGroupListImageShareEntries(context.Background(), imageShareGroup.ID, nil)
+	require.NoError(t, err)
+	if !slices.ContainsFunc(sharedImages, func(img linodego.ImageShareEntry) bool { return img.ID == imageShare.ID }) {
 		t.Errorf("Expected to find shared image with ID %s in listed images: ", imageShare.ID)
 	}
 
 	// Next, list the members of the Share Group (should be empty)
 	members, err := client.ImageShareGroupListMembers(context.Background(), imageShareGroup.ID, nil)
-	if err != nil {
-		t.Errorf("Failed to list members: %v", err)
-	}
+	require.NoError(t, err)
 	if len(members) != 0 {
 		t.Errorf("Expected 0 members, got %d", len(members))
 	}
@@ -216,36 +190,28 @@ func TestImageSharing_Suite(t *testing.T) {
 		Label:       linodego.Pointer("Updated label"),
 		Description: linodego.Pointer("Updated description"),
 	})
-	if err != nil {
-		t.Errorf("Failed to update Share Group: %v", err)
-	}
+	require.NoError(t, err)
 	if imageShareGroup.Label != "Updated label" || imageShareGroup.Description != "Updated description" {
 		t.Errorf("Failed to update Share Group with ID %d: ", imageShareGroup.ID)
 	}
 
 	// Next, update the Shared Image
-	imageShareUpdated, err := client.ImageShareGroupUpdateImage(context.Background(), imageShareGroup.ID, imageShare.ID, linodego.ImageShareGroupUpdateImageOptions{
+	imageShareUpdated, err := client.ImageShareGroupUpdateImageShareEntry(context.Background(), imageShareGroup.ID, imageShare.ID, linodego.ImageShareGroupUpdateImageOptions{
 		Label:       linodego.Pointer("Updated label"),
 		Description: linodego.Pointer("Updated description"),
 	})
-	if err != nil {
-		t.Errorf("Failed to update Shared Image: %v", err)
-	}
+	require.NoError(t, err)
 	if imageShareUpdated.Label != "Updated label" || imageShareUpdated.Description != "Updated description" {
 		t.Errorf("Failed to update Image Share with ID %s: ", imageShareUpdated.ID)
 	}
 
 	// Next, remove the image from the Share Group
 	err = client.ImageShareGroupRemoveImage(context.Background(), imageShareGroup.ID, imageShareUpdated.ID)
-	if err != nil {
-		t.Errorf("Failed to remove image from Share Group: %v", err)
-	}
+	require.NoError(t, err)
 
 	// Check that the image has been removed
 	image, err = client.GetImage(context.Background(), image.ID)
-	if err != nil {
-		t.Errorf("Failed to get image: %v", err)
-	}
+	require.NoError(t, err)
 
 	if image.ImageSharing.SharedWith == nil {
 		t.Errorf("Expected ImageSharing.SharedWith to be present, got nil")
@@ -263,10 +229,8 @@ func TestImageSharing_Suite(t *testing.T) {
 		t.Errorf("Expected ImageSharing.SharedBy to be nil, got %v", image.ImageSharing.SharedBy)
 	}
 
-	sharedImages, err = client.ImageShareGroupListImages(context.Background(), imageShareGroup.ID, nil)
-	if err != nil {
-		t.Errorf("Failed to list shared images: %v", err)
-	}
+	sharedImages, err = client.ImageShareGroupListImageShareEntries(context.Background(), imageShareGroup.ID, nil)
+	require.NoError(t, err)
 	if len(sharedImages) != 0 {
 		t.Errorf("Expected 0 shared images, got %d", len(sharedImages))
 	}

@@ -201,13 +201,13 @@ func (c *Client) DeleteImageShareGroup(ctx context.Context, imageShareGroupID in
 	)
 }
 
-// ImageShareGroupListImages lists the Images in a specified ImageShareGroup owned by the producer.
-func (c *Client) ImageShareGroupListImages(
+// ImageShareGroupListImageShareEntries lists the im_ImageShare entries of a specified ImageShareGroup owned by the producer.
+func (c *Client) ImageShareGroupListImageShareEntries(
 	ctx context.Context,
 	imageShareGroupID int,
 	opts *ListOptions,
-) ([]Image, error) {
-	return getPaginatedResults[Image](
+) ([]ImageShareEntry, error) {
+	return getPaginatedResults[ImageShareEntry](
 		ctx,
 		c,
 		formatAPIPath("images/sharegroups/%d/images", imageShareGroupID),
@@ -220,8 +220,8 @@ func (c *Client) ImageShareGroupAddImages(
 	ctx context.Context,
 	imageShareGroupID int,
 	opts ImageShareGroupAddImagesOptions,
-) ([]Image, error) {
-	return postPaginatedResults[Image, ImageShareGroupAddImagesOptions](
+) ([]ImageShareEntry, error) {
+	return postPaginatedResults[ImageShareEntry, ImageShareGroupAddImagesOptions](
 		ctx,
 		c,
 		formatAPIPath("images/sharegroups/%d/images", imageShareGroupID),
@@ -230,14 +230,14 @@ func (c *Client) ImageShareGroupAddImages(
 	)
 }
 
-// ImageShareGroupUpdateImage allows the producer to update the specified Image's description and label within an ImageShareGroup.
-func (c *Client) ImageShareGroupUpdateImage(
+// ImageShareGroupUpdateImage allows the producer to update the description and label of a specified ImageShareEntry within the specified ImageShareGroup.
+func (c *Client) ImageShareGroupUpdateImageShareEntry(
 	ctx context.Context,
 	imageShareGroupID int,
 	imageID string,
 	opts ImageShareGroupUpdateImageOptions,
-) (*Image, error) {
-	return doPUTRequest[Image](
+) (*ImageShareEntry, error) {
+	return doPUTRequest[ImageShareEntry](
 		ctx,
 		c,
 		formatAPIPath("images/sharegroups/%d/images/%s", imageShareGroupID, imageID),
