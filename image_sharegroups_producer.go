@@ -230,7 +230,7 @@ func (c *Client) ImageShareGroupAddImages(
 	)
 }
 
-// ImageShareGroupUpdateImage allows the producer to update the description and label of a specified ImageShareEntry within the specified ImageShareGroup.
+// ImageShareGroupUpdateImageShareEntry allows the producer to update the description and label of a specified ImageShareEntry within the specified ImageShareGroup.
 func (c *Client) ImageShareGroupUpdateImageShareEntry(
 	ctx context.Context,
 	imageShareGroupID int,
