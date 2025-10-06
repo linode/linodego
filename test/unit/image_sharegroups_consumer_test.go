@@ -155,7 +155,7 @@ func TestImageShareGroup_Consumer_Get_ShareGroup_Images_ByToken(t *testing.T) {
 
 	base.MockGet("images/sharegroups/tokens/18db04bf-fd0f-4bf6-944a-1fc2ae044dc6/sharegroup/images", fixtureData)
 
-	images, err := base.Client.ImageShareGroupGetImagesByToken(context.Background(), "18db04bf-fd0f-4bf6-944a-1fc2ae044dc6", &linodego.ListOptions{})
+	images, err := base.Client.ImageShareGroupGetImageShareEntriesByToken(context.Background(), "18db04bf-fd0f-4bf6-944a-1fc2ae044dc6", &linodego.ListOptions{})
 	assert.NoError(t, err)
 
 	image := images[0]

@@ -94,6 +94,13 @@ func handlePaginatedResults[T any, O any](
 			}
 
 			response = res.Result().(*paginatedResponse[T])
+		case "POST":
+			res, err := coupleAPIErrors(req.Post(endpoint))
+			if err != nil {
+				return err
+			}
+
+			response = res.Result().(*paginatedResponse[T])
 		default:
 			return fmt.Errorf("unsupported HTTP method: %s", method)
 		}
@@ -157,6 +164,18 @@ func putPaginatedResults[T, O any](
 	options ...O,
 ) ([]T, error) {
 	return handlePaginatedResults[T, O](ctx, client, endpoint, opts, "PUT", options...)
+}
+
+// postPaginatedResults sends a POST request and aggregates the results from the given
+// paginated endpoint using the provided ListOptions.
+func postPaginatedResults[T, O any](
+	ctx context.Context,
+	client *Client,
+	endpoint string,
+	opts *ListOptions,
+	options ...O,
+) ([]T, error) {
+	return handlePaginatedResults[T, O](ctx, client, endpoint, opts, "POST", options...)
 }
 
 // doGETRequest runs a GET request using the given client and API endpoint,
