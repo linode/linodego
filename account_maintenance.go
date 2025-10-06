@@ -28,7 +28,7 @@ type AccountMaintenance struct {
 	When *time.Time `json:"when"`
 }
 
-// The entity being affected by maintenance
+// Entity represents the entity being affected by maintenance
 type Entity struct {
 	ID    int    `json:"id"`
 	Label string `json:"label"`
