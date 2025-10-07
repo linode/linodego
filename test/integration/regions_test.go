@@ -75,7 +75,7 @@ func TestRegions_kubernetesEnterprise(t *testing.T) {
 }
 
 func TestRegionsMonitorsSection(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestRegions_List")
+	client, teardown := createTestClient(t, "fixtures/TestRegionsMonitorsSection")
 	defer teardown()
 
 	regions, err := client.ListRegions(context.Background(), nil)

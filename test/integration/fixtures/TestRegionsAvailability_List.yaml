@@ -14,94 +14,93 @@ interactions:
     url: https://api.linode.com/v4beta/regions/availability?page=1
     method: GET
   response:
-    body: '{"data": [{"region": "us-central", "plan": "g6-standard-1", "available":
-      true}, {"region": "us-central", "plan": "g6-standard-2", "available": true},
-      {"region": "us-central", "plan": "g6-standard-4", "available": true}, {"region":
-      "us-central", "plan": "g6-standard-6", "available": true}, {"region": "us-central",
-      "plan": "g6-standard-8", "available": true}, {"region": "us-central", "plan":
-      "g6-standard-16", "available": true}, {"region": "us-central", "plan": "g6-standard-20",
-      "available": true}, {"region": "us-central", "plan": "g6-standard-24", "available":
-      true}, {"region": "us-central", "plan": "g6-standard-32", "available": true},
-      {"region": "us-central", "plan": "g6-nanode-1", "available": true}, {"region":
-      "us-central", "plan": "g6-dedicated-2", "available": true}, {"region": "us-central",
-      "plan": "g6-dedicated-4", "available": true}, {"region": "us-central", "plan":
-      "g6-dedicated-8", "available": true}, {"region": "us-central", "plan": "g6-dedicated-16",
-      "available": true}, {"region": "us-central", "plan": "g6-dedicated-32", "available":
-      true}, {"region": "us-central", "plan": "g6-dedicated-48", "available": true},
-      {"region": "us-central", "plan": "g1-gpu-rtx6000-1", "available": false}, {"region":
-      "us-central", "plan": "g1-gpu-rtx6000-2", "available": false}, {"region": "us-central",
-      "plan": "g1-gpu-rtx6000-3", "available": false}, {"region": "us-central", "plan":
-      "g1-gpu-rtx6000-4", "available": false}, {"region": "us-central", "plan": "g6-dedicated-50",
-      "available": true}, {"region": "us-central", "plan": "g6-dedicated-56", "available":
-      true}, {"region": "us-central", "plan": "g7-highmem-1", "available": true},
-      {"region": "us-central", "plan": "g7-highmem-2", "available": true}, {"region":
-      "us-central", "plan": "g7-highmem-4", "available": true}, {"region": "us-central",
-      "plan": "g7-highmem-8", "available": true}, {"region": "us-central", "plan":
-      "g7-highmem-16", "available": true}, {"region": "us-central", "plan": "g7-premium-2",
-      "available": false}, {"region": "us-central", "plan": "g7-premium-4", "available":
-      false}, {"region": "us-central", "plan": "g7-premium-8", "available": false},
-      {"region": "us-central", "plan": "g7-premium-16", "available": false}, {"region":
-      "us-central", "plan": "g7-premium-32", "available": false}, {"region": "us-central",
-      "plan": "g7-premium-48", "available": false}, {"region": "us-central", "plan":
-      "g7-premium-50", "available": false}, {"region": "us-central", "plan": "g7-premium-56",
-      "available": false}, {"region": "us-central", "plan": "g2-gpu-rtx4000a1-s",
-      "available": false}, {"region": "us-central", "plan": "g2-gpu-rtx4000a1-m",
-      "available": false}, {"region": "us-central", "plan": "g2-gpu-rtx4000a1-l",
-      "available": false}, {"region": "us-central", "plan": "g2-gpu-rtx4000a1-xl",
-      "available": false}, {"region": "us-central", "plan": "g2-gpu-rtx4000a2-s",
-      "available": false}, {"region": "us-central", "plan": "g2-gpu-rtx4000a2-m",
-      "available": false}, {"region": "us-central", "plan": "g2-gpu-rtx4000a2-hs",
-      "available": false}, {"region": "us-central", "plan": "g2-gpu-rtx4000a4-s",
-      "available": false}, {"region": "us-central", "plan": "g2-gpu-rtx4000a4-m",
-      "available": false}, {"region": "us-central", "plan": "g1-accelerated-netint-vpu-t1u1-s",
-      "available": false}, {"region": "us-central", "plan": "g1-accelerated-netint-vpu-t1u1-m",
-      "available": false}, {"region": "us-central", "plan": "g1-accelerated-netint-vpu-t1u2-s",
-      "available": false}, {"region": "us-west", "plan": "g6-standard-1", "available":
-      true}, {"region": "us-west", "plan": "g6-standard-2", "available": true}, {"region":
-      "us-west", "plan": "g6-standard-4", "available": true}, {"region": "us-west",
-      "plan": "g6-standard-6", "available": true}, {"region": "us-west", "plan": "g6-standard-8",
-      "available": true}, {"region": "us-west", "plan": "g6-standard-16", "available":
-      true}, {"region": "us-west", "plan": "g6-standard-20", "available": true}, {"region":
-      "us-west", "plan": "g6-standard-24", "available": true}, {"region": "us-west",
-      "plan": "g6-standard-32", "available": true}, {"region": "us-west", "plan":
-      "g6-nanode-1", "available": true}, {"region": "us-west", "plan": "g6-dedicated-2",
-      "available": true}, {"region": "us-west", "plan": "g6-dedicated-4", "available":
-      true}, {"region": "us-west", "plan": "g6-dedicated-8", "available": true}, {"region":
-      "us-west", "plan": "g6-dedicated-16", "available": true}, {"region": "us-west",
-      "plan": "g6-dedicated-32", "available": true}, {"region": "us-west", "plan":
-      "g6-dedicated-48", "available": true}, {"region": "us-west", "plan": "g1-gpu-rtx6000-1",
-      "available": false}, {"region": "us-west", "plan": "g1-gpu-rtx6000-2", "available":
-      false}, {"region": "us-west", "plan": "g1-gpu-rtx6000-3", "available": false},
-      {"region": "us-west", "plan": "g1-gpu-rtx6000-4", "available": false}, {"region":
-      "us-west", "plan": "g6-dedicated-50", "available": true}, {"region": "us-west",
-      "plan": "g6-dedicated-56", "available": true}, {"region": "us-west", "plan":
-      "g7-highmem-1", "available": true}, {"region": "us-west", "plan": "g7-highmem-2",
-      "available": true}, {"region": "us-west", "plan": "g7-highmem-4", "available":
-      true}, {"region": "us-west", "plan": "g7-highmem-8", "available": true}, {"region":
-      "us-west", "plan": "g7-highmem-16", "available": true}, {"region": "us-west",
-      "plan": "g7-premium-2", "available": false}, {"region": "us-west", "plan": "g7-premium-4",
-      "available": false}, {"region": "us-west", "plan": "g7-premium-8", "available":
-      false}, {"region": "us-west", "plan": "g7-premium-16", "available": false},
-      {"region": "us-west", "plan": "g7-premium-32", "available": false}, {"region":
-      "us-west", "plan": "g7-premium-48", "available": false}, {"region": "us-west",
-      "plan": "g7-premium-50", "available": false}, {"region": "us-west", "plan":
-      "g7-premium-56", "available": false}, {"region": "us-west", "plan": "g2-gpu-rtx4000a1-s",
-      "available": false}, {"region": "us-west", "plan": "g2-gpu-rtx4000a1-m", "available":
-      false}, {"region": "us-west", "plan": "g2-gpu-rtx4000a1-l", "available": false},
-      {"region": "us-west", "plan": "g2-gpu-rtx4000a1-xl", "available": false}, {"region":
-      "us-west", "plan": "g2-gpu-rtx4000a2-s", "available": false}, {"region": "us-west",
-      "plan": "g2-gpu-rtx4000a2-m", "available": false}, {"region": "us-west", "plan":
-      "g2-gpu-rtx4000a2-hs", "available": false}, {"region": "us-west", "plan": "g2-gpu-rtx4000a4-s",
-      "available": false}, {"region": "us-west", "plan": "g2-gpu-rtx4000a4-m", "available":
-      false}, {"region": "us-west", "plan": "g1-accelerated-netint-vpu-t1u1-s", "available":
-      false}, {"region": "us-west", "plan": "g1-accelerated-netint-vpu-t1u1-m", "available":
-      false}, {"region": "us-west", "plan": "g1-accelerated-netint-vpu-t1u2-s", "available":
-      false}, {"region": "us-southeast", "plan": "g6-standard-1", "available": true},
-      {"region": "us-southeast", "plan": "g6-standard-2", "available": true}, {"region":
-      "us-southeast", "plan": "g6-standard-4", "available": true}, {"region": "us-southeast",
-      "plan": "g6-standard-6", "available": true}, {"region": "us-southeast", "plan":
-      "g6-standard-8", "available": true}, {"region": "us-southeast", "plan": "g6-standard-16",
-      "available": true}], "page": 1, "pages": 15, "results": 1457}'
+    body: '{"data": [{"region": "us-central", "plan": "g1-gpu-rtx6000-1", "available":
+      false}, {"region": "us-central", "plan": "g1-gpu-rtx6000-2", "available": false},
+      {"region": "us-central", "plan": "g1-gpu-rtx6000-3", "available": false}, {"region":
+      "us-central", "plan": "g1-gpu-rtx6000-4", "available": false}, {"region": "us-central",
+      "plan": "g7-premium-2", "available": false}, {"region": "us-central", "plan":
+      "g7-premium-4", "available": false}, {"region": "us-central", "plan": "g7-premium-8",
+      "available": false}, {"region": "us-central", "plan": "g7-premium-16", "available":
+      false}, {"region": "us-central", "plan": "g7-premium-32", "available": false},
+      {"region": "us-central", "plan": "g7-premium-48", "available": false}, {"region":
+      "us-central", "plan": "g7-premium-50", "available": false}, {"region": "us-central",
+      "plan": "g7-premium-56", "available": false}, {"region": "us-central", "plan":
+      "g7-premium-64", "available": false}, {"region": "us-central", "plan": "g1-gpu-rtx4000a-1",
+      "available": false}, {"region": "us-central", "plan": "g1-gpu-rtx4000a-2", "available":
+      false}, {"region": "us-central", "plan": "g1-gpu-rtx4000a-4", "available": false},
+      {"region": "us-central", "plan": "g1-gpu-rtx4000a-6", "available": false}, {"region":
+      "us-central", "plan": "g1-gpu-rtx4000a-8", "available": false}, {"region": "us-west",
+      "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "us-west", "plan":
+      "g1-gpu-rtx6000-2", "available": false}, {"region": "us-west", "plan": "g1-gpu-rtx6000-3",
+      "available": false}, {"region": "us-west", "plan": "g1-gpu-rtx6000-4", "available":
+      false}, {"region": "us-west", "plan": "g7-premium-2", "available": false}, {"region":
+      "us-west", "plan": "g7-premium-4", "available": false}, {"region": "us-west",
+      "plan": "g7-premium-8", "available": false}, {"region": "us-west", "plan": "g7-premium-16",
+      "available": false}, {"region": "us-west", "plan": "g7-premium-32", "available":
+      false}, {"region": "us-west", "plan": "g7-premium-48", "available": false},
+      {"region": "us-west", "plan": "g7-premium-50", "available": false}, {"region":
+      "us-west", "plan": "g7-premium-56", "available": false}, {"region": "us-west",
+      "plan": "g7-premium-64", "available": false}, {"region": "us-west", "plan":
+      "g1-gpu-rtx4000a-1", "available": false}, {"region": "us-west", "plan": "g1-gpu-rtx4000a-2",
+      "available": false}, {"region": "us-west", "plan": "g1-gpu-rtx4000a-4", "available":
+      false}, {"region": "us-west", "plan": "g1-gpu-rtx4000a-6", "available": false},
+      {"region": "us-west", "plan": "g1-gpu-rtx4000a-8", "available": false}, {"region":
+      "us-southeast", "plan": "g1-gpu-rtx6000-1", "available": true}, {"region": "us-southeast",
+      "plan": "g1-gpu-rtx6000-2", "available": true}, {"region": "us-southeast", "plan":
+      "g1-gpu-rtx6000-3", "available": true}, {"region": "us-southeast", "plan": "g1-gpu-rtx6000-4",
+      "available": false}, {"region": "us-southeast", "plan": "g7-premium-2", "available":
+      false}, {"region": "us-southeast", "plan": "g7-premium-4", "available": false},
+      {"region": "us-southeast", "plan": "g7-premium-8", "available": false}, {"region":
+      "us-southeast", "plan": "g7-premium-16", "available": false}, {"region": "us-southeast",
+      "plan": "g7-premium-32", "available": false}, {"region": "us-southeast", "plan":
+      "g7-premium-48", "available": false}, {"region": "us-southeast", "plan": "g7-premium-50",
+      "available": false}, {"region": "us-southeast", "plan": "g7-premium-56", "available":
+      false}, {"region": "us-southeast", "plan": "g7-premium-64", "available": false},
+      {"region": "us-southeast", "plan": "g1-gpu-rtx4000a-1", "available": false},
+      {"region": "us-southeast", "plan": "g1-gpu-rtx4000a-2", "available": false},
+      {"region": "us-southeast", "plan": "g1-gpu-rtx4000a-4", "available": false},
+      {"region": "us-southeast", "plan": "g1-gpu-rtx4000a-6", "available": false},
+      {"region": "us-southeast", "plan": "g1-gpu-rtx4000a-8", "available": false},
+      {"region": "us-east", "plan": "g1-gpu-rtx6000-1", "available": false}, {"region":
+      "us-east", "plan": "g1-gpu-rtx6000-2", "available": false}, {"region": "us-east",
+      "plan": "g1-gpu-rtx6000-3", "available": false}, {"region": "us-east", "plan":
+      "g1-gpu-rtx6000-4", "available": false}, {"region": "us-east", "plan": "g7-premium-2",
+      "available": false}, {"region": "us-east", "plan": "g7-premium-4", "available":
+      false}, {"region": "us-east", "plan": "g7-premium-8", "available": false}, {"region":
+      "us-east", "plan": "g7-premium-16", "available": false}, {"region": "us-east",
+      "plan": "g7-premium-32", "available": false}, {"region": "us-east", "plan":
+      "g7-premium-48", "available": false}, {"region": "us-east", "plan": "g7-premium-50",
+      "available": false}, {"region": "us-east", "plan": "g7-premium-56", "available":
+      false}, {"region": "us-east", "plan": "g7-premium-64", "available": false},
+      {"region": "us-east", "plan": "g1-gpu-rtx4000a-1", "available": false}, {"region":
+      "us-east", "plan": "g1-gpu-rtx4000a-2", "available": false}, {"region": "us-east",
+      "plan": "g1-gpu-rtx4000a-4", "available": false}, {"region": "us-east", "plan":
+      "g1-gpu-rtx4000a-6", "available": false}, {"region": "us-east", "plan": "g1-gpu-rtx4000a-8",
+      "available": false}, {"region": "eu-west", "plan": "g1-gpu-rtx6000-1", "available":
+      false}, {"region": "eu-west", "plan": "g1-gpu-rtx6000-2", "available": false},
+      {"region": "eu-west", "plan": "g1-gpu-rtx6000-3", "available": false}, {"region":
+      "eu-west", "plan": "g1-gpu-rtx6000-4", "available": false}, {"region": "eu-west",
+      "plan": "g7-premium-2", "available": false}, {"region": "eu-west", "plan": "g7-premium-4",
+      "available": false}, {"region": "eu-west", "plan": "g7-premium-8", "available":
+      false}, {"region": "eu-west", "plan": "g7-premium-16", "available": false},
+      {"region": "eu-west", "plan": "g7-premium-32", "available": false}, {"region":
+      "eu-west", "plan": "g7-premium-48", "available": false}, {"region": "eu-west",
+      "plan": "g7-premium-50", "available": false}, {"region": "eu-west", "plan":
+      "g7-premium-56", "available": false}, {"region": "eu-west", "plan": "g7-premium-64",
+      "available": false}, {"region": "eu-west", "plan": "g1-gpu-rtx4000a-1", "available":
+      false}, {"region": "eu-west", "plan": "g1-gpu-rtx4000a-2", "available": false},
+      {"region": "eu-west", "plan": "g1-gpu-rtx4000a-4", "available": false}, {"region":
+      "eu-west", "plan": "g1-gpu-rtx4000a-6", "available": false}, {"region": "eu-west",
+      "plan": "g1-gpu-rtx4000a-8", "available": false}, {"region": "ap-south", "plan":
+      "g1-gpu-rtx6000-1", "available": true}, {"region": "ap-south", "plan": "g1-gpu-rtx6000-2",
+      "available": true}, {"region": "ap-south", "plan": "g1-gpu-rtx6000-3", "available":
+      true}, {"region": "ap-south", "plan": "g1-gpu-rtx6000-4", "available": true},
+      {"region": "ap-south", "plan": "g7-premium-2", "available": false}, {"region":
+      "ap-south", "plan": "g7-premium-4", "available": false}, {"region": "ap-south",
+      "plan": "g7-premium-8", "available": false}, {"region": "ap-south", "plan":
+      "g7-premium-16", "available": false}, {"region": "ap-south", "plan": "g7-premium-32",
+      "available": false}, {"region": "ap-south", "plan": "g7-premium-48", "available":
+      false}], "page": 1, "pages": 5, "results": 486}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -124,7 +123,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 22 Aug 2025 07:24:09 GMT
+      - Tue, 09 Jul 2024 14:05:28 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -141,12 +140,9 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
-        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
-        monitor:read_only nodebalancers:read_only object_storage:read_only stackscripts:read_only
-        volumes:read_only
+      - '*'
       X-Ratelimit-Limit:
-      - "1840"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -165,95 +161,95 @@ interactions:
     url: https://api.linode.com/v4beta/regions/availability?page=2
     method: GET
   response:
-    body: '{"data": [{"region": "us-southeast", "plan": "g6-standard-20", "available":
-      true}, {"region": "us-southeast", "plan": "g6-standard-24", "available": true},
-      {"region": "us-southeast", "plan": "g6-standard-32", "available": true}, {"region":
-      "us-southeast", "plan": "g6-nanode-1", "available": true}, {"region": "us-southeast",
-      "plan": "g6-dedicated-2", "available": true}, {"region": "us-southeast", "plan":
-      "g6-dedicated-4", "available": true}, {"region": "us-southeast", "plan": "g6-dedicated-8",
-      "available": true}, {"region": "us-southeast", "plan": "g6-dedicated-16", "available":
-      true}, {"region": "us-southeast", "plan": "g6-dedicated-32", "available": true},
-      {"region": "us-southeast", "plan": "g6-dedicated-48", "available": true}, {"region":
-      "us-southeast", "plan": "g1-gpu-rtx6000-1", "available": false}, {"region":
-      "us-southeast", "plan": "g1-gpu-rtx6000-2", "available": false}, {"region":
-      "us-southeast", "plan": "g1-gpu-rtx6000-3", "available": false}, {"region":
-      "us-southeast", "plan": "g1-gpu-rtx6000-4", "available": false}, {"region":
-      "us-southeast", "plan": "g6-dedicated-50", "available": true}, {"region": "us-southeast",
-      "plan": "g6-dedicated-56", "available": true}, {"region": "us-southeast", "plan":
-      "g7-highmem-1", "available": true}, {"region": "us-southeast", "plan": "g7-highmem-2",
-      "available": true}, {"region": "us-southeast", "plan": "g7-highmem-4", "available":
-      true}, {"region": "us-southeast", "plan": "g7-highmem-8", "available": true},
-      {"region": "us-southeast", "plan": "g7-highmem-16", "available": true}, {"region":
-      "us-southeast", "plan": "g7-premium-2", "available": false}, {"region": "us-southeast",
-      "plan": "g7-premium-4", "available": false}, {"region": "us-southeast", "plan":
-      "g7-premium-8", "available": false}, {"region": "us-southeast", "plan": "g7-premium-16",
-      "available": false}, {"region": "us-southeast", "plan": "g7-premium-32", "available":
-      false}, {"region": "us-southeast", "plan": "g7-premium-48", "available": false},
-      {"region": "us-southeast", "plan": "g7-premium-50", "available": false}, {"region":
-      "us-southeast", "plan": "g7-premium-56", "available": false}, {"region": "us-southeast",
-      "plan": "g2-gpu-rtx4000a1-s", "available": false}, {"region": "us-southeast",
-      "plan": "g2-gpu-rtx4000a1-m", "available": false}, {"region": "us-southeast",
-      "plan": "g2-gpu-rtx4000a1-l", "available": false}, {"region": "us-southeast",
-      "plan": "g2-gpu-rtx4000a1-xl", "available": false}, {"region": "us-southeast",
-      "plan": "g2-gpu-rtx4000a2-s", "available": false}, {"region": "us-southeast",
-      "plan": "g2-gpu-rtx4000a2-m", "available": false}, {"region": "us-southeast",
-      "plan": "g2-gpu-rtx4000a2-hs", "available": false}, {"region": "us-southeast",
-      "plan": "g2-gpu-rtx4000a4-s", "available": false}, {"region": "us-southeast",
-      "plan": "g2-gpu-rtx4000a4-m", "available": false}, {"region": "us-southeast",
-      "plan": "g1-accelerated-netint-vpu-t1u1-s", "available": false}, {"region":
-      "us-southeast", "plan": "g1-accelerated-netint-vpu-t1u1-m", "available": false},
-      {"region": "us-southeast", "plan": "g1-accelerated-netint-vpu-t1u2-s", "available":
-      false}, {"region": "us-east", "plan": "g6-standard-1", "available": true}, {"region":
-      "us-east", "plan": "g6-standard-2", "available": true}, {"region": "us-east",
-      "plan": "g6-standard-4", "available": true}, {"region": "us-east", "plan": "g6-standard-6",
-      "available": true}, {"region": "us-east", "plan": "g6-standard-8", "available":
-      true}, {"region": "us-east", "plan": "g6-standard-16", "available": true}, {"region":
-      "us-east", "plan": "g6-standard-20", "available": true}, {"region": "us-east",
-      "plan": "g6-standard-24", "available": true}, {"region": "us-east", "plan":
-      "g6-standard-32", "available": true}, {"region": "us-east", "plan": "g6-nanode-1",
-      "available": true}, {"region": "us-east", "plan": "g6-dedicated-2", "available":
-      true}, {"region": "us-east", "plan": "g6-dedicated-4", "available": true}, {"region":
-      "us-east", "plan": "g6-dedicated-8", "available": true}, {"region": "us-east",
-      "plan": "g6-dedicated-16", "available": true}, {"region": "us-east", "plan":
-      "g6-dedicated-32", "available": true}, {"region": "us-east", "plan": "g6-dedicated-48",
-      "available": true}, {"region": "us-east", "plan": "g1-gpu-rtx6000-1", "available":
-      true}, {"region": "us-east", "plan": "g1-gpu-rtx6000-2", "available": true},
-      {"region": "us-east", "plan": "g1-gpu-rtx6000-3", "available": true}, {"region":
-      "us-east", "plan": "g1-gpu-rtx6000-4", "available": true}, {"region": "us-east",
-      "plan": "g6-dedicated-50", "available": true}, {"region": "us-east", "plan":
-      "g6-dedicated-56", "available": true}, {"region": "us-east", "plan": "g7-highmem-1",
-      "available": true}, {"region": "us-east", "plan": "g7-highmem-2", "available":
-      true}, {"region": "us-east", "plan": "g7-highmem-4", "available": true}, {"region":
-      "us-east", "plan": "g7-highmem-8", "available": true}, {"region": "us-east",
-      "plan": "g7-highmem-16", "available": true}, {"region": "us-east", "plan": "g7-premium-2",
-      "available": false}, {"region": "us-east", "plan": "g7-premium-4", "available":
-      false}, {"region": "us-east", "plan": "g7-premium-8", "available": false}, {"region":
-      "us-east", "plan": "g7-premium-16", "available": false}, {"region": "us-east",
-      "plan": "g7-premium-32", "available": false}, {"region": "us-east", "plan":
-      "g7-premium-48", "available": false}, {"region": "us-east", "plan": "g7-premium-50",
-      "available": false}, {"region": "us-east", "plan": "g7-premium-56", "available":
-      false}, {"region": "us-east", "plan": "g2-gpu-rtx4000a1-s", "available": false},
-      {"region": "us-east", "plan": "g2-gpu-rtx4000a1-m", "available": false}, {"region":
-      "us-east", "plan": "g2-gpu-rtx4000a1-l", "available": false}, {"region": "us-east",
-      "plan": "g2-gpu-rtx4000a1-xl", "available": false}, {"region": "us-east", "plan":
-      "g2-gpu-rtx4000a2-s", "available": false}, {"region": "us-east", "plan": "g2-gpu-rtx4000a2-m",
-      "available": false}, {"region": "us-east", "plan": "g2-gpu-rtx4000a2-hs", "available":
-      false}, {"region": "us-east", "plan": "g2-gpu-rtx4000a4-s", "available": false},
-      {"region": "us-east", "plan": "g2-gpu-rtx4000a4-m", "available": false}, {"region":
-      "us-east", "plan": "g1-accelerated-netint-vpu-t1u1-s", "available": false},
-      {"region": "us-east", "plan": "g1-accelerated-netint-vpu-t1u1-m", "available":
-      false}, {"region": "us-east", "plan": "g1-accelerated-netint-vpu-t1u2-s", "available":
-      false}, {"region": "eu-west", "plan": "g6-standard-1", "available": true}, {"region":
-      "eu-west", "plan": "g6-standard-2", "available": true}, {"region": "eu-west",
-      "plan": "g6-standard-4", "available": true}, {"region": "eu-west", "plan": "g6-standard-6",
-      "available": true}, {"region": "eu-west", "plan": "g6-standard-8", "available":
-      true}, {"region": "eu-west", "plan": "g6-standard-16", "available": true}, {"region":
-      "eu-west", "plan": "g6-standard-20", "available": true}, {"region": "eu-west",
-      "plan": "g6-standard-24", "available": true}, {"region": "eu-west", "plan":
-      "g6-standard-32", "available": true}, {"region": "eu-west", "plan": "g6-nanode-1",
-      "available": true}, {"region": "eu-west", "plan": "g6-dedicated-2", "available":
-      true}, {"region": "eu-west", "plan": "g6-dedicated-4", "available": true}],
-      "page": 2, "pages": 15, "results": 1457}'
+    body: '{"data": [{"region": "ap-south", "plan": "g7-premium-50", "available":
+      false}, {"region": "ap-south", "plan": "g7-premium-56", "available": false},
+      {"region": "ap-south", "plan": "g7-premium-64", "available": false}, {"region":
+      "ap-south", "plan": "g1-gpu-rtx4000a-1", "available": false}, {"region": "ap-south",
+      "plan": "g1-gpu-rtx4000a-2", "available": false}, {"region": "ap-south", "plan":
+      "g1-gpu-rtx4000a-4", "available": false}, {"region": "ap-south", "plan": "g1-gpu-rtx4000a-6",
+      "available": false}, {"region": "ap-south", "plan": "g1-gpu-rtx4000a-8", "available":
+      false}, {"region": "eu-central", "plan": "g1-gpu-rtx6000-1", "available": false},
+      {"region": "eu-central", "plan": "g1-gpu-rtx6000-2", "available": false}, {"region":
+      "eu-central", "plan": "g1-gpu-rtx6000-3", "available": false}, {"region": "eu-central",
+      "plan": "g1-gpu-rtx6000-4", "available": false}, {"region": "eu-central", "plan":
+      "g7-premium-2", "available": false}, {"region": "eu-central", "plan": "g7-premium-4",
+      "available": false}, {"region": "eu-central", "plan": "g7-premium-8", "available":
+      false}, {"region": "eu-central", "plan": "g7-premium-16", "available": false},
+      {"region": "eu-central", "plan": "g7-premium-32", "available": false}, {"region":
+      "eu-central", "plan": "g7-premium-48", "available": false}, {"region": "eu-central",
+      "plan": "g7-premium-50", "available": false}, {"region": "eu-central", "plan":
+      "g7-premium-56", "available": false}, {"region": "eu-central", "plan": "g7-premium-64",
+      "available": false}, {"region": "eu-central", "plan": "g1-gpu-rtx4000a-1", "available":
+      false}, {"region": "eu-central", "plan": "g1-gpu-rtx4000a-2", "available": false},
+      {"region": "eu-central", "plan": "g1-gpu-rtx4000a-4", "available": false}, {"region":
+      "eu-central", "plan": "g1-gpu-rtx4000a-6", "available": false}, {"region": "eu-central",
+      "plan": "g1-gpu-rtx4000a-8", "available": false}, {"region": "ap-northeast",
+      "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "ap-northeast",
+      "plan": "g1-gpu-rtx6000-2", "available": false}, {"region": "ap-northeast",
+      "plan": "g1-gpu-rtx6000-3", "available": false}, {"region": "ap-northeast",
+      "plan": "g1-gpu-rtx6000-4", "available": false}, {"region": "ap-northeast",
+      "plan": "g7-premium-2", "available": false}, {"region": "ap-northeast", "plan":
+      "g7-premium-4", "available": false}, {"region": "ap-northeast", "plan": "g7-premium-8",
+      "available": false}, {"region": "ap-northeast", "plan": "g7-premium-16", "available":
+      false}, {"region": "ap-northeast", "plan": "g7-premium-32", "available": false},
+      {"region": "ap-northeast", "plan": "g7-premium-48", "available": false}, {"region":
+      "ap-northeast", "plan": "g7-premium-50", "available": false}, {"region": "ap-northeast",
+      "plan": "g7-premium-56", "available": false}, {"region": "ap-northeast", "plan":
+      "g7-premium-64", "available": false}, {"region": "ap-northeast", "plan": "g1-gpu-rtx4000a-1",
+      "available": false}, {"region": "ap-northeast", "plan": "g1-gpu-rtx4000a-2",
+      "available": false}, {"region": "ap-northeast", "plan": "g1-gpu-rtx4000a-4",
+      "available": false}, {"region": "ap-northeast", "plan": "g1-gpu-rtx4000a-6",
+      "available": false}, {"region": "ap-northeast", "plan": "g1-gpu-rtx4000a-8",
+      "available": false}, {"region": "ap-west", "plan": "g1-gpu-rtx6000-1", "available":
+      true}, {"region": "ap-west", "plan": "g1-gpu-rtx6000-2", "available": true},
+      {"region": "ap-west", "plan": "g1-gpu-rtx6000-3", "available": true}, {"region":
+      "ap-west", "plan": "g1-gpu-rtx6000-4", "available": true}, {"region": "ap-west",
+      "plan": "g7-premium-2", "available": false}, {"region": "ap-west", "plan": "g7-premium-4",
+      "available": false}, {"region": "ap-west", "plan": "g7-premium-8", "available":
+      false}, {"region": "ap-west", "plan": "g7-premium-16", "available": false},
+      {"region": "ap-west", "plan": "g7-premium-32", "available": false}, {"region":
+      "ap-west", "plan": "g7-premium-48", "available": false}, {"region": "ap-west",
+      "plan": "g7-premium-50", "available": false}, {"region": "ap-west", "plan":
+      "g7-premium-56", "available": false}, {"region": "ap-west", "plan": "g7-premium-64",
+      "available": false}, {"region": "ap-west", "plan": "g1-gpu-rtx4000a-1", "available":
+      false}, {"region": "ap-west", "plan": "g1-gpu-rtx4000a-2", "available": false},
+      {"region": "ap-west", "plan": "g1-gpu-rtx4000a-4", "available": false}, {"region":
+      "ap-west", "plan": "g1-gpu-rtx4000a-6", "available": false}, {"region": "ap-west",
+      "plan": "g1-gpu-rtx4000a-8", "available": false}, {"region": "ca-central", "plan":
+      "g1-gpu-rtx6000-1", "available": false}, {"region": "ca-central", "plan": "g1-gpu-rtx6000-2",
+      "available": false}, {"region": "ca-central", "plan": "g1-gpu-rtx6000-3", "available":
+      false}, {"region": "ca-central", "plan": "g1-gpu-rtx6000-4", "available": false},
+      {"region": "ca-central", "plan": "g7-premium-2", "available": false}, {"region":
+      "ca-central", "plan": "g7-premium-4", "available": false}, {"region": "ca-central",
+      "plan": "g7-premium-8", "available": false}, {"region": "ca-central", "plan":
+      "g7-premium-16", "available": false}, {"region": "ca-central", "plan": "g7-premium-32",
+      "available": false}, {"region": "ca-central", "plan": "g7-premium-48", "available":
+      false}, {"region": "ca-central", "plan": "g7-premium-50", "available": false},
+      {"region": "ca-central", "plan": "g7-premium-56", "available": false}, {"region":
+      "ca-central", "plan": "g7-premium-64", "available": false}, {"region": "ca-central",
+      "plan": "g1-gpu-rtx4000a-1", "available": false}, {"region": "ca-central", "plan":
+      "g1-gpu-rtx4000a-2", "available": false}, {"region": "ca-central", "plan": "g1-gpu-rtx4000a-4",
+      "available": false}, {"region": "ca-central", "plan": "g1-gpu-rtx4000a-6", "available":
+      false}, {"region": "ca-central", "plan": "g1-gpu-rtx4000a-8", "available": false},
+      {"region": "ap-southeast", "plan": "g1-gpu-rtx6000-1", "available": false},
+      {"region": "ap-southeast", "plan": "g1-gpu-rtx6000-2", "available": false},
+      {"region": "ap-southeast", "plan": "g1-gpu-rtx6000-3", "available": false},
+      {"region": "ap-southeast", "plan": "g1-gpu-rtx6000-4", "available": false},
+      {"region": "ap-southeast", "plan": "g7-premium-2", "available": false}, {"region":
+      "ap-southeast", "plan": "g7-premium-4", "available": false}, {"region": "ap-southeast",
+      "plan": "g7-premium-8", "available": false}, {"region": "ap-southeast", "plan":
+      "g7-premium-16", "available": false}, {"region": "ap-southeast", "plan": "g7-premium-32",
+      "available": false}, {"region": "ap-southeast", "plan": "g7-premium-48", "available":
+      false}, {"region": "ap-southeast", "plan": "g7-premium-50", "available": false},
+      {"region": "ap-southeast", "plan": "g7-premium-56", "available": false}, {"region":
+      "ap-southeast", "plan": "g7-premium-64", "available": false}, {"region": "ap-southeast",
+      "plan": "g1-gpu-rtx4000a-1", "available": false}, {"region": "ap-southeast",
+      "plan": "g1-gpu-rtx4000a-2", "available": false}, {"region": "ap-southeast",
+      "plan": "g1-gpu-rtx4000a-4", "available": false}, {"region": "ap-southeast",
+      "plan": "g1-gpu-rtx4000a-6", "available": false}, {"region": "ap-southeast",
+      "plan": "g1-gpu-rtx4000a-8", "available": false}, {"region": "us-iad", "plan":
+      "g1-gpu-rtx6000-1", "available": false}, {"region": "us-iad", "plan": "g1-gpu-rtx6000-2",
+      "available": false}], "page": 2, "pages": 5, "results": 486}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -276,7 +272,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 22 Aug 2025 07:24:10 GMT
+      - Tue, 09 Jul 2024 14:05:28 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -293,12 +289,9 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
-        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
-        monitor:read_only nodebalancers:read_only object_storage:read_only stackscripts:read_only
-        volumes:read_only
+      - '*'
       X-Ratelimit-Limit:
-      - "1840"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -317,94 +310,91 @@ interactions:
     url: https://api.linode.com/v4beta/regions/availability?page=3
     method: GET
   response:
-    body: '{"data": [{"region": "eu-west", "plan": "g6-dedicated-8", "available":
-      true}, {"region": "eu-west", "plan": "g6-dedicated-16", "available": true},
-      {"region": "eu-west", "plan": "g6-dedicated-32", "available": true}, {"region":
-      "eu-west", "plan": "g6-dedicated-48", "available": true}, {"region": "eu-west",
-      "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "eu-west", "plan":
-      "g1-gpu-rtx6000-2", "available": false}, {"region": "eu-west", "plan": "g1-gpu-rtx6000-3",
-      "available": false}, {"region": "eu-west", "plan": "g1-gpu-rtx6000-4", "available":
-      false}, {"region": "eu-west", "plan": "g6-dedicated-50", "available": true},
-      {"region": "eu-west", "plan": "g6-dedicated-56", "available": true}, {"region":
-      "eu-west", "plan": "g7-highmem-1", "available": true}, {"region": "eu-west",
-      "plan": "g7-highmem-2", "available": true}, {"region": "eu-west", "plan": "g7-highmem-4",
-      "available": true}, {"region": "eu-west", "plan": "g7-highmem-8", "available":
-      true}, {"region": "eu-west", "plan": "g7-highmem-16", "available": true}, {"region":
-      "eu-west", "plan": "g7-premium-2", "available": false}, {"region": "eu-west",
-      "plan": "g7-premium-4", "available": false}, {"region": "eu-west", "plan": "g7-premium-8",
-      "available": false}, {"region": "eu-west", "plan": "g7-premium-16", "available":
-      false}, {"region": "eu-west", "plan": "g7-premium-32", "available": false},
-      {"region": "eu-west", "plan": "g7-premium-48", "available": false}, {"region":
-      "eu-west", "plan": "g7-premium-50", "available": false}, {"region": "eu-west",
-      "plan": "g7-premium-56", "available": false}, {"region": "eu-west", "plan":
-      "g2-gpu-rtx4000a1-s", "available": false}, {"region": "eu-west", "plan": "g2-gpu-rtx4000a1-m",
-      "available": false}, {"region": "eu-west", "plan": "g2-gpu-rtx4000a1-l", "available":
-      false}, {"region": "eu-west", "plan": "g2-gpu-rtx4000a1-xl", "available": false},
-      {"region": "eu-west", "plan": "g2-gpu-rtx4000a2-s", "available": false}, {"region":
-      "eu-west", "plan": "g2-gpu-rtx4000a2-m", "available": false}, {"region": "eu-west",
-      "plan": "g2-gpu-rtx4000a2-hs", "available": false}, {"region": "eu-west", "plan":
-      "g2-gpu-rtx4000a4-s", "available": false}, {"region": "eu-west", "plan": "g2-gpu-rtx4000a4-m",
-      "available": false}, {"region": "eu-west", "plan": "g1-accelerated-netint-vpu-t1u1-s",
-      "available": false}, {"region": "eu-west", "plan": "g1-accelerated-netint-vpu-t1u1-m",
-      "available": false}, {"region": "eu-west", "plan": "g1-accelerated-netint-vpu-t1u2-s",
-      "available": false}, {"region": "ap-south", "plan": "g6-standard-1", "available":
-      true}, {"region": "ap-south", "plan": "g6-standard-2", "available": true}, {"region":
-      "ap-south", "plan": "g6-standard-4", "available": true}, {"region": "ap-south",
-      "plan": "g6-standard-6", "available": true}, {"region": "ap-south", "plan":
-      "g6-standard-8", "available": true}, {"region": "ap-south", "plan": "g6-standard-16",
-      "available": true}, {"region": "ap-south", "plan": "g6-standard-20", "available":
-      true}, {"region": "ap-south", "plan": "g6-standard-24", "available": true},
-      {"region": "ap-south", "plan": "g6-standard-32", "available": true}, {"region":
-      "ap-south", "plan": "g6-nanode-1", "available": true}, {"region": "ap-south",
-      "plan": "g6-dedicated-2", "available": true}, {"region": "ap-south", "plan":
-      "g6-dedicated-4", "available": true}, {"region": "ap-south", "plan": "g6-dedicated-8",
-      "available": true}, {"region": "ap-south", "plan": "g6-dedicated-16", "available":
-      true}, {"region": "ap-south", "plan": "g6-dedicated-32", "available": true},
-      {"region": "ap-south", "plan": "g6-dedicated-48", "available": true}, {"region":
-      "ap-south", "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "ap-south",
-      "plan": "g1-gpu-rtx6000-2", "available": false}, {"region": "ap-south", "plan":
-      "g1-gpu-rtx6000-3", "available": false}, {"region": "ap-south", "plan": "g1-gpu-rtx6000-4",
-      "available": false}, {"region": "ap-south", "plan": "g6-dedicated-50", "available":
-      true}, {"region": "ap-south", "plan": "g6-dedicated-56", "available": true},
-      {"region": "ap-south", "plan": "g7-highmem-1", "available": true}, {"region":
-      "ap-south", "plan": "g7-highmem-2", "available": true}, {"region": "ap-south",
-      "plan": "g7-highmem-4", "available": true}, {"region": "ap-south", "plan": "g7-highmem-8",
-      "available": true}, {"region": "ap-south", "plan": "g7-highmem-16", "available":
-      true}, {"region": "ap-south", "plan": "g7-premium-2", "available": false}, {"region":
-      "ap-south", "plan": "g7-premium-4", "available": false}, {"region": "ap-south",
-      "plan": "g7-premium-8", "available": false}, {"region": "ap-south", "plan":
-      "g7-premium-16", "available": false}, {"region": "ap-south", "plan": "g7-premium-32",
-      "available": false}, {"region": "ap-south", "plan": "g7-premium-48", "available":
-      false}, {"region": "ap-south", "plan": "g7-premium-50", "available": false},
-      {"region": "ap-south", "plan": "g7-premium-56", "available": false}, {"region":
-      "ap-south", "plan": "g2-gpu-rtx4000a1-s", "available": false}, {"region": "ap-south",
-      "plan": "g2-gpu-rtx4000a1-m", "available": false}, {"region": "ap-south", "plan":
-      "g2-gpu-rtx4000a1-l", "available": false}, {"region": "ap-south", "plan": "g2-gpu-rtx4000a1-xl",
-      "available": false}, {"region": "ap-south", "plan": "g2-gpu-rtx4000a2-s", "available":
-      false}, {"region": "ap-south", "plan": "g2-gpu-rtx4000a2-m", "available": false},
-      {"region": "ap-south", "plan": "g2-gpu-rtx4000a2-hs", "available": false}, {"region":
-      "ap-south", "plan": "g2-gpu-rtx4000a4-s", "available": false}, {"region": "ap-south",
-      "plan": "g2-gpu-rtx4000a4-m", "available": false}, {"region": "ap-south", "plan":
-      "g1-accelerated-netint-vpu-t1u1-s", "available": false}, {"region": "ap-south",
-      "plan": "g1-accelerated-netint-vpu-t1u1-m", "available": false}, {"region":
-      "ap-south", "plan": "g1-accelerated-netint-vpu-t1u2-s", "available": false},
-      {"region": "eu-central", "plan": "g6-standard-1", "available": true}, {"region":
-      "eu-central", "plan": "g6-standard-2", "available": true}, {"region": "eu-central",
-      "plan": "g6-standard-4", "available": true}, {"region": "eu-central", "plan":
-      "g6-standard-6", "available": true}, {"region": "eu-central", "plan": "g6-standard-8",
-      "available": true}, {"region": "eu-central", "plan": "g6-standard-16", "available":
-      true}, {"region": "eu-central", "plan": "g6-standard-20", "available": true},
-      {"region": "eu-central", "plan": "g6-standard-24", "available": true}, {"region":
-      "eu-central", "plan": "g6-standard-32", "available": true}, {"region": "eu-central",
-      "plan": "g6-nanode-1", "available": true}, {"region": "eu-central", "plan":
-      "g6-dedicated-2", "available": true}, {"region": "eu-central", "plan": "g6-dedicated-4",
-      "available": true}, {"region": "eu-central", "plan": "g6-dedicated-8", "available":
-      true}, {"region": "eu-central", "plan": "g6-dedicated-16", "available": true},
-      {"region": "eu-central", "plan": "g6-dedicated-32", "available": true}, {"region":
-      "eu-central", "plan": "g6-dedicated-48", "available": true}, {"region": "eu-central",
-      "plan": "g1-gpu-rtx6000-1", "available": true}, {"region": "eu-central", "plan":
-      "g1-gpu-rtx6000-2", "available": true}], "page": 3, "pages": 15, "results":
-      1457}'
+    body: '{"data": [{"region": "us-iad", "plan": "g1-gpu-rtx6000-3", "available":
+      false}, {"region": "us-iad", "plan": "g1-gpu-rtx6000-4", "available": false},
+      {"region": "us-iad", "plan": "g7-premium-2", "available": true}, {"region":
+      "us-iad", "plan": "g7-premium-4", "available": true}, {"region": "us-iad", "plan":
+      "g7-premium-8", "available": true}, {"region": "us-iad", "plan": "g7-premium-16",
+      "available": true}, {"region": "us-iad", "plan": "g7-premium-32", "available":
+      true}, {"region": "us-iad", "plan": "g7-premium-48", "available": true}, {"region":
+      "us-iad", "plan": "g7-premium-50", "available": true}, {"region": "us-iad",
+      "plan": "g7-premium-56", "available": true}, {"region": "us-iad", "plan": "g7-premium-64",
+      "available": true}, {"region": "us-iad", "plan": "g1-gpu-rtx4000a-1", "available":
+      false}, {"region": "us-iad", "plan": "g1-gpu-rtx4000a-2", "available": false},
+      {"region": "us-iad", "plan": "g1-gpu-rtx4000a-4", "available": false}, {"region":
+      "us-iad", "plan": "g1-gpu-rtx4000a-6", "available": false}, {"region": "us-iad",
+      "plan": "g1-gpu-rtx4000a-8", "available": false}, {"region": "us-ord", "plan":
+      "g1-gpu-rtx6000-1", "available": false}, {"region": "us-ord", "plan": "g1-gpu-rtx6000-2",
+      "available": false}, {"region": "us-ord", "plan": "g1-gpu-rtx6000-3", "available":
+      false}, {"region": "us-ord", "plan": "g1-gpu-rtx6000-4", "available": false},
+      {"region": "us-ord", "plan": "g7-premium-2", "available": true}, {"region":
+      "us-ord", "plan": "g7-premium-4", "available": true}, {"region": "us-ord", "plan":
+      "g7-premium-8", "available": true}, {"region": "us-ord", "plan": "g7-premium-16",
+      "available": true}, {"region": "us-ord", "plan": "g7-premium-32", "available":
+      true}, {"region": "us-ord", "plan": "g7-premium-48", "available": true}, {"region":
+      "us-ord", "plan": "g7-premium-50", "available": true}, {"region": "us-ord",
+      "plan": "g7-premium-56", "available": true}, {"region": "us-ord", "plan": "g7-premium-64",
+      "available": true}, {"region": "us-ord", "plan": "g1-gpu-rtx4000a-1", "available":
+      true}, {"region": "us-ord", "plan": "g1-gpu-rtx4000a-2", "available": true},
+      {"region": "us-ord", "plan": "g1-gpu-rtx4000a-4", "available": true}, {"region":
+      "us-ord", "plan": "g1-gpu-rtx4000a-6", "available": true}, {"region": "us-ord",
+      "plan": "g1-gpu-rtx4000a-8", "available": true}, {"region": "fr-par", "plan":
+      "g1-gpu-rtx6000-1", "available": false}, {"region": "fr-par", "plan": "g1-gpu-rtx6000-2",
+      "available": false}, {"region": "fr-par", "plan": "g1-gpu-rtx6000-3", "available":
+      false}, {"region": "fr-par", "plan": "g1-gpu-rtx6000-4", "available": false},
+      {"region": "fr-par", "plan": "g7-premium-2", "available": true}, {"region":
+      "fr-par", "plan": "g7-premium-4", "available": true}, {"region": "fr-par", "plan":
+      "g7-premium-8", "available": true}, {"region": "fr-par", "plan": "g7-premium-16",
+      "available": true}, {"region": "fr-par", "plan": "g7-premium-32", "available":
+      true}, {"region": "fr-par", "plan": "g7-premium-48", "available": true}, {"region":
+      "fr-par", "plan": "g7-premium-50", "available": true}, {"region": "fr-par",
+      "plan": "g7-premium-56", "available": true}, {"region": "fr-par", "plan": "g7-premium-64",
+      "available": true}, {"region": "fr-par", "plan": "g1-gpu-rtx4000a-1", "available":
+      true}, {"region": "fr-par", "plan": "g1-gpu-rtx4000a-2", "available": true},
+      {"region": "fr-par", "plan": "g1-gpu-rtx4000a-4", "available": true}, {"region":
+      "fr-par", "plan": "g1-gpu-rtx4000a-6", "available": true}, {"region": "fr-par",
+      "plan": "g1-gpu-rtx4000a-8", "available": true}, {"region": "us-sea", "plan":
+      "g1-gpu-rtx6000-1", "available": false}, {"region": "us-sea", "plan": "g1-gpu-rtx6000-2",
+      "available": false}, {"region": "us-sea", "plan": "g1-gpu-rtx6000-3", "available":
+      false}, {"region": "us-sea", "plan": "g1-gpu-rtx6000-4", "available": false},
+      {"region": "us-sea", "plan": "g7-premium-2", "available": true}, {"region":
+      "us-sea", "plan": "g7-premium-4", "available": true}, {"region": "us-sea", "plan":
+      "g7-premium-8", "available": true}, {"region": "us-sea", "plan": "g7-premium-16",
+      "available": true}, {"region": "us-sea", "plan": "g7-premium-32", "available":
+      true}, {"region": "us-sea", "plan": "g7-premium-48", "available": true}, {"region":
+      "us-sea", "plan": "g7-premium-50", "available": true}, {"region": "us-sea",
+      "plan": "g7-premium-56", "available": true}, {"region": "us-sea", "plan": "g7-premium-64",
+      "available": false}, {"region": "us-sea", "plan": "g1-gpu-rtx4000a-1", "available":
+      true}, {"region": "us-sea", "plan": "g1-gpu-rtx4000a-2", "available": true},
+      {"region": "us-sea", "plan": "g1-gpu-rtx4000a-4", "available": true}, {"region":
+      "us-sea", "plan": "g1-gpu-rtx4000a-6", "available": true}, {"region": "us-sea",
+      "plan": "g1-gpu-rtx4000a-8", "available": true}, {"region": "br-gru", "plan":
+      "g1-gpu-rtx6000-1", "available": false}, {"region": "br-gru", "plan": "g1-gpu-rtx6000-2",
+      "available": false}, {"region": "br-gru", "plan": "g1-gpu-rtx6000-3", "available":
+      false}, {"region": "br-gru", "plan": "g1-gpu-rtx6000-4", "available": false},
+      {"region": "br-gru", "plan": "g7-premium-2", "available": true}, {"region":
+      "br-gru", "plan": "g7-premium-4", "available": true}, {"region": "br-gru", "plan":
+      "g7-premium-8", "available": true}, {"region": "br-gru", "plan": "g7-premium-16",
+      "available": true}, {"region": "br-gru", "plan": "g7-premium-32", "available":
+      true}, {"region": "br-gru", "plan": "g7-premium-48", "available": true}, {"region":
+      "br-gru", "plan": "g7-premium-50", "available": true}, {"region": "br-gru",
+      "plan": "g7-premium-56", "available": true}, {"region": "br-gru", "plan": "g7-premium-64",
+      "available": true}, {"region": "br-gru", "plan": "g1-gpu-rtx4000a-1", "available":
+      false}, {"region": "br-gru", "plan": "g1-gpu-rtx4000a-2", "available": false},
+      {"region": "br-gru", "plan": "g1-gpu-rtx4000a-4", "available": false}, {"region":
+      "br-gru", "plan": "g1-gpu-rtx4000a-6", "available": false}, {"region": "br-gru",
+      "plan": "g1-gpu-rtx4000a-8", "available": false}, {"region": "nl-ams", "plan":
+      "g1-gpu-rtx6000-1", "available": false}, {"region": "nl-ams", "plan": "g1-gpu-rtx6000-2",
+      "available": false}, {"region": "nl-ams", "plan": "g1-gpu-rtx6000-3", "available":
+      false}, {"region": "nl-ams", "plan": "g1-gpu-rtx6000-4", "available": false},
+      {"region": "nl-ams", "plan": "g7-premium-2", "available": true}, {"region":
+      "nl-ams", "plan": "g7-premium-4", "available": true}, {"region": "nl-ams", "plan":
+      "g7-premium-8", "available": true}, {"region": "nl-ams", "plan": "g7-premium-16",
+      "available": true}, {"region": "nl-ams", "plan": "g7-premium-32", "available":
+      true}, {"region": "nl-ams", "plan": "g7-premium-48", "available": true}, {"region":
+      "nl-ams", "plan": "g7-premium-50", "available": true}, {"region": "nl-ams",
+      "plan": "g7-premium-56", "available": true}], "page": 3, "pages": 5, "results":
+      486}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -427,7 +417,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 22 Aug 2025 07:24:10 GMT
+      - Thu, 11 Jul 2024 18:27:15 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -444,166 +434,9 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
-        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
-        monitor:read_only nodebalancers:read_only object_storage:read_only stackscripts:read_only
-        volumes:read_only
+      - '*'
       X-Ratelimit-Limit:
-      - "1840"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/regions/availability?page=4
-    method: GET
-  response:
-    body: '{"data": [{"region": "eu-central", "plan": "g1-gpu-rtx6000-3", "available":
-      true}, {"region": "eu-central", "plan": "g1-gpu-rtx6000-4", "available": true},
-      {"region": "eu-central", "plan": "g6-dedicated-50", "available": true}, {"region":
-      "eu-central", "plan": "g6-dedicated-56", "available": true}, {"region": "eu-central",
-      "plan": "g7-highmem-1", "available": true}, {"region": "eu-central", "plan":
-      "g7-highmem-2", "available": true}, {"region": "eu-central", "plan": "g7-highmem-4",
-      "available": true}, {"region": "eu-central", "plan": "g7-highmem-8", "available":
-      true}, {"region": "eu-central", "plan": "g7-highmem-16", "available": true},
-      {"region": "eu-central", "plan": "g7-premium-2", "available": false}, {"region":
-      "eu-central", "plan": "g7-premium-4", "available": false}, {"region": "eu-central",
-      "plan": "g7-premium-8", "available": false}, {"region": "eu-central", "plan":
-      "g7-premium-16", "available": false}, {"region": "eu-central", "plan": "g7-premium-32",
-      "available": false}, {"region": "eu-central", "plan": "g7-premium-48", "available":
-      false}, {"region": "eu-central", "plan": "g7-premium-50", "available": false},
-      {"region": "eu-central", "plan": "g7-premium-56", "available": false}, {"region":
-      "eu-central", "plan": "g2-gpu-rtx4000a1-s", "available": false}, {"region":
-      "eu-central", "plan": "g2-gpu-rtx4000a1-m", "available": false}, {"region":
-      "eu-central", "plan": "g2-gpu-rtx4000a1-l", "available": false}, {"region":
-      "eu-central", "plan": "g2-gpu-rtx4000a1-xl", "available": false}, {"region":
-      "eu-central", "plan": "g2-gpu-rtx4000a2-s", "available": false}, {"region":
-      "eu-central", "plan": "g2-gpu-rtx4000a2-m", "available": false}, {"region":
-      "eu-central", "plan": "g2-gpu-rtx4000a2-hs", "available": false}, {"region":
-      "eu-central", "plan": "g2-gpu-rtx4000a4-s", "available": false}, {"region":
-      "eu-central", "plan": "g2-gpu-rtx4000a4-m", "available": false}, {"region":
-      "eu-central", "plan": "g1-accelerated-netint-vpu-t1u1-s", "available": false},
-      {"region": "eu-central", "plan": "g1-accelerated-netint-vpu-t1u1-m", "available":
-      false}, {"region": "eu-central", "plan": "g1-accelerated-netint-vpu-t1u2-s",
-      "available": false}, {"region": "ap-northeast", "plan": "g6-standard-1", "available":
-      true}, {"region": "ap-northeast", "plan": "g6-standard-2", "available": true},
-      {"region": "ap-northeast", "plan": "g6-standard-4", "available": true}, {"region":
-      "ap-northeast", "plan": "g6-standard-6", "available": true}, {"region": "ap-northeast",
-      "plan": "g6-standard-8", "available": true}, {"region": "ap-northeast", "plan":
-      "g6-standard-16", "available": true}, {"region": "ap-northeast", "plan": "g6-standard-20",
-      "available": true}, {"region": "ap-northeast", "plan": "g6-standard-24", "available":
-      true}, {"region": "ap-northeast", "plan": "g6-standard-32", "available": true},
-      {"region": "ap-northeast", "plan": "g6-nanode-1", "available": true}, {"region":
-      "ap-northeast", "plan": "g6-dedicated-2", "available": true}, {"region": "ap-northeast",
-      "plan": "g6-dedicated-4", "available": true}, {"region": "ap-northeast", "plan":
-      "g6-dedicated-8", "available": true}, {"region": "ap-northeast", "plan": "g6-dedicated-16",
-      "available": true}, {"region": "ap-northeast", "plan": "g6-dedicated-32", "available":
-      true}, {"region": "ap-northeast", "plan": "g6-dedicated-48", "available": true},
-      {"region": "ap-northeast", "plan": "g1-gpu-rtx6000-1", "available": false},
-      {"region": "ap-northeast", "plan": "g1-gpu-rtx6000-2", "available": false},
-      {"region": "ap-northeast", "plan": "g1-gpu-rtx6000-3", "available": false},
-      {"region": "ap-northeast", "plan": "g1-gpu-rtx6000-4", "available": false},
-      {"region": "ap-northeast", "plan": "g6-dedicated-50", "available": true}, {"region":
-      "ap-northeast", "plan": "g6-dedicated-56", "available": true}, {"region": "ap-northeast",
-      "plan": "g7-highmem-1", "available": true}, {"region": "ap-northeast", "plan":
-      "g7-highmem-2", "available": true}, {"region": "ap-northeast", "plan": "g7-highmem-4",
-      "available": true}, {"region": "ap-northeast", "plan": "g7-highmem-8", "available":
-      true}, {"region": "ap-northeast", "plan": "g7-highmem-16", "available": true},
-      {"region": "ap-northeast", "plan": "g7-premium-2", "available": false}, {"region":
-      "ap-northeast", "plan": "g7-premium-4", "available": false}, {"region": "ap-northeast",
-      "plan": "g7-premium-8", "available": false}, {"region": "ap-northeast", "plan":
-      "g7-premium-16", "available": false}, {"region": "ap-northeast", "plan": "g7-premium-32",
-      "available": false}, {"region": "ap-northeast", "plan": "g7-premium-48", "available":
-      false}, {"region": "ap-northeast", "plan": "g7-premium-50", "available": false},
-      {"region": "ap-northeast", "plan": "g7-premium-56", "available": false}, {"region":
-      "ap-northeast", "plan": "g2-gpu-rtx4000a1-s", "available": false}, {"region":
-      "ap-northeast", "plan": "g2-gpu-rtx4000a1-m", "available": false}, {"region":
-      "ap-northeast", "plan": "g2-gpu-rtx4000a1-l", "available": false}, {"region":
-      "ap-northeast", "plan": "g2-gpu-rtx4000a1-xl", "available": false}, {"region":
-      "ap-northeast", "plan": "g2-gpu-rtx4000a2-s", "available": false}, {"region":
-      "ap-northeast", "plan": "g2-gpu-rtx4000a2-m", "available": false}, {"region":
-      "ap-northeast", "plan": "g2-gpu-rtx4000a2-hs", "available": false}, {"region":
-      "ap-northeast", "plan": "g2-gpu-rtx4000a4-s", "available": false}, {"region":
-      "ap-northeast", "plan": "g2-gpu-rtx4000a4-m", "available": false}, {"region":
-      "ap-northeast", "plan": "g1-accelerated-netint-vpu-t1u1-s", "available": false},
-      {"region": "ap-northeast", "plan": "g1-accelerated-netint-vpu-t1u1-m", "available":
-      false}, {"region": "ap-northeast", "plan": "g1-accelerated-netint-vpu-t1u2-s",
-      "available": false}, {"region": "ap-west", "plan": "g6-standard-1", "available":
-      true}, {"region": "ap-west", "plan": "g6-standard-2", "available": true}, {"region":
-      "ap-west", "plan": "g6-standard-4", "available": true}, {"region": "ap-west",
-      "plan": "g6-standard-6", "available": true}, {"region": "ap-west", "plan": "g6-standard-8",
-      "available": true}, {"region": "ap-west", "plan": "g6-standard-16", "available":
-      true}, {"region": "ap-west", "plan": "g6-standard-20", "available": true}, {"region":
-      "ap-west", "plan": "g6-standard-24", "available": true}, {"region": "ap-west",
-      "plan": "g6-standard-32", "available": true}, {"region": "ap-west", "plan":
-      "g6-nanode-1", "available": true}, {"region": "ap-west", "plan": "g6-dedicated-2",
-      "available": true}, {"region": "ap-west", "plan": "g6-dedicated-4", "available":
-      true}, {"region": "ap-west", "plan": "g6-dedicated-8", "available": true}, {"region":
-      "ap-west", "plan": "g6-dedicated-16", "available": true}, {"region": "ap-west",
-      "plan": "g6-dedicated-32", "available": true}, {"region": "ap-west", "plan":
-      "g6-dedicated-48", "available": true}, {"region": "ap-west", "plan": "g1-gpu-rtx6000-1",
-      "available": false}, {"region": "ap-west", "plan": "g1-gpu-rtx6000-2", "available":
-      false}, {"region": "ap-west", "plan": "g1-gpu-rtx6000-3", "available": false},
-      {"region": "ap-west", "plan": "g1-gpu-rtx6000-4", "available": false}, {"region":
-      "ap-west", "plan": "g6-dedicated-50", "available": true}, {"region": "ap-west",
-      "plan": "g6-dedicated-56", "available": true}, {"region": "ap-west", "plan":
-      "g7-highmem-1", "available": true}, {"region": "ap-west", "plan": "g7-highmem-2",
-      "available": true}], "page": 4, "pages": 15, "results": 1457}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Fri, 22 Aug 2025 07:24:10 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      - Accept-Encoding
-      X-Accepted-Oauth-Scopes:
-      - '*'
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
-        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
-        monitor:read_only nodebalancers:read_only object_storage:read_only stackscripts:read_only
-        volumes:read_only
-      X-Ratelimit-Limit:
-      - "1840"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -622,96 +455,79 @@ interactions:
     url: https://api.linode.com/v4beta/regions/availability?page=5
     method: GET
   response:
-    body: '{"data": [{"region": "ap-west", "plan": "g7-highmem-4", "available": true},
-      {"region": "ap-west", "plan": "g7-highmem-8", "available": true}, {"region":
-      "ap-west", "plan": "g7-highmem-16", "available": true}, {"region": "ap-west",
-      "plan": "g7-premium-2", "available": false}, {"region": "ap-west", "plan": "g7-premium-4",
-      "available": false}, {"region": "ap-west", "plan": "g7-premium-8", "available":
-      false}, {"region": "ap-west", "plan": "g7-premium-16", "available": false},
-      {"region": "ap-west", "plan": "g7-premium-32", "available": false}, {"region":
-      "ap-west", "plan": "g7-premium-48", "available": false}, {"region": "ap-west",
-      "plan": "g7-premium-50", "available": false}, {"region": "ap-west", "plan":
-      "g7-premium-56", "available": false}, {"region": "ap-west", "plan": "g2-gpu-rtx4000a1-s",
-      "available": false}, {"region": "ap-west", "plan": "g2-gpu-rtx4000a1-m", "available":
-      false}, {"region": "ap-west", "plan": "g2-gpu-rtx4000a1-l", "available": false},
-      {"region": "ap-west", "plan": "g2-gpu-rtx4000a1-xl", "available": false}, {"region":
-      "ap-west", "plan": "g2-gpu-rtx4000a2-s", "available": false}, {"region": "ap-west",
-      "plan": "g2-gpu-rtx4000a2-m", "available": false}, {"region": "ap-west", "plan":
-      "g2-gpu-rtx4000a2-hs", "available": false}, {"region": "ap-west", "plan": "g2-gpu-rtx4000a4-s",
-      "available": false}, {"region": "ap-west", "plan": "g2-gpu-rtx4000a4-m", "available":
-      false}, {"region": "ap-west", "plan": "g1-accelerated-netint-vpu-t1u1-s", "available":
-      false}, {"region": "ap-west", "plan": "g1-accelerated-netint-vpu-t1u1-m", "available":
-      false}, {"region": "ap-west", "plan": "g1-accelerated-netint-vpu-t1u2-s", "available":
-      false}, {"region": "ca-central", "plan": "g6-standard-1", "available": true},
-      {"region": "ca-central", "plan": "g6-standard-2", "available": true}, {"region":
-      "ca-central", "plan": "g6-standard-4", "available": true}, {"region": "ca-central",
-      "plan": "g6-standard-6", "available": true}, {"region": "ca-central", "plan":
-      "g6-standard-8", "available": true}, {"region": "ca-central", "plan": "g6-standard-16",
-      "available": true}, {"region": "ca-central", "plan": "g6-standard-20", "available":
-      true}, {"region": "ca-central", "plan": "g6-standard-24", "available": true},
-      {"region": "ca-central", "plan": "g6-standard-32", "available": true}, {"region":
-      "ca-central", "plan": "g6-nanode-1", "available": true}, {"region": "ca-central",
-      "plan": "g6-dedicated-2", "available": true}, {"region": "ca-central", "plan":
-      "g6-dedicated-4", "available": true}, {"region": "ca-central", "plan": "g6-dedicated-8",
-      "available": true}, {"region": "ca-central", "plan": "g6-dedicated-16", "available":
-      true}, {"region": "ca-central", "plan": "g6-dedicated-32", "available": true},
-      {"region": "ca-central", "plan": "g6-dedicated-48", "available": true}, {"region":
-      "ca-central", "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "ca-central",
-      "plan": "g1-gpu-rtx6000-2", "available": false}, {"region": "ca-central", "plan":
-      "g1-gpu-rtx6000-3", "available": false}, {"region": "ca-central", "plan": "g1-gpu-rtx6000-4",
-      "available": false}, {"region": "ca-central", "plan": "g6-dedicated-50", "available":
-      true}, {"region": "ca-central", "plan": "g6-dedicated-56", "available": true},
-      {"region": "ca-central", "plan": "g7-highmem-1", "available": true}, {"region":
-      "ca-central", "plan": "g7-highmem-2", "available": true}, {"region": "ca-central",
-      "plan": "g7-highmem-4", "available": true}, {"region": "ca-central", "plan":
-      "g7-highmem-8", "available": true}, {"region": "ca-central", "plan": "g7-highmem-16",
-      "available": true}, {"region": "ca-central", "plan": "g7-premium-2", "available":
-      false}, {"region": "ca-central", "plan": "g7-premium-4", "available": false},
-      {"region": "ca-central", "plan": "g7-premium-8", "available": false}, {"region":
-      "ca-central", "plan": "g7-premium-16", "available": false}, {"region": "ca-central",
-      "plan": "g7-premium-32", "available": false}, {"region": "ca-central", "plan":
-      "g7-premium-48", "available": false}, {"region": "ca-central", "plan": "g7-premium-50",
-      "available": false}, {"region": "ca-central", "plan": "g7-premium-56", "available":
-      false}, {"region": "ca-central", "plan": "g2-gpu-rtx4000a1-s", "available":
-      false}, {"region": "ca-central", "plan": "g2-gpu-rtx4000a1-m", "available":
-      false}, {"region": "ca-central", "plan": "g2-gpu-rtx4000a1-l", "available":
-      false}, {"region": "ca-central", "plan": "g2-gpu-rtx4000a1-xl", "available":
-      false}, {"region": "ca-central", "plan": "g2-gpu-rtx4000a2-s", "available":
-      false}, {"region": "ca-central", "plan": "g2-gpu-rtx4000a2-m", "available":
-      false}, {"region": "ca-central", "plan": "g2-gpu-rtx4000a2-hs", "available":
-      false}, {"region": "ca-central", "plan": "g2-gpu-rtx4000a4-s", "available":
-      false}, {"region": "ca-central", "plan": "g2-gpu-rtx4000a4-m", "available":
-      false}, {"region": "ca-central", "plan": "g1-accelerated-netint-vpu-t1u1-s",
-      "available": false}, {"region": "ca-central", "plan": "g1-accelerated-netint-vpu-t1u1-m",
-      "available": false}, {"region": "ca-central", "plan": "g1-accelerated-netint-vpu-t1u2-s",
-      "available": false}, {"region": "ap-southeast", "plan": "g6-standard-1", "available":
-      true}, {"region": "ap-southeast", "plan": "g6-standard-2", "available": true},
-      {"region": "ap-southeast", "plan": "g6-standard-4", "available": true}, {"region":
-      "ap-southeast", "plan": "g6-standard-6", "available": true}, {"region": "ap-southeast",
-      "plan": "g6-standard-8", "available": true}, {"region": "ap-southeast", "plan":
-      "g6-standard-16", "available": true}, {"region": "ap-southeast", "plan": "g6-standard-20",
-      "available": true}, {"region": "ap-southeast", "plan": "g6-standard-24", "available":
-      true}, {"region": "ap-southeast", "plan": "g6-standard-32", "available": true},
-      {"region": "ap-southeast", "plan": "g6-nanode-1", "available": true}, {"region":
-      "ap-southeast", "plan": "g6-dedicated-2", "available": true}, {"region": "ap-southeast",
-      "plan": "g6-dedicated-4", "available": true}, {"region": "ap-southeast", "plan":
-      "g6-dedicated-8", "available": true}, {"region": "ap-southeast", "plan": "g6-dedicated-16",
-      "available": true}, {"region": "ap-southeast", "plan": "g6-dedicated-32", "available":
-      true}, {"region": "ap-southeast", "plan": "g6-dedicated-48", "available": true},
-      {"region": "ap-southeast", "plan": "g1-gpu-rtx6000-1", "available": false},
-      {"region": "ap-southeast", "plan": "g1-gpu-rtx6000-2", "available": false},
-      {"region": "ap-southeast", "plan": "g1-gpu-rtx6000-3", "available": false},
-      {"region": "ap-southeast", "plan": "g1-gpu-rtx6000-4", "available": false},
-      {"region": "ap-southeast", "plan": "g6-dedicated-50", "available": true}, {"region":
-      "ap-southeast", "plan": "g6-dedicated-56", "available": true}, {"region": "ap-southeast",
-      "plan": "g7-highmem-1", "available": true}, {"region": "ap-southeast", "plan":
-      "g7-highmem-2", "available": true}, {"region": "ap-southeast", "plan": "g7-highmem-4",
-      "available": true}, {"region": "ap-southeast", "plan": "g7-highmem-8", "available":
-      true}, {"region": "ap-southeast", "plan": "g7-highmem-16", "available": true},
-      {"region": "ap-southeast", "plan": "g7-premium-2", "available": false}, {"region":
-      "ap-southeast", "plan": "g7-premium-4", "available": false}, {"region": "ap-southeast",
-      "plan": "g7-premium-8", "available": false}], "page": 5, "pages": 15, "results":
-      1457}'
+    body: '{"data": [{"region": "us-mia", "plan": "g7-premium-2", "available": true},
+      {"region": "us-mia", "plan": "g7-premium-4", "available": true}, {"region":
+      "us-mia", "plan": "g7-premium-8", "available": true}, {"region": "us-mia", "plan":
+      "g7-premium-16", "available": true}, {"region": "us-mia", "plan": "g7-premium-32",
+      "available": true}, {"region": "us-mia", "plan": "g7-premium-48", "available":
+      true}, {"region": "us-mia", "plan": "g7-premium-50", "available": true}, {"region":
+      "us-mia", "plan": "g7-premium-56", "available": true}, {"region": "us-mia",
+      "plan": "g7-premium-64", "available": false}, {"region": "us-mia", "plan": "g1-gpu-rtx4000a-1",
+      "available": false}, {"region": "us-mia", "plan": "g1-gpu-rtx4000a-2", "available":
+      false}, {"region": "us-mia", "plan": "g1-gpu-rtx4000a-4", "available": false},
+      {"region": "us-mia", "plan": "g1-gpu-rtx4000a-6", "available": false}, {"region":
+      "us-mia", "plan": "g1-gpu-rtx4000a-8", "available": false}, {"region": "id-cgk",
+      "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "id-cgk", "plan":
+      "g1-gpu-rtx6000-2", "available": false}, {"region": "id-cgk", "plan": "g1-gpu-rtx6000-3",
+      "available": false}, {"region": "id-cgk", "plan": "g1-gpu-rtx6000-4", "available":
+      false}, {"region": "id-cgk", "plan": "g7-premium-2", "available": true}, {"region":
+      "id-cgk", "plan": "g7-premium-4", "available": true}, {"region": "id-cgk", "plan":
+      "g7-premium-8", "available": true}, {"region": "id-cgk", "plan": "g7-premium-16",
+      "available": true}, {"region": "id-cgk", "plan": "g7-premium-32", "available":
+      true}, {"region": "id-cgk", "plan": "g7-premium-48", "available": true}, {"region":
+      "id-cgk", "plan": "g7-premium-50", "available": true}, {"region": "id-cgk",
+      "plan": "g7-premium-56", "available": true}, {"region": "id-cgk", "plan": "g7-premium-64",
+      "available": true}, {"region": "id-cgk", "plan": "g1-gpu-rtx4000a-1", "available":
+      false}, {"region": "id-cgk", "plan": "g1-gpu-rtx4000a-2", "available": false},
+      {"region": "id-cgk", "plan": "g1-gpu-rtx4000a-4", "available": false}, {"region":
+      "id-cgk", "plan": "g1-gpu-rtx4000a-6", "available": false}, {"region": "id-cgk",
+      "plan": "g1-gpu-rtx4000a-8", "available": false}, {"region": "us-lax", "plan":
+      "g1-gpu-rtx6000-1", "available": false}, {"region": "us-lax", "plan": "g1-gpu-rtx6000-2",
+      "available": false}, {"region": "us-lax", "plan": "g1-gpu-rtx6000-3", "available":
+      false}, {"region": "us-lax", "plan": "g1-gpu-rtx6000-4", "available": false},
+      {"region": "us-lax", "plan": "g7-premium-2", "available": true}, {"region":
+      "us-lax", "plan": "g7-premium-4", "available": true}, {"region": "us-lax", "plan":
+      "g7-premium-8", "available": true}, {"region": "us-lax", "plan": "g7-premium-16",
+      "available": true}, {"region": "us-lax", "plan": "g7-premium-32", "available":
+      true}, {"region": "us-lax", "plan": "g7-premium-48", "available": true}, {"region":
+      "us-lax", "plan": "g7-premium-50", "available": true}, {"region": "us-lax",
+      "plan": "g7-premium-56", "available": true}, {"region": "us-lax", "plan": "g7-premium-64",
+      "available": true}, {"region": "us-lax", "plan": "g1-gpu-rtx4000a-1", "available":
+      false}, {"region": "us-lax", "plan": "g1-gpu-rtx4000a-2", "available": false},
+      {"region": "us-lax", "plan": "g1-gpu-rtx4000a-4", "available": false}, {"region":
+      "us-lax", "plan": "g1-gpu-rtx4000a-6", "available": false}, {"region": "us-lax",
+      "plan": "g1-gpu-rtx4000a-8", "available": false}, {"region": "gb-lon", "plan":
+      "g1-gpu-rtx6000-1", "available": false}, {"region": "gb-lon", "plan": "g1-gpu-rtx6000-2",
+      "available": false}, {"region": "gb-lon", "plan": "g1-gpu-rtx6000-3", "available":
+      false}, {"region": "gb-lon", "plan": "g1-gpu-rtx6000-4", "available": false},
+      {"region": "gb-lon", "plan": "g7-premium-2", "available": true}, {"region":
+      "gb-lon", "plan": "g7-premium-4", "available": true}, {"region": "gb-lon", "plan":
+      "g7-premium-8", "available": true}, {"region": "gb-lon", "plan": "g7-premium-16",
+      "available": true}, {"region": "gb-lon", "plan": "g7-premium-32", "available":
+      true}, {"region": "gb-lon", "plan": "g7-premium-48", "available": true}, {"region":
+      "gb-lon", "plan": "g7-premium-50", "available": true}, {"region": "gb-lon",
+      "plan": "g7-premium-56", "available": true}, {"region": "gb-lon", "plan": "g7-premium-64",
+      "available": true}, {"region": "gb-lon", "plan": "g1-gpu-rtx4000a-1", "available":
+      false}, {"region": "gb-lon", "plan": "g1-gpu-rtx4000a-2", "available": false},
+      {"region": "gb-lon", "plan": "g1-gpu-rtx4000a-4", "available": false}, {"region":
+      "gb-lon", "plan": "g1-gpu-rtx4000a-6", "available": false}, {"region": "gb-lon",
+      "plan": "g1-gpu-rtx4000a-8", "available": false}, {"region": "au-mel", "plan":
+      "g1-gpu-rtx6000-1", "available": false}, {"region": "au-mel", "plan": "g1-gpu-rtx6000-2",
+      "available": false}, {"region": "au-mel", "plan": "g1-gpu-rtx6000-3", "available":
+      false}, {"region": "au-mel", "plan": "g1-gpu-rtx6000-4", "available": false},
+      {"region": "au-mel", "plan": "g7-premium-2", "available": true}, {"region":
+      "au-mel", "plan": "g7-premium-4", "available": true}, {"region": "au-mel", "plan":
+      "g7-premium-8", "available": true}, {"region": "au-mel", "plan": "g7-premium-16",
+      "available": true}, {"region": "au-mel", "plan": "g7-premium-32", "available":
+      true}, {"region": "au-mel", "plan": "g7-premium-48", "available": true}, {"region":
+      "au-mel", "plan": "g7-premium-50", "available": true}, {"region": "au-mel",
+      "plan": "g7-premium-56", "available": true}, {"region": "au-mel", "plan": "g7-premium-64",
+      "available": true}, {"region": "au-mel", "plan": "g1-gpu-rtx4000a-1", "available":
+      false}, {"region": "au-mel", "plan": "g1-gpu-rtx4000a-2", "available": false},
+      {"region": "au-mel", "plan": "g1-gpu-rtx4000a-4", "available": false}, {"region":
+      "au-mel", "plan": "g1-gpu-rtx4000a-6", "available": false}, {"region": "au-mel",
+      "plan": "g1-gpu-rtx4000a-8", "available": false}], "page": 5, "pages": 5, "results":
+      486}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -734,7 +550,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 22 Aug 2025 07:24:11 GMT
+      - Tue, 09 Jul 2024 14:05:28 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -751,12 +567,9 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
-        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
-        monitor:read_only nodebalancers:read_only object_storage:read_only stackscripts:read_only
-        volumes:read_only
+      - '*'
       X-Ratelimit-Limit:
-      - "1840"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -772,686 +585,94 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/regions/availability?page=6
+    url: https://api.linode.com/v4beta/regions/availability?page=4
     method: GET
   response:
-    body: '{"data": [{"region": "ap-southeast", "plan": "g7-premium-16", "available":
-      false}, {"region": "ap-southeast", "plan": "g7-premium-32", "available": false},
-      {"region": "ap-southeast", "plan": "g7-premium-48", "available": false}, {"region":
-      "ap-southeast", "plan": "g7-premium-50", "available": false}, {"region": "ap-southeast",
-      "plan": "g7-premium-56", "available": false}, {"region": "ap-southeast", "plan":
-      "g2-gpu-rtx4000a1-s", "available": false}, {"region": "ap-southeast", "plan":
-      "g2-gpu-rtx4000a1-m", "available": false}, {"region": "ap-southeast", "plan":
-      "g2-gpu-rtx4000a1-l", "available": false}, {"region": "ap-southeast", "plan":
-      "g2-gpu-rtx4000a1-xl", "available": false}, {"region": "ap-southeast", "plan":
-      "g2-gpu-rtx4000a2-s", "available": false}, {"region": "ap-southeast", "plan":
-      "g2-gpu-rtx4000a2-m", "available": false}, {"region": "ap-southeast", "plan":
-      "g2-gpu-rtx4000a2-hs", "available": false}, {"region": "ap-southeast", "plan":
-      "g2-gpu-rtx4000a4-s", "available": false}, {"region": "ap-southeast", "plan":
-      "g2-gpu-rtx4000a4-m", "available": false}, {"region": "ap-southeast", "plan":
-      "g1-accelerated-netint-vpu-t1u1-s", "available": false}, {"region": "ap-southeast",
-      "plan": "g1-accelerated-netint-vpu-t1u1-m", "available": false}, {"region":
-      "ap-southeast", "plan": "g1-accelerated-netint-vpu-t1u2-s", "available": false},
-      {"region": "us-iad", "plan": "g6-standard-1", "available": true}, {"region":
-      "us-iad", "plan": "g6-standard-2", "available": true}, {"region": "us-iad",
-      "plan": "g6-standard-4", "available": true}, {"region": "us-iad", "plan": "g6-standard-6",
-      "available": true}, {"region": "us-iad", "plan": "g6-standard-8", "available":
-      true}, {"region": "us-iad", "plan": "g6-standard-16", "available": true}, {"region":
-      "us-iad", "plan": "g6-standard-20", "available": true}, {"region": "us-iad",
-      "plan": "g6-standard-24", "available": true}, {"region": "us-iad", "plan": "g6-standard-32",
-      "available": true}, {"region": "us-iad", "plan": "g6-nanode-1", "available":
-      true}, {"region": "us-iad", "plan": "g6-dedicated-2", "available": true}, {"region":
-      "us-iad", "plan": "g6-dedicated-4", "available": true}, {"region": "us-iad",
-      "plan": "g6-dedicated-8", "available": true}, {"region": "us-iad", "plan": "g6-dedicated-16",
-      "available": true}, {"region": "us-iad", "plan": "g6-dedicated-32", "available":
-      true}, {"region": "us-iad", "plan": "g6-dedicated-48", "available": true}, {"region":
-      "us-iad", "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "us-iad",
-      "plan": "g1-gpu-rtx6000-2", "available": false}, {"region": "us-iad", "plan":
-      "g1-gpu-rtx6000-3", "available": false}, {"region": "us-iad", "plan": "g1-gpu-rtx6000-4",
-      "available": false}, {"region": "us-iad", "plan": "g6-dedicated-50", "available":
-      true}, {"region": "us-iad", "plan": "g6-dedicated-56", "available": true}, {"region":
-      "us-iad", "plan": "g7-highmem-1", "available": true}, {"region": "us-iad", "plan":
-      "g7-highmem-2", "available": true}, {"region": "us-iad", "plan": "g7-highmem-4",
-      "available": true}, {"region": "us-iad", "plan": "g7-highmem-8", "available":
-      true}, {"region": "us-iad", "plan": "g7-highmem-16", "available": true}, {"region":
-      "us-iad", "plan": "g7-premium-2", "available": true}, {"region": "us-iad", "plan":
-      "g7-premium-4", "available": true}, {"region": "us-iad", "plan": "g7-premium-8",
-      "available": true}, {"region": "us-iad", "plan": "g7-premium-16", "available":
-      true}, {"region": "us-iad", "plan": "g7-premium-32", "available": true}, {"region":
-      "us-iad", "plan": "g7-premium-48", "available": true}, {"region": "us-iad",
-      "plan": "g7-premium-50", "available": true}, {"region": "us-iad", "plan": "g7-premium-56",
-      "available": true}, {"region": "us-iad", "plan": "g2-gpu-rtx4000a1-s", "available":
-      false}, {"region": "us-iad", "plan": "g2-gpu-rtx4000a1-m", "available": false},
-      {"region": "us-iad", "plan": "g2-gpu-rtx4000a1-l", "available": false}, {"region":
-      "us-iad", "plan": "g2-gpu-rtx4000a1-xl", "available": false}, {"region": "us-iad",
-      "plan": "g2-gpu-rtx4000a2-s", "available": false}, {"region": "us-iad", "plan":
-      "g2-gpu-rtx4000a2-m", "available": false}, {"region": "us-iad", "plan": "g2-gpu-rtx4000a2-hs",
-      "available": false}, {"region": "us-iad", "plan": "g2-gpu-rtx4000a4-s", "available":
-      false}, {"region": "us-iad", "plan": "g2-gpu-rtx4000a4-m", "available": false},
-      {"region": "us-iad", "plan": "g1-accelerated-netint-vpu-t1u1-s", "available":
-      false}, {"region": "us-iad", "plan": "g1-accelerated-netint-vpu-t1u1-m", "available":
-      false}, {"region": "us-iad", "plan": "g1-accelerated-netint-vpu-t1u2-s", "available":
-      false}, {"region": "us-ord", "plan": "g6-standard-1", "available": true}, {"region":
-      "us-ord", "plan": "g6-standard-2", "available": true}, {"region": "us-ord",
-      "plan": "g6-standard-4", "available": true}, {"region": "us-ord", "plan": "g6-standard-6",
-      "available": true}, {"region": "us-ord", "plan": "g6-standard-8", "available":
-      true}, {"region": "us-ord", "plan": "g6-standard-16", "available": true}, {"region":
-      "us-ord", "plan": "g6-standard-20", "available": true}, {"region": "us-ord",
-      "plan": "g6-standard-24", "available": true}, {"region": "us-ord", "plan": "g6-standard-32",
-      "available": true}, {"region": "us-ord", "plan": "g6-nanode-1", "available":
-      true}, {"region": "us-ord", "plan": "g6-dedicated-2", "available": true}, {"region":
-      "us-ord", "plan": "g6-dedicated-4", "available": true}, {"region": "us-ord",
-      "plan": "g6-dedicated-8", "available": true}, {"region": "us-ord", "plan": "g6-dedicated-16",
-      "available": true}, {"region": "us-ord", "plan": "g6-dedicated-32", "available":
-      true}, {"region": "us-ord", "plan": "g6-dedicated-48", "available": true}, {"region":
-      "us-ord", "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "us-ord",
-      "plan": "g1-gpu-rtx6000-2", "available": false}, {"region": "us-ord", "plan":
-      "g1-gpu-rtx6000-3", "available": false}, {"region": "us-ord", "plan": "g1-gpu-rtx6000-4",
-      "available": false}, {"region": "us-ord", "plan": "g6-dedicated-50", "available":
-      true}, {"region": "us-ord", "plan": "g6-dedicated-56", "available": true}, {"region":
-      "us-ord", "plan": "g7-highmem-1", "available": true}, {"region": "us-ord", "plan":
-      "g7-highmem-2", "available": true}, {"region": "us-ord", "plan": "g7-highmem-4",
-      "available": true}, {"region": "us-ord", "plan": "g7-highmem-8", "available":
-      true}, {"region": "us-ord", "plan": "g7-highmem-16", "available": true}, {"region":
-      "us-ord", "plan": "g7-premium-2", "available": true}, {"region": "us-ord", "plan":
-      "g7-premium-4", "available": true}, {"region": "us-ord", "plan": "g7-premium-8",
-      "available": true}, {"region": "us-ord", "plan": "g7-premium-16", "available":
-      true}, {"region": "us-ord", "plan": "g7-premium-32", "available": true}, {"region":
-      "us-ord", "plan": "g7-premium-48", "available": true}, {"region": "us-ord",
-      "plan": "g7-premium-50", "available": true}, {"region": "us-ord", "plan": "g7-premium-56",
-      "available": true}, {"region": "us-ord", "plan": "g2-gpu-rtx4000a1-s", "available":
-      true}], "page": 6, "pages": 15, "results": 1457}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Fri, 22 Aug 2025 07:24:11 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      - Accept-Encoding
-      X-Accepted-Oauth-Scopes:
-      - '*'
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
-        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
-        monitor:read_only nodebalancers:read_only object_storage:read_only stackscripts:read_only
-        volumes:read_only
-      X-Ratelimit-Limit:
-      - "1840"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/regions/availability?page=7
-    method: GET
-  response:
-    body: '{"data": [{"region": "us-ord", "plan": "g2-gpu-rtx4000a1-m", "available":
-      true}, {"region": "us-ord", "plan": "g2-gpu-rtx4000a1-l", "available": true},
-      {"region": "us-ord", "plan": "g2-gpu-rtx4000a1-xl", "available": true}, {"region":
-      "us-ord", "plan": "g2-gpu-rtx4000a2-s", "available": true}, {"region": "us-ord",
-      "plan": "g2-gpu-rtx4000a2-m", "available": true}, {"region": "us-ord", "plan":
-      "g2-gpu-rtx4000a2-hs", "available": true}, {"region": "us-ord", "plan": "g2-gpu-rtx4000a4-s",
-      "available": true}, {"region": "us-ord", "plan": "g2-gpu-rtx4000a4-m", "available":
-      true}, {"region": "us-ord", "plan": "g1-accelerated-netint-vpu-t1u1-s", "available":
-      false}, {"region": "us-ord", "plan": "g1-accelerated-netint-vpu-t1u1-m", "available":
-      false}, {"region": "us-ord", "plan": "g1-accelerated-netint-vpu-t1u2-s", "available":
-      false}, {"region": "fr-par", "plan": "g6-standard-1", "available": true}, {"region":
-      "fr-par", "plan": "g6-standard-2", "available": true}, {"region": "fr-par",
-      "plan": "g6-standard-4", "available": true}, {"region": "fr-par", "plan": "g6-standard-6",
-      "available": true}, {"region": "fr-par", "plan": "g6-standard-8", "available":
-      true}, {"region": "fr-par", "plan": "g6-standard-16", "available": true}, {"region":
-      "fr-par", "plan": "g6-standard-20", "available": true}, {"region": "fr-par",
-      "plan": "g6-standard-24", "available": true}, {"region": "fr-par", "plan": "g6-standard-32",
-      "available": true}, {"region": "fr-par", "plan": "g6-nanode-1", "available":
-      true}, {"region": "fr-par", "plan": "g6-dedicated-2", "available": true}, {"region":
-      "fr-par", "plan": "g6-dedicated-4", "available": true}, {"region": "fr-par",
-      "plan": "g6-dedicated-8", "available": true}, {"region": "fr-par", "plan": "g6-dedicated-16",
-      "available": true}, {"region": "fr-par", "plan": "g6-dedicated-32", "available":
-      true}, {"region": "fr-par", "plan": "g6-dedicated-48", "available": true}, {"region":
-      "fr-par", "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "fr-par",
-      "plan": "g1-gpu-rtx6000-2", "available": false}, {"region": "fr-par", "plan":
-      "g1-gpu-rtx6000-3", "available": false}, {"region": "fr-par", "plan": "g1-gpu-rtx6000-4",
-      "available": false}, {"region": "fr-par", "plan": "g6-dedicated-50", "available":
-      true}, {"region": "fr-par", "plan": "g6-dedicated-56", "available": true}, {"region":
-      "fr-par", "plan": "g7-highmem-1", "available": true}, {"region": "fr-par", "plan":
-      "g7-highmem-2", "available": true}, {"region": "fr-par", "plan": "g7-highmem-4",
-      "available": true}, {"region": "fr-par", "plan": "g7-highmem-8", "available":
-      true}, {"region": "fr-par", "plan": "g7-highmem-16", "available": true}, {"region":
-      "fr-par", "plan": "g7-premium-2", "available": true}, {"region": "fr-par", "plan":
-      "g7-premium-4", "available": true}, {"region": "fr-par", "plan": "g7-premium-8",
-      "available": true}, {"region": "fr-par", "plan": "g7-premium-16", "available":
-      true}, {"region": "fr-par", "plan": "g7-premium-32", "available": true}, {"region":
-      "fr-par", "plan": "g7-premium-48", "available": true}, {"region": "fr-par",
-      "plan": "g7-premium-50", "available": true}, {"region": "fr-par", "plan": "g7-premium-56",
-      "available": true}, {"region": "fr-par", "plan": "g2-gpu-rtx4000a1-s", "available":
-      true}, {"region": "fr-par", "plan": "g2-gpu-rtx4000a1-m", "available": true},
-      {"region": "fr-par", "plan": "g2-gpu-rtx4000a1-l", "available": true}, {"region":
-      "fr-par", "plan": "g2-gpu-rtx4000a1-xl", "available": true}, {"region": "fr-par",
-      "plan": "g2-gpu-rtx4000a2-s", "available": true}, {"region": "fr-par", "plan":
-      "g2-gpu-rtx4000a2-m", "available": true}, {"region": "fr-par", "plan": "g2-gpu-rtx4000a2-hs",
-      "available": true}, {"region": "fr-par", "plan": "g2-gpu-rtx4000a4-s", "available":
-      true}, {"region": "fr-par", "plan": "g2-gpu-rtx4000a4-m", "available": true},
-      {"region": "fr-par", "plan": "g1-accelerated-netint-vpu-t1u1-s", "available":
-      false}, {"region": "fr-par", "plan": "g1-accelerated-netint-vpu-t1u1-m", "available":
-      false}, {"region": "fr-par", "plan": "g1-accelerated-netint-vpu-t1u2-s", "available":
-      false}, {"region": "us-sea", "plan": "g6-standard-1", "available": true}, {"region":
-      "us-sea", "plan": "g6-standard-2", "available": true}, {"region": "us-sea",
-      "plan": "g6-standard-4", "available": true}, {"region": "us-sea", "plan": "g6-standard-6",
-      "available": true}, {"region": "us-sea", "plan": "g6-standard-8", "available":
-      true}, {"region": "us-sea", "plan": "g6-standard-16", "available": true}, {"region":
-      "us-sea", "plan": "g6-standard-20", "available": true}, {"region": "us-sea",
-      "plan": "g6-standard-24", "available": true}, {"region": "us-sea", "plan": "g6-standard-32",
-      "available": true}, {"region": "us-sea", "plan": "g6-nanode-1", "available":
-      true}, {"region": "us-sea", "plan": "g6-dedicated-2", "available": true}, {"region":
-      "us-sea", "plan": "g6-dedicated-4", "available": true}, {"region": "us-sea",
-      "plan": "g6-dedicated-8", "available": true}, {"region": "us-sea", "plan": "g6-dedicated-16",
-      "available": true}, {"region": "us-sea", "plan": "g6-dedicated-32", "available":
-      true}, {"region": "us-sea", "plan": "g6-dedicated-48", "available": true}, {"region":
-      "us-sea", "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "us-sea",
-      "plan": "g1-gpu-rtx6000-2", "available": false}, {"region": "us-sea", "plan":
-      "g1-gpu-rtx6000-3", "available": false}, {"region": "us-sea", "plan": "g1-gpu-rtx6000-4",
-      "available": false}, {"region": "us-sea", "plan": "g6-dedicated-50", "available":
-      true}, {"region": "us-sea", "plan": "g6-dedicated-56", "available": true}, {"region":
-      "us-sea", "plan": "g7-highmem-1", "available": true}, {"region": "us-sea", "plan":
-      "g7-highmem-2", "available": true}, {"region": "us-sea", "plan": "g7-highmem-4",
-      "available": true}, {"region": "us-sea", "plan": "g7-highmem-8", "available":
-      true}, {"region": "us-sea", "plan": "g7-highmem-16", "available": true}, {"region":
-      "us-sea", "plan": "g7-premium-2", "available": true}, {"region": "us-sea", "plan":
-      "g7-premium-4", "available": true}, {"region": "us-sea", "plan": "g7-premium-8",
-      "available": true}, {"region": "us-sea", "plan": "g7-premium-16", "available":
-      true}, {"region": "us-sea", "plan": "g7-premium-32", "available": true}, {"region":
-      "us-sea", "plan": "g7-premium-48", "available": true}, {"region": "us-sea",
-      "plan": "g7-premium-50", "available": true}, {"region": "us-sea", "plan": "g7-premium-56",
-      "available": true}, {"region": "us-sea", "plan": "g2-gpu-rtx4000a1-s", "available":
-      true}, {"region": "us-sea", "plan": "g2-gpu-rtx4000a1-m", "available": true},
-      {"region": "us-sea", "plan": "g2-gpu-rtx4000a1-l", "available": true}, {"region":
-      "us-sea", "plan": "g2-gpu-rtx4000a1-xl", "available": true}, {"region": "us-sea",
-      "plan": "g2-gpu-rtx4000a2-s", "available": true}, {"region": "us-sea", "plan":
-      "g2-gpu-rtx4000a2-m", "available": true}, {"region": "us-sea", "plan": "g2-gpu-rtx4000a2-hs",
-      "available": true}], "page": 7, "pages": 15, "results": 1457}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Fri, 22 Aug 2025 07:24:11 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      - Accept-Encoding
-      X-Accepted-Oauth-Scopes:
-      - '*'
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
-        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
-        monitor:read_only nodebalancers:read_only object_storage:read_only stackscripts:read_only
-        volumes:read_only
-      X-Ratelimit-Limit:
-      - "1840"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/regions/availability?page=8
-    method: GET
-  response:
-    body: '{"data": [{"region": "us-sea", "plan": "g2-gpu-rtx4000a4-s", "available":
-      true}, {"region": "us-sea", "plan": "g2-gpu-rtx4000a4-m", "available": true},
-      {"region": "us-sea", "plan": "g1-accelerated-netint-vpu-t1u1-s", "available":
-      false}, {"region": "us-sea", "plan": "g1-accelerated-netint-vpu-t1u1-m", "available":
-      false}, {"region": "us-sea", "plan": "g1-accelerated-netint-vpu-t1u2-s", "available":
-      false}, {"region": "br-gru", "plan": "g6-standard-1", "available": true}, {"region":
-      "br-gru", "plan": "g6-standard-2", "available": true}, {"region": "br-gru",
-      "plan": "g6-standard-4", "available": true}, {"region": "br-gru", "plan": "g6-standard-6",
-      "available": true}, {"region": "br-gru", "plan": "g6-standard-8", "available":
-      true}, {"region": "br-gru", "plan": "g6-standard-16", "available": true}, {"region":
-      "br-gru", "plan": "g6-standard-20", "available": true}, {"region": "br-gru",
-      "plan": "g6-standard-24", "available": true}, {"region": "br-gru", "plan": "g6-standard-32",
-      "available": true}, {"region": "br-gru", "plan": "g6-nanode-1", "available":
-      true}, {"region": "br-gru", "plan": "g6-dedicated-2", "available": true}, {"region":
-      "br-gru", "plan": "g6-dedicated-4", "available": true}, {"region": "br-gru",
-      "plan": "g6-dedicated-8", "available": true}, {"region": "br-gru", "plan": "g6-dedicated-16",
-      "available": true}, {"region": "br-gru", "plan": "g6-dedicated-32", "available":
-      true}, {"region": "br-gru", "plan": "g6-dedicated-48", "available": true}, {"region":
-      "br-gru", "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "br-gru",
-      "plan": "g1-gpu-rtx6000-2", "available": false}, {"region": "br-gru", "plan":
-      "g1-gpu-rtx6000-3", "available": false}, {"region": "br-gru", "plan": "g1-gpu-rtx6000-4",
-      "available": false}, {"region": "br-gru", "plan": "g6-dedicated-50", "available":
-      true}, {"region": "br-gru", "plan": "g6-dedicated-56", "available": true}, {"region":
-      "br-gru", "plan": "g7-highmem-1", "available": true}, {"region": "br-gru", "plan":
-      "g7-highmem-2", "available": true}, {"region": "br-gru", "plan": "g7-highmem-4",
-      "available": true}, {"region": "br-gru", "plan": "g7-highmem-8", "available":
-      true}, {"region": "br-gru", "plan": "g7-highmem-16", "available": true}, {"region":
-      "br-gru", "plan": "g7-premium-2", "available": true}, {"region": "br-gru", "plan":
-      "g7-premium-4", "available": true}, {"region": "br-gru", "plan": "g7-premium-8",
-      "available": true}, {"region": "br-gru", "plan": "g7-premium-16", "available":
-      true}, {"region": "br-gru", "plan": "g7-premium-32", "available": true}, {"region":
-      "br-gru", "plan": "g7-premium-48", "available": true}, {"region": "br-gru",
-      "plan": "g7-premium-50", "available": true}, {"region": "br-gru", "plan": "g7-premium-56",
-      "available": true}, {"region": "br-gru", "plan": "g2-gpu-rtx4000a1-s", "available":
-      false}, {"region": "br-gru", "plan": "g2-gpu-rtx4000a1-m", "available": false},
-      {"region": "br-gru", "plan": "g2-gpu-rtx4000a1-l", "available": false}, {"region":
-      "br-gru", "plan": "g2-gpu-rtx4000a1-xl", "available": false}, {"region": "br-gru",
-      "plan": "g2-gpu-rtx4000a2-s", "available": false}, {"region": "br-gru", "plan":
-      "g2-gpu-rtx4000a2-m", "available": false}, {"region": "br-gru", "plan": "g2-gpu-rtx4000a2-hs",
-      "available": false}, {"region": "br-gru", "plan": "g2-gpu-rtx4000a4-s", "available":
-      false}, {"region": "br-gru", "plan": "g2-gpu-rtx4000a4-m", "available": false},
-      {"region": "br-gru", "plan": "g1-accelerated-netint-vpu-t1u1-s", "available":
-      false}, {"region": "br-gru", "plan": "g1-accelerated-netint-vpu-t1u1-m", "available":
-      false}, {"region": "br-gru", "plan": "g1-accelerated-netint-vpu-t1u2-s", "available":
-      false}, {"region": "nl-ams", "plan": "g6-standard-1", "available": true}, {"region":
-      "nl-ams", "plan": "g6-standard-2", "available": true}, {"region": "nl-ams",
-      "plan": "g6-standard-4", "available": true}, {"region": "nl-ams", "plan": "g6-standard-6",
-      "available": true}, {"region": "nl-ams", "plan": "g6-standard-8", "available":
-      true}, {"region": "nl-ams", "plan": "g6-standard-16", "available": true}, {"region":
-      "nl-ams", "plan": "g6-standard-20", "available": true}, {"region": "nl-ams",
-      "plan": "g6-standard-24", "available": true}, {"region": "nl-ams", "plan": "g6-standard-32",
-      "available": true}, {"region": "nl-ams", "plan": "g6-nanode-1", "available":
-      true}, {"region": "nl-ams", "plan": "g6-dedicated-2", "available": true}, {"region":
-      "nl-ams", "plan": "g6-dedicated-4", "available": true}, {"region": "nl-ams",
-      "plan": "g6-dedicated-8", "available": true}, {"region": "nl-ams", "plan": "g6-dedicated-16",
-      "available": true}, {"region": "nl-ams", "plan": "g6-dedicated-32", "available":
-      true}, {"region": "nl-ams", "plan": "g6-dedicated-48", "available": true}, {"region":
-      "nl-ams", "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "nl-ams",
-      "plan": "g1-gpu-rtx6000-2", "available": false}, {"region": "nl-ams", "plan":
-      "g1-gpu-rtx6000-3", "available": false}, {"region": "nl-ams", "plan": "g1-gpu-rtx6000-4",
-      "available": false}, {"region": "nl-ams", "plan": "g6-dedicated-50", "available":
-      true}, {"region": "nl-ams", "plan": "g6-dedicated-56", "available": true}, {"region":
-      "nl-ams", "plan": "g7-highmem-1", "available": true}, {"region": "nl-ams", "plan":
-      "g7-highmem-2", "available": true}, {"region": "nl-ams", "plan": "g7-highmem-4",
-      "available": true}, {"region": "nl-ams", "plan": "g7-highmem-8", "available":
-      true}, {"region": "nl-ams", "plan": "g7-highmem-16", "available": true}, {"region":
-      "nl-ams", "plan": "g7-premium-2", "available": true}, {"region": "nl-ams", "plan":
-      "g7-premium-4", "available": true}, {"region": "nl-ams", "plan": "g7-premium-8",
-      "available": true}, {"region": "nl-ams", "plan": "g7-premium-16", "available":
-      true}, {"region": "nl-ams", "plan": "g7-premium-32", "available": true}, {"region":
-      "nl-ams", "plan": "g7-premium-48", "available": true}, {"region": "nl-ams",
-      "plan": "g7-premium-50", "available": true}, {"region": "nl-ams", "plan": "g7-premium-56",
-      "available": true}, {"region": "nl-ams", "plan": "g2-gpu-rtx4000a1-s", "available":
-      false}, {"region": "nl-ams", "plan": "g2-gpu-rtx4000a1-m", "available": false},
-      {"region": "nl-ams", "plan": "g2-gpu-rtx4000a1-l", "available": false}, {"region":
-      "nl-ams", "plan": "g2-gpu-rtx4000a1-xl", "available": false}, {"region": "nl-ams",
-      "plan": "g2-gpu-rtx4000a2-s", "available": false}, {"region": "nl-ams", "plan":
-      "g2-gpu-rtx4000a2-m", "available": false}, {"region": "nl-ams", "plan": "g2-gpu-rtx4000a2-hs",
-      "available": false}, {"region": "nl-ams", "plan": "g2-gpu-rtx4000a4-s", "available":
-      false}, {"region": "nl-ams", "plan": "g2-gpu-rtx4000a4-m", "available": false},
-      {"region": "nl-ams", "plan": "g1-accelerated-netint-vpu-t1u1-s", "available":
-      false}, {"region": "nl-ams", "plan": "g1-accelerated-netint-vpu-t1u1-m", "available":
-      false}, {"region": "nl-ams", "plan": "g1-accelerated-netint-vpu-t1u2-s", "available":
-      false}, {"region": "se-sto", "plan": "g6-standard-1", "available": true}], "page":
-      8, "pages": 15, "results": 1457}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Fri, 22 Aug 2025 07:24:12 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      - Accept-Encoding
-      X-Accepted-Oauth-Scopes:
-      - '*'
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
-        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
-        monitor:read_only nodebalancers:read_only object_storage:read_only stackscripts:read_only
-        volumes:read_only
-      X-Ratelimit-Limit:
-      - "1840"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/regions/availability?page=9
-    method: GET
-  response:
-    body: '{"data": [{"region": "se-sto", "plan": "g6-standard-2", "available": true},
-      {"region": "se-sto", "plan": "g6-standard-4", "available": true}, {"region":
-      "se-sto", "plan": "g6-standard-6", "available": true}, {"region": "se-sto",
-      "plan": "g6-standard-8", "available": true}, {"region": "se-sto", "plan": "g6-standard-16",
-      "available": true}, {"region": "se-sto", "plan": "g6-standard-20", "available":
-      true}, {"region": "se-sto", "plan": "g6-standard-24", "available": true}, {"region":
-      "se-sto", "plan": "g6-standard-32", "available": true}, {"region": "se-sto",
-      "plan": "g6-nanode-1", "available": true}, {"region": "se-sto", "plan": "g6-dedicated-2",
-      "available": true}, {"region": "se-sto", "plan": "g6-dedicated-4", "available":
-      true}, {"region": "se-sto", "plan": "g6-dedicated-8", "available": true}, {"region":
-      "se-sto", "plan": "g6-dedicated-16", "available": true}, {"region": "se-sto",
-      "plan": "g6-dedicated-32", "available": true}, {"region": "se-sto", "plan":
-      "g6-dedicated-48", "available": true}, {"region": "se-sto", "plan": "g1-gpu-rtx6000-1",
-      "available": false}, {"region": "se-sto", "plan": "g1-gpu-rtx6000-2", "available":
-      false}, {"region": "se-sto", "plan": "g1-gpu-rtx6000-3", "available": false},
-      {"region": "se-sto", "plan": "g1-gpu-rtx6000-4", "available": false}, {"region":
-      "se-sto", "plan": "g6-dedicated-50", "available": true}, {"region": "se-sto",
-      "plan": "g6-dedicated-56", "available": true}, {"region": "se-sto", "plan":
-      "g7-highmem-1", "available": true}, {"region": "se-sto", "plan": "g7-highmem-2",
-      "available": true}, {"region": "se-sto", "plan": "g7-highmem-4", "available":
-      true}, {"region": "se-sto", "plan": "g7-highmem-8", "available": true}, {"region":
-      "se-sto", "plan": "g7-highmem-16", "available": true}, {"region": "se-sto",
+    body: '{"data": [{"region": "nl-ams", "plan": "g7-premium-64", "available": false},
+      {"region": "nl-ams", "plan": "g1-gpu-rtx4000a-1", "available": false}, {"region":
+      "nl-ams", "plan": "g1-gpu-rtx4000a-2", "available": false}, {"region": "nl-ams",
+      "plan": "g1-gpu-rtx4000a-4", "available": false}, {"region": "nl-ams", "plan":
+      "g1-gpu-rtx4000a-6", "available": false}, {"region": "nl-ams", "plan": "g1-gpu-rtx4000a-8",
+      "available": false}, {"region": "se-sto", "plan": "g1-gpu-rtx6000-1", "available":
+      false}, {"region": "se-sto", "plan": "g1-gpu-rtx6000-2", "available": false},
+      {"region": "se-sto", "plan": "g1-gpu-rtx6000-3", "available": false}, {"region":
+      "se-sto", "plan": "g1-gpu-rtx6000-4", "available": false}, {"region": "se-sto",
       "plan": "g7-premium-2", "available": true}, {"region": "se-sto", "plan": "g7-premium-4",
       "available": true}, {"region": "se-sto", "plan": "g7-premium-8", "available":
       true}, {"region": "se-sto", "plan": "g7-premium-16", "available": true}, {"region":
       "se-sto", "plan": "g7-premium-32", "available": true}, {"region": "se-sto",
       "plan": "g7-premium-48", "available": true}, {"region": "se-sto", "plan": "g7-premium-50",
       "available": true}, {"region": "se-sto", "plan": "g7-premium-56", "available":
-      true}, {"region": "se-sto", "plan": "g2-gpu-rtx4000a1-s", "available": false},
-      {"region": "se-sto", "plan": "g2-gpu-rtx4000a1-m", "available": false}, {"region":
-      "se-sto", "plan": "g2-gpu-rtx4000a1-l", "available": false}, {"region": "se-sto",
-      "plan": "g2-gpu-rtx4000a1-xl", "available": false}, {"region": "se-sto", "plan":
-      "g2-gpu-rtx4000a2-s", "available": false}, {"region": "se-sto", "plan": "g2-gpu-rtx4000a2-m",
-      "available": false}, {"region": "se-sto", "plan": "g2-gpu-rtx4000a2-hs", "available":
-      false}, {"region": "se-sto", "plan": "g2-gpu-rtx4000a4-s", "available": false},
-      {"region": "se-sto", "plan": "g2-gpu-rtx4000a4-m", "available": false}, {"region":
-      "se-sto", "plan": "g1-accelerated-netint-vpu-t1u1-s", "available": false}, {"region":
-      "se-sto", "plan": "g1-accelerated-netint-vpu-t1u1-m", "available": false}, {"region":
-      "se-sto", "plan": "g1-accelerated-netint-vpu-t1u2-s", "available": false}, {"region":
-      "es-mad", "plan": "g6-standard-1", "available": true}, {"region": "es-mad",
-      "plan": "g6-standard-2", "available": true}, {"region": "es-mad", "plan": "g6-standard-4",
-      "available": true}, {"region": "es-mad", "plan": "g6-standard-6", "available":
-      true}, {"region": "es-mad", "plan": "g6-standard-8", "available": true}, {"region":
-      "es-mad", "plan": "g6-standard-16", "available": true}, {"region": "es-mad",
-      "plan": "g6-standard-20", "available": true}, {"region": "es-mad", "plan": "g6-standard-24",
-      "available": true}, {"region": "es-mad", "plan": "g6-standard-32", "available":
-      true}, {"region": "es-mad", "plan": "g6-nanode-1", "available": true}, {"region":
-      "es-mad", "plan": "g6-dedicated-2", "available": true}, {"region": "es-mad",
-      "plan": "g6-dedicated-4", "available": true}, {"region": "es-mad", "plan": "g6-dedicated-8",
-      "available": true}, {"region": "es-mad", "plan": "g6-dedicated-16", "available":
-      true}, {"region": "es-mad", "plan": "g6-dedicated-32", "available": true}, {"region":
-      "es-mad", "plan": "g6-dedicated-48", "available": true}, {"region": "es-mad",
-      "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "es-mad", "plan":
-      "g1-gpu-rtx6000-2", "available": false}, {"region": "es-mad", "plan": "g1-gpu-rtx6000-3",
-      "available": false}, {"region": "es-mad", "plan": "g1-gpu-rtx6000-4", "available":
-      false}, {"region": "es-mad", "plan": "g6-dedicated-50", "available": true},
-      {"region": "es-mad", "plan": "g6-dedicated-56", "available": true}, {"region":
-      "es-mad", "plan": "g7-highmem-1", "available": true}, {"region": "es-mad", "plan":
-      "g7-highmem-2", "available": true}, {"region": "es-mad", "plan": "g7-highmem-4",
-      "available": true}, {"region": "es-mad", "plan": "g7-highmem-8", "available":
-      true}, {"region": "es-mad", "plan": "g7-highmem-16", "available": true}, {"region":
-      "es-mad", "plan": "g7-premium-2", "available": true}, {"region": "es-mad", "plan":
-      "g7-premium-4", "available": true}, {"region": "es-mad", "plan": "g7-premium-8",
-      "available": true}, {"region": "es-mad", "plan": "g7-premium-16", "available":
-      true}, {"region": "es-mad", "plan": "g7-premium-32", "available": true}, {"region":
-      "es-mad", "plan": "g7-premium-48", "available": true}, {"region": "es-mad",
-      "plan": "g7-premium-50", "available": true}, {"region": "es-mad", "plan": "g7-premium-56",
-      "available": true}, {"region": "es-mad", "plan": "g2-gpu-rtx4000a1-s", "available":
-      false}, {"region": "es-mad", "plan": "g2-gpu-rtx4000a1-m", "available": false},
-      {"region": "es-mad", "plan": "g2-gpu-rtx4000a1-l", "available": false}, {"region":
-      "es-mad", "plan": "g2-gpu-rtx4000a1-xl", "available": false}, {"region": "es-mad",
-      "plan": "g2-gpu-rtx4000a2-s", "available": false}, {"region": "es-mad", "plan":
-      "g2-gpu-rtx4000a2-m", "available": false}, {"region": "es-mad", "plan": "g2-gpu-rtx4000a2-hs",
-      "available": false}, {"region": "es-mad", "plan": "g2-gpu-rtx4000a4-s", "available":
-      false}, {"region": "es-mad", "plan": "g2-gpu-rtx4000a4-m", "available": false},
-      {"region": "es-mad", "plan": "g1-accelerated-netint-vpu-t1u1-s", "available":
-      false}, {"region": "es-mad", "plan": "g1-accelerated-netint-vpu-t1u1-m", "available":
-      false}, {"region": "es-mad", "plan": "g1-accelerated-netint-vpu-t1u2-s", "available":
-      false}, {"region": "in-maa", "plan": "g6-standard-1", "available": true}, {"region":
-      "in-maa", "plan": "g6-standard-2", "available": true}, {"region": "in-maa",
-      "plan": "g6-standard-4", "available": true}, {"region": "in-maa", "plan": "g6-standard-6",
-      "available": true}, {"region": "in-maa", "plan": "g6-standard-8", "available":
-      true}, {"region": "in-maa", "plan": "g6-standard-16", "available": true}, {"region":
-      "in-maa", "plan": "g6-standard-20", "available": true}], "page": 9, "pages":
-      15, "results": 1457}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Fri, 22 Aug 2025 07:24:12 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      - Accept-Encoding
-      X-Accepted-Oauth-Scopes:
-      - '*'
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
-        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
-        monitor:read_only nodebalancers:read_only object_storage:read_only stackscripts:read_only
-        volumes:read_only
-      X-Ratelimit-Limit:
-      - "1840"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/regions/availability?page=10
-    method: GET
-  response:
-    body: '{"data": [{"region": "in-maa", "plan": "g6-standard-24", "available": true},
-      {"region": "in-maa", "plan": "g6-standard-32", "available": true}, {"region":
-      "in-maa", "plan": "g6-nanode-1", "available": true}, {"region": "in-maa", "plan":
-      "g6-dedicated-2", "available": true}, {"region": "in-maa", "plan": "g6-dedicated-4",
-      "available": true}, {"region": "in-maa", "plan": "g6-dedicated-8", "available":
-      true}, {"region": "in-maa", "plan": "g6-dedicated-16", "available": true}, {"region":
-      "in-maa", "plan": "g6-dedicated-32", "available": true}, {"region": "in-maa",
-      "plan": "g6-dedicated-48", "available": true}, {"region": "in-maa", "plan":
-      "g1-gpu-rtx6000-1", "available": false}, {"region": "in-maa", "plan": "g1-gpu-rtx6000-2",
-      "available": false}, {"region": "in-maa", "plan": "g1-gpu-rtx6000-3", "available":
-      false}, {"region": "in-maa", "plan": "g1-gpu-rtx6000-4", "available": false},
-      {"region": "in-maa", "plan": "g6-dedicated-50", "available": true}, {"region":
-      "in-maa", "plan": "g6-dedicated-56", "available": true}, {"region": "in-maa",
-      "plan": "g7-highmem-1", "available": true}, {"region": "in-maa", "plan": "g7-highmem-2",
-      "available": true}, {"region": "in-maa", "plan": "g7-highmem-4", "available":
-      true}, {"region": "in-maa", "plan": "g7-highmem-8", "available": true}, {"region":
-      "in-maa", "plan": "g7-highmem-16", "available": true}, {"region": "in-maa",
-      "plan": "g7-premium-2", "available": true}, {"region": "in-maa", "plan": "g7-premium-4",
+      true}, {"region": "se-sto", "plan": "g7-premium-64", "available": true}, {"region":
+      "se-sto", "plan": "g1-gpu-rtx4000a-1", "available": false}, {"region": "se-sto",
+      "plan": "g1-gpu-rtx4000a-2", "available": false}, {"region": "se-sto", "plan":
+      "g1-gpu-rtx4000a-4", "available": false}, {"region": "se-sto", "plan": "g1-gpu-rtx4000a-6",
+      "available": false}, {"region": "se-sto", "plan": "g1-gpu-rtx4000a-8", "available":
+      false}, {"region": "es-mad", "plan": "g1-gpu-rtx6000-1", "available": false},
+      {"region": "es-mad", "plan": "g1-gpu-rtx6000-2", "available": false}, {"region":
+      "es-mad", "plan": "g1-gpu-rtx6000-3", "available": false}, {"region": "es-mad",
+      "plan": "g1-gpu-rtx6000-4", "available": false}, {"region": "es-mad", "plan":
+      "g7-premium-2", "available": true}, {"region": "es-mad", "plan": "g7-premium-4",
+      "available": true}, {"region": "es-mad", "plan": "g7-premium-8", "available":
+      true}, {"region": "es-mad", "plan": "g7-premium-16", "available": true}, {"region":
+      "es-mad", "plan": "g7-premium-32", "available": true}, {"region": "es-mad",
+      "plan": "g7-premium-48", "available": true}, {"region": "es-mad", "plan": "g7-premium-50",
+      "available": true}, {"region": "es-mad", "plan": "g7-premium-56", "available":
+      true}, {"region": "es-mad", "plan": "g7-premium-64", "available": true}, {"region":
+      "es-mad", "plan": "g1-gpu-rtx4000a-1", "available": false}, {"region": "es-mad",
+      "plan": "g1-gpu-rtx4000a-2", "available": false}, {"region": "es-mad", "plan":
+      "g1-gpu-rtx4000a-4", "available": false}, {"region": "es-mad", "plan": "g1-gpu-rtx4000a-6",
+      "available": false}, {"region": "es-mad", "plan": "g1-gpu-rtx4000a-8", "available":
+      false}, {"region": "in-maa", "plan": "g1-gpu-rtx6000-1", "available": false},
+      {"region": "in-maa", "plan": "g1-gpu-rtx6000-2", "available": false}, {"region":
+      "in-maa", "plan": "g1-gpu-rtx6000-3", "available": false}, {"region": "in-maa",
+      "plan": "g1-gpu-rtx6000-4", "available": false}, {"region": "in-maa", "plan":
+      "g7-premium-2", "available": true}, {"region": "in-maa", "plan": "g7-premium-4",
       "available": true}, {"region": "in-maa", "plan": "g7-premium-8", "available":
       true}, {"region": "in-maa", "plan": "g7-premium-16", "available": true}, {"region":
       "in-maa", "plan": "g7-premium-32", "available": true}, {"region": "in-maa",
       "plan": "g7-premium-48", "available": true}, {"region": "in-maa", "plan": "g7-premium-50",
       "available": true}, {"region": "in-maa", "plan": "g7-premium-56", "available":
-      true}, {"region": "in-maa", "plan": "g2-gpu-rtx4000a1-s", "available": false},
-      {"region": "in-maa", "plan": "g2-gpu-rtx4000a1-m", "available": false}, {"region":
-      "in-maa", "plan": "g2-gpu-rtx4000a1-l", "available": false}, {"region": "in-maa",
-      "plan": "g2-gpu-rtx4000a1-xl", "available": false}, {"region": "in-maa", "plan":
-      "g2-gpu-rtx4000a2-s", "available": false}, {"region": "in-maa", "plan": "g2-gpu-rtx4000a2-m",
-      "available": false}, {"region": "in-maa", "plan": "g2-gpu-rtx4000a2-hs", "available":
-      false}, {"region": "in-maa", "plan": "g2-gpu-rtx4000a4-s", "available": false},
-      {"region": "in-maa", "plan": "g2-gpu-rtx4000a4-m", "available": false}, {"region":
-      "in-maa", "plan": "g1-accelerated-netint-vpu-t1u1-s", "available": true}, {"region":
-      "in-maa", "plan": "g1-accelerated-netint-vpu-t1u1-m", "available": true}, {"region":
-      "in-maa", "plan": "g1-accelerated-netint-vpu-t1u2-s", "available": true}, {"region":
-      "jp-osa", "plan": "g6-standard-1", "available": true}, {"region": "jp-osa",
-      "plan": "g6-standard-2", "available": true}, {"region": "jp-osa", "plan": "g6-standard-4",
-      "available": true}, {"region": "jp-osa", "plan": "g6-standard-6", "available":
-      true}, {"region": "jp-osa", "plan": "g6-standard-8", "available": true}, {"region":
-      "jp-osa", "plan": "g6-standard-16", "available": true}, {"region": "jp-osa",
-      "plan": "g6-standard-20", "available": true}, {"region": "jp-osa", "plan": "g6-standard-24",
-      "available": true}, {"region": "jp-osa", "plan": "g6-standard-32", "available":
-      true}, {"region": "jp-osa", "plan": "g6-nanode-1", "available": true}, {"region":
-      "jp-osa", "plan": "g6-dedicated-2", "available": true}, {"region": "jp-osa",
-      "plan": "g6-dedicated-4", "available": true}, {"region": "jp-osa", "plan": "g6-dedicated-8",
-      "available": true}, {"region": "jp-osa", "plan": "g6-dedicated-16", "available":
-      true}, {"region": "jp-osa", "plan": "g6-dedicated-32", "available": true}, {"region":
-      "jp-osa", "plan": "g6-dedicated-48", "available": true}, {"region": "jp-osa",
-      "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "jp-osa", "plan":
-      "g1-gpu-rtx6000-2", "available": false}, {"region": "jp-osa", "plan": "g1-gpu-rtx6000-3",
-      "available": false}, {"region": "jp-osa", "plan": "g1-gpu-rtx6000-4", "available":
-      false}, {"region": "jp-osa", "plan": "g6-dedicated-50", "available": true},
-      {"region": "jp-osa", "plan": "g6-dedicated-56", "available": true}, {"region":
-      "jp-osa", "plan": "g7-highmem-1", "available": true}, {"region": "jp-osa", "plan":
-      "g7-highmem-2", "available": true}, {"region": "jp-osa", "plan": "g7-highmem-4",
-      "available": true}, {"region": "jp-osa", "plan": "g7-highmem-8", "available":
-      true}, {"region": "jp-osa", "plan": "g7-highmem-16", "available": true}, {"region":
-      "jp-osa", "plan": "g7-premium-2", "available": true}, {"region": "jp-osa", "plan":
-      "g7-premium-4", "available": true}, {"region": "jp-osa", "plan": "g7-premium-8",
-      "available": true}, {"region": "jp-osa", "plan": "g7-premium-16", "available":
-      true}, {"region": "jp-osa", "plan": "g7-premium-32", "available": true}, {"region":
-      "jp-osa", "plan": "g7-premium-48", "available": true}, {"region": "jp-osa",
-      "plan": "g7-premium-50", "available": true}, {"region": "jp-osa", "plan": "g7-premium-56",
-      "available": true}, {"region": "jp-osa", "plan": "g2-gpu-rtx4000a1-s", "available":
-      true}, {"region": "jp-osa", "plan": "g2-gpu-rtx4000a1-m", "available": true},
-      {"region": "jp-osa", "plan": "g2-gpu-rtx4000a1-l", "available": true}, {"region":
-      "jp-osa", "plan": "g2-gpu-rtx4000a1-xl", "available": true}, {"region": "jp-osa",
-      "plan": "g2-gpu-rtx4000a2-s", "available": true}, {"region": "jp-osa", "plan":
-      "g2-gpu-rtx4000a2-m", "available": true}, {"region": "jp-osa", "plan": "g2-gpu-rtx4000a2-hs",
-      "available": true}, {"region": "jp-osa", "plan": "g2-gpu-rtx4000a4-s", "available":
-      true}, {"region": "jp-osa", "plan": "g2-gpu-rtx4000a4-m", "available": true},
-      {"region": "jp-osa", "plan": "g1-accelerated-netint-vpu-t1u1-s", "available":
-      false}, {"region": "jp-osa", "plan": "g1-accelerated-netint-vpu-t1u1-m", "available":
-      false}, {"region": "jp-osa", "plan": "g1-accelerated-netint-vpu-t1u2-s", "available":
-      false}, {"region": "it-mil", "plan": "g6-standard-1", "available": true}, {"region":
-      "it-mil", "plan": "g6-standard-2", "available": true}, {"region": "it-mil",
-      "plan": "g6-standard-4", "available": true}, {"region": "it-mil", "plan": "g6-standard-6",
-      "available": true}, {"region": "it-mil", "plan": "g6-standard-8", "available":
-      true}, {"region": "it-mil", "plan": "g6-standard-16", "available": true}, {"region":
-      "it-mil", "plan": "g6-standard-20", "available": true}, {"region": "it-mil",
-      "plan": "g6-standard-24", "available": true}, {"region": "it-mil", "plan": "g6-standard-32",
-      "available": true}, {"region": "it-mil", "plan": "g6-nanode-1", "available":
-      true}, {"region": "it-mil", "plan": "g6-dedicated-2", "available": true}, {"region":
-      "it-mil", "plan": "g6-dedicated-4", "available": true}, {"region": "it-mil",
-      "plan": "g6-dedicated-8", "available": true}], "page": 10, "pages": 15, "results":
-      1457}'
+      true}, {"region": "in-maa", "plan": "g7-premium-64", "available": true}, {"region":
+      "in-maa", "plan": "g1-gpu-rtx4000a-1", "available": false}, {"region": "in-maa",
+      "plan": "g1-gpu-rtx4000a-2", "available": false}, {"region": "in-maa", "plan":
+      "g1-gpu-rtx4000a-4", "available": false}, {"region": "in-maa", "plan": "g1-gpu-rtx4000a-6",
+      "available": false}, {"region": "in-maa", "plan": "g1-gpu-rtx4000a-8", "available":
+      false}, {"region": "jp-osa", "plan": "g1-gpu-rtx6000-1", "available": false},
+      {"region": "jp-osa", "plan": "g1-gpu-rtx6000-2", "available": false}, {"region":
+      "jp-osa", "plan": "g1-gpu-rtx6000-3", "available": false}, {"region": "jp-osa",
+      "plan": "g1-gpu-rtx6000-4", "available": false}, {"region": "jp-osa", "plan":
+      "g7-premium-2", "available": true}, {"region": "jp-osa", "plan": "g7-premium-4",
+      "available": true}, {"region": "jp-osa", "plan": "g7-premium-8", "available":
+      true}, {"region": "jp-osa", "plan": "g7-premium-16", "available": true}, {"region":
+      "jp-osa", "plan": "g7-premium-32", "available": true}, {"region": "jp-osa",
+      "plan": "g7-premium-48", "available": true}, {"region": "jp-osa", "plan": "g7-premium-50",
+      "available": true}, {"region": "jp-osa", "plan": "g7-premium-56", "available":
+      true}, {"region": "jp-osa", "plan": "g7-premium-64", "available": true}, {"region":
+      "jp-osa", "plan": "g1-gpu-rtx4000a-1", "available": true}, {"region": "jp-osa",
+      "plan": "g1-gpu-rtx4000a-2", "available": true}, {"region": "jp-osa", "plan":
+      "g1-gpu-rtx4000a-4", "available": true}, {"region": "jp-osa", "plan": "g1-gpu-rtx4000a-6",
+      "available": true}, {"region": "jp-osa", "plan": "g1-gpu-rtx4000a-8", "available":
+      true}, {"region": "it-mil", "plan": "g1-gpu-rtx6000-1", "available": false},
+      {"region": "it-mil", "plan": "g1-gpu-rtx6000-2", "available": false}, {"region":
+      "it-mil", "plan": "g1-gpu-rtx6000-3", "available": false}, {"region": "it-mil",
+      "plan": "g1-gpu-rtx6000-4", "available": false}, {"region": "it-mil", "plan":
+      "g7-premium-2", "available": true}, {"region": "it-mil", "plan": "g7-premium-4",
+      "available": true}, {"region": "it-mil", "plan": "g7-premium-8", "available":
+      true}, {"region": "it-mil", "plan": "g7-premium-16", "available": true}, {"region":
+      "it-mil", "plan": "g7-premium-32", "available": true}, {"region": "it-mil",
+      "plan": "g7-premium-48", "available": true}, {"region": "it-mil", "plan": "g7-premium-50",
+      "available": true}, {"region": "it-mil", "plan": "g7-premium-56", "available":
+      true}, {"region": "it-mil", "plan": "g7-premium-64", "available": false}, {"region":
+      "it-mil", "plan": "g1-gpu-rtx4000a-1", "available": false}, {"region": "it-mil",
+      "plan": "g1-gpu-rtx4000a-2", "available": false}, {"region": "it-mil", "plan":
+      "g1-gpu-rtx4000a-4", "available": false}, {"region": "it-mil", "plan": "g1-gpu-rtx4000a-6",
+      "available": false}, {"region": "it-mil", "plan": "g1-gpu-rtx4000a-8", "available":
+      false}, {"region": "us-mia", "plan": "g1-gpu-rtx6000-1", "available": false},
+      {"region": "us-mia", "plan": "g1-gpu-rtx6000-2", "available": false}, {"region":
+      "us-mia", "plan": "g1-gpu-rtx6000-3", "available": false}, {"region": "us-mia",
+      "plan": "g1-gpu-rtx6000-4", "available": false}], "page": 4, "pages": 5, "results":
+      486}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -1463,8 +684,6 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -1474,7 +693,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 22 Aug 2025 07:24:13 GMT
+      - Tue, 09 Jul 2024 14:05:29 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -1491,12 +710,9 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
-        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
-        monitor:read_only nodebalancers:read_only object_storage:read_only stackscripts:read_only
-        volumes:read_only
+      - '*'
       X-Ratelimit-Limit:
-      - "1840"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -1512,94 +728,82 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/regions/availability?page=11
+    url: https://api.linode.com/v4beta/regions/availability?page=5
     method: GET
   response:
-    body: '{"data": [{"region": "it-mil", "plan": "g6-dedicated-16", "available":
-      true}, {"region": "it-mil", "plan": "g6-dedicated-32", "available": true}, {"region":
-      "it-mil", "plan": "g6-dedicated-48", "available": true}, {"region": "it-mil",
-      "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "it-mil", "plan":
-      "g1-gpu-rtx6000-2", "available": false}, {"region": "it-mil", "plan": "g1-gpu-rtx6000-3",
-      "available": false}, {"region": "it-mil", "plan": "g1-gpu-rtx6000-4", "available":
-      false}, {"region": "it-mil", "plan": "g6-dedicated-50", "available": true},
-      {"region": "it-mil", "plan": "g6-dedicated-56", "available": true}, {"region":
-      "it-mil", "plan": "g7-highmem-1", "available": true}, {"region": "it-mil", "plan":
-      "g7-highmem-2", "available": true}, {"region": "it-mil", "plan": "g7-highmem-4",
-      "available": true}, {"region": "it-mil", "plan": "g7-highmem-8", "available":
-      true}, {"region": "it-mil", "plan": "g7-highmem-16", "available": true}, {"region":
-      "it-mil", "plan": "g7-premium-2", "available": true}, {"region": "it-mil", "plan":
-      "g7-premium-4", "available": true}, {"region": "it-mil", "plan": "g7-premium-8",
-      "available": true}, {"region": "it-mil", "plan": "g7-premium-16", "available":
-      true}, {"region": "it-mil", "plan": "g7-premium-32", "available": true}, {"region":
-      "it-mil", "plan": "g7-premium-48", "available": true}, {"region": "it-mil",
-      "plan": "g7-premium-50", "available": true}, {"region": "it-mil", "plan": "g7-premium-56",
-      "available": true}, {"region": "it-mil", "plan": "g2-gpu-rtx4000a1-s", "available":
-      false}, {"region": "it-mil", "plan": "g2-gpu-rtx4000a1-m", "available": false},
-      {"region": "it-mil", "plan": "g2-gpu-rtx4000a1-l", "available": false}, {"region":
-      "it-mil", "plan": "g2-gpu-rtx4000a1-xl", "available": false}, {"region": "it-mil",
-      "plan": "g2-gpu-rtx4000a2-s", "available": false}, {"region": "it-mil", "plan":
-      "g2-gpu-rtx4000a2-m", "available": false}, {"region": "it-mil", "plan": "g2-gpu-rtx4000a2-hs",
-      "available": false}, {"region": "it-mil", "plan": "g2-gpu-rtx4000a4-s", "available":
-      false}, {"region": "it-mil", "plan": "g2-gpu-rtx4000a4-m", "available": false},
-      {"region": "it-mil", "plan": "g1-accelerated-netint-vpu-t1u1-s", "available":
-      false}, {"region": "it-mil", "plan": "g1-accelerated-netint-vpu-t1u1-m", "available":
-      false}, {"region": "it-mil", "plan": "g1-accelerated-netint-vpu-t1u2-s", "available":
-      false}, {"region": "us-mia", "plan": "g6-standard-1", "available": true}, {"region":
-      "us-mia", "plan": "g6-standard-2", "available": true}, {"region": "us-mia",
-      "plan": "g6-standard-4", "available": true}, {"region": "us-mia", "plan": "g6-standard-6",
-      "available": true}, {"region": "us-mia", "plan": "g6-standard-8", "available":
-      true}, {"region": "us-mia", "plan": "g6-standard-16", "available": true}, {"region":
-      "us-mia", "plan": "g6-standard-20", "available": true}, {"region": "us-mia",
-      "plan": "g6-standard-24", "available": true}, {"region": "us-mia", "plan": "g6-standard-32",
-      "available": true}, {"region": "us-mia", "plan": "g6-nanode-1", "available":
-      true}, {"region": "us-mia", "plan": "g6-dedicated-2", "available": true}, {"region":
-      "us-mia", "plan": "g6-dedicated-4", "available": true}, {"region": "us-mia",
-      "plan": "g6-dedicated-8", "available": true}, {"region": "us-mia", "plan": "g6-dedicated-16",
-      "available": true}, {"region": "us-mia", "plan": "g6-dedicated-32", "available":
-      true}, {"region": "us-mia", "plan": "g6-dedicated-48", "available": true}, {"region":
-      "us-mia", "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "us-mia",
-      "plan": "g1-gpu-rtx6000-2", "available": false}, {"region": "us-mia", "plan":
-      "g1-gpu-rtx6000-3", "available": false}, {"region": "us-mia", "plan": "g1-gpu-rtx6000-4",
-      "available": false}, {"region": "us-mia", "plan": "g6-dedicated-50", "available":
-      true}, {"region": "us-mia", "plan": "g6-dedicated-56", "available": true}, {"region":
-      "us-mia", "plan": "g7-highmem-1", "available": true}, {"region": "us-mia", "plan":
-      "g7-highmem-2", "available": true}, {"region": "us-mia", "plan": "g7-highmem-4",
-      "available": true}, {"region": "us-mia", "plan": "g7-highmem-8", "available":
-      true}, {"region": "us-mia", "plan": "g7-highmem-16", "available": true}, {"region":
-      "us-mia", "plan": "g7-premium-2", "available": true}, {"region": "us-mia", "plan":
-      "g7-premium-4", "available": true}, {"region": "us-mia", "plan": "g7-premium-8",
-      "available": true}, {"region": "us-mia", "plan": "g7-premium-16", "available":
-      true}, {"region": "us-mia", "plan": "g7-premium-32", "available": true}, {"region":
-      "us-mia", "plan": "g7-premium-48", "available": true}, {"region": "us-mia",
-      "plan": "g7-premium-50", "available": true}, {"region": "us-mia", "plan": "g7-premium-56",
-      "available": true}, {"region": "us-mia", "plan": "g2-gpu-rtx4000a1-s", "available":
-      false}, {"region": "us-mia", "plan": "g2-gpu-rtx4000a1-m", "available": false},
-      {"region": "us-mia", "plan": "g2-gpu-rtx4000a1-l", "available": false}, {"region":
-      "us-mia", "plan": "g2-gpu-rtx4000a1-xl", "available": false}, {"region": "us-mia",
-      "plan": "g2-gpu-rtx4000a2-s", "available": false}, {"region": "us-mia", "plan":
-      "g2-gpu-rtx4000a2-m", "available": false}, {"region": "us-mia", "plan": "g2-gpu-rtx4000a2-hs",
-      "available": false}, {"region": "us-mia", "plan": "g2-gpu-rtx4000a4-s", "available":
-      false}, {"region": "us-mia", "plan": "g2-gpu-rtx4000a4-m", "available": false},
-      {"region": "us-mia", "plan": "g1-accelerated-netint-vpu-t1u1-s", "available":
-      true}, {"region": "us-mia", "plan": "g1-accelerated-netint-vpu-t1u1-m", "available":
-      true}, {"region": "us-mia", "plan": "g1-accelerated-netint-vpu-t1u2-s", "available":
-      true}, {"region": "id-cgk", "plan": "g6-standard-1", "available": true}, {"region":
-      "id-cgk", "plan": "g6-standard-2", "available": true}, {"region": "id-cgk",
-      "plan": "g6-standard-4", "available": true}, {"region": "id-cgk", "plan": "g6-standard-6",
-      "available": true}, {"region": "id-cgk", "plan": "g6-standard-8", "available":
-      true}, {"region": "id-cgk", "plan": "g6-standard-16", "available": true}, {"region":
-      "id-cgk", "plan": "g6-standard-20", "available": true}, {"region": "id-cgk",
-      "plan": "g6-standard-24", "available": true}, {"region": "id-cgk", "plan": "g6-standard-32",
-      "available": true}, {"region": "id-cgk", "plan": "g6-nanode-1", "available":
-      true}, {"region": "id-cgk", "plan": "g6-dedicated-2", "available": true}, {"region":
-      "id-cgk", "plan": "g6-dedicated-4", "available": true}, {"region": "id-cgk",
-      "plan": "g6-dedicated-8", "available": true}, {"region": "id-cgk", "plan": "g6-dedicated-16",
-      "available": true}, {"region": "id-cgk", "plan": "g6-dedicated-32", "available":
-      true}, {"region": "id-cgk", "plan": "g6-dedicated-48", "available": true}, {"region":
-      "id-cgk", "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "id-cgk",
-      "plan": "g1-gpu-rtx6000-2", "available": false}, {"region": "id-cgk", "plan":
-      "g1-gpu-rtx6000-3", "available": false}], "page": 11, "pages": 15, "results":
-      1457}'
+    body: '{"data": [{"region": "us-mia", "plan": "g7-premium-2", "available": true},
+      {"region": "us-mia", "plan": "g7-premium-4", "available": true}, {"region":
+      "us-mia", "plan": "g7-premium-8", "available": true}, {"region": "us-mia", "plan":
+      "g7-premium-16", "available": true}, {"region": "us-mia", "plan": "g7-premium-32",
+      "available": true}, {"region": "us-mia", "plan": "g7-premium-48", "available":
+      true}, {"region": "us-mia", "plan": "g7-premium-50", "available": true}, {"region":
+      "us-mia", "plan": "g7-premium-56", "available": true}, {"region": "us-mia",
+      "plan": "g7-premium-64", "available": false}, {"region": "us-mia", "plan": "g1-gpu-rtx4000a-1",
+      "available": false}, {"region": "us-mia", "plan": "g1-gpu-rtx4000a-2", "available":
+      false}, {"region": "us-mia", "plan": "g1-gpu-rtx4000a-4", "available": false},
+      {"region": "us-mia", "plan": "g1-gpu-rtx4000a-6", "available": false}, {"region":
+      "us-mia", "plan": "g1-gpu-rtx4000a-8", "available": false}, {"region": "id-cgk",
+      "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "id-cgk", "plan":
+      "g1-gpu-rtx6000-2", "available": false}, {"region": "id-cgk", "plan": "g1-gpu-rtx6000-3",
+      "available": false}, {"region": "id-cgk", "plan": "g1-gpu-rtx6000-4", "available":
+      false}, {"region": "id-cgk", "plan": "g7-premium-2", "available": true}, {"region":
+      "id-cgk", "plan": "g7-premium-4", "available": true}, {"region": "id-cgk", "plan":
+      "g7-premium-8", "available": true}, {"region": "id-cgk", "plan": "g7-premium-16",
+      "available": true}, {"region": "id-cgk", "plan": "g7-premium-32", "available":
+      true}, {"region": "id-cgk", "plan": "g7-premium-48", "available": true}, {"region":
+      "id-cgk", "plan": "g7-premium-50", "available": true}, {"region": "id-cgk",
+      "plan": "g7-premium-56", "available": true}, {"region": "id-cgk", "plan": "g7-premium-64",
+      "available": true}, {"region": "id-cgk", "plan": "g1-gpu-rtx4000a-1", "available":
+      false}, {"region": "id-cgk", "plan": "g1-gpu-rtx4000a-2", "available": false},
+      {"region": "id-cgk", "plan": "g1-gpu-rtx4000a-4", "available": false}, {"region":
+      "id-cgk", "plan": "g1-gpu-rtx4000a-6", "available": false}, {"region": "id-cgk",
+      "plan": "g1-gpu-rtx4000a-8", "available": false}, {"region": "us-lax", "plan":
+      "g1-gpu-rtx6000-1", "available": false}, {"region": "us-lax", "plan": "g1-gpu-rtx6000-2",
+      "available": false}, {"region": "us-lax", "plan": "g1-gpu-rtx6000-3", "available":
+      false}, {"region": "us-lax", "plan": "g1-gpu-rtx6000-4", "available": false},
+      {"region": "us-lax", "plan": "g7-premium-2", "available": true}, {"region":
+      "us-lax", "plan": "g7-premium-4", "available": true}, {"region": "us-lax", "plan":
+      "g7-premium-8", "available": true}, {"region": "us-lax", "plan": "g7-premium-16",
+      "available": true}, {"region": "us-lax", "plan": "g7-premium-32", "available":
+      true}, {"region": "us-lax", "plan": "g7-premium-48", "available": true}, {"region":
+      "us-lax", "plan": "g7-premium-50", "available": true}, {"region": "us-lax",
+      "plan": "g7-premium-56", "available": true}, {"region": "us-lax", "plan": "g7-premium-64",
+      "available": true}, {"region": "us-lax", "plan": "g1-gpu-rtx4000a-1", "available":
+      false}, {"region": "us-lax", "plan": "g1-gpu-rtx4000a-2", "available": false},
+      {"region": "us-lax", "plan": "g1-gpu-rtx4000a-4", "available": false}, {"region":
+      "us-lax", "plan": "g1-gpu-rtx4000a-6", "available": false}, {"region": "us-lax",
+      "plan": "g1-gpu-rtx4000a-8", "available": false}, {"region": "gb-lon", "plan":
+      "g1-gpu-rtx6000-1", "available": false}, {"region": "gb-lon", "plan": "g1-gpu-rtx6000-2",
+      "available": false}, {"region": "gb-lon", "plan": "g1-gpu-rtx6000-3", "available":
+      false}, {"region": "gb-lon", "plan": "g1-gpu-rtx6000-4", "available": false},
+      {"region": "gb-lon", "plan": "g7-premium-2", "available": true}, {"region":
+      "gb-lon", "plan": "g7-premium-4", "available": true}, {"region": "gb-lon", "plan":
+      "g7-premium-8", "available": true}, {"region": "gb-lon", "plan": "g7-premium-16",
+      "available": true}, {"region": "gb-lon", "plan": "g7-premium-32", "available":
+      true}, {"region": "gb-lon", "plan": "g7-premium-48", "available": true}, {"region":
+      "gb-lon", "plan": "g7-premium-50", "available": true}, {"region": "gb-lon",
+      "plan": "g7-premium-56", "available": true}, {"region": "gb-lon", "plan": "g7-premium-64",
+      "available": true}, {"region": "gb-lon", "plan": "g1-gpu-rtx4000a-1", "available":
+      false}, {"region": "gb-lon", "plan": "g1-gpu-rtx4000a-2", "available": false},
+      {"region": "gb-lon", "plan": "g1-gpu-rtx4000a-4", "available": false}, {"region":
+      "gb-lon", "plan": "g1-gpu-rtx4000a-6", "available": false}, {"region": "gb-lon",
+      "plan": "g1-gpu-rtx4000a-8", "available": false}, {"region": "au-mel", "plan":
+      "g1-gpu-rtx6000-1", "available": false}, {"region": "au-mel", "plan": "g1-gpu-rtx6000-2",
+      "available": false}, {"region": "au-mel", "plan": "g1-gpu-rtx6000-3", "available":
+      false}, {"region": "au-mel", "plan": "g1-gpu-rtx6000-4", "available": false},
+      {"region": "au-mel", "plan": "g7-premium-2", "available": true}, {"region":
+      "au-mel", "plan": "g7-premium-4", "available": true}, {"region": "au-mel", "plan":
+      "g7-premium-8", "available": true}, {"region": "au-mel", "plan": "g7-premium-16",
+      "available": true}, {"region": "au-mel", "plan": "g7-premium-32", "available":
+      true}, {"region": "au-mel", "plan": "g7-premium-48", "available": true}, {"region":
+      "au-mel", "plan": "g7-premium-50", "available": true}, {"region": "au-mel",
+      "plan": "g7-premium-56", "available": true}, {"region": "au-mel", "plan": "g7-premium-64",
+      "available": true}, {"region": "au-mel", "plan": "g1-gpu-rtx4000a-1", "available":
+      false}, {"region": "au-mel", "plan": "g1-gpu-rtx4000a-2", "available": false},
+      {"region": "au-mel", "plan": "g1-gpu-rtx4000a-4", "available": false}, {"region":
+      "au-mel", "plan": "g1-gpu-rtx4000a-6", "available": false}, {"region": "au-mel",
+      "plan": "g1-gpu-rtx4000a-8", "available": false}], "page": 5, "pages": 5, "results":
+      486}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -1611,8 +815,6 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
       Connection:
@@ -1622,7 +824,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 22 Aug 2025 07:24:13 GMT
+      - Tue, 09 Jul 2024 14:05:29 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -1639,569 +841,9 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
-        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
-        monitor:read_only nodebalancers:read_only object_storage:read_only stackscripts:read_only
-        volumes:read_only
+      - '*'
       X-Ratelimit-Limit:
-      - "1840"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/regions/availability?page=12
-    method: GET
-  response:
-    body: '{"data": [{"region": "id-cgk", "plan": "g1-gpu-rtx6000-4", "available":
-      false}, {"region": "id-cgk", "plan": "g6-dedicated-50", "available": true},
-      {"region": "id-cgk", "plan": "g6-dedicated-56", "available": true}, {"region":
-      "id-cgk", "plan": "g7-highmem-1", "available": true}, {"region": "id-cgk", "plan":
-      "g7-highmem-2", "available": true}, {"region": "id-cgk", "plan": "g7-highmem-4",
-      "available": true}, {"region": "id-cgk", "plan": "g7-highmem-8", "available":
-      true}, {"region": "id-cgk", "plan": "g7-highmem-16", "available": true}, {"region":
-      "id-cgk", "plan": "g7-premium-2", "available": true}, {"region": "id-cgk", "plan":
-      "g7-premium-4", "available": true}, {"region": "id-cgk", "plan": "g7-premium-8",
-      "available": true}, {"region": "id-cgk", "plan": "g7-premium-16", "available":
-      true}, {"region": "id-cgk", "plan": "g7-premium-32", "available": true}, {"region":
-      "id-cgk", "plan": "g7-premium-48", "available": true}, {"region": "id-cgk",
-      "plan": "g7-premium-50", "available": true}, {"region": "id-cgk", "plan": "g7-premium-56",
-      "available": true}, {"region": "id-cgk", "plan": "g2-gpu-rtx4000a1-s", "available":
-      false}, {"region": "id-cgk", "plan": "g2-gpu-rtx4000a1-m", "available": false},
-      {"region": "id-cgk", "plan": "g2-gpu-rtx4000a1-l", "available": false}, {"region":
-      "id-cgk", "plan": "g2-gpu-rtx4000a1-xl", "available": false}, {"region": "id-cgk",
-      "plan": "g2-gpu-rtx4000a2-s", "available": false}, {"region": "id-cgk", "plan":
-      "g2-gpu-rtx4000a2-m", "available": false}, {"region": "id-cgk", "plan": "g2-gpu-rtx4000a2-hs",
-      "available": false}, {"region": "id-cgk", "plan": "g2-gpu-rtx4000a4-s", "available":
-      false}, {"region": "id-cgk", "plan": "g2-gpu-rtx4000a4-m", "available": false},
-      {"region": "id-cgk", "plan": "g1-accelerated-netint-vpu-t1u1-s", "available":
-      false}, {"region": "id-cgk", "plan": "g1-accelerated-netint-vpu-t1u1-m", "available":
-      false}, {"region": "id-cgk", "plan": "g1-accelerated-netint-vpu-t1u2-s", "available":
-      false}, {"region": "us-lax", "plan": "g6-standard-1", "available": true}, {"region":
-      "us-lax", "plan": "g6-standard-2", "available": true}, {"region": "us-lax",
-      "plan": "g6-standard-4", "available": true}, {"region": "us-lax", "plan": "g6-standard-6",
-      "available": true}, {"region": "us-lax", "plan": "g6-standard-8", "available":
-      true}, {"region": "us-lax", "plan": "g6-standard-16", "available": true}, {"region":
-      "us-lax", "plan": "g6-standard-20", "available": true}, {"region": "us-lax",
-      "plan": "g6-standard-24", "available": true}, {"region": "us-lax", "plan": "g6-standard-32",
-      "available": true}, {"region": "us-lax", "plan": "g6-nanode-1", "available":
-      true}, {"region": "us-lax", "plan": "g6-dedicated-2", "available": true}, {"region":
-      "us-lax", "plan": "g6-dedicated-4", "available": true}, {"region": "us-lax",
-      "plan": "g6-dedicated-8", "available": true}, {"region": "us-lax", "plan": "g6-dedicated-16",
-      "available": true}, {"region": "us-lax", "plan": "g6-dedicated-32", "available":
-      true}, {"region": "us-lax", "plan": "g6-dedicated-48", "available": true}, {"region":
-      "us-lax", "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "us-lax",
-      "plan": "g1-gpu-rtx6000-2", "available": false}, {"region": "us-lax", "plan":
-      "g1-gpu-rtx6000-3", "available": false}, {"region": "us-lax", "plan": "g1-gpu-rtx6000-4",
-      "available": false}, {"region": "us-lax", "plan": "g6-dedicated-50", "available":
-      true}, {"region": "us-lax", "plan": "g6-dedicated-56", "available": true}, {"region":
-      "us-lax", "plan": "g7-highmem-1", "available": true}, {"region": "us-lax", "plan":
-      "g7-highmem-2", "available": true}, {"region": "us-lax", "plan": "g7-highmem-4",
-      "available": true}, {"region": "us-lax", "plan": "g7-highmem-8", "available":
-      true}, {"region": "us-lax", "plan": "g7-highmem-16", "available": true}, {"region":
-      "us-lax", "plan": "g7-premium-2", "available": true}, {"region": "us-lax", "plan":
-      "g7-premium-4", "available": true}, {"region": "us-lax", "plan": "g7-premium-8",
-      "available": true}, {"region": "us-lax", "plan": "g7-premium-16", "available":
-      true}, {"region": "us-lax", "plan": "g7-premium-32", "available": true}, {"region":
-      "us-lax", "plan": "g7-premium-48", "available": true}, {"region": "us-lax",
-      "plan": "g7-premium-50", "available": true}, {"region": "us-lax", "plan": "g7-premium-56",
-      "available": true}, {"region": "us-lax", "plan": "g2-gpu-rtx4000a1-s", "available":
-      false}, {"region": "us-lax", "plan": "g2-gpu-rtx4000a1-m", "available": false},
-      {"region": "us-lax", "plan": "g2-gpu-rtx4000a1-l", "available": false}, {"region":
-      "us-lax", "plan": "g2-gpu-rtx4000a1-xl", "available": false}, {"region": "us-lax",
-      "plan": "g2-gpu-rtx4000a2-s", "available": false}, {"region": "us-lax", "plan":
-      "g2-gpu-rtx4000a2-m", "available": false}, {"region": "us-lax", "plan": "g2-gpu-rtx4000a2-hs",
-      "available": false}, {"region": "us-lax", "plan": "g2-gpu-rtx4000a4-s", "available":
-      false}, {"region": "us-lax", "plan": "g2-gpu-rtx4000a4-m", "available": false},
-      {"region": "us-lax", "plan": "g1-accelerated-netint-vpu-t1u1-s", "available":
-      true}, {"region": "us-lax", "plan": "g1-accelerated-netint-vpu-t1u1-m", "available":
-      true}, {"region": "us-lax", "plan": "g1-accelerated-netint-vpu-t1u2-s", "available":
-      true}, {"region": "gb-lon", "plan": "g6-standard-1", "available": true}, {"region":
-      "gb-lon", "plan": "g6-standard-2", "available": true}, {"region": "gb-lon",
-      "plan": "g6-standard-4", "available": true}, {"region": "gb-lon", "plan": "g6-standard-6",
-      "available": true}, {"region": "gb-lon", "plan": "g6-standard-8", "available":
-      true}, {"region": "gb-lon", "plan": "g6-standard-16", "available": true}, {"region":
-      "gb-lon", "plan": "g6-standard-20", "available": true}, {"region": "gb-lon",
-      "plan": "g6-standard-24", "available": true}, {"region": "gb-lon", "plan": "g6-standard-32",
-      "available": true}, {"region": "gb-lon", "plan": "g6-nanode-1", "available":
-      true}, {"region": "gb-lon", "plan": "g6-dedicated-2", "available": true}, {"region":
-      "gb-lon", "plan": "g6-dedicated-4", "available": true}, {"region": "gb-lon",
-      "plan": "g6-dedicated-8", "available": true}, {"region": "gb-lon", "plan": "g6-dedicated-16",
-      "available": true}, {"region": "gb-lon", "plan": "g6-dedicated-32", "available":
-      true}, {"region": "gb-lon", "plan": "g6-dedicated-48", "available": true}, {"region":
-      "gb-lon", "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "gb-lon",
-      "plan": "g1-gpu-rtx6000-2", "available": false}, {"region": "gb-lon", "plan":
-      "g1-gpu-rtx6000-3", "available": false}, {"region": "gb-lon", "plan": "g1-gpu-rtx6000-4",
-      "available": false}, {"region": "gb-lon", "plan": "g6-dedicated-50", "available":
-      true}, {"region": "gb-lon", "plan": "g6-dedicated-56", "available": true}, {"region":
-      "gb-lon", "plan": "g7-highmem-1", "available": true}, {"region": "gb-lon", "plan":
-      "g7-highmem-2", "available": true}, {"region": "gb-lon", "plan": "g7-highmem-4",
-      "available": true}], "page": 12, "pages": 15, "results": 1457}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Fri, 22 Aug 2025 07:24:13 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      - Accept-Encoding
-      X-Accepted-Oauth-Scopes:
-      - '*'
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
-        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
-        monitor:read_only nodebalancers:read_only object_storage:read_only stackscripts:read_only
-        volumes:read_only
-      X-Ratelimit-Limit:
-      - "1840"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/regions/availability?page=13
-    method: GET
-  response:
-    body: '{"data": [{"region": "gb-lon", "plan": "g7-highmem-8", "available": true},
-      {"region": "gb-lon", "plan": "g7-highmem-16", "available": true}, {"region":
-      "gb-lon", "plan": "g7-premium-2", "available": true}, {"region": "gb-lon", "plan":
-      "g7-premium-4", "available": true}, {"region": "gb-lon", "plan": "g7-premium-8",
-      "available": true}, {"region": "gb-lon", "plan": "g7-premium-16", "available":
-      true}, {"region": "gb-lon", "plan": "g7-premium-32", "available": true}, {"region":
-      "gb-lon", "plan": "g7-premium-48", "available": true}, {"region": "gb-lon",
-      "plan": "g7-premium-50", "available": true}, {"region": "gb-lon", "plan": "g7-premium-56",
-      "available": true}, {"region": "gb-lon", "plan": "g2-gpu-rtx4000a1-s", "available":
-      false}, {"region": "gb-lon", "plan": "g2-gpu-rtx4000a1-m", "available": false},
-      {"region": "gb-lon", "plan": "g2-gpu-rtx4000a1-l", "available": false}, {"region":
-      "gb-lon", "plan": "g2-gpu-rtx4000a1-xl", "available": false}, {"region": "gb-lon",
-      "plan": "g2-gpu-rtx4000a2-s", "available": false}, {"region": "gb-lon", "plan":
-      "g2-gpu-rtx4000a2-m", "available": false}, {"region": "gb-lon", "plan": "g2-gpu-rtx4000a2-hs",
-      "available": false}, {"region": "gb-lon", "plan": "g2-gpu-rtx4000a4-s", "available":
-      false}, {"region": "gb-lon", "plan": "g2-gpu-rtx4000a4-m", "available": false},
-      {"region": "gb-lon", "plan": "g1-accelerated-netint-vpu-t1u1-s", "available":
-      false}, {"region": "gb-lon", "plan": "g1-accelerated-netint-vpu-t1u1-m", "available":
-      false}, {"region": "gb-lon", "plan": "g1-accelerated-netint-vpu-t1u2-s", "available":
-      false}, {"region": "au-mel", "plan": "g6-standard-1", "available": true}, {"region":
-      "au-mel", "plan": "g6-standard-2", "available": true}, {"region": "au-mel",
-      "plan": "g6-standard-4", "available": true}, {"region": "au-mel", "plan": "g6-standard-6",
-      "available": true}, {"region": "au-mel", "plan": "g6-standard-8", "available":
-      true}, {"region": "au-mel", "plan": "g6-standard-16", "available": true}, {"region":
-      "au-mel", "plan": "g6-standard-20", "available": true}, {"region": "au-mel",
-      "plan": "g6-standard-24", "available": true}, {"region": "au-mel", "plan": "g6-standard-32",
-      "available": true}, {"region": "au-mel", "plan": "g6-nanode-1", "available":
-      true}, {"region": "au-mel", "plan": "g6-dedicated-2", "available": true}, {"region":
-      "au-mel", "plan": "g6-dedicated-4", "available": true}, {"region": "au-mel",
-      "plan": "g6-dedicated-8", "available": true}, {"region": "au-mel", "plan": "g6-dedicated-16",
-      "available": true}, {"region": "au-mel", "plan": "g6-dedicated-32", "available":
-      true}, {"region": "au-mel", "plan": "g6-dedicated-48", "available": true}, {"region":
-      "au-mel", "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "au-mel",
-      "plan": "g1-gpu-rtx6000-2", "available": false}, {"region": "au-mel", "plan":
-      "g1-gpu-rtx6000-3", "available": false}, {"region": "au-mel", "plan": "g1-gpu-rtx6000-4",
-      "available": false}, {"region": "au-mel", "plan": "g6-dedicated-50", "available":
-      true}, {"region": "au-mel", "plan": "g6-dedicated-56", "available": true}, {"region":
-      "au-mel", "plan": "g7-highmem-1", "available": true}, {"region": "au-mel", "plan":
-      "g7-highmem-2", "available": true}, {"region": "au-mel", "plan": "g7-highmem-4",
-      "available": true}, {"region": "au-mel", "plan": "g7-highmem-8", "available":
-      true}, {"region": "au-mel", "plan": "g7-highmem-16", "available": true}, {"region":
-      "au-mel", "plan": "g7-premium-2", "available": true}, {"region": "au-mel", "plan":
-      "g7-premium-4", "available": true}, {"region": "au-mel", "plan": "g7-premium-8",
-      "available": true}, {"region": "au-mel", "plan": "g7-premium-16", "available":
-      true}, {"region": "au-mel", "plan": "g7-premium-32", "available": true}, {"region":
-      "au-mel", "plan": "g7-premium-48", "available": true}, {"region": "au-mel",
-      "plan": "g7-premium-50", "available": true}, {"region": "au-mel", "plan": "g7-premium-56",
-      "available": true}, {"region": "au-mel", "plan": "g2-gpu-rtx4000a1-s", "available":
-      false}, {"region": "au-mel", "plan": "g2-gpu-rtx4000a1-m", "available": false},
-      {"region": "au-mel", "plan": "g2-gpu-rtx4000a1-l", "available": false}, {"region":
-      "au-mel", "plan": "g2-gpu-rtx4000a1-xl", "available": false}, {"region": "au-mel",
-      "plan": "g2-gpu-rtx4000a2-s", "available": false}, {"region": "au-mel", "plan":
-      "g2-gpu-rtx4000a2-m", "available": false}, {"region": "au-mel", "plan": "g2-gpu-rtx4000a2-hs",
-      "available": false}, {"region": "au-mel", "plan": "g2-gpu-rtx4000a4-s", "available":
-      false}, {"region": "au-mel", "plan": "g2-gpu-rtx4000a4-m", "available": false},
-      {"region": "au-mel", "plan": "g1-accelerated-netint-vpu-t1u1-s", "available":
-      true}, {"region": "au-mel", "plan": "g1-accelerated-netint-vpu-t1u1-m", "available":
-      true}, {"region": "au-mel", "plan": "g1-accelerated-netint-vpu-t1u2-s", "available":
-      true}, {"region": "in-bom-2", "plan": "g6-standard-1", "available": true}, {"region":
-      "in-bom-2", "plan": "g6-standard-2", "available": true}, {"region": "in-bom-2",
-      "plan": "g6-standard-4", "available": true}, {"region": "in-bom-2", "plan":
-      "g6-standard-6", "available": true}, {"region": "in-bom-2", "plan": "g6-standard-8",
-      "available": true}, {"region": "in-bom-2", "plan": "g6-standard-16", "available":
-      true}, {"region": "in-bom-2", "plan": "g6-standard-20", "available": true},
-      {"region": "in-bom-2", "plan": "g6-standard-24", "available": true}, {"region":
-      "in-bom-2", "plan": "g6-standard-32", "available": true}, {"region": "in-bom-2",
-      "plan": "g6-nanode-1", "available": true}, {"region": "in-bom-2", "plan": "g6-dedicated-2",
-      "available": true}, {"region": "in-bom-2", "plan": "g6-dedicated-4", "available":
-      true}, {"region": "in-bom-2", "plan": "g6-dedicated-8", "available": true},
-      {"region": "in-bom-2", "plan": "g6-dedicated-16", "available": true}, {"region":
-      "in-bom-2", "plan": "g6-dedicated-32", "available": true}, {"region": "in-bom-2",
-      "plan": "g6-dedicated-48", "available": true}, {"region": "in-bom-2", "plan":
-      "g1-gpu-rtx6000-1", "available": false}, {"region": "in-bom-2", "plan": "g1-gpu-rtx6000-2",
-      "available": false}, {"region": "in-bom-2", "plan": "g1-gpu-rtx6000-3", "available":
-      false}, {"region": "in-bom-2", "plan": "g1-gpu-rtx6000-4", "available": false},
-      {"region": "in-bom-2", "plan": "g6-dedicated-50", "available": true}, {"region":
-      "in-bom-2", "plan": "g6-dedicated-56", "available": true}, {"region": "in-bom-2",
-      "plan": "g7-highmem-1", "available": true}, {"region": "in-bom-2", "plan": "g7-highmem-2",
-      "available": true}, {"region": "in-bom-2", "plan": "g7-highmem-4", "available":
-      true}, {"region": "in-bom-2", "plan": "g7-highmem-8", "available": true}, {"region":
-      "in-bom-2", "plan": "g7-highmem-16", "available": true}, {"region": "in-bom-2",
-      "plan": "g7-premium-2", "available": true}, {"region": "in-bom-2", "plan": "g7-premium-4",
-      "available": true}, {"region": "in-bom-2", "plan": "g7-premium-8", "available":
-      true}, {"region": "in-bom-2", "plan": "g7-premium-16", "available": true}],
-      "page": 13, "pages": 15, "results": 1457}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Fri, 22 Aug 2025 07:24:14 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      - Accept-Encoding
-      X-Accepted-Oauth-Scopes:
-      - '*'
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
-        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
-        monitor:read_only nodebalancers:read_only object_storage:read_only stackscripts:read_only
-        volumes:read_only
-      X-Ratelimit-Limit:
-      - "1840"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/regions/availability?page=14
-    method: GET
-  response:
-    body: '{"data": [{"region": "in-bom-2", "plan": "g7-premium-32", "available":
-      true}, {"region": "in-bom-2", "plan": "g7-premium-48", "available": true}, {"region":
-      "in-bom-2", "plan": "g7-premium-50", "available": true}, {"region": "in-bom-2",
-      "plan": "g7-premium-56", "available": true}, {"region": "in-bom-2", "plan":
-      "g2-gpu-rtx4000a1-s", "available": true}, {"region": "in-bom-2", "plan": "g2-gpu-rtx4000a1-m",
-      "available": true}, {"region": "in-bom-2", "plan": "g2-gpu-rtx4000a1-l", "available":
-      true}, {"region": "in-bom-2", "plan": "g2-gpu-rtx4000a1-xl", "available": true},
-      {"region": "in-bom-2", "plan": "g2-gpu-rtx4000a2-s", "available": true}, {"region":
-      "in-bom-2", "plan": "g2-gpu-rtx4000a2-m", "available": true}, {"region": "in-bom-2",
-      "plan": "g2-gpu-rtx4000a2-hs", "available": true}, {"region": "in-bom-2", "plan":
-      "g2-gpu-rtx4000a4-s", "available": true}, {"region": "in-bom-2", "plan": "g2-gpu-rtx4000a4-m",
-      "available": true}, {"region": "in-bom-2", "plan": "g1-accelerated-netint-vpu-t1u1-s",
-      "available": false}, {"region": "in-bom-2", "plan": "g1-accelerated-netint-vpu-t1u1-m",
-      "available": false}, {"region": "in-bom-2", "plan": "g1-accelerated-netint-vpu-t1u2-s",
-      "available": false}, {"region": "de-fra-2", "plan": "g6-standard-1", "available":
-      true}, {"region": "de-fra-2", "plan": "g6-standard-2", "available": true}, {"region":
-      "de-fra-2", "plan": "g6-standard-4", "available": true}, {"region": "de-fra-2",
-      "plan": "g6-standard-6", "available": true}, {"region": "de-fra-2", "plan":
-      "g6-standard-8", "available": true}, {"region": "de-fra-2", "plan": "g6-standard-16",
-      "available": true}, {"region": "de-fra-2", "plan": "g6-standard-20", "available":
-      true}, {"region": "de-fra-2", "plan": "g6-standard-24", "available": true},
-      {"region": "de-fra-2", "plan": "g6-standard-32", "available": true}, {"region":
-      "de-fra-2", "plan": "g6-nanode-1", "available": true}, {"region": "de-fra-2",
-      "plan": "g6-dedicated-2", "available": true}, {"region": "de-fra-2", "plan":
-      "g6-dedicated-4", "available": true}, {"region": "de-fra-2", "plan": "g6-dedicated-8",
-      "available": true}, {"region": "de-fra-2", "plan": "g6-dedicated-16", "available":
-      true}, {"region": "de-fra-2", "plan": "g6-dedicated-32", "available": true},
-      {"region": "de-fra-2", "plan": "g6-dedicated-48", "available": true}, {"region":
-      "de-fra-2", "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "de-fra-2",
-      "plan": "g1-gpu-rtx6000-2", "available": false}, {"region": "de-fra-2", "plan":
-      "g1-gpu-rtx6000-3", "available": false}, {"region": "de-fra-2", "plan": "g1-gpu-rtx6000-4",
-      "available": false}, {"region": "de-fra-2", "plan": "g6-dedicated-50", "available":
-      true}, {"region": "de-fra-2", "plan": "g6-dedicated-56", "available": true},
-      {"region": "de-fra-2", "plan": "g7-highmem-1", "available": true}, {"region":
-      "de-fra-2", "plan": "g7-highmem-2", "available": true}, {"region": "de-fra-2",
-      "plan": "g7-highmem-4", "available": true}, {"region": "de-fra-2", "plan": "g7-highmem-8",
-      "available": true}, {"region": "de-fra-2", "plan": "g7-highmem-16", "available":
-      true}, {"region": "de-fra-2", "plan": "g7-premium-2", "available": true}, {"region":
-      "de-fra-2", "plan": "g7-premium-4", "available": true}, {"region": "de-fra-2",
-      "plan": "g7-premium-8", "available": true}, {"region": "de-fra-2", "plan": "g7-premium-16",
-      "available": true}, {"region": "de-fra-2", "plan": "g7-premium-32", "available":
-      true}, {"region": "de-fra-2", "plan": "g7-premium-48", "available": true}, {"region":
-      "de-fra-2", "plan": "g7-premium-50", "available": true}, {"region": "de-fra-2",
-      "plan": "g7-premium-56", "available": true}, {"region": "de-fra-2", "plan":
-      "g2-gpu-rtx4000a1-s", "available": true}, {"region": "de-fra-2", "plan": "g2-gpu-rtx4000a1-m",
-      "available": true}, {"region": "de-fra-2", "plan": "g2-gpu-rtx4000a1-l", "available":
-      true}, {"region": "de-fra-2", "plan": "g2-gpu-rtx4000a1-xl", "available": true},
-      {"region": "de-fra-2", "plan": "g2-gpu-rtx4000a2-s", "available": true}, {"region":
-      "de-fra-2", "plan": "g2-gpu-rtx4000a2-m", "available": true}, {"region": "de-fra-2",
-      "plan": "g2-gpu-rtx4000a2-hs", "available": true}, {"region": "de-fra-2", "plan":
-      "g2-gpu-rtx4000a4-s", "available": true}, {"region": "de-fra-2", "plan": "g2-gpu-rtx4000a4-m",
-      "available": true}, {"region": "de-fra-2", "plan": "g1-accelerated-netint-vpu-t1u1-s",
-      "available": true}, {"region": "de-fra-2", "plan": "g1-accelerated-netint-vpu-t1u1-m",
-      "available": true}, {"region": "de-fra-2", "plan": "g1-accelerated-netint-vpu-t1u2-s",
-      "available": true}, {"region": "sg-sin-2", "plan": "g6-standard-1", "available":
-      true}, {"region": "sg-sin-2", "plan": "g6-standard-2", "available": true}, {"region":
-      "sg-sin-2", "plan": "g6-standard-4", "available": true}, {"region": "sg-sin-2",
-      "plan": "g6-standard-6", "available": true}, {"region": "sg-sin-2", "plan":
-      "g6-standard-8", "available": true}, {"region": "sg-sin-2", "plan": "g6-standard-16",
-      "available": true}, {"region": "sg-sin-2", "plan": "g6-standard-20", "available":
-      true}, {"region": "sg-sin-2", "plan": "g6-standard-24", "available": true},
-      {"region": "sg-sin-2", "plan": "g6-standard-32", "available": true}, {"region":
-      "sg-sin-2", "plan": "g6-nanode-1", "available": true}, {"region": "sg-sin-2",
-      "plan": "g6-dedicated-2", "available": true}, {"region": "sg-sin-2", "plan":
-      "g6-dedicated-4", "available": true}, {"region": "sg-sin-2", "plan": "g6-dedicated-8",
-      "available": true}, {"region": "sg-sin-2", "plan": "g6-dedicated-16", "available":
-      true}, {"region": "sg-sin-2", "plan": "g6-dedicated-32", "available": true},
-      {"region": "sg-sin-2", "plan": "g6-dedicated-48", "available": true}, {"region":
-      "sg-sin-2", "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "sg-sin-2",
-      "plan": "g1-gpu-rtx6000-2", "available": false}, {"region": "sg-sin-2", "plan":
-      "g1-gpu-rtx6000-3", "available": false}, {"region": "sg-sin-2", "plan": "g1-gpu-rtx6000-4",
-      "available": false}, {"region": "sg-sin-2", "plan": "g6-dedicated-50", "available":
-      true}, {"region": "sg-sin-2", "plan": "g6-dedicated-56", "available": true},
-      {"region": "sg-sin-2", "plan": "g7-highmem-1", "available": true}, {"region":
-      "sg-sin-2", "plan": "g7-highmem-2", "available": true}, {"region": "sg-sin-2",
-      "plan": "g7-highmem-4", "available": true}, {"region": "sg-sin-2", "plan": "g7-highmem-8",
-      "available": true}, {"region": "sg-sin-2", "plan": "g7-highmem-16", "available":
-      true}, {"region": "sg-sin-2", "plan": "g7-premium-2", "available": true}, {"region":
-      "sg-sin-2", "plan": "g7-premium-4", "available": true}, {"region": "sg-sin-2",
-      "plan": "g7-premium-8", "available": true}, {"region": "sg-sin-2", "plan": "g7-premium-16",
-      "available": true}, {"region": "sg-sin-2", "plan": "g7-premium-32", "available":
-      true}, {"region": "sg-sin-2", "plan": "g7-premium-48", "available": true}, {"region":
-      "sg-sin-2", "plan": "g7-premium-50", "available": true}, {"region": "sg-sin-2",
-      "plan": "g7-premium-56", "available": true}, {"region": "sg-sin-2", "plan":
-      "g2-gpu-rtx4000a1-s", "available": true}, {"region": "sg-sin-2", "plan": "g2-gpu-rtx4000a1-m",
-      "available": true}], "page": 14, "pages": 15, "results": 1457}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Fri, 22 Aug 2025 07:24:14 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      - Accept-Encoding
-      X-Accepted-Oauth-Scopes:
-      - '*'
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
-        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
-        monitor:read_only nodebalancers:read_only object_storage:read_only stackscripts:read_only
-        volumes:read_only
-      X-Ratelimit-Limit:
-      - "1840"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/regions/availability?page=15
-    method: GET
-  response:
-    body: '{"data": [{"region": "sg-sin-2", "plan": "g2-gpu-rtx4000a1-l", "available":
-      true}, {"region": "sg-sin-2", "plan": "g2-gpu-rtx4000a1-xl", "available": true},
-      {"region": "sg-sin-2", "plan": "g2-gpu-rtx4000a2-s", "available": true}, {"region":
-      "sg-sin-2", "plan": "g2-gpu-rtx4000a2-m", "available": true}, {"region": "sg-sin-2",
-      "plan": "g2-gpu-rtx4000a2-hs", "available": true}, {"region": "sg-sin-2", "plan":
-      "g2-gpu-rtx4000a4-s", "available": true}, {"region": "sg-sin-2", "plan": "g2-gpu-rtx4000a4-m",
-      "available": true}, {"region": "sg-sin-2", "plan": "g1-accelerated-netint-vpu-t1u1-s",
-      "available": false}, {"region": "sg-sin-2", "plan": "g1-accelerated-netint-vpu-t1u1-m",
-      "available": false}, {"region": "sg-sin-2", "plan": "g1-accelerated-netint-vpu-t1u2-s",
-      "available": false}, {"region": "jp-tyo-3", "plan": "g6-standard-1", "available":
-      true}, {"region": "jp-tyo-3", "plan": "g6-standard-2", "available": true}, {"region":
-      "jp-tyo-3", "plan": "g6-standard-4", "available": true}, {"region": "jp-tyo-3",
-      "plan": "g6-standard-6", "available": true}, {"region": "jp-tyo-3", "plan":
-      "g6-standard-8", "available": true}, {"region": "jp-tyo-3", "plan": "g6-standard-16",
-      "available": true}, {"region": "jp-tyo-3", "plan": "g6-standard-20", "available":
-      true}, {"region": "jp-tyo-3", "plan": "g6-standard-24", "available": true},
-      {"region": "jp-tyo-3", "plan": "g6-standard-32", "available": true}, {"region":
-      "jp-tyo-3", "plan": "g6-nanode-1", "available": true}, {"region": "jp-tyo-3",
-      "plan": "g6-dedicated-2", "available": true}, {"region": "jp-tyo-3", "plan":
-      "g6-dedicated-4", "available": true}, {"region": "jp-tyo-3", "plan": "g6-dedicated-8",
-      "available": true}, {"region": "jp-tyo-3", "plan": "g6-dedicated-16", "available":
-      true}, {"region": "jp-tyo-3", "plan": "g6-dedicated-32", "available": true},
-      {"region": "jp-tyo-3", "plan": "g6-dedicated-48", "available": true}, {"region":
-      "jp-tyo-3", "plan": "g1-gpu-rtx6000-1", "available": false}, {"region": "jp-tyo-3",
-      "plan": "g1-gpu-rtx6000-2", "available": false}, {"region": "jp-tyo-3", "plan":
-      "g1-gpu-rtx6000-3", "available": false}, {"region": "jp-tyo-3", "plan": "g1-gpu-rtx6000-4",
-      "available": false}, {"region": "jp-tyo-3", "plan": "g6-dedicated-50", "available":
-      true}, {"region": "jp-tyo-3", "plan": "g6-dedicated-56", "available": true},
-      {"region": "jp-tyo-3", "plan": "g7-highmem-1", "available": true}, {"region":
-      "jp-tyo-3", "plan": "g7-highmem-2", "available": true}, {"region": "jp-tyo-3",
-      "plan": "g7-highmem-4", "available": true}, {"region": "jp-tyo-3", "plan": "g7-highmem-8",
-      "available": true}, {"region": "jp-tyo-3", "plan": "g7-highmem-16", "available":
-      true}, {"region": "jp-tyo-3", "plan": "g7-premium-2", "available": true}, {"region":
-      "jp-tyo-3", "plan": "g7-premium-4", "available": true}, {"region": "jp-tyo-3",
-      "plan": "g7-premium-8", "available": true}, {"region": "jp-tyo-3", "plan": "g7-premium-16",
-      "available": true}, {"region": "jp-tyo-3", "plan": "g7-premium-32", "available":
-      true}, {"region": "jp-tyo-3", "plan": "g7-premium-48", "available": true}, {"region":
-      "jp-tyo-3", "plan": "g7-premium-50", "available": true}, {"region": "jp-tyo-3",
-      "plan": "g7-premium-56", "available": true}, {"region": "jp-tyo-3", "plan":
-      "g2-gpu-rtx4000a1-s", "available": false}, {"region": "jp-tyo-3", "plan": "g2-gpu-rtx4000a1-m",
-      "available": false}, {"region": "jp-tyo-3", "plan": "g2-gpu-rtx4000a1-l", "available":
-      false}, {"region": "jp-tyo-3", "plan": "g2-gpu-rtx4000a1-xl", "available": false},
-      {"region": "jp-tyo-3", "plan": "g2-gpu-rtx4000a2-s", "available": false}, {"region":
-      "jp-tyo-3", "plan": "g2-gpu-rtx4000a2-m", "available": false}, {"region": "jp-tyo-3",
-      "plan": "g2-gpu-rtx4000a2-hs", "available": false}, {"region": "jp-tyo-3", "plan":
-      "g2-gpu-rtx4000a4-s", "available": false}, {"region": "jp-tyo-3", "plan": "g2-gpu-rtx4000a4-m",
-      "available": false}, {"region": "jp-tyo-3", "plan": "g1-accelerated-netint-vpu-t1u1-s",
-      "available": false}, {"region": "jp-tyo-3", "plan": "g1-accelerated-netint-vpu-t1u1-m",
-      "available": false}, {"region": "jp-tyo-3", "plan": "g1-accelerated-netint-vpu-t1u2-s",
-      "available": false}], "page": 15, "pages": 15, "results": 1457}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Fri, 22 Aug 2025 07:24:14 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      - Accept-Encoding
-      X-Accepted-Oauth-Scopes:
-      - '*'
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
-        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
-        monitor:read_only nodebalancers:read_only object_storage:read_only stackscripts:read_only
-        volumes:read_only
-      X-Ratelimit-Limit:
-      - "1840"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
