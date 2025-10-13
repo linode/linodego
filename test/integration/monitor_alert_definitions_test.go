@@ -165,9 +165,24 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 
 	// Clean up created alert definition
 	if createdAlert != nil {
-		// Wait for 2 minutes before deletion for update to complete
-		time.Sleep(2 * time.Minute)
-		err = client.DeleteMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, createdAlert.ID)
-		assert.NoError(t, err)
+		// Retry deletion with exponential backoff for up to 2 minutes
+		maxWait := 2 * time.Minute
+		baseDelay := 2 * time.Second
+		var lastErr error
+		start := time.Now()
+		for attempt := 0; time.Since(start) < maxWait; attempt++ {
+			err = client.DeleteMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, createdAlert.ID)
+			if err == nil {
+				break
+			}
+			lastErr = err
+			// Exponential backoff, capped at 30s
+			sleep := baseDelay * (1 << attempt)
+			if sleep > 30*time.Second {
+				sleep = 30 * time.Second
+			}
+			time.Sleep(sleep)
+		}
+		assert.NoError(t, err, "DeleteMonitorAlertDefinition failed after retries: %v", lastErr)
 	}
 }
