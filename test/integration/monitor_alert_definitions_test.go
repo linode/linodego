@@ -53,14 +53,14 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 		fetchedChannelID = alerts[0].AlertChannels[0].ID
 		fetchedChannelLabel = alerts[0].AlertChannels[0].Label
 	} else {
-		// Fallback to GetAlertChannels (some fixtures expose a single alert-channel endpoint)
-		fetchedChannelResp, err := client.GetAlertChannels(context.Background())
-		if err != nil {
+		// Fallback to ListAlertChannels to get available channels
+		channels, err := client.ListAlertChannels(context.Background(), nil)
+		if err != nil || len(channels) == 0 {
 			t.Fatalf("failed to determine a monitor channel to use: %s", err)
 		}
-		channelID = fetchedChannelResp.ID
-		fetchedChannelID = fetchedChannelResp.ID
-		fetchedChannelLabel = fetchedChannelResp.Label
+		channelID = channels[0].ID
+		fetchedChannelID = channels[0].ID
+		fetchedChannelLabel = channels[0].Label
 	}
 	// Validate the chosen channel
 	assert.NotZero(t, fetchedChannelID, "fetchedChannel.ID should not be zero")

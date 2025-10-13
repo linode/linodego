@@ -14,17 +14,15 @@ type AlertChannelEnvelope struct {
 
 // AlertChannel represents a Monitor Channel object.
 type AlertChannel struct {
-	ID           int                    `json:"id"`
-	Alerts       []AlertChannelEnvelope `json:"alerts"`
-	Label        string                 `json:"label"`
-	Channel_type string                 `json:"channel_type"`
-	Content      ChannelContent         `json:"content"`
-	Type         AlertType              `json:"type"`
-	Details      AlertChannelDetail     `json:"details"`
-	Created      string                 `json:"created"`
-	Created_by   string                 `json:"created_by"`
-	Updated      string                 `json:"updated"`
-	Updated_by   string                 `json:"updated_by"`
+	ID          int            `json:"id"`
+	Label       string         `json:"label"`
+	ChannelType string         `json:"channel_type"`
+	Content     ChannelContent `json:"content"`
+	Created     string         `json:"created"`
+	CreatedBy   string         `json:"created_by"`
+	Updated     string         `json:"updated"`
+	UpdatedBy   string         `json:"updated_by"`
+	URL         string         `json:"url"`
 }
 
 // AlertChannelDetail represents the details of a Monitor Channel.
@@ -61,19 +59,14 @@ type ChannelContent struct {
 	// Other channel types like 'webhook', 'slack' could be added here as optional fields.
 }
 
-// ListMonitorChannels gets a paginated list of Monitor Channels.
+// ListAlertChannels gets a paginated list of Alert Channels.
 func (c *Client) ListAlertChannels(ctx context.Context, opts *ListOptions) ([]AlertChannel, error) {
-	endpoint := formatAPIV4BetaPath("monitor/channels")
+	endpoint := formatAPIV4BetaPath("monitor/alert-channels")
 	return getPaginatedResults[AlertChannel](ctx, c, endpoint, opts)
 }
 
-// GetMonitorChannel gets a Monitor Channel by ID.
+// GetAlertChannel gets an Alert Channel by ID.
 func (c *Client) GetAlertChannel(ctx context.Context, channelID int) (*AlertChannel, error) {
-	e := formatAPIV4BetaPath("monitor/channels/%d", channelID)
-	return doGETRequest[AlertChannel](ctx, c, e)
-}
-
-func (c *Client) GetAlertChannels(ctx context.Context) (*AlertChannel, error) {
-	e := formatAPIV4BetaPath("monitor/alert-channels/")
+	e := formatAPIV4BetaPath("monitor/alert-channels/%d", channelID)
 	return doGETRequest[AlertChannel](ctx, c, e)
 }

@@ -84,6 +84,13 @@ const (
 	SeverityInfo   Severity = 3
 )
 
+// CriteriaCondition represents supported criteria conditions
+type CriteriaCondition string
+
+const (
+	CriteriaConditionAll CriteriaCondition = "ALL"
+)
+
 // AlertDefinitionCreateOptions are the options used to create a new alert definition.
 type AlertDefinitionCreateOptions struct {
 	ServiceType       string             `json:"service_type"`                 // mandatory
