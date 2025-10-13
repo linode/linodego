@@ -2,6 +2,7 @@ package unit
 
 import (
 	"context"
+	"encoding/json"
 	"testing"
 
 	"github.com/linode/linodego"
@@ -42,6 +43,33 @@ func TestFirewallRule_Get(t *testing.T) {
 	assert.Equal(t, linodego.NetworkProtocol("TCP"), firewallRule.Outbound[0].Protocol)
 	assert.ElementsMatch(t, []string{"192.0.2.0/24", "198.51.100.2/32"}, *firewallRule.Outbound[0].Addresses.IPv4)
 	assert.ElementsMatch(t, []string{"2001:DB8::/128"}, *firewallRule.Outbound[0].Addresses.IPv6)
+}
+
+func TestFirewallRule_MarshalJSON(t *testing.T) {
+	ruleWithRuleset := linodego.FirewallRule{Ruleset: 51}
+	data, err := json.Marshal(ruleWithRuleset)
+	assert.NoError(t, err)
+	assert.JSONEq(t, `{"ruleset":51}`, string(data))
+
+	ipv4 := []string{"pl::vpcs:123"}
+	ruleWithoutRuleset := linodego.FirewallRule{
+		Action:   "ACCEPT",
+		Label:    "allow-vpc",
+		Ports:    "443",
+		Protocol: linodego.NetworkProtocol("TCP"),
+		Addresses: linodego.NetworkAddresses{
+			IPv4: &ipv4,
+		},
+	}
+	data, err = json.Marshal(ruleWithoutRuleset)
+	assert.NoError(t, err)
+	assert.JSONEq(t, `{
+        "action":"ACCEPT",
+        "label":"allow-vpc",
+        "ports":"443",
+        "protocol":"TCP",
+        "addresses":{"ipv4":["pl::vpcs:123"]}
+    }`, string(data))
 }
 
 func TestFirewallRule_Update(t *testing.T) {

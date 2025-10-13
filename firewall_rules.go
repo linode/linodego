@@ -23,6 +23,8 @@ type NetworkAddresses struct {
 }
 
 // A FirewallRule is a whitelist of ports, protocols, and addresses for which traffic should be allowed.
+// The ipv4/ipv6 address lists may contain Prefix List tokens (for example, "pl::..." or "pl:system:...")
+// in addition to literal IP addresses.
 type FirewallRule struct {
 	Action      string           `json:"action"`
 	Label       string           `json:"label"`

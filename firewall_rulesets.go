@@ -35,8 +35,33 @@ type RuleSet struct {
 
 // UnmarshalJSON implements custom timestamp parsing for RuleSet.
 func (r *RuleSet) UnmarshalJSON(b []byte) error {
-	type Mask RuleSet
+	var raw map[string]json.RawMessage
+	if err := json.Unmarshal(b, &raw); err != nil {
+		return err
+	}
 
+	if v, ok := raw["is_service_defined"]; ok {
+		var boolValue bool
+		if err := json.Unmarshal(v, &boolValue); err != nil {
+			var intValue int
+			if err := json.Unmarshal(v, &intValue); err != nil {
+				return err
+			}
+			boolValue = intValue != 0
+		}
+		if boolValue {
+			raw["is_service_defined"] = json.RawMessage("true")
+		} else {
+			raw["is_service_defined"] = json.RawMessage("false")
+		}
+	}
+
+	normalized, err := json.Marshal(raw)
+	if err != nil {
+		return err
+	}
+
+	type Mask RuleSet
 	aux := struct {
 		*Mask
 
@@ -46,7 +71,7 @@ func (r *RuleSet) UnmarshalJSON(b []byte) error {
 	}{
 		Mask: (*Mask)(r),
 	}
-	if err := json.Unmarshal(b, &aux); err != nil {
+	if err := json.Unmarshal(normalized, &aux); err != nil {
 		return err
 	}
 
