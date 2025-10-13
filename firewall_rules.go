@@ -39,7 +39,7 @@ type FirewallRule struct {
 	Ruleset int `json:"ruleset,omitempty"`
 }
 
-// MarshalJSON ensures that when a rule references a Rule Set (Ruleset != nil),
+// MarshalJSON ensures that when a rule references a Rule Set (Ruleset != 0),
 // only the reference shape { "ruleset": <id> } is emitted. Otherwise, the
 // ordinary rule fields are emitted without the ruleset key.
 func (r FirewallRule) MarshalJSON() ([]byte, error) {

@@ -2,7 +2,6 @@ package integration
 
 import (
 	"context"
-	"fmt"
 	"testing"
 
 	"github.com/linode/linodego"
@@ -14,11 +13,7 @@ func TestFirewallRuleSets_CRUD(t *testing.T) {
 
 	ctx := context.Background()
 
-	unique := getUniqueText()
-	if len(unique) > 8 {
-		unique = unique[len(unique)-8:]
-	}
-	label := fmt.Sprintf("rs-%s", unique)
+	label := "rs-51452000"
 	createOpts := linodego.RuleSetCreateOptions{
 		Label:       label,
 		Description: "Allow inbound HTTP",

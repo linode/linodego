@@ -3,6 +3,7 @@ package linodego
 import (
 	"context"
 	"encoding/json"
+	"strconv"
 	"time"
 
 	"github.com/linode/linodego/internal/parseabletime"
@@ -17,7 +18,7 @@ const (
 	FirewallRuleSetTypeOutbound FirewallRuleSetType = "outbound"
 )
 
-// FirewallRuleSetV2 represents the Rule Set resource.
+// RuleSet represents the Rule Set resource.
 // Note: created/updated/deleted are parsed via UnmarshalJSON into time.Time pointers.
 type RuleSet struct {
 	ID               int                 `json:"id"`
@@ -36,24 +37,13 @@ type RuleSet struct {
 // UnmarshalJSON implements custom timestamp parsing for RuleSet.
 func (r *RuleSet) UnmarshalJSON(b []byte) error {
 	var raw map[string]json.RawMessage
+
 	if err := json.Unmarshal(b, &raw); err != nil {
 		return err
 	}
 
-	if v, ok := raw["is_service_defined"]; ok {
-		var boolValue bool
-		if err := json.Unmarshal(v, &boolValue); err != nil {
-			var intValue int
-			if err := json.Unmarshal(v, &intValue); err != nil {
-				return err
-			}
-			boolValue = intValue != 0
-		}
-		if boolValue {
-			raw["is_service_defined"] = json.RawMessage("true")
-		} else {
-			raw["is_service_defined"] = json.RawMessage("false")
-		}
+	if err := normalizeIsServiceDefined(raw); err != nil {
+		return err
 	}
 
 	normalized, err := json.Marshal(raw)
@@ -62,6 +52,7 @@ func (r *RuleSet) UnmarshalJSON(b []byte) error {
 	}
 
 	type Mask RuleSet
+
 	aux := struct {
 		*Mask
 
@@ -71,6 +62,7 @@ func (r *RuleSet) UnmarshalJSON(b []byte) error {
 	}{
 		Mask: (*Mask)(r),
 	}
+
 	if err := json.Unmarshal(normalized, &aux); err != nil {
 		return err
 	}
@@ -86,6 +78,28 @@ func (r *RuleSet) UnmarshalJSON(b []byte) error {
 	if aux.Deleted != nil {
 		r.Deleted = (*time.Time)(aux.Deleted)
 	}
+
+	return nil
+}
+
+func normalizeIsServiceDefined(raw map[string]json.RawMessage) error {
+	v, ok := raw["is_service_defined"]
+	if !ok {
+		return nil
+	}
+
+	var boolValue bool
+	if err := json.Unmarshal(v, &boolValue); err == nil {
+		raw["is_service_defined"] = json.RawMessage(strconv.FormatBool(boolValue))
+		return nil
+	}
+
+	var intValue int
+	if err := json.Unmarshal(v, &intValue); err != nil {
+		return err
+	}
+
+	raw["is_service_defined"] = json.RawMessage(strconv.FormatBool(intValue != 0))
 
 	return nil
 }
