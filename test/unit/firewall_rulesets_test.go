@@ -111,7 +111,7 @@ func TestFirewallRuleSets_Get(t *testing.T) {
 	assert.Equal(t, linodego.FirewallRuleSetTypeOutbound, rs.Type)
 	assert.True(t, rs.IsServiceDefined)
 	if assert.Len(t, rs.Rules, 1) {
-		assert.Equal(t, 77, rs.Rules[0].Ruleset)
+		assert.Equal(t, 77, rs.Rules[0].RuleSet)
 	}
 	if assert.NotNil(t, rs.Created) {
 		assert.Equal(t, time.Date(2024, time.February, 1, 1, 1, 1, 0, time.UTC), rs.Created.UTC())
@@ -265,7 +265,7 @@ func TestRuleSet_UnmarshalJSON(t *testing.T) {
 		assert.Equal(t, time.Date(2023, time.May, 5, 5, 5, 5, 0, time.UTC), rs.Deleted.UTC())
 	}
 	if assert.Len(t, rs.Rules, 1) {
-		assert.Equal(t, 12, rs.Rules[0].Ruleset)
+		assert.Equal(t, 12, rs.Rules[0].RuleSet)
 	}
 }
 
