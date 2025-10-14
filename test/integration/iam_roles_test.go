@@ -3,7 +3,6 @@ package integration
 import (
 	"context"
 	"testing"
-
 )
 
 func TestIAM_GetAccountRolePermissions(t *testing.T) {
