@@ -11,8 +11,9 @@ import (
 // VPCSubnetLinodeInterface represents an interface on a Linode that is currently
 // assigned to this VPC subnet.
 type VPCSubnetLinodeInterface struct {
-	ID     int  `json:"id"`
-	Active bool `json:"active"`
+	ID       int  `json:"id"`
+	Active   bool `json:"active"`
+	ConfigID *int `json:"config_id"`
 }
 
 // VPCSubnetLinode represents a Linode currently assigned to a VPC subnet.
@@ -21,18 +22,41 @@ type VPCSubnetLinode struct {
 	Interfaces []VPCSubnetLinodeInterface `json:"interfaces"`
 }
 
+// VPCSubnetDatabase represents a Linode currently assigned to a VPC subnet.
+type VPCSubnetDatabase struct {
+	ID         int      `json:"id"`
+	IPv4Range  *string  `json:"ipv4_range"`
+	IPv6Ranges []string `json:"ipv6_ranges"`
+}
+
 type VPCSubnet struct {
-	ID      int               `json:"id"`
-	Label   string            `json:"label"`
-	IPv4    string            `json:"ipv4"`
-	Linodes []VPCSubnetLinode `json:"linodes"`
-	Created *time.Time        `json:"-"`
-	Updated *time.Time        `json:"-"`
+	ID    int    `json:"id"`
+	Label string `json:"label"`
+	IPv4  string `json:"ipv4"`
+
+	// NOTE: IPv6 VPCs may not currently be available to all users.
+	IPv6 []VPCIPv6Range `json:"ipv6"`
+
+	Linodes   []VPCSubnetLinode   `json:"linodes"`
+	Databases []VPCSubnetDatabase `json:"databases"`
+
+	Created *time.Time `json:"-"`
+	Updated *time.Time `json:"-"`
 }
 
 type VPCSubnetCreateOptions struct {
 	Label string `json:"label"`
 	IPv4  string `json:"ipv4"`
+
+	// NOTE: IPv6 VPCs may not currently be available to all users.
+	IPv6 []VPCSubnetCreateOptionsIPv6 `json:"ipv6,omitempty"`
+}
+
+// VPCSubnetCreateOptionsIPv6 represents a single IPv6 range assigned to a VPC
+// which is specified during a VPC subnet's creation.
+// NOTE: IPv6 VPCs may not currently be available to all users.
+type VPCSubnetCreateOptionsIPv6 struct {
+	Range *string `json:"range,omitempty"`
 }
 
 type VPCSubnetUpdateOptions struct {
@@ -64,6 +88,11 @@ func (v VPCSubnet) GetCreateOptions() VPCSubnetCreateOptions {
 	return VPCSubnetCreateOptions{
 		Label: v.Label,
 		IPv4:  v.IPv4,
+		IPv6: mapSlice(v.IPv6, func(i VPCIPv6Range) VPCSubnetCreateOptionsIPv6 {
+			return VPCSubnetCreateOptionsIPv6{
+				Range: copyValue(&i.Range),
+			}
+		}),
 	}
 }
 
