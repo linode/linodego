@@ -18,17 +18,17 @@ func TestPrefixLists_List(t *testing.T) {
 	response := map[string]any{
 		"data": []map[string]any{
 			{
-				"id":                  321,
-				"name":                "pl:system:resolvers:us-iad:staging",
-				"description":         "Resolver ACL",
-				"visibility":          "restricted",
+				"id":                   321,
+				"name":                 "pl:system:resolvers:us-iad:staging",
+				"description":          "Resolver ACL",
+				"visibility":           "restricted",
 				"source_prefixlist_id": nil,
-				"ipv4":                []string{"139.144.192.62", "139.144.192.60"},
-				"ipv6":                []string{"2600:3c05:e001:bc::1", "2600:3c05:e001:bc::2"},
-				"version":             4,
-				"created":             "2018-01-01T00:01:01",
-				"updated":             "2019-01-01T00:01:01",
-				"deleted":             nil,
+				"ipv4":                 []string{"139.144.192.62", "139.144.192.60"},
+				"ipv6":                 []string{"2600:3c05:e001:bc::1", "2600:3c05:e001:bc::2"},
+				"version":              4,
+				"created":              "2018-01-01T00:01:01",
+				"updated":              "2019-01-01T00:01:01",
+				"deleted":              nil,
 			},
 		},
 		"page":    1,
@@ -69,17 +69,17 @@ func TestPrefixLists_Get(t *testing.T) {
 	prefixListID := 654
 
 	response := map[string]any{
-		"id":                  prefixListID,
-		"name":                "pl::customer:example",
-		"description":         "Example customer list",
-		"visibility":          "account",
+		"id":                   prefixListID,
+		"name":                 "pl::customer:example",
+		"description":          "Example customer list",
+		"visibility":           "account",
 		"source_prefixlist_id": nil,
-		"ipv4":                []string{"198.51.100.0/24"},
-		"ipv6":                []string{"2001:db8::/32"},
-		"version":             2,
-		"created":             "2020-02-02T02:02:02",
-		"updated":             "2020-03-03T03:03:03",
-		"deleted":             nil,
+		"ipv4":                 []string{"198.51.100.0/24"},
+		"ipv6":                 []string{"2001:db8::/32"},
+		"version":              2,
+		"created":              "2020-02-02T02:02:02",
+		"updated":              "2020-03-03T03:03:03",
+		"deleted":              nil,
 	}
 
 	base.MockGet(formatMockAPIPath("networking/prefixlists/%d", prefixListID), response)
