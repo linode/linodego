@@ -1,0 +1,639 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/entities?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 99284883, "label": "devenv-devcloud", "type": "linode"},
+      {"id": 99290132, "label": "test-linode", "type": "linode"}, {"id": 99294751,
+      "label": "lalenche-cometlab", "type": "linode"}, {"id": 99298866, "label": "dx-devenv-test",
+      "type": "linode"}, {"id": 99301780, "label": "ubuntu-22.04-devenv", "type":
+      "linode"}, {"id": 99351123, "label": "linode99351123", "type": "linode"}, {"id":
+      99366809, "label": "lke12802-21188-4808a4ae0000", "type": "linode"}, {"id":
+      99366813, "label": "lke12802-21190-32c7acac0000", "type": "linode"}, {"id":
+      99366814, "label": "lke12804-21191-20820ed80000-xxx", "type": "linode"}, {"id":
+      99366817, "label": "lke12804-21193-3c3652190000", "type": "linode"}, {"id":
+      99378927, "label": "hacpc-cpc-zsalwass-21dc-master-1", "type": "linode"}, {"id":
+      99378928, "label": "hacpc-cpc-zsalwass-21dc-worker-1", "type": "linode"}, {"id":
+      99378929, "label": "hacpc-cpc-zsalwass-21dc-worker-4", "type": "linode"}, {"id":
+      99378930, "label": "hacpc-cpc-zsalwass-21dc-worker-2", "type": "linode"}, {"id":
+      99378931, "label": "hacpc-cpc-zsalwass-21dc-master-3", "type": "linode"}, {"id":
+      99378932, "label": "cpc-zsalwass-21dc-haproxy-1", "type": "linode"}, {"id":
+      99378933, "label": "hacpc-cpc-zsalwass-21dc-worker-3", "type": "linode"}, {"id":
+      99378934, "label": "hacpc-cpc-zsalwass-21dc-master-2", "type": "linode"}, {"id":
+      99403477, "label": "lgassawa-cometlab", "type": "linode"}, {"id": 99410225,
+      "label": "reserved-ip-sqa", "type": "linode"}, {"id": 99428014, "label": "debian-nb-a-1",
+      "type": "linode"}, {"id": 99428018, "label": "debian-nb-b-2", "type": "linode"},
+      {"id": 99428019, "label": "debian-nb-c-3", "type": "linode"}, {"id": 99465989,
+      "label": "legacy", "type": "linode"}, {"id": 99468761, "label": "ubuntu-pl-labkrk",
+      "type": "linode"}, {"id": 99468764, "label": "ubuntu-pl-labkrk-clone", "type":
+      "linode"}, {"id": 99469238, "label": "debian-pl-labkrk-2", "type": "linode"},
+      {"id": 99481077, "label": "aptiwari-debian-11", "type": "linode"}, {"id": 99482262,
+      "label": "reserved-ip-sqa-3", "type": "linode"}, {"id": 99483899, "label": "ubuntu-pl-dmr-devenv-2",
+      "type": "linode"}, {"id": 99499019, "label": "seen_test", "type": "linode"},
+      {"id": 99499172, "label": "reserved-ip-sqa-4", "type": "linode"}, {"id": 99499419,
+      "label": "ubuntu-asirwani", "type": "linode"}, {"id": 99507229, "label": "test-csec-fiqcq",
+      "type": "linode"}, {"id": 99509066, "label": "LB-pl-labkrk-2", "type": "linode"},
+      {"id": 99546012, "label": "vm-cm-migrate-test", "type": "linode"}, {"id": 99546082,
+      "label": "qemu-migrate-test-1-clone", "type": "linode"}, {"id": 99555299, "label":
+      "jaalah-test", "type": "linode"}, {"id": 99555301, "label": "jaalah-test-2",
+      "type": "linode"}, {"id": 99574956, "label": "go-test-ins-wo-disk-gb91cy40f72j",
+      "type": "linode"}, {"id": 99576700, "label": "linode99576700", "type": "linode"},
+      {"id": 99576701, "label": "linode99576701", "type": "linode"}, {"id": 99576724,
+      "label": "linode99576724", "type": "linode"}, {"id": 99576725, "label": "linode99576725",
+      "type": "linode"}, {"id": 99576726, "label": "linode99576726", "type": "linode"},
+      {"id": 99576727, "label": "linode99576727", "type": "linode"}, {"id": 99576772,
+      "label": "linode99576772", "type": "linode"}, {"id": 99576782, "label": "linode99576782",
+      "type": "linode"}, {"id": 99576783, "label": "linode99576783", "type": "linode"},
+      {"id": 99576785, "label": "linode99576785", "type": "linode"}, {"id": 99576786,
+      "label": "linode99576786", "type": "linode"}, {"id": 99576868, "label": "linode99576868",
+      "type": "linode"}, {"id": 99576869, "label": "linode99576869", "type": "linode"},
+      {"id": 99576870, "label": "linode99576870", "type": "linode"}, {"id": 99576871,
+      "label": "linode99576871", "type": "linode"}, {"id": 99577439, "label": "linode99577439",
+      "type": "linode"}, {"id": 99577454, "label": "linode99577454", "type": "linode"},
+      {"id": 99577455, "label": "linode99577455", "type": "linode"}, {"id": 99577456,
+      "label": "linode99577456", "type": "linode"}, {"id": 99577471, "label": "linode99577471",
+      "type": "linode"}, {"id": 99577479, "label": "linode99577479", "type": "linode"},
+      {"id": 99578010, "label": "linode99578010", "type": "linode"}, {"id": 99578011,
+      "label": "linode99578011", "type": "linode"}, {"id": 99578014, "label": "linode99578014",
+      "type": "linode"}, {"id": 99578015, "label": "linode99578015", "type": "linode"},
+      {"id": 99578061, "label": "linode99578061", "type": "linode"}, {"id": 99578062,
+      "label": "linode99578062", "type": "linode"}, {"id": 99578066, "label": "linode99578066",
+      "type": "linode"}, {"id": 99578067, "label": "linode99578067", "type": "linode"},
+      {"id": 99578071, "label": "linode99578071", "type": "linode"}, {"id": 99578072,
+      "label": "linode99578072", "type": "linode"}, {"id": 99600865, "label": "linode99600865",
+      "type": "linode"}, {"id": 99600866, "label": "linode99600866", "type": "linode"},
+      {"id": 99601138, "label": "linode99601138", "type": "linode"}, {"id": 99601141,
+      "label": "linode99601141", "type": "linode"}, {"id": 99601153, "label": "linode99601153",
+      "type": "linode"}, {"id": 99601155, "label": "linode99601155", "type": "linode"},
+      {"id": 99601612, "label": "cometlabcsh", "type": "linode"}, {"id": 99602907,
+      "label": "linode99602907", "type": "linode"}, {"id": 99602912, "label": "linode99602912",
+      "type": "linode"}, {"id": 99603048, "label": "linode99603048", "type": "linode"},
+      {"id": 99603053, "label": "linode99603053", "type": "linode"}, {"id": 99605092,
+      "label": "devenv", "type": "linode"}, {"id": 99614180, "label": "ubuntu-pl-labkrk-devenv-attempt2",
+      "type": "linode"}, {"id": 99629281, "label": "ogvtsnja_modlinode", "type": "linode"},
+      {"id": 99629282, "label": "zrsqitbu_rebuild", "type": "linode"}, {"id": 99629286,
+      "label": "miewebry_modlinode", "type": "linode"}, {"id": 99629376, "label":
+      "finjztfb_modlinode", "type": "linode"}, {"id": 99630189, "label": "ikrrmkka_with_policy",
+      "type": "linode"}, {"id": 99630206, "label": "pdbwkvrv_update_policy_test",
+      "type": "linode"}, {"id": 99635155, "label": "caglketest-jumpbox3", "type":
+      "linode"}, {"id": 99635196, "label": "caglketest-jumpbox2", "type": "linode"},
+      {"id": 99635197, "label": "caglketest-jumpbox1", "type": "linode"}, {"id": 99635289,
+      "label": "linode-vpc-ds", "type": "linode"}, {"id": 99648063, "label": "corya-read_write-linode",
+      "type": "linode"}, {"id": 99658689, "label": "linode99658689", "type": "linode"},
+      {"id": 99658690, "label": "linode99658690", "type": "linode"}, {"id": 99658693,
+      "label": "linode99658693", "type": "linode"}, {"id": 99658694, "label": "linode99658694",
+      "type": "linode"}, {"id": 99658836, "label": "linode99658836", "type": "linode"}],
+      "page": 1, "pages": 5, "results": 411}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "6664"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - account:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/entities?page=2
+    method: GET
+  response:
+    body: '{"data": [{"id": 99658837, "label": "linode99658837", "type": "linode"},
+      {"id": 99684369, "label": "test-suprs-linodeadmin", "type": "linode"}, {"id":
+      99721097, "label": "vpc", "type": "linode"}, {"id": 99721986, "label": "linode99721986",
+      "type": "linode"}, {"id": 99721987, "label": "linode99721987", "type": "linode"},
+      {"id": 99722095, "label": "linode99722095", "type": "linode"}, {"id": 99722106,
+      "label": "linode99722106", "type": "linode"}, {"id": 99722119, "label": "linode99722119",
+      "type": "linode"}, {"id": 99726620, "label": "ubuntu-pl-labkrk-29876", "type":
+      "linode"}, {"id": 99736796, "label": "linode99736796", "type": "linode"}, {"id":
+      99737407, "label": "ccm-test-max-control-plane-grlqh", "type": "linode"}, {"id":
+      99737410, "label": "ccm-test-max-md-0-sqrbd-pwg89", "type": "linode"}, {"id":
+      99738064, "label": "ubuntu-pl-labkrk-21", "type": "linode"}, {"id": 99748066,
+      "label": "linode123", "type": "linode"}, {"id": 99748081, "label": "linode1233",
+      "type": "linode"}, {"id": 99748827, "label": "jd-gha-runner", "type": "linode"},
+      {"id": 99755907, "label": "linode99755907", "type": "linode"}, {"id": 99755977,
+      "label": "ubuntu-pl-labkrk-29999333", "type": "linode"}, {"id": 99759746, "label":
+      "ubuntu-pl-labkrk-221", "type": "linode"}, {"id": 99765750, "label": "aaleksee-cx-test",
+      "type": "linode"}, {"id": 99766856, "label": "knagorza-testttt2", "type": "linode"},
+      {"id": 99766858, "label": "knagorza-testt", "type": "linode"}, {"id": 99766860,
+      "label": "knagoorzrrz", "type": "linode"}, {"id": 99802174, "label": "test123",
+      "type": "linode"}, {"id": 99817943, "label": "linsode1233", "type": "linode"},
+      {"id": 99830232, "label": "linodego-fw-inst-test", "type": "linode"}, {"id":
+      99836626, "label": "lke31683-53960-8djdg-v8mdj", "type": "linode"}, {"id": 99842687,
+      "label": "linode99842687", "type": "linode"}, {"id": 99845720, "label": "reservediptest-044304AMAug15",
+      "type": "linode"}, {"id": 99848134, "label": "lke31986-54497-lf87m-6q8kq", "type":
+      "linode"}, {"id": 99861537, "label": "lke20671-34107-2949ba500000", "type":
+      "linode"}, {"id": 99882999, "label": "linode99882999", "type": "linode"}, {"id":
+      99883000, "label": "linode99883000", "type": "linode"}, {"id": 99913034, "label":
+      "reservediptest-095842AMAug26", "type": "linode"}, {"id": 99915620, "label":
+      "linode-service-transfer", "type": "linode"}, {"id": 99915621, "label": "linode-resize",
+      "type": "linode"}, {"id": 99915623, "label": "linode-rebuild", "type": "linode"},
+      {"id": 99921438, "label": "lke33954-57736-b59k2-r8lb7", "type": "linode"}, {"id":
+      99974746, "label": "lke33954-60937-9fxdz-h8mvh", "type": "linode"}, {"id": 99975564,
+      "label": "test-volume-limit", "type": "linode"}, {"id": 99976528, "label": "lke35928-60953-8mx9p-hql2h",
+      "type": "linode"}, {"id": 99980475, "label": "ubuntu-pl-labkrk-2-Test", "type":
+      "linode"}, {"id": 99985252, "label": "linode99985252", "type": "linode"}, {"id":
+      99985253, "label": "linode99985253", "type": "linode"}, {"id": 99992673, "label":
+      "lke36826-62422-rhdjt-t7w64", "type": "linode"}, {"id": 99996411, "label": "lke37015-62748-5a7d93310000",
+      "type": "linode"}, {"id": 99996412, "label": "lke37015-62748-4a1bf3aa0000",
+      "type": "linode"}, {"id": 99996413, "label": "lke37015-62748-5123135e0000",
+      "type": "linode"}, {"id": 100033533, "label": "ubuntu-pl-labkrk-2", "type":
+      "linode"}, {"id": 100086281, "label": "scanner-poc-5RrC3LHSjb", "type": "linode"},
+      {"id": 100092104, "label": "ubuntu-pl-labkrk-3", "type": "linode"}, {"id": 100148938,
+      "label": "kmidevtest", "type": "linode"}, {"id": 100150192, "label": "x70dznd7w8v4c89ca-master-1",
+      "type": "linode"}, {"id": 100150194, "label": "x70dznd7w8v4c89ca-default-2",
+      "type": "linode"}, {"id": 100150195, "label": "x70dznd7w8v4c89ca-default-0",
+      "type": "linode"}, {"id": 100150196, "label": "x70dznd7w8v4c89ca-default-1",
+      "type": "linode"}, {"id": 100150198, "label": "x70dznd7w8v4c89ca-master-2",
+      "type": "linode"}, {"id": 100150199, "label": "x70dznd7w8v4c89ca-ip-holder",
+      "type": "linode"}, {"id": 100150200, "label": "x70dznd7w8v4c89ca-master-0",
+      "type": "linode"}, {"id": 100152283, "label": "kwojtowi-linode", "type": "linode"},
+      {"id": 100169745, "label": "testlinode", "type": "linode"}, {"id": 100174264,
+      "label": "asirwani-ubuntu", "type": "linode"}, {"id": 636, "label": "default",
+      "type": "firewall"}, {"id": 6704, "label": "CPC-FW", "type": "firewall"}, {"id":
+      10859, "label": "child-enabled-128-gateway-cf-c3e", "type": "firewall"}, {"id":
+      10862, "label": "child-enabled-129-gateway-cf-f4a", "type": "firewall"}, {"id":
+      10867, "label": "child-en-128-gateway-cf-2fd0b53b", "type": "firewall"}, {"id":
+      10868, "label": "child-dis-128-gateway-cf-16568ac", "type": "firewall"}, {"id":
+      14244, "label": "Inbound_Drop", "type": "firewall"}, {"id": 28482, "label":
+      "devevn", "type": "firewall"}, {"id": 28915, "label": "new_firewall1", "type":
+      "firewall"}, {"id": 55811, "label": "sample-321-fc", "type": "firewall"}, {"id":
+      58559, "label": "gha-af0a0-2-gateway-cf-2b1e2fa1e", "type": "firewall"}, {"id":
+      59368, "label": "anotherfirewall", "type": "firewall"}, {"id": 60509, "label":
+      "firewall-devcloud1", "type": "firewall"}, {"id": 60511, "label": "default-firewall",
+      "type": "firewall"}, {"id": 62994, "label": "test-2", "type": "firewall"}, {"id":
+      63065, "label": "test-3", "type": "firewall"}, {"id": 91269, "label": "gha-d7ba9-2-gateway-cf-c76e0cc75",
+      "type": "firewall"}, {"id": 94179, "label": "gha-ecda1-2-gateway-cf-f2440a9a8",
+      "type": "firewall"}, {"id": 94767, "label": "gha-0b8f3-1-gateway-cf-bfbb235fd",
+      "type": "firewall"}, {"id": 94770, "label": "gha-0b8f3-2-gateway-cf-58bfcbac0",
+      "type": "firewall"}, {"id": 94954, "label": "gha-a0bee-1-gateway-cf-f9cb8342e",
+      "type": "firewall"}, {"id": 95341, "label": "gha-08531-1-gateway-cf-3104d3b05",
+      "type": "firewall"}, {"id": 95342, "label": "gha-4f844-1-gateway-cf-1165b711b",
+      "type": "firewall"}, {"id": 95343, "label": "gha-5b18f-1-gateway-cf-58a020ca7",
+      "type": "firewall"}, {"id": 95344, "label": "gha-c0d8d-1-gateway-cf-31690b572",
+      "type": "firewall"}, {"id": 95345, "label": "gha-3b0d1-1-gateway-cf-a17839fc2",
+      "type": "firewall"}, {"id": 101216, "label": "gha-7ca0c-2-gateway-cf-c2d8236dc",
+      "type": "firewall"}, {"id": 153617, "label": "test", "type": "firewall"}, {"id":
+      162959, "label": "cloudfw-1751960159241532000", "type": "firewall"}, {"id":
+      172693, "label": "cloudfw-1752143266744454000", "type": "firewall"}, {"id":
+      172709, "label": "cloudfw-1752145207561673000", "type": "firewall"}, {"id":
+      172735, "label": "cloudfw-1752147653678934000", "type": "firewall"}, {"id":
+      172876, "label": "cloudfw-1752160731985122000", "type": "firewall"}, {"id":
+      190831, "label": "ogvtsnja_firewall", "type": "firewall"}, {"id": 190835, "label":
+      "cloud_firewall_1753100544", "type": "firewall"}, {"id": 190838, "label": "miewebry_firewall",
+      "type": "firewall"}, {"id": 190857, "label": "finjztfb_firewall", "type": "firewall"},
+      {"id": 193905, "label": "AllowSSH", "type": "firewall"}], "page": 2, "pages":
+      5, "results": 411}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "6974"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - account:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/entities?page=3
+    method: GET
+  response:
+    body: '{"data": [{"id": 197569, "label": "iperf-flamingo-1267", "type": "firewall"},
+      {"id": 199094, "label": "corya-read_write-firewall", "type": "firewall"}, {"id":
+      199154, "label": "corya-read_only-firewall", "type": "firewall"}, {"id": 216991,
+      "label": "Test-suprs", "type": "firewall"}, {"id": 232276, "label": "ccm-test-max-nb",
+      "type": "firewall"}, {"id": 232277, "label": "ccm-test-max", "type": "firewall"},
+      {"id": 243398, "label": "mpolotsk-test-1", "type": "firewall"}, {"id": 285791,
+      "label": "cloudfw-1754986962788015000", "type": "firewall"}, {"id": 297816,
+      "label": "cloudfw-1755084293412754000", "type": "firewall"}, {"id": 297819,
+      "label": "cloudfw-1755084478224323000", "type": "firewall"}, {"id": 299731,
+      "label": "lke31683-workload", "type": "firewall"}, {"id": 302405, "label": "lke31986-workload",
+      "type": "firewall"}, {"id": 303980, "label": "test-caglke-job-cf-ace40b51ab86",
+      "type": "firewall"}, {"id": 340912, "label": "test-1", "type": "firewall"},
+      {"id": 341727, "label": "lke33954-workload", "type": "firewall"}, {"id": 367254,
+      "label": "lke35928-workload", "type": "firewall"}, {"id": 377683, "label": "lke36826-workload",
+      "type": "firewall"}, {"id": 380361, "label": "corya-tst-fix", "type": "firewall"},
+      {"id": 390740, "label": "ccm-a42a5a43d4e1", "type": "firewall"}, {"id": 390741,
+      "label": "ccm-a42bc276fd76", "type": "firewall"}, {"id": 419978, "label": "cloudfw-1758724986831909000",
+      "type": "firewall"}, {"id": 420229, "label": "cloudfw-1758728887160451000",
+      "type": "firewall"}, {"id": 426009, "label": "test4", "type": "firewall"}, {"id":
+      449457, "label": "x70dznd7w8v4c89ca-agent", "type": "firewall"}, {"id": 449458,
+      "label": "x70dznd7w8v4c89ca-server", "type": "firewall"}, {"id": 449459, "label":
+      "x70dznd7w8v4c89ca-ip-holder", "type": "firewall"}, {"id": 449500, "label":
+      "ccm-9d41dcdcb064", "type": "firewall"}, {"id": 449505, "label": "ccm-9d62fdb82756",
+      "type": "firewall"}, {"id": 460958, "label": "cloudfw-1760427820851238000",
+      "type": "firewall"}, {"id": 461008, "label": "cloudfw-1760428896766608000",
+      "type": "firewall"}, {"id": 27, "label": "aselvam-test-1", "type": "nodebalancer"},
+      {"id": 33474, "label": "test-1-gateway-nb-c6083193082f", "type": "nodebalancer"},
+      {"id": 34395, "label": "ccm-649b7bae3d13", "type": "nodebalancer"}, {"id": 34397,
+      "label": "ccm-649c0bd5f079", "type": "nodebalancer"}, {"id": 138784, "label":
+      "ccm-5385e9f574d3", "type": "nodebalancer"}, {"id": 138795, "label": "ccm-54a519b2848c",
+      "type": "nodebalancer"}, {"id": 146070, "label": "hacpc-cpc-zsalwass-21dc-api-serv",
+      "type": "nodebalancer"}, {"id": 146164, "label": "ccm-f9447b919ef3", "type":
+      "nodebalancer"}, {"id": 146166, "label": "ccm-f945591c4332", "type": "nodebalancer"},
+      {"id": 146282, "label": "cshnb", "type": "nodebalancer"}, {"id": 223671, "label":
+      "nb-115253AMJul08", "type": "nodebalancer"}, {"id": 223672, "label": "balancer223672",
+      "type": "nodebalancer"}, {"id": 223686, "label": "balancer223686", "type": "nodebalancer"},
+      {"id": 223688, "label": "balancer223688", "type": "nodebalancer"}, {"id": 223700,
+      "label": "balancer223700", "type": "nodebalancer"}, {"id": 223702, "label":
+      "balancer223702", "type": "nodebalancer"}, {"id": 223721, "label": "balancer223721",
+      "type": "nodebalancer"}, {"id": 223723, "label": "balancer223723", "type": "nodebalancer"},
+      {"id": 223725, "label": "balancer223725", "type": "nodebalancer"}, {"id": 223756,
+      "label": "balancer223756", "type": "nodebalancer"}, {"id": 223758, "label":
+      "balancer223758", "type": "nodebalancer"}, {"id": 223957, "label": "balancer223957",
+      "type": "nodebalancer"}, {"id": 223958, "label": "balancer223958", "type": "nodebalancer"},
+      {"id": 223962, "label": "balancer223962", "type": "nodebalancer"}, {"id": 223982,
+      "label": "balancer223982", "type": "nodebalancer"}, {"id": 224151, "label":
+      "balancer224151", "type": "nodebalancer"}, {"id": 224154, "label": "balancer224154",
+      "type": "nodebalancer"}, {"id": 224169, "label": "balancer224169", "type": "nodebalancer"},
+      {"id": 224171, "label": "balancer224171", "type": "nodebalancer"}, {"id": 232217,
+      "label": "balancer232217", "type": "nodebalancer"}, {"id": 232286, "label":
+      "balancer232286", "type": "nodebalancer"}, {"id": 232287, "label": "balancer232287",
+      "type": "nodebalancer"}, {"id": 232798, "label": "balancer232798", "type": "nodebalancer"},
+      {"id": 232807, "label": "balancer232807", "type": "nodebalancer"}, {"id": 261976,
+      "label": "test-admin-suprs", "type": "nodebalancer"}, {"id": 264331, "label":
+      "balancer264331", "type": "nodebalancer"}, {"id": 264334, "label": "balancer264334",
+      "type": "nodebalancer"}, {"id": 264374, "label": "balancer264374", "type": "nodebalancer"},
+      {"id": 264432, "label": "nb-050130PMJul31", "type": "nodebalancer"}, {"id":
+      264440, "label": "nb-051719PMJul31", "type": "nodebalancer"}, {"id": 268746,
+      "label": "ccm-test-max", "type": "nodebalancer"}, {"id": 283914, "label": "balancer283914",
+      "type": "nodebalancer"}, {"id": 285736, "label": "hacpc-cpc1-bishaw-api-server-nb",
+      "type": "nodebalancer"}, {"id": 291136, "label": "test-caglke-job-nb-8c3690e1294f",
+      "type": "nodebalancer"}, {"id": 299687, "label": "balancer299687", "type": "nodebalancer"},
+      {"id": 329237, "label": "testing333", "type": "nodebalancer"}, {"id": 330037,
+      "label": "balancer330037", "type": "nodebalancer"}, {"id": 330038, "label":
+      "balancer330038", "type": "nodebalancer"}, {"id": 335721, "label": "ccm-a42bc276fd76",
+      "type": "nodebalancer"}, {"id": 362722, "label": "ccm-9d41dcdcb064", "type":
+      "nodebalancer"}, {"id": 33035, "label": "test-3-gateway-nb-db9b36159b7d", "type":
+      "nodebalancer"}, {"id": 34396, "label": "ccm-649babc1f526", "type": "nodebalancer"},
+      {"id": 42222, "label": "ccm-3f0c6741a0e4", "type": "nodebalancer"}, {"id": 42223,
+      "label": "ccm-3f0cafd2843d", "type": "nodebalancer"}, {"id": 42224, "label":
+      "ccm-3f0d42a664b0", "type": "nodebalancer"}, {"id": 52382, "label": "hacpc-cpc2-hwagner-api-server-nb",
+      "type": "nodebalancer"}, {"id": 115604, "label": "test_nodebalancer2", "type":
+      "nodebalancer"}, {"id": 138778, "label": "ccm-53065db948d3", "type": "nodebalancer"},
+      {"id": 138790, "label": "ccm-542a94c1b92a", "type": "nodebalancer"}, {"id":
+      138798, "label": "ccm-553d10721d02", "type": "nodebalancer"}, {"id": 138802,
+      "label": "ccm-55fb08b7bbbf", "type": "nodebalancer"}, {"id": 146165, "label":
+      "ccm-f944bfb4e59d", "type": "nodebalancer"}, {"id": 223531, "label": "balancer223531",
+      "type": "nodebalancer"}, {"id": 223597, "label": "nb-113146AMJul08", "type":
+      "nodebalancer"}, {"id": 223687, "label": "balancer223687", "type": "nodebalancer"},
+      {"id": 223690, "label": "balancer223690", "type": "nodebalancer"}, {"id": 223701,
+      "label": "balancer223701", "type": "nodebalancer"}, {"id": 223703, "label":
+      "balancer223703", "type": "nodebalancer"}, {"id": 223712, "label": "balancer223712",
+      "type": "nodebalancer"}, {"id": 223724, "label": "balancer223724", "type": "nodebalancer"}],
+      "page": 3, "pages": 5, "results": 411}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "6918"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - account:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/entities?page=4
+    method: GET
+  response:
+    body: '{"data": [{"id": 223726, "label": "balancer223726", "type": "nodebalancer"},
+      {"id": 223757, "label": "balancer223757", "type": "nodebalancer"}, {"id": 223759,
+      "label": "balancer223759", "type": "nodebalancer"}, {"id": 223953, "label":
+      "balancer223953", "type": "nodebalancer"}, {"id": 223956, "label": "balancer223956",
+      "type": "nodebalancer"}, {"id": 223963, "label": "balancer223963", "type": "nodebalancer"},
+      {"id": 224152, "label": "balancer224152", "type": "nodebalancer"}, {"id": 224153,
+      "label": "balancer224153", "type": "nodebalancer"}, {"id": 224168, "label":
+      "balancer224168", "type": "nodebalancer"}, {"id": 224170, "label": "balancer224170",
+      "type": "nodebalancer"}, {"id": 224176, "label": "balancer224176", "type": "nodebalancer"},
+      {"id": 224177, "label": "balancer224177", "type": "nodebalancer"}, {"id": 232284,
+      "label": "balancer232284", "type": "nodebalancer"}, {"id": 232285, "label":
+      "balancer232285", "type": "nodebalancer"}, {"id": 232299, "label": "balancer232299",
+      "type": "nodebalancer"}, {"id": 232752, "label": "balancer232752", "type": "nodebalancer"},
+      {"id": 232755, "label": "balancer232755", "type": "nodebalancer"}, {"id": 232764,
+      "label": "balancer232764", "type": "nodebalancer"}, {"id": 232801, "label":
+      "balancer232801", "type": "nodebalancer"}, {"id": 260743, "label": "nb-030020PMJul29",
+      "type": "nodebalancer"}, {"id": 260837, "label": "nb-035017PMJul29", "type":
+      "nodebalancer"}, {"id": 264332, "label": "balancer264332", "type": "nodebalancer"},
+      {"id": 264368, "label": "balancer264368", "type": "nodebalancer"}, {"id": 264376,
+      "label": "balancer264376", "type": "nodebalancer"}, {"id": 286490, "label":
+      "Hot-Stuff-A", "type": "nodebalancer"}, {"id": 299643, "label": "balancer299643",
+      "type": "nodebalancer"}, {"id": 299659, "label": "balancer299659", "type": "nodebalancer"},
+      {"id": 330014, "label": "balancer330014", "type": "nodebalancer"}, {"id": 344309,
+      "label": "ccm-b7a390c5dd18", "type": "nodebalancer"}, {"id": 362723, "label":
+      "ccm-9d62fdb82756", "type": "nodebalancer"}, {"id": 2136, "label": "debian12-kube-572f52e4ce8f",
+      "type": "stackscript"}, {"id": 3090, "label": "debian12-kube-572f52e4ce8f",
+      "type": "stackscript"}, {"id": 3403, "label": "debian12-kube-572f52e4ce8f",
+      "type": "stackscript"}, {"id": 29650, "label": "debian12-kube-572f52e4ce8f",
+      "type": "stackscript"}, {"id": 29652, "label": "debian12-kube-572f52e4ce8f",
+      "type": "stackscript"}, {"id": 43726, "label": "debian12-kube-876169b25f29",
+      "type": "stackscript"}, {"id": 57205, "label": "test-admin-suprs-iam", "type":
+      "stackscript"}, {"id": 65523, "label": "debian12-kube-a25218914319", "type":
+      "stackscript"}, {"id": 1950, "label": "private-image-20241104193423", "type":
+      "image"}, {"id": 42850, "label": "test-devcloud-admin-Ubuntu 24.04 LTS Disk",
+      "type": "image"}, {"id": 430, "label": "ADefFrusqDwAdDQA6kS5wYOh8xnx8CL", "type":
+      "volume"}, {"id": 433, "label": "AWSKKaorOXdO2O3juQy9MoXY-clone", "type": "volume"},
+      {"id": 527, "label": "AOddLOKE7aPGyANPqFPpb7D64Xrg7Qb", "type": "volume"}, {"id":
+      531, "label": "A3kZxaaor23WYGPLUQAzeZ6y-clone", "type": "volume"}, {"id": 942,
+      "label": "AGEG2Sx7BLjfpCSh111LQaORI5pdkjM", "type": "volume"}, {"id": 947, "label":
+      "ALsBMLQXCAwao8pA8INdiH2x-clone", "type": "volume"}, {"id": 958, "label": "AVUPV4M4W5j5ryjhQGGbvmMc-clone",
+      "type": "volume"}, {"id": 961, "label": "At9NGJMQa3YQqN8oOPIgR2ur6KUCBrS", "type":
+      "volume"}, {"id": 6108, "label": "pvc2884a601685748b4", "type": "volume"}, {"id":
+      20910, "label": "pvc-f07f38b4aa6b475b", "type": "volume"}, {"id": 20983, "label":
+      "pvc-229d23e909d74010", "type": "volume"}, {"id": 64789, "label": "ogvtsnja_volume",
+      "type": "volume"}, {"id": 64790, "label": "miewebry_volume", "type": "volume"},
+      {"id": 64794, "label": "finjztfb_volume", "type": "volume"}, {"id": 68676, "label":
+      "test-devcloud-admin-volume", "type": "volume"}, {"id": 87015, "label": "test",
+      "type": "volume"}, {"id": 89300, "label": "corya-read_write-volume", "type":
+      "volume"}, {"id": 89301, "label": "test2", "type": "volume"}, {"id": 91534,
+      "label": "test3", "type": "volume"}, {"id": 91535, "label": "test4", "type":
+      "volume"}, {"id": 91536, "label": "test5", "type": "volume"}, {"id": 91537,
+      "label": "test6", "type": "volume"}, {"id": 91538, "label": "test7", "type":
+      "volume"}, {"id": 91539, "label": "test8", "type": "volume"}, {"id": 101517,
+      "label": "test-volume-1", "type": "volume"}, {"id": 105693, "label": "pvc-8df38cfa037e45c3",
+      "type": "volume"}, {"id": 105694, "label": "pvc-1d24f494ba0245b7", "type": "volume"},
+      {"id": 105695, "label": "pvc-617d6cb47edf408b", "type": "volume"}, {"id": 105696,
+      "label": "pvc-2b09d426583d421a", "type": "volume"}, {"id": 105697, "label":
+      "pvc-9b2d9cca9ba940ba", "type": "volume"}, {"id": 105698, "label": "pvc-2b777225bade4ae6",
+      "type": "volume"}, {"id": 105699, "label": "pvc-eb57c0f5eef74e6e", "type": "volume"},
+      {"id": 105700, "label": "pvc-b0b7dbb1564141c6", "type": "volume"}, {"id": 106050,
+      "label": "kwojtowi-volume", "type": "volume"}, {"id": 108649, "label": "tests",
+      "type": "volume"}, {"id": 108658, "label": "testse", "type": "volume"}, {"id":
+      108663, "label": "localtest", "type": "volume"}, {"id": 305, "label": "Cloud-Manager-Test-DB",
+      "type": "database"}, {"id": 608, "label": "Hello-DBs", "type": "database"},
+      {"id": 691, "label": "test", "type": "database"}, {"id": 1004, "label": "test-cluster-01-staging",
+      "type": "database"}, {"id": 1005, "label": "sm-cluster-dogfood-test", "type":
+      "database"}, {"id": 1259, "label": "sm-dogfooding-2", "type": "database"}, {"id":
+      1393, "label": "test-cluster-01-staging-2025-08-14T06-00-30", "type": "database"},
+      {"id": 2211, "label": "test-dbaas-1", "type": "database"}, {"id": 15, "label":
+      "vpc-BbMJzPVU2Z", "type": "vpc"}, {"id": 37, "label": "vpc-6AleShKLCW", "type":
+      "vpc"}, {"id": 130, "label": "vpc-bAGHsYm9BJ", "type": "vpc"}, {"id": 31657,
+      "label": "vpc-ds", "type": "vpc"}, {"id": 32472, "label": "test1", "type": "vpc"},
+      {"id": 39279, "label": "ccm-test-max", "type": "vpc"}, {"id": 40903, "label":
+      "coeol-vpc", "type": "vpc"}, {"id": 42673, "label": "test123", "type": "vpc"},
+      {"id": 46808, "label": "coeoerl-vpc", "type": "vpc"}, {"id": 46876, "label":
+      "coeoetyrl-vpc", "type": "vpc"}, {"id": 48054, "label": "lke31683", "type":
+      "vpc"}, {"id": 49590, "label": "dual-stack-vpc", "type": "vpc"}, {"id": 49595,
+      "label": "single-stack-vpc", "type": "vpc"}, {"id": 51000, "label": "hello-db-dualstack",
+      "type": "vpc"}, {"id": 58200, "label": "lke33954", "type": "vpc"}], "page":
+      4, "pages": 5, "results": 411}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "6500"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - account:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/entities?page=5
+    method: GET
+  response:
+    body: '{"data": [{"id": 63448, "label": "lke35928", "type": "vpc"}, {"id": 64718,
+      "label": "lke36826", "type": "vpc"}, {"id": 70846, "label": "banks-testing-ipv6-vpc",
+      "type": "vpc"}, {"id": 12802, "label": "test-restricted-lke", "type": "lkecluster"},
+      {"id": 12804, "label": "test-lke-123", "type": "lkecluster"}, {"id": 20671,
+      "label": "xtKp6C3zgm3sxgJz9MeqzTBrXzODW4", "type": "lkecluster"}, {"id": 31683,
+      "label": "lke-e", "type": "lkecluster"}, {"id": 31986, "label": "lke-e-with-byo-vpc-mjacobs",
+      "type": "lkecluster"}, {"id": 36826, "label": "lke-e-mjacobs", "type": "lkecluster"},
+      {"id": 37015, "label": "corya-read-write-kubernetes", "type": "lkecluster"},
+      {"id": 38753, "label": "lke-e-devcloud-test", "type": "lkecluster"}], "page":
+      5, "pages": 5, "results": 411}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "767"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - account:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
