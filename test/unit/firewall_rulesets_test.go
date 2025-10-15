@@ -278,7 +278,7 @@ func TestRuleSet_UnmarshalJSONNumericServiceDefined(t *testing.T) {
 		"type": "inbound",
 		"rules": [],
 		"version": 1,
-		"is_service_defined": 1
+		"is_service_defined": true
 	}`)
 
 	assert.NoError(t, json.Unmarshal(raw, &rs))
