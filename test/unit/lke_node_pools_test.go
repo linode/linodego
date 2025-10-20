@@ -201,6 +201,7 @@ func TestLKEEnterpriseNodePool_Create(t *testing.T) {
 		K8sVersion:     linodego.Pointer("v1.31.1+lke1"),
 		UpdateStrategy: linodego.Pointer(linodego.LKENodePoolOnRecycle),
 		Label:          linodego.Pointer("custom-label-create"),
+		FirewallID:     linodego.Pointer(12345),
 	}
 
 	base.MockPost("lke/clusters/123/pools", fixtureData)
@@ -212,6 +213,7 @@ func TestLKEEnterpriseNodePool_Create(t *testing.T) {
 	assert.Equal(t, "v1.31.1+lke1", *nodePool.K8sVersion)
 	assert.Equal(t, "on_recycle", string(*nodePool.UpdateStrategy))
 	assert.Equal(t, linodego.Pointer("custom-label-create"), nodePool.Label)
+	assert.Equal(t, 12345, *nodePool.FirewallID)
 }
 
 func TestLKEEnterpriseNodePool_Update(t *testing.T) {
@@ -226,6 +228,7 @@ func TestLKEEnterpriseNodePool_Update(t *testing.T) {
 		K8sVersion:     linodego.Pointer("v1.31.1+lke1"),
 		UpdateStrategy: linodego.Pointer(linodego.LKENodePoolRollingUpdate),
 		Label:          linodego.Pointer("custom-label-update"),
+		FirewallID:     linodego.Pointer(12345),
 	}
 
 	base.MockPut("lke/clusters/123/pools/12345", fixtureData)
@@ -235,4 +238,5 @@ func TestLKEEnterpriseNodePool_Update(t *testing.T) {
 	assert.Equal(t, "v1.31.1+lke1", *nodePool.K8sVersion)
 	assert.Equal(t, "rolling_update", string(*nodePool.UpdateStrategy))
 	assert.Equal(t, linodego.Pointer("custom-label-update"), nodePool.Label)
+	assert.Equal(t, 12345, *nodePool.FirewallID)
 }
