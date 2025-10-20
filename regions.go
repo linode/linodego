@@ -40,6 +40,7 @@ const (
 	CapabilityQuadraT1UVPU                  string = "NETINT Quadra T1U"
 	CapabilitySupportTicketSeverity         string = "Support Ticket Severity"
 	CapabilityVPCs                          string = "VPCs"
+	CapabilityVPCDualStack                  string = "VPC Dual Stack"
 	CapabilityVPCsExtra                     string = "VPCs Extra"
 	CapabilityVlans                         string = "Vlans"
 
