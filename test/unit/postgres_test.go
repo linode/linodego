@@ -100,6 +100,10 @@ func TestDatabasePostgreSQL_Get(t *testing.T) {
 	assert.Equal(t, "off", *db.EngineConfig.PG.TrackIOTiming)
 	assert.Equal(t, 60000, *db.EngineConfig.PG.WALSenderTimeout)
 	assert.Equal(t, 50, *db.EngineConfig.PG.WALWriterDelay)
+
+	assert.Equal(t, 1234, db.PrivateNetwork.VPCID)
+	assert.Equal(t, 5678, db.PrivateNetwork.SubnetID)
+	assert.Equal(t, true, db.PrivateNetwork.PublicAccess)
 }
 
 func TestDatabasePostgreSQL_Update(t *testing.T) {
@@ -116,6 +120,11 @@ func TestDatabasePostgreSQL_Update(t *testing.T) {
 			PG: &linodego.PostgresDatabaseEngineConfigPG{
 				AutovacuumMaxWorkers: linodego.Pointer(10),
 			},
+		},
+		PrivateNetwork: &linodego.DatabasePrivateNetwork{
+			VPCID:        1234,
+			SubnetID:     5678,
+			PublicAccess: true,
 		},
 	}
 
@@ -188,6 +197,10 @@ func TestDatabasePostgreSQL_Update(t *testing.T) {
 	assert.Equal(t, "off", *db.EngineConfig.PG.TrackIOTiming)
 	assert.Equal(t, 60000, *db.EngineConfig.PG.WALSenderTimeout)
 	assert.Equal(t, 50, *db.EngineConfig.PG.WALWriterDelay)
+
+	assert.Equal(t, 1234, db.PrivateNetwork.VPCID)
+	assert.Equal(t, 5678, db.PrivateNetwork.SubnetID)
+	assert.Equal(t, true, db.PrivateNetwork.PublicAccess)
 }
 
 func TestDatabasePostgreSQL_Create(t *testing.T) {
@@ -207,6 +220,11 @@ func TestDatabasePostgreSQL_Create(t *testing.T) {
 			PG: &linodego.PostgresDatabaseEngineConfigPG{
 				AutovacuumMaxWorkers: linodego.Pointer(10),
 			},
+		},
+		PrivateNetwork: &linodego.DatabasePrivateNetwork{
+			VPCID:        1234,
+			SubnetID:     5678,
+			PublicAccess: true,
 		},
 	}
 
@@ -279,6 +297,10 @@ func TestDatabasePostgreSQL_Create(t *testing.T) {
 	assert.Equal(t, "off", *db.EngineConfig.PG.TrackIOTiming)
 	assert.Equal(t, 60000, *db.EngineConfig.PG.WALSenderTimeout)
 	assert.Equal(t, 50, *db.EngineConfig.PG.WALWriterDelay)
+
+	assert.Equal(t, 1234, db.PrivateNetwork.VPCID)
+	assert.Equal(t, 5678, db.PrivateNetwork.SubnetID)
+	assert.Equal(t, true, db.PrivateNetwork.PublicAccess)
 }
 
 func TestDatabasePostgreSQL_Delete(t *testing.T) {
@@ -387,43 +409,61 @@ func TestDatabasePostgreSQLConfig_Get(t *testing.T) {
 	assert.False(t, config.PG.AutovacuumAnalyzeScaleFactor.RequiresRestart)
 	assert.Equal(t, "number", config.PG.AutovacuumAnalyzeScaleFactor.Type)
 
-	assert.Equal(t, "Specifies the minimum number of inserted, updated or deleted tuples needed to trigger an ANALYZE in any one table. The default is 50 tuples.",
-		config.PG.AutovacuumAnalyzeThreshold.Description)
+	assert.Equal(
+		t,
+		"Specifies the minimum number of inserted, updated or deleted tuples needed to trigger an ANALYZE in any one table. The default is 50 tuples.",
+		config.PG.AutovacuumAnalyzeThreshold.Description,
+	)
 	assert.Equal(t, int32(2147483647), config.PG.AutovacuumAnalyzeThreshold.Maximum)
 	assert.Equal(t, int32(0), config.PG.AutovacuumAnalyzeThreshold.Minimum)
 	assert.False(t, config.PG.AutovacuumAnalyzeThreshold.RequiresRestart)
 	assert.Equal(t, "integer", config.PG.AutovacuumAnalyzeThreshold.Type)
 
-	assert.Equal(t, "Specifies the maximum number of autovacuum processes (other than the autovacuum launcher) that may be running at any one time. The default is three. This parameter can only be set at server start.",
-		config.PG.AutovacuumMaxWorkers.Description)
+	assert.Equal(
+		t,
+		"Specifies the maximum number of autovacuum processes (other than the autovacuum launcher) that may be running at any one time. The default is three. This parameter can only be set at server start.",
+		config.PG.AutovacuumMaxWorkers.Description,
+	)
 	assert.Equal(t, 20, config.PG.AutovacuumMaxWorkers.Maximum)
 	assert.Equal(t, 1, config.PG.AutovacuumMaxWorkers.Minimum)
 	assert.False(t, config.PG.AutovacuumMaxWorkers.RequiresRestart)
 	assert.Equal(t, "integer", config.PG.AutovacuumMaxWorkers.Type)
 
-	assert.Equal(t, "Specifies the minimum delay between autovacuum runs on any given database. The delay is measured in seconds, and the default is one minute",
-		config.PG.AutovacuumNaptime.Description)
+	assert.Equal(
+		t,
+		"Specifies the minimum delay between autovacuum runs on any given database. The delay is measured in seconds, and the default is one minute",
+		config.PG.AutovacuumNaptime.Description,
+	)
 	assert.Equal(t, 86400, config.PG.AutovacuumNaptime.Maximum)
 	assert.Equal(t, 1, config.PG.AutovacuumNaptime.Minimum)
 	assert.False(t, config.PG.AutovacuumNaptime.RequiresRestart)
 	assert.Equal(t, "integer", config.PG.AutovacuumNaptime.Type)
 
-	assert.Equal(t, "Specifies the cost delay value that will be used in automatic VACUUM operations. If -1 is specified, the regular vacuum_cost_delay value will be used. The default value is 20 milliseconds",
-		config.PG.AutovacuumVacuumCostDelay.Description)
+	assert.Equal(
+		t,
+		"Specifies the cost delay value that will be used in automatic VACUUM operations. If -1 is specified, the regular vacuum_cost_delay value will be used. The default value is 20 milliseconds",
+		config.PG.AutovacuumVacuumCostDelay.Description,
+	)
 	assert.Equal(t, 100, config.PG.AutovacuumVacuumCostDelay.Maximum)
 	assert.Equal(t, -1, config.PG.AutovacuumVacuumCostDelay.Minimum)
 	assert.False(t, config.PG.AutovacuumVacuumCostDelay.RequiresRestart)
 	assert.Equal(t, "integer", config.PG.AutovacuumVacuumCostDelay.Type)
 
-	assert.Equal(t, "Specifies the cost limit value that will be used in automatic VACUUM operations. If -1 is specified (which is the default), the regular vacuum_cost_limit value will be used.",
-		config.PG.AutovacuumVacuumCostLimit.Description)
+	assert.Equal(
+		t,
+		"Specifies the cost limit value that will be used in automatic VACUUM operations. If -1 is specified (which is the default), the regular vacuum_cost_limit value will be used.",
+		config.PG.AutovacuumVacuumCostLimit.Description,
+	)
 	assert.Equal(t, 10000, config.PG.AutovacuumVacuumCostLimit.Maximum)
 	assert.Equal(t, -1, config.PG.AutovacuumVacuumCostLimit.Minimum)
 	assert.False(t, config.PG.AutovacuumVacuumCostLimit.RequiresRestart)
 	assert.Equal(t, "integer", config.PG.AutovacuumVacuumCostLimit.Type)
 
-	assert.Equal(t, "Specifies a fraction of the table size to add to autovacuum_vacuum_threshold when deciding whether to trigger a VACUUM. The default is 0.2 (20% of table size)",
-		config.PG.AutovacuumVacuumScaleFactor.Description)
+	assert.Equal(
+		t,
+		"Specifies a fraction of the table size to add to autovacuum_vacuum_threshold when deciding whether to trigger a VACUUM. The default is 0.2 (20% of table size)",
+		config.PG.AutovacuumVacuumScaleFactor.Description,
+	)
 	assert.Equal(t, 1.0, config.PG.AutovacuumVacuumScaleFactor.Maximum)
 	assert.Equal(t, 0.0, config.PG.AutovacuumVacuumScaleFactor.Minimum)
 	assert.False(t, config.PG.AutovacuumVacuumScaleFactor.RequiresRestart)
@@ -444,24 +484,33 @@ func TestDatabasePostgreSQLConfig_Get(t *testing.T) {
 	assert.False(t, config.PG.BGWriterDelay.RequiresRestart)
 	assert.Equal(t, "integer", config.PG.BGWriterDelay.Type)
 
-	assert.Equal(t, "Whenever more than bgwriter_flush_after bytes have been written by the background writer, attempt to force the OS to issue these writes to the underlying storage. Specified in kilobytes, default is 512. Setting of 0 disables forced writeback.",
-		config.PG.BGWriterFlushAfter.Description)
+	assert.Equal(
+		t,
+		"Whenever more than bgwriter_flush_after bytes have been written by the background writer, attempt to force the OS to issue these writes to the underlying storage. Specified in kilobytes, default is 512. Setting of 0 disables forced writeback.",
+		config.PG.BGWriterFlushAfter.Description,
+	)
 	assert.Equal(t, 512, config.PG.BGWriterFlushAfter.Example)
 	assert.Equal(t, 2048, config.PG.BGWriterFlushAfter.Maximum)
 	assert.Equal(t, 0, config.PG.BGWriterFlushAfter.Minimum)
 	assert.False(t, config.PG.BGWriterFlushAfter.RequiresRestart)
 	assert.Equal(t, "integer", config.PG.BGWriterFlushAfter.Type)
 
-	assert.Equal(t, "In each round, no more than this many buffers will be written by the background writer. Setting this to zero disables background writing. Default is 100.",
-		config.PG.BGWriterLRUMaxPages.Description)
+	assert.Equal(
+		t,
+		"In each round, no more than this many buffers will be written by the background writer. Setting this to zero disables background writing. Default is 100.",
+		config.PG.BGWriterLRUMaxPages.Description,
+	)
 	assert.Equal(t, 100, config.PG.BGWriterLRUMaxPages.Example)
 	assert.Equal(t, 1073741823, config.PG.BGWriterLRUMaxPages.Maximum)
 	assert.Equal(t, 0, config.PG.BGWriterLRUMaxPages.Minimum)
 	assert.False(t, config.PG.BGWriterLRUMaxPages.RequiresRestart)
 	assert.Equal(t, "integer", config.PG.BGWriterLRUMaxPages.Type)
 
-	assert.Equal(t, "The average recent need for new buffers is multiplied by bgwriter_lru_multiplier to arrive at an estimate of the number that will be needed during the next round, (up to bgwriter_lru_maxpages). 1.0 represents a “just in time” policy of writing exactly the number of buffers predicted to be needed. Larger values provide some cushion against spikes in demand, while smaller values intentionally leave writes to be done by server processes. The default is 2.0.",
-		config.PG.BGWriterLRUMultiplier.Description)
+	assert.Equal(
+		t,
+		"The average recent need for new buffers is multiplied by bgwriter_lru_multiplier to arrive at an estimate of the number that will be needed during the next round, (up to bgwriter_lru_maxpages). 1.0 represents a “just in time” policy of writing exactly the number of buffers predicted to be needed. Larger values provide some cushion against spikes in demand, while smaller values intentionally leave writes to be done by server processes. The default is 2.0.",
+		config.PG.BGWriterLRUMultiplier.Description,
+	)
 	assert.Equal(t, 2.0, config.PG.BGWriterLRUMultiplier.Example)
 	assert.Equal(t, 10.0, config.PG.BGWriterLRUMultiplier.Maximum)
 	assert.Equal(t, 0.0, config.PG.BGWriterLRUMultiplier.Minimum)
@@ -545,8 +594,11 @@ func TestDatabasePostgreSQLConfig_Get(t *testing.T) {
 	assert.False(t, config.PG.MaxReplicationSlots.RequiresRestart)
 	assert.Equal(t, "integer", config.PG.MaxReplicationSlots.Type)
 
-	assert.Equal(t, "PostgreSQL maximum WAL size (MB) reserved for replication slots. Default is -1 (unlimited). wal_keep_size minimum WAL size setting takes precedence over this.",
-		config.PG.MaxSlotWALKeepSize.Description)
+	assert.Equal(
+		t,
+		"PostgreSQL maximum WAL size (MB) reserved for replication slots. Default is -1 (unlimited). wal_keep_size minimum WAL size setting takes precedence over this.",
+		config.PG.MaxSlotWALKeepSize.Description,
+	)
 	assert.Equal(t, int32(2147483647), config.PG.MaxSlotWALKeepSize.Maximum)
 	assert.Equal(t, int32(-1), config.PG.MaxSlotWALKeepSize.Minimum)
 	assert.False(t, config.PG.MaxSlotWALKeepSize.RequiresRestart)
@@ -624,8 +676,11 @@ func TestDatabasePostgreSQLConfig_Get(t *testing.T) {
 	assert.False(t, config.PG.PGStatMonitorPGSMMaxBuckets.RequiresRestart)
 	assert.Equal(t, "integer", config.PG.PGStatMonitorPGSMMaxBuckets.Type)
 
-	assert.Equal(t, "Controls which statements are counted. Specify top to track top-level statements (those issued directly by clients), all to also track nested statements (such as statements invoked within functions), or none to disable statement statistics collection. The default value is top.",
-		config.PG.PGStatStatementsTrack.Description)
+	assert.Equal(
+		t,
+		"Controls which statements are counted. Specify top to track top-level statements (those issued directly by clients), all to also track nested statements (such as statements invoked within functions), or none to disable statement statistics collection. The default value is top.",
+		config.PG.PGStatStatementsTrack.Description,
+	)
 	assert.Equal(t, []string{"all", "top", "none"}, config.PG.PGStatStatementsTrack.Enum)
 	assert.False(t, config.PG.PGStatStatementsTrack.RequiresRestart)
 	assert.Equal(t, "string", config.PG.PGStatStatementsTrack.Type)
@@ -667,15 +722,21 @@ func TestDatabasePostgreSQLConfig_Get(t *testing.T) {
 	assert.False(t, config.PG.TrackFunctions.RequiresRestart)
 	assert.Equal(t, "string", config.PG.TrackFunctions.Type)
 
-	assert.Equal(t, "Enables timing of database I/O calls. This parameter is off by default, because it will repeatedly query the operating system for the current time, which may cause significant overhead on some platforms.",
-		config.PG.TrackIOTiming.Description)
+	assert.Equal(
+		t,
+		"Enables timing of database I/O calls. This parameter is off by default, because it will repeatedly query the operating system for the current time, which may cause significant overhead on some platforms.",
+		config.PG.TrackIOTiming.Description,
+	)
 	assert.Equal(t, "off", config.PG.TrackIOTiming.Example)
 	assert.Equal(t, []string{"off", "on"}, config.PG.TrackIOTiming.Enum)
 	assert.False(t, config.PG.TrackIOTiming.RequiresRestart)
 	assert.Equal(t, "string", config.PG.TrackIOTiming.Type)
 
-	assert.Equal(t, "Terminate replication connections that are inactive for longer than this amount of time, in milliseconds. Setting this value to zero disables the timeout.",
-		config.PG.WALSenderTimeout.Description)
+	assert.Equal(
+		t,
+		"Terminate replication connections that are inactive for longer than this amount of time, in milliseconds. Setting this value to zero disables the timeout.",
+		config.PG.WALSenderTimeout.Description,
+	)
 	assert.Equal(t, 60000, config.PG.WALSenderTimeout.Example)
 	assert.False(t, config.PG.WALSenderTimeout.RequiresRestart)
 	assert.Equal(t, "integer", config.PG.WALSenderTimeout.Type)
@@ -688,8 +749,11 @@ func TestDatabasePostgreSQLConfig_Get(t *testing.T) {
 	assert.False(t, config.PG.WALWriterDelay.RequiresRestart)
 	assert.Equal(t, "integer", config.PG.WALWriterDelay.Type)
 
-	assert.Equal(t, "Enable the pg_stat_monitor extension. Enabling this extension will cause the cluster to be restarted.When this extension is enabled, pg_stat_statements results for utility commands are unreliable",
-		config.PGStatMonitorEnable.Description)
+	assert.Equal(
+		t,
+		"Enable the pg_stat_monitor extension. Enabling this extension will cause the cluster to be restarted.When this extension is enabled, pg_stat_statements results for utility commands are unreliable",
+		config.PGStatMonitorEnable.Description,
+	)
 	assert.True(t, config.PGStatMonitorEnable.RequiresRestart)
 	assert.Equal(t, "boolean", config.PGStatMonitorEnable.Type)
 
@@ -700,16 +764,22 @@ func TestDatabasePostgreSQLConfig_Get(t *testing.T) {
 	assert.False(t, config.PGLookout.PGLookoutMaxFailoverReplicationTimeLag.RequiresRestart)
 	assert.Equal(t, "integer", config.PGLookout.PGLookoutMaxFailoverReplicationTimeLag.Type)
 
-	assert.Equal(t, "Percentage of total RAM that the database server uses for shared memory buffers. Valid range is 20-60 (float), which corresponds to 20% - 60%. This setting adjusts the shared_buffers configuration value.",
-		config.SharedBuffersPercentage.Description)
+	assert.Equal(
+		t,
+		"Percentage of total RAM that the database server uses for shared memory buffers. Valid range is 20-60 (float), which corresponds to 20% - 60%. This setting adjusts the shared_buffers configuration value.",
+		config.SharedBuffersPercentage.Description,
+	)
 	assert.Equal(t, 41.5, config.SharedBuffersPercentage.Example)
 	assert.Equal(t, 60.0, config.SharedBuffersPercentage.Maximum)
 	assert.Equal(t, 20.0, config.SharedBuffersPercentage.Minimum)
 	assert.False(t, config.SharedBuffersPercentage.RequiresRestart)
 	assert.Equal(t, "number", config.SharedBuffersPercentage.Type)
 
-	assert.Equal(t, "Sets the maximum amount of memory to be used by a query operation (such as a sort or hash table) before writing to temporary disk files, in MB. Default is 1MB + 0.075% of total RAM (up to 32MB).",
-		config.WorkMem.Description)
+	assert.Equal(
+		t,
+		"Sets the maximum amount of memory to be used by a query operation (such as a sort or hash table) before writing to temporary disk files, in MB. Default is 1MB + 0.075% of total RAM (up to 32MB).",
+		config.WorkMem.Description,
+	)
 	assert.Equal(t, 4, config.WorkMem.Example)
 	assert.Equal(t, 1024, config.WorkMem.Maximum)
 	assert.Equal(t, 1, config.WorkMem.Minimum)

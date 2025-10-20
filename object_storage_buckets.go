@@ -159,7 +159,7 @@ func (c *Client) UpdateObjectStorageBucketAccess(ctx context.Context, clusterOrR
 	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
 
-// GetObjectStorageBucketAccess gets the current access config for a bucket
+// GetObjectStorageBucketAccessV2 gets the current access config for a bucket
 func (c *Client) GetObjectStorageBucketAccessV2(ctx context.Context, clusterOrRegionID, label string) (*ObjectStorageBucketAccessV2, error) {
 	e := formatAPIPath("object-storage/buckets/%s/%s/access", clusterOrRegionID, label)
 	return doGETRequest[ObjectStorageBucketAccessV2](ctx, c, e)
@@ -171,8 +171,12 @@ func (c *Client) DeleteObjectStorageBucket(ctx context.Context, clusterOrRegionI
 	return doDELETERequest(ctx, c, e)
 }
 
-// Lists the contents of the specified ObjectStorageBucket
-func (c *Client) ListObjectStorageBucketContents(ctx context.Context, clusterOrRegionID, label string, params *ObjectStorageBucketListContentsParams) (*ObjectStorageBucketContent, error) {
+// ListObjectStorageBucketContents lists the contents of the specified ObjectStorageBucket
+func (c *Client) ListObjectStorageBucketContents(
+	ctx context.Context,
+	clusterOrRegionID, label string,
+	params *ObjectStorageBucketListContentsParams,
+) (*ObjectStorageBucketContent, error) {
 	basePath := formatAPIPath("object-storage/buckets/%s/%s/object-list", clusterOrRegionID, label)
 
 	queryString := ""

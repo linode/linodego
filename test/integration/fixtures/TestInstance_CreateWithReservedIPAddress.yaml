@@ -14,9 +14,10 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips
     method: POST
   response:
-    body: '{"address": "172.104.20.68", "gateway": "172.104.20.1", "subnet_mask":
-      "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true, "rdns": "172-104-20-68.ip.linodeusercontent.com",
-      "linode_id": null, "region": "us-east", "vpc_nat_1_1": null, "reserved": true}'
+    body: '{"address": "50.116.56.8", "gateway": "50.116.56.1", "subnet_mask": "255.255.255.0",
+      "prefix": 24, "type": "ipv4", "public": true, "rdns": null, "linode_id": null,
+      "interface_id": null, "region": "us-east", "vpc_nat_1_1": null, "reserved":
+      true, "assigned_entity": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -35,13 +36,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "262"
+      - "270"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Tue, 03 Sep 2024 19:13:05 GMT
+      - Fri, 22 Aug 2025 20:58:42 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -58,14 +59,14 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-x0or7k0186hu","root_pass":"?6I~^OU95=viKV8$wb,Q=`dUCjq8x''8l^z0m4KD~8c6F\u003e-6\u003eW60I6Cf6Ln2#Gca$","image":"linode/alpine3.17","interfaces":[{"purpose":"public"}],"booted":false,"ipv4":["172.104.20.68"]}'
+    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-h2omsxl18325","root_pass":"Xigy615Q1}UOBcx@wl80+X?3+|37\u003c6PEj8FNSso2s:8z-1w''J}NE+em3N0{/mK@/","image":"linode/alpine3.20","booted":false,"ipv4":["50.116.56.8"],"interfaces":[{"purpose":"public"}]}'
     form: {}
     headers:
       Accept:
@@ -77,17 +78,17 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 63432426, "label": "go-test-ins-reserved-ip-x0or7k0186hu", "group":
+    body: '{"id": 82372511, "label": "go-test-ins-reserved-ip-h2omsxl18325", "group":
       "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.104.20.68"], "ipv6": "1234::5678/128",
-      "image": "linode/alpine3.17", "region": "us-east", "site_type": "core", "specs":
-      {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts":
-      {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io":
-      10000}, "backups": {"enabled": false, "available": false, "schedule": {"day":
-      null, "window": null}, "last_successful": null}, "hypervisor": "kvm", "watchdog_enabled":
-      true, "tags": [], "host_uuid": "d5c60a121fe8f306350b432af2263337c9e0495a", "has_user_data":
-      false, "placement_group": null, "disk_encryption": "disabled", "lke_cluster_id":
-      null}'
+      "type": "g6-nanode-1", "ipv4": ["50.116.56.8"], "ipv6": "1234::5678/128",
+      "image": "linode/alpine3.20", "region": "us-east", "site_type": "core", "specs":
+      {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
+      0}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota":
+      80, "io": 10000}, "backups": {"enabled": false, "available": false, "schedule":
+      {"day": null, "window": null}, "last_successful": null}, "hypervisor": "kvm",
+      "watchdog_enabled": true, "tags": [], "host_uuid": "3e0b72a174519259b7d08494416447addea79cba",
+      "has_user_data": false, "placement_group": null, "disk_encryption": "enabled",
+      "lke_cluster_id": null, "capabilities": [], "interface_generation": "legacy_config"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -105,20 +106,19 @@ interactions:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
-      Content-Length:
-      - "857"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Tue, 03 Sep 2024 19:13:06 GMT
+      - Fri, 22 Aug 2025 20:58:44 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
+      - Accept-Encoding
       X-Accepted-Oauth-Scopes:
       - linodes:read_write
       X-Content-Type-Options:
@@ -129,7 +129,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "10"
+      - "20"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -145,7 +145,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/63432426
+    url: https://api.linode.com/v4beta/linode/instances/82372511
     method: DELETE
   response:
     body: '{}'
@@ -173,7 +173,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 03 Sep 2024 19:13:08 GMT
+      - Fri, 22 Aug 2025 20:58:46 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -190,7 +190,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -206,7 +206,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips/172.104.20.68
+    url: https://api.linode.com/v4beta/networking/reserved/ips/50.116.56.8
     method: DELETE
   response:
     body: '{}'
@@ -234,7 +234,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 03 Sep 2024 19:13:08 GMT
+      - Fri, 22 Aug 2025 20:58:46 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

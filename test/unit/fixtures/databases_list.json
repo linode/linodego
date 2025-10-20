@@ -10,8 +10,13 @@
         "version": "8.0",
         "cluster_size": 3,
         "platform": "rdbms-default",
-        "created": "2023-01-01T12:00:00"
-      }
+        "created": "2023-01-01T12:00:00",
+        "private_network": {
+          "vpc_id": 1234,
+          "subnet_id": 5678,
+          "public_access": true
+        }
+    }
     ],
     "page": 1,
     "pages": 1,
