@@ -55,6 +55,7 @@ func (i *NetLoadBalancerNode) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		Created       *parseabletime.ParseableTime `json:"created"`
 		Updated       *parseabletime.ParseableTime `json:"updated"`
 		WeightUpdated *parseabletime.ParseableTime `json:"weight_updated"`
@@ -83,14 +84,19 @@ func (i *NetLoadBalancerNode) GetCreateOptions() NetLoadBalancerNodeCreateOption
 
 func (i *NetLoadBalancerNode) GetUpdateOptions() NetLoadBalancerNodeUpdateOptions {
 	return NetLoadBalancerNodeUpdateOptions{
-		Label: i.Label,
+		Label:     i.Label,
 		AddressV6: i.AddressV6,
-		Weight: i.Weight,
+		Weight:    i.Weight,
 	}
 }
 
 // CreateNetLoadBalancerNode creates a new NetLoadBalancerNode
-func (c *Client) CreateNetLoadBalancerNode(ctx context.Context, netloadbalancerID int, listenerID int, opts NetLoadBalancerNodeCreateOptions) (*NetLoadBalancerNode, error) {
+func (c *Client) CreateNetLoadBalancerNode(
+	ctx context.Context,
+	netloadbalancerID int,
+	listenerID int,
+	opts NetLoadBalancerNodeCreateOptions,
+) (*NetLoadBalancerNode, error) {
 	e := formatAPIPath("netloadbalancers/%d/listeners/%d/nodes", netloadbalancerID, listenerID)
 	return doPOSTRequest[NetLoadBalancerNode](ctx, c, e, opts)
 }
@@ -108,7 +114,13 @@ func (c *Client) GetNetLoadBalancerNode(ctx context.Context, netloadbalancerID i
 }
 
 // UpdateNetLoadBalancerNode updates a NetLoadBalancerNode
-func (c *Client) UpdateNetLoadBalancerNode(ctx context.Context, netloadbalancerID int, listenerID int, nodeID int, opts NetLoadBalancerNodeLabelUpdateOptions) (*NetLoadBalancerNode, error) {
+func (c *Client) UpdateNetLoadBalancerNode(
+	ctx context.Context,
+	netloadbalancerID int,
+	listenerID int,
+	nodeID int,
+	opts NetLoadBalancerNodeLabelUpdateOptions,
+) (*NetLoadBalancerNode, error) {
 	e := formatAPIPath("netloadbalancers/%d/listeners/%d/nodes/%d", netloadbalancerID, listenerID, nodeID)
 	return doPUTRequest[NetLoadBalancerNode](ctx, c, e, opts)
 }

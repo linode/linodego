@@ -52,6 +52,7 @@ func (i *NetLoadBalancer) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		Created              *parseabletime.ParseableTime `json:"created"`
 		Updated              *parseabletime.ParseableTime `json:"updated"`
 		LastCompositeUpdated *parseabletime.ParseableTime `json:"last_composite_updated"`
@@ -75,6 +76,7 @@ func (i *NetLoadBalancer) GetCreateOptions() NetLoadBalancerCreateOptions {
 	for i, listener := range i.Listeners {
 		opts[i] = listener.GetCreateOptions()
 	}
+
 	return NetLoadBalancerCreateOptions{
 		Label:     i.Label,
 		Region:    i.Region,
@@ -87,6 +89,7 @@ func (i *NetLoadBalancer) GetUpdateOptions() NetLoadBalancerUpdateOptions {
 	for i, listener := range i.Listeners {
 		opts[i] = listener.GetUpdateOptions()
 	}
+
 	return NetLoadBalancerUpdateOptions{
 		Label:     i.Label,
 		Listeners: opts,

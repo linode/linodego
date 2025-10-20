@@ -23,7 +23,7 @@ type NetLoadBalancerListener struct {
 	Updated *time.Time `json:"-"`
 }
 
-// Need a create options and update options for the NetLoadBalancerListener
+// NetLoadBalancerListenerCreateOptions fields are those accepted by CreateNetLoadBalancerListener
 type NetLoadBalancerListenerCreateOptions struct {
 	// The protocol of this NetLoadBalancerListener.
 	Protocol string `json:"protocol,omitempty"`
@@ -63,6 +63,7 @@ func (i *NetLoadBalancerListener) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		Created *parseabletime.ParseableTime `json:"created"`
 		Updated *parseabletime.ParseableTime `json:"updated"`
 	}{
@@ -95,7 +96,11 @@ func (i *NetLoadBalancerListener) GetUpdateOptions() NetLoadBalancerListenerUpda
 }
 
 // CreateNetLoadBalancerListener creates a new NetLoadBalancerListener
-func (c *Client) CreateNetLoadBalancerListener(ctx context.Context, netloadbalancerID int, opts NetLoadBalancerListenerCreateOptions) (*NetLoadBalancerListener, error) {
+func (c *Client) CreateNetLoadBalancerListener(
+	ctx context.Context,
+	netloadbalancerID int,
+	opts NetLoadBalancerListenerCreateOptions,
+) (*NetLoadBalancerListener, error) {
 	e := formatAPIPath("netloadbalancers/%d/listeners", netloadbalancerID)
 	return doPOSTRequest[NetLoadBalancerListener](ctx, c, e, opts)
 }
@@ -113,7 +118,12 @@ func (c *Client) GetNetLoadBalancerListener(ctx context.Context, netloadbalancer
 }
 
 // UpdateNetLoadBalancerListener updates a NetLoadBalancerListener
-func (c *Client) UpdateNetLoadBalancerListener(ctx context.Context, netloadbalancerID int, listenerID int, opts NetLoadBalancerListenerUpdateOptions) (*NetLoadBalancerListener, error) {
+func (c *Client) UpdateNetLoadBalancerListener(
+	ctx context.Context,
+	netloadbalancerID int,
+	listenerID int,
+	opts NetLoadBalancerListenerUpdateOptions,
+) (*NetLoadBalancerListener, error) {
 	e := formatAPIPath("netloadbalancers/%d/listeners/%d", netloadbalancerID, listenerID)
 	return doPUTRequest[NetLoadBalancerListener](ctx, c, e, opts)
 }
@@ -127,7 +137,12 @@ func (c *Client) DeleteNetLoadBalancerListener(ctx context.Context, netloadbalan
 // UpdateNetLoadBalancerListenerNodeWeights updates the weights of the nodes of a NetLoadBalancerListener
 // Use this to update the weights of the nodes of a NetLoadBalancerListener in case of frequent changes
 // High frequency updates are allowed. No response is returned.
-func (c *Client) UpdateNetLoadBalancerListenerNodeWeights(ctx context.Context, netloadbalancerID int, listenerID int, opts NetLoadBalancerListenerNodeWeightsUpdateOptions) error {
+func (c *Client) UpdateNetLoadBalancerListenerNodeWeights(
+	ctx context.Context,
+	netloadbalancerID int,
+	listenerID int,
+	opts NetLoadBalancerListenerNodeWeightsUpdateOptions,
+) error {
 	e := formatAPIPath("netloadbalancers/%d/listeners/%d/node-weights", netloadbalancerID, listenerID)
 	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
