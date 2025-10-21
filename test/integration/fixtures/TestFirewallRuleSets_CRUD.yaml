@@ -15,7 +15,7 @@ interactions:
     method: POST
   response:
     body: '{"id": 78, "version": 1, "label": "rs-51452000", "description": "Allow
-      inbound HTTP", "type": "inbound", "is_service_defined": 0, "rules": [{"action":
+      inbound HTTP", "type": "inbound", "is_service_defined": false, "rules": [{"action":
       "ACCEPT", "label": "allow-http", "ports": "80", "protocol": "TCP", "addresses":
       {"ipv4": ["0.0.0.0/0"]}}], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
     headers:
@@ -79,7 +79,7 @@ interactions:
     method: GET
   response:
     body: '{"id": 78, "version": 1, "label": "rs-51452000", "description": "Allow
-      inbound HTTP", "type": "inbound", "is_service_defined": 0, "rules": [{"label":
+      inbound HTTP", "type": "inbound", "is_service_defined": false, "rules": [{"label":
       "allow-http", "ports": "80", "action": "ACCEPT", "protocol": "TCP", "addresses":
       {"ipv4": ["0.0.0.0/0"]}}], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
     headers:
@@ -144,7 +144,7 @@ interactions:
     method: PUT
   response:
     body: '{"id": 78, "version": 2, "label": "rs-51452000-updated", "description":
-      "Updated description", "type": "inbound", "is_service_defined": 0, "rules":
+      "Updated description", "type": "inbound", "is_service_defined": false, "rules":
       [{"action": "ACCEPT", "label": "allow-https", "ports": "443", "protocol": "TCP",
       "addresses": {"ipv6": ["1234::5678/0"]}}], "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05"}'
@@ -209,20 +209,20 @@ interactions:
     method: GET
   response:
     body: '{"data": [{"id": 74, "version": 1, "label": "testRuleSet", "description":
-      "test", "type": "inbound", "is_service_defined": 0, "rules": [{"label": "test",
+      "test", "type": "inbound", "is_service_defined": false, "rules": [{"label": "test",
       "ports": "22-24", "action": "ACCEPT", "protocol": "TCP", "addresses": {"ipv4":
       ["192.0.2.0/24"]}, "description": "test"}], "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05"}, {"id": 75, "version": 1, "label": "testRuleSet2",
-      "description": "test2", "type": "inbound", "is_service_defined": 0, "rules":
+      "description": "test2", "type": "inbound", "is_service_defined": false, "rules":
       [{"label": "test", "ports": "22-24", "action": "ACCEPT", "protocol": "TCP",
       "addresses": {"ipv4": ["192.0.2.0/24"]}, "description": "test"}], "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}, {"id": 76, "version":
       1, "label": "ruleset-1760391571119054000", "description": "Allow inbound HTTP",
-      "type": "inbound", "is_service_defined": 0, "rules": [{"label": "allow-http",
+      "type": "inbound", "is_service_defined": false, "rules": [{"label": "allow-http",
       "ports": "80", "action": "ACCEPT", "protocol": "TCP", "addresses": {"ipv4":
       ["0.0.0.0/0"]}}], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"},
       {"id": 78, "version": 2, "label": "rs-51452000-updated", "description": "Updated
-      description", "type": "inbound", "is_service_defined": 0, "rules": [{"label":
+      description", "type": "inbound", "is_service_defined": false, "rules": [{"label":
       "allow-https", "ports": "443", "action": "ACCEPT", "protocol": "TCP", "addresses":
       {"ipv6": ["1234::5678/0"]}}], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}],
       "page": 1, "pages": 1, "results": 4}'

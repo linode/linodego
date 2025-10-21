@@ -269,7 +269,7 @@ func TestRuleSet_UnmarshalJSON(t *testing.T) {
 	}
 }
 
-func TestRuleSet_UnmarshalJSONNumericServiceDefined(t *testing.T) {
+func TestRuleSet_UnmarshalJSONServiceDefined(t *testing.T) {
 	var rs linodego.RuleSet
 
 	raw := []byte(`{
