@@ -42,7 +42,7 @@ func TestImageSharing_Suite(t *testing.T) {
 		require.NoError(t, err)
 	})
 
-	_, err = client.WaitForImageStatus(context.Background(), image.ID, linodego.ImageStatusAvailable, 120)
+	_, err = client.WaitForImageStatus(context.Background(), image.ID, linodego.ImageStatusAvailable, 600)
 	require.NoError(t, err)
 
 	if image.IsShared {
