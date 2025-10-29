@@ -1,0 +1,2060 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/regions?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": "pl-labkrk-2", "label": "Krakow, PL", "country": "pl",
+      "capabilities": ["Linodes", "Block Storage Encryption", "Disk Encryption", "Backups",
+      "NodeBalancers", "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes",
+      "Cloud Firewall", "Vlans", "VPCs", "VPC Dual Stack", "Block Storage Migrations",
+      "Managed Databases", "Metadata", "Premium Plans", "Placement Group", "StackScripts",
+      "NETINT Quadra T1U", "Maintenance Policy", "Linode Interfaces"], "monitors":
+      {"alerts": ["Managed Databases"], "metrics": ["Managed Databases"]}, "status":
+      "ok", "resolvers": {"ipv4": "172.24.224.240,172.24.224.229,172.24.224.236,172.24.224.238,172.24.224.235,172.24.224.241,172.24.224.230,172.24.224.239,172.24.224.233,172.24.224.234",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}], "page": 1,
+      "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=900
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "1123"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"region":"pl-labkrk-2","type":"g6-nanode-1","label":"go-test-ins-7r3j00rd53lw","root_pass":"1-8G{#l-?-70D5#VsRU42TZ9y5B\\2e\u003eBa$tdn;0j9h,U+frLa85Bv3o@cHGSJ-7-","image":"linode/alpine3.22","firewall_id":444604,"booted":false}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/linode/instances
+    method: POST
+  response:
+    body: '{"id": 100139526, "label": "go-test-ins-7r3j00rd53lw", "group": "", "status":
+      "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "type": "g6-nanode-1", "ipv4": ["172.24.243.183"], "ipv6": "1234::5678/128",
+      "image": "linode/alpine3.22", "region": "pl-labkrk-2", "site_type": "core",
+      "specs": {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer":
+      1000, "accelerated_devices": 0}, "alerts": {"cpu": 90, "network_in": 10, "network_out":
+      10, "transfer_quota": 80, "io": 10000}, "backups": {"enabled": false, "available":
+      false, "schedule": {"day": null, "window": null}, "last_successful": null},
+      "hypervisor": "kvm", "watchdog_enabled": true, "tags": [], "host_uuid": "9024dae1ec937850f2b56825ab112c1b7d88cab4",
+      "has_user_data": false, "placement_group": null, "disk_encryption": "enabled",
+      "lke_cluster_id": null, "capabilities": ["Block Storage Encryption", "SMTP Enabled",
+      "Maintenance Policy"], "interface_generation": "legacy_config", "maintenance_policy":
+      "linode/power_off_on"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "1046"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - linodes:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "8"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/linode/instances/100139526/disks?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 1801621, "status": "not ready", "label": "Alpine 3.22
+      Disk", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem":
+      "ext4", "size": 25088, "disk_encryption": "enabled"}, {"id": 1801622, "status":
+      "not ready", "label": "512 MB Swap Image", "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "filesystem": "swap", "size": 512, "disk_encryption":
+      "enabled"}], "page": 1, "pages": 1, "results": 2}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "454"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - linodes:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"disk_id":1801621,"label":"linodego-test-image-sharing-image"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images
+    method: POST
+  response:
+    body: '{"id": "private/76969", "label": "linodego-test-image-sharing-image", "description":
+      "", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "size":
+      25088, "created_by": "lgarber", "type": "manual", "tags": [], "is_public": false,
+      "is_shared": false, "deprecated": false, "vendor": null, "expiry": null, "eol":
+      null, "status": "creating", "capabilities": [], "regions": [], "total_size":
+      25088, "image_sharing": {"shared_with": {"sharegroup_count": 0, "sharegroup_list_url":
+      "/images/private/76969/sharegroups"}, "shared_by": null}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "548"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_write,linodes:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/private%2F76969
+    method: GET
+  response:
+    body: '{"id": "private/76969", "label": "linodego-test-image-sharing-image", "description":
+      "", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "size":
+      25088, "created_by": "lgarber", "type": "manual", "tags": [], "is_public": false,
+      "is_shared": false, "deprecated": false, "vendor": null, "expiry": null, "eol":
+      null, "status": "creating", "capabilities": [], "regions": [], "total_size":
+      25088, "image_sharing": {"shared_with": {"sharegroup_count": 0, "sharegroup_list_url":
+      "/images/private/76969/sharegroups"}, "shared_by": null}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "548"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/private%2F76969
+    method: GET
+  response:
+    body: '{"id": "private/76969", "label": "linodego-test-image-sharing-image", "description":
+      "", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "size":
+      25088, "created_by": "lgarber", "type": "manual", "tags": [], "is_public": false,
+      "is_shared": false, "deprecated": false, "vendor": null, "expiry": null, "eol":
+      null, "status": "creating", "capabilities": [], "regions": [], "total_size":
+      25088, "image_sharing": {"shared_with": {"sharegroup_count": 0, "sharegroup_list_url":
+      "/images/private/76969/sharegroups"}, "shared_by": null}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "548"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/private%2F76969
+    method: GET
+  response:
+    body: '{"id": "private/76969", "label": "linodego-test-image-sharing-image", "description":
+      "", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "size":
+      25088, "created_by": "lgarber", "type": "manual", "tags": [], "is_public": false,
+      "is_shared": false, "deprecated": false, "vendor": null, "expiry": null, "eol":
+      null, "status": "creating", "capabilities": [], "regions": [], "total_size":
+      25088, "image_sharing": {"shared_with": {"sharegroup_count": 0, "sharegroup_list_url":
+      "/images/private/76969/sharegroups"}, "shared_by": null}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "548"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/private%2F76969
+    method: GET
+  response:
+    body: '{"id": "private/76969", "label": "linodego-test-image-sharing-image", "description":
+      "", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "size":
+      25088, "created_by": "lgarber", "type": "manual", "tags": [], "is_public": false,
+      "is_shared": false, "deprecated": false, "vendor": null, "expiry": null, "eol":
+      null, "status": "creating", "capabilities": [], "regions": [], "total_size":
+      25088, "image_sharing": {"shared_with": {"sharegroup_count": 0, "sharegroup_list_url":
+      "/images/private/76969/sharegroups"}, "shared_by": null}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "548"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/private%2F76969
+    method: GET
+  response:
+    body: '{"id": "private/76969", "label": "linodego-test-image-sharing-image", "description":
+      "", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "size":
+      25088, "created_by": "lgarber", "type": "manual", "tags": [], "is_public": false,
+      "is_shared": false, "deprecated": false, "vendor": null, "expiry": null, "eol":
+      null, "status": "creating", "capabilities": [], "regions": [], "total_size":
+      25088, "image_sharing": {"shared_with": {"sharegroup_count": 0, "sharegroup_list_url":
+      "/images/private/76969/sharegroups"}, "shared_by": null}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "548"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/private%2F76969
+    method: GET
+  response:
+    body: '{"id": "private/76969", "label": "linodego-test-image-sharing-image", "description":
+      "", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "size":
+      25088, "created_by": "lgarber", "type": "manual", "tags": [], "is_public": false,
+      "is_shared": false, "deprecated": false, "vendor": null, "expiry": null, "eol":
+      null, "status": "creating", "capabilities": [], "regions": [], "total_size":
+      25088, "image_sharing": {"shared_with": {"sharegroup_count": 0, "sharegroup_list_url":
+      "/images/private/76969/sharegroups"}, "shared_by": null}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "548"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/private%2F76969
+    method: GET
+  response:
+    body: '{"id": "private/76969", "label": "linodego-test-image-sharing-image", "description":
+      "", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "size":
+      366, "created_by": "lgarber", "type": "manual", "tags": [], "is_public": false,
+      "is_shared": false, "deprecated": false, "vendor": null, "expiry": null, "eol":
+      null, "status": "available", "capabilities": ["distributed-sites"], "regions":
+      [{"region": "pl-labkrk-2", "status": "available"}], "total_size": 366, "image_sharing":
+      {"shared_with": {"sharegroup_count": 0, "sharegroup_list_url": "/images/private/76969/sharegroups"},
+      "shared_by": null}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "612"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"label":"linodego-test-image-sharing-image-share-group"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/sharegroups
+    method: POST
+  response:
+    body: '{"id": 718, "uuid": "4256e6ec-6d94-4e45-a73c-95d70d0252b0", "label": "linodego-test-image-sharing-image-share-group",
+      "description": "", "is_suspended": false, "created": "2018-01-02T03:04:05",
+      "updated": null, "expiry": null, "images_count": 0, "members_count": 0}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "265"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"images":[{"id":"private/76969","label":"A label.","description":"A description."}]}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/sharegroups/718/images?page=1
+    method: POST
+  response:
+    body: '{"pages": 1, "data": [{"id": "shared/339", "label": "A label.", "description":
+      "A description.", "created": "2018-01-02T03:04:05", "updated": null, "size":
+      366, "status": "available", "capabilities": ["distributed-sites"], "tags": [],
+      "is_public": false, "is_shared": null, "type": "shared", "deprecated": false,
+      "regions": [{"region": "pl-labkrk-2", "status": "available"}], "total_size":
+      366, "image_sharing": {"shared_with": null, "shared_by": {"sharegroup_id": 718,
+      "sharegroup_uuid": "4256e6ec-6d94-4e45-a73c-95d70d0252b0", "sharegroup_label":
+      "linodego-test-image-sharing-image-share-group", "source_image_id": "private/76969"}},
+      "created_by": null, "vendor": null, "expiry": null, "eol": null}], "results":
+      1, "page": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "727"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/private%2F76969
+    method: GET
+  response:
+    body: '{"id": "private/76969", "label": "linodego-test-image-sharing-image", "description":
+      "", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "size":
+      366, "created_by": "lgarber", "type": "manual", "tags": [], "is_public": false,
+      "is_shared": true, "deprecated": false, "vendor": null, "expiry": null, "eol":
+      null, "status": "available", "capabilities": ["distributed-sites"], "regions":
+      [{"region": "pl-labkrk-2", "status": "available"}], "total_size": 366, "image_sharing":
+      {"shared_with": {"sharegroup_count": 1, "sharegroup_list_url": "/images/private/76969/sharegroups"},
+      "shared_by": null}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "611"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images?page=1
+    method: GET
+  response:
+    body: '{"pages": 1, "data": [{"id": "private/62854", "label": "linodego-test-image-sharing-image",
+      "description": "", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "size": 25088, "created_by": "lgarber", "type": "manual", "tags": [], "is_public":
+      false, "is_shared": false, "deprecated": false, "vendor": null, "expiry": null,
+      "eol": null, "status": "creating", "capabilities": [], "regions": [], "total_size":
+      25088, "image_sharing": {"shared_with": {"sharegroup_count": 0, "sharegroup_list_url":
+      "/images/private/62854/sharegroups"}, "shared_by": null}}, {"id": "private/62861",
+      "label": "linodego-test-image-sharing-image", "description": "", "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "size": 25088, "created_by":
+      "lgarber", "type": "manual", "tags": [], "is_public": false, "is_shared": false,
+      "deprecated": false, "vendor": null, "expiry": null, "eol": null, "status":
+      "creating", "capabilities": [], "regions": [], "total_size": 25088, "image_sharing":
+      {"shared_with": {"sharegroup_count": 0, "sharegroup_list_url": "/images/private/62861/sharegroups"},
+      "shared_by": null}}, {"id": "private/76969", "label": "linodego-test-image-sharing-image",
+      "description": "", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "size": 366, "created_by": "lgarber", "type": "manual", "tags": [], "is_public":
+      false, "is_shared": true, "deprecated": false, "vendor": null, "expiry": null,
+      "eol": null, "status": "available", "capabilities": ["distributed-sites"], "regions":
+      [{"region": "pl-labkrk-2", "status": "available"}], "total_size": 366, "image_sharing":
+      {"shared_with": {"sharegroup_count": 1, "sharegroup_list_url": "/images/private/76969/sharegroups"},
+      "shared_by": null}}, {"id": "linode/almalinux10", "label": "AlmaLinux 10", "deprecated":
+      false, "size": 3500, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "tags": [], "is_public":
+      true, "is_shared": false, "vendor": "AlmaLinux", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "regions": null, "status": "available", "capabilities": ["cloud-init"], "image_sharing":
+      null}, {"id": "linode/almalinux8", "label": "AlmaLinux 8", "deprecated": false,
+      "size": 4000, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "tags": [], "is_public":
+      true, "is_shared": false, "vendor": "AlmaLinux", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "regions": null, "status": "available", "capabilities": ["cloud-init", "distributed-sites"],
+      "image_sharing": null}, {"id": "linode/almalinux9", "label": "AlmaLinux 9",
+      "deprecated": false, "size": 2500, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "description": "", "created_by": "linode", "type": "manual",
+      "tags": [], "is_public": true, "is_shared": false, "vendor": "AlmaLinux", "expiry":
+      null, "eol": "2018-01-02T03:04:05", "regions": null, "status": "available",
+      "capabilities": ["cloud-init", "distributed-sites"], "image_sharing": null},
+      {"id": "linode/alpine3.19", "label": "Alpine 3.19", "deprecated": false, "size":
+      400, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description":
+      "", "created_by": "linode", "type": "manual", "tags": [], "is_public": true,
+      "is_shared": false, "vendor": "Alpine", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "regions": null, "status": "available", "capabilities": ["cloud-init"], "image_sharing":
+      null}, {"id": "linode/alpine3.20", "label": "Alpine 3.20", "deprecated": false,
+      "size": 400, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "tags": [], "is_public":
+      true, "is_shared": false, "vendor": "Alpine", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "regions": null, "status": "available", "capabilities": ["cloud-init"], "image_sharing":
+      null}, {"id": "linode/alpine3.21", "label": "Alpine 3.21", "deprecated": false,
+      "size": 500, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "tags": [], "is_public":
+      true, "is_shared": false, "vendor": "Alpine", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "regions": null, "status": "available", "capabilities": ["cloud-init"], "image_sharing":
+      null}, {"id": "linode/alpine3.22", "label": "Alpine 3.22", "deprecated": false,
+      "size": 500, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "tags": [], "is_public":
+      true, "is_shared": false, "vendor": "Alpine", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "regions": null, "status": "available", "capabilities": ["cloud-init"], "image_sharing":
+      null}, {"id": "linode/arch", "label": "Arch Linux", "deprecated": false, "size":
+      2500, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description":
+      "", "created_by": "linode", "type": "manual", "tags": [], "is_public": true,
+      "is_shared": false, "vendor": "Arch", "expiry": null, "eol": null, "regions":
+      null, "status": "available", "capabilities": ["cloud-init"], "image_sharing":
+      null}, {"id": "linode/centos-stream10", "label": "CentOS Stream 10", "deprecated":
+      false, "size": 3500, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "tags": [], "is_public":
+      true, "is_shared": false, "vendor": "CentOS", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "regions": null, "status": "available", "capabilities": ["cloud-init"], "image_sharing":
+      null}, {"id": "linode/centos-stream9", "label": "CentOS Stream 9", "deprecated":
+      false, "size": 2400, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "tags": [], "is_public":
+      true, "is_shared": false, "vendor": "CentOS", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "regions": null, "status": "available", "capabilities": ["cloud-init", "distributed-sites"],
+      "image_sharing": null}, {"id": "linode/debian11", "label": "Debian 11", "deprecated":
+      false, "size": 1500, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "tags": [], "is_public":
+      true, "is_shared": false, "vendor": "Debian", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "regions": null, "status": "available", "capabilities": ["cloud-init", "distributed-sites"],
+      "image_sharing": null}, {"id": "linode/debian12", "label": "Debian 12", "deprecated":
+      false, "size": 1800, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "tags": [], "is_public":
+      true, "is_shared": false, "vendor": "Debian", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "regions": null, "status": "available", "capabilities": ["cloud-init", "distributed-sites"],
+      "image_sharing": null}, {"id": "linode/debian13", "label": "Debian 13", "deprecated":
+      false, "size": 1800, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "tags": [], "is_public":
+      true, "is_shared": false, "vendor": "Debian", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "regions": null, "status": "available", "capabilities": ["cloud-init", "distributed-sites"],
+      "image_sharing": null}, {"id": "linode/fedora41", "label": "Fedora 41", "deprecated":
+      false, "size": 2000, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "tags": [], "is_public":
+      true, "is_shared": false, "vendor": "Fedora", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "regions": null, "status": "available", "capabilities": ["cloud-init"], "image_sharing":
+      null}, {"id": "linode/fedora42", "label": "Fedora 42", "deprecated": false,
+      "size": 3000, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "tags": [], "is_public":
+      true, "is_shared": false, "vendor": "Fedora", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "regions": null, "status": "available", "capabilities": ["cloud-init"], "image_sharing":
+      null}, {"id": "linode/gentoo", "label": "Gentoo", "deprecated": false, "size":
+      7000, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description":
+      "", "created_by": "linode", "type": "manual", "tags": [], "is_public": true,
+      "is_shared": false, "vendor": "Gentoo", "expiry": null, "eol": null, "regions":
+      null, "status": "available", "capabilities": ["cloud-init"], "image_sharing":
+      null}, {"id": "linode/kali", "label": "Kali Linux", "deprecated": false, "size":
+      1536, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description":
+      "", "created_by": "linode", "type": "manual", "tags": [], "is_public": true,
+      "is_shared": false, "vendor": "Kali", "expiry": null, "eol": null, "regions":
+      null, "status": "available", "capabilities": ["cloud-init"], "image_sharing":
+      null}, {"id": "linode/debian12-kube-v1.30.3", "label": "Kubernetes 1.30.3 on
+      Debian 12", "deprecated": false, "size": 3500, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "description": null, "created_by": "linode",
+      "type": "manual", "tags": [], "is_public": true, "is_shared": false, "vendor":
+      "Debian", "expiry": null, "eol": "2018-01-02T03:04:05", "regions": null, "status":
+      "available", "capabilities": ["cloud-init"], "image_sharing": null}, {"id":
+      "linode/debian12-kube-v1.31.0", "label": "Kubernetes 1.31.0 on Debian 12", "deprecated":
+      false, "size": 3500, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "tags": [], "is_public":
+      true, "is_shared": false, "vendor": "Debian", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "regions": null, "status": "available", "capabilities": ["cloud-init"], "image_sharing":
+      null}, {"id": "linode/debian12-kube-v1.32.1", "label": "Kubernetes 1.32.1 on
+      Debian 12", "deprecated": false, "size": 3500, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
+      "type": "manual", "tags": [], "is_public": true, "is_shared": false, "vendor":
+      "Debian", "expiry": null, "eol": "2018-01-02T03:04:05", "regions": null, "status":
+      "available", "capabilities": ["cloud-init"], "image_sharing": null}, {"id":
+      "linode/debian12-kube-v1.33.0", "label": "Kubernetes 1.33.0 on Debian 12", "deprecated":
+      false, "size": 3500, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "tags": [], "is_public":
+      true, "is_shared": false, "vendor": "Debian", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "regions": null, "status": "available", "capabilities": ["cloud-init"], "image_sharing":
+      null}, {"id": "linode/debian12-kube-v1.34.0", "label": "Kubernetes 1.34.0 on
+      Debian 12", "deprecated": false, "size": 3500, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
+      "type": "manual", "tags": [], "is_public": true, "is_shared": false, "vendor":
+      "Debian", "expiry": null, "eol": "2018-01-02T03:04:05", "regions": null, "status":
+      "available", "capabilities": ["cloud-init"], "image_sharing": null}, {"id":
+      "linode/opensuse15.6", "label": "openSUSE Leap 15.6", "deprecated": false, "size":
+      1200, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description":
+      "", "created_by": "linode", "type": "manual", "tags": [], "is_public": true,
+      "is_shared": false, "vendor": "openSUSE", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "regions": null, "status": "available", "capabilities": ["cloud-init"], "image_sharing":
+      null}, {"id": "linode/rocky10", "label": "Rocky Linux 10", "deprecated": false,
+      "size": 3500, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "tags": [], "is_public":
+      true, "is_shared": false, "vendor": "Rocky", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "regions": null, "status": "available", "capabilities": ["cloud-init"], "image_sharing":
+      null}, {"id": "linode/rocky8", "label": "Rocky Linux 8", "deprecated": false,
+      "size": 4000, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "tags": [], "is_public":
+      true, "is_shared": false, "vendor": "Rocky", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "regions": null, "status": "available", "capabilities": ["cloud-init", "distributed-sites"],
+      "image_sharing": null}, {"id": "linode/rocky9", "label": "Rocky Linux 9", "deprecated":
+      false, "size": 2500, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "tags": [], "is_public":
+      true, "is_shared": false, "vendor": "Rocky", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "regions": null, "status": "available", "capabilities": ["cloud-init", "distributed-sites"],
+      "image_sharing": null}, {"id": "linode/slackware15.0", "label": "Slackware 15.0",
+      "deprecated": false, "size": 11600, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "description": "", "created_by": "linode", "type": "manual",
+      "tags": [], "is_public": true, "is_shared": false, "vendor": "Slackware", "expiry":
+      null, "eol": null, "regions": null, "status": "available", "capabilities": [],
+      "image_sharing": null}, {"id": "linode/ubuntu22.04", "label": "Ubuntu 22.04
+      LTS", "deprecated": false, "size": 3500, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "description": "", "created_by": "linode", "type": "manual",
+      "tags": [], "is_public": true, "is_shared": false, "vendor": "Ubuntu", "expiry":
+      null, "eol": "2018-01-02T03:04:05", "regions": null, "status": "available",
+      "capabilities": ["cloud-init", "distributed-sites"], "image_sharing": null},
+      {"id": "linode/ubuntu22.04-kube", "label": "Ubuntu 22.04 LTS KPP", "deprecated":
+      false, "size": 3500, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "tags": [], "is_public":
+      true, "is_shared": false, "vendor": "Ubuntu", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "regions": null, "status": "available", "capabilities": ["cloud-init"], "image_sharing":
+      null}, {"id": "linode/ubuntu24.04-kube-vmulti", "label": "Ubuntu 24.04 for LKE",
+      "deprecated": false, "size": 3500, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "description": "", "created_by": "linode", "type": "manual",
+      "tags": [], "is_public": true, "is_shared": false, "vendor": "Ubuntu", "expiry":
+      null, "eol": "2018-01-02T03:04:05", "regions": null, "status": "available",
+      "capabilities": ["cloud-init"], "image_sharing": null}, {"id": "linode/ubuntu24.04",
+      "label": "Ubuntu 24.04 LTS", "deprecated": false, "size": 3500, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
+      "type": "manual", "tags": [], "is_public": true, "is_shared": false, "vendor":
+      "Ubuntu", "expiry": null, "eol": "2018-01-02T03:04:05", "regions": null, "status":
+      "available", "capabilities": ["cloud-init", "distributed-sites"], "image_sharing":
+      null}, {"id": "linode/ubuntu24.10", "label": "Ubuntu 24.10", "deprecated": false,
+      "size": 3500, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "tags": [], "is_public":
+      true, "is_shared": false, "vendor": "Ubuntu", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "regions": null, "status": "available", "capabilities": ["cloud-init"], "image_sharing":
+      null}, {"id": "linode/ubuntu25.04", "label": "Ubuntu 25.04", "deprecated": false,
+      "size": 3500, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "tags": [], "is_public":
+      true, "is_shared": false, "vendor": "Ubuntu", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "regions": null, "status": "available", "capabilities": ["cloud-init"], "image_sharing":
+      null}, {"id": "linode/ubuntu25.10", "label": "Ubuntu 25.10", "deprecated": false,
+      "size": 3500, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "description": "", "created_by": "linode", "type": "manual", "tags": [], "is_public":
+      true, "is_shared": false, "vendor": "Ubuntu", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "regions": null, "status": "available", "capabilities": ["cloud-init"], "image_sharing":
+      null}, {"id": "linode/centos7", "label": "CentOS 7", "deprecated": true, "size":
+      2800, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "description":
+      "", "created_by": "linode", "type": "manual", "tags": [], "is_public": true,
+      "is_shared": false, "vendor": "CentOS", "expiry": null, "eol": "2018-01-02T03:04:05",
+      "regions": null, "status": "available", "capabilities": ["distributed-sites"],
+      "image_sharing": null}, {"id": "linode/ubuntu18.04", "label": "Ubuntu 18.04
+      LTS", "deprecated": true, "size": 2700, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "description": "", "created_by": "linode", "type": "manual",
+      "tags": [], "is_public": true, "is_shared": false, "vendor": "Ubuntu", "expiry":
+      null, "eol": "2018-01-02T03:04:05", "regions": null, "status": "available",
+      "capabilities": ["distributed-sites"], "image_sharing": null}, {"id": "linode/ubuntu20.04",
+      "label": "Ubuntu 20.04 LTS", "deprecated": true, "size": 3500, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "description": "", "created_by": "linode",
+      "type": "manual", "tags": [], "is_public": true, "is_shared": false, "vendor":
+      "Ubuntu", "expiry": null, "eol": "2018-01-02T03:04:05", "regions": null, "status":
+      "available", "capabilities": ["cloud-init", "distributed-sites"], "image_sharing":
+      null}], "results": 40, "page": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "18001"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "20"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/private%2F76969/sharegroups?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 718, "uuid": "4256e6ec-6d94-4e45-a73c-95d70d0252b0", "label":
+      "linodego-test-image-sharing-image-share-group", "description": "", "is_suspended":
+      false, "created": "2018-01-02T03:04:05", "updated": null, "expiry": null, "images_count":
+      1, "members_count": 0}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "314"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/sharegroups?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 718, "uuid": "4256e6ec-6d94-4e45-a73c-95d70d0252b0", "label":
+      "linodego-test-image-sharing-image-share-group", "description": "", "is_suspended":
+      false, "created": "2018-01-02T03:04:05", "updated": null, "expiry": null, "images_count":
+      1, "members_count": 0}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "314"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/sharegroups/718
+    method: GET
+  response:
+    body: '{"id": 718, "uuid": "4256e6ec-6d94-4e45-a73c-95d70d0252b0", "label": "linodego-test-image-sharing-image-share-group",
+      "description": "", "is_suspended": false, "created": "2018-01-02T03:04:05",
+      "updated": null, "expiry": null, "images_count": 1, "members_count": 0}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "265"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/sharegroups/718/images?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": "shared/339", "label": "A label.", "description": "A description.",
+      "created": "2018-01-02T03:04:05", "updated": null, "size": 366, "status": "available",
+      "capabilities": ["distributed-sites"], "tags": [], "is_public": false, "is_shared":
+      null, "type": "shared", "deprecated": false, "regions": [{"region": "pl-labkrk-2",
+      "status": "available"}], "total_size": 366, "image_sharing": {"shared_with":
+      null, "shared_by": {"sharegroup_id": 718, "sharegroup_uuid": "4256e6ec-6d94-4e45-a73c-95d70d0252b0",
+      "sharegroup_label": "linodego-test-image-sharing-image-share-group", "source_image_id":
+      "private/76969"}}, "created_by": null, "vendor": null, "expiry": null, "eol":
+      null}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "727"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/sharegroups/718/members?page=1
+    method: GET
+  response:
+    body: '{"data": [], "page": 1, "pages": 1, "results": 0}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "49"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"label":"Updated label","description":"Updated description"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/sharegroups/718
+    method: PUT
+  response:
+    body: '{"id": 718, "uuid": "4256e6ec-6d94-4e45-a73c-95d70d0252b0", "label": "Updated
+      label", "description": "Updated description", "is_suspended": false, "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "expiry": null, "images_count":
+      1, "members_count": 0}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "269"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"label":"Updated label","description":"Updated description"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/sharegroups/718/images/shared%2F339
+    method: PUT
+  response:
+    body: '{"id": "shared/339", "label": "Updated label", "description": "Updated
+      description", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "size": 366, "status": "available", "capabilities": ["distributed-sites"], "tags":
+      [], "is_public": false, "is_shared": null, "type": "shared", "deprecated": false,
+      "regions": [{"region": "pl-labkrk-2", "status": "available"}], "total_size":
+      366, "image_sharing": {"shared_with": null, "shared_by": {"sharegroup_id": 718,
+      "sharegroup_uuid": "4256e6ec-6d94-4e45-a73c-95d70d0252b0", "sharegroup_label":
+      "Updated label", "source_image_id": "private/76969"}}, "created_by": null, "vendor":
+      null, "expiry": null, "eol": null}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "673"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/sharegroups/718/images/shared%2F339
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/private%2F76969
+    method: GET
+  response:
+    body: '{"id": "private/76969", "label": "linodego-test-image-sharing-image", "description":
+      "", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "size":
+      366, "created_by": "lgarber", "type": "manual", "tags": [], "is_public": false,
+      "is_shared": true, "deprecated": false, "vendor": null, "expiry": null, "eol":
+      null, "status": "available", "capabilities": ["distributed-sites"], "regions":
+      [{"region": "pl-labkrk-2", "status": "available"}], "total_size": 366, "image_sharing":
+      {"shared_with": {"sharegroup_count": 0, "sharegroup_list_url": "/images/private/76969/sharegroups"},
+      "shared_by": null}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "611"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/sharegroups/718/images?page=1
+    method: GET
+  response:
+    body: '{"data": [], "page": 1, "pages": 1, "results": 0}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "49"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/sharegroups/718
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/images/private%2F76969
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - images:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/linode/instances/100139526
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx/1.18.0
+      Strict-Transport-Security:
+      - max-age=31536000
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - linodes:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
