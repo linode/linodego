@@ -228,5 +228,6 @@ func ErrHasStatus(err error, code ...int) bool {
 	}
 
 	ec := e.StatusCode()
+
 	return slices.Contains(code, ec)
 }
