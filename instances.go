@@ -110,7 +110,7 @@ type InstanceBackup struct {
 	Schedule       struct {
 		Day    string `json:"day,omitempty"`
 		Window string `json:"window,omitempty"`
-	} `json:"schedule,omitempty"`
+	} `json:"schedule"`
 }
 
 type InstanceDiskEncryption string
