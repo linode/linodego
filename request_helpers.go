@@ -297,7 +297,7 @@ func formatAPIPath(format string, args ...any) string {
 	return fmt.Sprintf(format, escapedArgs...)
 }
 
-func isNil(i interface{}) bool {
+func isNil(i any) bool {
 	if i == nil {
 		return true
 	}

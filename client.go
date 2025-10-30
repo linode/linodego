@@ -405,7 +405,7 @@ func (c *httpClient) logRequest(req *http.Request, method, url string, bodyBuffe
 
 	var logBuf bytes.Buffer
 
-	err := reqLogTemplate.Execute(&logBuf, map[string]interface{}{
+	err := reqLogTemplate.Execute(&logBuf, map[string]any{
 		"Method":  method,
 		"URL":     url,
 		"Headers": req.Header,
@@ -453,7 +453,7 @@ func (c *httpClient) logResponse(resp *http.Response) (*http.Response, error) {
 
 	var logBuf bytes.Buffer
 
-	err := respLogTemplate.Execute(&logBuf, map[string]interface{}{
+	err := respLogTemplate.Execute(&logBuf, map[string]any{
 		"Status":  resp.Status,
 		"Headers": resp.Header,
 		"Body":    respBody.String(),
@@ -468,7 +468,7 @@ func (c *httpClient) logResponse(resp *http.Response) (*http.Response, error) {
 }
 
 // nolint:unused
-func (c *httpClient) decodeResponseBody(resp *http.Response, response interface{}) error {
+func (c *httpClient) decodeResponseBody(resp *http.Response, response any) error {
 	if err := json.NewDecoder(resp.Body).Decode(response); err != nil {
 		if c.debug && c.logger != nil {
 			c.logger.Errorf("failed to decode response: %v", err)
