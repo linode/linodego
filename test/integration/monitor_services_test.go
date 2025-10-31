@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/linode/linodego"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -34,6 +35,15 @@ func TestMonitorServices_Get_smoke(t *testing.T) {
 	} else if monitorServiceClient.ServiceType != "dbaas" {
 		t.Errorf("Monitor service not found or wrong service type: got %v", monitorServiceClient.ServiceType)
 	}
+}
+
+func TestMonitorServices_GetNotAllowedServiceType(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestMonitorNotAllowedServiceType_Get")
+	defer teardown()
+
+	_, getErr := client.ListMonitorServiceByType(context.Background(), "saas", nil)
+	require.Error(t, getErr)
+	assert.Contains(t, getErr.Error(), "[404] Not found")
 }
 
 func validateServiceTypes(
