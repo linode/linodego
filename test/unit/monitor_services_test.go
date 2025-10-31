@@ -50,6 +50,7 @@ func TestListMonitorServicesByType(t *testing.T) {
 	// Call the GetMonitorServiceByType method
 	client, err := base.Client.GetMonitorServiceByType(context.Background(), "dbaas")
 	assert.NoError(t, err, "Expected no error when listing monitor services by type")
+	assert.NotNil(t, client, "Expected client to not be nil")
 	assert.Equal(t, "Databases", client.Label, "Expected services label to match")
 	assert.Equal(t, "dbaas", client.ServiceType, "Expected service_type to match")
 

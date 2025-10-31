@@ -29,7 +29,9 @@ func TestMonitorServices_Get_smoke(t *testing.T) {
 		t.Errorf("Error getting monitor services : %s", getErr)
 	}
 
-	if monitorServiceClient.ServiceType != "dbaas" {
+	if monitorServiceClient == nil {
+		t.Errorf("Monitor service not found")
+	} else if monitorServiceClient.ServiceType != "dbaas" {
 		t.Errorf("Monitor service not found or wrong service type: got %v", monitorServiceClient.ServiceType)
 	}
 }
