@@ -3,7 +3,6 @@ package linodego
 import (
 	"context"
 	"encoding/json"
-	"strconv"
 	"time"
 
 	"github.com/linode/linodego/internal/parseabletime"
@@ -36,21 +35,6 @@ type RuleSet struct {
 
 // UnmarshalJSON implements custom timestamp parsing for RuleSet.
 func (r *RuleSet) UnmarshalJSON(b []byte) error {
-	var raw map[string]json.RawMessage
-
-	if err := json.Unmarshal(b, &raw); err != nil {
-		return err
-	}
-
-	if err := normalizeIsServiceDefined(raw); err != nil {
-		return err
-	}
-
-	normalized, err := json.Marshal(raw)
-	if err != nil {
-		return err
-	}
-
 	type Mask RuleSet
 
 	aux := struct {
@@ -63,7 +47,7 @@ func (r *RuleSet) UnmarshalJSON(b []byte) error {
 		Mask: (*Mask)(r),
 	}
 
-	if err := json.Unmarshal(normalized, &aux); err != nil {
+	if err := json.Unmarshal(b, &aux); err != nil {
 		return err
 	}
 
@@ -78,28 +62,6 @@ func (r *RuleSet) UnmarshalJSON(b []byte) error {
 	if aux.Deleted != nil {
 		r.Deleted = (*time.Time)(aux.Deleted)
 	}
-
-	return nil
-}
-
-func normalizeIsServiceDefined(raw map[string]json.RawMessage) error {
-	v, ok := raw["is_service_defined"]
-	if !ok {
-		return nil
-	}
-
-	var boolValue bool
-	if err := json.Unmarshal(v, &boolValue); err == nil {
-		raw["is_service_defined"] = json.RawMessage(strconv.FormatBool(boolValue))
-		return nil
-	}
-
-	var intValue int
-	if err := json.Unmarshal(v, &intValue); err != nil {
-		return err
-	}
-
-	raw["is_service_defined"] = json.RawMessage(strconv.FormatBool(intValue != 0))
 
 	return nil
 }
