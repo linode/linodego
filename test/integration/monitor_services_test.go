@@ -25,20 +25,15 @@ func TestMonitorServices_Get_smoke(t *testing.T) {
 	}
 
 	// Get the details of the registered ACLP services based on serviceType
-	monitorServicesClient, getErr := client.ListMonitorServiceByType(context.Background(), "dbaas", nil)
+	monitorServiceClient, getErr := client.GetMonitorServiceByType(context.Background(), "dbaas")
 	if getErr != nil {
 		t.Errorf("Error getting monitor services : %s", getErr)
 	}
 
-	found := false
-	for _, element := range monitorServicesClient {
-		if element.ServiceType == "dbaas" {
-			found = true
-		}
-	}
-
-	if !found {
-		t.Errorf("Monitor service not found in list.")
+	if monitorServiceClient == nil {
+		t.Errorf("Monitor service not found")
+	} else if monitorServiceClient.ServiceType != "dbaas" {
+		t.Errorf("Monitor service not found or wrong service type: got %v", monitorServiceClient.ServiceType)
 	}
 }
 
@@ -57,4 +52,8 @@ func validateServiceTypes(
 ) {
 	require.NotEmpty(t, serviceType.ServiceType)
 	require.NotEmpty(t, serviceType.Label)
+	require.NotEmpty(t, serviceType.Alert)
+	require.NotEmpty(t, serviceType.Alert.PollingIntervalSeconds)
+	require.NotEmpty(t, serviceType.Alert.EvaluationPeriodSeconds)
+	require.NotEmpty(t, serviceType.Alert.Scope)
 }
