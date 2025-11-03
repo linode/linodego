@@ -24,7 +24,7 @@ func TestImageShareGroup_Producer_Create(t *testing.T) {
 		Description: linodego.Pointer("This is the description."),
 		Images: []linodego.ImageShareGroupImage{
 			{
-				ImageID:     "linode/debian11",
+				ID:          "linode/debian11",
 				Label:       linodego.Pointer("image-label"),
 				Description: linodego.Pointer("A description."),
 			},
@@ -90,7 +90,7 @@ func TestImageShareGroup_Producer_AddImages(t *testing.T) {
 	requestData := linodego.ImageShareGroupAddImagesOptions{
 		Images: []linodego.ImageShareGroupImage{
 			{
-				ImageID:     "linode/debian11",
+				ID:          "linode/debian11",
 				Label:       linodego.Pointer("image-label"),
 				Description: linodego.Pointer("A description."),
 			},
@@ -147,7 +147,7 @@ func TestImageShareGroup_Producer_UpdateImage(t *testing.T) {
 
 	base.MockPut("images/sharegroups/1234/images/123", fixtureData)
 
-	image, err := base.Client.ImageShareGroupUpdateImage(context.Background(), 1234, "123", requestData)
+	image, err := base.Client.ImageShareGroupUpdateImageShareEntry(context.Background(), 1234, "123", requestData)
 	assert.NoError(t, err)
 
 	assert.Equal(t, "linode/debian11", image.ID)
@@ -213,9 +213,9 @@ func TestImageShareGroup_Producer_List_ContainingPrivateImage(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	base.MockGet("images/1234/sharegroups", fixtureData)
+	base.MockGet("images/private%2F1234/sharegroups", fixtureData)
 
-	imageShareGroups, err := base.Client.ListImageShareGroupsContainingPrivateImage(context.Background(), 1234, &linodego.ListOptions{})
+	imageShareGroups, err := base.Client.ListImageShareGroupsContainingPrivateImage(context.Background(), "private/1234", &linodego.ListOptions{})
 	assert.NoError(t, err)
 
 	assert.Len(t, imageShareGroups, 2)
@@ -320,7 +320,7 @@ func TestImageShareGroup_Producer_List_Images(t *testing.T) {
 
 	base.MockGet("images/sharegroups/1234/images", fixtureData)
 
-	images, err := base.Client.ImageShareGroupListImages(context.Background(), 1234, &linodego.ListOptions{})
+	images, err := base.Client.ImageShareGroupListImageShareEntries(context.Background(), 1234, &linodego.ListOptions{})
 	assert.NoError(t, err)
 
 	image := images[0]

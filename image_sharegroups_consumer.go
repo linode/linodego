@@ -196,10 +196,10 @@ func (c *Client) ImageShareGroupGetByToken(ctx context.Context, tokenUUID string
 	)
 }
 
-// ImageShareGroupGetImagesByToken lists the images in the ImageShareGroup that the
+// ImageShareGroupGetImageShareEntriesByToken lists the im_ImageShare entriess in the ImageShareGroup that the
 // consumer's specified token has been accepted into.
-func (c *Client) ImageShareGroupGetImagesByToken(ctx context.Context, tokenUUID string, opts *ListOptions) ([]Image, error) {
-	return getPaginatedResults[Image](
+func (c *Client) ImageShareGroupGetImageShareEntriesByToken(ctx context.Context, tokenUUID string, opts *ListOptions) ([]ImageShareEntry, error) {
+	return getPaginatedResults[ImageShareEntry](
 		ctx,
 		c,
 		formatAPIPath("images/sharegroups/tokens/%s/sharegroup/images", tokenUUID),

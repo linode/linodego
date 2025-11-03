@@ -73,7 +73,7 @@ type ImageShareGroupUpdateImageOptions struct {
 
 // ImageShareGroupImage represents an Image to be included in a ProducerImageShareGroup.
 type ImageShareGroupImage struct {
-	ImageID     string  `json:"image_id"`
+	ID          string  `json:"id"`
 	Label       *string `json:"label,omitempty"`
 	Description *string `json:"description,omitempty"`
 }
@@ -142,13 +142,13 @@ func (c *Client) ListImageShareGroups(
 // the given private image is present.
 func (c *Client) ListImageShareGroupsContainingPrivateImage(
 	ctx context.Context,
-	privateImageID int,
+	privateImageID string,
 	opts *ListOptions,
 ) ([]ProducerImageShareGroup, error) {
 	return getPaginatedResults[ProducerImageShareGroup](
 		ctx,
 		c,
-		formatAPIPath("images/%d/sharegroups", privateImageID),
+		formatAPIPath("images/%s/sharegroups", privateImageID),
 		opts,
 	)
 }
@@ -201,13 +201,13 @@ func (c *Client) DeleteImageShareGroup(ctx context.Context, imageShareGroupID in
 	)
 }
 
-// ImageShareGroupListImages lists the Images in a specified ImageShareGroup owned by the producer.
-func (c *Client) ImageShareGroupListImages(
+// ImageShareGroupListImageShareEntries lists the im_ImageShare entries of a specified ImageShareGroup owned by the producer.
+func (c *Client) ImageShareGroupListImageShareEntries(
 	ctx context.Context,
 	imageShareGroupID int,
 	opts *ListOptions,
-) ([]Image, error) {
-	return getPaginatedResults[Image](
+) ([]ImageShareEntry, error) {
+	return getPaginatedResults[ImageShareEntry](
 		ctx,
 		c,
 		formatAPIPath("images/sharegroups/%d/images", imageShareGroupID),
@@ -220,28 +220,24 @@ func (c *Client) ImageShareGroupAddImages(
 	ctx context.Context,
 	imageShareGroupID int,
 	opts ImageShareGroupAddImagesOptions,
-) ([]Image, error) {
-	response, err := doPOSTRequest[[]Image](
+) ([]ImageShareEntry, error) {
+	return postPaginatedResults[ImageShareEntry, ImageShareGroupAddImagesOptions](
 		ctx,
 		c,
 		formatAPIPath("images/sharegroups/%d/images", imageShareGroupID),
+		nil,
 		opts,
 	)
-	if err != nil {
-		return nil, err
-	}
-
-	return *response, nil
 }
 
-// ImageShareGroupUpdateImage allows the producer to update the specified Image's description and label within an ImageShareGroup.
-func (c *Client) ImageShareGroupUpdateImage(
+// ImageShareGroupUpdateImageShareEntry allows the producer to update the description and label of a specified ImageShareEntry within the specified ImageShareGroup.
+func (c *Client) ImageShareGroupUpdateImageShareEntry(
 	ctx context.Context,
 	imageShareGroupID int,
 	imageID string,
 	opts ImageShareGroupUpdateImageOptions,
-) (*Image, error) {
-	return doPUTRequest[Image](
+) (*ImageShareEntry, error) {
+	return doPUTRequest[ImageShareEntry](
 		ctx,
 		c,
 		formatAPIPath("images/sharegroups/%d/images/%s", imageShareGroupID, imageID),
