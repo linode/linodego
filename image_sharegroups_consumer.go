@@ -141,13 +141,13 @@ func (c *Client) ImageShareGroupListTokens(ctx context.Context, opts *ListOption
 	return getPaginatedResults[ImageShareGroupToken](
 		ctx,
 		c,
-		"/images/sharegroups/tokens",
+		"images/sharegroups/tokens",
 		opts,
 	)
 }
 
 // ImageShareGroupGetToken gets information about the specified ImageShareGroupToken created by the user.
-// the tokens themselves are only visible once upon creation.
+// The tokens themselves are only visible once upon creation.
 // NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) ImageShareGroupGetToken(ctx context.Context, tokenUUID string) (*ImageShareGroupToken, error) {
 	return doGETRequest[ImageShareGroupToken](
@@ -202,7 +202,7 @@ func (c *Client) ImageShareGroupGetByToken(ctx context.Context, tokenUUID string
 	)
 }
 
-// ImageShareGroupGetImageShareEntriesByToken lists the im_ImageShare entriess in the ImageShareGroup that the
+// ImageShareGroupGetImageShareEntriesByToken lists the shared image entries in the ImageShareGroup that the
 // consumer's specified token has been accepted into.
 // NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) ImageShareGroupGetImageShareEntriesByToken(ctx context.Context, tokenUUID string, opts *ListOptions) ([]ImageShareEntry, error) {

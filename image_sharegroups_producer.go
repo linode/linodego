@@ -207,7 +207,7 @@ func (c *Client) DeleteImageShareGroup(ctx context.Context, imageShareGroupID in
 	)
 }
 
-// ImageShareGroupListImageShareEntries lists the im_ImageShare entries of a specified ImageShareGroup owned by the producer.
+// ImageShareGroupListImageShareEntries lists the shared image entries of a specified ImageShareGroup owned by the producer.
 // NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) ImageShareGroupListImageShareEntries(
 	ctx context.Context,

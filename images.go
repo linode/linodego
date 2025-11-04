@@ -87,7 +87,7 @@ type ImageSharingSharedBy struct {
 	SourceImageID   *string `json:"source_image_id"`
 }
 
-// ImageShareEntry represents a row in the im_ImageShare entries for an ImageShareGroup
+// ImageShareEntry represents a shared image entry for an ImageShareGroup
 type ImageShareEntry struct {
 	ID           string        `json:"id"`
 	CreatedBy    *string       `json:"created_by"`
