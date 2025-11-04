@@ -42,27 +42,31 @@ type ImageRegion struct {
 
 // Image represents a deployable Image object for use with Linode Instances
 type Image struct {
-	ID           string        `json:"id"`
-	CreatedBy    string        `json:"created_by"`
-	Capabilities []string      `json:"capabilities"`
-	Label        string        `json:"label"`
-	Description  string        `json:"description"`
-	Type         string        `json:"type"`
-	Vendor       string        `json:"vendor"`
-	Status       ImageStatus   `json:"status"`
-	Size         int           `json:"size"`
-	TotalSize    int           `json:"total_size"`
-	IsPublic     bool          `json:"is_public"`
-	IsShared     bool          `json:"is_shared"`
-	Deprecated   bool          `json:"deprecated"`
-	Regions      []ImageRegion `json:"regions"`
-	Tags         []string      `json:"tags"`
+	ID           string      `json:"id"`
+	CreatedBy    string      `json:"created_by"`
+	Capabilities []string    `json:"capabilities"`
+	Label        string      `json:"label"`
+	Description  string      `json:"description"`
+	Type         string      `json:"type"`
+	Vendor       string      `json:"vendor"`
+	Status       ImageStatus `json:"status"`
+	Size         int         `json:"size"`
+	TotalSize    int         `json:"total_size"`
+	IsPublic     bool        `json:"is_public"`
+
+	// NOTE: IsShared may not currently be available to all users and can only be used with v4beta.
+	IsShared bool `json:"is_shared"`
+
+	Deprecated bool          `json:"deprecated"`
+	Regions    []ImageRegion `json:"regions"`
+	Tags       []string      `json:"tags"`
 
 	Updated *time.Time `json:"-"`
 	Created *time.Time `json:"-"`
 	Expiry  *time.Time `json:"-"`
 	EOL     *time.Time `json:"-"`
 
+	// NOTE: ImageSharing may not currently be available to all users and can only be used with v4beta.
 	ImageSharing ImageSharing `json:"image_sharing"`
 }
 

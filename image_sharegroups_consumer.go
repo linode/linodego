@@ -136,6 +136,7 @@ type ImageShareGroupUpdateTokenOptions struct {
 
 // ImageShareGroupListTokens lists information about all the ImageShareGroupTokens created by the user.
 // The tokens themselves are only visible once upon creation.
+// NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) ImageShareGroupListTokens(ctx context.Context, opts *ListOptions) ([]ImageShareGroupToken, error) {
 	return getPaginatedResults[ImageShareGroupToken](
 		ctx,
@@ -147,6 +148,7 @@ func (c *Client) ImageShareGroupListTokens(ctx context.Context, opts *ListOption
 
 // ImageShareGroupGetToken gets information about the specified ImageShareGroupToken created by the user.
 // the tokens themselves are only visible once upon creation.
+// NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) ImageShareGroupGetToken(ctx context.Context, tokenUUID string) (*ImageShareGroupToken, error) {
 	return doGETRequest[ImageShareGroupToken](
 		ctx,
@@ -157,6 +159,7 @@ func (c *Client) ImageShareGroupGetToken(ctx context.Context, tokenUUID string) 
 
 // ImageShareGroupCreateToken allows the consumer to create a single-use ImageShareGroup membership
 // token for a specific ImageShareGroup owned by the producer.
+// NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) ImageShareGroupCreateToken(ctx context.Context, opts ImageShareGroupCreateTokenOptions) (*ImageShareGroupCreateTokenResponse, error) {
 	return doPOSTRequest[ImageShareGroupCreateTokenResponse](
 		ctx,
@@ -167,6 +170,7 @@ func (c *Client) ImageShareGroupCreateToken(ctx context.Context, opts ImageShare
 }
 
 // ImageShareGroupUpdateToken allows the consumer to update an ImageShareGroupToken's label.
+// NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) ImageShareGroupUpdateToken(ctx context.Context, tokenUUID string, opts ImageShareGroupUpdateTokenOptions) (*ImageShareGroupToken, error) {
 	return doPUTRequest[ImageShareGroupToken](
 		ctx,
@@ -178,6 +182,7 @@ func (c *Client) ImageShareGroupUpdateToken(ctx context.Context, tokenUUID strin
 
 // ImageShareGroupRemoveToken allows the consumer to remove an individual ImageShareGroupToken from an ImageShareGroup
 // this token has been accepted into.
+// NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) ImageShareGroupRemoveToken(ctx context.Context, tokenUUID string) error {
 	return doDELETERequest(
 		ctx,
@@ -188,6 +193,7 @@ func (c *Client) ImageShareGroupRemoveToken(ctx context.Context, tokenUUID strin
 
 // ImageShareGroupGetByToken gets information about the ImageShareGroup that the
 // consumer's specified token has been accepted into.
+// NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) ImageShareGroupGetByToken(ctx context.Context, tokenUUID string) (*ConsumerImageShareGroup, error) {
 	return doGETRequest[ConsumerImageShareGroup](
 		ctx,
@@ -198,6 +204,7 @@ func (c *Client) ImageShareGroupGetByToken(ctx context.Context, tokenUUID string
 
 // ImageShareGroupGetImageShareEntriesByToken lists the im_ImageShare entriess in the ImageShareGroup that the
 // consumer's specified token has been accepted into.
+// NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) ImageShareGroupGetImageShareEntriesByToken(ctx context.Context, tokenUUID string, opts *ListOptions) ([]ImageShareEntry, error) {
 	return getPaginatedResults[ImageShareEntry](
 		ctx,

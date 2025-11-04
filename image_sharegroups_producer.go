@@ -126,6 +126,7 @@ type ImageShareGroupAddMemberOptions struct {
 }
 
 // ListImageShareGroups lists all ImageShareGroups owned by the producer.
+// NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) ListImageShareGroups(
 	ctx context.Context,
 	opts *ListOptions,
@@ -140,6 +141,7 @@ func (c *Client) ListImageShareGroups(
 
 // ListImageShareGroupsContainingPrivateImage lists all current ImageShareGroups owned by the producer where
 // the given private image is present.
+// NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) ListImageShareGroupsContainingPrivateImage(
 	ctx context.Context,
 	privateImageID string,
@@ -154,6 +156,7 @@ func (c *Client) ListImageShareGroupsContainingPrivateImage(
 }
 
 // GetImageShareGroup gets the specified ImageShareGroup owned by the producer.
+// NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) GetImageShareGroup(
 	ctx context.Context,
 	imageShareGroupID int,
@@ -166,6 +169,7 @@ func (c *Client) GetImageShareGroup(
 }
 
 // CreateImageShareGroup allows the producer to create a new ImageShareGroup.
+// NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) CreateImageShareGroup(
 	ctx context.Context,
 	opts ImageShareGroupCreateOptions,
@@ -179,6 +183,7 @@ func (c *Client) CreateImageShareGroup(
 }
 
 // UpdateImageShareGroup allows the producer to update an existing ImageShareGroup's description and label.
+// NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) UpdateImageShareGroup(
 	ctx context.Context,
 	imageShareGroupID int,
@@ -193,6 +198,7 @@ func (c *Client) UpdateImageShareGroup(
 }
 
 // DeleteImageShareGroup deletes the specified ImageShareGroup owned by the producer.
+// NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) DeleteImageShareGroup(ctx context.Context, imageShareGroupID int) error {
 	return doDELETERequest(
 		ctx,
@@ -202,6 +208,7 @@ func (c *Client) DeleteImageShareGroup(ctx context.Context, imageShareGroupID in
 }
 
 // ImageShareGroupListImageShareEntries lists the im_ImageShare entries of a specified ImageShareGroup owned by the producer.
+// NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) ImageShareGroupListImageShareEntries(
 	ctx context.Context,
 	imageShareGroupID int,
@@ -216,6 +223,7 @@ func (c *Client) ImageShareGroupListImageShareEntries(
 }
 
 // ImageShareGroupAddImages allows the producer to add images to a specific ImageShareGroup.
+// NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) ImageShareGroupAddImages(
 	ctx context.Context,
 	imageShareGroupID int,
@@ -231,6 +239,7 @@ func (c *Client) ImageShareGroupAddImages(
 }
 
 // ImageShareGroupUpdateImageShareEntry allows the producer to update the description and label of a specified ImageShareEntry within the specified ImageShareGroup.
+// NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) ImageShareGroupUpdateImageShareEntry(
 	ctx context.Context,
 	imageShareGroupID int,
@@ -246,6 +255,7 @@ func (c *Client) ImageShareGroupUpdateImageShareEntry(
 }
 
 // ImageShareGroupRemoveImage allows the producer to remove access to an image within an ImageShareGroup owned by the producer.
+// NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) ImageShareGroupRemoveImage(
 	ctx context.Context,
 	imageShareGroupID int,
@@ -259,6 +269,7 @@ func (c *Client) ImageShareGroupRemoveImage(
 }
 
 // ImageShareGroupListMembers lists the ImageShareGroupMembers of the provided ImageShareGroup owned by the producer.
+// NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) ImageShareGroupListMembers(
 	ctx context.Context,
 	imageShareGroupID int,
@@ -274,6 +285,7 @@ func (c *Client) ImageShareGroupListMembers(
 
 // ImageShareGroupGetMember gets the details of the specified ImageShareGroupMember in the specified
 // ImageShareGroup owned by the producer.
+// NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) ImageShareGroupGetMember(
 	ctx context.Context,
 	imageShareGroupID int,
@@ -287,6 +299,7 @@ func (c *Client) ImageShareGroupGetMember(
 }
 
 // ImageShareGroupAddMember allows the producer to add members to a specific ImageShareGroup.
+// NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) ImageShareGroupAddMember(
 	ctx context.Context,
 	imageShareGroupID int,
@@ -302,6 +315,7 @@ func (c *Client) ImageShareGroupAddMember(
 
 // ImageShareGroupUpdateMember allows the producer to update the label associated with the specified
 // ImageShareGroupMember in the specified ImageShareGroup owned by the producer.
+// NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) ImageShareGroupUpdateMember(
 	ctx context.Context,
 	imageShareGroupID int,
@@ -318,6 +332,7 @@ func (c *Client) ImageShareGroupUpdateMember(
 
 // ImageShareGroupRemoveMember allows the producer to remove an individual ImageShareGroupMember
 // that’s been accepted into the ImageShareGroup owned by the producer.
+// NOTE: May not currently be available to all users and can only be used with v4beta.
 func (c *Client) ImageShareGroupRemoveMember(
 	ctx context.Context,
 	imageShareGroupID int,
