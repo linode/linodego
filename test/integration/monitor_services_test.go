@@ -41,7 +41,7 @@ func TestMonitorServices_GetNotAllowedServiceType(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestMonitorNotAllowedServiceType_Get")
 	defer teardown()
 
-	_, getErr := client.ListMonitorServiceByType(context.Background(), "saas", nil)
+	_, getErr := client.GetMonitorServiceByType(context.Background(), "saas")
 	require.Error(t, getErr)
 	assert.Contains(t, getErr.Error(), "[404] Not found")
 }
