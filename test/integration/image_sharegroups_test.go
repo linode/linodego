@@ -196,10 +196,15 @@ func TestImageSharing_Suite(t *testing.T) {
 	}
 
 	// Next, update the Shared Image
-	imageShareUpdated, err := client.ImageShareGroupUpdateImageShareEntry(context.Background(), imageShareGroup.ID, imageShare.ID, linodego.ImageShareGroupUpdateImageOptions{
-		Label:       linodego.Pointer("Updated label"),
-		Description: linodego.Pointer("Updated description"),
-	})
+	imageShareUpdated, err := client.ImageShareGroupUpdateImageShareEntry(
+		context.Background(),
+		imageShareGroup.ID,
+		imageShare.ID,
+		linodego.ImageShareGroupUpdateImageOptions{
+			Label:       linodego.Pointer("Updated label"),
+			Description: linodego.Pointer("Updated description"),
+		},
+	)
 	require.NoError(t, err)
 	if imageShareUpdated.Label != "Updated label" || imageShareUpdated.Description != "Updated description" {
 		t.Errorf("Failed to update Image Share with ID %s: ", imageShareUpdated.ID)
