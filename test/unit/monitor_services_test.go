@@ -27,11 +27,17 @@ func TestListMonitorServices(t *testing.T) {
 
 	assert.Equal(t, "Databases", clients[0].Label, "Expected services label to match")
 	assert.Equal(t, "dbaas", clients[0].ServiceType, "Expected service_type to match")
+
+	// Assert alert details for the first service
+	assert.NotNil(t, clients[0].Alert, "Expected alert to be present")
+	assert.NotEmpty(t, clients[0].Alert.PollingIntervalSeconds, "Expected polling_interval_seconds to be present")
+	assert.NotEmpty(t, clients[0].Alert.EvaluationPeriodSeconds, "Expected evaluation_period_seconds to be present")
+	assert.NotEmpty(t, clients[0].Alert.Scope, "Expected scope to be present")
 }
 
 func TestListMonitorServicesByType(t *testing.T) {
 	// Load the mock fixture for monitor services
-	fixtureData, err := fixtures.GetFixture("monitor_services")
+	fixtureData, err := fixtures.GetFixture("monitor_services_dbaas")
 	assert.NoError(t, err, "Expected no error when getting fixture")
 
 	var base ClientBaseCase
@@ -41,11 +47,16 @@ func TestListMonitorServicesByType(t *testing.T) {
 	// Mock the GET request for the monitor services by type (dbaas)
 	base.MockGet("monitor/services/dbaas", fixtureData)
 
-	// Call the ListMonitorServiceByType method
-	clients, err := base.Client.ListMonitorServiceByType(context.Background(), "dbaas", &linodego.ListOptions{})
+	// Call the GetMonitorServiceByType method
+	client, err := base.Client.GetMonitorServiceByType(context.Background(), "dbaas")
 	assert.NoError(t, err, "Expected no error when listing monitor services by type")
-	assert.NotEmpty(t, clients, "Expected non-empty monitor services list")
+	assert.NotNil(t, client, "Expected client to not be nil")
+	assert.Equal(t, "Databases", client.Label, "Expected services label to match")
+	assert.Equal(t, "dbaas", client.ServiceType, "Expected service_type to match")
 
-	assert.Equal(t, "Databases", clients[0].Label, "Expected services label to match")
-	assert.Equal(t, "dbaas", clients[0].ServiceType, "Expected service_type to match")
+	// Assert alert details for the service
+	assert.NotNil(t, client.Alert, "Expected alert to be present")
+	assert.NotEmpty(t, client.Alert.PollingIntervalSeconds, "Expected polling_interval_seconds to be present")
+	assert.NotEmpty(t, client.Alert.EvaluationPeriodSeconds, "Expected evaluation_period_seconds to be present")
+	assert.NotEmpty(t, client.Alert.Scope, "Expected scope to be present")
 }
