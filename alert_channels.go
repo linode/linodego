@@ -46,7 +46,8 @@ type AlertChannelDetailOptions struct {
 	To string `json:"to,omitempty"`
 }
 
-// Backwards-compat alias for older name
+// AlertingChannelCreateOptions are the options used to create a new Monitor Channel.
+// Deprecated: AlertChannelCreateOptions should be used in all new implementations.
 type AlertingChannelCreateOptions = AlertChannelCreateOptions
 
 type EmailChannelContent struct {

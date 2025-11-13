@@ -31,6 +31,9 @@ type AlertDefinition struct {
 }
 
 // Backwards-compatible alias
+
+// MonitorAlertDefinition represents an ACLP Alert Definition object
+// Deprecated: AlertDefinition should be used in all new implementations.
 type MonitorAlertDefinition = AlertDefinition
 
 // TriggerConditions represents the trigger conditions for an alert.
@@ -122,6 +125,7 @@ func (i *AlertDefinition) UnmarshalJSON(b []byte) error {
 
 	p := struct {
 		*Mask
+
 		Created *parseabletime.ParseableTime `json:"created"`
 		Updated *parseabletime.ParseableTime `json:"updated"`
 	}{
@@ -139,34 +143,41 @@ func (i *AlertDefinition) UnmarshalJSON(b []byte) error {
 }
 
 // ListMonitorAlertDefinitions gets a paginated list of ACLP Monitor Alert Definitions.
-func (c *Client) ListMonitorAlertDefinitions(ctx context.Context, serviceType string, opts *ListOptions) ([]MonitorAlertDefinition, error) {
+func (c *Client) ListMonitorAlertDefinitions(ctx context.Context, serviceType string, opts *ListOptions) ([]AlertDefinition, error) {
 	var endpoint string
 	if serviceType != "" {
 		endpoint = formatAPIV4BetaPath("monitor/services/%s/alert-definitions", serviceType)
 	} else {
 		endpoint = formatAPIV4BetaPath("monitor/alert-definitions")
 	}
+
 	return getPaginatedResults[AlertDefinition](ctx, c, endpoint, opts)
 }
 
 // GetMonitorAlertDefinition gets an ACLP Monitor Alert Definition.
-func (c *Client) GetMonitorAlertDefinition(ctx context.Context, serviceType string, alertID int) (*MonitorAlertDefinition, error) {
+func (c *Client) GetMonitorAlertDefinition(ctx context.Context, serviceType string, alertID int) (*AlertDefinition, error) {
 	e := formatAPIV4BetaPath("monitor/services/%s/alert-definitions/%d", serviceType, alertID)
 	return doGETRequest[AlertDefinition](ctx, c, e)
 }
 
 // CreateMonitorAlertDefinition creates an ACLP Monitor Alert Definition.
-func (c *Client) CreateMonitorAlertDefinition(ctx context.Context, serviceType string, opts AlertDefinitionCreateOptions) (*MonitorAlertDefinition, error) {
+func (c *Client) CreateMonitorAlertDefinition(ctx context.Context, serviceType string, opts AlertDefinitionCreateOptions) (*AlertDefinition, error) {
 	e := formatAPIV4BetaPath("monitor/services/%s/alert-definitions", serviceType)
 	return doPOSTRequest[AlertDefinition](ctx, c, e, opts)
 }
 
 // CreateMonitorAlertDefinitionWithIdempotency creates an ACLP Monitor Alert Definition
 // and optionally sends an Idempotency-Key header to make the request idempotent.
-func (c *Client) CreateMonitorAlertDefinitionWithIdempotency(ctx context.Context, serviceType string, opts AlertDefinitionCreateOptions, idempotencyKey string) (*MonitorAlertDefinition, error) {
+func (c *Client) CreateMonitorAlertDefinitionWithIdempotency(
+	ctx context.Context,
+	serviceType string,
+	opts AlertDefinitionCreateOptions,
+	idempotencyKey string,
+) (*AlertDefinition, error) {
 	e := formatAPIV4BetaPath("monitor/services/%s/alert-definitions", serviceType)
 
 	var result AlertDefinition
+
 	req := c.R(ctx).SetResult(&result)
 
 	if idempotencyKey != "" {
@@ -189,7 +200,12 @@ func (c *Client) CreateMonitorAlertDefinitionWithIdempotency(ctx context.Context
 }
 
 // UpdateMonitorAlertDefinition updates an ACLP Monitor Alert Definition.
-func (c *Client) UpdateMonitorAlertDefinition(ctx context.Context, serviceType string, alertID int, opts AlertDefinitionUpdateOptions) (*AlertDefinition, error) {
+func (c *Client) UpdateMonitorAlertDefinition(
+	ctx context.Context,
+	serviceType string,
+	alertID int,
+	opts AlertDefinitionUpdateOptions,
+) (*AlertDefinition, error) {
 	e := formatAPIV4BetaPath("monitor/services/%s/alert-definitions/%d", serviceType, alertID)
 	return doPUTRequest[AlertDefinition](ctx, c, e, opts)
 }

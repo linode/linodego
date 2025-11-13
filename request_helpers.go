@@ -323,8 +323,10 @@ func formatAPIPath(format string, args ...any) string {
 // directly.
 func formatAPIV4BetaPath(format string, args ...any) string {
 	p := formatAPIPath(format, args...)
+
 	// Ensure we don't produce a double slash when joining
 	p = strings.TrimPrefix(p, "/")
+
 	return fmt.Sprintf("%s://%s/%s/%s", APIProto, APIHost, "v4beta", p)
 }
 
