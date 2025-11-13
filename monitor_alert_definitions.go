@@ -33,6 +33,7 @@ type AlertDefinition struct {
 // Backwards-compatible alias
 
 // MonitorAlertDefinition represents an ACLP Alert Definition object
+//
 // Deprecated: AlertDefinition should be used in all new implementations.
 type MonitorAlertDefinition = AlertDefinition
 

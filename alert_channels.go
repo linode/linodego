@@ -47,6 +47,7 @@ type AlertChannelDetailOptions struct {
 }
 
 // AlertingChannelCreateOptions are the options used to create a new Monitor Channel.
+//
 // Deprecated: AlertChannelCreateOptions should be used in all new implementations.
 type AlertingChannelCreateOptions = AlertChannelCreateOptions
 
