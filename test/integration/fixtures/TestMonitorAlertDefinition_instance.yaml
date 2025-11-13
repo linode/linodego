@@ -1,0 +1,173 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/alert-definitions?page=1
+    method: GET
+  response:
+    body: |
+      {
+        "data": [
+          {
+            "id": 10000,
+            "label": "High Memory Usage Plan Dedicated",
+            "severity": 2,
+            "type": "system",
+            "service_type": "dbaas",
+            "status": "enabled",
+            "has_more_resources": false,
+            "rule": null,
+            "trigger_conditions": {
+              "criteria_condition": "ALL",
+              "evaluation_period_seconds": 300,
+              "polling_interval_seconds": 300,
+              "trigger_occurrences": 1
+            },
+            "alert_channels": [
+              {
+                "id": 10000,
+                "label": "Read-Write Channel",
+                "type": "alert-channels",
+                "url": "/monitor/alert-channels/10000"
+              }
+            ],
+            "created": "2025-03-20T01:42:11",
+            "updated": "2025-09-11T04:45:19",
+            "updated_by": "system",
+            "created_by": "system",
+            "entity_ids": [],
+            "description": "Alert triggers when dedicated plan nodes consistently reach critical memory usage, risking application performance degradation.",
+            "class": "dedicated"
+          },
+          {
+            "id": 10001,
+            "label": "High Memory Usage Plan Shared",
+            "severity": 2,
+            "type": "system",
+            "service_type": "dbaas",
+            "status": "enabled",
+            "has_more_resources": false,
+            "rule": null,
+            "trigger_conditions": {
+              "criteria_condition": "ALL",
+              "evaluation_period_seconds": 300,
+              "polling_interval_seconds": 300,
+              "trigger_occurrences": 1
+            },
+            "alert_channels": [
+              {
+                "id": 10000,
+                "label": "Read-Write Channel",
+                "type": "alert-channels",
+                "url": "/monitor/alert-channels/10000"
+              }
+            ],
+            "created": "2025-03-20T01:42:11",
+            "updated": "2025-09-11T04:25:12",
+            "updated_by": "system",
+            "created_by": "system",
+            "entity_ids": [189690, 313392, 324828, 340839],
+            "description": "Alert triggers when shared plan nodes consistently reach critical memory usage, risking application performance degradation.",
+            "class": "shared"
+          }
+        ],
+        "page": 1,
+        "pages": 1,
+        "results": 2
+      }
+    headers:
+      Content-Type:
+      - application/json
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/10001
+    method: GET
+  response:
+    body: |
+      {
+        "id": 10001,
+        "label": "High Memory Usage Plan Shared",
+        "severity": 2,
+        "type": "system",
+        "service_type": "dbaas",
+        "status": "enabled",
+        "has_more_resources": false,
+        "rule": null,
+        "trigger_conditions": {
+          "criteria_condition": "ALL",
+          "evaluation_period_seconds": 300,
+          "polling_interval_seconds": 300,
+          "trigger_occurrences": 1
+        },
+        "alert_channels": [
+          {
+            "id": 10000,
+            "label": "Read-Write Channel",
+            "type": "alert-channels",
+            "url": "/monitor/alert-channels/10000"
+          }
+        ],
+        "created": "2025-03-20T01:42:11",
+        "updated": "2025-09-11T04:25:12",
+        "updated_by": "system",
+        "created_by": "system",
+        "entity_ids": [189690, 313392, 324828, 340839],
+        "description": "Alert triggers when shared plan nodes consistently reach critical memory usage, risking application performance degradation.",
+        "class": "shared"
+      }
+    headers:
+      Content-Type:
+      - application/json
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/alert-channels/
+    method: GET
+  response:
+    body: |
+      {
+        "id": 10000,
+        "label": "Read-Write Channel",
+        "type": "alert-channels",
+        "details": {
+          "to": "ops@example.com"
+        },
+        "created": "2025-03-20T01:42:11",
+        "updated": "2025-09-11T04:25:12"
+      }
+    headers:
+      Content-Type:
+      - application/json
+    status: 200 OK
+    code: 200
+    duration: ""
