@@ -63,10 +63,10 @@ type Rule struct {
 
 // DimensionFilter represents a single dimension filter used inside a Rule.
 type DimensionFilter struct {
-	DimensionLabel string      `json:"dimension_label"`
-	Label          string      `json:"label"`
-	Operator       string      `json:"operator"`
-	Value          interface{} `json:"value"`
+	DimensionLabel string `json:"dimension_label"`
+	Label          string `json:"label"`
+	Operator       string `json:"operator"`
+	Value          any    `json:"value"`
 }
 
 // AlertType represents the type of alert: "user" or "system"
