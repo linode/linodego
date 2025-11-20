@@ -46,7 +46,7 @@ func TestFirewallRule_Get(t *testing.T) {
 }
 
 func TestFirewallRule_MarshalJSON(t *testing.T) {
-	ruleWithRuleset := linodego.FirewallRule{Ruleset: 51}
+	ruleWithRuleset := linodego.FirewallRule{RuleSet: 51}
 	data, err := json.Marshal(ruleWithRuleset)
 	assert.NoError(t, err)
 	assert.JSONEq(t, `{"ruleset":51}`, string(data))

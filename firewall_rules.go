@@ -36,19 +36,19 @@ type FirewallRule struct {
 	// FirewallRule references one `Rule Set` by ID. When provided, this entry
 	// represents a reference and should be mutually exclusive with ordinary
 	// rule fields according to the API contract.
-	Ruleset int `json:"ruleset,omitempty"`
+	RuleSet int `json:"ruleset,omitempty"`
 }
 
-// MarshalJSON ensures that when a rule references a Rule Set (Ruleset != 0),
+// MarshalJSON ensures that when a rule references a Rule Set (RuleSet != 0),
 // only the reference shape { "ruleset": <id> } is emitted. Otherwise, the
 // ordinary rule fields are emitted without the ruleset key.
 func (r FirewallRule) MarshalJSON() ([]byte, error) {
-	if r.Ruleset != 0 {
+	if r.RuleSet != 0 {
 		type rulesetOnly struct {
-			Ruleset int `json:"ruleset"`
+			RuleSet int `json:"ruleset"`
 		}
 
-		return json.Marshal(rulesetOnly{Ruleset: r.Ruleset})
+		return json.Marshal(rulesetOnly{RuleSet: r.RuleSet})
 	}
 
 	type normal struct {
