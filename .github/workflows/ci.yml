@@ -11,7 +11,7 @@ jobs:
   lint-tidy:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
       - uses: actions/setup-go@v6
         with:
           go-version: stable
@@ -38,7 +38,7 @@ jobs:
       EXIT_STATUS: 0
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           submodules: 'recursive'
