@@ -498,7 +498,7 @@ func assertPostgresDatabaseBasics(t *testing.T, db *linodego.PostgresDatabase) {
 
 	// Assert Hosts structure
 	assert.NotEmpty(t, db.Hosts.Primary)
-	assert.Empty(t, db.Hosts.Standby)
+	assert.NotEmpty(t, db.Hosts.Standby)
 
 	// Assert EngineConfig structure
 	assert.NotNil(t, db.EngineConfig.PG)
