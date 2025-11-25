@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"reflect"
+	"slices"
 	"strings"
 
 	"github.com/go-resty/resty/v2"
@@ -225,11 +226,8 @@ func ErrHasStatus(err error, code ...int) bool {
 	if !errors.As(err, &e) {
 		return false
 	}
+
 	ec := e.StatusCode()
-	for _, c := range code {
-		if ec == c {
-			return true
-		}
-	}
-	return false
+
+	return slices.Contains(code, ec)
 }

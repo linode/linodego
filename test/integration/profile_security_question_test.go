@@ -18,5 +18,10 @@ func TestSecurityQuestions_List(t *testing.T) {
 
 	require.NotEmpty(t, questions.SecurityQuestions, "Expected to see security questions returned")
 
-	require.Equal(t, "What was the name of your first pet?", questions.SecurityQuestions[0].Question, "Expected question 'What was the name of your first pet?'")
+	require.Equal(
+		t,
+		"What was the name of your first pet?",
+		questions.SecurityQuestions[0].Question,
+		"Expected question 'What was the name of your first pet?'",
+	)
 }

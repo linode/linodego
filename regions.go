@@ -22,12 +22,14 @@ const (
 	CapabilityEdgePlans                     string = "Edge Plans"
 	CapabilityGPU                           string = "GPU Linodes"
 	CapabilityKubernetesEnterprise          string = "Kubernetes Enterprise"
+	CapabilityLinodeInterfaces              string = "Linode Interfaces"
 	CapabilityLADiskEncryption              string = "LA Disk Encryption"
 	CapabilityLKE                           string = "Kubernetes"
 	CapabilityLKEControlPlaneACL            string = "LKE Network Access Control List (IP ACL)"
 	CapabilityLinodes                       string = "Linodes"
 	CapabilityLkeHaControlPlanes            string = "LKE HA Control Planes"
 	CapabilityMachineImages                 string = "Machine Images"
+	CapabilityMaintenancePolicy             string = "Maintenance Policy"
 	CapabilityMetadata                      string = "Metadata"
 	CapabilityNodeBalancers                 string = "NodeBalancers"
 	CapabilityObjectStorage                 string = "Object Storage"
@@ -58,6 +60,8 @@ type Region struct {
 	// A List of enums from the above constants
 	Capabilities []string `json:"capabilities"`
 
+	Monitors RegionMonitors `json:"monitors"`
+
 	Status   string `json:"status"`
 	Label    string `json:"label"`
 	SiteType string `json:"site_type"`
@@ -70,6 +74,12 @@ type Region struct {
 type RegionResolvers struct {
 	IPv4 string `json:"ipv4"`
 	IPv6 string `json:"ipv6"`
+}
+
+// RegionMonitors contains the monitoring configuration for a region
+type RegionMonitors struct {
+	Alerts  []string `json:"alerts"`
+	Metrics []string `json:"metrics"`
 }
 
 // RegionPlacementGroupLimits contains information about the

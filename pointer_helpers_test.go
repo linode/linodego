@@ -6,6 +6,12 @@ import (
 
 // TestPointer tests the Pointer helper function with various types
 func TestPointer(t *testing.T) {
+	// Test nil pointer for int (should be nil if explicitly set)
+	nilIntPtr := Pointer[*int](nil)
+	if nilIntPtr == nil || *nilIntPtr != nil {
+		t.Errorf("Expected nil pointer, got %v", nilIntPtr)
+	}
+
 	// Test with an integer
 	intValue := 11
 	intPtr := Pointer(intValue)
@@ -43,5 +49,68 @@ func TestPointer(t *testing.T) {
 	structPtr := Pointer(structValue)
 	if structPtr.Field1 != structValue.Field1 || structPtr.Field2 != structValue.Field2 {
 		t.Errorf("Expected %+v, got %+v", structValue, *structPtr)
+	}
+}
+
+// TestDoublePointer tests the DoublePointer helper function with various types
+func TestDoublePointer(t *testing.T) {
+	// Test with an integer
+	intValue := 42
+	intDoublePtr := DoublePointer(intValue)
+	if **intDoublePtr != intValue {
+		t.Errorf("Expected %d, got %d", intValue, **intDoublePtr)
+	}
+
+	// Test with a string
+	strValue := "double"
+	strDoublePtr := DoublePointer(strValue)
+	if **strDoublePtr != strValue {
+		t.Errorf("Expected %s, got %s", strValue, **strDoublePtr)
+	}
+
+	// Test with a boolean
+	boolValue := false
+	boolDoublePtr := DoublePointer(boolValue)
+	if **boolDoublePtr != boolValue {
+		t.Errorf("Expected %t, got %t", boolValue, **boolDoublePtr)
+	}
+
+	// Test with a struct
+	type myStruct struct {
+		Field int
+	}
+	structValue := myStruct{Field: 7}
+	structDoublePtr := DoublePointer(structValue)
+	if (**structDoublePtr).Field != structValue.Field {
+		t.Errorf("Expected %+v, got %+v", structValue, **structDoublePtr)
+	}
+}
+
+func TestDoublePointerNull(t *testing.T) {
+	// Test with an integer
+	intDoublePtr := DoublePointerNull[int]()
+	if intDoublePtr == nil || *intDoublePtr != nil {
+		t.Errorf("Expected nil pointer, got %v", intDoublePtr)
+	}
+
+	// Test with a string
+	stringDoublePtr := DoublePointerNull[string]()
+	if stringDoublePtr == nil || *stringDoublePtr != nil {
+		t.Errorf("Expected nil pointer, got %v", stringDoublePtr)
+	}
+
+	// Test with a boolean
+	boolDoublePtr := DoublePointerNull[bool]()
+	if boolDoublePtr == nil || *boolDoublePtr != nil {
+		t.Errorf("Expected nil pointer, got %v", boolDoublePtr)
+	}
+
+	// Test with a struct
+	type myStruct struct {
+		Field int
+	}
+	structDoublePtr := DoublePointerNull[myStruct]()
+	if structDoublePtr == nil || *structDoublePtr != nil {
+		t.Errorf("Expected nil pointer, got %v", structDoublePtr)
 	}
 }

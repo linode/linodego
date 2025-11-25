@@ -9,12 +9,10 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/stretchr/testify/require"
-
-	"github.com/linode/linodego/internal/testutil"
-
 	"github.com/google/go-cmp/cmp"
 	"github.com/jarcoal/httpmock"
+	"github.com/linode/linodego/internal/testutil"
+	"github.com/stretchr/testify/require"
 )
 
 type testResultNestedType struct {

@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-or7801td3le2","root_pass":"NJ361jSqj5#YLI;4I33S\u0026|C\\LlW74Bp!b9=g35b?[O0mU|7jnW''.ci*d)(0[9Pat","image":"linode/alpine3.17","interfaces":[{"purpose":"public"}],"booted":false,"ipv4":["192.0.2.1"]}'
+    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-843dn5nr00iy","root_pass":"\u003e4!\u0026yS,ww6r|W\u003eoy|Tb75S2j3+8''9Z70jVCfXHmMrHtW${7/B`h6w^o1=T9Q3(I3","image":"linode/alpine3.20","booted":false,"ipv4":["192.0.2.1"],"interfaces":[{"purpose":"public"}]}'
     form: {}
     headers:
       Accept:
@@ -32,9 +32,11 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 12 Sep 2024 16:44:22 GMT
+      - Fri, 22 Aug 2025 20:58:55 GMT
       Pragma:
       - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
       X-Accepted-Oauth-Scopes:
       - linodes:read_write
       X-Frame-Options:
@@ -42,7 +44,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "10"
+      - "20"
     status: 400 Bad Request
     code: 400
     duration: ""

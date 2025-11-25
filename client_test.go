@@ -116,30 +116,64 @@ func TestClient_NewFromEnvToken(t *testing.T) {
 }
 
 func TestClient_UseURL(t *testing.T) {
-	client := NewClient(nil)
-
-	if _, err := client.UseURL("https://api.test1.linode.com/"); err != nil {
-		t.Fatal(err)
+	tests := []struct {
+		name        string
+		inputURL    string
+		wantBaseURL string
+		wantErr     string
+	}{
+		{
+			name:        "Standard v4 URL",
+			inputURL:    "https://api.test1.linode.com/",
+			wantBaseURL: "https://api.test1.linode.com/v4",
+		},
+		{
+			name:        "Beta v4 URL",
+			inputURL:    "https://api.test2.linode.com/v4beta",
+			wantBaseURL: "https://api.test2.linode.com/v4beta",
+		},
+		{
+			name:     "Missing scheme",
+			inputURL: "api.test3.linode.com/v4",
+			wantErr:  "need both scheme and host in API URL, got \"api.test3.linode.com/v4\"",
+		},
+		{
+			name:     "Missing host",
+			inputURL: "https://",
+			wantErr:  "need both scheme and host in API URL, got \"https://\"",
+		},
+		{
+			name:     "Invalid URL",
+			inputURL: "ht!tp://bad_url",
+			wantErr:  "failed to parse URL: parse \"ht!tp://bad_url\": first path segment in URL cannot contain colon",
+		},
 	}
 
-	if client.baseURL != "api.test1.linode.com" {
-		t.Fatalf("mismatched base url: %s", client.baseURL)
-	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			client := NewClient(nil)
 
-	if client.apiVersion != "v4" {
-		t.Fatalf("mismatched api version: %s", client.apiVersion)
-	}
+			_, err := client.UseURL(tt.inputURL)
 
-	if _, err := client.UseURL("https://api.test2.linode.com/v4beta"); err != nil {
-		t.Fatal(err)
-	}
+			if tt.wantErr != "" {
+				if err == nil {
+					t.Fatalf("expected error containing %q, got nil", tt.wantErr)
+				}
+				if !strings.Contains(err.Error(), tt.wantErr) {
+					t.Fatalf("expected error containing %q, got %q", tt.wantErr, err.Error())
+				}
+				// skip further checks if error was expected
+				return
+			}
 
-	if client.baseURL != "api.test2.linode.com" {
-		t.Fatalf("mismatched base url: %s", client.baseURL)
-	}
+			if err != nil {
+				t.Fatalf("unexpected error: %v", err)
+			}
 
-	if client.apiVersion != "v4beta" {
-		t.Fatalf("mismatched api version: %s", client.apiVersion)
+			if client.resty.BaseURL != tt.wantBaseURL {
+				t.Fatalf("mismatched base url: got %s, want %s", client.resty.BaseURL, tt.wantBaseURL)
+			}
+		})
 	}
 }
 
@@ -614,5 +648,58 @@ func TestClient_CustomRootCAWithoutCustomRoundTripper(t *testing.T) {
 				t.Errorf("didn't set a custom CA, but client TLS config is not nil: %#v", transport.TLSClientConfig)
 			}
 		})
+	}
+}
+
+func TestMonitorClient_SetAPIBasics(t *testing.T) {
+	defaultURL := "https://monitor-api.linode.com/v2beta"
+
+	baseURL := "api.very.cool.com"
+	apiVersion := "v4beta"
+	expectedHost := fmt.Sprintf("https://%s/%s", baseURL, apiVersion)
+
+	updatedBaseURL := "api.more.cool.com"
+	updatedAPIVersion := "v4beta_changed"
+	updatedExpectedHost := fmt.Sprintf("https://%s/%s", updatedBaseURL, updatedAPIVersion)
+
+	protocolBaseURL := "http://api.more.cool.com"
+	protocolAPIVersion := "v4_http"
+	protocolExpectedHost := fmt.Sprintf("%s/%s", protocolBaseURL, protocolAPIVersion)
+
+	client := NewMonitorClient(nil)
+
+	if client.resty.BaseURL != defaultURL {
+		t.Fatal(cmp.Diff(client.resty.BaseURL, defaultURL))
+	}
+
+	client.SetBaseURL(baseURL)
+	client.SetAPIVersion(apiVersion)
+
+	if client.resty.BaseURL != expectedHost {
+		t.Fatal(cmp.Diff(client.resty.BaseURL, expectedHost))
+	}
+
+	// Ensure setting twice does not cause conflicts
+	client.SetBaseURL(updatedBaseURL)
+	client.SetAPIVersion(updatedAPIVersion)
+
+	if client.resty.BaseURL != updatedExpectedHost {
+		t.Fatal(cmp.Diff(client.resty.BaseURL, updatedExpectedHost))
+	}
+
+	// Revert
+	client.SetBaseURL(baseURL)
+	client.SetAPIVersion(apiVersion)
+
+	if client.resty.BaseURL != expectedHost {
+		t.Fatal(cmp.Diff(client.resty.BaseURL, expectedHost))
+	}
+
+	// Custom protocol
+	client.SetBaseURL(protocolBaseURL)
+	client.SetAPIVersion(protocolAPIVersion)
+
+	if client.resty.BaseURL != protocolExpectedHost {
+		t.Fatal(cmp.Diff(client.resty.BaseURL, expectedHost))
 	}
 }

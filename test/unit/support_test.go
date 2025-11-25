@@ -28,7 +28,11 @@ func TestSupportTicket_List(t *testing.T) {
 
 	assert.Equal(t, []string{"screenshot.jpg", "screenshot.txt"}, ticket.Attachments)
 	assert.Equal(t, false, ticket.Closeable)
-	assert.Equal(t, "I am having trouble setting the root password on my Linode. I tried following the instructions but something is not working. Can you please help me figure out how I can reset it?", ticket.Description)
+	assert.Equal(
+		t,
+		"I am having trouble setting the root password on my Linode. I tried following the instructions but something is not working. Can you please help me figure out how I can reset it?",
+		ticket.Description,
+	)
 	assert.Equal(t, 10400, ticket.Entity.ID)
 	assert.Equal(t, "linode123456", ticket.Entity.Label)
 	assert.Equal(t, "linode", ticket.Entity.Type)
@@ -58,7 +62,11 @@ func TestSupportTicket_Get(t *testing.T) {
 
 	assert.Equal(t, []string{"screenshot.jpg", "screenshot.txt"}, ticket.Attachments)
 	assert.Equal(t, false, ticket.Closeable)
-	assert.Equal(t, "I am having trouble setting the root password on my Linode. I tried following the instructions but something is not working. Can you please help me figure out how I can reset it?", ticket.Description)
+	assert.Equal(
+		t,
+		"I am having trouble setting the root password on my Linode. I tried following the instructions but something is not working. Can you please help me figure out how I can reset it?",
+		ticket.Description,
+	)
 	assert.Equal(t, 10400, ticket.Entity.ID)
 	assert.Equal(t, "linode123456", ticket.Entity.Label)
 	assert.Equal(t, "linode", ticket.Entity.Type)

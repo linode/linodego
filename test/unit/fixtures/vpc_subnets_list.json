@@ -1,17 +1,53 @@
 {
-    "data": [
-      {
-        "id": 123,
-        "label": "Subnet A",
-        "ipv4": "192.168.3.0/24"
-      },
-      {
-        "id": 124,
-        "label": "Subnet B",
-        "ipv4": "192.168.4.0/24"
-      }
-    ],
-    "page": 1,
-    "pages": 1
+  "data": [
+    {
+      "created": "2023-07-11T00:00:00",
+      "id": 123,
+      "ipv4": "192.0.2.13/24",
+      "ipv6": [
+        {
+          "range": "fd71:1140:a9d0::/52"
+        }
+      ],
+      "label": "Subnet A",
+      "linodes": [
+        {
+          "id": 111,
+          "interfaces": [
+            {
+              "id": 421,
+              "config_id": 4567,
+              "active": true
+            },
+            {
+              "id": 422,
+              "config_id": null,
+              "active": false
+            }
+          ]
+        }
+      ],
+      "databases": []
+    },
+    {
+      "id": 124,
+      "label": "Subnet B",
+      "ipv4": "192.168.4.0/24",
+      "ipv6": [],
+      "linodes": [],
+      "databases": [
+        {
+          "id": 123,
+          "ipv4_range": "10.0.0.4/32",
+          "ipv6_ranges": [
+            "fda3:9c1b:5e2a:1::/64"
+          ]
+        }
+      ],
+      "updated": "2023-09-11T00:00:00"
+    }
+  ],
+  "page": 1,
+  "pages": 1,
+  "results": 2
 }
-  

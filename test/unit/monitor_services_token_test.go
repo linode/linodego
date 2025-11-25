@@ -21,7 +21,7 @@ func TestCreateMonitorServicesToken(t *testing.T) {
 
 	// Create request data for POST request
 	opts := linodego.MonitorTokenCreateOptions{
-		EntityIDs: []int{12345, 54321},
+		EntityIDs: []any{12345, "us-54321"},
 	}
 
 	token, err := base.Client.CreateMonitorServiceTokenForServiceType(context.Background(), "dbaas", opts)

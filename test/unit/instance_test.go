@@ -8,8 +8,8 @@ import (
 
 	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"
-
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestInstances_List(t *testing.T) {
@@ -41,7 +41,9 @@ func TestInstances_List(t *testing.T) {
 	assert.Equal(t, "us-east", linode.Region)
 	assert.Equal(t, 4096, linode.Specs.Memory)
 	assert.Equal(t, "2018-01-01 00:01:01 +0000 UTC", linode.Backups.LastSuccessful.String())
-	assert.Equal(t, "2468", linode.PlacementGroup.MigratingTo)
+	require.NotNil(t, linode.PlacementGroup.MigratingTo)
+	assert.Equal(t, 2468, *linode.PlacementGroup.MigratingTo)
+	assert.Equal(t, "linode/migrate", linode.MaintenancePolicy)
 }
 
 func TestInstance_Get(t *testing.T) {
@@ -72,7 +74,9 @@ func TestInstance_Get(t *testing.T) {
 	assert.Equal(t, "us-east", instance.Region)
 	assert.Equal(t, 4096, instance.Specs.Memory)
 	assert.Equal(t, "2018-01-01 00:01:01 +0000 UTC", instance.Backups.LastSuccessful.String())
-	assert.Equal(t, "2468", instance.PlacementGroup.MigratingTo)
+	assert.Equal(t, "linode/migrate", instance.MaintenancePolicy)
+	require.NotNil(t, instance.PlacementGroup.MigratingTo)
+	assert.Equal(t, 2468, *instance.PlacementGroup.MigratingTo)
 }
 
 func TestInstance_Migrate(t *testing.T) {
@@ -170,11 +174,12 @@ func TestInstance_Create(t *testing.T) {
 	defer base.TearDown(t)
 
 	createOptions := linodego.InstanceCreateOptions{
-		Region:   "us-east",
-		Type:     "g6-standard-1",
-		Label:    "new-instance",
-		Image:    "linode/ubuntu22.04",
-		RootPass: "securepassword",
+		Region:            "us-east",
+		Type:              "g6-standard-1",
+		Label:             "new-instance",
+		Image:             "linode/ubuntu22.04",
+		RootPass:          "securepassword",
+		MaintenancePolicy: linodego.Pointer("linode/migrate"),
 	}
 
 	base.MockPost("linode/instances", fixtureData)
@@ -182,6 +187,7 @@ func TestInstance_Create(t *testing.T) {
 	instance, err := base.Client.CreateInstance(context.Background(), createOptions)
 	assert.NoError(t, err)
 	assert.Equal(t, "new-instance", instance.Label)
+	assert.Equal(t, "linode/migrate", instance.MaintenancePolicy)
 }
 
 func TestInstance_Update(t *testing.T) {
@@ -193,7 +199,8 @@ func TestInstance_Update(t *testing.T) {
 	defer base.TearDown(t)
 
 	updateOptions := linodego.InstanceUpdateOptions{
-		Label: "updated-instance",
+		Label:             "updated-instance",
+		MaintenancePolicy: linodego.Pointer("linode/power_off_on"),
 	}
 
 	base.MockPut("linode/instances/123", fixtureData)
@@ -201,6 +208,7 @@ func TestInstance_Update(t *testing.T) {
 	instance, err := base.Client.UpdateInstance(context.Background(), 123, updateOptions)
 	assert.NoError(t, err)
 	assert.Equal(t, "updated-instance", instance.Label)
+	assert.Equal(t, "linode/power_off_on", instance.MaintenancePolicy)
 }
 
 func TestInstance_Delete(t *testing.T) {
@@ -255,6 +263,7 @@ func TestInstance_Clone(t *testing.T) {
 	instance, err := base.Client.CloneInstance(context.Background(), 123, cloneOptions)
 	assert.NoError(t, err)
 	assert.Equal(t, "cloned-instance", instance.Label)
+	assert.Equal(t, "linode/migrate", instance.MaintenancePolicy)
 }
 
 func TestInstance_Resize(t *testing.T) {

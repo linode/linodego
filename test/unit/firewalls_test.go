@@ -98,6 +98,9 @@ func TestFirewall_Create(t *testing.T) {
 			},
 		},
 		Tags: []string{"example tag", "another example"},
+		Devices: linodego.DevicesCreationOptions{
+			Interfaces: []int{1, 2, 3},
+		},
 	}
 
 	base.MockPost(formatMockAPIPath("networking/firewalls"), fixtureData)
@@ -249,4 +252,55 @@ func TestFirewall_Delete(t *testing.T) {
 	if err := client.DeleteFirewall(context.Background(), firewallID); err != nil {
 		t.Fatal(err)
 	}
+}
+
+func TestDefaultFirewall_Get(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("default_firewalls_get")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockGet(formatMockAPIPath("networking/firewalls/settings"), fixtureData)
+
+	defaultFirewalls, err := base.Client.GetFirewallSettings(context.Background())
+
+	assert.NoError(t, err)
+	assert.NotNil(t, defaultFirewalls)
+
+	assert.Equal(t, 101, *defaultFirewalls.DefaultFirewallIDs.NodeBalancer)
+	assert.Equal(t, 100, *defaultFirewalls.DefaultFirewallIDs.Linode)
+	assert.Equal(t, 200, *defaultFirewalls.DefaultFirewallIDs.PublicInterface)
+	assert.Equal(t, 200, *defaultFirewalls.DefaultFirewallIDs.VPCInterface)
+}
+
+func TestDefaultFirewall_Update(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("default_firewalls_update")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockPut(formatMockAPIPath("networking/firewalls/settings"), fixtureData)
+
+	requestData := linodego.FirewallSettingsUpdateOptions{
+		DefaultFirewallIDs: &linodego.DefaultFirewallIDsOptions{
+			Linode:          linodego.DoublePointer(1),
+			NodeBalancer:    linodego.DoublePointer(1),
+			VPCInterface:    linodego.DoublePointer(1),
+			PublicInterface: linodego.DoublePointer(1),
+		},
+	}
+
+	defaultFirewalls, err := base.Client.UpdateFirewallSettings(context.Background(), requestData)
+
+	assert.NoError(t, err)
+	assert.NotNil(t, defaultFirewalls)
+
+	assert.Equal(t, 1, *defaultFirewalls.DefaultFirewallIDs.NodeBalancer)
+	assert.Equal(t, 1, *defaultFirewalls.DefaultFirewallIDs.Linode)
+	assert.Equal(t, 1, *defaultFirewalls.DefaultFirewallIDs.PublicInterface)
+	assert.Equal(t, 1, *defaultFirewalls.DefaultFirewallIDs.VPCInterface)
 }

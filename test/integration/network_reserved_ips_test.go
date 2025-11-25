@@ -82,7 +82,10 @@ func TestReservedIPAddresses_EndToEndTest(t *testing.T) {
 	})
 
 	if resErr != nil {
-		t.Fatalf("Failed to reserve IP. This test expects the user to have 0 prior reservations and the ip_reservation_limit to be 2. Error from the API: %v", resErr)
+		t.Fatalf(
+			"Failed to reserve IP. This test expects the user to have 0 prior reservations and the ip_reservation_limit to be 2. Error from the API: %v",
+			resErr,
+		)
 	}
 
 	t.Logf("Successfully reserved IP: %+v", resIP)
@@ -206,7 +209,10 @@ func TestReservedIPAddresses_GetIPAddressVariants(t *testing.T) {
 	})
 
 	if resErr != nil {
-		t.Fatalf("Failed to reserve IP. This test expects the user to have 0 prior reservations and the ip_reservation_limit to be 2. Error from the API: %v", resErr)
+		t.Fatalf(
+			"Failed to reserve IP. This test expects the user to have 0 prior reservations and the ip_reservation_limit to be 2. Error from the API: %v",
+			resErr,
+		)
 	}
 
 	if resIP == nil {

@@ -5,6 +5,7 @@ import (
 	"testing"
 
 	"github.com/linode/linodego"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -58,6 +59,15 @@ func TestMonitorDashboards_Get_smoke(t *testing.T) {
 	}
 }
 
+func TestMonitorDashboards_GetNotExistingDashboardID(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestMonitorInvalidDashboard_Get")
+	defer teardown()
+
+	_, getErr := client.GetMonitorDashboard(context.Background(), 999999)
+	require.Error(t, getErr)
+	assert.Contains(t, getErr.Error(), "[404] Not found")
+}
+
 func validateDashboards(
 	t *testing.T,
 	dashboards linodego.MonitorDashboard,
@@ -68,4 +78,14 @@ func validateDashboards(
 	require.NotEmpty(t, dashboards.Created)
 	require.NotEmpty(t, dashboards.Updated)
 	require.NotEmpty(t, dashboards.Widgets)
+
+	// Validate group_by and filters for each widget
+	for _, widget := range dashboards.Widgets {
+		require.NotNil(t, widget.GroupBy, "Expected group_by to be present in widget")
+		require.GreaterOrEqual(t, len(widget.GroupBy), 0, "group_by should be a slice (possibly empty)")
+		// filters is optional
+		if widget.Filters != nil {
+			require.GreaterOrEqual(t, len(widget.Filters), 0, "filters should be a slice (possibly empty)")
+		}
+	}
 }

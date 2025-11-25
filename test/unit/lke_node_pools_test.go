@@ -4,10 +4,9 @@ import (
 	"context"
 	"testing"
 
+	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
-
-	"github.com/jarcoal/httpmock"
 )
 
 func Ptr[T any](v T) *T {
@@ -84,6 +83,8 @@ func TestLKENodePool_Create(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
+	label := "custom-label-create"
+
 	createOptions := linodego.LKENodePoolCreateOptions{
 		Count:  2,
 		Type:   "g6-standard-2",
@@ -97,6 +98,7 @@ func TestLKENodePool_Create(t *testing.T) {
 			Min:     1,
 			Max:     5,
 		},
+		Label: &label,
 	}
 
 	base.MockPost("lke/clusters/123/pools", fixtureData)
@@ -108,6 +110,7 @@ func TestLKENodePool_Create(t *testing.T) {
 	assert.True(t, nodePool.Autoscaler.Enabled)
 	assert.Equal(t, 1, nodePool.Autoscaler.Min)
 	assert.Equal(t, 5, nodePool.Autoscaler.Max)
+	assert.Equal(t, &label, nodePool.Label)
 }
 
 func TestLKENodePool_Update(t *testing.T) {
@@ -118,6 +121,8 @@ func TestLKENodePool_Update(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
+	label := "custom-label-update"
+
 	updateOptions := linodego.LKENodePoolUpdateOptions{
 		Count:  5,
 		Tags:   &[]string{"updated-tag"},
@@ -127,6 +132,7 @@ func TestLKENodePool_Update(t *testing.T) {
 			Min:     2,
 			Max:     8,
 		},
+		Label: &label,
 	}
 
 	base.MockPut("lke/clusters/123/pools/456", fixtureData)
@@ -138,6 +144,7 @@ func TestLKENodePool_Update(t *testing.T) {
 	assert.True(t, nodePool.Autoscaler.Enabled)
 	assert.Equal(t, 2, nodePool.Autoscaler.Min)
 	assert.Equal(t, 8, nodePool.Autoscaler.Max)
+	assert.Equal(t, &label, nodePool.Label)
 }
 
 func TestLKENodePool_Delete(t *testing.T) {
@@ -193,6 +200,8 @@ func TestLKEEnterpriseNodePool_Create(t *testing.T) {
 		Tags:           []string{"testing"},
 		K8sVersion:     linodego.Pointer("v1.31.1+lke1"),
 		UpdateStrategy: linodego.Pointer(linodego.LKENodePoolOnRecycle),
+		Label:          linodego.Pointer("custom-label-create"),
+		FirewallID:     linodego.Pointer(12345),
 	}
 
 	base.MockPost("lke/clusters/123/pools", fixtureData)
@@ -203,6 +212,8 @@ func TestLKEEnterpriseNodePool_Create(t *testing.T) {
 	assert.Equal(t, 2, nodePool.Count)
 	assert.Equal(t, "v1.31.1+lke1", *nodePool.K8sVersion)
 	assert.Equal(t, "on_recycle", string(*nodePool.UpdateStrategy))
+	assert.Equal(t, linodego.Pointer("custom-label-create"), nodePool.Label)
+	assert.Equal(t, 12345, *nodePool.FirewallID)
 }
 
 func TestLKEEnterpriseNodePool_Update(t *testing.T) {
@@ -216,6 +227,8 @@ func TestLKEEnterpriseNodePool_Update(t *testing.T) {
 	updateOptions := linodego.LKENodePoolUpdateOptions{
 		K8sVersion:     linodego.Pointer("v1.31.1+lke1"),
 		UpdateStrategy: linodego.Pointer(linodego.LKENodePoolRollingUpdate),
+		Label:          linodego.Pointer("custom-label-update"),
+		FirewallID:     linodego.Pointer(12345),
 	}
 
 	base.MockPut("lke/clusters/123/pools/12345", fixtureData)
@@ -224,4 +237,6 @@ func TestLKEEnterpriseNodePool_Update(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "v1.31.1+lke1", *nodePool.K8sVersion)
 	assert.Equal(t, "rolling_update", string(*nodePool.UpdateStrategy))
+	assert.Equal(t, linodego.Pointer("custom-label-update"), nodePool.Label)
+	assert.Equal(t, 12345, *nodePool.FirewallID)
 }

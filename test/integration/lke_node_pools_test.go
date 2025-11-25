@@ -4,10 +4,9 @@ import (
 	"context"
 	"testing"
 
-	k8scondition "github.com/linode/linodego/k8s/pkg/condition"
-
 	"github.com/google/go-cmp/cmp"
 	"github.com/linode/linodego"
+	k8scondition "github.com/linode/linodego/k8s/pkg/condition"
 )
 
 var testLKENodePoolCreateOpts = linodego.LKENodePoolCreateOptions{
@@ -288,7 +287,11 @@ func TestLKENodePool_CreateWithLabelsAndTaints(t *testing.T) {
 	}
 }
 
-func setupLKENodePool(t *testing.T, fixturesYaml string, nodePoolCreateOpts *linodego.LKENodePoolCreateOptions) (*linodego.Client, *linodego.LKECluster, *linodego.LKENodePool, func(), error) {
+func setupLKENodePool(
+	t *testing.T,
+	fixturesYaml string,
+	nodePoolCreateOpts *linodego.LKENodePoolCreateOptions,
+) (*linodego.Client, *linodego.LKECluster, *linodego.LKENodePool, func(), error) {
 	t.Helper()
 	var fixtureTeardown func()
 	client, lkeCluster, fixtureTeardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
@@ -359,7 +362,11 @@ func TestLKEEnterpriseNodePoolK8sUpgrade_Update(t *testing.T) {
 	}
 }
 
-func setupLKEEnterpriseNodePool(t *testing.T, fixturesYaml string, nodePoolCreateOpts *linodego.LKENodePoolCreateOptions) (*linodego.Client, *linodego.LKECluster, *linodego.LKENodePool, func(), error) {
+func setupLKEEnterpriseNodePool(
+	t *testing.T,
+	fixturesYaml string,
+	nodePoolCreateOpts *linodego.LKENodePoolCreateOptions,
+) (*linodego.Client, *linodego.LKECluster, *linodego.LKENodePool, func(), error) {
 	t.Helper()
 	var fixtureTeardown func()
 	client, lkeCluster, fixtureTeardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
