@@ -5,7 +5,7 @@ require (
 	github.com/google/go-cmp v0.7.0
 	github.com/google/go-querystring v1.1.0
 	github.com/jarcoal/httpmock v1.4.1
-	golang.org/x/net v0.46.0
+	golang.org/x/net v0.47.0
 	golang.org/x/oauth2 v0.33.0
 	golang.org/x/text v0.31.0
 	gopkg.in/ini.v1 v1.66.6
