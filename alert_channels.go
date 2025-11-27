@@ -63,12 +63,12 @@ type ChannelContent struct {
 
 // ListAlertChannels gets a paginated list of Alert Channels.
 func (c *Client) ListAlertChannels(ctx context.Context, opts *ListOptions) ([]AlertChannel, error) {
-	endpoint := formatAPIV4BetaPath("monitor/alert-channels")
+	endpoint := formatAPIPath("monitor/alert-channels")
 	return getPaginatedResults[AlertChannel](ctx, c, endpoint, opts)
 }
 
 // GetAlertChannel gets an Alert Channel by ID.
 func (c *Client) GetAlertChannel(ctx context.Context, channelID int) (*AlertChannel, error) {
-	e := formatAPIV4BetaPath("monitor/alert-channels/%d", channelID)
+	e := formatAPIPath("monitor/alert-channels/%d", channelID)
 	return doGETRequest[AlertChannel](ctx, c, e)
 }
