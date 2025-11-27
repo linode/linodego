@@ -22,16 +22,6 @@ type AlertChannel struct {
 	CreatedBy   string         `json:"created_by"`
 	Updated     string         `json:"updated"`
 	UpdatedBy   string         `json:"updated_by"`
-	URL         string         `json:"url"`
-}
-
-// AlertChannelDetail represents the details of a Monitor Channel.
-type AlertChannelDetail struct {
-	To    string `json:"to,omitempty"`
-	From  string `json:"from,omitempty"`
-	User  string `json:"user,omitempty"`
-	Token string `json:"token,omitempty"`
-	URL   string `json:"url,omitempty"`
 }
 
 // AlertChannelCreateOptions are the options used to create a new Monitor Channel.
