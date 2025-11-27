@@ -2,6 +2,9 @@ package integration
 
 import (
 	"context"
+	"io"
+	"os"
+	"path/filepath"
 	"testing"
 	"time"
 
@@ -14,8 +17,29 @@ const (
 )
 
 func TestMonitorAlertDefinition_smoke(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertDefinition_instance")
+	tempDir := t.TempDir()
+	fixtureSrc := "fixtures/TestMonitorAlertDefinition_instance.yaml"
+	fixtureDst := filepath.Join(tempDir, "TestMonitorAlertDefinition_instance.yaml")
+
+	// Copy fixture to temp dir
+	srcFile, err := os.Open(fixtureSrc)
+	if err != nil {
+		t.Fatalf("failed to open fixture: %s", err)
+	}
+	defer srcFile.Close()
+	dstFile, err := os.Create(fixtureDst)
+	if err != nil {
+		t.Fatalf("failed to create temp fixture: %s", err)
+	}
+	defer dstFile.Close()
+	if _, err := io.Copy(dstFile, srcFile); err != nil {
+		t.Fatalf("failed to copy fixture: %s", err)
+	}
+
+	client, teardown := createTestClient(t, fixtureDst)
 	defer teardown()
+
+	client.SetAPIVersion("v4beta")
 
 	//Get All Alert Definitions
 	alerts, err := client.ListMonitorAlertDefinitions(context.Background(), "", nil)

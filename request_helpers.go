@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"net/url"
 	"reflect"
-	"strings"
 )
 
 // paginatedResponse represents a single response from a paginated
@@ -317,20 +316,7 @@ func formatAPIPath(format string, args ...any) string {
 	return fmt.Sprintf(format, escapedArgs...)
 }
 
-// formatAPIV4BetaPath builds a fully-qualified URL for v4beta endpoints.
-// We return a full URL (including scheme and host) so requests made with the
-// standard client (which is pointed at /v4) will hit the /v4beta host/path
-// directly.
-func formatAPIV4BetaPath(format string, args ...any) string {
-	p := formatAPIPath(format, args...)
-
-	// Ensure we don't produce a double slash when joining
-	p = strings.TrimPrefix(p, "/")
-
-	return fmt.Sprintf("%s://%s/%s/%s", APIProto, APIHost, "v4beta", p)
-}
-
-func isNil(i any) bool {
+func isNil(i interface{}) bool {
 	if i == nil {
 		return true
 	}
