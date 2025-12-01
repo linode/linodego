@@ -22,6 +22,10 @@ type NodeBalancer struct {
 	IPv4 *string `json:"ipv4"`
 	// This NodeBalancer's public IPv6 address.
 	IPv6 *string `json:"ipv6"`
+	// Frontend address type (e.g., "vpc")
+	FrontendAddressType *string `json:"frontend_address_type,omitempty"`
+	// Frontend VPC subnet ID when using VPC addressing
+	FrontendVPCSubnetID *int `json:"frontend_vpc_subnet_id,omitempty"`
 	// Throttle connections per second (0-20). Set to 0 (zero) to disable throttling.
 	ClientConnThrottle int `json:"client_conn_throttle"`
 
@@ -46,16 +50,18 @@ type NodeBalancerTransfer struct {
 	// The total transfer, in MB, used by this NodeBalancer this month.
 	Total *float64 `json:"total"`
 	// The total inbound transfer, in MB, used for this NodeBalancer this month.
-	Out *float64 `json:"out"`
-	// The total outbound transfer, in MB, used for this NodeBalancer this month.
 	In *float64 `json:"in"`
+	// The total outbound transfer, in MB, used for this NodeBalancer this month.
+	Out *float64 `json:"out"`
 }
 
 type NodeBalancerVPCOptions struct {
-	IPv4Range           string `json:"ipv4_range,omitempty"`
-	IPv6Range           string `json:"ipv6_range,omitempty"`
-	SubnetID            int    `json:"subnet_id"`
-	IPv4RangeAutoAssign bool   `json:"ipv4_range_auto_assign,omitempty"`
+	IPv4Range string `json:"ipv4_range,omitempty"`
+	IPv6Range string `json:"ipv6_range,omitempty"`
+	SubnetID  int    `json:"subnet_id"`
+	// IPv4RangeAutoAssign is only used for backend VPC configuration.
+	// For frontend VPCs, this field is ignored.
+	IPv4RangeAutoAssign bool `json:"ipv4_range_auto_assign,omitempty"`
 }
 
 // NodeBalancerCreateOptions are the options permitted for CreateNodeBalancer
@@ -67,12 +73,13 @@ type NodeBalancerCreateOptions struct {
 	// NOTE: ClientUDPSessThrottle may not currently be available to all users.
 	ClientUDPSessThrottle *int `json:"client_udp_sess_throttle,omitempty"`
 
-	Configs    []*NodeBalancerConfigCreateOptions `json:"configs,omitempty"`
-	Tags       []string                           `json:"tags"`
-	FirewallID int                                `json:"firewall_id,omitempty"`
-	Type       NodeBalancerPlanType               `json:"type,omitempty"`
-	VPCs       []NodeBalancerVPCOptions           `json:"vpcs,omitempty"`
-	IPv4       *string                            `json:"ipv4,omitempty"`
+	Configs      []*NodeBalancerConfigCreateOptions `json:"configs,omitempty"`
+	Tags         []string                           `json:"tags"`
+	FirewallID   int                                `json:"firewall_id,omitempty"`
+	Type         NodeBalancerPlanType               `json:"type,omitempty"`
+	VPCs         []NodeBalancerVPCOptions           `json:"vpcs,omitempty"`
+	FrontendVPCs []NodeBalancerVPCOptions           `json:"frontend_vpcs,omitempty"`
+	IPv4         *string                            `json:"ipv4,omitempty"`
 }
 
 // NodeBalancerUpdateOptions are the options permitted for UpdateNodeBalancer
