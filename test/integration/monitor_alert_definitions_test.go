@@ -41,10 +41,9 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 
 	client.SetAPIVersion("v4beta")
 
-	//Get All Alert Definitions
+	// Get All Alert Definitions
 	alerts, err := client.ListMonitorAlertDefinitions(context.Background(), "", nil)
-
-	//Even if there is no alert definition, it should not error out
+	// Even if there is no alert definition, it should not error out
 	if err != nil {
 		t.Fatalf("failed to fetch monitor alert definitions: %s", err)
 	}
