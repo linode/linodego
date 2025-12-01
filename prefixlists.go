@@ -12,7 +12,7 @@ import (
 type PrefixList struct {
 	ID                 int       `json:"id"`
 	Name               string    `json:"name"`
-	Description        string    `json:"description,omitempty"`
+	Description        string    `json:"description"`
 	Visibility         string    `json:"visibility"`
 	SourcePrefixListID *int      `json:"source_prefixlist_id"`
 	IPv4               *[]string `json:"ipv4"`
