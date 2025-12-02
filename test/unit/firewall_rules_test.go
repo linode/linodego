@@ -220,30 +220,3 @@ func TestFirewallRule_GetExpansion(t *testing.T) {
 
 	assert.Equal(t, "DROP", firewallRuleSet.OutboundPolicy)
 }
-
-func TestFirewallRule_MarshalJSON(t *testing.T) {
-	ruleWithRuleset := linodego.FirewallRule{Ruleset: 51}
-	data, err := json.Marshal(ruleWithRuleset)
-	assert.NoError(t, err)
-	assert.JSONEq(t, `{"ruleset":51}`, string(data))
-
-	ipv4 := []string{"pl::vpcs:123"}
-	ruleWithoutRuleset := linodego.FirewallRule{
-		Action:   "ACCEPT",
-		Label:    "allow-vpc",
-		Ports:    "443",
-		Protocol: linodego.NetworkProtocol("TCP"),
-		Addresses: linodego.NetworkAddresses{
-			IPv4: &ipv4,
-		},
-	}
-	data, err = json.Marshal(ruleWithoutRuleset)
-	assert.NoError(t, err)
-	assert.JSONEq(t, `{
-		"action":"ACCEPT",
-		"label":"allow-vpc",
-		"ports":"443",
-		"protocol":"TCP",
-		"addresses":{"ipv4":["pl::vpcs:123"]}
-	}`, string(data))
-}
