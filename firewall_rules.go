@@ -84,6 +84,12 @@ func (c *Client) GetFirewallRules(ctx context.Context, firewallID int) (*Firewal
 	return doGETRequest[FirewallRuleSet](ctx, c, e)
 }
 
+// GetFirewallRulesExpansion gets the expanded FirewallRuleSet for the given Firewall.
+func (c *Client) GetFirewallRulesExpansion(ctx context.Context, firewallID int) (*FirewallRuleSet, error) {
+	e := formatAPIPath("networking/firewalls/%d/rules/expansion", firewallID)
+	return doGETRequest[FirewallRuleSet](ctx, c, e)
+}
+
 // UpdateFirewallRules updates the FirewallRuleSet for the given Firewall
 func (c *Client) UpdateFirewallRules(ctx context.Context, firewallID int, rules FirewallRuleSet) (*FirewallRuleSet, error) {
 	e := formatAPIPath("networking/firewalls/%d/rules", firewallID)
