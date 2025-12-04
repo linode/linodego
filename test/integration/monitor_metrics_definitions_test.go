@@ -23,7 +23,11 @@ func TestMonitorMetricDefinitions_Get_smoke(t *testing.T) {
 	}
 
 	// Get the metric-definitions by serviceType for the filter "is_alertable":false
-	monitorMetricDefinitionsClientListFilter, listErr := client.ListMonitorMetricsDefinitionByServiceType(context.Background(), "dbaas", linodego.NewListOptions(0, "{\"is_alertable\":false}"))
+	monitorMetricDefinitionsClientListFilter, listErr := client.ListMonitorMetricsDefinitionByServiceType(
+		context.Background(),
+		"dbaas",
+		linodego.NewListOptions(0, "{\"is_alertable\":false}"),
+	)
 	if listErr != nil {
 		t.Errorf("Error listing monitor metrics:%s", listErr)
 	}
