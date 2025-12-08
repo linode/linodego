@@ -14,79 +14,266 @@ interactions:
     url: https://api.linode.com/v4beta/monitor/alert-definitions?page=1
     method: GET
   response:
-    body: |
-      {
-        "data": [
-          {
-            "id": 10000,
-            "label": "High Memory Usage Plan Dedicated",
-            "severity": 2,
-            "type": "system",
-            "service_type": "dbaas",
-            "status": "enabled",
-            "has_more_resources": false,
-            "rule": null,
-            "trigger_conditions": {
-              "criteria_condition": "ALL",
-              "evaluation_period_seconds": 300,
-              "polling_interval_seconds": 300,
-              "trigger_occurrences": 1
-            },
-            "alert_channels": [
-              {
-                "id": 10000,
-                "label": "Read-Write Channel",
-                "type": "alert-channels",
-                "url": "/monitor/alert-channels/10000"
-              }
-            ],
-            "created": "2025-03-20T01:42:11",
-            "updated": "2025-09-11T04:45:19",
-            "updated_by": "system",
-            "created_by": "system",
-            "entity_ids": [],
-            "description": "Alert triggers when dedicated plan nodes consistently reach critical memory usage, risking application performance degradation.",
-            "class": "dedicated"
-          },
-          {
-            "id": 10001,
-            "label": "High Memory Usage Plan Shared",
-            "severity": 2,
-            "type": "system",
-            "service_type": "dbaas",
-            "status": "enabled",
-            "has_more_resources": false,
-            "rule": null,
-            "trigger_conditions": {
-              "criteria_condition": "ALL",
-              "evaluation_period_seconds": 300,
-              "polling_interval_seconds": 300,
-              "trigger_occurrences": 1
-            },
-            "alert_channels": [
-              {
-                "id": 10000,
-                "label": "Read-Write Channel",
-                "type": "alert-channels",
-                "url": "/monitor/alert-channels/10000"
-              }
-            ],
-            "created": "2025-03-20T01:42:11",
-            "updated": "2025-09-11T04:25:12",
-            "updated_by": "system",
-            "created_by": "system",
-            "entity_ids": [189690, 313392, 324828, 340839],
-            "description": "Alert triggers when shared plan nodes consistently reach critical memory usage, risking application performance degradation.",
-            "class": "shared"
-          }
-        ],
-        "page": 1,
-        "pages": 1,
-        "results": 2
-      }
+    body: '{"pages": 1, "page": 1, "results": 6, "data": [{"id": 10000, "label": "High
+      Memory Usage Plan Dedicated", "description": "Alert triggers when dedicated
+      plan nodes consistently reach critical memory usage, risking application performance
+      degradation.", "service_type": "dbaas", "type": "system", "scope": "entity",
+      "class": "dedicated", "regions": [], "status": "enabled", "entity_ids": [],
+      "has_more_resources": false, "severity": 2, "rule_criteria": {"rules": [{"label":
+      "Memory Usage", "metric": "memory_usage", "unit": "percent", "aggregate_function":
+      "avg", "operator": "gt", "threshold": 95, "dimension_filters": []}]}, "alert_channels":
+      [{"id": 10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
+      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
+      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
+      3}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
+      "system", "updated_by": "system"}, {"id": 10001, "label": "High Memory Usage
+      Plan Shared", "description": "Alert triggers when shared plan nodes consistently
+      reach critical memory usage, risking application performance degradation.",
+      "service_type": "dbaas", "type": "system", "scope": "entity", "class": "shared",
+      "regions": [], "status": "enabled", "entity_ids": [], "has_more_resources":
+      false, "severity": 2, "rule_criteria": {"rules": [{"label": "Memory Usage",
+      "metric": "memory_usage", "unit": "percent", "aggregate_function": "avg", "operator":
+      "gt", "threshold": 90, "dimension_filters": []}]}, "alert_channels": [{"id":
+      10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
+      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
+      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
+      3}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
+      "system", "updated_by": "system"}, {"id": 10002, "label": "High CPU Usage Plan
+      Dedicated", "description": "Alert triggers when dedicated nodes consistently
+      exceed 95% CPU usage across three consecutive 5-minute intervals.", "service_type":
+      "dbaas", "type": "system", "scope": "entity", "class": "dedicated", "regions":
+      [], "status": "enabled", "entity_ids": [], "has_more_resources": false, "severity":
+      2, "rule_criteria": {"rules": [{"label": "CPU Usage", "metric": "cpu_usage",
+      "unit": "percent", "aggregate_function": "avg", "operator": "gt", "threshold":
+      95, "dimension_filters": []}]}, "alert_channels": [{"id": 10000, "label": "Read-Write
+      Channel", "url": "/monitor/alert-channels/10000", "type": "alert-channels"}],
+      "trigger_conditions": {"criteria_condition": "ALL", "polling_interval_seconds":
+      300, "evaluation_period_seconds": 300, "trigger_occurrences": 3}, "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by": "system",
+      "updated_by": "system"}, {"id": 10003, "label": "High CPU Usage Plan Shared",
+      "description": "Alert triggers when shared plan nodes consistently exceed high
+      CPU utilization, indicating potential performance issues.", "service_type":
+      "dbaas", "type": "system", "scope": "entity", "class": "shared", "regions":
+      [], "status": "enabled", "entity_ids": [], "has_more_resources": false, "severity":
+      2, "rule_criteria": {"rules": [{"label": "CPU Usage", "metric": "cpu_usage",
+      "unit": "percent", "aggregate_function": "avg", "operator": "gt", "threshold":
+      90, "dimension_filters": []}]}, "alert_channels": [{"id": 10000, "label": "Read-Write
+      Channel", "url": "/monitor/alert-channels/10000", "type": "alert-channels"}],
+      "trigger_conditions": {"criteria_condition": "ALL", "polling_interval_seconds":
+      300, "evaluation_period_seconds": 300, "trigger_occurrences": 3}, "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by": "system",
+      "updated_by": "system"}, {"id": 10004, "label": "High Disk Usage Plan Dedicated",
+      "description": "Alert triggers when dedicated plan nodes experience sustained
+      high disk usage, risking immediate resource exhaustion.", "service_type": "dbaas",
+      "type": "system", "scope": "entity", "class": "dedicated", "regions": [], "status":
+      "enabled", "entity_ids": [], "has_more_resources": false, "severity": 2, "rule_criteria":
+      {"rules": [{"label": "Disk Space Usage", "metric": "disk_usage", "unit": "percent",
+      "aggregate_function": "avg", "operator": "gt", "threshold": 95, "dimension_filters":
+      []}]}, "alert_channels": [{"id": 10000, "label": "Read-Write Channel", "url":
+      "/monitor/alert-channels/10000", "type": "alert-channels"}], "trigger_conditions":
+      {"criteria_condition": "ALL", "polling_interval_seconds": 300, "evaluation_period_seconds":
+      300, "trigger_occurrences": 3}, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "created_by": "system", "updated_by": "system"}, {"id":
+      10005, "label": "High Disk Usage Plan Shared", "description": "Alert triggers
+      when shared plan nodes experience sustained high disk usage, risking immediate
+      resource exhaustion.", "service_type": "dbaas", "type": "system", "scope": "entity",
+      "class": "shared", "regions": [], "status": "enabled", "entity_ids": [], "has_more_resources":
+      false, "severity": 2, "rule_criteria": {"rules": [{"label": "Disk Space Usage",
+      "metric": "disk_usage", "unit": "percent", "aggregate_function": "avg", "operator":
+      "gt", "threshold": 90, "dimension_filters": []}]}, "alert_channels": [{"id":
+      10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
+      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
+      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
+      3}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
+      "system", "updated_by": "system"}]}'
     headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
       Content-Type:
       - application/json
+      Expires:
+      - Mon, 08 Dec 2025 16:43:45 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"service_type":"","label":"go-test-alert-definition-create","severity":2,"channel_ids":[10000],"rule_criteria":{"rules":[{"aggregate_function":"avg","dimension_filters":[{"dimension_label":"node_type","label":"Node
+      Type","operator":"eq","value":"primary"}],"label":"Memory Usage","metric":"memory_usage","operator":"gt","threshold":90,"unit":"percent"}]},"trigger_conditions":{"criteria_condition":"ALL","evaluation_period_seconds":300,"polling_interval_seconds":300,"trigger_occurrences":1},"description":"Test
+      alert definition creation"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions
+    method: POST
+  response:
+    body: '{"id": 10549, "label": "go-test-alert-definition-create", "description":
+      "Test alert definition creation", "service_type": "dbaas", "type": "user", "scope":
+      "entity", "class": null, "regions": [], "status": "in progress", "entity_ids":
+      [], "has_more_resources": false, "severity": 2, "rule_criteria": {"rules": [{"label":
+      "Memory Usage", "metric": "memory_usage", "unit": "percent", "aggregate_function":
+      "avg", "operator": "gt", "threshold": 90, "dimension_filters": [{"label": "Node
+      Type", "dimension_label": "node_type", "operator": "eq", "value": "primary"}]}]},
+      "alert_channels": [{"id": 10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
+      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
+      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
+      1}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
+      "ErikZilber", "updated_by": "ErikZilber"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 08 Dec 2025 16:43:46 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - databases:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"service_type":"","alert_id":0,"label":"go-test-alert-definition-create-updated"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/10549
+    method: PUT
+  response:
+    body: '{"id": 10549, "label": "go-test-alert-definition-create-updated", "description":
+      "Test alert definition creation", "service_type": "dbaas", "type": "user", "scope":
+      "entity", "class": null, "regions": [], "status": "in progress", "entity_ids":
+      [], "has_more_resources": false, "severity": 2, "rule_criteria": {"rules": [{"label":
+      "Memory Usage", "metric": "memory_usage", "unit": "percent", "aggregate_function":
+      "avg", "operator": "gt", "threshold": 90, "dimension_filters": [{"label": "Node
+      Type", "dimension_label": "node_type", "operator": "eq", "value": "primary"}]}]},
+      "alert_channels": [{"id": 10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
+      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
+      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
+      1}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
+      "ErikZilber", "updated_by": "ErikZilber"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 08 Dec 2025 16:44:47 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - databases:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
@@ -100,46 +287,44 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/10001
-    method: GET
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/10549
+    method: DELETE
   response:
-    body: |
-      {
-        "id": 10001,
-        "label": "High Memory Usage Plan Shared",
-        "severity": 2,
-        "type": "system",
-        "service_type": "dbaas",
-        "status": "enabled",
-        "has_more_resources": false,
-        "rule": null,
-        "trigger_conditions": {
-          "criteria_condition": "ALL",
-          "evaluation_period_seconds": 300,
-          "polling_interval_seconds": 300,
-          "trigger_occurrences": 1
-        },
-        "alert_channels": [
-          {
-            "id": 10000,
-            "label": "Read-Write Channel",
-            "type": "alert-channels",
-            "url": "/monitor/alert-channels/10000"
-          }
-        ],
-        "created": "2025-03-20T01:42:11",
-        "updated": "2025-09-11T04:25:12",
-        "updated_by": "system",
-        "created_by": "system",
-        "entity_ids": [189690, 313392, 324828, 340839],
-        "description": "Alert triggers when shared plan nodes consistently reach critical memory usage, risking application performance degradation.",
-        "class": "shared"
-      }
+    body: '{"errors": [{"reason": "An update to your alert is in progress. Please
+      wait until the update has completed, then try again."}]}'
     headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "127"
       Content-Type:
       - application/json
-    status: 200 OK
-    code: 200
+      Expires:
+      - Mon, 08 Dec 2025 16:44:47 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Accepted-Oauth-Scopes:
+      - databases:read_only
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+    status: 400 Bad Request
+    code: 400
     duration: ""
 - request:
     body: ""
@@ -151,23 +336,250 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/alert-channels/
-    method: GET
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/10549
+    method: DELETE
   response:
-    body: |
-      {
-        "id": 10000,
-        "label": "Read-Write Channel",
-        "type": "alert-channels",
-        "details": {
-          "to": "ops@example.com"
-        },
-        "created": "2025-03-20T01:42:11",
-        "updated": "2025-09-11T04:25:12"
-      }
+    body: '{"errors": [{"reason": "An update to your alert is in progress. Please
+      wait until the update has completed, then try again."}]}'
     headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "127"
       Content-Type:
       - application/json
+      Expires:
+      - Mon, 08 Dec 2025 16:44:50 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Accepted-Oauth-Scopes:
+      - databases:read_only
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+    status: 400 Bad Request
+    code: 400
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/10549
+    method: DELETE
+  response:
+    body: '{"errors": [{"reason": "An update to your alert is in progress. Please
+      wait until the update has completed, then try again."}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "127"
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 08 Dec 2025 16:44:54 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Accepted-Oauth-Scopes:
+      - databases:read_only
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+    status: 400 Bad Request
+    code: 400
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/10549
+    method: DELETE
+  response:
+    body: '{"errors": [{"reason": "An update to your alert is in progress. Please
+      wait until the update has completed, then try again."}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "127"
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 08 Dec 2025 16:45:03 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Accepted-Oauth-Scopes:
+      - databases:read_only
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+    status: 400 Bad Request
+    code: 400
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/10549
+    method: DELETE
+  response:
+    body: '{"errors": [{"reason": "An update to your alert is in progress. Please
+      wait until the update has completed, then try again."}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "127"
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 08 Dec 2025 16:45:19 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Accepted-Oauth-Scopes:
+      - databases:read_only
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+    status: 400 Bad Request
+    code: 400
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/10549
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 08 Dec 2025 16:45:50 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - databases:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
