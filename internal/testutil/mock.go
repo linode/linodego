@@ -65,6 +65,7 @@ func MockRequestBodyValidateNoBody(t *testing.T, response any) httpmock.Responde
 			if e != nil {
 				t.Fatal(e)
 			}
+
 			if len(body) > 0 {
 				t.Fatalf("got non-empty request body when no request body was expected: '%v'", string(body))
 			}
