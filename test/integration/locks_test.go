@@ -6,6 +6,8 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/linode/linodego"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestLocks(t *testing.T) {
@@ -74,4 +76,20 @@ func TestLocks(t *testing.T) {
 	if refreshedInstance.Locks[0] != linodego.LockTypeCannotDelete {
 		t.Errorf("Expected instance to have %s lock, got %s", linodego.LockTypeCannotDelete, refreshedInstance.Locks[0])
 	}
+}
+
+func TestTryToCreateWithInvalidData(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestLockTryToCreateWithNotExistingEntityID")
+	defer teardown()
+
+	createOpts := linodego.LockCreateOptions{
+		EntityType: linodego.EntityNodebalancer,
+		EntityID:   -99999876,
+		LockType:   linodego.LockTypeCannotDeleteWithSubresources,
+	}
+
+	_, createLockErr := client.CreateLock(context.Background(), createOpts)
+	require.Error(t, createLockErr)
+	assert.Equal(t, "[400] [entity_type] entity_type is not valid; [lock_type] lock_type is not valid",
+		createLockErr.Error())
 }

@@ -1,0 +1,52 @@
+---
+version: 1
+interactions:
+  - request:
+      body: '{"entity_type":"nodebalancer","entity_id":-99999876,"lock_type":"cannot_delete_with_subresources"}'
+      form: { }
+      headers:
+        Accept:
+          - application/json
+        Content-Type:
+          - application/json
+        User-Agent:
+          - linodego/dev https://github.com/linode/linodego
+      url: https://api.linode.com/v4beta/locks
+      method: POST
+    response:
+      body: '{"errors": [{"reason": "entity_type is not valid", "field": "entity_type"}, {"reason": "lock_type is not
+       valid", "field": "lock_type"}]}'
+      headers:
+        Access-Control-Allow-Headers:
+          - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+        Access-Control-Allow-Methods:
+          - HEAD, GET, OPTIONS, POST, PUT, DELETE
+        Access-Control-Allow-Origin:
+          - '*'
+        Akamai-Internal-Account:
+          - '*'
+        Cache-Control:
+          - private, max-age=0, s-maxage=0, no-cache, no-store
+        Connection:
+          - keep-alive
+        Content-Length:
+          - "37"
+        Content-Type:
+          - application/json
+        Server:
+          - nginx/1.18.0
+        Strict-Transport-Security:
+          - max-age=31536000
+        Vary:
+          - Authorization, X-Filter
+        X-Accepted-Oauth-Scopes:
+          - monitor:read_only
+        X-Frame-Options:
+          - DENY
+        X-Oauth-Scopes:
+          - '*'
+        X-Ratelimit-Limit:
+          - "400"
+      status: 400 Bad Request
+      code: 400
+      duration: ""
