@@ -24,13 +24,6 @@ type AlertChannel struct {
 	UpdatedBy   string         `json:"updated_by"`
 }
 
-// AlertChannelCreateOptions are the options used to create a new Monitor Channel.
-type AlertChannelCreateOptions struct {
-	Label   string                    `json:"label"`
-	Type    string                    `json:"type"`
-	Details AlertChannelDetailOptions `json:"details"`
-}
-
 // AlertChannelDetailOptions are the options used to create the details of a new Monitor Channel.
 type AlertChannelDetailOptions struct {
 	To string `json:"to,omitempty"`
@@ -39,8 +32,6 @@ type AlertChannelDetailOptions struct {
 // AlertingChannelCreateOptions are the options used to create a new Monitor Channel.
 //
 // Deprecated: AlertChannelCreateOptions should be used in all new implementations.
-type AlertingChannelCreateOptions = AlertChannelCreateOptions
-
 type EmailChannelContent struct {
 	EmailAddresses []string `json:"email_addresses"`
 }
@@ -58,7 +49,7 @@ func (c *Client) ListAlertChannels(ctx context.Context, opts *ListOptions) ([]Al
 }
 
 // GetAlertChannel gets an Alert Channel by ID.
-func (c *Client) GetAlertChannel(ctx context.Context, channelID int) (*AlertChannel, error) {
-	e := formatAPIPath("monitor/alert-channels/%d", channelID)
+func (c *Client) GetAlertChannel(ctx context.Context) (*AlertChannel, error) {
+	e := formatAPIPath("monitor/alert-channels")
 	return doGETRequest[AlertChannel](ctx, c, e)
 }

@@ -17,7 +17,6 @@ type AlertDefinition struct {
 	ServiceType       string                 `json:"service_type"`
 	Status            string                 `json:"status"`
 	HasMoreResources  bool                   `json:"has_more_resources"`
-	Rule              *Rule                  `json:"rule"`
 	RuleCriteria      *RuleCriteria          `json:"rule_criteria"`
 	TriggerConditions *TriggerConditions     `json:"trigger_conditions"`
 	AlertChannels     []AlertChannelEnvelope `json:"alert_channels"`
@@ -25,7 +24,7 @@ type AlertDefinition struct {
 	Updated           *time.Time             `json:"-"`
 	UpdatedBy         string                 `json:"updated_by"`
 	CreatedBy         string                 `json:"created_by"`
-	EntityIDs         []string               `json:"entity_ids"`
+	EntityIDs         []any                  `json:"entity_ids"`
 	Description       string                 `json:"description"`
 	Class             string                 `json:"class"`
 }
@@ -57,8 +56,8 @@ type Rule struct {
 	Label             string            `json:"label,omitempty"`
 	Metric            string            `json:"metric,omitempty"`
 	Operator          string            `json:"operator,omitempty"`
-	Threshold         *float64          `json:"threshold,omitempty"`
-	Unit              *string           `json:"unit,omitempty"`
+	Threshold         float64           `json:"threshold,omitempty"`
+	Unit              string            `json:"unit,omitempty"`
 }
 
 // DimensionFilter represents a single dimension filter used inside a Rule.
@@ -97,7 +96,6 @@ const (
 
 // AlertDefinitionCreateOptions are the options used to create a new alert definition.
 type AlertDefinitionCreateOptions struct {
-	ServiceType       string             `json:"service_type"`                 // mandatory
 	Label             string             `json:"label"`                        // mandatory
 	Severity          int                `json:"severity"`                     // mandatory
 	ChannelIDs        []int              `json:"channel_ids"`                  // mandatory
@@ -156,6 +154,14 @@ func (c *Client) ListMonitorAlertDefinitions(
 		endpoint = formatAPIPath("monitor/alert-definitions")
 	}
 
+	return getPaginatedResults[AlertDefinition](ctx, c, endpoint, opts)
+}
+
+func (c *Client) ListAllMonitorAlertDefinitions(
+	ctx context.Context,
+	opts *ListOptions,
+) ([]AlertDefinition, error) {
+	endpoint := formatAPIPath("monitor/alert-definitions")
 	return getPaginatedResults[AlertDefinition](ctx, c, endpoint, opts)
 }
 
