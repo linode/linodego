@@ -31,6 +31,11 @@ func TestInstanceIPAddresses_List(t *testing.T) {
 	// IPv6 Assertions
 	assert.NotNil(t, ips.IPv6.SLAAC)
 	assert.Equal(t, "2001:db8::1", ips.IPv6.SLAAC.Address)
+
+	assert.NotNil(t, ips.IPv6.VPC)
+	assert.NotNil(t, ips.IPv6.VPC[0])
+	assert.NotNil(t, ips.IPv6.VPC[0].IPv6Addresses)
+	assert.Equal(t, "2001:db8:d001:321:2000:bdff:fe10:6fa8", ips.IPv6.VPC[0].IPv6Addresses[0].SLAACAddress)
 }
 
 func TestInstanceIPAddress_Get(t *testing.T) {
