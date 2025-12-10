@@ -2,6 +2,7 @@ package integration
 
 import (
 	"context"
+	"fmt"
 	"testing"
 	"time"
 
@@ -87,8 +88,8 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 					Label:             "Memory Usage",
 					Metric:            "memory_usage",
 					Operator:          "gt",
-					Threshold:         func(f float64) *float64 { return &f }(90.0),
-					Unit:              func(s string) *string { return &s }("percent"),
+					Threshold:         90.0,
+					Unit:              "percent",
 					DimensionFilters: []linodego.DimensionFilter{
 						{
 							DimensionLabel: "node_type",
@@ -130,10 +131,7 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 			cr := createdAlert.RuleCriteria.Rules[i]
 			assert.Equal(t, r.Metric, cr.Metric)
 			assert.Equal(t, r.Operator, cr.Operator)
-			if r.Threshold != nil {
-				assert.NotNil(t, cr.Threshold)
-				assert.Equal(t, *r.Threshold, *cr.Threshold)
-			}
+			assert.Equal(t, r.Threshold, cr.Threshold)
 			// Dimension filters
 			if len(r.DimensionFilters) > 0 {
 				assert.Equal(t, len(r.DimensionFilters), len(cr.DimensionFilters))
@@ -185,5 +183,120 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 			time.Sleep(sleep)
 		}
 		assert.NoError(t, err, "DeleteMonitorAlertDefinition failed after retries: %v", lastErr)
+	}
+}
+
+func TestListMonitorAlertDefinitions(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestListMonitorAlertDefinitions")
+	defer teardown()
+
+	client.SetAPIVersion("v4beta")
+
+	// List all alert definitions
+	alerts, err := client.ListMonitorAlertDefinitions(context.Background(), "", nil)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, alerts, "Expected at least one alert definition")
+
+	for _, alert := range alerts {
+		assert.NotZero(t, alert.ID)
+		assert.NotEmpty(t, alert.Label)
+		assert.NotEmpty(t, alert.ServiceType)
+	}
+}
+
+func TestListMonitorAlertChannels(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestListMonitorAlertChannels")
+	defer teardown()
+
+	client.SetAPIVersion("v4beta")
+
+	// List all alert channels
+	channels, err := client.ListAlertChannels(context.Background(), nil)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, channels, "Expected at least one alert channel")
+
+	for _, channel := range channels {
+		assert.NotZero(t, channel.ID)
+		assert.NotEmpty(t, channel.Label)
+		assert.NotEmpty(t, channel.ChannelType)
+	}
+}
+
+func TestCreateMonitorAlertDefinitionWithIdempotency(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestCreateMonitorAlertDefinitionWithIdempotency")
+	defer teardown()
+
+	client.SetAPIVersion("v4beta")
+
+	// Get a channel ID to use
+	channels, err := client.ListAlertChannels(context.Background(), nil)
+	if err != nil || len(channels) == 0 {
+		t.Fatalf("failed to determine a monitor channel to use: %s", err)
+	}
+	channelID := channels[0].ID
+
+	uniqueLabel := fmt.Sprintf("go-test-alert-definition-idempotency-%d", time.Now().UnixNano())
+
+	createOpts := linodego.AlertDefinitionCreateOptions{
+		Label:       uniqueLabel,
+		Severity:    int(linodego.SeverityLow),
+		Description: "Test alert definition creation with idempotency",
+		ChannelIDs:  []int{channelID},
+		EntityIDs:   nil,
+		TriggerConditions: &linodego.TriggerConditions{
+			CriteriaCondition:       "ALL",
+			EvaluationPeriodSeconds: 300,
+			PollingIntervalSeconds:  300,
+			TriggerOccurrences:      1,
+		},
+		RuleCriteria: &linodego.RuleCriteria{
+			Rules: []linodego.Rule{
+				{
+					AggregateFunction: "avg",
+					Label:             "Memory Usage",
+					Metric:            "memory_usage",
+					Operator:          "gt",
+					Threshold:         90.0,
+					Unit:              "percent",
+					DimensionFilters: []linodego.DimensionFilter{
+						{
+							DimensionLabel: "node_type",
+							Label:          "Node Type",
+							Operator:       "eq",
+							Value:          "primary",
+						},
+					},
+				},
+			},
+		},
+	}
+
+	// Create the alert definition
+	createdAlert, err := client.CreateMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, createOpts)
+	if err != nil {
+		alerts, listErr := client.ListMonitorAlertDefinitions(context.Background(), testMonitorAlertDefinitionServiceType, nil)
+		if listErr == nil {
+			for _, a := range alerts {
+				if a.Label == createOpts.Label {
+					_ = client.DeleteMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, a.ID)
+					break
+				}
+			}
+			// Retry creation
+			createdAlert, err = client.CreateMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, createOpts)
+		}
+	}
+	assert.NoError(t, err)
+	assert.NotNil(t, createdAlert)
+
+	// Attempt to create the same alert definition again to test idempotency
+	// Expected to return Error as per the API behavior
+	_, err = client.CreateMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, createOpts)
+	assert.Error(t, err)
+	assert.Contains(t, err.Error(), "An alert with this label already exists")
+
+	// Cleanup
+	if createdAlert != nil {
+		_ = client.DeleteMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, createdAlert.ID)
 	}
 }
