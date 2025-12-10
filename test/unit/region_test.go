@@ -47,6 +47,9 @@ func TestListRegions(t *testing.T) {
 			assert.Greater(t, region.PlacementGroupLimits.MaximumLinodesPerPG, 0, "Expected MaximumLinodesPerPG to be greater than 0")
 		}
 		assert.Contains(t, region.Capabilities, linodego.CapabilityLinodes, "Expected region to support Linodes")
+		// Test monitors field
+		assert.NotNil(t, region.Monitors.Alerts, "Expected monitors alerts to be initialized")
+		assert.NotNil(t, region.Monitors.Metrics, "Expected monitors metrics to be initialized")
 	}
 }
 
@@ -80,6 +83,9 @@ func TestGetRegion(t *testing.T) {
 		assert.Greater(t, region.PlacementGroupLimits.MaximumLinodesPerPG, 0, "Expected MaximumLinodesPerPG to be greater than 0")
 	}
 	assert.Contains(t, region.Capabilities, linodego.CapabilityLinodes, "Expected region to support Linodes")
+	// Test monitors field
+	assert.NotNil(t, region.Monitors.Alerts, "Expected monitors alerts to be initialized")
+	assert.NotNil(t, region.Monitors.Metrics, "Expected monitors metrics to be initialized")
 }
 
 func TestListRegionsAvailability(t *testing.T) {

@@ -31,6 +31,7 @@ const (
 	ServiceTypeObjectStorage   ServiceType = "objectstorage"
 	ServiceTypeVPC             ServiceType = "vpc"
 	ServiceTypeFirewallService ServiceType = "firewall"
+	ServiceTypeNetLoadBalancer ServiceType = "netloadbalancer"
 )
 
 // DashboardType is an enum object for DashboardType
@@ -51,6 +52,15 @@ type DashboardWidget struct {
 	ChartType         ChartType         `json:"chart_type"`
 	YLabel            string            `json:"y_label"`
 	AggregateFunction AggregateFunction `json:"aggregate_function"`
+	GroupBy           []string          `json:"group_by"`
+	Filters           []DashboardFilter `json:"filters"`
+}
+
+// DashboardFilter represents a filter for dashboard widgets
+type DashboardFilter struct {
+	DimensionLabel string `json:"dimension_label"`
+	Operator       string `json:"operator"`
+	Value          string `json:"value"`
 }
 
 // AggregateFunction is an enum object for AggregateFunction

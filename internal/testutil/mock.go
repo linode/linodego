@@ -61,7 +61,14 @@ func MockRequestBodyValidateNoBody(t *testing.T, response any) httpmock.Responde
 
 	return func(request *http.Request) (*http.Response, error) {
 		if request.Body != nil {
-			t.Fatal("got request body when no request body was expected")
+			body, e := io.ReadAll(request.Body)
+			if e != nil {
+				t.Fatal(e)
+			}
+
+			if len(body) > 0 {
+				t.Fatalf("got non-empty request body when no request body was expected: '%v'", string(body))
+			}
 		}
 
 		return httpmock.NewJsonResponse(http.StatusOK, response)
@@ -92,9 +99,9 @@ func CreateMockClient[T any](t *testing.T, createFunc func(*http.Client) T) *T {
 }
 
 type Logger interface {
-	Errorf(format string, v ...interface{})
-	Warnf(format string, v ...interface{})
-	Debugf(format string, v ...interface{})
+	Errorf(format string, v ...any)
+	Warnf(format string, v ...any)
+	Debugf(format string, v ...any)
 }
 
 func CreateLogger() *TestLogger {
@@ -108,19 +115,19 @@ type TestLogger struct {
 	L *log.Logger
 }
 
-func (l *TestLogger) Errorf(format string, v ...interface{}) {
+func (l *TestLogger) Errorf(format string, v ...any) {
 	l.outputf("ERROR RESTY "+format, v...)
 }
 
-func (l *TestLogger) Warnf(format string, v ...interface{}) {
+func (l *TestLogger) Warnf(format string, v ...any) {
 	l.outputf("WARN RESTY "+format, v...)
 }
 
-func (l *TestLogger) Debugf(format string, v ...interface{}) {
+func (l *TestLogger) Debugf(format string, v ...any) {
 	l.outputf("DEBUG RESTY "+format, v...)
 }
 
-func (l *TestLogger) outputf(format string, v ...interface{}) {
+func (l *TestLogger) outputf(format string, v ...any) {
 	if len(v) == 0 {
 		l.L.Print(format)
 		return

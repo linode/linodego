@@ -431,6 +431,7 @@ type MySQLUpdateOptions struct {
 }
 
 // MySQLDatabaseBackup is information for interacting with a backup for the existing MySQL Database
+
 // Deprecated: MySQLDatabaseBackup is a deprecated struct, as the backup endpoints are no longer supported in DBaaS V2.
 // In DBaaS V2, databases can be backed up via database forking.
 type MySQLDatabaseBackup struct {
@@ -441,6 +442,7 @@ type MySQLDatabaseBackup struct {
 }
 
 // MySQLBackupCreateOptions are options used for CreateMySQLDatabaseBackup(...)
+//
 // Deprecated: MySQLBackupCreateOptions is a deprecated struct, as the backup endpoints are no longer supported in DBaaS V2.
 // In DBaaS V2, databases can be backed up via database forking.
 type MySQLBackupCreateOptions struct {
@@ -485,6 +487,7 @@ func (c *Client) ListMySQLDatabases(ctx context.Context, opts *ListOptions) ([]M
 }
 
 // ListMySQLDatabaseBackups lists all MySQL Database Backups associated with the given MySQL Database
+//
 // Deprecated: ListMySQLDatabaseBackups is a deprecated method, as the backup endpoints are no longer supported in DBaaS V2.
 // In DBaaS V2, databases can be backed up via database forking.
 func (c *Client) ListMySQLDatabaseBackups(ctx context.Context, databaseID int, opts *ListOptions) ([]MySQLDatabaseBackup, error) {
@@ -533,6 +536,7 @@ func (c *Client) ResetMySQLDatabaseCredentials(ctx context.Context, databaseID i
 }
 
 // GetMySQLDatabaseBackup returns a specific MySQL Database Backup with the given ids
+//
 // Deprecated: GetMySQLDatabaseBackup is a deprecated method, as the backup endpoints are no longer supported in DBaaS V2.
 // In DBaaS V2, databases can be backed up via database forking.
 func (c *Client) GetMySQLDatabaseBackup(ctx context.Context, databaseID int, backupID int) (*MySQLDatabaseBackup, error) {
@@ -541,6 +545,7 @@ func (c *Client) GetMySQLDatabaseBackup(ctx context.Context, databaseID int, bac
 }
 
 // RestoreMySQLDatabaseBackup returns the given MySQL Database with the given Backup
+//
 // Deprecated: RestoreMySQLDatabaseBackup is a deprecated method, as the backup endpoints are no longer supported in DBaaS V2.
 // In DBaaS V2, databases can be backed up via database forking.
 func (c *Client) RestoreMySQLDatabaseBackup(ctx context.Context, databaseID int, backupID int) error {
@@ -549,6 +554,7 @@ func (c *Client) RestoreMySQLDatabaseBackup(ctx context.Context, databaseID int,
 }
 
 // CreateMySQLDatabaseBackup creates a snapshot for the given MySQL database
+//
 // Deprecated: CreateMySQLDatabaseBackup is a deprecated method, as the backup endpoints are no longer supported in DBaaS V2.
 // In DBaaS V2, databases can be backed up via database forking.
 func (c *Client) CreateMySQLDatabaseBackup(ctx context.Context, databaseID int, opts MySQLBackupCreateOptions) error {

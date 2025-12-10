@@ -61,6 +61,8 @@ type Region struct {
 	// A List of enums from the above constants
 	Capabilities []string `json:"capabilities"`
 
+	Monitors RegionMonitors `json:"monitors"`
+
 	Status   string `json:"status"`
 	Label    string `json:"label"`
 	SiteType string `json:"site_type"`
@@ -73,6 +75,12 @@ type Region struct {
 type RegionResolvers struct {
 	IPv4 string `json:"ipv4"`
 	IPv6 string `json:"ipv6"`
+}
+
+// RegionMonitors contains the monitoring configuration for a region
+type RegionMonitors struct {
+	Alerts  []string `json:"alerts"`
+	Metrics []string `json:"metrics"`
 }
 
 // RegionPlacementGroupLimits contains information about the

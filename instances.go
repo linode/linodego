@@ -81,6 +81,9 @@ type Instance struct {
 
 	// NOTE: MaintenancePolicy can only be used with v4beta.
 	MaintenancePolicy string `json:"maintenance_policy"`
+
+	// NOTE: Locks can only be used with v4beta.
+	Locks []LockType `json:"locks"`
 }
 
 // InstanceSpec represents a linode spec
@@ -110,7 +113,7 @@ type InstanceBackup struct {
 	Schedule       struct {
 		Day    string `json:"day,omitempty"`
 		Window string `json:"window,omitempty"`
-	} `json:"schedule,omitempty"`
+	} `json:"schedule"`
 }
 
 type InstanceDiskEncryption string
@@ -132,8 +135,9 @@ type InstanceTransfer struct {
 	Quota int `json:"quota"`
 }
 
-// MonthlyInstanceTransferStats pool stats for a Linode Instance network transfer statistics for a specific month
 // Deprecated: use MonthlyInstanceTransferStatsV2 for new implementations
+//
+// MonthlyInstanceTransferStats pool stats for a Linode Instance network transfer statistics for a specific month
 type MonthlyInstanceTransferStats struct {
 	// The amount of inbound public network traffic received by this Linode, in bytes, for a specific year/month.
 	BytesIn int `json:"bytes_in"`

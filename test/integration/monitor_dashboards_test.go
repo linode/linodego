@@ -78,4 +78,14 @@ func validateDashboards(
 	require.NotEmpty(t, dashboards.Created)
 	require.NotEmpty(t, dashboards.Updated)
 	require.NotEmpty(t, dashboards.Widgets)
+
+	// Validate group_by and filters for each widget
+	for _, widget := range dashboards.Widgets {
+		require.NotNil(t, widget.GroupBy, "Expected group_by to be present in widget")
+		require.GreaterOrEqual(t, len(widget.GroupBy), 0, "group_by should be a slice (possibly empty)")
+		// filters is optional
+		if widget.Filters != nil {
+			require.GreaterOrEqual(t, len(widget.Filters), 0, "filters should be a slice (possibly empty)")
+		}
+	}
 }
