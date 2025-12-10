@@ -107,15 +107,13 @@ type AlertDefinitionCreateOptions struct {
 
 // AlertDefinitionUpdateOptions are the options used to update an alert definition.
 type AlertDefinitionUpdateOptions struct {
-	ServiceType       string             `json:"service_type"`                 // mandatory, must not be empty
-	AlertID           int                `json:"alert_id"`                     // mandatory, must not be zero
-	Label             string             `json:"label,omitempty"`              // optional
-	Severity          int                `json:"severity,omitempty"`           // optional, should be int to match AlertDefinition
-	Description       string             `json:"description,omitempty"`        // optional
+	Label             string             `json:"label"`                        // mandatory
+	Severity          int                `json:"severity"`                     // mandatory
+	ChannelIDs        []int              `json:"channel_ids"`                  // mandatory
 	RuleCriteria      *RuleCriteria      `json:"rule_criteria,omitempty"`      // optional
 	TriggerConditions *TriggerConditions `json:"trigger_conditions,omitempty"` // optional
 	EntityIDs         []string           `json:"entity_ids,omitempty"`         // optional
-	ChannelIDs        []int              `json:"channel_ids,omitempty"`        // optional
+	Description       string             `json:"description,omitempty"`        // optional
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
