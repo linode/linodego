@@ -14,9 +14,10 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips
     method: POST
   response:
-    body: '{"address": "66.228.42.57", "gateway": "66.228.42.1", "subnet_mask": "255.255.255.0",
-      "prefix": 24, "type": "ipv4", "public": true, "rdns": "66-228-42-57.ip.linodeusercontent.com",
-      "linode_id": null, "region": "us-east", "vpc_nat_1_1": null, "reserved": true}'
+    body: '{"address": "50.116.56.8", "gateway": "50.116.56.1", "subnet_mask": "255.255.255.0",
+      "prefix": 24, "type": "ipv4", "public": true, "rdns": null, "linode_id": null,
+      "interface_id": null, "region": "us-east", "vpc_nat_1_1": null, "reserved":
+      true, "assigned_entity": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -35,13 +36,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "259"
+      - "270"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 12 Sep 2024 16:44:36 GMT
+      - Fri, 22 Aug 2025 20:59:00 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -58,146 +59,14 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "800"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-4rc1sui21a14","root_pass":"E1dxAxLSB0}\u003c977C=n+5u1g@x4tOx/,5rav03~W''7!]7#lgOJRLO.0Zm$}52f-LT","image":"linode/alpine3.17","interfaces":[{"purpose":"public"}],"booted":false,"ipv4":["66.228.42.57","192.0.2.2"]}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances
-    method: POST
-  response:
-    body: '{"errors": [{"reason": "Too many requests"}]}'
-    headers:
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Content-Length:
-      - "45"
-      Content-Type:
-      - application/json
-      Expires:
-      - Thu, 12 Sep 2024 16:44:36 GMT
-      Pragma:
-      - no-cache
-      X-Accepted-Oauth-Scopes:
-      - linodes:read_write
-      X-Frame-Options:
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "10"
-    status: 429 Too Many Requests
-    code: 429
-    duration: ""
-- request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-4rc1sui21a14","root_pass":"E1dxAxLSB0}\u003c977C=n+5u1g@x4tOx/,5rav03~W''7!]7#lgOJRLO.0Zm$}52f-LT","image":"linode/alpine3.17","interfaces":[{"purpose":"public"}],"booted":false,"ipv4":["66.228.42.57","192.0.2.2"]}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances
-    method: POST
-  response:
-    body: '{"errors": [{"reason": "Too many requests"}]}'
-    headers:
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Content-Length:
-      - "45"
-      Content-Type:
-      - application/json
-      Expires:
-      - Thu, 12 Sep 2024 16:44:39 GMT
-      Pragma:
-      - no-cache
-      X-Accepted-Oauth-Scopes:
-      - linodes:read_write
-      X-Frame-Options:
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "10"
-    status: 429 Too Many Requests
-    code: 429
-    duration: ""
-- request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-4rc1sui21a14","root_pass":"E1dxAxLSB0}\u003c977C=n+5u1g@x4tOx/,5rav03~W''7!]7#lgOJRLO.0Zm$}52f-LT","image":"linode/alpine3.17","interfaces":[{"purpose":"public"}],"booted":false,"ipv4":["66.228.42.57","192.0.2.2"]}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances
-    method: POST
-  response:
-    body: '{"errors": [{"reason": "Too many requests"}]}'
-    headers:
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Content-Length:
-      - "45"
-      Content-Type:
-      - application/json
-      Expires:
-      - Thu, 12 Sep 2024 16:44:43 GMT
-      Pragma:
-      - no-cache
-      X-Accepted-Oauth-Scopes:
-      - linodes:read_write
-      X-Frame-Options:
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "10"
-    status: 429 Too Many Requests
-    code: 429
-    duration: ""
-- request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-4rc1sui21a14","root_pass":"E1dxAxLSB0}\u003c977C=n+5u1g@x4tOx/,5rav03~W''7!]7#lgOJRLO.0Zm$}52f-LT","image":"linode/alpine3.17","interfaces":[{"purpose":"public"}],"booted":false,"ipv4":["66.228.42.57","192.0.2.2"]}'
+    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-v0t4d9n5v71c","root_pass":"46S37bK:3U089p)g-m(i9.avKrb2T4C@1?/`QaeuhD~''uOXMH28?`''g$8C5QY#nF","image":"linode/alpine3.20","booted":false,"ipv4":["50.116.56.8","192.0.2.2"],"interfaces":[{"purpose":"public"}]}'
     form: {}
     headers:
       Accept:
@@ -227,9 +96,11 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 12 Sep 2024 16:44:46 GMT
+      - Fri, 22 Aug 2025 20:59:00 GMT
       Pragma:
       - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
       X-Accepted-Oauth-Scopes:
       - linodes:read_write
       X-Frame-Options:
@@ -237,7 +108,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "10"
+      - "20"
     status: 400 Bad Request
     code: 400
     duration: ""
@@ -251,7 +122,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips/66.228.42.57
+    url: https://api.linode.com/v4beta/networking/reserved/ips/50.116.56.8
     method: DELETE
   response:
     body: '{}'
@@ -279,7 +150,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 12 Sep 2024 16:44:46 GMT
+      - Fri, 22 Aug 2025 20:59:00 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

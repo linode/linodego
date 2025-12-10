@@ -72,8 +72,10 @@ type LKENodePool struct {
 	Tags    []string            `json:"tags"`
 	Labels  LKENodePoolLabels   `json:"labels"`
 	Taints  []LKENodePoolTaint  `json:"taints"`
+	Label   *string             `json:"label"`
 
 	Autoscaler LKENodePoolAutoscaler `json:"autoscaler"`
+	FirewallID *int                  `json:"firewall_id,omitempty"`
 
 	// NOTE: Disk encryption may not currently be available to all users.
 	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitempty"`
@@ -92,8 +94,10 @@ type LKENodePoolCreateOptions struct {
 	Tags   []string           `json:"tags"`
 	Labels LKENodePoolLabels  `json:"labels"`
 	Taints []LKENodePoolTaint `json:"taints"`
+	Label  *string            `json:"label,omitempty"`
 
 	Autoscaler *LKENodePoolAutoscaler `json:"autoscaler,omitempty"`
+	FirewallID *int                   `json:"firewall_id,omitempty"`
 
 	// K8sVersion and UpdateStrategy only works for LKE Enterprise to support node pool upgrades.
 	// It may not currently be available to all users and is under v4beta.
@@ -107,8 +111,10 @@ type LKENodePoolUpdateOptions struct {
 	Tags   *[]string           `json:"tags,omitempty"`
 	Labels *LKENodePoolLabels  `json:"labels,omitempty"`
 	Taints *[]LKENodePoolTaint `json:"taints,omitempty"`
+	Label  *string             `json:"label,omitempty"`
 
 	Autoscaler *LKENodePoolAutoscaler `json:"autoscaler,omitempty"`
+	FirewallID *int                   `json:"firewall_id,omitempty"`
 
 	// K8sVersion and UpdateStrategy only works for LKE Enterprise to support node pool upgrades.
 	// It may not currently be available to all users and is under v4beta.
@@ -127,7 +133,10 @@ func (l LKENodePool) GetCreateOptions() (o LKENodePoolCreateOptions) {
 	o.Autoscaler = &l.Autoscaler
 	o.K8sVersion = l.K8sVersion
 	o.UpdateStrategy = l.UpdateStrategy
-	return
+	o.Label = l.Label
+	o.FirewallID = l.FirewallID
+
+	return o
 }
 
 // GetUpdateOptions converts a LKENodePool to LKENodePoolUpdateOptions for use in UpdateLKENodePoolUpdate
@@ -139,7 +148,10 @@ func (l LKENodePool) GetUpdateOptions() (o LKENodePoolUpdateOptions) {
 	o.Autoscaler = &l.Autoscaler
 	o.K8sVersion = l.K8sVersion
 	o.UpdateStrategy = l.UpdateStrategy
-	return
+	o.Label = l.Label
+	o.FirewallID = l.FirewallID
+
+	return o
 }
 
 // ListLKENodePools lists LKENodePools
