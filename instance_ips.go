@@ -50,7 +50,7 @@ type VPCIP struct {
 	SubnetID     int     `json:"subnet_id"`
 	InterfaceID  int     `json:"interface_id"`
 	// NOTE: NodeBalancerID and DatabaseID may not currently be available to all users.
-	NodebalancerID *int `json:"nodebalancer_id"`
+	NodeBalancerID *int `json:"nodebalancer_id"`
 	DatabaseID     *int `json:"database_id"`
 	// NOTE: IPv6 VPCs may not currently be available to all users.
 	IPv6Range     *string            `json:"ipv6_range"`
