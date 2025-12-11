@@ -73,7 +73,7 @@ type InstanceIPv6Response struct {
 	SLAAC     *InstanceIP `json:"slaac"`
 	Global    []IPv6Range `json:"global"`
 	// NOTE: IPv6 VPCs may not currently be available to all users.
-	VPC []*VPCIP `json:"vpc"`
+	VPC []VPCIP `json:"vpc"`
 }
 
 // InstanceIPNAT1To1 contains information about the NAT 1:1 mapping
