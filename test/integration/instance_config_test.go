@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	. "github.com/linode/linodego"
+	"github.com/stretchr/testify/require"
 )
 
 func setupVPCWithSubnetWithInstance(
@@ -586,4 +587,56 @@ func TestInstance_Config_Update(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
+}
+
+func TestInstanceConfig_deviceMap(t *testing.T) {
+	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstanceConfig_deviceMap", true)
+	defer teardown()
+	require.NoError(t, err)
+
+	volume1, teardown, err := createVolume(t, client, func(l *Client, options *VolumeCreateOptions) {
+		options.Region = instance.Region
+	})
+	defer teardown()
+	require.NoError(t, err)
+
+	volume2, teardown, err := createVolume(t, client, func(l *Client, options *VolumeCreateOptions) {
+		options.Region = instance.Region
+	})
+	defer teardown()
+	require.NoError(t, err)
+
+	_, err = client.WaitForVolumeStatus(context.Background(), volume1.ID, VolumeActive, 500)
+	if err != nil {
+		t.Errorf("Error waiting for volume1 to be active, %s", err)
+	}
+
+	configOpts := InstanceConfigUpdateOptions{
+		Label: "go-vol-test" + getUniqueText(),
+		DeviceMap: InstanceConfigDeviceMapping{
+			"sdk": InstanceConfigDevice{
+				VolumeID: volume1.ID,
+			},
+			"sdaf": InstanceConfigDevice{
+				VolumeID: volume2.ID,
+			},
+		},
+	}
+	updatedConfig, err := client.UpdateInstanceConfig(context.Background(), instance.ID, config.ID, configOpts)
+	if err != nil {
+		t.Error(err)
+	}
+
+	require.Nil(t, updatedConfig.Devices.SDA)
+	require.Nil(t, updatedConfig.Devices.SDB)
+	require.Nil(t, updatedConfig.Devices.SDC)
+	require.Nil(t, updatedConfig.Devices.SDD)
+	require.Nil(t, updatedConfig.Devices.SDE)
+	require.Nil(t, updatedConfig.Devices.SDF)
+	require.Nil(t, updatedConfig.Devices.SDG)
+	require.Nil(t, updatedConfig.Devices.SDH)
+
+	require.Len(t, updatedConfig.DeviceMap, 1)
+	require.Equal(t, updatedConfig.DeviceMap["sdk"].VolumeID, volume1.ID)
+	require.Equal(t, updatedConfig.DeviceMap["sdaf"].VolumeID, volume2.ID)
 }
