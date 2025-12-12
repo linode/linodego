@@ -10,20 +10,21 @@ import (
 
 // InstanceConfig represents all of the settings that control the boot and run configuration of a Linode Instance
 type InstanceConfig struct {
-	ID          int                       `json:"id"`
-	Label       string                    `json:"label"`
-	Comments    string                    `json:"comments"`
-	Devices     *InstanceConfigDeviceMap  `json:"devices"`
-	Helpers     *InstanceConfigHelpers    `json:"helpers"`
-	Interfaces  []InstanceConfigInterface `json:"interfaces"`
-	MemoryLimit int                       `json:"memory_limit"`
-	Kernel      string                    `json:"kernel"`
-	InitRD      *int                      `json:"init_rd"`
-	RootDevice  string                    `json:"root_device"`
-	RunLevel    string                    `json:"run_level"`
-	VirtMode    string                    `json:"virt_mode"`
-	Created     *time.Time                `json:"-"`
-	Updated     *time.Time                `json:"-"`
+	ID          int                         `json:"id"`
+	Label       string                      `json:"label"`
+	Comments    string                      `json:"comments"`
+	Devices     *InstanceConfigDeviceMap    `json:"-"`
+	DeviceMap   InstanceConfigDeviceMapping `json:"-"`
+	Helpers     *InstanceConfigHelpers      `json:"helpers"`
+	Interfaces  []InstanceConfigInterface   `json:"interfaces"`
+	MemoryLimit int                         `json:"memory_limit"`
+	Kernel      string                      `json:"kernel"`
+	InitRD      *int                        `json:"init_rd"`
+	RootDevice  string                      `json:"root_device"`
+	RunLevel    string                      `json:"run_level"`
+	VirtMode    string                      `json:"virt_mode"`
+	Created     *time.Time                  `json:"-"`
+	Updated     *time.Time                  `json:"-"`
 }
 
 // InstanceConfigDevice contains either the DiskID or VolumeID assigned to a Config Device
@@ -32,7 +33,13 @@ type InstanceConfigDevice struct {
 	VolumeID int `json:"volume_id,omitempty"`
 }
 
+// InstanceConfigDeviceMapping is an arbitrary mapping of device names to InstanceConfigDevice entries.
+// Because it supports more than 8 devices per-config, this is generally preferred
+// over InstanceConfigDeviceMap.
+type InstanceConfigDeviceMapping map[string]InstanceConfigDevice
+
 // InstanceConfigDeviceMap contains SDA-SDH InstanceConfigDevice settings
+// Deprecated: use InstanceConfigDeviceMapping instead.
 type InstanceConfigDeviceMap struct {
 	SDA *InstanceConfigDevice `json:"sda,omitempty"`
 	SDB *InstanceConfigDevice `json:"sdb,omitempty"`
@@ -64,9 +71,13 @@ const (
 
 // InstanceConfigCreateOptions are InstanceConfig settings that can be used at creation
 type InstanceConfigCreateOptions struct {
-	Label       string                                 `json:"label,omitempty"`
-	Comments    string                                 `json:"comments,omitempty"`
-	Devices     InstanceConfigDeviceMap                `json:"devices"`
+	Label    string `json:"label,omitempty"`
+	Comments string `json:"comments,omitempty"`
+
+	// Deprecated: Use DeviceMap instead.
+	Devices   InstanceConfigDeviceMap     `json:"-"`
+	DeviceMap InstanceConfigDeviceMapping `json:"-"`
+
 	Helpers     *InstanceConfigHelpers                 `json:"helpers,omitempty"`
 	Interfaces  []InstanceConfigInterfaceCreateOptions `json:"interfaces"`
 	MemoryLimit int                                    `json:"memory_limit,omitempty"`
@@ -79,9 +90,13 @@ type InstanceConfigCreateOptions struct {
 
 // InstanceConfigUpdateOptions are InstanceConfig settings that can be used in updates
 type InstanceConfigUpdateOptions struct {
-	Label      string                                 `json:"label,omitempty"`
-	Comments   string                                 `json:"comments"`
-	Devices    *InstanceConfigDeviceMap               `json:"devices,omitempty"`
+	Label    string `json:"label,omitempty"`
+	Comments string `json:"comments"`
+
+	// Deprecated: Use DeviceMap instead.
+	Devices   *InstanceConfigDeviceMap    `json:"-"`
+	DeviceMap InstanceConfigDeviceMapping `json:"-"`
+
 	Helpers    *InstanceConfigHelpers                 `json:"helpers,omitempty"`
 	Interfaces []InstanceConfigInterfaceCreateOptions `json:"interfaces"`
 	// MemoryLimit 0 means unlimitted, this is not omitted
@@ -98,21 +113,36 @@ type InstanceConfigUpdateOptions struct {
 func (i *InstanceConfig) UnmarshalJSON(b []byte) error {
 	type Mask InstanceConfig
 
-	p := struct {
+	primary := struct {
 		*Mask
 
 		Created *parseabletime.ParseableTime `json:"created"`
 		Updated *parseabletime.ParseableTime `json:"updated"`
+		Devices InstanceConfigDeviceMapping  `json:"devices"`
 	}{
 		Mask: (*Mask)(i),
 	}
 
-	if err := json.Unmarshal(b, &p); err != nil {
+	if err := json.Unmarshal(b, &primary); err != nil {
 		return err
 	}
 
-	i.Created = (*time.Time)(p.Created)
-	i.Updated = (*time.Time)(p.Updated)
+	i.Created = (*time.Time)(primary.Created)
+	i.Updated = (*time.Time)(primary.Updated)
+
+	// Populate the DeviceMap field with the unmarshalled response
+	i.DeviceMap = primary.Devices
+
+	// Populate the deprecated Devices field for backward compatibility
+	legacyDeviceObject := struct {
+		Devices *InstanceConfigDeviceMap `json:"devices"`
+	}{}
+
+	if err := json.Unmarshal(b, &legacyDeviceObject); err != nil {
+		return err
+	}
+
+	i.Devices = legacyDeviceObject.Devices
 
 	return nil
 }
@@ -148,6 +178,7 @@ func (i InstanceConfig) GetUpdateOptions() InstanceConfigUpdateOptions {
 		Label:       i.Label,
 		Comments:    i.Comments,
 		Devices:     i.Devices,
+		DeviceMap:   i.DeviceMap,
 		Helpers:     i.Helpers,
 		Interfaces:  getInstanceConfigInterfacesCreateOptionsList(i.Interfaces),
 		MemoryLimit: i.MemoryLimit,
@@ -157,6 +188,64 @@ func (i InstanceConfig) GetUpdateOptions() InstanceConfigUpdateOptions {
 		RunLevel:    i.RunLevel,
 		VirtMode:    i.VirtMode,
 	}
+}
+
+// MarshalJSON implements the json.Marshaler interface
+func (opts *InstanceConfigCreateOptions) MarshalJSON() ([]byte, error) {
+	type Mask InstanceConfigCreateOptions
+
+	if opts.DeviceMap != nil {
+		p := struct {
+			*Mask
+			Devices map[string]InstanceConfigDevice `json:"devices"`
+		}{
+			Mask:    (*Mask)(opts),
+			Devices: opts.DeviceMap,
+		}
+
+		return json.Marshal(p)
+	}
+
+	p := struct {
+		*Mask
+		Devices InstanceConfigDeviceMap `json:"devices"`
+	}{
+		Mask:    (*Mask)(opts),
+		Devices: opts.Devices,
+	}
+
+	return json.Marshal(p)
+}
+
+// MarshalJSON implements the json.Marshaler interface
+func (opts *InstanceConfigUpdateOptions) MarshalJSON() ([]byte, error) {
+	type Mask InstanceConfigUpdateOptions
+
+	if opts.DeviceMap != nil {
+		p := struct {
+			*Mask
+			Devices InstanceConfigDeviceMapping `json:"devices"`
+		}{
+			Mask:    (*Mask)(opts),
+			Devices: opts.DeviceMap,
+		}
+
+		return json.Marshal(p)
+	}
+
+	if opts.Devices != nil {
+		p := struct {
+			*Mask
+			Devices *InstanceConfigDeviceMap `json:"devices"`
+		}{
+			Mask:    (*Mask)(opts),
+			Devices: opts.Devices,
+		}
+
+		return json.Marshal(p)
+	}
+
+	return json.Marshal(opts)
 }
 
 // ListInstanceConfigs lists InstanceConfigs
