@@ -34,7 +34,7 @@ type InstanceConfigDevice struct {
 
 // InstanceConfigDeviceMap contains SDA-SDH InstanceConfigDevice settings
 type InstanceConfigDeviceMap struct {
-	// sdX
+	// sda-sdz
 	SDA *InstanceConfigDevice `json:"sda,omitempty"`
 	SDB *InstanceConfigDevice `json:"sdb,omitempty"`
 	SDC *InstanceConfigDevice `json:"sdc,omitempty"`
@@ -62,7 +62,7 @@ type InstanceConfigDeviceMap struct {
 	SDY *InstanceConfigDevice `json:"sdy,omitempty"`
 	SDZ *InstanceConfigDevice `json:"sdz,omitempty"`
 
-	// sdaX
+	// sdaa-sdaz
 	SDAA *InstanceConfigDevice `json:"sdaa,omitempty"`
 	SDAB *InstanceConfigDevice `json:"sdab,omitempty"`
 	SDAC *InstanceConfigDevice `json:"sdac,omitempty"`
@@ -90,7 +90,7 @@ type InstanceConfigDeviceMap struct {
 	SDAY *InstanceConfigDevice `json:"sday,omitempty"`
 	SDAZ *InstanceConfigDevice `json:"sdaz,omitempty"`
 
-	// sdbX
+	// sdba-sdbl
 	SDBA *InstanceConfigDevice `json:"sdba,omitempty"`
 	SDBB *InstanceConfigDevice `json:"sdbb,omitempty"`
 	SDBC *InstanceConfigDevice `json:"sdbc,omitempty"`
