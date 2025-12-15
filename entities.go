@@ -21,5 +21,6 @@ func (c *Client) GetEntityRoles(ctx context.Context, username string, entityType
 	if perms == nil {
 		return nil, err
 	}
+
 	return (*perms), err
 }

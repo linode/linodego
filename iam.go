@@ -75,5 +75,6 @@ func (c *Client) GetUserAccountPermissions(ctx context.Context, username string)
 	if perms == nil {
 		return nil, err
 	}
+
 	return (*perms), err
 }
