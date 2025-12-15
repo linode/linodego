@@ -18,7 +18,7 @@ func (c *Client) ListEntities(ctx context.Context, opts *ListOptions) ([]LinodeE
 func (c *Client) GetEntityRoles(ctx context.Context, username string, entityType string, entityID int) ([]string, error) {
 	perms, err := doGETRequest[[]string](ctx, c,
 		formatAPIPath("iam/users/%s/permissions/%s/%d", username, entityType, entityID))
-	if err != nil {
+	if err != nil || perms == nil {
 		return nil, err
 	}
 
