@@ -593,6 +593,10 @@ func TestInstance_Config_VolumeLimitExtension(t *testing.T) {
 	client, instance, config, teardown, err := setupInstanceWithoutDisks(
 		t, "fixtures/TestInstance_Config_VolumeLimitExtension",
 		true,
+		func(l *Client, options *InstanceCreateOptions) {
+			// We need a larger type to increase our volume limit
+			options.Type = "g6-standard-6"
+		},
 	)
 	defer teardown()
 	require.NoError(t, err)
@@ -625,10 +629,10 @@ func TestInstance_Config_VolumeLimitExtension(t *testing.T) {
 			SDA: &InstanceConfigDevice{
 				DiskID: disk.ID,
 			},
-			SDAC: &InstanceConfigDevice{
+			SDL: &InstanceConfigDevice{
 				VolumeID: volume1.ID,
 			},
-			SDAB: &InstanceConfigDevice{
+			SDK: &InstanceConfigDevice{
 				VolumeID: volume2.ID,
 			},
 		},
@@ -646,6 +650,6 @@ func TestInstance_Config_VolumeLimitExtension(t *testing.T) {
 
 	require.Equal(t, "/dev/sdac", updatedConfig.RootDevice)
 	require.Equal(t, disk.ID, updatedConfig.Devices.SDA.DiskID)
-	require.Equal(t, volume1.ID, updatedConfig.Devices.SDAC.DiskID)
-	require.Equal(t, volume2.ID, updatedConfig.Devices.SDAB.DiskID)
+	require.Equal(t, volume1.ID, updatedConfig.Devices.SDL.VolumeID)
+	require.Equal(t, volume2.ID, updatedConfig.Devices.SDK.VolumeID)
 }
