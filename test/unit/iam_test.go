@@ -61,3 +61,19 @@ func TestIAMUserRolePermissions_Update(t *testing.T) {
 	assert.Equal(t, 1, after.EntityAccess[0].ID)
 	assert.NotEqual(t, before.AccountAccess, after.AccountAccess)
 }
+
+func TestIAMUserAccountPermissions_Get(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("iam_user_account_permissions_get")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockGet(formatMockAPIPath("iam/users/Linode/permissions/account"), fixtureData)
+
+	perms, err := base.Client.GetUserAccountPermissions(context.Background(), "Linode")
+	assert.NoError(t, err)
+
+	assert.Equal(t, "list_events", perms[0])
+}
