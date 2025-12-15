@@ -636,7 +636,7 @@ func TestInstance_Config_VolumeLimitExtension(t *testing.T) {
 				VolumeID: volume2.ID,
 			},
 		},
-		RootDevice: "/dev/sdac",
+		RootDevice: "/dev/sdk",
 	}
 
 	_, err = client.WaitForVolumeStatus(context.Background(), volume1.ID, VolumeActive, 500)
@@ -648,7 +648,7 @@ func TestInstance_Config_VolumeLimitExtension(t *testing.T) {
 	updatedConfig, err := client.UpdateInstanceConfig(context.Background(), instance.ID, config.ID, configOpts)
 	require.NoError(t, err)
 
-	require.Equal(t, "/dev/sdac", updatedConfig.RootDevice)
+	require.Equal(t, "/dev/sdk", updatedConfig.RootDevice)
 	require.Equal(t, disk.ID, updatedConfig.Devices.SDA.DiskID)
 	require.Equal(t, volume1.ID, updatedConfig.Devices.SDL.VolumeID)
 	require.Equal(t, volume2.ID, updatedConfig.Devices.SDK.VolumeID)
