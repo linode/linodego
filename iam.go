@@ -72,7 +72,7 @@ func (c *Client) GetAccountRolePermissions(ctx context.Context) (*AccountRolePer
 func (c *Client) GetUserAccountPermissions(ctx context.Context, username string) ([]string, error) {
 	perms, err := doGETRequest[[]string](ctx, c,
 		formatAPIPath("iam/users/%s/permissions/account", username))
-	if perms == nil {
+	if err != nil {
 		return nil, err
 	}
 
