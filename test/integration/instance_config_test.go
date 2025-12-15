@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	. "github.com/linode/linodego"
+	"github.com/stretchr/testify/require"
 )
 
 func setupVPCWithSubnetWithInstance(
@@ -586,4 +587,69 @@ func TestInstance_Config_Update(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
+}
+
+func TestInstance_Config_VolumeLimitExtension(t *testing.T) {
+	client, instance, config, teardown, err := setupInstanceWithoutDisks(
+		t, "fixtures/TestInstance_Config_VolumeLimitExtension",
+		true,
+		func(l *Client, options *InstanceCreateOptions) {
+			// We need a larger type to increase our volume limit
+			options.Type = "g6-standard-6"
+		},
+	)
+	defer teardown()
+	require.NoError(t, err)
+
+	disk, err := client.CreateInstanceDisk(
+		t.Context(),
+		instance.ID,
+		InstanceDiskCreateOptions{
+			Label:      "test-disk",
+			Size:       1024,
+			Filesystem: string(FilesystemExt4),
+		},
+	)
+	require.NoError(t, err)
+
+	volume1, teardown, err := createVolume(t, client, func(l *Client, options *VolumeCreateOptions) {
+		options.Region = instance.Region
+	})
+	defer teardown()
+	require.NoError(t, err)
+
+	volume2, teardown, err := createVolume(t, client, func(l *Client, options *VolumeCreateOptions) {
+		options.Region = instance.Region
+	})
+	defer teardown()
+	require.NoError(t, err)
+
+	configOpts := InstanceConfigUpdateOptions{
+		Devices: &InstanceConfigDeviceMap{
+			SDA: &InstanceConfigDevice{
+				DiskID: disk.ID,
+			},
+			SDL: &InstanceConfigDevice{
+				VolumeID: volume1.ID,
+			},
+			SDK: &InstanceConfigDevice{
+				VolumeID: volume2.ID,
+			},
+		},
+		RootDevice: "/dev/sdk",
+	}
+
+	_, err = client.WaitForVolumeStatus(context.Background(), volume1.ID, VolumeActive, 500)
+	require.NoError(t, err)
+
+	_, err = client.WaitForVolumeStatus(context.Background(), volume2.ID, VolumeActive, 500)
+	require.NoError(t, err)
+
+	updatedConfig, err := client.UpdateInstanceConfig(context.Background(), instance.ID, config.ID, configOpts)
+	require.NoError(t, err)
+
+	require.Equal(t, "/dev/sdk", updatedConfig.RootDevice)
+	require.Equal(t, disk.ID, updatedConfig.Devices.SDA.DiskID)
+	require.Equal(t, volume1.ID, updatedConfig.Devices.SDL.VolumeID)
+	require.Equal(t, volume2.ID, updatedConfig.Devices.SDK.VolumeID)
 }
