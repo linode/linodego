@@ -58,7 +58,7 @@ func TestGetVolume(t *testing.T) {
 	assert.Contains(t, volume.Tags, "test", "Expected tags to include 'test'")
 	assert.Empty(t, volume.HardwareType, "Expected hardware type to be empty")
 	assert.Empty(t, volume.LinodeLabel, "Expected Linode label to be empty")
-	assert.Equal(t, true, volume.IOReady, "Expected IO Ready true")
+	assert.True(t, volume.IOReady, "Expected IO Ready true")
 }
 
 func TestCreateVolume(t *testing.T) {

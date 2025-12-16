@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestIAMAccountRolerPermissions_Get(t *testing.T) {
+func TestIAMAccountRolePermissions_Get(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("iam_account_get")
 	assert.NoError(t, err)
 
