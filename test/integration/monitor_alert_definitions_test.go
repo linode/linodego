@@ -81,19 +81,16 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 			PollingIntervalSeconds:  300,
 			TriggerOccurrences:      1,
 		},
-		RuleCriteria: &linodego.RuleCriteria{
-			Rules: []linodego.Rule{
+		RuleCriteria: &linodego.RuleCriteriaOptions{
+			Rules: []linodego.RuleOptions{
 				{
 					AggregateFunction: "avg",
-					Label:             "Memory Usage",
 					Metric:            "memory_usage",
 					Operator:          "gt",
 					Threshold:         90.0,
-					Unit:              "percent",
-					DimensionFilters: []linodego.DimensionFilter{
+					DimensionFilters: []linodego.DimensionFilterOptions{
 						{
 							DimensionLabel: "node_type",
-							Label:          "Node Type",
 							Operator:       "eq",
 							Value:          "primary",
 						},
@@ -249,19 +246,16 @@ func TestCreateMonitorAlertDefinitionWithIdempotency(t *testing.T) {
 			PollingIntervalSeconds:  300,
 			TriggerOccurrences:      1,
 		},
-		RuleCriteria: &linodego.RuleCriteria{
-			Rules: []linodego.Rule{
+		RuleCriteria: &linodego.RuleCriteriaOptions{
+			Rules: []linodego.RuleOptions{
 				{
 					AggregateFunction: "avg",
-					Label:             "Memory Usage",
 					Metric:            "memory_usage",
 					Operator:          "gt",
 					Threshold:         90.0,
-					Unit:              "percent",
-					DimensionFilters: []linodego.DimensionFilter{
+					DimensionFilters: []linodego.DimensionFilterOptions{
 						{
 							DimensionLabel: "node_type",
-							Label:          "Node Type",
 							Operator:       "eq",
 							Value:          "primary",
 						},

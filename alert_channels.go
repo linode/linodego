@@ -29,9 +29,6 @@ type AlertChannelDetailOptions struct {
 	To string `json:"to,omitempty"`
 }
 
-// AlertingChannelCreateOptions are the options used to create a new Monitor Channel.
-//
-// Deprecated: AlertChannelCreateOptions should be used in all new implementations.
 type EmailChannelContent struct {
 	EmailAddresses []string `json:"email_addresses"`
 }
