@@ -92,7 +92,7 @@ type NodeBalancerPlanType string
 // NodeBalancerPlanType constants reflect the plan type used by a NodeBalancer Config
 const (
 	NBTypePremium     NodeBalancerPlanType = "premium"
-	NBTypePremium40GB NodeBalancerPlanType = "premium_40GB"
+	NBTypePremium40GB NodeBalancerPlanType = "premium_40gb"
 	NBTypeCommon      NodeBalancerPlanType = "common"
 )
 
