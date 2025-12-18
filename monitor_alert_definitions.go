@@ -17,8 +17,8 @@ type AlertDefinition struct {
 	ServiceType       string                 `json:"service_type"`
 	Status            string                 `json:"status"`
 	HasMoreResources  bool                   `json:"has_more_resources"`
-	RuleCriteria      *RuleCriteria          `json:"rule_criteria"`
-	TriggerConditions *TriggerConditions     `json:"trigger_conditions"`
+	RuleCriteria      RuleCriteria          `json:"rule_criteria"`
+	TriggerConditions TriggerConditions     `json:"trigger_conditions"`
 	AlertChannels     []AlertChannelEnvelope `json:"alert_channels"`
 	Created           *time.Time             `json:"-"`
 	Updated           *time.Time             `json:"-"`
