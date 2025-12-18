@@ -17,8 +17,8 @@ type AlertDefinition struct {
 	ServiceType       string                 `json:"service_type"`
 	Status            string                 `json:"status"`
 	HasMoreResources  bool                   `json:"has_more_resources"`
-	RuleCriteria      RuleCriteria          `json:"rule_criteria"`
-	TriggerConditions TriggerConditions     `json:"trigger_conditions"`
+	RuleCriteria      RuleCriteria           `json:"rule_criteria"`
+	TriggerConditions TriggerConditions      `json:"trigger_conditions"`
 	AlertChannels     []AlertChannelEnvelope `json:"alert_channels"`
 	Created           *time.Time             `json:"-"`
 	Updated           *time.Time             `json:"-"`
@@ -51,13 +51,13 @@ type RuleCriteria struct {
 
 // Rule represents a single rule for an alert.
 type Rule struct {
-	AggregateFunction string            `json:"aggregate_function,omitempty"`
-	DimensionFilters  []DimensionFilter `json:"dimension_filters,omitempty"`
-	Label             string            `json:"label,omitempty"`
-	Metric            string            `json:"metric,omitempty"`
-	Operator          string            `json:"operator,omitempty"`
-	Threshold         float64           `json:"threshold,omitempty"`
-	Unit              string            `json:"unit,omitempty"`
+	AggregateFunction string            `json:"aggregate_function"`
+	DimensionFilters  []DimensionFilter `json:"dimension_filters"`
+	Label             string            `json:"label"`
+	Metric            string            `json:"metric"`
+	Operator          string            `json:"operator"`
+	Threshold         float64           `json:"threshold"`
+	Unit              string            `json:"unit"`
 }
 
 // DimensionFilter represents a single dimension filter used inside a Rule.
@@ -65,7 +65,7 @@ type DimensionFilter struct {
 	DimensionLabel string `json:"dimension_label"`
 	Label          string `json:"label"`
 	Operator       string `json:"operator"`
-	Value          any    `json:"value"`
+	Value          string `json:"value"`
 }
 
 // RuleCriteriaOptions represents the rule criteria options for an alert.
@@ -84,9 +84,9 @@ type RuleOptions struct {
 
 // DimensionFilterOptions represents a single dimension filter option used inside a Rule.
 type DimensionFilterOptions struct {
-	DimensionLabel string `json:"dimension_label"`
-	Operator       string `json:"operator"`
-	Value          any    `json:"value"`
+	DimensionLabel string `json:"dimension_label,omitempty"`
+	Operator       string `json:"operator,omitempty"`
+	Value          any    `json:"value,omitempty"`
 }
 
 // AlertType represents the type of alert: "user" or "system"
@@ -117,24 +117,24 @@ const (
 
 // AlertDefinitionCreateOptions are the options used to create a new alert definition.
 type AlertDefinitionCreateOptions struct {
-	Label             string               `json:"label"`                        // mandatory
-	Severity          int                  `json:"severity"`                     // mandatory
-	ChannelIDs        []int                `json:"channel_ids"`                  // mandatory
-	RuleCriteria      *RuleCriteriaOptions `json:"rule_criteria,omitempty"`      // optional
-	TriggerConditions *TriggerConditions   `json:"trigger_conditions,omitempty"` // optional
-	EntityIDs         []string             `json:"entity_ids,omitempty"`         // optional
-	Description       string               `json:"description,omitempty"`        // optional
+	Label             string              `json:"label"`                        // mandatory
+	Severity          int                 `json:"severity"`                     // mandatory
+	ChannelIDs        []int               `json:"channel_ids"`                  // mandatory
+	RuleCriteria      RuleCriteriaOptions `json:"rule_criteria,omitempty"`      // optional
+	TriggerConditions TriggerConditions   `json:"trigger_conditions,omitempty"` // optional
+	EntityIDs         []string            `json:"entity_ids,omitempty"`         // optional
+	Description       string              `json:"description,omitempty"`        // optional
 }
 
 // AlertDefinitionUpdateOptions are the options used to update an alert definition.
 type AlertDefinitionUpdateOptions struct {
-	Label             string               `json:"label"`                        // mandatory
-	Severity          int                  `json:"severity"`                     // mandatory
-	ChannelIDs        []int                `json:"channel_ids"`                  // mandatory
-	RuleCriteria      *RuleCriteriaOptions `json:"rule_criteria,omitempty"`      // optional
-	TriggerConditions *TriggerConditions   `json:"trigger_conditions,omitempty"` // optional
-	EntityIDs         []string             `json:"entity_ids,omitempty"`         // optional
-	Description       string               `json:"description,omitempty"`        // optional
+	Label             string              `json:"label"`                        // mandatory
+	Severity          int                 `json:"severity"`                     // mandatory
+	ChannelIDs        []int               `json:"channel_ids"`                  // mandatory
+	RuleCriteria      RuleCriteriaOptions `json:"rule_criteria,omitempty"`      // optional
+	TriggerConditions TriggerConditions   `json:"trigger_conditions,omitempty"` // optional
+	EntityIDs         []string            `json:"entity_ids,omitempty"`         // optional
+	Description       string              `json:"description,omitempty"`        // optional
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface

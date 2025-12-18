@@ -207,7 +207,8 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"service_type":"","alert_id":0,"label":"go-test-alert-definition-create-updated"}'
+    body: '{"service_type":"","alert_id":0,"label":"go-test-alert-definition-create-updated","severity":2,"channel_ids":[10000],"rule_criteria":{"rules":[{"aggregate_function":"avg","dimension_filters":[{"dimension_label":"node_type","label":"","operator":"eq","value":"primary"}],"metric":"memory_usage","operator":"gt","threshold":90}]},"trigger_conditions":{"criteria_condition":"ALL","evaluation_period_seconds":300,"polling_interval_seconds":300,"trigger_occurrences":1},"description":"Test
+      alert definition creation"}'
     form: {}
     headers:
       Accept:

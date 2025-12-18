@@ -34,7 +34,7 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 		assert.NotEmpty(t, alert.Label, "alert.Label should not be empty")
 
 		// If alert has a rule, validate basic rule structure
-		if alert.RuleCriteria != nil {
+		if len(alert.RuleCriteria.Rules) > 0 {
 			assert.NotEmpty(t, alert.RuleCriteria.Rules, "RuleCriteria.Rules should not be empty when RuleCriteria is provided")
 			for _, r := range alert.RuleCriteria.Rules {
 				assert.NotEmpty(t, r.Metric, "rule.Metric should not be empty")
@@ -75,13 +75,13 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 		Description: "Test alert definition creation",
 		ChannelIDs:  []int{channelID},
 		EntityIDs:   nil,
-		TriggerConditions: &linodego.TriggerConditions{
+		TriggerConditions: linodego.TriggerConditions{
 			CriteriaCondition:       "ALL",
 			EvaluationPeriodSeconds: 300,
 			PollingIntervalSeconds:  300,
 			TriggerOccurrences:      1,
 		},
-		RuleCriteria: &linodego.RuleCriteriaOptions{
+		RuleCriteria: linodego.RuleCriteriaOptions{
 			Rules: []linodego.RuleOptions{
 				{
 					AggregateFunction: "avg",
@@ -116,13 +116,13 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 	// assert.Equal(t, fetchedChannel.Label, createdAlert.AlertChannels[0].Label)
 
 	// More thorough assertions on the created alert's nested fields
-	if createdAlert.TriggerConditions != nil && createOpts.TriggerConditions != nil {
-		assert.Equal(t, createOpts.TriggerConditions.CriteriaCondition, createdAlert.TriggerConditions.CriteriaCondition)
-		assert.Equal(t, createOpts.TriggerConditions.EvaluationPeriodSeconds, createdAlert.TriggerConditions.EvaluationPeriodSeconds)
-		assert.Equal(t, createOpts.TriggerConditions.PollingIntervalSeconds, createdAlert.TriggerConditions.PollingIntervalSeconds)
-		assert.Equal(t, createOpts.TriggerConditions.TriggerOccurrences, createdAlert.TriggerConditions.TriggerOccurrences)
-	}
-	if createdAlert.RuleCriteria != nil && createOpts.RuleCriteria != nil {
+	// TriggerConditions is a struct, so it is never nil
+	assert.Equal(t, createOpts.TriggerConditions.CriteriaCondition, createdAlert.TriggerConditions.CriteriaCondition)
+	assert.Equal(t, createOpts.TriggerConditions.EvaluationPeriodSeconds, createdAlert.TriggerConditions.EvaluationPeriodSeconds)
+	assert.Equal(t, createOpts.TriggerConditions.PollingIntervalSeconds, createdAlert.TriggerConditions.PollingIntervalSeconds)
+	assert.Equal(t, createOpts.TriggerConditions.TriggerOccurrences, createdAlert.TriggerConditions.TriggerOccurrences)
+
+	if len(createdAlert.RuleCriteria.Rules) > 0 && len(createOpts.RuleCriteria.Rules) > 0 {
 		assert.Equal(t, len(createOpts.RuleCriteria.Rules), len(createdAlert.RuleCriteria.Rules), "created alert should have same number of rules")
 		for i, r := range createOpts.RuleCriteria.Rules {
 			cr := createdAlert.RuleCriteria.Rules[i]
@@ -145,7 +145,13 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 	// Update the created alert definition: change label only
 	newLabel := createdAlert.Label + "-updated"
 	updateOpts := linodego.AlertDefinitionUpdateOptions{
-		Label: newLabel,
+		Label:             newLabel,
+		Severity:          createdAlert.Severity,
+		ChannelIDs:        createOpts.ChannelIDs,
+		RuleCriteria:      createOpts.RuleCriteria,
+		TriggerConditions: createOpts.TriggerConditions,
+		EntityIDs:         createOpts.EntityIDs,
+		Description:       createdAlert.Description,
 	}
 	// wait for 1 minute before update for create to complete
 	time.Sleep(1 * time.Minute)
@@ -240,13 +246,13 @@ func TestCreateMonitorAlertDefinitionWithIdempotency(t *testing.T) {
 		Description: "Test alert definition creation with idempotency",
 		ChannelIDs:  []int{channelID},
 		EntityIDs:   nil,
-		TriggerConditions: &linodego.TriggerConditions{
+		TriggerConditions: linodego.TriggerConditions{
 			CriteriaCondition:       "ALL",
 			EvaluationPeriodSeconds: 300,
 			PollingIntervalSeconds:  300,
 			TriggerOccurrences:      1,
 		},
-		RuleCriteria: &linodego.RuleCriteriaOptions{
+		RuleCriteria: linodego.RuleCriteriaOptions{
 			Rules: []linodego.RuleOptions{
 				{
 					AggregateFunction: "avg",
