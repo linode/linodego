@@ -78,18 +78,37 @@ func TestLocks(t *testing.T) {
 	}
 }
 
+func TestTryToLockTwoResourcesWithTheSameType(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t,
+		"fixtures/TestLockTryToLockResourceTwice", false)
+	require.NoError(t, err)
+	t.Cleanup(teardown)
+	createOpts := linodego.LockCreateOptions{
+		EntityType: linodego.EntityLinode,
+		EntityID:   instance.ID,
+		LockType:   linodego.LockTypeCannotDelete,
+	}
+
+	createdLock, err := client.CreateLock(context.Background(), createOpts)
+	require.NoError(t, err)
+	defer client.DeleteLock(context.Background(), createdLock.ID)
+
+	createOpts.LockType = linodego.LockTypeCannotDeleteWithSubresources
+	_, errAlreadyExist := client.CreateLock(context.Background(), createOpts)
+	require.Error(t, errAlreadyExist)
+}
+
 func TestTryToCreateWithInvalidData(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestLockTryToCreateWithNotExistingEntityID")
 	defer teardown()
 
 	createOpts := linodego.LockCreateOptions{
-		EntityType: linodego.EntityNodebalancer,
+		EntityType: linodego.EntityLinode,
 		EntityID:   -99999876,
 		LockType:   linodego.LockTypeCannotDeleteWithSubresources,
 	}
 
 	_, createLockErr := client.CreateLock(context.Background(), createOpts)
 	require.Error(t, createLockErr)
-	assert.Equal(t, "[400] [entity_type] entity_type is not valid; [lock_type] lock_type is not valid",
-		createLockErr.Error())
+	assert.Equal(t, "[400] [entity_id] entity_id is not valid", createLockErr.Error())
 }

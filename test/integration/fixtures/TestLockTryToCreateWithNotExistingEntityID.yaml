@@ -1,0 +1,49 @@
+---
+version: 1
+interactions:
+- request:
+    body: '{"entity_type":"linode","entity_id":-99999876,"lock_type":"cannot_delete_with_subresources"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/locks
+    method: POST
+  response:
+    body: '{"errors": [{"reason": "entity_id is not valid", "field": "entity_id"}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Content-Length:
+      - "72"
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 18 Dec 2025 13:23:21 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Accepted-Oauth-Scopes:
+      - account:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+    status: 400 Bad Request
+    code: 400
+    duration: ""
