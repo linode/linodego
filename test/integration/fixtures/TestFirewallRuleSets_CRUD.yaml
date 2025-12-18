@@ -1,0 +1,336 @@
+---
+version: 1
+interactions:
+- request:
+    body: '{"label":"rs-51452000","description":"Allow inbound HTTP","type":"inbound","rules":[{"action":"ACCEPT","label":"allow-http","ports":"80","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"]}}]}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/firewalls/rulesets
+    method: POST
+  response:
+    body: '{"id": 78, "version": 1, "label": "rs-51452000", "description": "Allow
+      inbound HTTP", "type": "inbound", "is_service_defined": false, "rules": [{"action":
+      "ACCEPT", "label": "allow-http", "ports": "80", "protocol": "TCP", "addresses":
+      {"ipv4": ["0.0.0.0/0"]}}], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "325"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 13 Oct 2025 21:57:58 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - firewall:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/firewalls/rulesets/78
+    method: GET
+  response:
+    body: '{"id": 78, "version": 1, "label": "rs-51452000", "description": "Allow
+      inbound HTTP", "type": "inbound", "is_service_defined": false, "rules": [{"label":
+      "allow-http", "ports": "80", "action": "ACCEPT", "protocol": "TCP", "addresses":
+      {"ipv4": ["0.0.0.0/0"]}}], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "325"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 13 Oct 2025 21:57:58 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - firewall:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"label":"rs-51452000-updated","description":"Updated description","rules":[{"action":"ACCEPT","label":"allow-https","ports":"443","protocol":"TCP","addresses":{"ipv6":["1234::5678/0"]}}]}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/firewalls/rulesets/78
+    method: PUT
+  response:
+    body: '{"id": 78, "version": 2, "label": "rs-51452000-updated", "description":
+      "Updated description", "type": "inbound", "is_service_defined": false, "rules":
+      [{"action": "ACCEPT", "label": "allow-https", "ports": "443", "protocol": "TCP",
+      "addresses": {"ipv6": ["1234::5678/0"]}}], "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "331"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 13 Oct 2025 21:57:58 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - firewall:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/firewalls/rulesets?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 74, "version": 1, "label": "testRuleSet", "description":
+      "test", "type": "inbound", "is_service_defined": false, "rules": [{"label": "test",
+      "ports": "22-24", "action": "ACCEPT", "protocol": "TCP", "addresses": {"ipv4":
+      ["192.0.2.0/24"]}, "description": "test"}], "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05"}, {"id": 75, "version": 1, "label": "testRuleSet2",
+      "description": "test2", "type": "inbound", "is_service_defined": false, "rules":
+      [{"label": "test", "ports": "22-24", "action": "ACCEPT", "protocol": "TCP",
+      "addresses": {"ipv4": ["192.0.2.0/24"]}, "description": "test"}], "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}, {"id": 76, "version":
+      1, "label": "ruleset-1760391571119054000", "description": "Allow inbound HTTP",
+      "type": "inbound", "is_service_defined": false, "rules": [{"label": "allow-http",
+      "ports": "80", "action": "ACCEPT", "protocol": "TCP", "addresses": {"ipv4":
+      ["0.0.0.0/0"]}}], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"},
+      {"id": 78, "version": 2, "label": "rs-51452000-updated", "description": "Updated
+      description", "type": "inbound", "is_service_defined": false, "rules": [{"label":
+      "allow-https", "ports": "443", "action": "ACCEPT", "protocol": "TCP", "addresses":
+      {"ipv6": ["1234::5678/0"]}}], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}],
+      "page": 1, "pages": 1, "results": 4}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 13 Oct 2025 21:57:58 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - firewall:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/networking/firewalls/rulesets/78
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 13 Oct 2025 21:57:58 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - firewall:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
