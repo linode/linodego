@@ -80,7 +80,7 @@ func TestLocks(t *testing.T) {
 
 func TestTryToLockTwoResourcesWithTheSameType(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t,
-		"fixtures/TestLockTryToLockResourceTwice", false)
+		"fixtures/TestTryToLockTwoResourcesWithTheSameType", false)
 	require.NoError(t, err)
 	t.Cleanup(teardown)
 	createOpts := linodego.LockCreateOptions{
@@ -94,12 +94,12 @@ func TestTryToLockTwoResourcesWithTheSameType(t *testing.T) {
 	defer client.DeleteLock(context.Background(), createdLock.ID)
 
 	createOpts.LockType = linodego.LockTypeCannotDeleteWithSubresources
-	_, errAlreadyExist := client.CreateLock(context.Background(), createOpts)
-	require.Error(t, errAlreadyExist)
+	_, errConflictingLock := client.CreateLock(context.Background(), createOpts)
+	require.Error(t, errConflictingLock)
 }
 
 func TestTryToCreateWithInvalidData(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestLockTryToCreateWithNotExistingEntityID")
+	client, teardown := createTestClient(t, "fixtures/TestTryToCreateWithInvalidData")
 	defer teardown()
 
 	createOpts := linodego.LockCreateOptions{
