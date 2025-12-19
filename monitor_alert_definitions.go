@@ -86,7 +86,7 @@ type RuleOptions struct {
 type DimensionFilterOptions struct {
 	DimensionLabel string `json:"dimension_label,omitempty"`
 	Operator       string `json:"operator,omitempty"`
-	Value          any    `json:"value,omitempty"`
+	Value          string `json:"value,omitempty"`
 }
 
 // AlertType represents the type of alert: "user" or "system"
@@ -117,24 +117,24 @@ const (
 
 // AlertDefinitionCreateOptions are the options used to create a new alert definition.
 type AlertDefinitionCreateOptions struct {
-	Label             string              `json:"label"`                        // mandatory
-	Severity          int                 `json:"severity"`                     // mandatory
-	ChannelIDs        []int               `json:"channel_ids"`                  // mandatory
-	RuleCriteria      RuleCriteriaOptions `json:"rule_criteria,omitempty"`      // optional
-	TriggerConditions TriggerConditions   `json:"trigger_conditions,omitempty"` // optional
-	EntityIDs         []string            `json:"entity_ids,omitempty"`         // optional
-	Description       string              `json:"description,omitempty"`        // optional
+	Label             string              `json:"label"`                 // mandatory
+	Severity          int                 `json:"severity"`              // mandatory
+	ChannelIDs        []int               `json:"channel_ids"`           // mandatory
+	RuleCriteria      RuleCriteriaOptions `json:"rule_criteria"`         // optional
+	TriggerConditions TriggerConditions   `json:"trigger_conditions"`    // optional
+	EntityIDs         []string            `json:"entity_ids,omitempty"`  // optional
+	Description       string              `json:"description,omitempty"` // optional
 }
 
 // AlertDefinitionUpdateOptions are the options used to update an alert definition.
 type AlertDefinitionUpdateOptions struct {
-	Label             string              `json:"label"`                        // mandatory
-	Severity          int                 `json:"severity"`                     // mandatory
-	ChannelIDs        []int               `json:"channel_ids"`                  // mandatory
-	RuleCriteria      RuleCriteriaOptions `json:"rule_criteria,omitempty"`      // optional
-	TriggerConditions TriggerConditions   `json:"trigger_conditions,omitempty"` // optional
-	EntityIDs         []string            `json:"entity_ids,omitempty"`         // optional
-	Description       string              `json:"description,omitempty"`        // optional
+	Label             string              `json:"label"`                 // mandatory
+	Severity          int                 `json:"severity"`              // mandatory
+	ChannelIDs        []int               `json:"channel_ids"`           // mandatory
+	RuleCriteria      RuleCriteriaOptions `json:"rule_criteria"`         // optional
+	TriggerConditions TriggerConditions   `json:"trigger_conditions"`    // optional
+	EntityIDs         []string            `json:"entity_ids,omitempty"`  // optional
+	Description       string              `json:"description,omitempty"` // optional
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
