@@ -44,9 +44,3 @@ func (c *Client) ListAlertChannels(ctx context.Context, opts *ListOptions) ([]Al
 	endpoint := formatAPIPath("monitor/alert-channels")
 	return getPaginatedResults[AlertChannel](ctx, c, endpoint, opts)
 }
-
-// GetAlertChannel gets an Alert Channel by ID.
-func (c *Client) GetAlertChannel(ctx context.Context) (*AlertChannel, error) {
-	e := formatAPIPath("monitor/alert-channels")
-	return doGETRequest[AlertChannel](ctx, c, e)
-}

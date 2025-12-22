@@ -160,7 +160,7 @@ func (i *AlertDefinition) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// ListMonitorAlertDefinitions gets a paginated list of ACLP Monitor Alert Definitions.
+// ListMonitorAlertDefinitions returns a paginated list of ACLP Monitor Alert Definitions by service type.
 func (c *Client) ListMonitorAlertDefinitions(
 	ctx context.Context,
 	serviceType string,
@@ -176,6 +176,7 @@ func (c *Client) ListMonitorAlertDefinitions(
 	return getPaginatedResults[AlertDefinition](ctx, c, endpoint, opts)
 }
 
+// ListAllMonitorAlertDefinitions returns a paginated list of all ACLP Monitor Alert Definitions under this account.
 func (c *Client) ListAllMonitorAlertDefinitions(
 	ctx context.Context,
 	opts *ListOptions,
