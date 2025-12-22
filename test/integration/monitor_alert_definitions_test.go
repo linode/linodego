@@ -15,7 +15,7 @@ const (
 )
 
 func TestMonitorAlertDefinition_smoke(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertDefinition_instance")
+	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertDefinition")
 	defer teardown()
 
 	client.SetAPIVersion("v4beta")
@@ -72,16 +72,16 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 	createOpts := linodego.AlertDefinitionCreateOptions{
 		Label:       "go-test-alert-definition-create",
 		Severity:    int(linodego.SeverityLow),
-		Description: "Test alert definition creation",
+		Description: linodego.Pointer("Test alert definition creation"),
 		ChannelIDs:  []int{channelID},
 		EntityIDs:   nil,
-		TriggerConditions: linodego.TriggerConditions{
+		TriggerConditions: &linodego.TriggerConditions{
 			CriteriaCondition:       "ALL",
 			EvaluationPeriodSeconds: 300,
 			PollingIntervalSeconds:  300,
 			TriggerOccurrences:      1,
 		},
-		RuleCriteria: linodego.RuleCriteriaOptions{
+		RuleCriteria: &linodego.RuleCriteriaOptions{
 			Rules: []linodego.RuleOptions{
 				{
 					AggregateFunction: "avg",
@@ -151,7 +151,7 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 		RuleCriteria:      createOpts.RuleCriteria,
 		TriggerConditions: createOpts.TriggerConditions,
 		EntityIDs:         createOpts.EntityIDs,
-		Description:       createdAlert.Description,
+		Description:       &createdAlert.Description,
 	}
 	// wait for 1 minute before update for create to complete
 	time.Sleep(1 * time.Minute)
@@ -243,16 +243,16 @@ func TestCreateMonitorAlertDefinitionWithIdempotency(t *testing.T) {
 	createOpts := linodego.AlertDefinitionCreateOptions{
 		Label:       uniqueLabel,
 		Severity:    int(linodego.SeverityLow),
-		Description: "Test alert definition creation with idempotency",
+		Description: linodego.Pointer("Test alert definition creation with idempotency"),
 		ChannelIDs:  []int{channelID},
 		EntityIDs:   nil,
-		TriggerConditions: linodego.TriggerConditions{
+		TriggerConditions: &linodego.TriggerConditions{
 			CriteriaCondition:       "ALL",
 			EvaluationPeriodSeconds: 300,
 			PollingIntervalSeconds:  300,
 			TriggerOccurrences:      1,
 		},
-		RuleCriteria: linodego.RuleCriteriaOptions{
+		RuleCriteria: &linodego.RuleCriteriaOptions{
 			Rules: []linodego.RuleOptions{
 				{
 					AggregateFunction: "avg",
