@@ -2,6 +2,7 @@ package unit
 
 import (
 	"net/http"
+	"strings"
 	"testing"
 
 	"github.com/jarcoal/httpmock"
@@ -38,24 +39,49 @@ func (c *ClientBaseCase) TearDown(t *testing.T) {
 func (c *ClientBaseCase) MockGet(path string, response interface{}) {
 	fullURL := c.BaseURL + path
 	httpmock.RegisterResponder("GET", fullURL, httpmock.NewJsonResponderOrPanic(http.StatusOK, response))
+
+	// Also register beta endpoint equivalents for monitor-related endpoints
+	if strings.HasPrefix(path, "monitor/") {
+		altBase := strings.Replace(c.BaseURL, "/v4/", "/v4beta/", 1)
+		altURL := altBase + path
+		httpmock.RegisterResponder("GET", altURL, httpmock.NewJsonResponderOrPanic(http.StatusOK, response))
+	}
 }
 
 // MockPost mocks a POST request for a given path with the provided response body
 func (c *ClientBaseCase) MockPost(path string, response interface{}) {
 	fullURL := c.BaseURL + path
 	httpmock.RegisterResponder("POST", fullURL, httpmock.NewJsonResponderOrPanic(http.StatusOK, response))
+
+	if strings.HasPrefix(path, "monitor/") {
+		altBase := strings.Replace(c.BaseURL, "/v4/", "/v4beta/", 1)
+		altURL := altBase + path
+		httpmock.RegisterResponder("POST", altURL, httpmock.NewJsonResponderOrPanic(http.StatusOK, response))
+	}
 }
 
 // MockPut mocks a PUT request for a given path with the provided response body
 func (c *ClientBaseCase) MockPut(path string, response interface{}) {
 	fullURL := c.BaseURL + path
 	httpmock.RegisterResponder("PUT", fullURL, httpmock.NewJsonResponderOrPanic(http.StatusOK, response))
+
+	if strings.HasPrefix(path, "monitor/") {
+		altBase := strings.Replace(c.BaseURL, "/v4/", "/v4beta/", 1)
+		altURL := altBase + path
+		httpmock.RegisterResponder("PUT", altURL, httpmock.NewJsonResponderOrPanic(http.StatusOK, response))
+	}
 }
 
 // MockDelete mocks a DELETE request for a given path with the provided response body
 func (c *ClientBaseCase) MockDelete(path string, response interface{}) {
 	fullURL := c.BaseURL + path
 	httpmock.RegisterResponder("DELETE", fullURL, httpmock.NewJsonResponderOrPanic(http.StatusOK, response))
+
+	if strings.HasPrefix(path, "monitor/") {
+		altBase := strings.Replace(c.BaseURL, "/v4/", "/v4beta/", 1)
+		altURL := altBase + path
+		httpmock.RegisterResponder("DELETE", altURL, httpmock.NewJsonResponderOrPanic(http.StatusOK, response))
+	}
 }
 
 // MonitorClientBaseCase provides a base for unit tests
