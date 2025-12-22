@@ -2,6 +2,22 @@ package linodego
 
 import (
 	"context"
+	"encoding/json"
+	"github.com/linode/linodego/internal/parseabletime"
+	"time"
+)
+
+type AlertNotificationType string
+
+const (
+	EmailAlertNotification AlertNotificationType = "email"
+)
+
+type AlertChannelType string
+
+const (
+	SystemAlertChannel AlertChannelType = "system"
+	UserAlertChannel   AlertChannelType = "user"
 )
 
 // AlertChannelEnvelope represents a single alert channel entry returned inside alert definition
@@ -14,19 +30,16 @@ type AlertChannelEnvelope struct {
 
 // AlertChannel represents a Monitor Channel object.
 type AlertChannel struct {
-	ID          int            `json:"id"`
-	Label       string         `json:"label"`
-	ChannelType string         `json:"channel_type"`
-	Content     ChannelContent `json:"content"`
-	Created     string         `json:"created"`
-	CreatedBy   string         `json:"created_by"`
-	Updated     string         `json:"updated"`
-	UpdatedBy   string         `json:"updated_by"`
-}
-
-// AlertChannelDetailOptions are the options used to create the details of a new Monitor Channel.
-type AlertChannelDetailOptions struct {
-	To string `json:"to,omitempty"`
+	Alerts      []AlertChannelEnvelope `json:"alerts"`
+	ChannelType AlertNotificationType  `json:"channel_type"`
+	Content     ChannelContent         `json:"content"`
+	Created     *time.Time             `json:"-"`
+	CreatedBy   string                 `json:"created_by"`
+	Updated     *time.Time             `json:"-"`
+	UpdatedBy   string                 `json:"updated_by"`
+	ID          int                    `json:"id"`
+	Label       string                 `json:"label"`
+	Type        AlertChannelType       `json:"type"`
 }
 
 type EmailChannelContent struct {
@@ -35,8 +48,31 @@ type EmailChannelContent struct {
 
 // ChannelContent represents the content block for an AlertChannel, which varies by channel type.
 type ChannelContent struct {
-	Email *EmailChannelContent `json:"email,omitempty"`
+	Email *EmailChannelContent `json:"email"`
 	// Other channel types like 'webhook', 'slack' could be added here as optional fields.
+}
+
+// UnmarshalJSON implements the json.Unmarshaler interface
+func (a *AlertChannel) UnmarshalJSON(b []byte) error {
+	type Mask AlertChannel
+
+	p := struct {
+		*Mask
+
+		Updated *parseabletime.ParseableTime `json:"updated"`
+		Created *parseabletime.ParseableTime `json:"created"`
+	}{
+		Mask: (*Mask)(a),
+	}
+
+	if err := json.Unmarshal(b, &p); err != nil {
+		return err
+	}
+
+	a.Updated = (*time.Time)(p.Updated)
+	a.Created = (*time.Time)(p.Created)
+
+	return nil
 }
 
 // ListAlertChannels gets a paginated list of Alert Channels.
