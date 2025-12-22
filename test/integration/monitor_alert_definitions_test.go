@@ -15,7 +15,7 @@ const (
 )
 
 func TestMonitorAlertDefinition_smoke(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertDefinition_smoke")
+	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertDefinition")
 	defer teardown()
 
 	// Get All Alert Definitions
