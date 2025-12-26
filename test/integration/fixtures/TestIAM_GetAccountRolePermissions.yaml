@@ -1,0 +1,291 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/iam/role-permissions
+    method: GET
+  response:
+    body: '{"account_access": [{"type": "stackscript", "roles": [{"name": "account_stackscript_creator",
+      "description": "Allows the user the same access as the legacy \"Can add Stackscripts
+      under this account\" general permission.", "permissions": []}]}, {"type": "firewall",
+      "roles": [{"name": "account_firewall_creator", "description": "Allows the user
+      to create firewalls in the account.", "permissions": ["create_firewall"]}]},
+      {"type": "volume", "roles": [{"name": "account_volume_creator", "description":
+      "Allows the user to create Volumes in the account.", "permissions": ["create_volume"]}]},
+      {"type": "linode", "roles": [{"name": "account_linode_creator", "description":
+      "Allows the user to create Linodes in the account.", "permissions": ["create_linode"]}]},
+      {"type": "database", "roles": [{"name": "account_database_creator", "description":
+      "Allows the user the same access as the legacy \"Can add Databases to this account
+      ($)\" general permission.", "permissions": []}]}, {"type": "image", "roles":
+      [{"name": "account_image_creator", "description": "Allows the user to create
+      Images in the account.", "permissions": ["upload_image", "create_image"]}]},
+      {"type": "account", "roles": [{"name": "account_oauth_client_viewer", "description":
+      "Allows the user to list and view all OAuth client configurations in the account.",
+      "permissions": ["list_oauth_clients", "view_oauth_client"]}, {"name": "account_notification_viewer",
+      "description": "Allows the user to list notifications in the account.", "permissions":
+      ["list_notifications"]}, {"name": "account_maintenance_viewer", "description":
+      "Allows the user to list maintenances in the account.", "permissions": ["list_maintenances"]},
+      {"name": "account_oauth_client_admin", "description": "Allows the user to create,
+      list, view, update, and delete all OAuth client configurations in the account.",
+      "permissions": ["list_oauth_clients", "update_oauth_client", "update_oauth_client_thumbnail",
+      "reset_oauth_client_secret", "create_oauth_client", "view_oauth_client", "delete_oauth_client"]},
+      {"name": "account_billing_viewer", "description": "Allows the user to list and
+      view all payments, invoices, and payment methods in the account.", "permissions":
+      ["list_billing_invoices", "list_billing_payments", "view_invoice_item", "view_billing_invoice",
+      "view_payment_method", "view_billing_payment", "list_payment_methods", "list_invoice_items"]},
+      {"name": "account_billing_admin", "description": "Allows the user to list and
+      view all payments, invoices, and payment methods in the account, as well as
+      make payments, create promo codes, and create, update, and delete payment methods.",
+      "permissions": ["list_billing_invoices", "view_invoice_item", "make_billing_payment",
+      "view_payment_client_token", "create_promo_code", "list_payment_methods", "list_invoice_items",
+      "create_payment_method", "delete_payment_method", "list_billing_payments", "view_billing_invoice",
+      "view_payment_method", "view_billing_payment", "set_default_payment_method"]},
+      {"name": "account_admin", "description": "Allows the user to list, view, create,
+      update, and delete all entities in the account.", "permissions": ["generate_linode_lish_token_remote",
+      "list_events", "disable_profile_tfa", "cancel_account", "rebuild_linode", "update_profile",
+      "update_vpc", "create_nodebalancer_config", "reset_oauth_client_secret", "list_linode_nodebalancers",
+      "list_account_logins", "revoke_profile_app", "view_profile_ssh_key", "rebuild_nodebalancer_config",
+      "delete_firewall", "reset_linode_disk_root_password", "enable_managed", "create_firewall_device",
+      "update_linode_firewalls", "boot_linode", "view_vpc_subnet", "list_vpcs_ip_addresses",
+      "create_vpc_subnet", "create_linode_disk", "view_event", "create_profile_pat",
+      "list_billing_payments", "view_linode", "create_oauth_client", "enable_profile_tfa",
+      "view_account", "rescue_linode", "list_user_grants", "view_user_preferences",
+      "update_user", "list_linode_volumes", "view_billing_invoice", "view_linode_monthly_stats",
+      "delete_linode", "list_firewall_rule_versions", "list_profile_grants", "create_service_transfer",
+      "list_enrolled_beta_programs", "clone_volume", "view_linode_monthly_network_transfer_stats",
+      "update_linode", "delete_nodebalancer_config_node", "acknowledge_account_agreement",
+      "list_payment_methods", "view_linode_stats", "list_firewall_rules", "generate_linode_lish_token",
+      "create_volume", "cancel_linode_backups", "view_profile_security_question",
+      "delete_nodebalancer", "create_vpc", "shutdown_linode", "delete_linode_config_profile",
+      "view_profile", "delete_oauth_client", "create_linode_config_profile_interface",
+      "password_reset_linode", "view_linode_config_profile_interface", "upgrade_linode",
+      "resize_linode", "update_nodebalancer", "upload_image", "view_linode_disk",
+      "view_volume", "view_linode_network_transfer", "make_billing_payment", "update_nodebalancer_config",
+      "delete_profile_pat", "list_invoice_items", "list_profile_logins", "view_enrolled_beta_program",
+      "list_user_permissions", "view_account_login", "view_nodebalancer_vpc_config",
+      "list_role_permissions", "update_profile_ssh_key", "delete_payment_method",
+      "list_profile_devices", "update_account", "view_nodebalancer_statistics", "delete_linode_disk",
+      "clone_linode", "view_profile_app", "resize_volume", "list_billing_invoices",
+      "apply_linode_firewalls", "reboot_linode", "list_default_firewalls", "create_promo_code",
+      "delete_linode_config_profile_interface", "attach_volume", "accept_service_transfer",
+      "update_user_grants", "delete_user", "list_entities", "view_account_settings",
+      "view_vpc", "view_invoice_item", "restore_linode_backup", "update_linode_config_profile_interface",
+      "list_nodebalancer_vpc_configs", "create_profile_ssh_key", "view_firewall_device",
+      "view_linode_config_profile", "update_vpc_subnet", "list_profile_pats", "view_user",
+      "update_nodebalancer_firewalls", "list_vpc_ip_addresses", "view_firewall", "delete_profile_phone_number",
+      "update_oauth_client_thumbnail", "list_profile_security_questions", "mark_event_seen",
+      "view_linode_backup", "enroll_beta_program", "update_oauth_client", "view_nodebalancer_config",
+      "list_nodebalancer_config_nodes", "is_account_admin", "create_image", "update_profile_pat",
+      "delete_image", "list_notifications", "answer_profile_security_questions", "view_profile_device",
+      "replicate_image", "view_payment_method", "update_user_permissions", "list_profile_apps",
+      "create_nodebalancer", "view_profile_pat", "clone_linode_disk", "cancel_service_transfer",
+      "update_default_firewalls", "delete_vpc", "view_payment_client_token", "view_oauth_client",
+      "update_linode_config_profile", "list_nodebalancer_firewalls", "list_oauth_clients",
+      "revoke_profile_device", "view_billing_payment", "view_region_available_service",
+      "list_available_services", "view_firewall_rule_version", "delete_nodebalancer_config",
+      "delete_volume", "detach_volume", "verify_profile_phone_number", "list_profile_ssh_keys",
+      "create_linode_config_profile", "create_payment_method", "view_nodebalancer_config_node",
+      "create_nodebalancer_config_node", "update_firewall_rules", "update_user_preferences",
+      "set_default_payment_method", "view_image", "enable_linode_backups", "create_profile_tfa_secret",
+      "list_account_agreements", "view_nodebalancer", "update_nodebalancer_config_node",
+      "update_image", "view_service_transfer", "create_user", "create_linode", "update_account_settings",
+      "list_firewall_devices", "list_service_transfers", "list_maintenances", "create_linode_backup_snapshot",
+      "list_linode_firewalls", "delete_firewall_device", "reorder_linode_config_profile_interfaces",
+      "update_volume", "delete_profile_ssh_key", "view_network_usage", "delete_vpc_subnet",
+      "migrate_linode", "resize_linode_disk", "update_firewall", "send_profile_phone_number_verification_code",
+      "create_firewall", "update_linode_disk", "view_profile_login"]}, {"name": "account_event_viewer",
+      "description": "Allows the user to list and view all events in the account.",
+      "permissions": ["list_events", "view_event", "mark_event_seen"]}]}, {"type":
+      "nodebalancer", "roles": [{"name": "account_nodebalancer_creator", "description":
+      "Allows the user to create NodeBalancers in the account.", "permissions": ["create_nodebalancer"]}]},
+      {"type": "vpc", "roles": [{"name": "account_vpc_creator", "description": "Allows
+      the user to create VPCs in the account.", "permissions": ["create_vpc"]}]},
+      {"type": "longview", "roles": [{"name": "account_longview_creator", "description":
+      "Allows the user the same access as the legacy \"Can add Longview clients to
+      this account\" general permission.", "permissions": []}, {"name": "account_longview_subscription_admin",
+      "description": "Allows the user the same access as the legacy \"Can modify this
+      account''s Longview subscription ($)\" general permission.", "permissions":
+      []}]}, {"type": "lkecluster", "roles": [{"name": "account_lkecluster_creator",
+      "description": "Allows the user the same access as the legacy \"Can add Kubernetes
+      Clusters to this account ($)\" general permission.", "permissions": []}]}, {"type":
+      "domain", "roles": [{"name": "account_domain_creator", "description": "Allows
+      the user the same access as the legacy \"Can add Domains using the DNS Manager\"
+      general permission.", "permissions": []}]}], "entity_access": [{"type": "firewall",
+      "roles": [{"name": "firewall_viewer", "description": "Allows the user to view
+      firewall instances attached to this role, as well as list and view their devices
+      and rules.", "permissions": ["view_firewall", "list_firewall_rules", "view_firewall_device",
+      "list_firewall_devices", "view_firewall_rule_version", "list_firewall_rule_versions"]},
+      {"name": "firewall_admin", "description": "Allows the user to view, update,
+      and delete firewall instances in the account as well as view, create, and delete
+      their devices and rules. ", "permissions": ["view_firewall", "list_firewall_rules",
+      "view_firewall_device", "update_firewall", "delete_firewall_device", "update_firewall_rules",
+      "list_firewall_devices", "delete_firewall", "view_firewall_rule_version", "list_firewall_rule_versions",
+      "create_firewall_device"]}, {"name": "firewall_contributor", "description":
+      "Allows the user to view and update firewall instances attached to this role,
+      as well as view their devices and view and update their rules.", "permissions":
+      ["view_firewall", "list_firewall_rules", "view_firewall_device", "update_firewall",
+      "update_firewall_rules", "list_firewall_devices", "view_firewall_rule_version",
+      "list_firewall_rule_versions", "create_firewall_device"]}]}, {"type": "longview",
+      "roles": [{"name": "longview_viewer", "description": "Allows the user the same
+      access as the legacy Read-Only specific permission for the Longview clients
+      attached to this role.", "permissions": []}, {"name": "longview_admin", "description":
+      "Allows the user the same access as the legacy Read-Write specific permission
+      for the Longview clients attached to this role.", "permissions": []}]}, {"type":
+      "stackscript", "roles": [{"name": "stackscript_admin", "description": "Allows
+      the user the same access as the legacy Read-Write specific permission for the
+      Stackscripts attached to this role.", "permissions": []}, {"name": "stackscript_viewer",
+      "description": "Allows the user the same access as the legacy Read-Only specific
+      permission for the Stackscripts attached to this role.", "permissions": []}]},
+      {"type": "volume", "roles": [{"name": "volume_admin", "description": "Allows
+      the user to view, update, attach, clone, detach, resize, and delete Volume instances
+      attached to this role.", "permissions": ["attach_volume", "delete_volume", "clone_volume",
+      "detach_volume", "view_volume", "update_volume", "resize_volume"]}, {"name":
+      "volume_viewer", "description": "Allows the user to view Volume instances attached
+      to this role.", "permissions": ["view_volume"]}, {"name": "volume_contributor",
+      "description": "Allows the user to view, update, attach, clone, detach, and
+      resize Volume instances attached to this role.", "permissions": ["attach_volume",
+      "clone_volume", "detach_volume", "view_volume", "update_volume", "resize_volume"]}]},
+      {"type": "lkecluster", "roles": [{"name": "lkecluster_admin", "description":
+      "Allows the user the same access as the legacy Read-Write specific permission
+      for the LKE clusters attached to this role.", "permissions": []}, {"name": "lkecluster_viewer",
+      "description": "Allows the user the same access as the legacy Read-Only specific
+      permission for the LKE clusters attached to this role.", "permissions": []}]},
+      {"type": "database", "roles": [{"name": "database_admin", "description": "Allows
+      the user the same access as the legacy Read-Write specific permission for the
+      Databases attached to this role.", "permissions": []}, {"name": "database_viewer",
+      "description": "Allows the user the same access as the legacy Read-Only specific
+      permission for the Databases attached to this role.", "permissions": []}]},
+      {"type": "linode", "roles": [{"name": "linode_viewer", "description": "Allows
+      the user to view Linode instances attached to this role and their backups, config
+      profiles, and disks.", "permissions": ["list_linode_firewalls", "list_linode_volumes",
+      "view_linode_disk", "view_linode", "view_linode_monthly_network_transfer_stats",
+      "view_linode_network_transfer", "list_linode_nodebalancers", "view_linode_monthly_stats",
+      "view_linode_config_profile", "view_linode_stats", "view_linode_backup", "view_linode_config_profile_interface"]},
+      {"name": "linode_contributor", "description": "Allows the user to view and update
+      Linode instances attached to this role, as well as create, list, view, and update
+      their backups, config profiles, and disks.", "permissions": ["generate_linode_lish_token_remote",
+      "rebuild_linode", "shutdown_linode", "restore_linode_backup", "update_linode_config_profile_interface",
+      "create_linode_config_profile", "rescue_linode", "list_linode_volumes", "list_linode_nodebalancers",
+      "view_linode_monthly_stats", "view_linode_config_profile", "clone_linode", "create_linode_config_profile_interface",
+      "password_reset_linode", "view_linode_config_profile_interface", "reset_linode_disk_root_password",
+      "upgrade_linode", "resize_linode", "update_linode_firewalls", "create_linode_backup_snapshot",
+      "list_linode_firewalls", "boot_linode", "view_linode_disk", "clone_linode_disk",
+      "view_linode_monthly_network_transfer_stats", "enable_linode_backups", "update_linode",
+      "view_linode_network_transfer", "apply_linode_firewalls", "reorder_linode_config_profile_interfaces",
+      "reboot_linode", "create_linode_disk", "view_linode_stats", "update_linode_config_profile",
+      "view_linode_backup", "migrate_linode", "generate_linode_lish_token", "view_linode",
+      "resize_linode_disk", "update_linode_disk"]}, {"name": "linode_admin", "description":
+      "Allows the user to view, update, and delete Linode instances attached to this
+      role, as well as create, list, view, update, and delete their backups, config
+      profiles, and disks.", "permissions": ["generate_linode_lish_token_remote",
+      "rebuild_linode", "shutdown_linode", "restore_linode_backup", "update_linode_config_profile_interface",
+      "create_linode_config_profile", "rescue_linode", "delete_linode_config_profile",
+      "list_linode_volumes", "list_linode_nodebalancers", "view_linode_monthly_stats",
+      "view_linode_config_profile", "delete_linode_disk", "delete_linode", "clone_linode",
+      "create_linode_config_profile_interface", "password_reset_linode", "view_linode_config_profile_interface",
+      "reset_linode_disk_root_password", "upgrade_linode", "resize_linode", "update_linode_firewalls",
+      "create_linode_backup_snapshot", "list_linode_firewalls", "boot_linode", "view_linode_disk",
+      "clone_linode_disk", "view_linode_monthly_network_transfer_stats", "enable_linode_backups",
+      "update_linode", "view_linode_network_transfer", "apply_linode_firewalls", "reorder_linode_config_profile_interfaces",
+      "reboot_linode", "create_linode_disk", "view_linode_stats", "update_linode_config_profile",
+      "view_linode_backup", "delete_linode_config_profile_interface", "migrate_linode",
+      "generate_linode_lish_token", "view_linode", "resize_linode_disk", "update_linode_disk",
+      "cancel_linode_backups"]}]}, {"type": "vpc", "roles": [{"name": "vpc_contributor",
+      "description": "Allows the user to view and update VPC instances attached to
+      this role and their subnets.", "permissions": ["list_vpc_ip_addresses", "update_vpc",
+      "view_vpc", "view_vpc_subnet", "create_vpc_subnet", "update_vpc_subnet"]}, {"name":
+      "vpc_viewer", "description": "Allows the user to view VPC instances attached
+      to this role and their subnets.", "permissions": ["list_vpc_ip_addresses", "view_vpc",
+      "view_vpc_subnet"]}, {"name": "vpc_admin", "description": "Allows the user to
+      view, update, and delete VPC instances attached to this role, as well as view,
+      create, update, and delete their subnets. ", "permissions": ["list_vpc_ip_addresses",
+      "delete_vpc_subnet", "update_vpc", "view_vpc", "view_vpc_subnet", "delete_vpc",
+      "create_vpc_subnet", "update_vpc_subnet"]}]}, {"type": "domain", "roles": [{"name":
+      "domain_viewer", "description": "Allows the user the same access as the legacy
+      Read-Only specific permission for the Domains attached to this role.", "permissions":
+      []}, {"name": "domain_admin", "description": "Allows the user the same access
+      as the legacy Read-Write specific permission for the Domains attached to this
+      role.", "permissions": []}]}, {"type": "nodebalancer", "roles": [{"name": "nodebalancer_contributor",
+      "description": "Allows the user to view and update NodeBalancer instances attached
+      to this role, as well as create, list, view, and update their configs.", "permissions":
+      ["list_nodebalancer_vpc_configs", "update_nodebalancer_config", "list_nodebalancer_firewalls",
+      "view_nodebalancer", "update_nodebalancer_config_node", "view_nodebalancer_config_node",
+      "create_nodebalancer_config", "view_nodebalancer_statistics", "view_nodebalancer_config",
+      "create_nodebalancer_config_node", "list_nodebalancer_config_nodes", "update_nodebalancer_firewalls",
+      "view_nodebalancer_vpc_config", "rebuild_nodebalancer_config", "update_nodebalancer"]},
+      {"name": "nodebalancer_admin", "description": "Allows the user to view, update,
+      and delete NodeBalancer instances attached to this role, as well as create,
+      list, view, update, and delete their configs.", "permissions": ["delete_nodebalancer_config_node",
+      "list_nodebalancer_vpc_configs", "update_nodebalancer_config", "list_nodebalancer_firewalls",
+      "view_nodebalancer", "update_nodebalancer_config_node", "view_nodebalancer_config_node",
+      "create_nodebalancer_config", "view_nodebalancer_statistics", "view_nodebalancer_config",
+      "create_nodebalancer_config_node", "list_nodebalancer_config_nodes", "update_nodebalancer_firewalls",
+      "view_nodebalancer_vpc_config", "rebuild_nodebalancer_config", "delete_nodebalancer",
+      "update_nodebalancer", "delete_nodebalancer_config"]}, {"name": "nodebalancer_viewer",
+      "description": "Allows the user to view NodeBalancer instances attached to this
+      role and their configs.", "permissions": ["view_nodebalancer_config_node", "view_nodebalancer_statistics",
+      "view_nodebalancer_config", "list_nodebalancer_config_nodes", "list_nodebalancer_vpc_configs",
+      "list_nodebalancer_firewalls", "view_nodebalancer_vpc_config", "view_nodebalancer"]}]},
+      {"type": "image", "roles": [{"name": "image_admin", "description": "Allows the
+      user to view, update, replicate, and delete Image instances attached to this
+      role.", "permissions": ["update_image", "replicate_image", "delete_image", "view_image"]},
+      {"name": "image_contributor", "description": "Allows the user to view, update,
+      attach, clone, detach, and resize Image instances attached to this role.", "permissions":
+      ["update_image", "view_image"]}, {"name": "image_viewer", "description": "Allows
+      the user to view Volume instances attached to this role.", "permissions": ["view_image"]}]}]}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 22 Dec 2025 10:21:35 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - account:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
