@@ -117,24 +117,24 @@ const (
 
 // AlertDefinitionCreateOptions are the options used to create a new alert definition.
 type AlertDefinitionCreateOptions struct {
-	Label             string              `json:"label"`                 // mandatory
-	Severity          int                 `json:"severity"`              // mandatory
-	ChannelIDs        []int               `json:"channel_ids"`           // mandatory
-	RuleCriteria      RuleCriteriaOptions `json:"rule_criteria"`         // optional
-	TriggerConditions TriggerConditions   `json:"trigger_conditions"`    // optional
-	EntityIDs         []string            `json:"entity_ids,omitempty"`  // optional
-	Description       string              `json:"description,omitempty"` // optional
+	Label             string               `json:"label"`
+	Severity          int                  `json:"severity"`
+	ChannelIDs        []int                `json:"channel_ids"`
+	RuleCriteria      *RuleCriteriaOptions `json:"rule_criteria,omitempty"`
+	TriggerConditions *TriggerConditions   `json:"trigger_conditions,omitempty"`
+	EntityIDs         []string             `json:"entity_ids,omitempty"`
+	Description       *string              `json:"description,omitempty"`
 }
 
 // AlertDefinitionUpdateOptions are the options used to update an alert definition.
 type AlertDefinitionUpdateOptions struct {
-	Label             string              `json:"label"`                 // mandatory
-	Severity          int                 `json:"severity"`              // mandatory
-	ChannelIDs        []int               `json:"channel_ids"`           // mandatory
-	RuleCriteria      RuleCriteriaOptions `json:"rule_criteria"`         // optional
-	TriggerConditions TriggerConditions   `json:"trigger_conditions"`    // optional
-	EntityIDs         []string            `json:"entity_ids,omitempty"`  // optional
-	Description       string              `json:"description,omitempty"` // optional
+	Label             string               `json:"label"`
+	Severity          int                  `json:"severity"`
+	ChannelIDs        []int                `json:"channel_ids"`
+	RuleCriteria      *RuleCriteriaOptions `json:"rule_criteria,omitempty"`
+	TriggerConditions *TriggerConditions   `json:"trigger_conditions,omitempty"`
+	EntityIDs         []string             `json:"entity_ids,omitempty"`
+	Description       *string              `json:"description,omitempty"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
@@ -166,13 +166,7 @@ func (c *Client) ListMonitorAlertDefinitions(
 	serviceType string,
 	opts *ListOptions,
 ) ([]AlertDefinition, error) {
-	var endpoint string
-	if serviceType != "" {
-		endpoint = formatAPIPath("monitor/services/%s/alert-definitions", serviceType)
-	} else {
-		endpoint = formatAPIPath("monitor/alert-definitions")
-	}
-
+	endpoint := formatAPIPath("monitor/services/%s/alert-definitions", serviceType)
 	return getPaginatedResults[AlertDefinition](ctx, c, endpoint, opts)
 }
 

@@ -15,13 +15,11 @@ const (
 )
 
 func TestMonitorAlertDefinition_smoke(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertDefinition_instance")
+	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertDefinition")
 	defer teardown()
 
-	client.SetAPIVersion("v4beta")
-
 	// Get All Alert Definitions
-	alerts, err := client.ListMonitorAlertDefinitions(context.Background(), "", nil)
+	alerts, err := client.ListAllMonitorAlertDefinitions(context.Background(), nil)
 	// Even if there is no alert definition, it should not error out
 	if err != nil {
 		t.Fatalf("failed to fetch monitor alert definitions: %s", err)
@@ -72,16 +70,16 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 	createOpts := linodego.AlertDefinitionCreateOptions{
 		Label:       "go-test-alert-definition-create",
 		Severity:    int(linodego.SeverityLow),
-		Description: "Test alert definition creation",
+		Description: linodego.Pointer("Test alert definition creation"),
 		ChannelIDs:  []int{channelID},
 		EntityIDs:   nil,
-		TriggerConditions: linodego.TriggerConditions{
+		TriggerConditions: &linodego.TriggerConditions{
 			CriteriaCondition:       "ALL",
 			EvaluationPeriodSeconds: 300,
 			PollingIntervalSeconds:  300,
 			TriggerOccurrences:      1,
 		},
-		RuleCriteria: linodego.RuleCriteriaOptions{
+		RuleCriteria: &linodego.RuleCriteriaOptions{
 			Rules: []linodego.RuleOptions{
 				{
 					AggregateFunction: "avg",
@@ -111,7 +109,7 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 	assert.NotNil(t, createdAlert)
 	assert.Equal(t, createOpts.Label, createdAlert.Label)
 	assert.Equal(t, createOpts.Severity, createdAlert.Severity)
-	assert.Equal(t, createOpts.Description, createdAlert.Description)
+	assert.Equal(t, *createOpts.Description, createdAlert.Description)
 	assert.ElementsMatch(t, createOpts.EntityIDs, createdAlert.EntityIDs)
 	// assert.Equal(t, fetchedChannel.Label, createdAlert.AlertChannels[0].Label)
 
@@ -151,7 +149,7 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 		RuleCriteria:      createOpts.RuleCriteria,
 		TriggerConditions: createOpts.TriggerConditions,
 		EntityIDs:         createOpts.EntityIDs,
-		Description:       createdAlert.Description,
+		Description:       &createdAlert.Description,
 	}
 	// wait for 1 minute before update for create to complete
 	time.Sleep(1 * time.Minute)
@@ -189,14 +187,12 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 	}
 }
 
-func TestListMonitorAlertDefinitions(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestListMonitorAlertDefinitions")
+func TestMonitorAlertDefinitions_List(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertDefinitions_List")
 	defer teardown()
 
-	client.SetAPIVersion("v4beta")
-
 	// List all alert definitions
-	alerts, err := client.ListMonitorAlertDefinitions(context.Background(), "", nil)
+	alerts, err := client.ListAllMonitorAlertDefinitions(context.Background(), nil)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, alerts, "Expected at least one alert definition")
 
@@ -207,11 +203,9 @@ func TestListMonitorAlertDefinitions(t *testing.T) {
 	}
 }
 
-func TestListMonitorAlertChannels(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestListMonitorAlertChannels")
+func TestMonitorAlertChannels_List(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertChannels_List")
 	defer teardown()
-
-	client.SetAPIVersion("v4beta")
 
 	// List all alert channels
 	channels, err := client.ListAlertChannels(context.Background(), nil)
@@ -225,11 +219,9 @@ func TestListMonitorAlertChannels(t *testing.T) {
 	}
 }
 
-func TestCreateMonitorAlertDefinitionWithIdempotency(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestCreateMonitorAlertDefinitionWithIdempotency")
+func TestMonitorAlertDefinition_CreateWithIdempotency(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertDefinition_CreateWithIdempotency")
 	defer teardown()
-
-	client.SetAPIVersion("v4beta")
 
 	// Get a channel ID to use
 	channels, err := client.ListAlertChannels(context.Background(), nil)
@@ -243,16 +235,16 @@ func TestCreateMonitorAlertDefinitionWithIdempotency(t *testing.T) {
 	createOpts := linodego.AlertDefinitionCreateOptions{
 		Label:       uniqueLabel,
 		Severity:    int(linodego.SeverityLow),
-		Description: "Test alert definition creation with idempotency",
+		Description: linodego.Pointer("Test alert definition creation with idempotency"),
 		ChannelIDs:  []int{channelID},
 		EntityIDs:   nil,
-		TriggerConditions: linodego.TriggerConditions{
+		TriggerConditions: &linodego.TriggerConditions{
 			CriteriaCondition:       "ALL",
 			EvaluationPeriodSeconds: 300,
 			PollingIntervalSeconds:  300,
 			TriggerOccurrences:      1,
 		},
-		RuleCriteria: linodego.RuleCriteriaOptions{
+		RuleCriteria: &linodego.RuleCriteriaOptions{
 			Rules: []linodego.RuleOptions{
 				{
 					AggregateFunction: "avg",
