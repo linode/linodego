@@ -446,7 +446,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Dec 2025 17:12:06 GMT
+      - Mon, 08 Dec 2025 16:21:24 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -472,7 +472,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"au-mel","type":"g6-nanode-1","label":"go-test-ins-wo-disk-92m1s5bir5e8","firewall_id":3573375,"booted":false}'
+    body: '{"region":"gb-lon","type":"g6-nanode-1","label":"go-test-ins-wo-disk-k42bgqvb9626","firewall_id":3573134,"booted":false}'
     form: {}
     headers:
       Accept:
@@ -484,19 +484,19 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 88409909, "label": "go-test-ins-wo-disk-92m1s5bir5e8", "group":
+    body: '{"id": 88407723, "label": "go-test-ins-wo-disk-k42bgqvb9626", "group":
       "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.236.32.16"], "ipv6": "1234::5678/128",
-      "image": null, "region": "au-mel", "site_type": "core", "specs": {"disk": 25600,
+      "type": "g6-nanode-1", "ipv4": ["172.236.1.42"], "ipv6": "1234::5678/128",
+      "image": null, "region": "gb-lon", "site_type": "core", "specs": {"disk": 25600,
       "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
       0}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota":
       80, "io": 10000}, "backups": {"enabled": false, "available": false, "schedule":
       {"day": null, "window": null}, "last_successful": null}, "hypervisor": "kvm",
-      "watchdog_enabled": true, "tags": [], "host_uuid": "aa52131295cf7351a602605960d45b04136019b6",
+      "watchdog_enabled": true, "tags": [], "host_uuid": "3be48bd537d9a354ea41df6b60e4a961ab365af4",
       "has_user_data": false, "placement_group": null, "disk_encryption": "enabled",
       "lke_cluster_id": null, "capabilities": ["Block Storage Encryption", "SMTP Enabled",
       "Maintenance Policy"], "interface_generation": "legacy_config", "maintenance_policy":
-      "linode/migrate", "locks": []}'
+      "linode/power_off_on", "locks": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -519,7 +519,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Dec 2025 17:12:06 GMT
+      - Mon, 08 Dec 2025 16:21:24 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -544,7 +544,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-conf-ovvt060z6a39","devices":{},"interfaces":null}'
+    body: '{"label":"go-test-conf-q318o5as4mm0","devices":{},"interfaces":null}'
     form: {}
     headers:
       Accept:
@@ -553,10 +553,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/88409909/configs
+    url: https://api.linode.com/v4beta/linode/instances/88407723/configs
     method: POST
   response:
-    body: '{"id": 91911061, "label": "go-test-conf-ovvt060z6a39", "helpers": {"updatedb_disabled":
+    body: '{"id": 91909448, "label": "go-test-conf-q318o5as4mm0", "helpers": {"updatedb_disabled":
       true, "distro": true, "modules_dep": true, "network": false, "devtmpfs_automount":
       true}, "kernel": "linode/latest-64bit", "comments": "", "memory_limit": 0, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "root_device": "/dev/sda",
@@ -587,7 +587,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Dec 2025 17:12:07 GMT
+      - Mon, 08 Dec 2025 16:21:25 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -620,7 +620,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/88409909/transfer/2025/12
+    url: https://api.linode.com/v4beta/linode/instances/88407723/transfer/2025/12
     method: GET
   response:
     body: '{"bytes_in": 0, "bytes_out": 0, "bytes_total": 0}'
@@ -648,7 +648,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Dec 2025 17:12:07 GMT
+      - Mon, 08 Dec 2025 16:21:25 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -682,7 +682,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/88409909/transfer/2025/12
+    url: https://api.linode.com/v4beta/linode/instances/88407723/transfer/2025/12
     method: GET
   response:
     body: '{"bytes_in": 0, "bytes_out": 0, "bytes_total": 0}'
@@ -710,7 +710,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Dec 2025 17:12:07 GMT
+      - Mon, 08 Dec 2025 16:21:25 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -744,7 +744,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/88409909
+    url: https://api.linode.com/v4beta/linode/instances/88407723
     method: DELETE
   response:
     body: '{}'
@@ -772,7 +772,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 08 Dec 2025 17:12:07 GMT
+      - Mon, 08 Dec 2025 16:21:25 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

@@ -1,0 +1,300 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/alert-channels?page=1
+    method: GET
+  response:
+    body: '{"pages": 1, "page": 1, "results": 1, "data": [{"id": 10000, "label": "Read-Write
+      Channel", "channel_type": "email", "type": "system", "content": {"email": {"email_addresses":
+      ["Users-with-read-write-access-to-resources"]}}, "alerts": [{"id": 10000, "label":
+      "High Memory Usage Plan Dedicated", "url": "/monitor/alerts-definitions/10000",
+      "type": "alerts-definitions"}, {"id": 10001, "label": "High Memory Usage Plan
+      Shared", "url": "/monitor/alerts-definitions/10001", "type": "alerts-definitions"},
+      {"id": 10002, "label": "High CPU Usage Plan Dedicated", "url": "/monitor/alerts-definitions/10002",
+      "type": "alerts-definitions"}, {"id": 10003, "label": "High CPU Usage Plan Shared",
+      "url": "/monitor/alerts-definitions/10003", "type": "alerts-definitions"}, {"id":
+      10004, "label": "High Disk Usage Plan Dedicated", "url": "/monitor/alerts-definitions/10004",
+      "type": "alerts-definitions"}, {"id": 10005, "label": "High Disk Usage Plan
+      Shared", "url": "/monitor/alerts-definitions/10005", "type": "alerts-definitions"},
+      {"id": 10325, "label": "priugnqv_updated", "url": "/monitor/alerts-definitions/10325",
+      "type": "alerts-definitions"}, {"id": 10428, "label": "dgrdhnsr-e2e-alert-1759852561-updated",
+      "url": "/monitor/alerts-definitions/10428", "type": "alerts-definitions"}, {"id":
+      10538, "label": "wxnlqpsc-e2e-alert-1764709596-updated", "url": "/monitor/alerts-definitions/10538",
+      "type": "alerts-definitions"}, {"id": 10539, "label": "nrlcnzoh-e2e-alert-1764710180-updated",
+      "url": "/monitor/alerts-definitions/10539", "type": "alerts-definitions"}, {"id":
+      10550, "label": "ansible-test-220883203", "url": "/monitor/alerts-definitions/10550",
+      "type": "alerts-definitions"}, {"id": 10551, "label": "ansible-test-826575525",
+      "url": "/monitor/alerts-definitions/10551", "type": "alerts-definitions"}, {"id":
+      10552, "label": "ansible-test-375711107", "url": "/monitor/alerts-definitions/10552",
+      "type": "alerts-definitions"}, {"id": 10553, "label": "ansible-test-657347537",
+      "url": "/monitor/alerts-definitions/10553", "type": "alerts-definitions"}, {"id":
+      10554, "label": "ansible-test-534545596", "url": "/monitor/alerts-definitions/10554",
+      "type": "alerts-definitions"}, {"id": 10555, "label": "ansible-test-642881759",
+      "url": "/monitor/alerts-definitions/10555", "type": "alerts-definitions"}, {"id":
+      10556, "label": "ansible-test-656673869", "url": "/monitor/alerts-definitions/10556",
+      "type": "alerts-definitions"}, {"id": 10557, "label": "ansible-test-295829242",
+      "url": "/monitor/alerts-definitions/10557", "type": "alerts-definitions"}, {"id":
+      10558, "label": "ansible-test-277521781-updated", "url": "/monitor/alerts-definitions/10558",
+      "type": "alerts-definitions"}, {"id": 10559, "label": "ansible-test-466811413-updated",
+      "url": "/monitor/alerts-definitions/10559", "type": "alerts-definitions"}, {"id":
+      10560, "label": "ansible-test-38320747-updated", "url": "/monitor/alerts-definitions/10560",
+      "type": "alerts-definitions"}, {"id": 10561, "label": "ansible-test-876561700-updated",
+      "url": "/monitor/alerts-definitions/10561", "type": "alerts-definitions"}, {"id":
+      10562, "label": "ansible-test-256576958-updated", "url": "/monitor/alerts-definitions/10562",
+      "type": "alerts-definitions"}, {"id": 10563, "label": "ansible-test-653795213-updated",
+      "url": "/monitor/alerts-definitions/10563", "type": "alerts-definitions"}, {"id":
+      10564, "label": "ansible-test-211263922-updated", "url": "/monitor/alerts-definitions/10564",
+      "type": "alerts-definitions"}, {"id": 10565, "label": "ansible-test-97045254-updated",
+      "url": "/monitor/alerts-definitions/10565", "type": "alerts-definitions"}, {"id":
+      10566, "label": "ansible-test-977589614-updated", "url": "/monitor/alerts-definitions/10566",
+      "type": "alerts-definitions"}, {"id": 10579, "label": "ansible-test-542221755-updated",
+      "url": "/monitor/alerts-definitions/10579", "type": "alerts-definitions"}, {"id":
+      10580, "label": "ansible-test-538851406-updated", "url": "/monitor/alerts-definitions/10580",
+      "type": "alerts-definitions"}, {"id": 10581, "label": "ansible-test-857069357-updated",
+      "url": "/monitor/alerts-definitions/10581", "type": "alerts-definitions"}, {"id":
+      10582, "label": "ansible-test-522435221-updated", "url": "/monitor/alerts-definitions/10582",
+      "type": "alerts-definitions"}, {"id": 10583, "label": "ansible-test-547596618-updated",
+      "url": "/monitor/alerts-definitions/10583", "type": "alerts-definitions"}, {"id":
+      10584, "label": "ansible-test-32062765-updated", "url": "/monitor/alerts-definitions/10584",
+      "type": "alerts-definitions"}, {"id": 10620, "label": "go-test-alert-definition-create-updated",
+      "url": "/monitor/alerts-definitions/10620", "type": "alerts-definitions"}],
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
+      "system", "updated_by": "system"}]}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Fri, 19 Dec 2025 16:44:01 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"label":"go-test-alert-definition-idempotency-1766162641225442000","severity":2,"channel_ids":[10000],"rule_criteria":{"rules":[{"aggregate_function":"avg","dimension_filters":[{"dimension_label":"node_type","operator":"eq","value":"primary"}],"metric":"memory_usage","operator":"gt","threshold":90}]},"trigger_conditions":{"criteria_condition":"ALL","evaluation_period_seconds":300,"polling_interval_seconds":300,"trigger_occurrences":1},"description":"Test
+      alert definition creation with idempotency"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions
+    method: POST
+  response:
+    body: '{"id": 10621, "label": "go-test-alert-definition-idempotency-1766162641225442000",
+      "description": "Test alert definition creation with idempotency", "service_type":
+      "dbaas", "type": "user", "scope": "entity", "class": null, "regions": [], "status":
+      "enabled", "entity_ids": [], "has_more_resources": false, "severity": 2, "rule_criteria":
+      {"rules": [{"label": "Memory Usage", "metric": "memory_usage", "unit": "percent",
+      "aggregate_function": "avg", "operator": "gt", "threshold": 90, "dimension_filters":
+      [{"label": "Node Type", "dimension_label": "node_type", "operator": "eq", "value":
+      "primary"}]}]}, "alert_channels": [{"id": 10000, "label": "Read-Write Channel",
+      "url": "/monitor/alert-channels/10000", "type": "alert-channels"}], "trigger_conditions":
+      {"criteria_condition": "ALL", "polling_interval_seconds": 300, "evaluation_period_seconds":
+      300, "trigger_occurrences": 1}, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "created_by": "ychen123", "updated_by": "ychen123"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Fri, 19 Dec 2025 16:44:02 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - databases:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"label":"go-test-alert-definition-idempotency-1766162641225442000","severity":2,"channel_ids":[10000],"rule_criteria":{"rules":[{"aggregate_function":"avg","dimension_filters":[{"dimension_label":"node_type","operator":"eq","value":"primary"}],"metric":"memory_usage","operator":"gt","threshold":90}]},"trigger_conditions":{"criteria_condition":"ALL","evaluation_period_seconds":300,"polling_interval_seconds":300,"trigger_occurrences":1},"description":"Test
+      alert definition creation with idempotency"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions
+    method: POST
+  response:
+    body: '{"errors": [{"reason": "An alert with this label already exists", "field":
+      "label"}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Content-Length:
+      - "85"
+      Content-Type:
+      - application/json
+      Expires:
+      - Fri, 19 Dec 2025 16:44:02 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Accepted-Oauth-Scopes:
+      - databases:read_only
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+    status: 400 Bad Request
+    code: 400
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/10621
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Fri, 19 Dec 2025 16:44:03 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - databases:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""

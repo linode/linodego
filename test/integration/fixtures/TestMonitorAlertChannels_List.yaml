@@ -1,0 +1,113 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/alert-channels?page=1
+    method: GET
+  response:
+    body: '{"pages": 1, "page": 1, "results": 1, "data": [{"id": 10000, "label": "Read-Write
+      Channel", "channel_type": "email", "type": "system", "content": {"email": {"email_addresses":
+      ["Users-with-read-write-access-to-resources"]}}, "alerts": [{"id": 10000, "label":
+      "High Memory Usage Plan Dedicated", "url": "/monitor/alerts-definitions/10000",
+      "type": "alerts-definitions"}, {"id": 10001, "label": "High Memory Usage Plan
+      Shared", "url": "/monitor/alerts-definitions/10001", "type": "alerts-definitions"},
+      {"id": 10002, "label": "High CPU Usage Plan Dedicated", "url": "/monitor/alerts-definitions/10002",
+      "type": "alerts-definitions"}, {"id": 10003, "label": "High CPU Usage Plan Shared",
+      "url": "/monitor/alerts-definitions/10003", "type": "alerts-definitions"}, {"id":
+      10004, "label": "High Disk Usage Plan Dedicated", "url": "/monitor/alerts-definitions/10004",
+      "type": "alerts-definitions"}, {"id": 10005, "label": "High Disk Usage Plan
+      Shared", "url": "/monitor/alerts-definitions/10005", "type": "alerts-definitions"},
+      {"id": 10470, "label": "jgliahjs_updated", "url": "/monitor/alerts-definitions/10470",
+      "type": "alerts-definitions"}, {"id": 10503, "label": "obohragp-e2e-alert-1763051867-updated",
+      "url": "/monitor/alerts-definitions/10503", "type": "alerts-definitions"}, {"id":
+      10504, "label": "lczvmpvu-e2e-alert-1763053808", "url": "/monitor/alerts-definitions/10504",
+      "type": "alerts-definitions"}, {"id": 10505, "label": "ocachcjp-e2e-alert-1763055498-updated",
+      "url": "/monitor/alerts-definitions/10505", "type": "alerts-definitions"}, {"id":
+      10506, "label": "lrbbifob-e2e-alert-1763057283", "url": "/monitor/alerts-definitions/10506",
+      "type": "alerts-definitions"}, {"id": 10507, "label": "cbbrhfnv-e2e-alert-1763057415",
+      "url": "/monitor/alerts-definitions/10507", "type": "alerts-definitions"}, {"id":
+      10508, "label": "gqzzxdgh-e2e-alert-1763057687", "url": "/monitor/alerts-definitions/10508",
+      "type": "alerts-definitions"}, {"id": 10509, "label": "smqsmhst-e2e-alert-1763058424",
+      "url": "/monitor/alerts-definitions/10509", "type": "alerts-definitions"}, {"id":
+      10510, "label": "vygdkmkw-e2e-alert-1763058509", "url": "/monitor/alerts-definitions/10510",
+      "type": "alerts-definitions"}, {"id": 10511, "label": "dvlgyyvr-e2e-alert-1763058560",
+      "url": "/monitor/alerts-definitions/10511", "type": "alerts-definitions"}, {"id":
+      10512, "label": "pscihptu-e2e-alert-1763058653-updated", "url": "/monitor/alerts-definitions/10512",
+      "type": "alerts-definitions"}, {"id": 10513, "label": "emxhsdlm-e2e-alert-1763059164-updated",
+      "url": "/monitor/alerts-definitions/10513", "type": "alerts-definitions"}, {"id":
+      10514, "label": "fxbekqdl-e2e-alert-1763059845-updated", "url": "/monitor/alerts-definitions/10514",
+      "type": "alerts-definitions"}, {"id": 10529, "label": "Test Database Standby
+      Host", "url": "/monitor/alerts-definitions/10529", "type": "alerts-definitions"},
+      {"id": 10623, "label": "go-test-alert-definition-idempotency-1766438857602066000",
+      "url": "/monitor/alerts-definitions/10623", "type": "alerts-definitions"}, {"id":
+      10624, "label": "go-test-alert-definition-create-updated", "url": "/monitor/alerts-definitions/10624",
+      "type": "alerts-definitions"}, {"id": 10625, "label": "go-test-alert-definition-idempotency-1766439008803464000",
+      "url": "/monitor/alerts-definitions/10625", "type": "alerts-definitions"}, {"id":
+      10626, "label": "go-test-alert-definition-create-updated", "url": "/monitor/alerts-definitions/10626",
+      "type": "alerts-definitions"}, {"id": 10627, "label": "go-test-alert-definition-idempotency-1766439204872603000",
+      "url": "/monitor/alerts-definitions/10627", "type": "alerts-definitions"}, {"id":
+      10628, "label": "go-test-alert-definition-create-updated", "url": "/monitor/alerts-definitions/10628",
+      "type": "alerts-definitions"}, {"id": 10629, "label": "go-test-alert-definition-idempotency-1766439362488609000",
+      "url": "/monitor/alerts-definitions/10629", "type": "alerts-definitions"}, {"id":
+      10630, "label": "go-test-alert-definition-create-updated", "url": "/monitor/alerts-definitions/10630",
+      "type": "alerts-definitions"}, {"id": 10631, "label": "go-test-alert-definition-idempotency-1766439501203284000",
+      "url": "/monitor/alerts-definitions/10631", "type": "alerts-definitions"}, {"id":
+      10632, "label": "go-test-alert-definition-create-updated", "url": "/monitor/alerts-definitions/10632",
+      "type": "alerts-definitions"}], "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "created_by": "system", "updated_by": "system"}]}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 22 Dec 2025 21:41:17 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
