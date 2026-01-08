@@ -98,8 +98,9 @@ type NodeBalancerPlanType string
 
 // NodeBalancerPlanType constants reflect the plan type used by a NodeBalancer Config
 const (
-	NBTypePremium NodeBalancerPlanType = "premium"
-	NBTypeCommon  NodeBalancerPlanType = "common"
+	NBTypePremium     NodeBalancerPlanType = "premium"
+	NBTypePremium40GB NodeBalancerPlanType = "premium_40gb"
+	NBTypeCommon      NodeBalancerPlanType = "common"
 )
 
 // UnmarshalJSON implements the json.Unmarshaler interface

@@ -1,0 +1,227 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/alert-definitions?page=1
+    method: GET
+  response:
+    body: '{"pages": 1, "page": 1, "results": 14, "data": [{"id": 10000, "label":
+      "High Memory Usage Plan Dedicated", "description": "Alert triggers when dedicated
+      plan nodes consistently reach critical memory usage, risking application performance
+      degradation.", "service_type": "dbaas", "type": "system", "scope": "entity",
+      "class": "dedicated", "regions": [], "status": "enabled", "entity_ids": [],
+      "has_more_resources": false, "severity": 2, "rule_criteria": {"rules": [{"label":
+      "Memory Usage", "metric": "memory_usage", "unit": "percent", "aggregate_function":
+      "avg", "operator": "gt", "threshold": 95, "dimension_filters": []}]}, "alert_channels":
+      [{"id": 10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
+      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
+      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
+      3}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
+      "system", "updated_by": "system"}, {"id": 10001, "label": "High Memory Usage
+      Plan Shared", "description": "Alert triggers when shared plan nodes consistently
+      reach critical memory usage, risking application performance degradation.",
+      "service_type": "dbaas", "type": "system", "scope": "entity", "class": "shared",
+      "regions": [], "status": "enabled", "entity_ids": ["389481", "395222"], "has_more_resources":
+      false, "severity": 2, "rule_criteria": {"rules": [{"label": "Memory Usage",
+      "metric": "memory_usage", "unit": "percent", "aggregate_function": "avg", "operator":
+      "gt", "threshold": 90, "dimension_filters": []}]}, "alert_channels": [{"id":
+      10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
+      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
+      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
+      3}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
+      "system", "updated_by": "system"}, {"id": 10002, "label": "High CPU Usage Plan
+      Dedicated", "description": "Alert triggers when dedicated nodes consistently
+      exceed 95% CPU usage across three consecutive 5-minute intervals.", "service_type":
+      "dbaas", "type": "system", "scope": "entity", "class": "dedicated", "regions":
+      [], "status": "enabled", "entity_ids": [], "has_more_resources": false, "severity":
+      2, "rule_criteria": {"rules": [{"label": "CPU Usage", "metric": "cpu_usage",
+      "unit": "percent", "aggregate_function": "avg", "operator": "gt", "threshold":
+      95, "dimension_filters": []}]}, "alert_channels": [{"id": 10000, "label": "Read-Write
+      Channel", "url": "/monitor/alert-channels/10000", "type": "alert-channels"}],
+      "trigger_conditions": {"criteria_condition": "ALL", "polling_interval_seconds":
+      300, "evaluation_period_seconds": 300, "trigger_occurrences": 3}, "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by": "system",
+      "updated_by": "system"}, {"id": 10003, "label": "High CPU Usage Plan Shared",
+      "description": "Alert triggers when shared plan nodes consistently exceed high
+      CPU utilization, indicating potential performance issues.", "service_type":
+      "dbaas", "type": "system", "scope": "entity", "class": "shared", "regions":
+      [], "status": "enabled", "entity_ids": ["389481", "395222"], "has_more_resources":
+      false, "severity": 2, "rule_criteria": {"rules": [{"label": "CPU Usage", "metric":
+      "cpu_usage", "unit": "percent", "aggregate_function": "avg", "operator": "gt",
+      "threshold": 90, "dimension_filters": []}]}, "alert_channels": [{"id": 10000,
+      "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000", "type":
+      "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL", "polling_interval_seconds":
+      300, "evaluation_period_seconds": 300, "trigger_occurrences": 3}, "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by": "system",
+      "updated_by": "system"}, {"id": 10004, "label": "High Disk Usage Plan Dedicated",
+      "description": "Alert triggers when dedicated plan nodes experience sustained
+      high disk usage, risking immediate resource exhaustion.", "service_type": "dbaas",
+      "type": "system", "scope": "entity", "class": "dedicated", "regions": [], "status":
+      "enabled", "entity_ids": [], "has_more_resources": false, "severity": 2, "rule_criteria":
+      {"rules": [{"label": "Disk Space Usage", "metric": "disk_usage", "unit": "percent",
+      "aggregate_function": "avg", "operator": "gt", "threshold": 95, "dimension_filters":
+      []}]}, "alert_channels": [{"id": 10000, "label": "Read-Write Channel", "url":
+      "/monitor/alert-channels/10000", "type": "alert-channels"}], "trigger_conditions":
+      {"criteria_condition": "ALL", "polling_interval_seconds": 300, "evaluation_period_seconds":
+      300, "trigger_occurrences": 3}, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "created_by": "system", "updated_by": "system"}, {"id":
+      10005, "label": "High Disk Usage Plan Shared", "description": "Alert triggers
+      when shared plan nodes experience sustained high disk usage, risking immediate
+      resource exhaustion.", "service_type": "dbaas", "type": "system", "scope": "entity",
+      "class": "shared", "regions": [], "status": "enabled", "entity_ids": ["389481",
+      "395222"], "has_more_resources": false, "severity": 2, "rule_criteria": {"rules":
+      [{"label": "Disk Space Usage", "metric": "disk_usage", "unit": "percent", "aggregate_function":
+      "avg", "operator": "gt", "threshold": 90, "dimension_filters": []}]}, "alert_channels":
+      [{"id": 10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
+      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
+      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
+      3}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
+      "system", "updated_by": "system"}, {"id": 10550, "label": "ansible-test-220883203",
+      "description": "An alert definition for ansible test", "service_type": "dbaas",
+      "type": "user", "scope": "entity", "class": null, "regions": [], "status": "enabled",
+      "entity_ids": [], "has_more_resources": false, "severity": 1, "rule_criteria":
+      {"rules": [{"label": "Memory Usage", "metric": "memory_usage", "unit": "percent",
+      "aggregate_function": "avg", "operator": "gt", "threshold": 90.0, "dimension_filters":
+      [{"label": "Node Type", "dimension_label": "node_type", "operator": "eq", "value":
+      "primary"}]}]}, "alert_channels": [{"id": 10000, "label": "Read-Write Channel",
+      "url": "/monitor/alert-channels/10000", "type": "alert-channels"}], "trigger_conditions":
+      {"criteria_condition": "ALL", "polling_interval_seconds": 300, "evaluation_period_seconds":
+      300, "trigger_occurrences": 1}, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "created_by": "ychen123", "updated_by": "ychen123"},
+      {"id": 10551, "label": "ansible-test-826575525", "description": "An alert definition
+      for ansible test", "service_type": "dbaas", "type": "user", "scope": "entity",
+      "class": null, "regions": [], "status": "enabled", "entity_ids": [], "has_more_resources":
+      false, "severity": 1, "rule_criteria": {"rules": [{"label": "Memory Usage",
+      "metric": "memory_usage", "unit": "percent", "aggregate_function": "avg", "operator":
+      "gt", "threshold": 90.0, "dimension_filters": [{"label": "Node Type", "dimension_label":
+      "node_type", "operator": "eq", "value": "primary"}]}]}, "alert_channels": [{"id":
+      10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
+      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
+      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
+      1}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
+      "ychen123", "updated_by": "ychen123"}, {"id": 10552, "label": "ansible-test-375711107",
+      "description": "An alert definition for ansible test", "service_type": "dbaas",
+      "type": "user", "scope": "entity", "class": null, "regions": [], "status": "enabled",
+      "entity_ids": [], "has_more_resources": false, "severity": 1, "rule_criteria":
+      {"rules": [{"label": "Memory Usage", "metric": "memory_usage", "unit": "percent",
+      "aggregate_function": "avg", "operator": "gt", "threshold": 90.0, "dimension_filters":
+      [{"label": "Node Type", "dimension_label": "node_type", "operator": "eq", "value":
+      "primary"}]}]}, "alert_channels": [{"id": 10000, "label": "Read-Write Channel",
+      "url": "/monitor/alert-channels/10000", "type": "alert-channels"}], "trigger_conditions":
+      {"criteria_condition": "ALL", "polling_interval_seconds": 300, "evaluation_period_seconds":
+      300, "trigger_occurrences": 1}, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "created_by": "ychen123", "updated_by": "ychen123"},
+      {"id": 10553, "label": "ansible-test-657347537", "description": "An alert definition
+      for ansible test", "service_type": "dbaas", "type": "user", "scope": "entity",
+      "class": null, "regions": [], "status": "enabled", "entity_ids": [], "has_more_resources":
+      false, "severity": 1, "rule_criteria": {"rules": [{"label": "Memory Usage",
+      "metric": "memory_usage", "unit": "percent", "aggregate_function": "avg", "operator":
+      "gt", "threshold": 90.0, "dimension_filters": [{"label": "Node Type", "dimension_label":
+      "node_type", "operator": "eq", "value": "primary"}]}]}, "alert_channels": [{"id":
+      10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
+      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
+      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
+      1}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
+      "ychen123", "updated_by": "ychen123"}, {"id": 10554, "label": "ansible-test-534545596",
+      "description": "An alert definition for ansible test", "service_type": "dbaas",
+      "type": "user", "scope": "entity", "class": null, "regions": [], "status": "enabled",
+      "entity_ids": [], "has_more_resources": false, "severity": 1, "rule_criteria":
+      {"rules": [{"label": "Memory Usage", "metric": "memory_usage", "unit": "percent",
+      "aggregate_function": "avg", "operator": "gt", "threshold": 90.0, "dimension_filters":
+      [{"label": "Node Type", "dimension_label": "node_type", "operator": "eq", "value":
+      "primary"}]}]}, "alert_channels": [{"id": 10000, "label": "Read-Write Channel",
+      "url": "/monitor/alert-channels/10000", "type": "alert-channels"}], "trigger_conditions":
+      {"criteria_condition": "ALL", "polling_interval_seconds": 300, "evaluation_period_seconds":
+      300, "trigger_occurrences": 1}, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "created_by": "ychen123", "updated_by": "ychen123"},
+      {"id": 10555, "label": "ansible-test-642881759", "description": "An alert definition
+      for ansible test", "service_type": "dbaas", "type": "user", "scope": "entity",
+      "class": null, "regions": [], "status": "enabled", "entity_ids": [], "has_more_resources":
+      false, "severity": 1, "rule_criteria": {"rules": [{"label": "Memory Usage",
+      "metric": "memory_usage", "unit": "percent", "aggregate_function": "avg", "operator":
+      "gt", "threshold": 90.0, "dimension_filters": [{"label": "Node Type", "dimension_label":
+      "node_type", "operator": "eq", "value": "primary"}]}]}, "alert_channels": [{"id":
+      10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
+      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
+      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
+      1}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
+      "ychen123", "updated_by": "ychen123"}, {"id": 10556, "label": "ansible-test-656673869",
+      "description": "An alert definition for ansible test", "service_type": "dbaas",
+      "type": "user", "scope": "entity", "class": null, "regions": [], "status": "enabled",
+      "entity_ids": [], "has_more_resources": false, "severity": 1, "rule_criteria":
+      {"rules": [{"label": "Memory Usage", "metric": "memory_usage", "unit": "percent",
+      "aggregate_function": "avg", "operator": "gt", "threshold": 90.0, "dimension_filters":
+      [{"label": "Node Type", "dimension_label": "node_type", "operator": "eq", "value":
+      "primary"}]}]}, "alert_channels": [{"id": 10000, "label": "Read-Write Channel",
+      "url": "/monitor/alert-channels/10000", "type": "alert-channels"}], "trigger_conditions":
+      {"criteria_condition": "ALL", "polling_interval_seconds": 300, "evaluation_period_seconds":
+      300, "trigger_occurrences": 1}, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "created_by": "ychen123", "updated_by": "ychen123"},
+      {"id": 10557, "label": "ansible-test-295829242", "description": "An alert definition
+      for ansible test", "service_type": "dbaas", "type": "user", "scope": "entity",
+      "class": null, "regions": [], "status": "enabled", "entity_ids": [], "has_more_resources":
+      false, "severity": 1, "rule_criteria": {"rules": [{"label": "Memory Usage",
+      "metric": "memory_usage", "unit": "percent", "aggregate_function": "avg", "operator":
+      "gt", "threshold": 90.0, "dimension_filters": [{"label": "Node Type", "dimension_label":
+      "node_type", "operator": "eq", "value": "primary"}]}]}, "alert_channels": [{"id":
+      10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
+      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
+      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
+      1}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
+      "ychen123", "updated_by": "ychen123"}]}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Fri, 19 Dec 2025 16:39:50 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
