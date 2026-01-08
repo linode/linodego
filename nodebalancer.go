@@ -22,7 +22,7 @@ type NodeBalancer struct {
 	IPv4 *string `json:"ipv4"`
 	// This NodeBalancer's public IPv6 address.
 	IPv6 *string `json:"ipv6"`
-	// Frontend address type (e.g., "vpc")
+	// Frontend address type (Either "vpc" or "public")
 	FrontendAddressType *string `json:"frontend_address_type,omitempty"`
 	// Frontend VPC subnet ID when using VPC addressing
 	FrontendVPCSubnetID *int `json:"frontend_vpc_subnet_id,omitempty"`
