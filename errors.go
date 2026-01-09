@@ -144,9 +144,9 @@ func coupleAPIErrorsHTTP(resp *http.Response, err error) (*http.Response, error)
 }
 
 func (e APIError) Error() string {
-	x := []string{}
-	for _, msg := range e.Errors {
-		x = append(x, msg.Error())
+	x := make([]string, len(e.Errors))
+	for i, msg := range e.Errors {
+		x[i] = msg.Error()
 	}
 
 	return strings.Join(x, "; ")
