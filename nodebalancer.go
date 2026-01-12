@@ -56,9 +56,9 @@ type NodeBalancerTransfer struct {
 }
 
 type NodeBalancerVPCOptions struct {
-	IPv4Range string `json:"ipv4_range,omitempty"`
-	IPv6Range string `json:"ipv6_range,omitempty"`
-	SubnetID  int    `json:"subnet_id"`
+	IPv4Range *string `json:"ipv4_range,omitempty"`
+	IPv6Range *string `json:"ipv6_range,omitempty"`
+	SubnetID  int     `json:"subnet_id"`
 	// IPv4RangeAutoAssign is only used for backend VPC configuration.
 	// For frontend VPCs, this field is ignored.
 	IPv4RangeAutoAssign bool `json:"ipv4_range_auto_assign,omitempty"`
