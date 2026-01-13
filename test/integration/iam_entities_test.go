@@ -40,7 +40,7 @@ func TestIAM_GetEntityRoles(t *testing.T) {
 	defer teardown()
 
 	// Get current user
-	account, err := client.GetProfile(context.Background())
+	profile, err := client.GetProfile(context.Background())
 	if err != nil {
 		t.Fatalf("Error getting account profile: %s", err)
 	}
@@ -58,7 +58,7 @@ func TestIAM_GetEntityRoles(t *testing.T) {
 
 	roles, err := client.GetEntityRoles(
 		context.Background(),
-		account.Username,
+		profile.Username,
 		entity.Type,
 		entity.ID,
 	)

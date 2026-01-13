@@ -27,14 +27,14 @@ func TestIAM_GetUserRolePermissions(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestIAM_GetUserRolePermissions")
 	defer teardown()
 
-	account, err := client.GetProfile(context.Background())
+	profile, err := client.GetProfile(context.Background())
 	if err != nil {
 		t.Fatalf("Error getting account profile: %s", err)
 	}
 
-	rolePermissions, err := client.GetUserRolePermissions(context.Background(), account.Username)
+	rolePermissions, err := client.GetUserRolePermissions(context.Background(), profile.Username)
 	if err != nil {
-		t.Errorf("Error getting user role permissions for %s: %s", account.Username, err)
+		t.Errorf("Error getting user role permissions for %s: %s", profile.Username, err)
 	}
 
 	if rolePermissions == nil {
@@ -53,12 +53,12 @@ func TestIAM_UpdateUserRolePermissions(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestIAM_UpdateUserRolePermissions")
 	defer teardown()
 
-	account, err := client.GetProfile(context.Background())
+	profile, err := client.GetProfile(context.Background())
 	if err != nil {
 		t.Fatalf("Error getting account profile: %s", err)
 	}
 
-	username := account.Username
+	username := profile.Username
 
 	currentPermissions, err := client.GetUserRolePermissions(context.Background(), username)
 	if err != nil {
@@ -87,18 +87,18 @@ func TestIAM_GetUserAccountPermissions(t *testing.T) {
 	defer teardown()
 
 	// Get current user profile to obtain username
-	account, err := client.GetProfile(context.Background())
+	profile, err := client.GetProfile(context.Background())
 	if err != nil {
 		t.Fatalf("Error getting account profile: %s", err)
 	}
 
 	permissions, err := client.GetUserAccountPermissions(
 		context.Background(),
-		account.Username,
+		profile.Username,
 	)
 	if err != nil {
 		t.Fatalf("Error getting user account permissions for %s: %s",
-			account.Username, err)
+			profile.Username, err)
 	}
 
 	if permissions == nil {
