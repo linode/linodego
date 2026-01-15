@@ -1,7 +1,6 @@
 package linodego
 
 import (
-	"context"
 	"encoding/json"
 	"time"
 
@@ -76,8 +75,9 @@ func (a *AlertChannel) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// ListAlertChannels gets a paginated list of Alert Channels.
-func (c *Client) ListAlertChannels(ctx context.Context, opts *ListOptions) ([]AlertChannel, error) {
-	endpoint := formatAPIPath("monitor/alert-channels")
-	return getPaginatedResults[AlertChannel](ctx, c, endpoint, opts)
-}
+// TODO: disable the list function for now as alert channels are not yet correctly supported
+//// ListAlertChannels gets a paginated list of Alert Channels.
+//func (c *Client) ListAlertChannels(ctx context.Context, opts *ListOptions) ([]AlertChannel, error) {
+//	endpoint := formatAPIPath("monitor/alert-channels")
+//	return getPaginatedResults[AlertChannel](ctx, c, endpoint, opts)
+//}

@@ -8,6 +8,15 @@ import (
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
+type AlertDefinitionStatus string
+
+const (
+	AlertDefinitionStatusEnabled    AlertDefinitionStatus = "enabled"
+	AlertDefinitionStatusDisabled   AlertDefinitionStatus = "disabled"
+	AlertDefinitionStatusInProgress AlertDefinitionStatus = "in_progress"
+	AlertDefinitionStatusFailed     AlertDefinitionStatus = "failed"
+)
+
 // AlertDefinition represents an ACLP Alert Definition object
 type AlertDefinition struct {
 	ID                int                    `json:"id"`
@@ -15,7 +24,7 @@ type AlertDefinition struct {
 	Severity          int                    `json:"severity"`
 	Type              string                 `json:"type"`
 	ServiceType       string                 `json:"service_type"`
-	Status            string                 `json:"status"`
+	Status            AlertDefinitionStatus  `json:"status"`
 	HasMoreResources  bool                   `json:"has_more_resources"`
 	RuleCriteria      RuleCriteria           `json:"rule_criteria"`
 	TriggerConditions TriggerConditions      `json:"trigger_conditions"`
@@ -24,7 +33,7 @@ type AlertDefinition struct {
 	Updated           *time.Time             `json:"-"`
 	UpdatedBy         string                 `json:"updated_by"`
 	CreatedBy         string                 `json:"created_by"`
-	EntityIDs         []any                  `json:"entity_ids"`
+	EntityIDs         []string               `json:"entity_ids"`
 	Description       string                 `json:"description"`
 	Class             string                 `json:"class"`
 }
@@ -128,13 +137,14 @@ type AlertDefinitionCreateOptions struct {
 
 // AlertDefinitionUpdateOptions are the options used to update an alert definition.
 type AlertDefinitionUpdateOptions struct {
-	Label             string               `json:"label"`
-	Severity          int                  `json:"severity"`
-	ChannelIDs        []int                `json:"channel_ids"`
-	RuleCriteria      *RuleCriteriaOptions `json:"rule_criteria,omitempty"`
-	TriggerConditions *TriggerConditions   `json:"trigger_conditions,omitempty"`
-	EntityIDs         []string             `json:"entity_ids,omitempty"`
-	Description       *string              `json:"description,omitempty"`
+	Label             string                 `json:"label"`
+	Severity          int                    `json:"severity"`
+	ChannelIDs        []int                  `json:"channel_ids"`
+	RuleCriteria      *RuleCriteriaOptions   `json:"rule_criteria,omitempty"`
+	TriggerConditions *TriggerConditions     `json:"trigger_conditions,omitempty"`
+	EntityIDs         []string               `json:"entity_ids,omitempty"`
+	Description       *string                `json:"description,omitempty"`
+	Status            *AlertDefinitionStatus `json:"status,omitempty"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
