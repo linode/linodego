@@ -3,19 +3,19 @@ package linodego
 // @TODO: disable alert channel for now because API made breaking changes.
 // type AlertNotificationType string
 //
-//const (
+// const (
 //	EmailAlertNotification AlertNotificationType = "email"
 //)
 //
-//type AlertChannelType string
+// type AlertChannelType string
 //
-//const (
+// const (
 //	SystemAlertChannel AlertChannelType = "system"
 //	UserAlertChannel   AlertChannelType = "user"
 //)
 //
 //// AlertChannelEnvelope represents a single alert channel entry returned inside alert definition
-//type AlertChannelEnvelope struct {
+// type AlertChannelEnvelope struct {
 //	ID    int    `json:"id"`
 //	Label string `json:"label"`
 //	Type  string `json:"type"`
@@ -23,7 +23,7 @@ package linodego
 //}
 //
 //// AlertChannel represents a Monitor Channel object.
-//type AlertChannel struct {
+// type AlertChannel struct {
 //	Alerts      []AlertChannelEnvelope `json:"alerts"`
 //	ChannelType AlertNotificationType  `json:"channel_type"`
 //	Content     ChannelContent         `json:"content"`
@@ -34,20 +34,20 @@ package linodego
 //	ID          int                    `json:"id"`
 //	Label       string                 `json:"label"`
 //	Type        AlertChannelType       `json:"type"`
-//}
+// }
 //
-//type EmailChannelContent struct {
+// type EmailChannelContent struct {
 //	EmailAddresses []string `json:"email_addresses"`
-//}
+// }
 //
 //// ChannelContent represents the content block for an AlertChannel, which varies by channel type.
-//type ChannelContent struct {
+// type ChannelContent struct {
 //	Email *EmailChannelContent `json:"email"`
 //	// Other channel types like 'webhook', 'slack' could be added here as optional fields.
-//}
+// }
 //
 //// UnmarshalJSON implements the json.Unmarshaler interface
-//func (a *AlertChannel) UnmarshalJSON(b []byte) error {
+// func (a *AlertChannel) UnmarshalJSON(b []byte) error {
 //	type Mask AlertChannel
 //
 //	p := struct {
@@ -67,10 +67,10 @@ package linodego
 //	a.Created = (*time.Time)(p.Created)
 //
 //	return nil
-//}
+// }
 
 //// ListAlertChannels gets a paginated list of Alert Channels.
 // func (c *Client) ListAlertChannels(ctx context.Context, opts *ListOptions) ([]AlertChannel, error) {
 //	endpoint := formatAPIPath("monitor/alert-channels")
 //	return getPaginatedResults[AlertChannel](ctx, c, endpoint, opts)
-//}
+// }
