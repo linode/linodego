@@ -98,6 +98,14 @@ type DimensionFilterOptions struct {
 	Value          string `json:"value,omitempty"`
 }
 
+// AlertChannelEnvelope represents a single alert channel entry returned inside alert definition
+type AlertChannelEnvelope struct {
+	ID    int    `json:"id"`
+	Label string `json:"label"`
+	Type  string `json:"type"`
+	URL   string `json:"url"`
+}
+
 // AlertType represents the type of alert: "user" or "system"
 type AlertType string
 
