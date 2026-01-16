@@ -6,6 +6,8 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/linode/linodego"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestLocks(t *testing.T) {
@@ -74,4 +76,41 @@ func TestLocks(t *testing.T) {
 	if refreshedInstance.Locks[0] != linodego.LockTypeCannotDelete {
 		t.Errorf("Expected instance to have %s lock, got %s", linodego.LockTypeCannotDelete, refreshedInstance.Locks[0])
 	}
+}
+
+func TestTryToLockTwoResourcesWithTheSameType(t *testing.T) {
+	client, instance, _, teardown, err := setupInstanceWithoutDisks(t,
+		"fixtures/TestTryToLockTwoResourcesWithTheSameType", false)
+	require.NoError(t, err)
+	t.Cleanup(teardown)
+	createOpts := linodego.LockCreateOptions{
+		EntityType: linodego.EntityLinode,
+		EntityID:   instance.ID,
+		LockType:   linodego.LockTypeCannotDelete,
+	}
+
+	createdLock, err := client.CreateLock(context.Background(), createOpts)
+	require.NoError(t, err)
+	t.Cleanup(func() {
+		client.DeleteLock(context.Background(), createdLock.ID)
+	})
+
+	createOpts.LockType = linodego.LockTypeCannotDeleteWithSubresources
+	_, errConflictingLock := client.CreateLock(context.Background(), createOpts)
+	require.Error(t, errConflictingLock)
+}
+
+func TestTryToCreateWithInvalidData(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestTryToCreateWithInvalidData")
+	t.Cleanup(teardown)
+
+	createOpts := linodego.LockCreateOptions{
+		EntityType: linodego.EntityLinode,
+		EntityID:   -99999876,
+		LockType:   linodego.LockTypeCannotDeleteWithSubresources,
+	}
+
+	_, createLockErr := client.CreateLock(context.Background(), createOpts)
+	require.Error(t, createLockErr)
+	assert.Equal(t, "[400] [entity_id] entity_id is not valid", createLockErr.Error())
 }
