@@ -12,6 +12,9 @@ import (
 
 const (
 	testMonitorAlertDefinitionServiceType = "dbaas"
+
+	// TODO: use a fixed channel id for now until the alert channel has been fixed.
+	channelID = 10000
 )
 
 func TestMonitorAlertDefinition_smoke(t *testing.T) {
@@ -66,7 +69,6 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 	//// Validate the chosen channel
 	//assert.NotZero(t, fetchedChannelID, "fetchedChannel.ID should not be zero")
 	//assert.NotEmpty(t, fetchedChannelLabel, "fetchedChannel.Label should not be empty")
-	channelID := 10000
 
 	// Test creating a new Monitor Alert Definition
 	createOpts := linodego.AlertDefinitionCreateOptions{
@@ -233,7 +235,6 @@ func TestMonitorAlertDefinition_CreateWithIdempotency(t *testing.T) {
 	//	t.Fatalf("failed to determine a monitor channel to use: %s", err)
 	//}
 	//channelID := channels[0].ID
-	channelID := 10000
 
 	uniqueLabel := fmt.Sprintf("go-test-alert-definition-idempotency-%d", time.Now().UnixNano())
 

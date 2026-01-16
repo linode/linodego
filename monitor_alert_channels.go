@@ -1,7 +1,7 @@
 package linodego
 
-// TODO: disable alert channel for now because API made breaking changes.
-//type AlertNotificationType string
+// @TODO: disable alert channel for now because API made breaking changes.
+// type AlertNotificationType string
 //
 //const (
 //	EmailAlertNotification AlertNotificationType = "email"
@@ -70,7 +70,7 @@ package linodego
 //}
 
 //// ListAlertChannels gets a paginated list of Alert Channels.
-//func (c *Client) ListAlertChannels(ctx context.Context, opts *ListOptions) ([]AlertChannel, error) {
+// func (c *Client) ListAlertChannels(ctx context.Context, opts *ListOptions) ([]AlertChannel, error) {
 //	endpoint := formatAPIPath("monitor/alert-channels")
 //	return getPaginatedResults[AlertChannel](ctx, c, endpoint, opts)
 //}

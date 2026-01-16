@@ -850,7 +850,7 @@ func eventMatchesSecondary(configuredID any, e Event) bool {
 	return secondaryID == configuredID
 }
 
-// WaitForAlertDefinitionStatus waits for the Alert Definition to reach the ready status (not in progress)
+// WaitForAlertDefinitionStatusReady waits for the Alert Definition to reach the ready status (not in progress)
 func (client Client) WaitForAlertDefinitionStatusReady(
 	ctx context.Context,
 	serviceType string,
