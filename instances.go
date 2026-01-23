@@ -232,10 +232,11 @@ type InstanceCreateOptions struct {
 	MaintenancePolicy *string `json:"maintenance_policy,omitempty"`
 
 	// Note: Alerts can only be used with v4beta.
-	Alerts *InstanceAlertsOptions `json:"alerts,omitempty"`
+	Alerts *InstanceACLPAlertsOptions `json:"alerts,omitempty"`
 }
 
-type InstanceAlertsOptions struct {
+// InstanceACLPAlertsOptions represents ACLP alerts options for instance creation and cloning.
+type InstanceACLPAlertsOptions struct {
 	SystemAlerts *[]int `json:"system_alerts,omitempty"`
 	UserAlerts   *[]int `json:"user_alerts,omitempty"`
 }
@@ -415,7 +416,7 @@ type InstanceCloneOptions struct {
 	Group string `json:"group,omitempty"`
 
 	// Note: Alerts can only be used with v4beta.
-	Alerts *InstanceAlertsOptions `json:"alerts,omitempty"`
+	Alerts *InstanceACLPAlertsOptions `json:"alerts,omitempty"`
 }
 
 // InstanceResizeOptions is an options struct used when resizing an instance

@@ -189,7 +189,7 @@ func TestInstance_Create(t *testing.T) {
 		Image:             "linode/ubuntu22.04",
 		RootPass:          "securepassword",
 		MaintenancePolicy: linodego.Pointer("linode/migrate"),
-		Alerts: &linodego.InstanceAlertsOptions{
+		Alerts: &linodego.InstanceACLPAlertsOptions{
 			SystemAlerts: &[]int{123, 456},
 			UserAlerts:   &[]int{555},
 		},
@@ -291,7 +291,7 @@ func TestInstance_Clone(t *testing.T) {
 		Region: "us-east",
 		Type:   "g6-standard-1",
 		Label:  "cloned-instance",
-		Alerts: &linodego.InstanceAlertsOptions{
+		Alerts: &linodego.InstanceACLPAlertsOptions{
 			SystemAlerts: &[]int{123, 456},
 			UserAlerts:   &[]int{555},
 		},
