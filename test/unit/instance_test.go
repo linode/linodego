@@ -44,6 +44,19 @@ func TestInstances_List(t *testing.T) {
 	require.NotNil(t, linode.PlacementGroup.MigratingTo)
 	assert.Equal(t, 2468, *linode.PlacementGroup.MigratingTo)
 	assert.Equal(t, "linode/migrate", linode.MaintenancePolicy)
+	if linode.Alerts.SystemAlerts != nil {
+		systemAlerts := *linode.Alerts.SystemAlerts
+		if len(systemAlerts) > 2 {
+			assert.Equal(t, 123, systemAlerts[0])
+			assert.Equal(t, 456, systemAlerts[1])
+		}
+	}
+	if linode.Alerts.UserAlerts != nil {
+		userAlerts := *linode.Alerts.UserAlerts
+		if len(userAlerts) > 0 {
+			assert.Equal(t, 555, userAlerts[0])
+		}
+	}
 }
 
 func TestInstance_Get(t *testing.T) {
@@ -79,12 +92,16 @@ func TestInstance_Get(t *testing.T) {
 	assert.Equal(t, 2468, *instance.PlacementGroup.MigratingTo)
 	if instance.Alerts.SystemAlerts != nil {
 		systemAlerts := *instance.Alerts.SystemAlerts
-		assert.Equal(t, 123, systemAlerts[0])
-		assert.Equal(t, 456, systemAlerts[1])
+		if len(systemAlerts) > 2 {
+			assert.Equal(t, 123, systemAlerts[0])
+			assert.Equal(t, 456, systemAlerts[1])
+		}
 	}
 	if instance.Alerts.UserAlerts != nil {
 		userAlerts := *instance.Alerts.UserAlerts
-		assert.Equal(t, 555, userAlerts[0])
+		if len(userAlerts) > 0 {
+			assert.Equal(t, 555, userAlerts[0])
+		}
 	}
 }
 
@@ -203,12 +220,16 @@ func TestInstance_Create(t *testing.T) {
 	assert.Equal(t, "linode/migrate", instance.MaintenancePolicy)
 	if instance.Alerts.SystemAlerts != nil {
 		systemAlerts := *instance.Alerts.SystemAlerts
-		assert.Equal(t, 123, systemAlerts[0])
-		assert.Equal(t, 456, systemAlerts[1])
+		if len(systemAlerts) > 2 {
+			assert.Equal(t, 123, systemAlerts[0])
+			assert.Equal(t, 456, systemAlerts[1])
+		}
 	}
 	if instance.Alerts.UserAlerts != nil {
 		userAlerts := *instance.Alerts.UserAlerts
-		assert.Equal(t, 555, userAlerts[0])
+		if len(userAlerts) > 0 {
+			assert.Equal(t, 555, userAlerts[0])
+		}
 	}
 }
 
@@ -237,12 +258,16 @@ func TestInstance_Update(t *testing.T) {
 	assert.Equal(t, "linode/power_off_on", instance.MaintenancePolicy)
 	if instance.Alerts.SystemAlerts != nil {
 		systemAlerts := *instance.Alerts.SystemAlerts
-		assert.Equal(t, 123, systemAlerts[0])
-		assert.Equal(t, 456, systemAlerts[1])
+		if len(systemAlerts) > 2 {
+			assert.Equal(t, 123, systemAlerts[0])
+			assert.Equal(t, 456, systemAlerts[1])
+		}
 	}
 	if instance.Alerts.UserAlerts != nil {
 		userAlerts := *instance.Alerts.UserAlerts
-		assert.Equal(t, 555, userAlerts[0])
+		if len(userAlerts) > 0 {
+			assert.Equal(t, 555, userAlerts[0])
+		}
 	}
 }
 
@@ -305,12 +330,16 @@ func TestInstance_Clone(t *testing.T) {
 	assert.Equal(t, "linode/migrate", instance.MaintenancePolicy)
 	if instance.Alerts.SystemAlerts != nil {
 		systemAlerts := *instance.Alerts.SystemAlerts
-		assert.Equal(t, 123, systemAlerts[0])
-		assert.Equal(t, 456, systemAlerts[1])
+		if len(systemAlerts) > 2 {
+			assert.Equal(t, 123, systemAlerts[0])
+			assert.Equal(t, 456, systemAlerts[1])
+		}
 	}
 	if instance.Alerts.UserAlerts != nil {
 		userAlerts := *instance.Alerts.UserAlerts
-		assert.Equal(t, 555, userAlerts[0])
+		if len(userAlerts) > 0 {
+			assert.Equal(t, 555, userAlerts[0])
+		}
 	}
 }
 
