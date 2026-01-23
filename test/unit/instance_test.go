@@ -77,6 +77,15 @@ func TestInstance_Get(t *testing.T) {
 	assert.Equal(t, "linode/migrate", instance.MaintenancePolicy)
 	require.NotNil(t, instance.PlacementGroup.MigratingTo)
 	assert.Equal(t, 2468, *instance.PlacementGroup.MigratingTo)
+	if instance.Alerts.SystemAlerts != nil {
+		systemAlerts := *instance.Alerts.SystemAlerts
+		assert.Equal(t, 123, systemAlerts[0])
+		assert.Equal(t, 456, systemAlerts[1])
+	}
+	if instance.Alerts.UserAlerts != nil {
+		userAlerts := *instance.Alerts.UserAlerts
+		assert.Equal(t, 555, userAlerts[0])
+	}
 }
 
 func TestInstance_Migrate(t *testing.T) {
@@ -180,6 +189,10 @@ func TestInstance_Create(t *testing.T) {
 		Image:             "linode/ubuntu22.04",
 		RootPass:          "securepassword",
 		MaintenancePolicy: linodego.Pointer("linode/migrate"),
+		Alerts: &linodego.InstanceAlertsOptions{
+			SystemAlerts: &[]int{123, 456},
+			UserAlerts:   &[]int{555},
+		},
 	}
 
 	base.MockPost("linode/instances", fixtureData)
@@ -188,6 +201,15 @@ func TestInstance_Create(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "new-instance", instance.Label)
 	assert.Equal(t, "linode/migrate", instance.MaintenancePolicy)
+	if instance.Alerts.SystemAlerts != nil {
+		systemAlerts := *instance.Alerts.SystemAlerts
+		assert.Equal(t, 123, systemAlerts[0])
+		assert.Equal(t, 456, systemAlerts[1])
+	}
+	if instance.Alerts.UserAlerts != nil {
+		userAlerts := *instance.Alerts.UserAlerts
+		assert.Equal(t, 555, userAlerts[0])
+	}
 }
 
 func TestInstance_Update(t *testing.T) {
@@ -201,6 +223,10 @@ func TestInstance_Update(t *testing.T) {
 	updateOptions := linodego.InstanceUpdateOptions{
 		Label:             "updated-instance",
 		MaintenancePolicy: linodego.Pointer("linode/power_off_on"),
+		Alerts: &linodego.InstanceAlert{
+			SystemAlerts: &[]int{123, 456},
+			UserAlerts:   &[]int{555},
+		},
 	}
 
 	base.MockPut("linode/instances/123", fixtureData)
@@ -209,6 +235,15 @@ func TestInstance_Update(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "updated-instance", instance.Label)
 	assert.Equal(t, "linode/power_off_on", instance.MaintenancePolicy)
+	if instance.Alerts.SystemAlerts != nil {
+		systemAlerts := *instance.Alerts.SystemAlerts
+		assert.Equal(t, 123, systemAlerts[0])
+		assert.Equal(t, 456, systemAlerts[1])
+	}
+	if instance.Alerts.UserAlerts != nil {
+		userAlerts := *instance.Alerts.UserAlerts
+		assert.Equal(t, 555, userAlerts[0])
+	}
 }
 
 func TestInstance_Delete(t *testing.T) {
@@ -256,6 +291,10 @@ func TestInstance_Clone(t *testing.T) {
 		Region: "us-east",
 		Type:   "g6-standard-1",
 		Label:  "cloned-instance",
+		Alerts: &linodego.InstanceAlertsOptions{
+			SystemAlerts: &[]int{123, 456},
+			UserAlerts:   &[]int{555},
+		},
 	}
 
 	base.MockPost("linode/instances/123/clone", fixtureData)
@@ -264,6 +303,15 @@ func TestInstance_Clone(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "cloned-instance", instance.Label)
 	assert.Equal(t, "linode/migrate", instance.MaintenancePolicy)
+	if instance.Alerts.SystemAlerts != nil {
+		systemAlerts := *instance.Alerts.SystemAlerts
+		assert.Equal(t, 123, systemAlerts[0])
+		assert.Equal(t, 456, systemAlerts[1])
+	}
+	if instance.Alerts.UserAlerts != nil {
+		userAlerts := *instance.Alerts.UserAlerts
+		assert.Equal(t, 555, userAlerts[0])
+	}
 }
 
 func TestInstance_Resize(t *testing.T) {
