@@ -11,6 +11,13 @@ type RegionAvailability struct {
 	Available bool   `json:"available"`
 }
 
+// RegionVPCAvailability represents a linode region vpc availability object
+type RegionVPCAvailability struct {
+	Region                     string `json:"region"`
+	Available                  bool   `json:"available"`
+	AvailableIPV6PrefixLengths []int  `json:"available_ipv6_prefix_lengths"`
+}
+
 // ListRegionsAvailability lists Regions. This endpoint is cached by default.
 func (c *Client) ListRegionsAvailability(ctx context.Context, opts *ListOptions) ([]RegionAvailability, error) {
 	e := "regions/availability"
@@ -44,6 +51,50 @@ func (c *Client) GetRegionAvailability(ctx context.Context, regionID string) (*R
 	}
 
 	response, err := doGETRequest[RegionAvailability](ctx, c, e)
+	if err != nil {
+		return nil, err
+	}
+
+	c.addCachedResponse(e, response, &cacheExpiryTime)
+
+	return response, nil
+}
+
+// ListRegionsVPCAvailability lists VPC availability data for all regions.
+// NOTE: IPv6 VPCs may not currently be available to all users.
+func (c *Client) ListRegionsVPCAvailability(ctx context.Context, opts *ListOptions) ([]RegionVPCAvailability, error) {
+	e := "regions/vpc-availability"
+
+	endpoint, err := generateListCacheURL(e, opts)
+	if err != nil {
+		return nil, err
+	}
+
+	if result := c.getCachedResponse(endpoint); result != nil {
+		return result.([]RegionVPCAvailability), nil
+	}
+
+	response, err := getPaginatedResults[RegionVPCAvailability](ctx, c, e, opts)
+	if err != nil {
+		return nil, err
+	}
+
+	c.addCachedResponse(endpoint, response, &cacheExpiryTime)
+
+	return response, nil
+}
+
+// GetRegionVPCAvailability gets VPC availability data for a single region.
+// NOTE: IPv6 VPCs may not currently be available to all users.
+func (c *Client) GetRegionVPCAvailability(ctx context.Context, regionID string) (*RegionVPCAvailability, error) {
+	e := formatAPIPath("regions/%s/vpc-availability", regionID)
+
+	if result := c.getCachedResponse(e); result != nil {
+		result := result.(RegionVPCAvailability)
+		return &result, nil
+	}
+
+	response, err := doGETRequest[RegionVPCAvailability](ctx, c, e)
 	if err != nil {
 		return nil, err
 	}
