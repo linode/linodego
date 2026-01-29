@@ -162,7 +162,7 @@ func TestListRegionsVPCAvailability(t *testing.T) {
 			AvailableIPV6PrefixLengths: []int{56, 52, 48},
 		},
 	}
-	
+
 	assert.Equal(t, expected, availability, "Expected region vpc availability list to match expected data")
 }
 
@@ -187,6 +187,6 @@ func TestGetRegionVPCAvailability(t *testing.T) {
 		Available:                  true,
 		AvailableIPV6PrefixLengths: []int{52, 60},
 	}
-	
+
 	assert.Equal(t, expected, availability, "Expected region vpc availability to match expected data")
 }
