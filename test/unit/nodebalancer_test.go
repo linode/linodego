@@ -82,6 +82,7 @@ func TestNodeBalancer_Get(t *testing.T) {
 	assert.Equal(t, 123, nodebalancer.ID, "Expected NodeBalancer ID to match")
 	assert.Equal(t, "Existing NodeBalancer", *nodebalancer.Label, "Expected NodeBalancer label to match")
 	assert.Equal(t, "us-west", nodebalancer.Region, "Expected NodeBalancer region to match")
+	assert.Equal(t, []linodego.LockType{linodego.LockTypeCannotDeleteWithSubresources}, nodebalancer.Locks, "Expected NodeBalancer locks to match")
 }
 
 func TestNodeBalancer_List(t *testing.T) {
@@ -105,12 +106,14 @@ func TestNodeBalancer_List(t *testing.T) {
 	assert.Equal(t, "NodeBalancer A", *nodebalancers[0].Label, "Expected first NodeBalancer label to match")
 	assert.Equal(t, "us-east", nodebalancers[0].Region, "Expected first NodeBalancer region to match")
 	assert.Equal(t, []string{"tag1", "tag2"}, nodebalancers[0].Tags, "Expected first NodeBalancer tags to match")
+	assert.Equal(t, []linodego.LockType{linodego.LockTypeCannotDelete}, nodebalancers[0].Locks, "Expected first NodeBalancer locks to match")
 
 	// Verify details of the second NodeBalancer
 	assert.Equal(t, 456, nodebalancers[1].ID, "Expected second NodeBalancer ID to match")
 	assert.Equal(t, "NodeBalancer B", *nodebalancers[1].Label, "Expected second NodeBalancer label to match")
 	assert.Equal(t, "us-west", nodebalancers[1].Region, "Expected second NodeBalancer region to match")
 	assert.Equal(t, []string{"tag3"}, nodebalancers[1].Tags, "Expected second NodeBalancer tags to match")
+	assert.Empty(t, nodebalancers[1].Locks, "Expected second NodeBalancer to have no locks")
 }
 
 func TestNodeBalancer_Update(t *testing.T) {
@@ -135,6 +138,7 @@ func TestNodeBalancer_Update(t *testing.T) {
 	assert.Equal(t, 456, nodebalancer.ID)
 	assert.Equal(t, "Updated NodeBalancer", *nodebalancer.Label)
 	assert.Equal(t, []string{"updated", "production"}, nodebalancer.Tags)
+	assert.Equal(t, []linodego.LockType{linodego.LockTypeCannotDeleteWithSubresources}, nodebalancer.Locks, "Expected NodeBalancer locks to match")
 }
 
 func TestNodeBalancer_Delete(t *testing.T) {
