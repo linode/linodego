@@ -7,7 +7,6 @@ import (
 	"strconv"
 	"strings"
 	"testing"
-	"time"
 
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/require"
@@ -114,14 +113,15 @@ func TestInstance_GetMonthlyTransfer(t *testing.T) {
 		t.Error(err)
 	}
 
-	currentYear, currentMonth := time.Now().Year(), int(time.Now().Month())
+	testYear:= 2026
+	testMonth := 1
 
-	_, err = client.GetInstanceTransferMonthly(context.Background(), instance.ID, currentYear, currentMonth)
+	_, err = client.GetInstanceTransferMonthly(context.Background(), instance.ID, testYear, testMonth)
 	if err != nil {
 		t.Errorf("Error getting monthly instance transfer, expected struct, got error %v", err)
 	}
 
-	_, err = client.GetInstanceTransferMonthlyV2(context.Background(), instance.ID, currentYear, currentMonth)
+	_, err = client.GetInstanceTransferMonthlyV2(context.Background(), instance.ID, testYear, testMonth)
 	if err != nil {
 		t.Errorf("Error getting monthly instance transfer, expected struct, got error %v", err)
 	}
