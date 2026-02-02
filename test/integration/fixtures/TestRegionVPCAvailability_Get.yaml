@@ -11,11 +11,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/regions/pl-labkrk-2/vpc-availability
+    url: https://api.linode.com/v4beta/regions/nl-ams/vpc-availability
     method: GET
   response:
-    body: '{"region": "pl-labkrk-2", "available": true, "available_ipv6_prefix_lengths":
-      [52]}'
+    body: '{"region": "nl-ams", "available": true, "available_ipv6_prefix_lengths":
+      []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -30,18 +30,19 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - private, max-age=900
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "83"
+      - "76"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Mon, 02 Feb 2026 10:17:52 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -57,7 +58,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

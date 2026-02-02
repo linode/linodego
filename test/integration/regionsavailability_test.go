@@ -44,7 +44,7 @@ func TestRegionVPCAvailability_Get(t *testing.T) {
 	defer teardown()
 
 	testFunc := func(retryT *TRetry) {
-		region, err := client.GetRegionVPCAvailability(context.Background(), "pl-labkrk-2")
+		region, err := client.GetRegionVPCAvailability(context.Background(), "nl-ams")
 		if err != nil {
 			t.Errorf("Error getting region vpc availability, expected struct - error %v", err)
 		}

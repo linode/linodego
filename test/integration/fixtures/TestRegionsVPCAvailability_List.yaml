@@ -14,8 +14,39 @@ interactions:
     url: https://api.linode.com/v4beta/regions/vpc-availability?page=1
     method: GET
   response:
-    body: '{"data": [{"region": "pl-labkrk-2", "available": true, "available_ipv6_prefix_lengths":
-      [52]}], "page": 1, "pages": 1, "results": 1}'
+    body: '{"data": [{"region": "nl-ams", "available": true, "available_ipv6_prefix_lengths":
+      []}, {"region": "fr-par-2", "available": true, "available_ipv6_prefix_lengths":
+      []}, {"region": "jp-tyo-3", "available": true, "available_ipv6_prefix_lengths":
+      []}, {"region": "sg-sin-2", "available": true, "available_ipv6_prefix_lengths":
+      []}, {"region": "de-fra-2", "available": true, "available_ipv6_prefix_lengths":
+      []}, {"region": "in-bom-2", "available": true, "available_ipv6_prefix_lengths":
+      []}, {"region": "au-mel", "available": true, "available_ipv6_prefix_lengths":
+      []}, {"region": "gb-lon", "available": true, "available_ipv6_prefix_lengths":
+      []}, {"region": "us-lax", "available": true, "available_ipv6_prefix_lengths":
+      []}, {"region": "id-cgk", "available": true, "available_ipv6_prefix_lengths":
+      []}, {"region": "us-mia", "available": true, "available_ipv6_prefix_lengths":
+      []}, {"region": "it-mil", "available": true, "available_ipv6_prefix_lengths":
+      []}, {"region": "jp-osa", "available": true, "available_ipv6_prefix_lengths":
+      []}, {"region": "in-maa", "available": true, "available_ipv6_prefix_lengths":
+      []}, {"region": "es-mad", "available": true, "available_ipv6_prefix_lengths":
+      []}, {"region": "se-sto", "available": true, "available_ipv6_prefix_lengths":
+      []}, {"region": "br-gru", "available": true, "available_ipv6_prefix_lengths":
+      []}, {"region": "us-sea", "available": true, "available_ipv6_prefix_lengths":
+      []}, {"region": "fr-par", "available": true, "available_ipv6_prefix_lengths":
+      []}, {"region": "us-ord", "available": true, "available_ipv6_prefix_lengths":
+      []}, {"region": "us-iad", "available": true, "available_ipv6_prefix_lengths":
+      []}, {"region": "ap-southeast", "available": false, "available_ipv6_prefix_lengths":
+      []}, {"region": "ca-central", "available": false, "available_ipv6_prefix_lengths":
+      []}, {"region": "ap-west", "available": false, "available_ipv6_prefix_lengths":
+      []}, {"region": "us-central", "available": false, "available_ipv6_prefix_lengths":
+      []}, {"region": "ap-northeast", "available": false, "available_ipv6_prefix_lengths":
+      []}, {"region": "eu-central", "available": false, "available_ipv6_prefix_lengths":
+      []}, {"region": "ap-south", "available": false, "available_ipv6_prefix_lengths":
+      []}, {"region": "eu-west", "available": false, "available_ipv6_prefix_lengths":
+      []}, {"region": "us-east", "available": false, "available_ipv6_prefix_lengths":
+      []}, {"region": "us-southeast", "available": false, "available_ipv6_prefix_lengths":
+      []}, {"region": "us-west", "available": false, "available_ipv6_prefix_lengths":
+      []}], "page": 1, "pages": 1, "results": 32}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -30,23 +61,23 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - private, max-age=900
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
-      Content-Length:
-      - "132"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Mon, 02 Feb 2026 10:17:08 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
       - Authorization, X-Filter
+      - Accept-Encoding
       X-Accepted-Oauth-Scopes:
       - vpc:read_only
       X-Content-Type-Options:
@@ -57,7 +88,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
