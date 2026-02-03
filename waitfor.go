@@ -849,3 +849,33 @@ func eventMatchesSecondary(configuredID any, e Event) bool {
 
 	return secondaryID == configuredID
 }
+
+// WaitForAlertDefinitionStatusReady waits for the Alert Definition to reach the ready status (not in progress)
+func (client Client) WaitForAlertDefinitionStatusReady(
+	ctx context.Context,
+	serviceType string,
+	alertID int,
+	timeoutSeconds int,
+) (*AlertDefinition, error) {
+	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
+	defer cancel()
+
+	ticker := time.NewTicker(client.pollInterval)
+	defer ticker.Stop()
+
+	for {
+		select {
+		case <-ticker.C:
+			alertDef, err := client.GetMonitorAlertDefinition(ctx, serviceType, alertID)
+			if err != nil {
+				return alertDef, err
+			}
+
+			if alertDef.Status != AlertDefinitionStatusInProgress {
+				return alertDef, nil
+			}
+		case <-ctx.Done():
+			return nil, fmt.Errorf("failed to wait for AlertDefinition %d status ready: %w", alertID, ctx.Err())
+		}
+	}
+}
