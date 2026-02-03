@@ -8,6 +8,7 @@ import (
 
 	"github.com/linode/linodego"
 	. "github.com/linode/linodego"
+	"github.com/stretchr/testify/assert"
 )
 
 const (
@@ -151,35 +152,6 @@ func createVPCWithDualStackSubnet(t *testing.T, client *linodego.Client, vpcModi
 		}
 	}
 	return vpc, &vpc.Subnets[0], teardown, err
-}
-
-func createSubnetInVPC(
-	t *testing.T,
-	client *linodego.Client,
-	vpc linodego.VPC,
-	vpcModifier ...vpcModifier,
-) (
-	*linodego.VPCSubnet,
-	func(),
-	error,
-) {
-	t.Helper()
-	createOpts := linodego.VPCSubnetCreateOptions{
-		Label: "linodego-vpc-test-" + getUniqueText(),
-		IPv4:  TestSubnetIPv4,
-	}
-	vpcSubnet, err := client.CreateVPCSubnet(context.Background(), createOpts, vpc.ID)
-	if err != nil {
-		t.Fatal(formatVPCSubnetError(err, "creating", &vpc.ID, nil))
-	}
-
-	teardown := func() {
-		err = client.DeleteVPCSubnet(context.Background(), vpc.ID, vpcSubnet.ID)
-		if err != nil {
-			t.Error(formatVPCSubnetError(err, "deleting", &vpc.ID, &vpcSubnet.ID))
-		}
-	}
-	return vpcSubnet, teardown, err
 }
 
 func setupVPCWithSubnet(
@@ -375,4 +347,21 @@ func TestVPC_Subnet_WithInstance(t *testing.T) {
 	if nat1To1.Address != config.Interfaces[2].IPv4.VPC {
 		t.Fatalf("nat_1_1 subnet IP mismatch")
 	}
+}
+
+func TestVPC_Subnet_WithNodeBalancer(t *testing.T) {
+	client, vpc, vpcSubnet, teardown := setupNodebalancer(t, "fixtures/TestVPC_Subnet_WithNodeBalancer")
+
+	defer teardown()
+
+	refreshedSubnet, err := client.GetVPCSubnet(context.Background(), vpc.ID, vpcSubnet.ID)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	assert.Equal(t, 0, len(refreshedSubnet.Linodes), "expected no linode")
+	assert.Equal(t, 1, len(refreshedSubnet.Nodebalancers), "expected 1 assigned node balancer")
+	assert.Equal(t, "192.168.0.64/30", refreshedSubnet.Nodebalancers[0].Ipv4Range, "expected matching ipv4 range")
+	assert.Equal(t, 0, len(refreshedSubnet.Nodebalancers[0].Ipv6Ranges), "expected 0 ipv6 ranges")
+
 }

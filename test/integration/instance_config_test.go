@@ -249,6 +249,55 @@ func setupInstanceWith3Interfaces(t *testing.T, fixturesYaml string) (
 	return client, vpc, vpcSubnet, instance, config, teardown
 }
 
+func setupNodebalancer(t *testing.T, fixturesYaml string) (
+	*Client,
+	*VPC,
+	*VPCSubnet,
+	func(),
+) {
+	t.Helper()
+	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+	vpc, vpcSubnet, vpcWithSubnetTeardown, err := createVPCWithSubnet(
+		t,
+		client,
+		func(client *Client, options *VPCCreateOptions) {
+			options.Region = "nl-ams"
+		},
+	)
+	if err != nil {
+		t.Error(err)
+	}
+
+	createOpts := NodeBalancerCreateOptions{
+		Label:              &label,
+		Region:             vpc.Region,
+		ClientConnThrottle: &clientConnThrottle,
+		FirewallID:         GetFirewallID(),
+		VPCs: []NodeBalancerVPCOptions{
+			{
+				IPv4Range: "192.168.0.64/30",
+				IPv6Range: "",
+				SubnetID:  vpcSubnet.ID,
+			},
+		},
+	}
+
+	nodebalancer, err := client.CreateNodeBalancer(context.Background(), createOpts)
+	if err != nil {
+		t.Fatalf("Error listing nodebalancers, expected struct, got error %v", err)
+	}
+
+	teardown := func() {
+		if err := client.DeleteNodeBalancer(context.Background(), nodebalancer.ID); err != nil {
+			t.Errorf("Expected to delete a nodebalancer, but got %v", err)
+		}
+		vpcWithSubnetTeardown()
+		fixtureTeardown()
+	}
+
+	return client, vpc, vpcSubnet, teardown
+}
+
 func TestInstance_ConfigInterfaces_AppendDelete(t *testing.T) {
 	client, _, subnet, instance, config, teardown, err := setupVPCWithSubnetWithInstance(
 		t,
