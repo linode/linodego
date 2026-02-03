@@ -92,7 +92,12 @@ func TestCreateMonitorAlertDefinitionWithIdempotency(t *testing.T) {
 		EntityIDs:  []string{"12345"},
 	}
 
-	alert, err := base.Client.CreateMonitorAlertDefinitionWithIdempotency(context.Background(), testMonitorAlertDefinitionServiceType, createOpts, "idempotency-key")
+	alert, err := base.Client.CreateMonitorAlertDefinitionWithIdempotency(
+		context.Background(),
+		testMonitorAlertDefinitionServiceType,
+		createOpts,
+		"idempotency-key",
+	)
 	assert.NoError(t, err)
 	assert.NotNil(t, alert)
 	assert.Equal(t, "test-alert-definition", alert.Label)
@@ -140,7 +145,12 @@ func TestUpdateMonitorAlertDefinition(t *testing.T) {
 		ChannelIDs: []int{1, 2},
 	}
 
-	alert, err := base.Client.UpdateMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, testMonitorAlertDefinitionID, updateOpts)
+	alert, err := base.Client.UpdateMonitorAlertDefinition(
+		context.Background(),
+		testMonitorAlertDefinitionServiceType,
+		testMonitorAlertDefinitionID,
+		updateOpts,
+	)
 	assert.NoError(t, err)
 	assert.NotNil(t, alert)
 	assert.Equal(t, "test-alert-definition-renamed", alert.Label)
@@ -159,7 +169,12 @@ func TestUpdateMonitorAlertDefinition_LabelOnly(t *testing.T) {
 		Label: "test-alert-definition-renamed-one-line",
 	}
 
-	alert, err := base.Client.UpdateMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, testMonitorAlertDefinitionID, updateOpts)
+	alert, err := base.Client.UpdateMonitorAlertDefinition(
+		context.Background(),
+		testMonitorAlertDefinitionServiceType,
+		testMonitorAlertDefinitionID,
+		updateOpts,
+	)
 	assert.NoError(t, err)
 	assert.NotNil(t, alert)
 	assert.Equal(t, "test-alert-definition-renamed-one-line", alert.Label)

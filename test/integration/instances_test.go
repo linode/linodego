@@ -113,7 +113,7 @@ func TestInstance_GetMonthlyTransfer(t *testing.T) {
 		t.Error(err)
 	}
 
-	testYear:= 2026
+	testYear := 2026
 	testMonth := 1
 
 	_, err = client.GetInstanceTransferMonthly(context.Background(), instance.ID, testYear, testMonth)
