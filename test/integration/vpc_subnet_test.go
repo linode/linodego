@@ -363,5 +363,4 @@ func TestVPC_Subnet_WithNodeBalancer(t *testing.T) {
 	assert.Equal(t, 1, len(refreshedSubnet.Nodebalancers), "expected 1 assigned node balancer")
 	assert.Equal(t, "192.168.0.64/30", refreshedSubnet.Nodebalancers[0].Ipv4Range, "expected matching ipv4 range")
 	assert.Equal(t, 0, len(refreshedSubnet.Nodebalancers[0].Ipv6Ranges), "expected 0 ipv6 ranges")
-
 }
