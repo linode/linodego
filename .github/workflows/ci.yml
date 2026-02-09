@@ -76,7 +76,7 @@ jobs:
           SKIP_LINT: 1
 
       - name: Upload test results to bucket
-        if: ${{ @always() && github.repository == 'linode/linodego' && github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && inputs.test_report_upload)) }}
+        if: ${{ always() && github.repository == 'linode/linodego' && github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && inputs.test_report_upload)) }}
         run: |
           python3 e2e_scripts/tod_scripts/xml_to_obj_storage/scripts/add_gha_info_to_xml.py \
           --branch_name "${GITHUB_REF#refs/*/}" \
