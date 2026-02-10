@@ -59,7 +59,7 @@ const (
 
 func TestCreateMonitorAlertDefinition(t *testing.T) {
 	var base ClientBaseCase
-	base.SetUp(t)
+	base.SetUpWithAPIVersion(t, "v4beta")
 	defer base.TearDown(t)
 
 	base.MockPost("monitor/services/dbaas/alert-definitions", json.RawMessage(monitorAlertDefinitionGetResponse))
@@ -80,7 +80,7 @@ func TestCreateMonitorAlertDefinition(t *testing.T) {
 
 func TestCreateMonitorAlertDefinitionWithIdempotency(t *testing.T) {
 	var base ClientBaseCase
-	base.SetUp(t)
+	base.SetUpWithAPIVersion(t, "v4beta")
 	defer base.TearDown(t)
 
 	base.MockPost("monitor/services/dbaas/alert-definitions", json.RawMessage(monitorAlertDefinitionGetResponse))
@@ -106,7 +106,7 @@ func TestCreateMonitorAlertDefinitionWithIdempotency(t *testing.T) {
 
 func TestGetMonitorAlertDefinition(t *testing.T) {
 	var base ClientBaseCase
-	base.SetUp(t)
+	base.SetUpWithAPIVersion(t, "v4beta")
 	defer base.TearDown(t)
 
 	base.MockGet("monitor/services/dbaas/alert-definitions/123", json.RawMessage(monitorAlertDefinitionGetResponse))
@@ -120,7 +120,7 @@ func TestGetMonitorAlertDefinition(t *testing.T) {
 
 func TestListMonitorAlertDefinitions(t *testing.T) {
 	var base ClientBaseCase
-	base.SetUp(t)
+	base.SetUpWithAPIVersion(t, "v4beta")
 	defer base.TearDown(t)
 
 	base.MockGet("monitor/services/dbaas/alert-definitions", json.RawMessage(monitorAlertDefinitionListResponse))
@@ -134,7 +134,7 @@ func TestListMonitorAlertDefinitions(t *testing.T) {
 
 func TestUpdateMonitorAlertDefinition(t *testing.T) {
 	var base ClientBaseCase
-	base.SetUp(t)
+	base.SetUpWithAPIVersion(t, "v4beta")
 	defer base.TearDown(t)
 
 	base.MockPut("monitor/services/dbaas/alert-definitions/123", json.RawMessage(monitorAlertDefinitionUpdateResponse))
@@ -159,7 +159,7 @@ func TestUpdateMonitorAlertDefinition(t *testing.T) {
 
 func TestUpdateMonitorAlertDefinition_LabelOnly(t *testing.T) {
 	var base ClientBaseCase
-	base.SetUp(t)
+	base.SetUpWithAPIVersion(t, "v4beta")
 	defer base.TearDown(t)
 
 	// Mock a PUT that returns the single-line fixture
@@ -183,7 +183,7 @@ func TestUpdateMonitorAlertDefinition_LabelOnly(t *testing.T) {
 
 func TestDeleteMonitorAlertDefinition(t *testing.T) {
 	var base ClientBaseCase
-	base.SetUp(t)
+	base.SetUpWithAPIVersion(t, "v4beta")
 	defer base.TearDown(t)
 
 	base.MockDelete("monitor/services/dbaas/alert-definitions/123", nil)
