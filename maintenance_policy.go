@@ -13,7 +13,6 @@ type MaintenancePolicy struct {
 	IsDefault             bool   `json:"is_default"`
 }
 
-// ListMaintenancePolicies can only be used with v4beta.
 func (c *Client) ListMaintenancePolicies(ctx context.Context, opts *ListOptions) ([]MaintenancePolicy, error) {
 	return getPaginatedResults[MaintenancePolicy](ctx, c, "maintenance/policies", opts)
 }
