@@ -98,11 +98,13 @@ type InstanceSpec struct {
 
 // InstanceAlert represents a metric alert
 type InstanceAlert struct {
-	CPU           int `json:"cpu"`
-	IO            int `json:"io"`
-	NetworkIn     int `json:"network_in"`
-	NetworkOut    int `json:"network_out"`
-	TransferQuota int `json:"transfer_quota"`
+	CPU           int   `json:"cpu"`
+	IO            int   `json:"io"`
+	NetworkIn     int   `json:"network_in"`
+	NetworkOut    int   `json:"network_out"`
+	TransferQuota int   `json:"transfer_quota"`
+	SystemAlerts  []int `json:"system_alerts,omitempty"`
+	UserAlerts    []int `json:"user_alerts,omitempty"`
 }
 
 // InstanceBackup represents backup settings for an instance
@@ -228,6 +230,15 @@ type InstanceCreateOptions struct {
 
 	// NOTE: MaintenancePolicy can only be used with v4beta.
 	MaintenancePolicy *string `json:"maintenance_policy,omitempty"`
+
+	// Note: Alerts can only be used with v4beta.
+	Alerts *InstanceACLPAlertsOptions `json:"alerts,omitempty"`
+}
+
+// InstanceACLPAlertsOptions represents ACLP alerts options for instance creation and cloning.
+type InstanceACLPAlertsOptions struct {
+	SystemAlerts []int `json:"system_alerts,omitempty"`
+	UserAlerts   []int `json:"user_alerts,omitempty"`
 }
 
 // InstanceCreatePlacementGroupOptions represents the placement group
@@ -403,6 +414,9 @@ type InstanceCloneOptions struct {
 
 	// Deprecated: group is a deprecated property denoting a group label for the Linode.
 	Group string `json:"group,omitempty"`
+
+	// Note: Alerts can only be used with v4beta.
+	Alerts *InstanceACLPAlertsOptions `json:"alerts,omitempty"`
 }
 
 // InstanceResizeOptions is an options struct used when resizing an instance
