@@ -871,7 +871,7 @@ func (client Client) WaitForAlertDefinitionStatusReady(
 				return alertDef, err
 			}
 
-			if alertDef.Status != AlertDefinitionStatusInProgress {
+			if alertDef.Status != AlertDefinitionStatusEnabling {
 				return alertDef, nil
 			}
 		case <-ctx.Done():

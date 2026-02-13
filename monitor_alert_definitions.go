@@ -11,10 +11,12 @@ import (
 type AlertDefinitionStatus string
 
 const (
-	AlertDefinitionStatusEnabled    AlertDefinitionStatus = "enabled"
-	AlertDefinitionStatusDisabled   AlertDefinitionStatus = "disabled"
-	AlertDefinitionStatusInProgress AlertDefinitionStatus = "in_progress"
-	AlertDefinitionStatusFailed     AlertDefinitionStatus = "failed"
+	AlertDefinitionStatusProvisioning AlertDefinitionStatus = "provisioning"
+	AlertDefinitionStatusEnabling     AlertDefinitionStatus = "enabling"
+	AlertDefinitionStatusDisabling    AlertDefinitionStatus = "disabling"
+	AlertDefinitionStatusEnabled      AlertDefinitionStatus = "enabled"
+	AlertDefinitionStatusDisabled     AlertDefinitionStatus = "disabled"
+	AlertDefinitionStatusFailed       AlertDefinitionStatus = "failed"
 )
 
 // AlertDefinition represents an ACLP Alert Definition object
