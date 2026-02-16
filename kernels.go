@@ -16,7 +16,7 @@ type LinodeKernel struct {
 	Architecture string `json:"architecture"`
 	Deprecated   bool   `json:"deprecated"`
 	KVM          bool   `json:"kvm"`
-	// deprecated: this field is no longer populated by the API, but it is included here for backward compatibility with existing implementations.
+	// Deprecated: this field is no longer populated by the API, but it is included here for backward compatibility with existing implementations.
 	XEN   bool       `json:"xen"`
 	PVOPS bool       `json:"pvops"`
 	Built *time.Time `json:"-"`
