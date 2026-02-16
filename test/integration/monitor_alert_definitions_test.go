@@ -123,7 +123,7 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 	assert.Equal(t, createOpts.TriggerConditions.PollingIntervalSeconds, createdAlert.TriggerConditions.PollingIntervalSeconds)
 	assert.Equal(t, createOpts.TriggerConditions.TriggerOccurrences, createdAlert.TriggerConditions.TriggerOccurrences)
 
-	if len(createdAlert.RuleCriteria.Rules) > 0 && len(createOpts.RuleCriteria.Rules) > 0 && len(createOpts.RuleCriteria.Rules) > 0 {
+	if len(createdAlert.RuleCriteria.Rules) > 0 && len(createOpts.RuleCriteria.Rules) > 0 {
 		assert.Equal(t, len(createOpts.RuleCriteria.Rules), len(createdAlert.RuleCriteria.Rules), "created alert should have same number of rules")
 		for i, r := range createOpts.RuleCriteria.Rules {
 			cr := createdAlert.RuleCriteria.Rules[i]
