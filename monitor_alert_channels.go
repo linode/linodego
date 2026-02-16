@@ -8,7 +8,6 @@ import (
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
-// @TODO: disable alert channel for now because API made breaking changes.
 type AlertNotificationType string
 
 const (
@@ -50,14 +49,14 @@ type EmailChannelContent struct {
 
 // ChannelContent represents the content block for an AlertChannel, which varies by channel type.
 type ChannelContent struct {
-	Email *EmailChannelContent `json:"email,omitempty"`
-	// Other channel types like 'webhook', 'slack' could be added here as optional fields.
+	Email *EmailChannelContent `json:"email"`
+	// Other channel types like 'webhook', 'slack' could be added her
 }
 
 // ChannelDetails represents the details block for an AlertChannel
 type ChannelDetails struct {
-	Email *EmailChannelDetails `json:"email,omitempty"`
-	// Other channel types could be added here as optional fields.
+	Email *EmailChannelDetails `json:"email"`
+	// Other channel types could be added here
 }
 
 // EmailChannelDetails represents email-specific details for a channel
@@ -89,7 +88,7 @@ func (a *AlertChannel) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-// // ListAlertChannels gets a paginated list of Alert Channels.
+// ListAlertChannels gets a paginated list of Alert Channels.
 func (c *Client) ListAlertChannels(ctx context.Context, opts *ListOptions) ([]AlertChannel, error) {
 	endpoint := formatAPIPath("monitor/alert-channels")
 	return getPaginatedResults[AlertChannel](ctx, c, endpoint, opts)

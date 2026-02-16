@@ -47,7 +47,6 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 	// Basic assertions based on the fixture
 	assert.NoError(t, err)
 
-	// TODO: Use a fixed channel id for now until the alert channel has been fixed.
 	// Determine a channel ID to use for creating a new alert definition:
 	var channelID int
 	var fetchedChannelLabel string
@@ -207,7 +206,6 @@ func TestMonitorAlertDefinitions_List(t *testing.T) {
 	}
 }
 
-// TODO: Disable this test until we can query alert channels correctly.
 func TestMonitorAlertChannels_List(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertChannels_List")
 	defer teardown()
@@ -228,8 +226,7 @@ func TestMonitorAlertDefinition_CreateWithIdempotency(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertDefinition_CreateWithIdempotency")
 	defer teardown()
 
-	// TODO: use a fixed channel id for now until the alert channel has been fixed.
-	//// Get a channel ID to use
+	// Get a channel ID to use
 	channels, err := client.ListAlertChannels(context.Background(), nil)
 	if err != nil || len(channels) == 0 {
 		t.Fatalf("failed to determine a monitor channel to use: %s", err)

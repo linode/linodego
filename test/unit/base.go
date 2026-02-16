@@ -29,14 +29,6 @@ func (c *ClientBaseCase) SetUp(t *testing.T) {
 	c.BaseURL = "https://api.linode.com/v4/"
 }
 
-// SetUpWithAPIVersion initializes the Linode client with a specific API version
-func (c *ClientBaseCase) SetUpWithAPIVersion(t *testing.T, apiVersion string) {
-	c.Mock = &mock.Mock{}
-	c.Client = testutil.CreateMockClient(t, linodego.NewClient)
-	c.Client.SetAPIVersion(apiVersion)
-	c.BaseURL = "https://api.linode.com/" + apiVersion + "/"
-}
-
 func (c *ClientBaseCase) TearDown(t *testing.T) {
 	httpmock.DeactivateAndReset() // Reset HTTP mock after tests
 	c.Mock.AssertExpectations(t)
