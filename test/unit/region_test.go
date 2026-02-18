@@ -129,10 +129,10 @@ func TestGetRegionAvailability(t *testing.T) {
 
 	availability, err := base.Client.GetRegionAvailability(context.Background(), regionID)
 	assert.NoError(t, err)
-	assert.NotNil(t, availability, "Expected region availability object to be returned")
-	assert.Equal(t, "us-east", availability.Region, "Expected region ID to be 'us-east'")
-	assert.True(t, availability.Available, "Expected region to be available")
-	assert.NotEmpty(t, availability.Plan, "Expected plan to be set")
+	assert.NotEmpty(t, availability, "Expected region availability list to be returned")
+	assert.Equal(t, "us-east", availability[0].Region, "Expected region ID to be 'us-east'")
+	assert.True(t, availability[0].Available, "Expected region to be available")
+	assert.NotEmpty(t, availability[0].Plan, "Expected plan to be set")
 }
 
 func TestListRegionsVPCAvailability(t *testing.T) {
