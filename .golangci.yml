@@ -54,7 +54,8 @@ linters:
     rules:
       - linters:
           - gosec
-        # matches secret pattern
+        # "matches secret pattern" linodego necessarily serializes and
+        # deserializes API structs that contain secrets
         text: G117
     presets:
       - comments
