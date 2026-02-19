@@ -850,9 +850,10 @@ func eventMatchesSecondary(configuredID any, e Event) bool {
 	return secondaryID == configuredID
 }
 
-// WaitForAlertDefinitionStatusReady waits for the Alert Definition to reach the ready status (not in progress)
-func (client Client) WaitForAlertDefinitionStatusReady(
+// WaitForAlertDefinitionStatus waits for the Alert Definition to reach the specified status
+func (client Client) WaitForAlertDefinitionStatus(
 	ctx context.Context,
+	status AlertDefinitionStatus,
 	serviceType string,
 	alertID int,
 	timeoutSeconds int,
@@ -871,11 +872,11 @@ func (client Client) WaitForAlertDefinitionStatusReady(
 				return alertDef, err
 			}
 
-			if alertDef.Status != AlertDefinitionStatusEnabling {
+			if alertDef.Status == status {
 				return alertDef, nil
 			}
 		case <-ctx.Done():
-			return nil, fmt.Errorf("failed to wait for AlertDefinition %d status ready: %w", alertID, ctx.Err())
+			return nil, fmt.Errorf("failed to wait for AlertDefinition %d status %s: %w", alertID, status, ctx.Err())
 		}
 	}
 }

@@ -155,7 +155,16 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 		Description:       &createdAlert.Description,
 	}
 	// wait for 1 minute before update for create to complete
-	time.Sleep(1 * time.Minute)
+	_, err = client.WaitForAlertDefinitionStatus(
+		context.Background(),
+		linodego.AlertDefinitionStatusEnabled,
+		testMonitorAlertDefinitionServiceType,
+		createdAlert.ID,
+		300, // timeout in seconds (5 minutes)
+	)
+	if err != nil {
+		t.Logf("failed to wait for alert definition to be enabled: %s", err)
+	}
 	updatedAlert, err := client.UpdateMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, createdAlert.ID, updateOpts)
 	if err != nil {
 		// Some fixtures may not support update; treat as non-fatal
