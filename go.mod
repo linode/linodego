@@ -1,7 +1,7 @@
 module github.com/linode/linodego
 
 require (
-	github.com/go-resty/resty/v2 v2.17.1
+	github.com/go-resty/resty/v2 v2.17.2
 	github.com/google/go-cmp v0.7.0
 	github.com/google/go-querystring v1.2.0
 	github.com/jarcoal/httpmock v1.4.1
