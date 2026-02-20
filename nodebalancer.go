@@ -37,6 +37,10 @@ type NodeBalancer struct {
 	// An array of tags applied to this object. Tags are for organizational purposes only.
 	Tags []string `json:"tags"`
 
+	// An array of locks applied to this NodeBalancer for deletion protection.
+	// Locks prevent the NodeBalancer or its subresources from being deleted.
+	Locks []LockType `json:"locks"`
+
 	Created *time.Time `json:"-"`
 	Updated *time.Time `json:"-"`
 }
