@@ -1,0 +1,29 @@
+{
+    "id": 999,
+    "label": "Complex NetLoadBalancer",
+    "region": "us-central",
+    "address_v4": "192.0.2.99",
+    "address_v6": "2600:3c03::f03c:91ff:fe24:9999",
+    "status": "active",
+    "listeners": [
+        {
+            "id": 1,
+            "protocol": "tcp",
+            "port": 80,
+            "label": "HTTP Listener",
+            "created": "2025-01-15T09:00:00",
+            "updated": "2025-01-15T09:00:00"
+        },
+        {
+            "id": 2,
+            "protocol": "tcp",
+            "port": 443,
+            "label": "HTTPS Listener",
+            "created": "2025-01-15T09:00:00",
+            "updated": "2025-01-15T09:00:00"
+        }
+    ],
+    "created": "2025-01-15T09:00:00",
+    "updated": "2025-01-15T09:00:00",
+    "last_composite_updated": "2025-01-15T09:00:00"
+}
