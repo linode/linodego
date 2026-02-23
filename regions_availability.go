@@ -41,23 +41,22 @@ func (c *Client) ListRegionsAvailability(ctx context.Context, opts *ListOptions)
 	return response, nil
 }
 
-// GetRegionAvailability gets the template with the provided ID. This endpoint is cached by default.
-func (c *Client) GetRegionAvailability(ctx context.Context, regionID string) (*RegionAvailability, error) {
+// GetRegionAvailability gets availability for all plans in the provided region. This endpoint is cached by default.
+func (c *Client) GetRegionAvailability(ctx context.Context, regionID string) ([]RegionAvailability, error) {
 	e := formatAPIPath("regions/%s/availability", regionID)
 
 	if result := c.getCachedResponse(e); result != nil {
-		result := result.(RegionAvailability)
-		return &result, nil
+		return result.([]RegionAvailability), nil
 	}
 
-	response, err := doGETRequest[RegionAvailability](ctx, c, e)
+	response, err := doGETRequest[[]RegionAvailability](ctx, c, e)
 	if err != nil {
 		return nil, err
 	}
 
-	c.addCachedResponse(e, response, &cacheExpiryTime)
+	c.addCachedResponse(e, *response, &cacheExpiryTime)
 
-	return response, nil
+	return *response, nil
 }
 
 // ListRegionsVPCAvailability lists VPC availability data for all regions.
