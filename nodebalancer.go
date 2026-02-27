@@ -39,6 +39,7 @@ type NodeBalancer struct {
 
 	// An array of locks applied to this NodeBalancer for deletion protection.
 	// Locks prevent the NodeBalancer or its subresources from being deleted.
+	// NOTE: Locks can only be used with v4beta.
 	Locks []LockType `json:"locks"`
 
 	Created *time.Time `json:"-"`
