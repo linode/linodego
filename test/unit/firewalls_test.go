@@ -113,6 +113,8 @@ func TestFirewall_Create(t *testing.T) {
 	assert.Equal(t, "firewall123", firewall.Label)
 	assert.Equal(t, linodego.FirewallStatus("enabled"), firewall.Status)
 	assert.ElementsMatch(t, []string{"example tag", "another example"}, firewall.Tags)
+	assert.Equal(t, "2018-01-01T00:01:01Z", firewall.Created.Format(time.RFC3339))
+	assert.Equal(t, "2018-01-02T00:01:01Z", firewall.Updated.Format(time.RFC3339))
 
 	assert.NotNil(t, firewall.Rules)
 	assert.Equal(t, "DROP", firewall.Rules.InboundPolicy)
@@ -137,6 +139,21 @@ func TestFirewall_Create(t *testing.T) {
 	assert.Equal(t, linodego.NetworkProtocol("TCP"), outboundRule.Protocol)
 	assert.ElementsMatch(t, []string{"192.0.2.0/24", "198.51.100.2/32"}, *outboundRule.Addresses.IPv4)
 	assert.ElementsMatch(t, []string{"2001:DB8::/128"}, *outboundRule.Addresses.IPv6)
+
+	assert.Len(t, firewall.Entities, 1)
+	entity := firewall.Entities[0]
+	assert.Equal(t, 189031, entity.ID)
+	assert.Equal(t, linodego.FirewallDeviceLinodeInterface, entity.Type)
+	assert.Nil(t, entity.Label)
+	assert.Equal(t, "/v4/linode/instances/92759172/interfaces/189031", entity.URL)
+	assert.NotNil(t, entity.ParentEntity)
+	assert.Equal(t, 92759172, entity.ParentEntity.ID)
+	assert.Equal(t, linodego.FirewallDeviceLinode, entity.ParentEntity.Type)
+	if assert.NotNil(t, entity.ParentEntity.Label) {
+		assert.Equal(t, "test-01", *entity.ParentEntity.Label)
+	}
+	assert.Equal(t, "/v4/linode/instances/92759172", entity.ParentEntity.URL)
+	assert.Nil(t, entity.ParentEntity.ParentEntity)
 }
 
 func TestFirewall_Get(t *testing.T) {
