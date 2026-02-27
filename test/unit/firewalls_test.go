@@ -99,7 +99,7 @@ func TestFirewall_Create(t *testing.T) {
 		},
 		Tags: []string{"example tag", "another example"},
 		Devices: linodego.DevicesCreationOptions{
-			Interfaces: []int{1, 2, 3},
+			LinodeInterfaces: []int{1, 2, 3},
 		},
 	}
 
