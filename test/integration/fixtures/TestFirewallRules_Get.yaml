@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"linodego-fw-test","rules":{"inbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
+    body: '{"label":"linodego-fw-test","rules":{"inbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"outbound_policy":"ACCEPT","version":0,"fingerprint":""},"tags":["testing"]}'
     form: {}
     headers:
       Accept:
@@ -14,12 +14,12 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 692859, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
+    body: '{"id": 3885660, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
-      [{"action": "ACCEPT", "label": "go-fwrule-test", "ports": "22", "protocol":
-      "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy":
-      "ACCEPT", "outbound": [{"action": "ACCEPT", "label": "go-fwrule-test", "ports":
-      "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}],
+      [{"protocol": "TCP", "addresses": {"ipv6": ["1234::5678/0"], "ipv4": ["0.0.0.0/0"]},
+      "action": "ACCEPT", "label": "go-fwrule-test", "ports": "22"}], "inbound_policy":
+      "ACCEPT", "outbound": [{"protocol": "TCP", "addresses": {"ipv6": ["1234::5678/0"], "ipv4":
+      ["0.0.0.0/0"]}, "action": "ACCEPT", "label": "go-fwrule-test", "ports": "22"}],
       "outbound_policy": "ACCEPT", "version": 1, "fingerprint": "7bcc0f03"}, "tags":
       ["testing"], "entities": []}'
     headers:
@@ -40,13 +40,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "583"
+      - "584"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 25 Jul 2024 17:44:41 GMT
+      - Sat, 28 Feb 2026 07:07:58 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -61,12 +61,9 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -82,14 +79,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/692859/rules
+    url: https://api.linode.com/v4beta/networking/firewalls/3885660/rules
     method: GET
   response:
-    body: '{"inbound": [{"action": "ACCEPT", "label": "go-fwrule-test", "ports": "22",
-      "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}],
-      "inbound_policy": "ACCEPT", "outbound": [{"action": "ACCEPT", "label": "go-fwrule-test",
-      "ports": "22", "protocol": "TCP", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6":
-      ["1234::5678/0"]}}], "outbound_policy": "ACCEPT", "version": 1, "fingerprint": "7bcc0f03"}'
+    body: '{"inbound": [{"protocol": "TCP", "addresses": {"ipv6": ["1234::5678/0"], "ipv4":
+      ["0.0.0.0/0"]}, "action": "ACCEPT", "label": "go-fwrule-test", "ports": "22"}],
+      "inbound_policy": "ACCEPT", "outbound": [{"protocol": "TCP", "addresses": {"ipv6":
+      ["1234::5678/0"], "ipv4": ["0.0.0.0/0"]}, "action": "ACCEPT", "label": "go-fwrule-test",
+      "ports": "22"}], "outbound_policy": "ACCEPT", "version": 1, "fingerprint": "7bcc0f03"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -114,7 +111,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 25 Jul 2024 17:44:42 GMT
+      - Sat, 28 Feb 2026 07:07:58 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -130,12 +127,9 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -151,7 +145,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/692859
+    url: https://api.linode.com/v4beta/networking/firewalls/3885660
     method: DELETE
   response:
     body: '{}'
@@ -179,7 +173,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 25 Jul 2024 17:44:42 GMT
+      - Sat, 28 Feb 2026 07:07:59 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -194,12 +188,9 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
