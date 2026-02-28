@@ -144,14 +144,12 @@ func TestFirewall_Create(t *testing.T) {
 	entity := firewall.Entities[0]
 	assert.Equal(t, 189031, entity.ID)
 	assert.Equal(t, linodego.FirewallDeviceLinodeInterface, entity.Type)
-	assert.Nil(t, entity.Label)
+	assert.Empty(t, entity.Label)
 	assert.Equal(t, "/v4/linode/instances/92759172/interfaces/189031", entity.URL)
 	assert.NotNil(t, entity.ParentEntity)
 	assert.Equal(t, 92759172, entity.ParentEntity.ID)
 	assert.Equal(t, linodego.FirewallDeviceLinode, entity.ParentEntity.Type)
-	if assert.NotNil(t, entity.ParentEntity.Label) {
-		assert.Equal(t, "test-01", *entity.ParentEntity.Label)
-	}
+	assert.Equal(t, "test-01", entity.ParentEntity.Label)
 	assert.Equal(t, "/v4/linode/instances/92759172", entity.ParentEntity.URL)
 	assert.Nil(t, entity.ParentEntity.ParentEntity)
 }
