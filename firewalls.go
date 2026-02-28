@@ -20,13 +20,23 @@ const (
 
 // A Firewall is a set of networking rules (iptables) applied to Devices with which it is associated
 type Firewall struct {
-	ID      int             `json:"id"`
-	Label   string          `json:"label"`
-	Status  FirewallStatus  `json:"status"`
-	Tags    []string        `json:"tags,omitempty"`
-	Rules   FirewallRuleSet `json:"rules"`
-	Created *time.Time      `json:"-"`
-	Updated *time.Time      `json:"-"`
+	ID       int              `json:"id"`
+	Label    string           `json:"label"`
+	Status   FirewallStatus   `json:"status"`
+	Tags     []string         `json:"tags"`
+	Rules    FirewallRuleSet  `json:"rules"`
+	Entities []FirewallEntity `json:"entities"`
+	Created  *time.Time       `json:"-"`
+	Updated  *time.Time       `json:"-"`
+}
+
+// FirewallEntity represents an entity attached to a Firewall.
+type FirewallEntity struct {
+	ID           int                `json:"id"`
+	Type         FirewallDeviceType `json:"type"`
+	Label        string             `json:"label"`
+	URL          string             `json:"url"`
+	ParentEntity *FirewallEntity    `json:"parent_entity"`
 }
 
 // DevicesCreationOptions fields are used when adding devices during the Firewall creation process.
