@@ -64,20 +64,17 @@ type LKENodePoolLabels map[string]string
 
 // LKENodePool represents a LKENodePool object
 type LKENodePool struct {
-	ID      int                 `json:"id"`
-	Count   int                 `json:"count"`
-	Type    string              `json:"type"`
-	Disks   []LKENodePoolDisk   `json:"disks"`
-	Linodes []LKENodePoolLinode `json:"nodes"`
-	Tags    []string            `json:"tags"`
-	Labels  LKENodePoolLabels   `json:"labels"`
-	Taints  []LKENodePoolTaint  `json:"taints"`
-	Label   *string             `json:"label"`
-
-	Autoscaler LKENodePoolAutoscaler `json:"autoscaler"`
-	FirewallID *int                  `json:"firewall_id,omitempty"`
-
-	// NOTE: Disk encryption may not currently be available to all users.
+	ID             int                    `json:"id"`
+	Count          int                    `json:"count"`
+	Type           string                 `json:"type"`
+	Disks          []LKENodePoolDisk      `json:"disks"`
+	Linodes        []LKENodePoolLinode    `json:"nodes"`
+	Tags           []string               `json:"tags"`
+	Labels         LKENodePoolLabels      `json:"labels"`
+	Taints         []LKENodePoolTaint     `json:"taints"`
+	Label          *string                `json:"label"`
+	Autoscaler     LKENodePoolAutoscaler  `json:"autoscaler"`
+	FirewallID     *int                   `json:"firewall_id,omitempty"`
 	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitempty"`
 
 	// K8sVersion and UpdateStrategy are only for LKE Enterprise to support node pool upgrades.
