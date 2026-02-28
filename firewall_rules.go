@@ -76,6 +76,8 @@ type FirewallRuleSet struct {
 	InboundPolicy  string         `json:"inbound_policy"`
 	Outbound       []FirewallRule `json:"outbound"`
 	OutboundPolicy string         `json:"outbound_policy"`
+	Version        int            `json:"version"`
+	Fingerprint    string         `json:"fingerprint"`
 }
 
 // GetFirewallRules gets the FirewallRuleSet for the given Firewall.
