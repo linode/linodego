@@ -4,13 +4,19 @@
             "id": 123,
             "label": "NodeBalancer A",
             "region": "us-east",
-            "tags": ["tag1", "tag2"]
+            "tags": ["tag1", "tag2"],
+            "frontend_address_type": "vpc",
+            "frontend_vpc_subnet_id": 123,
+            "type": "premium_40gb"
         },
         {
             "id": 456,
             "label": "NodeBalancer B",
             "region": "us-west",
-            "tags": ["tag3"]
+            "tags": ["tag3"],
+            "frontend_address_type": "vpc",
+            "frontend_vpc_subnet_id": 456,
+            "type": "premium_40gb"
         }
     ],
     "page": 1,
