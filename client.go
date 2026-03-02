@@ -66,6 +66,11 @@ Body: {{.Body}}`))
 
 var envDebug = false
 
+// sensitiveHeaders lists headers whose values are redacted from logs.
+var sensitiveHeaders = []string{
+	"Authorization",
+}
+
 // Client is a wrapper around the Resty client
 type Client struct {
 	resty             *resty.Client
@@ -408,12 +413,24 @@ func (c *httpClient) logRequest(req *http.Request, method, url string, bodyBuffe
 	err := reqLogTemplate.Execute(&logBuf, map[string]any{
 		"Method":  method,
 		"URL":     url,
-		"Headers": req.Header,
+		"Headers": redactHeaders(req.Header),
 		"Body":    reqBody,
 	})
 	if err == nil {
 		c.logger.Debugf(logBuf.String())
 	}
+}
+
+func redactHeaders(headers http.Header) http.Header {
+	redacted := headers.Clone()
+
+	for _, header := range sensitiveHeaders {
+		if headers.Get(header) != "" {
+			redacted.Set(header, "[REDACTED]")
+		}
+	}
+
+	return redacted
 }
 
 // nolint:unused
@@ -456,7 +473,7 @@ func (c *httpClient) logResponse(resp *http.Response) (*http.Response, error) {
 
 	err := respLogTemplate.Execute(&logBuf, map[string]any{
 		"Status":  resp.Status,
-		"Headers": resp.Header,
+		"Headers": redactHeaders(resp.Header),
 		"Body":    respBody.String(),
 	})
 	if err == nil {
