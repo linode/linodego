@@ -5,7 +5,6 @@ import (
 )
 
 // NodeBalancerVPCConfig objects represent a VPC config for a NodeBalancer
-// s
 // NOTE: NodeBalancer VPC support may not currently be available to all users.
 type NodeBalancerVPCConfig struct {
 	ID             int                          `json:"id"`
@@ -42,7 +41,7 @@ func (c *Client) ListNodeBalancerVPCFrontendConfigs(ctx context.Context, nodebal
 }
 
 // GetNodeBalancerVPCConfig gets the NodeBalancer VPC config with the specified id
-func (c *Client) GetNodeBalancerVPCConfig(ctx context.Context, nodebalancerID int, vpcID int) (*NodeBalancerVPCConfig, error) {
-	e := formatAPIPath("nodebalancers/%d/vpcs/%d", nodebalancerID, vpcID)
+func (c *Client) GetNodeBalancerVPCConfig(ctx context.Context, nodebalancerID int, vpcConfigID int) (*NodeBalancerVPCConfig, error) {
+	e := formatAPIPath("nodebalancers/%d/vpcs/%d", nodebalancerID, vpcConfigID)
 	return doGETRequest[NodeBalancerVPCConfig](ctx, c, e)
 }

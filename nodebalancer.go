@@ -38,7 +38,7 @@ type NodeBalancer struct {
 	Tags []string `json:"tags"`
 
 	FrontendAddressType NodeBalancerVPCFrontendAddressType `json:"frontend_address_type"`
-	FrontendVPCSubnetID int                                `json:"frontend_vpc_subnet_id"`
+	FrontendVPCSubnetID *int                               `json:"frontend_vpc_subnet_id"`
 
 	Created *time.Time `json:"-"`
 	Updated *time.Time `json:"-"`

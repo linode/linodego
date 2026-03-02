@@ -84,7 +84,7 @@ func TestNodeBalancer_Get(t *testing.T) {
 	assert.Equal(t, "us-west", nodebalancer.Region, "Expected NodeBalancer region to match")
 	assert.Equal(t, linodego.NBTypePremium40GB, nodebalancer.Type)
 	assert.Equal(t, linodego.NodeBalancerVPCFrontendAddressTypeVPC, nodebalancer.FrontendAddressType)
-	assert.Equal(t, 456, nodebalancer.FrontendVPCSubnetID)
+	assert.Equal(t, 456, *nodebalancer.FrontendVPCSubnetID)
 }
 
 func TestNodeBalancer_List(t *testing.T) {
@@ -110,7 +110,7 @@ func TestNodeBalancer_List(t *testing.T) {
 	assert.Equal(t, []string{"tag1", "tag2"}, nodebalancers[0].Tags, "Expected first NodeBalancer tags to match")
 	assert.Equal(t, linodego.NBTypePremium40GB, nodebalancers[0].Type)
 	assert.Equal(t, linodego.NodeBalancerVPCFrontendAddressTypeVPC, nodebalancers[0].FrontendAddressType)
-	assert.Equal(t, 123, nodebalancers[0].FrontendVPCSubnetID)
+	assert.Equal(t, 123, *nodebalancers[0].FrontendVPCSubnetID)
 
 	// Verify details of the second NodeBalancer
 	assert.Equal(t, 456, nodebalancers[1].ID, "Expected second NodeBalancer ID to match")
@@ -119,7 +119,7 @@ func TestNodeBalancer_List(t *testing.T) {
 	assert.Equal(t, []string{"tag3"}, nodebalancers[1].Tags, "Expected second NodeBalancer tags to match")
 	assert.Equal(t, linodego.NBTypePremium40GB, nodebalancers[1].Type)
 	assert.Equal(t, linodego.NodeBalancerVPCFrontendAddressTypeVPC, nodebalancers[1].FrontendAddressType)
-	assert.Equal(t, 456, nodebalancers[1].FrontendVPCSubnetID)
+	assert.Equal(t, 456, *nodebalancers[1].FrontendVPCSubnetID)
 }
 
 func TestNodeBalancer_Update(t *testing.T) {
@@ -199,5 +199,5 @@ func TestNodeBalancer_Create_with_VPCs(t *testing.T) {
 	assert.Equal(t, linodego.NBTypePremium40GB, nb.Type)
 
 	assert.Equal(t, linodego.NodeBalancerVPCFrontendAddressTypeVPC, nb.FrontendAddressType)
-	assert.Equal(t, 456, nb.FrontendVPCSubnetID)
+	assert.Equal(t, 456, *nb.FrontendVPCSubnetID)
 }
