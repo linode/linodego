@@ -9,7 +9,7 @@ import (
 type NodeBalancerVPCConfig struct {
 	ID             int                          `json:"id"`
 	IPv4Range      string                       `json:"ipv4_range"`
-	IPv6Range      string                       `json:"ipv6_range,omitempty"`
+	IPv6Range      string                       `json:"ipv6_range"`
 	NodeBalancerID int                          `json:"nodebalancer_id"`
 	SubnetID       int                          `json:"subnet_id"`
 	VPCID          int                          `json:"vpc_id"`
