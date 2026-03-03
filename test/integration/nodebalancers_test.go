@@ -146,6 +146,35 @@ func TestNodeBalancer_Get(t *testing.T) {
 	}
 }
 
+func TestNodeBalancer_Locks(t *testing.T) {
+	client, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancer_Locks", nil)
+	require.NoError(t, err)
+
+	t.Cleanup(teardown)
+
+	createOpts := linodego.LockCreateOptions{
+		EntityType: linodego.EntityNodebalancer,
+		EntityID:   nodebalancer.ID,
+		LockType:   linodego.LockTypeCannotDeleteWithSubresources,
+	}
+
+	createdLock, err := client.CreateLock(context.Background(), createOpts)
+	require.NoError(t, err)
+
+	t.Cleanup(func() {
+		require.NoError(t, client.DeleteLock(context.Background(), createdLock.ID))
+	})
+
+	refreshedNodeBalancer, err := client.GetNodeBalancer(context.Background(), nodebalancer.ID)
+	require.NoError(t, err)
+	require.NotEmpty(t, refreshedNodeBalancer.Locks)
+	require.Equal(
+		t,
+		linodego.LockTypeCannotDeleteWithSubresources,
+		refreshedNodeBalancer.Locks[0],
+	)
+}
+
 func TestNodeBalancer_UDP(t *testing.T) {
 	_, nodebalancer, teardown, err := setupNodeBalancer(
 		t,
@@ -182,7 +211,7 @@ func setupNodeBalancer(t *testing.T, fixturesYaml string, nbModifiers []nbModifi
 
 	nodebalancer, err := client.CreateNodeBalancer(context.Background(), createOpts)
 	if err != nil {
-		t.Fatalf("Error listing nodebalancers, expected struct, got error %v", err)
+		t.Fatalf("Error creating nodebalancer, expected struct, got error %v", err)
 	}
 
 	teardown := func() {
