@@ -717,7 +717,7 @@ func TestRedactHeaders(t *testing.T) {
 				"Content-Type":  []string{"application/json"},
 			},
 			wantVal: map[string]string{
-				"Authorization": "Bearer *******************************",
+				"Authorization": redactHeadersMap["Authorization"],
 				"Content-Type":  "application/json",
 			},
 		},
@@ -743,7 +743,7 @@ func TestRedactHeaders(t *testing.T) {
 				"Authorization": []string{"Bearer supersecrettoken"},
 			},
 			wantVal: map[string]string{
-				"Authorization": "Bearer *******************************",
+				"Authorization": redactHeadersMap["Authorization"],
 			},
 		},
 	}
@@ -786,7 +786,10 @@ func TestEnableLogSanitization(t *testing.T) {
 			"Authorization": []string{"Bearer " + plainTextToken},
 		}))
 
-	_, _ = mockClient.resty.R().Get("https://api.linode.com/v4/test")
+	_, err := mockClient.resty.R().Get("https://api.linode.com/v4/test")
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
 
 	logOutput := logBuf.String()
 

@@ -846,24 +846,22 @@ func (c *Client) updateHostURL() {
 	)
 }
 
+func redactLogHeaders(header http.Header) {
+	for h, redactedValue := range redactHeadersMap {
+		if header.Get(h) != "" {
+			header.Set(h, redactedValue)
+		}
+	}
+}
+
 func (c *Client) enableLogSanitization() *Client {
 	c.resty.OnRequestLog(func(r *resty.RequestLog) error {
-		for header, redactedValue := range redactHeadersMap {
-			if r.Header.Get(header) != "" {
-				r.Header.Set(header, redactedValue)
-			}
-		}
-
+		redactLogHeaders(r.Header)
 		return nil
 	})
 
 	c.resty.OnResponseLog(func(r *resty.ResponseLog) error {
-		for header, redactedValue := range redactHeadersMap {
-			if r.Header.Get(header) != "" {
-				r.Header.Set(header, redactedValue)
-			}
-		}
-
+		redactLogHeaders(r.Header)
 		return nil
 	})
 
