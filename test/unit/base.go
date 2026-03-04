@@ -1,7 +1,6 @@
 package unit
 
 import (
-	"fmt"
 	"net/http"
 	"os"
 	"strings"
