@@ -34,7 +34,7 @@ type Firewall struct {
 type FirewallEntity struct {
 	ID           int                `json:"id"`
 	Type         FirewallDeviceType `json:"type"`
-	Label        string             `json:"label"`
+	Label        *string            `json:"label"`
 	URL          string             `json:"url"`
 	ParentEntity *FirewallEntity    `json:"parent_entity"`
 }
