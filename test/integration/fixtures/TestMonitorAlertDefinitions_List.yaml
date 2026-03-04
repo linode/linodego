@@ -18,7 +18,7 @@ interactions:
       Memory Usage Plan Dedicated", "description": "Alert triggers when dedicated
       plan nodes consistently reach critical memory usage, risking application performance
       degradation.", "service_type": "dbaas", "type": "system", "scope": "entity",
-      "class": "dedicated", "regions": [], "status": "enabled", "entity_ids": [],
+      "class": "dedicated", "regions": [], "status": "enabled", "entity_ids": ["423214"],
       "has_more_resources": false, "severity": 2, "rule_criteria": {"rules": [{"label":
       "Memory Usage", "metric": "memory_usage", "unit": "percent", "aggregate_function":
       "avg", "operator": "gt", "threshold": 95, "dimension_filters": []}]}, "alert_channels":
@@ -30,19 +30,20 @@ interactions:
       Plan Shared", "description": "Alert triggers when shared plan nodes consistently
       reach critical memory usage, risking application performance degradation.",
       "service_type": "dbaas", "type": "system", "scope": "entity", "class": "shared",
-      "regions": [], "status": "enabled", "entity_ids": [], "has_more_resources":
-      false, "severity": 2, "rule_criteria": {"rules": [{"label": "Memory Usage",
-      "metric": "memory_usage", "unit": "percent", "aggregate_function": "avg", "operator":
-      "gt", "threshold": 90, "dimension_filters": []}]}, "alert_channels": [{"id":
-      10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
-      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
-      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
-      3}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
-      "system", "updated_by": "system"}, {"id": 10002, "label": "High CPU Usage Plan
-      Dedicated", "description": "Alert triggers when dedicated nodes consistently
-      exceed 95% CPU usage across three consecutive 5-minute intervals.", "service_type":
-      "dbaas", "type": "system", "scope": "entity", "class": "dedicated", "regions":
-      [], "status": "enabled", "entity_ids": [], "has_more_resources": false, "severity":
+      "regions": [], "status": "enabled", "entity_ids": ["189690", "313392", "324828",
+      "340839", "380969"], "has_more_resources": false, "severity": 2, "rule_criteria":
+      {"rules": [{"label": "Memory Usage", "metric": "memory_usage", "unit": "percent",
+      "aggregate_function": "avg", "operator": "gt", "threshold": 90, "dimension_filters":
+      []}]}, "alert_channels": [{"id": 10000, "label": "Read-Write Channel", "url":
+      "/monitor/alert-channels/10000", "type": "alert-channels"}], "trigger_conditions":
+      {"criteria_condition": "ALL", "polling_interval_seconds": 300, "evaluation_period_seconds":
+      300, "trigger_occurrences": 3}, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "created_by": "system", "updated_by": "system"}, {"id":
+      10002, "label": "High CPU Usage Plan Dedicated", "description": "Alert triggers
+      when dedicated nodes consistently exceed 95% CPU usage across three consecutive
+      5-minute intervals.", "service_type": "dbaas", "type": "system", "scope": "entity",
+      "class": "dedicated", "regions": [], "status": "enabled", "entity_ids": ["187468",
+      "188020", "188680", "188691", "423214"], "has_more_resources": false, "severity":
       2, "rule_criteria": {"rules": [{"label": "CPU Usage", "metric": "cpu_usage",
       "unit": "percent", "aggregate_function": "avg", "operator": "gt", "threshold":
       95, "dimension_filters": []}]}, "alert_channels": [{"id": 10000, "label": "Read-Write
@@ -54,34 +55,35 @@ interactions:
       "description": "Alert triggers when shared plan nodes consistently exceed high
       CPU utilization, indicating potential performance issues.", "service_type":
       "dbaas", "type": "system", "scope": "entity", "class": "shared", "regions":
-      [], "status": "enabled", "entity_ids": [], "has_more_resources": false, "severity":
-      2, "rule_criteria": {"rules": [{"label": "CPU Usage", "metric": "cpu_usage",
-      "unit": "percent", "aggregate_function": "avg", "operator": "gt", "threshold":
-      90, "dimension_filters": []}]}, "alert_channels": [{"id": 10000, "label": "Read-Write
-      Channel", "url": "/monitor/alert-channels/10000", "type": "alert-channels"}],
-      "trigger_conditions": {"criteria_condition": "ALL", "polling_interval_seconds":
-      300, "evaluation_period_seconds": 300, "trigger_occurrences": 3}, "created":
-      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by": "system",
-      "updated_by": "system"}, {"id": 10004, "label": "High Disk Usage Plan Dedicated",
-      "description": "Alert triggers when dedicated plan nodes experience sustained
+      [], "status": "enabled", "entity_ids": ["189690", "313392", "324828", "340839",
+      "380969"], "has_more_resources": false, "severity": 2, "rule_criteria": {"rules":
+      [{"label": "CPU Usage", "metric": "cpu_usage", "unit": "percent", "aggregate_function":
+      "avg", "operator": "gt", "threshold": 90, "dimension_filters": []}]}, "alert_channels":
+      [{"id": 10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
+      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
+      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
+      3}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
+      "system", "updated_by": "system"}, {"id": 10004, "label": "High Disk Usage Plan
+      Dedicated", "description": "Alert triggers when dedicated plan nodes experience
+      sustained high disk usage, risking immediate resource exhaustion.", "service_type":
+      "dbaas", "type": "system", "scope": "entity", "class": "dedicated", "regions":
+      [], "status": "enabled", "entity_ids": ["187468", "188020", "188680", "188691",
+      "423214"], "has_more_resources": false, "severity": 2, "rule_criteria": {"rules":
+      [{"label": "Disk Space Usage", "metric": "disk_usage", "unit": "percent", "aggregate_function":
+      "avg", "operator": "gt", "threshold": 95, "dimension_filters": []}]}, "alert_channels":
+      [{"id": 10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
+      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
+      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
+      3}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
+      "system", "updated_by": "system"}, {"id": 10005, "label": "High Disk Usage Plan
+      Shared", "description": "Alert triggers when shared plan nodes experience sustained
       high disk usage, risking immediate resource exhaustion.", "service_type": "dbaas",
-      "type": "system", "scope": "entity", "class": "dedicated", "regions": [], "status":
-      "enabled", "entity_ids": [], "has_more_resources": false, "severity": 2, "rule_criteria":
-      {"rules": [{"label": "Disk Space Usage", "metric": "disk_usage", "unit": "percent",
-      "aggregate_function": "avg", "operator": "gt", "threshold": 95, "dimension_filters":
-      []}]}, "alert_channels": [{"id": 10000, "label": "Read-Write Channel", "url":
-      "/monitor/alert-channels/10000", "type": "alert-channels"}], "trigger_conditions":
-      {"criteria_condition": "ALL", "polling_interval_seconds": 300, "evaluation_period_seconds":
-      300, "trigger_occurrences": 3}, "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "created_by": "system", "updated_by": "system"}, {"id":
-      10005, "label": "High Disk Usage Plan Shared", "description": "Alert triggers
-      when shared plan nodes experience sustained high disk usage, risking immediate
-      resource exhaustion.", "service_type": "dbaas", "type": "system", "scope": "entity",
-      "class": "shared", "regions": [], "status": "enabled", "entity_ids": [], "has_more_resources":
-      false, "severity": 2, "rule_criteria": {"rules": [{"label": "Disk Space Usage",
-      "metric": "disk_usage", "unit": "percent", "aggregate_function": "avg", "operator":
-      "gt", "threshold": 90, "dimension_filters": []}]}, "alert_channels": [{"id":
-      10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
+      "type": "system", "scope": "entity", "class": "shared", "regions": [], "status":
+      "enabled", "entity_ids": ["189690", "313392", "324828", "340839", "380969"],
+      "has_more_resources": false, "severity": 2, "rule_criteria": {"rules": [{"label":
+      "Disk Space Usage", "metric": "disk_usage", "unit": "percent", "aggregate_function":
+      "avg", "operator": "gt", "threshold": 90, "dimension_filters": []}]}, "alert_channels":
+      [{"id": 10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
       "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
       "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
       3}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
@@ -108,7 +110,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 22 Dec 2025 21:41:16 GMT
+      - Mon, 16 Feb 2026 04:27:15 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
