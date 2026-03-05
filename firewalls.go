@@ -25,18 +25,9 @@ type Firewall struct {
 	Status   FirewallStatus   `json:"status"`
 	Tags     []string         `json:"tags"`
 	Rules    FirewallRuleSet  `json:"rules"`
-	Entities []FirewallEntity `json:"entities"`
+	Entities []FirewallDeviceEntity `json:"entities"`
 	Created  *time.Time       `json:"-"`
 	Updated  *time.Time       `json:"-"`
-}
-
-// FirewallEntity represents an entity attached to a Firewall.
-type FirewallEntity struct {
-	ID           int                `json:"id"`
-	Type         FirewallDeviceType `json:"type"`
-	Label        *string            `json:"label"`
-	URL          string             `json:"url"`
-	ParentEntity *FirewallEntity    `json:"parent_entity"`
 }
 
 // DevicesCreationOptions fields are used when adding devices during the Firewall creation process.
