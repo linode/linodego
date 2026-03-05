@@ -469,7 +469,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Sat, 28 Feb 2026 04:56:41 GMT
+      - Wed, 04 Mar 2026 22:50:33 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -596,7 +596,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Sat, 28 Feb 2026 04:56:41 GMT
+      - Wed, 04 Mar 2026 22:50:33 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -622,7 +622,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"au-mel","type":"g6-nanode-1","label":"go-test-ins-pw9fe6385sz3","root_pass":"3rA!7HF!\u003cOxc;4M9tZJW+y/b}E7yw\u003c7tm1G8:|#7^Jx^5TeP7C$.0\u00265Z37mit7bP","image":"linode/debian12","booted":false}'
+    body: '{"region":"au-mel","type":"g6-nanode-1","label":"go-test-ins-q27m167oya7q","root_pass":"1;N2vve+~7TsyXbvPJ60+J45mmmM09d,V5U.[j;(Qf+AeZNn7*7K5+D6M:8f|@`7","image":"linode/debian12","booted":false}'
     form: {}
     headers:
       Accept:
@@ -634,15 +634,15 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 92781966, "label": "go-test-ins-pw9fe6385sz3", "group": "", "status":
+    body: '{"id": 93152753, "label": "go-test-ins-q27m167oya7q", "group": "", "status":
       "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.236.61.7"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["172.236.44.156"], "ipv6": "1234::5678/128",
       "image": "linode/debian12", "region": "au-mel", "site_type": "core", "specs":
       {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
       0}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota":
       80, "io": 10000}, "backups": {"enabled": false, "available": false, "schedule":
       {"day": null, "window": null}, "last_successful": null}, "hypervisor": "kvm",
-      "watchdog_enabled": true, "tags": [], "host_uuid": "3e3e0a7e79e0008de5ca42ce764eb79ba83ead36",
+      "watchdog_enabled": true, "tags": [], "host_uuid": "e6fb7e51a1d7b36635dda16eb686150d00ac7289",
       "has_user_data": false, "placement_group": null, "disk_encryption": "enabled",
       "lke_cluster_id": null, "capabilities": ["Block Storage Encryption", "SMTP Enabled",
       "Maintenance Policy"], "interface_generation": "legacy_config", "maintenance_policy":
@@ -669,7 +669,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Sat, 28 Feb 2026 04:56:43 GMT
+      - Wed, 04 Mar 2026 22:50:35 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -706,7 +706,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 3885330, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
+    body: '{"id": 3913123, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"protocol": "TCP", "addresses": {"ipv6": ["1234::5678/0"], "ipv4": ["0.0.0.0/0"]},
       "action": "ACCEPT", "label": "go-fwrule-test", "ports": "22"}], "inbound_policy":
@@ -738,7 +738,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Sat, 28 Feb 2026 04:56:43 GMT
+      - Wed, 04 Mar 2026 22:50:35 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -762,7 +762,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"id":92781966,"type":"linode"}'
+    body: '{"id":93152753,"type":"linode"}'
     form: {}
     headers:
       Accept:
@@ -771,12 +771,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/3885330/devices
+    url: https://api.linode.com/v4beta/networking/firewalls/3913123/devices
     method: POST
   response:
-    body: '{"id": 10391618, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "entity": {"id": 92781966, "type": "linode", "label": "go-test-ins-pw9fe6385sz3",
-      "url": "/v4/linode/instances/92781966", "parent_entity": null}}'
+    body: '{"id": 10483434, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "entity": {"id": 93152753, "type": "linode", "label": "go-test-ins-q27m167oya7q",
+      "url": "/v4/linode/instances/93152753", "parent_entity": null}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -801,7 +801,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Sat, 28 Feb 2026 04:56:43 GMT
+      - Wed, 04 Mar 2026 22:50:35 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -834,12 +834,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/3885330/devices/10391618
+    url: https://api.linode.com/v4beta/networking/firewalls/3913123/devices/10483434
     method: GET
   response:
-    body: '{"id": 10391618, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "entity": {"id": 92781966, "type": "linode", "label": "go-test-ins-pw9fe6385sz3",
-      "url": "/v4/linode/instances/92781966", "parent_entity": null}}'
+    body: '{"id": 10483434, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "entity": {"id": 93152753, "type": "linode", "label": "go-test-ins-q27m167oya7q",
+      "url": "/v4/linode/instances/93152753", "parent_entity": null}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -864,7 +864,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Sat, 28 Feb 2026 04:56:44 GMT
+      - Wed, 04 Mar 2026 22:50:36 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -898,18 +898,18 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/3885330
+    url: https://api.linode.com/v4beta/networking/firewalls/3913123
     method: GET
   response:
-    body: '{"id": 3885330, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
+    body: '{"id": 3913123, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"protocol": "TCP", "addresses": {"ipv6": ["1234::5678/0"], "ipv4": ["0.0.0.0/0"]},
       "action": "ACCEPT", "label": "go-fwrule-test", "ports": "22"}], "inbound_policy":
       "ACCEPT", "outbound": [{"protocol": "TCP", "addresses": {"ipv6": ["1234::5678/0"], "ipv4":
       ["0.0.0.0/0"]}, "action": "ACCEPT", "label": "go-fwrule-test", "ports": "22"}],
       "outbound_policy": "ACCEPT", "version": 1, "fingerprint": "7bcc0f03"}, "tags":
-      ["testing"], "entities": [{"id": 92781966, "type": "linode", "label": "go-test-ins-pw9fe6385sz3",
-      "url": "/v4/linode/instances/92781966", "parent_entity": null}]}'
+      ["testing"], "entities": [{"id": 93152753, "type": "linode", "label": "go-test-ins-q27m167oya7q",
+      "url": "/v4/linode/instances/93152753", "parent_entity": null}]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -934,7 +934,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Sat, 28 Feb 2026 04:56:46 GMT
+      - Wed, 04 Mar 2026 22:50:36 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -968,7 +968,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/3885330
+    url: https://api.linode.com/v4beta/networking/firewalls/3913123
     method: DELETE
   response:
     body: '{}'
@@ -996,7 +996,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Sat, 28 Feb 2026 04:56:46 GMT
+      - Wed, 04 Mar 2026 22:50:36 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -1029,7 +1029,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/92781966
+    url: https://api.linode.com/v4beta/linode/instances/93152753
     method: DELETE
   response:
     body: '{}'
@@ -1057,7 +1057,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Sat, 28 Feb 2026 04:56:47 GMT
+      - Wed, 04 Mar 2026 22:50:37 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

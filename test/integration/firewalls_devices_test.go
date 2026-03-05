@@ -35,6 +35,9 @@ func TestFirewallDevices_List_smoke(t *testing.T) {
 		if firewall.Entities[0].ID != instance.ID {
 			t.Errorf("expected entity id %d, got %d", instance.ID, firewall.Entities[0].ID)
 		}
+		if firewall.Entities[0].ParentEntity != nil {
+			t.Errorf("expected parent entity to be nil for a linode device, got %+v", firewall.Entities[0].ParentEntity)
+		}
 	}
 
 	firewallDevices, err := client.ListFirewallDevices(context.Background(), firewall.ID, nil)
@@ -44,6 +47,21 @@ func TestFirewallDevices_List_smoke(t *testing.T) {
 
 	if len(firewallDevices) != 1 {
 		t.Errorf("expected 1 firewall device but got %d", len(firewallDevices))
+	}
+
+	if len(firewallDevices) > 0 {
+		if firewallDevices[0].Entity.Type != linodego.FirewallDeviceLinode {
+			t.Errorf("expected device entity type %q, got %q", linodego.FirewallDeviceLinode, firewallDevices[0].Entity.Type)
+		}
+		if firewallDevices[0].Entity.ID != instance.ID {
+			t.Errorf("expected device entity id %d, got %d", instance.ID, firewallDevices[0].Entity.ID)
+		}
+		if firewallDevices[0].Entity.Label == "" {
+			t.Error("expected non-empty device entity label")
+		}
+		if firewallDevices[0].Entity.ParentEntity != nil {
+			t.Errorf("expected parent entity to be nil for a linode device, got %+v", firewallDevices[0].Entity.ParentEntity)
+		}
 	}
 }
 
@@ -72,6 +90,13 @@ func TestFirewallDevice_Get(t *testing.T) {
 		t.Error(err)
 	} else if !cmp.Equal(device, firewallDevice) {
 		t.Errorf("expected device to match create result but got diffs: %s", cmp.Diff(device, firewallDevice))
+	} else {
+		if device.Entity.Label == "" {
+			t.Error("expected non-empty device entity label")
+		}
+		if device.Entity.ParentEntity != nil {
+			t.Errorf("expected parent entity to be nil for a linode device, got %+v", device.Entity.ParentEntity)
+		}
 	}
 
 	refreshedFirewall, err := client.GetFirewall(context.Background(), firewall.ID)
