@@ -30,8 +30,10 @@ func TestFirewall_List(t *testing.T) {
 	assert.Equal(t, 123, firewall.ID)
 	assert.Equal(t, "firewall123", firewall.Label)
 	assert.Equal(t, linodego.FirewallStatus("enabled"), firewall.Status)
+	assert.Equal(t, 2, firewall.Version)
 
 	assert.Equal(t, "DROP", firewall.Rules.InboundPolicy)
+	assert.Equal(t, 1, firewall.Rules.Version)
 	assert.Len(t, firewall.Rules.Inbound, 1)
 
 	inboundRule := firewall.Rules.Inbound[0]
@@ -112,11 +114,13 @@ func TestFirewall_Create(t *testing.T) {
 	assert.Equal(t, 123, firewall.ID)
 	assert.Equal(t, "firewall123", firewall.Label)
 	assert.Equal(t, linodego.FirewallStatus("enabled"), firewall.Status)
+	assert.Equal(t, 1, firewall.Version)
 	assert.ElementsMatch(t, []string{"example tag", "another example"}, firewall.Tags)
 
 	assert.NotNil(t, firewall.Rules)
 	assert.Equal(t, "DROP", firewall.Rules.InboundPolicy)
 	assert.Equal(t, "DROP", firewall.Rules.OutboundPolicy)
+	assert.Equal(t, 1, firewall.Rules.Version)
 
 	assert.Len(t, firewall.Rules.Inbound, 1)
 	inboundRule := firewall.Rules.Inbound[0]
@@ -158,6 +162,7 @@ func TestFirewall_Get(t *testing.T) {
 	assert.Equal(t, 123, firewall.ID)
 	assert.Equal(t, "firewall123", firewall.Label)
 	assert.Equal(t, linodego.FirewallStatus("enabled"), firewall.Status)
+	assert.Equal(t, 2, firewall.Version)
 	assert.Equal(t, "2018-01-01T00:01:01Z", firewall.Created.Format(time.RFC3339))
 	assert.Equal(t, "2018-01-02T00:01:01Z", firewall.Updated.Format(time.RFC3339))
 	assert.ElementsMatch(t, []string{"example tag", "another example"}, firewall.Tags)
@@ -165,6 +170,7 @@ func TestFirewall_Get(t *testing.T) {
 	assert.NotNil(t, firewall.Rules)
 	assert.Equal(t, "DROP", firewall.Rules.InboundPolicy)
 	assert.Equal(t, "DROP", firewall.Rules.OutboundPolicy)
+	assert.Equal(t, 1, firewall.Rules.Version)
 
 	assert.Len(t, firewall.Rules.Inbound, 1)
 	inboundRule := firewall.Rules.Inbound[0]
@@ -212,6 +218,7 @@ func TestFirewall_Update(t *testing.T) {
 	assert.Equal(t, 123, firewall.ID)
 	assert.Equal(t, "firewall123", firewall.Label)
 	assert.Equal(t, linodego.FirewallStatus("enabled"), firewall.Status)
+	assert.Equal(t, 3, firewall.Version)
 	assert.Equal(t, "2018-01-01T00:01:01Z", firewall.Created.Format(time.RFC3339))
 	assert.Equal(t, "2018-01-02T00:01:01Z", firewall.Updated.Format(time.RFC3339))
 	assert.ElementsMatch(t, []string{"updated tag", "another updated tag"}, firewall.Tags)
@@ -219,6 +226,7 @@ func TestFirewall_Update(t *testing.T) {
 	assert.NotNil(t, firewall.Rules)
 	assert.Equal(t, "DROP", firewall.Rules.InboundPolicy)
 	assert.Equal(t, "DROP", firewall.Rules.OutboundPolicy)
+	assert.Equal(t, 1, firewall.Rules.Version)
 
 	assert.Len(t, firewall.Rules.Inbound, 1)
 	inboundRule := firewall.Rules.Inbound[0]

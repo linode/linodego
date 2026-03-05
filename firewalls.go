@@ -25,6 +25,7 @@ type Firewall struct {
 	Status  FirewallStatus  `json:"status"`
 	Tags    []string        `json:"tags,omitempty"`
 	Rules   FirewallRuleSet `json:"rules"`
+	Version int             `json:"version"`
 	Created *time.Time      `json:"-"`
 	Updated *time.Time      `json:"-"`
 }

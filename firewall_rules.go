@@ -76,6 +76,11 @@ type FirewallRuleSet struct {
 	InboundPolicy  string         `json:"inbound_policy"`
 	Outbound       []FirewallRule `json:"outbound"`
 	OutboundPolicy string         `json:"outbound_policy"`
+
+	// Version is the firewall rules version, starting from 1. The version
+	// number increments when the rules change. Include the version when updating
+	// rules to avoid conflicts.
+	Version int `json:"version,omitempty"`
 }
 
 // GetFirewallRules gets the FirewallRuleSet for the given Firewall.

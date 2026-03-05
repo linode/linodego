@@ -24,6 +24,7 @@ func TestFirewallRule_Get(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, firewallRule)
 
+	assert.Equal(t, 1, firewallRule.Version)
 	assert.Equal(t, "DROP", firewallRule.InboundPolicy)
 	assert.Equal(t, 1, len(firewallRule.Inbound))
 	assert.Equal(t, "ACCEPT", firewallRule.Inbound[0].Action)
@@ -119,6 +120,7 @@ func TestFirewallRule_Update(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, firewallRule)
 
+	assert.Equal(t, 1, firewallRule.Version)
 	assert.Equal(t, "DROP", firewallRule.InboundPolicy)
 	assert.Equal(t, 1, len(firewallRule.Inbound))
 	assert.Equal(t, "ACCEPT", firewallRule.Inbound[0].Action)
@@ -147,6 +149,7 @@ func TestFirewallRule_GetExpansion(t *testing.T) {
 	outboundIPv6 := []string{"pl::vpcs:<current>"}
 
 	mockResponse := linodego.FirewallRuleSet{
+		Version: 2,
 		Inbound: []linodego.FirewallRule{
 			{
 				Action:      "ACCEPT",
@@ -187,6 +190,7 @@ func TestFirewallRule_GetExpansion(t *testing.T) {
 	firewallRuleSet, err := base.Client.GetFirewallRulesExpansion(context.Background(), firewallID)
 	assert.NoError(t, err)
 	assert.NotNil(t, firewallRuleSet)
+	assert.Equal(t, 2, firewallRuleSet.Version)
 
 	if assert.Len(t, firewallRuleSet.Inbound, 1) {
 		assert.Equal(t, "ACCEPT", firewallRuleSet.Inbound[0].Action)
