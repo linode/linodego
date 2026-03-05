@@ -37,6 +37,9 @@ type NodeBalancer struct {
 	// An array of tags applied to this object. Tags are for organizational purposes only.
 	Tags []string `json:"tags"`
 
+	FrontendAddressType NodeBalancerVPCFrontendAddressType `json:"frontend_address_type"`
+	FrontendVPCSubnetID *int                               `json:"frontend_vpc_subnet_id"`
+
 	Created *time.Time `json:"-"`
 	Updated *time.Time `json:"-"`
 }
@@ -58,6 +61,12 @@ type NodeBalancerVPCOptions struct {
 	IPv4RangeAutoAssign bool   `json:"ipv4_range_auto_assign,omitempty"`
 }
 
+type NodeBalancerFrontendVPCOptions struct {
+	IPv4Range string `json:"ipv4_range,omitempty"`
+	IPv6Range string `json:"ipv6_range,omitempty"`
+	SubnetID  int    `json:"subnet_id"`
+}
+
 // NodeBalancerCreateOptions are the options permitted for CreateNodeBalancer
 type NodeBalancerCreateOptions struct {
 	Label              *string `json:"label,omitempty"`
@@ -67,12 +76,13 @@ type NodeBalancerCreateOptions struct {
 	// NOTE: ClientUDPSessThrottle may not currently be available to all users.
 	ClientUDPSessThrottle *int `json:"client_udp_sess_throttle,omitempty"`
 
-	Configs    []*NodeBalancerConfigCreateOptions `json:"configs,omitempty"`
-	Tags       []string                           `json:"tags"`
-	FirewallID int                                `json:"firewall_id,omitempty"`
-	Type       NodeBalancerPlanType               `json:"type,omitempty"`
-	VPCs       []NodeBalancerVPCOptions           `json:"vpcs,omitempty"`
-	IPv4       *string                            `json:"ipv4,omitempty"`
+	Configs      []*NodeBalancerConfigCreateOptions `json:"configs,omitempty"`
+	Tags         []string                           `json:"tags"`
+	FirewallID   int                                `json:"firewall_id,omitempty"`
+	Type         NodeBalancerPlanType               `json:"type,omitempty"`
+	VPCs         []NodeBalancerVPCOptions           `json:"vpcs,omitempty"`
+	FrontendVPCs []NodeBalancerFrontendVPCOptions   `json:"frontend_vpcs,omitempty"`
+	IPv4         *string                            `json:"ipv4,omitempty"`
 }
 
 // NodeBalancerUpdateOptions are the options permitted for UpdateNodeBalancer
@@ -94,6 +104,15 @@ const (
 	NBTypePremium     NodeBalancerPlanType = "premium"
 	NBTypePremium40GB NodeBalancerPlanType = "premium_40gb"
 	NBTypeCommon      NodeBalancerPlanType = "common"
+)
+
+// NodeBalancerVPCFrontendAddressType constants start with NodeBalancerVPCFrontendAddressType and include the types of frontend addresses a NodeBalancer VPC can have
+type NodeBalancerVPCFrontendAddressType string
+
+// NodeBalancerVPCFrontendAddressType constants reflect the types of frontend addresses a NodeBalancer VPC can have
+const (
+	NodeBalancerVPCFrontendAddressTypeVPC    NodeBalancerVPCFrontendAddressType = "vpc"
+	NodeBalancerVPCFrontendAddressTypePublic NodeBalancerVPCFrontendAddressType = "public"
 )
 
 // UnmarshalJSON implements the json.Unmarshaler interface

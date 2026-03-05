@@ -5,24 +5,43 @@ import (
 )
 
 // NodeBalancerVPCConfig objects represent a VPC config for a NodeBalancer
-// s
 // NOTE: NodeBalancer VPC support may not currently be available to all users.
 type NodeBalancerVPCConfig struct {
-	ID             int    `json:"id"`
-	IPv4Range      string `json:"ipv4_range"`
-	IPv6Range      string `json:"ipv6_range,omitempty"`
-	NodeBalancerID int    `json:"nodebalancer_id"`
-	SubnetID       int    `json:"subnet_id"`
-	VPCID          int    `json:"vpc_id"`
+	ID             int                          `json:"id"`
+	IPv4Range      string                       `json:"ipv4_range"`
+	IPv6Range      string                       `json:"ipv6_range"`
+	NodeBalancerID int                          `json:"nodebalancer_id"`
+	SubnetID       int                          `json:"subnet_id"`
+	VPCID          int                          `json:"vpc_id"`
+	Purpose        NodeBalancerVPCConfigPurpose `json:"purpose"`
 }
+
+// NodeBalancerVPCConfigPurpose constants start with NodeBalancerVPCConfigPurpose and include the purposes of a NodeBalancer VPC config
+type NodeBalancerVPCConfigPurpose string
+
+// NodeBalancerVPCConfigPurpose constants reflect the purpose of a NodeBalancer VPC config
+const (
+	NodeBalancerVPCConfigPurposeFrontend NodeBalancerVPCConfigPurpose = "frontend"
+	NodeBalancerVPCConfigPurposeBackend  NodeBalancerVPCConfigPurpose = "backend"
+)
 
 // ListNodeBalancerVPCConfigs lists NodeBalancer VPC configs
 func (c *Client) ListNodeBalancerVPCConfigs(ctx context.Context, nodebalancerID int, opts *ListOptions) ([]NodeBalancerVPCConfig, error) {
 	return getPaginatedResults[NodeBalancerVPCConfig](ctx, c, formatAPIPath("nodebalancers/%d/vpcs", nodebalancerID), opts)
 }
 
+// ListNodeBalancerVPCBackendConfigs lists NodeBalancer Backend VPC configs
+func (c *Client) ListNodeBalancerVPCBackendConfigs(ctx context.Context, nodebalancerID int, opts *ListOptions) ([]NodeBalancerVPCConfig, error) {
+	return getPaginatedResults[NodeBalancerVPCConfig](ctx, c, formatAPIPath("nodebalancers/%d/backend_vpcs", nodebalancerID), opts)
+}
+
+// ListNodeBalancerVPCFrontendConfigs lists NodeBalancer Frontend VPC configs
+func (c *Client) ListNodeBalancerVPCFrontendConfigs(ctx context.Context, nodebalancerID int, opts *ListOptions) ([]NodeBalancerVPCConfig, error) {
+	return getPaginatedResults[NodeBalancerVPCConfig](ctx, c, formatAPIPath("nodebalancers/%d/frontend_vpcs", nodebalancerID), opts)
+}
+
 // GetNodeBalancerVPCConfig gets the NodeBalancer VPC config with the specified id
-func (c *Client) GetNodeBalancerVPCConfig(ctx context.Context, nodebalancerID int, vpcID int) (*NodeBalancerVPCConfig, error) {
-	e := formatAPIPath("nodebalancers/%d/vpcs/%d", nodebalancerID, vpcID)
+func (c *Client) GetNodeBalancerVPCConfig(ctx context.Context, nodebalancerID int, vpcConfigID int) (*NodeBalancerVPCConfig, error) {
+	e := formatAPIPath("nodebalancers/%d/vpcs/%d", nodebalancerID, vpcConfigID)
 	return doGETRequest[NodeBalancerVPCConfig](ctx, c, e)
 }
