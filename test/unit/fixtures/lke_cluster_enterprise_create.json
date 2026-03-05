@@ -1,0 +1,18 @@
+{
+    "id": 3010,
+    "label": "enterprise-cluster",
+    "region": "us-east",
+    "status": "ready",
+    "tier": "enterprise",
+    "subnet_id": 2010,
+    "vpc_id": 1010,
+    "stack_type": "ipv4-ipv6",
+    "control_plane": {
+        "high_availability": true,
+        "audit_logs_enabled": true
+    },
+    "ruleset_ids": {
+        "inbound": 4010,
+        "outbound": 4011
+    }
+}

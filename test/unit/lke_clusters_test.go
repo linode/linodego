@@ -121,6 +121,60 @@ func TestLKECluster_Create(t *testing.T) {
 	assert.Equal(t, false, cluster.ControlPlane.AuditLogsEnabled)
 }
 
+func TestLKECluster_Create_Enterprise_RuleSetIDs(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("lke_cluster_enterprise_create")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	createOptions := linodego.LKEClusterCreateOptions{
+		Label:      "enterprise-cluster",
+		Region:     "us-east",
+		K8sVersion: "1.31",
+		Tier:       "enterprise",
+		SubnetID:   linodego.Pointer(2010),
+		VpcID:      linodego.Pointer(1010),
+		StackType:  linodego.Pointer(linodego.LKEClusterDualStack),
+		ControlPlane: &linodego.LKEClusterControlPlaneOptions{
+			HighAvailability: linodego.Pointer(true),
+			AuditLogsEnabled: linodego.Pointer(true),
+		},
+	}
+
+	base.MockPost("lke/clusters", fixtureData)
+
+	cluster, err := base.Client.CreateLKECluster(context.Background(), createOptions)
+	assert.NoError(t, err)
+	assert.Equal(t, 3010, cluster.ID)
+	assert.Equal(t, "enterprise", cluster.Tier)
+	assert.Equal(t, 2010, cluster.SubnetID)
+	assert.Equal(t, 1010, cluster.VpcID)
+	assert.Equal(t, linodego.LKEClusterDualStack, cluster.StackType)
+
+	// Validate ruleset_ids deserialization
+	assert.NotNil(t, cluster.RuleSetIDs, "RuleSetIDs should not be nil for enterprise clusters")
+	assert.Equal(t, 4010, cluster.RuleSetIDs.Inbound)
+	assert.Equal(t, 4011, cluster.RuleSetIDs.Outbound)
+}
+
+func TestLKECluster_Get_NoRuleSetIDs(t *testing.T) {
+	// Standard clusters do not return ruleset_ids; the field should be nil
+	fixtureData, err := fixtures.GetFixture("lke_cluster_get")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockGet("lke/clusters/123", fixtureData)
+
+	cluster, err := base.Client.GetLKECluster(context.Background(), 123)
+	assert.NoError(t, err)
+	assert.Nil(t, cluster.RuleSetIDs, "RuleSetIDs should be nil for standard clusters")
+}
+
 func TestLKECluster_Update(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("lke_cluster_update")
 	assert.NoError(t, err)

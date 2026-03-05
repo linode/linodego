@@ -47,6 +47,16 @@ type LKECluster struct {
 	SubnetID  int                 `json:"subnet_id"`
 	VpcID     int                 `json:"vpc_id"`
 	StackType LKEClusterStackType `json:"stack_type"`
+
+	// RuleSetIDs contains the IDs of the service-managed firewall rulesets
+	// automatically created for LKE Enterprise clusters.
+	RuleSetIDs *LKEClusterRuleSetIDs `json:"ruleset_ids,omitempty"`
+}
+
+// LKEClusterRuleSetIDs contains the inbound and outbound ruleset IDs for an LKE-E cluster.
+type LKEClusterRuleSetIDs struct {
+	Inbound  int `json:"inbound"`
+	Outbound int `json:"outbound"`
 }
 
 // LKEClusterCreateOptions fields are those accepted by CreateLKECluster
