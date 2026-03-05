@@ -163,7 +163,7 @@ func TestFirewallDevice_Get_WithParentEntity(t *testing.T) {
 	assert.NotNil(t, device)
 
 	assert.Equal(t, linodego.FirewallDeviceLinodeInterface, device.Entity.Type)
-	assert.Nil(t, device.Entity.Label)
+	assert.Equal(t, device.Entity.Label, "")
 
 	if assert.NotNil(t, device.Entity.ParentEntity) {
 		assert.Equal(t, 123, device.Entity.ParentEntity.ID)
