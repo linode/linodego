@@ -85,6 +85,7 @@ func TestInstanceDisk_Create(t *testing.T) {
 		Label:      "New Disk",
 		Size:       20480,
 		Filesystem: "ext4",
+		RootPass:   "@S3cur3p@ssw0rd",
 	}
 
 	base.MockPost("linode/instances/123/disks", fixtureData)
