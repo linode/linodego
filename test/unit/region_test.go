@@ -129,8 +129,64 @@ func TestGetRegionAvailability(t *testing.T) {
 
 	availability, err := base.Client.GetRegionAvailability(context.Background(), regionID)
 	assert.NoError(t, err)
-	assert.NotNil(t, availability, "Expected region availability object to be returned")
-	assert.Equal(t, "us-east", availability.Region, "Expected region ID to be 'us-east'")
-	assert.True(t, availability.Available, "Expected region to be available")
-	assert.NotEmpty(t, availability.Plan, "Expected plan to be set")
+	assert.NotEmpty(t, availability, "Expected region availability list to be returned")
+	assert.Equal(t, "us-east", availability[0].Region, "Expected region ID to be 'us-east'")
+	assert.True(t, availability[0].Available, "Expected region to be available")
+	assert.NotEmpty(t, availability[0].Plan, "Expected plan to be set")
+}
+
+func TestListRegionsVPCAvailability(t *testing.T) {
+	// Load the fixture data for regions vpc availability
+	fixtureData, err := fixtures.GetFixture("regions_vpc_availability_list")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockGet("regions/vpc-availability", fixtureData)
+
+	availability, err := base.Client.ListRegionsVPCAvailability(context.Background(), &linodego.ListOptions{})
+	assert.NoError(t, err)
+	assert.NotEmpty(t, availability, "Expected non-empty region vpc availability list")
+
+	expected := []linodego.RegionVPCAvailability{
+		{
+			Region:                     "us-east",
+			Available:                  true,
+			AvailableIPV6PrefixLengths: []int{52, 48},
+		},
+		{
+			Region:                     "us-west",
+			Available:                  true,
+			AvailableIPV6PrefixLengths: []int{56, 52, 48},
+		},
+	}
+
+	assert.Equal(t, expected, availability, "Expected region vpc availability list to match expected data")
+}
+
+func TestGetRegionVPCAvailability(t *testing.T) {
+	// Load the fixture data for a specific region vpc availability
+	fixtureData, err := fixtures.GetFixture("region_vpc_availability_get")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	regionID := "us-east"
+	base.MockGet(fmt.Sprintf("regions/%s/vpc-availability", regionID), fixtureData)
+
+	availability, err := base.Client.GetRegionVPCAvailability(context.Background(), regionID)
+	assert.NoError(t, err)
+	assert.NotNil(t, availability, "Expected region vpc availability object to be returned")
+
+	expected := &linodego.RegionVPCAvailability{
+		Region:                     "us-east",
+		Available:                  true,
+		AvailableIPV6PrefixLengths: []int{52, 60},
+	}
+
+	assert.Equal(t, expected, availability, "Expected region vpc availability to match expected data")
 }

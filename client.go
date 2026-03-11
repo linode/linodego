@@ -418,6 +418,7 @@ func (c *httpClient) logRequest(req *http.Request, method, url string, bodyBuffe
 
 // nolint:unused
 func (c *httpClient) sendRequest(req *http.Request) (*http.Response, error) {
+	// #nosec G704
 	resp, err := c.httpClient.Do(req)
 	if err != nil {
 		if c.debug && c.logger != nil {

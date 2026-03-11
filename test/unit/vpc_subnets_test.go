@@ -74,6 +74,10 @@ func TestVPCSubnet_Get(t *testing.T) {
 	assert.Equal(t, 123, subnet.Databases[0].ID)
 	assert.Equal(t, "10.0.0.4/32", *subnet.Databases[0].IPv4Range)
 	assert.Equal(t, "fda3:9c1b:5e2a:1::/64", subnet.Databases[0].IPv6Ranges[0])
+
+	assert.Equal(t, 4444, subnet.Nodebalancers[0].ID)
+	assert.Equal(t, "192.168.0.20/30", subnet.Nodebalancers[0].Ipv4Range)
+	assert.Equal(t, "2830:0:0:4::/62", subnet.Nodebalancers[0].Ipv6Ranges[0].Range)
 }
 
 func TestVPCSubnets_List(t *testing.T) {
@@ -120,6 +124,10 @@ func TestVPCSubnets_List(t *testing.T) {
 	assert.Equal(t, 123, subnet.Databases[0].ID)
 	assert.Equal(t, "10.0.0.4/32", *subnet.Databases[0].IPv4Range)
 	assert.Equal(t, "fda3:9c1b:5e2a:1::/64", subnet.Databases[0].IPv6Ranges[0])
+
+	assert.Equal(t, 4444, subnet.Nodebalancers[0].ID)
+	assert.Equal(t, "192.168.0.20/30", subnet.Nodebalancers[0].Ipv4Range)
+	assert.Equal(t, "2830:0:0:4::/62", subnet.Nodebalancers[0].Ipv6Ranges[0].Range)
 }
 
 func TestVPCSubnet_Update(t *testing.T) {

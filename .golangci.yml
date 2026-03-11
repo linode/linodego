@@ -51,6 +51,12 @@ linters:
       disable-all: false
   exclusions:
     generated: lax
+    rules:
+      - linters:
+          - gosec
+        # "matches secret pattern" linodego necessarily serializes and
+        # deserializes API structs that contain secrets
+        text: G117
     presets:
       - comments
       - common-false-positives
