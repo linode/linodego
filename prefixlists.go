@@ -3,6 +3,7 @@ package linodego
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"time"
 
 	"github.com/linode/linodego/internal/parseabletime"
@@ -58,4 +59,29 @@ func (c *Client) ListPrefixLists(ctx context.Context, opts *ListOptions) ([]Pref
 func (c *Client) GetPrefixList(ctx context.Context, id int) (*PrefixList, error) {
 	endpoint := formatAPIPath("networking/prefixlists/%d", id)
 	return doGETRequest[PrefixList](ctx, c, endpoint)
+}
+
+// GetPrefixListByName finds a Prefix List by its name (e.g., "pl:system:object-storage:us-iad").
+// Returns nil and an error if no matching prefix list is found.
+func (c *Client) GetPrefixListByName(ctx context.Context, name string) (*PrefixList, error) {
+	f := Filter{}
+	f.AddField(Eq, "name", name)
+
+	fJSON, err := f.MarshalJSON()
+	if err != nil {
+		return nil, err
+	}
+
+	opts := ListOptions{Filter: string(fJSON)}
+
+	lists, err := c.ListPrefixLists(ctx, &opts)
+	if err != nil {
+		return nil, err
+	}
+
+	if len(lists) == 0 {
+		return nil, fmt.Errorf("prefix list with name %q not found", name)
+	}
+
+	return &lists[0], nil
 }

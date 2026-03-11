@@ -59,6 +59,12 @@ type LKENodePoolTaint struct {
 	Effect LKENodePoolTaintEffect `json:"effect"`
 }
 
+// LKENodePoolIsolation controls network isolation for nodes in the pool.
+type LKENodePoolIsolation struct {
+	PublicIPv4 bool `json:"public_ipv4"`
+	PublicIPv6 bool `json:"public_ipv6"`
+}
+
 // LKENodePoolLabels represents Kubernetes labels to add to an LKENodePool
 type LKENodePoolLabels map[string]string
 
@@ -80,6 +86,8 @@ type LKENodePool struct {
 	// NOTE: Disk encryption may not currently be available to all users.
 	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitempty"`
 
+	Isolation *LKENodePoolIsolation `json:"isolation,omitempty"`
+
 	// K8sVersion and UpdateStrategy are only for LKE Enterprise to support node pool upgrades.
 	// It may not currently be available to all users and is under v4beta.
 	K8sVersion     *string                    `json:"k8s_version,omitempty"`
@@ -98,6 +106,10 @@ type LKENodePoolCreateOptions struct {
 
 	Autoscaler *LKENodePoolAutoscaler `json:"autoscaler,omitempty"`
 	FirewallID *int                   `json:"firewall_id,omitempty"`
+
+	// NOTE: Disk encryption may not currently be available to all users.
+	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitempty"`
+	Isolation      *LKENodePoolIsolation  `json:"isolation,omitempty"`
 
 	// K8sVersion and UpdateStrategy only works for LKE Enterprise to support node pool upgrades.
 	// It may not currently be available to all users and is under v4beta.
@@ -120,6 +132,8 @@ type LKENodePoolUpdateOptions struct {
 	// It may not currently be available to all users and is under v4beta.
 	K8sVersion     *string                    `json:"k8s_version,omitempty"`
 	UpdateStrategy *LKENodePoolUpdateStrategy `json:"update_strategy,omitempty"`
+
+	Isolation *LKENodePoolIsolation `json:"isolation,omitempty"`
 }
 
 // GetCreateOptions converts a LKENodePool to LKENodePoolCreateOptions for
@@ -135,6 +149,8 @@ func (l LKENodePool) GetCreateOptions() (o LKENodePoolCreateOptions) {
 	o.UpdateStrategy = l.UpdateStrategy
 	o.Label = l.Label
 	o.FirewallID = l.FirewallID
+	o.DiskEncryption = l.DiskEncryption
+	o.Isolation = l.Isolation
 
 	return o
 }
@@ -150,6 +166,7 @@ func (l LKENodePool) GetUpdateOptions() (o LKENodePoolUpdateOptions) {
 	o.UpdateStrategy = l.UpdateStrategy
 	o.Label = l.Label
 	o.FirewallID = l.FirewallID
+	o.Isolation = l.Isolation
 
 	return o
 }

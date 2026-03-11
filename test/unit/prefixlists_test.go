@@ -119,3 +119,68 @@ func TestPrefixList_UnmarshalJSON(t *testing.T) {
 	}
 	assert.Nil(t, prefixList.Deleted)
 }
+
+func TestPrefixLists_GetByName(t *testing.T) {
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	response := map[string]any{
+		"data": []map[string]any{
+			{
+				"id":                   999,
+				"name":                 "pl:system:resolvers:us-iad:staging",
+				"description":          "Resolver ACL",
+				"visibility":           "restricted",
+				"source_prefixlist_id": nil,
+				"ipv4":                 []string{"139.144.192.62"},
+				"ipv6":                 []string{"2600:3c05:e001:bc::1"},
+				"version":              7,
+				"created":              "2021-01-01T00:00:00",
+				"updated":              "2021-06-01T00:00:00",
+				"deleted":              nil,
+			},
+		},
+		"page":    1,
+		"pages":   1,
+		"results": 1,
+	}
+
+	base.MockGet("networking/prefixlists", response)
+
+	pl, err := base.Client.GetPrefixListByName(context.Background(), "pl:system:resolvers:us-iad:staging")
+	assert.NoError(t, err)
+	assert.NotNil(t, pl)
+
+	assert.Equal(t, 999, pl.ID)
+	assert.Equal(t, "pl:system:resolvers:us-iad:staging", pl.Name)
+	assert.Equal(t, "Resolver ACL", pl.Description)
+	assert.Equal(t, "restricted", pl.Visibility)
+	assert.Equal(t, 7, pl.Version)
+	if assert.NotNil(t, pl.IPv4) {
+		assert.Equal(t, []string{"139.144.192.62"}, *pl.IPv4)
+	}
+	if assert.NotNil(t, pl.IPv6) {
+		assert.Equal(t, []string{"2600:3c05:e001:bc::1"}, *pl.IPv6)
+	}
+}
+
+func TestPrefixLists_GetByName_NotFound(t *testing.T) {
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	response := map[string]any{
+		"data":    []map[string]any{},
+		"page":    1,
+		"pages":   1,
+		"results": 0,
+	}
+
+	base.MockGet("networking/prefixlists", response)
+
+	pl, err := base.Client.GetPrefixListByName(context.Background(), "pl:nonexistent")
+	assert.Error(t, err)
+	assert.Nil(t, pl)
+	assert.Contains(t, err.Error(), "not found")
+}
