@@ -184,16 +184,21 @@ type InstancePasswordResetOptions struct {
 
 // InstanceCreateOptions require only Region and Type
 type InstanceCreateOptions struct {
-	Region              string                   `json:"region"`
-	Type                string                   `json:"type"`
-	Label               string                   `json:"label,omitempty"`
-	RootPass            string                   `json:"root_pass,omitempty"`
-	AuthorizedKeys      []string                 `json:"authorized_keys,omitempty"`
-	AuthorizedUsers     []string                 `json:"authorized_users,omitempty"`
-	StackScriptID       int                      `json:"stackscript_id,omitempty"`
-	StackScriptData     map[string]string        `json:"stackscript_data,omitempty"`
-	BackupID            int                      `json:"backup_id,omitempty"`
-	Image               string                   `json:"image,omitempty"`
+	Region string `json:"region"`
+	Type   string `json:"type"`
+	Label  string `json:"label,omitempty"`
+
+	AuthorizedUsers []string          `json:"authorized_users,omitempty"`
+	StackScriptID   int               `json:"stackscript_id,omitempty"`
+	StackScriptData map[string]string `json:"stackscript_data,omitempty"`
+	BackupID        int               `json:"backup_id,omitempty"`
+
+	// Image is optional, but requires at least one of RootPass or AuthorizedKeys if provided
+	Image string `json:"image,omitempty"`
+
+	RootPass       string   `json:"root_pass,omitempty"`
+	AuthorizedKeys []string `json:"authorized_keys,omitempty"`
+
 	BackupsEnabled      bool                     `json:"backups_enabled,omitempty"`
 	PrivateIP           bool                     `json:"private_ip,omitempty"`
 	NetworkHelper       *bool                    `json:"network_helper,omitempty"`
@@ -226,6 +231,8 @@ type InstanceCreateOptions struct {
 	IPv4 []string `json:"ipv4,omitempty"`
 
 	MaintenancePolicy *string `json:"maintenance_policy,omitempty"`
+	Kernel            *string `json:"kernel,omitempty"`
+	BootSize          *int    `json:"boot_size,omitempty"`
 }
 
 // InstanceCreatePlacementGroupOptions represents the placement group
@@ -513,9 +520,12 @@ func (c *Client) RebootInstance(ctx context.Context, linodeID int, configID int)
 
 // InstanceRebuildOptions is a struct representing the options to send to the rebuild linode endpoint
 type InstanceRebuildOptions struct {
-	Image           string                   `json:"image,omitempty"`
-	RootPass        string                   `json:"root_pass,omitempty"`
-	AuthorizedKeys  []string                 `json:"authorized_keys,omitempty"`
+	// Image is optional, but requires at least one of RootPass or AuthorizedKeys if provided
+	Image string `json:"image,omitempty"`
+
+	RootPass       string   `json:"root_pass,omitempty"`
+	AuthorizedKeys []string `json:"authorized_keys,omitempty"`
+
 	AuthorizedUsers []string                 `json:"authorized_users,omitempty"`
 	StackScriptID   int                      `json:"stackscript_id,omitempty"`
 	StackScriptData map[string]string        `json:"stackscript_data,omitempty"`

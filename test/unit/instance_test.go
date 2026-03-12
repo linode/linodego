@@ -180,9 +180,15 @@ func TestInstance_Create(t *testing.T) {
 		Image:             "linode/ubuntu22.04",
 		RootPass:          "securepassword",
 		MaintenancePolicy: linodego.Pointer("linode/migrate"),
+		Kernel:            linodego.Pointer("linode/6.15.7-x86_64-linode169"),
+		BootSize:          linodego.Pointer(9000),
 	}
 
-	base.MockPost("linode/instances", fixtureData)
+	httpmock.RegisterRegexpResponder(
+		"POST",
+		mockRequestURL(t, "/linode/instances"),
+		mockRequestBodyValidate(t, createOptions, fixtureData),
+	)
 
 	instance, err := base.Client.CreateInstance(context.Background(), createOptions)
 	assert.NoError(t, err)
@@ -303,10 +309,15 @@ func TestInstance_Rebuild(t *testing.T) {
 	defer base.TearDown(t)
 
 	rebuildOptions := linodego.InstanceRebuildOptions{
-		Image: "linode/ubuntu22.04",
+		RootPass: "@S3cur3p@ssw0rd",
+		Image:    "linode/ubuntu22.04",
 	}
 
-	base.MockPost("linode/instances/123/rebuild", fixtureData)
+	httpmock.RegisterRegexpResponder(
+		"POST",
+		mockRequestURL(t, "/linode/instances/123/rebuild"),
+		mockRequestBodyValidate(t, rebuildOptions, fixtureData),
+	)
 
 	instance, err := base.Client.RebuildInstance(context.Background(), 123, rebuildOptions)
 	assert.NoError(t, err)
