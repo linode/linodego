@@ -3,8 +3,21 @@ updates:
   - package-ecosystem: gomod
     directory: "/"
     schedule:
-      interval: daily
+      interval: weekly
     open-pull-requests-limit: 10
+    groups:
+      golang-org-deps:
+        patterns:
+          - "golang.org/*"
+      k8s-deps:
+        patterns:
+          - "k8s.io/*"
+      google-deps:
+        patterns:
+          - "github.com/google/*"
+      linode-deps:
+        patterns:
+          - "github.com/linode/*"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
