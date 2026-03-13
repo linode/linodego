@@ -24,6 +24,9 @@ func TestFirewallRule_Get(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, firewallRule)
 
+	assert.Equal(t, 1, firewallRule.Version)
+	assert.Equal(t, "997dd135", firewallRule.Fingerprint)
+
 	assert.Equal(t, "DROP", firewallRule.InboundPolicy)
 	assert.Equal(t, 1, len(firewallRule.Inbound))
 	assert.Equal(t, "ACCEPT", firewallRule.Inbound[0].Action)
@@ -118,6 +121,8 @@ func TestFirewallRule_Update(t *testing.T) {
 
 	assert.NoError(t, err)
 	assert.NotNil(t, firewallRule)
+	assert.Equal(t, 1, firewallRule.Version)
+	assert.Equal(t, "997dd135", firewallRule.Fingerprint)
 
 	assert.Equal(t, "DROP", firewallRule.InboundPolicy)
 	assert.Equal(t, 1, len(firewallRule.Inbound))
@@ -175,6 +180,8 @@ func TestFirewallRule_GetExpansion(t *testing.T) {
 			},
 		},
 		OutboundPolicy: "DROP",
+		Version:        2,
+		Fingerprint:    "4ef67a29",
 	}
 
 	var base ClientBaseCase
@@ -187,6 +194,8 @@ func TestFirewallRule_GetExpansion(t *testing.T) {
 	firewallRuleSet, err := base.Client.GetFirewallRulesExpansion(context.Background(), firewallID)
 	assert.NoError(t, err)
 	assert.NotNil(t, firewallRuleSet)
+	assert.Equal(t, 2, firewallRuleSet.Version)
+	assert.Equal(t, "4ef67a29", firewallRuleSet.Fingerprint)
 
 	if assert.Len(t, firewallRuleSet.Inbound, 1) {
 		assert.Equal(t, "ACCEPT", firewallRuleSet.Inbound[0].Action)
