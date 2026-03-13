@@ -20,6 +20,34 @@ jobs:
   lint-tidy:
     runs-on: ubuntu-latest
     steps:
+      - name: Validate PR Title
+        if: github.event_name == 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          if ! TITLE=$(gh pr view "$PR_NUMBER" --repo "$GITHUB_REPOSITORY" --json title --jq '.title'); then
+            echo "Error: failed to fetch PR title using 'gh pr view'."
+            echo "Please check GitHub CLI authentication, API access, and network connectivity."
+            exit 1
+          fi
+          if [[ -z "$TITLE" ]]; then
+            echo "Error: 'gh pr view' returned an empty title."
+            exit 1
+          fi
+          
+          if [[ ! "$TITLE" =~ ^TPT-[0-9]+:[[:space:]]*.+ ]]; then
+            echo "Invalid PR title:"
+            echo "   \"$TITLE\""
+            echo ""
+            echo "PR title must follow format:"
+            echo "   TPT-1234: Description"
+            exit 1
+          fi
+    
+          echo "PR title is valid: $TITLE"
+
       - uses: actions/checkout@v6
       - uses: actions/setup-go@v6
         with:
