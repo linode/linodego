@@ -22,7 +22,7 @@ jobs:
               return;
             }
 
-            // Remove prefixes like "TPT-1234: " (including after markdown bullet points)
+            // Remove ticket prefixes like "TPT-1234: " or "TPT-1234:"
             body = body.replace(/TPT-\d+:\s*/g, '');
 
             await github.rest.repos.updateRelease({
