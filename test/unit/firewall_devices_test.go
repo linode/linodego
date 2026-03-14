@@ -39,10 +39,12 @@ func TestFirewallDevice_List(t *testing.T) {
 			assert.Equal(t, 123, device.Entity.ID)
 			assert.Equal(t, "my-linode", device.Entity.Label)
 			assert.Equal(t, "/v4/linode/instances/123", device.Entity.URL)
+			assert.Nil(t, device.Entity.ParentEntity)
 		case "nodebalancer":
 			assert.Equal(t, 321, device.Entity.ID)
 			assert.Equal(t, "my-nodebalancer", device.Entity.Label)
 			assert.Equal(t, "/v4/nodebalancers/123", device.Entity.URL)
+			assert.Nil(t, device.Entity.ParentEntity)
 		default:
 			t.Fatalf("Unexpected device type: %s", device.Entity.Type)
 		}
@@ -74,6 +76,7 @@ func TestFirewallDevice_Get(t *testing.T) {
 	assert.Equal(t, "my-linode", firewallDevice.Entity.Label)
 	assert.Equal(t, linodego.FirewallDeviceType("linode"), firewallDevice.Entity.Type)
 	assert.Equal(t, "/v4/linode/instances/123", firewallDevice.Entity.URL)
+	assert.Nil(t, firewallDevice.Entity.ParentEntity)
 
 	assert.NotNil(t, firewallDevice.Created)
 	assert.NotNil(t, firewallDevice.Updated)
@@ -106,6 +109,7 @@ func TestFirewallDevice_Create(t *testing.T) {
 	assert.Equal(t, "my-linode", firewallDevice.Entity.Label)
 	assert.Equal(t, linodego.FirewallDeviceType("linode"), firewallDevice.Entity.Type)
 	assert.Equal(t, "/v4/linode/instances/123", firewallDevice.Entity.URL)
+	assert.Nil(t, firewallDevice.Entity.ParentEntity)
 
 	assert.NotNil(t, firewallDevice.Created)
 	assert.NotNil(t, firewallDevice.Updated)
@@ -123,5 +127,48 @@ func TestFirewallDevice_Delete(t *testing.T) {
 
 	if err := client.DeleteFirewallDevice(context.Background(), firewallID, deviceID); err != nil {
 		t.Fatal(err)
+	}
+}
+
+func TestFirewallDevice_Get_WithParentEntity(t *testing.T) {
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	firewallID := 123
+	deviceID := 456
+
+	response := map[string]any{
+		"id":      deviceID,
+		"created": "2018-01-01T00:01:01",
+		"updated": "2018-01-02T00:01:01",
+		"entity": map[string]any{
+			"id":    999,
+			"type":  "linode_interface",
+			"label": nil,
+			"url":   "/v4/linode/interfaces/999",
+			"parent_entity": map[string]any{
+				"id":    123,
+				"type":  "linode",
+				"label": "my-linode",
+				"url":   "/v4/linode/instances/123",
+			},
+		},
+	}
+
+	base.MockGet(formatMockAPIPath("networking/firewalls/%d/devices/%d", firewallID, deviceID), response)
+
+	device, err := base.Client.GetFirewallDevice(context.Background(), firewallID, deviceID)
+	assert.NoError(t, err)
+	assert.NotNil(t, device)
+
+	assert.Equal(t, linodego.FirewallDeviceLinodeInterface, device.Entity.Type)
+	assert.Equal(t, device.Entity.Label, "")
+
+	if assert.NotNil(t, device.Entity.ParentEntity) {
+		assert.Equal(t, 123, device.Entity.ParentEntity.ID)
+		assert.Equal(t, linodego.FirewallDeviceLinode, device.Entity.ParentEntity.Type)
+		assert.Equal(t, "my-linode", device.Entity.ParentEntity.Label)
+		assert.Equal(t, "/v4/linode/instances/123", device.Entity.ParentEntity.URL)
 	}
 }

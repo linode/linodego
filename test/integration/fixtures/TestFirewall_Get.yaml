@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"linodego-fw-test","rules":{"inbound":[{"action":"DROP","label":"linodego-fwrule-test","protocol":"ICMP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":null,"outbound_policy":"ACCEPT"},"tags":["testing"],"devices":{}}'
+    body: '{"label":"linodego-fw-test","rules":{"inbound":[{"action":"DROP","label":"linodego-fwrule-test","protocol":"ICMP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":null,"outbound_policy":"ACCEPT"},"tags":["testing"]}'
     form: {}
     headers:
       Accept:
@@ -14,12 +14,12 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 692865, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
+    body: '{"id": 3885331, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
-      [{"action": "DROP", "label": "linodego-fwrule-test", "protocol": "ICMP", "addresses":
-      {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy": "ACCEPT", "outbound":
-      null, "outbound_policy": "ACCEPT", "version": 1, "fingerprint": "e026ab25"},
-      "tags": ["testing"], "entities": []}'
+      [{"protocol": "ICMP", "addresses": {"ipv6": ["1234::5678/0"], "ipv4": ["0.0.0.0/0"]},
+      "action": "DROP", "label": "linodego-fwrule-test"}], "inbound_policy": "ACCEPT",
+      "outbound": null, "outbound_policy": "ACCEPT", "version": 1, "fingerprint":
+      "e026ab25"}, "tags": ["testing"], "entities": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -38,13 +38,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "438"
+      - "439"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 25 Jul 2024 17:44:49 GMT
+      - Sat, 28 Feb 2026 04:56:47 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -59,12 +59,9 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -80,15 +77,15 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/692865
+    url: https://api.linode.com/v4beta/networking/firewalls/3885331
     method: GET
   response:
-    body: '{"id": 692865, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
+    body: '{"id": 3885331, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
-      [{"action": "DROP", "label": "linodego-fwrule-test", "protocol": "ICMP", "addresses":
-      {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}}], "inbound_policy": "ACCEPT", "outbound":
-      null, "outbound_policy": "ACCEPT", "version": 1, "fingerprint": "e026ab25"},
-      "tags": ["testing"], "entities": []}'
+      [{"protocol": "ICMP", "addresses": {"ipv6": ["1234::5678/0"], "ipv4": ["0.0.0.0/0"]},
+      "action": "DROP", "label": "linodego-fwrule-test"}], "inbound_policy": "ACCEPT",
+      "outbound": null, "outbound_policy": "ACCEPT", "version": 1, "fingerprint":
+      "e026ab25"}, "tags": ["testing"], "entities": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -107,13 +104,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "438"
+      - "439"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 25 Jul 2024 17:44:50 GMT
+      - Sat, 28 Feb 2026 04:56:47 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -129,12 +126,9 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -150,7 +144,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/692865
+    url: https://api.linode.com/v4beta/networking/firewalls/3885331
     method: DELETE
   response:
     body: '{}'
@@ -178,7 +172,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 25 Jul 2024 17:44:50 GMT
+      - Sat, 28 Feb 2026 04:56:48 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -193,12 +187,9 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_write databases:read_write domains:read_write events:read_write
-        firewall:read_write images:read_write ips:read_write linodes:read_write lke:read_write
-        longview:read_write nodebalancers:read_write object_storage:read_write stackscripts:read_write
-        volumes:read_write vpc:read_write
+      - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

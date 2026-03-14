@@ -77,6 +77,10 @@ func TestFirewall_Get(t *testing.T) {
 		t.Errorf("failed to get newly created firewall %d: %s", created.ID, err)
 	}
 
+	if len(result.Entities) != 0 {
+		t.Errorf("expected no firewall entities for a newly created firewall, got %d", len(result.Entities))
+	}
+
 	if result.Rules.Inbound[0].Label != rules.Inbound[0].Label {
 		t.Errorf("Expected firewall rules to be %#v but got %#v", rules, result.Rules)
 	}
@@ -118,6 +122,10 @@ func TestFirewall_Update(t *testing.T) {
 	updated, err := client.UpdateFirewall(context.Background(), firewall.ID, updateOpts)
 	if err != nil {
 		t.Error(err)
+	}
+
+	if len(updated.Entities) != 0 {
+		t.Errorf("expected no firewall entities after update, got %d", len(updated.Entities))
 	}
 
 	if !cmp.Equal(updated.Tags, *updateOpts.Tags) {
