@@ -4,13 +4,15 @@
             "id": 123,
             "label": "NodeBalancer A",
             "region": "us-east",
-            "tags": ["tag1", "tag2"]
+            "tags": ["tag1", "tag2"],
+            "locks": ["cannot_delete"]
         },
         {
             "id": 456,
             "label": "NodeBalancer B",
             "region": "us-west",
-            "tags": ["tag3"]
+            "tags": ["tag3"],
+            "locks": []
         }
     ],
     "page": 1,

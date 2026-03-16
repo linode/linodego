@@ -2,6 +2,8 @@ package unit
 
 import (
 	"net/http"
+	"os"
+	"strings"
 	"testing"
 
 	"github.com/jarcoal/httpmock"
@@ -26,7 +28,18 @@ type ClientBaseCase struct {
 func (c *ClientBaseCase) SetUp(t *testing.T) {
 	c.Mock = &mock.Mock{}
 	c.Client = testutil.CreateMockClient(t, linodego.NewClient)
-	c.BaseURL = "https://api.linode.com/v4/"
+
+	baseURL := "https://" + linodego.APIHost
+	if hostOverride, ok := os.LookupEnv(linodego.APIHostVar); ok && hostOverride != "" {
+		baseURL = strings.TrimSuffix(hostOverride, "/")
+	}
+
+	apiVersion := linodego.APIVersion
+	if versionOverride, ok := os.LookupEnv(linodego.APIVersionVar); ok && versionOverride != "" {
+		apiVersion = versionOverride
+	}
+
+	c.BaseURL = strings.TrimSuffix(baseURL, "/") + "/" + apiVersion + "/"
 }
 
 func (c *ClientBaseCase) TearDown(t *testing.T) {
