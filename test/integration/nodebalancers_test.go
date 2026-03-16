@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	"github.com/linode/linodego"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -79,8 +80,8 @@ func TestNodeBalancer_Create_with_ReservedIP(t *testing.T) {
 	assertDateSet(t, nodebalancer.Updated)
 }
 
-func TestNodeBalancer_Create_with_vpc(t *testing.T) {
-	_, nodebalancer, _, _, teardown, err := setupNodeBalancerWithVPC(t, "fixtures/TestNodeBalancer_With_VPC_Create")
+func TestNodeBalancer_Create_with_backend_vpc(t *testing.T) {
+	client, nodebalancer, _, _, teardown, err := setupNodeBalancerWithVPC(t, "fixtures/TestNodeBalancer_With_VPC_Create")
 	defer teardown()
 
 	if err != nil {
@@ -94,6 +95,41 @@ func TestNodeBalancer_Create_with_vpc(t *testing.T) {
 
 	assertDateSet(t, nodebalancer.Created)
 	assertDateSet(t, nodebalancer.Updated)
+	assert.NotEmpty(t, nodebalancer.IPv4)
+	assert.NotEmpty(t, nodebalancer.IPv6)
+	assert.Equal(t, "public", string(nodebalancer.FrontendAddressType))
+	assert.Empty(t, nodebalancer.FrontendVPCSubnetID)
+
+	vpcConfigs, err := client.ListNodeBalancerVPCConfigs(context.Background(), nodebalancer.ID, nil)
+	if err != nil {
+		t.Errorf("Error listing nodebalancer VPC configs: %s", err)
+	}
+
+	require.Len(t, vpcConfigs, 1, "Expected exactly one nodebalancer VPC config, got %d", len(vpcConfigs))
+	assert.Equal(t, "backend", string(vpcConfigs[0].Purpose))
+
+	vpcConfig, err := client.GetNodeBalancerVPCConfig(context.Background(), nodebalancer.ID, vpcConfigs[0].ID)
+	if err != nil {
+		t.Errorf("Error getting nodebalancer VPC config: %s", err)
+	}
+
+	assert.Equal(t, "backend", string(vpcConfig.Purpose))
+
+	// TODO: Uncomment when API implementation of /backend_vpcs and /frontend_vpcs endpoints is finished
+	//backendVPCs, err := client.ListNodeBalancerVPCBackendConfigs(context.Background(), nodebalancer.ID, nil)
+	//if err != nil {
+	//	t.Errorf("Error listing nodebalancer backend VPC configs: %s", err)
+	//}
+	//
+	//require.Len(t, backendVPCs, 1, "Expected exactly one backend VPC, got %d", len(backendVPCs))
+	//assert.Equal(t, "backend", backendVPCs[0].Purpose)
+	//
+	//frontendVPCs, err := client.ListNodeBalancerVPCFrontendConfigs(context.Background(), nodebalancer.ID, nil)
+	//if err != nil {
+	//	t.Errorf("Error listing nodebalancer frontend VPC configs: %s", err)
+	//}
+	//
+	//require.Len(t, frontendVPCs, 0, "Expected no frontend VPCs, got %d", len(frontendVPCs))
 }
 
 func TestNodeBalancer_Update(t *testing.T) {
