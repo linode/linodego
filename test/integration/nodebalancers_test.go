@@ -145,34 +145,6 @@ func TestNodeBalancer_Create_WithFrontendIPv4Only(t *testing.T) {
 	defer teardown()
 	require.NoError(t, err, "Error creating VPC with subnet for NodeBalancer frontend VPC")
 
-	//createOpts := linodego.NodeBalancerCreateOptions{
-	//	Label:              &label,
-	//	Region:             vpc.Region,
-	//	ClientConnThrottle: &clientConnThrottle,
-	//	FirewallID:         GetFirewallID(),
-	//	VPCs: []linodego.NodeBalancerVPCOptions{
-	//		{
-	//			IPv4Range: "192.168.0.64/30",
-	//			IPv6Range: "",
-	//			SubnetID:  subnet.ID,
-	//		},
-	//	},
-	//}
-	//
-	//client, nodebalancer, vpc, subnet, teardown, err := setupNodeBalancerWithVPC(
-	//	t,
-	//	"fixtures/TestNodeBalancerVpcConfig_Get",
-	//	vpcModifier{
-	//		func(_ *linodego.Client, createOpts *linodego.NodeBalancerCreateOptions) {{
-	//			createOpts.Type = linodego.NBTypePremium
-	//			createOpts.FrontendVPCs = []linodego.NodeBalancerFrontendVPCOptions{{
-	//				SubnetID:  subnet.ID,
-	//				IPv4Range: TestSubnetIPv4,
-	//			}}
-	//		}},
-	//	},
-	//)
-
 	_, nodebalancer, teardown, err := setupNodeBalancer(
 		t,
 		"fixtures/TestNodeBalancer_Create_WithFrontendIPv4Only",
