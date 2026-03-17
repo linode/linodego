@@ -229,13 +229,7 @@ func TestNodeBalancer_Create_WithPremium40gbType(t *testing.T) {
 	client, _ := createTestClient(t, fixturesYaml)
 	region := getValidRandomRegion(t, client, premium40gbRegions)
 
-	_, _, teardown, err := createVPCWithDualStackSubnet(
-		t,
-		client,
-		func(_ *linodego.Client, vpcOpts *linodego.VPCCreateOptions) {
-			vpcOpts.Region = region
-		},
-	)
+	_, _, teardown, err := createVPCWithDualStackSubnetInRegion(t, client, region)
 	defer teardown()
 	require.NoErrorf(t, err, "Error creating VPC with subnet in region '%s'", region)
 
@@ -258,23 +252,11 @@ func TestNodeBalancer_Create_WithFrontendAndBackendInDifferentVPCs(t *testing.T)
 	client, _ := createTestClient(t, fixturesYaml)
 	region := getValidRandomRegion(t, client, premiumRegions)
 
-	_, subnetBackend, teardown, err := createVPCWithDualStackSubnet(
-		t,
-		client,
-		func(_ *linodego.Client, vpcOpts *linodego.VPCCreateOptions) {
-			vpcOpts.Region = region
-		},
-	)
+	_, subnetBackend, teardown, err := createVPCWithDualStackSubnetInRegion(t, client, region)
 	defer teardown()
 	require.NoErrorf(t, err, "Error creating backend VPC with subnet in region '%s'", region)
 
-	_, subnetFrontend, teardown, err := createVPCWithDualStackSubnet(
-		t,
-		client,
-		func(_ *linodego.Client, vpcOpts *linodego.VPCCreateOptions) {
-			vpcOpts.Region = region
-		},
-	)
+	_, subnetFrontend, teardown, err := createVPCWithDualStackSubnetInRegion(t, client, region)
 	defer teardown()
 	require.NoErrorf(t, err, "Error creating frontend VPC with subnet in region '%s'", region)
 
@@ -399,6 +381,23 @@ func TestNodeBalancer_UDP(t *testing.T) {
 }
 
 type nbModifier func(options *linodego.NodeBalancerCreateOptions)
+
+func createVPCWithDualStackSubnetInRegion(t *testing.T, client *linodego.Client, region string) (
+	*linodego.VPC,
+	*linodego.VPCSubnet,
+	func(),
+	error,
+) {
+	t.Helper()
+	vpc, subnet, teardown, err := createVPCWithDualStackSubnet(
+		t,
+		client,
+		func(_ *linodego.Client, vpcOpts *linodego.VPCCreateOptions) {
+			vpcOpts.Region = region
+		},
+	)
+	return vpc, subnet, teardown, err
+}
 
 func getValidRandomRegion(t *testing.T, client *linodego.Client, validRegions []string) string {
 	regionsWithCaps := getRegionsWithCaps(t, client, []string{
