@@ -2,7 +2,6 @@ package integration
 
 import (
 	"context"
-	"math/rand"
 	"slices"
 	"strings"
 	"testing"
@@ -146,6 +145,34 @@ func TestNodeBalancer_Create_WithFrontendIPv4Only(t *testing.T) {
 	defer teardown()
 	require.NoError(t, err, "Error creating VPC with subnet for NodeBalancer frontend VPC")
 
+	//createOpts := linodego.NodeBalancerCreateOptions{
+	//	Label:              &label,
+	//	Region:             vpc.Region,
+	//	ClientConnThrottle: &clientConnThrottle,
+	//	FirewallID:         GetFirewallID(),
+	//	VPCs: []linodego.NodeBalancerVPCOptions{
+	//		{
+	//			IPv4Range: "192.168.0.64/30",
+	//			IPv6Range: "",
+	//			SubnetID:  subnet.ID,
+	//		},
+	//	},
+	//}
+	//
+	//client, nodebalancer, vpc, subnet, teardown, err := setupNodeBalancerWithVPC(
+	//	t,
+	//	"fixtures/TestNodeBalancerVpcConfig_Get",
+	//	vpcModifier{
+	//		func(_ *linodego.Client, createOpts *linodego.NodeBalancerCreateOptions) {{
+	//			createOpts.Type = linodego.NBTypePremium
+	//			createOpts.FrontendVPCs = []linodego.NodeBalancerFrontendVPCOptions{{
+	//				SubnetID:  subnet.ID,
+	//				IPv4Range: TestSubnetIPv4,
+	//			}}
+	//		}},
+	//	},
+	//)
+
 	_, nodebalancer, teardown, err := setupNodeBalancer(
 		t,
 		"fixtures/TestNodeBalancer_Create_WithFrontendIPv4Only",
@@ -226,58 +253,27 @@ func TestNodeBalancer_Create_WithFrontendAndDefaultType_Fail(t *testing.T) {
 }
 
 func TestNodeBalancer_Create_WithPremium40gbType(t *testing.T) {
-	client, _ := createTestClient(t, fixturesYaml)
-	region := getValidRandomRegion(t, client, premium40gbRegions)
-
-	_, _, teardown, err := createVPCWithDualStackSubnetInRegion(t, client, region)
-	defer teardown()
-	require.NoErrorf(t, err, "Error creating VPC with subnet in region '%s'", region)
-
-	_, nodebalancer, teardown, err := setupNodeBalancer(
+	_, nodebalancer, teardown, err := setupNodeBalancerWithPremiumType(
 		t,
 		"fixtures/TestNodeBalancer_Create_WithPremium40gbType",
+		premium40gbRegions,
 		[]nbModifier{
 			func(createOpts *linodego.NodeBalancerCreateOptions) {
-				createOpts.Region = region
 				createOpts.Type = linodego.NBTypePremium40GB
 			},
 		},
 	)
 	defer teardown()
-	require.NoErrorf(t, err, "Error creating NodeBalancer with premium_40gb type in region '%s'", region)
+	require.NoErrorf(t, err, "Error creating nodebalancer with premium_40gb type: %v", err)
+
 	assert.Equal(t, linodego.NBTypePremium40GB, nodebalancer.Type)
 }
 
 func TestNodeBalancer_Create_WithFrontendAndBackendInDifferentVPCs(t *testing.T) {
-	client, _ := createTestClient(t, fixturesYaml)
-	region := getValidRandomRegion(t, client, premiumRegions)
-
-	_, subnetBackend, teardown, err := createVPCWithDualStackSubnetInRegion(t, client, region)
-	defer teardown()
-	require.NoErrorf(t, err, "Error creating backend VPC with subnet in region '%s'", region)
-
-	_, subnetFrontend, teardown, err := createVPCWithDualStackSubnetInRegion(t, client, region)
-	defer teardown()
-	require.NoErrorf(t, err, "Error creating frontend VPC with subnet in region '%s'", region)
-
-	_, nodebalancer, teardown, err := setupNodeBalancer(
+	client, nodebalancer, subnetFrontend, teardown, err := setupNodeBalancerWithPremiumTypeInDifferentVPCs(
 		t,
 		"fixtures/TestNodeBalancer_Create_WithFrontendAndBackendInDifferentVPCs",
-		[]nbModifier{
-			func(createOpts *linodego.NodeBalancerCreateOptions) {
-				createOpts.Region = region
-				createOpts.Type = linodego.NBTypePremium
-				createOpts.VPCs = []linodego.NodeBalancerVPCOptions{
-					{
-						SubnetID: subnetBackend.ID,
-					},
-				}
-				createOpts.FrontendVPCs = []linodego.NodeBalancerFrontendVPCOptions{{
-					SubnetID:  subnetFrontend.ID,
-					IPv4Range: TestSubnetIPv4,
-				}}
-			},
-		},
+		premiumRegions,
 	)
 	defer teardown()
 	require.NoErrorf(t, err, "Error creating NodeBalancer with different VPCs")
@@ -399,7 +395,7 @@ func createVPCWithDualStackSubnetInRegion(t *testing.T, client *linodego.Client,
 	return vpc, subnet, teardown, err
 }
 
-func getValidRandomRegion(t *testing.T, client *linodego.Client, validRegions []string) string {
+func getValidRegion(t *testing.T, client *linodego.Client, validRegions []string) string {
 	regionsWithCaps := getRegionsWithCaps(t, client, []string{
 		linodego.CapabilityVPCs,
 		linodego.CapabilityVPCIPv6Stack,
@@ -407,8 +403,7 @@ func getValidRandomRegion(t *testing.T, client *linodego.Client, validRegions []
 		linodego.CapabilityLinodeInterfaces,
 		linodego.CapabilityNodeBalancers,
 	})
-	regions := getIntersection(regionsWithCaps, validRegions)
-	return regions[rand.Intn(len(regions))]
+	return getIntersection(regionsWithCaps, validRegions)[0]
 }
 
 func setupNodeBalancer(t *testing.T, fixturesYaml string, nbModifiers []nbModifier) (*linodego.Client, *linodego.NodeBalancer, func(), error) {
@@ -515,4 +510,96 @@ func setupNodeBalancerWithVPC(
 		fixtureTeardown()
 	}
 	return client, nodebalancer, vpc, subnet, teardown, err
+}
+
+func setupNodeBalancerWithPremiumType(t *testing.T, fixturesYaml string, regions []string, nbModifiers []nbModifier) (
+	*linodego.Client,
+	*linodego.NodeBalancer,
+	func(),
+	error,
+) {
+	t.Helper()
+	var fixtureTeardown func()
+	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+	region := getValidRegion(t, client, regions)
+
+	_, subnet, vpcTeardown, err := createVPCWithDualStackSubnetInRegion(t, client, region)
+	require.NoErrorf(t, err, "Error creating VPC with subnet in region '%s'", region)
+
+	createOpts := linodego.NodeBalancerCreateOptions{
+		Label:              &label,
+		Region:             region,
+		ClientConnThrottle: &clientConnThrottle,
+		Type:               linodego.NBTypePremium,
+		FrontendVPCs: []linodego.NodeBalancerFrontendVPCOptions{{
+			SubnetID:  subnet.ID,
+			IPv4Range: TestSubnetIPv4,
+		}},
+	}
+	for _, modifier := range nbModifiers {
+		modifier(&createOpts)
+	}
+
+	nodebalancer, err := client.CreateNodeBalancer(context.Background(), createOpts)
+	if err != nil {
+		t.Fatalf("Error listing nodebalancers, expected struct, got error %v", err)
+	}
+
+	teardown := func() {
+		if err := client.DeleteNodeBalancer(context.Background(), nodebalancer.ID); err != nil {
+			t.Errorf("Expected to delete a nodebalancer, but got %v", err)
+		}
+		vpcTeardown()
+		fixtureTeardown()
+	}
+	return client, nodebalancer, teardown, err
+}
+
+func setupNodeBalancerWithPremiumTypeInDifferentVPCs(t *testing.T, fixturesYaml string, regions []string) (
+	*linodego.Client,
+	*linodego.NodeBalancer,
+	*linodego.VPCSubnet, func(),
+	error,
+) {
+	t.Helper()
+	var fixtureTeardown func()
+	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+	region := getValidRegion(t, client, regions)
+
+	_, subnetBackend, backendTeardown, err := createVPCWithDualStackSubnetInRegion(t, client, region)
+	require.NoErrorf(t, err, "Error creating backend VPC with subnet in region '%s'", region)
+
+	_, subnetFrontend, frontendTeardown, err := createVPCWithDualStackSubnetInRegion(t, client, region)
+	require.NoErrorf(t, err, "Error creating frontend VPC with subnet in region '%s'", region)
+
+	createOpts := linodego.NodeBalancerCreateOptions{
+		Label:              &label,
+		Region:             region,
+		ClientConnThrottle: &clientConnThrottle,
+		Type:               linodego.NBTypePremium,
+		VPCs: []linodego.NodeBalancerVPCOptions{
+			{
+				SubnetID: subnetBackend.ID,
+			},
+		},
+		FrontendVPCs: []linodego.NodeBalancerFrontendVPCOptions{{
+			SubnetID:  subnetFrontend.ID,
+			IPv4Range: TestSubnetIPv4,
+		}},
+	}
+
+	nodebalancer, err := client.CreateNodeBalancer(context.Background(), createOpts)
+	if err != nil {
+		t.Fatalf("Error listing nodebalancers, expected struct, got error %v", err)
+	}
+
+	teardown := func() {
+		if err := client.DeleteNodeBalancer(context.Background(), nodebalancer.ID); err != nil {
+			t.Errorf("Expected to delete a nodebalancer, but got %v", err)
+		}
+		backendTeardown()
+		frontendTeardown()
+		fixtureTeardown()
+	}
+	return client, nodebalancer, subnetFrontend, teardown, err
 }
