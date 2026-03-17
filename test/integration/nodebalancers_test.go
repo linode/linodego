@@ -104,7 +104,7 @@ func TestNodeBalancer_Create_with_ReservedIP(t *testing.T) {
 }
 
 func TestNodeBalancer_Create_WithBackendVPCOnly(t *testing.T) {
-	client, nodebalancer, _, _, teardown, err := setupNodeBalancerWithVPC(t, "fixtures/TestNodeBalancer_Create_WithBackendVPC")
+	client, nodebalancer, _, _, teardown, err := setupNodeBalancerWithVPC(t, "fixtures/TestNodeBalancer_Create_WithBackendVPCOnly")
 	defer teardown()
 	require.NoErrorf(t, err, "Error creating nodebalancer: %s", err)
 
