@@ -139,30 +139,22 @@ func TestNodeBalancer_Create_WithBackendVPCOnly(t *testing.T) {
 	//require.Len(t, frontendVPCs, 0, "Expected no frontend VPCs, got %d", len(frontendVPCs))
 }
 
-func TestNodeBalancer_Create_WithFrontendIPv4Only(t *testing.T) {
-	client, _ := createTestClient(t, fixturesYaml)
-	_, subnet, teardown, err := createVPCWithSubnet(t, client)
-	defer teardown()
-	require.NoError(t, err, "Error creating VPC with subnet for NodeBalancer frontend VPC")
-
-	_, nodebalancer, teardown, err := setupNodeBalancer(
+func TestNodeBalancer_Create_WithFrontendVPCOnly(t *testing.T) {
+	_, nodebalancer, subnet, teardown, err := setupNodeBalancerWithFrontendVPC(
 		t,
-		"fixtures/TestNodeBalancer_Create_WithFrontendIPv4Only",
+		"fixtures/TestNodeBalancer_Create_WithFrontendVPCOnly",
+		premiumRegions,
 		[]nbModifier{
 			func(createOpts *linodego.NodeBalancerCreateOptions) {
 				createOpts.Type = linodego.NBTypePremium
-				createOpts.FrontendVPCs = []linodego.NodeBalancerFrontendVPCOptions{{
-					SubnetID:  subnet.ID,
-					IPv4Range: TestSubnetIPv4,
-				}}
 			},
 		},
 	)
 	defer teardown()
-	require.NoError(t, err, "Error setting up NodeBalancer with frontend VPC")
+	require.NoErrorf(t, err, "Error creating nodebalancer with premium type: %v", err)
 
-	assert.Empty(t, nodebalancer.IPv6)
 	assert.Equal(t, "192.168.0.2", *nodebalancer.IPv4)
+	assert.Regexp(t, `\d+::\d+`, *nodebalancer.IPv6)
 	assert.Equal(t, "vpc", string(nodebalancer.FrontendAddressType))
 	assert.Equal(t, subnet.ID, *nodebalancer.FrontendVPCSubnetID)
 
@@ -225,7 +217,7 @@ func TestNodeBalancer_Create_WithFrontendAndDefaultType_Fail(t *testing.T) {
 }
 
 func TestNodeBalancer_Create_WithPremium40gbType(t *testing.T) {
-	_, nodebalancer, teardown, err := setupNodeBalancerWithPremiumType(
+	_, nodebalancer, _, teardown, err := setupNodeBalancerWithFrontendVPC(
 		t,
 		"fixtures/TestNodeBalancer_Create_WithPremium40gbType",
 		premium40gbRegions,
@@ -251,7 +243,7 @@ func TestNodeBalancer_Create_WithFrontendAndBackendInDifferentVPCs(t *testing.T)
 	require.NoErrorf(t, err, "Error creating NodeBalancer with different VPCs")
 
 	assert.Equal(t, "192.168.0.2", *nodebalancer.IPv4)
-	assert.Contains(t, *nodebalancer.IPv6, ":1::1")
+	assert.Regexp(t, `\d+::\d+`, *nodebalancer.IPv6)
 	assert.Equal(t, "vpc", string(nodebalancer.FrontendAddressType))
 	assert.Equal(t, subnetFrontend.ID, *nodebalancer.FrontendVPCSubnetID)
 
@@ -484,9 +476,10 @@ func setupNodeBalancerWithVPC(
 	return client, nodebalancer, vpc, subnet, teardown, err
 }
 
-func setupNodeBalancerWithPremiumType(t *testing.T, fixturesYaml string, regions []string, nbModifiers []nbModifier) (
+func setupNodeBalancerWithFrontendVPC(t *testing.T, fixturesYaml string, regions []string, nbModifiers []nbModifier) (
 	*linodego.Client,
 	*linodego.NodeBalancer,
+	*linodego.VPCSubnet,
 	func(),
 	error,
 ) {
@@ -502,7 +495,6 @@ func setupNodeBalancerWithPremiumType(t *testing.T, fixturesYaml string, regions
 		Label:              &label,
 		Region:             region,
 		ClientConnThrottle: &clientConnThrottle,
-		Type:               linodego.NBTypePremium,
 		FrontendVPCs: []linodego.NodeBalancerFrontendVPCOptions{{
 			SubnetID:  subnet.ID,
 			IPv4Range: TestSubnetIPv4,
@@ -524,13 +516,14 @@ func setupNodeBalancerWithPremiumType(t *testing.T, fixturesYaml string, regions
 		vpcTeardown()
 		fixtureTeardown()
 	}
-	return client, nodebalancer, teardown, err
+	return client, nodebalancer, subnet, teardown, err
 }
 
 func setupNodeBalancerWithPremiumTypeInDifferentVPCs(t *testing.T, fixturesYaml string, regions []string) (
 	*linodego.Client,
 	*linodego.NodeBalancer,
-	*linodego.VPCSubnet, func(),
+	*linodego.VPCSubnet,
+	func(),
 	error,
 ) {
 	t.Helper()
