@@ -377,7 +377,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 18 Mar 2026 08:19:19 GMT
+      - Wed, 18 Mar 2026 14:38:05 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -403,7 +403,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-vpc-1773821959339651000","region":"us-iad","ipv6":[{"range":"/52"}],"subnets":[{"label":"linodego-vpc-test-1773821959339845000","ipv4":"192.168.0.0/25","ipv6":[{"range":"/62"}]}]}'
+    body: '{"label":"go-test-vpc-1773844685079023000","region":"nl-ams","ipv6":[{"range":"/52"}],"subnets":[{"label":"linodego-vpc-test-1773844685521802000","ipv4":"192.168.0.0/25","ipv6":[{"range":"/62"}]}]}'
     form: {}
     headers:
       Accept:
@@ -415,9 +415,9 @@ interactions:
     url: https://api.linode.com/v4beta/vpcs
     method: POST
   response:
-    body: '{"id": 414117, "label": "go-test-vpc-1773821959339651000", "description":
-      "", "region": "us-iad", "ipv6": [{"range": "1234::5678/52"}], "subnets":
-      [{"id": 507709, "label": "linodego-vpc-test-1773821959339845000", "ipv4": "192.168.0.0/25",
+    body: '{"id": 414622, "label": "go-test-vpc-1773844685079023000", "description":
+      "", "region": "nl-ams", "ipv6": [{"range": "1234::5678/52"}], "subnets":
+      [{"id": 508493, "label": "linodego-vpc-test-1773844685521802000", "ipv4": "192.168.0.0/25",
       "ipv6": [{"range": "1234::5678/62"}], "linodes": [], "databases": [],
       "nodebalancers": [], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}],
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
@@ -445,7 +445,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 18 Mar 2026 08:19:21 GMT
+      - Wed, 18 Mar 2026 14:38:07 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -469,7 +469,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-def","region":"us-iad","client_conn_throttle":20,"tags":null,"type":"premium_40gb","frontend_vpcs":[{"ipv4_range":"192.168.0.0/25","subnet_id":507709}]}'
+    body: '{"label":"go-test-def","region":"nl-ams","tags":null,"type":"common","frontend_vpcs":[{"subnet_id":508493}]}'
     form: {}
     headers:
       Accept:
@@ -481,58 +481,38 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 2071384, "label": "go-test-def", "region": "us-iad", "type": "premium_40gb",
-      "hostname": "", "ipv4": "192.168.0.2", "ipv6": "1234::5678", "frontend_address_type":
-      "vpc", "frontend_vpc_subnet_id": 507709, "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "client_conn_throttle": 20, "client_udp_sess_throttle":
-      0, "lke_cluster": null, "tags": [], "locks": [], "transfer": {"in": null, "out":
-      null, "total": null}}'
+    body: '{"errors": [{"reason": "NodeBalancer with frontend VPC IP must be premium"}]}'
     headers:
-      Access-Control-Allow-Credentials:
-      - "true"
       Access-Control-Allow-Headers:
       - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
       Access-Control-Allow-Methods:
       - HEAD, GET, OPTIONS, POST, PUT, DELETE
       Access-Control-Allow-Origin:
       - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
       Content-Length:
-      - "446"
-      Content-Security-Policy:
-      - default-src 'none'
+      - "77"
       Content-Type:
       - application/json
       Expires:
-      - Wed, 18 Mar 2026 08:19:24 GMT
+      - Wed, 18 Mar 2026 14:38:07 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
       - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
       - nodebalancers:read_write
-      X-Content-Type-Options:
-      - nosniff
       X-Frame-Options:
-      - DENY
       - DENY
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
       - "1840"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
+    status: 400 Bad Request
+    code: 400
     duration: ""
 - request:
     body: ""
@@ -544,7 +524,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/2071384
+    url: https://api.linode.com/v4beta/vpcs/414622
     method: DELETE
   response:
     body: '{}'
@@ -572,68 +552,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 18 Mar 2026 08:19:26 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - nodebalancers:read_write
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "1840"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/vpcs/414117
-    method: DELETE
-  response:
-    body: '{}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "2"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Wed, 18 Mar 2026 08:19:26 GMT
+      - Wed, 18 Mar 2026 14:38:08 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

@@ -105,11 +105,11 @@ func TestNodeBalancer_Create_with_ReservedIP(t *testing.T) {
 func TestNodeBalancer_Create_WithBackendVPCOnly(t *testing.T) {
 	client, nodebalancer, _, _, teardown, err := setupNodeBalancerWithVPC(t, "fixtures/TestNodeBalancer_Create_WithBackendVPCOnly")
 	defer teardown()
-	require.NoErrorf(t, err, "Error creating nodebalancer: %s", err)
+	require.NoErrorf(t, err, "Error creating NodeBalancer with Backend VPC: %v", err)
 
 	// when comparing fixtures to random value Label will differ, compare the known suffix
 	if !strings.Contains(*nodebalancer.Label, label) {
-		t.Errorf("nodebalancer returned does not match nodebalancer create request")
+		t.Errorf("NodeBalancer returned does not match NodeBalancer create request")
 	}
 
 	assertDateSet(t, nodebalancer.Created)
@@ -120,22 +120,22 @@ func TestNodeBalancer_Create_WithBackendVPCOnly(t *testing.T) {
 	assert.Empty(t, nodebalancer.FrontendVPCSubnetID)
 
 	vpcConfigs, err := client.ListNodeBalancerVPCConfigs(context.Background(), nodebalancer.ID, nil)
-	require.NoErrorf(t, err, "Error listing nodebalancer VPC configs: %s", err)
+	require.NoErrorf(t, err, "Error listing nodebalancer VPC configs: %v", err)
 	require.Len(t, vpcConfigs, 1, "Expected exactly one nodebalancer VPC config, got %d", len(vpcConfigs))
 	assert.Equal(t, "backend", string(vpcConfigs[0].Purpose))
 
 	vpcConfig, err := client.GetNodeBalancerVPCConfig(context.Background(), nodebalancer.ID, vpcConfigs[0].ID)
-	require.NoErrorf(t, err, "Error getting nodebalancer VPC config: %s", err)
+	require.NoErrorf(t, err, "Error getting nodebalancer VPC config: %v", err)
 	assert.Equal(t, "backend", string(vpcConfig.Purpose))
 
 	// TODO: Uncomment when API implementation of /backend_vpcs and /frontend_vpcs endpoints is finished
 	//backendVPCs, err := client.ListNodeBalancerVPCBackendConfigs(context.Background(), nodebalancer.ID, nil)
-	//require.NoErrorf(t, err, "Error listing nodebalancer backend VPC configs: %s", err)
+	//require.NoErrorf(t, err, "Error listing NodeBalancer backend VPC configs: %v", err)
 	//require.Len(t, backendVPCs, 1, "Expected exactly one backend VPC, got %d", len(backendVPCs))
 	//assert.Equal(t, "backend", backendVPCs[0].Purpose)
 	//
 	//frontendVPCs, err := client.ListNodeBalancerVPCFrontendConfigs(context.Background(), nodebalancer.ID, nil)
-	//require.NoErrorf(t, err, "Error listing nodebalancer frontend VPC configs: %s", err)
+	//require.NoErrorf(t, err, "Error listing NodeBalancer frontend VPC configs: %v", err)
 	//require.Len(t, frontendVPCs, 0, "Expected no frontend VPCs, got %d", len(frontendVPCs))
 }
 
@@ -151,7 +151,7 @@ func TestNodeBalancer_Create_WithFrontendVPCOnly(t *testing.T) {
 		},
 	)
 	defer teardown()
-	require.NoErrorf(t, err, "Error creating nodebalancer with premium type: %v", err)
+	require.NoErrorf(t, err, "Error creating NodeBalancer with Frontend VPC: %v", err)
 
 	assert.Equal(t, "192.168.0.2", *nodebalancer.IPv4)
 	assert.Regexp(t, `\d+::\d+`, *nodebalancer.IPv6)
@@ -159,76 +159,86 @@ func TestNodeBalancer_Create_WithFrontendVPCOnly(t *testing.T) {
 	assert.Equal(t, subnet.ID, *nodebalancer.FrontendVPCSubnetID)
 
 	vpcConfigs, err := client.ListNodeBalancerVPCConfigs(context.Background(), nodebalancer.ID, nil)
-	require.NoErrorf(t, err, "Error listing nodebalancer VPC configs: %s", err)
-	require.Len(t, vpcConfigs, 1, "Expected exactly one nodebalancer VPC config, got %d", len(vpcConfigs))
+	require.NoErrorf(t, err, "Error listing NodeBalancer VPC configs: %v", err)
+	require.Len(t, vpcConfigs, 1, "Expected exactly one NodeBalancer VPC config, got %d", len(vpcConfigs))
 	assert.Equal(t, "frontend", string(vpcConfigs[0].Purpose))
 
 	vpcConfig, err := client.GetNodeBalancerVPCConfig(context.Background(), nodebalancer.ID, vpcConfigs[0].ID)
-	require.NoErrorf(t, err, "Error getting nodebalancer VPC config: %s", err)
+	require.NoErrorf(t, err, "Error getting NodeBalancer VPC config: %v", err)
 	assert.Equal(t, "frontend", string(vpcConfig.Purpose))
 
 	// TODO: Uncomment when API implementation of /backend_vpcs and /frontend_vpcs endpoints is finished
 	//backendVPCs, err := client.ListNodeBalancerVPCBackendConfigs(context.Background(), nodebalancer.ID, nil)
-	//require.NoErrorf(t, err, "Error listing nodebalancer backend VPC configs: %s", err)
+	//require.NoErrorf(t, err, "Error listing NodeBalancer backend VPC configs: %v", err)
 	//require.Len(t, backendVPCs, 0, "Expected no backend VPC, got %d", len(backendVPCs))
 	//
 	//frontendVPCs, err := client.ListNodeBalancerVPCFrontendConfigs(context.Background(), nodebalancer.ID, nil)
-	//require.NoErrorf(t, err, "Error listing nodebalancer frontend VPC configs: %s", err)
+	//require.NoErrorf(t, err, "Error listing NodeBalancer frontend VPC configs: %v", err)
 	//require.Len(t, frontendVPCs, 1, "Expected exactly one frontend VPC, got %d", len(frontendVPCs))
 	//assert.Equal(t, "frontend", frontendVPCs[0].Purpose)
 }
 
-//func TestNodeBalancer_Fail_Create_WithFrontendIPv6Only(t *testing.T) {
-//	client, _ := createTestClient(t, fixturesYaml)
-//	vpc, subnet, teardown, err := createVPCWithSubnet(t, client)
-//	defer teardown()
-//	require.NoError(t, err, "Error creating VPC with subnet for NodeBalancer frontend VPC")
-//
-//	createOpts := linodego.NodeBalancerCreateOptions{
-//		Label:  &label,
-//		Region: vpc.Region,
-//		Type:   linodego.NBTypePremium,
-//		FrontendVPCs: []linodego.NodeBalancerFrontendVPCOptions{{
-//			SubnetID:  subnet.ID,
-//			IPv6Range: "/62",
-//		}}}
-//
-//	_, err = client.CreateNodeBalancer(context.Background(), createOpts)
-//	require.ErrorContainsf(
-//		t,
-//		err,
-//		"No IPv6 subnets available in VPC",
-//		"No expected error returned, actual error value: %s", err,
-//	)
-//}
-//
-//func TestNodeBalancer_Fail_Create_WithFrontendAndDefaultType(t *testing.T) {
-//	client, _ := createTestClient(t, fixturesYaml)
-//	vpc, subnet, teardown, err := createVPCWithDualStackSubnet(t, client)
-//	defer teardown()
-//	require.NoError(t, err, "Error creating VPC with subnet for NodeBalancer frontend VPC test")
-//
-//	createOpts := linodego.NodeBalancerCreateOptions{
-//		Label:  &label,
-//		Region: vpc.Region,
-//		Type:   linodego.NBTypeCommon,
-//		FrontendVPCs: []linodego.NodeBalancerFrontendVPCOptions{{
-//			SubnetID: subnet.ID,
-//		}}}
-//
-//	_, err = client.CreateNodeBalancer(context.Background(), createOpts)
-//	require.ErrorContainsf(
-//		t,
-//		err,
-//		"NodeBalancer with frontend VPC IP must be premium",
-//		"No expected error returned, actual error value: %s", err,
-//	)
-//}
+func TestNodeBalancer_Create_WithFrontendIPv6Only_Fail(t *testing.T) {
+	client, recordStopper := createTestClient(t, "fixtures/TestNodeBalancer_Create_WithFrontendIPv6Only_Fail")
+	defer recordStopper()
+
+	vpc, subnet, teardown, err := createVPCWithSubnet(t, client)
+	defer teardown()
+	require.NoError(t, err, "Error creating VPC with subnet for NodeBalancer")
+
+	createOpts := linodego.NodeBalancerCreateOptions{
+		Label:  &label,
+		Region: vpc.Region,
+		Type:   linodego.NBTypePremium,
+		FrontendVPCs: []linodego.NodeBalancerFrontendVPCOptions{{
+			SubnetID:  subnet.ID,
+			IPv6Range: "/62",
+		}}}
+
+	_, err = client.CreateNodeBalancer(context.Background(), createOpts)
+	require.ErrorContainsf(
+		t,
+		err,
+		"No IPv6 subnets available in VPC",
+		"No expected error returned, actual error value: %v", err,
+	)
+	e, ok := err.(*linodego.Error)
+	require.Truef(t, ok, "Expected error related to incorrect IPv6 subnets, got %v", err)
+	require.Equalf(t, 400, e.Code, "Expected error with 400 Status Code, got %v", err)
+}
+
+func TestNodeBalancer_Create_WithFrontendAndDefaultType_Fail(t *testing.T) {
+	client, recordStopper := createTestClient(t, "fixtures/TestNodeBalancer_Create_WithFrontendAndDefaultType_Fail")
+	defer recordStopper()
+
+	vpc, subnet, teardown, err := createVPCWithDualStackSubnet(t, client)
+	defer teardown()
+	require.NoError(t, err, "Error creating VPC with subnet for NodeBalancer")
+
+	createOpts := linodego.NodeBalancerCreateOptions{
+		Label:  &label,
+		Region: vpc.Region,
+		Type:   linodego.NBTypeCommon,
+		FrontendVPCs: []linodego.NodeBalancerFrontendVPCOptions{{
+			SubnetID: subnet.ID,
+		}}}
+
+	_, err = client.CreateNodeBalancer(context.Background(), createOpts)
+	require.ErrorContainsf(
+		t,
+		err,
+		"NodeBalancer with frontend VPC IP must be premium",
+		"No expected error returned, actual error value: %v", err,
+	)
+	e, ok := err.(*linodego.Error)
+	require.Truef(t, ok, "Expected error related to incorrect NodeBalancer type, got %v", err)
+	require.Equalf(t, 400, e.Code, "Expected error with 400 Status Code, got %v", err)
+}
 
 func TestNodeBalancer_Create_WithPremium40GBType(t *testing.T) {
 	_, nodebalancer, _, teardown, err := setupNodeBalancerWithFrontendVPC(
 		t,
-		"fixtures/TestNodeBalancer_Create_WithPremium40gbType",
+		"fixtures/TestNodeBalancer_Create_WithPremium40GBType",
 		premium40GBRegions,
 		[]nbModifier{
 			func(createOpts *linodego.NodeBalancerCreateOptions) {
@@ -237,7 +247,7 @@ func TestNodeBalancer_Create_WithPremium40GBType(t *testing.T) {
 		},
 	)
 	defer teardown()
-	require.NoErrorf(t, err, "Error creating nodebalancer with premium_40gb type: %v", err)
+	require.NoErrorf(t, err, "Error creating NodeBalancer with premium_40gb type: %v", err)
 
 	assert.Equal(t, linodego.NBTypePremium40GB, nodebalancer.Type)
 }
@@ -257,7 +267,7 @@ func TestNodeBalancer_Create_WithFrontendAndBackendInDifferentVPCs(t *testing.T)
 	assert.Equal(t, subnetFrontend.ID, *nodebalancer.FrontendVPCSubnetID)
 
 	vpcConfigs, err := client.ListNodeBalancerVPCConfigs(context.Background(), nodebalancer.ID, nil)
-	require.NoErrorf(t, err, "Error listing nodebalancer VPC configs: %s", err)
+	require.NoErrorf(t, err, "Error listing NodeBalancer VPC configs: %v", err)
 	require.Len(t, vpcConfigs, 2, "Expected exactly two VPC configs, got %d", len(vpcConfigs))
 
 	slices.SortFunc(vpcConfigs, func(a, b linodego.NodeBalancerVPCConfig) int {
@@ -271,12 +281,12 @@ func TestNodeBalancer_Create_WithFrontendAndBackendInDifferentVPCs(t *testing.T)
 
 	// TODO: Uncomment when API implementation of /backend_vpcs and /frontend_vpcs endpoints is finished
 	//backendVPCs, err := client.ListNodeBalancerVPCBackendConfigs(context.Background(), nodebalancer.ID, nil)
-	//require.NoErrorf(t, err, "Error listing nodebalancer backend VPC configs: %s", err)
+	//require.NoErrorf(t, err, "Error listing NodeBalancer backend VPC configs: %v", err)
 	//require.Len(t, backendVPCs, 1, "Expected exactly one backend VPC, got %d", len(backendVPCs))
 	//assert.Equal(t, "backend", backendVPCs[0].Purpose)
 	//
 	//frontendVPCs, err := client.ListNodeBalancerVPCFrontendConfigs(context.Background(), nodebalancer.ID, nil)
-	//require.NoErrorf(t, err, "Error listing nodebalancer frontend VPC configs: %s", err)
+	//require.NoErrorf(t, err, "Error listing NodeBalancer frontend VPC configs: %v", err)
 	//require.Len(t, frontendVPCs, 1, "Expected exactly one frontend VPCs, got %d", len(frontendVPCs))
 	//assert.Equal(t, "frontend", frontendVPCs[0].Purpose)
 }
