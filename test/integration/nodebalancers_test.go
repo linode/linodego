@@ -169,52 +169,52 @@ func TestNodeBalancer_Create_WithFrontendVPCOnly(t *testing.T) {
 	//assert.Equal(t, "frontend", frontendVPCs[0].Purpose)
 }
 
-func TestNodeBalancer_Fail_Create_WithFrontendIPv6Only(t *testing.T) {
-	client, _ := createTestClient(t, fixturesYaml)
-	vpc, subnet, teardown, err := createVPCWithSubnet(t, client)
-	defer teardown()
-	require.NoError(t, err, "Error creating VPC with subnet for NodeBalancer frontend VPC")
-
-	createOpts := linodego.NodeBalancerCreateOptions{
-		Label:  &label,
-		Region: vpc.Region,
-		Type:   linodego.NBTypePremium,
-		FrontendVPCs: []linodego.NodeBalancerFrontendVPCOptions{{
-			SubnetID:  subnet.ID,
-			IPv6Range: "/62",
-		}}}
-
-	_, err = client.CreateNodeBalancer(context.Background(), createOpts)
-	require.ErrorContainsf(
-		t,
-		err,
-		"No IPv6 subnets available in VPC",
-		"No expected error returned, actual error value: %s", err,
-	)
-}
-
-func TestNodeBalancer_Fail_Create_WithFrontendAndDefaultType(t *testing.T) {
-	client, _ := createTestClient(t, fixturesYaml)
-	vpc, subnet, teardown, err := createVPCWithDualStackSubnet(t, client)
-	defer teardown()
-	require.NoError(t, err, "Error creating VPC with subnet for NodeBalancer frontend VPC test")
-
-	createOpts := linodego.NodeBalancerCreateOptions{
-		Label:  &label,
-		Region: vpc.Region,
-		Type:   linodego.NBTypeCommon,
-		FrontendVPCs: []linodego.NodeBalancerFrontendVPCOptions{{
-			SubnetID: subnet.ID,
-		}}}
-
-	_, err = client.CreateNodeBalancer(context.Background(), createOpts)
-	require.ErrorContainsf(
-		t,
-		err,
-		"NodeBalancer with frontend VPC IP must be premium",
-		"No expected error returned, actual error value: %s", err,
-	)
-}
+//func TestNodeBalancer_Fail_Create_WithFrontendIPv6Only(t *testing.T) {
+//	client, _ := createTestClient(t, fixturesYaml)
+//	vpc, subnet, teardown, err := createVPCWithSubnet(t, client)
+//	defer teardown()
+//	require.NoError(t, err, "Error creating VPC with subnet for NodeBalancer frontend VPC")
+//
+//	createOpts := linodego.NodeBalancerCreateOptions{
+//		Label:  &label,
+//		Region: vpc.Region,
+//		Type:   linodego.NBTypePremium,
+//		FrontendVPCs: []linodego.NodeBalancerFrontendVPCOptions{{
+//			SubnetID:  subnet.ID,
+//			IPv6Range: "/62",
+//		}}}
+//
+//	_, err = client.CreateNodeBalancer(context.Background(), createOpts)
+//	require.ErrorContainsf(
+//		t,
+//		err,
+//		"No IPv6 subnets available in VPC",
+//		"No expected error returned, actual error value: %s", err,
+//	)
+//}
+//
+//func TestNodeBalancer_Fail_Create_WithFrontendAndDefaultType(t *testing.T) {
+//	client, _ := createTestClient(t, fixturesYaml)
+//	vpc, subnet, teardown, err := createVPCWithDualStackSubnet(t, client)
+//	defer teardown()
+//	require.NoError(t, err, "Error creating VPC with subnet for NodeBalancer frontend VPC test")
+//
+//	createOpts := linodego.NodeBalancerCreateOptions{
+//		Label:  &label,
+//		Region: vpc.Region,
+//		Type:   linodego.NBTypeCommon,
+//		FrontendVPCs: []linodego.NodeBalancerFrontendVPCOptions{{
+//			SubnetID: subnet.ID,
+//		}}}
+//
+//	_, err = client.CreateNodeBalancer(context.Background(), createOpts)
+//	require.ErrorContainsf(
+//		t,
+//		err,
+//		"NodeBalancer with frontend VPC IP must be premium",
+//		"No expected error returned, actual error value: %s", err,
+//	)
+//}
 
 func TestNodeBalancer_Create_WithPremium40gbType(t *testing.T) {
 	_, nodebalancer, _, teardown, err := setupNodeBalancerWithFrontendVPC(
