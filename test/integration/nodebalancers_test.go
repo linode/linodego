@@ -386,7 +386,12 @@ func getValidRegion(t *testing.T, client *linodego.Client, validRegions []string
 		linodego.CapabilityLinodeInterfaces,
 		linodego.CapabilityNodeBalancers,
 	})
-	return getIntersection(regionsWithCaps, validRegions)[0]
+	intersection := getIntersection(regionsWithCaps, validRegions)
+
+	if len(intersection) == 0 {
+		t.Skip("Skipping test: No valid regions with required capabilities")
+	}
+	return intersection[0]
 }
 
 func setupNodeBalancer(t *testing.T, fixturesYaml string, nbModifiers []nbModifier) (*linodego.Client, *linodego.NodeBalancer, func(), error) {
