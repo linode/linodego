@@ -169,7 +169,7 @@ func TestNodeBalancer_Create_WithFrontendVPCOnly(t *testing.T) {
 	//assert.Equal(t, "frontend", frontendVPCs[0].Purpose)
 }
 
-func TestNodeBalancer_Create_WithFrontendIPv6Only_Fail(t *testing.T) {
+func TestNodeBalancer_Fail_Create_WithFrontendIPv6Only(t *testing.T) {
 	client, _ := createTestClient(t, fixturesYaml)
 	vpc, subnet, teardown, err := createVPCWithSubnet(t, client)
 	defer teardown()
@@ -193,7 +193,7 @@ func TestNodeBalancer_Create_WithFrontendIPv6Only_Fail(t *testing.T) {
 	)
 }
 
-func TestNodeBalancer_Create_WithFrontendAndDefaultType_Fail(t *testing.T) {
+func TestNodeBalancer_Fail_Create_WithFrontendAndDefaultType(t *testing.T) {
 	client, _ := createTestClient(t, fixturesYaml)
 	vpc, subnet, teardown, err := createVPCWithDualStackSubnet(t, client)
 	defer teardown()
