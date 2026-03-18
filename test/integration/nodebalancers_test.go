@@ -225,7 +225,7 @@ func TestNodeBalancer_Create_WithFrontendVPCOnly(t *testing.T) {
 //	)
 //}
 
-func TestNodeBalancer_Create_WithPremium40gbType(t *testing.T) {
+func TestNodeBalancer_Create_WithPremium40GBType(t *testing.T) {
 	_, nodebalancer, _, teardown, err := setupNodeBalancerWithFrontendVPC(
 		t,
 		"fixtures/TestNodeBalancer_Create_WithPremium40gbType",
