@@ -34,7 +34,7 @@ var (
 		"us-iad",
 		"pl-labkrk-2", // DevCloud
 	}
-	premium40gbRegions = []string{"us-iad"} // No DevCloud region for premium_40gb type
+	premium40GBRegions = []string{"us-iad"} // No DevCloud region for premium_40gb type
 )
 
 func TestNodeBalancer_Create_create_smoke(t *testing.T) {
@@ -229,7 +229,7 @@ func TestNodeBalancer_Create_WithPremium40gbType(t *testing.T) {
 	_, nodebalancer, _, teardown, err := setupNodeBalancerWithFrontendVPC(
 		t,
 		"fixtures/TestNodeBalancer_Create_WithPremium40gbType",
-		premium40gbRegions,
+		premium40GBRegions,
 		[]nbModifier{
 			func(createOpts *linodego.NodeBalancerCreateOptions) {
 				createOpts.Type = linodego.NBTypePremium40GB
@@ -514,14 +514,12 @@ func setupNodeBalancerWithFrontendVPC(t *testing.T, fixturesYaml string, regions
 	}
 
 	nodebalancer, err := client.CreateNodeBalancer(context.Background(), createOpts)
-	if err != nil {
-		t.Fatalf("Error listing nodebalancers, expected struct, got error %v", err)
-	}
+	require.NoErrorf(t, err, "Error listing nodebalancers, expected struct, got error %v", err)
 
 	teardown := func() {
-		if err := client.DeleteNodeBalancer(context.Background(), nodebalancer.ID); err != nil {
-			t.Errorf("Expected to delete a nodebalancer, but got %v", err)
-		}
+		err = client.DeleteNodeBalancer(context.Background(), nodebalancer.ID)
+		require.NoErrorf(t, err, "Expected to delete a nodebalancer, but got %v", err)
+
 		vpcTeardown()
 		fixtureTeardown()
 	}
@@ -563,14 +561,12 @@ func setupNodeBalancerWithPremiumTypeInDifferentVPCs(t *testing.T, fixturesYaml 
 	}
 
 	nodebalancer, err := client.CreateNodeBalancer(context.Background(), createOpts)
-	if err != nil {
-		t.Fatalf("Error listing nodebalancers, expected struct, got error %v", err)
-	}
+	require.NoErrorf(t, err, "Error listing nodebalancers, expected struct, got error %v", err)
 
 	teardown := func() {
-		if err := client.DeleteNodeBalancer(context.Background(), nodebalancer.ID); err != nil {
-			t.Errorf("Expected to delete a nodebalancer, but got %v", err)
-		}
+		err = client.DeleteNodeBalancer(context.Background(), nodebalancer.ID)
+		require.NoErrorf(t, err, "Expected to delete a nodebalancer, but got %v", err)
+
 		backendTeardown()
 		frontendTeardown()
 		fixtureTeardown()
