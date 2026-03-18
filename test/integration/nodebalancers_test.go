@@ -140,7 +140,7 @@ func TestNodeBalancer_Create_WithBackendVPCOnly(t *testing.T) {
 }
 
 func TestNodeBalancer_Create_WithFrontendVPCOnly(t *testing.T) {
-	_, nodebalancer, subnet, teardown, err := setupNodeBalancerWithFrontendVPC(
+	client, nodebalancer, subnet, teardown, err := setupNodeBalancerWithFrontendVPC(
 		t,
 		"fixtures/TestNodeBalancer_Create_WithFrontendVPCOnly",
 		premiumRegions,
@@ -157,6 +157,15 @@ func TestNodeBalancer_Create_WithFrontendVPCOnly(t *testing.T) {
 	assert.Regexp(t, `\d+::\d+`, *nodebalancer.IPv6)
 	assert.Equal(t, "vpc", string(nodebalancer.FrontendAddressType))
 	assert.Equal(t, subnet.ID, *nodebalancer.FrontendVPCSubnetID)
+
+	vpcConfigs, err := client.ListNodeBalancerVPCConfigs(context.Background(), nodebalancer.ID, nil)
+	require.NoErrorf(t, err, "Error listing nodebalancer VPC configs: %s", err)
+	require.Len(t, vpcConfigs, 1, "Expected exactly one nodebalancer VPC config, got %d", len(vpcConfigs))
+	assert.Equal(t, "frontend", string(vpcConfigs[0].Purpose))
+
+	vpcConfig, err := client.GetNodeBalancerVPCConfig(context.Background(), nodebalancer.ID, vpcConfigs[0].ID)
+	require.NoErrorf(t, err, "Error getting nodebalancer VPC config: %s", err)
+	assert.Equal(t, "frontend", string(vpcConfig.Purpose))
 
 	// TODO: Uncomment when API implementation of /backend_vpcs and /frontend_vpcs endpoints is finished
 	//backendVPCs, err := client.ListNodeBalancerVPCBackendConfigs(context.Background(), nodebalancer.ID, nil)
