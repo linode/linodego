@@ -193,7 +193,8 @@ func TestNodeBalancer_Create_WithFrontendIPv6Only_Fail(t *testing.T) {
 		FrontendVPCs: []linodego.NodeBalancerFrontendVPCOptions{{
 			SubnetID:  subnet.ID,
 			IPv6Range: "/62",
-		}}}
+		}},
+	}
 
 	_, err = client.CreateNodeBalancer(context.Background(), createOpts)
 	require.ErrorContainsf(
@@ -221,7 +222,8 @@ func TestNodeBalancer_Create_WithFrontendAndDefaultType_Fail(t *testing.T) {
 		Type:   linodego.NBTypeCommon,
 		FrontendVPCs: []linodego.NodeBalancerFrontendVPCOptions{{
 			SubnetID: subnet.ID,
-		}}}
+		}},
+	}
 
 	_, err = client.CreateNodeBalancer(context.Background(), createOpts)
 	require.ErrorContainsf(
