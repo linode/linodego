@@ -117,7 +117,7 @@ func TestNodeBalancer_Create_WithBackendVPCOnly(t *testing.T) {
 	assert.NotEmpty(t, nodebalancer.IPv4)
 	assert.NotEmpty(t, nodebalancer.IPv6)
 	assert.Equal(t, "public", string(nodebalancer.FrontendAddressType))
-	assert.Empty(t, nodebalancer.FrontendVPCSubnetID)
+	assert.Nil(t, nodebalancer.FrontendVPCSubnetID)
 
 	vpcConfigs, err := client.ListNodeBalancerVPCConfigs(context.Background(), nodebalancer.ID, nil)
 	require.NoErrorf(t, err, "Error listing nodebalancer VPC configs: %v", err)
