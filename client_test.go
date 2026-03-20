@@ -17,6 +17,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego/internal/testutil"
+	"github.com/stretchr/testify/require"
 )
 
 func TestClient_SetAPIVersion(t *testing.T) {
@@ -787,9 +788,7 @@ func TestEnableLogSanitization(t *testing.T) {
 		}))
 
 	_, err := mockClient.resty.R().Get("https://api.linode.com/v4/test")
-	if err != nil {
-		t.Fatalf("unexpected error: %v", err)
-	}
+	require.NoError(t, err)
 
 	logOutput := logBuf.String()
 
