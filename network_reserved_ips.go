@@ -28,6 +28,7 @@ type ReservedIPRegionPrice = baseTypeRegionPrice
 // ReservedIPType represents a reserved IP type with pricing information.
 // It reuses the generic baseType to avoid duplicating type/pricing structures.
 type ReservedIPType = baseType[ReservedIPPrice, ReservedIPRegionPrice]
+
 // ListReservedIPAddresses retrieves a list of reserved IP addresses
 // NOTE: Reserved IP feature may not currently be available to all users.
 func (c *Client) ListReservedIPAddresses(ctx context.Context, opts *ListOptions) ([]InstanceIP, error) {

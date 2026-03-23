@@ -9,6 +9,129 @@ import (
 	. "github.com/linode/linodego"
 )
 
+// TestReservedIPAddress_ReserveWithTags verifies that tags can be passed when reserving
+// an IP and are returned in the response.
+func TestReservedIPAddress_ReserveWithTags(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestReservedIPAddress_ReserveWithTags")
+	defer teardown()
+
+	resIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{
+		Region: "us-east",
+		Tags:   []string{"lb"},
+	})
+	if err != nil {
+		t.Fatalf("Failed to reserve IP with tags: %v", err)
+	}
+
+	if resIP.Address == "" {
+		t.Fatal("Expected a non-empty address in the response")
+	}
+	if !resIP.Reserved {
+		t.Errorf("Expected Reserved=true, got false")
+	}
+	found := false
+	for _, tag := range resIP.Tags {
+		if tag == "lb" {
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Errorf("Expected tag 'lb' in response tags, got %v", resIP.Tags)
+	}
+
+	defer func() {
+		if err := client.DeleteReservedIPAddress(context.Background(), resIP.Address); err != nil {
+			t.Errorf("Failed to delete reserved IP %s: %v", resIP.Address, err)
+		}
+	}()
+
+	// Verify tags round-trip via Get
+	fetched, err := client.GetReservedIPAddress(context.Background(), resIP.Address)
+	if err != nil {
+		t.Fatalf("Failed to get reserved IP: %v", err)
+	}
+	foundInFetch := false
+	for _, tag := range fetched.Tags {
+		if tag == "lb" {
+			foundInFetch = true
+			break
+		}
+	}
+	if !foundInFetch {
+		t.Errorf("Expected tag 'lb' in fetched IP tags, got %v", fetched.Tags)
+	}
+}
+
+// TestReservedIPAddress_UpdateTags verifies that PUT /networking/reserved/ips/{address}
+// replaces tags in full.
+func TestReservedIPAddress_UpdateTags(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestReservedIPAddress_UpdateTags")
+	defer teardown()
+
+	// Reserve without tags first
+	resIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{
+		Region: "us-east",
+	})
+	if err != nil {
+		t.Fatalf("Failed to reserve IP: %v", err)
+	}
+	defer func() {
+		if err := client.DeleteReservedIPAddress(context.Background(), resIP.Address); err != nil {
+			t.Errorf("Failed to delete reserved IP %s: %v", resIP.Address, err)
+		}
+	}()
+
+	// Set tags
+	updated, err := client.UpdateReservedIPAddress(context.Background(), resIP.Address, linodego.UpdateReservedIPOptions{
+		Tags: []string{"lb"},
+	})
+	if err != nil {
+		t.Fatalf("Failed to update reserved IP tags: %v", err)
+	}
+	if len(updated.Tags) != 1 || updated.Tags[0] != "lb" {
+		t.Errorf("Expected tags=[lb] after update, got %v", updated.Tags)
+	}
+
+	// Replace tags entirely (full replacement semantics)
+	cleared, err := client.UpdateReservedIPAddress(context.Background(), resIP.Address, linodego.UpdateReservedIPOptions{
+		Tags: []string{},
+	})
+	if err != nil {
+		t.Fatalf("Failed to clear reserved IP tags: %v", err)
+	}
+	if len(cleared.Tags) != 0 {
+		t.Errorf("Expected empty tags after clearing, got %v", cleared.Tags)
+	}
+}
+
+// TestReservedIPTypes_List verifies that GET /networking/reserved/ips/types returns
+// pricing structs with all expected fields populated.
+func TestReservedIPTypes_List(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestReservedIPTypes_List")
+	defer teardown()
+
+	types, err := client.ListReservedIPTypes(context.Background(), nil)
+	if err != nil {
+		t.Fatalf("Failed to list reserved IP types: %v", err)
+	}
+	if len(types) == 0 {
+		t.Fatal("Expected at least one reserved IP type, got none")
+	}
+
+	for _, rt := range types {
+		if rt.ID == "" {
+			t.Errorf("Expected non-empty ID for reserved IP type")
+		}
+		if rt.Label == "" {
+			t.Errorf("Expected non-empty Label for reserved IP type")
+		}
+		if rt.Price.Hourly == 0 && rt.Price.Monthly == 0 {
+			t.Errorf("Expected non-zero pricing for type %s", rt.ID)
+		}
+	}
+}
+
 // TestReservedIPAddresses_InsufficientPermissions tests the behavior when a user account
 // doesn't have the permission to use the Reserved IP feature
 func TestReservedIPAddresses_InsufficientPermissions(t *testing.T) {
