@@ -33,6 +33,7 @@ type InstanceIP struct {
 	Region      string             `json:"region"`
 	VPCNAT1To1  *InstanceIPNAT1To1 `json:"vpc_nat_1_1"`
 	Reserved    bool               `json:"reserved"`
+	Tags        []string           `json:"tags"`
 }
 
 // VPCIP represents a private IP address in a VPC subnet with additional networking details

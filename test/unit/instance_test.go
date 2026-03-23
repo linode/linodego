@@ -312,3 +312,20 @@ func TestInstance_Rebuild(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "linode/ubuntu22.04", instance.Image)
 }
+
+func TestCreateInstance_IPv4ReservedIPs(t *testing.T) {
+	client := createMockClient(t)
+
+	createOpts := linodego.InstanceCreateOptions{
+		Region: "us-east",
+		Type:   "g6-standard-1",
+		IPv4:   []string{"192.0.2.1"},
+	}
+
+	httpmock.RegisterRegexpResponder("POST", mockRequestURL(t, "/linode/instances"),
+		mockRequestBodyValidate(t, createOpts, nil))
+
+	if _, err := client.CreateInstance(context.Background(), createOpts); err != nil {
+		t.Fatal(err)
+	}
+}

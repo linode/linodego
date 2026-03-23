@@ -38,10 +38,11 @@ type TagCreateOptions struct {
 	Label   string `json:"label"`
 	Linodes []int  `json:"linodes,omitempty"`
 	// @TODO is this implemented?
-	LKEClusters   []int `json:"lke_clusters,omitempty"`
-	Domains       []int `json:"domains,omitempty"`
-	Volumes       []int `json:"volumes,omitempty"`
-	NodeBalancers []int `json:"nodebalancers,omitempty"`
+	LKEClusters           []int    `json:"lke_clusters,omitempty"`
+	Domains               []int    `json:"domains,omitempty"`
+	Volumes               []int    `json:"volumes,omitempty"`
+	NodeBalancers         []int    `json:"nodebalancers,omitempty"`
+	ReservedIPv4Addresses []string `json:"reserved_ipv4_addresses,omitempty"`
 }
 
 // GetCreateOptions converts a Tag to TagCreateOptions for use in CreateTag
@@ -88,6 +89,13 @@ func (i *TaggedObject) fixData() (*TaggedObject, error) {
 		i.Data = obj
 	case "volume":
 		obj := Volume{}
+		if err := json.Unmarshal(i.RawData, &obj); err != nil {
+			return nil, err
+		}
+
+		i.Data = obj
+	case "reserved_ipv4_address":
+		obj := InstanceIP{}
 		if err := json.Unmarshal(i.RawData, &obj); err != nil {
 			return nil, err
 		}
