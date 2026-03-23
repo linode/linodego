@@ -82,8 +82,12 @@ func createVPCWithSubnet(t *testing.T, client *linodego.Client, vpcModifier ...v
 ) {
 	t.Helper()
 	createOpts := linodego.VPCCreateOptions{
-		Label:  "go-test-vpc-" + getUniqueText(),
-		Region: getRegionsWithCaps(t, client, []string{"Linodes", "VPCs"})[0],
+		Label: "go-test-vpc-" + getUniqueText(),
+		Region: getRegionsWithCaps(t, client, []string{
+			linodego.CapabilityVPCs,
+			linodego.CapabilityLinodes,
+			linodego.CapabilityNodeBalancers,
+		})[0],
 		Subnets: []VPCSubnetCreateOptions{
 			{
 				Label: "linodego-vpc-test-" + getUniqueText(),
@@ -117,8 +121,15 @@ func createVPCWithDualStackSubnet(t *testing.T, client *linodego.Client, vpcModi
 ) {
 	t.Helper()
 	createOpts := linodego.VPCCreateOptions{
-		Label:  "go-test-vpc-" + getUniqueText(),
-		Region: getRegionsWithCaps(t, client, []string{"Linodes", "VPCs"})[0],
+		Label: "go-test-vpc-" + getUniqueText(),
+		Region: getRegionsWithCaps(t, client, []string{
+			linodego.CapabilityVPCs,
+			linodego.CapabilityVPCDualStack,
+			linodego.CapabilityVPCIPv6Stack,
+			linodego.CapabilityLinodes,
+			linodego.CapabilityLinodeInterfaces,
+			linodego.CapabilityNodeBalancers,
+		})[0],
 		IPv6: []VPCCreateOptionsIPv6{
 			{
 				Range: linodego.Pointer("/52"),
