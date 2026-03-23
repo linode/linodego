@@ -17,27 +17,17 @@ type UpdateReservedIPOptions struct {
 	Tags []string `json:"tags"`
 }
 
-// ReservedIPPrice represents the pricing information for a reserved IP type
-type ReservedIPPrice struct {
-	Hourly  float64 `json:"hourly"`
-	Monthly float64 `json:"monthly"`
-}
+// ReservedIPPrice represents the pricing information for a reserved IP type.
+// It is an alias of the shared baseTypePrice to keep pricing consistent across resources.
+type ReservedIPPrice = baseTypePrice
 
-// ReservedIPRegionPrice represents region-specific pricing for a reserved IP type
-type ReservedIPRegionPrice struct {
-	ID      string  `json:"id"`
-	Hourly  float64 `json:"hourly"`
-	Monthly float64 `json:"monthly"`
-}
+// ReservedIPRegionPrice represents region-specific pricing for a reserved IP type.
+// It is an alias of the shared baseTypeRegionPrice to keep region pricing consistent across resources.
+type ReservedIPRegionPrice = baseTypeRegionPrice
 
-// ReservedIPType represents a reserved IP type with pricing information
-type ReservedIPType struct {
-	ID           string                  `json:"id"`
-	Label        string                  `json:"label"`
-	Price        ReservedIPPrice         `json:"price"`
-	RegionPrices []ReservedIPRegionPrice `json:"region_prices"`
-}
-
+// ReservedIPType represents a reserved IP type with pricing information.
+// It reuses the generic baseType to avoid duplicating type/pricing structures.
+type ReservedIPType = baseType[ReservedIPPrice, ReservedIPRegionPrice]
 // ListReservedIPAddresses retrieves a list of reserved IP addresses
 // NOTE: Reserved IP feature may not currently be available to all users.
 func (c *Client) ListReservedIPAddresses(ctx context.Context, opts *ListOptions) ([]InstanceIP, error) {
