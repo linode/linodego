@@ -30,7 +30,7 @@ func createInstanceWithLinodeInterfaces(
 	}
 
 	if enableCloudFirewall {
-		for i := range createOpts.Interfaces {
+		for i := range createOpts.LinodeInterfaces {
 			createOpts.LinodeInterfaces[i].FirewallID = linodego.Pointer(firewallID)
 		}
 	}
