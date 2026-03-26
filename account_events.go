@@ -257,6 +257,8 @@ const (
 	EntityImage          EntityType = "image"
 	EntityIPAddress      EntityType = "ipaddress"
 	EntityLinode         EntityType = "linode"
+	EntityLKECluster     EntityType = "lkecluster"
+	EntityLKENodePool    EntityType = "lkenodepool"
 	EntityLongview       EntityType = "longview"
 	EntityManagedService EntityType = "managed_service"
 	EntityNodebalancer   EntityType = "nodebalancer"
