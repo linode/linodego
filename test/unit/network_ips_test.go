@@ -66,9 +66,10 @@ func TestIPAllocateReserve(t *testing.T) {
 
 	// Mock API response
 	base.MockPost("networking/ips", linodego.InstanceIP{
-		Address: "192.168.1.3",
-		Region:  "us-east",
-		Public:  true,
+		Address:        "192.168.1.3",
+		Region:         "us-east",
+		Public:         true,
+		AssignedEntity: nil,
 	})
 
 	ip, err := base.Client.AllocateReserveIP(context.Background(), linodego.AllocateReserveIPOptions{
@@ -83,6 +84,7 @@ func TestIPAllocateReserve(t *testing.T) {
 	assert.Equal(t, "us-east", ip.Region, "Expected Region to match")
 	assert.True(t, ip.Public, "Expected Public to be true")
 	assert.Nil(t, ip.InterfaceID)
+	assert.Nil(t, ip.AssignedEntity)
 }
 
 func TestIPAllocateReserve_RequestBody(t *testing.T) {

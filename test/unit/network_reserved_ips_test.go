@@ -88,11 +88,12 @@ func TestIPReserveIPAddress(t *testing.T) {
 
 	// Mock the POST request for reserving an IP
 	mockResponse := linodego.InstanceIP{
-		Address:  "192.168.1.30",
-		Region:   "us-west",
-		LinodeID: 13579,
-		Reserved: true,
-		Tags:     []string{"env:staging"},
+		Address:        "192.168.1.30",
+		Region:         "us-west",
+		LinodeID:       13579,
+		Reserved:       true,
+		Tags:           []string{"env:staging"},
+		AssignedEntity: nil,
 	}
 
 	base.MockPost("networking/reserved/ips", mockResponse)
@@ -105,6 +106,7 @@ func TestIPReserveIPAddress(t *testing.T) {
 	assert.Equal(t, "us-west", reservedIP.Region, "Expected region to match")
 	assert.Equal(t, 13579, reservedIP.LinodeID, "Expected Linode ID to match")
 	assert.Equal(t, []string{"env:staging"}, reservedIP.Tags, "Expected tags to match")
+	assert.Nil(t, reservedIP.AssignedEntity, "Expected AssignedEntity to be nil for newly reserved IP")
 }
 
 func TestReservedIPAddress_Delete(t *testing.T) {
@@ -144,6 +146,7 @@ func TestUpdateReservedIPAddress(t *testing.T) {
 	assert.Equal(t, ip, updated.Address)
 	assert.True(t, updated.Reserved)
 	assert.Equal(t, []string{"lb", "team:infra"}, updated.Tags)
+	assert.Nil(t, updated.AssignedEntity, "Expected AssignedEntity to be nil for unassigned reserved IP")
 }
 
 func TestListReservedIPTypes(t *testing.T) {
