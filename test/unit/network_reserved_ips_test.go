@@ -50,22 +50,15 @@ func TestReservedIPAddresses_List(t *testing.T) {
 }
 
 func TestReservedIPAddress_Get(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("network_reserved_ips_get")
+	assert.NoError(t, err)
+
 	var base ClientBaseCase
 	base.SetUp(t)
 	defer base.TearDown(t)
 
 	ip := "192.168.1.10"
-
-	// Mock response with necessary attributes
-	mockResponse := linodego.InstanceIP{
-		Address:  ip,
-		Region:   "us-east",
-		LinodeID: 12345,
-		Reserved: true,
-		Tags:     []string{"lb"},
-	}
-
-	base.MockGet("networking/reserved/ips/"+ip, mockResponse)
+	base.MockGet("networking/reserved/ips/"+ip, fixtureData)
 
 	reservedIP, err := base.Client.GetReservedIPAddress(context.Background(), ip)
 
@@ -76,6 +69,12 @@ func TestReservedIPAddress_Get(t *testing.T) {
 	assert.Equal(t, 12345, reservedIP.LinodeID, "Expected Linode ID to match")
 	assert.True(t, reservedIP.Reserved, "Expected IP to be reserved")
 	assert.Equal(t, []string{"lb"}, reservedIP.Tags, "Expected tags to match")
+
+	assert.NotNil(t, reservedIP.AssignedEntity)
+	assert.Equal(t, 1234, reservedIP.AssignedEntity.ID)
+	assert.Equal(t, "my-linode", reservedIP.AssignedEntity.Label)
+	assert.Equal(t, "linode", reservedIP.AssignedEntity.Type)
+	assert.Equal(t, "/v4/linode/instances/12345", reservedIP.AssignedEntity.URL)
 }
 
 func TestIPReserveIPAddress(t *testing.T) {

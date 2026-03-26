@@ -4,6 +4,15 @@ import (
 	"context"
 )
 
+// ReservedIPAssignedEntity represents the entity that a reserved IP is assigned to.
+// NOTE: Reserved IP feature may not currently be available to all users.
+type ReservedIPAssignedEntity struct {
+	ID    int    `json:"id"`
+	Label string `json:"label"`
+	Type  string `json:"type"`
+	URL   string `json:"url"`
+}
+
 // ReserveIPOptions represents the options for reserving an IP address
 // NOTE: Reserved IP feature may not currently be available to all users.
 type ReserveIPOptions struct {
