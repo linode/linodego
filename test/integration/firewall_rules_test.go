@@ -41,8 +41,29 @@ func TestFirewallRules_Get_smoke(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	if !cmp.Equal(rules, &testFirewallRuleSet, ignoreNetworkAddresses) {
-		t.Errorf("expected rules to match test rules, but got diff: %s", cmp.Diff(rules, testFirewallRuleSet, ignoreNetworkAddresses))
+
+	if rules.Version <= 0 {
+		t.Errorf("expected non-zero rules version, got %d", rules.Version)
+	}
+
+	if rules.Fingerprint == "" {
+		t.Error("expected non-empty rules fingerprint")
+	}
+
+	if rules.InboundPolicy != testFirewallRuleSet.InboundPolicy {
+		t.Errorf("expected inbound policy %q, got %q", testFirewallRuleSet.InboundPolicy, rules.InboundPolicy)
+	}
+
+	if rules.OutboundPolicy != testFirewallRuleSet.OutboundPolicy {
+		t.Errorf("expected outbound policy %q, got %q", testFirewallRuleSet.OutboundPolicy, rules.OutboundPolicy)
+	}
+
+	if !cmp.Equal(rules.Inbound, testFirewallRuleSet.Inbound, ignoreNetworkAddresses) {
+		t.Errorf("expected inbound rules to match, but got diff: %s", cmp.Diff(rules.Inbound, testFirewallRuleSet.Inbound, ignoreNetworkAddresses))
+	}
+
+	if !cmp.Equal(rules.Outbound, testFirewallRuleSet.Outbound, ignoreNetworkAddresses) {
+		t.Errorf("expected outbound rules to match, but got diff: %s", cmp.Diff(rules.Outbound, testFirewallRuleSet.Outbound, ignoreNetworkAddresses))
 	}
 }
 
@@ -78,7 +99,28 @@ func TestFirewallRules_Update(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	if !cmp.Equal(rules, &newRules, ignoreNetworkAddresses) {
-		t.Errorf("expected rules to have been updated but got diff: %s", cmp.Diff(rules, &newRules, ignoreNetworkAddresses))
+
+	if rules.Version <= 0 {
+		t.Errorf("expected non-zero rules version, got %d", rules.Version)
+	}
+
+	if rules.Fingerprint == "" {
+		t.Error("expected non-empty rules fingerprint")
+	}
+
+	if rules.InboundPolicy != newRules.InboundPolicy {
+		t.Errorf("expected inbound policy %q, got %q", newRules.InboundPolicy, rules.InboundPolicy)
+	}
+
+	if rules.OutboundPolicy != newRules.OutboundPolicy {
+		t.Errorf("expected outbound policy %q, got %q", newRules.OutboundPolicy, rules.OutboundPolicy)
+	}
+
+	if !cmp.Equal(rules.Inbound, newRules.Inbound, ignoreNetworkAddresses) {
+		t.Errorf("expected inbound rules to match, but got diff: %s", cmp.Diff(rules.Inbound, newRules.Inbound, ignoreNetworkAddresses))
+	}
+
+	if !cmp.Equal(rules.Outbound, newRules.Outbound, ignoreNetworkAddresses) {
+		t.Errorf("expected outbound rules to match, but got diff: %s", cmp.Diff(rules.Outbound, newRules.Outbound, ignoreNetworkAddresses))
 	}
 }

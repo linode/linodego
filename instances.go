@@ -70,7 +70,6 @@ type Instance struct {
 	Tags            []string                `json:"tags"`
 	PlacementGroup  *InstancePlacementGroup `json:"placement_group"`
 
-	// NOTE: Disk encryption may not currently be available to all users.
 	DiskEncryption InstanceDiskEncryption `json:"disk_encryption"`
 
 	LKEClusterID int      `json:"lke_cluster_id"`
