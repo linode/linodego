@@ -304,3 +304,29 @@ func TestMonitorAlertDefinition_CreateWithIdempotency(t *testing.T) {
 		_ = client.DeleteMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, createdAlert.ID)
 	}
 }
+
+func TestMonitorAlertDefinitionEntities_List(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertDefinitionEntities_List")
+	defer teardown()
+
+	alerts, err := client.ListAllMonitorAlertDefinitions(context.Background(), nil)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, alerts)
+
+	entities, err := client.ListMonitorAlertDefinitionEntities(
+		context.Background(),
+		testMonitorAlertDefinitionServiceType,
+		alerts[0].ID,
+		nil,
+	)
+
+	assert.NoError(t, err)
+	assert.NotEmpty(t, entities, "Expected at least one entity")
+
+	for _, entity := range entities {
+		assert.NotZero(t, entity.ID)
+		assert.NotEmpty(t, entity.Label)
+		assert.NotEmpty(t, entity.Type)
+		assert.NotEmpty(t, entity.URL)
+	}
+}

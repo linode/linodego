@@ -14,80 +14,58 @@ interactions:
     url: https://api.linode.com/v4beta/monitor/alert-definitions?page=1
     method: GET
   response:
-    body: '{"pages": 1, "page": 1, "results": 6, "data": [{"id": 10000, "label": "High
-      Memory Usage Plan Dedicated", "description": "Alert triggers when dedicated
+    body: '{"pages": 1, "page": 1, "results": 4, "data": [{"id": 10000, "label":
+      "High Memory Usage Plan Dedicated", "description": "Alert triggers when dedicated
       plan nodes consistently reach critical memory usage, risking application performance
       degradation.", "service_type": "dbaas", "type": "system", "scope": "entity",
-      "class": "dedicated", "regions": [], "status": "enabled", "entity_ids": ["423214"],
-      "has_more_resources": false, "severity": 2, "rule_criteria": {"rules": [{"label":
-      "Memory Usage", "metric": "memory_usage", "unit": "percent", "aggregate_function":
-      "avg", "operator": "gt", "threshold": 95, "dimension_filters": []}]}, "alert_channels":
-      [{"id": 10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
-      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
-      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
-      3}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
-      "system", "updated_by": "system"}, {"id": 10001, "label": "High Memory Usage
-      Plan Shared", "description": "Alert triggers when shared plan nodes consistently
-      reach critical memory usage, risking application performance degradation.",
-      "service_type": "dbaas", "type": "system", "scope": "entity", "class": "shared",
-      "regions": [], "status": "enabled", "entity_ids": ["189690", "313392", "324828",
-      "340839", "380969"], "has_more_resources": false, "severity": 2, "rule_criteria":
-      {"rules": [{"label": "Memory Usage", "metric": "memory_usage", "unit": "percent",
-      "aggregate_function": "avg", "operator": "gt", "threshold": 90, "dimension_filters":
-      []}]}, "alert_channels": [{"id": 10000, "label": "Read-Write Channel", "url":
-      "/monitor/alert-channels/10000", "type": "alert-channels"}], "trigger_conditions":
-      {"criteria_condition": "ALL", "polling_interval_seconds": 300, "evaluation_period_seconds":
-      300, "trigger_occurrences": 3}, "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "created_by": "system", "updated_by": "system"}, {"id":
-      10002, "label": "High CPU Usage Plan Dedicated", "description": "Alert triggers
-      when dedicated nodes consistently exceed 95% CPU usage across three consecutive
-      5-minute intervals.", "service_type": "dbaas", "type": "system", "scope": "entity",
-      "class": "dedicated", "regions": [], "status": "enabled", "entity_ids": ["187468",
-      "188020", "188680", "188691", "423214"], "has_more_resources": false, "severity":
-      2, "rule_criteria": {"rules": [{"label": "CPU Usage", "metric": "cpu_usage",
+      "class": "dedicated", "regions": [], "status": "enabled", "entity_ids": ["324478",
+      "324480", "324483", "324486", "394528"], "has_more_resources": false, "severity":
+      2, "rule_criteria": {"rules": [{"label": "Memory Usage", "metric": "memory_usage",
       "unit": "percent", "aggregate_function": "avg", "operator": "gt", "threshold":
       95, "dimension_filters": []}]}, "alert_channels": [{"id": 10000, "label": "Read-Write
       Channel", "url": "/monitor/alert-channels/10000", "type": "alert-channels"}],
       "trigger_conditions": {"criteria_condition": "ALL", "polling_interval_seconds":
       300, "evaluation_period_seconds": 300, "trigger_occurrences": 3}, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by": "system",
-      "updated_by": "system"}, {"id": 10003, "label": "High CPU Usage Plan Shared",
-      "description": "Alert triggers when shared plan nodes consistently exceed high
-      CPU utilization, indicating potential performance issues.", "service_type":
-      "dbaas", "type": "system", "scope": "entity", "class": "shared", "regions":
-      [], "status": "enabled", "entity_ids": ["189690", "313392", "324828", "340839",
-      "380969"], "has_more_resources": false, "severity": 2, "rule_criteria": {"rules":
-      [{"label": "CPU Usage", "metric": "cpu_usage", "unit": "percent", "aggregate_function":
-      "avg", "operator": "gt", "threshold": 90, "dimension_filters": []}]}, "alert_channels":
-      [{"id": 10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
+      "updated_by": "system", "entities": {"url": "/monitor/services/dbaas/alert-definitions/10000/entities",
+      "has_more_resources": false, "count": 5}}, {"id": 10001, "label": "High Memory
+      Usage Plan Shared", "description": "Alert triggers when shared plan nodes consistently
+      reach critical memory usage, risking application performance degradation.",
+      "service_type": "dbaas", "type": "system", "scope": "entity", "class": "shared",
+      "regions": [], "status": "enabled", "entity_ids": ["190003", "257626"], "has_more_resources":
+      false, "severity": 2, "rule_criteria": {"rules": [{"label": "Memory Usage",
+      "metric": "memory_usage", "unit": "percent", "aggregate_function": "avg", "operator":
+      "gt", "threshold": 90, "dimension_filters": []}]}, "alert_channels": [{"id":
+      10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
       "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
       "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
       3}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
-      "system", "updated_by": "system"}, {"id": 10004, "label": "High Disk Usage Plan
-      Dedicated", "description": "Alert triggers when dedicated plan nodes experience
-      sustained high disk usage, risking immediate resource exhaustion.", "service_type":
-      "dbaas", "type": "system", "scope": "entity", "class": "dedicated", "regions":
-      [], "status": "enabled", "entity_ids": ["187468", "188020", "188680", "188691",
-      "423214"], "has_more_resources": false, "severity": 2, "rule_criteria": {"rules":
-      [{"label": "Disk Space Usage", "metric": "disk_usage", "unit": "percent", "aggregate_function":
-      "avg", "operator": "gt", "threshold": 95, "dimension_filters": []}]}, "alert_channels":
-      [{"id": 10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
-      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
-      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
-      3}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
-      "system", "updated_by": "system"}, {"id": 10005, "label": "High Disk Usage Plan
-      Shared", "description": "Alert triggers when shared plan nodes experience sustained
-      high disk usage, risking immediate resource exhaustion.", "service_type": "dbaas",
-      "type": "system", "scope": "entity", "class": "shared", "regions": [], "status":
-      "enabled", "entity_ids": ["189690", "313392", "324828", "340839", "380969"],
+      "system", "updated_by": "system", "entities": {"url": "/monitor/services/dbaas/alert-definitions/10001/entities",
+      "has_more_resources": false, "count": 2}}, {"id": 11001, "label": "test_alert_logs_prod",
+      "description": "some desc1", "service_type": "logs", "type": "user", "scope":
+      "entity", "class": null, "regions": [], "status": "enabled", "entity_ids": ["100"],
       "has_more_resources": false, "severity": 2, "rule_criteria": {"rules": [{"label":
-      "Disk Space Usage", "metric": "disk_usage", "unit": "percent", "aggregate_function":
-      "avg", "operator": "gt", "threshold": 90, "dimension_filters": []}]}, "alert_channels":
-      [{"id": 10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
+      "Successful Upload Count", "metric": "success_upload_count", "unit": "count",
+      "aggregate_function": "sum", "operator": "lt", "threshold": 100000, "dimension_filters":
+      []}]}, "alert_channels": [{"id": 10004, "label": "Alert Channel", "url":
+      "/monitor/alert-channels/10004", "type": "alert-channels"}], "trigger_conditions":
+      {"criteria_condition": "ALL", "polling_interval_seconds": 300, "evaluation_period_seconds":
+      300, "trigger_occurrences": 1}, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "created_by": "tester", "updated_by":
+      "tester", "entities": {"url": "/monitor/services/logs/alert-definitions/11001/entities",
+      "has_more_resources": false, "count": 1}}, {"id": 11021, "label": "Test Alert", "description": "Test Alert", "service_type":
+      "dbaas", "type": "user", "scope": "entity", "class": null, "regions": [], "status":
+      "enabled", "entity_ids": ["257626", "394528"], "has_more_resources": false,
+      "severity": 1, "rule_criteria": {"rules": [{"label": "Memory Usage", "metric":
+      "memory_usage", "unit": "percent", "aggregate_function": "sum", "operator":
+      "gt", "threshold": 100, "dimension_filters": []}]}, "alert_channels": [{"id":
+      10004, "label": "Alert Channel", "url": "/monitor/alert-channels/10004",
       "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
-      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
-      3}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
-      "system", "updated_by": "system"}]}'
+      "polling_interval_seconds": 1800, "evaluation_period_seconds": 900, "trigger_occurrences":
+      10}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
+      "tester", "updated_by": "tester", "entities":
+      {"url": "/monitor/services/dbaas/alert-definitions/11021/entities", "has_more_resources":
+      false, "count": 2}}]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -110,7 +88,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 16 Feb 2026 04:26:10 GMT
+      - Wed, 08 Apr 2026 06:05:05 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -127,7 +105,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
+        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
+        monitor:read_write nodebalancers:read_only object_storage:read_only stackscripts:read_only
+        volumes:read_only
       X-Ratelimit-Limit:
       - "1840"
       X-Xss-Protection:
@@ -149,7 +130,7 @@ interactions:
     url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions
     method: POST
   response:
-    body: '{"id": 10855, "label": "go-test-alert-definition-create", "description":
+    body: '{"id": 11022, "label": "go-test-alert-definition-create", "description":
       "Test alert definition creation", "service_type": "dbaas", "type": "user", "scope":
       "entity", "class": null, "regions": [], "status": "provisioning", "entity_ids":
       [], "has_more_resources": false, "severity": 2, "rule_criteria": {"rules": [{"label":
@@ -160,7 +141,9 @@ interactions:
       "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
       "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
       1}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
-      "srinidhi_gemini", "updated_by": "srinidhi_gemini"}'
+      "tester", "updated_by": "tester", "entities":
+      {"url": "/monitor/services/dbaas/alert-definitions/11022/entities", "has_more_resources":
+      false, "count": 0}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -183,7 +166,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 16 Feb 2026 04:26:11 GMT
+      - Wed, 08 Apr 2026 06:05:06 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -199,7 +182,87 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
+      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
+        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
+        monitor:read_write nodebalancers:read_only object_storage:read_only stackscripts:read_only
+        volumes:read_only
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/11022
+    method: GET
+  response:
+    body: '{"id": 11022, "label": "go-test-alert-definition-create", "description":
+      "Test alert definition creation", "service_type": "dbaas", "type": "user", "scope":
+      "entity", "class": null, "regions": [], "status": "enabled", "entity_ids": [],
+      "has_more_resources": false, "severity": 2, "rule_criteria": {"rules": [{"label":
+      "Memory Usage", "metric": "memory_usage", "unit": "percent", "aggregate_function":
+      "avg", "operator": "gt", "threshold": 90, "dimension_filters": [{"label": "Node
+      Type", "dimension_label": "node_type", "operator": "eq", "value": "primary"}]}]},
+      "alert_channels": [{"id": 10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
+      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
+      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
+      1}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
+      "tester", "updated_by": "tester", "entities":
+      {"url": "/monitor/services/dbaas/alert-definitions/11022/entities", "has_more_resources":
+      false, "count": 0}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
       - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Wed, 08 Apr 2026 06:05:22 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
+        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
+        monitor:read_write nodebalancers:read_only object_storage:read_only stackscripts:read_only
+        volumes:read_only
       X-Ratelimit-Limit:
       - "1840"
       X-Xss-Protection:
@@ -218,10 +281,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/10855
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/11022
     method: PUT
   response:
-    body: '{"id": 10855, "label": "go-test-alert-definition-create-updated", "description":
+    body: '{"id": 11022, "label": "go-test-alert-definition-create-updated", "description":
       "Test alert definition creation", "service_type": "dbaas", "type": "user", "scope":
       "entity", "class": null, "regions": [], "status": "enabled", "entity_ids": [],
       "has_more_resources": false, "severity": 2, "rule_criteria": {"rules": [{"label":
@@ -232,7 +295,9 @@ interactions:
       "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
       "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
       1}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
-      "srinidhi_gemini", "updated_by": "srinidhi_gemini"}'
+      "tester", "updated_by": "tester", "entities":
+      {"url": "/monitor/services/dbaas/alert-definitions/11022/entities", "has_more_resources":
+      false, "count": 0}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -255,7 +320,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 16 Feb 2026 04:27:13 GMT
+      - Wed, 08 Apr 2026 06:05:24 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -271,7 +336,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
+        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
+        monitor:read_write nodebalancers:read_only object_storage:read_only stackscripts:read_only
+        volumes:read_only
       X-Ratelimit-Limit:
       - "1840"
       X-Xss-Protection:
@@ -289,7 +357,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/10855
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/11022
     method: DELETE
   response:
     body: '{}'
@@ -317,7 +385,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 16 Feb 2026 04:27:14 GMT
+      - Wed, 08 Apr 2026 06:05:25 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -332,7 +400,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
+        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
+        monitor:read_write nodebalancers:read_only object_storage:read_only stackscripts:read_only
+        volumes:read_only
       X-Ratelimit-Limit:
       - "1840"
       X-Xss-Protection:
