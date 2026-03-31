@@ -293,6 +293,38 @@ func TestNodeBalancer_Create_WithFrontendAndBackendInDifferentVPCs(t *testing.T)
 	//assert.Equal(t, "frontend", frontendVPCs[0].Purpose)
 }
 
+func TestNodeBalancer_Create_WithDeprecatedVPCsAttribute(t *testing.T) {
+	//	To test that deprecated VPCs attribute is still valid - it will be deleted when it can no longer be used
+	client, recordStopper := createTestClient(t, "fixtures/TestNodeBalancer_Create_WithDeprecatedVPCsAttribute")
+	defer recordStopper()
+
+	vpc, subnet, vpcTeardown, err := createVPCWithSubnet(t, client)
+	defer vpcTeardown()
+	require.NoError(t, err, "Error creating VPC with subnet for NodeBalancer")
+
+	createOpts := linodego.NodeBalancerCreateOptions{
+		Label:  &label,
+		Region: vpc.Region,
+		Type:   linodego.NBTypePremium,
+		VPCs: []linodego.NodeBalancerVPCOptions{{
+			SubnetID: subnet.ID,
+		}},
+	}
+
+	nodebalancer, err := client.CreateNodeBalancer(context.Background(), createOpts)
+	require.NoErrorf(t, err, "Error creating NodeBalancer with VPCc attribute: %v", err)
+
+	assertDateSet(t, nodebalancer.Created)
+	assertDateSet(t, nodebalancer.Updated)
+	assert.NotEmpty(t, nodebalancer.IPv4)
+	assert.NotEmpty(t, nodebalancer.IPv6)
+	assert.Equal(t, "public", string(nodebalancer.FrontendAddressType))
+	assert.Nil(t, nodebalancer.FrontendVPCSubnetID)
+
+	err = client.DeleteNodeBalancer(context.Background(), nodebalancer.ID)
+	require.NoErrorf(t, err, "Expected to delete a nodebalancer, but got %v", err)
+}
+
 func TestNodeBalancer_Update(t *testing.T) {
 	client, nodebalancer, teardown, err := setupNodeBalancer(t, "fixtures/TestNodeBalancer_Update", nil)
 	defer teardown()
@@ -478,7 +510,7 @@ func setupNodeBalancerWithVPC(
 		Region:             vpc.Region,
 		ClientConnThrottle: &clientConnThrottle,
 		FirewallID:         GetFirewallID(),
-		VPCs: []linodego.NodeBalancerVPCOptions{
+		BackendVPCs: []linodego.NodeBalancerVPCOptions{
 			{
 				IPv4Range: "192.168.0.64/30",
 				IPv6Range: "",
@@ -566,7 +598,7 @@ func setupNodeBalancerWithPremiumTypeInDifferentVPCs(t *testing.T, fixturesYaml 
 		Region:             region,
 		ClientConnThrottle: &clientConnThrottle,
 		Type:               linodego.NBTypePremium,
-		VPCs: []linodego.NodeBalancerVPCOptions{
+		BackendVPCs: []linodego.NodeBalancerVPCOptions{
 			{
 				SubnetID: subnetBackend.ID,
 			},
