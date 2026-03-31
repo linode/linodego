@@ -228,6 +228,8 @@ func TestMonitorAlertChannels_List(t *testing.T) {
 		assert.NotZero(t, channel.ID)
 		assert.NotEmpty(t, channel.Label)
 		assert.NotEmpty(t, channel.ChannelType)
+		assert.NotNil(t, channel.Details.Email)
+		assert.NotEmpty(t, channel.Details.Email.RecipientType)
 	}
 }
 
