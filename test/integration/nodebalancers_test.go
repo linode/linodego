@@ -510,7 +510,7 @@ func setupNodeBalancerWithVPC(
 		Region:             vpc.Region,
 		ClientConnThrottle: &clientConnThrottle,
 		FirewallID:         GetFirewallID(),
-		BackendVPCs: []linodego.NodeBalancerVPCOptions{
+		BackendVPCs: []linodego.NodeBalancerBackendVPCOptions{
 			{
 				IPv4Range: "192.168.0.64/30",
 				IPv6Range: "",
@@ -598,7 +598,7 @@ func setupNodeBalancerWithPremiumTypeInDifferentVPCs(t *testing.T, fixturesYaml 
 		Region:             region,
 		ClientConnThrottle: &clientConnThrottle,
 		Type:               linodego.NBTypePremium,
-		BackendVPCs: []linodego.NodeBalancerVPCOptions{
+		BackendVPCs: []linodego.NodeBalancerBackendVPCOptions{
 			{
 				SubnetID: subnetBackend.ID,
 			},

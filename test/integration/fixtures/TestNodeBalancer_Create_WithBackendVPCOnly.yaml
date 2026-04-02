@@ -378,7 +378,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 31 Mar 2026 12:47:32 GMT
+      - Thu, 02 Apr 2026 07:54:33 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -404,7 +404,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-vpc-1774961252171678000","region":"nl-ams","subnets":[{"label":"linodego-vpc-test-1774961252530082000","ipv4":"192.168.0.0/25"}]}'
+    body: '{"label":"go-test-vpc-1775116472687174000","region":"nl-ams","subnets":[{"label":"linodego-vpc-test-1775116473242703000","ipv4":"192.168.0.0/25"}]}'
     form: {}
     headers:
       Accept:
@@ -416,8 +416,8 @@ interactions:
     url: https://api.linode.com/v4beta/vpcs
     method: POST
   response:
-    body: '{"id": 432829, "label": "go-test-vpc-1774961252171678000", "description":
-      "", "region": "nl-ams", "ipv6": null, "subnets": [{"id": 541864, "label": "linodego-vpc-test-1774961252530082000",
+    body: '{"id": 435793, "label": "go-test-vpc-1775116472687174000", "description":
+      "", "region": "nl-ams", "ipv6": null, "subnets": [{"id": 547270, "label": "linodego-vpc-test-1775116473242703000",
       "ipv4": "192.168.0.0/25", "ipv6": null, "linodes": [], "databases": [], "nodebalancers":
       [], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}], "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
@@ -445,7 +445,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 31 Mar 2026 12:47:33 GMT
+      - Thu, 02 Apr 2026 07:54:33 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -469,7 +469,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-def","region":"nl-ams","client_conn_throttle":20,"tags":null,"firewall_id":4054942,"backend_vpcs":[{"ipv4_range":"192.168.0.64/30","subnet_id":541864}]}'
+    body: '{"label":"go-test-def","region":"nl-ams","client_conn_throttle":20,"tags":null,"firewall_id":4066926,"backend_vpcs":[{"ipv4_range":"192.168.0.64/30","subnet_id":547270}]}'
     form: {}
     headers:
       Accept:
@@ -481,8 +481,8 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 2092330, "label": "go-test-def", "region": "nl-ams", "type": "common",
-      "hostname": "172-233-36-75.ip.linodeusercontent.com", "ipv4": "172.233.36.75",
+    body: '{"id": 2095943, "label": "go-test-def", "region": "nl-ams", "type": "common",
+      "hostname": "172-233-35-203.ip.linodeusercontent.com", "ipv4": "172.233.35.203",
       "ipv6": "1234::5678", "frontend_address_type": "public", "frontend_vpc_subnet_id":
       null, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "client_conn_throttle":
       20, "client_udp_sess_throttle": 0, "lke_cluster": null, "tags": [], "locks":
@@ -505,13 +505,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "484"
+      - "486"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Tue, 31 Mar 2026 12:47:33 GMT
+      - Thu, 02 Apr 2026 07:54:34 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -544,11 +544,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/2092330/vpcs?page=1
+    url: https://api.linode.com/v4beta/nodebalancers/2095943/vpcs?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 48481, "nodebalancer_id": 2092330, "vpc_id": 432829, "subnet_id":
-      541864, "ipv4_range": "192.168.0.64/30", "ipv6_range": null, "purpose": "backend"}],
+    body: '{"data": [{"id": 49027, "nodebalancer_id": 2095943, "vpc_id": 435793, "subnet_id":
+      547270, "ipv4_range": "192.168.0.64/30", "ipv6_range": null, "purpose": "backend"}],
       "page": 1, "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
@@ -574,7 +574,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 31 Mar 2026 12:47:33 GMT
+      - Thu, 02 Apr 2026 07:54:34 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -608,11 +608,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/2092330/vpcs/48481
+    url: https://api.linode.com/v4beta/nodebalancers/2095943/vpcs/49027
     method: GET
   response:
-    body: '{"id": 48481, "nodebalancer_id": 2092330, "vpc_id": 432829, "subnet_id":
-      541864, "ipv4_range": "192.168.0.64/30", "ipv6_range": null, "purpose": "backend"}'
+    body: '{"id": 49027, "nodebalancer_id": 2095943, "vpc_id": 435793, "subnet_id":
+      547270, "ipv4_range": "192.168.0.64/30", "ipv6_range": null, "purpose": "backend"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -637,7 +637,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 31 Mar 2026 12:47:33 GMT
+      - Thu, 02 Apr 2026 07:54:34 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -671,7 +671,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/2092330
+    url: https://api.linode.com/v4beta/nodebalancers/2095943
     method: DELETE
   response:
     body: '{}'
@@ -699,7 +699,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 31 Mar 2026 12:47:34 GMT
+      - Thu, 02 Apr 2026 07:54:35 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -732,7 +732,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/vpcs/432829
+    url: https://api.linode.com/v4beta/vpcs/435793
     method: DELETE
   response:
     body: '{}'
@@ -760,7 +760,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 31 Mar 2026 12:47:34 GMT
+      - Thu, 02 Apr 2026 07:54:36 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
