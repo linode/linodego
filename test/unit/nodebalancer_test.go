@@ -216,7 +216,7 @@ func TestNodeBalancer_Create_with_BackendVPCs(t *testing.T) {
 		Label:  String("Test NodeBalancer VPC"),
 		Region: "us-east",
 		Type:   linodego.NBTypePremium40GB,
-		BackendVPCs: []linodego.NodeBalancerVPCOptions{
+		BackendVPCs: []linodego.NodeBalancerBackendVPCOptions{
 			{
 				SubnetID:            123,
 				IPv4Range:           "10.200.4.16/28",
