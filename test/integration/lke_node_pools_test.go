@@ -18,7 +18,8 @@ var testLKENodePoolCreateOpts = linodego.LKENodePoolCreateOptions{
 			Type: "ext4",
 		},
 	},
-	Tags: []string{"testing"},
+	Tags:           []string{"testing"},
+	DiskEncryption: linodego.Pointer(linodego.InstanceDiskEncryptionEnabled),
 }
 
 func TestLKENodePool_GetMissing(t *testing.T) {
@@ -71,8 +72,8 @@ func TestLKENodePool_GetFound(t *testing.T) {
 		t.Errorf("unexpected tags:\n%s", diff)
 	}
 
-	if i.DiskEncryption != linodego.InstanceDiskEncryptionDisabled {
-		t.Errorf("DiskEncryption enabled, got: %s, want: %s", i.DiskEncryption, linodego.InstanceDiskEncryptionEnabled)
+	if i.DiskEncryption != linodego.InstanceDiskEncryptionEnabled {
+		t.Errorf("expected DiskEncryption to be enabled, got: %s", i.DiskEncryption)
 	}
 
 	wrapper, teardownClusterClient := transportRecorderWrapper(t, "fixtures/TestLKENodePool_GetFound_k8s")
