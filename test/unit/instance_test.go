@@ -196,7 +196,7 @@ func TestInstance_Create(t *testing.T) {
 		MaintenancePolicy: linodego.Pointer("linode/migrate"),
 		Alerts: &linodego.InstanceACLPAlertsOptions{
 			SystemAlerts: []int{123, 456},
-			UserAlerts:  []int{555},
+			UserAlerts:   []int{555},
 		},
 	}
 
