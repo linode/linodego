@@ -46,7 +46,7 @@ func TestInstances_List(t *testing.T) {
 	assert.Equal(t, "linode/migrate", linode.MaintenancePolicy)
 	if linode.Alerts.SystemAlerts != nil {
 		systemAlerts := *linode.Alerts.SystemAlerts
-		if len(systemAlerts) > 2 {
+		if len(systemAlerts) >= 2 {
 			assert.Equal(t, 123, systemAlerts[0])
 			assert.Equal(t, 456, systemAlerts[1])
 		}
@@ -92,7 +92,7 @@ func TestInstance_Get(t *testing.T) {
 	assert.Equal(t, 2468, *instance.PlacementGroup.MigratingTo)
 	if instance.Alerts.SystemAlerts != nil {
 		systemAlerts := *instance.Alerts.SystemAlerts
-		if len(*instance.Alerts.SystemAlerts) > 2 {
+		if len(systemAlerts) >= 2 {
 			assert.Equal(t, 123, systemAlerts[0])
 			assert.Equal(t, 456, systemAlerts[1])
 		}
@@ -207,8 +207,8 @@ func TestInstance_Create(t *testing.T) {
 		RootPass:          "securepassword",
 		MaintenancePolicy: linodego.Pointer("linode/migrate"),
 		Alerts: &linodego.InstanceACLPAlertsOptions{
-			SystemAlerts: &[]int{123, 456},
-			UserAlerts:   &[]int{555},
+			SystemAlerts: linodego.Pointer([]int{123, 456}),
+			UserAlerts:   linodego.Pointer([]int{555}),
 		},
 	}
 
@@ -220,7 +220,7 @@ func TestInstance_Create(t *testing.T) {
 	assert.Equal(t, "linode/migrate", instance.MaintenancePolicy)
 	if instance.Alerts.SystemAlerts != nil {
 		systemAlerts := *instance.Alerts.SystemAlerts
-		if len(*instance.Alerts.SystemAlerts) > 2 {
+		if len(systemAlerts) >= 2 {
 			assert.Equal(t, 123, systemAlerts[0])
 			assert.Equal(t, 456, systemAlerts[1])
 		}
@@ -245,8 +245,8 @@ func TestInstance_Update(t *testing.T) {
 		Label:             "updated-instance",
 		MaintenancePolicy: linodego.Pointer("linode/power_off_on"),
 		Alerts: &linodego.InstanceAlert{
-			SystemAlerts: &[]int{123, 456},
-			UserAlerts:   &[]int{555},
+			SystemAlerts: linodego.Pointer([]int{123, 456}),
+			UserAlerts:   linodego.Pointer([]int{555}),
 		},
 	}
 
@@ -258,7 +258,7 @@ func TestInstance_Update(t *testing.T) {
 	assert.Equal(t, "linode/power_off_on", instance.MaintenancePolicy)
 	if instance.Alerts.SystemAlerts != nil {
 		systemAlerts := *instance.Alerts.SystemAlerts
-		if len(*instance.Alerts.SystemAlerts) > 2 {
+		if len(systemAlerts) >= 2 {
 			assert.Equal(t, 123, systemAlerts[0])
 			assert.Equal(t, 456, systemAlerts[1])
 		}
@@ -317,8 +317,8 @@ func TestInstance_Clone(t *testing.T) {
 		Type:   "g6-standard-1",
 		Label:  "cloned-instance",
 		Alerts: &linodego.InstanceACLPAlertsOptions{
-			SystemAlerts: &[]int{123, 456},
-			UserAlerts:   &[]int{555},
+			SystemAlerts: linodego.Pointer([]int{123, 456}),
+			UserAlerts:   linodego.Pointer([]int{555}),
 		},
 	}
 
@@ -330,7 +330,7 @@ func TestInstance_Clone(t *testing.T) {
 	assert.Equal(t, "linode/migrate", instance.MaintenancePolicy)
 	if instance.Alerts.SystemAlerts != nil {
 		systemAlerts := *instance.Alerts.SystemAlerts
-		if len(*instance.Alerts.SystemAlerts) > 2 {
+		if len(systemAlerts) >= 2 {
 			assert.Equal(t, 123, systemAlerts[0])
 			assert.Equal(t, 456, systemAlerts[1])
 		}
