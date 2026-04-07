@@ -294,7 +294,7 @@ func TestNodeBalancer_Create_WithFrontendAndBackendInDifferentVPCs(t *testing.T)
 }
 
 func TestNodeBalancer_Create_WithDeprecatedVPCsAttribute(t *testing.T) {
-	//	To test that deprecated VPCs attribute is still valid - it will be deleted when it can no longer be used
+	// Test that the deprecated VPCs attribute is still valid - it will be deleted when it can no longer be used.
 	client, recordStopper := createTestClient(t, "fixtures/TestNodeBalancer_Create_WithDeprecatedVPCsAttribute")
 	defer recordStopper()
 
@@ -312,7 +312,7 @@ func TestNodeBalancer_Create_WithDeprecatedVPCsAttribute(t *testing.T) {
 	}
 
 	nodebalancer, err := client.CreateNodeBalancer(context.Background(), createOpts)
-	require.NoErrorf(t, err, "Error creating NodeBalancer with VPCc attribute: %v", err)
+	require.NoErrorf(t, err, "Error creating NodeBalancer with VPCs attribute: %v", err)
 
 	assertDateSet(t, nodebalancer.Created)
 	assertDateSet(t, nodebalancer.Updated)
