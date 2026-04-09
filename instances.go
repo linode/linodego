@@ -79,7 +79,6 @@ type Instance struct {
 
 	MaintenancePolicy string `json:"maintenance_policy"`
 
-	// NOTE: Locks can only be used with v4beta.
 	Locks []LockType `json:"locks"`
 }
 
