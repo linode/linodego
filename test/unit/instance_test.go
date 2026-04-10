@@ -2,6 +2,7 @@ package unit
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"strconv"
 	"testing"
@@ -358,4 +359,22 @@ func TestInstance_Rebuild(t *testing.T) {
 	instance, err := base.Client.RebuildInstance(context.Background(), 123, rebuildOptions)
 	assert.NoError(t, err)
 	assert.Equal(t, "linode/ubuntu22.04", instance.Image)
+}
+
+func TestInstanceACLPAlerts_MarshalEmptyList(t *testing.T) {
+	opts := linodego.InstanceACLPAlertsOptions{
+		SystemAlerts: []int{},
+		UserAlerts:   []int{},
+	}
+
+	buf, err := json.Marshal(opts)
+	if err != nil {
+		t.Fatalf("failed to marshal options: %v", err)
+	}
+
+	// The goal of omitzero here is to ensure empty list is present
+	expected := `{"system_alerts":[],"user_alerts":[]}`
+	if string(buf) != expected {
+		t.Errorf("expected JSON %s, got %s", expected, string(buf))
+	}
 }
