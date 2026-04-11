@@ -83,7 +83,6 @@ type LKENodePool struct {
 	Autoscaler LKENodePoolAutoscaler `json:"autoscaler"`
 	FirewallID *int                  `json:"firewall_id,omitempty"`
 
-	// NOTE: Disk encryption may not currently be available to all users.
 	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitempty"`
 
 	Isolation *LKENodePoolIsolation `json:"isolation,omitempty"`
@@ -115,6 +114,8 @@ type LKENodePoolCreateOptions struct {
 	// It may not currently be available to all users and is under v4beta.
 	K8sVersion     *string                    `json:"k8s_version,omitempty"`
 	UpdateStrategy *LKENodePoolUpdateStrategy `json:"update_strategy,omitempty"`
+
+	DiskEncryption *InstanceDiskEncryption `json:"disk_encryption,omitempty"`
 }
 
 // LKENodePoolUpdateOptions fields are those accepted by UpdateLKENodePoolUpdate
@@ -149,8 +150,8 @@ func (l LKENodePool) GetCreateOptions() (o LKENodePoolCreateOptions) {
 	o.UpdateStrategy = l.UpdateStrategy
 	o.Label = l.Label
 	o.FirewallID = l.FirewallID
-	o.DiskEncryption = l.DiskEncryption
 	o.Isolation = l.Isolation
+	o.DiskEncryption = &l.DiskEncryption
 
 	return o
 }
