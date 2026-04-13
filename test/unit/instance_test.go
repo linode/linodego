@@ -2,6 +2,7 @@ package unit
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"strconv"
 	"testing"
@@ -44,7 +45,7 @@ func TestInstances_List(t *testing.T) {
 	require.NotNil(t, linode.PlacementGroup.MigratingTo)
 	assert.Equal(t, 2468, *linode.PlacementGroup.MigratingTo)
 	assert.Equal(t, "linode/migrate", linode.MaintenancePolicy)
-	if len(linode.Alerts.SystemAlerts) > 2 {
+	if len(linode.Alerts.SystemAlerts) >= 2 {
 		assert.Equal(t, 123, linode.Alerts.SystemAlerts[0])
 		assert.Equal(t, 456, linode.Alerts.SystemAlerts[1])
 	}
@@ -84,7 +85,7 @@ func TestInstance_Get(t *testing.T) {
 	assert.Equal(t, "linode/migrate", instance.MaintenancePolicy)
 	require.NotNil(t, instance.PlacementGroup.MigratingTo)
 	assert.Equal(t, 2468, *instance.PlacementGroup.MigratingTo)
-	if len(instance.Alerts.SystemAlerts) > 2 {
+	if len(instance.Alerts.SystemAlerts) >= 2 {
 		assert.Equal(t, 123, instance.Alerts.SystemAlerts[0])
 		assert.Equal(t, 456, instance.Alerts.SystemAlerts[1])
 	}
@@ -206,7 +207,7 @@ func TestInstance_Create(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "new-instance", instance.Label)
 	assert.Equal(t, "linode/migrate", instance.MaintenancePolicy)
-	if len(instance.Alerts.SystemAlerts) > 2 {
+	if len(instance.Alerts.SystemAlerts) >= 2 {
 		assert.Equal(t, 123, instance.Alerts.SystemAlerts[0])
 		assert.Equal(t, 456, instance.Alerts.SystemAlerts[1])
 	}
@@ -238,7 +239,7 @@ func TestInstance_Update(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "updated-instance", instance.Label)
 	assert.Equal(t, "linode/power_off_on", instance.MaintenancePolicy)
-	if len(instance.Alerts.SystemAlerts) > 2 {
+	if len(instance.Alerts.SystemAlerts) >= 2 {
 		assert.Equal(t, 123, instance.Alerts.SystemAlerts[0])
 		assert.Equal(t, 456, instance.Alerts.SystemAlerts[1])
 	}
@@ -304,7 +305,7 @@ func TestInstance_Clone(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "cloned-instance", instance.Label)
 	assert.Equal(t, "linode/migrate", instance.MaintenancePolicy)
-	if len(instance.Alerts.SystemAlerts) > 2 {
+	if len(instance.Alerts.SystemAlerts) >= 2 {
 		assert.Equal(t, 123, instance.Alerts.SystemAlerts[0])
 		assert.Equal(t, 456, instance.Alerts.SystemAlerts[1])
 	}
@@ -358,4 +359,22 @@ func TestInstance_Rebuild(t *testing.T) {
 	instance, err := base.Client.RebuildInstance(context.Background(), 123, rebuildOptions)
 	assert.NoError(t, err)
 	assert.Equal(t, "linode/ubuntu22.04", instance.Image)
+}
+
+func TestInstanceACLPAlerts_MarshalEmptyList(t *testing.T) {
+	opts := linodego.InstanceACLPAlertsOptions{
+		SystemAlerts: []int{},
+		UserAlerts:   []int{},
+	}
+
+	buf, err := json.Marshal(opts)
+	if err != nil {
+		t.Fatalf("failed to marshal options: %v", err)
+	}
+
+	// The goal of omitzero here is to ensure empty list is present
+	expected := `{"system_alerts":[],"user_alerts":[]}`
+	if string(buf) != expected {
+		t.Errorf("expected JSON %s, got %s", expected, string(buf))
+	}
 }

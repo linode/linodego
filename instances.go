@@ -100,8 +100,8 @@ type InstanceAlert struct {
 	NetworkIn     int   `json:"network_in"`
 	NetworkOut    int   `json:"network_out"`
 	TransferQuota int   `json:"transfer_quota"`
-	SystemAlerts  []int `json:"system_alerts,omitempty"`
-	UserAlerts    []int `json:"user_alerts,omitempty"`
+	SystemAlerts  []int `json:"system_alerts,omitzero"`
+	UserAlerts    []int `json:"user_alerts,omitzero"`
 }
 
 // InstanceBackup represents backup settings for an instance
@@ -230,8 +230,8 @@ type InstanceCreateOptions struct {
 
 // InstanceACLPAlertsOptions represents ACLP alerts options for instance creation and cloning.
 type InstanceACLPAlertsOptions struct {
-	SystemAlerts []int `json:"system_alerts,omitempty"`
-	UserAlerts   []int `json:"user_alerts,omitempty"`
+	SystemAlerts []int `json:"system_alerts,omitzero"`
+	UserAlerts   []int `json:"user_alerts,omitzero"`
 }
 
 // InstanceCreatePlacementGroupOptions represents the placement group
