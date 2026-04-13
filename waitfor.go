@@ -820,3 +820,29 @@ func (client Client) WaitForAlertDefinitionStatus(
 		}
 	}
 }
+
+func (client Client) WaitForVolumeIOReadyStatus(ctx context.Context, volumeID int, status bool, timeoutSeconds int) (*Volume, error) {
+	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
+	defer cancel()
+
+	ticker := time.NewTicker(client.pollInterval)
+	defer ticker.Stop()
+
+	for {
+		select {
+		case <-ticker.C:
+			volume, err := client.GetVolume(ctx, volumeID)
+			if err != nil {
+				return volume, err
+			}
+
+			complete := (volume.IOReady == status)
+
+			if complete {
+				return volume, nil
+			}
+		case <-ctx.Done():
+			return nil, fmt.Errorf("Error waiting for Volume %d IO Ready status %s: %w", volumeID, status, ctx.Err())
+		}
+	}
+}
