@@ -44,7 +44,7 @@ func setupVolumeAttachedToLinode(
 			require.NoErrorf(t, err, "Error detaching volume: %v", err)
 
 			_, err = client.WaitForVolumeIOReadyStatus(context.Background(), volume.ID, false, 45)
-			require.NoErrorf(t, err, "Error waiting for IO Ready status of attached volume: %v", err)
+			require.NoErrorf(t, err, "Error waiting for IO Ready status of detached volume: %v", err)
 		}
 		teardownVolume()
 		teardownInstance()
@@ -91,12 +91,12 @@ func TestIAM_GetIOReadyForAttachedDetachedVolume(t *testing.T) {
 	instanceVolumes, err := client.ListInstanceVolumes(context.Background(), instance.ID, nil)
 	require.NoErrorf(t, err, "Error listing instance volumes: %v", err)
 	require.Len(t, instanceVolumes, 1, "Expected 1 volume attached to instance, got %d", len(instanceVolumes))
-	assert.Equal(t, *instanceVolumes[0].LinodeID, *volume.LinodeID)
-	assert.Equal(t, instanceVolumes[0].LinodeLabel, volume.LinodeLabel)
+	assert.Equal(t, instance.ID, *instanceVolumes[0].LinodeID)
+	assert.Equal(t, instance.Label, instanceVolumes[0].LinodeLabel)
 	assert.True(t, instanceVolumes[0].IOReady)
 
 	volume, err = client.GetVolume(context.Background(), volume.ID)
-	require.NoErrorf(t, err, "Error getting volume after detaching from instance: %v", err)
+	require.NoErrorf(t, err, "Error getting attached volume: %v", err)
 	assert.Equal(t, instance.ID, *volume.LinodeID)
 	assert.Equal(t, instance.Label, volume.LinodeLabel)
 	assert.True(t, volume.IOReady)
@@ -105,15 +105,52 @@ func TestIAM_GetIOReadyForAttachedDetachedVolume(t *testing.T) {
 	require.NoErrorf(t, err, "Error detaching volume: %v", err)
 
 	volume, err = client.WaitForVolumeIOReadyStatus(context.Background(), volume.ID, false, 45)
-	require.NoErrorf(t, err, "Error waiting for IO Ready status of attached volume: %v", err)
+	require.NoErrorf(t, err, "Error waiting for IO Ready status of detached volume: %v", err)
 
 	instanceVolumes, err = client.ListInstanceVolumes(context.Background(), instance.ID, nil)
-	require.NoErrorf(t, err, "Error listing instance volumes: %v", err)
+	require.NoErrorf(t, err, "Error listing instance volumes after detach: %v", err)
 	require.Len(t, instanceVolumes, 0, "Expected no volumes attached to instance, got %d", len(instanceVolumes))
 
 	volume, err = client.GetVolume(context.Background(), volume.ID)
-	require.NoErrorf(t, err, "Error getting volume after detaching from instance: %v", err)
+	require.NoErrorf(t, err, "Error getting volume after detach: %v", err)
 	assert.Empty(t, volume.LinodeID)
 	assert.Empty(t, volume.LinodeLabel)
 	assert.False(t, volume.IOReady)
+}
+
+func TestIAM_GetIOReadyForUpdatedVolume(t *testing.T) {
+	client, volume, instance, teardown := setupVolumeAttachedToLinode(t, "fixtures/TestIAM_GetIOReadyForUpdatedVolume", true)
+	defer teardown()
+	assert.Equal(t, instance.ID, *volume.LinodeID)
+	assert.Equal(t, instance.Label, volume.LinodeLabel)
+	assert.NotContains(t, "-updated", volume.Label)
+	assert.Empty(t, volume.Tags)
+	assert.True(t, volume.IOReady)
+
+	labelUpdated := volume.Label + "-updated"
+	tagsUpdated := []string{"updated"}
+
+	updateOpts := linodego.VolumeUpdateOptions{
+		Label: labelUpdated,
+		Tags:  &tagsUpdated,
+	}
+	volume, err := client.UpdateVolume(context.Background(), volume.ID, updateOpts)
+	require.NoErrorf(t, err, "Error updating volume: %v", err)
+
+	instanceVolumes, err := client.ListInstanceVolumes(context.Background(), instance.ID, nil)
+	require.NoErrorf(t, err, "Error listing instance volumes: %v", err)
+	require.Len(t, instanceVolumes, 1, "Expected 1 volume attached to instance, got %d", len(instanceVolumes))
+	assert.Equal(t, instance.ID, *instanceVolumes[0].LinodeID)
+	assert.Equal(t, instance.Label, instanceVolumes[0].LinodeLabel)
+	assert.Equal(t, labelUpdated, instanceVolumes[0].Label)
+	assert.Equal(t, tagsUpdated, instanceVolumes[0].Tags)
+	assert.True(t, instanceVolumes[0].IOReady)
+
+	volume, err = client.GetVolume(context.Background(), volume.ID)
+	require.NoErrorf(t, err, "Error getting updated volume: %v", err)
+	assert.Equal(t, instance.ID, *volume.LinodeID)
+	assert.Equal(t, instance.Label, volume.LinodeLabel)
+	assert.Equal(t, labelUpdated, volume.Label)
+	assert.Equal(t, tagsUpdated, volume.Tags)
+	assert.True(t, volume.IOReady)
 }
