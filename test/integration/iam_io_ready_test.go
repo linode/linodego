@@ -12,7 +12,8 @@ import (
 func setupVolumeAttachedToLinode(
 	t *testing.T,
 	fixturesYaml string,
-) (*linodego.Client, *linodego.Volume, *linodego.Instance, func(), error) {
+	detachVolume bool,
+) (*linodego.Client, *linodego.Volume, *linodego.Instance, func()) {
 	t.Helper()
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
@@ -34,16 +35,23 @@ func setupVolumeAttachedToLinode(
 	volume, err = client.AttachVolume(context.Background(), volume.ID, &linodego.VolumeAttachOptions{LinodeID: instance.ID})
 	require.NoErrorf(t, err, "Error attaching volume to instance: %v", err)
 
-	volume, err = client.WaitForVolumeIOReadyStatus(context.Background(), volume.ID, true, 30)
+	volume, err = client.WaitForVolumeIOReadyStatus(context.Background(), volume.ID, true, 45)
 	require.NoErrorf(t, err, "Error waiting for IO Ready status of attached volume: %v", err)
 
 	teardown := func() {
+		if detachVolume {
+			err = client.DetachVolume(context.Background(), volume.ID)
+			require.NoErrorf(t, err, "Error detaching volume: %v", err)
+
+			_, err = client.WaitForVolumeIOReadyStatus(context.Background(), volume.ID, false, 45)
+			require.NoErrorf(t, err, "Error waiting for IO Ready status of attached volume: %v", err)
+		}
 		teardownVolume()
 		teardownInstance()
 		fixtureTeardown()
 	}
 
-	return client, volume, instance, teardown, err
+	return client, volume, instance, teardown
 }
 
 func TestIAM_GetIOReadyForNotAttachedVolume(t *testing.T) {
@@ -59,9 +67,16 @@ func TestIAM_GetIOReadyForNotAttachedVolume(t *testing.T) {
 	volume, err = client.WaitForVolumeStatus(context.Background(), volume.ID, linodego.VolumeActive, 30)
 	require.NoErrorf(t, err, "Error waiting for volume to be active: %v", err)
 
+	volumeList, err := client.ListVolumes(context.Background(), nil)
+	require.NoErrorf(t, err, "Error listing volumes: %v", err)
+	assert.Equal(t, label, volumeList[0].Label)
+	assert.Equal(t, linodego.VolumeActive, volumeList[0].Status)
+	assert.Empty(t, volumeList[0].LinodeID)
+	assert.Empty(t, volumeList[0].LinodeLabel)
+	assert.False(t, volumeList[0].IOReady)
+
 	volume, err = client.GetVolume(context.Background(), volume.ID)
 	require.NoErrorf(t, err, "Error getting not attached volume: %v", err)
-
 	assert.Equal(t, label, volume.Label)
 	assert.Equal(t, linodego.VolumeActive, volume.Status)
 	assert.Empty(t, volume.LinodeID)
@@ -70,13 +85,18 @@ func TestIAM_GetIOReadyForNotAttachedVolume(t *testing.T) {
 }
 
 func TestIAM_GetIOReadyForAttachedDetachedVolume(t *testing.T) {
-	client, volume, instance, teardown, err := setupVolumeAttachedToLinode(t, "fixtures/TestIAM_GetIOReadyForAttachedDetachedVolume")
+	client, volume, instance, teardown := setupVolumeAttachedToLinode(t, "fixtures/TestIAM_GetIOReadyForAttachedDetachedVolume", false)
 	defer teardown()
-	require.NoErrorf(t, err, "Error setting up volume attached to Linode: %v", err)
+
+	instanceVolumes, err := client.ListInstanceVolumes(context.Background(), instance.ID, nil)
+	require.NoErrorf(t, err, "Error listing instance volumes: %v", err)
+	require.Len(t, instanceVolumes, 1, "Expected 1 volume attached to instance, got %d", len(instanceVolumes))
+	assert.Equal(t, *instanceVolumes[0].LinodeID, *volume.LinodeID)
+	assert.Equal(t, instanceVolumes[0].LinodeLabel, volume.LinodeLabel)
+	assert.True(t, instanceVolumes[0].IOReady)
 
 	volume, err = client.GetVolume(context.Background(), volume.ID)
 	require.NoErrorf(t, err, "Error getting volume after detaching from instance: %v", err)
-
 	assert.Equal(t, instance.ID, *volume.LinodeID)
 	assert.Equal(t, instance.Label, volume.LinodeLabel)
 	assert.True(t, volume.IOReady)
@@ -84,12 +104,15 @@ func TestIAM_GetIOReadyForAttachedDetachedVolume(t *testing.T) {
 	err = client.DetachVolume(context.Background(), volume.ID)
 	require.NoErrorf(t, err, "Error detaching volume: %v", err)
 
-	volume, err = client.WaitForVolumeIOReadyStatus(context.Background(), volume.ID, false, 30)
+	volume, err = client.WaitForVolumeIOReadyStatus(context.Background(), volume.ID, false, 45)
 	require.NoErrorf(t, err, "Error waiting for IO Ready status of attached volume: %v", err)
+
+	instanceVolumes, err = client.ListInstanceVolumes(context.Background(), instance.ID, nil)
+	require.NoErrorf(t, err, "Error listing instance volumes: %v", err)
+	require.Len(t, instanceVolumes, 0, "Expected no volumes attached to instance, got %d", len(instanceVolumes))
 
 	volume, err = client.GetVolume(context.Background(), volume.ID)
 	require.NoErrorf(t, err, "Error getting volume after detaching from instance: %v", err)
-
 	assert.Empty(t, volume.LinodeID)
 	assert.Empty(t, volume.LinodeLabel)
 	assert.False(t, volume.IOReady)
