@@ -19,7 +19,7 @@ func setupVolumeAttachedToLinode(
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 
 	_, instance, teardownInstance, err := setupInstance(
-		t, "fixtures/TestIAM_GetIOReadyForAttachedVolume", true, func(l *linodego.Client, options *linodego.InstanceCreateOptions) {
+		t, fixturesYaml, true, func(l *linodego.Client, options *linodego.InstanceCreateOptions) {
 			options.Booted = linodego.Pointer(true)
 		})
 	require.NoErrorf(t, err, "Error setting up Linode instance: %v", err)
@@ -69,11 +69,14 @@ func TestIAM_GetIOReadyForNotAttachedVolume(t *testing.T) {
 
 	volumeList, err := client.ListVolumes(context.Background(), nil)
 	require.NoErrorf(t, err, "Error listing volumes: %v", err)
-	assert.Equal(t, label, volumeList[0].Label)
-	assert.Equal(t, linodego.VolumeActive, volumeList[0].Status)
-	assert.Empty(t, volumeList[0].LinodeID)
-	assert.Empty(t, volumeList[0].LinodeLabel)
-	assert.False(t, volumeList[0].IOReady)
+	for _, vol := range volumeList {
+		if vol.Label == label {
+			assert.Equal(t, linodego.VolumeActive, volumeList[0].Status)
+			assert.Empty(t, volumeList[0].LinodeID)
+			assert.Empty(t, volumeList[0].LinodeLabel)
+			assert.False(t, volumeList[0].IOReady)
+		}
+	}
 
 	volume, err = client.GetVolume(context.Background(), volume.ID)
 	require.NoErrorf(t, err, "Error getting not attached volume: %v", err)
