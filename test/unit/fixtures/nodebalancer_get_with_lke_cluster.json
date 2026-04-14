@@ -11,7 +11,13 @@
       "in": 1000.0,
       "out": 1000.0
     },
-    "lke_cluster": null,
+    "type": "common",
+    "lke_cluster": {
+        "id": 1234,
+        "type": "lkecluster",
+        "label": "test-cluster",
+        "url": "/v4/lke/clusters/1234"
+    },
     "tags": ["production"],
     "locks": ["cannot_delete_with_subresources"],
     "created": "2025-01-15T08:00:00",

@@ -37,6 +37,9 @@ type NodeBalancer struct {
 	// An array of tags applied to this object. Tags are for organizational purposes only.
 	Tags []string `json:"tags"`
 
+	// This NodeBalancer's related LKE cluster, if any. The value is null if this NodeBalancer is not related to an LKE cluster.
+	LKECluster *NodeBalancerLKECluster `json:"lke_cluster"`
+
 	// An array of locks applied to this NodeBalancer for deletion protection.
 	// Locks prevent the NodeBalancer or its subresources from being deleted.
 	// NOTE: Locks can only be used with v4beta.
@@ -89,6 +92,17 @@ type NodeBalancerUpdateOptions struct {
 	ClientUDPSessThrottle *int `json:"client_udp_sess_throttle,omitempty"`
 
 	Tags *[]string `json:"tags,omitempty"`
+}
+
+type NodeBalancerLKECluster struct {
+	// The ID of the related LKE cluster.
+	ID int `json:"id"`
+	// The label of the related LKE cluster.
+	Label string `json:"label"`
+	// The type for LKE clusters.
+	Type string `json:"type"`
+	// The URL where you can access the related LKE cluster.
+	URL string `json:"url"`
 }
 
 // NodeBalancerPlanType constants start with NBType and include Linode API NodeBalancer's plan types
