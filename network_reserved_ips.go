@@ -23,7 +23,7 @@ type ReserveIPOptions struct {
 // UpdateReservedIPOptions represents the options for updating a reserved IP address
 // NOTE: Reserved IP feature may not currently be available to all users.
 type UpdateReservedIPOptions struct {
-	Tags []string `json:"tags"`
+	Tags []string `json:"tags,omitzero"`
 }
 
 // ReservedIPPrice represents the pricing information for a reserved IP type.
