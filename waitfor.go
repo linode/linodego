@@ -842,7 +842,7 @@ func (client Client) WaitForVolumeIOReadyStatus(ctx context.Context, volumeID in
 				return volume, nil
 			}
 		case <-ctx.Done():
-			return nil, fmt.Errorf("Error waiting for Volume %d IO Ready status %s: %w", volumeID, status, ctx.Err())
+			return nil, fmt.Errorf("failed to wait for Volume %d IO Ready status %t: %w", volumeID, status, ctx.Err())
 		}
 	}
 }
