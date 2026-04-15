@@ -75,11 +75,12 @@ func TestIAM_GetIOReadyForNotAttachedVolume(t *testing.T) {
 	volumeList, err := client.ListVolumes(context.Background(), nil)
 	require.NoErrorf(t, err, "Error listing volumes: %v", err)
 	for _, vol := range volumeList {
-		if vol.Label == label {
-			assert.Equal(t, linodego.VolumeActive, volumeList[0].Status)
-			assert.Empty(t, volumeList[0].LinodeID)
-			assert.Empty(t, volumeList[0].LinodeLabel)
-			assert.False(t, volumeList[0].IOReady)
+		if vol.ID == volume.ID {
+			assert.Equal(t, linodego.VolumeActive, vol.Status)
+			assert.Empty(t, vol.LinodeID)
+			assert.Empty(t, vol.LinodeLabel)
+			assert.False(t, vol.IOReady)
+			break
 		}
 	}
 
