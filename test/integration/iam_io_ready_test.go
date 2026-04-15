@@ -59,6 +59,31 @@ func setupVolumeAttachedToLinode(
 	return client, volume, instance, teardown
 }
 
+func assertVolumeAttachedToInstance(t *testing.T, volume *linodego.Volume, instance *linodego.Instance) {
+	t.Helper()
+
+	require.NotNil(t, volume.LinodeID)
+	assert.Equal(t, instance.ID, *volume.LinodeID)
+	assert.Equal(t, instance.Label, volume.LinodeLabel)
+	assert.True(t, volume.IOReady)
+}
+
+func requireSingleAttachedInstanceVolume(t *testing.T, client *linodego.Client, instance *linodego.Instance) linodego.Volume {
+	t.Helper()
+
+	instanceVolumes, err := client.ListInstanceVolumes(context.Background(), instance.ID, nil)
+	require.NoErrorf(t, err, "Error listing instance volumes: %v", err)
+	require.Len(t, instanceVolumes, 1, "Expected 1 volume attached to instance, got %d", len(instanceVolumes))
+
+	volume := instanceVolumes[0]
+	require.NotNil(t, volume.LinodeID)
+	assert.Equal(t, instance.ID, *volume.LinodeID)
+	assert.Equal(t, instance.Label, volume.LinodeLabel)
+	assert.True(t, volume.IOReady)
+
+	return volume
+}
+
 func TestIAM_GetIOReadyForNotAttachedVolume(t *testing.T) {
 	client, recordStopper := createTestClient(t, "fixtures/TestIAM_GetIOReadyForNotAttachedVolume")
 	defer recordStopper()
@@ -97,18 +122,11 @@ func TestIAM_GetIOReadyForAttachedDetachedVolume(t *testing.T) {
 	client, volume, instance, teardown := setupVolumeAttachedToLinode(t, "fixtures/TestIAM_GetIOReadyForAttachedDetachedVolume", false)
 	defer teardown()
 
-	instanceVolumes, err := client.ListInstanceVolumes(context.Background(), instance.ID, nil)
-	require.NoErrorf(t, err, "Error listing instance volumes: %v", err)
-	require.Len(t, instanceVolumes, 1, "Expected 1 volume attached to instance, got %d", len(instanceVolumes))
-	assert.Equal(t, instance.ID, *instanceVolumes[0].LinodeID)
-	assert.Equal(t, instance.Label, instanceVolumes[0].LinodeLabel)
-	assert.True(t, instanceVolumes[0].IOReady)
+	requireSingleAttachedInstanceVolume(t, client, instance)
 
-	volume, err = client.GetVolume(context.Background(), volume.ID)
+	volume, err := client.GetVolume(context.Background(), volume.ID)
 	require.NoErrorf(t, err, "Error getting attached volume: %v", err)
-	assert.Equal(t, instance.ID, *volume.LinodeID)
-	assert.Equal(t, instance.Label, volume.LinodeLabel)
-	assert.True(t, volume.IOReady)
+	assertVolumeAttachedToInstance(t, volume, instance)
 
 	err = client.DetachVolume(context.Background(), volume.ID)
 	require.NoErrorf(t, err, "Error detaching volume: %v", err)
@@ -116,7 +134,7 @@ func TestIAM_GetIOReadyForAttachedDetachedVolume(t *testing.T) {
 	volume, err = client.WaitForVolumeIOReadyStatus(context.Background(), volume.ID, false, 45)
 	require.NoErrorf(t, err, "Error waiting for IO Ready status of detached volume: %v", err)
 
-	instanceVolumes, err = client.ListInstanceVolumes(context.Background(), instance.ID, nil)
+	instanceVolumes, err := client.ListInstanceVolumes(context.Background(), instance.ID, nil)
 	require.NoErrorf(t, err, "Error listing instance volumes after detach: %v", err)
 	require.Len(t, instanceVolumes, 0, "Expected no volumes attached to instance, got %d", len(instanceVolumes))
 
@@ -130,11 +148,9 @@ func TestIAM_GetIOReadyForAttachedDetachedVolume(t *testing.T) {
 func TestIAM_GetIOReadyForUpdatedVolume(t *testing.T) {
 	client, volume, instance, teardown := setupVolumeAttachedToLinode(t, "fixtures/TestIAM_GetIOReadyForUpdatedVolume", true)
 	defer teardown()
-	assert.Equal(t, instance.ID, *volume.LinodeID)
-	assert.Equal(t, instance.Label, volume.LinodeLabel)
+	assertVolumeAttachedToInstance(t, volume, instance)
 	assert.NotContains(t, "-updated", volume.Label)
 	assert.Empty(t, volume.Tags)
-	assert.True(t, volume.IOReady)
 
 	labelUpdated := volume.Label + "-updated"
 	tagsUpdated := []string{"updated"}
@@ -146,22 +162,15 @@ func TestIAM_GetIOReadyForUpdatedVolume(t *testing.T) {
 	volume, err := client.UpdateVolume(context.Background(), volume.ID, updateOpts)
 	require.NoErrorf(t, err, "Error updating volume: %v", err)
 
-	instanceVolumes, err := client.ListInstanceVolumes(context.Background(), instance.ID, nil)
-	require.NoErrorf(t, err, "Error listing instance volumes: %v", err)
-	require.Len(t, instanceVolumes, 1, "Expected 1 volume attached to instance, got %d", len(instanceVolumes))
-	assert.Equal(t, instance.ID, *instanceVolumes[0].LinodeID)
-	assert.Equal(t, instance.Label, instanceVolumes[0].LinodeLabel)
-	assert.Equal(t, labelUpdated, instanceVolumes[0].Label)
-	assert.Equal(t, tagsUpdated, instanceVolumes[0].Tags)
-	assert.True(t, instanceVolumes[0].IOReady)
+	instanceVolume := requireSingleAttachedInstanceVolume(t, client, instance)
+	assert.Equal(t, labelUpdated, instanceVolume.Label)
+	assert.Equal(t, tagsUpdated, instanceVolume.Tags)
 
 	volume, err = client.GetVolume(context.Background(), volume.ID)
 	require.NoErrorf(t, err, "Error getting updated volume: %v", err)
-	assert.Equal(t, instance.ID, *volume.LinodeID)
-	assert.Equal(t, instance.Label, volume.LinodeLabel)
+	assertVolumeAttachedToInstance(t, volume, instance)
 	assert.Equal(t, labelUpdated, volume.Label)
 	assert.Equal(t, tagsUpdated, volume.Tags)
-	assert.True(t, volume.IOReady)
 }
 
 func TestIAM_GetIOReadyForClonedVolume(t *testing.T) {
@@ -169,34 +178,26 @@ func TestIAM_GetIOReadyForClonedVolume(t *testing.T) {
 
 	client, volume, instance, teardown := setupVolumeAttachedToLinode(t, "fixtures/TestIAM_GetIOReadyForClonedVolume", true)
 	defer teardown()
-	assert.Equal(t, instance.ID, *volume.LinodeID)
-	assert.Equal(t, instance.Label, volume.LinodeLabel)
-	assert.True(t, volume.IOReady)
+	assertVolumeAttachedToInstance(t, volume, instance)
 
 	labelCloned := volume.Label + "-cloned"
 
-	instanceVolumes, err := client.ListInstanceVolumes(context.Background(), instance.ID, nil)
-	require.NoErrorf(t, err, "Error listing instance volumes: %v", err)
-	require.Len(t, instanceVolumes, 1, "Expected 1 volume attached to instance, got %d", len(instanceVolumes))
+	requireSingleAttachedInstanceVolume(t, client, instance)
 
 	volumeCloned, err := client.CloneVolume(context.Background(), volume.ID, labelCloned)
 	require.NoErrorf(t, err, "Error cloning volume: %v", err)
 
-	instanceVolumes, err = client.ListInstanceVolumes(context.Background(), instance.ID, nil)
+	instanceVolumes, err := client.ListInstanceVolumes(context.Background(), instance.ID, nil)
 	require.NoErrorf(t, err, "Error listing instance volumes: %v", err)
 	require.Len(t, instanceVolumes, 2, "Expected 2 volumes attached to instance, got %d", len(instanceVolumes))
 	for _, vol := range instanceVolumes {
-		assert.Equal(t, instance.ID, *vol.LinodeID)
-		assert.Equal(t, instance.Label, vol.LinodeLabel)
-		assert.True(t, vol.IOReady)
+		assertVolumeAttachedToInstance(t, &vol, instance)
 	}
 
 	volumeCloned, err = client.GetVolume(context.Background(), volumeCloned.ID)
 	require.NoErrorf(t, err, "Error getting cloned volume: %v", err)
 	assert.Equal(t, labelCloned, volumeCloned.Label)
-	assert.Equal(t, instance.ID, *volumeCloned.LinodeID)
-	assert.Equal(t, instance.Label, volumeCloned.LinodeLabel)
-	assert.True(t, volumeCloned.IOReady)
+	assertVolumeAttachedToInstance(t, volumeCloned, instance)
 
 	// Cleaning the cloned volume
 	err = client.DetachVolume(context.Background(), volumeCloned.ID)
@@ -212,9 +213,7 @@ func TestIAM_GetIOReadyForClonedVolume(t *testing.T) {
 func TestIAM_GetIOReadyForResizedVolume(t *testing.T) {
 	client, volume, instance, teardown := setupVolumeAttachedToLinode(t, "fixtures/TestIAM_GetIOReadyForResizedVolume", true)
 	defer teardown()
-	assert.Equal(t, instance.ID, *volume.LinodeID)
-	assert.Equal(t, instance.Label, volume.LinodeLabel)
-	assert.True(t, volume.IOReady)
+	assertVolumeAttachedToInstance(t, volume, instance)
 
 	newSize := volume.Size + 10
 
@@ -224,18 +223,11 @@ func TestIAM_GetIOReadyForResizedVolume(t *testing.T) {
 	_, err = client.WaitForVolumeStatus(context.Background(), volume.ID, linodego.VolumeActive, 30)
 	require.NoErrorf(t, err, "Error waiting for volume to be active: %v", err)
 
-	instanceVolumes, err := client.ListInstanceVolumes(context.Background(), instance.ID, nil)
-	require.NoErrorf(t, err, "Error listing instance volumes: %v", err)
-	require.Len(t, instanceVolumes, 1, "Expected 1 volume attached to instance, got %d", len(instanceVolumes))
-	assert.Equal(t, instance.ID, *instanceVolumes[0].LinodeID)
-	assert.Equal(t, instance.Label, instanceVolumes[0].LinodeLabel)
-	assert.Equal(t, newSize, instanceVolumes[0].Size)
-	assert.True(t, instanceVolumes[0].IOReady)
+	instanceVolume := requireSingleAttachedInstanceVolume(t, client, instance)
+	assert.Equal(t, newSize, instanceVolume.Size)
 
 	volume, err = client.GetVolume(context.Background(), volume.ID)
 	require.NoErrorf(t, err, "Error getting updated volume: %v", err)
-	assert.Equal(t, instance.ID, *volume.LinodeID)
-	assert.Equal(t, instance.Label, volume.LinodeLabel)
+	assertVolumeAttachedToInstance(t, volume, instance)
 	assert.Equal(t, newSize, volume.Size)
-	assert.True(t, volume.IOReady)
 }
