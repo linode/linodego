@@ -16,13 +16,18 @@ func setupVolumeAttachedToLinode(
 ) (*linodego.Client, *linodego.Volume, *linodego.Instance, func()) {
 	t.Helper()
 	var fixtureTeardown func()
+
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 
-	_, instance, teardownInstance, err := setupInstance(
-		t, fixturesYaml, true, func(l *linodego.Client, options *linodego.InstanceCreateOptions) {
-			options.Booted = linodego.Pointer(true)
-		})
+	instance, err := createInstance(t, client, true, func(l *linodego.Client, options *linodego.InstanceCreateOptions) {
+		options.Booted = linodego.Pointer(true)
+	})
 	require.NoErrorf(t, err, "Error setting up Linode instance: %v", err)
+
+	teardownInstance := func() {
+		err = client.DeleteInstance(context.Background(), instance.ID)
+		require.NoErrorf(t, err, "Error deleting instance: %v", err)
+	}
 
 	instance, err = client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceRunning, 180)
 	require.NoErrorf(t, err, "Error waiting for instance to be running: %v", err)
@@ -159,6 +164,8 @@ func TestIAM_GetIOReadyForUpdatedVolume(t *testing.T) {
 }
 
 func TestIAM_GetIOReadyForClonedVolume(t *testing.T) {
+	t.Skip("Skipping test due to possible API defect - JIRA ticket: STORENGSUP-855")
+
 	client, volume, instance, teardown := setupVolumeAttachedToLinode(t, "fixtures/TestIAM_GetIOReadyForClonedVolume", true)
 	defer teardown()
 	assert.Equal(t, instance.ID, *volume.LinodeID)
