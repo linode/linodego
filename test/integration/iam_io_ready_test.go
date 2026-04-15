@@ -196,13 +196,13 @@ func TestIAM_GetIOReadyForClonedVolume(t *testing.T) {
 	assert.Equal(t, labelCloned, volumeCloned.Label)
 	assert.Equal(t, instance.ID, *volumeCloned.LinodeID)
 	assert.Equal(t, instance.Label, volumeCloned.LinodeLabel)
-	assert.True(t, volume.IOReady)
+	assert.True(t, volumeCloned.IOReady)
 
 	// Cleaning the cloned volume
 	err = client.DetachVolume(context.Background(), volumeCloned.ID)
 	require.NoErrorf(t, err, "Error detaching cloned volume: %v", err)
 
-	_, err = client.WaitForVolumeIOReadyStatus(context.Background(), volume.ID, false, 15)
+	_, err = client.WaitForVolumeIOReadyStatus(context.Background(), volumeCloned.ID, false, 15)
 	require.NoErrorf(t, err, "Error waiting for IO Ready status of detached volume: %v", err)
 
 	err = client.DeleteVolume(context.Background(), volumeCloned.ID)
