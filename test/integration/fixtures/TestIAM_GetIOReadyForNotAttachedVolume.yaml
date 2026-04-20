@@ -239,7 +239,7 @@ interactions:
       "VPCs", "VPC Dual Stack", "VPC IPv6 Stack", "Managed Databases", "Metadata",
       "Premium Plans", "Placement Group", "StackScripts", "Maintenance Policy", "Linode
       Interfaces", "ACLP Logs Datacenter LKE-E"], "monitors": {"alerts": ["Managed
-      Databases", "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]},
+      Databases", "NodeBalancers"], "metrics": ["Linodes", "Managed Databases", "NodeBalancers"]},
       "status": "ok", "resolvers": {"ipv4": "139.144.192.62,139.144.192.60,139.144.192.61,139.144.192.53,139.144.192.54,139.144.192.67,139.144.192.69,139.144.192.66,139.144.192.52,139.144.192.68",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
@@ -378,7 +378,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 15 Apr 2026 12:22:21 GMT
+      - Mon, 20 Apr 2026 11:41:22 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -416,7 +416,7 @@ interactions:
     url: https://api.linode.com/v4beta/volumes
     method: POST
   response:
-    body: '{"id": 15146184, "status": "creating", "label": "go-test-def", "created":
+    body: '{"id": 15238346, "status": "creating", "label": "go-test-def", "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
       "/dev/disk/by-id/scsi-0Linode_Volume_go-test-def", "size": 20, "linode_id":
       null, "linode_label": null, "io_ready": false, "region": "nl-ams", "tags": [],
@@ -445,7 +445,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 15 Apr 2026 12:22:22 GMT
+      - Mon, 20 Apr 2026 11:41:22 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -478,10 +478,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/volumes/15146184
+    url: https://api.linode.com/v4beta/volumes/15238346
     method: GET
   response:
-    body: '{"id": 15146184, "status": "active", "label": "go-test-def", "created":
+    body: '{"id": 15238346, "status": "active", "label": "go-test-def", "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
       "/dev/disk/by-id/scsi-0Linode_Volume_go-test-def", "size": 20, "linode_id":
       null, "linode_label": null, "io_ready": false, "region": "nl-ams", "tags": [],
@@ -510,7 +510,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 15 Apr 2026 12:22:37 GMT
+      - Mon, 20 Apr 2026 11:41:38 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -547,12 +547,16 @@ interactions:
     url: https://api.linode.com/v4beta/volumes?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 15146184, "status": "active", "label": "go-test-def",
+    body: '{"data": [{"id": 15238296, "status": "active", "label": "go-vol-testsfgg5p94974z",
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
-      "/dev/disk/by-id/scsi-0Linode_Volume_go-test-def", "size": 20, "linode_id":
+      "/dev/disk/by-id/scsi-0Linode_Volume_go-vol-testsfgg5p94974z", "size": 20, "linode_id":
       null, "linode_label": null, "io_ready": false, "region": "nl-ams", "tags": [],
-      "hardware_type": "nvme", "encryption": "enabled", "locks": []}], "page": 1,
-      "pages": 1, "results": 1}'
+      "hardware_type": "nvme", "encryption": "enabled", "locks": []}, {"id": 15238346,
+      "status": "active", "label": "go-test-def", "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "filesystem_path": "/dev/disk/by-id/scsi-0Linode_Volume_go-test-def",
+      "size": 20, "linode_id": null, "linode_label": null, "io_ready": false, "region":
+      "nl-ams", "tags": [], "hardware_type": "nvme", "encryption": "enabled", "locks":
+      []}], "page": 1, "pages": 1, "results": 2}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -571,13 +575,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "414"
+      - "805"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Wed, 15 Apr 2026 12:22:37 GMT
+      - Mon, 20 Apr 2026 11:41:38 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -611,10 +615,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/volumes/15146184
+    url: https://api.linode.com/v4beta/volumes/15238346
     method: GET
   response:
-    body: '{"id": 15146184, "status": "active", "label": "go-test-def", "created":
+    body: '{"id": 15238346, "status": "active", "label": "go-test-def", "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "filesystem_path":
       "/dev/disk/by-id/scsi-0Linode_Volume_go-test-def", "size": 20, "linode_id":
       null, "linode_label": null, "io_ready": false, "region": "nl-ams", "tags": [],
@@ -643,7 +647,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 15 Apr 2026 12:22:37 GMT
+      - Mon, 20 Apr 2026 11:41:38 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -677,7 +681,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/volumes/15146184
+    url: https://api.linode.com/v4beta/volumes/15238346
     method: DELETE
   response:
     body: '{}'
@@ -705,7 +709,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 15 Apr 2026 12:22:38 GMT
+      - Mon, 20 Apr 2026 11:41:39 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
