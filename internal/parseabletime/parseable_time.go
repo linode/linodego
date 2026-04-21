@@ -11,12 +11,14 @@ const (
 type ParseableTime time.Time
 
 func (p *ParseableTime) UnmarshalJSON(b []byte) error {
-	t, err := time.Parse(`"`+dateLayout+`"`, string(b))
-	if err != nil {
-		return err
+	var err error
+	for _, layout := range []string{time.RFC3339, dateLayout} {
+		var t time.Time
+		if t, err = time.Parse(`"`+layout+`"`, string(b)); err == nil {
+			*p = ParseableTime(t)
+			return nil
+		}
 	}
-
-	*p = ParseableTime(t)
-
-	return nil
+	return err
 }
+
