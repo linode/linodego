@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"os"
 	"regexp"
+	"slices"
 	"strconv"
 	"strings"
 	"testing"
@@ -183,18 +184,16 @@ func transportRecorderWrapper(t *testing.T, fixtureYaml string) (transport.Wrapp
 	}, teardown
 }
 
-/*
-Helper function getRegionsWithCaps returns a list of regions that support the given capabilities and plans.
-It filters regions based on their capabilities and the availability of specified plans.
-If the plans list is empty, it only checks for the capabilities.
+type regionFilterFunc func(linodego.Region) bool
 
-Parameters:
-  - capabilities: A list of required capabilities that regions must support.
-
-Returns:
-  - string values representing the IDs of regions that have a given set of capabilities.
-*/
+// getRegionsWithCaps returns regions that support the provided capabilities.
 func getRegionsWithCaps(t *testing.T, client *linodego.Client, capabilities []string) []string {
+	return getRegionsByFilter(t, client, capabilities, func(region linodego.Region) bool {
+		return regionHasCaps(region, capabilities)
+	})
+}
+
+func getRegionsByFilter(t *testing.T, client *linodego.Client, capabilities []string, filters ...regionFilterFunc) []string {
 	result := make([]string, 0)
 
 	regions, err := client.ListRegions(context.Background(), nil)
@@ -203,7 +202,9 @@ func getRegionsWithCaps(t *testing.T, client *linodego.Client, capabilities []st
 	}
 
 	for _, region := range regions {
-		if region.Status != "ok" || !regionHasCaps(region, capabilities) {
+		if region.Status != "ok" || slices.ContainsFunc(filters, func(filter regionFilterFunc) bool {
+			return !filter(region)
+		}) {
 			continue
 		}
 
@@ -256,33 +257,24 @@ func getRegionsWithCapsAndPlans(t *testing.T, client *linodego.Client, capabilit
 
 // getRegionsWithCapsAndSiteType returns a list of regions that meet the given capabilities and site type
 func getRegionsWithCapsAndSiteType(t *testing.T, client *linodego.Client, capabilities []string, siteType string) []string {
-	result := make([]string, 0)
-
-	regions, err := client.ListRegions(context.Background(), nil)
-	if err != nil {
-		t.Fatal(err)
-	}
-
-	for _, region := range regions {
-		if region.Status != "ok" || region.SiteType != siteType || !regionHasCaps(region, capabilities) {
-			continue
-		}
-
-		result = append(result, region.ID)
-	}
-
-	return result
+	return getRegionsByFilter(
+		t,
+		client,
+		capabilities,
+		func(region linodego.Region) bool {
+			return regionHasCaps(region, capabilities)
+		},
+		func(region linodego.Region) bool {
+			return region.SiteType == siteType
+		},
+	)
 }
 
 func regionHasCaps(r linodego.Region, capabilities []string) bool {
-	capsMap := make(map[string]bool)
-
-	for _, c := range r.Capabilities {
-		capsMap[strings.ToUpper(c)] = true
-	}
-
-	for _, c := range capabilities {
-		if _, ok := capsMap[strings.ToUpper(c)]; !ok {
+	for _, capability := range capabilities {
+		if !slices.ContainsFunc(r.Capabilities, func(regionCapability string) bool {
+			return strings.EqualFold(regionCapability, capability)
+		}) {
 			return false
 		}
 	}
