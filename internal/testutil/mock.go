@@ -115,16 +115,16 @@ type TestLogger struct {
 	L *log.Logger
 }
 
-func (l *TestLogger) Errorf(format string, v ...any) {
-	l.outputf("ERROR RESTY "+format, v...)
+func (l *TestLogger) Errorf(format string, v ...interface{}) {
+	l.outputf("ERROR "+format, v...)
 }
 
-func (l *TestLogger) Warnf(format string, v ...any) {
-	l.outputf("WARN RESTY "+format, v...)
+func (l *TestLogger) Warnf(format string, v ...interface{}) {
+	l.outputf("WARN "+format, v...)
 }
 
-func (l *TestLogger) Debugf(format string, v ...any) {
-	l.outputf("DEBUG RESTY "+format, v...)
+func (l *TestLogger) Debugf(format string, v ...interface{}) {
+	l.outputf("DEBUG "+format, v...)
 }
 
 func (l *TestLogger) outputf(format string, v ...any) {

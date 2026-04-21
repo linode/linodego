@@ -271,6 +271,14 @@ func TestImage_Upload(t *testing.T) {
 
 	base.MockPost("images/upload", fixtureData)
 
+	// Mock the PUT request to the upload URL returned in the fixture.
+	// UploadImageToURL uses http.DefaultTransport, so we need to
+	// activate httpmock on the default transport as well.
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+	httpmock.RegisterResponder("PUT", "https://example.com/upload-endpoint",
+		httpmock.NewStringResponder(200, "{}"))
+
 	image, err := base.Client.UploadImage(context.Background(), requestData)
 	assert.NoError(t, err)
 

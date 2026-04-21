@@ -27,9 +27,19 @@ func TestCache_RegionList(t *testing.T) {
 	// Collect request number
 	totalRequests := int64(0)
 
+	//client.OnBeforeRequest(func(request *linodego.Request) error {
+	//	fmt.Printf("Request URL: %s\n", request.URL.String())     // Log the URL
+	//	fmt.Printf("Page: %s\n", request.URL.Query().Get("page")) // Log the page query parameter
+	//	if !strings.Contains(request.URL.String(), "regions") || request.URL.Query().Get("page") != "1" {
+	//		return nil
+	//	}
+	//
+	//	atomic.AddInt64(&totalRequests, 1)
+	//	return nil
+	//})
 	client.OnBeforeRequest(func(request *linodego.Request) error {
-		page := request.QueryParam.Get("page")
-		if !strings.Contains(request.URL, "regions") || page != "1" {
+		page := request.URL.Query().Get("page")
+		if !strings.Contains(request.URL.String(), "regions") || page != "1" {
 			return nil
 		}
 
@@ -91,8 +101,8 @@ func TestCache_Expiration(t *testing.T) {
 	totalRequests := int64(0)
 
 	client.OnBeforeRequest(func(request *linodego.Request) error {
-		page := request.QueryParam.Get("page")
-		if !strings.Contains(request.URL, "kernels") || page != "1" {
+		page := request.URL.Query().Get("page")
+		if !strings.Contains(request.URL.String(), "kernels") || page != "1" {
 			return nil
 		}
 

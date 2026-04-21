@@ -9,10 +9,9 @@ import (
 	"encoding/hex"
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"reflect"
 	"strconv"
-
-	"github.com/go-resty/resty/v2"
 )
 
 // PageOptions are the pagination parameters for List endpoints
@@ -56,38 +55,48 @@ func (l ListOptions) Hash() (string, error) {
 	return hex.EncodeToString(h.Sum(nil)), nil
 }
 
-func applyListOptionsToRequest(opts *ListOptions, req *resty.Request) error {
+func createListOptionsToRequestMutator(opts *ListOptions) func(*http.Request) error {
 	if opts == nil {
 		return nil
 	}
 
-	if opts.QueryParams != nil {
-		params, err := flattenQueryStruct(opts.QueryParams)
-		if err != nil {
-			return fmt.Errorf("failed to apply list options: %w", err)
+	// Return a mutator to apply query parameters and headers
+	return func(req *http.Request) error {
+		query := req.URL.Query()
+
+		// Apply QueryParams from ListOptions if present
+		if opts.QueryParams != nil {
+			params, err := flattenQueryStruct(opts.QueryParams)
+			if err != nil {
+				return fmt.Errorf("failed to apply list options: %w", err)
+			}
+			for key, value := range params {
+				query.Set(key, value)
+			}
 		}
 
-		req.SetQueryParams(params)
-	}
+		// Apply pagination options
+		if opts.PageOptions != nil && opts.Page > 0 {
+			query.Set("page", strconv.Itoa(opts.Page))
+		}
+		if opts.PageSize > 0 {
+			query.Set("page_size", strconv.Itoa(opts.PageSize))
+		}
 
-	if opts.PageOptions != nil && opts.Page > 0 {
-		req.SetQueryParam("page", strconv.Itoa(opts.Page))
-	}
+		// Apply filters as headers
+		if len(opts.Filter) > 0 {
+			req.Header.Set("X-Filter", opts.Filter)
+		}
 
-	if opts.PageSize > 0 {
-		req.SetQueryParam("page_size", strconv.Itoa(opts.PageSize))
+		// Assign the updated query back to the request URL
+		req.URL.RawQuery = query.Encode()
+		return nil
 	}
-
-	if len(opts.Filter) > 0 {
-		req.SetHeader("X-Filter", opts.Filter)
-	}
-
-	return nil
 }
 
 type PagedResponse interface {
 	endpoint(...any) string
-	castResult(*resty.Request, string) (int, int, error)
+	castResult(*http.Request, string) (int, int, error)
 }
 
 // flattenQueryStruct flattens a structure into a Resty-compatible query param map.
