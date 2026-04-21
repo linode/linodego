@@ -150,6 +150,116 @@ func init() {
 	}
 }
 
+// NewClient factory to create new Client struct
+// nolint:funlen
+func NewClient(hc *http.Client) (client Client) {
+	if hc != nil {
+		client.httpClient = hc
+	} else {
+		client.httpClient = &http.Client{}
+	}
+
+	// Ensure that the Header map is not nil
+	if client.httpClient.Transport == nil {
+		client.httpClient.Transport = &http.Transport{}
+	}
+
+	client.shouldCache = true
+	client.cacheExpiration = APIDefaultCacheExpiration
+	client.cachedEntries = make(map[string]clientCacheEntry)
+	client.cachedEntryLock = &sync.RWMutex{}
+	client.configProfiles = make(map[string]ConfigProfile)
+
+	const (
+		retryMinWaitDuration = 100 * time.Millisecond
+		retryMaxWaitDuration = 2 * time.Second
+	)
+
+	client.retryMinWaitTime = retryMinWaitDuration
+	client.retryMaxWaitTime = retryMaxWaitDuration
+
+	client.SetUserAgent(DefaultUserAgent)
+	client.SetLogger(createLogger())
+
+	baseURL, baseURLExists := os.LookupEnv(APIHostVar)
+	if baseURLExists {
+		client.SetBaseURL(baseURL)
+	}
+
+	apiVersion, apiVersionExists := os.LookupEnv(APIVersionVar)
+	if apiVersionExists {
+		client.SetAPIVersion(apiVersion)
+	} else {
+		client.SetAPIVersion(APIVersion)
+	}
+
+	certPath, certPathExists := os.LookupEnv(APIHostCert)
+	if certPathExists {
+		cert, err := os.ReadFile(filepath.Clean(certPath))
+		if err != nil {
+			log.Fatalf("[ERROR] Error when reading cert at %s: %s\n", certPath, err.Error())
+		}
+
+		client.SetRootCertificate(certPath)
+
+		if envDebug {
+			log.Printf("[DEBUG] Set API root certificate to %s with contents %s\n", certPath, cert)
+		}
+	}
+
+	client.
+		SetRetryWaitTime(APISecondsPerPoll * time.Second).
+		SetPollDelay(APISecondsPerPoll * time.Second).
+		SetRetries().
+		SetLogger(createLogger()).
+		SetDebug(envDebug).
+		enableLogSanitization()
+
+	return client
+}
+
+// NewClientFromEnv creates a Client and initializes it with values
+// from the LINODE_CONFIG file and the LINODE_TOKEN environment variable.
+func NewClientFromEnv(hc *http.Client) (*Client, error) {
+	client := NewClient(hc)
+
+	// Users are expected to chain NewClient(...) and LoadConfig(...) to customize these options
+	configPath, err := resolveValidConfigPath()
+	if err != nil {
+		return nil, err
+	}
+
+	// Populate the token from the environment.
+	// Tokens should be first priority to maintain backwards compatibility
+	if token, ok := os.LookupEnv(APIEnvVar); ok && token != "" {
+		client.SetToken(token)
+		return &client, nil
+	}
+
+	if p, ok := os.LookupEnv(APIConfigEnvVar); ok {
+		configPath = p
+	} else if !ok && configPath == "" {
+		return nil, fmt.Errorf("no linode config file or token found")
+	}
+
+	configProfile := DefaultConfigProfile
+
+	if p, ok := os.LookupEnv(APIConfigProfileEnvVar); ok {
+		configProfile = p
+	}
+
+	client.selectedProfile = configProfile
+
+	// We should only load the config if the config file exists
+	if _, statErr := os.Stat(configPath); statErr != nil {
+		return nil, fmt.Errorf("error loading config file %s: %w", configPath, statErr)
+	}
+
+	err = client.preLoadConfig(configPath)
+
+	return &client, err
+}
+
 // SetUserAgent sets a custom user-agent for HTTP requests
 func (c *Client) SetUserAgent(ua string) *Client {
 	c.userAgent = ua
@@ -161,6 +271,227 @@ func (c *Client) SetUserAgent(ua string) *Client {
 type requestParams struct {
 	Body     *bytes.Reader
 	Response any
+}
+
+func (c *Client) ErrorAndLogf(format string, args ...any) error {
+	if c.debug && c.logger != nil {
+		c.logger.Errorf(format, args...)
+	}
+
+	return fmt.Errorf(format, args...)
+}
+
+// SetRootCertificate adds a root certificate to the underlying TLS client config
+func (c *Client) SetRootCertificate(path string) *Client {
+	config, err := c.tlsConfig()
+	if err != nil {
+		log.Println("[WARN] Custom transport is not allowed with a custom root CA")
+		return c
+	}
+
+	if config.RootCAs == nil {
+		config.RootCAs = x509.NewCertPool()
+	}
+
+	config.RootCAs.AppendCertsFromPEM([]byte(path))
+
+	return c
+}
+
+// SetToken sets the API token for all requests from this client
+// Only necessary if you haven't already provided the http client to NewClient() configured with the token.
+func (c *Client) SetToken(token string) *Client {
+	c.SetHeader("Authorization", fmt.Sprintf("Bearer %s", token))
+	return c
+}
+
+// SetRetries adds retry conditions for "Linode Busy." errors and 429s.
+func (c *Client) SetRetries() *Client {
+	c.
+		AddRetryCondition(LinodeBusyRetryCondition).
+		AddRetryCondition(TooManyRequestsRetryCondition).
+		AddRetryCondition(ServiceUnavailableRetryCondition).
+		AddRetryCondition(RequestTimeoutRetryCondition).
+		AddRetryCondition(RequestGOAWAYRetryCondition).
+		AddRetryCondition(RequestNGINXRetryCondition).
+		SetRetryMaxWaitTime(APIRetryMaxWaitTime)
+	ConfigureRetries(c)
+
+	return c
+}
+
+// AddRetryCondition adds a RetryConditional function to the Client
+func (c *Client) AddRetryCondition(retryCondition RetryConditional) *Client {
+	c.retryConditionals = append(c.retryConditionals, retryCondition)
+
+	return c
+}
+
+func (c *Client) SetDebug(debug bool) *Client {
+	c.debug = debug
+
+	return c
+}
+
+func (c *Client) SetLogger(logger Logger) *Client {
+	c.logger = logger
+
+	return c
+}
+
+func (c *Client) OnBeforeRequest(m func(*http.Request) error) {
+	c.onBeforeRequest = append(c.onBeforeRequest, m)
+}
+
+func (c *Client) OnAfterResponse(m func(*http.Response) error) {
+	c.onAfterResponse = append(c.onAfterResponse, m)
+}
+
+// UseURL parses the individual components of the given API URL and configures the client
+// accordingly. For example, a valid URL.
+// For example:
+//
+//	client.UseURL("https://api.test.linode.com/v4beta")
+func (c *Client) UseURL(apiURL string) (*Client, error) {
+	parsedURL, err := url.Parse(apiURL)
+	if err != nil {
+		return nil, fmt.Errorf("failed to parse URL: %w", err)
+	}
+
+	if parsedURL.Scheme == "" || parsedURL.Host == "" {
+		return nil, fmt.Errorf("need both scheme and host in API URL, got %q", apiURL)
+	}
+
+	// Create a new URL excluding the path to use as the base URL
+	baseURL := &url.URL{
+		Host:   parsedURL.Host,
+		Scheme: parsedURL.Scheme,
+	}
+
+	c.SetBaseURL(baseURL.String())
+
+	versionMatches := regexp.MustCompile(`/v[a-zA-Z0-9]+`).FindAllString(parsedURL.Path, -1)
+
+	// Only set the version if a version is found in the URL, else use the default
+	if len(versionMatches) > 0 {
+		c.SetAPIVersion(
+			strings.Trim(versionMatches[len(versionMatches)-1], "/"),
+		)
+	}
+
+	return c, nil
+}
+
+func (c *Client) SetBaseURL(baseURL string) *Client {
+	baseURLPath, _ := url.Parse(baseURL)
+
+	c.baseURL = path.Join(baseURLPath.Host, baseURLPath.Path)
+	c.apiProto = baseURLPath.Scheme
+
+	c.updateHostURL()
+
+	return c
+}
+
+// SetAPIVersion sets the version of the API to interface with
+func (c *Client) SetAPIVersion(apiVersion string) *Client {
+	c.apiVersion = apiVersion
+
+	c.updateHostURL()
+
+	return c
+}
+
+// InvalidateCache clears all cached responses for all endpoints.
+func (c *Client) InvalidateCache() {
+	c.cachedEntryLock.Lock()
+	defer c.cachedEntryLock.Unlock()
+
+	// GC will handle the old map
+	c.cachedEntries = make(map[string]clientCacheEntry)
+}
+
+// InvalidateCacheEndpoint invalidates a single cached endpoint.
+func (c *Client) InvalidateCacheEndpoint(endpoint string) error {
+	u, err := url.Parse(endpoint)
+	if err != nil {
+		return fmt.Errorf("failed to parse URL for caching: %w", err)
+	}
+
+	c.cachedEntryLock.Lock()
+	defer c.cachedEntryLock.Unlock()
+
+	delete(c.cachedEntries, u.Path)
+
+	return nil
+}
+
+// SetGlobalCacheExpiration sets the desired time for any cached response
+// to be valid for.
+func (c *Client) SetGlobalCacheExpiration(expiryTime time.Duration) {
+	c.cacheExpiration = expiryTime
+}
+
+// UseCache sets whether response caching should be used
+func (c *Client) UseCache(value bool) {
+	c.shouldCache = value
+}
+
+// SetRetryMaxWaitTime sets the maximum delay before retrying a request.
+func (c *Client) SetRetryMaxWaitTime(maxWaitTime time.Duration) *Client {
+	c.retryMaxWaitTime = maxWaitTime
+	return c
+}
+
+// SetRetryWaitTime sets the default (minimum) delay before retrying a request.
+func (c *Client) SetRetryWaitTime(minWaitTime time.Duration) *Client {
+	c.retryMinWaitTime = minWaitTime
+	return c
+}
+
+// SetRetryAfter sets the callback function to be invoked with a failed request
+// to determine wben it should be retried.
+func (c *Client) SetRetryAfter(callback RetryAfter) *Client {
+	c.retryAfter = callback
+	return c
+}
+
+// SetRetryCount sets the maximum retry attempts before aborting.
+func (c *Client) SetRetryCount(count int) *Client {
+	c.retryCount = count
+	return c
+}
+
+// SetPollDelay sets the number of milliseconds to wait between events or status polls.
+// Affects all WaitFor* functions and retries.
+func (c *Client) SetPollDelay(delay time.Duration) *Client {
+	c.pollInterval = delay
+	return c
+}
+
+// GetPollDelay gets the number of milliseconds to wait between events or status polls.
+// Affects all WaitFor* functions and retries.
+func (c *Client) GetPollDelay() time.Duration {
+	return c.pollInterval
+}
+
+// SetHeader sets a custom header to be used in all API requests made with the current
+// client.
+// NOTE: Some headers may be overridden by the individual request functions.
+func (c *Client) SetHeader(name, value string) {
+	if c.header == nil {
+		c.header = make(http.Header) // Initialize header if nil
+	}
+
+	c.header.Set(name, value)
+}
+
+func (c *Client) Transport() (*http.Transport, error) {
+	if transport, ok := c.httpClient.Transport.(*http.Transport); ok {
+		return transport, nil
+	}
+
+	return nil, fmt.Errorf("current transport is not an *http.Transport instance")
 }
 
 // Generic helper to execute HTTP requests using the net/http package
@@ -177,9 +508,8 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 	for range c.retryCount {
 		// Reset the body to the start for each retry if it's not nil
 		if params.Body != nil {
-			_, err := params.Body.Seek(0, io.SeekStart)
-			if err != nil {
-				return c.ErrorAndLogf("failed to seek to the start of the body: %v", err.Error())
+			if _, seekErr := params.Body.Seek(0, io.SeekStart); seekErr != nil {
+				return c.ErrorAndLogf("failed to seek to the start of the body: %v", seekErr.Error())
 			}
 		}
 
@@ -189,8 +519,8 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 		}
 
 		if paginationMutator != nil {
-			if err := (*paginationMutator)(req); err != nil {
-				return c.ErrorAndLogf("failed to mutate before request: %v", err.Error())
+			if mutErr := (*paginationMutator)(req); mutErr != nil {
+				return c.ErrorAndLogf("failed to mutate before request: %v", mutErr.Error())
 			}
 		}
 
@@ -215,12 +545,7 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 			}
 
 			if c.debug && c.logger != nil {
-				var logErr error
-
-				resp, logErr = c.logResponse(resp)
-				if logErr != nil {
-					return logErr
-				}
+				resp = c.logResponse(resp)
 			}
 
 			if params.Response != nil {
@@ -284,8 +609,10 @@ func (c *Client) shouldRetry(resp *http.Response, err error) bool {
 }
 
 func (c *Client) createRequest(ctx context.Context, method, endpoint string, params requestParams) (*http.Request, *bytes.Buffer, error) {
-	var bodyReader io.Reader
-	var bodyBuffer *bytes.Buffer
+	var (
+		bodyReader io.Reader
+		bodyBuffer *bytes.Buffer
+	)
 
 	if params.Body != nil {
 		// Reset the body position to the start before using it
@@ -374,7 +701,8 @@ func (c *Client) logRequest(req *http.Request, method, url string, bodyBuffer *b
 	}
 
 	var logBuf bytes.Buffer
-	err := reqLogTemplate.Execute(&logBuf, map[string]interface{}{
+
+	err := reqLogTemplate.Execute(&logBuf, map[string]any{
 		"Method":  reqLog.Method,
 		"URL":     reqLog.URL,
 		"Headers": reqLog.Headers,
@@ -386,7 +714,7 @@ func (c *Client) logRequest(req *http.Request, method, url string, bodyBuffer *b
 }
 
 func (c *Client) sendRequest(req *http.Request) (*http.Response, error) {
-	resp, err := c.httpClient.Do(req)
+	resp, err := c.httpClient.Do(req) //#nosec G704 // URL is constructed from client-configured base URL + endpoint
 	if err != nil {
 		return nil, c.ErrorAndLogf("failed to send request: %w", err)
 	}
@@ -404,14 +732,15 @@ func (c *Client) checkHTTPError(resp *http.Response) error {
 	return nil
 }
 
-func (c *Client) logResponse(resp *http.Response) (*http.Response, error) {
+func (c *Client) logResponse(resp *http.Response) *http.Response {
 	var respBody bytes.Buffer
 	if _, err := io.Copy(&respBody, resp.Body); err != nil {
 		c.logger.Errorf("failed to read response body: %v", err)
 	}
 
 	var logBuf bytes.Buffer
-	err := respLogTemplate.Execute(&logBuf, map[string]interface{}{
+
+	err := respLogTemplate.Execute(&logBuf, map[string]any{
 		"Status":  resp.Status,
 		"Headers": redactHeaders(resp.Header),
 		"Body":    respBody.String(),
@@ -422,90 +751,15 @@ func (c *Client) logResponse(resp *http.Response) (*http.Response, error) {
 
 	resp.Body = io.NopCloser(bytes.NewReader(respBody.Bytes()))
 
-	return resp, nil
+	return resp
 }
 
-func (c *Client) decodeResponseBody(resp *http.Response, response interface{}) error {
+func (c *Client) decodeResponseBody(resp *http.Response, response any) error {
 	if err := json.NewDecoder(resp.Body).Decode(response); err != nil {
 		return c.ErrorAndLogf("failed to decode response: %v", err.Error())
 	}
 
 	return nil
-}
-
-func (c *Client) SetDebug(debug bool) *Client {
-	c.debug = debug
-
-	return c
-}
-
-func (c *Client) SetLogger(logger Logger) *Client {
-	c.logger = logger
-
-	return c
-}
-
-func (c *Client) OnBeforeRequest(m func(*http.Request) error) {
-	c.onBeforeRequest = append(c.onBeforeRequest, m)
-}
-
-func (c *Client) OnAfterResponse(m func(*http.Response) error) {
-	c.onAfterResponse = append(c.onAfterResponse, m)
-}
-
-// UseURL parses the individual components of the given API URL and configures the client
-// accordingly. For example, a valid URL.
-// For example:
-//
-//	client.UseURL("https://api.test.linode.com/v4beta")
-func (c *Client) UseURL(apiURL string) (*Client, error) {
-	parsedURL, err := url.Parse(apiURL)
-	if err != nil {
-		return nil, fmt.Errorf("failed to parse URL: %w", err)
-	}
-
-	if parsedURL.Scheme == "" || parsedURL.Host == "" {
-		return nil, fmt.Errorf("need both scheme and host in API URL, got %q", apiURL)
-	}
-
-	// Create a new URL excluding the path to use as the base URL
-	baseURL := &url.URL{
-		Host:   parsedURL.Host,
-		Scheme: parsedURL.Scheme,
-	}
-
-	c.SetBaseURL(baseURL.String())
-
-	versionMatches := regexp.MustCompile(`/v[a-zA-Z0-9]+`).FindAllString(parsedURL.Path, -1)
-
-	// Only set the version if a version is found in the URL, else use the default
-	if len(versionMatches) > 0 {
-		c.SetAPIVersion(
-			strings.Trim(versionMatches[len(versionMatches)-1], "/"),
-		)
-	}
-
-	return c, nil
-}
-
-func (c *Client) SetBaseURL(baseURL string) *Client {
-	baseURLPath, _ := url.Parse(baseURL)
-
-	c.baseURL = path.Join(baseURLPath.Host, baseURLPath.Path)
-	c.apiProto = baseURLPath.Scheme
-
-	c.updateHostURL()
-
-	return c
-}
-
-// SetAPIVersion sets the version of the API to interface with
-func (c *Client) SetAPIVersion(apiVersion string) *Client {
-	c.apiVersion = apiVersion
-
-	c.updateHostURL()
-
-	return c
 }
 
 func (c *Client) updateHostURL() {
@@ -528,66 +782,19 @@ func (c *Client) updateHostURL() {
 	c.hostURL = strings.TrimRight(fmt.Sprintf("%s://%s/%s", apiProto, baseURL, url.PathEscape(apiVersion)), "/")
 }
 
-func (c *Client) Transport() (*http.Transport, error) {
-	if transport, ok := c.httpClient.Transport.(*http.Transport); ok {
-		return transport, nil
-	}
-	return nil, fmt.Errorf("current transport is not an *http.Transport instance")
-}
-
 func (c *Client) tlsConfig() (*tls.Config, error) {
 	transport, err := c.Transport()
 	if err != nil {
 		return nil, err
 	}
+
 	if transport.TLSClientConfig == nil {
 		transport.TLSClientConfig = &tls.Config{
 			MinVersion: tls.VersionTLS12,
 		}
 	}
+
 	return transport.TLSClientConfig, nil
-}
-
-// SetRootCertificate adds a root certificate to the underlying TLS client config
-func (c *Client) SetRootCertificate(path string) *Client {
-	config, err := c.tlsConfig()
-	if err != nil {
-		log.Println("[WARN] Custom transport is not allowed with a custom root CA")
-		return c
-	}
-	if config.RootCAs == nil {
-		config.RootCAs = x509.NewCertPool()
-	}
-
-	config.RootCAs.AppendCertsFromPEM([]byte(path))
-	return c
-}
-
-// SetToken sets the API token for all requests from this client
-// Only necessary if you haven't already provided the http client to NewClient() configured with the token.
-func (c *Client) SetToken(token string) *Client {
-	c.SetHeader("Authorization", fmt.Sprintf("Bearer %s", token))
-	return c
-}
-
-// SetRetries adds retry conditions for "Linode Busy." errors and 429s.
-func (c *Client) SetRetries() *Client {
-	c.
-		AddRetryCondition(LinodeBusyRetryCondition).
-		AddRetryCondition(TooManyRequestsRetryCondition).
-		AddRetryCondition(ServiceUnavailableRetryCondition).
-		AddRetryCondition(RequestTimeoutRetryCondition).
-		AddRetryCondition(RequestGOAWAYRetryCondition).
-		AddRetryCondition(RequestNGINXRetryCondition).
-		SetRetryMaxWaitTime(APIRetryMaxWaitTime)
-	ConfigureRetries(c)
-	return c
-}
-
-// AddRetryCondition adds a RetryConditional function to the Client
-func (c *Client) AddRetryCondition(retryCondition RetryConditional) *Client {
-	c.retryConditionals = append(c.retryConditionals, retryCondition)
-	return c
 }
 
 func (c *Client) addCachedResponse(endpoint string, response any, expiry *time.Duration) {
@@ -630,6 +837,7 @@ func (c *Client) getCachedResponse(endpoint string) any {
 	// This is necessary as we take write
 	// access if the entry has expired.
 	rLocked := true
+
 	defer func() {
 		if rLocked {
 			c.cachedEntryLock.RUnlock()
@@ -652,99 +860,18 @@ func (c *Client) getCachedResponse(endpoint string) any {
 	if hasExpired {
 		// We need to give up our read access and request read-write access
 		c.cachedEntryLock.RUnlock()
+
 		rLocked = false
 
 		c.cachedEntryLock.Lock()
 		defer c.cachedEntryLock.Unlock()
 
 		delete(c.cachedEntries, endpoint)
+
 		return nil
 	}
 
 	return c.cachedEntries[endpoint].Data
-}
-
-// InvalidateCache clears all cached responses for all endpoints.
-func (c *Client) InvalidateCache() {
-	c.cachedEntryLock.Lock()
-	defer c.cachedEntryLock.Unlock()
-
-	// GC will handle the old map
-	c.cachedEntries = make(map[string]clientCacheEntry)
-}
-
-// InvalidateCacheEndpoint invalidates a single cached endpoint.
-func (c *Client) InvalidateCacheEndpoint(endpoint string) error {
-	u, err := url.Parse(endpoint)
-	if err != nil {
-		return fmt.Errorf("failed to parse URL for caching: %w", err)
-	}
-
-	c.cachedEntryLock.Lock()
-	defer c.cachedEntryLock.Unlock()
-
-	delete(c.cachedEntries, u.Path)
-
-	return nil
-}
-
-// SetGlobalCacheExpiration sets the desired time for any cached response
-// to be valid for.
-func (c *Client) SetGlobalCacheExpiration(expiryTime time.Duration) {
-	c.cacheExpiration = expiryTime
-}
-
-// UseCache sets whether response caching should be used
-func (c *Client) UseCache(value bool) {
-	c.shouldCache = value
-}
-
-// SetRetryMaxWaitTime sets the maximum delay before retrying a request.
-func (c *Client) SetRetryMaxWaitTime(maxWaitTime time.Duration) *Client {
-	c.retryMaxWaitTime = maxWaitTime
-	return c
-}
-
-// SetRetryWaitTime sets the default (minimum) delay before retrying a request.
-func (c *Client) SetRetryWaitTime(minWaitTime time.Duration) *Client {
-	c.retryMinWaitTime = minWaitTime
-	return c
-}
-
-// SetRetryAfter sets the callback function to be invoked with a failed request
-// to determine wben it should be retried.
-func (c *Client) SetRetryAfter(callback RetryAfter) *Client {
-	c.retryAfter = callback
-	return c
-}
-
-// SetRetryCount sets the maximum retry attempts before aborting.
-func (c *Client) SetRetryCount(count int) *Client {
-	c.retryCount = count
-	return c
-}
-
-// SetPollDelay sets the number of milliseconds to wait between events or status polls.
-// Affects all WaitFor* functions and retries.
-func (c *Client) SetPollDelay(delay time.Duration) *Client {
-	c.pollInterval = delay
-	return c
-}
-
-// GetPollDelay gets the number of milliseconds to wait between events or status polls.
-// Affects all WaitFor* functions and retries.
-func (c *Client) GetPollDelay() time.Duration {
-	return c.pollInterval
-}
-
-// SetHeader sets a custom header to be used in all API requests made with the current
-// client.
-// NOTE: Some headers may be overridden by the individual request functions.
-func (c *Client) SetHeader(name, value string) {
-	if c.header == nil {
-		c.header = make(http.Header) // Initialize header if nil
-	}
-	c.header.Set(name, value)
 }
 
 func (c *Client) onRequestLog(rl func(*RequestLog) error) *Client {
@@ -752,11 +879,13 @@ func (c *Client) onRequestLog(rl func(*RequestLog) error) *Client {
 		c.logger.Warnf("Overwriting an existing on-request-log callback from=%s to=%s",
 			functionName(c.requestLog), functionName(rl))
 	}
+
 	c.requestLog = rl
+
 	return c
 }
 
-func functionName(i interface{}) string {
+func functionName(i any) string {
 	return runtime.FuncForPC(reflect.ValueOf(i).Pointer()).Name()
 }
 
@@ -768,114 +897,6 @@ func (c *Client) enableLogSanitization() *Client {
 	})
 
 	return c
-}
-
-// NewClient factory to create new Client struct
-// nolint:funlen
-func NewClient(hc *http.Client) (client Client) {
-	if hc != nil {
-		client.httpClient = hc
-	} else {
-		client.httpClient = &http.Client{}
-	}
-
-	// Ensure that the Header map is not nil
-	if client.httpClient.Transport == nil {
-		client.httpClient.Transport = &http.Transport{}
-	}
-
-	client.shouldCache = true
-	client.cacheExpiration = APIDefaultCacheExpiration
-	client.cachedEntries = make(map[string]clientCacheEntry)
-	client.cachedEntryLock = &sync.RWMutex{}
-	client.configProfiles = make(map[string]ConfigProfile)
-
-	const (
-		retryMinWaitDuration = 100 * time.Millisecond
-		retryMaxWaitDuration = 2 * time.Second
-	)
-
-	client.retryMinWaitTime = retryMinWaitDuration
-	client.retryMaxWaitTime = retryMaxWaitDuration
-
-	client.SetUserAgent(DefaultUserAgent)
-	client.SetLogger(createLogger())
-
-	baseURL, baseURLExists := os.LookupEnv(APIHostVar)
-	if baseURLExists {
-		client.SetBaseURL(baseURL)
-	}
-	apiVersion, apiVersionExists := os.LookupEnv(APIVersionVar)
-	if apiVersionExists {
-		client.SetAPIVersion(apiVersion)
-	} else {
-		client.SetAPIVersion(APIVersion)
-	}
-
-	certPath, certPathExists := os.LookupEnv(APIHostCert)
-	if certPathExists {
-		cert, err := os.ReadFile(filepath.Clean(certPath))
-		if err != nil {
-			log.Fatalf("[ERROR] Error when reading cert at %s: %s\n", certPath, err.Error())
-		}
-
-		client.SetRootCertificate(certPath)
-
-		if envDebug {
-			log.Printf("[DEBUG] Set API root certificate to %s with contents %s\n", certPath, cert)
-		}
-	}
-
-	client.
-		SetRetryWaitTime(APISecondsPerPoll * time.Second).
-		SetPollDelay(APISecondsPerPoll * time.Second).
-		SetRetries().
-		SetLogger(createLogger()).
-		SetDebug(envDebug).
-		enableLogSanitization()
-
-	return
-}
-
-// NewClientFromEnv creates a Client and initializes it with values
-// from the LINODE_CONFIG file and the LINODE_TOKEN environment variable.
-func NewClientFromEnv(hc *http.Client) (*Client, error) {
-	client := NewClient(hc)
-
-	// Users are expected to chain NewClient(...) and LoadConfig(...) to customize these options
-	configPath, err := resolveValidConfigPath()
-	if err != nil {
-		return nil, err
-	}
-
-	// Populate the token from the environment.
-	// Tokens should be first priority to maintain backwards compatibility
-	if token, ok := os.LookupEnv(APIEnvVar); ok && token != "" {
-		client.SetToken(token)
-		return &client, nil
-	}
-
-	if p, ok := os.LookupEnv(APIConfigEnvVar); ok {
-		configPath = p
-	} else if !ok && configPath == "" {
-		return nil, fmt.Errorf("no linode config file or token found")
-	}
-
-	configProfile := DefaultConfigProfile
-
-	if p, ok := os.LookupEnv(APIConfigProfileEnvVar); ok {
-		configProfile = p
-	}
-
-	client.selectedProfile = configProfile
-
-	// We should only load the config if the config file exists
-	if _, err := os.Stat(configPath); err != nil {
-		return nil, fmt.Errorf("error loading config file %s: %w", configPath, err)
-	}
-
-	err = client.preLoadConfig(configPath)
-	return &client, err
 }
 
 func (c *Client) preLoadConfig(configPath string) error {
@@ -967,24 +988,4 @@ func generateListCacheURL(endpoint string, opts *ListOptions) (string, error) {
 	}
 
 	return fmt.Sprintf("%s:%s", endpoint, hashedOpts), nil
-}
-
-func (c *Client) ErrorAndLogf(format string, args ...interface{}) error {
-	if c.debug && c.logger != nil {
-		c.logger.Errorf(format, args...)
-	}
-	return fmt.Errorf(format, args...)
-}
-
-func hasCustomTransport(hc *http.Client) bool {
-	if hc == nil || hc.Transport == nil {
-		return false
-	}
-
-	if _, ok := hc.Transport.(*http.Transport); !ok {
-		log.Println("[WARN] Custom transport is not allowed with a custom root CA.")
-		return true
-	}
-
-	return false
 }

@@ -164,6 +164,7 @@ func doGETRequest[T any](
 	endpoint string,
 ) (*T, error) {
 	var resultType T
+
 	params := requestParams{
 		Response: &resultType,
 	}
@@ -185,6 +186,7 @@ func doPOSTRequest[T, O any](
 	options ...O,
 ) (*T, error) {
 	var resultType T
+
 	numOpts := len(options)
 	if numOpts > 1 {
 		return nil, fmt.Errorf("invalid number of options: %d", numOpts)
@@ -193,11 +195,13 @@ func doPOSTRequest[T, O any](
 	params := requestParams{
 		Response: &resultType,
 	}
+
 	if numOpts > 0 && !isNil(options[0]) {
 		body, err := json.Marshal(options[0])
 		if err != nil {
 			return nil, err
 		}
+
 		params.Body = bytes.NewReader(body)
 	}
 
@@ -205,6 +209,7 @@ func doPOSTRequest[T, O any](
 	if err != nil {
 		return nil, err
 	}
+
 	return &resultType, nil
 }
 
@@ -217,6 +222,7 @@ func doPOSTRequestNoResponseBody[T any](
 	options ...T,
 ) error {
 	_, err := doPOSTRequest[any, T](ctx, client, endpoint, options...)
+
 	return err
 }
 
@@ -239,6 +245,7 @@ func doPUTRequest[T, O any](
 	options ...O,
 ) (*T, error) {
 	var resultType T
+
 	numOpts := len(options)
 	if numOpts > 1 {
 		return nil, fmt.Errorf("invalid number of options: %d", numOpts)
@@ -247,11 +254,13 @@ func doPUTRequest[T, O any](
 	params := requestParams{
 		Response: &resultType,
 	}
+
 	if numOpts > 0 && !isNil(options[0]) {
 		body, err := json.Marshal(options[0])
 		if err != nil {
 			return nil, err
 		}
+
 		params.Body = bytes.NewReader(body)
 	}
 
@@ -259,6 +268,7 @@ func doPUTRequest[T, O any](
 	if err != nil {
 		return nil, err
 	}
+
 	return &resultType, nil
 }
 
@@ -271,6 +281,7 @@ func doDELETERequest(
 ) error {
 	params := requestParams{}
 	err := client.doRequest(ctx, http.MethodDelete, endpoint, params, nil)
+
 	return err
 }
 

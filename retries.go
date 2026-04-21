@@ -25,7 +25,7 @@ type RetryConditional func(*http.Response, error) bool
 // RetryAfter is a type alias for a function that determines the duration to wait before retrying based on the response.
 type RetryAfter func(*http.Response) (time.Duration, error)
 
-// Configures http.Client to lock until enough time has passed to retry the request as determined by the Retry-After response header.
+// ConfigureRetries configures http.Client to lock until enough time has passed to retry the request as determined by the Retry-After response header.
 // If the Retry-After header is not set, we fall back to the value of SetPollDelay.
 func ConfigureRetries(c *Client) {
 	c.SetRetryAfter(RespectRetryAfter)
@@ -49,6 +49,7 @@ func RespectRetryAfter(resp *http.Response) (time.Duration, error) {
 
 	duration := time.Duration(retryAfter) * time.Second
 	log.Printf("[INFO] Respecting Retry-After Header of %d (%s)", retryAfter, duration)
+
 	return duration, nil
 }
 
@@ -62,6 +63,7 @@ func LinodeBusyRetryCondition(resp *http.Response, _ error) bool {
 	apiError, ok := getAPIError(resp)
 	linodeBusy := ok && apiError.Error() == "Linode busy."
 	retry := resp.StatusCode == http.StatusBadRequest && linodeBusy
+
 	return retry
 }
 
@@ -127,6 +129,7 @@ func getAPIError(resp *http.Response) (*APIError, bool) {
 	resp.Body = io.NopCloser(bytes.NewReader(body))
 
 	var apiError APIError
+
 	err = json.Unmarshal(body, &apiError)
 	if err != nil {
 		return nil, false

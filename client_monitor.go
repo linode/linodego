@@ -129,15 +129,19 @@ func (mc *MonitorClient) SetRootCertificate(certPath string) *MonitorClient {
 		mc.logger.Errorf("current transport is not an *http.Transport instance")
 		return mc
 	}
+
 	if transport.TLSClientConfig == nil {
 		transport.TLSClientConfig = &tls.Config{
 			MinVersion: tls.VersionTLS12,
 		}
 	}
+
 	if transport.TLSClientConfig.RootCAs == nil {
 		transport.TLSClientConfig.RootCAs = x509.NewCertPool()
 	}
+
 	transport.TLSClientConfig.RootCAs.AppendCertsFromPEM([]byte(certPath))
+
 	return mc
 }
 
@@ -181,10 +185,12 @@ func (mc *MonitorClient) updateMonitorHostURL() {
 // doRequest is a generic helper to execute HTTP requests for the MonitorClient
 func (mc *MonitorClient) doRequest(ctx context.Context, method, endpoint string, params requestParams) error {
 	var bodyReader io.Reader
+
 	if params.Body != nil {
 		if _, err := params.Body.Seek(0, io.SeekStart); err != nil {
 			return fmt.Errorf("failed to seek body: %w", err)
 		}
+
 		bodyReader = params.Body
 	}
 

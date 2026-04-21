@@ -47,7 +47,7 @@ type APIError struct {
 	Errors []APIErrorReason `json:"errors"`
 }
 
-//nolint:nestif
+//nolint:nestif,unparam
 func coupleAPIErrors(resp *http.Response, err error) (*http.Response, error) {
 	if err != nil {
 		return nil, NewError(err)
@@ -77,9 +77,9 @@ func coupleAPIErrors(resp *http.Response, err error) (*http.Response, error) {
 				return nil, NewError(fmt.Errorf("response body is nil"))
 			}
 
-			bodyBytes, err := io.ReadAll(resp.Body)
-			if err != nil {
-				return nil, NewError(fmt.Errorf("failed to read response body: %w", err))
+			bodyBytes, readErr := io.ReadAll(resp.Body)
+			if readErr != nil {
+				return nil, NewError(fmt.Errorf("failed to read response body: %w", readErr))
 			}
 
 			resp.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))

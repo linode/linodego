@@ -70,6 +70,7 @@ func createListOptionsToRequestMutator(opts *ListOptions) func(*http.Request) er
 			if err != nil {
 				return fmt.Errorf("failed to apply list options: %w", err)
 			}
+
 			for key, value := range params {
 				query.Set(key, value)
 			}
@@ -79,6 +80,7 @@ func createListOptionsToRequestMutator(opts *ListOptions) func(*http.Request) er
 		if opts.PageOptions != nil && opts.Page > 0 {
 			query.Set("page", strconv.Itoa(opts.Page))
 		}
+
 		if opts.PageSize > 0 {
 			query.Set("page_size", strconv.Itoa(opts.PageSize))
 		}
@@ -90,6 +92,7 @@ func createListOptionsToRequestMutator(opts *ListOptions) func(*http.Request) er
 
 		// Assign the updated query back to the request URL
 		req.URL.RawQuery = query.Encode()
+
 		return nil
 	}
 }
