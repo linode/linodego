@@ -532,12 +532,7 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 		}
 
 		if c.debug && c.logger != nil {
-			loggedReq, logErr := c.logRequest(req)
-			if logErr != nil {
-				return logErr
-			}
-
-			req = loggedReq
+			req = c.logRequest(req)
 		}
 
 		processResponse := func(start, end time.Time) error {
@@ -573,6 +568,7 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 		startTime := time.Now()
 		resp, err = c.sendRequest(req)
 		endTime := time.Now()
+
 		if err == nil {
 			if err = processResponse(startTime, endTime); err == nil {
 				return nil
@@ -619,9 +615,7 @@ func (c *Client) shouldRetry(resp *http.Response, err error) bool {
 }
 
 func (c *Client) createRequest(ctx context.Context, method, endpoint string, params requestParams) (*http.Request, error) {
-	var (
-		bodyReader io.Reader
-	)
+	var bodyReader io.Reader
 
 	if params.Body != nil {
 		// Reset the body position to the start before using it
@@ -689,12 +683,13 @@ func redactHeaders(headers http.Header) http.Header {
 	return redacted
 }
 
-func (c *Client) logRequest(req *http.Request) (*http.Request, error) {
+func (c *Client) logRequest(req *http.Request) *http.Request {
 	var reqBody bytes.Buffer
 	if req.Body != nil {
 		if _, err := io.Copy(&reqBody, req.Body); err != nil {
 			c.logger.Errorf("failed to read request body: %v", err)
 		}
+
 		req.Body = io.NopCloser(bytes.NewReader(reqBody.Bytes()))
 	}
 
@@ -729,7 +724,7 @@ func (c *Client) logRequest(req *http.Request) (*http.Request, error) {
 		c.logger.Debugf(logBuf.String())
 	}
 
-	return req, nil
+	return req
 }
 
 func formatHeaders(headers map[string][]string) string {
@@ -740,11 +735,13 @@ func formatHeaders(headers map[string][]string) string {
 	for key := range headers {
 		keys = append(keys, key)
 	}
+
 	sort.Strings(keys)
 
 	for _, key := range keys {
 		builder.WriteString(fmt.Sprintf("    %s: %s\n", key, strings.Join(headers[key], ", ")))
 	}
+
 	return strings.TrimSuffix(builder.String(), "\n")
 }
 
@@ -754,7 +751,8 @@ func formatBody(body string) (string, error) {
 		return "", nil
 	}
 
-	var jsonData map[string]interface{}
+	var jsonData map[string]any
+
 	err := json.Unmarshal([]byte(body), &jsonData)
 	if err != nil {
 		return "", fmt.Errorf("error unmarshalling JSON: %w", err)
@@ -773,7 +771,9 @@ func formatDate(dateStr string) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("error parsing date: %v", err)
 	}
+
 	formattedDate := parsedTime.In(time.Local).Format("2006-01-02T15:04:05-07:00") // nolint:gosmopolitan
+
 	return formattedDate, nil
 }
 
