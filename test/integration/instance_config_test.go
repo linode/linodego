@@ -6,6 +6,7 @@ import (
 	"testing"
 
 	. "github.com/linode/linodego"
+	"github.com/stretchr/testify/require"
 )
 
 func setupVPCWithSubnetWithInstance(
@@ -246,6 +247,55 @@ func setupInstanceWith3Interfaces(t *testing.T, fixturesYaml string) (
 	}
 
 	return client, vpc, vpcSubnet, instance, config, teardown
+}
+
+func setupNodebalancer(t *testing.T, fixturesYaml string) (
+	*Client,
+	*VPC,
+	*VPCSubnet,
+	func(),
+) {
+	t.Helper()
+	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+	vpc, vpcSubnet, vpcWithSubnetTeardown, err := createVPCWithSubnet(
+		t,
+		client,
+		func(client *Client, options *VPCCreateOptions) {
+			options.Region = "nl-ams"
+		},
+	)
+	if err != nil {
+		t.Error(err)
+	}
+
+	createOpts := NodeBalancerCreateOptions{
+		Label:              &label,
+		Region:             vpc.Region,
+		ClientConnThrottle: &clientConnThrottle,
+		FirewallID:         GetFirewallID(),
+		VPCs: []NodeBalancerVPCOptions{
+			{
+				IPv4Range: "192.168.0.64/30",
+				IPv6Range: "",
+				SubnetID:  vpcSubnet.ID,
+			},
+		},
+	}
+
+	nodebalancer, err := client.CreateNodeBalancer(context.Background(), createOpts)
+	if err != nil {
+		t.Fatalf("Error listing nodebalancers, expected struct, got error %v", err)
+	}
+
+	teardown := func() {
+		if err := client.DeleteNodeBalancer(context.Background(), nodebalancer.ID); err != nil {
+			t.Errorf("Expected to delete a nodebalancer, but got %v", err)
+		}
+		vpcWithSubnetTeardown()
+		fixtureTeardown()
+	}
+
+	return client, vpc, vpcSubnet, teardown
 }
 
 func TestInstance_ConfigInterfaces_AppendDelete(t *testing.T) {
@@ -586,4 +636,69 @@ func TestInstance_Config_Update(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
+}
+
+func TestInstance_Config_VolumeLimitExtension(t *testing.T) {
+	client, instance, config, teardown, err := setupInstanceWithoutDisks(
+		t, "fixtures/TestInstance_Config_VolumeLimitExtension",
+		true,
+		func(l *Client, options *InstanceCreateOptions) {
+			// We need a larger type to increase our volume limit
+			options.Type = "g6-standard-6"
+		},
+	)
+	defer teardown()
+	require.NoError(t, err)
+
+	disk, err := client.CreateInstanceDisk(
+		t.Context(),
+		instance.ID,
+		InstanceDiskCreateOptions{
+			Label:      "test-disk",
+			Size:       1024,
+			Filesystem: string(FilesystemExt4),
+		},
+	)
+	require.NoError(t, err)
+
+	volume1, teardown, err := createVolume(t, client, func(l *Client, options *VolumeCreateOptions) {
+		options.Region = instance.Region
+	})
+	defer teardown()
+	require.NoError(t, err)
+
+	volume2, teardown, err := createVolume(t, client, func(l *Client, options *VolumeCreateOptions) {
+		options.Region = instance.Region
+	})
+	defer teardown()
+	require.NoError(t, err)
+
+	configOpts := InstanceConfigUpdateOptions{
+		Devices: &InstanceConfigDeviceMap{
+			SDA: &InstanceConfigDevice{
+				DiskID: disk.ID,
+			},
+			SDL: &InstanceConfigDevice{
+				VolumeID: volume1.ID,
+			},
+			SDK: &InstanceConfigDevice{
+				VolumeID: volume2.ID,
+			},
+		},
+		RootDevice: "/dev/sdk",
+	}
+
+	_, err = client.WaitForVolumeStatus(context.Background(), volume1.ID, VolumeActive, 500)
+	require.NoError(t, err)
+
+	_, err = client.WaitForVolumeStatus(context.Background(), volume2.ID, VolumeActive, 500)
+	require.NoError(t, err)
+
+	updatedConfig, err := client.UpdateInstanceConfig(context.Background(), instance.ID, config.ID, configOpts)
+	require.NoError(t, err)
+
+	require.Equal(t, "/dev/sdk", updatedConfig.RootDevice)
+	require.Equal(t, disk.ID, updatedConfig.Devices.SDA.DiskID)
+	require.Equal(t, volume1.ID, updatedConfig.Devices.SDL.VolumeID)
+	require.Equal(t, volume2.ID, updatedConfig.Devices.SDK.VolumeID)
 }

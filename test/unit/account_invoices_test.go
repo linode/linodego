@@ -83,5 +83,5 @@ func TestAccountInvoiceItems_List(t *testing.T) {
 	assert.Equal(t, float32(1.25), invoiceItem.Tax)
 	assert.Equal(t, float32(21.45), invoiceItem.Total)
 	assert.Equal(t, "hourly", invoiceItem.Type)
-	assert.Equal(t, float32(5.05), invoiceItem.UnitPrice)
+	assert.Equal(t, "5.05", invoiceItem.UnitPrice)
 }

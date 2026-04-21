@@ -1,7 +1,16 @@
 name: Continuous Integration
 
 on:
-  workflow_dispatch: null
+  workflow_dispatch:
+    inputs:
+      test_report_upload:
+        description: 'Indicates whether to upload the test report to object storage. Defaults to "false"'
+        type: choice
+        required: false
+        default: 'false'
+        options:
+          - 'true'
+          - 'false'
   push:
     branches:
       - main
@@ -10,8 +19,36 @@ on:
 jobs:
   lint-tidy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
     steps:
-      - uses: actions/checkout@v5
+      # Enforce TPT-1234: prefix on PR titles, with the following exemptions:
+      # - PRs labeled 'dependencies' (e.g. Dependabot PRs)
+      # - PRs labeled 'hotfix' (urgent fixes that may not have a ticket)
+      # - PRs labeled 'community-contribution' (external contributors without TPT tickets)
+      # - PRs labeled 'ignore-for-release' (release PRs that don't need a ticket prefix)
+      - name: Validate PR Title
+        if: github.event_name == 'pull_request'
+        uses: amannn/action-semantic-pull-request@v6
+        with:
+          types: |
+            TPT-\d+
+          requireScope: false
+          # Override the default header pattern to allow hyphens and digits in the type
+          # (e.g. "TPT-4298: Description"). The default pattern only matches word
+          # characters (\w) which excludes hyphens.
+          headerPattern: '^([\w-]+):\s?(.*)$'
+          headerPatternCorrespondence: type, subject
+          ignoreLabels: |
+            dependencies
+            hotfix
+            community-contribution
+            ignore-for-release
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - uses: actions/checkout@v6
       - uses: actions/setup-go@v6
         with:
           go-version: stable
@@ -38,7 +75,7 @@ jobs:
       EXIT_STATUS: 0
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
           submodules: 'recursive'
@@ -70,7 +107,7 @@ jobs:
           SKIP_LINT: 1
 
       - name: Upload test results to bucket
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push' && always()
+        if: always() && github.repository == 'linode/linodego' && github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && inputs.test_report_upload == 'true'))
         run: |
           python3 e2e_scripts/tod_scripts/xml_to_obj_storage/scripts/add_gha_info_to_xml.py \
           --branch_name "${GITHUB_REF#refs/*/}" \
@@ -90,7 +127,7 @@ jobs:
 
     steps:
       - name: Notify Slack
-        uses: slackapi/slack-github-action@v2.1.1
+        uses: slackapi/slack-github-action@v3
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_BOT_TOKEN }}

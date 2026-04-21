@@ -3,6 +3,11 @@
     "label": "new-config",
     "kernel": "linode/latest-64bit",
     "root_device": "/dev/sda",
+    "devices": {
+      "sdba": {
+        "volume_id": 456
+      }
+    },
     "interfaces": [
         {
             "id": 1,

@@ -1,0 +1,147 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/profile
+    method: GET
+  response:
+    body: '{"uid": 2897900, "username": "prod-test-022", "email": "dl-linode-devs@akamai.com",
+      "verified_phone_number": null, "timezone": "GMT", "email_notifications": true,
+      "referrals": {"code": "", "url": "", "total": 0, "completed": 0, "pending":
+      0, "credit": 0}, "ip_whitelist_enabled": false, "lish_auth_method": "password_keys",
+      "authorized_keys": null, "two_factor_auth": true, "restricted": false, "authentication_type":
+      "password", "user_type": "default"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "453"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 22 Dec 2025 10:21:37 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/iam/users/prod-test-022/permissions/account
+    method: GET
+  response:
+    body: '["list_events", "view_account_settings", "view_invoice_item", "cancel_account",
+      "create_vpc", "create_payment_method", "reset_oauth_client_secret", "list_account_logins",
+      "delete_oauth_client", "update_delegate_users", "enable_managed", "set_default_payment_method",
+      "upload_image", "update_oauth_client_thumbnail", "make_billing_payment", "list_vpcs_ip_addresses",
+      "list_delegate_users", "view_event", "mark_event_seen", "list_account_agreements",
+      "list_invoice_items", "list_billing_payments", "enroll_beta_program", "view_enrolled_beta_program",
+      "update_oauth_client", "view_service_transfer", "list_all_child_accounts", "create_oauth_client",
+      "is_account_admin", "create_user", "view_account_login", "create_image", "create_linode",
+      "view_account", "update_account_settings", "list_notifications", "delete_payment_method",
+      "update_account", "view_billing_invoice", "view_payment_method", "list_service_transfers",
+      "list_maintenances", "list_user_delegate_accounts", "create_nodebalancer", "create_service_transfer",
+      "list_enrolled_beta_programs", "list_billing_invoices", "cancel_service_transfer",
+      "update_default_firewalls", "view_payment_client_token", "list_default_firewalls",
+      "view_oauth_client", "list_payment_methods", "acknowledge_account_agreement",
+      "create_promo_code", "view_network_usage", "list_oauth_clients", "update_default_delegate_access",
+      "create_volume", "view_billing_payment", "create_firewall", "view_region_available_service",
+      "accept_service_transfer", "list_available_services"]'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 22 Dec 2025 10:21:37 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - account:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""

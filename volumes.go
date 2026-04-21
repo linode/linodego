@@ -37,11 +37,10 @@ type Volume struct {
 	Tags           []string     `json:"tags"`
 	HardwareType   string       `json:"hardware_type"`
 	LinodeLabel    string       `json:"linode_label"`
+	IOReady        bool         `json:"io_ready"`
 	Created        *time.Time   `json:"-"`
 	Updated        *time.Time   `json:"-"`
-
-	// Note: Block Storage Disk Encryption is not currently available to all users.
-	Encryption string `json:"encryption"`
+	Encryption     string       `json:"encryption"`
 }
 
 // VolumeCreateOptions fields are those accepted by CreateVolume

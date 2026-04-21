@@ -54,7 +54,6 @@ type Event struct {
 	Duration float64 `json:"duration"`
 
 	// The maintenance policy configured by the user for the event.
-	// NOTE: MaintenancePolicySet can only be used with v4beta.
 	MaintenancePolicySet string `json:"maintenance_policy_set"`
 
 	// Describes the nature of the event (e.g., whether it is scheduled or emergency).
@@ -122,6 +121,10 @@ const (
 	ActionFirewallUpdate                          EventAction = "firewall_update"
 	ActionFirewallDeviceAdd                       EventAction = "firewall_device_add"
 	ActionFirewallDeviceRemove                    EventAction = "firewall_device_remove"
+	ActionFirewallRuleSetCreate                   EventAction = "firewall_ruleset_create"
+	ActionFirewallRuleSetUpdate                   EventAction = "firewall_ruleset_update"
+	ActionFirewallRuleSetDelete                   EventAction = "firewall_ruleset_delete"
+	ActionFirewallRuleSetFirewallUpdate           EventAction = "firewall_ruleset_firewall_update"
 	ActionHostReboot                              EventAction = "host_reboot"
 	ActionImageDelete                             EventAction = "image_delete"
 	ActionImageUpdate                             EventAction = "image_update"
@@ -254,6 +257,8 @@ const (
 	EntityImage          EntityType = "image"
 	EntityIPAddress      EntityType = "ipaddress"
 	EntityLinode         EntityType = "linode"
+	EntityLKECluster     EntityType = "lkecluster"
+	EntityLKENodePool    EntityType = "lkenodepool"
 	EntityLongview       EntityType = "longview"
 	EntityManagedService EntityType = "managed_service"
 	EntityNodebalancer   EntityType = "nodebalancer"

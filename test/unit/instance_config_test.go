@@ -104,6 +104,11 @@ func TestInstanceConfig_Create(t *testing.T) {
 		Label:      "new-config",
 		Kernel:     "linode/latest-64bit",
 		RootDevice: &rootDevice,
+		Devices: linodego.InstanceConfigDeviceMap{
+			SDBA: &linodego.InstanceConfigDevice{
+				VolumeID: 456,
+			},
+		},
 	}
 
 	base.MockPost("linode/instances/123/configs", fixtureData)
@@ -115,6 +120,7 @@ func TestInstanceConfig_Create(t *testing.T) {
 	assertJSONObjectsSimilar(t, config, config.GetUpdateOptions())
 
 	assert.Equal(t, "new-config", config.Label)
+	assert.Equal(t, 456, config.Devices.SDBA.VolumeID)
 
 	iface := config.Interfaces[0]
 	assert.Equal(t, 1, iface.ID)
@@ -150,6 +156,11 @@ func TestInstanceConfig_Update(t *testing.T) {
 	updateOptions := linodego.InstanceConfigUpdateOptions{
 		Label:      "updated-config",
 		RootDevice: "/dev/sdb",
+		Devices: &linodego.InstanceConfigDeviceMap{
+			SDAB: &linodego.InstanceConfigDevice{
+				VolumeID: 456,
+			},
+		},
 	}
 
 	base.MockPut("linode/instances/123/configs/1", fixtureData)
@@ -161,6 +172,7 @@ func TestInstanceConfig_Update(t *testing.T) {
 	assertJSONObjectsSimilar(t, config, config.GetUpdateOptions())
 
 	assert.Equal(t, "updated-config", config.Label)
+	assert.Equal(t, 456, config.Devices.SDAB.VolumeID)
 
 	iface := config.Interfaces[0]
 	assert.Equal(t, 1, iface.ID)

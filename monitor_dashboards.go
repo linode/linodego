@@ -28,7 +28,7 @@ const (
 	ServiceTypeDBaaS           ServiceType = "dbaas"
 	ServiceTypeACLB            ServiceType = "aclb"
 	ServiceTypeNodeBalancer    ServiceType = "nodebalancer"
-	ServiceTypeObjectStorage   ServiceType = "objectstorage"
+	ServiceTypeObjectStorage   ServiceType = "object_storage"
 	ServiceTypeVPC             ServiceType = "vpc"
 	ServiceTypeFirewallService ServiceType = "firewall"
 	ServiceTypeNetLoadBalancer ServiceType = "netloadbalancer"
