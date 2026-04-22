@@ -65,7 +65,9 @@ func TestLKECluster_List(t *testing.T) {
 	assert.Equal(t, 123, clusters[0].SubnetID)
 	assert.Equal(t, 456, clusters[0].VpcID)
 	assert.Equal(t, linodego.LKEClusterStackIPv4, clusters[0].StackType)
+	assert.Equal(t, []linodego.LockType{linodego.LockTypeCannotDelete}, clusters[0].Locks)
 	assert.Equal(t, false, clusters[0].ControlPlane.AuditLogsEnabled)
+	assert.Empty(t, clusters[1].Locks)
 }
 
 func TestLKECluster_Get(t *testing.T) {
@@ -85,6 +87,7 @@ func TestLKECluster_Get(t *testing.T) {
 	assert.Equal(t, 123, cluster.SubnetID)
 	assert.Equal(t, 456, cluster.VpcID)
 	assert.Equal(t, linodego.LKEClusterStackIPv4, cluster.StackType)
+	assert.Equal(t, []linodego.LockType{linodego.LockTypeCannotDelete}, cluster.Locks)
 	assert.Equal(t, false, cluster.ControlPlane.AuditLogsEnabled)
 }
 

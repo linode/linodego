@@ -31,6 +31,7 @@ func TestListVolumes(t *testing.T) {
 	assert.Equal(t, "us-east", volumes[0].Region, "Expected volume region to match")
 	assert.Equal(t, 20, volumes[0].Size, "Expected volume size to match")
 	assert.Equal(t, "test", volumes[0].Tags[0], "Expected volume tag to match")
+	assert.Equal(t, []linodego.LockType{linodego.LockTypeCannotDelete}, volumes[0].Locks, "Expected volume locks to match")
 }
 
 func TestGetVolume(t *testing.T) {
@@ -59,6 +60,7 @@ func TestGetVolume(t *testing.T) {
 	assert.Empty(t, volume.HardwareType, "Expected hardware type to be empty")
 	assert.Empty(t, volume.LinodeLabel, "Expected Linode label to be empty")
 	assert.True(t, volume.IOReady, "Expected IO Ready true")
+	assert.Equal(t, []linodego.LockType{linodego.LockTypeCannotDeleteWithSubresources}, volume.Locks, "Expected volume locks to match")
 }
 
 func TestCreateVolume(t *testing.T) {

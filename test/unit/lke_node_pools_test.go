@@ -73,6 +73,7 @@ func TestLKENodePool_Get(t *testing.T) {
 	assert.Equal(t, "g6-standard-2", nodePool.Type)
 	assert.Equal(t, 3, nodePool.Count)
 	assert.Equal(t, []string{"tag1", "tag2"}, nodePool.Tags)
+	assert.Equal(t, []linodego.LockType{linodego.LockTypeCannotDelete}, nodePool.Locks)
 }
 
 func TestLKENodePool_Create(t *testing.T) {
@@ -172,7 +173,9 @@ func TestLKENodePool_List(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Len(t, nodePools, 2)
 	assert.Equal(t, 456, nodePools[0].ID)
+	assert.Equal(t, []linodego.LockType{linodego.LockTypeCannotDelete}, nodePools[0].Locks)
 	assert.Equal(t, 789, nodePools[1].ID)
+	assert.Empty(t, nodePools[1].Locks)
 }
 
 func TestLKENodePoolNode_Delete(t *testing.T) {

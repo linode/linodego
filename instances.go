@@ -75,7 +75,7 @@ type Instance struct {
 	InterfaceGeneration InterfaceGeneration     `json:"interface_generation"`
 	MaintenancePolicy   string                  `json:"maintenance_policy"`
 
-	// NOTE: Locks can only be used with v4beta.
+	// NOTE: Both cannot_delete and cannot_delete_with_subresources apply to Instances and can only be used with v4beta.
 	Locks []LockType `json:"locks"`
 }
 

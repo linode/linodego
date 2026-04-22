@@ -47,6 +47,9 @@ type LKECluster struct {
 	SubnetID  int                 `json:"subnet_id"`
 	VpcID     int                 `json:"vpc_id"`
 	StackType LKEClusterStackType `json:"stack_type"`
+
+	// NOTE: Locks can only be used with v4beta.
+	Locks []LockType `json:"locks"`
 }
 
 // LKEClusterCreateOptions fields are those accepted by CreateLKECluster
