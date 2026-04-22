@@ -86,8 +86,8 @@ type LogsDestinationCreateOptions struct {
 
 // LogsDestinationUpdateOptions are the options used to update a logs destination.
 type LogsDestinationUpdateOptions struct {
-	Label   string                  `json:"label,omitempty"`
-	Details *LogsDestinationDetails `json:"details,omitempty"`
+	Label   string                               `json:"label,omitempty"`
+	Details *LogsDestinationDetailsCreateOptions `json:"details,omitempty"`
 }
 
 // ListLogsDestinations returns a paginated list of logs destinations.
