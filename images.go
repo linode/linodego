@@ -329,6 +329,9 @@ func (c *Client) UploadImageToURL(ctx context.Context, uploadURL string, image i
 	req.Header.Set("User-Agent", c.userAgent)
 
 	resp, err := clonedClient.Do(req)
+	if resp != nil && resp.Body != nil {
+		defer resp.Body.Close()
+	}
 
 	_, err = coupleAPIErrors(resp, err)
 	if err != nil {

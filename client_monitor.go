@@ -11,6 +11,7 @@ import (
 	"net/url"
 	"os"
 	"path"
+	"path/filepath"
 	"strings"
 )
 
@@ -47,6 +48,11 @@ func NewMonitorClient(hc *http.Client) (mClient MonitorClient) {
 		mClient.httpClient = hc
 	} else {
 		mClient.httpClient = &http.Client{}
+	}
+
+	// Ensure transport is initialized so SetRootCertificate can configure TLS
+	if mClient.httpClient.Transport == nil {
+		mClient.httpClient.Transport = &http.Transport{}
 	}
 
 	mClient.header = make(http.Header)
@@ -140,7 +146,13 @@ func (mc *MonitorClient) SetRootCertificate(certPath string) *MonitorClient {
 		transport.TLSClientConfig.RootCAs = x509.NewCertPool()
 	}
 
-	transport.TLSClientConfig.RootCAs.AppendCertsFromPEM([]byte(certPath))
+	pem, err := os.ReadFile(filepath.Clean(certPath))
+	if err != nil {
+		mc.logger.Errorf("Failed to read root certificate at %s: %s", certPath, err.Error())
+		return mc
+	}
+
+	transport.TLSClientConfig.RootCAs.AppendCertsFromPEM(pem)
 
 	return mc
 }

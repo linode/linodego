@@ -276,8 +276,9 @@ func (c *Client) CreateMonitorAlertDefinitionWithIdempotency(
 	}
 
 	if idempotencyKey != "" {
-		c.SetHeader("Idempotency-Key", idempotencyKey)
-		defer c.header.Del("Idempotency-Key")
+		params.Headers = http.Header{
+			"Idempotency-Key": {idempotencyKey},
+		}
 	}
 
 	err = c.doRequest(ctx, http.MethodPost, e, params, nil)

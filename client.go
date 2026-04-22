@@ -199,15 +199,10 @@ func NewClient(hc *http.Client) (client Client) {
 
 	certPath, certPathExists := os.LookupEnv(APIHostCert)
 	if certPathExists {
-		cert, err := os.ReadFile(filepath.Clean(certPath))
-		if err != nil {
-			log.Fatalf("[ERROR] Error when reading cert at %s: %s\n", certPath, err.Error())
-		}
-
 		client.SetRootCertificate(certPath)
 
 		if envDebug {
-			log.Printf("[DEBUG] Set API root certificate to %s with contents %s\n", certPath, cert)
+			log.Printf("[DEBUG] Set API root certificate to %s\n", certPath)
 		}
 	}
 
@@ -275,6 +270,9 @@ func (c *Client) SetUserAgent(ua string) *Client {
 type requestParams struct {
 	Body     *bytes.Reader
 	Response any
+	// Headers are per-request headers that will be applied only to
+	// the individual request, not stored on the shared client state.
+	Headers http.Header
 }
 
 func (c *Client) ErrorAndLogf(format string, args ...any) error {
@@ -286,7 +284,7 @@ func (c *Client) ErrorAndLogf(format string, args ...any) error {
 }
 
 // SetRootCertificate adds a root certificate to the underlying TLS client config
-func (c *Client) SetRootCertificate(path string) *Client {
+func (c *Client) SetRootCertificate(certPath string) *Client {
 	config, err := c.tlsConfig()
 	if err != nil {
 		log.Println("[WARN] Custom transport is not allowed with a custom root CA")
@@ -297,7 +295,13 @@ func (c *Client) SetRootCertificate(path string) *Client {
 		config.RootCAs = x509.NewCertPool()
 	}
 
-	config.RootCAs.AppendCertsFromPEM([]byte(path))
+	pem, err := os.ReadFile(filepath.Clean(certPath))
+	if err != nil {
+		log.Printf("[ERROR] Failed to read root certificate at %s: %s\n", certPath, err.Error())
+		return c
+	}
+
+	config.RootCAs.AppendCertsFromPEM(pem)
 
 	return c
 }
@@ -584,20 +588,24 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 			return retryErr
 		}
 
-		// Sleep for the specified duration before retrying.
+		// Determine wait time before retrying.
+		// If the server provided a Retry-After duration, use it (clamped to bounds).
+		// Otherwise, fall back to the configured minimum wait time.
+		waitTime := c.retryMinWaitTime
+
 		if retryAfter > 0 {
-			waitTime := retryAfter
-
-			// Ensure the wait time is within the defined bounds
-			if waitTime < c.retryMinWaitTime {
-				waitTime = c.retryMinWaitTime
-			} else if waitTime > c.retryMaxWaitTime {
-				waitTime = c.retryMaxWaitTime
-			}
-
-			// Sleep for the calculated duration before retrying
-			time.Sleep(waitTime)
+			waitTime = retryAfter
 		}
+
+		// Ensure the wait time is within the defined bounds
+		if waitTime < c.retryMinWaitTime {
+			waitTime = c.retryMinWaitTime
+		} else if waitTime > c.retryMaxWaitTime {
+			waitTime = c.retryMaxWaitTime
+		}
+
+		// Sleep for the calculated duration before retrying
+		time.Sleep(waitTime)
 	}
 
 	return err
@@ -643,6 +651,13 @@ func (c *Client) createRequest(ctx context.Context, method, endpoint string, par
 
 	// Set additional headers added to the client
 	for name, values := range c.header {
+		for _, value := range values {
+			req.Header.Set(name, value)
+		}
+	}
+
+	// Apply per-request headers (these take priority over client headers)
+	for name, values := range params.Headers {
 		for _, value := range values {
 			req.Header.Set(name, value)
 		}
