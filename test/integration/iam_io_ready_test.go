@@ -98,8 +98,11 @@ func TestIAM_GetIOReadyForNotAttachedVolume(t *testing.T) {
 
 	volumeList, err := client.ListVolumes(context.Background(), nil)
 	require.NoErrorf(t, err, "Error listing volumes: %v", err)
+	volumeFound := false
+
 	for _, vol := range volumeList {
 		if vol.ID == volume.ID {
+			volumeFound = true
 			assert.Equal(t, linodego.VolumeActive, vol.Status)
 			assert.Empty(t, vol.LinodeID)
 			assert.Empty(t, vol.LinodeLabel)
@@ -107,6 +110,7 @@ func TestIAM_GetIOReadyForNotAttachedVolume(t *testing.T) {
 			break
 		}
 	}
+	require.True(t, volumeFound, "Volume with ID %d not found in volumeList", volume.ID)
 
 	volume, err = client.GetVolume(context.Background(), volume.ID)
 	require.NoErrorf(t, err, "Error getting not attached volume: %v", err)
@@ -133,7 +137,7 @@ func TestIAM_GetIOReadyForAttachedDetachedVolume(t *testing.T) {
 	err = client.DetachVolume(context.Background(), volume.ID)
 	require.NoErrorf(t, err, "Error detaching volume: %v", err)
 
-	volume, err = client.WaitForVolumeIOReadyStatus(context.Background(), volume.ID, false, 45)
+	_, err = client.WaitForVolumeIOReadyStatus(context.Background(), volume.ID, false, 45)
 	require.NoErrorf(t, err, "Error waiting for IO Ready status of detached volume: %v", err)
 
 	instanceVolumes, err := client.ListInstanceVolumes(context.Background(), instance.ID, nil)

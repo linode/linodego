@@ -837,12 +837,10 @@ func (client Client) WaitForVolumeIOReadyStatus(ctx context.Context, volumeID in
 			if err != nil {
 				return volume, err
 			}
-
-			complete := (volume.IOReady == status)
-
-			if complete {
+			if volume.IOReady == status {
 				return volume, nil
 			}
+
 		case <-ctx.Done():
 			return nil, fmt.Errorf("failed to wait for Volume %d IO Ready status %t: %w", volumeID, status, ctx.Err())
 		}
