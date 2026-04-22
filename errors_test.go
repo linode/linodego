@@ -7,7 +7,6 @@ import (
 	"errors"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/http/httptest"
 	"strconv"
@@ -51,7 +50,7 @@ func httpError(reason, field string) *http.Response {
 
 	return &http.Response{
 		StatusCode: 500,
-		Body:       ioutil.NopCloser(bytes.NewReader(body)),
+		Body:       io.NopCloser(bytes.NewReader(body)),
 	}
 }
 

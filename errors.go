@@ -91,13 +91,13 @@ func coupleAPIErrors(resp *http.Response, err error) (*http.Response, error) {
 				string(bodyBytes),
 			)
 
-			return nil, &Error{Code: resp.StatusCode, Message: msg}
+			return nil, &Error{Code: resp.StatusCode, Message: msg, Response: resp}
 		}
 
 		// Must check if there is no list of reasons in the error before making a call to NewError
 		apiError, ok := getAPIError(resp)
 		if !ok {
-			return nil, NewError(fmt.Errorf("failed to decode response body: %w", err))
+			return nil, NewError(fmt.Errorf("failed to decode response body"))
 		}
 
 		if len(apiError.Errors) == 0 {

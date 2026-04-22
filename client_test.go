@@ -473,8 +473,9 @@ func TestDoRequestLogging_Success(t *testing.T) {
 	params := requestParams{
 		Response: &map[string]string{},
 	}
+	endpoint := "/foo/bar"
 
-	err := client.doRequest(context.Background(), http.MethodGet, server.URL, params, nil)
+	err := client.doRequest(context.Background(), http.MethodGet, endpoint, params, nil)
 	if err != nil {
 		t.Fatal(cmp.Diff(nil, err))
 	}
@@ -482,7 +483,7 @@ func TestDoRequestLogging_Success(t *testing.T) {
 	logInfo := logBuffer.String()
 
 	expectedRequestParts := []string{
-		"GET /v4/" + server.URL + " " + "HTTP/1.1",
+		"GET /v4/foo/bar HTTP/1.1",
 		"Accept: application/json",
 		"Authorization: Bearer *******************************",
 		"Content-Type: application/json",
