@@ -1,6 +1,7 @@
 package linodego
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -36,15 +37,18 @@ func (l *logger) Debugf(format string, v ...any) {
 }
 
 func (l *logger) output(format string, v ...any) { //nolint:goprintffuncname
-	// Sanitize to prevent log injection via user-controlled values
-	format = strings.ReplaceAll(format, "\r\n", "\\n")
-	format = strings.ReplaceAll(format, "\r", "\\n")
-	format = strings.ReplaceAll(format, "\n", "\\n")
-
+	// Render the final message first, then sanitize control characters
+	// to prevent log injection via both the format string and variadic args.
+	var msg string
 	if len(v) == 0 {
-		l.l.Print(format)
-		return
+		msg = format
+	} else {
+		msg = fmt.Sprintf(format, v...)
 	}
 
-	l.l.Printf(format, v...)
+	msg = strings.ReplaceAll(msg, "\r\n", "\\n")
+	msg = strings.ReplaceAll(msg, "\r", "\\n")
+	msg = strings.ReplaceAll(msg, "\n", "\\n")
+
+	l.l.Print(msg)
 }

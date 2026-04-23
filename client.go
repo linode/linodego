@@ -780,7 +780,7 @@ func formatBody(body string) (string, error) {
 		return "", nil
 	}
 
-	var jsonData map[string]any
+	var jsonData any
 
 	err := json.Unmarshal([]byte(body), &jsonData)
 	if err != nil {
