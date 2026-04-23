@@ -720,7 +720,9 @@ func (c *Client) logRequest(req *http.Request) *http.Request {
 		_ = c.ErrorAndLogf("failed to log request: %v", e.Error())
 	}
 
-	body, jsonErr := formatBody(reqLog.Body)
+	sanitizedBody := sanitizeLogValue(reqLog.Body)
+
+	body, jsonErr := formatBody(sanitizedBody)
 	if jsonErr != nil {
 		if c.debug && c.logger != nil {
 			c.logger.Errorf("%v", jsonErr)
@@ -736,7 +738,7 @@ func (c *Client) logRequest(req *http.Request) *http.Request {
 		"Body":    body,
 	})
 	if err == nil {
-		c.logger.Debugf(logBuf.String())
+		c.logger.Debugf(sanitizeLogValue(logBuf.String()))
 	}
 
 	return req
@@ -758,6 +760,18 @@ func formatHeaders(headers map[string][]string) string {
 	}
 
 	return strings.TrimSuffix(builder.String(), "\n")
+}
+
+// sanitizeLogValue removes or escapes control characters that could
+// enable log injection (e.g., \r, \n) from a string before it is written
+// to a log entry. Uses strings.ReplaceAll so static-analysis tools
+// (e.g., CodeQL) can recognize the sanitization.
+func sanitizeLogValue(s string) string {
+	s = strings.ReplaceAll(s, "\r\n", "\\n")
+	s = strings.ReplaceAll(s, "\r", "\\n")
+	s = strings.ReplaceAll(s, "\n", "\\n")
+
+	return s
 }
 
 func formatBody(body string) (string, error) {
@@ -835,7 +849,7 @@ func (c *Client) logResponse(resp *http.Response, start, end time.Time) *http.Re
 		Body:         respBody.String(),
 	}
 
-	body, jsonErr := formatBody(respLog.Body)
+	body, jsonErr := formatBody(sanitizeLogValue(respLog.Body))
 	if jsonErr != nil {
 		if c.debug && c.logger != nil {
 			c.logger.Errorf("%v", jsonErr)
@@ -853,7 +867,7 @@ func (c *Client) logResponse(resp *http.Response, start, end time.Time) *http.Re
 		"Body":         body,
 	})
 	if err == nil {
-		c.logger.Debugf(logBuf.String())
+		c.logger.Debugf(sanitizeLogValue(logBuf.String()))
 	}
 
 	resp.Body = io.NopCloser(bytes.NewReader(respBody.Bytes()))

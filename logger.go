@@ -3,6 +3,7 @@ package linodego
 import (
 	"log"
 	"os"
+	"strings"
 )
 
 type Logger interface {
@@ -35,6 +36,11 @@ func (l *logger) Debugf(format string, v ...any) {
 }
 
 func (l *logger) output(format string, v ...any) { //nolint:goprintffuncname
+	// Sanitize to prevent log injection via user-controlled values
+	format = strings.ReplaceAll(format, "\r\n", "\\n")
+	format = strings.ReplaceAll(format, "\r", "\\n")
+	format = strings.ReplaceAll(format, "\n", "\\n")
+
 	if len(v) == 0 {
 		l.l.Print(format)
 		return
