@@ -839,7 +839,6 @@ func (client Client) WaitForVolumeIOReadyStatus(
 		select {
 		case <-ticker.C:
 			volume, err := client.GetVolume(ctx, volumeID)
-
 			if err != nil {
 				return volume, err
 			}
