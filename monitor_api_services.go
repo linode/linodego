@@ -4,8 +4,10 @@
 package linodego
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
+	"net/http"
 	"time"
 )
 
@@ -101,7 +103,11 @@ type MetricAbsoluteTimeDuration struct {
 func (mc *MonitorClient) FetchEntityMetrics(ctx context.Context, serviceType string, opts *EntityMetricsFetchOptions) (*EntityMetrics, error) {
 	endpoint := formatAPIPath("monitor/services/%s/metrics", serviceType)
 
-	req := mc.R(ctx).SetResult(&EntityMetrics{})
+	var result EntityMetrics
+
+	params := requestParams{
+		Response: &result,
+	}
 
 	if opts != nil {
 		body, err := json.Marshal(opts)
@@ -109,13 +115,13 @@ func (mc *MonitorClient) FetchEntityMetrics(ctx context.Context, serviceType str
 			return nil, err
 		}
 
-		req.SetBody(string(body))
+		params.Body = bytes.NewReader(body)
 	}
 
-	r, err := coupleAPIErrors(req.Post(endpoint))
+	err := mc.doRequest(ctx, http.MethodPost, endpoint, params)
 	if err != nil {
 		return nil, err
 	}
 
-	return r.Result().(*EntityMetrics), nil
+	return &result, nil
 }

@@ -116,15 +116,15 @@ type TestLogger struct {
 }
 
 func (l *TestLogger) Errorf(format string, v ...any) {
-	l.outputf("ERROR RESTY "+format, v...)
+	l.outputf("ERROR "+format, v...)
 }
 
 func (l *TestLogger) Warnf(format string, v ...any) {
-	l.outputf("WARN RESTY "+format, v...)
+	l.outputf("WARN "+format, v...)
 }
 
 func (l *TestLogger) Debugf(format string, v ...any) {
-	l.outputf("DEBUG RESTY "+format, v...)
+	l.outputf("DEBUG "+format, v...)
 }
 
 func (l *TestLogger) outputf(format string, v ...any) {

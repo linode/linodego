@@ -1,8 +1,10 @@
 package linodego
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
+	"net/http"
 	"time"
 
 	"github.com/linode/linodego/internal/parseabletime"
@@ -263,25 +265,28 @@ func (c *Client) CreateMonitorAlertDefinitionWithIdempotency(
 
 	var result AlertDefinition
 
-	req := c.R(ctx).SetResult(&result)
-
-	if idempotencyKey != "" {
-		req.SetHeader("Idempotency-Key", idempotencyKey)
-	}
-
 	body, err := json.Marshal(opts)
 	if err != nil {
 		return nil, err
 	}
 
-	req.SetBody(string(body))
+	params := requestParams{
+		Response: &result,
+		Body:     bytes.NewReader(body),
+	}
 
-	r, err := coupleAPIErrors(req.Post(e))
+	if idempotencyKey != "" {
+		params.Headers = http.Header{
+			"Idempotency-Key": {idempotencyKey},
+		}
+	}
+
+	err = c.doRequest(ctx, http.MethodPost, e, params, nil)
 	if err != nil {
 		return nil, err
 	}
 
-	return r.Result().(*AlertDefinition), nil
+	return &result, nil
 }
 
 // UpdateMonitorAlertDefinition updates an ACLP Monitor Alert Definition.
