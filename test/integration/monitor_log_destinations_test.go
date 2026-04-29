@@ -71,6 +71,8 @@ func setupObjectStorageForLogs(t *testing.T, client *linodego.Client) (*linodego
 					t.Errorf("expected status code to be 204; got %d", res.StatusCode)
 				}
 			}
+		} else {
+			t.Errorf("Expected to list objects in object storage, but got %v", terr)
 		}
 
 		if terr := client.DeleteObjectStorageBucket(context.Background(), bucket.Region, bucket.Label); terr != nil {
@@ -106,8 +108,14 @@ func setupLogsDestination(t *testing.T, fixturesYaml string) (*linodego.Client, 
 	}
 
 	teardown := func() {
-		// Only delete if it still exists (e.g. not already deleted by the test itself).
-		if _, terr := client.GetLogsDestination(context.Background(), dest.ID); terr == nil {
+		_, terr := client.GetLogsDestination(context.Background(), dest.ID)
+		if apiErr, ok := terr.(*linodego.Error); ok && apiErr.Code == 404 {
+			// Already gone — nothing to do.
+		} else {
+			if terr != nil {
+				t.Errorf("Error while checking destination existence: %v", terr)
+			}
+			// Object exists or GET failed for another reason — try to delete anyway.
 			if terr := client.DeleteLogsDestination(context.Background(), dest.ID); terr != nil {
 				t.Errorf("Expected to delete a logs destination, but got %v", terr)
 			}
@@ -134,8 +142,17 @@ func TestLogsDestination_List(t *testing.T) {
 	for _, d := range destinations {
 		assert.NotZero(t, d.ID)
 		assert.NotEmpty(t, d.Label)
-		assert.NotEmpty(t, d.Type)
-		assert.NotEmpty(t, d.Status)
+		assert.Equal(t, linodego.LogsDestinationTypeAkamaiObjectStorage, d.Type)
+		assert.Contains(t,
+			[]linodego.LogsDestinationStatus{
+				linodego.LogsDestinationStatusActive,
+				linodego.LogsDestinationStatusInactive,
+			},
+			d.Status,
+		)
+		assert.NotEmpty(t, d.Details.AccessKeyID)
+		assert.NotEmpty(t, d.Details.BucketName)
+		assert.NotEmpty(t, d.Details.Host)
 	}
 
 	ids := make([]int, len(destinations))
@@ -155,7 +172,11 @@ func TestLogsDestination_Delete(t *testing.T) {
 
 	// Verify it's gone
 	_, err = client.GetLogsDestination(context.Background(), dest.ID)
-	assert.Error(t, err, "expected error fetching deleted destination")
+	require.Error(t, err)
+
+	apiErr, ok := err.(*linodego.Error)
+	require.True(t, ok, "expected linodego.Error")
+	assert.Equal(t, 404, apiErr.Code)
 }
 
 func TestLogsDestination_Get(t *testing.T) {
@@ -175,20 +196,23 @@ func TestLogsDestination_UpdateAndHistory(t *testing.T) {
 	defer teardown()
 
 	newLabel := dest.Label + "-upd"
+	newPath := "updated/logs/path/"
 
 	// should update logs destination
 	updated, err := client.UpdateLogsDestination(context.Background(), dest.ID, linodego.LogsDestinationUpdateOptions{
 		Label: newLabel,
-		Details: &linodego.LogsDestinationDetailsCreateOptions{
+		Details: &linodego.LogsDestinationDetailsUpdateOptions{
 			AccessKeyID:     dest.Details.AccessKeyID,
 			AccessKeySecret: storageKey.SecretKey,
 			BucketName:      dest.Details.BucketName,
 			Host:            dest.Details.Host,
+			Path:            &newPath,
 		},
 	})
 	assert.NoError(t, err)
 	require.NotNil(t, updated)
 	assert.Equal(t, newLabel, updated.Label)
+	assert.Equal(t, newPath, updated.Details.Path)
 
 	// history should contain both versions
 	history, err := client.ListLogsDestinationHistory(context.Background(), dest.ID, nil)
@@ -259,4 +283,5 @@ func TestLogsDestination_Create_InvalidType(t *testing.T) {
 	apiErr, ok := err.(*linodego.Error)
 	require.True(t, ok, "expected linodego.Error")
 	assert.Equal(t, 400, apiErr.Code)
+	assert.Contains(t, apiErr.Message, "[type] Must be one of akamai_object_storage, custom_https")
 }

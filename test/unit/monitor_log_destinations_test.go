@@ -9,7 +9,7 @@ import (
 )
 
 const (
-    testLogsDestinationID = 12345
+	testLogsDestinationID = 12345
 )
 
 func TestCreateLogsDestination(t *testing.T) {
@@ -27,9 +27,10 @@ func TestCreateLogsDestination(t *testing.T) {
 		Label: "my-logs-destination",
 		Type:  linodego.LogsDestinationTypeAkamaiObjectStorage,
 		Details: linodego.LogsDestinationDetailsCreateOptions{
-			AccessKeyID:     "123",
+			AccessKeyID:     "1ABCD23EFG4HIJKLMNO5",
+			AccessKeySecret: "1aB2CD3e4fgHi5JK6lmnop7qR8STU9VxYzabcdefHh",
 			BucketName:      "primary-bucket",
-			Host:            "primary-bucket-1.us-east-12.linodeobjects.com",
+			Host:            "primary-bucket-1.us-iad-12.linodeobjects.com",
 			Path:            &path,
 		},
 	}
@@ -41,7 +42,7 @@ func TestCreateLogsDestination(t *testing.T) {
 	assert.Equal(t, "OBJ_logs_destination", dest.Label)
 	assert.Equal(t, linodego.LogsDestinationStatusActive, dest.Status)
 	assert.Equal(t, linodego.LogsDestinationTypeAkamaiObjectStorage, dest.Type)
-	assert.Equal(t, "123", string(dest.Details.AccessKeyID))
+	assert.Equal(t, "1ABCD23EFG4HIJKLMNO5", string(dest.Details.AccessKeyID))
 	assert.Equal(t, "primary-bucket", dest.Details.BucketName)
 	assert.Equal(t, "primary-bucket-1.us-iad-12.linodeobjects.com", dest.Details.Host)
 	assert.Equal(t, "audit-logs", dest.Details.Path)
@@ -66,7 +67,7 @@ func TestCreateLogsDestination_NoPath(t *testing.T) {
 			AccessKeyID:     "1ABCD23EFG4HIJKLMNO5",
 			AccessKeySecret: "1aB2CD3e4fgHi5JK6lmnop7qR8STU9VxYzabcdefHh",
 			BucketName:      "primary-bucket",
-			Host:            "primary-bucket-1.us-east-12.linodeobjects.com",
+			Host:            "primary-bucket-1.us-iad-12.linodeobjects.com",
 			// Path intentionally omitted
 		},
 	}
@@ -97,7 +98,7 @@ func TestGetLogsDestination(t *testing.T) {
 	assert.Equal(t, "John Q. Linode", dest.CreatedBy)
 	assert.Equal(t, "Jane Q. Linode", dest.UpdatedBy)
 	assert.Equal(t, 1, dest.Version)
-	assert.Equal(t, "123", string(dest.Details.AccessKeyID))
+	assert.Equal(t, "1ABCD23EFG4HIJKLMNO5", string(dest.Details.AccessKeyID))
 	assert.Equal(t, "primary-bucket", dest.Details.BucketName)
 	assert.Equal(t, "primary-bucket-1.us-iad-12.linodeobjects.com", dest.Details.Host)
 	assert.Equal(t, "audit-logs", dest.Details.Path)

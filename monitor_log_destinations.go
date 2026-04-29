@@ -77,6 +77,8 @@ func (i *LogsDestination) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+const logsDestinationBaseEndpoint = "monitor/streams/destinations"
+
 // LogsDestinationCreateOptions are the options used to create a new logs destination.
 type LogsDestinationCreateOptions struct {
 	Label   string                              `json:"label"`
@@ -84,42 +86,51 @@ type LogsDestinationCreateOptions struct {
 	Details LogsDestinationDetailsCreateOptions `json:"details"`
 }
 
-// LogsDestinationUpdateOptions are the options used to update a logs destination.
+// LogsDestinationDetailsUpdateOptions represents the details block used when updating a LogsDestination.
+type LogsDestinationDetailsUpdateOptions struct {
+	AccessKeyID     string  `json:"access_key_id,omitempty"`
+	AccessKeySecret string  `json:"access_key_secret,omitempty"`
+	BucketName      string  `json:"bucket_name,omitempty"`
+	Host            string  `json:"host,omitempty"`
+	Path            *string `json:"path,omitempty"`
+}
+
+// LogsDestinationUpdateOptions are the options used to update a LogsDestination.
 type LogsDestinationUpdateOptions struct {
 	Label   string                               `json:"label,omitempty"`
-	Details *LogsDestinationDetailsCreateOptions `json:"details,omitempty"`
+	Details *LogsDestinationDetailsUpdateOptions `json:"details,omitempty"`
 }
 
 // ListLogsDestinations returns a paginated list of logs destinations.
 func (c *Client) ListLogsDestinations(ctx context.Context, opts *ListOptions) ([]LogsDestination, error) {
-	return getPaginatedResults[LogsDestination](ctx, c, "monitor/streams/destinations", opts)
+	return getPaginatedResults[LogsDestination](ctx, c, logsDestinationBaseEndpoint, opts)
 }
 
 // GetLogsDestination gets a single logs destination by ID.
 func (c *Client) GetLogsDestination(ctx context.Context, destinationID int) (*LogsDestination, error) {
-	e := formatAPIPath("monitor/streams/destinations/%d", destinationID)
+	e := formatAPIPath(logsDestinationBaseEndpoint+"/%d", destinationID)
 	return doGETRequest[LogsDestination](ctx, c, e)
 }
 
 // CreateLogsDestination creates a new logs destination.
 func (c *Client) CreateLogsDestination(ctx context.Context, opts LogsDestinationCreateOptions) (*LogsDestination, error) {
-	return doPOSTRequest[LogsDestination](ctx, c, "monitor/streams/destinations", opts)
+	return doPOSTRequest[LogsDestination](ctx, c, logsDestinationBaseEndpoint, opts)
 }
 
 // UpdateLogsDestination updates a logs destination.
 func (c *Client) UpdateLogsDestination(ctx context.Context, destinationID int, opts LogsDestinationUpdateOptions) (*LogsDestination, error) {
-	e := formatAPIPath("monitor/streams/destinations/%d", destinationID)
+	e := formatAPIPath(logsDestinationBaseEndpoint+"/%d", destinationID)
 	return doPUTRequest[LogsDestination](ctx, c, e, opts)
 }
 
 // DeleteLogsDestination deletes a logs destination.
 func (c *Client) DeleteLogsDestination(ctx context.Context, destinationID int) error {
-	e := formatAPIPath("monitor/streams/destinations/%d", destinationID)
+	e := formatAPIPath(logsDestinationBaseEndpoint+"/%d", destinationID)
 	return doDELETERequest(ctx, c, e)
 }
 
 // ListLogsDestinationHistory returns the version history for a logs destination.
 func (c *Client) ListLogsDestinationHistory(ctx context.Context, destinationID int, opts *ListOptions) ([]LogsDestination, error) {
-	e := formatAPIPath("monitor/streams/destinations/%d/history", destinationID)
+	e := formatAPIPath(logsDestinationBaseEndpoint+"/%d/history", destinationID)
 	return getPaginatedResults[LogsDestination](ctx, c, e, opts)
 }
