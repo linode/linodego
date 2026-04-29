@@ -2,6 +2,8 @@ package integration
 
 import (
 	"context"
+	"os"
+	"strings"
 	"testing"
 
 	"github.com/linode/linodego"
@@ -11,8 +13,10 @@ func TestInstance_CreateWithReservedIPAddress(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestInstance_CreateWithReservedIPAddress")
 	defer teardown()
 
+	region := getRegionsWithCaps(t, client, []string{linodego.CapabilityLinodes, linodego.CapabilityCloudFirewall})[0]
+
 	// Reserve an IP for testing
-	reservedIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{Region: "us-east"})
+	reservedIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{Region: region})
 	if err != nil {
 		t.Fatalf("Failed to reserve IP: %v", err)
 	}
@@ -23,7 +27,10 @@ func TestInstance_CreateWithReservedIPAddress(t *testing.T) {
 		}
 	}()
 
-	_, instanceTeardown, err := createInstanceWithReservedIP(t, client, reservedIP.Address)
+	_, instanceTeardown, err := createInstanceWithReservedIP(
+		t, client, reservedIP.Address, func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
+			opts.Region = region
+		})
 	defer instanceTeardown()
 	if err != nil {
 		t.Fatalf("Error creating instance with reserved IP: %s", err)
@@ -40,7 +47,7 @@ func createInstanceWithReservedIP(
 
 	createOpts := linodego.InstanceCreateOptions{
 		Label:    "go-test-ins-reserved-ip-" + randLabel(),
-		Region:   "us-east",
+		Region:   getRegionsWithCaps(t, client, []string{linodego.CapabilityLinodes, linodego.CapabilityCloudFirewall})[0],
 		Type:     "g6-nanode-1",
 		Booted:   linodego.Pointer(false),
 		Image:    "linode/alpine3.20",
@@ -77,7 +84,9 @@ func TestInstance_CreateWithOwnedNonAssignedReservedIP(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestInstance_CreateWithOwnedNonAssignedReservedIP")
 	defer teardown()
 
-	reservedIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{Region: "us-east"})
+	region := getRegionsWithCaps(t, client, []string{linodego.CapabilityLinodes, linodego.CapabilityCloudFirewall})[0]
+
+	reservedIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{Region: region})
 	if err != nil {
 		t.Fatalf("Failed to reserve IP: %v", err)
 	}
@@ -88,7 +97,10 @@ func TestInstance_CreateWithOwnedNonAssignedReservedIP(t *testing.T) {
 		}
 	}()
 
-	_, instanceTeardown, err := createInstanceWithReservedIP(t, client, reservedIP.Address)
+	_, instanceTeardown, err := createInstanceWithReservedIP(
+		t, client, reservedIP.Address, func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
+			opts.Region = region
+		})
 	defer instanceTeardown()
 	if err != nil {
 		t.Errorf("Unexpected error with owned non-assigned reserved IP: %v", err)
@@ -99,7 +111,9 @@ func TestInstance_CreateWithAlreadyAssignedReservedIP(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestInstance_CreateWithAlreadyAssignedReservedIP")
 	defer teardown()
 
-	reservedIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{Region: "us-east"})
+	region := getRegionsWithCaps(t, client, []string{linodego.CapabilityLinodes, linodego.CapabilityCloudFirewall})[0]
+
+	reservedIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{Region: region})
 	if err != nil {
 		t.Fatalf("Failed to reserve IP: %v", err)
 	}
@@ -111,14 +125,20 @@ func TestInstance_CreateWithAlreadyAssignedReservedIP(t *testing.T) {
 	}()
 
 	// First, create an instance with the reserved IP
-	_, instanceTeardown, err := createInstanceWithReservedIP(t, client, reservedIP.Address)
+	_, instanceTeardown, err := createInstanceWithReservedIP(
+		t, client, reservedIP.Address, func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
+			opts.Region = region
+		})
 	defer instanceTeardown()
 	if err != nil {
 		t.Fatalf("Failed to create initial instance: %v", err)
 	}
 
 	// Now try to create another instance with the same IP
-	_, secondInstanceTeardown, err := createInstanceWithReservedIP(t, client, reservedIP.Address)
+	_, secondInstanceTeardown, err := createInstanceWithReservedIP(
+		t, client, reservedIP.Address, func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
+			opts.Region = region
+		})
 	defer secondInstanceTeardown()
 	if err == nil {
 		t.Errorf("Expected error with already assigned reserved IP, but got none")
@@ -175,7 +195,9 @@ func TestInstance_CreateWithMultipleIPAddresses(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestInstance_CreateWithMultipleIPAddresses")
 	defer teardown()
 
-	reservedIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{Region: "us-east"})
+	region := getRegionsWithCaps(t, client, []string{linodego.CapabilityLinodes, linodego.CapabilityCloudFirewall})[0]
+
+	reservedIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{Region: region})
 	if err != nil {
 		t.Fatalf("Failed to reserve IP: %v", err)
 	}
@@ -188,6 +210,7 @@ func TestInstance_CreateWithMultipleIPAddresses(t *testing.T) {
 
 	_, instanceTeardown, err := createInstanceWithReservedIP(t, client, "", func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
 		opts.IPv4 = []string{reservedIP.Address, "192.0.2.2"}
+		opts.Region = region
 	})
 	defer instanceTeardown()
 	if err == nil {
@@ -212,11 +235,13 @@ func TestInstance_AddReservedIPToInstance(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestInstance_AddReservedIPToInstance")
 	defer teardown()
 
+	region := getRegionsWithCaps(t, client, []string{linodego.CapabilityLinodes, linodego.CapabilityCloudFirewall})[0]
+
 	// Create a test Linode instance
 	instance, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
-		Region:   "us-east",
+		Region:   region,
 		Type:     "g6-nanode-1",
-		Label:    "test-instance-for-ip-reservation",
+		Label:    "test-instance-for-ip-reservation_" + getUniqueText(),
 		RootPass: randPassword(),
 	})
 	if err != nil {
@@ -230,7 +255,7 @@ func TestInstance_AddReservedIPToInstance(t *testing.T) {
 
 	// Reserve an IP address
 	reservedIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{
-		Region: "us-east",
+		Region: region,
 	})
 	if err != nil {
 		t.Fatalf("Error reserving IP address: %v", err)
@@ -275,9 +300,16 @@ func TestInstance_AddReservedIPToInstanceVariants(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestInstance_AddReservedIPToInstanceVariants")
 	defer teardown()
 
+	env, _ := os.LookupEnv(linodego.APIHostVar)
+	if strings.Contains(env, "devcloud") {
+		t.Skip("Skipping test because DevCloud environment has only one region")
+	}
+
+	region := getRegionsWithCaps(t, client, []string{linodego.CapabilityLinodes, linodego.CapabilityCloudFirewall})[0]
+
 	// Create a test Linode instance
 	instance, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
-		Region:   "us-east",
+		Region:   region,
 		Type:     "g6-nanode-1",
 		Label:    "test-instance-for-ip-reservation",
 		RootPass: randPassword(),
@@ -293,7 +325,7 @@ func TestInstance_AddReservedIPToInstanceVariants(t *testing.T) {
 
 	// Reserve an IP address
 	reservedIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{
-		Region: "us-east",
+		Region: region,
 	})
 	if err != nil {
 		t.Fatalf("Error reserving IP address: %v", err)
@@ -331,7 +363,7 @@ func TestInstance_AddReservedIPToInstanceVariants(t *testing.T) {
 
 	// Reserve IP address
 	resIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{
-		Region: "us-east",
+		Region: region,
 	})
 	if err != nil {
 		t.Fatalf("Failed to reserve IP: %v", err)
@@ -378,8 +410,9 @@ func TestInstance_AddReservedIPToInstanceVariants(t *testing.T) {
 
 	// Test: Reserved IP in different datacenter
 	// Reserve an IP address
+	region2 := getRegionsWithCaps(t, client, []string{linodego.CapabilityLinodes, linodego.CapabilityCloudFirewall})[1]
 	diffDataCentreIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{
-		Region: "ca-central",
+		Region: region2,
 	})
 	if err != nil {
 		t.Fatalf("Error reserving IP address: %v", err)
@@ -458,8 +491,10 @@ func TestInstance_DeleteInstanceVariants(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestInstance_DeleteInstanceVariants")
 	defer teardown()
 
+	region := getRegionsWithCaps(t, client, []string{linodego.CapabilityLinodes, linodego.CapabilityCloudFirewall})[0]
+
 	// Create a Linode with a reserved IP
-	reservedIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{Region: "us-east"})
+	reservedIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{Region: region})
 	if err != nil {
 		t.Fatalf("Failed to reserve IP: %v", err)
 	}
@@ -471,7 +506,10 @@ func TestInstance_DeleteInstanceVariants(t *testing.T) {
 		}
 	}()
 
-	instance, _, err := createInstanceWithReservedIP(t, client, reservedIP.Address)
+	instance, _, err := createInstanceWithReservedIP(
+		t, client, reservedIP.Address, func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
+			opts.Region = region
+		})
 	if err != nil {
 		t.Fatalf("Error creating instance with reserved IP: %s", err)
 	}
@@ -496,7 +534,7 @@ func TestInstance_DeleteInstanceVariants(t *testing.T) {
 
 	//  Reassign the freed reserved IP to a new Linode
 	newInstance, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
-		Region:   "us-east",
+		Region:   region,
 		Type:     "g6-nanode-1",
 		Label:    "test-instance-freed-ip",
 		RootPass: randPassword(),
@@ -525,7 +563,7 @@ func TestInstance_DeleteInstanceVariants(t *testing.T) {
 
 	// PERMUTATION 4: Delete a Linode with an ephemeral IP
 	ephemeralInstance, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
-		Region:   "us-east",
+		Region:   region,
 		Type:     "g6-nanode-1",
 		Label:    "ephemeral-ip-test",
 		RootPass: randPassword(),
