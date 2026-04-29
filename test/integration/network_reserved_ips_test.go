@@ -523,7 +523,7 @@ func TestReservedIPAddresses_DeleteIPAddressVariants(t *testing.T) {
 }
 
 func TestReservedIPAddresses_GetIPReservationStatus(t *testing.T) {
-	client, teardown := createTestClient(t, "TestReservedIPAddresses_GetInstanceIPReservationStatus")
+	client, teardown := createTestClient(t, "fixtures/TestReservedIPAddresses_GetIPReservationStatus")
 	defer teardown()
 
 	region := getRegionsWithCaps(t, client, []string{linodego.CapabilityLinodes, linodego.CapabilityCloudFirewall})[0]
