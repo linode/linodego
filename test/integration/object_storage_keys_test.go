@@ -116,13 +116,11 @@ func TestObjectStorageKeys_Limited(t *testing.T) {
 	createOpts := testBasicObjectStorageKeyCreateOpts
 	createOpts.BucketAccess = &[]ObjectStorageKeyBucketAccess{
 		{
-			Cluster:     "us-east-1",
 			Region:      "us-east",
 			BucketName:  bucket.Label,
 			Permissions: "read_only",
 		},
 		{
-			Cluster:     "us-east-1",
 			Region:      "us-east",
 			BucketName:  bucket.Label,
 			Permissions: "read_write",
@@ -170,8 +168,8 @@ func TestObjectStorageKeys_Regional_Limited(t *testing.T) {
 
 	client, bucket, teardown, err := setupObjectStorageBucket(t, []objectStorageBucketModifier{
 		func(createOpts *ObjectStorageBucketCreateOptions) {
-			createOpts.Cluster = ""
 			createOpts.Region = region
+			createOpts.Label += "go-test-def-regional"
 		},
 	}, "fixtures/TestObjectStorageKeys_Regional_Limited",
 		client, teardown, nil)

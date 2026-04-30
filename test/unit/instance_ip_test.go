@@ -82,8 +82,8 @@ func TestInstanceIPAddress_Update(t *testing.T) {
 	defer base.TearDown(t)
 
 	rdns := "custom.reverse.dns"
-	updateOpts := linodego.IPAddressUpdateOptions{
-		RDNS: &rdns,
+	updateOpts := linodego.IPAddressUpdateOptionsV2{
+		RDNS: linodego.DoublePointer(rdns),
 	}
 
 	base.MockPut("linode/instances/123/ips/192.0.2.1", fixtureData)

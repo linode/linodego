@@ -58,10 +58,6 @@ const (
 	CapabilityVPCIPv6LargePrefixes             string = "VPC IPv6 Large Prefixes"
 	CapabilityVPCIPv6Stack                     string = "VPC IPv6 Stack"
 	CapabilityVPCsExtra                        string = "VPCs Extra"
-
-	// Deprecated: CapabilityObjectStorageRegions constant has been
-	// renamed to `CapabilityObjectStorageAccessKeyRegions`.
-	CapabilityObjectStorageRegions string = CapabilityObjectStorageAccessKeyRegions
 )
 
 // Region-related endpoints have a custom expiry time as the

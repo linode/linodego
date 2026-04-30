@@ -114,7 +114,7 @@ func TestObjectStorageBucket_GetAccess(t *testing.T) {
 
 	base.MockGet("object-storage/buckets/"+clusterID+"/"+bucketLabel+"/access", fixtureData)
 
-	access, err := base.Client.GetObjectStorageBucketAccess(context.Background(), clusterID, bucketLabel)
+	access, err := base.Client.GetObjectStorageBucketAccessV2(context.Background(), clusterID, bucketLabel)
 	assert.NoError(t, err)
 	assert.NotNil(t, access)
 	assert.Equal(t, linodego.ACLPublicRead, access.ACL)

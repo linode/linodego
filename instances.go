@@ -128,20 +128,6 @@ type InstanceTransfer struct {
 	Quota int `json:"quota"`
 }
 
-// Deprecated: use MonthlyInstanceTransferStatsV2 for new implementations
-//
-// MonthlyInstanceTransferStats pool stats for a Linode Instance network transfer statistics for a specific month
-type MonthlyInstanceTransferStats struct {
-	// The amount of inbound public network traffic received by this Linode, in bytes, for a specific year/month.
-	BytesIn int `json:"bytes_in"`
-
-	// The amount of outbound public network traffic sent by this Linode, in bytes, for a specific year/month.
-	BytesOut int `json:"bytes_out"`
-
-	// The total amount of public network traffic sent and received by this Linode, in bytes, for a specific year/month.
-	BytesTotal int `json:"bytes_total"`
-}
-
 // MonthlyInstanceTransferStatsV2 pool stats for a Linode Instance network transfer statistics for a specific month
 type MonthlyInstanceTransferStatsV2 struct {
 	// The amount of inbound public network traffic received by this Linode, in bytes, for a specific year/month.
@@ -210,9 +196,6 @@ type InstanceCreateOptions struct {
 	SwapSize *int  `json:"swap_size,omitempty"`
 	Booted   *bool `json:"booted,omitempty"`
 
-	// Deprecated: group is a deprecated property denoting a group label for the Linode.
-	Group string `json:"group,omitempty"`
-
 	IPv4 []string `json:"ipv4,omitempty"`
 
 	MaintenancePolicy *string `json:"maintenance_policy,omitempty"`
@@ -232,9 +215,6 @@ type InstanceUpdateOptions struct {
 	Alerts          *InstanceAlert  `json:"alerts,omitempty"`
 	WatchdogEnabled *bool           `json:"watchdog_enabled,omitempty"`
 	Tags            *[]string       `json:"tags,omitempty"`
-
-	// Deprecated: group is a deprecated property denoting a group label for the Linode.
-	Group *string `json:"group,omitempty"`
 
 	MaintenancePolicy *string `json:"maintenance_policy,omitempty"`
 }
@@ -364,7 +344,6 @@ func (backup *InstanceBackup) UnmarshalJSON(b []byte) error {
 func (i *Instance) GetUpdateOptions() InstanceUpdateOptions {
 	return InstanceUpdateOptions{
 		Label:             i.Label,
-		Group:             &i.Group,
 		Backups:           i.Backups,
 		Alerts:            i.Alerts,
 		WatchdogEnabled:   &i.WatchdogEnabled,
@@ -387,9 +366,6 @@ type InstanceCloneOptions struct {
 	PrivateIP      bool                                 `json:"private_ip,omitempty"`
 	Metadata       *InstanceMetadataOptions             `json:"metadata,omitempty"`
 	PlacementGroup *InstanceCreatePlacementGroupOptions `json:"placement_group,omitempty"`
-
-	// Deprecated: group is a deprecated property denoting a group label for the Linode.
-	Group string `json:"group,omitempty"`
 }
 
 // InstanceResizeOptions is an options struct used when resizing an instance
@@ -425,12 +401,6 @@ func (c *Client) GetInstance(ctx context.Context, linodeID int) (*Instance, erro
 func (c *Client) GetInstanceTransfer(ctx context.Context, linodeID int) (*InstanceTransfer, error) {
 	e := formatAPIPath("linode/instances/%d/transfer", linodeID)
 	return doGETRequest[InstanceTransfer](ctx, c, e)
-}
-
-// GetInstanceTransferMonthly gets the instance's network transfer pool statistics for a specific month.
-func (c *Client) GetInstanceTransferMonthly(ctx context.Context, linodeID, year, month int) (*MonthlyInstanceTransferStats, error) {
-	e := formatAPIPath("linode/instances/%d/transfer/%d/%d", linodeID, year, month)
-	return doGETRequest[MonthlyInstanceTransferStats](ctx, c, e)
 }
 
 // GetInstanceTransferMonthlyV2 gets the instance's network transfer pool statistics for a specific month.
@@ -545,12 +515,6 @@ func (c *Client) ResizeInstance(ctx context.Context, linodeID int, opts Instance
 // ShutdownInstance - Shutdown an instance
 func (c *Client) ShutdownInstance(ctx context.Context, id int) error {
 	return c.simpleInstanceAction(ctx, "shutdown", id)
-}
-
-// Deprecated: Please use UpgradeInstance instead.
-// MutateInstance Upgrades a Linode to its next generation.
-func (c *Client) MutateInstance(ctx context.Context, id int) error {
-	return c.simpleInstanceAction(ctx, "mutate", id)
 }
 
 // InstanceUpgradeOptions is a struct representing the options for upgrading a Linode

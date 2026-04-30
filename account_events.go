@@ -231,14 +231,6 @@ const (
 	ActionVPCSubnetCreate                         EventAction = "subnet_create"
 	ActionVPCSubnetDelete                         EventAction = "subnet_delete"
 	ActionVPCSubnetUpdate                         EventAction = "subnet_update"
-
-	// Deprecated: incorrect spelling,
-	// to be removed in the next major version release.
-	ActionVolumeDelte EventAction = "volume_delete"
-
-	// Deprecated: incorrect spelling,
-	// to be removed in the next major version
-	ActionCreateCardUpdated = ActionCreditCardUpdated
 )
 
 // EntityType constants start with Entity and include Linode API Event Entity Types
@@ -341,16 +333,6 @@ func (c *Client) ListEvents(ctx context.Context, opts *ListOptions) ([]Event, er
 func (c *Client) GetEvent(ctx context.Context, eventID int) (*Event, error) {
 	e := formatAPIPath("account/events/%d", eventID)
 	return doGETRequest[Event](ctx, c, e)
-}
-
-// MarkEventRead marks a single Event as read.
-//
-// Deprecated: `MarkEventRead` is a deprecated API, please consider using `MarkEventsSeen` instead.
-// Please note that the `MarkEventsSeen` API functions differently and will mark all events up to and
-// including the referenced event-id as "seen" rather than individual events.
-func (c *Client) MarkEventRead(ctx context.Context, event *Event) error {
-	e := formatAPIPath("account/events/%d/read", event.ID)
-	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
 }
 
 // MarkEventsSeen marks all Events up to and including this Event by ID as seen.

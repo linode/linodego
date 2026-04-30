@@ -55,7 +55,6 @@ type AlertDefinition struct {
 	Type              string                  `json:"type"`
 	ServiceType       string                  `json:"service_type"`
 	Status            AlertDefinitionStatus   `json:"status"`
-	HasMoreResources  bool                    `json:"has_more_resources"` // Deprecated: use Entities.HasMoreResources.
 	RuleCriteria      RuleCriteria            `json:"rule_criteria"`
 	TriggerConditions TriggerConditions       `json:"trigger_conditions"`
 	AlertChannels     []AlertChannelEnvelope  `json:"alert_channels"`
@@ -63,20 +62,12 @@ type AlertDefinition struct {
 	Updated           *time.Time              `json:"-"`
 	UpdatedBy         string                  `json:"updated_by"`
 	CreatedBy         string                  `json:"created_by"`
-	EntityIDs         []string                `json:"entity_ids"` // Deprecated: use Entities.url to list associated entities.
 	Description       string                  `json:"description"`
 	Class             string                  `json:"class"`
 	Scope             AlertDefinitionScope    `json:"scope"`
 	Regions           []string                `json:"regions"`
 	Entities          AlertDefinitionEntities `json:"entities"`
 }
-
-// Backwards-compatible alias
-
-// MonitorAlertDefinition represents an ACLP Alert Definition object
-//
-// Deprecated: AlertDefinition should be used in all new implementations.
-type MonitorAlertDefinition = AlertDefinition
 
 // TriggerConditions represents the trigger conditions for an alert.
 type TriggerConditions struct {
@@ -238,7 +229,7 @@ func (c *Client) GetMonitorAlertDefinition(
 	ctx context.Context,
 	serviceType string,
 	alertID int,
-) (*MonitorAlertDefinition, error) {
+) (*AlertDefinition, error) {
 	e := formatAPIPath("monitor/services/%s/alert-definitions/%d", serviceType, alertID)
 	return doGETRequest[AlertDefinition](ctx, c, e)
 }
@@ -248,7 +239,7 @@ func (c *Client) CreateMonitorAlertDefinition(
 	ctx context.Context,
 	serviceType string,
 	opts AlertDefinitionCreateOptions,
-) (*MonitorAlertDefinition, error) {
+) (*AlertDefinition, error) {
 	e := formatAPIPath("monitor/services/%s/alert-definitions", serviceType)
 	return doPOSTRequest[AlertDefinition](ctx, c, e, opts)
 }
@@ -260,7 +251,7 @@ func (c *Client) CreateMonitorAlertDefinitionWithIdempotency(
 	serviceType string,
 	opts AlertDefinitionCreateOptions,
 	idempotencyKey string,
-) (*MonitorAlertDefinition, error) {
+) (*AlertDefinition, error) {
 	e := formatAPIPath("monitor/services/%s/alert-definitions", serviceType)
 
 	var result AlertDefinition

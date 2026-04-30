@@ -15,9 +15,6 @@ type Domain struct {
 	// If this Domain represents the authoritative source of information for the domain it describes, or if it is a read-only copy of a master (also called a slave).
 	Type DomainType `json:"type"` // Enum:"master" "slave"
 
-	// Deprecated: The group this Domain belongs to. This is for display purposes only.
-	Group string `json:"group"`
-
 	// Used to control whether this Domain is currently being rendered.
 	Status DomainStatus `json:"status"` // Enum:"disabled" "active" "edit_mode" "has_errors"
 
@@ -178,7 +175,6 @@ type DomainImportOptions struct {
 func (d Domain) GetUpdateOptions() (du DomainUpdateOptions) {
 	du.Domain = d.Domain
 	du.Type = d.Type
-	du.Group = d.Group
 	du.Status = d.Status
 	du.Description = d.Description
 	du.SOAEmail = d.SOAEmail
