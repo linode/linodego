@@ -8,6 +8,7 @@ import (
 
 	"github.com/linode/linodego"
 	. "github.com/linode/linodego"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -135,6 +136,8 @@ func TestIPAddresses_List_smoke(t *testing.T) {
 	for _, ip := range reservedIpAddresses {
 		if !ip.Reserved {
 			t.Errorf("IP %s is in the reserved list but has Reserved field set to false", ip.Address)
+		} else {
+			assert.NotNil(t, ip.Tags)
 		}
 	}
 
@@ -151,6 +154,8 @@ func TestIPAddresses_List_smoke(t *testing.T) {
 	for _, ip := range unreservedIpAddresses {
 		if ip.Reserved {
 			t.Errorf("IP %s is in the non-reserved list but has Reserved field set to true", ip.Address)
+		} else {
+			assert.Nil(t, ip.Tags)
 		}
 	}
 }
