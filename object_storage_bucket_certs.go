@@ -16,21 +16,21 @@ type ObjectStorageBucketCertUploadOptions struct {
 // UploadObjectStorageBucketCertV2 uploads a TLS/SSL Cert to be used with an Object Storage Bucket.
 func (c *Client) UploadObjectStorageBucketCertV2(
 	ctx context.Context,
-	clusterOrRegionID, bucket string,
+	regionID, bucket string,
 	opts ObjectStorageBucketCertUploadOptions,
 ) (*ObjectStorageBucketCertV2, error) {
-	e := formatAPIPath("object-storage/buckets/%s/%s/ssl", clusterOrRegionID, bucket)
+	e := formatAPIPath("object-storage/buckets/%s/%s/ssl", regionID, bucket)
 	return doPOSTRequest[ObjectStorageBucketCertV2](ctx, c, e, opts)
 }
 
 // GetObjectStorageBucketCertV2 gets an ObjectStorageBucketCert
-func (c *Client) GetObjectStorageBucketCertV2(ctx context.Context, clusterOrRegionID, bucket string) (*ObjectStorageBucketCertV2, error) {
-	e := formatAPIPath("object-storage/buckets/%s/%s/ssl", clusterOrRegionID, bucket)
+func (c *Client) GetObjectStorageBucketCertV2(ctx context.Context, regionID, bucket string) (*ObjectStorageBucketCertV2, error) {
+	e := formatAPIPath("object-storage/buckets/%s/%s/ssl", regionID, bucket)
 	return doGETRequest[ObjectStorageBucketCertV2](ctx, c, e)
 }
 
 // DeleteObjectStorageBucketCert deletes an ObjectStorageBucketCert
-func (c *Client) DeleteObjectStorageBucketCert(ctx context.Context, clusterOrRegionID, bucket string) error {
-	e := formatAPIPath("object-storage/buckets/%s/%s/ssl", clusterOrRegionID, bucket)
+func (c *Client) DeleteObjectStorageBucketCert(ctx context.Context, regionID, bucket string) error {
+	e := formatAPIPath("object-storage/buckets/%s/%s/ssl", regionID, bucket)
 	return doDELETERequest(ctx, c, e)
 }

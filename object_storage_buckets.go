@@ -117,13 +117,13 @@ func (c *Client) ListObjectStorageBuckets(ctx context.Context, opts *ListOptions
 }
 
 // ListObjectStorageBucketsInCluster lists all ObjectStorageBuckets of a cluster
-func (c *Client) ListObjectStorageBucketsInCluster(ctx context.Context, opts *ListOptions, regionId string) ([]ObjectStorageBucket, error) {
-	return getPaginatedResults[ObjectStorageBucket](ctx, c, formatAPIPath("object-storage/buckets/%s", regionId), opts)
+func (c *Client) ListObjectStorageBucketsInCluster(ctx context.Context, opts *ListOptions, regionID string) ([]ObjectStorageBucket, error) {
+	return getPaginatedResults[ObjectStorageBucket](ctx, c, formatAPIPath("object-storage/buckets/%s", regionID), opts)
 }
 
 // GetObjectStorageBucket gets the ObjectStorageBucket with the provided label
-func (c *Client) GetObjectStorageBucket(ctx context.Context, regionId, label string) (*ObjectStorageBucket, error) {
-	e := formatAPIPath("object-storage/buckets/%s/%s", regionId, label)
+func (c *Client) GetObjectStorageBucket(ctx context.Context, regionID, label string) (*ObjectStorageBucket, error) {
+	e := formatAPIPath("object-storage/buckets/%s/%s", regionID, label)
 	return doGETRequest[ObjectStorageBucket](ctx, c, e)
 }
 
@@ -133,30 +133,30 @@ func (c *Client) CreateObjectStorageBucket(ctx context.Context, opts ObjectStora
 }
 
 // UpdateObjectStorageBucketAccess updates the access configuration for an ObjectStorageBucket
-func (c *Client) UpdateObjectStorageBucketAccess(ctx context.Context, regionId, label string, opts ObjectStorageBucketUpdateAccessOptions) error {
-	e := formatAPIPath("object-storage/buckets/%s/%s/access", regionId, label)
+func (c *Client) UpdateObjectStorageBucketAccess(ctx context.Context, regionID, label string, opts ObjectStorageBucketUpdateAccessOptions) error {
+	e := formatAPIPath("object-storage/buckets/%s/%s/access", regionID, label)
 	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
 
 // GetObjectStorageBucketAccessV2 gets the current access config for a bucket
-func (c *Client) GetObjectStorageBucketAccessV2(ctx context.Context, regionId, label string) (*ObjectStorageBucketAccessV2, error) {
-	e := formatAPIPath("object-storage/buckets/%s/%s/access", regionId, label)
+func (c *Client) GetObjectStorageBucketAccessV2(ctx context.Context, regionID, label string) (*ObjectStorageBucketAccessV2, error) {
+	e := formatAPIPath("object-storage/buckets/%s/%s/access", regionID, label)
 	return doGETRequest[ObjectStorageBucketAccessV2](ctx, c, e)
 }
 
 // DeleteObjectStorageBucket deletes the ObjectStorageBucket with the specified label
-func (c *Client) DeleteObjectStorageBucket(ctx context.Context, regionId, label string) error {
-	e := formatAPIPath("object-storage/buckets/%s/%s", regionId, label)
+func (c *Client) DeleteObjectStorageBucket(ctx context.Context, regionID, label string) error {
+	e := formatAPIPath("object-storage/buckets/%s/%s", regionID, label)
 	return doDELETERequest(ctx, c, e)
 }
 
 // ListObjectStorageBucketContents lists the contents of the specified ObjectStorageBucket
 func (c *Client) ListObjectStorageBucketContents(
 	ctx context.Context,
-	regionId, label string,
+	regionID, label string,
 	params *ObjectStorageBucketListContentsParams,
 ) (*ObjectStorageBucketContent, error) {
-	basePath := formatAPIPath("object-storage/buckets/%s/%s/object-list", regionId, label)
+	basePath := formatAPIPath("object-storage/buckets/%s/%s/object-list", regionID, label)
 
 	queryString := ""
 
