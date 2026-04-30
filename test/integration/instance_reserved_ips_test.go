@@ -7,6 +7,8 @@ import (
 	"testing"
 
 	"github.com/linode/linodego"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestInstance_CreateWithReservedIPAddress(t *testing.T) {
@@ -17,24 +19,25 @@ func TestInstance_CreateWithReservedIPAddress(t *testing.T) {
 
 	// Reserve an IP for testing
 	reservedIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{Region: region})
-	if err != nil {
-		t.Fatalf("Failed to reserve IP: %v", err)
-	}
-	defer func() {
-		err := client.DeleteReservedIPAddress(context.Background(), reservedIP.Address)
-		if err != nil {
-			t.Errorf("Failed to delete reserved IP: %v", err)
-		}
-	}()
+	require.NoErrorf(t, err, "Failed to reserve IP: %v", err)
 
 	_, instanceTeardown, err := createInstanceWithReservedIP(
 		t, client, reservedIP.Address, func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
 			opts.Region = region
 		})
-	defer instanceTeardown()
-	if err != nil {
-		t.Fatalf("Error creating instance with reserved IP: %s", err)
-	}
+	require.NoErrorf(t, err, "Error creating instance with reserved IP: %s", err)
+
+	defer func() {
+		instanceTeardown()
+
+		// Fetch reserved IP to verify that it still exists after instance deletion
+		fetchedIP, fetchErr := client.GetReservedIPAddress(context.Background(), reservedIP.Address)
+		require.NoErrorf(t, fetchErr, "Error fetching reserved IP after instance deletion: %v", fetchErr)
+		assert.NotNil(t, fetchedIP, "Expected reserved IP to still exist after instance deletion, but got nil")
+
+		err = client.DeleteReservedIPAddress(context.Background(), reservedIP.Address)
+		require.NoError(t, err, "Failed to delete reserved IP")
+	}()
 }
 
 func createInstanceWithReservedIP(

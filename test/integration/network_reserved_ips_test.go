@@ -8,6 +8,7 @@ import (
 
 	"github.com/linode/linodego"
 	. "github.com/linode/linodego"
+	"github.com/stretchr/testify/assert"
 )
 
 // TestReservedIPAddress_ReserveWithTags verifies that tags can be passed when reserving
@@ -204,6 +205,7 @@ func TestReservedIPAddresses_EndToEndTest(t *testing.T) {
 	// Attempt to reserve an IP
 	resIP, resErr := client.ReserveIPAddress(context.Background(), ReserveIPOptions{
 		Region: getRegionsWithCaps(t, client, []string{linodego.CapabilityLinodes, linodego.CapabilityCloudFirewall})[0],
+		Tags:   []string{"lb"},
 	})
 
 	if resErr != nil {
@@ -233,6 +235,15 @@ func TestReservedIPAddresses_EndToEndTest(t *testing.T) {
 
 	if len(verifyList) != initialCount+1 {
 		t.Errorf("Expected IP count to increase by 1, got %d, want %d", len(verifyList), initialCount+1)
+	}
+
+	for _, addressIP := range verifyList {
+		if addressIP.Address == resIP.Address {
+			assert.Nil(t, addressIP.AssignedEntity)
+			assert.True(t, addressIP.Reserved)
+			assert.Equal(t, 0, addressIP.LinodeID)
+			assert.Equal(t, []string{"lb"}, addressIP.Tags)
+		}
 	}
 
 	// Delete the reserved IP
