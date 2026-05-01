@@ -116,7 +116,7 @@ func (c *Client) ListObjectStorageBuckets(ctx context.Context, opts *ListOptions
 	return getPaginatedResults[ObjectStorageBucket](ctx, c, "object-storage/buckets", opts)
 }
 
-// ListObjectStorageBucketsInCluster lists all ObjectStorageBuckets of a cluster
+// ListObjectStorageBucketsInCluster lists all ObjectStorageBuckets in the specified region
 func (c *Client) ListObjectStorageBucketsInCluster(ctx context.Context, opts *ListOptions, regionID string) ([]ObjectStorageBucket, error) {
 	return getPaginatedResults[ObjectStorageBucket](ctx, c, formatAPIPath("object-storage/buckets/%s", regionID), opts)
 }
