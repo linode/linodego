@@ -125,7 +125,7 @@ func TestObjectStorageBucketCert_smoke(t *testing.T) {
 		fixtureTeardown()
 	}()
 
-	_, err = client.UploadObjectStorageBucketCertV2(context.TODO(), bucket.Region, bucket.Label, linodego.ObjectStorageBucketCertUploadOptions{
+	_, err = client.UploadObjectStorageBucketCert(context.TODO(), bucket.Region, bucket.Label, linodego.ObjectStorageBucketCertUploadOptions{
 		Certificate: testCertifcate,
 		PrivateKey:  testPrivateKey,
 	})
@@ -139,12 +139,12 @@ func TestObjectStorageBucketCert_smoke(t *testing.T) {
 		}
 	}()
 
-	certv2, err := client.GetObjectStorageBucketCertV2(context.TODO(), bucket.Region, bucket.Label)
+	cert, err := client.GetObjectStorageBucketCert(context.TODO(), bucket.Region, bucket.Label)
 	if err != nil {
 		t.Fatalf("failed to get bucket cert: %s", err)
 	}
 
-	if certv2 == nil || !*certv2.SSL {
+	if cert == nil || !*cert.SSL {
 		t.Fatalf("expected cert.SSL to be true; got false")
 	}
 }

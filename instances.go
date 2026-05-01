@@ -128,8 +128,8 @@ type InstanceTransfer struct {
 	Quota int `json:"quota"`
 }
 
-// MonthlyInstanceTransferStatsV2 pool stats for a Linode Instance network transfer statistics for a specific month
-type MonthlyInstanceTransferStatsV2 struct {
+// MonthlyInstanceTransferStats pool stats for a Linode Instance network transfer statistics for a specific month
+type MonthlyInstanceTransferStats struct {
 	// The amount of inbound public network traffic received by this Linode, in bytes, for a specific year/month.
 	BytesIn uint64 `json:"bytes_in"`
 
@@ -403,10 +403,10 @@ func (c *Client) GetInstanceTransfer(ctx context.Context, linodeID int) (*Instan
 	return doGETRequest[InstanceTransfer](ctx, c, e)
 }
 
-// GetInstanceTransferMonthlyV2 gets the instance's network transfer pool statistics for a specific month.
-func (c *Client) GetInstanceTransferMonthlyV2(ctx context.Context, linodeID, year, month int) (*MonthlyInstanceTransferStatsV2, error) {
+// GetInstanceTransferMonthly gets the instance's network transfer pool statistics for a specific month.
+func (c *Client) GetInstanceTransferMonthly(ctx context.Context, linodeID, year, month int) (*MonthlyInstanceTransferStats, error) {
 	e := formatAPIPath("linode/instances/%d/transfer/%d/%d", linodeID, year, month)
-	return doGETRequest[MonthlyInstanceTransferStatsV2](ctx, c, e)
+	return doGETRequest[MonthlyInstanceTransferStats](ctx, c, e)
 }
 
 // CreateInstance creates a Linode instance

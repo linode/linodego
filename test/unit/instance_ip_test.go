@@ -82,7 +82,7 @@ func TestInstanceIPAddress_Update(t *testing.T) {
 	defer base.TearDown(t)
 
 	rdns := "custom.reverse.dns"
-	updateOpts := linodego.IPAddressUpdateOptionsV2{
+	updateOpts := linodego.IPAddressUpdateOptions{
 		RDNS: linodego.DoublePointer(rdns),
 	}
 

@@ -17,7 +17,7 @@ type ObjectStorageObjectURL struct {
 	Exists bool   `json:"exists"`
 }
 
-type ObjectStorageObjectACLConfigV2 struct {
+type ObjectStorageObjectACLConfig struct {
 	ACL    *string `json:"acl"`
 	ACLXML *string `json:"acl_xml"`
 }
@@ -36,16 +36,16 @@ func (c *Client) CreateObjectStorageObjectURL(
 	return doPOSTRequest[ObjectStorageObjectURL](ctx, c, e, opts)
 }
 
-func (c *Client) GetObjectStorageObjectACLConfigV2(ctx context.Context, regionID, label, object string) (*ObjectStorageObjectACLConfigV2, error) {
+func (c *Client) GetObjectStorageObjectACLConfig(ctx context.Context, regionID, label, object string) (*ObjectStorageObjectACLConfig, error) {
 	e := formatAPIPath("object-storage/buckets/%s/%s/object-acl?name=%s", regionID, label, object)
-	return doGETRequest[ObjectStorageObjectACLConfigV2](ctx, c, e)
+	return doGETRequest[ObjectStorageObjectACLConfig](ctx, c, e)
 }
 
-func (c *Client) UpdateObjectStorageObjectACLConfigV2(
+func (c *Client) UpdateObjectStorageObjectACLConfig(
 	ctx context.Context,
 	regionID, label string,
 	opts ObjectStorageObjectACLConfigUpdateOptions,
-) (*ObjectStorageObjectACLConfigV2, error) {
+) (*ObjectStorageObjectACLConfig, error) {
 	e := formatAPIPath("object-storage/buckets/%s/%s/object-acl", regionID, label)
-	return doPUTRequest[ObjectStorageObjectACLConfigV2](ctx, c, e, opts)
+	return doPUTRequest[ObjectStorageObjectACLConfig](ctx, c, e, opts)
 }

@@ -87,17 +87,17 @@ func TestObjectStorageObject_Smoke(t *testing.T) {
 	putObjectStorageObject(t, client, bucket, object, "testing123")
 	defer deleteObjectStorageObject(t, client, bucket, object)
 
-	configv2, err := client.GetObjectStorageObjectACLConfigV2(context.TODO(), bucket.Region, bucket.Label, object)
+	config, err := client.GetObjectStorageObjectACLConfig(context.TODO(), bucket.Region, bucket.Label, object)
 	if err != nil {
 		t.Errorf("failed to get ACL config: %s", err)
 	}
 
-	if configv2.ACL == nil {
+	if config.ACL == nil {
 		t.Errorf("expected ACL to be private; got nil")
 	}
 
-	if configv2.ACL != nil && *configv2.ACL != "private" {
-		t.Errorf("expected ACL to be private; got %s", *configv2.ACL)
+	if config.ACL != nil && *config.ACL != "private" {
+		t.Errorf("expected ACL to be private; got %s", *config.ACL)
 	}
 
 	content, err := client.ListObjectStorageBucketContents(context.TODO(), bucket.Region, bucket.Label, nil)
@@ -110,28 +110,28 @@ func TestObjectStorageObject_Smoke(t *testing.T) {
 	}
 
 	updateOpts := linodego.ObjectStorageObjectACLConfigUpdateOptions{ACL: "public-read", Name: object}
-	if _, err = client.UpdateObjectStorageObjectACLConfigV2(context.TODO(), bucket.Region, bucket.Label, updateOpts); err != nil {
+	if _, err = client.UpdateObjectStorageObjectACLConfig(context.TODO(), bucket.Region, bucket.Label, updateOpts); err != nil {
 		t.Errorf("failed to update ACL config: %s", err)
 	}
 
-	configv2, err = client.GetObjectStorageObjectACLConfigV2(context.TODO(), bucket.Region, bucket.Label, object)
+	config, err = client.GetObjectStorageObjectACLConfig(context.TODO(), bucket.Region, bucket.Label, object)
 	if err != nil {
 		t.Errorf("failed to get ACL config: %s", err)
 	}
 
-	if configv2.ACL == nil {
+	if config.ACL == nil {
 		t.Errorf("expected ACL config to be %s; got nil", updateOpts.ACL)
 	}
 
-	if configv2.ACL != nil && *configv2.ACL != updateOpts.ACL {
+	if config.ACL != nil && *config.ACL != updateOpts.ACL {
 		t.Errorf("expected ACL config to be %s; got nil", updateOpts.ACL)
 	}
 
-	if configv2.ACLXML == nil {
+	if config.ACLXML == nil {
 		t.Error("expected ACL XML to be included")
 	}
 
-	if configv2.ACLXML != nil && *configv2.ACLXML == "" {
+	if config.ACLXML != nil && *config.ACLXML == "" {
 		t.Error("expected ACL XML to be included")
 	}
 }

@@ -8,7 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestObjectStorageBucketCertV2_Get(t *testing.T) {
+func TestObjectStorageBucketCert_Get(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("object_storage_bucket_cert")
 	assert.NoError(t, err)
 
@@ -21,14 +21,14 @@ func TestObjectStorageBucketCertV2_Get(t *testing.T) {
 
 	base.MockGet("object-storage/buckets/"+clusterID+"/"+bucketName+"/ssl", fixtureData)
 
-	cert, err := base.Client.GetObjectStorageBucketCertV2(context.Background(), clusterID, bucketName)
+	cert, err := base.Client.GetObjectStorageBucketCert(context.Background(), clusterID, bucketName)
 	assert.NoError(t, err)
 	assert.NotNil(t, cert)
 	assert.NotNil(t, cert.SSL)
 	assert.True(t, *cert.SSL)
 }
 
-func TestObjectStorageBucketCertV2_Upload(t *testing.T) {
+func TestObjectStorageBucketCert_Upload(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("object_storage_bucket_cert")
 	assert.NoError(t, err)
 
@@ -46,7 +46,7 @@ func TestObjectStorageBucketCertV2_Upload(t *testing.T) {
 
 	base.MockPost("object-storage/buckets/"+clusterID+"/"+bucketName+"/ssl", fixtureData)
 
-	uploadedCert, err := base.Client.UploadObjectStorageBucketCertV2(context.Background(), clusterID, bucketName, uploadOpts)
+	uploadedCert, err := base.Client.UploadObjectStorageBucketCert(context.Background(), clusterID, bucketName, uploadOpts)
 	assert.NoError(t, err)
 	assert.NotNil(t, uploadedCert)
 	assert.NotNil(t, uploadedCert.SSL)

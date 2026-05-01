@@ -116,7 +116,7 @@ func TestInstance_GetMonthlyTransfer(t *testing.T) {
 	testYear := 2026
 	testMonth := 1
 
-	_, err = client.GetInstanceTransferMonthlyV2(context.Background(), instance.ID, testYear, testMonth)
+	_, err = client.GetInstanceTransferMonthly(context.Background(), instance.ID, testYear, testMonth)
 	if err != nil {
 		t.Errorf("Error getting monthly instance transfer, expected struct, got error %v", err)
 	}

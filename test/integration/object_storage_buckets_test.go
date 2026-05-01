@@ -132,23 +132,23 @@ func TestObjectStorageBucket_Access_Get(t *testing.T) {
 	)
 	defer teardown()
 
-	newBucketv2, err := client.GetObjectStorageBucketAccessV2(context.Background(), bucket.Region, bucket.Label)
+	newBucket, err := client.GetObjectStorageBucketAccess(context.Background(), bucket.Region, bucket.Label)
 	if err != nil {
 		t.Errorf("Error getting ObjectStorageBucket access, got error %s", err)
 	}
 
-	if newBucketv2.CorsEnabled == nil {
+	if newBucket.CorsEnabled == nil {
 		t.Errorf("ObjectStorageBucket access CORS does not match update, expected %t, got nil", corsEnabled)
 	}
 
-	if newBucketv2.CorsEnabled != nil && *newBucketv2.CorsEnabled != corsEnabled {
-		t.Errorf("ObjectStorageBucket access CORS does not match update, expected %t, got %t", corsEnabled, *newBucketv2.CorsEnabled)
+	if newBucket.CorsEnabled != nil && *newBucket.CorsEnabled != corsEnabled {
+		t.Errorf("ObjectStorageBucket access CORS does not match update, expected %t, got %t", corsEnabled, *newBucket.CorsEnabled)
 	}
 
-	if newBucketv2.ACL != createOpts.ACL {
+	if newBucket.ACL != createOpts.ACL {
 		t.Errorf("ObjectStorageBucket access ACL does not match update, expected %s, got %s",
 			createOpts.ACL,
-			newBucketv2.ACL)
+			newBucket.ACL)
 	}
 }
 
@@ -173,7 +173,7 @@ func TestObjectStorageBucket_Access_Update(t *testing.T) {
 		t.Errorf("Error updating ObjectStorageBucket access, got error %s", err)
 	}
 
-	newBucket, err := client.GetObjectStorageBucketAccessV2(context.Background(), bucket.Region, bucket.Label)
+	newBucket, err := client.GetObjectStorageBucketAccess(context.Background(), bucket.Region, bucket.Label)
 	if err != nil {
 		t.Errorf("Error getting ObjectStorageBucket access, got error %s", err)
 	}

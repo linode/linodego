@@ -24,13 +24,7 @@ type ObjectStorageBucket struct {
 	Size         int                       `json:"size"`
 }
 
-// ObjectStorageBucketAccess holds Object Storage access info
 type ObjectStorageBucketAccess struct {
-	ACL         ObjectStorageACL `json:"acl"`
-	CorsEnabled bool             `json:"cors_enabled"`
-}
-
-type ObjectStorageBucketAccessV2 struct {
 	ACL         ObjectStorageACL `json:"acl"`
 	ACLXML      string           `json:"acl_xml"`
 	CorsEnabled *bool            `json:"cors_enabled"`
@@ -138,10 +132,10 @@ func (c *Client) UpdateObjectStorageBucketAccess(ctx context.Context, regionID, 
 	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
 
-// GetObjectStorageBucketAccessV2 gets the current access config for a bucket
-func (c *Client) GetObjectStorageBucketAccessV2(ctx context.Context, regionID, label string) (*ObjectStorageBucketAccessV2, error) {
+// GetObjectStorageBucketAccess gets the current access config for a bucket
+func (c *Client) GetObjectStorageBucketAccess(ctx context.Context, regionID, label string) (*ObjectStorageBucketAccess, error) {
 	e := formatAPIPath("object-storage/buckets/%s/%s/access", regionID, label)
-	return doGETRequest[ObjectStorageBucketAccessV2](ctx, c, e)
+	return doGETRequest[ObjectStorageBucketAccess](ctx, c, e)
 }
 
 // DeleteObjectStorageBucket deletes the ObjectStorageBucket with the specified label

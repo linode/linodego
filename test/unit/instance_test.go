@@ -112,7 +112,7 @@ func TestInstance_ResetPassword(t *testing.T) {
 	}
 }
 
-func TestInstance_Get_MonthlyTransferV2(t *testing.T) {
+func TestInstance_Get_MonthlyTransfer(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("instance_monthly_transfer_get")
 	assert.NoError(t, err)
 
@@ -122,7 +122,7 @@ func TestInstance_Get_MonthlyTransferV2(t *testing.T) {
 
 	base.MockGet("linode/instances/12345/transfer/2024/11", fixtureData)
 
-	stats, err := base.Client.GetInstanceTransferMonthlyV2(context.Background(), 12345, 2024, 11)
+	stats, err := base.Client.GetInstanceTransferMonthly(context.Background(), 12345, 2024, 11)
 	assert.NoError(t, err)
 
 	assert.Equal(t, uint64(30471077120), stats.BytesIn)
