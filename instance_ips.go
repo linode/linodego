@@ -35,6 +35,10 @@ type InstanceIP struct {
 	Reserved    bool               `json:"reserved"`
 }
 
+type InstanceIPAddressUpdateOptions struct {
+	RDNS **string `json:"rdns,omitempty"`
+}
+
 // VPCIP represents a private IP address in a VPC subnet with additional networking details
 type VPCIP struct {
 	Address      *string `json:"address"`
@@ -139,7 +143,7 @@ func (c *Client) AddInstanceIPAddress(ctx context.Context, linodeID int, public 
 }
 
 // UpdateInstanceIPAddress updates the IPAddress with the specified instance id and IP address
-func (c *Client) UpdateInstanceIPAddress(ctx context.Context, linodeID int, ipAddress string, opts IPAddressUpdateOptions) (*InstanceIP, error) {
+func (c *Client) UpdateInstanceIPAddress(ctx context.Context, linodeID int, ipAddress string, opts InstanceIPAddressUpdateOptions) (*InstanceIP, error) {
 	e := formatAPIPath("linode/instances/%d/ips/%s", linodeID, ipAddress)
 	return doPUTRequest[InstanceIP](ctx, c, e, opts)
 }
