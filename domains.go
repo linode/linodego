@@ -61,9 +61,6 @@ type DomainCreateOptions struct {
 	// Enum:"master" "slave"
 	Type DomainType `json:"type"`
 
-	// Deprecated: The group this Domain belongs to. This is for display purposes only.
-	Group string `json:"group,omitempty"`
-
 	// Used to control whether this Domain is currently being rendered.
 	// Enum:"disabled" "active" "edit_mode" "has_errors"
 	Status DomainStatus `json:"status,omitempty"`
@@ -105,9 +102,6 @@ type DomainUpdateOptions struct {
 	// If this Domain represents the authoritative source of information for the domain it describes, or if it is a read-only copy of a master (also called a slave).
 	// Enum:"master" "slave"
 	Type DomainType `json:"type,omitempty"`
-
-	// Deprecated: The group this Domain belongs to. This is for display purposes only.
-	Group string `json:"group,omitempty"`
 
 	// Used to control whether this Domain is currently being rendered.
 	// Enum:"disabled" "active" "edit_mode" "has_errors"

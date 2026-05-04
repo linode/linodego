@@ -42,7 +42,7 @@ func TestObjectStorageBucket_ListInCluster(t *testing.T) {
 	regionID := "us-east"
 	base.MockGet("object-storage/buckets/"+regionID, fixtureData)
 
-	buckets, err := base.Client.ListObjectStorageBucketsInCluster(context.Background(), nil, regionID)
+	buckets, err := base.Client.ListObjectStorageBucketsInRegion(context.Background(), nil, regionID)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, buckets)
 }
