@@ -378,7 +378,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 04 May 2026 07:22:34 GMT
+      - Mon, 04 May 2026 10:44:02 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -416,7 +416,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips
     method: POST
   response:
-    body: '{"address": "172.233.54.125", "gateway": "172.233.54.1", "subnet_mask":
+    body: '{"address": "172.233.53.104", "gateway": "172.233.53.1", "subnet_mask":
       "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true, "rdns": null,
       "linode_id": null, "interface_id": null, "region": "nl-ams", "vpc_nat_1_1":
       null, "reserved": true, "assigned_entity": null, "tags": []}'
@@ -444,7 +444,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 04 May 2026 07:22:34 GMT
+      - Mon, 04 May 2026 10:44:02 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -468,7 +468,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-tag-test-foo","reserved_ipv4_addresses":["172.233.54.125"]}'
+    body: '{"label":"go-tag-test-foo","reserved_ipv4_addresses":["172.233.53.104"]}'
     form: {}
     headers:
       Accept:
@@ -505,7 +505,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 04 May 2026 07:22:35 GMT
+      - Mon, 04 May 2026 10:44:03 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -542,7 +542,7 @@ interactions:
     method: GET
   response:
     body: '{"page": 1, "pages": 1, "results": 1, "data": [{"type": "reserved_ipv4_address",
-      "data": {"address": "172.233.54.125", "gateway": "172.233.54.1", "subnet_mask":
+      "data": {"address": "172.233.53.104", "gateway": "172.233.53.1", "subnet_mask":
       "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true, "rdns": null,
       "linode_id": null, "interface_id": null, "region": "nl-ams", "vpc_nat_1_1":
       null, "reserved": true, "assigned_entity": null, "tags": ["go-tag-test-foo"]}}]}'
@@ -570,7 +570,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 04 May 2026 07:22:35 GMT
+      - Mon, 04 May 2026 10:44:03 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -632,7 +632,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 04 May 2026 07:22:35 GMT
+      - Mon, 04 May 2026 10:44:03 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -665,10 +665,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips/172.233.54.125
+    url: https://api.linode.com/v4beta/networking/reserved/ips/172.233.53.104
     method: GET
   response:
-    body: '{"address": "172.233.54.125", "gateway": "172.233.54.1", "subnet_mask":
+    body: '{"address": "172.233.53.104", "gateway": "172.233.53.1", "subnet_mask":
       "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true, "rdns": null,
       "linode_id": null, "interface_id": null, "region": "nl-ams", "vpc_nat_1_1":
       null, "reserved": true, "assigned_entity": null, "tags": []}'
@@ -696,7 +696,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 04 May 2026 07:22:35 GMT
+      - Mon, 04 May 2026 10:44:03 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -730,7 +730,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips/172.233.54.125
+    url: https://api.linode.com/v4beta/networking/reserved/ips/172.233.53.104
     method: DELETE
   response:
     body: '{}'
@@ -758,7 +758,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 04 May 2026 07:22:36 GMT
+      - Mon, 04 May 2026 10:44:04 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
