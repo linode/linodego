@@ -111,7 +111,7 @@ func TestTag_CreateTagWithReservedIP(t *testing.T) {
 		t.Fatalf("Should have found Tag in tagged objects list, got %v", tagObjects)
 	}
 
-	t.Cleanup(func() {
+	defer func() {
 		err = client.DeleteTag(context.Background(), tag.Label)
 		require.NoErrorf(t, err, "Failed to delete tag with reserved IP: %v", err)
 
@@ -120,8 +120,7 @@ func TestTag_CreateTagWithReservedIP(t *testing.T) {
 
 		err = client.DeleteReservedIPAddress(context.Background(), reservedIP.Address)
 		require.NoErrorf(t, err, "Failed to delete reserved IP: %v", err)
-	})
-
+	}()
 }
 
 func setupTaggedInstance(t *testing.T, fixturesYaml string) (*Client, *Instance, func(), error) {

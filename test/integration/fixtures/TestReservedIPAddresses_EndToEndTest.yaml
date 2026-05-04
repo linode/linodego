@@ -14,14 +14,15 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips?page=1
     method: GET
   response:
-    body: '{"data": [{"address": "172.233.52.232", "gateway": "172.233.52.1", "subnet_mask":
+    body: '{"data": [{"address": "172.233.52.88", "gateway": "172.233.52.1", "subnet_mask":
       "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true, "rdns": null,
       "linode_id": null, "interface_id": null, "region": "nl-ams", "vpc_nat_1_1":
-      null, "reserved": true, "assigned_entity": null, "tags": []}, {"address": "172.235.191.208",
-      "gateway": "172.235.191.1", "subnet_mask": "255.255.255.0", "prefix": 24, "type":
+      null, "reserved": true, "assigned_entity": null, "tags": []}, {"address": "172.233.52.232",
+      "gateway": "172.233.52.1", "subnet_mask": "255.255.255.0", "prefix": 24, "type":
       "ipv4", "public": true, "rdns": null, "linode_id": null, "interface_id": null,
       "region": "nl-ams", "vpc_nat_1_1": null, "reserved": true, "assigned_entity":
-      null, "tags": []}], "page": 1, "pages": 1, "results": 2}'
+      {"id": 2152065, "type": "nodebalancer", "label": "nb-postman-1", "url": "/v4/nodebalancers/2152065"},
+      "tags": []}], "page": 1, "pages": 1, "results": 2}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -40,13 +41,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "623"
+      - "716"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Wed, 29 Apr 2026 09:59:50 GMT
+      - Mon, 04 May 2026 07:15:13 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -447,7 +448,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 29 Apr 2026 09:59:51 GMT
+      - Mon, 04 May 2026 07:15:13 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -473,7 +474,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"nl-ams"}'
+    body: '{"region":"nl-ams","tags":["lb"]}'
     form: {}
     headers:
       Accept:
@@ -485,10 +486,10 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips
     method: POST
   response:
-    body: '{"address": "172.233.52.188", "gateway": "172.233.52.1", "subnet_mask":
+    body: '{"address": "172.233.54.125", "gateway": "172.233.54.1", "subnet_mask":
       "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true, "rdns": null,
       "linode_id": null, "interface_id": null, "region": "nl-ams", "vpc_nat_1_1":
-      null, "reserved": true, "assigned_entity": null, "tags": []}'
+      null, "reserved": true, "assigned_entity": null, "tags": ["lb"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -507,13 +508,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "285"
+      - "289"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Wed, 29 Apr 2026 09:59:51 GMT
+      - Mon, 04 May 2026 07:15:13 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -546,13 +547,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips/172.233.52.188
+    url: https://api.linode.com/v4beta/networking/reserved/ips/172.233.54.125
     method: GET
   response:
-    body: '{"address": "172.233.52.188", "gateway": "172.233.52.1", "subnet_mask":
+    body: '{"address": "172.233.54.125", "gateway": "172.233.54.1", "subnet_mask":
       "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true, "rdns": null,
       "linode_id": null, "interface_id": null, "region": "nl-ams", "vpc_nat_1_1":
-      null, "reserved": true, "assigned_entity": null, "tags": []}'
+      null, "reserved": true, "assigned_entity": null, "tags": ["lb"]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -571,13 +572,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "285"
+      - "289"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Wed, 29 Apr 2026 09:59:51 GMT
+      - Mon, 04 May 2026 07:15:14 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -614,18 +615,19 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips?page=1
     method: GET
   response:
-    body: '{"data": [{"address": "172.233.52.188", "gateway": "172.233.52.1", "subnet_mask":
+    body: '{"data": [{"address": "172.233.52.88", "gateway": "172.233.52.1", "subnet_mask":
       "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true, "rdns": null,
       "linode_id": null, "interface_id": null, "region": "nl-ams", "vpc_nat_1_1":
       null, "reserved": true, "assigned_entity": null, "tags": []}, {"address": "172.233.52.232",
       "gateway": "172.233.52.1", "subnet_mask": "255.255.255.0", "prefix": 24, "type":
       "ipv4", "public": true, "rdns": null, "linode_id": null, "interface_id": null,
       "region": "nl-ams", "vpc_nat_1_1": null, "reserved": true, "assigned_entity":
-      null, "tags": []}, {"address": "172.235.191.208", "gateway": "172.235.191.1",
-      "subnet_mask": "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true,
-      "rdns": null, "linode_id": null, "interface_id": null, "region": "nl-ams", "vpc_nat_1_1":
-      null, "reserved": true, "assigned_entity": null, "tags": []}], "page": 1, "pages":
-      1, "results": 3}'
+      {"id": 2152065, "type": "nodebalancer", "label": "nb-postman-1", "url": "/v4/nodebalancers/2152065"},
+      "tags": []}, {"address": "172.233.54.125", "gateway": "172.233.54.1", "subnet_mask":
+      "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true, "rdns": null,
+      "linode_id": null, "interface_id": null, "region": "nl-ams", "vpc_nat_1_1":
+      null, "reserved": true, "assigned_entity": null, "tags": ["lb"]}], "page": 1,
+      "pages": 1, "results": 3}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -648,7 +650,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 29 Apr 2026 09:59:52 GMT
+      - Mon, 04 May 2026 07:15:14 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -683,7 +685,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips/172.233.52.188
+    url: https://api.linode.com/v4beta/networking/reserved/ips/172.233.54.125
     method: DELETE
   response:
     body: '{}'
@@ -711,7 +713,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 29 Apr 2026 09:59:52 GMT
+      - Mon, 04 May 2026 07:15:14 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -744,7 +746,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips/172.233.52.188
+    url: https://api.linode.com/v4beta/networking/reserved/ips/172.233.54.125
     method: GET
   response:
     body: '{"errors": [{"reason": "Not found"}]}'
@@ -766,7 +768,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 29 Apr 2026 09:59:52 GMT
+      - Mon, 04 May 2026 07:15:14 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -797,14 +799,15 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips?page=1
     method: GET
   response:
-    body: '{"data": [{"address": "172.233.52.232", "gateway": "172.233.52.1", "subnet_mask":
+    body: '{"data": [{"address": "172.233.52.88", "gateway": "172.233.52.1", "subnet_mask":
       "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true, "rdns": null,
       "linode_id": null, "interface_id": null, "region": "nl-ams", "vpc_nat_1_1":
-      null, "reserved": true, "assigned_entity": null, "tags": []}, {"address": "172.235.191.208",
-      "gateway": "172.235.191.1", "subnet_mask": "255.255.255.0", "prefix": 24, "type":
+      null, "reserved": true, "assigned_entity": null, "tags": []}, {"address": "172.233.52.232",
+      "gateway": "172.233.52.1", "subnet_mask": "255.255.255.0", "prefix": 24, "type":
       "ipv4", "public": true, "rdns": null, "linode_id": null, "interface_id": null,
       "region": "nl-ams", "vpc_nat_1_1": null, "reserved": true, "assigned_entity":
-      null, "tags": []}], "page": 1, "pages": 1, "results": 2}'
+      {"id": 2152065, "type": "nodebalancer", "label": "nb-postman-1", "url": "/v4/nodebalancers/2152065"},
+      "tags": []}], "page": 1, "pages": 1, "results": 2}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -823,13 +826,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "623"
+      - "716"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Wed, 29 Apr 2026 09:59:52 GMT
+      - Mon, 04 May 2026 07:15:15 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
