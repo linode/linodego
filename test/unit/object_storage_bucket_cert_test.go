@@ -16,12 +16,12 @@ func TestObjectStorageBucketCert_Get(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	clusterID := "us-east-1"
+	regionID := "us-east"
 	bucketName := "my-bucket"
 
-	base.MockGet("object-storage/buckets/"+clusterID+"/"+bucketName+"/ssl", fixtureData)
+	base.MockGet("object-storage/buckets/"+regionID+"/"+bucketName+"/ssl", fixtureData)
 
-	cert, err := base.Client.GetObjectStorageBucketCert(context.Background(), clusterID, bucketName)
+	cert, err := base.Client.GetObjectStorageBucketCert(context.Background(), regionID, bucketName)
 	assert.NoError(t, err)
 	assert.NotNil(t, cert)
 	assert.NotNil(t, cert.SSL)
@@ -36,7 +36,7 @@ func TestObjectStorageBucketCert_Upload(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	clusterID := "us-east-1"
+	regionID := "us-east"
 	bucketName := "my-bucket"
 
 	uploadOpts := linodego.ObjectStorageBucketCertUploadOptions{
@@ -44,9 +44,9 @@ func TestObjectStorageBucketCert_Upload(t *testing.T) {
 		PrivateKey:  "mock-key",
 	}
 
-	base.MockPost("object-storage/buckets/"+clusterID+"/"+bucketName+"/ssl", fixtureData)
+	base.MockPost("object-storage/buckets/"+regionID+"/"+bucketName+"/ssl", fixtureData)
 
-	uploadedCert, err := base.Client.UploadObjectStorageBucketCert(context.Background(), clusterID, bucketName, uploadOpts)
+	uploadedCert, err := base.Client.UploadObjectStorageBucketCert(context.Background(), regionID, bucketName, uploadOpts)
 	assert.NoError(t, err)
 	assert.NotNil(t, uploadedCert)
 	assert.NotNil(t, uploadedCert.SSL)
@@ -58,11 +58,11 @@ func TestObjectStorageBucketCert_Delete(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	clusterID := "us-east-1"
+	regionID := "us-east"
 	bucketName := "my-bucket"
 
-	base.MockDelete("object-storage/buckets/"+clusterID+"/"+bucketName+"/ssl", nil)
+	base.MockDelete("object-storage/buckets/"+regionID+"/"+bucketName+"/ssl", nil)
 
-	err := base.Client.DeleteObjectStorageBucketCert(context.Background(), clusterID, bucketName)
+	err := base.Client.DeleteObjectStorageBucketCert(context.Background(), regionID, bucketName)
 	assert.NoError(t, err)
 }
