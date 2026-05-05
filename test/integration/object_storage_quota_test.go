@@ -12,7 +12,8 @@ func TestObjectStorageQuotas_Get(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestObjectStorageQuotas_Get")
 	defer teardown()
 
-	quota, err := client.GetObjectStorageQuota(context.Background(), "obj-objects-us-ord-1.linodeobjects.com")
+	targetQuotaID := "obj-objects-us-ord-1.linodeobjects.com"
+	quota, err := client.GetObjectStorageQuota(context.Background(), targetQuotaID)
 	assert.NoError(t, err)
 
 	expected := linodego.ObjectStorageQuota{
