@@ -18,8 +18,8 @@ const (
 
 // NetworkAddresses are arrays of ipv4 and v6 addresses
 type NetworkAddresses struct {
-	IPv4 *[]string `json:"ipv4,omitempty"`
-	IPv6 *[]string `json:"ipv6,omitempty"`
+	IPv4 *[]string `json:"ipv4,omitzero"`
+	IPv6 *[]string `json:"ipv6,omitzero"`
 }
 
 // A FirewallRule is a whitelist of ports, protocols, and addresses for which traffic should be allowed.
@@ -28,15 +28,15 @@ type NetworkAddresses struct {
 type FirewallRule struct {
 	Action      string           `json:"action"`
 	Label       string           `json:"label"`
-	Description string           `json:"description,omitempty"`
-	Ports       string           `json:"ports,omitempty"`
+	Description string           `json:"description,omitzero"`
+	Ports       string           `json:"ports,omitzero"`
 	Protocol    NetworkProtocol  `json:"protocol"`
 	Addresses   NetworkAddresses `json:"addresses"`
 
 	// FirewallRule references one `Rule Set` by ID. When provided, this entry
 	// represents a reference and should be mutually exclusive with ordinary
 	// rule fields according to the API contract.
-	RuleSet int `json:"ruleset,omitempty"`
+	RuleSet int `json:"ruleset,omitzero"`
 }
 
 // MarshalJSON ensures that when a rule references a Rule Set (RuleSet != 0),
@@ -54,8 +54,8 @@ func (r FirewallRule) MarshalJSON() ([]byte, error) {
 	type normal struct {
 		Action      string           `json:"action"`
 		Label       string           `json:"label"`
-		Description string           `json:"description,omitempty"`
-		Ports       string           `json:"ports,omitempty"`
+		Description string           `json:"description,omitzero"`
+		Ports       string           `json:"ports,omitzero"`
 		Protocol    NetworkProtocol  `json:"protocol"`
 		Addresses   NetworkAddresses `json:"addresses"`
 	}
@@ -79,9 +79,9 @@ type FirewallRuleSet struct {
 
 	// TODO: separate request and response types in linodego v2
 	// read-only, can't be used in creating or updating a Firewall
-	Version int `json:"version,omitempty"`
+	Version int `json:"version,omitzero"`
 	// read-only, can't be used in creating or updating a Firewall
-	Fingerprint string `json:"fingerprint,omitempty"`
+	Fingerprint string `json:"fingerprint,omitzero"`
 }
 
 // GetFirewallRules gets the FirewallRuleSet for the given Firewall.

@@ -32,24 +32,24 @@ type Firewall struct {
 
 // DevicesCreationOptions fields are used when adding devices during the Firewall creation process.
 type DevicesCreationOptions struct {
-	Linodes          []int `json:"linodes,omitempty"`
-	NodeBalancers    []int `json:"nodebalancers,omitempty"`
-	LinodeInterfaces []int `json:"linode_interfaces,omitempty"`
+	Linodes          []int `json:"linodes,omitzero"`
+	NodeBalancers    []int `json:"nodebalancers,omitzero"`
+	LinodeInterfaces []int `json:"linode_interfaces,omitzero"`
 }
 
 // FirewallCreateOptions fields are those accepted by CreateFirewall
 type FirewallCreateOptions struct {
-	Label   string                 `json:"label,omitempty"`
+	Label   string                 `json:"label,omitzero"`
 	Rules   FirewallRuleSet        `json:"rules"`
-	Tags    []string               `json:"tags,omitempty"`
+	Tags    []string               `json:"tags,omitzero"`
 	Devices DevicesCreationOptions `json:"devices,omitzero"`
 }
 
 // FirewallUpdateOptions is an options struct used when Updating a Firewall
 type FirewallUpdateOptions struct {
-	Label  string         `json:"label,omitempty"`
-	Status FirewallStatus `json:"status,omitempty"`
-	Tags   *[]string      `json:"tags,omitempty"`
+	Label  string         `json:"label,omitzero"`
+	Status FirewallStatus `json:"status,omitzero"`
+	Tags   *[]string      `json:"tags,omitzero"`
 }
 
 // FirewallSettings represents the default firewalls for Linodes,
@@ -67,14 +67,14 @@ type DefaultFirewallIDs struct {
 
 // FirewallSettingsUpdateOptions is an options struct used when Updating FirewallSettings
 type FirewallSettingsUpdateOptions struct {
-	DefaultFirewallIDs *DefaultFirewallIDsOptions `json:"default_firewall_ids,omitempty"`
+	DefaultFirewallIDs *DefaultFirewallIDsOptions `json:"default_firewall_ids,omitzero"`
 }
 
 type DefaultFirewallIDsOptions struct {
-	Linode          **int `json:"linode,omitempty"`
-	NodeBalancer    **int `json:"nodebalancer,omitempty"`
-	PublicInterface **int `json:"public_interface,omitempty"`
-	VPCInterface    **int `json:"vpc_interface,omitempty"`
+	Linode          **int `json:"linode,omitzero"`
+	NodeBalancer    **int `json:"nodebalancer,omitzero"`
+	PublicInterface **int `json:"public_interface,omitzero"`
+	VPCInterface    **int `json:"vpc_interface,omitzero"`
 }
 
 // GetUpdateOptions converts a Firewall to FirewallUpdateOptions for use in Client.UpdateFirewall.

@@ -71,15 +71,15 @@ type AlertDefinition struct {
 
 // TriggerConditions represents the trigger conditions for an alert.
 type TriggerConditions struct {
-	CriteriaCondition       string `json:"criteria_condition,omitempty"`
-	EvaluationPeriodSeconds int    `json:"evaluation_period_seconds,omitempty"`
-	PollingIntervalSeconds  int    `json:"polling_interval_seconds,omitempty"`
-	TriggerOccurrences      int    `json:"trigger_occurrences,omitempty"`
+	CriteriaCondition       string `json:"criteria_condition,omitzero"`
+	EvaluationPeriodSeconds int    `json:"evaluation_period_seconds,omitzero"`
+	PollingIntervalSeconds  int    `json:"polling_interval_seconds,omitzero"`
+	TriggerOccurrences      int    `json:"trigger_occurrences,omitzero"`
 }
 
 // RuleCriteria represents the rule criteria for an alert.
 type RuleCriteria struct {
-	Rules []Rule `json:"rules,omitempty"`
+	Rules []Rule `json:"rules,omitzero"`
 }
 
 // Rule represents a single rule for an alert.
@@ -103,23 +103,23 @@ type DimensionFilter struct {
 
 // RuleCriteriaOptions represents the rule criteria options for an alert.
 type RuleCriteriaOptions struct {
-	Rules []RuleOptions `json:"rules,omitempty"`
+	Rules []RuleOptions `json:"rules,omitzero"`
 }
 
 // RuleOptions represents a single rule option for an alert.
 type RuleOptions struct {
-	AggregateFunction string                   `json:"aggregate_function,omitempty"`
-	DimensionFilters  []DimensionFilterOptions `json:"dimension_filters,omitempty"`
-	Metric            string                   `json:"metric,omitempty"`
-	Operator          string                   `json:"operator,omitempty"`
-	Threshold         float64                  `json:"threshold,omitempty"`
+	AggregateFunction string                   `json:"aggregate_function,omitzero"`
+	DimensionFilters  []DimensionFilterOptions `json:"dimension_filters,omitzero"`
+	Metric            string                   `json:"metric,omitzero"`
+	Operator          string                   `json:"operator,omitzero"`
+	Threshold         float64                  `json:"threshold,omitzero"`
 }
 
 // DimensionFilterOptions represents a single dimension filter option used inside a Rule.
 type DimensionFilterOptions struct {
-	DimensionLabel string `json:"dimension_label,omitempty"`
-	Operator       string `json:"operator,omitempty"`
-	Value          string `json:"value,omitempty"`
+	DimensionLabel string `json:"dimension_label,omitzero"`
+	Operator       string `json:"operator,omitzero"`
+	Value          string `json:"value,omitzero"`
 }
 
 // AlertChannelEnvelope represents a single alert channel entry returned inside alert definition
@@ -161,11 +161,11 @@ type AlertDefinitionCreateOptions struct {
 	Label             string               `json:"label"`
 	Severity          int                  `json:"severity"`
 	ChannelIDs        []int                `json:"channel_ids"`
-	RuleCriteria      *RuleCriteriaOptions `json:"rule_criteria,omitempty"`
-	TriggerConditions *TriggerConditions   `json:"trigger_conditions,omitempty"`
-	EntityIDs         []string             `json:"entity_ids,omitempty"`
-	Description       *string              `json:"description,omitempty"`
-	Scope             AlertDefinitionScope `json:"scope,omitempty"`
+	RuleCriteria      *RuleCriteriaOptions `json:"rule_criteria,omitzero"`
+	TriggerConditions *TriggerConditions   `json:"trigger_conditions,omitzero"`
+	EntityIDs         []string             `json:"entity_ids,omitzero"`
+	Description       *string              `json:"description,omitzero"`
+	Scope             AlertDefinitionScope `json:"scope,omitzero"`
 	Regions           []string             `json:"regions,omitzero"`
 }
 
@@ -174,11 +174,11 @@ type AlertDefinitionUpdateOptions struct {
 	Label             string                 `json:"label"`
 	Severity          int                    `json:"severity"`
 	ChannelIDs        []int                  `json:"channel_ids"`
-	RuleCriteria      *RuleCriteriaOptions   `json:"rule_criteria,omitempty"`
-	TriggerConditions *TriggerConditions     `json:"trigger_conditions,omitempty"`
-	EntityIDs         []string               `json:"entity_ids,omitempty"`
-	Description       *string                `json:"description,omitempty"`
-	Status            *AlertDefinitionStatus `json:"status,omitempty"`
+	RuleCriteria      *RuleCriteriaOptions   `json:"rule_criteria,omitzero"`
+	TriggerConditions *TriggerConditions     `json:"trigger_conditions,omitzero"`
+	EntityIDs         []string               `json:"entity_ids,omitzero"`
+	Description       *string                `json:"description,omitzero"`
+	Status            *AlertDefinitionStatus `json:"status,omitzero"`
 	Regions           []string               `json:"regions,omitzero"`
 }
 

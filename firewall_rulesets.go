@@ -22,7 +22,7 @@ const (
 type RuleSet struct {
 	ID               int                 `json:"id"`
 	Label            string              `json:"label"`
-	Description      string              `json:"description,omitempty"`
+	Description      string              `json:"description,omitzero"`
 	Type             FirewallRuleSetType `json:"type"`
 	Rules            []FirewallRule      `json:"rules"`
 	IsServiceDefined bool                `json:"is_service_defined"`
@@ -69,7 +69,7 @@ func (r *RuleSet) UnmarshalJSON(b []byte) error {
 // RuleSetCreateOptions fields accepted by CreateRuleSet.
 type RuleSetCreateOptions struct {
 	Label       string              `json:"label"`
-	Description string              `json:"description,omitempty"`
+	Description string              `json:"description,omitzero"`
 	Type        FirewallRuleSetType `json:"type"`
 	Rules       []FirewallRule      `json:"rules"`
 }
@@ -78,9 +78,9 @@ type RuleSetCreateOptions struct {
 // Omit a top-level field to leave it unchanged. If Rules is provided, it
 // replaces the entire ordered rules array.
 type RuleSetUpdateOptions struct {
-	Label       *string         `json:"label,omitempty"`
-	Description *string         `json:"description,omitempty"`
-	Rules       *[]FirewallRule `json:"rules,omitempty"`
+	Label       *string         `json:"label,omitzero"`
+	Description *string         `json:"description,omitzero"`
+	Rules       *[]FirewallRule `json:"rules,omitzero"`
 }
 
 // ListFirewallRuleSets returns a paginated list of Rule Sets.

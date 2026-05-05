@@ -36,7 +36,7 @@ type InstanceIP struct {
 }
 
 type InstanceIPAddressUpdateOptions struct {
-	RDNS **string `json:"rdns,omitempty"`
+	RDNS **string `json:"rdns,omitzero"`
 }
 
 // VPCIP represents a private IP address in a VPC subnet with additional networking details

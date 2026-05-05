@@ -55,27 +55,27 @@ type LKEClusterCreateOptions struct {
 	Label        string                         `json:"label"`
 	Region       string                         `json:"region"`
 	K8sVersion   string                         `json:"k8s_version"`
-	Tags         []string                       `json:"tags,omitempty"`
-	ControlPlane *LKEClusterControlPlaneOptions `json:"control_plane,omitempty"`
+	Tags         []string                       `json:"tags,omitzero"`
+	ControlPlane *LKEClusterControlPlaneOptions `json:"control_plane,omitzero"`
 
 	// NOTE: Tier may not currently be available to all users and can only be used with v4beta.
-	Tier string `json:"tier,omitempty"`
+	Tier string `json:"tier,omitzero"`
 
 	// NOTE: APLEnabled is currently in beta and may only function with API version v4beta.
-	APLEnabled bool `json:"apl_enabled,omitempty"`
+	APLEnabled bool `json:"apl_enabled,omitzero"`
 
 	// NOTE: SubnetID, VpcID, and StackType may not currently be available to all users and can only be used with v4beta.
-	SubnetID  *int                 `json:"subnet_id,omitempty"`
-	VpcID     *int                 `json:"vpc_id,omitempty"`
-	StackType *LKEClusterStackType `json:"stack_type,omitempty"`
+	SubnetID  *int                 `json:"subnet_id,omitzero"`
+	VpcID     *int                 `json:"vpc_id,omitzero"`
+	StackType *LKEClusterStackType `json:"stack_type,omitzero"`
 }
 
 // LKEClusterUpdateOptions fields are those accepted by UpdateLKECluster
 type LKEClusterUpdateOptions struct {
-	K8sVersion   string                         `json:"k8s_version,omitempty"`
-	Label        string                         `json:"label,omitempty"`
-	Tags         *[]string                      `json:"tags,omitempty"`
-	ControlPlane *LKEClusterControlPlaneOptions `json:"control_plane,omitempty"`
+	K8sVersion   string                         `json:"k8s_version,omitzero"`
+	Label        string                         `json:"label,omitzero"`
+	Tags         *[]string                      `json:"tags,omitzero"`
+	ControlPlane *LKEClusterControlPlaneOptions `json:"control_plane,omitzero"`
 }
 
 // LKEClusterAPIEndpoint fields are those returned by ListLKEClusterAPIEndpoints

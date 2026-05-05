@@ -70,20 +70,20 @@ func (i *ObjectStorageBucket) UnmarshalJSON(b []byte) error {
 
 // ObjectStorageBucketCreateOptions fields are those accepted by CreateObjectStorageBucket
 type ObjectStorageBucketCreateOptions struct {
-	Region string `json:"region,omitempty"`
+	Region string `json:"region,omitzero"`
 
 	Label        string                    `json:"label"`
-	S3Endpoint   string                    `json:"s3_endpoint,omitempty"`
-	EndpointType ObjectStorageEndpointType `json:"endpoint_type,omitempty"`
+	S3Endpoint   string                    `json:"s3_endpoint,omitzero"`
+	EndpointType ObjectStorageEndpointType `json:"endpoint_type,omitzero"`
 
-	ACL         ObjectStorageACL `json:"acl,omitempty"`
-	CorsEnabled *bool            `json:"cors_enabled,omitempty"`
+	ACL         ObjectStorageACL `json:"acl,omitzero"`
+	CorsEnabled *bool            `json:"cors_enabled,omitzero"`
 }
 
 // ObjectStorageBucketUpdateAccessOptions fields are those accepted by UpdateObjectStorageBucketAccess
 type ObjectStorageBucketUpdateAccessOptions struct {
-	ACL         ObjectStorageACL `json:"acl,omitempty"`
-	CorsEnabled *bool            `json:"cors_enabled,omitempty"`
+	ACL         ObjectStorageACL `json:"acl,omitzero"`
+	CorsEnabled *bool            `json:"cors_enabled,omitzero"`
 }
 
 // ObjectStorageBucketListContentsParams fields are the query parameters for ListObjectStorageBucketContents
