@@ -133,19 +133,6 @@ func TestObjectStorageBucketCert_smoke(t *testing.T) {
 		t.Fatalf("failed to upload bucket cert: %s", err)
 	}
 
-	err = client.DeleteObjectStorageBucketCert(context.TODO(), bucket.Region, bucket.Label)
-	if err != nil {
-		t.Fatalf("failed to upload bucket cert: %s", err)
-	}
-
-	_, err = client.UploadObjectStorageBucketCertV2(context.TODO(), bucket.Region, bucket.Label, linodego.ObjectStorageBucketCertUploadOptions{
-		Certificate: testCertifcate,
-		PrivateKey:  testPrivateKey,
-	})
-	if err != nil {
-		t.Fatalf("failed to upload bucket cert: %s", err)
-	}
-
 	defer func() {
 		if err := client.DeleteObjectStorageBucketCert(context.TODO(), bucket.Region, bucket.Label); err != nil {
 			t.Errorf("failed to delete bucket cert: %s", err)
@@ -157,16 +144,7 @@ func TestObjectStorageBucketCert_smoke(t *testing.T) {
 		t.Fatalf("failed to get bucket cert: %s", err)
 	}
 
-	if !cert.SSL {
-		t.Fatalf("expected cert.SSL to be true; got false")
-	}
-
-	certv2, err := client.GetObjectStorageBucketCertV2(context.TODO(), bucket.Region, bucket.Label)
-	if err != nil {
-		t.Fatalf("failed to get bucket cert: %s", err)
-	}
-
-	if certv2 == nil || !*certv2.SSL {
+	if cert == nil || !*cert.SSL {
 		t.Fatalf("expected cert.SSL to be true; got false")
 	}
 }

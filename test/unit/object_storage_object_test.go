@@ -31,7 +31,7 @@ func TestObjectStorageObjectURL_Create(t *testing.T) {
 	assert.True(t, urlResponse.Exists)
 }
 
-func TestObjectStorageObjectACLConfigV2_Get(t *testing.T) {
+func TestObjectStorageObjectACLConfig_Get(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("object_storage_object_acl_get")
 	assert.NoError(t, err)
 
@@ -41,13 +41,13 @@ func TestObjectStorageObjectACLConfigV2_Get(t *testing.T) {
 
 	base.MockGet("object-storage/buckets/my-bucket/test-label/object-acl?name=test-object", fixtureData)
 
-	aclConfig, err := base.Client.GetObjectStorageObjectACLConfigV2(context.Background(), "my-bucket", "test-label", "test-object")
+	aclConfig, err := base.Client.GetObjectStorageObjectACLConfig(context.Background(), "my-bucket", "test-label", "test-object")
 	assert.NoError(t, err)
 	assert.NotNil(t, aclConfig.ACL)
 	assert.Equal(t, "public-read", *aclConfig.ACL)
 }
 
-func TestObjectStorageObjectACLConfigV2_Update(t *testing.T) {
+func TestObjectStorageObjectACLConfig_Update(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("object_storage_object_acl_update")
 	assert.NoError(t, err)
 
@@ -62,7 +62,7 @@ func TestObjectStorageObjectACLConfigV2_Update(t *testing.T) {
 
 	base.MockPut("object-storage/buckets/my-bucket/test-label/object-acl", fixtureData)
 
-	updatedACLConfig, err := base.Client.UpdateObjectStorageObjectACLConfigV2(context.Background(), "my-bucket", "test-label", updateOptions)
+	updatedACLConfig, err := base.Client.UpdateObjectStorageObjectACLConfig(context.Background(), "my-bucket", "test-label", updateOptions)
 	assert.NoError(t, err)
 	assert.NotNil(t, updatedACLConfig.ACL)
 	assert.Equal(t, "private", *updatedACLConfig.ACL)

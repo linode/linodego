@@ -22,9 +22,6 @@ type AccountMaintenance struct {
 	NotBefore    *time.Time `json:"-"`
 	StartTime    *time.Time `json:"-"`
 	CompleteTime *time.Time `json:"-"`
-
-	// Deprecated: When is a deprecated property
-	When *time.Time `json:"when"`
 }
 
 // Entity represents the entity being affected by maintenance
@@ -57,7 +54,6 @@ func (accountMaintenance *AccountMaintenance) UnmarshalJSON(b []byte) error {
 	accountMaintenance.NotBefore = (*time.Time)(p.NotBefore)
 	accountMaintenance.StartTime = (*time.Time)(p.StartTime)
 	accountMaintenance.CompleteTime = (*time.Time)(p.CompleteTime)
-	accountMaintenance.When = (*time.Time)(p.When)
 
 	return nil
 }

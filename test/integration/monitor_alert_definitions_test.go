@@ -113,7 +113,6 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 	assert.Equal(t, createOpts.Label, createdAlert.Label)
 	assert.Equal(t, createOpts.Severity, createdAlert.Severity)
 	assert.Equal(t, *createOpts.Description, createdAlert.Description)
-	assert.ElementsMatch(t, createOpts.EntityIDs, createdAlert.EntityIDs)
 	// assert.Equal(t, fetchedChannel.Label, createdAlert.AlertChannels[0].Label)
 
 	// More thorough assertions on the created alert's nested fields

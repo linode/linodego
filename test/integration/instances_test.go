@@ -120,11 +120,6 @@ func TestInstance_GetMonthlyTransfer(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error getting monthly instance transfer, expected struct, got error %v", err)
 	}
-
-	_, err = client.GetInstanceTransferMonthlyV2(context.Background(), instance.ID, testYear, testMonth)
-	if err != nil {
-		t.Errorf("Error getting monthly instance transfer, expected struct, got error %v", err)
-	}
 }
 
 func TestInstance_ResetPassword(t *testing.T) {
