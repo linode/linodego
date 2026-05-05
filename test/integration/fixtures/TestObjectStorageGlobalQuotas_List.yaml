@@ -11,14 +11,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/quotas/obj-objects-us-ord-1.linodeobjects.com
+    url: https://api.linode.com/v4beta/object-storage/global-quotas?page=1
     method: GET
   response:
-    body: '{"quota_id": "obj-objects-us-ord-1.linodeobjects.com", "quota_name": "max_objects",
-      "endpoint_type": "E1", "s3_endpoint": "us-ord-1.linodeobjects.com", "description":
-      "Maximum number of objects this customer is allowed to have on this endpoint",
-      "quota_limit": 100000000, "resource_metric": "object", "quota_type": "obj-objects",
-      "has_usage": true}'
+    body: '{"data": [{"quota_id": "keys", "quota_name": "Number of Access Keys", "quota_type":
+      "keys", "description": "Current number of access keys per account", "quota_limit":
+      100, "resource_metric": "key", "has_usage": true}], "page": 1, "pages": 1, "results":
+      1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -37,13 +36,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "300"
+      - "255"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 24 Apr 2025 17:38:46 GMT
+      - Wed, 18 Feb 2026 07:24:08 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -61,7 +60,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
