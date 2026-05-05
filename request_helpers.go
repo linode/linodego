@@ -307,5 +307,5 @@ func isNil(i any) bool {
 	// Check for nil pointers
 	v := reflect.ValueOf(i)
 
-	return v.Kind() == reflect.Ptr && v.IsNil()
+	return v.Kind() == reflect.Pointer && v.IsNil()
 }

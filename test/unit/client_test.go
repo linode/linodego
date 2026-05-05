@@ -18,7 +18,7 @@ func TestClient_NGINXRetry(t *testing.T) {
 		resp := httpmock.NewStringResponse(400, "")
 
 		resp.Header.Add("Server", "nginx")
-		resp.Header.Set("Content-Type", "text/html")
+		resp.Header.Set("Content-Type", "text/html") //nolint:goconst
 
 		return resp, nil
 	}
