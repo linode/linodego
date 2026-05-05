@@ -272,6 +272,19 @@ func doPUTRequest[T, O any](
 	return &resultType, nil
 }
 
+// doPUTRequestNoResponseBody runs a PUT request using the given client, API endpoint,
+// and options/body. It expects only empty response from the endpoint.
+func doPUTRequestNoResponseBody[T any](
+	ctx context.Context,
+	client *Client,
+	endpoint string,
+	options ...T,
+) error {
+	_, err := doPUTRequest[any, T](ctx, client, endpoint, options...)
+
+	return err
+}
+
 // doDELETERequest runs a DELETE request using the given client
 // and API endpoint.
 func doDELETERequest(

@@ -80,6 +80,12 @@ type ObjectStorageBucketCreateOptions struct {
 	CorsEnabled *bool            `json:"cors_enabled,omitzero"`
 }
 
+// ObjectStorageBucketModifyAccessOptions fields are those accepted by ModifyObjectStorageBucketAccess
+type ObjectStorageBucketModifyAccessOptions struct {
+	ACL         ObjectStorageACL `json:"acl,omitzero"`
+	CorsEnabled *bool            `json:"cors_enabled,omitzero"`
+}
+
 // ObjectStorageBucketUpdateAccessOptions fields are those accepted by UpdateObjectStorageBucketAccess
 type ObjectStorageBucketUpdateAccessOptions struct {
 	ACL         ObjectStorageACL `json:"acl,omitzero"`
@@ -126,10 +132,16 @@ func (c *Client) CreateObjectStorageBucket(ctx context.Context, opts ObjectStora
 	return doPOSTRequest[ObjectStorageBucket](ctx, c, "object-storage/buckets", opts)
 }
 
+// ModifyObjectStorageBucketAccess modifies the access configuration for an ObjectStorageBucket
+func (c *Client) ModifyObjectStorageBucketAccess(ctx context.Context, regionID, label string, opts ObjectStorageBucketModifyAccessOptions) error {
+	e := formatAPIPath("object-storage/buckets/%s/%s/access", regionID, label)
+	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
+}
+
 // UpdateObjectStorageBucketAccess updates the access configuration for an ObjectStorageBucket
 func (c *Client) UpdateObjectStorageBucketAccess(ctx context.Context, regionID, label string, opts ObjectStorageBucketUpdateAccessOptions) error {
 	e := formatAPIPath("object-storage/buckets/%s/%s/access", regionID, label)
-	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
+	return doPUTRequestNoResponseBody(ctx, c, e, opts)
 }
 
 // GetObjectStorageBucketAccess gets the current access config for a bucket

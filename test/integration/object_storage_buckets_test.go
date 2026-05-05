@@ -152,6 +152,41 @@ func TestObjectStorageBucket_Access_Get(t *testing.T) {
 	}
 }
 
+func TestObjectStorageBucket_Access_Modify(t *testing.T) {
+	endpointType := linodego.ObjectStorageEndpointE1
+	client, bucket, teardown, err := setupObjectStorageBucket(t,
+		nil,
+		"fixtures/TestObjectStorageBucket_Access_Modify",
+		nil, nil, &endpointType,
+	)
+	defer teardown()
+
+	corsEnabled := false
+
+	opts := ObjectStorageBucketModifyAccessOptions{
+		ACL:         ACLPrivate,
+		CorsEnabled: &corsEnabled,
+	}
+
+	err = client.ModifyObjectStorageBucketAccess(context.Background(), bucket.Region, bucket.Label, opts)
+	if err != nil {
+		t.Errorf("Error modifying ObjectStorageBucket access, got error %s", err)
+	}
+
+	newBucket, err := client.GetObjectStorageBucketAccess(context.Background(), bucket.Region, bucket.Label)
+	if err != nil {
+		t.Errorf("Error getting ObjectStorageBucket access, got error %s", err)
+	}
+
+	if *newBucket.CorsEnabled != corsEnabled {
+		t.Errorf("ObjectStorageBucket access CORS does not match modification, expected %t, got %t", corsEnabled, *newBucket.CorsEnabled)
+	}
+
+	if newBucket.ACL != opts.ACL {
+		t.Errorf("ObjectStorageBucket access ACL does not match modification, expected %s, got %s", opts.ACL, newBucket.ACL)
+	}
+}
+
 func TestObjectStorageBucket_Access_Update(t *testing.T) {
 	endpointType := linodego.ObjectStorageEndpointE1
 	client, bucket, teardown, err := setupObjectStorageBucket(t,

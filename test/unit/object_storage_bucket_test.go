@@ -120,6 +120,24 @@ func TestObjectStorageBucket_GetAccess(t *testing.T) {
 	assert.Equal(t, linodego.ACLPublicRead, access.ACL)
 }
 
+func TestObjectStorageBucket_ModifyAccess(t *testing.T) {
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	regionID := "us-east"
+	bucketLabel := "my-bucket"
+
+	modifyOpts := linodego.ObjectStorageBucketModifyAccessOptions{
+		ACL: linodego.ACLPrivate,
+	}
+
+	base.MockPost("object-storage/buckets/"+regionID+"/"+bucketLabel+"/access", nil)
+
+	err := base.Client.ModifyObjectStorageBucketAccess(context.Background(), regionID, bucketLabel, modifyOpts)
+	assert.NoError(t, err)
+}
+
 func TestObjectStorageBucket_UpdateAccess(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)
@@ -132,7 +150,7 @@ func TestObjectStorageBucket_UpdateAccess(t *testing.T) {
 		ACL: linodego.ACLPrivate,
 	}
 
-	base.MockPost("object-storage/buckets/"+regionID+"/"+bucketLabel+"/access", nil)
+	base.MockPut("object-storage/buckets/"+regionID+"/"+bucketLabel+"/access", nil)
 
 	err := base.Client.UpdateObjectStorageBucketAccess(context.Background(), regionID, bucketLabel, updateOpts)
 	assert.NoError(t, err)
