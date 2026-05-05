@@ -117,16 +117,16 @@ type ImageShareEntry struct {
 type ImageCreateOptions struct {
 	DiskID      int       `json:"disk_id"`
 	Label       string    `json:"label"`
-	Description string    `json:"description,omitempty"`
-	CloudInit   bool      `json:"cloud_init,omitempty"`
-	Tags        *[]string `json:"tags,omitempty"`
+	Description string    `json:"description,omitzero"`
+	CloudInit   bool      `json:"cloud_init,omitzero"`
+	Tags        *[]string `json:"tags,omitzero"`
 }
 
 // ImageUpdateOptions fields are those accepted by UpdateImage
 type ImageUpdateOptions struct {
-	Label       string    `json:"label,omitempty"`
-	Description *string   `json:"description,omitempty"`
-	Tags        *[]string `json:"tags,omitempty"`
+	Label       string    `json:"label,omitzero"`
+	Description *string   `json:"description,omitzero"`
+	Tags        *[]string `json:"tags,omitzero"`
 }
 
 // ImageReplicateOptions represents the options accepted by the
@@ -145,18 +145,18 @@ type ImageCreateUploadResponse struct {
 type ImageCreateUploadOptions struct {
 	Region      string    `json:"region"`
 	Label       string    `json:"label"`
-	Description string    `json:"description,omitempty"`
-	CloudInit   bool      `json:"cloud_init,omitempty"`
-	Tags        *[]string `json:"tags,omitempty"`
+	Description string    `json:"description,omitzero"`
+	CloudInit   bool      `json:"cloud_init,omitzero"`
+	Tags        *[]string `json:"tags,omitzero"`
 }
 
 // ImageUploadOptions fields are those accepted by UploadImage
 type ImageUploadOptions struct {
 	Region      string    `json:"region"`
 	Label       string    `json:"label"`
-	Description string    `json:"description,omitempty"`
+	Description string    `json:"description,omitzero"`
 	CloudInit   bool      `json:"cloud_init"`
-	Tags        *[]string `json:"tags,omitempty"`
+	Tags        *[]string `json:"tags,omitzero"`
 	Image       io.Reader
 }
 

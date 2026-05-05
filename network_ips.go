@@ -12,8 +12,8 @@ import (
 //	}
 type IPAddressUpdateOptions struct {
 	// The reverse DNS assigned to this address. For public IPv4 addresses, this will be set to a default value provided by Linode if set to nil.
-	Reserved *bool    `json:"reserved,omitempty"`
-	RDNS     **string `json:"rdns,omitempty"`
+	Reserved *bool    `json:"reserved,omitzero"`
+	RDNS     **string `json:"rdns,omitzero"`
 }
 
 // LinodeIPAssignment stores an assignment between an IP address and a Linode instance.
@@ -25,9 +25,9 @@ type LinodeIPAssignment struct {
 type AllocateReserveIPOptions struct {
 	Type     string `json:"type"`
 	Public   bool   `json:"public"`
-	Reserved bool   `json:"reserved,omitempty"`
-	Region   string `json:"region,omitempty"`
-	LinodeID int    `json:"linode_id,omitempty"`
+	Reserved bool   `json:"reserved,omitzero"`
+	Region   string `json:"region,omitzero"`
+	LinodeID int    `json:"linode_id,omitzero"`
 }
 
 // LinodesAssignIPsOptions fields are those accepted by InstancesAssignIPs.

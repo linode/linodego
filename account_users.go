@@ -45,9 +45,9 @@ type UserCreateOptions struct {
 
 // UserUpdateOptions fields are those accepted by UpdateUser
 type UserUpdateOptions struct {
-	Username   string `json:"username,omitempty"`
-	Restricted *bool  `json:"restricted,omitempty"`
-	Email      string `json:"email,omitempty"`
+	Username   string `json:"username,omitzero"`
+	Restricted *bool  `json:"restricted,omitzero"`
+	Email      string `json:"email,omitzero"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface

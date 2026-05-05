@@ -100,12 +100,12 @@ type InstanceAlert struct {
 
 // InstanceBackup represents backup settings for an instance
 type InstanceBackup struct {
-	Available      bool       `json:"available,omitempty"` // read-only
-	Enabled        bool       `json:"enabled,omitempty"`   // read-only
-	LastSuccessful *time.Time `json:"-"`                   // read-only
+	Available      bool       `json:"available,omitzero"` // read-only
+	Enabled        bool       `json:"enabled,omitzero"`   // read-only
+	LastSuccessful *time.Time `json:"-"`                  // read-only
 	Schedule       struct {
-		Day    string `json:"day,omitempty"`
-		Window string `json:"window,omitempty"`
+		Day    string `json:"day,omitzero"`
+		Window string `json:"window,omitzero"`
 	} `json:"schedule"`
 }
 
@@ -154,7 +154,7 @@ type InstancePlacementGroup struct {
 // that relate to the Linode Metadata service.
 type InstanceMetadataOptions struct {
 	// UserData expects a Base64-encoded string
-	UserData string `json:"user_data,omitempty"`
+	UserData string `json:"user_data,omitzero"`
 }
 
 // InstancePasswordResetOptions specifies the new password for the Linode
@@ -166,23 +166,23 @@ type InstancePasswordResetOptions struct {
 type InstanceCreateOptions struct {
 	Region              string                               `json:"region"`
 	Type                string                               `json:"type"`
-	Label               string                               `json:"label,omitempty"`
-	RootPass            string                               `json:"root_pass,omitempty"`
-	AuthorizedKeys      []string                             `json:"authorized_keys,omitempty"`
-	AuthorizedUsers     []string                             `json:"authorized_users,omitempty"`
-	StackScriptID       int                                  `json:"stackscript_id,omitempty"`
-	StackScriptData     map[string]string                    `json:"stackscript_data,omitempty"`
-	BackupID            int                                  `json:"backup_id,omitempty"`
-	Image               string                               `json:"image,omitempty"`
-	BackupsEnabled      bool                                 `json:"backups_enabled,omitempty"`
-	PrivateIP           bool                                 `json:"private_ip,omitempty"`
-	NetworkHelper       *bool                                `json:"network_helper,omitempty"`
-	Tags                []string                             `json:"tags,omitempty"`
-	Metadata            *InstanceMetadataOptions             `json:"metadata,omitempty"`
-	FirewallID          int                                  `json:"firewall_id,omitempty"`
-	InterfaceGeneration InterfaceGeneration                  `json:"interface_generation,omitempty"`
-	DiskEncryption      InstanceDiskEncryption               `json:"disk_encryption,omitempty"`
-	PlacementGroup      *InstanceCreatePlacementGroupOptions `json:"placement_group,omitempty"`
+	Label               string                               `json:"label,omitzero"`
+	RootPass            string                               `json:"root_pass,omitzero"`
+	AuthorizedKeys      []string                             `json:"authorized_keys,omitzero"`
+	AuthorizedUsers     []string                             `json:"authorized_users,omitzero"`
+	StackScriptID       int                                  `json:"stackscript_id,omitzero"`
+	StackScriptData     map[string]string                    `json:"stackscript_data,omitzero"`
+	BackupID            int                                  `json:"backup_id,omitzero"`
+	Image               string                               `json:"image,omitzero"`
+	BackupsEnabled      bool                                 `json:"backups_enabled,omitzero"`
+	PrivateIP           bool                                 `json:"private_ip,omitzero"`
+	NetworkHelper       *bool                                `json:"network_helper,omitzero"`
+	Tags                []string                             `json:"tags,omitzero"`
+	Metadata            *InstanceMetadataOptions             `json:"metadata,omitzero"`
+	FirewallID          int                                  `json:"firewall_id,omitzero"`
+	InterfaceGeneration InterfaceGeneration                  `json:"interface_generation,omitzero"`
+	DiskEncryption      InstanceDiskEncryption               `json:"disk_encryption,omitzero"`
+	PlacementGroup      *InstanceCreatePlacementGroupOptions `json:"placement_group,omitzero"`
 
 	// Linode Interfaces to create the new instance with.
 	// Conflicts with Interfaces.
@@ -193,30 +193,30 @@ type InstanceCreateOptions struct {
 	Interfaces []InstanceConfigInterfaceCreateOptions `json:"-"`
 
 	// Creation fields that need to be set explicitly false, "", or 0 use pointers
-	SwapSize *int  `json:"swap_size,omitempty"`
-	Booted   *bool `json:"booted,omitempty"`
+	SwapSize *int  `json:"swap_size,omitzero"`
+	Booted   *bool `json:"booted,omitzero"`
 
-	IPv4 []string `json:"ipv4,omitempty"`
+	IPv4 []string `json:"ipv4,omitzero"`
 
-	MaintenancePolicy *string `json:"maintenance_policy,omitempty"`
+	MaintenancePolicy *string `json:"maintenance_policy,omitzero"`
 }
 
 // InstanceCreatePlacementGroupOptions represents the placement group
 // to create this Linode under.
 type InstanceCreatePlacementGroupOptions struct {
 	ID            int   `json:"id"`
-	CompliantOnly *bool `json:"compliant_only,omitempty"`
+	CompliantOnly *bool `json:"compliant_only,omitzero"`
 }
 
 // InstanceUpdateOptions is an options struct used when Updating an Instance
 type InstanceUpdateOptions struct {
-	Label           string          `json:"label,omitempty"`
-	Backups         *InstanceBackup `json:"backups,omitempty"`
-	Alerts          *InstanceAlert  `json:"alerts,omitempty"`
-	WatchdogEnabled *bool           `json:"watchdog_enabled,omitempty"`
-	Tags            *[]string       `json:"tags,omitempty"`
+	Label           string          `json:"label,omitzero"`
+	Backups         *InstanceBackup `json:"backups,omitzero"`
+	Alerts          *InstanceAlert  `json:"alerts,omitzero"`
+	WatchdogEnabled *bool           `json:"watchdog_enabled,omitzero"`
+	Tags            *[]string       `json:"tags,omitzero"`
 
-	MaintenancePolicy *string `json:"maintenance_policy,omitempty"`
+	MaintenancePolicy *string `json:"maintenance_policy,omitzero"`
 }
 
 // MarshalJSON contains logic necessary to populate the `interfaces` field of
@@ -228,7 +228,7 @@ func (i InstanceCreateOptions) MarshalJSON() ([]byte, error) {
 	resultData := struct {
 		*Mask
 
-		Interfaces any `json:"interfaces,omitempty"`
+		Interfaces any `json:"interfaces,omitzero"`
 	}{
 		Mask:       (*Mask)(&i),
 		Interfaces: nil,
@@ -257,7 +257,7 @@ func (i *InstanceCreateOptions) UnmarshalJSON(b []byte) error {
 	p := struct {
 		*Mask
 
-		GenericInterfaces any `json:"interfaces,omitempty"`
+		GenericInterfaces any `json:"interfaces,omitzero"`
 	}{
 		Mask: (*Mask)(i),
 	}
@@ -354,36 +354,36 @@ func (i *Instance) GetUpdateOptions() InstanceUpdateOptions {
 
 // InstanceCloneOptions is an options struct sent when Cloning an Instance
 type InstanceCloneOptions struct {
-	Region string `json:"region,omitempty"`
-	Type   string `json:"type,omitempty"`
+	Region string `json:"region,omitzero"`
+	Type   string `json:"type,omitzero"`
 
 	// LinodeID is an optional existing instance to use as the target of the clone
-	LinodeID       int                                  `json:"linode_id,omitempty"`
-	Label          string                               `json:"label,omitempty"`
+	LinodeID       int                                  `json:"linode_id,omitzero"`
+	Label          string                               `json:"label,omitzero"`
 	BackupsEnabled bool                                 `json:"backups_enabled"`
-	Disks          []int                                `json:"disks,omitempty"`
-	Configs        []int                                `json:"configs,omitempty"`
-	PrivateIP      bool                                 `json:"private_ip,omitempty"`
-	Metadata       *InstanceMetadataOptions             `json:"metadata,omitempty"`
-	PlacementGroup *InstanceCreatePlacementGroupOptions `json:"placement_group,omitempty"`
+	Disks          []int                                `json:"disks,omitzero"`
+	Configs        []int                                `json:"configs,omitzero"`
+	PrivateIP      bool                                 `json:"private_ip,omitzero"`
+	Metadata       *InstanceMetadataOptions             `json:"metadata,omitzero"`
+	PlacementGroup *InstanceCreatePlacementGroupOptions `json:"placement_group,omitzero"`
 }
 
 // InstanceResizeOptions is an options struct used when resizing an instance
 type InstanceResizeOptions struct {
 	Type          string                `json:"type"`
-	MigrationType InstanceMigrationType `json:"migration_type,omitempty"`
+	MigrationType InstanceMigrationType `json:"migration_type,omitzero"`
 
 	// When enabled, an instance resize will also resize a data disk if the instance has no more than one data disk and one swap disk
-	AllowAutoDiskResize *bool `json:"allow_auto_disk_resize,omitempty"`
+	AllowAutoDiskResize *bool `json:"allow_auto_disk_resize,omitzero"`
 }
 
 // InstanceMigrateOptions is an options struct used when migrating an instance
 type InstanceMigrateOptions struct {
-	Type    InstanceMigrationType `json:"type,omitempty"`
-	Region  string                `json:"region,omitempty"`
-	Upgrade *bool                 `json:"upgrade,omitempty"`
+	Type    InstanceMigrationType `json:"type,omitzero"`
+	Region  string                `json:"region,omitzero"`
+	Upgrade *bool                 `json:"upgrade,omitzero"`
 
-	PlacementGroup *InstanceCreatePlacementGroupOptions `json:"placement_group,omitempty"`
+	PlacementGroup *InstanceCreatePlacementGroupOptions `json:"placement_group,omitzero"`
 }
 
 // ListInstances lists linode instances
@@ -473,16 +473,16 @@ func (c *Client) RebootInstance(ctx context.Context, linodeID int, configID int)
 
 // InstanceRebuildOptions is a struct representing the options to send to the rebuild linode endpoint
 type InstanceRebuildOptions struct {
-	Image           string                   `json:"image,omitempty"`
-	RootPass        string                   `json:"root_pass,omitempty"`
-	AuthorizedKeys  []string                 `json:"authorized_keys,omitempty"`
-	AuthorizedUsers []string                 `json:"authorized_users,omitempty"`
-	StackScriptID   int                      `json:"stackscript_id,omitempty"`
-	StackScriptData map[string]string        `json:"stackscript_data,omitempty"`
-	Booted          *bool                    `json:"booted,omitempty"`
-	Metadata        *InstanceMetadataOptions `json:"metadata,omitempty"`
-	Type            string                   `json:"type,omitempty"`
-	DiskEncryption  InstanceDiskEncryption   `json:"disk_encryption,omitempty"`
+	Image           string                   `json:"image,omitzero"`
+	RootPass        string                   `json:"root_pass,omitzero"`
+	AuthorizedKeys  []string                 `json:"authorized_keys,omitzero"`
+	AuthorizedUsers []string                 `json:"authorized_users,omitzero"`
+	StackScriptID   int                      `json:"stackscript_id,omitzero"`
+	StackScriptData map[string]string        `json:"stackscript_data,omitzero"`
+	Booted          *bool                    `json:"booted,omitzero"`
+	Metadata        *InstanceMetadataOptions `json:"metadata,omitzero"`
+	Type            string                   `json:"type,omitzero"`
+	DiskEncryption  InstanceDiskEncryption   `json:"disk_encryption,omitzero"`
 }
 
 // RebuildInstance Deletes all Disks and Configs on this Linode,

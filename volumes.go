@@ -45,29 +45,29 @@ type Volume struct {
 
 // VolumeCreateOptions fields are those accepted by CreateVolume
 type VolumeCreateOptions struct {
-	Label    string `json:"label,omitempty"`
-	Region   string `json:"region,omitempty"`
-	LinodeID int    `json:"linode_id,omitempty"`
-	ConfigID int    `json:"config_id,omitempty"`
+	Label    string `json:"label,omitzero"`
+	Region   string `json:"region,omitzero"`
+	LinodeID int    `json:"linode_id,omitzero"`
+	ConfigID int    `json:"config_id,omitzero"`
 	// The Volume's size, in GiB. Minimum size is 10GiB, maximum size is 10240GiB. A "0" value will result in the default size.
-	Size int `json:"size,omitempty"`
+	Size int `json:"size,omitzero"`
 	// An array of tags applied to this object. Tags are for organizational purposes only.
 	Tags               []string `json:"tags"`
-	PersistAcrossBoots *bool    `json:"persist_across_boots,omitempty"`
-	Encryption         string   `json:"encryption,omitempty"`
+	PersistAcrossBoots *bool    `json:"persist_across_boots,omitzero"`
+	Encryption         string   `json:"encryption,omitzero"`
 }
 
 // VolumeUpdateOptions fields are those accepted by UpdateVolume
 type VolumeUpdateOptions struct {
-	Label string    `json:"label,omitempty"`
-	Tags  *[]string `json:"tags,omitempty"`
+	Label string    `json:"label,omitzero"`
+	Tags  *[]string `json:"tags,omitzero"`
 }
 
 // VolumeAttachOptions fields are those accepted by AttachVolume
 type VolumeAttachOptions struct {
 	LinodeID           int   `json:"linode_id"`
-	ConfigID           int   `json:"config_id,omitempty"`
-	PersistAcrossBoots *bool `json:"persist_across_boots,omitempty"`
+	ConfigID           int   `json:"config_id,omitzero"`
+	PersistAcrossBoots *bool `json:"persist_across_boots,omitzero"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface

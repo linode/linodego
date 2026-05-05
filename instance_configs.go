@@ -28,81 +28,81 @@ type InstanceConfig struct {
 
 // InstanceConfigDevice contains either the DiskID or VolumeID assigned to a Config Device
 type InstanceConfigDevice struct {
-	DiskID   int `json:"disk_id,omitempty"`
-	VolumeID int `json:"volume_id,omitempty"`
+	DiskID   int `json:"disk_id,omitzero"`
+	VolumeID int `json:"volume_id,omitzero"`
 }
 
 // InstanceConfigDeviceMap contains SDA-SDH InstanceConfigDevice settings
 type InstanceConfigDeviceMap struct {
 	// sda-sdz
-	SDA *InstanceConfigDevice `json:"sda,omitempty"`
-	SDB *InstanceConfigDevice `json:"sdb,omitempty"`
-	SDC *InstanceConfigDevice `json:"sdc,omitempty"`
-	SDD *InstanceConfigDevice `json:"sdd,omitempty"`
-	SDE *InstanceConfigDevice `json:"sde,omitempty"`
-	SDF *InstanceConfigDevice `json:"sdf,omitempty"`
-	SDG *InstanceConfigDevice `json:"sdg,omitempty"`
-	SDH *InstanceConfigDevice `json:"sdh,omitempty"`
-	SDI *InstanceConfigDevice `json:"sdi,omitempty"`
-	SDJ *InstanceConfigDevice `json:"sdj,omitempty"`
-	SDK *InstanceConfigDevice `json:"sdk,omitempty"`
-	SDL *InstanceConfigDevice `json:"sdl,omitempty"`
-	SDM *InstanceConfigDevice `json:"sdm,omitempty"`
-	SDN *InstanceConfigDevice `json:"sdn,omitempty"`
-	SDO *InstanceConfigDevice `json:"sdo,omitempty"`
-	SDP *InstanceConfigDevice `json:"sdp,omitempty"`
-	SDQ *InstanceConfigDevice `json:"sdq,omitempty"`
-	SDR *InstanceConfigDevice `json:"sdr,omitempty"`
-	SDS *InstanceConfigDevice `json:"sds,omitempty"`
-	SDT *InstanceConfigDevice `json:"sdt,omitempty"`
-	SDU *InstanceConfigDevice `json:"sdu,omitempty"`
-	SDV *InstanceConfigDevice `json:"sdv,omitempty"`
-	SDW *InstanceConfigDevice `json:"sdw,omitempty"`
-	SDX *InstanceConfigDevice `json:"sdx,omitempty"`
-	SDY *InstanceConfigDevice `json:"sdy,omitempty"`
-	SDZ *InstanceConfigDevice `json:"sdz,omitempty"`
+	SDA *InstanceConfigDevice `json:"sda,omitzero"`
+	SDB *InstanceConfigDevice `json:"sdb,omitzero"`
+	SDC *InstanceConfigDevice `json:"sdc,omitzero"`
+	SDD *InstanceConfigDevice `json:"sdd,omitzero"`
+	SDE *InstanceConfigDevice `json:"sde,omitzero"`
+	SDF *InstanceConfigDevice `json:"sdf,omitzero"`
+	SDG *InstanceConfigDevice `json:"sdg,omitzero"`
+	SDH *InstanceConfigDevice `json:"sdh,omitzero"`
+	SDI *InstanceConfigDevice `json:"sdi,omitzero"`
+	SDJ *InstanceConfigDevice `json:"sdj,omitzero"`
+	SDK *InstanceConfigDevice `json:"sdk,omitzero"`
+	SDL *InstanceConfigDevice `json:"sdl,omitzero"`
+	SDM *InstanceConfigDevice `json:"sdm,omitzero"`
+	SDN *InstanceConfigDevice `json:"sdn,omitzero"`
+	SDO *InstanceConfigDevice `json:"sdo,omitzero"`
+	SDP *InstanceConfigDevice `json:"sdp,omitzero"`
+	SDQ *InstanceConfigDevice `json:"sdq,omitzero"`
+	SDR *InstanceConfigDevice `json:"sdr,omitzero"`
+	SDS *InstanceConfigDevice `json:"sds,omitzero"`
+	SDT *InstanceConfigDevice `json:"sdt,omitzero"`
+	SDU *InstanceConfigDevice `json:"sdu,omitzero"`
+	SDV *InstanceConfigDevice `json:"sdv,omitzero"`
+	SDW *InstanceConfigDevice `json:"sdw,omitzero"`
+	SDX *InstanceConfigDevice `json:"sdx,omitzero"`
+	SDY *InstanceConfigDevice `json:"sdy,omitzero"`
+	SDZ *InstanceConfigDevice `json:"sdz,omitzero"`
 
 	// sdaa-sdaz
-	SDAA *InstanceConfigDevice `json:"sdaa,omitempty"`
-	SDAB *InstanceConfigDevice `json:"sdab,omitempty"`
-	SDAC *InstanceConfigDevice `json:"sdac,omitempty"`
-	SDAD *InstanceConfigDevice `json:"sdad,omitempty"`
-	SDAE *InstanceConfigDevice `json:"sdae,omitempty"`
-	SDAF *InstanceConfigDevice `json:"sdaf,omitempty"`
-	SDAG *InstanceConfigDevice `json:"sdag,omitempty"`
-	SDAH *InstanceConfigDevice `json:"sdah,omitempty"`
-	SDAI *InstanceConfigDevice `json:"sdai,omitempty"`
-	SDAJ *InstanceConfigDevice `json:"sdaj,omitempty"`
-	SDAK *InstanceConfigDevice `json:"sdak,omitempty"`
-	SDAL *InstanceConfigDevice `json:"sdal,omitempty"`
-	SDAM *InstanceConfigDevice `json:"sdam,omitempty"`
-	SDAN *InstanceConfigDevice `json:"sdan,omitempty"`
-	SDAO *InstanceConfigDevice `json:"sdao,omitempty"`
-	SDAP *InstanceConfigDevice `json:"sdap,omitempty"`
-	SDAQ *InstanceConfigDevice `json:"sdaq,omitempty"`
-	SDAR *InstanceConfigDevice `json:"sdar,omitempty"`
-	SDAS *InstanceConfigDevice `json:"sdas,omitempty"`
-	SDAT *InstanceConfigDevice `json:"sdat,omitempty"`
-	SDAU *InstanceConfigDevice `json:"sdau,omitempty"`
-	SDAV *InstanceConfigDevice `json:"sdav,omitempty"`
-	SDAW *InstanceConfigDevice `json:"sdaw,omitempty"`
-	SDAX *InstanceConfigDevice `json:"sdax,omitempty"`
-	SDAY *InstanceConfigDevice `json:"sday,omitempty"`
-	SDAZ *InstanceConfigDevice `json:"sdaz,omitempty"`
+	SDAA *InstanceConfigDevice `json:"sdaa,omitzero"`
+	SDAB *InstanceConfigDevice `json:"sdab,omitzero"`
+	SDAC *InstanceConfigDevice `json:"sdac,omitzero"`
+	SDAD *InstanceConfigDevice `json:"sdad,omitzero"`
+	SDAE *InstanceConfigDevice `json:"sdae,omitzero"`
+	SDAF *InstanceConfigDevice `json:"sdaf,omitzero"`
+	SDAG *InstanceConfigDevice `json:"sdag,omitzero"`
+	SDAH *InstanceConfigDevice `json:"sdah,omitzero"`
+	SDAI *InstanceConfigDevice `json:"sdai,omitzero"`
+	SDAJ *InstanceConfigDevice `json:"sdaj,omitzero"`
+	SDAK *InstanceConfigDevice `json:"sdak,omitzero"`
+	SDAL *InstanceConfigDevice `json:"sdal,omitzero"`
+	SDAM *InstanceConfigDevice `json:"sdam,omitzero"`
+	SDAN *InstanceConfigDevice `json:"sdan,omitzero"`
+	SDAO *InstanceConfigDevice `json:"sdao,omitzero"`
+	SDAP *InstanceConfigDevice `json:"sdap,omitzero"`
+	SDAQ *InstanceConfigDevice `json:"sdaq,omitzero"`
+	SDAR *InstanceConfigDevice `json:"sdar,omitzero"`
+	SDAS *InstanceConfigDevice `json:"sdas,omitzero"`
+	SDAT *InstanceConfigDevice `json:"sdat,omitzero"`
+	SDAU *InstanceConfigDevice `json:"sdau,omitzero"`
+	SDAV *InstanceConfigDevice `json:"sdav,omitzero"`
+	SDAW *InstanceConfigDevice `json:"sdaw,omitzero"`
+	SDAX *InstanceConfigDevice `json:"sdax,omitzero"`
+	SDAY *InstanceConfigDevice `json:"sday,omitzero"`
+	SDAZ *InstanceConfigDevice `json:"sdaz,omitzero"`
 
 	// sdba-sdbl
-	SDBA *InstanceConfigDevice `json:"sdba,omitempty"`
-	SDBB *InstanceConfigDevice `json:"sdbb,omitempty"`
-	SDBC *InstanceConfigDevice `json:"sdbc,omitempty"`
-	SDBD *InstanceConfigDevice `json:"sdbd,omitempty"`
-	SDBE *InstanceConfigDevice `json:"sdbe,omitempty"`
-	SDBF *InstanceConfigDevice `json:"sdbf,omitempty"`
-	SDBG *InstanceConfigDevice `json:"sdbg,omitempty"`
-	SDBH *InstanceConfigDevice `json:"sdbh,omitempty"`
-	SDBI *InstanceConfigDevice `json:"sdbi,omitempty"`
-	SDBJ *InstanceConfigDevice `json:"sdbj,omitempty"`
-	SDBK *InstanceConfigDevice `json:"sdbk,omitempty"`
-	SDBL *InstanceConfigDevice `json:"sdbl,omitempty"`
+	SDBA *InstanceConfigDevice `json:"sdba,omitzero"`
+	SDBB *InstanceConfigDevice `json:"sdbb,omitzero"`
+	SDBC *InstanceConfigDevice `json:"sdbc,omitzero"`
+	SDBD *InstanceConfigDevice `json:"sdbd,omitzero"`
+	SDBE *InstanceConfigDevice `json:"sdbe,omitzero"`
+	SDBF *InstanceConfigDevice `json:"sdbf,omitzero"`
+	SDBG *InstanceConfigDevice `json:"sdbg,omitzero"`
+	SDBH *InstanceConfigDevice `json:"sdbh,omitzero"`
+	SDBI *InstanceConfigDevice `json:"sdbi,omitzero"`
+	SDBJ *InstanceConfigDevice `json:"sdbj,omitzero"`
+	SDBK *InstanceConfigDevice `json:"sdbk,omitzero"`
+	SDBL *InstanceConfigDevice `json:"sdbl,omitzero"`
 }
 
 // InstanceConfigHelpers are Instance Config options that control Linux distribution specific tweaks
@@ -125,34 +125,34 @@ const (
 
 // InstanceConfigCreateOptions are InstanceConfig settings that can be used at creation
 type InstanceConfigCreateOptions struct {
-	Label       string                                 `json:"label,omitempty"`
-	Comments    string                                 `json:"comments,omitempty"`
+	Label       string                                 `json:"label,omitzero"`
+	Comments    string                                 `json:"comments,omitzero"`
 	Devices     InstanceConfigDeviceMap                `json:"devices"`
-	Helpers     *InstanceConfigHelpers                 `json:"helpers,omitempty"`
+	Helpers     *InstanceConfigHelpers                 `json:"helpers,omitzero"`
 	Interfaces  []InstanceConfigInterfaceCreateOptions `json:"interfaces"`
-	MemoryLimit int                                    `json:"memory_limit,omitempty"`
-	Kernel      string                                 `json:"kernel,omitempty"`
-	InitRD      int                                    `json:"init_rd,omitempty"`
-	RootDevice  *string                                `json:"root_device,omitempty"`
-	RunLevel    string                                 `json:"run_level,omitempty"`
-	VirtMode    string                                 `json:"virt_mode,omitempty"`
+	MemoryLimit int                                    `json:"memory_limit,omitzero"`
+	Kernel      string                                 `json:"kernel,omitzero"`
+	InitRD      int                                    `json:"init_rd,omitzero"`
+	RootDevice  *string                                `json:"root_device,omitzero"`
+	RunLevel    string                                 `json:"run_level,omitzero"`
+	VirtMode    string                                 `json:"virt_mode,omitzero"`
 }
 
 // InstanceConfigUpdateOptions are InstanceConfig settings that can be used in updates
 type InstanceConfigUpdateOptions struct {
-	Label      string                                 `json:"label,omitempty"`
+	Label      string                                 `json:"label,omitzero"`
 	Comments   string                                 `json:"comments"`
-	Devices    *InstanceConfigDeviceMap               `json:"devices,omitempty"`
-	Helpers    *InstanceConfigHelpers                 `json:"helpers,omitempty"`
+	Devices    *InstanceConfigDeviceMap               `json:"devices,omitzero"`
+	Helpers    *InstanceConfigHelpers                 `json:"helpers,omitzero"`
 	Interfaces []InstanceConfigInterfaceCreateOptions `json:"interfaces"`
 	// MemoryLimit 0 means unlimitted, this is not omitted
 	MemoryLimit int    `json:"memory_limit"`
-	Kernel      string `json:"kernel,omitempty"`
+	Kernel      string `json:"kernel,omitzero"`
 	// InitRD is nullable, permit the sending of null
 	InitRD     *int   `json:"init_rd"`
-	RootDevice string `json:"root_device,omitempty"`
-	RunLevel   string `json:"run_level,omitempty"`
-	VirtMode   string `json:"virt_mode,omitempty"`
+	RootDevice string `json:"root_device,omitzero"`
+	RunLevel   string `json:"run_level,omitzero"`
+	VirtMode   string `json:"virt_mode,omitzero"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface

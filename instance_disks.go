@@ -48,14 +48,14 @@ type InstanceDiskCreateOptions struct {
 	Size  int    `json:"size"`
 
 	// Image is optional, but requires RootPass if provided
-	Image    string `json:"image,omitempty"`
-	RootPass string `json:"root_pass,omitempty"`
+	Image    string `json:"image,omitzero"`
+	RootPass string `json:"root_pass,omitzero"`
 
-	Filesystem      string            `json:"filesystem,omitempty"`
-	AuthorizedKeys  []string          `json:"authorized_keys,omitempty"`
-	AuthorizedUsers []string          `json:"authorized_users,omitempty"`
-	StackscriptID   int               `json:"stackscript_id,omitempty"`
-	StackscriptData map[string]string `json:"stackscript_data,omitempty"`
+	Filesystem      string            `json:"filesystem,omitzero"`
+	AuthorizedKeys  []string          `json:"authorized_keys,omitzero"`
+	AuthorizedUsers []string          `json:"authorized_users,omitzero"`
+	StackscriptID   int               `json:"stackscript_id,omitzero"`
+	StackscriptData map[string]string `json:"stackscript_data,omitzero"`
 }
 
 // InstanceDiskUpdateOptions are InstanceDisk settings that can be used in updates

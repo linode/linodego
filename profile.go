@@ -38,19 +38,19 @@ type Profile struct {
 	Referrals           ProfileReferrals `json:"referrals"`
 	AuthorizedKeys      []string         `json:"authorized_keys"`
 	AuthenticationType  string           `json:"authentication_type"`
-	VerifiedPhoneNumber string           `json:"verified_phone_number,omitempty"`
+	VerifiedPhoneNumber string           `json:"verified_phone_number,omitzero"`
 }
 
 // ProfileUpdateOptions fields are those accepted by UpdateProfile
 type ProfileUpdateOptions struct {
-	Email              string         `json:"email,omitempty"`
-	Timezone           string         `json:"timezone,omitempty"`
-	EmailNotifications *bool          `json:"email_notifications,omitempty"`
-	IPWhitelistEnabled *bool          `json:"ip_whitelist_enabled,omitempty"`
-	LishAuthMethod     LishAuthMethod `json:"lish_auth_method,omitempty"`
-	AuthorizedKeys     *[]string      `json:"authorized_keys,omitempty"`
-	TwoFactorAuth      *bool          `json:"two_factor_auth,omitempty"`
-	Restricted         *bool          `json:"restricted,omitempty"`
+	Email              string         `json:"email,omitzero"`
+	Timezone           string         `json:"timezone,omitzero"`
+	EmailNotifications *bool          `json:"email_notifications,omitzero"`
+	IPWhitelistEnabled *bool          `json:"ip_whitelist_enabled,omitzero"`
+	LishAuthMethod     LishAuthMethod `json:"lish_auth_method,omitzero"`
+	AuthorizedKeys     *[]string      `json:"authorized_keys,omitzero"`
+	TwoFactorAuth      *bool          `json:"two_factor_auth,omitzero"`
+	Restricted         *bool          `json:"restricted,omitzero"`
 }
 
 // GetUpdateOptions converts a Profile to ProfileUpdateOptions for use in UpdateProfile

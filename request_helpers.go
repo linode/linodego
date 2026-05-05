@@ -13,9 +13,9 @@ import (
 // paginatedResponse represents a single response from a paginated
 // endpoint.
 type paginatedResponse[T any] struct {
-	Page    int `json:"page"    url:"page,omitempty"`
-	Pages   int `json:"pages"   url:"pages,omitempty"`
-	Results int `json:"results" url:"results,omitempty"`
+	Page    int `json:"page"    url:"page,omitzero"`
+	Pages   int `json:"pages"   url:"pages,omitzero"`
+	Results int `json:"results" url:"results,omitzero"`
 	Data    []T `json:"data"`
 }
 
