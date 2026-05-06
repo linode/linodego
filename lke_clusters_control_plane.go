@@ -28,8 +28,8 @@ type LKEClusterControlPlaneACL struct {
 // LKEClusterControlPlaneACLAddressesOptions are the options used to
 // specify the allowed IP ranges for an LKE cluster's control plane.
 type LKEClusterControlPlaneACLAddressesOptions struct {
-	IPv4 *[]string `json:"ipv4,omitzero"`
-	IPv6 *[]string `json:"ipv6,omitzero"`
+	IPv4 []string `json:"ipv4,omitzero"`
+	IPv6 []string `json:"ipv6,omitzero"`
 }
 
 // LKEClusterControlPlaneACLOptions represents the options used when

@@ -140,7 +140,7 @@ func TestLKECluster_Update(t *testing.T) {
 	updatedK8sVersion := "1.32"
 
 	updatedCluster, err := client.UpdateLKECluster(context.Background(), cluster.ID, linodego.LKEClusterUpdateOptions{
-		Tags:       &updatedTags,
+		Tags:       updatedTags,
 		Label:      updatedLabel,
 		K8sVersion: updatedK8sVersion,
 	})

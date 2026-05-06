@@ -408,7 +408,7 @@ type MySQLCreateOptions struct {
 // MySQLUpdateOptions fields are used when altering the existing MySQL Database
 type MySQLUpdateOptions struct {
 	Label          string                     `json:"label,omitzero"`
-	AllowList      *[]string                  `json:"allow_list,omitzero"`
+	AllowList      []string                   `json:"allow_list,omitzero"`
 	Updates        *DatabaseMaintenanceWindow `json:"updates,omitzero"`
 	Type           string                     `json:"type,omitzero"`
 	ClusterSize    int                        `json:"cluster_size,omitzero"`

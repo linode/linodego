@@ -55,7 +55,7 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 
 	updatedLabel := database.Label + "-updated"
 	opts := linodego.MySQLUpdateOptions{
-		AllowList: &allowList,
+		AllowList: allowList,
 		Label:     updatedLabel,
 		Updates:   &updatedWindow,
 	}

@@ -49,7 +49,7 @@ type FirewallCreateOptions struct {
 type FirewallUpdateOptions struct {
 	Label  string         `json:"label,omitzero"`
 	Status FirewallStatus `json:"status,omitzero"`
-	Tags   *[]string      `json:"tags,omitzero"`
+	Tags   []string       `json:"tags,omitzero"`
 }
 
 // FirewallSettings represents the default firewalls for Linodes,
@@ -82,7 +82,7 @@ func (f *Firewall) GetUpdateOptions() FirewallUpdateOptions {
 	return FirewallUpdateOptions{
 		Label:  f.Label,
 		Status: f.Status,
-		Tags:   &f.Tags,
+		Tags:   f.Tags,
 	}
 }
 

@@ -65,10 +65,10 @@ func TestFirewallRuleSets_List(t *testing.T) {
 	rule := rs.Rules[0]
 	assert.Equal(t, "ACCEPT", rule.Action)
 	if assert.NotNil(t, rule.Addresses.IPv4) {
-		assert.Equal(t, []string{"pl::vpcs:primary"}, *rule.Addresses.IPv4)
+		assert.Equal(t, []string{"pl::vpcs:primary"}, rule.Addresses.IPv4)
 	}
 	if assert.NotNil(t, rule.Addresses.IPv6) {
-		assert.Equal(t, []string{"pl::vpcs:primary"}, *rule.Addresses.IPv6)
+		assert.Equal(t, []string{"pl::vpcs:primary"}, rule.Addresses.IPv6)
 	}
 
 	if assert.NotNil(t, rs.Created) {
@@ -132,7 +132,7 @@ func TestFirewallRuleSets_Create(t *testing.T) {
 			{
 				Action: "ACCEPT",
 				Addresses: linodego.NetworkAddresses{
-					IPv4: &[]string{"pl::vpcs:primary"},
+					IPv4: []string{"pl::vpcs:primary"},
 				},
 				Label:    "ingress",
 				Protocol: linodego.NetworkProtocol("TCP"),
@@ -181,7 +181,7 @@ func TestFirewallRuleSets_Update(t *testing.T) {
 		{
 			Action: "ACCEPT",
 			Addresses: linodego.NetworkAddresses{
-				IPv6: &[]string{"pl::system:obj-storage"},
+				IPv6: []string{"pl::system:obj-storage"},
 			},
 			Label:    "egress",
 			Protocol: linodego.NetworkProtocol("UDP"),
@@ -192,7 +192,7 @@ func TestFirewallRuleSets_Update(t *testing.T) {
 	req := linodego.RuleSetUpdateOptions{
 		Label:       &label,
 		Description: &description,
-		Rules:       &rules,
+		Rules:       rules,
 	}
 
 	response := map[string]any{
