@@ -228,6 +228,8 @@ func TestMonitorAlertChannels_List(t *testing.T) {
 		assert.NotZero(t, channel.ID)
 		assert.NotEmpty(t, channel.Label)
 		assert.NotEmpty(t, channel.ChannelType)
+		assert.NotNil(t, channel.Details.Email)
+		assert.NotEmpty(t, channel.Details.Email.RecipientType)
 	}
 }
 
@@ -302,5 +304,31 @@ func TestMonitorAlertDefinition_CreateWithIdempotency(t *testing.T) {
 	// Cleanup
 	if createdAlert != nil {
 		_ = client.DeleteMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, createdAlert.ID)
+	}
+}
+
+func TestMonitorAlertDefinitionEntities_List(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertDefinitionEntities_List")
+	defer teardown()
+
+	alerts, err := client.ListAllMonitorAlertDefinitions(context.Background(), nil)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, alerts)
+
+	entities, err := client.ListMonitorAlertDefinitionEntities(
+		context.Background(),
+		testMonitorAlertDefinitionServiceType,
+		alerts[0].ID,
+		nil,
+	)
+
+	assert.NoError(t, err)
+	assert.NotEmpty(t, entities, "Expected at least one entity")
+
+	for _, entity := range entities {
+		assert.NotZero(t, entity.ID)
+		assert.NotEmpty(t, entity.Label)
+		assert.NotEmpty(t, entity.Type)
+		assert.NotEmpty(t, entity.URL)
 	}
 }

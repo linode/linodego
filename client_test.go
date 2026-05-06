@@ -17,6 +17,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego/internal/testutil"
+	"github.com/stretchr/testify/require"
 )
 
 func TestClient_SetAPIVersion(t *testing.T) {
@@ -701,5 +702,103 @@ func TestMonitorClient_SetAPIBasics(t *testing.T) {
 
 	if client.resty.BaseURL != protocolExpectedHost {
 		t.Fatal(cmp.Diff(client.resty.BaseURL, expectedHost))
+	}
+}
+
+func TestRedactHeaders(t *testing.T) {
+	tests := []struct {
+		name    string
+		headers http.Header
+		wantVal map[string]string
+	}{
+		{
+			name: "redacts authorization header",
+			headers: http.Header{
+				"Authorization": []string{"Bearer supersecrettoken"},
+				"Content-Type":  []string{"application/json"},
+			},
+			wantVal: map[string]string{
+				"Authorization": redactHeadersMap["Authorization"],
+				"Content-Type":  "application/json",
+			},
+		},
+		{
+			name: "leaves non-sensitive headers unchanged",
+			headers: http.Header{
+				"Content-Type": []string{"application/json"},
+				"Accept":       []string{"application/json"},
+			},
+			wantVal: map[string]string{
+				"Content-Type": "application/json",
+				"Accept":       "application/json",
+			},
+		},
+		{
+			name:    "handles empty headers",
+			headers: http.Header{},
+			wantVal: map[string]string{},
+		},
+		{
+			name: "does not mutate original headers",
+			headers: http.Header{
+				"Authorization": []string{"Bearer supersecrettoken"},
+			},
+			wantVal: map[string]string{
+				"Authorization": redactHeadersMap["Authorization"],
+			},
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			originalAuth := tt.headers.Get("Authorization")
+
+			result := redactHeaders(tt.headers)
+
+			// Verify expected values in result
+			for key, expectedVal := range tt.wantVal {
+				if got := result.Get(key); got != expectedVal {
+					t.Errorf("redactHeaders() header %q = %q, want %q", key, got, expectedVal)
+				}
+			}
+
+			// Verify original was not mutated
+			if tt.headers.Get("Authorization") != originalAuth {
+				t.Error("redactHeaders() mutated the original headers")
+			}
+		})
+	}
+}
+
+func TestEnableLogSanitization(t *testing.T) {
+	mockClient := testutil.CreateMockClient(t, NewClient)
+	mockClient.SetDebug(true)
+
+	plainTextToken := "supersecrettoken"
+	mockClient.SetToken(plainTextToken)
+
+	var logBuf bytes.Buffer
+	logger := testutil.CreateLogger()
+	logger.L.SetOutput(&logBuf)
+	mockClient.SetLogger(logger)
+
+	httpmock.RegisterResponder("GET", "=~.*",
+		httpmock.NewStringResponder(200, `{}`).HeaderSet(http.Header{
+			"Authorization": []string{"Bearer " + plainTextToken},
+		}))
+
+	_, err := mockClient.resty.R().Get("https://api.linode.com/v4/test")
+	require.NoError(t, err)
+
+	logOutput := logBuf.String()
+
+	// Verify token is not present in either request or response logs
+	if strings.Contains(logOutput, plainTextToken) {
+		t.Errorf("log output contains raw token %q, expected it to be redacted", plainTextToken)
+	}
+
+	// Verify Authorization header still appears (as redacted value) in request log
+	if !strings.Contains(logOutput, "Authorization") {
+		t.Error("expected Authorization header to appear in request log output")
 	}
 }

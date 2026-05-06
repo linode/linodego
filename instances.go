@@ -49,37 +49,31 @@ const (
 
 // Instance represents a linode object
 type Instance struct {
-	ID              int                     `json:"id"`
-	Created         *time.Time              `json:"-"`
-	Updated         *time.Time              `json:"-"`
-	Region          string                  `json:"region"`
-	Alerts          *InstanceAlert          `json:"alerts"`
-	Backups         *InstanceBackup         `json:"backups"`
-	Image           string                  `json:"image"`
-	Group           string                  `json:"group"`
-	IPv4            []*net.IP               `json:"ipv4"`
-	IPv6            string                  `json:"ipv6"`
-	Label           string                  `json:"label"`
-	Type            string                  `json:"type"`
-	Status          InstanceStatus          `json:"status"`
-	HasUserData     bool                    `json:"has_user_data"`
-	Hypervisor      string                  `json:"hypervisor"`
-	HostUUID        string                  `json:"host_uuid"`
-	Specs           *InstanceSpec           `json:"specs"`
-	WatchdogEnabled bool                    `json:"watchdog_enabled"`
-	Tags            []string                `json:"tags"`
-	PlacementGroup  *InstancePlacementGroup `json:"placement_group"`
-
-	// NOTE: Disk encryption may not currently be available to all users.
-	DiskEncryption InstanceDiskEncryption `json:"disk_encryption"`
-
-	LKEClusterID int      `json:"lke_cluster_id"`
-	Capabilities []string `json:"capabilities"`
-
-	// Note: Linode interfaces may not currently be available to all users.
-	InterfaceGeneration InterfaceGeneration `json:"interface_generation"`
-
-	MaintenancePolicy string `json:"maintenance_policy"`
+	ID                  int                     `json:"id"`
+	Created             *time.Time              `json:"-"`
+	Updated             *time.Time              `json:"-"`
+	Region              string                  `json:"region"`
+	Alerts              *InstanceAlert          `json:"alerts"`
+	Backups             *InstanceBackup         `json:"backups"`
+	Image               string                  `json:"image"`
+	Group               string                  `json:"group"`
+	IPv4                []*net.IP               `json:"ipv4"`
+	IPv6                string                  `json:"ipv6"`
+	Label               string                  `json:"label"`
+	Type                string                  `json:"type"`
+	Status              InstanceStatus          `json:"status"`
+	HasUserData         bool                    `json:"has_user_data"`
+	Hypervisor          string                  `json:"hypervisor"`
+	HostUUID            string                  `json:"host_uuid"`
+	Specs               *InstanceSpec           `json:"specs"`
+	WatchdogEnabled     bool                    `json:"watchdog_enabled"`
+	Tags                []string                `json:"tags"`
+	PlacementGroup      *InstancePlacementGroup `json:"placement_group"`
+	DiskEncryption      InstanceDiskEncryption  `json:"disk_encryption"`
+	LKEClusterID        int                     `json:"lke_cluster_id"`
+	Capabilities        []string                `json:"capabilities"`
+	InterfaceGeneration InterfaceGeneration     `json:"interface_generation"`
+	MaintenancePolicy   string                  `json:"maintenance_policy"`
 
 	// NOTE: Locks can only be used with v4beta.
 	Locks []LockType `json:"locks"`
@@ -206,20 +200,16 @@ type InstanceCreateOptions struct {
 	Metadata            *InstanceMetadataOptions `json:"metadata,omitempty"`
 	FirewallID          int                      `json:"firewall_id,omitempty"`
 	InterfaceGeneration InterfaceGeneration      `json:"interface_generation,omitempty"`
+	DiskEncryption      InstanceDiskEncryption               `json:"disk_encryption,omitempty"`
+	PlacementGroup      *InstanceCreatePlacementGroupOptions `json:"placement_group,omitempty"`
 
 	// Linode Interfaces to create the new instance with.
 	// Conflicts with Interfaces.
-	// NOTE: Linode Interfaces may not currently be available to all users.
 	LinodeInterfaces []LinodeInterfaceCreateOptions `json:"-"`
 
 	// Legacy (config) Interfaces to create the new instance with.
 	// Conflicts with LinodeInterfaces.
 	Interfaces []InstanceConfigInterfaceCreateOptions `json:"-"`
-
-	// NOTE: Disk encryption may not currently be available to all users.
-	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitempty"`
-
-	PlacementGroup *InstanceCreatePlacementGroupOptions `json:"placement_group,omitempty"`
 
 	// Creation fields that need to be set explicitly false, "", or 0 use pointers
 	SwapSize *int  `json:"swap_size,omitempty"`
@@ -532,9 +522,7 @@ type InstanceRebuildOptions struct {
 	Booted          *bool                    `json:"booted,omitempty"`
 	Metadata        *InstanceMetadataOptions `json:"metadata,omitempty"`
 	Type            string                   `json:"type,omitempty"`
-
-	// NOTE: Disk encryption may not currently be available to all users.
-	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitempty"`
+	DiskEncryption  InstanceDiskEncryption   `json:"disk_encryption,omitempty"`
 }
 
 // RebuildInstance Deletes all Disks and Configs on this Linode,

@@ -10,15 +10,13 @@ import (
 
 // InstanceDisk represents an Instance Disk object
 type InstanceDisk struct {
-	ID         int            `json:"id"`
-	Label      string         `json:"label"`
-	Status     DiskStatus     `json:"status"`
-	Size       int            `json:"size"`
-	Filesystem DiskFilesystem `json:"filesystem"`
-	Created    *time.Time     `json:"-"`
-	Updated    *time.Time     `json:"-"`
-
-	// NOTE: Disk encryption may not currently be available to all users.
+	ID             int                    `json:"id"`
+	Label          string                 `json:"label"`
+	Status         DiskStatus             `json:"status"`
+	Size           int                    `json:"size"`
+	Filesystem     DiskFilesystem         `json:"filesystem"`
+	Created        *time.Time             `json:"-"`
+	Updated        *time.Time             `json:"-"`
 	DiskEncryption InstanceDiskEncryption `json:"disk_encryption"`
 }
 
