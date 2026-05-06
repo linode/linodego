@@ -15,8 +15,8 @@ var (
 		Ports:    "22",
 		Protocol: "TCP",
 		Addresses: linodego.NetworkAddresses{
-			IPv4: &[]string{"0.0.0.0/0"},
-			IPv6: &[]string{"::0/0"},
+			IPv4: []string{"0.0.0.0/0"},
+			IPv6: []string{"::0/0"},
 		},
 	}
 
@@ -82,8 +82,8 @@ func TestFirewallRules_Update(t *testing.T) {
 				Ports:    "22",
 				Protocol: "TCP",
 				Addresses: linodego.NetworkAddresses{
-					IPv4: &[]string{"0.0.0.0/0"},
-					IPv6: &[]string{"::0/0"},
+					IPv4: []string{"0.0.0.0/0"},
+					IPv6: []string{"::0/0"},
 				},
 			},
 		},

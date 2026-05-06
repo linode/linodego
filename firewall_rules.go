@@ -18,8 +18,8 @@ const (
 
 // NetworkAddresses are arrays of ipv4 and v6 addresses
 type NetworkAddresses struct {
-	IPv4 *[]string `json:"ipv4,omitzero"`
-	IPv6 *[]string `json:"ipv6,omitzero"`
+	IPv4 []string `json:"ipv4,omitzero"`
+	IPv6 []string `json:"ipv6,omitzero"`
 }
 
 // A FirewallRule is a whitelist of ports, protocols, and addresses for which traffic should be allowed.

@@ -125,7 +125,7 @@ func TestLKENodePool_Update(t *testing.T) {
 
 	updateOptions := linodego.LKENodePoolUpdateOptions{
 		Count:  5,
-		Tags:   &[]string{"updated-tag"},
+		Tags:   []string{"updated-tag"},
 		Labels: Ptr(linodego.LKENodePoolLabels{"env": "prod"}),
 		Autoscaler: &linodego.LKENodePoolAutoscaler{
 			Enabled: true,

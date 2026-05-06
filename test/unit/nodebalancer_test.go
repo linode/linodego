@@ -130,7 +130,7 @@ func TestNodeBalancer_Update(t *testing.T) {
 	label := "Updated NodeBalancer"
 	updateOpts := linodego.NodeBalancerUpdateOptions{
 		Label: &label,
-		Tags:  &[]string{"updated", "production"},
+		Tags:  []string{"updated", "production"},
 	}
 	nodebalancer, err := base.Client.UpdateNodeBalancer(context.Background(), 123, updateOpts)
 	assert.NoError(t, err)

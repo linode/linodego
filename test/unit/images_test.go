@@ -178,7 +178,7 @@ func TestImage_Create(t *testing.T) {
 		Label:       "Debian 11",
 		Description: "Example image description.",
 		CloudInit:   true,
-		Tags:        &[]string{"repair-image", "fix-1"},
+		Tags:        []string{"repair-image", "fix-1"},
 	}
 
 	base.MockPost("images", fixtureData)
@@ -220,7 +220,7 @@ func TestImage_Update(t *testing.T) {
 	requestData := linodego.ImageUpdateOptions{
 		Label:       "Debian 11",
 		Description: &desc,
-		Tags:        &[]string{"repair-image", "fix-1"},
+		Tags:        []string{"repair-image", "fix-1"},
 	}
 
 	imageID := "123"
@@ -265,7 +265,7 @@ func TestImage_Upload(t *testing.T) {
 		Label:       "Debian 11",
 		Description: "Example image description.",
 		CloudInit:   true,
-		Tags:        &[]string{"repair-image", "fix-1"},
+		Tags:        []string{"repair-image", "fix-1"},
 		Image:       strings.NewReader("mock image data"),
 	}
 

@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"linodego-fw-test","rules":{"inbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"outbound_policy":"ACCEPT","version":0,"fingerprint":""},"tags":["testing"]}'
+    body: '{"label":"linodego-fw-test","rules":{"inbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"inbound_policy":"ACCEPT","outbound":[{"action":"ACCEPT","label":"go-fwrule-test","ports":"22","protocol":"TCP","addresses":{"ipv4":["0.0.0.0/0"],"ipv6":["1234::5678/0"]}}],"outbound_policy":"ACCEPT"},"tags":["testing"]}'
     form: {}
     headers:
       Accept:
@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 3885660, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
+    body: '{"id": 9618466, "label": "linodego-fw-test", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"protocol": "TCP", "addresses": {"ipv6": ["1234::5678/0"], "ipv4": ["0.0.0.0/0"]},
       "action": "ACCEPT", "label": "go-fwrule-test", "ports": "22"}], "inbound_policy":
@@ -46,7 +46,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Sat, 28 Feb 2026 07:07:58 GMT
+      - Tue, 05 May 2026 23:45:07 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -79,7 +79,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/3885660/rules
+    url: https://api.linode.com/v4beta/networking/firewalls/9618466/rules
     method: GET
   response:
     body: '{"inbound": [{"protocol": "TCP", "addresses": {"ipv6": ["1234::5678/0"], "ipv4":
@@ -111,7 +111,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Sat, 28 Feb 2026 07:07:58 GMT
+      - Tue, 05 May 2026 23:45:07 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -145,7 +145,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/3885660
+    url: https://api.linode.com/v4beta/networking/firewalls/9618466
     method: DELETE
   response:
     body: '{}'
@@ -173,7 +173,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Sat, 28 Feb 2026 07:07:59 GMT
+      - Tue, 05 May 2026 23:45:08 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

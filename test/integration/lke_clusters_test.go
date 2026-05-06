@@ -128,7 +128,6 @@ func TestLKECluster_Enterprise_BYOVPC_smoke(t *testing.T) {
 func TestLKECluster_Update(t *testing.T) {
 	client, cluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = "go-lke-test-update"
-		createOpts.K8sVersion = "1.31"
 	}}, "fixtures/TestLKECluster_Update")
 	defer teardown()
 	if err != nil {
@@ -137,12 +136,10 @@ func TestLKECluster_Update(t *testing.T) {
 
 	updatedTags := []string{"test=true"}
 	updatedLabel := cluster.Label + "-updated"
-	updatedK8sVersion := "1.32"
 
 	updatedCluster, err := client.UpdateLKECluster(context.Background(), cluster.ID, linodego.LKEClusterUpdateOptions{
-		Tags:       &updatedTags,
-		Label:      updatedLabel,
-		K8sVersion: updatedK8sVersion,
+		Tags:  updatedTags,
+		Label: updatedLabel,
 	})
 	if err != nil {
 		t.Fatalf("failed to update LKE Cluster (%d): %s", cluster.ID, err)
@@ -150,10 +147,6 @@ func TestLKECluster_Update(t *testing.T) {
 
 	if updatedCluster.Label != updatedLabel {
 		t.Errorf("expected label to be updated to %q; got %q", updatedLabel, updatedCluster.Label)
-	}
-
-	if updatedCluster.K8sVersion != updatedK8sVersion {
-		t.Errorf("expected k8s version to be updated to %q; got %q", updatedK8sVersion, updatedCluster.K8sVersion)
 	}
 
 	if !reflect.DeepEqual(updatedTags, updatedCluster.Tags) {

@@ -14,10 +14,11 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls/rulesets
     method: POST
   response:
-    body: '{"id": 78, "version": 1, "label": "rs-51452000", "description": "Allow
+    body: '{"id": 66319, "version": 1, "label": "rs-51452000", "description": "Allow
       inbound HTTP", "type": "inbound", "is_service_defined": false, "rules": [{"action":
       "ACCEPT", "label": "allow-http", "ports": "80", "protocol": "TCP", "addresses":
-      {"ipv4": ["0.0.0.0/0"]}}], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
+      {"ipv4": ["0.0.0.0/0"]}}], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "deleted": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -36,13 +37,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "325"
+      - "349"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 13 Oct 2025 21:57:58 GMT
+      - Tue, 05 May 2026 23:45:09 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -75,13 +76,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/rulesets/78
+    url: https://api.linode.com/v4beta/networking/firewalls/rulesets/66319
     method: GET
   response:
-    body: '{"id": 78, "version": 1, "label": "rs-51452000", "description": "Allow
+    body: '{"id": 66319, "version": 1, "label": "rs-51452000", "description": "Allow
       inbound HTTP", "type": "inbound", "is_service_defined": false, "rules": [{"label":
       "allow-http", "ports": "80", "action": "ACCEPT", "protocol": "TCP", "addresses":
-      {"ipv4": ["0.0.0.0/0"]}}], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
+      {"ipv4": ["0.0.0.0/0"]}}], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "deleted": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -100,13 +102,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "325"
+      - "349"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 13 Oct 2025 21:57:58 GMT
+      - Tue, 05 May 2026 23:45:09 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -140,14 +142,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/rulesets/78
+    url: https://api.linode.com/v4beta/networking/firewalls/rulesets/66319
     method: PUT
   response:
-    body: '{"id": 78, "version": 2, "label": "rs-51452000-updated", "description":
+    body: '{"id": 66319, "version": 2, "label": "rs-51452000-updated", "description":
       "Updated description", "type": "inbound", "is_service_defined": false, "rules":
-      [{"action": "ACCEPT", "label": "allow-https", "ports": "443", "protocol": "TCP",
+      [{"label": "allow-https", "ports": "443", "action": "ACCEPT", "protocol": "TCP",
       "addresses": {"ipv6": ["1234::5678/0"]}}], "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05"}'
+      "2018-01-02T03:04:05", "deleted": null}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -166,13 +168,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "331"
+      - "355"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 13 Oct 2025 21:57:58 GMT
+      - Tue, 05 May 2026 23:45:09 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -208,24 +210,16 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls/rulesets?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 74, "version": 1, "label": "testRuleSet", "description":
-      "test", "type": "inbound", "is_service_defined": false, "rules": [{"label": "test",
-      "ports": "22-24", "action": "ACCEPT", "protocol": "TCP", "addresses": {"ipv4":
-      ["192.0.2.0/24"]}, "description": "test"}], "created": "2018-01-02T03:04:05",
-      "updated": "2018-01-02T03:04:05"}, {"id": 75, "version": 1, "label": "testRuleSet2",
-      "description": "test2", "type": "inbound", "is_service_defined": false, "rules":
-      [{"label": "test", "ports": "22-24", "action": "ACCEPT", "protocol": "TCP",
-      "addresses": {"ipv4": ["192.0.2.0/24"]}, "description": "test"}], "created":
-      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}, {"id": 76, "version":
-      1, "label": "ruleset-1760391571119054000", "description": "Allow inbound HTTP",
-      "type": "inbound", "is_service_defined": false, "rules": [{"label": "allow-http",
-      "ports": "80", "action": "ACCEPT", "protocol": "TCP", "addresses": {"ipv4":
-      ["0.0.0.0/0"]}}], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"},
-      {"id": 78, "version": 2, "label": "rs-51452000-updated", "description": "Updated
-      description", "type": "inbound", "is_service_defined": false, "rules": [{"label":
-      "allow-https", "ports": "443", "action": "ACCEPT", "protocol": "TCP", "addresses":
-      {"ipv6": ["1234::5678/0"]}}], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}],
-      "page": 1, "pages": 1, "results": 4}'
+    body: '{"data": [{"id": 66318, "version": 2, "label": "rs-51452000-updated", "description":
+      "Updated description", "type": "inbound", "is_service_defined": false, "rules":
+      [{"label": "allow-https", "ports": "443", "action": "ACCEPT", "protocol": "TCP",
+      "addresses": {"ipv6": ["1234::5678/0"]}}], "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "deleted": "2018-01-02T03:04:05"}, {"id": 66319, "version":
+      2, "label": "rs-51452000-updated", "description": "Updated description", "type":
+      "inbound", "is_service_defined": false, "rules": [{"label": "allow-https", "ports":
+      "443", "action": "ACCEPT", "protocol": "TCP", "addresses": {"ipv6": ["1234::5678/0"]}}],
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "deleted":
+      null}], "page": 1, "pages": 1, "results": 2}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -243,12 +237,14 @@ interactions:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
+      Content-Length:
+      - "778"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Mon, 13 Oct 2025 21:57:58 GMT
+      - Tue, 05 May 2026 23:45:10 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -256,7 +252,6 @@ interactions:
       Vary:
       - Authorization, X-Filter
       - Authorization, X-Filter
-      - Accept-Encoding
       X-Accepted-Oauth-Scopes:
       - firewall:read_only
       X-Content-Type-Options:
@@ -283,7 +278,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/rulesets/78
+    url: https://api.linode.com/v4beta/networking/firewalls/rulesets/66319
     method: DELETE
   response:
     body: '{}'
@@ -311,7 +306,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 13 Oct 2025 21:57:58 GMT
+      - Tue, 05 May 2026 23:45:11 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

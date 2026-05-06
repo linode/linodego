@@ -207,8 +207,8 @@ func TestLKENodePool_Update(t *testing.T) {
 	}
 	updatedTags := []string{}
 	updated, err := client.UpdateLKENodePool(context.TODO(), lkeCluster.ID, nodePool.ID, linodego.LKENodePoolUpdateOptions{
-		Count:      2,            // downsize
-		Tags:       &updatedTags, // remove all tags
+		Count:      2,           // downsize
+		Tags:       updatedTags, // remove all tags
 		Autoscaler: &updatedAutoscaler,
 	})
 	if err != nil {
@@ -237,9 +237,9 @@ func TestLKENodePool_Update(t *testing.T) {
 	}}
 	updated, err = client.UpdateLKENodePool(context.TODO(), lkeCluster.ID, nodePool.ID, linodego.LKENodePoolUpdateOptions{
 		Count:  3,              // upsize
-		Tags:   &updatedTags,   // repopulate tags
+		Tags:   updatedTags,    // repopulate tags
 		Labels: &updatedLabels, // set a label
-		Taints: &updatedTaints, // set a taint
+		Taints: updatedTaints,  // set a taint
 	})
 	if err != nil {
 		t.Fatal(err)

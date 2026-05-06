@@ -55,7 +55,7 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 
 	updatedLabel := database.Label + "-updated"
 	opts := linodego.PostgresUpdateOptions{
-		AllowList: &allowList,
+		AllowList: allowList,
 		Label:     updatedLabel,
 		Updates:   &updatedWindow,
 	}

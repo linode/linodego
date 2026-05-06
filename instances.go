@@ -214,7 +214,7 @@ type InstanceUpdateOptions struct {
 	Backups         *InstanceBackup `json:"backups,omitzero"`
 	Alerts          *InstanceAlert  `json:"alerts,omitzero"`
 	WatchdogEnabled *bool           `json:"watchdog_enabled,omitzero"`
-	Tags            *[]string       `json:"tags,omitzero"`
+	Tags            []string        `json:"tags,omitzero"`
 
 	MaintenancePolicy *string `json:"maintenance_policy,omitzero"`
 }
@@ -347,7 +347,7 @@ func (i *Instance) GetUpdateOptions() InstanceUpdateOptions {
 		Backups:           i.Backups,
 		Alerts:            i.Alerts,
 		WatchdogEnabled:   &i.WatchdogEnabled,
-		Tags:              &i.Tags,
+		Tags:              i.Tags,
 		MaintenancePolicy: &i.MaintenancePolicy,
 	}
 }

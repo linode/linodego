@@ -114,7 +114,7 @@ func TestObjectStorageKeys_Limited(t *testing.T) {
 	defer teardown()
 
 	createOpts := testBasicObjectStorageKeyCreateOpts
-	createOpts.BucketAccess = &[]ObjectStorageKeyBucketAccess{
+	createOpts.BucketAccess = []ObjectStorageKeyBucketAccess{
 		{
 			Region:      "us-east",
 			BucketName:  bucket.Label,
@@ -132,11 +132,11 @@ func TestObjectStorageKeys_Limited(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	if !objectStorageKey.Limited || !cmp.Equal(objectStorageKey.BucketAccess, createOpts.BucketAccess) {
+	if !objectStorageKey.Limited || !cmp.Equal(*objectStorageKey.BucketAccess, createOpts.BucketAccess) {
 		t.Errorf(
 			"objectStorageKey returned (%v) does not match objectStorageKey creation request (%v)",
 			*objectStorageKey.BucketAccess,
-			*createOpts.BucketAccess,
+			createOpts.BucketAccess,
 		)
 	}
 }
@@ -145,7 +145,7 @@ func TestObjectStorageKeys_Limited_NoAccess(t *testing.T) {
 	t.Skip("skipping test due to unexpected API behavior with limited object storage keys")
 
 	createOpts := testBasicObjectStorageKeyCreateOpts
-	createOpts.BucketAccess = &[]ObjectStorageKeyBucketAccess{}
+	createOpts.BucketAccess = []ObjectStorageKeyBucketAccess{}
 
 	_, objectStorageKey, teardown, err := setupObjectStorageKey(t, createOpts, "fixtures/TestObjectStorageKeys_Limited_NoAccess", nil, nil)
 	defer teardown()
@@ -178,7 +178,7 @@ func TestObjectStorageKeys_Regional_Limited(t *testing.T) {
 	}
 
 	createOpts := testBasicObjectStorageKeyCreateOpts
-	createOpts.BucketAccess = &[]ObjectStorageKeyBucketAccess{
+	createOpts.BucketAccess = []ObjectStorageKeyBucketAccess{
 		{
 			Region:      region,
 			BucketName:  bucket.Label,

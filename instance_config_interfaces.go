@@ -93,16 +93,16 @@ type InstanceConfigInterfaceUpdateOptions struct {
 	// NOTE: IPv6 interfaces may not currently be available to all users.
 	IPv6 *InstanceConfigInterfaceUpdateOptionsIPv6 `json:"ipv6,omitzero"`
 
-	IPRanges *[]string `json:"ip_ranges,omitzero"`
+	IPRanges []string `json:"ip_ranges,omitzero"`
 }
 
 // InstanceConfigInterfaceUpdateOptionsIPv6 represents the IPv6 configuration of a Linode interface
 // specified during updates.
 // NOTE: IPv6 interfaces may not currently be available to all users.
 type InstanceConfigInterfaceUpdateOptionsIPv6 struct {
-	SLAAC    *[]InstanceConfigInterfaceUpdateOptionsIPv6SLAAC `json:"slaac,omitzero"`
-	Ranges   *[]InstanceConfigInterfaceUpdateOptionsIPv6Range `json:"ranges,omitzero"`
-	IsPublic *bool                                            `json:"is_public,omitzero"`
+	SLAAC    []InstanceConfigInterfaceUpdateOptionsIPv6SLAAC `json:"slaac,omitzero"`
+	Ranges   []InstanceConfigInterfaceUpdateOptionsIPv6Range `json:"ranges,omitzero"`
+	IsPublic *bool                                           `json:"is_public,omitzero"`
 }
 
 // InstanceConfigInterfaceUpdateOptionsIPv6SLAAC represents a single IPv6 SLAAC of a Linode interface
@@ -217,8 +217,8 @@ func (i InstanceConfigInterface) GetUpdateOptions() InstanceConfigInterfaceUpdat
 			)
 
 			opts.IPv6 = &InstanceConfigInterfaceUpdateOptionsIPv6{
-				SLAAC:    &newSLAAC,
-				Ranges:   &newRanges,
+				SLAAC:    newSLAAC,
+				Ranges:   newRanges,
 				IsPublic: copyValue(ipv6.IsPublic),
 			}
 		}
@@ -230,7 +230,7 @@ func (i InstanceConfigInterface) GetUpdateOptions() InstanceConfigInterfaceUpdat
 		copiedIPRanges := make([]string, len(i.IPRanges))
 		copy(copiedIPRanges, i.IPRanges)
 
-		opts.IPRanges = &copiedIPRanges
+		opts.IPRanges = copiedIPRanges
 	}
 
 	return opts

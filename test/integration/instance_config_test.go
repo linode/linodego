@@ -594,7 +594,7 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 		NAT1To1: &NAT1To1Any,
 	}
 	newIPRanges := make([]string, 0)
-	updateOpts.IPRanges = &newIPRanges
+	updateOpts.IPRanges = newIPRanges
 
 	updatedIntfc, err = client.UpdateInstanceConfigInterface(
 		context.Background(),
