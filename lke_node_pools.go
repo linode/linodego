@@ -108,11 +108,11 @@ type LKENodePoolCreateOptions struct {
 
 // LKENodePoolUpdateOptions fields are those accepted by UpdateLKENodePoolUpdate
 type LKENodePoolUpdateOptions struct {
-	Count  int                 `json:"count,omitzero"`
-	Tags   *[]string           `json:"tags,omitzero"`
-	Labels *LKENodePoolLabels  `json:"labels,omitzero"`
-	Taints *[]LKENodePoolTaint `json:"taints,omitzero"`
-	Label  *string             `json:"label,omitzero"`
+	Count  int                `json:"count,omitzero"`
+	Tags   []string           `json:"tags,omitzero"`
+	Labels *LKENodePoolLabels `json:"labels,omitzero"`
+	Taints []LKENodePoolTaint `json:"taints,omitzero"`
+	Label  *string            `json:"label,omitzero"`
 
 	Autoscaler *LKENodePoolAutoscaler `json:"autoscaler,omitzero"`
 	FirewallID *int                   `json:"firewall_id,omitzero"`
@@ -144,9 +144,9 @@ func (l LKENodePool) GetCreateOptions() (o LKENodePoolCreateOptions) {
 // GetUpdateOptions converts a LKENodePool to LKENodePoolUpdateOptions for use in UpdateLKENodePoolUpdate
 func (l LKENodePool) GetUpdateOptions() (o LKENodePoolUpdateOptions) {
 	o.Count = l.Count
-	o.Tags = &l.Tags
+	o.Tags = l.Tags
 	o.Labels = &l.Labels
-	o.Taints = &l.Taints
+	o.Taints = l.Taints
 	o.Autoscaler = &l.Autoscaler
 	o.K8sVersion = l.K8sVersion
 	o.UpdateStrategy = l.UpdateStrategy

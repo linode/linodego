@@ -78,9 +78,9 @@ type RuleSetCreateOptions struct {
 // Omit a top-level field to leave it unchanged. If Rules is provided, it
 // replaces the entire ordered rules array.
 type RuleSetUpdateOptions struct {
-	Label       *string         `json:"label,omitzero"`
-	Description *string         `json:"description,omitzero"`
-	Rules       *[]FirewallRule `json:"rules,omitzero"`
+	Label       *string        `json:"label,omitzero"`
+	Description *string        `json:"description,omitzero"`
+	Rules       []FirewallRule `json:"rules,omitzero"`
 }
 
 // ListFirewallRuleSets returns a paginated list of Rule Sets.

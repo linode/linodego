@@ -19,11 +19,8 @@ func TestTag_Create_create_smoke(t *testing.T) {
 	}
 
 	updateOpts := instance.GetUpdateOptions()
-	if updateOpts.Tags == nil {
-		updateOpts.Tags = new([]string)
-	}
-	newTags := append(*updateOpts.Tags, "go-tag-test-bar")
-	updateOpts.Tags = &newTags
+	newTags := append(updateOpts.Tags, "go-tag-test-bar")
+	updateOpts.Tags = newTags
 	updateOpts.Backups = nil
 	instance, err = client.UpdateInstance(context.Background(), instance.ID, updateOpts)
 	if err != nil {

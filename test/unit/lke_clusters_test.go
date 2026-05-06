@@ -131,7 +131,7 @@ func TestLKECluster_Update(t *testing.T) {
 
 	updateOptions := linodego.LKEClusterUpdateOptions{
 		Label: "updated-cluster",
-		Tags:  &[]string{"new-tag"},
+		Tags:  []string{"new-tag"},
 		ControlPlane: &linodego.LKEClusterControlPlaneOptions{
 			AuditLogsEnabled: linodego.Pointer(true),
 		},

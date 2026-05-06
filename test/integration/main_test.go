@@ -82,7 +82,7 @@ func getDefaultFirewallRuleSet(publicIPv4 string) linodego.FirewallRuleSet {
 		Action:    "ACCEPT",
 		Ports:     "22",
 		Protocol:  "TCP",
-		Addresses: linodego.NetworkAddresses{IPv4: &[]string{publicIPv4}},
+		Addresses: linodego.NetworkAddresses{IPv4: []string{publicIPv4}},
 	}
 
 	return linodego.FirewallRuleSet{

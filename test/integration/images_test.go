@@ -115,7 +115,7 @@ func TestImage_CreateUpload(t *testing.T) {
 		Label:       "linodego-image-create-upload",
 		Description: "An image that does stuff.",
 		CloudInit:   true,
-		Tags:        &[]string{"foo", "bar"},
+		Tags:        []string{"foo", "bar"},
 	})
 	if err != nil {
 		t.Errorf("Failed to create image upload: %v", err)
@@ -159,7 +159,7 @@ func TestImage_CloudInit(t *testing.T) {
 		DiskID:    instanceDisks[0].ID,
 		Label:     "linodego-test-cloud-init",
 		CloudInit: true,
-		Tags:      &[]string{"test1", "test2"},
+		Tags:      []string{"test1", "test2"},
 	})
 	if err != nil {
 		t.Errorf("Failed to create image: %v", err)

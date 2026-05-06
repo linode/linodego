@@ -103,7 +103,7 @@ func TestUpdateVolume(t *testing.T) {
 
 	opts := linodego.VolumeUpdateOptions{
 		Label: "updated-volume",
-		Tags:  &[]string{"updated"},
+		Tags:  []string{"updated"},
 	}
 
 	updatedVolume, err := base.Client.UpdateVolume(context.Background(), volumeID, opts)

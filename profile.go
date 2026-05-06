@@ -48,7 +48,7 @@ type ProfileUpdateOptions struct {
 	EmailNotifications *bool          `json:"email_notifications,omitzero"`
 	IPWhitelistEnabled *bool          `json:"ip_whitelist_enabled,omitzero"`
 	LishAuthMethod     LishAuthMethod `json:"lish_auth_method,omitzero"`
-	AuthorizedKeys     *[]string      `json:"authorized_keys,omitzero"`
+	AuthorizedKeys     []string       `json:"authorized_keys,omitzero"`
 	TwoFactorAuth      *bool          `json:"two_factor_auth,omitzero"`
 	Restricted         *bool          `json:"restricted,omitzero"`
 }
@@ -62,7 +62,7 @@ func (i Profile) GetUpdateOptions() (o ProfileUpdateOptions) {
 	o.LishAuthMethod = i.LishAuthMethod
 	authorizedKeys := make([]string, len(i.AuthorizedKeys))
 	copy(authorizedKeys, i.AuthorizedKeys)
-	o.AuthorizedKeys = &authorizedKeys
+	o.AuthorizedKeys = authorizedKeys
 	o.TwoFactorAuth = copyBool(&i.TwoFactorAuth)
 	o.Restricted = copyBool(&i.Restricted)
 
