@@ -510,7 +510,7 @@ func (c *Client) RebootInstance(ctx context.Context, linodeID int, configID int)
 
 // InstanceRebuildOptions is a struct representing the options to send to the rebuild linode endpoint
 type InstanceRebuildOptions struct {
-	// Image is optional, but requires at least one of RootPass, AuthorizedUsers, or AuthorizedKeys if provided
+	// Image is the image to deploy when rebuilding the Linode
 	Image string `json:"image,omitempty"`
 
 	RootPass        string   `json:"root_pass,omitempty"`
