@@ -194,7 +194,7 @@ Parameters:
 Returns:
   - string values representing the IDs of regions that have a given set of capabilities.
 */
-func getRegionsWithCaps(t *testing.T, client *linodego.Client, capabilities []string) []string {
+func getRegionsWithCaps(t *testing.T, client *linodego.Client, capabilities []linodego.RegionCapability) []string {
 	result := make([]string, 0)
 
 	regions, err := client.ListRegions(context.Background(), nil)
@@ -215,7 +215,7 @@ func getRegionsWithCaps(t *testing.T, client *linodego.Client, capabilities []st
 
 // getRegionWithCapsAndPlans resolves a list of regions that meet the given capabilities
 // and has availability for all the provided plans.
-func getRegionsWithCapsAndPlans(t *testing.T, client *linodego.Client, capabilities, plans []string) []string {
+func getRegionsWithCapsAndPlans(t *testing.T, client *linodego.Client, capabilities []linodego.RegionCapability, plans []string) []string {
 	regionsWithCaps := getRegionsWithCaps(t, client, capabilities)
 
 	regionsAvailabilities, err := client.ListRegionsAvailability(context.Background(), nil)
@@ -255,7 +255,7 @@ func getRegionsWithCapsAndPlans(t *testing.T, client *linodego.Client, capabilit
 }
 
 // getRegionsWithCapsAndSiteType returns a list of regions that meet the given capabilities and site type
-func getRegionsWithCapsAndSiteType(t *testing.T, client *linodego.Client, capabilities []string, siteType string) []string {
+func getRegionsWithCapsAndSiteType(t *testing.T, client *linodego.Client, capabilities []linodego.RegionCapability, siteType string) []string {
 	result := make([]string, 0)
 
 	regions, err := client.ListRegions(context.Background(), nil)
@@ -274,7 +274,7 @@ func getRegionsWithCapsAndSiteType(t *testing.T, client *linodego.Client, capabi
 	return result
 }
 
-func regionHasCaps(r linodego.Region, capabilities []string) bool {
+func regionHasCaps(r linodego.Region, capabilities []linodego.RegionCapability) bool {
 	capsMap := make(map[string]bool)
 
 	for _, c := range r.Capabilities {
@@ -282,7 +282,7 @@ func regionHasCaps(r linodego.Region, capabilities []string) bool {
 	}
 
 	for _, c := range capabilities {
-		if _, ok := capsMap[strings.ToUpper(c)]; !ok {
+		if _, ok := capsMap[strings.ToUpper(string(c))]; !ok {
 			return false
 		}
 	}

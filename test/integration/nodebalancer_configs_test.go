@@ -256,7 +256,8 @@ func setupNodeBalancerWithVPCAndInstance(
 		t,
 		fixturesYaml,
 		func(client *linodego.Client, options *linodego.VPCCreateOptions) {
-			options.Region = getRegionsWithCaps(t, client, []string{"Linodes", "VPCs"})[1]
+			options.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes,
+				linodego.CapabilityVPCs})[1]
 		},
 	)
 	if err != nil {
@@ -269,7 +270,8 @@ func setupNodeBalancerWithVPCAndInstance(
 		client,
 		true,
 		func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
-			opts.Region = getRegionsWithCaps(t, client, []string{"Linodes", "VPCs"})[1]
+			opts.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes,
+				linodego.CapabilityVPCs})[1]
 			opts.Image = "linode/ubuntu22.04"
 			opts.RootPass = "0o37Klm56P4ssw0rd"
 

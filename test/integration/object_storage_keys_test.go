@@ -160,7 +160,7 @@ func TestObjectStorageKeys_Limited_NoAccess(t *testing.T) {
 
 func TestObjectStorageKeys_Regional_Limited(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestObjectStorageKeys_Regional_Limited")
-	regions := getRegionsWithCaps(t, client, []string{"Object Storage"})
+	regions := getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityObjectStorage})
 	if len(regions) < 1 {
 		t.Fatal("Can't get region with Object Storage capability")
 	}

@@ -16,7 +16,7 @@ func TestVolume_Create_smoke(t *testing.T) {
 
 	createOpts := linodego.VolumeCreateOptions{
 		Label:  "go-vol-test-create",
-		Region: getRegionsWithCaps(t, client, []string{"Linodes"})[0],
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes})[0],
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
 	if err != nil {
@@ -41,8 +41,9 @@ func TestVolume_Create_withEncryption(t *testing.T) {
 	defer teardown()
 
 	createOpts := linodego.VolumeCreateOptions{
-		Label:      "go-vol-test-create-encryption",
-		Region:     getRegionsWithCaps(t, client, []string{"Linodes", "Block Storage Encryption"})[0],
+		Label: "go-vol-test-create-encryption",
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes,
+			linodego.CapabilityBlockStorageEncryption})[0],
 		Encryption: "enabled",
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
@@ -120,8 +121,9 @@ func TestVolume_Get_withEncryption(t *testing.T) {
 	defer teardown()
 
 	createOpts := linodego.VolumeCreateOptions{
-		Label:      "go-vol-test-get-encryption",
-		Region:     getRegionsWithCaps(t, client, []string{"Linodes", "Block Storage Encryption"})[0],
+		Label: "go-vol-test-get-encryption",
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes,
+			linodego.CapabilityBlockStorageEncryption})[0],
 		Encryption: "enabled",
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
@@ -254,7 +256,7 @@ func setupVolume(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := linodego.VolumeCreateOptions{
 		Label:  "go-vol-test-def",
-		Region: getRegionsWithCaps(t, client, []string{"Linodes"})[0],
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes})[0],
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
 	if err != nil {
@@ -280,7 +282,7 @@ func createVolume(
 	t.Helper()
 	createOpts := linodego.VolumeCreateOptions{
 		Label:  "go-vol-test" + randLabel(),
-		Region: getRegionsWithCaps(t, client, []string{"Linodes"})[0],
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes})[0],
 	}
 
 	for _, mod := range vModifier {

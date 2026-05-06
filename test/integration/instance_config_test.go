@@ -5,6 +5,7 @@ import (
 	"reflect"
 	"testing"
 
+	"github.com/linode/linodego"
 	. "github.com/linode/linodego"
 	"github.com/stretchr/testify/require"
 )
@@ -68,7 +69,8 @@ func setupInstanceWithVPCAndNATOneToOne(t *testing.T, fixturesYaml string) (
 		t,
 		fixturesYaml,
 		func(client *Client, opts *InstanceCreateOptions) {
-			opts.Region = getRegionsWithCaps(t, client, []string{"Linodes", "VPCs"})[0]
+			opts.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes,
+				linodego.CapabilityVPCs})[0]
 		},
 	)
 	if err != nil {
@@ -160,7 +162,8 @@ func setupInstanceWithDualStackVPCAndNAT11(t *testing.T, fixturesYaml string) (
 			// TODO: Revert once rolled out to all DCs.
 			// 		 NOTE: There is currently no VPC Dual Stack region capability
 			//	     so this needs to be hardcoded.
-			// opts.Region = getRegionsWithCaps(t, client, []string{"Linodes", "VPCs"})[0]
+			// opts.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes,
+			//				linodego.CapabilityVPCs})[0]
 			opts.Region = "no-osl-1"
 		},
 	)
@@ -212,7 +215,8 @@ func setupInstanceWith3Interfaces(t *testing.T, fixturesYaml string) (
 		t,
 		fixturesYaml,
 		func(client *Client, opts *InstanceCreateOptions) {
-			opts.Region = getRegionsWithCaps(t, client, []string{"Linodes", "VPCs"})[0]
+			opts.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes,
+				linodego.CapabilityVPCs})[0]
 		},
 	)
 	if err != nil {
@@ -304,7 +308,8 @@ func TestInstance_ConfigInterfaces_AppendDelete(t *testing.T) {
 		"fixtures/TestInstance_ConfigInterfaces_AppendDelete",
 		func(client *Client, opts *InstanceCreateOptions) {
 			// Ensure we're in a region that supports VLANs
-			opts.Region = getRegionsWithCaps(t, client, []string{"vlans", "VPCs"})[0]
+			opts.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityVlans,
+				linodego.CapabilityVPCs})[0]
 		},
 	)
 	defer teardown()
@@ -454,7 +459,8 @@ func TestInstance_ConfigInterfaces_Update(t *testing.T) {
 		"fixtures/TestInstance_ConfigInterfaces_Update",
 		func(client *Client, opts *InstanceCreateOptions) {
 			// Ensure we're in a region that supports VLANs
-			opts.Region = getRegionsWithCaps(t, client, []string{"vlans", "VPCs"})[0]
+			opts.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityVlans,
+				linodego.CapabilityVPCs})[0]
 		},
 	)
 	defer teardown()
@@ -528,7 +534,8 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 		"fixtures/TestInstance_ConfigInterface_Update",
 		func(client *Client, opts *InstanceCreateOptions) {
 			// Ensure we're in a region that supports VLANs
-			opts.Region = getRegionsWithCaps(t, client, []string{"vlans", "VPCs"})[0]
+			opts.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityVlans,
+				linodego.CapabilityVPCs})[0]
 		},
 	)
 	defer teardown()
