@@ -1,0 +1,1239 @@
+---
+version: 1
+interactions:
+- request:
+    body: '{"region":"us-southeast","label":"go-test-logs-destination-1777380933768752000","acl":"private","cors_enabled":false}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/buckets
+    method: POST
+  response:
+    body: '{"hostname": "go-test-logs-destination-1777380933768752000.us-southeast-1.linodeobjects.com",
+      "label": "go-test-logs-destination-1777380933768752000", "created": "2018-01-02T03:04:05",
+      "region": "us-southeast", "cluster": "us-southeast-1", "size": 0, "objects":
+      0, "endpoint_type": "E0", "s3_endpoint": "us-southeast-1.linodeobjects.com"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "338"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Tue, 28 Apr 2026 12:55:34 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "60"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"label":"go-test-logs-destination-1777380934902008000"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/keys
+    method: POST
+  response:
+    body: '{"id": 3463942, "label": "go-test-logs-destination-1777380934902008000",
+      "access_key": "M1ETFMYI6C8F1QGPP6XC", "secret_key": "VonqEkac2ZPqLsrJ6amstGOXGByW4M52i3YzLQ4A",
+      "limited": false, "bucket_access": null, "regions": [{"id": "us-east", "s3_endpoint":
+      "us-east-1.linodeobjects.com", "endpoint_type": "E0"}, {"id": "us-iad", "s3_endpoint":
+      "us-iad-10.linodeobjects.com", "endpoint_type": "E1"}, {"id": "us-lax", "s3_endpoint":
+      "us-lax-1.linodeobjects.com", "endpoint_type": "E1"}, {"id": "us-lax", "s3_endpoint":
+      "us-lax-4.linodeobjects.com", "endpoint_type": "E3"}, {"id": "us-mia", "s3_endpoint":
+      "us-mia-1.linodeobjects.com", "endpoint_type": "E1"}, {"id": "us-ord", "s3_endpoint":
+      "us-ord-10.linodeobjects.com", "endpoint_type": "E3"}, {"id": "us-ord", "s3_endpoint":
+      "us-ord-1.linodeobjects.com", "endpoint_type": "E1"}, {"id": "us-sea", "s3_endpoint":
+      "us-sea-1.linodeobjects.com", "endpoint_type": "E1"}, {"id": "us-southeast",
+      "s3_endpoint": "us-southeast-1.linodeobjects.com", "endpoint_type": "E0"}]}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Tue, 28 Apr 2026 12:55:37 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "60"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"label":"go-test-logs-destination-1777380937067141000","type":"akamai_object_storage","details":{"access_key_id":"M1ETFMYI6C8F1QGPP6XC","access_key_secret":"VonqEkac2ZPqLsrJ6amstGOXGByW4M52i3YzLQ4A","bucket_name":"go-test-logs-destination-1777380933768752000","host":"go-test-logs-destination-1777380933768752000.us-southeast-1.linodeobjects.com"}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/streams/destinations
+    method: POST
+  response:
+    body: '{"id": 304, "label": "go-test-logs-destination-1777380937067141000", "type":
+      "akamai_object_storage", "details": {"host": "go-test-logs-destination-1777380933768752000.us-southeast-1.linodeobjects.com",
+      "bucket_name": "go-test-logs-destination-1777380933768752000", "access_key_id":
+      "M1ETFMYI6C8F1QGPP6XC"}, "version": 1, "status": "active", "created_by": "dola-klipensk",
+      "created": "2018-01-02T03:04:05Z", "updated_by": "dola-klipensk", "updated":
+      "2018-01-02T03:04:05Z"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "473"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Tue, 28 Apr 2026 12:55:37 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"destinations":[304],"label":"go-test-log-stream-1777380937845106000","type":"audit_logs"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/streams
+    method: POST
+  response:
+    body: '{"id": 154, "label": "go-test-log-stream-1777380937845106000", "type":
+      "audit_logs", "destinations": [{"id": 304, "type": "akamai_object_storage",
+      "label": "go-test-logs-destination-1777380937067141000", "details": {"host":
+      "go-test-logs-destination-1777380933768752000.us-southeast-1.linodeobjects.com",
+      "bucket_name": "go-test-logs-destination-1777380933768752000", "access_key_id":
+      "M1ETFMYI6C8F1QGPP6XC"}}], "details": null, "version": 1, "status": "provisioning",
+      "created_by": "dola-klipensk", "created": "2018-01-02T03:04:05Z", "updated_by":
+      "dola-klipensk", "updated": "2018-01-02T03:04:05Z"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "600"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Tue, 28 Apr 2026 12:55:38 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/account
+    method: GET
+  response:
+    body: '{"company": "Akamai Technologies - Edge Experience - Dola", "email": "dl-pdx-dw-dola@akamai.com",
+      "first_name": "", "last_name": "", "address_1": "", "address_2": "", "city":
+      "", "state": "MA", "zip": "02142", "country": "US", "phone": "", "balance":
+      0.0, "tax_id": "", "billing_source": "linode", "credit_card": {"last_four":
+      null, "expiry": null}, "balance_uninvoiced": 0.0, "active_since": "2018-01-02T03:04:05",
+      "capabilities": ["Linodes", "NodeBalancers", "Block Storage", "Object Storage",
+      "Kubernetes", "Cloud Firewall", "Vlans", "LKE HA Control Planes", "VPCs", "Block
+      Storage Encryption", "Machine Images", "Managed Databases", "Akamai Cloud Pulse
+      Logs", "LKE Network Access Control List (IP ACL)", "Placement Group", "Object
+      Storage Access Key Regions", "Object Storage Endpoint Types", "Disk Encryption",
+      "LA Disk Encryption", "SMTP Enabled", "NETINT Quadra T1U", "Linode Interfaces"],
+      "active_promotions": [], "euuid": "BED02C05-67D6-4FAA-BC8BB63BB77C1197"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Tue, 28 Apr 2026 12:55:38 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - account:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/streams/154
+    method: GET
+  response:
+    body: '{"id": 154, "label": "go-test-log-stream-1777380937845106000", "type":
+      "audit_logs", "destinations": [{"id": 304, "type": "akamai_object_storage",
+      "label": "go-test-logs-destination-1777380937067141000", "details": {"host":
+      "go-test-logs-destination-1777380933768752000.us-southeast-1.linodeobjects.com",
+      "bucket_name": "go-test-logs-destination-1777380933768752000", "access_key_id":
+      "M1ETFMYI6C8F1QGPP6XC"}}], "details": null, "version": 1, "status": "active",
+      "created_by": "dola-klipensk", "created": "2018-01-02T03:04:05Z", "updated_by":
+      "dola-klipensk", "updated": "2018-01-02T03:04:05Z"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "594"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Tue, 28 Apr 2026 13:40:59 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/streams/154
+    method: GET
+  response:
+    body: '{"id": 154, "label": "go-test-log-stream-1777380937845106000", "type":
+      "audit_logs", "destinations": [{"id": 304, "type": "akamai_object_storage",
+      "label": "go-test-logs-destination-1777380937067141000", "details": {"host":
+      "go-test-logs-destination-1777380933768752000.us-southeast-1.linodeobjects.com",
+      "bucket_name": "go-test-logs-destination-1777380933768752000", "access_key_id":
+      "M1ETFMYI6C8F1QGPP6XC"}}], "details": null, "version": 1, "status": "active",
+      "created_by": "dola-klipensk", "created": "2018-01-02T03:04:05Z", "updated_by":
+      "dola-klipensk", "updated": "2018-01-02T03:04:05Z"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "594"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Tue, 28 Apr 2026 13:40:59 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/streams/154
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Tue, 28 Apr 2026 13:41:00 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/streams/destinations/304
+    method: GET
+  response:
+    body: '{"id": 304, "label": "go-test-logs-destination-1777380937067141000", "type":
+      "akamai_object_storage", "details": {"host": "go-test-logs-destination-1777380933768752000.us-southeast-1.linodeobjects.com",
+      "bucket_name": "go-test-logs-destination-1777380933768752000", "access_key_id":
+      "M1ETFMYI6C8F1QGPP6XC"}, "version": 1, "status": "active", "created_by": "dola-klipensk",
+      "created": "2018-01-02T03:04:05Z", "updated_by": "dola-klipensk", "updated":
+      "2018-01-02T03:04:05Z"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "473"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Tue, 28 Apr 2026 13:41:00 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/streams/destinations/304
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Tue, 28 Apr 2026 13:41:01 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/keys/3463942
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Tue, 28 Apr 2026 13:41:01 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "60"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-southeast/go-test-logs-destination-1777380933768752000/object-list
+    method: GET
+  response:
+    body: '{"data": [{"name": "audit_logs/com.akamai.audit/BED02C05-67D6-4FAA-BC8BB63BB77C1197/2026/04/28/akamai_log-109980-1777383461-081657-config.gz",
+      "size": 821, "last_modified": "2018-01-02T03:04:05.417Z", "etag": "c6e55c876a666b39909f0596cb404891",
+      "owner": "285755ea-e54d-40f7-8861-0a77cb9e9080"}, {"name": "audit_logs/com.akamai.audit/BED02C05-67D6-4FAA-BC8BB63BB77C1197/2026/04/28/akamai_log-220626-1777383256-610362-config.gz",
+      "size": 577, "last_modified": "2018-01-02T03:04:05.761Z", "etag": "84175b07ccef9c81babf6b6a6285c57e",
+      "owner": "285755ea-e54d-40f7-8861-0a77cb9e9080"}, {"name": "audit_logs/com.akamai.audit/BED02C05-67D6-4FAA-BC8BB63BB77C1197/2026/04/28/akamai_log-326411-1777383509-948565-config.gz",
+      "size": 578, "last_modified": "2018-01-02T03:04:05.240Z", "etag": "a4dfe3d8f5baa0b4fda63fb66261556a",
+      "owner": "285755ea-e54d-40f7-8861-0a77cb9e9080"}, {"name": "audit_logs/com.akamai.audit/BED02C05-67D6-4FAA-BC8BB63BB77C1197/2026/04/28/akamai_log-351678-1777383464-097526-config.gz",
+      "size": 696, "last_modified": "2018-01-02T03:04:05.267Z", "etag": "156df00fcd1ed771db2ca6274f141bff",
+      "owner": "285755ea-e54d-40f7-8861-0a77cb9e9080"}, {"name": "audit_logs/com.akamai.audit/BED02C05-67D6-4FAA-BC8BB63BB77C1197/2026/04/28/akamai_log-988336-1777382392-381517-config.gz",
+      "size": 577, "last_modified": "2018-01-02T03:04:05.869Z", "etag": "2f9b36a49ab2d75cbcbf1ef327b08d6c",
+      "owner": "285755ea-e54d-40f7-8861-0a77cb9e9080"}, {"name": "cloud-logs-test-connection-20260428T125537",
+      "size": 9, "last_modified": "2018-01-02T03:04:05.686Z", "etag": "06aa6fa8bdc2078e7e1bd903e70c8f6a",
+      "owner": "285755ea-e54d-40f7-8861-0a77cb9e9080"}], "next_marker": null, "is_truncated":
+      false}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Tue, 28 Apr 2026 13:41:02 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"name":"audit_logs/com.akamai.audit/BED02C05-67D6-4FAA-BC8BB63BB77C1197/2026/04/28/akamai_log-109980-1777383461-081657-config.gz","method":"DELETE","expires_in":360}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-southeast-1/go-test-logs-destination-1777380933768752000/object-url
+    method: POST
+  response:
+    body: '{"url": "https://us-southeast-1.linodeobjects.com:443/go-test-logs-destination-1777380933768752000/audit_logs/com.akamai.audit/BED02C05-67D6-4FAA-BC8BB63BB77C1197/2026/04/28/akamai_log-109980-1777383461-081657-config.gz?Signature=Nulmc4%2FYdS5rj5DB5KyqrlJP3S4%3D&Expires=1777384024&AWSAccessKeyID=SANITIZED",
+      "exists": true}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "335"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Tue, 28 Apr 2026 13:41:04 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"name":"audit_logs/com.akamai.audit/BED02C05-67D6-4FAA-BC8BB63BB77C1197/2026/04/28/akamai_log-220626-1777383256-610362-config.gz","method":"DELETE","expires_in":360}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-southeast-1/go-test-logs-destination-1777380933768752000/object-url
+    method: POST
+  response:
+    body: '{"url": "https://us-southeast-1.linodeobjects.com:443/go-test-logs-destination-1777380933768752000/audit_logs/com.akamai.audit/BED02C05-67D6-4FAA-BC8BB63BB77C1197/2026/04/28/akamai_log-220626-1777383256-610362-config.gz?Signature=e3GxKAKh0L6kAWOw9uYI%2FwvhkQU%3D&Expires=1777384027&AWSAccessKeyID=SANITIZED",
+      "exists": true}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "335"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Tue, 28 Apr 2026 13:41:07 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"name":"audit_logs/com.akamai.audit/BED02C05-67D6-4FAA-BC8BB63BB77C1197/2026/04/28/akamai_log-326411-1777383509-948565-config.gz","method":"DELETE","expires_in":360}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-southeast-1/go-test-logs-destination-1777380933768752000/object-url
+    method: POST
+  response:
+    body: '{"url": "https://us-southeast-1.linodeobjects.com:443/go-test-logs-destination-1777380933768752000/audit_logs/com.akamai.audit/BED02C05-67D6-4FAA-BC8BB63BB77C1197/2026/04/28/akamai_log-326411-1777383509-948565-config.gz?Signature=ppzloXkoJgAvjYMipq9qy6bIjIg%3D&Expires=1777384029&AWSAccessKeyID=SANITIZED",
+      "exists": true}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "333"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Tue, 28 Apr 2026 13:41:09 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"name":"audit_logs/com.akamai.audit/BED02C05-67D6-4FAA-BC8BB63BB77C1197/2026/04/28/akamai_log-351678-1777383464-097526-config.gz","method":"DELETE","expires_in":360}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-southeast-1/go-test-logs-destination-1777380933768752000/object-url
+    method: POST
+  response:
+    body: '{"url": "https://us-southeast-1.linodeobjects.com:443/go-test-logs-destination-1777380933768752000/audit_logs/com.akamai.audit/BED02C05-67D6-4FAA-BC8BB63BB77C1197/2026/04/28/akamai_log-351678-1777383464-097526-config.gz?Signature=OpEd6RueuQD%2BYzT6L0i6OCSJt2A%3D&Expires=1777384032&AWSAccessKeyID=SANITIZED",
+      "exists": true}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "335"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Tue, 28 Apr 2026 13:41:12 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"name":"audit_logs/com.akamai.audit/BED02C05-67D6-4FAA-BC8BB63BB77C1197/2026/04/28/akamai_log-988336-1777382392-381517-config.gz","method":"DELETE","expires_in":360}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-southeast-1/go-test-logs-destination-1777380933768752000/object-url
+    method: POST
+  response:
+    body: '{"url": "https://us-southeast-1.linodeobjects.com:443/go-test-logs-destination-1777380933768752000/audit_logs/com.akamai.audit/BED02C05-67D6-4FAA-BC8BB63BB77C1197/2026/04/28/akamai_log-988336-1777382392-381517-config.gz?Signature=ClCbni2if0IgkdPtRCLctq0WOKI%3D&Expires=1777384033&AWSAccessKeyID=SANITIZED",
+      "exists": true}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "333"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Tue, 28 Apr 2026 13:41:13 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"name":"cloud-logs-test-connection-20260428T125537","method":"DELETE","expires_in":360}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-southeast-1/go-test-logs-destination-1777380933768752000/object-url
+    method: POST
+  response:
+    body: '{"url": "https://us-southeast-1.linodeobjects.com:443/go-test-logs-destination-1777380933768752000/cloud-logs-test-connection-20260428T125537?Signature=XC3ffUNVIOuyjSskJdtzJIWByl8%3D&Expires=1777384035&AWSAccessKeyID=SANITIZED",
+      "exists": true}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "255"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Tue, 28 Apr 2026 13:41:15 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-southeast/go-test-logs-destination-1777380933768752000
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Tue, 28 Apr 2026 13:41:19 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
