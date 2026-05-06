@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-southeast","label":"go-test-logs-destination-1776935225070012000","acl":"private","cors_enabled":false}'
+    body: '{"region":"us-southeast","label":"go-test-logs-destination-1778050366803952000","acl":"private","cors_enabled":false}'
     form: {}
     headers:
       Accept:
@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/buckets
     method: POST
   response:
-    body: '{"hostname": "go-test-logs-destination-1776935225070012000.us-southeast-1.linodeobjects.com",
-      "label": "go-test-logs-destination-1776935225070012000", "created": "2018-01-02T03:04:05",
+    body: '{"hostname": "go-test-logs-destination-1778050366803952000.us-southeast-1.linodeobjects.com",
+      "label": "go-test-logs-destination-1778050366803952000", "created": "2018-01-02T03:04:05",
       "region": "us-southeast", "cluster": "us-southeast-1", "size": 0, "objects":
       0, "endpoint_type": "E0", "s3_endpoint": "us-southeast-1.linodeobjects.com"}'
     headers:
@@ -42,7 +42,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 23 Apr 2026 09:07:07 GMT
+      - Wed, 06 May 2026 06:52:49 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -66,7 +66,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-logs-destination-1776935227025993000"}'
+    body: '{"label":"go-test-logs-destination-1778050369234853000"}'
     form: {}
     headers:
       Accept:
@@ -78,18 +78,18 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/keys
     method: POST
   response:
-    body: '{"id": 3392842, "label": "go-test-logs-destination-1776935227025993000",
-      "access_key": "[SANITIZED]", "secret_key": "[SANITIZED]",
-      "limited": false, "bucket_access": null, "regions": [{"id": "us-east", "s3_endpoint":
-      "us-east-1.linodeobjects.com", "endpoint_type": "E0"}, {"id": "us-iad", "s3_endpoint":
-      "us-iad-10.linodeobjects.com", "endpoint_type": "E1"}, {"id": "us-lax", "s3_endpoint":
-      "us-lax-1.linodeobjects.com", "endpoint_type": "E1"}, {"id": "us-lax", "s3_endpoint":
-      "us-lax-4.linodeobjects.com", "endpoint_type": "E3"}, {"id": "us-mia", "s3_endpoint":
-      "us-mia-1.linodeobjects.com", "endpoint_type": "E1"}, {"id": "us-ord", "s3_endpoint":
-      "us-ord-10.linodeobjects.com", "endpoint_type": "E3"}, {"id": "us-ord", "s3_endpoint":
-      "us-ord-1.linodeobjects.com", "endpoint_type": "E1"}, {"id": "us-sea", "s3_endpoint":
-      "us-sea-1.linodeobjects.com", "endpoint_type": "E1"}, {"id": "us-southeast",
-      "s3_endpoint": "us-southeast-1.linodeobjects.com", "endpoint_type": "E0"}]}'
+    body: '{"id": 3576474, "label": "go-test-logs-destination-1778050369234853000",
+      "access_key": "[SANITIZED]", "secret_key": "[SANITIZED]", "limited": false,
+      "bucket_access": null, "regions": [{"id": "us-east", "s3_endpoint": "us-east-1.linodeobjects.com",
+      "endpoint_type": "E0"}, {"id": "us-iad", "s3_endpoint": "us-iad-10.linodeobjects.com",
+      "endpoint_type": "E1"}, {"id": "us-lax", "s3_endpoint": "us-lax-1.linodeobjects.com",
+      "endpoint_type": "E1"}, {"id": "us-lax", "s3_endpoint": "us-lax-4.linodeobjects.com",
+      "endpoint_type": "E3"}, {"id": "us-mia", "s3_endpoint": "us-mia-1.linodeobjects.com",
+      "endpoint_type": "E1"}, {"id": "us-ord", "s3_endpoint": "us-ord-10.linodeobjects.com",
+      "endpoint_type": "E3"}, {"id": "us-ord", "s3_endpoint": "us-ord-1.linodeobjects.com",
+      "endpoint_type": "E1"}, {"id": "us-sea", "s3_endpoint": "us-sea-1.linodeobjects.com",
+      "endpoint_type": "E1"}, {"id": "us-southeast", "s3_endpoint": "us-southeast-1.linodeobjects.com",
+      "endpoint_type": "E0"}]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -112,7 +112,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 23 Apr 2026 09:07:09 GMT
+      - Wed, 06 May 2026 06:52:51 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -137,7 +137,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-logs-destination-1776935229407727000","type":"invalid_type","details":{"access_key_id":"7YJAWT8024PHAT0JP158","access_key_secret":"SvXbo4kaCGZvNOlWdij0nKkZbyQus2Z0kpxHE1bK","bucket_name":"go-test-logs-destination-1776935225070012000","host":"go-test-logs-destination-1776935225070012000.us-southeast-1.linodeobjects.com"}}'
+    body: '{"label":"go-test-logs-destination-1778050371723025000","type":"invalid_type","details":{"access_key_id":"[SANITIZED]","access_key_secret":"[SANITIZED]","bucket_name":"go-test-logs-destination-1778050366803952000","host":"go-test-logs-destination-1778050366803952000.us-southeast-1.linodeobjects.com"}}'
     form: {}
     headers:
       Accept:
@@ -167,7 +167,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 23 Apr 2026 09:07:09 GMT
+      - Wed, 06 May 2026 06:52:52 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -193,7 +193,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/3392842
+    url: https://api.linode.com/v4beta/object-storage/keys/3576474
     method: DELETE
   response:
     body: '{}'
@@ -221,7 +221,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 23 Apr 2026 09:07:10 GMT
+      - Wed, 06 May 2026 06:52:52 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -254,7 +254,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-southeast/go-test-logs-destination-1776935225070012000/object-list
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-southeast/go-test-logs-destination-1778050366803952000/object-list
     method: GET
   response:
     body: '{"data": [], "next_marker": null, "is_truncated": false}'
@@ -282,7 +282,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 23 Apr 2026 09:07:11 GMT
+      - Wed, 06 May 2026 06:52:53 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -316,7 +316,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-southeast/go-test-logs-destination-1776935225070012000
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-southeast/go-test-logs-destination-1778050366803952000
     method: DELETE
   response:
     body: '{}'
@@ -344,7 +344,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 23 Apr 2026 09:07:15 GMT
+      - Wed, 06 May 2026 06:52:56 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
