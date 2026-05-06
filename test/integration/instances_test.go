@@ -3,12 +3,15 @@ package integration
 import (
 	"context"
 	"encoding/base64"
+	"fmt"
 	"slices"
 	"strconv"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/linode/linodego"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -22,75 +25,55 @@ func TestInstances_List_smoke(t *testing.T) {
 
 	defer teardown()
 
-	if err != nil {
-		t.Error(err)
-	}
+	require.NoError(t, err)
 
 	listOpts := linodego.NewListOptions(1, "{\"id\": "+strconv.Itoa(instance.ID)+"}")
 	linodes, err := client.ListInstances(context.Background(), listOpts)
-	if err != nil {
-		t.Errorf("Error listing instances, expected struct, got error %v", err)
-	}
-	if len(linodes) != 1 {
-		t.Errorf("Expected a list of instances, but got %v", linodes)
-	}
+	require.NoErrorf(t, err, "Error listing instances, expected struct, got error %v", err)
+	require.Equalf(t, 1, len(linodes), "Expected a list of instances, but got %v", linodes)
+	require.Equalf(t, instance.ID, linodes[0].ID,
+		"Expected list of instances to include test instance, but got %v", linodes)
+	require.NotEmptyf(t, linodes[0].HostUUID, "failed to get instance HostUUID")
+	require.Falsef(t, linodes[0].HasUserData, "expected instance.HasUserData to be false, got true")
+	require.GreaterOrEqualf(t, linodes[0].Specs.GPUs, 0, "failed to retrieve number of GPUs")
 
-	if linodes[0].ID != instance.ID {
-		t.Errorf("Expected list of instances to include test instance, but got %v", linodes)
-	}
-
-	if linodes[0].HostUUID == "" {
-		t.Errorf("failed to get instance HostUUID")
-	}
-
-	if linodes[0].HasUserData {
-		t.Errorf("expected instance.HasUserData to be false, got true")
-	}
-
-	if linodes[0].Specs.GPUs < 0 {
-		t.Errorf("failed to retrieve number of GPUs")
-	}
+	assert.GreaterOrEqual(t, linodes[0].Alerts.CPU, 0)
+	assert.GreaterOrEqual(t, linodes[0].Alerts.IO, 0)
+	assert.GreaterOrEqual(t, linodes[0].Alerts.NetworkIn, 0)
+	assert.GreaterOrEqual(t, linodes[0].Alerts.NetworkOut, 0)
+	assert.GreaterOrEqual(t, linodes[0].Alerts.TransferQuota, 0)
 }
 
 func TestInstance_Get_smoke(t *testing.T) {
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Get", true)
 	defer teardown()
-	if err != nil {
-		t.Error(err)
-	}
+	require.NoError(t, err)
 
 	settings, err := client.GetAccountSettings(context.Background())
-	if err != nil {
-		t.Fatalf("Failed to get account settings: %s", err)
-	}
+	require.NoErrorf(t, err, "Failed to get account settings: %s", err)
 	defaultPolicy := settings.MaintenancePolicy
 
 	_, err = client.UpdateInstance(context.Background(), instance.ID, linodego.InstanceUpdateOptions{
 		MaintenancePolicy: &defaultPolicy,
 	})
-	if err != nil {
-		t.Fatalf("Error setting maintenance policy: %s", err)
-	}
+	require.NoErrorf(t, err, "Error setting maintenance policy: %s", err)
 
 	instanceGot, err := client.GetInstance(context.Background(), instance.ID)
-	if err != nil {
-		t.Errorf("Error getting instance: %s", err)
-	}
-	if instanceGot.ID != instance.ID {
-		t.Errorf("Expected instance ID %d to match %d", instanceGot.ID, instance.ID)
-	}
-	if instanceGot.MaintenancePolicy != defaultPolicy {
-		t.Errorf("Expected maintenance policy %q, got %q", defaultPolicy, instanceGot.MaintenancePolicy)
-	}
-	if instanceGot.Specs.Disk <= 0 {
-		t.Errorf("Error parsing instance spec for disk size: %v", instanceGot.Specs)
-	}
-	if instanceGot.HostUUID == "" {
-		t.Errorf("failed to get instance HostUUID")
-	}
+	require.NoError(t, err, "Error getting instance: %s", err)
+	require.Equal(t, instance.ID, instanceGot.ID)
+	require.Equal(t, defaultPolicy, instanceGot.MaintenancePolicy)
+	require.Greaterf(t, instanceGot.Specs.Disk, 0,
+		"Error parsing instance spec for disk size: %v", instanceGot.Specs)
+	require.NotEmpty(t, instanceGot.HostUUID, "failed to get instance HostUUID")
 
 	assertDateSet(t, instanceGot.Created)
 	assertDateSet(t, instanceGot.Updated)
+
+	assert.Greater(t, instanceGot.Alerts.CPU, 0)
+	assert.Greater(t, instanceGot.Alerts.IO, 0)
+	assert.GreaterOrEqual(t, instanceGot.Alerts.NetworkIn, 0)
+	assert.GreaterOrEqual(t, instanceGot.Alerts.NetworkOut, 0)
+	assert.GreaterOrEqual(t, instanceGot.Alerts.TransferQuota, 0)
 }
 
 func TestInstance_GetTransfer(t *testing.T) {
@@ -697,14 +680,10 @@ func TestInstance_Rebuild(t *testing.T) {
 	)
 	defer teardown()
 
-	if err != nil {
-		t.Error(err)
-	}
+	require.NoError(t, err)
 
 	_, err = client.WaitForEventFinished(context.Background(), instance.ID, linodego.EntityLinode, linodego.ActionLinodeCreate, *instance.Created, 180)
-	if err != nil {
-		t.Errorf("Error waiting for instance created: %s", err)
-	}
+	require.NoErrorf(t, err, "Error waiting for instance created: %s", err)
 
 	rebuildOpts := linodego.InstanceRebuildOptions{
 		Image: "linode/alpine3.19",
@@ -715,13 +694,11 @@ func TestInstance_Rebuild(t *testing.T) {
 		Type:     "g6-standard-2",
 	}
 	instance, err = client.RebuildInstance(context.Background(), instance.ID, rebuildOpts)
-	if err != nil {
-		t.Fatal(err)
-	}
+	require.NoError(t, err)
 
-	if !instance.HasUserData {
-		t.Fatal("expected instance.HasUserData to be true, got false")
-	}
+	require.True(t, instance.HasUserData, "expected instance.HasUserData to be true, got false")
+	assert.GreaterOrEqual(t, instance.Alerts.CPU, 0)
+	assert.GreaterOrEqual(t, instance.Alerts.IO, 0)
 }
 
 func TestInstance_RebuildWithEncryption(t *testing.T) {
@@ -956,6 +933,128 @@ func TestInstance_withPG(t *testing.T) {
 	require.Equal(t, inst.PlacementGroup.PlacementGroupPolicy, pg.PlacementGroupPolicy)
 }
 
+func TestLinodeLegacyAlertsWorkflow(t *testing.T) {
+	client, teardown := createTestClient(t,
+		"fixtures/TestInstance_LegacyAlertsWorkflow")
+	defer teardown()
+
+	region := getRegionsWithCaps(t, client, []string{"linodes"})[0]
+	instance, err := createInstance(
+		t,
+		client,
+		false,
+		func(l *linodego.Client, options *linodego.InstanceCreateOptions) {
+			options.Region = region
+		},
+	)
+	require.NoError(t, err)
+	defer func() {
+		err := client.DeleteInstance(context.Background(), instance.ID)
+		require.NoError(t, err)
+	}()
+	assert.Equal(t, 90, instance.Alerts.CPU)
+	assert.Equal(t, 10000, instance.Alerts.IO)
+	assert.Equal(t, 10, instance.Alerts.NetworkIn)
+	assert.Equal(t, 10, instance.Alerts.NetworkOut)
+	assert.Equal(t, 80, instance.Alerts.TransferQuota)
+	assert.Empty(t, instance.Alerts.SystemAlerts)
+	assert.Empty(t, instance.Alerts.UserAlerts)
+	_, err = client.WaitForEventFinished(
+		context.Background(),
+		instance.ID,
+		linodego.EntityLinode,
+		linodego.ActionLinodeCreate,
+		*instance.Created,
+		180,
+	)
+	require.NoErrorf(t, err, "Error waiting for instance created: %s", err)
+	updateOpts := instance.GetUpdateOptions()
+	alertsUpdateOpts := linodego.InstanceAlert{
+		CPU:           50,
+		IO:            6000,
+		NetworkIn:     20,
+		NetworkOut:    20,
+		TransferQuota: 50,
+	}
+	updateOpts.Alerts = &alertsUpdateOpts
+	updateOpts.Backups = nil
+	updateResponse, errUpdate := client.UpdateInstance(context.Background(), instance.ID, updateOpts)
+	require.NoError(t, errUpdate)
+	assert.Equal(t, 50, updateResponse.Alerts.CPU)
+	assert.Equal(t, 6000, updateResponse.Alerts.IO)
+	assert.Equal(t, 20, updateResponse.Alerts.NetworkIn)
+	assert.Equal(t, 20, updateResponse.Alerts.NetworkOut)
+	assert.Equal(t, 50, updateResponse.Alerts.TransferQuota)
+	assert.Empty(t, updateResponse.Alerts.SystemAlerts)
+	assert.Empty(t, updateResponse.Alerts.UserAlerts)
+
+	cloneOptions := linodego.InstanceCloneOptions{
+		Region: region,
+		Type:   "g6-nanode-1",
+		Alerts: &linodego.InstanceACLPAlertsOptions{
+			SystemAlerts: []int{},
+		},
+	}
+	clonedInstance, err := client.CloneInstance(context.Background(), instance.ID, cloneOptions)
+	require.NoError(t, err)
+	assert.Equal(t, 90, clonedInstance.Alerts.CPU)
+	assert.Equal(t, 10000, clonedInstance.Alerts.IO)
+	assert.Equal(t, 10, clonedInstance.Alerts.NetworkIn)
+	assert.Equal(t, 10, clonedInstance.Alerts.NetworkOut)
+	assert.Equal(t, 80, clonedInstance.Alerts.TransferQuota)
+	assert.Empty(t, clonedInstance.Alerts.SystemAlerts)
+	assert.Empty(t, clonedInstance.Alerts.UserAlerts)
+
+	_, err = client.WaitForEventFinished(
+		context.Background(),
+		instance.ID,
+		linodego.EntityLinode,
+		linodego.ActionLinodeClone,
+		*clonedInstance.Created,
+		240,
+	)
+	require.NoError(t, err)
+}
+
+func TestUpdateACLPAlerts(t *testing.T) {
+	client, teardown := createTestClient(t,
+		"fixtures/TestInstance_UpdateACLPAlerts")
+	defer teardown()
+
+	region := getRegionsWithCaps(t, client, []string{"linodes"})[0]
+	instToUpdate, err := createInstance(
+		t,
+		client,
+		false,
+		func(l *linodego.Client, options *linodego.InstanceCreateOptions) {
+			options.Region = region
+		},
+	)
+	require.NoError(t, err)
+	defer func() {
+		err := client.DeleteInstance(context.Background(), instToUpdate.ID)
+		require.NoError(t, err)
+	}()
+
+	sampleSystemAlert := getSampleSystemAlert(t, client)
+	testUserAlert := createAlertServiceDefinition(t, client).ID
+	defer func() {
+		errDeleteUserAlert := client.DeleteMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, testUserAlert)
+		require.NoError(t, errDeleteUserAlert)
+	}()
+	updateOpts := instToUpdate.GetUpdateOptions()
+	alertsUpdateData := linodego.InstanceAlert{
+		UserAlerts:   []int{testUserAlert},
+		SystemAlerts: []int{sampleSystemAlert},
+	}
+	updateOpts.Alerts = &alertsUpdateData
+	updateOpts.Backups = nil
+	updateResponse, errUpdate := client.UpdateInstance(context.Background(), instToUpdate.ID, updateOpts)
+	require.NoError(t, errUpdate)
+	assert.Equal(t, []int{sampleSystemAlert}, updateResponse.Alerts.SystemAlerts)
+	assert.Equal(t, []int{testUserAlert}, updateResponse.Alerts.UserAlerts)
+}
+
 func createInstance(t *testing.T, client *linodego.Client, enableCloudFirewall bool, modifiers ...instanceModifier) (*linodego.Instance, error) {
 	if t != nil {
 		t.Helper()
@@ -1148,4 +1247,63 @@ func TestInstance_MaintenancePolicy(t *testing.T) {
 	_, err = client.UpdateInstance(context.Background(), instToUpdate.ID, updateOpts)
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "Unsupported maintenance policy slug format")
+}
+
+func getAlertChannelsList(t *testing.T, client *linodego.Client) []linodego.AlertChannel {
+	channels, err := client.ListAlertChannels(context.Background(), nil)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, channels, "Expected at least one alert channel")
+
+	return channels
+}
+
+func createAlertServiceDefinition(t *testing.T, client *linodego.Client) *linodego.MonitorAlertDefinition {
+	ruleCriteria := linodego.AlertDefinitionCreateOptions{
+		Label: fmt.Sprintf("test-%d-service-definition", time.Now().UnixNano()),
+		RuleCriteria: &linodego.RuleCriteriaOptions{
+			Rules: []linodego.RuleOptions{
+				{
+					AggregateFunction: "min",
+					Metric:            "memory_usage",
+					Operator:          "eq",
+					Threshold:         95,
+					DimensionFilters: []linodego.DimensionFilterOptions{
+						{
+							DimensionLabel: "node_type",
+							Operator:       "eq",
+							Value:          "primary",
+						},
+					},
+				},
+			},
+		},
+		TriggerConditions: &linodego.TriggerConditions{
+			CriteriaCondition:       "ALL",
+			EvaluationPeriodSeconds: 300,
+			PollingIntervalSeconds:  900,
+			TriggerOccurrences:      3,
+		},
+
+		Severity:   1,
+		ChannelIDs: []int{getAlertChannelsList(t, client)[0].ID},
+	}
+
+	alert, err := client.CreateMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, ruleCriteria)
+	require.NoError(t, err)
+	return alert
+}
+
+func getSampleSystemAlert(t *testing.T, client *linodego.Client) int {
+	alerts, listErr := client.ListMonitorAlertDefinitions(context.Background(), testMonitorAlertDefinitionServiceType, nil)
+	require.NoError(t, listErr)
+	sampleSystemAlertIR := 0
+	for _, alert := range alerts {
+		if alert.Type == "system" {
+			sampleSystemAlertIR = alert.ID
+			break
+		}
+	}
+	require.Greater(t, sampleSystemAlertIR, 0, "No system alert definitions found. Cannot run tests dependent on system alert definitions.")
+
+	return sampleSystemAlertIR
 }
