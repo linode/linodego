@@ -193,13 +193,13 @@ type InstanceCreateOptions struct {
 	AuthorizedKeys  []string `json:"authorized_keys,omitempty"`
 	AuthorizedUsers []string `json:"authorized_users,omitempty"`
 
-	BackupsEnabled      bool                     `json:"backups_enabled,omitempty"`
-	PrivateIP           bool                     `json:"private_ip,omitempty"`
-	NetworkHelper       *bool                    `json:"network_helper,omitempty"`
-	Tags                []string                 `json:"tags,omitempty"`
-	Metadata            *InstanceMetadataOptions `json:"metadata,omitempty"`
-	FirewallID          int                      `json:"firewall_id,omitempty"`
-	InterfaceGeneration InterfaceGeneration      `json:"interface_generation,omitempty"`
+	BackupsEnabled      bool                                 `json:"backups_enabled,omitempty"`
+	PrivateIP           bool                                 `json:"private_ip,omitempty"`
+	NetworkHelper       *bool                                `json:"network_helper,omitempty"`
+	Tags                []string                             `json:"tags,omitempty"`
+	Metadata            *InstanceMetadataOptions             `json:"metadata,omitempty"`
+	FirewallID          int                                  `json:"firewall_id,omitempty"`
+	InterfaceGeneration InterfaceGeneration                  `json:"interface_generation,omitempty"`
 	DiskEncryption      InstanceDiskEncryption               `json:"disk_encryption,omitempty"`
 	PlacementGroup      *InstanceCreatePlacementGroupOptions `json:"placement_group,omitempty"`
 
