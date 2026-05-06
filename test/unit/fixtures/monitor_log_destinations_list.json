@@ -16,9 +16,38 @@
       "updated": "2025-07-21T12:41:09",
       "updated_by": "user",
       "version": 1
+    },
+    {
+      "created": "2025-08-01T10:00:00",
+      "created_by": "user",
+      "details": {
+        "endpoint_url": "https://my-site.com/log-storage/database-info",
+        "authentication": {
+          "type": "basic",
+          "details": {
+            "basic_authentication_user": "John_Q",
+            "basic_authentication_password": "p@$$w0Rd"
+          }
+        },
+        "content_type": "application/json",
+        "custom_headers": [
+          {
+            "name": "Cache-Control",
+            "value": "max-age=0"
+          }
+        ],
+        "data_compression": "gzip"
+      },
+      "id": 67890,
+      "label": "HTTPS_logs_destination",
+      "status": "active",
+      "type": "custom_https",
+      "updated": "2025-08-02T11:00:00",
+      "updated_by": "user",
+      "version": 1
     }
   ],
   "page":1,
   "pages":1,
-  "results":1
+  "results":2
 }
