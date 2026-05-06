@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/linode/linodego"
-	. "github.com/linode/linodego"
 )
 
 // TestReservedIPAddress_ReserveWithTags verifies that tags can be passed when reserving
