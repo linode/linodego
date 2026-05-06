@@ -43,8 +43,8 @@ func TestLKEClusterControlPlaneACL_Update(t *testing.T) {
 			Enabled:    BoolToPtr(true),
 			RevisionID: "rev-abc123",
 			Addresses: &linodego.LKEClusterControlPlaneACLAddressesOptions{
-				IPv4: &[]string{"10.0.0.1/32"},
-				IPv6: &[]string{"2001:db8::/64"},
+				IPv4: []string{"10.0.0.1/32"},
+				IPv6: []string{"2001:db8::/64"},
 			},
 		},
 	}

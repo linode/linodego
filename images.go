@@ -115,18 +115,18 @@ type ImageShareEntry struct {
 
 // ImageCreateOptions fields are those accepted by CreateImage
 type ImageCreateOptions struct {
-	DiskID      int       `json:"disk_id"`
-	Label       string    `json:"label"`
-	Description string    `json:"description,omitzero"`
-	CloudInit   bool      `json:"cloud_init,omitzero"`
-	Tags        *[]string `json:"tags,omitzero"`
+	DiskID      int      `json:"disk_id"`
+	Label       string   `json:"label"`
+	Description string   `json:"description,omitzero"`
+	CloudInit   bool     `json:"cloud_init,omitzero"`
+	Tags        []string `json:"tags,omitzero"`
 }
 
 // ImageUpdateOptions fields are those accepted by UpdateImage
 type ImageUpdateOptions struct {
-	Label       string    `json:"label,omitzero"`
-	Description *string   `json:"description,omitzero"`
-	Tags        *[]string `json:"tags,omitzero"`
+	Label       string   `json:"label,omitzero"`
+	Description *string  `json:"description,omitzero"`
+	Tags        []string `json:"tags,omitzero"`
 }
 
 // ImageReplicateOptions represents the options accepted by the
@@ -143,20 +143,20 @@ type ImageCreateUploadResponse struct {
 
 // ImageCreateUploadOptions fields are those accepted by CreateImageUpload
 type ImageCreateUploadOptions struct {
-	Region      string    `json:"region"`
-	Label       string    `json:"label"`
-	Description string    `json:"description,omitzero"`
-	CloudInit   bool      `json:"cloud_init,omitzero"`
-	Tags        *[]string `json:"tags,omitzero"`
+	Region      string   `json:"region"`
+	Label       string   `json:"label"`
+	Description string   `json:"description,omitzero"`
+	CloudInit   bool     `json:"cloud_init,omitzero"`
+	Tags        []string `json:"tags,omitzero"`
 }
 
 // ImageUploadOptions fields are those accepted by UploadImage
 type ImageUploadOptions struct {
-	Region      string    `json:"region"`
-	Label       string    `json:"label"`
-	Description string    `json:"description,omitzero"`
-	CloudInit   bool      `json:"cloud_init"`
-	Tags        *[]string `json:"tags,omitzero"`
+	Region      string   `json:"region"`
+	Label       string   `json:"label"`
+	Description string   `json:"description,omitzero"`
+	CloudInit   bool     `json:"cloud_init"`
+	Tags        []string `json:"tags,omitzero"`
 	Image       io.Reader
 }
 

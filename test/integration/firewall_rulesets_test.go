@@ -25,7 +25,7 @@ func TestFirewallRuleSets_CRUD(t *testing.T) {
 				Protocol: linodego.NetworkProtocol("TCP"),
 				Ports:    "80",
 				Addresses: linodego.NetworkAddresses{
-					IPv4: &[]string{"0.0.0.0/0"},
+					IPv4: []string{"0.0.0.0/0"},
 				},
 			},
 		},
@@ -71,7 +71,7 @@ func TestFirewallRuleSets_CRUD(t *testing.T) {
 			Protocol: linodego.NetworkProtocol("TCP"),
 			Ports:    "443",
 			Addresses: linodego.NetworkAddresses{
-				IPv6: &[]string{"::/0"},
+				IPv6: []string{"::/0"},
 			},
 		},
 	}
@@ -79,7 +79,7 @@ func TestFirewallRuleSets_CRUD(t *testing.T) {
 	updateOpts := linodego.RuleSetUpdateOptions{
 		Label:       &updatedLabel,
 		Description: &updatedDescription,
-		Rules:       &updatedRules,
+		Rules:       updatedRules,
 	}
 
 	updated, err := client.UpdateFirewallRuleSet(ctx, ruleSet.ID, updateOpts)

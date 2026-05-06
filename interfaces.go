@@ -131,7 +131,7 @@ type PublicInterfaceCreateOptions struct {
 }
 
 type PublicInterfaceIPv4CreateOptions struct {
-	Addresses *[]PublicInterfaceIPv4AddressCreateOptions `json:"addresses,omitzero"`
+	Addresses []PublicInterfaceIPv4AddressCreateOptions `json:"addresses,omitzero"`
 }
 
 type PublicInterfaceIPv4AddressCreateOptions struct {
@@ -140,7 +140,7 @@ type PublicInterfaceIPv4AddressCreateOptions struct {
 }
 
 type PublicInterfaceIPv6CreateOptions struct {
-	Ranges *[]PublicInterfaceIPv6RangeCreateOptions `json:"ranges,omitzero"`
+	Ranges []PublicInterfaceIPv6RangeCreateOptions `json:"ranges,omitzero"`
 }
 
 type PublicInterfaceIPv6RangeCreateOptions struct {
@@ -154,8 +154,8 @@ type VPCInterfaceCreateOptions struct {
 }
 
 type VPCInterfaceIPv4CreateOptions struct {
-	Addresses *[]VPCInterfaceIPv4AddressCreateOptions `json:"addresses,omitzero"`
-	Ranges    *[]VPCInterfaceIPv4RangeCreateOptions   `json:"ranges,omitzero"`
+	Addresses []VPCInterfaceIPv4AddressCreateOptions `json:"addresses,omitzero"`
+	Ranges    []VPCInterfaceIPv4RangeCreateOptions   `json:"ranges,omitzero"`
 }
 
 type VPCInterfaceIPv4AddressCreateOptions struct {
@@ -171,9 +171,9 @@ type VPCInterfaceIPv4RangeCreateOptions struct {
 // VPCInterfaceIPv6CreateOptions specifies IPv6 configuration parameters for VPC creation.
 // NOTE: IPv6 interfaces may not currently be available to all users.
 type VPCInterfaceIPv6CreateOptions struct {
-	SLAAC    *[]VPCInterfaceIPv6SLAACCreateOptions `json:"slaac,omitzero"`
-	Ranges   *[]VPCInterfaceIPv6RangeCreateOptions `json:"ranges,omitzero"`
-	IsPublic *bool                                 `json:"is_public"`
+	SLAAC    []VPCInterfaceIPv6SLAACCreateOptions `json:"slaac,omitzero"`
+	Ranges   []VPCInterfaceIPv6RangeCreateOptions `json:"ranges,omitzero"`
+	IsPublic *bool                                `json:"is_public"`
 }
 
 // VPCInterfaceIPv6SLAACCreateOptions defines the IPv6 SLAAC configuration parameters for VPC creation.

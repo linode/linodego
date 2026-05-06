@@ -74,7 +74,7 @@ type LKEClusterCreateOptions struct {
 type LKEClusterUpdateOptions struct {
 	K8sVersion   string                         `json:"k8s_version,omitzero"`
 	Label        string                         `json:"label,omitzero"`
-	Tags         *[]string                      `json:"tags,omitzero"`
+	Tags         []string                       `json:"tags,omitzero"`
 	ControlPlane *LKEClusterControlPlaneOptions `json:"control_plane,omitzero"`
 }
 
@@ -165,7 +165,7 @@ func (i LKECluster) GetCreateOptions() (o LKEClusterCreateOptions) {
 func (i LKECluster) GetUpdateOptions() (o LKEClusterUpdateOptions) {
 	o.K8sVersion = i.K8sVersion
 	o.Label = i.Label
-	o.Tags = &i.Tags
+	o.Tags = i.Tags
 
 	isHA := i.ControlPlane.HighAvailability
 

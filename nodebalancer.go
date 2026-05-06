@@ -88,7 +88,7 @@ type NodeBalancerUpdateOptions struct {
 	// NOTE: ClientUDPSessThrottle may not currently be available to all users.
 	ClientUDPSessThrottle *int `json:"client_udp_sess_throttle,omitzero"`
 
-	Tags *[]string `json:"tags,omitzero"`
+	Tags []string `json:"tags,omitzero"`
 }
 
 // NodeBalancerPlanType constants start with NBType and include Linode API NodeBalancer's plan types
@@ -142,7 +142,7 @@ func (i NodeBalancer) GetUpdateOptions() NodeBalancerUpdateOptions {
 		Label:                 i.Label,
 		ClientConnThrottle:    &i.ClientConnThrottle,
 		ClientUDPSessThrottle: &i.ClientUDPSessThrottle,
-		Tags:                  &i.Tags,
+		Tags:                  i.Tags,
 	}
 }
 

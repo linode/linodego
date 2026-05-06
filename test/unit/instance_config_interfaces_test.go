@@ -114,7 +114,7 @@ func TestInstanceConfigInterface_Update(t *testing.T) {
 		IPv4: &linodego.VPCIPv4{
 			NAT1To1: &nat1to1,
 		},
-		IPRanges: &ipRanges,
+		IPRanges: ipRanges,
 	}
 
 	base.MockPut("linode/instances/123/configs/456/interfaces/1", fixtureData)
