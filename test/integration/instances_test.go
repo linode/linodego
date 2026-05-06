@@ -249,7 +249,7 @@ func TestInstance_MigrateToPG(t *testing.T) {
 		clientTeardown()
 	}()
 
-	regions := getRegionsWithCaps(t, client, []string{"Placement Group"})
+	regions := getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityPlacementGroup})
 
 	pgOutboundCreateOpts := linodego.PlacementGroupCreateOptions{
 		Label:                "linodego-test-" + getUniqueText(),
@@ -367,7 +367,7 @@ func TestInstance_Disks_List_WithEncryption(t *testing.T) {
 		"fixtures/TestInstance_Disks_List_WithEncryption",
 		true,
 		func(c *linodego.Client, ico *linodego.InstanceCreateOptions) {
-			ico.Region = getRegionsWithCaps(t, c, []string{"Disk Encryption"})[0]
+			ico.Region = getRegionsWithCaps(t, c, []linodego.RegionCapability{linodego.CapabilityDiskEncryption})[0]
 		},
 	)
 	defer teardown()
@@ -687,7 +687,7 @@ func TestInstance_Rebuild(t *testing.T) {
 		t,
 		"fixtures/TestInstance_Rebuild", true,
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-			options.Region = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
+			options.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityMetadata})[0]
 		},
 	)
 	defer teardown()
@@ -725,7 +725,7 @@ func TestInstance_RebuildWithEncryption(t *testing.T) {
 		"fixtures/TestInstance_RebuildWithEncryption",
 		true,
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-			options.Region = getRegionsWithCaps(t, client, []string{"Disk Encryption"})[0]
+			options.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityDiskEncryption})[0]
 			options.DiskEncryption = linodego.InstanceDiskEncryptionEnabled
 		},
 	)
@@ -762,7 +762,7 @@ func TestInstance_Clone(t *testing.T) {
 	client, instance, teardownOriginalLinode, err := setupInstance(
 		t, "fixtures/TestInstance_Clone", true,
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-			targetRegion = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
+			targetRegion = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityMetadata})[0]
 
 			options.Region = targetRegion
 		})
@@ -858,7 +858,7 @@ func TestInstance_withMetadata(t *testing.T) {
 			options.Metadata = &linodego.InstanceMetadataOptions{
 				UserData: base64.StdEncoding.EncodeToString([]byte("reallycoolmetadata")),
 			}
-			options.Region = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
+			options.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityMetadata})[0]
 		})
 	if err != nil {
 		t.Fatal(err)
@@ -891,7 +891,10 @@ func TestInstance_withBlockStorageEncryption(t *testing.T) {
 	client, clientTeardown := createTestClient(t, "fixtures/TestInstance_withBlockStorageEncryption")
 
 	inst, err := createInstance(t, client, true, func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-		options.Region = getRegionsWithCaps(t, client, []string{"Linodes", "Block Storage Encryption"})[0]
+		options.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{
+			linodego.CapabilityLinodes,
+			linodego.CapabilityBlockStorageEncryption,
+		})[0]
 		options.Label = "go-inst-test-create-bde"
 	})
 	require.NoError(t, err)
@@ -959,7 +962,7 @@ func createInstance(t *testing.T, client *linodego.Client, enableCloudFirewall b
 	createOpts := linodego.InstanceCreateOptions{
 		Label:    "go-test-ins-" + randLabel(),
 		RootPass: randPassword(),
-		Region:   getRegionsWithCaps(t, client, []string{"linodes"})[0],
+		Region:   getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes})[0],
 		Type:     "g6-nanode-1",
 		Image:    "linode/debian12",
 		Booted:   linodego.Pointer(false),
@@ -1011,8 +1014,11 @@ func createInstanceWithoutDisks(
 	t.Helper()
 
 	createOpts := linodego.InstanceCreateOptions{
-		Label:  "go-test-ins-wo-disk-" + randLabel(),
-		Region: getRegionsWithCaps(t, client, []string{"Linodes", "Maintenance Policy"})[0],
+		Label: "go-test-ins-wo-disk-" + randLabel(),
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{
+			linodego.CapabilityLinodes,
+			linodego.CapabilityMaintenancePolicy,
+		})[0],
 		Type:   "g6-nanode-1",
 		Booted: linodego.Pointer(false),
 	}
@@ -1071,7 +1077,7 @@ func TestInstance_MaintenancePolicy(t *testing.T) {
 	region := getRegionsWithCapsAndSiteType(
 		t,
 		client,
-		[]string{"Linodes", "Maintenance Policy"},
+		[]linodego.RegionCapability{linodego.CapabilityLinodes, linodego.CapabilityMaintenancePolicy},
 		"core",
 	)[0]
 

@@ -21,7 +21,7 @@ func createInstanceWithLinodeInterfaces(
 	createOpts := linodego.InstanceCreateOptions{
 		Label:               "go-test-intf-" + randLabel(),
 		RootPass:            randPassword(),
-		Region:              getRegionsWithCaps(t, client, []string{linodego.CapabilityLinodeInterfaces})[0],
+		Region:              getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodeInterfaces})[0],
 		Type:                "g6-nanode-1",
 		Image:               "linode/debian12",
 		Booted:              linodego.Pointer(false),
@@ -80,7 +80,7 @@ func TestInstance_CreateWithLinodeInterfaces(
 	client, fixtureTeardown := createTestClient(t, "fixtures/TestInstance_CreateWithLinodeInterfaces")
 	t.Cleanup(fixtureTeardown)
 
-	testRegion := getRegionsWithCaps(t, client, []string{linodego.CapabilityVPCs, linodego.CapabilityLinodeInterfaces})[0]
+	testRegion := getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityVPCs, linodego.CapabilityLinodeInterfaces})[0]
 	_, vpcSubnet, vpcTeardown, err := createVPCWithSubnet(
 		t,
 		client,

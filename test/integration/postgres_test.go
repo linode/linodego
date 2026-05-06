@@ -165,7 +165,7 @@ func createPostgresDatabase(t *testing.T, client *linodego.Client,
 
 	createOpts := linodego.PostgresCreateOptions{
 		Label:       "go-postgres-testing-def" + randLabel(),
-		Region:      getRegionsWithCaps(t, client, []string{"Managed Databases"})[0],
+		Region:      getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityDBAAS})[0],
 		Type:        "g6-nanode-1",
 		Engine:      "postgresql/14",
 		ClusterSize: 3,
