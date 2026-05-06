@@ -441,8 +441,10 @@ func setupLKECluster(t *testing.T, clusterModifiers []clusterModifier, fixturesY
 	}
 
 	if createOpts.Region == "" {
-		createOpts.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLKE,
-			linodego.CapabilityLADiskEncryption})[0]
+		createOpts.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{
+			linodego.CapabilityLKE,
+			linodego.CapabilityLADiskEncryption,
+		})[0]
 	}
 
 	if createOpts.K8sVersion == "" {

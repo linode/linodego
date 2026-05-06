@@ -891,8 +891,10 @@ func TestInstance_withBlockStorageEncryption(t *testing.T) {
 	client, clientTeardown := createTestClient(t, "fixtures/TestInstance_withBlockStorageEncryption")
 
 	inst, err := createInstance(t, client, true, func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-		options.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes,
-			linodego.CapabilityBlockStorageEncryption})[0]
+		options.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{
+			linodego.CapabilityLinodes,
+			linodego.CapabilityBlockStorageEncryption,
+		})[0]
 		options.Label = "go-inst-test-create-bde"
 	})
 	require.NoError(t, err)
@@ -1013,8 +1015,10 @@ func createInstanceWithoutDisks(
 
 	createOpts := linodego.InstanceCreateOptions{
 		Label: "go-test-ins-wo-disk-" + randLabel(),
-		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes,
-			linodego.CapabilityMaintenancePolicy})[0],
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{
+			linodego.CapabilityLinodes,
+			linodego.CapabilityMaintenancePolicy,
+		})[0],
 		Type:   "g6-nanode-1",
 		Booted: linodego.Pointer(false),
 	}

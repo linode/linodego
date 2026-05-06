@@ -42,8 +42,10 @@ func TestVolume_Create_withEncryption(t *testing.T) {
 
 	createOpts := linodego.VolumeCreateOptions{
 		Label: "go-vol-test-create-encryption",
-		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes,
-			linodego.CapabilityBlockStorageEncryption})[0],
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{
+			linodego.CapabilityLinodes,
+			linodego.CapabilityBlockStorageEncryption,
+		})[0],
 		Encryption: "enabled",
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
@@ -122,8 +124,10 @@ func TestVolume_Get_withEncryption(t *testing.T) {
 
 	createOpts := linodego.VolumeCreateOptions{
 		Label: "go-vol-test-get-encryption",
-		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes,
-			linodego.CapabilityBlockStorageEncryption})[0],
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{
+			linodego.CapabilityLinodes,
+			linodego.CapabilityBlockStorageEncryption,
+		})[0],
 		Encryption: "enabled",
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
