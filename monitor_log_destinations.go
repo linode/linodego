@@ -13,6 +13,7 @@ type LogsDestinationType string
 
 const (
 	LogsDestinationTypeAkamaiObjectStorage LogsDestinationType = "akamai_object_storage"
+	LogsDestinationTypeCustomHTTPS         LogsDestinationType = "custom_https"
 )
 
 // LogsDestinationStatus represents the status of a logs destination.
@@ -24,20 +25,77 @@ const (
 )
 
 // LogsDestinationDetails represents the details block returned in a LogsDestination response.
+// Fields are populated based on the destination type.
 type LogsDestinationDetails struct {
-	AccessKeyID string `json:"access_key_id"`
-	BucketName  string `json:"bucket_name"`
-	Host        string `json:"host"`
-	Path        string `json:"path"`
+	// akamai_object_storage fields
+	AccessKeyID string `json:"access_key_id,omitempty"`
+	BucketName  string `json:"bucket_name,omitempty"`
+	Host        string `json:"host,omitempty"`
+	Path        string `json:"path,omitempty"`
+
+	// custom_https fields
+	EndpointURL              string                                   `json:"endpoint_url,omitempty"`
+	Authentication           *LogsDestinationCustomHTTPSAuthDetails   `json:"authentication,omitempty"`
+	ClientCertificateDetails *LogsDestinationClientCertificateDetails `json:"client_certificate_details,omitempty"`
+	ContentType              string                                   `json:"content_type,omitempty"`
+	CustomHeaders            []LogsDestinationCustomHTTPSHeader       `json:"custom_headers,omitempty"`
+	DataCompression          string                                   `json:"data_compression,omitempty"`
 }
 
-// LogsDestinationDetailsCreateOptions represents the details block used when creating a LogsDestination.
+// LogsDestinationDetailsCreateOptions represents the details block used when creating
+// an akamai_object_storage LogsDestination.
 type LogsDestinationDetailsCreateOptions struct {
 	AccessKeyID     string  `json:"access_key_id"`
 	AccessKeySecret string  `json:"access_key_secret"`
 	BucketName      string  `json:"bucket_name"`
 	Host            string  `json:"host"`
 	Path            *string `json:"path,omitempty"`
+}
+
+// LogsDestinationCustomHTTPSAuthType represents the authentication type for a custom_https destination.
+type LogsDestinationCustomHTTPSAuthType string
+
+const (
+	LogsDestinationCustomHTTPSAuthTypeBasic LogsDestinationCustomHTTPSAuthType = "basic"
+	LogsDestinationCustomHTTPSAuthTypeNone  LogsDestinationCustomHTTPSAuthType = "none"
+)
+
+// LogsDestinationCustomHTTPSBasicAuthDetails holds credentials for basic authentication.
+// Both fields are required when authentication type is "basic".
+type LogsDestinationCustomHTTPSBasicAuthDetails struct {
+	Username string `json:"basic_authentication_user"`
+	Password string `json:"basic_authentication_password"`
+}
+
+// LogsDestinationCustomHTTPSAuthDetails holds authentication configuration for a custom_https destination.
+type LogsDestinationCustomHTTPSAuthDetails struct {
+	Type    LogsDestinationCustomHTTPSAuthType          `json:"type"`
+	Details *LogsDestinationCustomHTTPSBasicAuthDetails `json:"details,omitempty"`
+}
+
+// LogsDestinationCustomHTTPSHeader represents a single custom HTTP header.
+type LogsDestinationCustomHTTPSHeader struct {
+	Name  string `json:"name"`
+	Value string `json:"value"`
+}
+
+// LogsDestinationClientCertificateDetails contains TLS client certificate information
+type LogsDestinationClientCertificateDetails struct {
+	ClientCACertificate string `json:"client_ca_certificate"`
+	ClientCertificate   string `json:"client_certificate"`
+	ClientPrivateKey    string `json:"client_private_key"`
+	TLSHostname         string `json:"tls_hostname"`
+}
+
+// LogsDestinationCustomHTTPSDetailsCreateOptions represents the details block used when
+// creating a custom_https LogsDestination.
+type LogsDestinationCustomHTTPSDetailsCreateOptions struct {
+	EndpointURL              string                                   `json:"endpoint_url"`
+	Authentication           *LogsDestinationCustomHTTPSAuthDetails   `json:"authentication"`
+	ClientCertificateDetails *LogsDestinationClientCertificateDetails `json:"client_certificate_details,omitempty"`
+	ContentType              string                                   `json:"content_type,omitempty"`
+	CustomHeaders            []LogsDestinationCustomHTTPSHeader       `json:"custom_headers,omitempty"`
+	DataCompression          string                                   `json:"data_compression,omitempty"`
 }
 
 // LogsDestination represents a logs destination object.
@@ -81,12 +139,13 @@ const logsDestinationBaseEndpoint = "monitor/streams/destinations"
 
 // LogsDestinationCreateOptions are the options used to create a new logs destination.
 type LogsDestinationCreateOptions struct {
-	Label   string                              `json:"label"`
-	Type    LogsDestinationType                 `json:"type"`
-	Details LogsDestinationDetailsCreateOptions `json:"details"`
+	Label   string              `json:"label"`
+	Type    LogsDestinationType `json:"type"`
+	Details interface{}         `json:"details"`
 }
 
-// LogsDestinationDetailsUpdateOptions represents the details block used when updating a LogsDestination.
+// LogsDestinationDetailsUpdateOptions represents the details block used when updating
+// an akamai_object_storage LogsDestination.
 type LogsDestinationDetailsUpdateOptions struct {
 	AccessKeyID     string  `json:"access_key_id,omitempty"`
 	AccessKeySecret string  `json:"access_key_secret,omitempty"`
@@ -95,10 +154,23 @@ type LogsDestinationDetailsUpdateOptions struct {
 	Path            *string `json:"path,omitempty"`
 }
 
+// LogsDestinationCustomHTTPSDetailsUpdateOptions represents the details block used when
+// updating a custom_https LogsDestination.
+type LogsDestinationCustomHTTPSDetailsUpdateOptions struct {
+	EndpointURL              string                                   `json:"endpoint_url,omitempty"`
+	Authentication           *LogsDestinationCustomHTTPSAuthDetails   `json:"authentication,omitempty"`
+	ClientCertificateDetails *LogsDestinationClientCertificateDetails `json:"client_certificate_details,omitempty"`
+	ContentType              string                                   `json:"content_type,omitempty"`
+	CustomHeaders            []LogsDestinationCustomHTTPSHeader       `json:"custom_headers,omitempty"`
+	DataCompression          string                                   `json:"data_compression,omitempty"`
+}
+
 // LogsDestinationUpdateOptions are the options used to update a LogsDestination.
+// Set Details to *LogsDestinationDetailsUpdateOptions for akamai_object_storage,
+// or *LogsDestinationCustomHTTPSDetailsUpdateOptions for custom_https.
 type LogsDestinationUpdateOptions struct {
-	Label   string                               `json:"label,omitempty"`
-	Details *LogsDestinationDetailsUpdateOptions `json:"details,omitempty"`
+	Label   string      `json:"label,omitempty"`
+	Details interface{} `json:"details,omitempty"`
 }
 
 // ListLogsDestinations returns a paginated list of logs destinations.
