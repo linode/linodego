@@ -166,7 +166,7 @@ func TestInterface_CreatePublic(t *testing.T) {
 				},
 			},
 		},
-		FirewallID: linodego.DoublePointer(123),
+		FirewallID: linodego.Pointer(123),
 	}
 
 	iface, err := base.Client.CreateInterface(context.Background(), 123, opts)
