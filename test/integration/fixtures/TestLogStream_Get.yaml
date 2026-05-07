@@ -11,7 +11,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/regions?page=1
+    url: https://api.linode.com/v4beta/regions?page=1
     method: GET
   response:
     body: '{"data": [{"id": "pl-labkrk-2", "label": "Krakow, PL", "country": "pl",
@@ -97,13 +97,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/object-storage/buckets
+    url: https://api.linode.com/v4beta/object-storage/buckets
     method: POST
   response:
-    body: '{"hostname": "go-test-logs-destination-1778077361692714000.pl-labkrk2-1.devcloud.linodeobjects.com",
+    body: '{"hostname": "go-test-logs-destination-1778077361692714000.pl-labkrk2-1.linodeobjects.com",
       "label": "go-test-logs-destination-1778077361692714000", "created": "2018-01-02T03:04:05",
       "region": "pl-labkrk-2", "cluster": "pl-labkrk2-1", "size": 0, "objects": 0,
-      "endpoint_type": "E1", "s3_endpoint": "pl-labkrk2-1.devcloud.linodeobjects.com"}'
+      "endpoint_type": "E1", "s3_endpoint": "pl-labkrk2-1.linodeobjects.com"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -159,12 +159,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/object-storage/keys
+    url: https://api.linode.com/v4beta/object-storage/keys
     method: POST
   response:
     body: '{"id": 340471, "label": "go-test-logs-destination-1778077362450834000",
       "access_key": "[SANITIZED]", "secret_key": "[SANITIZED]", "limited": false,
-      "bucket_access": null, "regions": [{"id": "pl-labkrk-2", "s3_endpoint": "pl-labkrk2-1.devcloud.linodeobjects.com",
+      "bucket_access": null, "regions": [{"id": "pl-labkrk-2", "s3_endpoint": "pl-labkrk2-1.linodeobjects.com",
       "endpoint_type": "E1"}]}'
     headers:
       Access-Control-Allow-Credentials:
@@ -212,7 +212,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-logs-destination-1778077363114776000","type":"akamai_object_storage","details":{"access_key_id":"KU09RCXVUJUB9I7Q6ZSD","access_key_secret":"GswNLX4wQRRLeDwYIsyolZJjREZ77H5XZaBYcw5L","bucket_name":"go-test-logs-destination-1778077361692714000","host":"go-test-logs-destination-1778077361692714000.pl-labkrk2-1.devcloud.linodeobjects.com"}}'
+    body: '{"label":"go-test-logs-destination-1778077363114776000","type":"akamai_object_storage","details":{"access_key_id":"KU09RCXVUJUB9I7Q6ZSD","access_key_secret":"GswNLX4wQRRLeDwYIsyolZJjREZ77H5XZaBYcw5L","bucket_name":"go-test-logs-destination-1778077361692714000","host":"go-test-logs-destination-1778077361692714000.pl-labkrk2-1.linodeobjects.com"}}'
     form: {}
     headers:
       Accept:
@@ -221,11 +221,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/monitor/streams/destinations
+    url: https://api.linode.com/v4beta/monitor/streams/destinations
     method: POST
   response:
     body: '{"id": 1094, "label": "go-test-logs-destination-1778077363114776000", "type":
-      "akamai_object_storage", "details": {"host": "go-test-logs-destination-1778077361692714000.pl-labkrk2-1.devcloud.linodeobjects.com",
+      "akamai_object_storage", "details": {"host": "go-test-logs-destination-1778077361692714000.pl-labkrk2-1.linodeobjects.com",
       "bucket_name": "go-test-logs-destination-1778077361692714000", "access_key_id":
       "KU09RCXVUJUB9I7Q6ZSD"}, "version": 1, "status": "active", "created_by": "klipensk-aclp",
       "created": "2018-01-02T03:04:05", "updated_by": "klipensk-aclp", "updated":
@@ -285,13 +285,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/monitor/streams
+    url: https://api.linode.com/v4beta/monitor/streams
     method: POST
   response:
     body: '{"id": 2124, "label": "go-test-log-stream-1778077365217644000", "type":
       "audit_logs", "destinations": [{"id": 1094, "type": "akamai_object_storage",
       "label": "go-test-logs-destination-1778077363114776000", "details": {"host":
-      "go-test-logs-destination-1778077361692714000.pl-labkrk2-1.devcloud.linodeobjects.com",
+      "go-test-logs-destination-1778077361692714000.pl-labkrk2-1.linodeobjects.com",
       "bucket_name": "go-test-logs-destination-1778077361692714000", "access_key_id":
       "KU09RCXVUJUB9I7Q6ZSD"}}], "details": null, "version": 1, "status": "provisioning",
       "created_by": "klipensk-aclp", "created": "2018-01-02T03:04:05", "updated_by":
@@ -351,13 +351,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/monitor/streams/2124
+    url: https://api.linode.com/v4beta/monitor/streams/2124
     method: GET
   response:
     body: '{"id": 2124, "label": "go-test-log-stream-1778077365217644000", "type":
       "audit_logs", "destinations": [{"id": 1094, "type": "akamai_object_storage",
       "label": "go-test-logs-destination-1778077363114776000", "details": {"host":
-      "go-test-logs-destination-1778077361692714000.pl-labkrk2-1.devcloud.linodeobjects.com",
+      "go-test-logs-destination-1778077361692714000.pl-labkrk2-1.linodeobjects.com",
       "bucket_name": "go-test-logs-destination-1778077361692714000", "access_key_id":
       "KU09RCXVUJUB9I7Q6ZSD"}}], "details": null, "version": 1, "status": "active",
       "created_by": "klipensk-aclp", "created": "2018-01-02T03:04:05", "updated_by":
@@ -419,13 +419,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/monitor/streams/2124
+    url: https://api.linode.com/v4beta/monitor/streams/2124
     method: GET
   response:
     body: '{"id": 2124, "label": "go-test-log-stream-1778077365217644000", "type":
       "audit_logs", "destinations": [{"id": 1094, "type": "akamai_object_storage",
       "label": "go-test-logs-destination-1778077363114776000", "details": {"host":
-      "go-test-logs-destination-1778077361692714000.pl-labkrk2-1.devcloud.linodeobjects.com",
+      "go-test-logs-destination-1778077361692714000.pl-labkrk2-1.linodeobjects.com",
       "bucket_name": "go-test-logs-destination-1778077361692714000", "access_key_id":
       "KU09RCXVUJUB9I7Q6ZSD"}}], "details": null, "version": 1, "status": "active",
       "created_by": "klipensk-aclp", "created": "2018-01-02T03:04:05", "updated_by":
@@ -487,7 +487,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/monitor/streams/2124
+    url: https://api.linode.com/v4beta/monitor/streams/2124
     method: DELETE
   response:
     body: '{}'
@@ -546,11 +546,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/monitor/streams/destinations/1094
+    url: https://api.linode.com/v4beta/monitor/streams/destinations/1094
     method: GET
   response:
     body: '{"id": 1094, "label": "go-test-logs-destination-1778077363114776000", "type":
-      "akamai_object_storage", "details": {"host": "go-test-logs-destination-1778077361692714000.pl-labkrk2-1.devcloud.linodeobjects.com",
+      "akamai_object_storage", "details": {"host": "go-test-logs-destination-1778077361692714000.pl-labkrk2-1.linodeobjects.com",
       "bucket_name": "go-test-logs-destination-1778077361692714000", "access_key_id":
       "KU09RCXVUJUB9I7Q6ZSD"}, "version": 1, "status": "active", "created_by": "klipensk-aclp",
       "created": "2018-01-02T03:04:05", "updated_by": "klipensk-aclp", "updated":
@@ -612,7 +612,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/monitor/streams/destinations/1094
+    url: https://api.linode.com/v4beta/monitor/streams/destinations/1094
     method: DELETE
   response:
     body: '{}'
@@ -671,7 +671,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/object-storage/keys/340471
+    url: https://api.linode.com/v4beta/object-storage/keys/340471
     method: DELETE
   response:
     body: '{}'
@@ -730,7 +730,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/object-storage/buckets/pl-labkrk-2/go-test-logs-destination-1778077361692714000/object-list
+    url: https://api.linode.com/v4beta/object-storage/buckets/pl-labkrk-2/go-test-logs-destination-1778077361692714000/object-list
     method: GET
   response:
     body: '{"data": [{"name": "cloud-logs-test-connection-20260506T142244", "size":
@@ -794,10 +794,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/object-storage/buckets/pl-labkrk2-1/go-test-logs-destination-1778077361692714000/object-url
+    url: https://api.linode.com/v4beta/object-storage/buckets/pl-labkrk-2/go-test-logs-destination-1778077361692714000/object-url
     method: POST
   response:
-    body: '{"url": "https://pl-labkrk2-1.devcloud.linodeobjects.com:443/go-test-logs-destination-1778077361692714000/cloud-logs-test-connection-20260506T142244?Signature=aum22VqPehBfdia9VBm5RsHOLrw%3D&Expires=1778079713&AWSAccessKeyID=SANITIZED",
+    body: '{"url": "https://pl-labkrk2-1.linodeobjects.com:443/go-test-logs-destination-1778077361692714000/cloud-logs-test-connection-20260506T142244?Signature=aum22VqPehBfdia9VBm5RsHOLrw%3D&Expires=1778079713&AWSAccessKeyID=SANITIZED",
       "exists": true}'
     headers:
       Access-Control-Allow-Credentials:
@@ -854,7 +854,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/object-storage/buckets/pl-labkrk-2/go-test-logs-destination-1778077361692714000
+    url: https://api.linode.com/v4beta/object-storage/buckets/pl-labkrk-2/go-test-logs-destination-1778077361692714000
     method: DELETE
   response:
     body: '{}'
