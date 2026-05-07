@@ -9,6 +9,16 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+func findVolumeByID(volumes []linodego.Volume, id int) linodego.Volume {
+	for _, vol := range volumes {
+		if vol.ID == id {
+			return vol
+		}
+	}
+
+	return linodego.Volume{}
+}
+
 func setupVolumeAttachedToLinode(
 	t *testing.T,
 	fixturesYaml string,
@@ -98,19 +108,13 @@ func TestIAM_GetIOReadyForNotAttachedVolume(t *testing.T) {
 
 	volumeList, err := client.ListVolumes(context.Background(), nil)
 	require.NoErrorf(t, err, "Error listing volumes: %v", err)
-	volumeFound := false
 
-	for _, vol := range volumeList {
-		if vol.ID == volume.ID {
-			volumeFound = true
-			assert.Equal(t, linodego.VolumeActive, vol.Status)
-			assert.Empty(t, vol.LinodeID)
-			assert.Empty(t, vol.LinodeLabel)
-			assert.False(t, vol.IOReady)
-			break
-		}
-	}
-	require.True(t, volumeFound, "Volume with ID %d not found in volumeList", volume.ID)
+	volumeFound := findVolumeByID(volumeList, volume.ID)
+	require.NotEmpty(t, volumeFound, "Volume with ID %d not found in volumeList", volume.ID)
+	assert.Equal(t, linodego.VolumeActive, volumeFound.Status)
+	assert.Empty(t, volumeFound.LinodeID)
+	assert.Empty(t, volumeFound.LinodeLabel)
+	assert.False(t, volumeFound.IOReady)
 
 	volume, err = client.GetVolume(context.Background(), volume.ID)
 	require.NoErrorf(t, err, "Error getting not attached volume: %v", err)
