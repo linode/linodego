@@ -1,0 +1,129 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/regions?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": "pl-labkrk-2", "label": "Krakow, PL", "country": "pl",
+      "capabilities": ["Linodes", "Block Storage Encryption", "Disk Encryption", "Backups",
+      "NodeBalancers", "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes",
+      "Cloud Firewall", "Vlans", "VPCs", "VPC Dual Stack", "VPC IPv6 Stack", "Block
+      Storage Migrations", "Managed Databases", "Metadata", "Premium Plans", "Placement
+      Group", "StackScripts", "NETINT Quadra T1U", "Maintenance Policy", "Linode Interfaces",
+      "ACLP Logs Datacenter LKE-E"], "monitors": {"alerts": ["Linodes", "Managed Databases",
+      "NodeBalancers"], "metrics": ["Linodes", "Managed Databases", "NodeBalancers"]},
+      "status": "ok", "resolvers": {"ipv4": "172.24.224.240,172.24.224.229,172.24.224.236,172.24.224.238,172.24.224.235,172.24.224.241,172.24.224.230,172.24.224.239,172.24.224.233,172.24.224.234",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "us-labedgeeat-2",
+      "label": "East Wenatchee, US", "country": "us", "capabilities": ["Linodes",
+      "Disk Encryption", "Cloud Firewall", "Vlans", "VPCs", "VPC Dual Stack", "VPC
+      IPv6 Stack", "Metadata", "Distributed Plans", "Linode Interfaces"], "monitors":
+      {"alerts": [], "metrics": []}, "status": "ok", "resolvers": {"ipv4": "173.223.100.53,173.223.101.53",
+      "ipv6": "1234::5678,1234::5678"}, "placement_group_limits": {"maximum_pgs_per_customer":
+      0, "maximum_linodes_per_pg": 0, "maximum_linodes_per_flexible_pg": 0}, "site_type":
+      "distributed"}, {"id": "us-labedgeeat-3", "label": "East Wenatchee, US", "country":
+      "us", "capabilities": ["Linodes", "Disk Encryption", "Cloud Firewall", "Metadata",
+      "Distributed Plans"], "monitors": {"alerts": [], "metrics": []}, "status": "ok",
+      "resolvers": {"ipv4": "173.223.100.53,173.223.101.53", "ipv6": "1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 0, "maximum_linodes_per_pg":
+      0, "maximum_linodes_per_flexible_pg": 0}, "site_type": "distributed"}], "page":
+      1, "pages": 1, "results": 3}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=900
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"region":"pl-labkrk-2","type":"g6-nanode-1","label":"go-test-ins-icvqdq302467","image":"linode/debian12","kernel":"linode/6.15.7-x86_64-linode169","boot_size":9000}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/linode/instances
+    method: POST
+  response:
+    body: '{"errors": [{"reason": "Must provide valid root_pass, authorized_keys,
+      or authorized_users"}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Akamai-Internal-Account:
+      - '*'
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "94"
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
+      X-Accepted-Oauth-Scopes:
+      - linodes:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "8"
+    status: 400 BAD REQUEST
+    code: 400
+    duration: ""
