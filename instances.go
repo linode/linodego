@@ -199,6 +199,9 @@ type InstanceCreateOptions struct {
 	IPv4 []string `json:"ipv4,omitzero"`
 
 	MaintenancePolicy *string `json:"maintenance_policy,omitzero"`
+
+	Kernel   *string `json:"kernel,omitzero"`
+	BootSize *int    `json:"boot_size,omitzero"`
 }
 
 // InstanceCreatePlacementGroupOptions represents the placement group

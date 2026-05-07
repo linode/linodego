@@ -4,6 +4,7 @@ import (
 	"context"
 	"testing"
 
+	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
 )
@@ -85,9 +86,14 @@ func TestInstanceDisk_Create(t *testing.T) {
 		Label:      "New Disk",
 		Size:       20480,
 		Filesystem: "ext4",
+		RootPass:   "@S3cur3p@ssw0rd",
 	}
 
-	base.MockPost("linode/instances/123/disks", fixtureData)
+	httpmock.RegisterRegexpResponder(
+		"POST",
+		mockRequestURL(t, "/linode/instances/123/disks"),
+		mockRequestBodyValidate(t, createOptions, fixtureData),
+	)
 
 	disk, err := base.Client.CreateInstanceDisk(context.Background(), 123, createOptions)
 	assert.NoError(t, err)
