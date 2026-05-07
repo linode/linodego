@@ -2,8 +2,11 @@ package unit
 
 import (
 	"context"
+	"encoding/json"
+	"net/http"
 	"testing"
 
+	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 )
@@ -30,6 +33,32 @@ func TestIPUpdateAddress(t *testing.T) {
 	assert.True(t, updatedIP.Reserved, "Expected Reserved to be true")
 }
 
+// TestIPUpdateAddressV2_BothFields: both "rdns" and "reserved" present in request body.
+func TestIPUpdateAddressV2_BothFields(t *testing.T) {
+	client := createMockClient(t)
+
+	rdns := "test.example.org"
+	opts := linodego.IPAddressUpdateOptionsV2{
+		RDNS:     linodego.Pointer(&rdns),
+		Reserved: linodego.Pointer(true),
+	}
+
+	httpmock.RegisterRegexpResponder("PUT", mockRequestURL(t, "/networking/ips/192.168.1.1"),
+		func(req *http.Request) (*http.Response, error) {
+			var body map[string]any
+			if err := json.NewDecoder(req.Body).Decode(&body); err != nil {
+				t.Fatal(err)
+			}
+			assert.Equal(t, rdns, body["rdns"])
+			assert.Equal(t, true, body["reserved"])
+			return httpmock.NewJsonResponse(http.StatusOK, nil)
+		})
+
+	if _, err := client.UpdateIPAddressV2(context.Background(), "192.168.1.1", opts); err != nil {
+		t.Fatal(err)
+	}
+}
+
 func TestIPAllocateReserve(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)
@@ -37,9 +66,10 @@ func TestIPAllocateReserve(t *testing.T) {
 
 	// Mock API response
 	base.MockPost("networking/ips", linodego.InstanceIP{
-		Address: "192.168.1.3",
-		Region:  "us-east",
-		Public:  true,
+		Address:        "192.168.1.3",
+		Region:         "us-east",
+		Public:         true,
+		AssignedEntity: nil,
 	})
 
 	ip, err := base.Client.AllocateReserveIP(context.Background(), linodego.AllocateReserveIPOptions{
@@ -54,6 +84,25 @@ func TestIPAllocateReserve(t *testing.T) {
 	assert.Equal(t, "us-east", ip.Region, "Expected Region to match")
 	assert.True(t, ip.Public, "Expected Public to be true")
 	assert.Nil(t, ip.InterfaceID)
+	assert.Nil(t, ip.AssignedEntity)
+}
+
+func TestIPAllocateReserve_RequestBody(t *testing.T) {
+	client := createMockClient(t)
+
+	opts := linodego.AllocateReserveIPOptions{
+		Type:     "ipv4",
+		Public:   true,
+		Reserved: true,
+		Region:   "us-east",
+	}
+
+	httpmock.RegisterRegexpResponder("POST", mockRequestURL(t, "/networking/ips"),
+		mockRequestBodyValidate(t, opts, nil))
+
+	if _, err := client.AllocateReserveIP(context.Background(), opts); err != nil {
+		t.Fatal(err)
+	}
 }
 
 func TestIPAssignInstances(t *testing.T) {
@@ -144,4 +193,23 @@ func TestIPAddresses_Get(t *testing.T) {
 	assert.Equal(t, "192.168.0.42", ip.VPCNAT1To1.Address)
 	assert.Equal(t, 101, ip.VPCNAT1To1.SubnetID)
 	assert.Equal(t, 111, ip.VPCNAT1To1.VPCID)
+}
+
+func TestIPAddresses_List_FilterByReserved(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("network_ip_addresses_list")
+	assert.NoError(t, err)
+
+	client := createMockClient(t)
+
+	httpmock.RegisterRegexpResponder("GET", mockRequestURL(t, "/networking/ips"),
+		func(req *http.Request) (*http.Response, error) {
+			filter := req.Header.Get("X-Filter")
+			assert.Equal(t, `{"reserved":true}`, filter, "Expected X-Filter header to filter by reserved=true")
+			return httpmock.NewJsonResponse(http.StatusOK, fixtureData)
+		})
+
+	_, err = client.ListIPAddresses(context.Background(), &linodego.ListOptions{
+		Filter: `{"reserved":true}`,
+	})
+	assert.NoError(t, err)
 }
