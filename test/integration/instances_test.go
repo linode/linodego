@@ -1198,12 +1198,14 @@ func TestCreateLinodeWithKernelAndBootSizeThenAddDiskAndRebuild(t *testing.T) {
 			AuthorizedKeys: []string{testSSHKeyCreateOpts.SSHKey},
 		},
 	)
+	defer func() {
+		if instance != nil {
+			err := client.DeleteInstance(context.Background(), instance.ID)
+			require.NoError(t, err)
+		}
+	}()
 	require.NoError(t, err)
 	assert.Equal(t, "linode/debian12", instance.Image)
-	defer func() {
-		err := client.DeleteInstance(context.Background(), instance.ID)
-		require.NoError(t, err)
-	}()
 	_, err = client.WaitForEventFinished(
 		context.Background(),
 		instance.ID,
@@ -1227,7 +1229,7 @@ func TestCreateLinodeWithKernelAndBootSizeThenAddDiskAndRebuild(t *testing.T) {
 	assert.Equal(t, linodego.DiskReady, createDiskResponse.Status)
 
 	rebuildResponse, errRebuild := client.RebuildInstance(context.Background(), instance.ID, linodego.InstanceRebuildOptions{
-		Image: "linode/alpine3.19",
+		Image: "linode/alpine3.23",
 		Metadata: &linodego.InstanceMetadataOptions{
 			UserData: base64.StdEncoding.EncodeToString([]byte("cool")),
 		},
@@ -1235,5 +1237,5 @@ func TestCreateLinodeWithKernelAndBootSizeThenAddDiskAndRebuild(t *testing.T) {
 		AuthorizedKeys: []string{"ecdsa-sha2-nistp"},
 	})
 	require.NoError(t, errRebuild)
-	assert.Equal(t, "linode/alpine3.19", rebuildResponse.Image)
+	assert.Equal(t, "linode/alpine3.23", rebuildResponse.Image)
 }
