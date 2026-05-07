@@ -21,18 +21,20 @@ type InstanceIPv4Response struct {
 
 // InstanceIP represents an Instance IP with additional DNS and networking details
 type InstanceIP struct {
-	Address     string             `json:"address"`
-	Gateway     string             `json:"gateway"`
-	SubnetMask  string             `json:"subnet_mask"`
-	Prefix      int                `json:"prefix"`
-	Type        InstanceIPType     `json:"type"`
-	Public      bool               `json:"public"`
-	RDNS        string             `json:"rdns"`
-	LinodeID    int                `json:"linode_id"`
-	InterfaceID *int               `json:"interface_id"`
-	Region      string             `json:"region"`
-	VPCNAT1To1  *InstanceIPNAT1To1 `json:"vpc_nat_1_1"`
-	Reserved    bool               `json:"reserved"`
+	Address        string                    `json:"address"`
+	Gateway        string                    `json:"gateway"`
+	SubnetMask     string                    `json:"subnet_mask"`
+	Prefix         int                       `json:"prefix"`
+	Type           InstanceIPType            `json:"type"`
+	Public         bool                      `json:"public"`
+	RDNS           string                    `json:"rdns"`
+	LinodeID       int                       `json:"linode_id"`
+	InterfaceID    *int                      `json:"interface_id"`
+	Region         string                    `json:"region"`
+	VPCNAT1To1     *InstanceIPNAT1To1        `json:"vpc_nat_1_1"`
+	Reserved       bool                      `json:"reserved"`
+	Tags           []string                  `json:"tags"`
+	AssignedEntity *ReservedIPAssignedEntity `json:"assigned_entity"`
 }
 
 // VPCIP represents a private IP address in a VPC subnet with additional networking details
