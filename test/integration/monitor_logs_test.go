@@ -14,10 +14,6 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-const (
-	aclpLogsCapability = "Akamai Cloud Pulse Logs"
-)
-
 // requireACLPLogsStreamTests skips the test if RUN_ACLP_LOGS_STREAM_TESTS is not set.
 // Call this before creating a test client so the env check short-circuits early.
 func requireACLPLogsStreamTests(t *testing.T) {
@@ -31,29 +27,17 @@ func requireACLPLogsStreamTests(t *testing.T) {
 	}
 }
 
-// requireACLPLogsCapability skips the test if the aclp_logs capability is not enabled.
-// Call this after creating a test client.
-func requireACLPLogsCapability(t *testing.T, client *linodego.Client) {
-	if testingMode == recorder.ModeReplaying {
-		return
-	}
-	t.Helper()
-	account, err := client.GetAccount(context.Background())
-	require.NoError(t, err)
-	for _, cap := range account.Capabilities {
-		if cap == aclpLogsCapability {
-			return
-		}
-	}
-	t.Skipf("aclp_logs capability not enabled for this account")
-}
-
 // creates a object storage and access keys for use in tests
 func setupObjectStorageForLogs(t *testing.T, client *linodego.Client) (*linodego.ObjectStorageBucket, *linodego.ObjectStorageKey, func()) {
 	t.Helper()
 
+	regions := getRegionsWithCaps(t, client, []string{linodego.CapabilityObjectStorage})
+	if len(regions) == 0 {
+		t.Fatal("no region with Object Storage capability found")
+	}
+
 	bucket, err := client.CreateObjectStorageBucket(context.Background(), linodego.ObjectStorageBucketCreateOptions{
-		Region:      "us-southeast",
+		Region:      regions[0],
 		Label:       testLabel(),
 		ACL:         "private",
 		CorsEnabled: linodego.Pointer(false),
@@ -63,7 +47,8 @@ func setupObjectStorageForLogs(t *testing.T, client *linodego.Client) (*linodego
 	}
 
 	storageKey, err := client.CreateObjectStorageKey(context.Background(), linodego.ObjectStorageKeyCreateOptions{
-		Label: testLabel(),
+		Label:   testLabel(),
+		Regions: []string{regions[0]},
 	})
 	if err != nil {
 		_ = client.DeleteObjectStorageBucket(context.Background(), bucket.Region, bucket.Label)
@@ -78,7 +63,7 @@ func setupObjectStorageForLogs(t *testing.T, client *linodego.Client) (*linodego
 		bucketObjects, terr := client.ListObjectStorageBucketContents(context.Background(), bucket.Region, bucket.Label, nil)
 		if terr == nil {
 			for _, obj := range bucketObjects.Data {
-				url, err := client.CreateObjectStorageObjectURL(context.TODO(), bucket.Cluster, bucket.Label, linodego.ObjectStorageObjectURLCreateOptions{
+				url, err := client.CreateObjectStorageObjectURL(context.TODO(), bucket.Region, bucket.Label, linodego.ObjectStorageObjectURLCreateOptions{
 					Name:      obj.Name,
 					Method:    http.MethodDelete,
 					ExpiresIn: &objectStorageObjectURLExpirySeconds,
@@ -186,11 +171,44 @@ func setupLogStream(t *testing.T, fixturesYaml string) (*linodego.Client, *linod
 	}
 
 	teardown := func() {
-		_ = client.DeleteLogStream(context.Background(), stream.ID)
+		// Wait for stream to reach a stable (non-transitional) state before deleting;
+		// deleting while in "deactivating"/"provisioning" silently fails and then
+		// the destination delete returns 400 because the stream is still attached.
+		if _, err := waitForLogStreamProvisioned(context.Background(), client, stream.ID, 60, 3600); err != nil {
+			t.Logf("Warning: could not wait for stream %d to stabilize before deletion: %v", stream.ID, err)
+		}
+		if err := client.DeleteLogStream(context.Background(), stream.ID); err != nil {
+			t.Errorf("Expected to delete log stream %d, but got %v", stream.ID, err)
+		} else if err := waitForLogStreamDeleted(context.Background(), client, stream.ID, 60, 3600); err != nil {
+			t.Logf("Warning: stream %d may not be fully deleted: %v", stream.ID, err)
+		}
 		destTeardown()
 	}
 
 	return client, stream, dest, teardown
+}
+
+// waitForLogStreamDeleted polls until the stream returns 404, indicating it has been fully removed.
+func waitForLogStreamDeleted(
+	ctx context.Context,
+	client *linodego.Client,
+	streamID int,
+	pollIntervalSeconds int,
+	timeoutSeconds int,
+) error {
+	deadline := time.Now().Add(time.Duration(timeoutSeconds) * time.Second)
+	for {
+		_, err := client.GetLogStream(ctx, streamID)
+		if apiErr, ok := err.(*linodego.Error); ok && apiErr.Code == 404 {
+			return nil
+		}
+		if time.Now().After(deadline) {
+			return fmt.Errorf("timed out waiting for log stream %d to be deleted", streamID)
+		}
+		if testingMode != recorder.ModeReplaying {
+			time.Sleep(time.Duration(pollIntervalSeconds) * time.Second)
+		}
+	}
 }
 
 // waitForLogStreamProvisioned polls until the stream leaves provisioning state.
@@ -233,25 +251,27 @@ func TestLogsDestination_List(t *testing.T) {
 	for _, d := range destinations {
 		assert.NotZero(t, d.ID)
 		assert.NotEmpty(t, d.Label)
-		assert.Equal(t, linodego.LogsDestinationTypeAkamaiObjectStorage, d.Type)
-		assert.Contains(t,
-			[]linodego.LogsDestinationStatus{
-				linodego.LogsDestinationStatusActive,
-				linodego.LogsDestinationStatusInactive,
-			},
-			d.Status,
-		)
-		assert.NotEmpty(t, d.Details.AccessKeyID)
-		assert.NotEmpty(t, d.Details.BucketName)
-		assert.NotEmpty(t, d.Details.Host)
 	}
 
-	ids := make([]int, len(destinations))
-	for i, d := range destinations {
-		ids[i] = d.ID
+	var found *linodego.LogsDestination
+	for i := range destinations {
+		if destinations[i].ID == dest.ID {
+			found = &destinations[i]
+			break
+		}
 	}
-
-	assert.Contains(t, ids, dest.ID)
+	require.NotNil(t, found, "created destination not found in list")
+	assert.Equal(t, linodego.LogsDestinationTypeAkamaiObjectStorage, found.Type)
+	assert.Contains(t,
+		[]linodego.LogsDestinationStatus{
+			linodego.LogsDestinationStatusActive,
+			linodego.LogsDestinationStatusInactive,
+		},
+		found.Status,
+	)
+	assert.NotEmpty(t, found.Details.AccessKeyID)
+	assert.NotEmpty(t, found.Details.BucketName)
+	assert.NotEmpty(t, found.Details.Host)
 }
 
 func TestLogsDestination_Delete(t *testing.T) {
@@ -399,7 +419,6 @@ func TestLogStream_Create_InvalidDestination(t *testing.T) {
 
 	client, teardown := createTestClient(t, "fixtures/TestLogStream_Create_InvalidDestination")
 	defer teardown()
-	requireACLPLogsCapability(t, client)
 	requireNoExistingStreams(t, client)
 
 	_, err := client.CreateLogStream(context.Background(), linodego.StreamCreateOptions{
@@ -419,7 +438,6 @@ func TestLogStream_Create_EmptyDestinations(t *testing.T) {
 
 	client, teardown := createTestClient(t, "fixtures/TestLogStream_Create_EmptyDestinations")
 	defer teardown()
-	requireACLPLogsCapability(t, client)
 	requireNoExistingStreams(t, client)
 
 	_, err := client.CreateLogStream(context.Background(), linodego.StreamCreateOptions{
@@ -439,7 +457,6 @@ func TestLogStream_Create_TwoDestinations(t *testing.T) {
 
 	client, teardown := createTestClient(t, "fixtures/TestLogStream_Create_TwoDestinations")
 	defer teardown()
-	requireACLPLogsCapability(t, client)
 	requireNoExistingStreams(t, client)
 
 	bucket1, storageKey1, storageTeardown1 := setupObjectStorageForLogs(t, client)
@@ -490,7 +507,6 @@ func TestLogStream_Delete(t *testing.T) {
 
 	client, stream, _, teardown := setupLogStream(t, "fixtures/TestLogStream_Delete")
 	defer teardown()
-	requireACLPLogsCapability(t, client)
 
 	provisioned, err := waitForLogStreamProvisioned(context.Background(), client, stream.ID, 60, 3600)
 	require.NoError(t, err)
@@ -507,7 +523,6 @@ func TestLogStream_List(t *testing.T) {
 
 	client, stream, _, teardown := setupLogStream(t, "fixtures/TestLogStream_List")
 	defer teardown()
-	requireACLPLogsCapability(t, client)
 
 	provisioned, err := waitForLogStreamProvisioned(context.Background(), client, stream.ID, 60, 3600)
 	require.NoError(t, err)
@@ -531,7 +546,6 @@ func TestLogStream_Get(t *testing.T) {
 
 	client, stream, _, teardown := setupLogStream(t, "fixtures/TestLogStream_Get")
 	defer teardown()
-	requireACLPLogsCapability(t, client)
 
 	provisioned, err := waitForLogStreamProvisioned(context.Background(), client, stream.ID, 60, 3600)
 	require.NoError(t, err)
@@ -549,7 +563,6 @@ func TestLogStream_Update_LabelAndStatus(t *testing.T) {
 
 	client, stream, _, teardown := setupLogStream(t, "fixtures/TestLogStream_Update_LabelAndStatus")
 	defer teardown()
-	requireACLPLogsCapability(t, client)
 
 	provisioned, err := waitForLogStreamProvisioned(context.Background(), client, stream.ID, 60, 3600)
 	require.NoError(t, err)
@@ -559,9 +572,16 @@ func TestLogStream_Update_LabelAndStatus(t *testing.T) {
 	versionBefore := provisioned.Version
 
 	newLabel := originalLabel + "-upd"
-	newStatus := linodego.StreamStatusInactive
+	// When active, requesting inactive triggers "deactivating" first; vice versa triggers "provisioning".
+	// Accept both the requested status and its transitional counterpart.
+	var newStatus linodego.StreamStatus
+	var expectedStatuses []linodego.StreamStatus
 	if originalStatus == linodego.StreamStatusInactive {
 		newStatus = linodego.StreamStatusActive
+		expectedStatuses = []linodego.StreamStatus{linodego.StreamStatusActive, linodego.StreamStatusProvisioning}
+	} else {
+		newStatus = linodego.StreamStatusInactive
+		expectedStatuses = []linodego.StreamStatus{linodego.StreamStatusInactive, linodego.StreamStatusDeactivating}
 	}
 
 	updated, err := client.UpdateLogStream(context.Background(), provisioned.ID, linodego.StreamUpdateOptions{
@@ -570,14 +590,7 @@ func TestLogStream_Update_LabelAndStatus(t *testing.T) {
 	})
 	require.NoError(t, err)
 	assert.Equal(t, newLabel, updated.Label)
-	assert.Equal(t, newStatus, updated.Status)
-
-	defer func() {
-		_, _ = client.UpdateLogStream(context.Background(), provisioned.ID, linodego.StreamUpdateOptions{
-			Label:  &originalLabel,
-			Status: &originalStatus,
-		})
-	}()
+	assert.Contains(t, expectedStatuses, updated.Status)
 
 	history, err := client.ListLogStreamHistory(context.Background(), provisioned.ID, nil)
 	require.NoError(t, err)
@@ -603,7 +616,6 @@ func TestLogStream_Update_Destinations(t *testing.T) {
 
 	client, stream, dest, teardown := setupLogStream(t, "fixtures/TestLogStream_Update_Destinations")
 	defer teardown()
-	requireACLPLogsCapability(t, client)
 
 	objBucket2, objKey2, objTeardown2 := setupObjectStorageForLogs(t, client)
 	defer objTeardown2()

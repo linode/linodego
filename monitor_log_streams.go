@@ -14,6 +14,8 @@ type StreamType string
 const (
 	// StreamTypeAuditLogs configures a stream for ACLP audit logs.
 	StreamTypeAuditLogs StreamType = "audit_logs"
+	// StreamTypeLKEAuditLogs configures a stream for LKE enterprise cluster audit logs.
+	StreamTypeLKEAuditLogs StreamType = "lke_audit_logs"
 )
 
 // StreamStatus represents the availability state of an ACLP logs stream.
@@ -24,6 +26,10 @@ const (
 	StreamStatusActive StreamStatus = "active"
 	// StreamStatusInactive means the stream is paused.
 	StreamStatusInactive StreamStatus = "inactive"
+	// StreamStatusProvisioning means the stream is being set up.
+	StreamStatusProvisioning StreamStatus = "provisioning"
+	// StreamStatusDeactivating means the stream is being deactivated.
+	StreamStatusDeactivating StreamStatus = "deactivating"
 )
 
 // StreamDestinationType represents the destination type for ACLP logs streams.
@@ -34,20 +40,19 @@ const (
 	StreamDestinationTypeAkamaiObjectStorage StreamDestinationType = "akamai_object_storage"
 )
 
-// StreamDestinationDetails contains destination-specific settings for log delivery.
-type StreamDestinationDetails struct {
-	AccessKeyID string `json:"access_key_id"`
-	BucketName  string `json:"bucket_name"`
-	Host        string `json:"host"`
-	Path        string `json:"path"`
+// StreamDetails contains additional details for a logs stream.
+// This only applies to streams with a Type of StreamTypeLKEAuditLogs.
+type StreamDetails struct {
+	ClusterIDs                  []int `json:"cluster_ids,omitempty"`
+	IsAutoAddAllClustersEnabled bool  `json:"is_auto_add_all_clusters_enabled"`
 }
 
 // StreamDestination is a destination configured on an ACLP logs stream.
 type StreamDestination struct {
-	ID      int                      `json:"id"`
-	Label   string                   `json:"label"`
-	Type    StreamDestinationType    `json:"type"`
-	Details StreamDestinationDetails `json:"details"`
+	ID      int                     `json:"id"`
+	Label   string                  `json:"label"`
+	Type    StreamDestinationType   `json:"type"`
+	Details LogsDestinationDetails  `json:"details"`
 }
 
 // Stream represents an ACLP logs stream.
@@ -58,6 +63,7 @@ type Stream struct {
 	Status       StreamStatus        `json:"status"`
 	Version      int                 `json:"version"`
 	Destinations []StreamDestination `json:"destinations"`
+	Details      *StreamDetails      `json:"details,omitempty"`
 	Created      *time.Time          `json:"-"`
 	Updated      *time.Time          `json:"-"`
 	CreatedBy    string              `json:"created_by"`
@@ -66,18 +72,20 @@ type Stream struct {
 
 // StreamCreateOptions are the fields used to create an ACLP logs stream.
 type StreamCreateOptions struct {
-	Destinations []int         `json:"destinations"`
-	Label        string        `json:"label"`
-	Type         StreamType    `json:"type"`
-	Status       *StreamStatus `json:"status,omitempty"`
+	Destinations []int          `json:"destinations"`
+	Label        string         `json:"label"`
+	Type         StreamType     `json:"type"`
+	Status       *StreamStatus  `json:"status,omitempty"`
+	Details      *StreamDetails `json:"details,omitempty"`
 }
 
 // StreamUpdateOptions are the fields used to update an ACLP logs stream.
 type StreamUpdateOptions struct {
-	Destinations []int         `json:"destinations,omitempty"`
-	Label        *string       `json:"label,omitempty"`
-	Type         *StreamType   `json:"type,omitempty"`
-	Status       *StreamStatus `json:"status,omitempty"`
+	Destinations []int          `json:"destinations,omitempty"`
+	Label        *string        `json:"label,omitempty"`
+	Type         *StreamType    `json:"type,omitempty"`
+	Status       *StreamStatus  `json:"status,omitempty"`
+	Details      *StreamDetails `json:"details,omitempty"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface.

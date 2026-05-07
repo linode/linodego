@@ -11,6 +11,7 @@ import (
 const (
 	testLogsDestinationID = 12345
 	testLogStreamID       = 456
+	testLKELogStreamID    = 789
 )
 
 // ---- Logs Destination tests ----
@@ -424,7 +425,7 @@ func TestGetLogStream_DestinationDetails(t *testing.T) {
 	assert.Equal(t, testLogsDestinationID, dest.ID)
 	assert.Equal(t, "OBJ_logs_destination", dest.Label)
 	assert.Equal(t, linodego.StreamDestinationTypeAkamaiObjectStorage, dest.Type)
-	assert.Equal(t, 123, dest.Details.AccessKeyID)
+	assert.Equal(t, "123", dest.Details.AccessKeyID)
 	assert.Equal(t, "primary-bucket", dest.Details.BucketName)
 	assert.Equal(t, "primary-bucket-1.us-iad-12.linodeobjects.com", dest.Details.Host)
 	assert.Equal(t, "audit-logs", dest.Details.Path)
@@ -479,4 +480,95 @@ func TestDeleteLogStream(t *testing.T) {
 
 	err := base.Client.DeleteLogStream(context.Background(), testLogStreamID)
 	assert.NoError(t, err)
+}
+
+func TestStreamTypeLKEAuditLogs_Constant(t *testing.T) {
+	assert.Equal(t, linodego.StreamType("audit_logs"), linodego.StreamTypeAuditLogs)
+	assert.Equal(t, linodego.StreamType("lke_audit_logs"), linodego.StreamTypeLKEAuditLogs)
+}
+
+func TestGetLogStream_LKEAuditLogs(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("monitor_log_stream_lke")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockGet("monitor/streams/789", fixtureData)
+
+	stream, err := base.Client.GetLogStream(context.Background(), testLKELogStreamID)
+	assert.NoError(t, err)
+	assert.NotNil(t, stream)
+	assert.Equal(t, testLKELogStreamID, stream.ID)
+	assert.Equal(t, linodego.StreamTypeLKEAuditLogs, stream.Type)
+	assert.NotNil(t, stream.Details)
+	assert.Equal(t, []int{1234, 5678}, stream.Details.ClusterIDs)
+	assert.False(t, stream.Details.IsAutoAddAllClustersEnabled)
+}
+
+func TestGetLogStream_AuditLogs_NoDetails(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("monitor_log_stream")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockGet("monitor/streams/456", fixtureData)
+
+	stream, err := base.Client.GetLogStream(context.Background(), testLogStreamID)
+	assert.NoError(t, err)
+	assert.Nil(t, stream.Details)
+}
+
+func TestCreateLogStream_LKEAuditLogs(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("monitor_log_stream_lke")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockPost("monitor/streams", fixtureData)
+
+	createOpts := linodego.StreamCreateOptions{
+		Destinations: []int{testLogsDestinationID},
+		Label:        "LKEAuditLog-config",
+		Type:         linodego.StreamTypeLKEAuditLogs,
+		Details: &linodego.StreamDetails{
+			ClusterIDs:                  []int{1111, 2222},
+			IsAutoAddAllClustersEnabled: false,
+		},
+	}
+
+	stream, err := base.Client.CreateLogStream(context.Background(), createOpts)
+	assert.NoError(t, err)
+	assert.NotNil(t, stream)
+	assert.Equal(t, testLKELogStreamID, stream.ID)
+	assert.Equal(t, linodego.StreamTypeLKEAuditLogs, stream.Type)
+	assert.NotNil(t, stream.Details)
+	assert.Equal(t, []int{1234, 5678}, stream.Details.ClusterIDs)
+}
+
+func TestCreateLogStream_AuditLogs_OmitsDetails(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("monitor_log_stream")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockPost("monitor/streams", fixtureData)
+
+	createOpts := linodego.StreamCreateOptions{
+		Destinations: []int{testLogsDestinationID},
+		Label:        "AuditLog-config",
+		Type:         linodego.StreamTypeAuditLogs,
+	}
+
+	stream, err := base.Client.CreateLogStream(context.Background(), createOpts)
+	assert.NoError(t, err)
+	assert.NotNil(t, stream)
+	assert.Nil(t, stream.Details)
 }

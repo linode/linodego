@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-southeast","label":"go-test-logs-destination-1778050327857586000","acl":"private","cors_enabled":false}'
+    body: ""
     form: {}
     headers:
       Accept:
@@ -11,13 +11,37 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets
-    method: POST
+    url: https://api.devcloud.linode.com/v4beta/regions?page=1
+    method: GET
   response:
-    body: '{"hostname": "go-test-logs-destination-1778050327857586000.us-southeast-1.linodeobjects.com",
-      "label": "go-test-logs-destination-1778050327857586000", "created": "2018-01-02T03:04:05",
-      "region": "us-southeast", "cluster": "us-southeast-1", "size": 0, "objects":
-      0, "endpoint_type": "E0", "s3_endpoint": "us-southeast-1.linodeobjects.com"}'
+    body: '{"data": [{"id": "pl-labkrk-2", "label": "Krakow, PL", "country": "pl",
+      "capabilities": ["Linodes", "Block Storage Encryption", "LA Disk Encryption",
+      "Disk Encryption", "Backups", "NodeBalancers", "Block Storage", "Object Storage",
+      "GPU Linodes", "Kubernetes", "Kubernetes Enterprise", "Cloud Firewall", "Vlans",
+      "VPCs", "VPC Dual Stack", "Block Storage Migrations", "Managed Databases", "Metadata",
+      "Premium Plans", "Placement Group", "StackScripts", "NETINT Quadra T1U", "Maintenance
+      Policy", "Linode Interfaces", "Network LoadBalancer", "ACLP Logs Datacenter
+      LKE-E"], "monitors": {"alerts": ["Block Storage", "Cloud Firewall", "Kubernetes",
+      "Linodes", "Managed Databases", "Network LoadBalancer", "NodeBalancers", "Object
+      Storage", "logs"], "metrics": ["Block Storage", "Cloud Firewall", "Kubernetes",
+      "Linodes", "Managed Databases", "Network LoadBalancer", "NodeBalancers", "Object
+      Storage", "logs"]}, "status": "ok", "resolvers": {"ipv4": "172.24.224.240,172.24.224.229,172.24.224.236,172.24.224.238,172.24.224.235,172.24.224.241,172.24.224.230,172.24.224.239,172.24.224.233,172.24.224.234",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "us-labedgeeat-2",
+      "label": "East Wenatchee, US", "country": "us", "capabilities": ["Linodes",
+      "Disk Encryption", "Cloud Firewall", "Vlans", "VPCs", "VPC Dual Stack", "Metadata",
+      "Distributed Plans", "Linode Interfaces"], "monitors": {"alerts": [], "metrics":
+      []}, "status": "ok", "resolvers": {"ipv4": "173.223.100.53,173.223.101.53",
+      "ipv6": "1234::5678,1234::5678"}, "placement_group_limits": {"maximum_pgs_per_customer":
+      0, "maximum_linodes_per_pg": 0, "maximum_linodes_per_flexible_pg": 0}, "site_type":
+      "distributed"}, {"id": "us-labedgeeat-3", "label": "East Wenatchee, US", "country":
+      "us", "capabilities": ["Linodes", "Disk Encryption", "Cloud Firewall", "Metadata",
+      "Distributed Plans"], "monitors": {"alerts": [], "metrics": []}, "status": "ok",
+      "resolvers": {"ipv4": "173.223.100.53,173.223.101.53", "ipv6": "1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 0, "maximum_linodes_per_pg":
+      0, "maximum_linodes_per_flexible_pg": 0}, "site_type": "distributed"}], "page":
+      1, "pages": 1, "results": 3}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -32,19 +56,79 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - max-age=0, no-cache, no-store
+      - private, max-age=900
+      - private, max-age=60, s-maxage=60
       Connection:
       - keep-alive
-      Content-Length:
-      - "338"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Wed, 06 May 2026 06:52:09 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "400"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"region":"pl-labkrk-2","label":"go-test-logs-destination-1778158444463812000","acl":"private","cors_enabled":false}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.devcloud.linode.com/v4beta/object-storage/buckets
+    method: POST
+  response:
+    body: '{"hostname": "go-test-logs-destination-1778158444463812000.pl-labkrk2-1.devcloud.linodeobjects.com",
+      "label": "go-test-logs-destination-1778158444463812000", "created": "2018-01-02T03:04:05",
+      "region": "pl-labkrk-2", "cluster": "pl-labkrk2-1", "size": 0, "objects": 0,
+      "endpoint_type": "E1", "s3_endpoint": "pl-labkrk2-1.devcloud.linodeobjects.com"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - private, max-age=60, s-maxage=60
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "349"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Server:
+      - nginx
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -59,14 +143,14 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "60"
+      - "12"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-logs-destination-1778050329787087000"}'
+    body: '{"label":"go-test-logs-destination-1778158445108382000","regions":["pl-labkrk-2"]}'
     form: {}
     headers:
       Accept:
@@ -75,21 +159,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys
+    url: https://api.devcloud.linode.com/v4beta/object-storage/keys
     method: POST
   response:
-    body: '{"id": 3576467, "label": "go-test-logs-destination-1778050329787087000",
+    body: '{"id": 341689, "label": "go-test-logs-destination-1778158445108382000",
       "access_key": "[SANITIZED]", "secret_key": "[SANITIZED]", "limited": false,
-      "bucket_access": null, "regions": [{"id": "us-east", "s3_endpoint": "us-east-1.linodeobjects.com",
-      "endpoint_type": "E0"}, {"id": "us-iad", "s3_endpoint": "us-iad-10.linodeobjects.com",
-      "endpoint_type": "E1"}, {"id": "us-lax", "s3_endpoint": "us-lax-1.linodeobjects.com",
-      "endpoint_type": "E1"}, {"id": "us-lax", "s3_endpoint": "us-lax-4.linodeobjects.com",
-      "endpoint_type": "E3"}, {"id": "us-mia", "s3_endpoint": "us-mia-1.linodeobjects.com",
-      "endpoint_type": "E1"}, {"id": "us-ord", "s3_endpoint": "us-ord-10.linodeobjects.com",
-      "endpoint_type": "E3"}, {"id": "us-ord", "s3_endpoint": "us-ord-1.linodeobjects.com",
-      "endpoint_type": "E1"}, {"id": "us-sea", "s3_endpoint": "us-sea-1.linodeobjects.com",
-      "endpoint_type": "E1"}, {"id": "us-southeast", "s3_endpoint": "us-southeast-1.linodeobjects.com",
-      "endpoint_type": "E0"}]}'
+      "bucket_access": null, "regions": [{"id": "pl-labkrk-2", "s3_endpoint": "pl-labkrk2-1.devcloud.linodeobjects.com",
+      "endpoint_type": "E1"}]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -104,22 +180,21 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - max-age=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
       Connection:
       - keep-alive
+      Content-Length:
+      - "325"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Wed, 06 May 2026 06:52:12 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
-      - Accept-Encoding
       X-Accepted-Oauth-Scopes:
       - object_storage:read_write
       X-Content-Type-Options:
@@ -130,14 +205,14 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "60"
+      - "12"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-logs-destination-1778050332159629000","type":"akamai_object_storage","details":{"access_key_id":"[SANITIZED]","access_key_secret":"[SANITIZED]","bucket_name":"go-test-logs-destination-1778050327857586000","host":"go-test-logs-destination-1778050327857586000.us-southeast-1.linodeobjects.com"}}'
+    body: '{"label":"go-test-logs-destination-1778158445659109000","type":"akamai_object_storage","details":{"access_key_id":"1IF6EHFIFWH635BXGRZT","access_key_secret":"COHNLDlJhpQccnT1ZWSuiuPBHoC8ycomojDWRidq","bucket_name":"go-test-logs-destination-1778158444463812000","host":"go-test-logs-destination-1778158444463812000.pl-labkrk2-1.devcloud.linodeobjects.com"}}'
     form: {}
     headers:
       Accept:
@@ -146,15 +221,15 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/streams/destinations
+    url: https://api.devcloud.linode.com/v4beta/monitor/streams/destinations
     method: POST
   response:
-    body: '{"id": 405, "label": "go-test-logs-destination-1778050332159629000", "type":
-      "akamai_object_storage", "details": {"host": "go-test-logs-destination-1778050327857586000.us-southeast-1.linodeobjects.com",
-      "bucket_name": "go-test-logs-destination-1778050327857586000", "access_key_id":
-      "[SANITIZED]"}, "version": 1, "status": "active", "created_by": "user",
-      "created": "2018-01-02T03:04:05", "updated_by": "user",
-      "updated": "2018-01-02T03:04:05"}'
+    body: '{"id": 1132, "label": "go-test-logs-destination-1778158445659109000", "type":
+      "akamai_object_storage", "details": {"host": "go-test-logs-destination-1778158444463812000.pl-labkrk2-1.devcloud.linodeobjects.com",
+      "bucket_name": "go-test-logs-destination-1778158444463812000", "access_key_id":
+      "1IF6EHFIFWH635BXGRZT"}, "version": 1, "status": "active", "created_by": "klipensk-aclp",
+      "created": "2018-01-02T03:04:05", "updated_by": "klipensk-aclp", "updated":
+      "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -169,19 +244,17 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - max-age=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
       Connection:
       - keep-alive
       Content-Length:
-      - "499"
+      - "479"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Wed, 06 May 2026 06:52:12 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -196,7 +269,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1840"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -212,15 +285,15 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/streams/destinations/405
+    url: https://api.devcloud.linode.com/v4beta/monitor/streams/destinations/1132
     method: GET
   response:
-    body: '{"id": 405, "label": "go-test-logs-destination-1778050332159629000", "type":
-      "akamai_object_storage", "details": {"host": "go-test-logs-destination-1778050327857586000.us-southeast-1.linodeobjects.com",
-      "bucket_name": "go-test-logs-destination-1778050327857586000", "access_key_id":
-      "[SANITIZED]"}, "version": 1, "status": "active", "created_by": "user",
-      "created": "2018-01-02T03:04:05", "updated_by": "user",
-      "updated": "2018-01-02T03:04:05"}'
+    body: '{"id": 1132, "label": "go-test-logs-destination-1778158445659109000", "type":
+      "akamai_object_storage", "details": {"host": "go-test-logs-destination-1778158444463812000.pl-labkrk2-1.devcloud.linodeobjects.com",
+      "bucket_name": "go-test-logs-destination-1778158444463812000", "access_key_id":
+      "1IF6EHFIFWH635BXGRZT"}, "version": 1, "status": "active", "created_by": "klipensk-aclp",
+      "created": "2018-01-02T03:04:05", "updated_by": "klipensk-aclp", "updated":
+      "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -235,19 +308,18 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - max-age=0, no-cache, no-store
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
       Connection:
       - keep-alive
       Content-Length:
-      - "499"
+      - "479"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Wed, 06 May 2026 06:52:13 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -263,7 +335,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1840"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -279,15 +351,15 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/streams/destinations/405
+    url: https://api.devcloud.linode.com/v4beta/monitor/streams/destinations/1132
     method: GET
   response:
-    body: '{"id": 405, "label": "go-test-logs-destination-1778050332159629000", "type":
-      "akamai_object_storage", "details": {"host": "go-test-logs-destination-1778050327857586000.us-southeast-1.linodeobjects.com",
-      "bucket_name": "go-test-logs-destination-1778050327857586000", "access_key_id":
-      "[SANITIZED]"}, "version": 1, "status": "active", "created_by": "user",
-      "created": "2018-01-02T03:04:05", "updated_by": "user",
-      "updated": "2018-01-02T03:04:05"}'
+    body: '{"id": 1132, "label": "go-test-logs-destination-1778158445659109000", "type":
+      "akamai_object_storage", "details": {"host": "go-test-logs-destination-1778158444463812000.pl-labkrk2-1.devcloud.linodeobjects.com",
+      "bucket_name": "go-test-logs-destination-1778158444463812000", "access_key_id":
+      "1IF6EHFIFWH635BXGRZT"}, "version": 1, "status": "active", "created_by": "klipensk-aclp",
+      "created": "2018-01-02T03:04:05", "updated_by": "klipensk-aclp", "updated":
+      "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -302,19 +374,18 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - max-age=0, no-cache, no-store
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
       Connection:
       - keep-alive
       Content-Length:
-      - "499"
+      - "479"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Wed, 06 May 2026 06:52:13 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -330,7 +401,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1840"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -346,7 +417,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/streams/destinations/405
+    url: https://api.devcloud.linode.com/v4beta/monitor/streams/destinations/1132
     method: DELETE
   response:
     body: '{}'
@@ -364,7 +435,7 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - max-age=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
       Connection:
       - keep-alive
       Content-Length:
@@ -373,10 +444,8 @@ interactions:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Wed, 06 May 2026 06:52:13 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -391,7 +460,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1840"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -407,7 +476,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/3576467
+    url: https://api.devcloud.linode.com/v4beta/object-storage/keys/341689
     method: DELETE
   response:
     body: '{}'
@@ -425,7 +494,7 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - max-age=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
       Connection:
       - keep-alive
       Content-Length:
@@ -434,10 +503,8 @@ interactions:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Wed, 06 May 2026 06:52:14 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -452,7 +519,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "60"
+      - "12"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -468,12 +535,12 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-southeast/go-test-logs-destination-1778050327857586000/object-list
+    url: https://api.devcloud.linode.com/v4beta/object-storage/buckets/pl-labkrk-2/go-test-logs-destination-1778158444463812000/object-list
     method: GET
   response:
-    body: '{"data": [{"name": "cloud-logs-test-connection-20260506T065212", "size":
-      9, "last_modified": "2018-01-02T03:04:05.778Z", "etag": "06aa6fa8bdc2078e7e1bd903e70c8f6a",
-      "owner": "285755ea-e54d-40f7-8861-0a77cb9e9080"}], "next_marker": null, "is_truncated":
+    body: '{"data": [{"name": "cloud-logs-test-connection-20260507T125406", "size":
+      9, "last_modified": "2018-01-02T03:04:05.391Z", "etag": "06aa6fa8bdc2078e7e1bd903e70c8f6a",
+      "owner": "512fe32a-48a2-4a57-8a11-0eef806858d3"}], "next_marker": null, "is_truncated":
       false}'
     headers:
       Access-Control-Allow-Credentials:
@@ -489,7 +556,8 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - max-age=0, no-cache, no-store
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
       Connection:
       - keep-alive
       Content-Length:
@@ -498,10 +566,8 @@ interactions:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Wed, 06 May 2026 06:52:15 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -517,14 +583,14 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1840"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"name":"cloud-logs-test-connection-20260506T065212","method":"DELETE","expires_in":360}'
+    body: '{"name":"cloud-logs-test-connection-20260507T125406","method":"DELETE","expires_in":360}'
     form: {}
     headers:
       Accept:
@@ -533,10 +599,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-southeast-1/go-test-logs-destination-1778050327857586000/object-url
+    url: https://api.devcloud.linode.com/v4beta/object-storage/buckets/pl-labkrk-2/go-test-logs-destination-1778158444463812000/object-url
     method: POST
   response:
-    body: '{"url": "https://us-southeast-1.linodeobjects.com:443/go-test-logs-destination-1778050327857586000/cloud-logs-test-connection-20260506T065212?Signature=4qcGXTa9wKZ85RInpMJy6B7dF7M%3D&Expires=1778050697&AWSAccessKeyID=SANITIZED",
+    body: '{"url": "https://pl-labkrk2-1.devcloud.linodeobjects.com:443/go-test-logs-destination-1778158444463812000/cloud-logs-test-connection-20260507T125406?Signature=nYKcAXwXyevmFP17frPLZE4KOjw%3D&Expires=1778158811&AWSAccessKeyID=SANITIZED",
       "exists": true}'
     headers:
       Access-Control-Allow-Credentials:
@@ -552,19 +618,17 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - max-age=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
       Connection:
       - keep-alive
       Content-Length:
-      - "255"
+      - "262"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Wed, 06 May 2026 06:52:17 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -579,7 +643,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1840"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -595,7 +659,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-southeast/go-test-logs-destination-1778050327857586000
+    url: https://api.devcloud.linode.com/v4beta/object-storage/buckets/pl-labkrk-2/go-test-logs-destination-1778158444463812000
     method: DELETE
   response:
     body: '{}'
@@ -613,7 +677,7 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - max-age=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
       Connection:
       - keep-alive
       Content-Length:
@@ -622,10 +686,8 @@ interactions:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Wed, 06 May 2026 06:52:20 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -640,7 +702,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1840"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

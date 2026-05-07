@@ -14,10 +14,14 @@
       "type": "akamai_object_storage"
     }
   ],
-  "id": 456,
-  "label": "AuditLog-config",
+  "id": 789,
+  "label": "LKEAuditLog-config",
   "status": "active",
-  "type": "audit_logs",
+  "type": "lke_audit_logs",
+  "details": {
+    "cluster_ids": [1234, 5678],
+    "is_auto_add_all_clusters_enabled": false
+  },
   "updated": "2025-03-20T01:41:09",
   "updated_by": "Jane Q. Linode",
   "version": 1
