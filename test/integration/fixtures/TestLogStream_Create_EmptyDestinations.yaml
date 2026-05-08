@@ -14,29 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/monitor/streams?page=1
     method: GET
   response:
-    body: '{"pages": 1, "page": 1, "results": 4, "data": [{"id": 1288, "label": "heliosstream1",
-      "type": "audit_logs", "destinations": [{"id": 584, "type": "akamai_object_storage",
-      "label": "helioslogstreamdestination", "details": {"host": "pl-labkrk2-1.linodeobjects.com",
-      "bucket_name": "helios-bucket", "path": "helioslogs", "access_key_id": "JEYJTV5JQJ86H6ZHNBAX"}}],
-      "details": null, "version": 2, "status": "active", "created_by": "ndeverse-aclp",
-      "created": "2018-01-02T03:04:05", "updated_by": "vivkumar-aclp", "updated":
-      "2018-01-02T03:04:05"}, {"id": 2114, "label": "tgfjszqd", "type": "audit_logs",
-      "destinations": [{"id": 1084, "type": "akamai_object_storage", "label": "klfikshb-upd",
-      "details": {"host": "waimfikm.pl-labkrk2-1.linodeobjects.com", "bucket_name":
-      "waimfikm", "path": "updated/logs/path/", "access_key_id": "ZFYLHL1J17IJZIXDEK0V"}}],
-      "details": null, "version": 1, "status": "inactive", "created_by": "sjerecze-aclp",
-      "created": "2018-01-02T03:04:05", "updated_by": "sjerecze-aclp", "updated":
-      "2018-01-02T03:04:05"}, {"id": 2116, "label": "dqukxuje-upd", "type": "audit_logs",
-      "destinations": [{"id": 1086, "type": "akamai_object_storage", "label": "hcclrgmo",
-      "details": {"host": "xqhicizn.pl-labkrk2-1.linodeobjects.com", "bucket_name":
-      "xqhicizn", "access_key_id": "VX1VWTK7OCLBDH58RBPY"}}], "details": null, "version":
-      3, "status": "active", "created_by": "sjerecze-aclp", "created": "2018-01-02T03:04:05",
-      "updated_by": "sjerecze-aclp", "updated": "2018-01-02T03:04:05"}, {"id": 2118,
-      "label": "agsdsoop-upd", "type": "audit_logs", "destinations": [{"id": 1087,
-      "type": "akamai_object_storage", "label": "wprylqfw", "details": {"host": "vjftvrbl.pl-labkrk2-1.linodeobjects.com",
-      "bucket_name": "vjftvrbl", "access_key_id": "GXUK06GMN46SNHMDUILT"}}], "details":
-      null, "version": 2, "status": "active", "created_by": "sjerecze-aclp", "created":
-      "2018-01-02T03:04:05", "updated_by": "sjerecze-aclp", "updated": "2018-01-02T03:04:05"}]}'
+    body: '{"pages": 0, "page": 1, "results": 0, "data": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -51,16 +29,19 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
+      Content-Length:
+      - "49"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Thu, 07 May 2026 15:11:29 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -76,9 +57,55 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
+    duration: ""
+- request:
+    body: '{"destinations":[],"label":"go-test-empty-dest-1778166689144566000","type":"audit_logs"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/streams
+    method: POST
+  response:
+    body: '{"errors": [{"reason": "Must contain one item", "field": "destinations"}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Content-Length:
+      - "74"
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 07 May 2026 15:11:29 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+    status: 400 Bad Request
+    code: 400
     duration: ""

@@ -175,10 +175,19 @@ func setupLogStream(t *testing.T, fixturesYaml string) (*linodego.Client, *linod
 		// deleting while in "deactivating"/"provisioning" silently fails and then
 		// the destination delete returns 400 because the stream is still attached.
 		if _, err := waitForLogStreamProvisioned(context.Background(), client, stream.ID, 60, 3600); err != nil {
+			if apiErr, ok := err.(*linodego.Error); ok && apiErr.Code == 404 {
+				// Already deleted by the test itself — skip to resource cleanup.
+				destTeardown()
+				return
+			}
 			t.Logf("Warning: could not wait for stream %d to stabilize before deletion: %v", stream.ID, err)
 		}
 		if err := client.DeleteLogStream(context.Background(), stream.ID); err != nil {
-			t.Errorf("Expected to delete log stream %d, but got %v", stream.ID, err)
+			if apiErr, ok := err.(*linodego.Error); ok && apiErr.Code == 404 {
+				// Already gone — nothing to do.
+			} else {
+				t.Errorf("Expected to delete log stream %d, but got %v", stream.ID, err)
+			}
 		} else if err := waitForLogStreamDeleted(context.Background(), client, stream.ID, 60, 3600); err != nil {
 			t.Logf("Warning: stream %d may not be fully deleted: %v", stream.ID, err)
 		}

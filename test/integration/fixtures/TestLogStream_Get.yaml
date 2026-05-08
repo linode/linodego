@@ -14,34 +14,346 @@ interactions:
     url: https://api.linode.com/v4beta/regions?page=1
     method: GET
   response:
-    body: '{"data": [{"id": "pl-labkrk-2", "label": "Krakow, PL", "country": "pl",
-      "capabilities": ["Linodes", "Block Storage Encryption", "LA Disk Encryption",
-      "Disk Encryption", "Backups", "NodeBalancers", "Block Storage", "Object Storage",
-      "GPU Linodes", "Kubernetes", "Kubernetes Enterprise", "Cloud Firewall", "Vlans",
-      "VPCs", "Block Storage Migrations", "Managed Databases", "Metadata", "Premium
-      Plans", "Placement Group", "StackScripts", "NETINT Quadra T1U", "Maintenance
-      Policy", "Linode Interfaces", "Network LoadBalancer", "ACLP Logs Datacenter
-      LKE-E"], "monitors": {"alerts": ["Block Storage", "Cloud Firewall", "Kubernetes",
-      "Linodes", "Managed Databases", "Network LoadBalancer", "NodeBalancers", "Object
-      Storage", "logs"], "metrics": ["Block Storage", "Cloud Firewall", "Kubernetes",
-      "Linodes", "Managed Databases", "Network LoadBalancer", "NodeBalancers", "Object
-      Storage", "logs"]}, "status": "ok", "resolvers": {"ipv4": "172.24.224.240,172.24.224.229,172.24.224.236,172.24.224.238,172.24.224.235,172.24.224.241,172.24.224.230,172.24.224.239,172.24.224.233,172.24.224.234",
+    body: '{"data": [{"id": "gb-lon", "label": "London 2, UK", "country": "gb", "capabilities":
+      ["Linodes", "Block Storage Encryption", "LA Disk Encryption", "Disk Encryption",
+      "Backups", "NodeBalancers", "Block Storage", "Object Storage", "GPU Linodes",
+      "Kubernetes", "Cloud Firewall", "Vlans", "VPCs", "Managed Databases", "Metadata",
+      "Premium Plans", "Placement Group", "StackScripts", "NETINT Quadra T1U", "Maintenance
+      Policy", "Linode Interfaces", "ACLP Logs Datacenter LKE-E"], "monitors": {"alerts":
+      ["Managed Databases", "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]},
+      "status": "ok", "resolvers": {"ipv4": "172.236.0.46,172.236.0.50,172.236.0.47,172.236.0.53,172.236.0.52,172.236.0.45,172.236.0.49,172.236.0.51,172.236.0.54,172.236.0.48",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
-      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "us-labedgeeat-2",
-      "label": "East Wenatchee, US", "country": "us", "capabilities": ["Linodes",
-      "Disk Encryption", "Cloud Firewall", "Vlans", "VPCs", "Metadata", "Distributed
-      Plans", "Linode Interfaces"], "monitors": {"alerts": [], "metrics": []}, "status":
-      "ok", "resolvers": {"ipv4": "173.223.100.53,173.223.101.53", "ipv6": "1234::5678,1234::5678"},
-      "placement_group_limits": {"maximum_pgs_per_customer": 0, "maximum_linodes_per_pg":
-      0, "maximum_linodes_per_flexible_pg": 0}, "site_type": "distributed"}, {"id":
-      "us-labedgeeat-3", "label": "East Wenatchee, US", "country": "us", "capabilities":
-      ["Linodes", "Disk Encryption", "Cloud Firewall", "Metadata", "Distributed Plans"],
-      "monitors": {"alerts": [], "metrics": []}, "status": "ok", "resolvers": {"ipv4":
-      "173.223.100.53,173.223.101.53", "ipv6": "1234::5678,1234::5678"},
-      "placement_group_limits": {"maximum_pgs_per_customer": 0, "maximum_linodes_per_pg":
-      0, "maximum_linodes_per_flexible_pg": 0}, "site_type": "distributed"}], "page":
-      1, "pages": 1, "results": 3}'
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "se-sto",
+      "label": "Stockholm, SE", "country": "se", "capabilities": ["Linodes", "Block
+      Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
+      "Vlans", "VPCs", "Managed Databases", "Metadata", "Premium Plans", "Placement
+      Group", "StackScripts", "Maintenance Policy", "Linode Interfaces"], "monitors":
+      {"alerts": ["Managed Databases", "NodeBalancers"], "metrics": ["Managed Databases",
+      "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "172.232.128.24,172.232.128.26,172.232.128.20,172.232.128.22,172.232.128.25,172.232.128.19,172.232.128.23,172.232.128.18,172.232.128.21,172.232.128.27",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "es-mad",
+      "label": "Madrid, ES", "country": "es", "capabilities": ["Linodes", "Block Storage
+      Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
+      "Vlans", "VPCs", "Managed Databases", "Metadata", "Premium Plans", "Placement
+      Group", "StackScripts", "Maintenance Policy", "Linode Interfaces"], "monitors":
+      {"alerts": ["Managed Databases", "NodeBalancers"], "metrics": ["Managed Databases",
+      "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "172.233.111.6,172.233.111.17,172.233.111.21,172.233.111.25,172.233.111.19,172.233.111.12,172.233.111.26,172.233.111.16,172.233.111.18,172.233.111.9",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "in-maa",
+      "label": "Chennai, IN", "country": "in", "capabilities": ["Linodes", "Block
+      Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
+      "Vlans", "VPCs", "Managed Databases", "Metadata", "Premium Plans", "Placement
+      Group", "StackScripts", "NETINT Quadra T1U", "Maintenance Policy", "Linode Interfaces"],
+      "monitors": {"alerts": ["Managed Databases", "NodeBalancers"], "metrics": ["Managed
+      Databases", "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "172.232.96.17,172.232.96.26,172.232.96.19,172.232.96.20,172.232.96.25,172.232.96.21,172.232.96.18,172.232.96.22,172.232.96.23,172.232.96.24",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "jp-osa",
+      "label": "Osaka, JP", "country": "jp", "capabilities": ["Linodes", "Block Storage
+      Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
+      "Vlans", "VPCs", "Managed Databases", "Metadata", "Premium Plans", "Placement
+      Group", "StackScripts", "Maintenance Policy", "Linode Interfaces"], "monitors":
+      {"alerts": ["Managed Databases", "NodeBalancers"], "metrics": ["Managed Databases",
+      "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "172.233.64.44,172.233.64.43,172.233.64.37,172.233.64.40,172.233.64.46,172.233.64.41,172.233.64.39,172.233.64.42,172.233.64.45,172.233.64.38",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "it-mil",
+      "label": "Milan, IT", "country": "it", "capabilities": ["Linodes", "Block Storage
+      Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
+      "Vlans", "VPCs", "Managed Databases", "Metadata", "Premium Plans", "Placement
+      Group", "StackScripts", "Maintenance Policy", "Linode Interfaces"], "monitors":
+      {"alerts": ["Managed Databases", "NodeBalancers"], "metrics": ["Managed Databases",
+      "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "172.232.192.19,172.232.192.18,172.232.192.16,172.232.192.20,172.232.192.24,172.232.192.21,172.232.192.22,172.232.192.17,172.232.192.15,172.232.192.23",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "us-mia",
+      "label": "Miami, FL", "country": "us", "capabilities": ["Linodes", "Block Storage
+      Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
+      "Vlans", "VPCs", "Managed Databases", "Metadata", "Premium Plans", "Placement
+      Group", "StackScripts", "NETINT Quadra T1U", "Maintenance Policy", "Linode Interfaces"],
+      "monitors": {"alerts": ["Managed Databases", "NodeBalancers"], "metrics": ["Managed
+      Databases", "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "172.233.160.34,172.233.160.27,172.233.160.30,172.233.160.29,172.233.160.32,172.233.160.28,172.233.160.33,172.233.160.26,172.233.160.25,172.233.160.31",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "id-cgk",
+      "label": "Jakarta, ID", "country": "id", "capabilities": ["Linodes", "Block
+      Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
+      "Vlans", "VPCs", "Managed Databases", "Metadata", "Premium Plans", "Placement
+      Group", "StackScripts", "Maintenance Policy", "Linode Interfaces"], "monitors":
+      {"alerts": ["Managed Databases", "NodeBalancers"], "metrics": ["Managed Databases",
+      "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "172.232.224.23,172.232.224.32,172.232.224.26,172.232.224.27,172.232.224.21,172.232.224.24,172.232.224.22,172.232.224.20,172.232.224.31,172.232.224.28",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "us-lax",
+      "label": "Los Angeles, CA", "country": "us", "capabilities": ["Linodes", "Block
+      Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
+      "Vlans", "VPCs", "Managed Databases", "Metadata", "Premium Plans", "Placement
+      Group", "StackScripts", "NETINT Quadra T1U", "Maintenance Policy", "Linode Interfaces",
+      "ACLP Logs Datacenter LKE-E"], "monitors": {"alerts": ["Managed Databases",
+      "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status":
+      "ok", "resolvers": {"ipv4": "172.233.128.45,172.233.128.38,172.233.128.53,172.233.128.37,172.233.128.34,172.233.128.36,172.233.128.33,172.233.128.39,172.233.128.43,172.233.128.44",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "nl-ams",
+      "label": "Amsterdam, NL", "country": "nl", "capabilities": ["Linodes", "Block
+      Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
+      "Vlans", "VPCs", "Managed Databases", "Metadata", "Premium Plans", "Placement
+      Group", "StackScripts", "Maintenance Policy", "Linode Interfaces"], "monitors":
+      {"alerts": ["Managed Databases", "NodeBalancers"], "metrics": ["Managed Databases",
+      "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "172.233.33.36,172.233.33.38,172.233.33.35,172.233.33.39,172.233.33.34,172.233.33.33,172.233.33.31,172.233.33.30,172.233.33.37,172.233.33.32",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "au-mel",
+      "label": "Melbourne, AU", "country": "au", "capabilities": ["Linodes", "Block
+      Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans",
+      "VPCs", "Managed Databases", "Metadata", "Premium Plans", "Placement Group",
+      "StackScripts", "Maintenance Policy", "Linode Interfaces"], "monitors": {"alerts":
+      ["Managed Databases", "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]},
+      "status": "ok", "resolvers": {"ipv4": "172.236.32.23,172.236.32.35,172.236.32.30,172.236.32.28,172.236.32.32,172.236.32.33,172.236.32.27,172.236.32.37,172.236.32.29,172.236.32.34",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "in-bom-2",
+      "label": "Mumbai 2, IN", "country": "in", "capabilities": ["Linodes", "Block
+      Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall", "Vlans", "VPCs",
+      "Managed Databases", "Metadata", "Premium Plans", "Placement Group", "StackScripts",
+      "Maintenance Policy", "Linode Interfaces", "ACLP Logs Datacenter LKE-E"], "monitors":
+      {"alerts": ["Managed Databases", "NodeBalancers"], "metrics": ["Managed Databases",
+      "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "172.236.171.41,172.236.171.42,172.236.171.25,172.236.171.44,172.236.171.26,172.236.171.45,172.236.171.24,172.236.171.43,172.236.171.27,172.236.171.28",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "de-fra-2",
+      "label": "Frankfurt 2, DE", "country": "de", "capabilities": ["Linodes", "Block
+      Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
+      "Vlans", "VPCs", "Managed Databases", "Metadata", "Premium Plans", "Placement
+      Group", "StackScripts", "NETINT Quadra T1U", "Maintenance Policy", "Linode Interfaces",
+      "ACLP Logs Datacenter LKE-E"], "monitors": {"alerts": ["Managed Databases",
+      "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status":
+      "ok", "resolvers": {"ipv4": "172.236.203.9,172.236.203.16,172.236.203.19,172.236.203.15,172.236.203.17,172.236.203.11,172.236.203.18,172.236.203.14,172.236.203.13,172.236.203.12",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "sg-sin-2",
+      "label": "Singapore 2, SG", "country": "sg", "capabilities": ["Linodes", "Block
+      Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
+      "Vlans", "VPCs", "Managed Databases", "Metadata", "Premium Plans", "Placement
+      Group", "StackScripts", "Maintenance Policy", "Linode Interfaces", "ACLP Logs
+      Datacenter LKE-E"], "monitors": {"alerts": ["Managed Databases", "NodeBalancers"],
+      "metrics": ["Managed Databases", "NodeBalancers"]}, "status": "ok", "resolvers":
+      {"ipv4": "172.236.129.8,172.236.129.42,172.236.129.41,172.236.129.19,172.236.129.46,172.236.129.23,172.236.129.48,172.236.129.20,172.236.129.21,172.236.129.47",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "jp-tyo-3",
+      "label": "Tokyo 3, JP", "country": "jp", "capabilities": ["Linodes", "Block
+      Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
+      "Vlans", "VPCs", "Managed Databases", "Metadata", "Premium Plans", "Placement
+      Group", "StackScripts", "Maintenance Policy", "Linode Interfaces", "ACLP Logs
+      Datacenter LKE-E"], "monitors": {"alerts": ["Managed Databases", "NodeBalancers"],
+      "metrics": ["Managed Databases", "NodeBalancers"]}, "status": "ok", "resolvers":
+      {"ipv4": "172.237.4.15,172.237.4.19,172.237.4.17,172.237.4.21,172.237.4.16,172.237.4.18,172.237.4.23,172.237.4.24,172.237.4.20,172.237.4.14",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "us-iad-2",
+      "label": "Washington 2, DC", "country": "us", "capabilities": ["Linodes", "Block
+      Storage Encryption", "Disk Encryption", "Backups", "NodeBalancers", "Block Storage",
+      "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans", "VPCs", "Managed
+      Databases", "Metadata", "Premium Plans", "Placement Group", "StackScripts",
+      "Maintenance Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed
+      Databases", "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]},
+      "status": "ok", "resolvers": {"ipv4": "172.239.142.102,172.239.142.89,172.239.142.92,172.239.142.87,172.239.142.88,172.239.142.103,172.239.142.91,172.239.142.90,172.239.142.86,172.239.142.100",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "fr-par-2",
+      "label": "Paris 2, FR", "country": "fr", "capabilities": ["Linodes", "Block
+      Storage Encryption", "Disk Encryption", "Backups", "NodeBalancers", "Block Storage",
+      "GPU Linodes", "Kubernetes", "Cloud Firewall", "Vlans", "VPCs", "Managed Databases",
+      "Metadata", "Premium Plans", "Placement Group", "StackScripts", "Maintenance
+      Policy", "Linode Interfaces", "ACLP Logs Datacenter LKE-E"], "monitors": {"alerts":
+      ["Managed Databases", "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]},
+      "status": "ok", "resolvers": {"ipv4": "172.239.11.24,172.239.11.22,172.239.11.17,172.239.11.20,172.239.11.23,172.239.11.19,172.239.11.21,172.239.11.15,172.239.11.16,172.239.11.18",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "br-gru",
+      "label": "Sao Paulo, BR", "country": "br", "capabilities": ["Linodes", "Block
+      Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans",
+      "VPCs", "Managed Databases", "Metadata", "Premium Plans", "Placement Group",
+      "StackScripts", "Maintenance Policy", "Linode Interfaces"], "monitors": {"alerts":
+      ["Managed Databases", "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]},
+      "status": "ok", "resolvers": {"ipv4": "172.233.0.4,172.233.0.9,172.233.0.7,172.233.0.12,172.233.0.5,172.233.0.13,172.233.0.10,172.233.0.6,172.233.0.8,172.233.0.11",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "us-sea",
+      "label": "Seattle, WA", "country": "us", "capabilities": ["Linodes", "Block
+      Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
+      "Vlans", "VPCs", "Managed Databases", "Metadata", "Premium Plans", "Placement
+      Group", "StackScripts", "Maintenance Policy", "Linode Interfaces", "ACLP Logs
+      Datacenter LKE-E"], "monitors": {"alerts": ["Managed Databases", "NodeBalancers"],
+      "metrics": ["Managed Databases", "NodeBalancers"]}, "status": "ok", "resolvers":
+      {"ipv4": "172.232.160.19,172.232.160.21,172.232.160.17,172.232.160.15,172.232.160.18,172.232.160.8,172.232.160.12,172.232.160.11,172.232.160.14,172.232.160.16",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "fr-par",
+      "label": "Paris, FR", "country": "fr", "capabilities": ["Linodes", "Block Storage
+      Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
+      "Vlans", "VPCs", "Managed Databases", "Metadata", "Premium Plans", "Placement
+      Group", "StackScripts", "Maintenance Policy", "Linode Interfaces"], "monitors":
+      {"alerts": ["Managed Databases", "NodeBalancers"], "metrics": ["Managed Databases",
+      "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "172.232.32.21,172.232.32.23,172.232.32.17,172.232.32.18,172.232.32.16,172.232.32.22,172.232.32.20,172.232.32.14,172.232.32.11,172.232.32.12",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "us-ord",
+      "label": "Chicago, IL", "country": "us", "capabilities": ["Linodes", "Block
+      Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
+      "Vlans", "VPCs", "Managed Databases", "Metadata", "Premium Plans", "Placement
+      Group", "StackScripts", "Maintenance Policy", "Linode Interfaces", "ACLP Logs
+      Datacenter LKE-E"], "monitors": {"alerts": ["Managed Databases", "NodeBalancers"],
+      "metrics": ["Managed Databases", "NodeBalancers"]}, "status": "ok", "resolvers":
+      {"ipv4": "172.232.0.17,172.232.0.16,172.232.0.21,172.232.0.13,172.232.0.22,172.232.0.9,172.232.0.19,172.232.0.20,172.232.0.15,172.232.0.18",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "us-iad",
+      "label": "Washington, DC", "country": "us", "capabilities": ["Linodes", "Block
+      Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "Kubernetes", "Cloud Firewall", "Vlans",
+      "VPCs", "Managed Databases", "Metadata", "Premium Plans", "Placement Group",
+      "StackScripts", "Maintenance Policy", "Linode Interfaces", "ACLP Logs Datacenter
+      LKE-E"], "monitors": {"alerts": ["Managed Databases", "NodeBalancers"], "metrics":
+      ["Managed Databases", "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4":
+      "139.144.192.62,139.144.192.60,139.144.192.61,139.144.192.53,139.144.192.54,139.144.192.67,139.144.192.69,139.144.192.66,139.144.192.52,139.144.192.68",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "ap-southeast",
+      "label": "Sydney, AU", "country": "au", "capabilities": ["Linodes", "Block Storage
+      Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Kubernetes", "Cloud Firewall", "Vlans", "Block Storage Migrations",
+      "Managed Databases", "Metadata", "Placement Group", "StackScripts", "Maintenance
+      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases",
+      "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status":
+      "ok", "resolvers": {"ipv4": "172.105.166.5,172.105.169.5,172.105.168.5,172.105.172.5,172.105.162.5,172.105.170.5,172.105.167.5,172.105.171.5,172.105.181.5,172.105.161.5",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "ca-central",
+      "label": "Toronto, CA", "country": "ca", "capabilities": ["Linodes", "Block
+      Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall", "Vlans", "Block
+      Storage Migrations", "Managed Databases", "Metadata", "Placement Group", "StackScripts",
+      "Maintenance Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed
+      Databases", "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]},
+      "status": "ok", "resolvers": {"ipv4": "172.105.0.5,172.105.3.5,172.105.4.5,172.105.5.5,172.105.6.5,172.105.7.5,172.105.8.5,172.105.9.5,172.105.10.5,172.105.11.5",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "ap-west",
+      "label": "Mumbai, IN", "country": "in", "capabilities": ["Linodes", "Block Storage
+      Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall", "Vlans", "Block
+      Storage Migrations", "Managed Databases", "Metadata", "Placement Group", "StackScripts",
+      "Maintenance Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed
+      Databases", "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]},
+      "status": "ok", "resolvers": {"ipv4": "172.105.34.5,172.105.35.5,172.105.36.5,172.105.37.5,172.105.38.5,172.105.39.5,172.105.40.5,172.105.41.5,172.105.42.5,172.105.43.5",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "us-central",
+      "label": "Dallas, TX", "country": "us", "capabilities": ["Linodes", "Block Storage
+      Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Kubernetes", "Cloud Firewall", "Vlans", "Block Storage Migrations",
+      "Managed Databases", "Metadata", "Placement Group", "StackScripts", "Maintenance
+      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases",
+      "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status":
+      "ok", "resolvers": {"ipv4": "72.14.179.5,72.14.188.5,173.255.199.5,66.228.53.5,96.126.122.5,96.126.124.5,96.126.127.5,198.58.107.5,198.58.111.5,23.239.24.5",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "ap-northeast",
+      "label": "Tokyo 2, JP", "country": "jp", "capabilities": ["Linodes", "Block
+      Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Kubernetes", "Cloud Firewall", "Vlans", "Block Storage Migrations",
+      "Managed Databases", "Metadata", "Placement Group", "StackScripts", "Maintenance
+      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases",
+      "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status":
+      "ok", "resolvers": {"ipv4": "139.162.66.5,139.162.67.5,139.162.68.5,139.162.69.5,139.162.70.5,139.162.71.5,139.162.72.5,139.162.73.5,139.162.74.5,139.162.75.5",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "eu-central",
+      "label": "Frankfurt, DE", "country": "de", "capabilities": ["Linodes", "Block
+      Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
+      "Vlans", "Block Storage Migrations", "Managed Databases", "Metadata", "Placement
+      Group", "StackScripts", "Maintenance Policy", "Linode Interfaces"], "monitors":
+      {"alerts": ["Managed Databases", "NodeBalancers"], "metrics": ["Managed Databases",
+      "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "139.162.130.5,139.162.131.5,139.162.132.5,139.162.133.5,139.162.134.5,139.162.135.5,139.162.136.5,139.162.137.5,139.162.138.5,139.162.139.5",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "ap-south",
+      "label": "Singapore, SG", "country": "sg", "capabilities": ["Linodes", "Block
+      Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
+      "Vlans", "Block Storage Migrations", "Metadata", "Placement Group", "StackScripts",
+      "Maintenance Policy", "Linode Interfaces"], "monitors": {"alerts": ["NodeBalancers"],
+      "metrics": ["NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "139.162.11.5,139.162.13.5,139.162.14.5,139.162.15.5,139.162.16.5,139.162.21.5,139.162.27.5,103.3.60.18,103.3.60.19,103.3.60.20",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "eu-west",
+      "label": "London, UK", "country": "gb", "capabilities": ["Linodes", "Block Storage
+      Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Kubernetes", "Cloud Firewall", "Vlans", "Block Storage Migrations",
+      "Metadata", "Placement Group", "StackScripts", "Maintenance Policy", "Linode
+      Interfaces"], "monitors": {"alerts": ["NodeBalancers"], "metrics": ["NodeBalancers"]},
+      "status": "ok", "resolvers": {"ipv4": "178.79.182.5, 176.58.107.5, 176.58.116.5,
+      176.58.121.5, 151.236.220.5, 212.71.252.5, 212.71.253.5, 109.74.192.20, 109.74.193.20,
+      109.74.194.20", "ipv6": "1234::5678, 1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "us-east",
+      "label": "Newark, NJ", "country": "us", "capabilities": ["Linodes", "Block Storage
+      Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
+      "Vlans", "Block Storage Migrations", "Managed Databases", "Metadata", "Placement
+      Group", "StackScripts", "Maintenance Policy", "Linode Interfaces"], "monitors":
+      {"alerts": ["Managed Databases", "NodeBalancers"], "metrics": ["Managed Databases",
+      "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "66.228.42.5,96.126.106.5,50.116.53.5,50.116.58.5,50.116.61.5,50.116.62.5,66.175.211.5,97.107.133.4,173.255.225.5,66.228.35.5",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "us-southeast",
+      "label": "Atlanta, GA", "country": "us", "capabilities": ["Linodes", "Block
+      Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
+      "Vlans", "Block Storage Migrations", "Managed Databases", "Metadata", "Placement
+      Group", "StackScripts", "Maintenance Policy", "Linode Interfaces"], "monitors":
+      {"alerts": ["Managed Databases", "NodeBalancers"], "metrics": ["Managed Databases",
+      "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "74.207.231.5,173.230.128.5,173.230.129.5,173.230.136.5,173.230.140.5,66.228.59.5,66.228.62.5,50.116.35.5,50.116.41.5,23.239.18.5",
+      "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "us-west",
+      "label": "Fremont, CA", "country": "us", "capabilities": ["Linodes", "Block
+      Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Kubernetes", "Cloud Firewall", "Vlans", "Block Storage Migrations",
+      "Managed Databases", "Metadata", "Placement Group", "StackScripts", "Maintenance
+      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases",
+      "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status":
+      "ok", "resolvers": {"ipv4": "173.230.145.5, 173.230.147.5, 173.230.155.5, 173.255.212.5,
+      173.255.219.5, 173.255.241.5, 173.255.243.5, 173.255.244.5, 74.207.241.5, 74.207.242.5",
+      "ipv6": "1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678"}, "placement_group_limits":
+      {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg": 5, "maximum_linodes_per_flexible_pg":
+      5}, "site_type": "core"}], "page": 1, "pages": 1, "results": 33}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -56,21 +368,23 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - private, max-age=900
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Fri, 08 May 2026 10:12:51 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
       - Authorization, X-Filter
+      - Accept-Encoding
       X-Accepted-Oauth-Scopes:
       - '*'
       X-Content-Type-Options:
@@ -81,14 +395,14 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"region":"pl-labkrk-2","label":"go-test-logs-destination-1778077361692714000","acl":"private","cors_enabled":false}'
+    body: '{"region":"gb-lon","label":"go-test-logs-destination-1778235171706060000","acl":"private","cors_enabled":false}'
     form: {}
     headers:
       Accept:
@@ -100,10 +414,10 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/buckets
     method: POST
   response:
-    body: '{"hostname": "go-test-logs-destination-1778077361692714000.pl-labkrk2-1.linodeobjects.com",
-      "label": "go-test-logs-destination-1778077361692714000", "created": "2018-01-02T03:04:05",
-      "region": "pl-labkrk-2", "cluster": "pl-labkrk2-1", "size": 0, "objects": 0,
-      "endpoint_type": "E1", "s3_endpoint": "pl-labkrk2-1.linodeobjects.com"}'
+    body: '{"hostname": "go-test-logs-destination-1778235171706060000.gb-lon-1.linodeobjects.com",
+      "label": "go-test-logs-destination-1778235171706060000", "created": "2018-01-02T03:04:05",
+      "region": "gb-lon", "cluster": "", "size": 0, "objects": 0, "endpoint_type":
+      "E3", "s3_endpoint": "gb-lon-1.linodeobjects.com"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -118,17 +432,19 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "349"
+      - "306"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Fri, 08 May 2026 10:12:55 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -143,14 +459,14 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "12"
+      - "60"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-logs-destination-1778077362450834000"}'
+    body: '{"label":"go-test-logs-destination-1778235175701451000","regions":["gb-lon"]}'
     form: {}
     headers:
       Accept:
@@ -162,10 +478,10 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/keys
     method: POST
   response:
-    body: '{"id": 340471, "label": "go-test-logs-destination-1778077362450834000",
+    body: '{"id": 3613668, "label": "go-test-logs-destination-1778235175701451000",
       "access_key": "[SANITIZED]", "secret_key": "[SANITIZED]", "limited": false,
-      "bucket_access": null, "regions": [{"id": "pl-labkrk-2", "s3_endpoint": "pl-labkrk2-1.linodeobjects.com",
-      "endpoint_type": "E1"}]}'
+      "bucket_access": null, "regions": [{"id": "gb-lon", "s3_endpoint": "gb-lon-1.linodeobjects.com",
+      "endpoint_type": "E3"}]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -180,17 +496,19 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "325"
+      - "308"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Fri, 08 May 2026 10:12:57 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -205,14 +523,14 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "12"
+      - "60"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-logs-destination-1778077363114776000","type":"akamai_object_storage","details":{"access_key_id":"KU09RCXVUJUB9I7Q6ZSD","access_key_secret":"GswNLX4wQRRLeDwYIsyolZJjREZ77H5XZaBYcw5L","bucket_name":"go-test-logs-destination-1778077361692714000","host":"go-test-logs-destination-1778077361692714000.pl-labkrk2-1.linodeobjects.com"}}'
+    body: '{"label":"go-test-logs-destination-1778235177676694000","type":"akamai_object_storage","details":{"access_key_id":"VGZIU2RGOJJFOA0B7CVI","access_key_secret":"mIs0q1pfOOFFprjtzKGUL5YaUiFT8AK7dYW5ByUC","bucket_name":"go-test-logs-destination-1778235171706060000","host":"go-test-logs-destination-1778235171706060000.gb-lon-1.linodeobjects.com"}}'
     form: {}
     headers:
       Accept:
@@ -224,11 +542,11 @@ interactions:
     url: https://api.linode.com/v4beta/monitor/streams/destinations
     method: POST
   response:
-    body: '{"id": 1094, "label": "go-test-logs-destination-1778077363114776000", "type":
-      "akamai_object_storage", "details": {"host": "go-test-logs-destination-1778077361692714000.pl-labkrk2-1.linodeobjects.com",
-      "bucket_name": "go-test-logs-destination-1778077361692714000", "access_key_id":
-      "KU09RCXVUJUB9I7Q6ZSD"}, "version": 1, "status": "active", "created_by": "klipensk-aclp",
-      "created": "2018-01-02T03:04:05", "updated_by": "klipensk-aclp", "updated":
+    body: '{"id": 450, "label": "go-test-logs-destination-1778235177676694000", "type":
+      "akamai_object_storage", "details": {"host": "go-test-logs-destination-1778235171706060000.gb-lon-1.linodeobjects.com",
+      "bucket_name": "go-test-logs-destination-1778235171706060000", "access_key_id":
+      "VGZIU2RGOJJFOA0B7CVI"}, "version": 1, "status": "active", "created_by": "dola-klipensk",
+      "created": "2018-01-02T03:04:05", "updated_by": "dola-klipensk", "updated":
       "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -244,17 +562,19 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "479"
+      - "465"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Fri, 08 May 2026 10:12:58 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -269,14 +589,14 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"destinations":[1094],"label":"go-test-log-stream-1778077365217644000","type":"audit_logs"}'
+    body: '{"destinations":[450],"label":"go-test-log-stream-1778235178909904000","type":"audit_logs"}'
     form: {}
     headers:
       Accept:
@@ -288,272 +608,13 @@ interactions:
     url: https://api.linode.com/v4beta/monitor/streams
     method: POST
   response:
-    body: '{"id": 2124, "label": "go-test-log-stream-1778077365217644000", "type":
-      "audit_logs", "destinations": [{"id": 1094, "type": "akamai_object_storage",
-      "label": "go-test-logs-destination-1778077363114776000", "details": {"host":
-      "go-test-logs-destination-1778077361692714000.pl-labkrk2-1.linodeobjects.com",
-      "bucket_name": "go-test-logs-destination-1778077361692714000", "access_key_id":
-      "KU09RCXVUJUB9I7Q6ZSD"}}], "details": null, "version": 1, "status": "provisioning",
-      "created_by": "klipensk-aclp", "created": "2018-01-02T03:04:05", "updated_by":
-      "klipensk-aclp", "updated": "2018-01-02T03:04:05"}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "607"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - monitor:read_write
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "400"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/streams/2124
-    method: GET
-  response:
-    body: '{"id": 2124, "label": "go-test-log-stream-1778077365217644000", "type":
-      "audit_logs", "destinations": [{"id": 1094, "type": "akamai_object_storage",
-      "label": "go-test-logs-destination-1778077363114776000", "details": {"host":
-      "go-test-logs-destination-1778077361692714000.pl-labkrk2-1.linodeobjects.com",
-      "bucket_name": "go-test-logs-destination-1778077361692714000", "access_key_id":
-      "KU09RCXVUJUB9I7Q6ZSD"}}], "details": null, "version": 1, "status": "active",
-      "created_by": "klipensk-aclp", "created": "2018-01-02T03:04:05", "updated_by":
-      "klipensk-aclp", "updated": "2018-01-02T03:04:05"}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "602"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - monitor:read_only
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "400"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/streams/2124
-    method: GET
-  response:
-    body: '{"id": 2124, "label": "go-test-log-stream-1778077365217644000", "type":
-      "audit_logs", "destinations": [{"id": 1094, "type": "akamai_object_storage",
-      "label": "go-test-logs-destination-1778077363114776000", "details": {"host":
-      "go-test-logs-destination-1778077361692714000.pl-labkrk2-1.linodeobjects.com",
-      "bucket_name": "go-test-logs-destination-1778077361692714000", "access_key_id":
-      "KU09RCXVUJUB9I7Q6ZSD"}}], "details": null, "version": 1, "status": "active",
-      "created_by": "klipensk-aclp", "created": "2018-01-02T03:04:05", "updated_by":
-      "klipensk-aclp", "updated": "2018-01-02T03:04:05"}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "601"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - monitor:read_only
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "400"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/streams/2124
-    method: DELETE
-  response:
-    body: '{}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - private, max-age=60, s-maxage=60
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "2"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Server:
-      - nginx
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - monitor:read_write
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "400"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/streams/destinations/1094
-    method: GET
-  response:
-    body: '{"id": 1094, "label": "go-test-logs-destination-1778077363114776000", "type":
-      "akamai_object_storage", "details": {"host": "go-test-logs-destination-1778077361692714000.pl-labkrk2-1.linodeobjects.com",
-      "bucket_name": "go-test-logs-destination-1778077361692714000", "access_key_id":
-      "KU09RCXVUJUB9I7Q6ZSD"}, "version": 1, "status": "active", "created_by": "klipensk-aclp",
-      "created": "2018-01-02T03:04:05", "updated_by": "klipensk-aclp", "updated":
+    body: '{"id": 192, "label": "go-test-log-stream-1778235178909904000", "type":
+      "audit_logs", "destinations": [{"id": 450, "type": "akamai_object_storage",
+      "label": "go-test-logs-destination-1778235177676694000", "details": {"host":
+      "go-test-logs-destination-1778235171706060000.gb-lon-1.linodeobjects.com", "bucket_name":
+      "go-test-logs-destination-1778235171706060000", "access_key_id": "VGZIU2RGOJJFOA0B7CVI"}}],
+      "details": null, "version": 1, "status": "provisioning", "created_by": "dola-klipensk",
+      "created": "2018-01-02T03:04:05", "updated_by": "dola-klipensk", "updated":
       "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
@@ -569,18 +630,87 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "479"
+      - "592"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Fri, 08 May 2026 10:12:59 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/streams/192
+    method: GET
+  response:
+    body: '{"id": 192, "label": "go-test-log-stream-1778235178909904000", "type":
+      "audit_logs", "destinations": [{"id": 450, "type": "akamai_object_storage",
+      "label": "go-test-logs-destination-1778235177676694000", "details": {"host":
+      "go-test-logs-destination-1778235171706060000.gb-lon-1.linodeobjects.com", "bucket_name":
+      "go-test-logs-destination-1778235171706060000", "access_key_id": "VGZIU2RGOJJFOA0B7CVI"}}],
+      "details": null, "version": 1, "status": "active", "created_by": "dola-klipensk",
+      "created": "2018-01-02T03:04:05", "updated_by": "dola-klipensk", "updated":
+      "2018-01-02T03:04:05"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "592"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Fri, 08 May 2026 10:12:59 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -596,7 +726,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -612,7 +742,145 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/streams/destinations/1094
+    url: https://api.linode.com/v4beta/monitor/streams/192
+    method: GET
+  response:
+    body: '{"id": 192, "label": "go-test-log-stream-1778235178909904000", "type":
+      "audit_logs", "destinations": [{"id": 450, "type": "akamai_object_storage",
+      "label": "go-test-logs-destination-1778235177676694000", "details": {"host":
+      "go-test-logs-destination-1778235171706060000.gb-lon-1.linodeobjects.com", "bucket_name":
+      "go-test-logs-destination-1778235171706060000", "access_key_id": "VGZIU2RGOJJFOA0B7CVI"}}],
+      "details": null, "version": 1, "status": "active", "created_by": "dola-klipensk",
+      "created": "2018-01-02T03:04:05", "updated_by": "dola-klipensk", "updated":
+      "2018-01-02T03:04:05"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "592"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Fri, 08 May 2026 10:12:59 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/streams/192
+    method: GET
+  response:
+    body: '{"id": 192, "label": "go-test-log-stream-1778235178909904000", "type":
+      "audit_logs", "destinations": [{"id": 450, "type": "akamai_object_storage",
+      "label": "go-test-logs-destination-1778235177676694000", "details": {"host":
+      "go-test-logs-destination-1778235171706060000.gb-lon-1.linodeobjects.com", "bucket_name":
+      "go-test-logs-destination-1778235171706060000", "access_key_id": "VGZIU2RGOJJFOA0B7CVI"}}],
+      "details": null, "version": 1, "status": "active", "created_by": "dola-klipensk",
+      "created": "2018-01-02T03:04:05", "updated_by": "dola-klipensk", "updated":
+      "2018-01-02T03:04:05"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "592"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Fri, 08 May 2026 10:12:59 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/streams/192
     method: DELETE
   response:
     body: '{}'
@@ -630,7 +898,7 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
@@ -639,8 +907,10 @@ interactions:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Fri, 08 May 2026 10:37:15 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -655,7 +925,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -671,7 +941,124 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/340471
+    url: https://api.linode.com/v4beta/monitor/streams/192
+    method: GET
+  response:
+    body: '{"errors": [{"reason": "Stream not found"}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "44"
+      Content-Type:
+      - application/json
+      Expires:
+      - Fri, 08 May 2026 10:37:15 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_only
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+    status: 404 Not Found
+    code: 404
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/streams/destinations/450
+    method: GET
+  response:
+    body: '{"id": 450, "label": "go-test-logs-destination-1778235177676694000", "type":
+      "akamai_object_storage", "details": {"host": "go-test-logs-destination-1778235171706060000.gb-lon-1.linodeobjects.com",
+      "bucket_name": "go-test-logs-destination-1778235171706060000", "access_key_id":
+      "VGZIU2RGOJJFOA0B7CVI"}, "version": 1, "status": "active", "created_by": "dola-klipensk",
+      "created": "2018-01-02T03:04:05", "updated_by": "dola-klipensk", "updated":
+      "2018-01-02T03:04:05"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "465"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Fri, 08 May 2026 10:37:16 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/streams/destinations/450
     method: DELETE
   response:
     body: '{}'
@@ -689,7 +1076,7 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
@@ -698,8 +1085,71 @@ interactions:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Fri, 08 May 2026 10:37:16 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/keys/3613668
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Fri, 08 May 2026 10:37:17 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -714,7 +1164,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "12"
+      - "60"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -730,12 +1180,14 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/pl-labkrk-2/go-test-logs-destination-1778077361692714000/object-list
+    url: https://api.linode.com/v4beta/object-storage/buckets/gb-lon/go-test-logs-destination-1778235171706060000/object-list
     method: GET
   response:
-    body: '{"data": [{"name": "cloud-logs-test-connection-20260506T142244", "size":
-      9, "last_modified": "2018-01-02T03:04:05.400Z", "etag": "06aa6fa8bdc2078e7e1bd903e70c8f6a",
-      "owner": "512fe32a-48a2-4a57-8a11-0eef806858d3"}], "next_marker": null, "is_truncated":
+    body: '{"data": [{"name": "audit_logs/com.akamai.audit/BED02C05-67D6-4FAA-BC8BB63BB77C1197/2026/05/08/akamai_log-123432-1778236085-322081-config.gz",
+      "size": 574, "last_modified": "2018-01-02T03:04:05.388Z", "etag": "f4bb7599147adde4652d69905e9efeb7",
+      "owner": "285755ea-e54d-40f7-8861-0a77cb9e9080"}, {"name": "cloud-logs-test-connection-20260508T101258",
+      "size": 9, "last_modified": "2018-01-02T03:04:05.626Z", "etag": "06aa6fa8bdc2078e7e1bd903e70c8f6a",
+      "owner": "285755ea-e54d-40f7-8861-0a77cb9e9080"}], "next_marker": null, "is_truncated":
       false}'
     headers:
       Access-Control-Allow-Credentials:
@@ -751,18 +1203,19 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "259"
+      - "544"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Fri, 08 May 2026 10:37:19 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -778,14 +1231,14 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"name":"cloud-logs-test-connection-20260506T142244","method":"DELETE","expires_in":360}'
+    body: '{"name":"audit_logs/com.akamai.audit/BED02C05-67D6-4FAA-BC8BB63BB77C1197/2026/05/08/akamai_log-123432-1778236085-322081-config.gz","method":"DELETE","expires_in":360}'
     form: {}
     headers:
       Accept:
@@ -794,10 +1247,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/pl-labkrk-2/go-test-logs-destination-1778077361692714000/object-url
+    url: https://api.linode.com/v4beta/object-storage/buckets/gb-lon/go-test-logs-destination-1778235171706060000/object-url
     method: POST
   response:
-    body: '{"url": "https://pl-labkrk2-1.linodeobjects.com:443/go-test-logs-destination-1778077361692714000/cloud-logs-test-connection-20260506T142244?Signature=aum22VqPehBfdia9VBm5RsHOLrw%3D&Expires=1778079713&AWSAccessKeyID=SANITIZED",
+    body: '{"url": "https://gb-lon-1.linodeobjects.com:443/go-test-logs-destination-1778235171706060000/audit_logs/com.akamai.audit/BED02C05-67D6-4FAA-BC8BB63BB77C1197/2026/05/08/akamai_log-123432-1778236085-322081-config.gz?Signature=FyF4ppil%2FRZKW2FvfTrfwIiUkfU%3D&Expires=1778237003&AWSAccessKeyID=SANITIZED&x-amz-security-token=MQpmODAwOTNlZTliMTE0ZWY1MTY1ZTA4NzMxMjRkOWJhNzg4YTQ0YjhjNWVkMjk5NGJmYjI1NGM0ZDFlZWJkM2JjCgrkoyFJpQy9H5GxRrsO4GjcW93Jd7F4SSPM3i%2BF9TIiZs7mNszilgBc67R40LhZw1AfIWLC6v8ofidhrg34e/h91SQ/s6N8j8z7uqE3jmky0rRubD7ruYLIzDrnchm3oX0bet4q9gorBnNAfGRSlLFqn9Otb1dck7mSpNxFSPDp2XooUdea%2B953Jr5BgRhVaz70Ksj9uVA7AapyQuy4xPgGf2x0XHocnMwguNOiHv5VC82G7cA85BGHTbvkdDwXX4G1hsaN5jOjSBukJ0xO1/pTUqSE7ny5IYN0nnir1msexM2FNy4MpCf71BIfUqq38igQlpiQo1ketLVfFd31t0s5eHxJWTCMB%2BwVJqziO2zQN3RPH5CZ2cI4aOsT/fjCUO2EFMr0RprvMTez0dX7Unm5xNPK042z4IG9U8WQI2DeIPrWxCn4ZUcmhIuQio00xLU%2BOauzz8VIpLK1xVTYN04dUrWn",
       "exists": true}'
     headers:
       Access-Control-Allow-Credentials:
@@ -813,17 +1266,80 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
-      Content-Length:
-      - "262"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Fri, 08 May 2026 10:37:23 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"name":"cloud-logs-test-connection-20260508T101258","method":"DELETE","expires_in":360}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/buckets/gb-lon/go-test-logs-destination-1778235171706060000/object-url
+    method: POST
+  response:
+    body: '{"url": "https://gb-lon-1.linodeobjects.com:443/go-test-logs-destination-1778235171706060000/cloud-logs-test-connection-20260508T101258?Signature=uP4h8AGg5M4pxaefEWmOEaS4ksk%3D&Expires=1778237007&AWSAccessKeyID=SANITIZED&x-amz-security-token=MQpmODAwOTNlZTliMTE0ZWY1MTY1ZTA4NzMxMjRkOWJhNzg4YTQ0YjhjNWVkMjk5NGJmYjI1NGM0ZDFlZWJkM2JjCrhIS/QDnTn3pghxMaIAQzyWYnj1sg0FCwP1%2B%2B4EDnoR5Crov5v%2BoknK4PzcmqZphWUJ5oZ6sYF%2BQrZKYgWjHv2YhcIES9rwfLHsBkYNZ0nFarQXEsDIsVINJk7jsH3ph4Il5zh9ygpguOMVpit8OE2MnRfxK9CrKnVYKnrcc603rGm3HrKhiTq%2BQdcwffZxTvtWfYrFbrhDGXJGSf4GDe7zKTY5lCLY8necQCjGaiZnmp/na17c1lbPgtYSQFSLUaKCVuWf6ORUxmYzXnjzL8dq9TRAptzt7BvKJC6cOrbJihifTU6mLneB52OHJGf/QQeFJZf17%2BaMtbMgNsugJDCN0nPAynameQWxQpWf/Bgr7rFu5xpoVq1o41IecHcnwyX6Rb/L/jN4eTX6noWmNghHVkzb7jYEi8eqjHpyvTM%2BucuRRydfyFNO8ErPJAoz0JdXK16ryO%2BcEf/5XnE0vl%2BeBT/t",
+      "exists": true}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "853"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Fri, 08 May 2026 10:37:28 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -838,7 +1354,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -854,7 +1370,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/pl-labkrk-2/go-test-logs-destination-1778077361692714000
+    url: https://api.linode.com/v4beta/object-storage/buckets/gb-lon/go-test-logs-destination-1778235171706060000
     method: DELETE
   response:
     body: '{}'
@@ -872,7 +1388,7 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
@@ -881,8 +1397,10 @@ interactions:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx
+      Expires:
+      - Fri, 08 May 2026 10:37:34 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
@@ -897,7 +1415,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "400"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
