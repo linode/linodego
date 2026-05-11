@@ -105,24 +105,6 @@ func TestIPAllocateReserve_RequestBody(t *testing.T) {
 	}
 }
 
-func TestIPAllocateReserve_RequestBody(t *testing.T) {
-	client := createMockClient(t)
-
-	opts := linodego.AllocateReserveIPOptions{
-		Type:     "ipv4",
-		Public:   true,
-		Reserved: true,
-		Region:   "us-east",
-	}
-
-	httpmock.RegisterRegexpResponder("POST", mockRequestURL(t, "/networking/ips"),
-		mockRequestBodyValidate(t, opts, nil))
-
-	if _, err := client.AllocateReserveIP(context.Background(), opts); err != nil {
-		t.Fatal(err)
-	}
-}
-
 func TestIPAssignInstances(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)
