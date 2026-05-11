@@ -53,7 +53,7 @@ func createInstanceWithReservedIP(
 		Region:   getRegionsWithCaps(t, client, []string{linodego.CapabilityLinodes, linodego.CapabilityCloudFirewall})[0],
 		Type:     "g6-nanode-1",
 		Booted:   linodego.Pointer(false),
-		Image:    "linode/alpine3.20",
+		Image:    "linode/alpine3.23",
 		RootPass: randPassword(),
 		Interfaces: []linodego.InstanceConfigInterfaceCreateOptions{
 			{
