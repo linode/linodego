@@ -376,7 +376,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 07 May 2026 14:47:55 GMT
+      - Mon, 11 May 2026 14:25:21 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -402,7 +402,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"gb-lon","label":"go-test-logs-destination-1778165275087560000","acl":"private","cors_enabled":false}'
+    body: '{"region":"gb-lon","label":"go-test-logs-monitoring-1778509521223173000","acl":"private","cors_enabled":false}'
     form: {}
     headers:
       Accept:
@@ -414,8 +414,8 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/buckets
     method: POST
   response:
-    body: '{"hostname": "go-test-logs-destination-1778165275087560000.gb-lon-1.linodeobjects.com",
-      "label": "go-test-logs-destination-1778165275087560000", "created": "2018-01-02T03:04:05",
+    body: '{"hostname": "go-test-logs-monitoring-1778509521223173000.gb-lon-1.linodeobjects.com",
+      "label": "go-test-logs-monitoring-1778509521223173000", "created": "2018-01-02T03:04:05",
       "region": "gb-lon", "cluster": "", "size": 0, "objects": 0, "endpoint_type":
       "E3", "s3_endpoint": "gb-lon-1.linodeobjects.com"}'
     headers:
@@ -436,13 +436,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "306"
+      - "304"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 07 May 2026 14:47:59 GMT
+      - Mon, 11 May 2026 14:25:27 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -466,7 +466,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-logs-destination-1778165279480181000","regions":["gb-lon"]}'
+    body: '{"label":"go-test-logs-monitoring-1778509526910864000","regions":["gb-lon"]}'
     form: {}
     headers:
       Accept:
@@ -478,7 +478,7 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/keys
     method: POST
   response:
-    body: '{"id": 3599930, "label": "go-test-logs-destination-1778165279480181000",
+    body: '{"id": 3666526, "label": "go-test-logs-monitoring-1778509526910864000",
       "access_key": "[SANITIZED]", "secret_key": "[SANITIZED]", "limited": false,
       "bucket_access": null, "regions": [{"id": "gb-lon", "s3_endpoint": "gb-lon-1.linodeobjects.com",
       "endpoint_type": "E3"}]}'
@@ -500,13 +500,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "308"
+      - "307"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 07 May 2026 14:48:01 GMT
+      - Mon, 11 May 2026 14:25:28 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -530,7 +530,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-logs-destination-1778165281684696000","type":"akamai_object_storage","details":{"access_key_id":"OUEG24KPCLXIOAQXZM1R","access_key_secret":"oJsVxKlk2RPb53Ud6FMQekCpZigiN17wMaVYRSKn","bucket_name":"go-test-logs-destination-1778165275087560000","host":"go-test-logs-destination-1778165275087560000.gb-lon-1.linodeobjects.com"}}'
+    body: '{"label":"go-test-logs-monitoring-1778509528489377000","type":"akamai_object_storage","details":{"access_key_id":"MA8OF2UBBNBX5V1CMO7L","access_key_secret":"XUCFnYBPK2DjEezeVXtJtNjBxSJk3mqO3FOSU21Q","bucket_name":"go-test-logs-monitoring-1778509521223173000","host":"go-test-logs-monitoring-1778509521223173000.gb-lon-1.linodeobjects.com"}}'
     form: {}
     headers:
       Accept:
@@ -542,10 +542,10 @@ interactions:
     url: https://api.linode.com/v4beta/monitor/streams/destinations
     method: POST
   response:
-    body: '{"id": 433, "label": "go-test-logs-destination-1778165281684696000", "type":
-      "akamai_object_storage", "details": {"host": "go-test-logs-destination-1778165275087560000.gb-lon-1.linodeobjects.com",
-      "bucket_name": "go-test-logs-destination-1778165275087560000", "access_key_id":
-      "OUEG24KPCLXIOAQXZM1R"}, "version": 1, "status": "active", "created_by": "dola-klipensk",
+    body: '{"id": 474, "label": "go-test-logs-monitoring-1778509528489377000", "type":
+      "akamai_object_storage", "details": {"host": "go-test-logs-monitoring-1778509521223173000.gb-lon-1.linodeobjects.com",
+      "bucket_name": "go-test-logs-monitoring-1778509521223173000", "access_key_id":
+      "MA8OF2UBBNBX5V1CMO7L"}, "version": 1, "status": "active", "created_by": "dola-klipensk",
       "created": "2018-01-02T03:04:05", "updated_by": "dola-klipensk", "updated":
       "2018-01-02T03:04:05"}'
     headers:
@@ -566,13 +566,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "465"
+      - "462"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 07 May 2026 14:48:02 GMT
+      - Mon, 11 May 2026 14:25:29 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -608,15 +608,15 @@ interactions:
     url: https://api.linode.com/v4beta/monitor/streams/destinations?page=1
     method: GET
   response:
-    body: '{"pages": 1, "page": 1, "results": 2, "data": [{"id": 296, "label": "go-test-logs-destination-1777279324004188000",
-      "type": "akamai_object_storage", "details": {"host": "go-test-logs-destination-1777279319044234000.us-southeast-1.linodeobjects.com",
-      "bucket_name": "go-test-logs-destination-1777279319044234000", "access_key_id":
-      "G2A636FQXPSM1282P2JF"}, "version": 1, "status": "active", "created_by": "dola-klipensk",
-      "created": "2018-01-02T03:04:05", "updated_by": "dola-klipensk", "updated":
-      "2018-01-02T03:04:05"}, {"id": 433, "label": "go-test-logs-destination-1778165281684696000",
-      "type": "akamai_object_storage", "details": {"host": "go-test-logs-destination-1778165275087560000.gb-lon-1.linodeobjects.com",
-      "bucket_name": "go-test-logs-destination-1778165275087560000", "access_key_id":
-      "OUEG24KPCLXIOAQXZM1R"}, "version": 1, "status": "active", "created_by": "dola-klipensk",
+    body: '{"pages": 1, "page": 1, "results": 2, "data": [{"id": 445, "label": "test-logs-destination-755957659",
+      "type": "akamai_object_storage", "details": {"host": "us-mia-1.linodeobjects.com",
+      "bucket_name": "test-logs-bucket-755957659", "path": "test-path", "access_key_id":
+      "7S59WIH9P07VVGJO5Q7E"}, "version": 1, "status": "active", "created_by": "dola-pskupien",
+      "created": "2018-01-02T03:04:05", "updated_by": "dola-pskupien", "updated":
+      "2018-01-02T03:04:05"}, {"id": 474, "label": "go-test-logs-monitoring-1778509528489377000",
+      "type": "akamai_object_storage", "details": {"host": "go-test-logs-monitoring-1778509521223173000.gb-lon-1.linodeobjects.com",
+      "bucket_name": "go-test-logs-monitoring-1778509521223173000", "access_key_id":
+      "MA8OF2UBBNBX5V1CMO7L"}, "version": 1, "status": "active", "created_by": "dola-klipensk",
       "created": "2018-01-02T03:04:05", "updated_by": "dola-klipensk", "updated":
       "2018-01-02T03:04:05"}]}'
     headers:
@@ -641,7 +641,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 07 May 2026 14:48:03 GMT
+      - Mon, 11 May 2026 14:25:30 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -676,13 +676,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/streams/destinations/433
+    url: https://api.linode.com/v4beta/monitor/streams/destinations/474
     method: GET
   response:
-    body: '{"id": 433, "label": "go-test-logs-destination-1778165281684696000", "type":
-      "akamai_object_storage", "details": {"host": "go-test-logs-destination-1778165275087560000.gb-lon-1.linodeobjects.com",
-      "bucket_name": "go-test-logs-destination-1778165275087560000", "access_key_id":
-      "OUEG24KPCLXIOAQXZM1R"}, "version": 1, "status": "active", "created_by": "dola-klipensk",
+    body: '{"id": 474, "label": "go-test-logs-monitoring-1778509528489377000", "type":
+      "akamai_object_storage", "details": {"host": "go-test-logs-monitoring-1778509521223173000.gb-lon-1.linodeobjects.com",
+      "bucket_name": "go-test-logs-monitoring-1778509521223173000", "access_key_id":
+      "MA8OF2UBBNBX5V1CMO7L"}, "version": 1, "status": "active", "created_by": "dola-klipensk",
       "created": "2018-01-02T03:04:05", "updated_by": "dola-klipensk", "updated":
       "2018-01-02T03:04:05"}'
     headers:
@@ -703,13 +703,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "465"
+      - "462"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 07 May 2026 14:48:03 GMT
+      - Mon, 11 May 2026 14:25:30 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -743,7 +743,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/streams/destinations/433
+    url: https://api.linode.com/v4beta/monitor/streams/destinations/474
     method: DELETE
   response:
     body: '{}'
@@ -771,7 +771,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 07 May 2026 14:48:04 GMT
+      - Mon, 11 May 2026 14:25:30 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -804,7 +804,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/keys/3599930
+    url: https://api.linode.com/v4beta/object-storage/keys/3666526
     method: DELETE
   response:
     body: '{}'
@@ -832,7 +832,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 07 May 2026 14:48:04 GMT
+      - Mon, 11 May 2026 14:25:31 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -865,11 +865,11 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/gb-lon/go-test-logs-destination-1778165275087560000/object-list
+    url: https://api.linode.com/v4beta/object-storage/buckets/gb-lon/go-test-logs-monitoring-1778509521223173000/object-list
     method: GET
   response:
-    body: '{"data": [{"name": "cloud-logs-test-connection-20260507T144802", "size":
-      9, "last_modified": "2018-01-02T03:04:05.626Z", "etag": "06aa6fa8bdc2078e7e1bd903e70c8f6a",
+    body: '{"data": [{"name": "cloud-logs-test-connection-20260511T142528", "size":
+      9, "last_modified": "2018-01-02T03:04:05.455Z", "etag": "06aa6fa8bdc2078e7e1bd903e70c8f6a",
       "owner": "285755ea-e54d-40f7-8861-0a77cb9e9080"}], "next_marker": null, "is_truncated":
       false}'
     headers:
@@ -896,7 +896,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 07 May 2026 14:48:06 GMT
+      - Mon, 11 May 2026 14:25:34 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -921,7 +921,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"name":"cloud-logs-test-connection-20260507T144802","method":"DELETE","expires_in":360}'
+    body: '{"name":"cloud-logs-test-connection-20260511T142528","method":"DELETE","expires_in":360}'
     form: {}
     headers:
       Accept:
@@ -930,10 +930,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/gb-lon/go-test-logs-destination-1778165275087560000/object-url
+    url: https://api.linode.com/v4beta/object-storage/buckets/gb-lon/go-test-logs-monitoring-1778509521223173000/object-url
     method: POST
   response:
-    body: '{"url": "https://gb-lon-1.linodeobjects.com:443/go-test-logs-destination-1778165275087560000/cloud-logs-test-connection-20260507T144802?Signature=yiWYIugoUTxIMmtXAZ1CtBDI1SE%3D&Expires=1778165649&AWSAccessKeyID=SANITIZED&x-amz-security-token=MQpmODAwOTNlZTliMTE0ZWY1MTY1ZTA4NzMxMjRkOWJhNzg4YTQ0YjhjNWVkMjk5NGJmYjI1NGM0ZDFlZWJkM2JjCjDD%2BLLyJASj0cZQJJoRy7Vi7W/wO4rFUvvPwy4riMn4QKC6xEs7jfJNRZq2/mtdvN%2BhvvqTbvo%2BWlgsNEOiDIe5cbRiA6M4A6o5/ScHnpedmR94er0H%2BJ3PvUsGi8Umzmbz3P6kz2NjHDHRx9PdJtDOTBQBgqyydDtaR3PkvkqUa0rUCTbBwM5RJdhO4iIGGD5TVXwYgjQnmuXaCMVvoPva7w8csGr4Fe7LbFhZg62I9dUWKb1r6W3Q9qwjVgD5TkebdAundFPZw9f4U5YQwz94z4TusiCOHoB9tYCVqvEmUIjcrjqEC5LbGcU4JzO5L5J3rX9rYtvX0ucQMB462liC6aOXKyn7dKQnbbNp1pRdnoMm3F/AE8swnZ1WXyyzFIWxlZuodHYY6tEk6jZaqZKTTmlD7GJ/N0Oahp9z6c8tvJkkHIl0kyxMiP%2B1uAGjXlTHNp92HSuNKOovN5ZOEVOvrSr1",
+    body: '{"url": "https://gb-lon-1.linodeobjects.com:443/go-test-logs-monitoring-1778509521223173000/cloud-logs-test-connection-20260511T142528?Signature=NRGqXSEsSt6cAgMh32JZUp5jKxQ%3D&Expires=1778509898&AWSAccessKeyID=SANITIZED&x-amz-security-token=MQpmODAwOTNlZTliMTE0ZWY1MTY1ZTA4NzMxMjRkOWJhNzg4YTQ0YjhjNWVkMjk5NGJmYjI1NGM0ZDFlZWJkM2JjCosAD32CSNHHcdufrYP%2BeVxAi2Fc4FjJP7TwXpntNEA/6CIpmb3jIaJl4NjHhUDPkjHOUbwvVPjOtB96yI7PXCzupueDkTaSDoRhBmCORXnJL9RMogTgQ2EhDnJN042CFeqnW8BCNzyt6SisThbSQV0SAL6cDr8e8Th7j%2BxxE%2Blq4BsQEkx36n3uESB6RMz8RS1Iw8Fn9Xo3yDD1aB8p9W%2BPYBsKFIheM1MFbC5Bu08el9EFtTab6SvLoJBJAPqZXTZXI7/od0Vpa2ikkmAebiGG/Me8ix9S44ugwekzWQozguwYCRRWYpfOb6SUXrnNMk8rewTdhxgxjzzNcdN60LG%2BPzMlrfhOkTyqDlG%2Bfr5d5Jf24jWGGlfboiQbTn3R6fWbcQMxeAVPA9mc%2By3OnbTASeLD9jx6iC75mXp3OZUuZqg%2BIBXuoifo09YgjgeDaaxwm0bkUaYyEcLmW8kVwc4B7XsZ",
       "exists": true}'
     headers:
       Access-Control-Allow-Credentials:
@@ -953,13 +953,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "845"
+      - "850"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 07 May 2026 14:48:09 GMT
+      - Mon, 11 May 2026 14:25:38 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -992,7 +992,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/gb-lon/go-test-logs-destination-1778165275087560000
+    url: https://api.linode.com/v4beta/object-storage/buckets/gb-lon/go-test-logs-monitoring-1778509521223173000
     method: DELETE
   response:
     body: '{}'
@@ -1020,7 +1020,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 07 May 2026 14:48:16 GMT
+      - Mon, 11 May 2026 14:25:44 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

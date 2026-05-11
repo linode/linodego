@@ -150,7 +150,7 @@ func setupLogsDestination(t *testing.T, fixturesYaml string) (*linodego.Client, 
 }
 
 func testLabel() string {
-	return "go-test-logs-destination-" + getUniqueText()
+	return "go-test-logs-monitoring-" + getUniqueText()
 }
 
 // setupLogStream creates a test client, Object Storage resources, a LogsDestination,
@@ -159,6 +159,7 @@ func setupLogStream(t *testing.T, fixturesYaml string) (*linodego.Client, *linod
 	t.Helper()
 
 	client, dest, _, destTeardown := setupLogsDestination(t, fixturesYaml)
+	requireNoExistingStreams(t, client)
 
 	stream, err := client.CreateLogStream(context.Background(), linodego.StreamCreateOptions{
 		Label:        fmt.Sprintf("go-test-log-stream-%d", time.Now().UnixNano()),
@@ -445,6 +446,7 @@ func TestLogStream_Create_InvalidDestination(t *testing.T) {
 	apiErr, ok := err.(*linodego.Error)
 	require.True(t, ok, "expected *linodego.Error")
 	assert.Equal(t, 400, apiErr.Code)
+	assert.Contains(t, apiErr.Message, "[destination] Destination not found")
 }
 
 func TestLogStream_Create_EmptyDestinations(t *testing.T) {
@@ -464,6 +466,7 @@ func TestLogStream_Create_EmptyDestinations(t *testing.T) {
 	apiErr, ok := err.(*linodego.Error)
 	require.True(t, ok, "expected *linodego.Error")
 	assert.Equal(t, 400, apiErr.Code)
+	assert.Contains(t, apiErr.Message, "[destinations] Must contain one item")
 }
 
 func TestLogStream_Create_TwoDestinations(t *testing.T) {
@@ -514,6 +517,7 @@ func TestLogStream_Create_TwoDestinations(t *testing.T) {
 	apiErr, ok := err.(*linodego.Error)
 	require.True(t, ok, "expected *linodego.Error")
 	assert.Equal(t, 400, apiErr.Code)
+	assert.Contains(t, apiErr.Message, "[destinations] Must contain one item")
 }
 
 func TestLogStream_Delete(t *testing.T) {
@@ -529,7 +533,11 @@ func TestLogStream_Delete(t *testing.T) {
 	require.NoError(t, err)
 
 	_, err = client.GetLogStream(context.Background(), provisioned.ID)
-	assert.Error(t, err, "expected error fetching deleted stream")
+	require.Error(t, err)
+
+	apiErr, ok := err.(*linodego.Error)
+	require.True(t, ok, "expected *linodego.Error")
+	assert.Equal(t, 404, apiErr.Code)
 }
 
 func TestLogStream_List(t *testing.T) {
@@ -598,10 +606,13 @@ func TestLogStream_Update_LabelAndStatus(t *testing.T) {
 		expectedStatuses = []linodego.StreamStatus{linodego.StreamStatusInactive, linodego.StreamStatusDeactivating}
 	}
 
-	updated, err := client.UpdateLogStream(context.Background(), provisioned.ID, linodego.StreamUpdateOptions{
+	_, err = client.UpdateLogStream(context.Background(), provisioned.ID, linodego.StreamUpdateOptions{
 		Label:  &newLabel,
 		Status: &newStatus,
 	})
+	require.NoError(t, err)
+
+	updated, err := client.GetLogStream(context.Background(), provisioned.ID)
 	require.NoError(t, err)
 	assert.Equal(t, newLabel, updated.Label)
 	assert.Contains(t, expectedStatuses, updated.Status)
