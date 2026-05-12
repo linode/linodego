@@ -47,7 +47,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 08 Apr 2026 06:27:41 GMT
+      - Mon, 27 Apr 2026 12:32:45 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -76,7 +76,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-alert-definition-idempotency-1775629661986967956","severity":2,"channel_ids":[10000],"rule_criteria":{"rules":[{"aggregate_function":"avg","dimension_filters":[{"dimension_label":"node_type","operator":"eq","value":"primary"}],"metric":"memory_usage","operator":"gt","threshold":90}]},"trigger_conditions":{"criteria_condition":"ALL","evaluation_period_seconds":300,"polling_interval_seconds":300,"trigger_occurrences":1},"description":"Test
+    body: '{"label":"go-test-alert-definition-idempotency-1777293165535535919","severity":2,"channel_ids":[10000],"rule_criteria":{"rules":[{"aggregate_function":"avg","dimension_filters":[{"dimension_label":"node_type","operator":"eq","value":"primary"}],"metric":"memory_usage","operator":"gt","threshold":90}]},"trigger_conditions":{"criteria_condition":"ALL","evaluation_period_seconds":300,"polling_interval_seconds":300,"trigger_occurrences":1},"description":"Test
       alert definition creation with idempotency"}'
     form: {}
     headers:
@@ -89,11 +89,10 @@ interactions:
     url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions
     method: POST
   response:
-    body: '{"id": 11023, "label": "go-test-alert-definition-idempotency-1775629661986967956",
+    body: '{"id": 11073, "label": "go-test-alert-definition-idempotency-1777293165535535919",
       "description": "Test alert definition creation with idempotency", "service_type":
       "dbaas", "type": "user", "scope": "entity", "class": null, "regions": [], "status":
-      "provisioning", "entity_ids": [], "has_more_resources": false, "severity": 2,
-      "rule_criteria": {"rules": [{"label": "Memory Usage", "metric": "memory_usage",
+      "provisioning", "severity": 2, "rule_criteria": {"rules": [{"label": "Memory Usage", "metric": "memory_usage",
       "unit": "percent", "aggregate_function": "avg", "operator": "gt", "threshold":
       90, "dimension_filters": [{"label": "Node Type", "dimension_label": "node_type",
       "operator": "eq", "value": "primary"}]}]}, "alert_channels": [{"id": 10000,
@@ -101,7 +100,7 @@ interactions:
       "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL", "polling_interval_seconds":
       300, "evaluation_period_seconds": 300, "trigger_occurrences": 1}, "created":
       "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by": "tester",
-      "updated_by": "tester", "entities": {"url": "/monitor/services/dbaas/alert-definitions/11023/entities",
+      "updated_by": "tester", "entities": {"url": "/monitor/services/dbaas/alert-definitions/11073/entities",
       "has_more_resources": false, "count": 0}}'
     headers:
       Access-Control-Allow-Credentials:
@@ -125,7 +124,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 08 Apr 2026 06:27:43 GMT
+      - Mon, 27 Apr 2026 12:32:46 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -153,7 +152,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-alert-definition-idempotency-1775629661986967956","severity":2,"channel_ids":[10000],"rule_criteria":{"rules":[{"aggregate_function":"avg","dimension_filters":[{"dimension_label":"node_type","operator":"eq","value":"primary"}],"metric":"memory_usage","operator":"gt","threshold":90}]},"trigger_conditions":{"criteria_condition":"ALL","evaluation_period_seconds":300,"polling_interval_seconds":300,"trigger_occurrences":1},"description":"Test
+    body: '{"label":"go-test-alert-definition-idempotency-1777293165535535919","severity":2,"channel_ids":[10000],"rule_criteria":{"rules":[{"aggregate_function":"avg","dimension_filters":[{"dimension_label":"node_type","operator":"eq","value":"primary"}],"metric":"memory_usage","operator":"gt","threshold":90}]},"trigger_conditions":{"criteria_condition":"ALL","evaluation_period_seconds":300,"polling_interval_seconds":300,"trigger_occurrences":1},"description":"Test
       alert definition creation with idempotency"}'
     form: {}
     headers:
@@ -184,7 +183,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 08 Apr 2026 06:27:43 GMT
+      - Mon, 27 Apr 2026 12:32:47 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -213,7 +212,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/11023
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/11073
     method: DELETE
   response:
     body: '{}'
@@ -241,7 +240,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 08 Apr 2026 06:27:44 GMT
+      - Mon, 27 Apr 2026 12:32:48 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
