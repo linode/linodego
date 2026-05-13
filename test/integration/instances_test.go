@@ -7,6 +7,7 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
@@ -124,6 +125,8 @@ func TestInstance_GetMonthlyTransfer(t *testing.T) {
 }
 
 func TestInstance_ResetPassword(t *testing.T) {
+	ctx := waitContext(t, 180*time.Second)
+
 	client, instance, teardown, err := setupInstance(
 		t,
 		"fixtures/TestInstance_ResetPassword", true,
@@ -141,10 +144,9 @@ func TestInstance_ResetPassword(t *testing.T) {
 	}
 
 	instance, err = client.WaitForInstanceStatus(
-		context.Background(),
+		ctx,
 		instance.ID,
 		linodego.InstanceOffline,
-		180,
 	)
 	if err != nil {
 		t.Errorf("Error waiting for instance readiness for password reset: %s", err.Error())
@@ -163,6 +165,8 @@ func TestInstance_ResetPassword(t *testing.T) {
 }
 
 func TestInstance_Resize(t *testing.T) {
+	ctx := waitContext(t, 180*time.Second)
+
 	client, instance, teardown, err := setupInstance(
 		t,
 		"fixtures/TestInstance_Resize", true,
@@ -179,10 +183,9 @@ func TestInstance_Resize(t *testing.T) {
 	}
 
 	instance, err = client.WaitForInstanceStatus(
-		context.Background(),
+		ctx,
 		instance.ID,
 		linodego.InstanceRunning,
-		180,
 	)
 	if err != nil {
 		t.Errorf("Error waiting for instance readiness for resize: %s", err.Error())
@@ -202,6 +205,8 @@ func TestInstance_Resize(t *testing.T) {
 }
 
 func TestInstance_Migrate(t *testing.T) {
+	ctx := waitContext(t, 180*time.Second)
+
 	client, instance, teardown, err := setupInstance(
 		t,
 		"fixtures/TestInstance_Migrate", true,
@@ -218,10 +223,9 @@ func TestInstance_Migrate(t *testing.T) {
 	}
 
 	instance, err = client.WaitForInstanceStatus(
-		context.Background(),
+		ctx,
 		instance.ID,
 		linodego.InstanceRunning,
-		180,
 	)
 	if err != nil {
 		t.Errorf("Error waiting for instance readiness for migration: %s", err.Error())
@@ -244,6 +248,8 @@ func TestInstance_Migrate(t *testing.T) {
 }
 
 func TestInstance_MigrateToPG(t *testing.T) {
+	ctx := waitContext(t, 180*time.Second)
+
 	client, clientTeardown := createTestClient(t, "fixtures/TestInstance_MigrateToPG")
 
 	defer func() {
@@ -282,10 +288,9 @@ func TestInstance_MigrateToPG(t *testing.T) {
 	}
 
 	instance, err = client.WaitForInstanceStatus(
-		context.Background(),
+		ctx,
 		instance.ID,
 		linodego.InstanceRunning,
-		180,
 	)
 	if err != nil {
 		t.Errorf("Error waiting for instance readiness for migration: %s", err.Error())
@@ -393,13 +398,15 @@ func TestInstance_Disks_List_WithEncryption(t *testing.T) {
 }
 
 func TestInstance_Disk_Resize(t *testing.T) {
+	ctx := waitContext(t, 360*time.Second)
+
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Disk_Resize", true)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
 	}
 
-	instance, err = client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceOffline, 180)
+	instance, err = client.WaitForInstanceStatus(ctx, instance.ID, linodego.InstanceOffline)
 	if err != nil {
 		t.Errorf("Error waiting for instance readiness for resize: %s", err)
 	}
@@ -413,7 +420,7 @@ func TestInstance_Disk_Resize(t *testing.T) {
 		t.Errorf("Error creating disk for resize: %s", err)
 	}
 
-	disk, err = client.WaitForInstanceDiskStatus(context.Background(), instance.ID, disk.ID, linodego.DiskReady, 180)
+	disk, err = client.WaitForInstanceDiskStatus(ctx, instance.ID, disk.ID, linodego.DiskReady)
 	if err != nil {
 		t.Errorf("Error waiting for disk readiness for resize: %s", err)
 	}
@@ -425,6 +432,8 @@ func TestInstance_Disk_Resize(t *testing.T) {
 }
 
 func TestInstance_Disk_ListMultiple(t *testing.T) {
+	ctx := waitContext(t, 840*time.Second)
+
 	// This is a long running test
 	client, instance1, teardown1, err := setupInstance(t, "fixtures/TestInstance_Disk_ListMultiple_Primary", true)
 	defer teardown1()
@@ -435,7 +444,7 @@ func TestInstance_Disk_ListMultiple(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	instance1, err = client.WaitForInstanceStatus(context.Background(), instance1.ID, linodego.InstanceRunning, 180)
+	instance1, err = client.WaitForInstanceStatus(ctx, instance1.ID, linodego.InstanceRunning)
 	if err != nil {
 		t.Errorf("Error waiting for instance readiness: %s", err)
 	}
@@ -445,7 +454,7 @@ func TestInstance_Disk_ListMultiple(t *testing.T) {
 		t.Error(err)
 	}
 
-	disk, err := client.WaitForInstanceDiskStatus(context.Background(), instance1.ID, disks[0].ID, linodego.DiskReady, 180)
+	disk, err := client.WaitForInstanceDiskStatus(ctx, instance1.ID, disks[0].ID, linodego.DiskReady)
 	if err != nil {
 		t.Errorf("Error waiting for disk readiness: %s", err)
 	}
@@ -464,12 +473,12 @@ func TestInstance_Disk_ListMultiple(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	instance2, err = client.WaitForInstanceStatus(context.Background(), instance2.ID, linodego.InstanceOffline, 180)
+	instance2, err = client.WaitForInstanceStatus(ctx, instance2.ID, linodego.InstanceOffline)
 	if err != nil {
 		t.Errorf("Error waiting for instance readiness: %s", err)
 	}
 
-	_, err = client.WaitForEventFinished(context.Background(), instance1.ID, linodego.EntityLinode, linodego.ActionDiskImagize, *disk.Created, 300)
+	_, err = client.WaitForEventFinished(ctx, instance1.ID, linodego.EntityLinode, linodego.ActionDiskImagize, *disk.Created)
 	if err != nil {
 		t.Errorf("Error waiting for imagize event: %s", err)
 	}
@@ -502,13 +511,15 @@ func TestInstance_Disk_ListMultiple(t *testing.T) {
 }
 
 func TestInstance_Disk_Clone(t *testing.T) {
+	ctx := waitContext(t, 540*time.Second)
+
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Disk_Clone", true)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
 	}
 
-	instance, err = client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceOffline, 180)
+	instance, err = client.WaitForInstanceStatus(ctx, instance.ID, linodego.InstanceOffline)
 	if err != nil {
 		t.Errorf("Error waiting for instance readiness for disk clone: %s", err)
 	}
@@ -524,11 +535,11 @@ func TestInstance_Disk_Clone(t *testing.T) {
 		t.Errorf("Error creating disk for disk clone: %s", err)
 	}
 
-	instance, err = client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceOffline, 180)
+	instance, err = client.WaitForInstanceStatus(ctx, instance.ID, linodego.InstanceOffline)
 	if err != nil {
 		t.Errorf("Error waiting for instance readiness after creating disk for disk clone: %s", err)
 	}
-	disk, err = client.WaitForInstanceDiskStatus(context.Background(), instance.ID, disk.ID, linodego.DiskReady, 180)
+	disk, err = client.WaitForInstanceDiskStatus(ctx, instance.ID, disk.ID, linodego.DiskReady)
 	if err != nil {
 		t.Errorf("Error waiting for disk readiness for disk clone: %s", err)
 	}
@@ -542,13 +553,15 @@ func TestInstance_Disk_Clone(t *testing.T) {
 }
 
 func TestInstance_Disk_ResetPassword(t *testing.T) {
+	ctx := waitContext(t, 540*time.Second)
+
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Disk_ResetPassword", true)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
 	}
 
-	instance, err = client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceOffline, 180)
+	instance, err = client.WaitForInstanceStatus(ctx, instance.ID, linodego.InstanceOffline)
 	if err != nil {
 		t.Errorf("Error waiting for instance readiness for password reset: %s", err)
 	}
@@ -564,11 +577,11 @@ func TestInstance_Disk_ResetPassword(t *testing.T) {
 		t.Errorf("Error creating disk for password reset: %s", err)
 	}
 
-	instance, err = client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceOffline, 180)
+	instance, err = client.WaitForInstanceStatus(ctx, instance.ID, linodego.InstanceOffline)
 	if err != nil {
 		t.Errorf("Error waiting for instance readiness after creating disk for password reset: %s", err)
 	}
-	disk, err = client.WaitForInstanceDiskStatus(context.Background(), instance.ID, disk.ID, linodego.DiskReady, 180)
+	disk, err = client.WaitForInstanceDiskStatus(ctx, instance.ID, disk.ID, linodego.DiskReady)
 	if err != nil {
 		t.Errorf("Error waiting for disk readiness for password reset: %s", err)
 	}
@@ -616,6 +629,8 @@ func TestInstance_NodeBalancers_List(t *testing.T) {
 }
 
 func TestInstance_Volumes_List(t *testing.T) {
+	ctx := waitContext(t, 500*time.Second)
+
 	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Volumes_List_Instance", true)
 	defer teardown()
 	if err != nil {
@@ -626,7 +641,7 @@ func TestInstance_Volumes_List(t *testing.T) {
 		options.Region = instance.Region
 	})
 
-	_, err = client.WaitForVolumeStatus(context.Background(), volume.ID, linodego.VolumeActive, 500)
+	_, err = client.WaitForVolumeStatus(ctx, volume.ID, linodego.VolumeActive)
 	if err != nil {
 		t.Errorf("Error waiting for volume to be active, %s", err)
 	}
@@ -684,6 +699,8 @@ func TestInstance_CreateUnderFirewall(t *testing.T) {
 }
 
 func TestInstance_Rebuild(t *testing.T) {
+	ctx := waitContext(t, 180*time.Second)
+
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(
 		t,
 		"fixtures/TestInstance_Rebuild", true,
@@ -697,7 +714,7 @@ func TestInstance_Rebuild(t *testing.T) {
 		t.Error(err)
 	}
 
-	_, err = client.WaitForEventFinished(context.Background(), instance.ID, linodego.EntityLinode, linodego.ActionLinodeCreate, *instance.Created, 180)
+	_, err = client.WaitForEventFinished(ctx, instance.ID, linodego.EntityLinode, linodego.ActionLinodeCreate, *instance.Created)
 	if err != nil {
 		t.Errorf("Error waiting for instance created: %s", err)
 	}
@@ -721,6 +738,8 @@ func TestInstance_Rebuild(t *testing.T) {
 }
 
 func TestInstance_RebuildWithEncryption(t *testing.T) {
+	ctx := waitContext(t, 180*time.Second)
+
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(
 		t,
 		"fixtures/TestInstance_RebuildWithEncryption",
@@ -736,7 +755,7 @@ func TestInstance_RebuildWithEncryption(t *testing.T) {
 		t.Error(err)
 	}
 
-	_, err = client.WaitForEventFinished(context.Background(), instance.ID, linodego.EntityLinode, linodego.ActionLinodeCreate, *instance.Created, 180)
+	_, err = client.WaitForEventFinished(ctx, instance.ID, linodego.EntityLinode, linodego.ActionLinodeCreate, *instance.Created)
 	if err != nil {
 		t.Errorf("Error waiting for instance created: %s", err)
 	}
@@ -758,6 +777,8 @@ func TestInstance_RebuildWithEncryption(t *testing.T) {
 }
 
 func TestInstance_Clone(t *testing.T) {
+	ctx := waitContext(t, 420*time.Second)
+
 	var targetRegion string
 
 	client, instance, teardownOriginalLinode, err := setupInstance(
@@ -773,12 +794,11 @@ func TestInstance_Clone(t *testing.T) {
 	t.Cleanup(teardownOriginalLinode)
 
 	_, err = client.WaitForEventFinished(
-		context.Background(),
+		ctx,
 		instance.ID,
 		linodego.EntityLinode,
 		linodego.ActionLinodeCreate,
 		*instance.Created,
-		180,
 	)
 	if err != nil {
 		t.Errorf("Error waiting for instance created: %s", err)
@@ -806,17 +826,12 @@ func TestInstance_Clone(t *testing.T) {
 		client.DeleteInstance(context.Background(), clonedInstance.ID)
 	})
 
-	if err != nil {
-		t.Error(err)
-	}
-
 	_, err = client.WaitForEventFinished(
-		context.Background(),
+		ctx,
 		instance.ID,
 		linodego.EntityLinode,
 		linodego.ActionLinodeClone,
 		*clonedInstance.Created,
-		240,
 	)
 	if err != nil {
 		t.Fatal(err)
@@ -1178,6 +1193,8 @@ func TestExpectedErrorIfFieldsAuthorizedUsersAuthorizedKeysRootPassAreNotSet(t *
 }
 
 func TestCreateLinodeWithKernelAndBootSizeThenAddDiskAndRebuild(t *testing.T) {
+	ctx := waitContext(t, 360*time.Second)
+
 	client, teardown := createTestClient(t,
 		"fixtures/TestInstance_TestCreateLinodeWithKernelAndBootSizeThenAddDiskAndRebuild")
 	defer teardown()
@@ -1208,12 +1225,11 @@ func TestCreateLinodeWithKernelAndBootSizeThenAddDiskAndRebuild(t *testing.T) {
 	require.NoError(t, err)
 	assert.Equal(t, "linode/debian12", instance.Image)
 	_, err = client.WaitForEventFinished(
-		context.Background(),
+		ctx,
 		instance.ID,
 		linodego.EntityLinode,
 		linodego.ActionLinodeCreate,
 		*instance.Created,
-		180,
 	)
 	require.NoErrorf(t, err, "Error waiting for instance created: %s", err)
 
@@ -1225,7 +1241,7 @@ func TestCreateLinodeWithKernelAndBootSizeThenAddDiskAndRebuild(t *testing.T) {
 		RootPass:   randPassword(),
 	})
 	require.NoError(t, errCreateDisk)
-	createDiskResponse, err = client.WaitForInstanceDiskStatus(context.Background(), instance.ID, createDiskResponse.ID, linodego.DiskReady, 180)
+	createDiskResponse, err = client.WaitForInstanceDiskStatus(ctx, instance.ID, createDiskResponse.ID, linodego.DiskReady)
 	require.NoError(t, err)
 	assert.Equal(t, linodego.DiskReady, createDiskResponse.Status)
 

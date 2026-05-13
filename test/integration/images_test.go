@@ -5,6 +5,7 @@ import (
 	"context"
 	"slices"
 	"testing"
+	"time"
 
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/linode/linodego"
@@ -69,6 +70,8 @@ func TestImages_List_smoke(t *testing.T) {
 }
 
 func TestImage_Upload(t *testing.T) {
+	ctx := waitContext(t, 300*time.Second)
+
 	client, teardown := createTestClient(t, "fixtures/TestImage_Upload")
 	defer teardown()
 
@@ -90,7 +93,7 @@ func TestImage_Upload(t *testing.T) {
 		t.Errorf("Expected upload URL, got none")
 	}
 
-	if _, err := client.WaitForImageStatus(context.Background(), image.ID, ImageStatusPendingUpload, 60); err != nil {
+	if _, err := client.WaitForImageStatus(ctx, image.ID, ImageStatusPendingUpload); err != nil {
 		t.Errorf("Failed to wait for image pending upload status: %v", err)
 	}
 
@@ -101,7 +104,7 @@ func TestImage_Upload(t *testing.T) {
 		}
 	}
 
-	if _, err := client.WaitForImageStatus(context.Background(), image.ID, ImageStatusAvailable, 240); err != nil {
+	if _, err := client.WaitForImageStatus(ctx, image.ID, ImageStatusAvailable); err != nil {
 		t.Errorf("Failed to wait for image available upload status: %v", err)
 	}
 }
@@ -178,6 +181,8 @@ func TestImage_CloudInit(t *testing.T) {
 }
 
 func TestImage_Replicate(t *testing.T) {
+	ctx := waitContext(t, 460*time.Second)
+
 	client, teardown := createTestClient(t, "fixtures/TestImage_Replicate")
 	defer teardown()
 
@@ -201,7 +206,7 @@ func TestImage_Replicate(t *testing.T) {
 		t.Errorf("Expected upload URL, got none")
 	}
 
-	if _, err := client.WaitForImageStatus(context.Background(), image.ID, ImageStatusPendingUpload, 60); err != nil {
+	if _, err := client.WaitForImageStatus(ctx, image.ID, ImageStatusPendingUpload); err != nil {
 		t.Errorf("Failed to wait for image pending upload status: %v", err)
 	}
 
@@ -212,7 +217,7 @@ func TestImage_Replicate(t *testing.T) {
 		}
 	}
 
-	if _, err := client.WaitForImageStatus(context.Background(), image.ID, ImageStatusAvailable, 400); err != nil {
+	if _, err := client.WaitForImageStatus(ctx, image.ID, ImageStatusAvailable); err != nil {
 		t.Errorf("Failed to wait for image available upload status: %v", err)
 	}
 

@@ -171,6 +171,15 @@ func createTestClient(t *testing.T, fixturesYaml string) (*linodego.Client, func
 	return &c, recordStopper
 }
 
+func waitContext(t *testing.T, timeout time.Duration) context.Context {
+	t.Helper()
+
+	ctx, cancel := context.WithTimeout(t.Context(), timeout)
+	t.Cleanup(cancel)
+
+	return ctx
+}
+
 // transportRecordWrapper returns a tranport.WrapperFunc which provides the test
 // recorder as an http.RoundTripper.
 func transportRecorderWrapper(t *testing.T, fixtureYaml string) (transport.WrapperFunc, func()) {

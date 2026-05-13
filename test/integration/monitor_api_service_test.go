@@ -3,12 +3,15 @@ package integration
 import (
 	"context"
 	"testing"
+	"time"
 
 	"github.com/linode/linodego"
 )
 
 func TestMonitorAPI_Fetch_Entity_Metrics(t *testing.T) {
-	mClient, entityIDs, teardown, err := setup(t, "fixtures/TestMonitorAPI_Get_Entity_Metrics")
+	ctx := waitContext(t, 5400*time.Second)
+
+	mClient, entityIDs, teardown, err := setup(t, ctx, "fixtures/TestMonitorAPI_Get_Entity_Metrics")
 	if err != nil {
 		t.Error(err)
 	}
@@ -38,7 +41,7 @@ func TestMonitorAPI_Fetch_Entity_Metrics(t *testing.T) {
 	}
 }
 
-func setup(t *testing.T, fixturesYaml string) (*linodego.MonitorClient, []any, func(), error) {
+func setup(t *testing.T, ctx context.Context, fixturesYaml string) (*linodego.MonitorClient, []any, func(), error) {
 	t.Helper()
 
 	client, clientFixtureTeardown := createTestClient(t, "fixtures/TestMonitorAPI_Get_Entity_Metrics_ListDB")
@@ -51,7 +54,7 @@ func setup(t *testing.T, fixturesYaml string) (*linodego.MonitorClient, []any, f
 	var teardown func()
 	if len(dbs) < 1 {
 		// create a DB entity to generate token
-		client, _, teardown, err = setupPostgresDatabase(t, nil, "fixtures/TestMonitorAPI_Get_Entity_Metrics_setupPostgres")
+		client, _, teardown, err = setupPostgresDatabase(t, ctx, nil, "fixtures/TestMonitorAPI_Get_Entity_Metrics_setupPostgres")
 		if err != nil {
 			t.Error(err)
 		}
