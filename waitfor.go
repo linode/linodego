@@ -695,7 +695,7 @@ func (client Client) WaitForVolumeIOReadyStatus(
 		func(ctx context.Context) (*Volume, bool, error) {
 			volume, err := client.GetVolume(ctx, volumeID)
 			if err != nil {
-				return volume, false, fmt.Errorf("failed to get volume %w", err)
+				return volume, false, fmt.Errorf("failed to get volume: %w", err)
 			}
 
 			return volume, volume.IOReady == status, nil
