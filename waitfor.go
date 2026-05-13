@@ -465,11 +465,10 @@ func (client Client) NewEventPoller(
 		EntityType: entityType,
 		Action:     action,
 
-		client:         client,
-		previousEvents: make(map[int]bool),
+		client: client,
 	}
 
-	if err := result.PreTask(ctx); err != nil {
+	if err := result.preTask(ctx); err != nil {
 		return nil, fmt.Errorf("failed to run pretask: %w", err)
 	}
 
@@ -509,40 +508,6 @@ func (client Client) NewEventPollerWithoutEntity(entityType EntityType, action E
 	}
 
 	return &result, nil
-}
-
-// PreTask stores all current events for the given entity to prevent them from being
-// processed on subsequent runs.
-func (p *EventPoller) PreTask(ctx context.Context) error {
-	f := Filter{
-		OrderBy: "created",
-		Order:   Descending,
-	}
-	f.AddField(Eq, "entity.type", p.EntityType)
-	f.AddField(Eq, "entity.id", p.EntityID)
-	f.AddField(Eq, "action", p.Action)
-
-	fBytes, err := f.MarshalJSON()
-	if err != nil {
-		return err
-	}
-
-	events, err := p.client.ListEvents(ctx, &ListOptions{
-		Filter:      string(fBytes),
-		PageOptions: &PageOptions{Page: 1},
-	})
-	if err != nil {
-		return fmt.Errorf("failed to list events: %w", err)
-	}
-
-	eventIDs := make(map[int]bool, len(events))
-	for _, event := range events {
-		eventIDs[event.ID] = true
-	}
-
-	p.previousEvents = eventIDs
-
-	return nil
 }
 
 // WaitForLatestUnknownEvent waits for the next event not observed by this poller.
@@ -739,6 +704,40 @@ func (client Client) WaitForVolumeIOReadyStatus(
 			return fmt.Errorf("failed to wait for Volume %d IO Ready status %t: %w", volumeID, status, ctx.Err())
 		},
 	)
+}
+
+// preTask stores all current events for the given entity to prevent them from being
+// processed on subsequent runs.
+func (p *EventPoller) preTask(ctx context.Context) error {
+	f := Filter{
+		OrderBy: "created",
+		Order:   Descending,
+	}
+	f.AddField(Eq, "entity.type", p.EntityType)
+	f.AddField(Eq, "entity.id", p.EntityID)
+	f.AddField(Eq, "action", p.Action)
+
+	fBytes, err := f.MarshalJSON()
+	if err != nil {
+		return err
+	}
+
+	events, err := p.client.ListEvents(ctx, &ListOptions{
+		Filter:      string(fBytes),
+		PageOptions: &PageOptions{Page: 1},
+	})
+	if err != nil {
+		return fmt.Errorf("failed to list events: %w", err)
+	}
+
+	eventIDs := make(map[int]bool, len(events))
+	for _, event := range events {
+		eventIDs[event.ID] = true
+	}
+
+	p.previousEvents = eventIDs
+
+	return nil
 }
 
 // poll runs check on each tick until check reports done, returns an error, or ctx is canceled.
