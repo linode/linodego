@@ -154,9 +154,9 @@ func init() {
 	}
 }
 
-// NewClient factory to create new Client struct
+// NewClient factory to create new Client struct.
 // nolint:funlen
-func NewClient(hc *http.Client) (client Client) {
+func NewClient(hc *http.Client) (client Client, err error) {
 	if hc != nil {
 		client.httpClient = hc
 	} else {
@@ -199,7 +199,9 @@ func NewClient(hc *http.Client) (client Client) {
 
 	certPath, certPathExists := os.LookupEnv(APIHostCert)
 	if certPathExists {
-		client.SetRootCertificate(certPath)
+		if err := client.SetRootCertificate(certPath); err != nil {
+			return Client{}, err
+		}
 
 		if envDebug {
 			log.Printf("[DEBUG] Set API root certificate to %s\n", certPath)
@@ -214,13 +216,16 @@ func NewClient(hc *http.Client) (client Client) {
 		SetDebug(envDebug).
 		enableLogSanitization()
 
-	return client
+	return client, nil
 }
 
 // NewClientFromEnv creates a Client and initializes it with values
 // from the LINODE_CONFIG file and the LINODE_TOKEN environment variable.
 func NewClientFromEnv(hc *http.Client) (*Client, error) {
-	client := NewClient(hc)
+	client, err := NewClient(hc)
+	if err != nil {
+		return nil, err
+	}
 
 	// Users are expected to chain NewClient(...) and LoadConfig(...) to customize these options
 	configPath, err := resolveValidConfigPath()
@@ -283,12 +288,11 @@ func (c *Client) ErrorAndLogf(format string, args ...any) error {
 	return fmt.Errorf(format, args...)
 }
 
-// SetRootCertificate adds a root certificate to the underlying TLS client config
-func (c *Client) SetRootCertificate(certPath string) *Client {
+// SetRootCertificate adds a root certificate to the underlying TLS client config.
+func (c *Client) SetRootCertificate(certPath string) error {
 	config, err := c.tlsConfig()
 	if err != nil {
-		log.Println("[WARN] Custom transport is not allowed with a custom root CA")
-		return c
+		return fmt.Errorf("custom transport is not allowed with a custom root CA: %w", err)
 	}
 
 	if config.RootCAs == nil {
@@ -297,13 +301,12 @@ func (c *Client) SetRootCertificate(certPath string) *Client {
 
 	pem, err := os.ReadFile(filepath.Clean(certPath))
 	if err != nil {
-		log.Printf("[ERROR] Failed to read root certificate at %s: %s\n", certPath, err.Error())
-		return c
+		return fmt.Errorf("failed to read root certificate at %s: %w", certPath, err)
 	}
 
 	config.RootCAs.AppendCertsFromPEM(pem)
 
-	return c
+	return nil
 }
 
 // SetToken sets the API token for all requests from this client

@@ -5,7 +5,6 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -19,6 +18,17 @@ import (
 	"github.com/linode/linodego/internal/testutil"
 	"github.com/stretchr/testify/require"
 )
+
+func newTestClient(t *testing.T, hc *http.Client) Client {
+	t.Helper()
+	t.Setenv(APIHostVar, "")
+	t.Setenv(APIVersionVar, "")
+
+	client, err := NewClient(hc)
+	require.NoError(t, err)
+
+	return client
+}
 
 func TestClient_SetAPIVersion(t *testing.T) {
 	defaultURL := "https://api.linode.com/v4"
@@ -35,7 +45,7 @@ func TestClient_SetAPIVersion(t *testing.T) {
 	protocolAPIVersion := "v4_http"
 	protocolExpectedHost := fmt.Sprintf("%s/%s", protocolBaseURL, protocolAPIVersion)
 
-	client := NewClient(nil)
+	client := newTestClient(t, nil)
 
 	if client.hostURL != defaultURL {
 		t.Fatal(cmp.Diff(client.hostURL, defaultURL))
@@ -152,7 +162,7 @@ func TestClient_UseURL(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			client := NewClient(nil)
+			client := newTestClient(t, nil)
 
 			_, err := client.UseURL(tt.inputURL)
 
@@ -203,7 +213,7 @@ func TestDebugLogSanitization(t *testing.T) {
 
 	plainTextToken := "NOTANAPIKEY"
 
-	mockClient := testutil.CreateMockClient(t, NewClient)
+	mockClient := testutil.CreateMockClientWithError(t, NewClient)
 	logger := testutil.CreateLogger()
 	mockClient.SetLogger(logger)
 	logger.L.SetOutput(&lgr)
@@ -253,7 +263,7 @@ func TestDoRequest_Success(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(handler))
 	defer server.Close()
 
-	client := NewClient(server.Client())
+	client := newTestClient(t, server.Client())
 	client.SetBaseURL(server.URL)
 
 	params := requestParams{
@@ -273,7 +283,7 @@ func TestDoRequest_Success(t *testing.T) {
 }
 
 func TestDoRequest_FailedCreateRequest(t *testing.T) {
-	client := NewClient(nil)
+	client := newTestClient(t, nil)
 
 	// Create a request with an invalid method to simulate a request creation failure
 	err := client.doRequest(context.Background(), "bad method", "/foo/bar", requestParams{}, nil)
@@ -290,7 +300,7 @@ func TestDoRequest_Non2xxStatusCode(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(handler))
 	defer server.Close()
 
-	client := NewClient(server.Client())
+	client := newTestClient(t, server.Client())
 	client.SetBaseURL(server.URL)
 
 	err := client.doRequest(context.Background(), http.MethodGet, "/foo/bar", requestParams{}, nil)
@@ -321,7 +331,7 @@ func TestDoRequest_FailedDecodeResponse(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(handler))
 	defer server.Close()
 
-	client := NewClient(server.Client())
+	client := newTestClient(t, server.Client())
 	client.SetBaseURL(server.URL)
 
 	params := requestParams{
@@ -348,7 +358,7 @@ func TestDoRequest_BeforeRequestSuccess(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(handler))
 	defer server.Close()
 
-	client := NewClient(server.Client())
+	client := newTestClient(t, server.Client())
 	client.SetBaseURL(server.URL)
 
 	mutator := func(req *http.Request) error {
@@ -377,7 +387,7 @@ func TestDoRequest_BeforeRequestError(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(handler))
 	defer server.Close()
 
-	client := NewClient(server.Client())
+	client := newTestClient(t, server.Client())
 	client.SetBaseURL(server.URL)
 
 	mutator := func(req *http.Request) error {
@@ -407,7 +417,7 @@ func TestDoRequest_AfterResponseSuccess(t *testing.T) {
 	tr := &testRoundTripper{
 		Transport: server.Client().Transport,
 	}
-	client := NewClient(&http.Client{Transport: tr})
+	client := newTestClient(t, &http.Client{Transport: tr})
 	client.SetBaseURL(server.URL)
 
 	mutator := func(resp *http.Response) error {
@@ -436,7 +446,7 @@ func TestDoRequest_AfterResponseError(t *testing.T) {
 	server := httptest.NewServer(http.HandlerFunc(handler))
 	defer server.Close()
 
-	client := NewClient(server.Client())
+	client := newTestClient(t, server.Client())
 	client.SetBaseURL(server.URL)
 
 	mutator := func(resp *http.Response) error {
@@ -457,7 +467,7 @@ func TestDoRequestLogging_Success(t *testing.T) {
 	logger := createLogger()
 	logger.l.SetOutput(&logBuffer) // Redirect log output to buffer
 
-	client := NewClient(nil)
+	client := newTestClient(t, nil)
 	client.SetDebug(true)
 	client.SetLogger(logger)
 
@@ -515,7 +525,7 @@ func TestDoRequestLogging_Error(t *testing.T) {
 	logger := createLogger()
 	logger.l.SetOutput(&logBuffer) // Redirect log output to buffer
 
-	client := NewClient(nil)
+	client := newTestClient(t, nil)
 	client.SetDebug(true)
 	client.SetLogger(logger)
 
@@ -586,18 +596,15 @@ func TestClient_CustomRootCAWithCustomRoundTripper(t *testing.T) {
 		Transport: server.Client().Transport,
 	}
 
-	buf := new(strings.Builder)
-	log.SetOutput(buf)
+	_, err = NewClient(&http.Client{Transport: tr})
+	require.ErrorContains(t, err, "custom transport is not allowed with a custom root CA")
+}
 
-	NewClient(&http.Client{Transport: tr})
+func TestClient_CustomRootCAWithMissingFile(t *testing.T) {
+	t.Setenv(APIHostCert, "/does/not/exist.pem")
 
-	expectedLog := "Custom transport is not allowed with a custom root CA"
-
-	if !strings.Contains(buf.String(), expectedLog) {
-		t.Fatalf("expected log %q not found in logs", expectedLog)
-	}
-
-	log.SetOutput(os.Stderr)
+	_, err := NewClient(nil)
+	require.ErrorContains(t, err, "failed to read root certificate")
 }
 
 func TestClient_CustomRootCAWithoutCustomRoundTripper(t *testing.T) {
@@ -624,7 +631,7 @@ func TestClient_CustomRootCAWithoutCustomRoundTripper(t *testing.T) {
 				t.Setenv(APIHostCert, caFile.Name())
 			}
 
-			client := NewClient(test.httpClient)
+			client := newTestClient(t, test.httpClient)
 			transport, ok := client.httpClient.Transport.(*http.Transport)
 			if !ok {
 				t.Fatal("expected *http.Transport")
@@ -758,7 +765,7 @@ func TestRedactHeaders(t *testing.T) {
 }
 
 func TestEnableLogSanitization(t *testing.T) {
-	mockClient := testutil.CreateMockClient(t, NewClient)
+	mockClient := testutil.CreateMockClientWithError(t, NewClient)
 	mockClient.SetDebug(true)
 
 	plainTextToken := "supersecrettoken"

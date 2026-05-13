@@ -7,7 +7,7 @@ import (
 )
 
 func TestConfig_LoadWithDefaults(t *testing.T) {
-	client := NewClient(nil)
+	client := newTestClient(t, nil)
 
 	file := createTestConfig(t, configLoadWithDefault)
 
@@ -52,7 +52,7 @@ func TestConfig_LoadWithDefaults(t *testing.T) {
 }
 
 func TestConfig_OverrideDefaults(t *testing.T) {
-	client := NewClient(nil)
+	client := newTestClient(t, nil)
 
 	file := createTestConfig(t, configOverrideDefaults)
 
@@ -98,7 +98,7 @@ func TestConfig_OverrideDefaults(t *testing.T) {
 }
 
 func TestConfig_NoDefaults(t *testing.T) {
-	client := NewClient(nil)
+	client := newTestClient(t, nil)
 
 	file := createTestConfig(t, configNoDefaults)
 

@@ -27,7 +27,7 @@ type ClientBaseCase struct {
 // SetUp initializes the Linode client using the mock HTTP client
 func (c *ClientBaseCase) SetUp(t *testing.T) {
 	c.Mock = &mock.Mock{}
-	c.Client = testutil.CreateMockClient(t, linodego.NewClient)
+	c.Client = testutil.CreateMockClientWithError(t, linodego.NewClient)
 
 	baseURL := "https://" + linodego.APIHost
 	if hostOverride, ok := os.LookupEnv(linodego.APIHostVar); ok && hostOverride != "" {

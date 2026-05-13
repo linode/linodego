@@ -98,6 +98,32 @@ func CreateMockClient[T any](t *testing.T, createFunc func(*http.Client) T) *T {
 	return &result
 }
 
+// CreateMockClientWithError is generic because importing the linodego package
+// will result in a cyclic dependency. This pattern isn't ideal but works for now.
+func CreateMockClientWithError[T any](t *testing.T, createFunc func(*http.Client) (T, error)) *T {
+	t.Helper()
+
+	tokenSource := oauth2.StaticTokenSource(&oauth2.Token{AccessToken: validTestAPIKey})
+
+	client := &http.Client{
+		Transport: &oauth2.Transport{
+			Source: tokenSource,
+		},
+	}
+	httpmock.ActivateNonDefault(client)
+
+	t.Cleanup(func() {
+		httpmock.DeactivateAndReset()
+	})
+
+	result, err := createFunc(client)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	return &result
+}
+
 type Logger interface {
 	Errorf(format string, v ...any)
 	Warnf(format string, v ...any)

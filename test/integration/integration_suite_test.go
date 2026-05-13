@@ -163,7 +163,12 @@ func createTestClient(t *testing.T, fixturesYaml string) (*linodego.Client, func
 		},
 	}
 
-	c = linodego.NewClient(oc)
+	client, err := linodego.NewClient(oc)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	c = client
 	c.SetDebug(debugAPI).
 		SetPollDelay(testingPollDuration).
 		SetRetryMaxWaitTime(testingMaxRetryTime)
