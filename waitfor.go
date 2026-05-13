@@ -741,6 +741,9 @@ func (client Client) WaitForVolumeIOReadyStatus(
 	)
 }
 
+// poll runs check on each tick until check reports done, returns an error, or ctx is canceled.
+//
+//nolint:ireturn // false positive: returning a generic concrete type, not an interface
 func poll[T any](
 	ctx context.Context,
 	client *Client,
