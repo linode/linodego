@@ -445,17 +445,9 @@ func (c *Client) DeleteInstance(ctx context.Context, linodeID int) error {
 // BootInstance will boot a Linode instance
 // A configID of 0 will cause Linode to choose the last/best config
 func (c *Client) BootInstance(ctx context.Context, linodeID int, opts InstanceBootOptions) error {
-	var payload InstanceBootOptions
-
-	if opts.ConfigID != 0 {
-		payload = opts // Use the struct when ConfigID is set
-	} else {
-		payload = InstanceBootOptions{} // Send an empty JSON object when ConfigID is 0
-	}
-
 	e := formatAPIPath("linode/instances/%d/boot", linodeID)
 
-	return doPOSTRequestNoResponseBody(ctx, c, e, payload)
+	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
 
 // CloneInstance clone an existing Instances Disks and Configuration profiles to another Linode Instance
@@ -473,17 +465,9 @@ func (c *Client) ResetInstancePassword(ctx context.Context, linodeID int, opts I
 // RebootInstance reboots a Linode instance
 // A configID of 0 will cause Linode to choose the last/best config
 func (c *Client) RebootInstance(ctx context.Context, linodeID int, opts InstanceRebootOptions) error {
-	var payload InstanceRebootOptions
-
-	if opts.ConfigID != 0 {
-		payload = opts // Use the struct when ConfigID is set
-	} else {
-		payload = InstanceRebootOptions{} // Send an empty JSON object when ConfigID is 0
-	}
-
 	e := formatAPIPath("linode/instances/%d/reboot", linodeID)
 
-	return doPOSTRequestNoResponseBody(ctx, c, e, payload)
+	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
 
 // InstanceRebuildOptions is a struct representing the options to send to the rebuild linode endpoint
