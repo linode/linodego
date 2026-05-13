@@ -58,10 +58,14 @@ func setupVolumeAttachedToLinode(
 
 	teardown := func() {
 		if detachVolume {
-			err = client.DetachVolume(context.Background(), volume.ID)
+			// new a context because the context from t.Context() will be cancelled before cleanup run
+			cleanupCtx, cancel := context.WithTimeout(context.Background(), 45*time.Second)
+			defer cancel()
+
+			err = client.DetachVolume(cleanupCtx, volume.ID)
 			require.NoErrorf(t, err, "Error detaching volume: %v", err)
 
-			_, err = client.WaitForVolumeIOReadyStatus(ctx, volume.ID, false)
+			_, err = client.WaitForVolumeIOReadyStatus(cleanupCtx, volume.ID, false)
 			require.NoErrorf(t, err, "Error waiting for IO Ready status of detached volume: %v", err)
 		}
 		teardownVolume()
