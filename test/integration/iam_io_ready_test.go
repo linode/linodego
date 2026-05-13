@@ -201,7 +201,8 @@ func TestIAM_GetIOReadyForClonedVolume(t *testing.T) {
 	requireSingleAttachedInstanceVolume(t, client, instance)
 
 	labelCloned := volume.Label + "-cloned"
-	volumeCloned, err := client.CloneVolume(context.Background(), volume.ID, labelCloned)
+	opts := linodego.VolumeCloneOptions{Label: labelCloned}
+	volumeCloned, err := client.CloneVolume(context.Background(), volume.ID, opts)
 	t.Cleanup(func() {
 		if err = client.DeleteVolume(context.Background(), volumeCloned.ID); err != nil {
 			t.Errorf("Error deleting cloned volume: %v", err)
@@ -234,7 +235,8 @@ func TestIAM_GetIOReadyForResizedVolume(t *testing.T) {
 
 	newSize := volume.Size + 10
 
-	err := client.ResizeVolume(context.Background(), volume.ID, newSize)
+	opts := linodego.VolumeResizeOptions{Size: newSize}
+	err := client.ResizeVolume(context.Background(), volume.ID, opts)
 	require.NoErrorf(t, err, "Error resizing volume: %v", err)
 
 	_, err = client.WaitForVolumeStatus(ctx, volume.ID, linodego.VolumeActive)

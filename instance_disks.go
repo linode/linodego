@@ -63,7 +63,15 @@ type InstanceDiskUpdateOptions struct {
 	Label string `json:"label"`
 }
 
-type InstanceDiskCloneOptions struct{}
+// InstanceDiskResizeOptions are InstanceDisk settings that can be used in resizes
+type InstanceDiskResizeOptions struct {
+	Size int `json:"size"`
+}
+
+// InstanceDiskPasswordResetOptions are InstanceDisk settings that can be used in password resets
+type InstanceDiskPasswordResetOptions struct {
+	Password string `json:"password"`
+}
 
 // ListInstanceDisks lists InstanceDisks
 func (c *Client) ListInstanceDisks(ctx context.Context, linodeID int, opts *ListOptions) ([]InstanceDisk, error) {
@@ -117,22 +125,14 @@ func (c *Client) RenameInstanceDisk(ctx context.Context, linodeID int, diskID in
 }
 
 // ResizeInstanceDisk resizes the size of the Instance disk
-func (c *Client) ResizeInstanceDisk(ctx context.Context, linodeID int, diskID int, size int) error {
-	opts := map[string]any{
-		"size": size,
-	}
-
+func (c *Client) ResizeInstanceDisk(ctx context.Context, linodeID int, diskID int, opts InstanceDiskResizeOptions) error {
 	e := formatAPIPath("linode/instances/%d/disks/%d/resize", linodeID, diskID)
 
 	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
 
 // PasswordResetInstanceDisk resets the "root" account password on the Instance disk
-func (c *Client) PasswordResetInstanceDisk(ctx context.Context, linodeID int, diskID int, password string) error {
-	opts := map[string]any{
-		"password": password,
-	}
-
+func (c *Client) PasswordResetInstanceDisk(ctx context.Context, linodeID int, diskID int, opts InstanceDiskPasswordResetOptions) error {
 	e := formatAPIPath("linode/instances/%d/disks/%d/password", linodeID, diskID)
 
 	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
@@ -145,7 +145,7 @@ func (c *Client) DeleteInstanceDisk(ctx context.Context, linodeID int, diskID in
 }
 
 // CloneInstanceDisk clones the given InstanceDisk for the given Instance
-func (c *Client) CloneInstanceDisk(ctx context.Context, linodeID, diskID int, opts InstanceDiskCloneOptions) (*InstanceDisk, error) {
+func (c *Client) CloneInstanceDisk(ctx context.Context, linodeID, diskID int) (*InstanceDisk, error) {
 	e := formatAPIPath("linode/instances/%d/disks/%d/clone", linodeID, diskID)
-	return doPOSTRequest[InstanceDisk](ctx, c, e, opts)
+	return doPOSTRequestNoRequestBody[InstanceDisk](ctx, c, e)
 }
