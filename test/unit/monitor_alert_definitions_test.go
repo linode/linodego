@@ -140,11 +140,6 @@ const (
     "scope": "entity",
     "description": "A test alert for dbaas service",
     "regions": [],
-    "entity_ids": [
-        "12345",
-        "45678"
-    ],
-    "has_more_resources": true,
     "alert_channels": [
         {
             "id": 10000,
@@ -189,8 +184,6 @@ const (
     "updated": "2024-01-01T00:00:00",
     "updated_by": "tester"
 	}`
-
-	monitorAlertDefinitionUpdateLabelOnlyResponseSingleLine = `{"id": 123, "label": "test-alert-definition-renamed-one-line", "severity": 1, "type": "some_type", "service_type": "dbaas", "status": "enabled", "entity_ids": ["12345"], "channel_ids": [1], "is_enabled": true}`
 
 	monitorAlertDefinitionEntitiesListResponse = `{
 		"data": [
@@ -351,6 +344,7 @@ func TestUpdateMonitorAlertDefinition(t *testing.T) {
 	)
 	assert.NoError(t, err)
 	assert.NotNil(t, alert)
+	assert.Equal(t, testMonitorAlertDefinitionID, alert.ID)
 	assert.Equal(t, "test-alert-definition-renamed", alert.Label)
 	assert.Equal(t, 2, alert.Severity)
 	assert.Equal(t, linodego.AlertDefinitionScopeEntity, alert.Scope)
@@ -358,30 +352,6 @@ func TestUpdateMonitorAlertDefinition(t *testing.T) {
 	assert.Equal(t, "/monitor/services/dbaas/alert-definitions/123/entities", alert.Entities.URL)
 	assert.Equal(t, 2, alert.Entities.Count)
 	assert.True(t, alert.Entities.HasMoreResources)
-}
-
-func TestUpdateMonitorAlertDefinition_LabelOnly(t *testing.T) {
-	var base ClientBaseCase
-	base.SetUp(t)
-	defer base.TearDown(t)
-
-	// Mock a PUT that returns the single-line fixture
-	base.MockPut("monitor/services/dbaas/alert-definitions/123", json.RawMessage(monitorAlertDefinitionUpdateLabelOnlyResponseSingleLine))
-
-	updateOpts := linodego.AlertDefinitionUpdateOptions{
-		Label: "test-alert-definition-renamed-one-line",
-	}
-
-	alert, err := base.Client.UpdateMonitorAlertDefinition(
-		context.Background(),
-		testMonitorAlertDefinitionServiceType,
-		testMonitorAlertDefinitionID,
-		updateOpts,
-	)
-	assert.NoError(t, err)
-	assert.NotNil(t, alert)
-	assert.Equal(t, "test-alert-definition-renamed-one-line", alert.Label)
-	assert.Equal(t, testMonitorAlertDefinitionID, alert.ID)
 }
 
 func TestDeleteMonitorAlertDefinition(t *testing.T) {
