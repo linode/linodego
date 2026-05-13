@@ -22,10 +22,6 @@ const (
     "description": "A test alert for dbaas service",
     "scope": "entity",
     "regions": [],
-    "entity_ids": [
-        "12345"
-    ],
-    "has_more_resources": false,
     "alert_channels": [
         {
             "id": 10000,
@@ -84,10 +80,6 @@ const (
             "status": "enabled",
             "scope": "entity",
             "regions": [],
-            "entity_ids": [
-                "12345"
-            ],
-            "has_more_resources": true,
             "alert_channels": [
                 {
                     "id": 10000,
@@ -148,11 +140,6 @@ const (
     "scope": "entity",
     "description": "A test alert for dbaas service",
     "regions": [],
-    "entity_ids": [
-        "12345",
-        "45678"
-    ],
-    "has_more_resources": true,
     "alert_channels": [
         {
             "id": 10000,
@@ -197,8 +184,6 @@ const (
     "updated": "2024-01-01T00:00:00",
     "updated_by": "tester"
 	}`
-
-	monitorAlertDefinitionUpdateLabelOnlyResponseSingleLine = `{"id": 123, "label": "test-alert-definition-renamed-one-line", "severity": 1, "type": "some_type", "service_type": "dbaas", "status": "enabled", "entity_ids": ["12345"], "channel_ids": [1], "is_enabled": true}`
 
 	monitorAlertDefinitionEntitiesListResponse = `{
 		"data": [
@@ -253,8 +238,6 @@ func TestCreateMonitorAlertDefinition(t *testing.T) {
 	assert.Equal(t, "/monitor/services/dbaas/alert-definitions/123/entities", alert.Entities.URL)
 	assert.Equal(t, 0, alert.Entities.Count)
 	assert.False(t, alert.Entities.HasMoreResources)
-	assert.Equal(t, []string{"12345"}, alert.EntityIDs)
-	assert.False(t, alert.HasMoreResources)
 	assert.NotNil(t, alert.AlertChannels)
 	assert.NotNil(t, alert.RuleCriteria)
 	assert.NotNil(t, alert.RuleCriteria.Rules)
@@ -311,8 +294,6 @@ func TestGetMonitorAlertDefinition(t *testing.T) {
 	assert.Equal(t, "/monitor/services/dbaas/alert-definitions/123/entities", alert.Entities.URL)
 	assert.Equal(t, 0, alert.Entities.Count)
 	assert.False(t, alert.Entities.HasMoreResources)
-	assert.Equal(t, []string{"12345"}, alert.EntityIDs)
-	assert.False(t, alert.HasMoreResources)
 	assert.NotNil(t, alert.AlertChannels)
 	assert.NotNil(t, alert.RuleCriteria)
 	assert.NotNil(t, alert.RuleCriteria.Rules)
@@ -336,8 +317,6 @@ func TestListMonitorAlertDefinitions(t *testing.T) {
 	assert.Equal(t, "/monitor/services/dbaas/alert-definitions/123/entities", alerts[0].Entities.URL)
 	assert.Equal(t, 2, alerts[0].Entities.Count)
 	assert.True(t, alerts[0].Entities.HasMoreResources)
-	assert.Equal(t, []string{"12345"}, alerts[0].EntityIDs)
-	assert.True(t, alerts[0].HasMoreResources)
 	assert.NotNil(t, alerts[0].AlertChannels)
 	assert.NotNil(t, alerts[0].RuleCriteria)
 	assert.NotNil(t, alerts[0].RuleCriteria.Rules)
@@ -365,6 +344,7 @@ func TestUpdateMonitorAlertDefinition(t *testing.T) {
 	)
 	assert.NoError(t, err)
 	assert.NotNil(t, alert)
+	assert.Equal(t, testMonitorAlertDefinitionID, alert.ID)
 	assert.Equal(t, "test-alert-definition-renamed", alert.Label)
 	assert.Equal(t, 2, alert.Severity)
 	assert.Equal(t, linodego.AlertDefinitionScopeEntity, alert.Scope)
@@ -372,31 +352,6 @@ func TestUpdateMonitorAlertDefinition(t *testing.T) {
 	assert.Equal(t, "/monitor/services/dbaas/alert-definitions/123/entities", alert.Entities.URL)
 	assert.Equal(t, 2, alert.Entities.Count)
 	assert.True(t, alert.Entities.HasMoreResources)
-	assert.True(t, alert.HasMoreResources)
-}
-
-func TestUpdateMonitorAlertDefinition_LabelOnly(t *testing.T) {
-	var base ClientBaseCase
-	base.SetUp(t)
-	defer base.TearDown(t)
-
-	// Mock a PUT that returns the single-line fixture
-	base.MockPut("monitor/services/dbaas/alert-definitions/123", json.RawMessage(monitorAlertDefinitionUpdateLabelOnlyResponseSingleLine))
-
-	updateOpts := linodego.AlertDefinitionUpdateOptions{
-		Label: "test-alert-definition-renamed-one-line",
-	}
-
-	alert, err := base.Client.UpdateMonitorAlertDefinition(
-		context.Background(),
-		testMonitorAlertDefinitionServiceType,
-		testMonitorAlertDefinitionID,
-		updateOpts,
-	)
-	assert.NoError(t, err)
-	assert.NotNil(t, alert)
-	assert.Equal(t, "test-alert-definition-renamed-one-line", alert.Label)
-	assert.Equal(t, testMonitorAlertDefinitionID, alert.ID)
 }
 
 func TestDeleteMonitorAlertDefinition(t *testing.T) {
