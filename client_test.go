@@ -21,12 +21,9 @@ import (
 
 func newTestClient(t *testing.T, hc *http.Client) Client {
 	t.Helper()
-	t.Setenv(APIHostVar, "")
-	t.Setenv(APIVersionVar, "")
 
 	client, err := NewClient(hc)
 	require.NoError(t, err)
-
 	return client
 }
 
@@ -696,6 +693,65 @@ func TestMonitorClient_SetAPIBasics(t *testing.T) {
 
 	if client.hostURL != protocolExpectedHost {
 		t.Fatal(cmp.Diff(client.hostURL, expectedHost))
+	}
+}
+
+func TestMonitorClient_SetRootCertificateWithCustomRoundTripper(t *testing.T) {
+	caFile, err := os.CreateTemp(t.TempDir(), "linodego_test_ca_*")
+	if err != nil {
+		t.Fatalf("Failed to create temp ca file: %s", err)
+	}
+	defer os.Remove(caFile.Name())
+
+	server := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+	}))
+	defer server.Close()
+
+	tr := &testRoundTripper{Transport: server.Client().Transport}
+	client := NewMonitorClient(&http.Client{Transport: tr})
+
+	err = client.SetRootCertificate(caFile.Name())
+	require.ErrorContains(t, err, "current transport is not an *http.Transport instance")
+}
+
+func TestMonitorClient_SetRootCertificateWithMissingFile(t *testing.T) {
+	client := NewMonitorClient(nil)
+
+	err := client.SetRootCertificate("/does/not/exist.pem")
+	require.ErrorContains(t, err, "failed to read root certificate")
+}
+
+func TestMonitorClient_SetRootCertificateWithoutCustomRoundTripper(t *testing.T) {
+	caFile, err := os.CreateTemp(t.TempDir(), "linodego_test_ca_*")
+	if err != nil {
+		t.Fatalf("Failed to create temp ca file: %s", err)
+	}
+	defer os.Remove(caFile.Name())
+
+	tests := []struct {
+		name       string
+		httpClient *http.Client
+	}{
+		{"default http client", nil},
+		{"timeout http client", &http.Client{Timeout: time.Second}},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			client := NewMonitorClient(test.httpClient)
+
+			err := client.SetRootCertificate(caFile.Name())
+			require.NoError(t, err)
+
+			transport, ok := client.httpClient.Transport.(*http.Transport)
+			if !ok {
+				t.Fatal("expected *http.Transport")
+			}
+			if transport.TLSClientConfig == nil || transport.TLSClientConfig.RootCAs == nil {
+				t.Error("expected root CAs to be set")
+			}
+		})
 	}
 }
 

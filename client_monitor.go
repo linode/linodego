@@ -128,12 +128,16 @@ func (mc *MonitorClient) SetAPIVersion(apiVersion string) *MonitorClient {
 	return mc
 }
 
-// SetRootCertificate adds a root certificate to the underlying TLS client config
-func (mc *MonitorClient) SetRootCertificate(certPath string) *MonitorClient {
+// SetRootCertificate adds a root certificate to the underlying TLS client config.
+func (mc *MonitorClient) SetRootCertificate(certPath string) error {
 	transport, ok := mc.httpClient.Transport.(*http.Transport)
 	if !ok {
-		mc.logger.Errorf("current transport is not an *http.Transport instance")
-		return mc
+		err := fmt.Errorf("current transport is not an *http.Transport instance")
+		if mc.logger != nil {
+			mc.logger.Errorf("%s", err)
+		}
+
+		return err
 	}
 
 	if transport.TLSClientConfig == nil {
@@ -148,13 +152,16 @@ func (mc *MonitorClient) SetRootCertificate(certPath string) *MonitorClient {
 
 	pem, err := os.ReadFile(filepath.Clean(certPath))
 	if err != nil {
-		mc.logger.Errorf("Failed to read root certificate at %s: %s", certPath, err.Error())
-		return mc
+		if mc.logger != nil {
+			mc.logger.Errorf("Failed to read root certificate at %s: %s", certPath, err.Error())
+		}
+
+		return fmt.Errorf("failed to read root certificate at %s: %w", certPath, err)
 	}
 
 	transport.TLSClientConfig.RootCAs.AppendCertsFromPEM(pem)
 
-	return mc
+	return nil
 }
 
 // SetToken sets the API token for all requests from this client
