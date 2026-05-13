@@ -58,7 +58,7 @@ func setupVolumeAttachedToLinode(
 
 	teardown := func() {
 		if detachVolume {
-			// new a context because the context from t.Context() will be cancelled before cleanup run
+			// Use a fresh context here because the context returned by t.Context() is canceled before t.Cleanup callbacks run.
 			cleanupCtx, cancel := context.WithTimeout(context.Background(), 45*time.Second)
 			defer cancel()
 
