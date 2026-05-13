@@ -4,11 +4,14 @@ import (
 	"context"
 	"fmt"
 	"testing"
+	"time"
 
 	"github.com/linode/linodego"
 )
 
 func TestEventPoller_InstancePower(t *testing.T) {
+	ctx := waitContext(t, 520*time.Second)
+
 	client, fixtureTeardown := createTestClient(t, "fixtures/TestEventPoller_InstancePower")
 	t.Cleanup(fixtureTeardown)
 
@@ -37,7 +40,7 @@ func TestEventPoller_InstancePower(t *testing.T) {
 
 	p.EntityID = instance.ID
 
-	if _, err := p.WaitForFinished(context.Background(), 120); err != nil {
+	if _, err := p.WaitForFinished(ctx); err != nil {
 		t.Fatal(err)
 	}
 
@@ -52,7 +55,7 @@ func TestEventPoller_InstancePower(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	event, err := p.WaitForFinished(context.Background(), 200)
+	event, err := p.WaitForFinished(ctx)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -77,7 +80,7 @@ func TestEventPoller_InstancePower(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	event, err = p.WaitForFinished(context.Background(), 200)
+	event, err = p.WaitForFinished(ctx)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -97,6 +100,8 @@ func TestEventPoller_InstancePower(t *testing.T) {
 }
 
 func TestWaitForResourceFree(t *testing.T) {
+	ctx := waitContext(t, 240*time.Second)
+
 	client, fixtureTeardown := createTestClient(t, "fixtures/TestWaitForResourceFree")
 	t.Cleanup(fixtureTeardown)
 
@@ -119,7 +124,7 @@ func TestWaitForResourceFree(t *testing.T) {
 	})
 
 	// Wait for the instance to be done with all events
-	err = client.WaitForResourceFree(context.Background(), linodego.EntityLinode, instance.ID, 240)
+	err = client.WaitForResourceFree(ctx, linodego.EntityLinode, instance.ID)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -136,6 +141,8 @@ func TestWaitForResourceFree(t *testing.T) {
 }
 
 func TestEventPoller_Secondary(t *testing.T) {
+	ctx := waitContext(t, 240*time.Second)
+
 	client, fixtureTeardown := createTestClient(t, "fixtures/TestEventPoller_Secondary")
 	defer fixtureTeardown()
 
@@ -162,7 +169,7 @@ func TestEventPoller_Secondary(t *testing.T) {
 
 	createPoller.EntityID = instance.ID
 
-	if _, err := createPoller.WaitForFinished(context.Background(), 120); err != nil {
+	if _, err := createPoller.WaitForFinished(ctx); err != nil {
 		t.Fatal(err)
 	}
 
@@ -211,7 +218,7 @@ func TestEventPoller_Secondary(t *testing.T) {
 	}
 
 	// Wait for the first disk to be deleted
-	deleteEvent, err := diskPoller.WaitForFinished(context.Background(), 60)
+	deleteEvent, err := diskPoller.WaitForFinished(ctx)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -219,7 +226,7 @@ func TestEventPoller_Secondary(t *testing.T) {
 	// Poll for the second disk to be deleted.
 	// This is necessary to cover an edge case that triggers a panic
 	// when other deletion events with a null SecondaryEntity are discovered.
-	if _, err := diskPoller2.WaitForFinished(context.Background(), 60); err != nil {
+	if _, err := diskPoller2.WaitForFinished(ctx); err != nil {
 		t.Fatal(err)
 	}
 

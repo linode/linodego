@@ -3,6 +3,7 @@ package integration
 import (
 	"context"
 	"testing"
+	"time"
 
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
@@ -10,7 +11,9 @@ import (
 )
 
 func TestMonitorServicesTokenCreation_Get_smoke(t *testing.T) {
-	client, _, teardown, err := setupPostgresDatabase(t, nil, "fixtures/TestMonitorServicesTokenCreation_Get")
+	ctx := waitContext(t, 5400*time.Second)
+
+	client, _, teardown, err := setupPostgresDatabase(t, ctx, nil, "fixtures/TestMonitorServicesTokenCreation_Get")
 	if err != nil {
 		t.Error(err)
 	}

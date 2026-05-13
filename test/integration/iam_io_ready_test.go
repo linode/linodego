@@ -3,6 +3,7 @@ package integration
 import (
 	"context"
 	"testing"
+	"time"
 
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
@@ -21,6 +22,7 @@ func findVolumeByID(volumes []linodego.Volume, id int) linodego.Volume {
 
 func setupVolumeAttachedToLinode(
 	t *testing.T,
+	ctx context.Context,
 	fixturesYaml string,
 	detachVolume bool,
 ) (*linodego.Client, *linodego.Volume, *linodego.Instance, func()) {
@@ -39,7 +41,7 @@ func setupVolumeAttachedToLinode(
 		require.NoErrorf(t, err, "Error deleting instance: %v", err)
 	}
 
-	instance, err = client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceRunning, 180)
+	instance, err = client.WaitForInstanceStatus(ctx, instance.ID, linodego.InstanceRunning)
 	require.NoErrorf(t, err, "Error waiting for instance to be running: %v", err)
 
 	volume, teardownVolume, err := createVolume(t, client, func(l *linodego.Client, options *linodego.VolumeCreateOptions) {
@@ -51,7 +53,7 @@ func setupVolumeAttachedToLinode(
 	volume, err = client.AttachVolume(context.Background(), volume.ID, &linodego.VolumeAttachOptions{LinodeID: instance.ID})
 	require.NoErrorf(t, err, "Error attaching volume to instance: %v", err)
 
-	volume, err = client.WaitForVolumeIOReadyStatus(context.Background(), volume.ID, true, 45)
+	volume, err = client.WaitForVolumeIOReadyStatus(ctx, volume.ID, true)
 	require.NoErrorf(t, err, "Error waiting for IO Ready status of attached volume: %v", err)
 
 	teardown := func() {
@@ -59,7 +61,7 @@ func setupVolumeAttachedToLinode(
 			err = client.DetachVolume(context.Background(), volume.ID)
 			require.NoErrorf(t, err, "Error detaching volume: %v", err)
 
-			_, err = client.WaitForVolumeIOReadyStatus(context.Background(), volume.ID, false, 45)
+			_, err = client.WaitForVolumeIOReadyStatus(ctx, volume.ID, false)
 			require.NoErrorf(t, err, "Error waiting for IO Ready status of detached volume: %v", err)
 		}
 		teardownVolume()
@@ -96,6 +98,8 @@ func requireSingleAttachedInstanceVolume(t *testing.T, client *linodego.Client, 
 }
 
 func TestIAM_GetIOReadyForNotAttachedVolume(t *testing.T) {
+	ctx := waitContext(t, 30*time.Second)
+
 	client, recordStopper := createTestClient(t, "fixtures/TestIAM_GetIOReadyForNotAttachedVolume")
 	t.Cleanup(recordStopper)
 
@@ -105,7 +109,7 @@ func TestIAM_GetIOReadyForNotAttachedVolume(t *testing.T) {
 	t.Cleanup(teardown)
 	require.NoErrorf(t, err, "Error creating not attached volume: %v", err)
 
-	volume, err = client.WaitForVolumeStatus(context.Background(), volume.ID, linodego.VolumeActive, 30)
+	volume, err = client.WaitForVolumeStatus(ctx, volume.ID, linodego.VolumeActive)
 	require.NoErrorf(t, err, "Error waiting for volume to be active: %v", err)
 
 	volumeList, err := client.ListVolumes(context.Background(), nil)
@@ -128,7 +132,9 @@ func TestIAM_GetIOReadyForNotAttachedVolume(t *testing.T) {
 }
 
 func TestIAM_GetIOReadyForAttachedDetachedVolume(t *testing.T) {
-	client, volume, instance, teardown := setupVolumeAttachedToLinode(t, "fixtures/TestIAM_GetIOReadyForAttachedDetachedVolume", false)
+	ctx := waitContext(t, 270*time.Second)
+
+	client, volume, instance, teardown := setupVolumeAttachedToLinode(t, ctx, "fixtures/TestIAM_GetIOReadyForAttachedDetachedVolume", false)
 	t.Cleanup(teardown)
 	requireSingleAttachedInstanceVolume(t, client, instance)
 
@@ -139,7 +145,7 @@ func TestIAM_GetIOReadyForAttachedDetachedVolume(t *testing.T) {
 	err = client.DetachVolume(context.Background(), volume.ID)
 	require.NoErrorf(t, err, "Error detaching volume: %v", err)
 
-	_, err = client.WaitForVolumeIOReadyStatus(context.Background(), volume.ID, false, 45)
+	_, err = client.WaitForVolumeIOReadyStatus(ctx, volume.ID, false)
 	require.NoErrorf(t, err, "Error waiting for IO Ready status of detached volume: %v", err)
 
 	instanceVolumes, err := client.ListInstanceVolumes(context.Background(), instance.ID, nil)
@@ -154,7 +160,9 @@ func TestIAM_GetIOReadyForAttachedDetachedVolume(t *testing.T) {
 }
 
 func TestIAM_GetIOReadyForUpdatedVolume(t *testing.T) {
-	client, volume, instance, teardown := setupVolumeAttachedToLinode(t, "fixtures/TestIAM_GetIOReadyForUpdatedVolume", true)
+	ctx := waitContext(t, 270*time.Second)
+
+	client, volume, instance, teardown := setupVolumeAttachedToLinode(t, ctx, "fixtures/TestIAM_GetIOReadyForUpdatedVolume", true)
 	t.Cleanup(teardown)
 	assertVolumeAttachedToInstance(t, volume, instance)
 	assert.NotContains(t, "-updated", volume.Label)
@@ -182,7 +190,9 @@ func TestIAM_GetIOReadyForUpdatedVolume(t *testing.T) {
 }
 
 func TestIAM_GetIOReadyForClonedVolume(t *testing.T) {
-	client, volume, instance, teardown := setupVolumeAttachedToLinode(t, "fixtures/TestIAM_GetIOReadyForClonedVolume", true)
+	ctx := waitContext(t, 300*time.Second)
+
+	client, volume, instance, teardown := setupVolumeAttachedToLinode(t, ctx, "fixtures/TestIAM_GetIOReadyForClonedVolume", true)
 	t.Cleanup(teardown)
 	requireSingleAttachedInstanceVolume(t, client, instance)
 
@@ -195,7 +205,7 @@ func TestIAM_GetIOReadyForClonedVolume(t *testing.T) {
 	})
 	require.NoErrorf(t, err, "Error cloning volume: %v", err)
 
-	_, err = client.WaitForVolumeStatus(context.Background(), volumeCloned.ID, linodego.VolumeActive, 30)
+	_, err = client.WaitForVolumeStatus(ctx, volumeCloned.ID, linodego.VolumeActive)
 	require.NoErrorf(t, err, "Error waiting for IO Ready status of attached volume: %v", err)
 
 	volumeCloned, err = client.GetVolume(context.Background(), volumeCloned.ID)
@@ -212,7 +222,9 @@ func TestIAM_GetIOReadyForClonedVolume(t *testing.T) {
 }
 
 func TestIAM_GetIOReadyForResizedVolume(t *testing.T) {
-	client, volume, instance, teardown := setupVolumeAttachedToLinode(t, "fixtures/TestIAM_GetIOReadyForResizedVolume", true)
+	ctx := waitContext(t, 300*time.Second)
+
+	client, volume, instance, teardown := setupVolumeAttachedToLinode(t, ctx, "fixtures/TestIAM_GetIOReadyForResizedVolume", true)
 	t.Cleanup(teardown)
 	assertVolumeAttachedToInstance(t, volume, instance)
 
@@ -221,7 +233,7 @@ func TestIAM_GetIOReadyForResizedVolume(t *testing.T) {
 	err := client.ResizeVolume(context.Background(), volume.ID, newSize)
 	require.NoErrorf(t, err, "Error resizing volume: %v", err)
 
-	_, err = client.WaitForVolumeStatus(context.Background(), volume.ID, linodego.VolumeActive, 30)
+	_, err = client.WaitForVolumeStatus(ctx, volume.ID, linodego.VolumeActive)
 	require.NoErrorf(t, err, "Error waiting for volume to be active: %v", err)
 
 	instanceVolume := requireSingleAttachedInstanceVolume(t, client, instance)

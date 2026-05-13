@@ -66,7 +66,9 @@ func TestDatabase_Type(t *testing.T) {
 }
 
 func TestDatabase_List(t *testing.T) {
-	client, database, teardown, err := setupPostgresDatabase(t, nil, "fixtures/TestDatabase_List")
+	ctx := waitContext(t, 5400*time.Second)
+
+	client, database, teardown, err := setupPostgresDatabase(t, ctx, nil, "fixtures/TestDatabase_List")
 	if err != nil {
 		t.Error(err)
 	}
@@ -90,18 +92,18 @@ func TestDatabase_List(t *testing.T) {
 	}
 }
 
-func waitForDatabaseUpdated(t *testing.T, client *linodego.Client, dbID int,
+func waitForDatabaseUpdated(t *testing.T, ctx context.Context, client *linodego.Client, dbID int,
 	dbType linodego.DatabaseEngineType, minStart *time.Time,
 ) {
-	_, err := client.WaitForEventFinished(context.Background(), dbID, linodego.EntityDatabase,
-		linodego.ActionDatabaseUpdate, *minStart, 1200)
+	_, err := client.WaitForEventFinished(ctx, dbID, linodego.EntityDatabase,
+		linodego.ActionDatabaseUpdate, *minStart)
 	if err != nil {
 		t.Fatalf("failed to wait for database update: %s", err)
 	}
 
 	// Sometimes the event has finished but the status hasn't caught up
-	err = client.WaitForDatabaseStatus(context.Background(), dbID, dbType,
-		linodego.DatabaseStatusActive, 120)
+	err = client.WaitForDatabaseStatus(ctx, dbID, dbType,
+		linodego.DatabaseStatusActive)
 	if err != nil {
 		t.Fatalf("failed to wait for database active: %s", err)
 	}

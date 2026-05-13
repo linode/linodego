@@ -12,7 +12,9 @@ import (
 )
 
 func TestDatabase_MySQL_Suite(t *testing.T) {
-	client, database, teardown, err := setupMySQLDatabase(t, nil, "fixtures/TestDatabase_MySQL_Suite")
+	ctx := waitContext(t, 12000*time.Second)
+
+	client, database, teardown, err := setupMySQLDatabase(t, ctx, nil, "fixtures/TestDatabase_MySQL_Suite")
 	if err != nil {
 		t.Error(err)
 	}
@@ -64,7 +66,7 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 		t.Errorf("failed to update db %d: %v", database.ID, err)
 	}
 
-	waitForDatabaseUpdated(t, client, db.ID, linodego.DatabaseEngineTypeMySQL, db.Created)
+	waitForDatabaseUpdated(t, ctx, client, db.ID, linodego.DatabaseEngineTypeMySQL, db.Created)
 
 	if db.ID != database.ID {
 		t.Errorf("updated db does not match original id")
@@ -117,15 +119,15 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 
 	// Wait for the DB to enter updating status
 	if err := client.WaitForDatabaseStatus(
-		context.Background(), database.ID, linodego.DatabaseEngineTypeMySQL,
-		linodego.DatabaseStatusUpdating, 240); err != nil {
+		ctx, database.ID, linodego.DatabaseEngineTypeMySQL,
+		linodego.DatabaseStatusUpdating); err != nil {
 		t.Fatalf("failed to wait for database updating: %s", err)
 	}
 
 	// Wait for the DB to re-enter active status
 	if err := client.WaitForDatabaseStatus(
-		context.Background(), database.ID, linodego.DatabaseEngineTypeMySQL,
-		linodego.DatabaseStatusActive, 2400); err != nil {
+		ctx, database.ID, linodego.DatabaseEngineTypeMySQL,
+		linodego.DatabaseStatusActive); err != nil {
 		t.Fatalf("failed to wait for database active: %s", err)
 	}
 
@@ -135,8 +137,8 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 
 	// Wait for the DB to enter suspended status
 	if err := client.WaitForDatabaseStatus(
-		context.Background(), database.ID, linodego.DatabaseEngineTypeMySQL,
-		linodego.DatabaseStatusSuspended, 240); err != nil {
+		ctx, database.ID, linodego.DatabaseEngineTypeMySQL,
+		linodego.DatabaseStatusSuspended); err != nil {
 		t.Fatalf("failed to wait for database suspended: %s", err)
 	}
 
@@ -146,8 +148,8 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 
 	// Wait for the DB to re-enter active status
 	if err := client.WaitForDatabaseStatus(
-		context.Background(), database.ID, linodego.DatabaseEngineTypeMySQL,
-		linodego.DatabaseStatusActive, 2400); err != nil {
+		ctx, database.ID, linodego.DatabaseEngineTypeMySQL,
+		linodego.DatabaseStatusActive); err != nil {
 		t.Fatalf("failed to wait for database active: %s", err)
 	}
 }
@@ -208,7 +210,7 @@ func createMySQLDatabase(t *testing.T, client *linodego.Client,
 	return database, teardown, nil
 }
 
-func setupMySQLDatabase(t *testing.T, databaseMofidiers []mysqlDatabaseModifier,
+func setupMySQLDatabase(t *testing.T, ctx context.Context, databaseMofidiers []mysqlDatabaseModifier,
 	fixturesYaml string,
 ) (*linodego.Client, *linodego.MySQLDatabase, func(), error) {
 	t.Helper()
@@ -219,8 +221,8 @@ func setupMySQLDatabase(t *testing.T, databaseMofidiers []mysqlDatabaseModifier,
 		t.Fatalf("failed to create db: %s", err)
 	}
 
-	_, err = client.WaitForEventFinished(context.Background(), database.ID, linodego.EntityDatabase,
-		linodego.ActionDatabaseCreate, now, 5400)
+	_, err = client.WaitForEventFinished(ctx, database.ID, linodego.EntityDatabase,
+		linodego.ActionDatabaseCreate, now)
 	if err != nil {
 		t.Fatalf("failed to wait for db create event: %s", err)
 	}

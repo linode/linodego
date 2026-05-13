@@ -4,6 +4,7 @@ import (
 	"context"
 	"reflect"
 	"testing"
+	"time"
 
 	"github.com/linode/linodego"
 	. "github.com/linode/linodego"
@@ -656,6 +657,8 @@ func TestInstance_Config_Update(t *testing.T) {
 }
 
 func TestInstance_Config_VolumeLimitExtension(t *testing.T) {
+	ctx := waitContext(t, 1000*time.Second)
+
 	client, instance, config, teardown, err := setupInstanceWithoutDisks(
 		t, "fixtures/TestInstance_Config_VolumeLimitExtension",
 		true,
@@ -705,10 +708,10 @@ func TestInstance_Config_VolumeLimitExtension(t *testing.T) {
 		RootDevice: "/dev/sdk",
 	}
 
-	_, err = client.WaitForVolumeStatus(context.Background(), volume1.ID, VolumeActive, 500)
+	_, err = client.WaitForVolumeStatus(ctx, volume1.ID, VolumeActive)
 	require.NoError(t, err)
 
-	_, err = client.WaitForVolumeStatus(context.Background(), volume2.ID, VolumeActive, 500)
+	_, err = client.WaitForVolumeStatus(ctx, volume2.ID, VolumeActive)
 	require.NoError(t, err)
 
 	updatedConfig, err := client.UpdateInstanceConfig(context.Background(), instance.ID, config.ID, configOpts)

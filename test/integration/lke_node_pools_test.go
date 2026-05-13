@@ -3,6 +3,7 @@ package integration
 import (
 	"context"
 	"testing"
+	"time"
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/linode/linodego"
@@ -41,13 +42,15 @@ func TestLKENodePool_GetMissing(t *testing.T) {
 }
 
 func TestLKENodePool_GetFound(t *testing.T) {
+	ctx := waitContext(t, 10*time.Minute)
+
 	client, lkeCluster, pool, teardown, err := setupLKENodePool(t, "fixtures/TestLKENodePool_GetFound", &testLKENodePoolCreateOpts)
 	if err != nil {
 		t.Error(err)
 	}
 	defer teardown()
 
-	i, err := client.GetLKENodePool(context.Background(), lkeCluster.ID, pool.ID)
+	i, err := client.GetLKENodePool(ctx, lkeCluster.ID, pool.ID)
 	if err != nil {
 		t.Errorf("Error getting LKENodePool, expected struct, got %v and error %v", i, err)
 	}
@@ -79,21 +82,20 @@ func TestLKENodePool_GetFound(t *testing.T) {
 	wrapper, teardownClusterClient := transportRecorderWrapper(t, "fixtures/TestLKENodePool_GetFound_k8s")
 	defer teardownClusterClient()
 
-	if err := k8scondition.WaitForLKEClusterAndNodesReady(context.TODO(), *client, lkeCluster.ID, linodego.LKEClusterPollOptions{
+	if err := k8scondition.WaitForLKEClusterAndNodesReady(ctx, *client, lkeCluster.ID, linodego.LKEClusterPollOptions{
 		Retry:            true,
-		TimeoutSeconds:   0,
 		TransportWrapper: wrapper,
 	}); err != nil {
 		t.Fatalf("got err waiting for LKE cluster and nodes to be ready, err: %v", err)
 	}
 
-	i, err = client.GetLKENodePool(context.TODO(), lkeCluster.ID, pool.ID)
+	i, err = client.GetLKENodePool(ctx, lkeCluster.ID, pool.ID)
 	if err != nil {
 		t.Fatalf("failed to get lke node pool, got err: %v", err)
 	}
 
 	for _, node := range i.Linodes {
-		instance, err := client.GetInstance(context.Background(), node.InstanceID)
+		instance, err := client.GetInstance(ctx, node.InstanceID)
 		if err != nil {
 			t.Errorf("failed to get Linode, got err: %v", err)
 		}

@@ -67,6 +67,8 @@ func TestVolume_Create_withEncryption(t *testing.T) {
 }
 
 func TestVolume_Resize(t *testing.T) {
+	ctx := waitContext(t, 500*time.Second)
+
 	client, volume, teardown, err := setupVolume(t, "fixtures/TestVolume_Resize")
 	defer teardown()
 
@@ -74,7 +76,7 @@ func TestVolume_Resize(t *testing.T) {
 		t.Errorf("Error setting up volume test, %s", err)
 	}
 
-	_, err = client.WaitForVolumeStatus(context.Background(), volume.ID, linodego.VolumeActive, 500)
+	_, err = client.WaitForVolumeStatus(ctx, volume.ID, linodego.VolumeActive)
 	if err != nil {
 		t.Errorf("Error waiting for volume to be active, %s", err)
 	}
@@ -171,19 +173,23 @@ func TestVolume_Get_withEncryption(t *testing.T) {
 }
 
 func TestVolume_WaitForLinodeID_nil(t *testing.T) {
+	ctx := waitContext(t, 20*time.Second)
+
 	client, volume, teardown, err := setupVolume(t, "fixtures/TestVolume_WaitForLinodeID_nil")
 	defer teardown()
 
 	if err != nil {
 		t.Errorf("Error setting up volume test, %s", err)
 	}
-	_, err = client.WaitForVolumeLinodeID(context.Background(), volume.ID, nil, 20)
+	_, err = client.WaitForVolumeLinodeID(ctx, volume.ID, nil)
 	if err != nil {
 		t.Errorf("Error getting volume %d, expected *LinodeVolume, got error %v", volume.ID, err)
 	}
 }
 
 func TestVolume_WaitForLinodeID(t *testing.T) {
+	ctx := waitContext(t, 40*time.Second)
+
 	client, instance, teardownInstance, errInstance := setupInstance(t, "fixtures/TestVolume_WaitForLinodeID_linode", true)
 	if errInstance != nil {
 		t.Errorf("Error setting up instance for volume test, %s", errInstance)
@@ -213,7 +219,7 @@ func TestVolume_WaitForLinodeID(t *testing.T) {
 		t.Errorf("Could not attach test volume to test instance")
 	}
 
-	_, errWait := client.WaitForVolumeLinodeID(context.Background(), volume.ID, nil, 20)
+	_, errWait := client.WaitForVolumeLinodeID(ctx, volume.ID, nil)
 	if errWait == nil {
 		t.Errorf("Expected to timeout waiting for nil LinodeID on volume %d : %s", volume.ID, errWait)
 	}
@@ -221,7 +227,7 @@ func TestVolume_WaitForLinodeID(t *testing.T) {
 	client, teardownWait := createTestClient(t, "fixtures/TestVolume_WaitForLinodeID_waiting")
 	defer teardownWait()
 
-	v, errWait := client.WaitForVolumeLinodeID(context.Background(), volume.ID, &instance.ID, 20)
+	v, errWait := client.WaitForVolumeLinodeID(ctx, volume.ID, &instance.ID)
 	if errWait != nil {
 		t.Errorf("Error waiting for volume %d to attach to instance %d: %s", volume.ID, instance.ID, errWait)
 	}

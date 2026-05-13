@@ -5,11 +5,14 @@ import (
 	"fmt"
 	"regexp"
 	"testing"
+	"time"
 
 	"github.com/linode/linodego"
 )
 
 func TestVLANs_List_smoke(t *testing.T) {
+	ctx := waitContext(t, 240*time.Second)
+
 	vlanName := "go-vlan-test-list"
 	instancePrefix := "go-ins-test-list"
 
@@ -28,7 +31,7 @@ func TestVLANs_List_smoke(t *testing.T) {
 	}
 
 	for _, instance := range instances {
-		if _, err := client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceRunning, 240); err != nil {
+		if _, err := client.WaitForInstanceStatus(ctx, instance.ID, linodego.InstanceRunning); err != nil {
 			t.Error(err)
 		}
 	}
@@ -52,6 +55,8 @@ func TestVLANs_List_smoke(t *testing.T) {
 }
 
 func TestVLANs_GetIPAMAddress(t *testing.T) {
+	ctx := waitContext(t, 240*time.Second)
+
 	vlanName := "go-vlan-test-ipam"
 	instancePrefix := "go-ins-test-ipam"
 
@@ -64,7 +69,7 @@ func TestVLANs_GetIPAMAddress(t *testing.T) {
 	}
 	defer instanceTeardown()
 
-	_, err = client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceRunning, 240)
+	_, err = client.WaitForInstanceStatus(ctx, instance.ID, linodego.InstanceRunning)
 	if err != nil {
 		t.Error(err)
 	}
