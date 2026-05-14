@@ -446,7 +446,7 @@ func TestInstance_Disk_ListMultiple(t *testing.T) {
 	}
 
 	opts := linodego.InstanceBootOptions{
-		ConfigID: 0,
+		ConfigID: linodego.Pointer(0),
 	}
 	err = client.BootInstance(context.Background(), instance1.ID, opts)
 	if err != nil {

@@ -52,7 +52,7 @@ func TestEventPoller_InstancePower(t *testing.T) {
 	}
 
 	opts := linodego.InstanceBootOptions{
-		ConfigID: 0,
+		ConfigID: linodego.Pointer(0),
 	}
 	if err := client.BootInstance(context.Background(), instance.ID, opts); err != nil {
 		t.Fatal(err)

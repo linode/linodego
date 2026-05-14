@@ -213,7 +213,7 @@ func TestInstance_Boot(t *testing.T) {
 
 	base.MockPost("linode/instances/123/boot", nil)
 
-	opts := linodego.InstanceBootOptions{ConfigID: 0}
+	opts := linodego.InstanceBootOptions{ConfigID: linodego.Pointer(0)}
 
 	err := base.Client.BootInstance(context.Background(), 123, opts)
 	assert.NoError(t, err)
@@ -226,7 +226,7 @@ func TestInstance_Reboot(t *testing.T) {
 
 	base.MockPost("linode/instances/123/reboot", nil)
 
-	opts := linodego.InstanceRebootOptions{ConfigID: 0}
+	opts := linodego.InstanceRebootOptions{ConfigID: linodego.Pointer(0)}
 
 	err := base.Client.RebootInstance(context.Background(), 123, opts)
 	assert.NoError(t, err)

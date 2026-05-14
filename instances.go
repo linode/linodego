@@ -381,11 +381,11 @@ type InstanceResizeOptions struct {
 }
 
 type InstanceBootOptions struct {
-	ConfigID int `json:"config_id"`
+	ConfigID *int `json:"config_id,omitzero"`
 }
 
 type InstanceRebootOptions struct {
-	ConfigID int `json:"config_id"`
+	ConfigID *int `json:"config_id,omitzero"`
 }
 
 // InstanceMigrateOptions is an options struct used when migrating an instance
