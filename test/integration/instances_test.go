@@ -708,7 +708,7 @@ func TestInstance_Rebuild(t *testing.T) {
 	}
 
 	rebuildOpts := linodego.InstanceRebuildOptions{
-		Image: "linode/alpine3.19",
+		Image: "linode/alpine3.23",
 		Metadata: &linodego.InstanceMetadataOptions{
 			UserData: base64.StdEncoding.EncodeToString([]byte("cool")),
 		},
@@ -747,7 +747,7 @@ func TestInstance_RebuildWithEncryption(t *testing.T) {
 	}
 
 	rebuildOpts := linodego.InstanceRebuildOptions{
-		Image:          "linode/alpine3.19",
+		Image:          "linode/alpine3.23",
 		RootPass:       randPassword(),
 		Type:           "g6-standard-2",
 		DiskEncryption: linodego.InstanceDiskEncryptionDisabled,
