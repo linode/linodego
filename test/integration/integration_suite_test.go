@@ -117,10 +117,27 @@ func testRecorder(t *testing.T, fixturesYaml string, testingMode recorder.Mode, 
 		// Sanitize credentials only when saving to cassette, so that real access/secret
 		// keys are available to test code during recording (e.g. for creating a
 		// LogsDestination that requires valid object-storage credentials).
+
+		// Object Storage access_key / secret_key (response and request bodies)
 		re := regexp.MustCompile(`"access_key": "[[:alnum:]]*"`)
 		i.Response.Body = re.ReplaceAllString(i.Response.Body, `"access_key": "[SANITIZED]"`)
+		i.Request.Body = re.ReplaceAllString(i.Request.Body, `"access_key": "[SANITIZED]"`)
 		re = regexp.MustCompile(`"secret_key": "[[:alnum:]]*"`)
 		i.Response.Body = re.ReplaceAllString(i.Response.Body, `"secret_key": "[SANITIZED]"`)
+		i.Request.Body = re.ReplaceAllString(i.Request.Body, `"secret_key": "[SANITIZED]"`)
+
+		// LogsDestination credentials (access_key_id / access_key_secret)
+		re = regexp.MustCompile(`"access_key_id":\s*"[^"]*"`)
+		i.Response.Body = re.ReplaceAllString(i.Response.Body, `"access_key_id": "[SANITIZED]"`)
+		i.Request.Body = re.ReplaceAllString(i.Request.Body, `"access_key_id":"[SANITIZED]"`)
+		re = regexp.MustCompile(`"access_key_secret":\s*"[^"]*"`)
+		i.Response.Body = re.ReplaceAllString(i.Response.Body, `"access_key_secret": "[SANITIZED]"`)
+		i.Request.Body = re.ReplaceAllString(i.Request.Body, `"access_key_secret":"[SANITIZED]"`)
+
+		// Custom HTTPS basic authentication password
+		re = regexp.MustCompile(`"basic_authentication_password":\s*"[^"]*"`)
+		i.Response.Body = re.ReplaceAllString(i.Response.Body, `"basic_authentication_password": "[SANITIZED]"`)
+		i.Request.Body = re.ReplaceAllString(i.Request.Body, `"basic_authentication_password":"[SANITIZED]"`)
 
 		re = regexp.MustCompile("AWSAccessKeyId=[[:alnum:]]{20}")
 		i.Response.Body = re.ReplaceAllString(i.Response.Body, "AWSAccessKeyID=SANITIZED")

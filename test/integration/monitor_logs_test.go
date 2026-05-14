@@ -3,6 +3,7 @@ package integration
 import (
 	"context"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 	"testing"
@@ -89,6 +90,8 @@ func setupObjectStorageForLogs(t *testing.T, client *linodego.Client) (*linodego
 					t.Errorf("failed to delete object: %s", err)
 					continue
 				}
+				_, _ = io.Copy(io.Discard, res.Body)
+				res.Body.Close()
 				if res.StatusCode != 204 {
 					t.Errorf("expected status code to be 204; got %d", res.StatusCode)
 				}
