@@ -74,7 +74,7 @@ func TestFirewallRules_Update(t *testing.T) {
 	}
 	defer teardown()
 
-	newRules := linodego.FirewallRuleSet{
+	newRules := linodego.FirewallRuleSetUpdateOptions{
 		Inbound: []linodego.FirewallRule{
 			{
 				Label:    testFirewallRule.Label + "_r",

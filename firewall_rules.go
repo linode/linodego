@@ -76,12 +76,15 @@ type FirewallRuleSet struct {
 	InboundPolicy  string         `json:"inbound_policy"`
 	Outbound       []FirewallRule `json:"outbound"`
 	OutboundPolicy string         `json:"outbound_policy"`
+	Version        int            `json:"version,omitzero"`
+	Fingerprint    string         `json:"fingerprint,omitzero"`
+}
 
-	// TODO: separate request and response types in linodego v2
-	// read-only, can't be used in creating or updating a Firewall
-	Version int `json:"version,omitzero"`
-	// read-only, can't be used in creating or updating a Firewall
-	Fingerprint string `json:"fingerprint,omitzero"`
+type FirewallRuleSetUpdateOptions struct {
+	Inbound        []FirewallRule `json:"inbound"`
+	InboundPolicy  string         `json:"inbound_policy"`
+	Outbound       []FirewallRule `json:"outbound"`
+	OutboundPolicy string         `json:"outbound_policy"`
 }
 
 // GetFirewallRules gets the FirewallRuleSet for the given Firewall.
@@ -97,7 +100,7 @@ func (c *Client) GetFirewallRulesExpansion(ctx context.Context, firewallID int) 
 }
 
 // UpdateFirewallRules updates the FirewallRuleSet for the given Firewall
-func (c *Client) UpdateFirewallRules(ctx context.Context, firewallID int, rules FirewallRuleSet) (*FirewallRuleSet, error) {
+func (c *Client) UpdateFirewallRules(ctx context.Context, firewallID int, rules FirewallRuleSetUpdateOptions) (*FirewallRuleSet, error) {
 	e := formatAPIPath("networking/firewalls/%d/rules", firewallID)
 	return doPUTRequest[FirewallRuleSet](ctx, c, e, rules)
 }
