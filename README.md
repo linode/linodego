@@ -54,7 +54,10 @@ func main() {
 		},
 	}
 
-	linodeClient := linodego.NewClient(oauth2Client)
+	linodeClient, err := linodego.NewClient(oauth2Client)
+	if err != nil {
+		log.Fatal(err)
+	}
 	linodeClient.SetDebug(true)
 
 	res, err := linodeClient.GetInstance(context.Background(), 4090913)

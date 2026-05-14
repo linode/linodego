@@ -20,7 +20,7 @@ func mockRequestURL(t *testing.T, path string) *regexp.Regexp {
 }
 
 func createMockClient(t *testing.T) *linodego.Client {
-	return testutil.CreateMockClient(t, linodego.NewClient)
+	return testutil.CreateMockClientWithError(t, linodego.NewClient)
 }
 
 func formatMockAPIPath(format string, args ...any) string {

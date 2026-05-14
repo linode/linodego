@@ -98,7 +98,9 @@ func TestNewError(t *testing.T) {
 	}
 }
 
-func createTestServer(method, route, contentType, body string, statusCode int) (*httptest.Server, *Client) {
+func createTestServer(t *testing.T, method, route, contentType, body string, statusCode int) (*httptest.Server, *Client) {
+	t.Helper()
+
 	h := http.HandlerFunc(func(rw http.ResponseWriter, r *http.Request) {
 		if r.Method == method && r.URL.Path == route {
 			rw.Header().Add("Content-Type", contentType)
@@ -110,7 +112,7 @@ func createTestServer(method, route, contentType, body string, statusCode int) (
 	})
 	ts := httptest.NewServer(h)
 
-	client := NewClient(nil)
+	client := newTestClient(t, nil)
 	client.SetBaseURL(ts.URL)
 	return ts, &client
 }

@@ -37,7 +37,7 @@ var testResponse = testResultType{
 }
 
 func TestRequestHelpers_get(t *testing.T) {
-	client := testutil.CreateMockClient(t, NewClient)
+	client := testutil.CreateMockClientWithError(t, NewClient)
 
 	httpmock.RegisterRegexpResponder("GET", testutil.MockRequestURL("/foo/bar"),
 		httpmock.NewJsonResponderOrPanic(200, &testResponse))
@@ -57,7 +57,7 @@ func TestRequestHelpers_get(t *testing.T) {
 }
 
 func TestRequestHelpers_post(t *testing.T) {
-	client := testutil.CreateMockClient(t, NewClient)
+	client := testutil.CreateMockClientWithError(t, NewClient)
 
 	httpmock.RegisterRegexpResponder("POST", testutil.MockRequestURL("/foo/bar"),
 		testutil.MockRequestBodyValidate(t, testResponse, testResponse))
@@ -78,7 +78,7 @@ func TestRequestHelpers_post(t *testing.T) {
 }
 
 func TestRequestHelpers_postNoOptions(t *testing.T) {
-	client := testutil.CreateMockClient(t, NewClient)
+	client := testutil.CreateMockClientWithError(t, NewClient)
 
 	httpmock.RegisterRegexpResponder("POST", testutil.MockRequestURL("/foo/bar"),
 		testutil.MockRequestBodyValidateNoBody(t, testResponse))
@@ -98,7 +98,7 @@ func TestRequestHelpers_postNoOptions(t *testing.T) {
 }
 
 func TestRequestHelpers_put(t *testing.T) {
-	client := testutil.CreateMockClient(t, NewClient)
+	client := testutil.CreateMockClientWithError(t, NewClient)
 
 	httpmock.RegisterRegexpResponder("PUT", testutil.MockRequestURL("/foo/bar"),
 		testutil.MockRequestBodyValidate(t, testResponse, testResponse))
@@ -119,7 +119,7 @@ func TestRequestHelpers_put(t *testing.T) {
 }
 
 func TestRequestHelpers_putNoOptions(t *testing.T) {
-	client := testutil.CreateMockClient(t, NewClient)
+	client := testutil.CreateMockClientWithError(t, NewClient)
 
 	httpmock.RegisterRegexpResponder("PUT", testutil.MockRequestURL("/foo/bar"),
 		testutil.MockRequestBodyValidateNoBody(t, testResponse))
@@ -139,7 +139,7 @@ func TestRequestHelpers_putNoOptions(t *testing.T) {
 }
 
 func TestRequestHelpers_delete(t *testing.T) {
-	client := testutil.CreateMockClient(t, NewClient)
+	client := testutil.CreateMockClientWithError(t, NewClient)
 
 	httpmock.RegisterRegexpResponder("DELETE", testutil.MockRequestURL("/foo/bar/foo%20bar"),
 		httpmock.NewStringResponder(200, "{}"))
@@ -156,7 +156,7 @@ func TestRequestHelpers_delete(t *testing.T) {
 func TestRequestHelpers_paginateAll(t *testing.T) {
 	const totalResults = 4123
 
-	client := testutil.CreateMockClient(t, NewClient)
+	client := testutil.CreateMockClientWithError(t, NewClient)
 
 	numRequests := 0
 
@@ -186,7 +186,7 @@ func TestRequestHelpers_paginateAll(t *testing.T) {
 }
 
 func TestRequestHelpers_paginateSingle(t *testing.T) {
-	client := testutil.CreateMockClient(t, NewClient)
+	client := testutil.CreateMockClientWithError(t, NewClient)
 
 	numRequests := 0
 
