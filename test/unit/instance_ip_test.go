@@ -66,7 +66,9 @@ func TestInstanceIPAddress_Add(t *testing.T) {
 
 	base.MockPost("linode/instances/123/ips", fixtureData)
 
-	ip, err := base.Client.AddInstanceIPAddress(context.Background(), 123, true)
+	opts := linodego.InstanceIPAddOptions{Public: true}
+
+	ip, err := base.Client.AddInstanceIPAddress(context.Background(), 123, opts)
 	assert.NoError(t, err)
 	assert.NotNil(t, ip)
 	assert.Equal(t, "198.51.100.1", ip.Address)

@@ -380,6 +380,14 @@ type InstanceResizeOptions struct {
 	AllowAutoDiskResize *bool `json:"allow_auto_disk_resize,omitzero"`
 }
 
+type InstanceBootOptions struct {
+	ConfigID *int `json:"config_id,omitzero"`
+}
+
+type InstanceRebootOptions struct {
+	ConfigID *int `json:"config_id,omitzero"`
+}
+
 // InstanceMigrateOptions is an options struct used when migrating an instance
 type InstanceMigrateOptions struct {
 	Type    InstanceMigrationType `json:"type,omitzero"`
@@ -436,13 +444,7 @@ func (c *Client) DeleteInstance(ctx context.Context, linodeID int) error {
 
 // BootInstance will boot a Linode instance
 // A configID of 0 will cause Linode to choose the last/best config
-func (c *Client) BootInstance(ctx context.Context, linodeID int, configID int) error {
-	opts := make(map[string]int)
-
-	if configID != 0 {
-		opts = map[string]int{"config_id": configID}
-	}
-
+func (c *Client) BootInstance(ctx context.Context, linodeID int, opts InstanceBootOptions) error {
 	e := formatAPIPath("linode/instances/%d/boot", linodeID)
 
 	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
@@ -462,13 +464,7 @@ func (c *Client) ResetInstancePassword(ctx context.Context, linodeID int, opts I
 
 // RebootInstance reboots a Linode instance
 // A configID of 0 will cause Linode to choose the last/best config
-func (c *Client) RebootInstance(ctx context.Context, linodeID int, configID int) error {
-	opts := make(map[string]int)
-
-	if configID != 0 {
-		opts = map[string]int{"config_id": configID}
-	}
-
+func (c *Client) RebootInstance(ctx context.Context, linodeID int, opts InstanceRebootOptions) error {
 	e := formatAPIPath("linode/instances/%d/reboot", linodeID)
 
 	return doPOSTRequestNoResponseBody(ctx, c, e, opts)

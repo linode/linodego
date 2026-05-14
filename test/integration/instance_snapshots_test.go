@@ -124,7 +124,9 @@ func setupInstanceBackup(
 		t.Errorf("Error enabling Instance Backups: %v", err)
 	}
 
-	snapshot, err := client.CreateInstanceSnapshot(context.Background(), instance.ID, testSnapshotLabel)
+	opts := linodego.InstanceSnapshotCreateOptions{Label: testSnapshotLabel}
+
+	snapshot, err := client.CreateInstanceSnapshot(context.Background(), instance.ID, opts)
 	if err != nil {
 		t.Errorf("Error creating instance snapshot: %v", err)
 	}
