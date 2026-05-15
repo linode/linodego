@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/google/go-cmp/cmp"
+    
 	"github.com/linode/linodego"
 	. "github.com/linode/linodego"
 )
@@ -113,8 +113,12 @@ func TestObjectStorageKeys_Limited(t *testing.T) {
 	)
 	defer teardown()
 
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	createOpts := testBasicObjectStorageKeyCreateOpts
-	createOpts.BucketAccess = []ObjectStorageKeyBucketAccess{
+	createOpts.BucketAccess = []ObjectStorageKeyBucketAccessCreateOptions{
 		{
 			Region:      "us-east",
 			BucketName:  bucket.Label,
@@ -132,12 +136,24 @@ func TestObjectStorageKeys_Limited(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	if !objectStorageKey.Limited || !cmp.Equal(*objectStorageKey.BucketAccess, createOpts.BucketAccess) {
-		t.Errorf(
-			"objectStorageKey returned (%v) does not match objectStorageKey creation request (%v)",
-			*objectStorageKey.BucketAccess,
-			createOpts.BucketAccess,
-		)
+	if !objectStorageKey.Limited {
+		t.Errorf("expected key to be limited")
+	}
+
+	if objectStorageKey.BucketAccess == nil {
+		t.Fatalf("expected BucketAccess to be set on returned key")
+	}
+
+	// Compare values field-by-field to avoid relying on concrete types.
+	got := *objectStorageKey.BucketAccess
+	if len(got) != len(createOpts.BucketAccess) {
+		t.Fatalf("bucket access length mismatch: got %d, want %d", len(got), len(createOpts.BucketAccess))
+	}
+	for i := range got {
+		want := createOpts.BucketAccess[i]
+		if got[i].Region != want.Region || got[i].BucketName != want.BucketName || got[i].Permissions != want.Permissions {
+			t.Errorf("bucket access mismatch at index %d: got %+v, want %+v", i, got[i], want)
+		}
 	}
 }
 
@@ -145,7 +161,7 @@ func TestObjectStorageKeys_Limited_NoAccess(t *testing.T) {
 	t.Skip("skipping test due to unexpected API behavior with limited object storage keys")
 
 	createOpts := testBasicObjectStorageKeyCreateOpts
-	createOpts.BucketAccess = []ObjectStorageKeyBucketAccess{}
+	createOpts.BucketAccess = []ObjectStorageKeyBucketAccessCreateOptions{}
 
 	_, objectStorageKey, teardown, err := setupObjectStorageKey(t, createOpts, "fixtures/TestObjectStorageKeys_Limited_NoAccess", nil, nil)
 	defer teardown()
@@ -178,7 +194,7 @@ func TestObjectStorageKeys_Regional_Limited(t *testing.T) {
 	}
 
 	createOpts := testBasicObjectStorageKeyCreateOpts
-	createOpts.BucketAccess = []ObjectStorageKeyBucketAccess{
+	createOpts.BucketAccess = []ObjectStorageKeyBucketAccessCreateOptions{
 		{
 			Region:      region,
 			BucketName:  bucket.Label,
