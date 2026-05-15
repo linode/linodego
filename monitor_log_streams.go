@@ -49,10 +49,10 @@ type StreamDetails struct {
 
 // StreamDestination is a destination configured on an ACLP logs stream.
 type StreamDestination struct {
-	ID      int                     `json:"id"`
-	Label   string                  `json:"label"`
-	Type    StreamDestinationType   `json:"type"`
-	Details LogsDestinationDetails  `json:"details"`
+	ID      int                    `json:"id"`
+	Label   string                 `json:"label"`
+	Type    StreamDestinationType  `json:"type"`
+	Details LogsDestinationDetails `json:"details"`
 }
 
 // Stream represents an ACLP logs stream.

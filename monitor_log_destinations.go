@@ -141,7 +141,7 @@ const logsDestinationBaseEndpoint = "monitor/streams/destinations"
 type LogsDestinationCreateOptions struct {
 	Label   string              `json:"label"`
 	Type    LogsDestinationType `json:"type"`
-	Details interface{}         `json:"details"`
+	Details any                 `json:"details"`
 }
 
 // LogsDestinationDetailsUpdateOptions represents the details block used when updating
@@ -169,8 +169,8 @@ type LogsDestinationCustomHTTPSDetailsUpdateOptions struct {
 // Set Details to *LogsDestinationDetailsUpdateOptions for akamai_object_storage,
 // or *LogsDestinationCustomHTTPSDetailsUpdateOptions for custom_https.
 type LogsDestinationUpdateOptions struct {
-	Label   string      `json:"label,omitempty"`
-	Details interface{} `json:"details,omitempty"`
+	Label   string `json:"label,omitempty"`
+	Details any    `json:"details,omitempty"`
 }
 
 // ListLogsDestinations returns a paginated list of logs destinations.
