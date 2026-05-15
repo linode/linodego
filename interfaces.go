@@ -25,6 +25,16 @@ type InterfaceDefaultRoute struct {
 	IPv6 *bool `json:"ipv6,omitzero"`
 }
 
+type InterfaceDefaultRouteCreateOptions struct {
+	IPv4 *bool `json:"ipv4,omitzero"`
+	IPv6 *bool `json:"ipv6,omitzero"`
+}
+
+type InterfaceDefaultRouteUpdateOptions struct {
+	IPv4 *bool `json:"ipv4,omitzero"`
+	IPv6 *bool `json:"ipv6,omitzero"`
+}
+
 type PublicInterface struct {
 	IPv4 *PublicInterfaceIPv4 `json:"ipv4"`
 	IPv6 *PublicInterfaceIPv6 `json:"ipv6"`
@@ -111,18 +121,23 @@ type VLANInterface struct {
 	IPAMAddress *string `json:"ipam_address,omitzero"`
 }
 
+type VLANInterfaceCreateOptions struct {
+	VLANLabel   string  `json:"vlan_label"`
+	IPAMAddress *string `json:"ipam_address,omitzero"`
+}
+
 type LinodeInterfaceCreateOptions struct {
-	FirewallID   *int                          `json:"firewall_id,omitzero"`
-	DefaultRoute *InterfaceDefaultRoute        `json:"default_route,omitzero"`
-	Public       *PublicInterfaceCreateOptions `json:"public,omitzero"`
-	VPC          *VPCInterfaceCreateOptions    `json:"vpc,omitzero"`
-	VLAN         *VLANInterface                `json:"vlan,omitzero"`
+	FirewallID   *int                                `json:"firewall_id,omitzero"`
+	DefaultRoute *InterfaceDefaultRouteCreateOptions `json:"default_route,omitzero"`
+	Public       *PublicInterfaceCreateOptions       `json:"public,omitzero"`
+	VPC          *VPCInterfaceCreateOptions          `json:"vpc,omitzero"`
+	VLAN         *VLANInterfaceCreateOptions         `json:"vlan,omitzero"`
 }
 
 type LinodeInterfaceUpdateOptions struct {
-	DefaultRoute *InterfaceDefaultRoute        `json:"default_route,omitzero"`
-	Public       *PublicInterfaceCreateOptions `json:"public,omitzero"`
-	VPC          *VPCInterfaceUpdateOptions    `json:"vpc,omitzero"`
+	DefaultRoute *InterfaceDefaultRouteUpdateOptions `json:"default_route,omitzero"`
+	Public       *PublicInterfaceCreateOptions       `json:"public,omitzero"`
+	VPC          *VPCInterfaceUpdateOptions          `json:"vpc,omitzero"`
 }
 
 type PublicInterfaceCreateOptions struct {

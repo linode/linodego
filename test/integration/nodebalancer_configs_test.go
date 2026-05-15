@@ -284,7 +284,7 @@ func setupNodeBalancerWithVPCAndInstance(
 				{
 					Purpose:  "vpc",
 					SubnetID: &subnet.ID,
-					IPv4: &linodego.VPCIPv4{
+					IPv4: &linodego.VPCIPv4CreateOptions{
 						NAT1To1: &NAT1To1Any,
 					},
 				},
