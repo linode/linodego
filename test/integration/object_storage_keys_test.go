@@ -6,7 +6,6 @@ import (
 	"strings"
 	"testing"
 
-    
 	"github.com/linode/linodego"
 	. "github.com/linode/linodego"
 )
