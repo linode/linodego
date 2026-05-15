@@ -268,7 +268,7 @@ func mockPaginatedResponse(
 
 		return httpmock.NewJsonResponse(
 			200,
-			paginatedResponse[testResultType]{
+			PaginatedResponse[testResultType]{
 				Page:    page,
 				Pages:   int(math.Ceil(float64(len(entries)) / float64(pageSize))),
 				Results: pageSize,

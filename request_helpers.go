@@ -10,9 +10,9 @@ import (
 	"reflect"
 )
 
-// paginatedResponse represents a single response from a paginated
+// PaginatedResponse represents a single response from a paginated
 // endpoint.
-type paginatedResponse[T any] struct {
+type PaginatedResponse[T any] struct {
 	Page    int `json:"page"`
 	Pages   int `json:"pages"`
 	Results int `json:"results"`
@@ -60,7 +60,7 @@ func handlePaginatedResults[T any, O any](
 
 	// Makes a request to a particular page and appends the response to the result
 	handlePage := func(page int) error {
-		var resultType paginatedResponse[T]
+		var resultType PaginatedResponse[T]
 
 		// Override the page to be applied in createListOptionsToRequestMutator(...)
 		opts.Page = page
