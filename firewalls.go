@@ -24,7 +24,7 @@ type Firewall struct {
 	Label    string                 `json:"label"`
 	Status   FirewallStatus         `json:"status"`
 	Tags     []string               `json:"tags"`
-	Rules    FirewallRuleSet        `json:"rules"`
+	Rules    FirewallRules          `json:"rules"`
 	Entities []FirewallDeviceEntity `json:"entities"`
 	Created  *time.Time             `json:"-"`
 	Updated  *time.Time             `json:"-"`
@@ -40,7 +40,7 @@ type DevicesCreationOptions struct {
 // FirewallCreateOptions fields are those accepted by CreateFirewall
 type FirewallCreateOptions struct {
 	Label   string                 `json:"label,omitzero"`
-	Rules   FirewallRuleSet        `json:"rules"`
+	Rules   FirewallRules          `json:"rules"`
 	Tags    []string               `json:"tags,omitzero"`
 	Devices DevicesCreationOptions `json:"devices,omitzero"`
 }

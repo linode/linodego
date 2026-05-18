@@ -49,13 +49,8 @@ func TestFirewallRule_Get(t *testing.T) {
 }
 
 func TestFirewallRule_MarshalJSON(t *testing.T) {
-	ruleWithRuleset := linodego.FirewallRule{RuleSet: 51}
-	data, err := json.Marshal(ruleWithRuleset)
-	assert.NoError(t, err)
-	assert.JSONEq(t, `{"ruleset":51}`, string(data))
-
 	ipv4 := []string{"pl::vpcs:123"}
-	ruleWithoutRuleset := linodego.FirewallRule{
+	ruleWithoutRuleset := linodego.FirewallRuleSetRule{
 		Action:   "ACCEPT",
 		Label:    "allow-vpc",
 		Ports:    "443",
@@ -64,7 +59,7 @@ func TestFirewallRule_MarshalJSON(t *testing.T) {
 			IPv4: ipv4,
 		},
 	}
-	data, err = json.Marshal(ruleWithoutRuleset)
+	data, err := json.Marshal(ruleWithoutRuleset)
 	assert.NoError(t, err)
 	assert.JSONEq(t, `{
         "action":"ACCEPT",
@@ -87,7 +82,7 @@ func TestFirewallRule_Update(t *testing.T) {
 	base.MockPut(formatMockAPIPath("networking/firewalls/%d/rules", firewallID), fixtureData)
 
 	requestData := linodego.FirewallRuleSetUpdateOptions{
-		Inbound: []linodego.FirewallRule{
+		Inbound: []linodego.FirewallRuleInbound{
 			{
 				Action:      "ACCEPT",
 				Label:       "firewallrule123",
@@ -101,7 +96,7 @@ func TestFirewallRule_Update(t *testing.T) {
 			},
 		},
 		InboundPolicy: "DROP",
-		Outbound: []linodego.FirewallRule{
+		Outbound: []linodego.FirewallRuleOutbound{
 			{
 				Action:      "ACCEPT",
 				Label:       "firewallrule123",
@@ -151,8 +146,8 @@ func TestFirewallRule_GetExpansion(t *testing.T) {
 	outboundIPv4 := []string{"pl::vpcs:1234"}
 	outboundIPv6 := []string{"pl::vpcs:<current>"}
 
-	mockResponse := linodego.FirewallRuleSet{
-		Inbound: []linodego.FirewallRule{
+	mockResponse := linodego.FirewallRules{
+		Inbound: []linodego.FirewallRuleInbound{
 			{
 				Action:      "ACCEPT",
 				Label:       "accept-inbound-ssh",
@@ -166,7 +161,7 @@ func TestFirewallRule_GetExpansion(t *testing.T) {
 			},
 		},
 		InboundPolicy: "DROP",
-		Outbound: []linodego.FirewallRule{
+		Outbound: []linodego.FirewallRuleOutbound{
 			{
 				Action:      "ACCEPT",
 				Label:       "accept-outbound-ssh",

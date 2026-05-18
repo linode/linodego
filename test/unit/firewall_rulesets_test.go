@@ -110,9 +110,6 @@ func TestFirewallRuleSets_Get(t *testing.T) {
 	assert.Equal(t, ruleSetID, rs.ID)
 	assert.Equal(t, linodego.FirewallRuleSetTypeOutbound, rs.Type)
 	assert.True(t, rs.IsServiceDefined)
-	if assert.Len(t, rs.Rules, 1) {
-		assert.Equal(t, 77, rs.Rules[0].RuleSet)
-	}
 	if assert.NotNil(t, rs.Created) {
 		assert.Equal(t, time.Date(2024, time.February, 1, 1, 1, 1, 0, time.UTC), rs.Created.UTC())
 	}
@@ -128,7 +125,7 @@ func TestFirewallRuleSets_Create(t *testing.T) {
 		Label:       "allow-vpc",
 		Description: "Allow VPC ingress",
 		Type:        linodego.FirewallRuleSetTypeInbound,
-		Rules: []linodego.FirewallRule{
+		Rules: []linodego.FirewallRuleSetRule{
 			{
 				Action: "ACCEPT",
 				Addresses: linodego.NetworkAddresses{
@@ -177,7 +174,7 @@ func TestFirewallRuleSets_Update(t *testing.T) {
 	ruleSetID := 404
 	label := "updated-egress"
 	description := "Updated description"
-	rules := []linodego.FirewallRule{
+	rules := []linodego.FirewallRuleSetRule{
 		{
 			Action: "ACCEPT",
 			Addresses: linodego.NetworkAddresses{
@@ -236,7 +233,7 @@ func TestFirewallRuleSets_Delete(t *testing.T) {
 }
 
 func TestRuleSet_UnmarshalJSON(t *testing.T) {
-	var rs linodego.RuleSet
+	var rs linodego.FirewallRuleSet
 
 	raw := []byte(`{
 		"id": 42,
@@ -264,13 +261,10 @@ func TestRuleSet_UnmarshalJSON(t *testing.T) {
 	if assert.NotNil(t, rs.Deleted) {
 		assert.Equal(t, time.Date(2023, time.May, 5, 5, 5, 5, 0, time.UTC), rs.Deleted.UTC())
 	}
-	if assert.Len(t, rs.Rules, 1) {
-		assert.Equal(t, 12, rs.Rules[0].RuleSet)
-	}
 }
 
 func TestRuleSet_UnmarshalJSONServiceDefined(t *testing.T) {
-	var rs linodego.RuleSet
+	var rs linodego.FirewallRuleSet
 
 	raw := []byte(`{
 		"id": 99,

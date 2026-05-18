@@ -9,7 +9,7 @@ import (
 )
 
 var (
-	testFirewallRule = linodego.FirewallRule{
+	testFirewallRule = linodego.FirewallRuleSetRule{
 		Label:    "go-fwrule-test",
 		Action:   "ACCEPT",
 		Ports:    "22",
@@ -20,10 +20,10 @@ var (
 		},
 	}
 
-	testFirewallRuleSet = linodego.FirewallRuleSet{
-		Inbound:        []linodego.FirewallRule{testFirewallRule},
+	testFirewallRuleSet = linodego.FirewallRules{
+		Inbound:        []linodego.FirewallRuleSetRule{testFirewallRule},
 		InboundPolicy:  "ACCEPT",
-		Outbound:       []linodego.FirewallRule{testFirewallRule},
+		Outbound:       []linodego.FirewallRuleSetRule{testFirewallRule},
 		OutboundPolicy: "ACCEPT",
 	}
 )
@@ -75,7 +75,7 @@ func TestFirewallRules_Update(t *testing.T) {
 	defer teardown()
 
 	newRules := linodego.FirewallRuleSetUpdateOptions{
-		Inbound: []linodego.FirewallRule{
+		Inbound: []linodego.FirewallRuleSetRule{
 			{
 				Label:    testFirewallRule.Label + "_r",
 				Action:   "DROP",
