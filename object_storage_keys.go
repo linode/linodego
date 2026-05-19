@@ -29,11 +29,18 @@ type ObjectStorageKeyBucketAccess struct {
 	Permissions string `json:"permissions"`
 }
 
+type ObjectStorageKeyBucketAccessCreateOptions struct {
+	Region string `json:"region,omitzero"`
+
+	BucketName  string `json:"bucket_name"`
+	Permissions string `json:"permissions"`
+}
+
 // ObjectStorageKeyCreateOptions fields are those accepted by CreateObjectStorageKey
 type ObjectStorageKeyCreateOptions struct {
-	Label        string                         `json:"label"`
-	BucketAccess []ObjectStorageKeyBucketAccess `json:"bucket_access,omitzero"`
-	Regions      []string                       `json:"regions,omitzero"`
+	Label        string                                      `json:"label"`
+	BucketAccess []ObjectStorageKeyBucketAccessCreateOptions `json:"bucket_access,omitzero"`
+	Regions      []string                                    `json:"regions,omitzero"`
 }
 
 // ObjectStorageKeyUpdateOptions fields are those accepted by UpdateObjectStorageKey

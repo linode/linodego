@@ -68,10 +68,10 @@ func TestFirewall_Create(t *testing.T) {
 
 	requestData := linodego.FirewallCreateOptions{
 		Label: "firewall123",
-		Rules: linodego.FirewallRuleSet{
+		Rules: linodego.FirewallRulesCreateOptions{
 			InboundPolicy:  "DROP",
 			OutboundPolicy: "DROP",
-			Inbound: []linodego.FirewallRule{
+			Inbound: []linodego.FirewallRuleInbound{
 				{
 					Action: "ACCEPT",
 					Addresses: linodego.NetworkAddresses{
@@ -84,7 +84,7 @@ func TestFirewall_Create(t *testing.T) {
 					Protocol:    "TCP",
 				},
 			},
-			Outbound: []linodego.FirewallRule{
+			Outbound: []linodego.FirewallRuleOutbound{
 				{
 					Action: "ACCEPT",
 					Addresses: linodego.NetworkAddresses{

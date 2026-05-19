@@ -191,7 +191,7 @@ func TestInterface_UpdateVLAN(t *testing.T) {
 	base.MockPut("linode/instances/123/interfaces/123", fixtureData)
 
 	opts := linodego.LinodeInterfaceUpdateOptions{
-		DefaultRoute: &linodego.InterfaceDefaultRoute{
+		DefaultRoute: &linodego.InterfaceDefaultRouteUpdateOptions{
 			IPv6: linodego.Pointer(true),
 		},
 	}
@@ -221,7 +221,7 @@ func TestInterface_UpdateVPC(t *testing.T) {
 	base.MockPut("linode/instances/123/interfaces/456", fixtureData)
 
 	opts := linodego.LinodeInterfaceUpdateOptions{
-		DefaultRoute: &linodego.InterfaceDefaultRoute{
+		DefaultRoute: &linodego.InterfaceDefaultRouteUpdateOptions{
 			IPv4: linodego.Pointer(true),
 			IPv6: linodego.Pointer(true),
 		},

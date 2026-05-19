@@ -14,11 +14,11 @@ func TestFirewallRuleSets_CRUD(t *testing.T) {
 	ctx := context.Background()
 
 	label := "rs-51452000"
-	createOpts := linodego.RuleSetCreateOptions{
+	createOpts := linodego.FirewallRuleSetCreateOptions{
 		Label:       label,
 		Description: "Allow inbound HTTP",
 		Type:        linodego.FirewallRuleSetTypeInbound,
-		Rules: []linodego.FirewallRule{
+		Rules: []linodego.FirewallRuleSetRuleCreateOptions{
 			{
 				Label:    "allow-http",
 				Action:   "ACCEPT",
@@ -64,7 +64,7 @@ func TestFirewallRuleSets_CRUD(t *testing.T) {
 
 	updatedLabel := label + "-updated"
 	updatedDescription := "Updated description"
-	updatedRules := []linodego.FirewallRule{
+	updatedRules := []linodego.FirewallRuleSetRuleUpdateOptions{
 		{
 			Label:    "allow-https",
 			Action:   "ACCEPT",
@@ -76,7 +76,7 @@ func TestFirewallRuleSets_CRUD(t *testing.T) {
 		},
 	}
 
-	updateOpts := linodego.RuleSetUpdateOptions{
+	updateOpts := linodego.FirewallRuleSetUpdateOptions{
 		Label:       &updatedLabel,
 		Description: &updatedDescription,
 		Rules:       updatedRules,
