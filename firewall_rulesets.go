@@ -44,6 +44,24 @@ type FirewallRuleSetRule struct {
 	Addresses NetworkAddresses `json:"addresses"`
 }
 
+// FirewallRuleSetRuleCreateOptions fields accepted in Firewall Rule Set create payloads.
+type FirewallRuleSetRuleCreateOptions struct {
+	Action    string           `json:"action"`
+	Label     string           `json:"label"`
+	Ports     string           `json:"ports,omitzero"`
+	Protocol  NetworkProtocol  `json:"protocol"`
+	Addresses NetworkAddresses `json:"addresses"`
+}
+
+// FirewallRuleSetRuleUpdateOptions fields accepted in Firewall Rule Set update payloads.
+type FirewallRuleSetRuleUpdateOptions struct {
+	Action    string           `json:"action"`
+	Label     string           `json:"label"`
+	Ports     string           `json:"ports,omitzero"`
+	Protocol  NetworkProtocol  `json:"protocol"`
+	Addresses NetworkAddresses `json:"addresses"`
+}
+
 // UnmarshalJSON implements custom timestamp parsing for FirewallRuleSet.
 func (r *FirewallRuleSet) UnmarshalJSON(b []byte) error {
 	type Mask FirewallRuleSet
@@ -79,19 +97,19 @@ func (r *FirewallRuleSet) UnmarshalJSON(b []byte) error {
 
 // FirewallRuleSetCreateOptions fields accepted by CreateRuleSet.
 type FirewallRuleSetCreateOptions struct {
-	Label       string                `json:"label"`
-	Description string                `json:"description,omitzero"`
-	Type        FirewallRuleSetType   `json:"type"`
-	Rules       []FirewallRuleSetRule `json:"rules"`
+	Label       string                             `json:"label"`
+	Description string                             `json:"description,omitzero"`
+	Type        FirewallRuleSetType                `json:"type"`
+	Rules       []FirewallRuleSetRuleCreateOptions `json:"rules"`
 }
 
 // FirewallRuleSetUpdateOptions fields accepted by UpdateRuleSet.
 // Omit a top-level field to leave it unchanged. If Rules is provided, it
 // replaces the entire ordered rules array.
 type FirewallRuleSetUpdateOptions struct {
-	Label       *string               `json:"label,omitzero"`
-	Description *string               `json:"description,omitzero"`
-	Rules       []FirewallRuleSetRule `json:"rules,omitzero"`
+	Label       *string                            `json:"label,omitzero"`
+	Description *string                            `json:"description,omitzero"`
+	Rules       []FirewallRuleSetRuleUpdateOptions `json:"rules,omitzero"`
 }
 
 // ListFirewallRuleSets returns a paginated list of Rule Sets.
