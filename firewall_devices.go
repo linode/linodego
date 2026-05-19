@@ -59,7 +59,7 @@ func (device *FirewallDevice) UnmarshalJSON(b []byte) error {
 type FirewallDeviceEntity struct {
 	ID           int                   `json:"id"`
 	Type         FirewallDeviceType    `json:"type"`
-	Label        *string                `json:"label"`
+	Label        *string               `json:"label"`
 	URL          string                `json:"url"`
 	ParentEntity *FirewallDeviceEntity `json:"parent_entity"`
 }
