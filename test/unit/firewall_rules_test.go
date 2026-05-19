@@ -50,7 +50,7 @@ func TestFirewallRule_Get(t *testing.T) {
 
 func TestFirewallRule_MarshalJSON(t *testing.T) {
 	ipv4 := []string{"pl::vpcs:123"}
-	ruleWithoutRuleset := linodego.FirewallRuleSetRule{
+	ruleWithoutRuleset := linodego.FirewallRuleSetRuleCreateOptions{
 		Action:   "ACCEPT",
 		Label:    "allow-vpc",
 		Ports:    "443",
