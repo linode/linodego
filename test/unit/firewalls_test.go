@@ -9,6 +9,7 @@ import (
 	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestFirewall_List(t *testing.T) {
@@ -149,7 +150,8 @@ func TestFirewall_Create(t *testing.T) {
 	assert.NotNil(t, entity.ParentEntity)
 	assert.Equal(t, 92759172, entity.ParentEntity.ID)
 	assert.Equal(t, linodego.FirewallDeviceLinode, entity.ParentEntity.Type)
-	assert.Equal(t, "test-01", entity.ParentEntity.Label)
+	require.NotNil(t, entity.ParentEntity.Label)
+	assert.Equal(t, "test-01", *entity.ParentEntity.Label)
 	assert.Equal(t, "/v4/linode/instances/92759172", entity.ParentEntity.URL)
 	assert.Nil(t, entity.ParentEntity.ParentEntity)
 }
