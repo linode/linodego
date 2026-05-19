@@ -67,7 +67,7 @@ func TestFirewall_Create(t *testing.T) {
 
 	requestData := linodego.FirewallCreateOptions{
 		Label: "firewall123",
-		Rules: linodego.FirewallRules{
+		Rules: linodego.FirewallRulesCreateOptions{
 			InboundPolicy:  "DROP",
 			OutboundPolicy: "DROP",
 			Inbound: []linodego.FirewallRuleInbound{

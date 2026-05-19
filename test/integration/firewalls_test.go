@@ -49,7 +49,7 @@ func TestFirewalls_List_smoke(t *testing.T) {
 }
 
 func TestFirewall_Get(t *testing.T) {
-	rules := linodego.FirewallRules{
+	rules := linodego.FirewallRulesCreateOptions{
 		Inbound: []linodego.FirewallRuleInbound{
 			{
 				Label:    "linodego-fwrule-test",
@@ -90,7 +90,7 @@ func TestFirewall_Get(t *testing.T) {
 }
 
 func TestFirewall_Update(t *testing.T) {
-	rules := linodego.FirewallRules{
+	rules := linodego.FirewallRulesCreateOptions{
 		InboundPolicy: "ACCEPT",
 		Inbound: []linodego.FirewallRuleInbound{
 			{

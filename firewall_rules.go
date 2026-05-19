@@ -22,17 +22,6 @@ type NetworkAddresses struct {
 	IPv6 []string `json:"ipv6,omitzero"`
 }
 
-// A FirewallRuleSetRule is a whitelist of ports, protocols, and addresses for which traffic should be allowed.
-// The ipv4/ipv6 address lists may contain Prefix List tokens (for example, "pl::..." or "pl:system:...")
-// in addition to literal IP addresses.
-type FirewallRuleSetRule struct {
-	Action    string           `json:"action"`
-	Label     string           `json:"label"`
-	Ports     string           `json:"ports,omitzero"`
-	Protocol  NetworkProtocol  `json:"protocol"`
-	Addresses NetworkAddresses `json:"addresses"`
-}
-
 type FirewallRuleInbound struct {
 	Action      string           `json:"action"`
 	Label       string           `json:"label"`
@@ -132,8 +121,7 @@ type FirewallRules struct {
 	Version        int                    `json:"version,omitzero"`
 	Fingerprint    string                 `json:"fingerprint,omitzero"`
 }
-
-type FirewallRuleSetUpdateOptions struct {
+type FirewallRulesUpdateOptions struct {
 	Inbound        []FirewallRuleInbound  `json:"inbound"`
 	InboundPolicy  string                 `json:"inbound_policy"`
 	Outbound       []FirewallRuleOutbound `json:"outbound"`
@@ -153,7 +141,7 @@ func (c *Client) GetFirewallRulesExpansion(ctx context.Context, firewallID int) 
 }
 
 // UpdateFirewallRules updates the FirewallRules for the given Firewall
-func (c *Client) UpdateFirewallRules(ctx context.Context, firewallID int, rules FirewallRuleSetUpdateOptions) (*FirewallRules, error) {
+func (c *Client) UpdateFirewallRules(ctx context.Context, firewallID int, rules FirewallRulesUpdateOptions) (*FirewallRules, error) {
 	e := formatAPIPath("networking/firewalls/%d/rules", firewallID)
 	return doPUTRequest[FirewallRules](ctx, c, e, rules)
 }

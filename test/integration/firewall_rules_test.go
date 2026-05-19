@@ -30,7 +30,7 @@ var (
 		},
 	}
 
-	testFirewallRuleSet = linodego.FirewallRules{
+	testFirewallRuleSet = linodego.FirewallRulesCreateOptions{
 		Inbound:        []linodego.FirewallRuleInbound{testFirewallRuleInbound},
 		InboundPolicy:  "ACCEPT",
 		Outbound:       []linodego.FirewallRuleOutbound{testFirewallRuleOutbound},
@@ -84,7 +84,7 @@ func TestFirewallRules_Update(t *testing.T) {
 	}
 	defer teardown()
 
-	newRules := linodego.FirewallRuleSetUpdateOptions{
+	newRules := linodego.FirewallRulesUpdateOptions{
 		Inbound: []linodego.FirewallRuleInbound{
 			{
 				Label:    testFirewallRuleInbound.Label + "_r",

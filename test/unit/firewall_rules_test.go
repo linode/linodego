@@ -81,7 +81,7 @@ func TestFirewallRule_Update(t *testing.T) {
 	firewallID := 123
 	base.MockPut(formatMockAPIPath("networking/firewalls/%d/rules", firewallID), fixtureData)
 
-	requestData := linodego.FirewallRuleSetUpdateOptions{
+	requestData := linodego.FirewallRulesUpdateOptions{
 		Inbound: []linodego.FirewallRuleInbound{
 			{
 				Action:      "ACCEPT",

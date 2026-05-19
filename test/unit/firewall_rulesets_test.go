@@ -121,7 +121,7 @@ func TestFirewallRuleSets_Get(t *testing.T) {
 func TestFirewallRuleSets_Create(t *testing.T) {
 	client := createMockClient(t)
 
-	req := linodego.RuleSetCreateOptions{
+	req := linodego.FirewallRuleSetCreateOptions{
 		Label:       "allow-vpc",
 		Description: "Allow VPC ingress",
 		Type:        linodego.FirewallRuleSetTypeInbound,
@@ -186,7 +186,7 @@ func TestFirewallRuleSets_Update(t *testing.T) {
 		},
 	}
 
-	req := linodego.RuleSetUpdateOptions{
+	req := linodego.FirewallRuleSetUpdateOptions{
 		Label:       &label,
 		Description: &description,
 		Rules:       rules,

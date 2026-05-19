@@ -76,7 +76,7 @@ func deleteCloudFirewall() {
 	}
 }
 
-func getDefaultFirewallRuleSet(publicIPv4 string) linodego.FirewallRules {
+func getDefaultFirewallRuleSet(publicIPv4 string) linodego.FirewallRulesCreateOptions {
 	cloudFirewallRuleInbound := linodego.FirewallRuleInbound{
 		Label:     "ssh-inbound-accept-local",
 		Action:    "ACCEPT",
@@ -85,7 +85,7 @@ func getDefaultFirewallRuleSet(publicIPv4 string) linodego.FirewallRules {
 		Addresses: linodego.NetworkAddresses{IPv4: []string{publicIPv4}},
 	}
 
-	return linodego.FirewallRules{
+	return linodego.FirewallRulesCreateOptions{
 		Inbound:        []linodego.FirewallRuleInbound{cloudFirewallRuleInbound},
 		InboundPolicy:  "DROP",
 		Outbound:       []linodego.FirewallRuleOutbound{},

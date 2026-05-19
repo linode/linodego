@@ -39,10 +39,19 @@ type DevicesCreationOptions struct {
 
 // FirewallCreateOptions fields are those accepted by CreateFirewall
 type FirewallCreateOptions struct {
-	Label   string                 `json:"label,omitzero"`
-	Rules   FirewallRules          `json:"rules"`
-	Tags    []string               `json:"tags,omitzero"`
-	Devices DevicesCreationOptions `json:"devices,omitzero"`
+	Label   string                     `json:"label,omitzero"`
+	Rules   FirewallRulesCreateOptions `json:"rules"`
+	Tags    []string                   `json:"tags,omitzero"`
+	Devices DevicesCreationOptions     `json:"devices,omitzero"`
+}
+
+type FirewallRulesCreateOptions struct {
+	Inbound        []FirewallRuleInbound  `json:"inbound"`
+	InboundPolicy  string                 `json:"inbound_policy"`
+	Outbound       []FirewallRuleOutbound `json:"outbound"`
+	OutboundPolicy string                 `json:"outbound_policy"`
+	Version        int                    `json:"version,omitzero"`
+	Fingerprint    string                 `json:"fingerprint,omitzero"`
 }
 
 // FirewallUpdateOptions is an options struct used when Updating a Firewall
