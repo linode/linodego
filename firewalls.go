@@ -50,8 +50,6 @@ type FirewallRulesCreateOptions struct {
 	InboundPolicy  string                 `json:"inbound_policy"`
 	Outbound       []FirewallRuleOutbound `json:"outbound"`
 	OutboundPolicy string                 `json:"outbound_policy"`
-	Version        int                    `json:"version,omitzero"`
-	Fingerprint    string                 `json:"fingerprint,omitzero"`
 }
 
 // FirewallUpdateOptions is an options struct used when Updating a Firewall
