@@ -49,13 +49,23 @@ type VPCIPv4 struct {
 	NAT1To1 *string `json:"nat_1_1,omitzero"`
 }
 
+type VPCIPv4CreateOptions struct {
+	VPC     string  `json:"vpc,omitzero"`
+	NAT1To1 *string `json:"nat_1_1,omitzero"`
+}
+
+type VPCIPv4UpdateOptions struct {
+	VPC     string  `json:"vpc,omitzero"`
+	NAT1To1 *string `json:"nat_1_1,omitzero"`
+}
+
 type InstanceConfigInterfaceCreateOptions struct {
 	IPAMAddress string                 `json:"ipam_address,omitzero"`
 	Label       string                 `json:"label,omitzero"`
 	Purpose     ConfigInterfacePurpose `json:"purpose,omitzero"`
 	Primary     bool                   `json:"primary,omitzero"`
 	SubnetID    *int                   `json:"subnet_id,omitzero"`
-	IPv4        *VPCIPv4               `json:"ipv4,omitzero"`
+	IPv4        *VPCIPv4CreateOptions  `json:"ipv4,omitzero"`
 
 	// NOTE: IPv6 interfaces may not currently be available to all users.
 	IPv6 *InstanceConfigInterfaceCreateOptionsIPv6 `json:"ipv6,omitzero"`
@@ -87,8 +97,8 @@ type InstanceConfigInterfaceCreateOptionsIPv6Range struct {
 }
 
 type InstanceConfigInterfaceUpdateOptions struct {
-	Primary bool     `json:"primary,omitzero"`
-	IPv4    *VPCIPv4 `json:"ipv4,omitzero"`
+	Primary bool                  `json:"primary,omitzero"`
+	IPv4    *VPCIPv4UpdateOptions `json:"ipv4,omitzero"`
 
 	// NOTE: IPv6 interfaces may not currently be available to all users.
 	IPv6 *InstanceConfigInterfaceUpdateOptionsIPv6 `json:"ipv6,omitzero"`
@@ -147,7 +157,7 @@ func (i InstanceConfigInterface) GetCreateOptions() InstanceConfigInterfaceCreat
 	}
 
 	if i.IPv4 != nil {
-		opts.IPv4 = &VPCIPv4{
+		opts.IPv4 = &VPCIPv4CreateOptions{
 			VPC:     i.IPv4.VPC,
 			NAT1To1: i.IPv4.NAT1To1,
 		}
@@ -189,7 +199,7 @@ func (i InstanceConfigInterface) GetUpdateOptions() InstanceConfigInterfaceUpdat
 
 	if i.Purpose == InterfacePurposeVPC {
 		if i.IPv4 != nil {
-			opts.IPv4 = &VPCIPv4{
+			opts.IPv4 = &VPCIPv4UpdateOptions{
 				VPC:     i.IPv4.VPC,
 				NAT1To1: i.IPv4.NAT1To1,
 			}

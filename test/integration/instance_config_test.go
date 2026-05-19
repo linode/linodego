@@ -89,7 +89,7 @@ func setupInstanceWithVPCAndNATOneToOne(t *testing.T, fixturesYaml string) (
 		{
 			Purpose:  InterfacePurposeVPC,
 			SubnetID: &vpcSubnet.ID,
-			IPv4: &VPCIPv4{
+			IPv4: &VPCIPv4CreateOptions{
 				NAT1To1: &NAT1To1Any,
 			},
 		},
@@ -183,7 +183,7 @@ func setupInstanceWithDualStackVPCAndNAT11(t *testing.T, fixturesYaml string) (
 		{
 			Purpose:  InterfacePurposeVPC,
 			SubnetID: &vpcSubnet.ID,
-			IPv4: &VPCIPv4{
+			IPv4: &VPCIPv4CreateOptions{
 				NAT1To1: &NAT1To1Any,
 			},
 			IPv6: &InstanceConfigInterfaceCreateOptionsIPv6{
@@ -244,7 +244,7 @@ func setupInstanceWith3Interfaces(t *testing.T, fixturesYaml string) (
 		{
 			Purpose:  InterfacePurposeVPC,
 			SubnetID: &vpcSubnet.ID,
-			IPv4: &VPCIPv4{
+			IPv4: &VPCIPv4CreateOptions{
 				NAT1To1: &NAT1To1Any,
 			},
 		},
@@ -490,7 +490,7 @@ func TestInstance_ConfigInterfaces_Update(t *testing.T) {
 		{
 			Purpose:  InterfacePurposeVPC,
 			SubnetID: &vpcSubnet.ID,
-			IPv4: &VPCIPv4{
+			IPv4: &VPCIPv4CreateOptions{
 				VPC: "192.168.0.87",
 			},
 		},
@@ -590,7 +590,7 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 	}
 
 	NAT1To1Any := "any"
-	updateOpts.IPv4 = &VPCIPv4{
+	updateOpts.IPv4 = &VPCIPv4UpdateOptions{
 		VPC:     "192.168.0.10",
 		NAT1To1: &NAT1To1Any,
 	}

@@ -18,7 +18,10 @@ var testFirewallCreateOpts = linodego.FirewallCreateOptions{
 
 // ignoreNetworkAddresses negates comparing IP addresses. Because of fixture sanitization,
 // these addresses will be changed to bogus values when running tests.
-var ignoreNetworkAddresses = cmpopts.IgnoreFields(linodego.FirewallRule{}, "Addresses")
+var ignoreNetworkAddresses = cmp.Options{
+	cmpopts.IgnoreFields(linodego.FirewallRuleInbound{}, "Addresses"),
+	cmpopts.IgnoreFields(linodego.FirewallRuleOutbound{}, "Addresses"),
+}
 
 // ignoreFirewallTimestamps negates comparing created and updated timestamps. Because of
 // fixture sanitization, these addresses will be changed to bogus values when running tests.
@@ -46,8 +49,8 @@ func TestFirewalls_List_smoke(t *testing.T) {
 }
 
 func TestFirewall_Get(t *testing.T) {
-	rules := linodego.FirewallRuleSet{
-		Inbound: []linodego.FirewallRule{
+	rules := linodego.FirewallRulesCreateOptions{
+		Inbound: []linodego.FirewallRuleInbound{
 			{
 				Label:    "linodego-fwrule-test",
 				Action:   "DROP",
@@ -87,9 +90,9 @@ func TestFirewall_Get(t *testing.T) {
 }
 
 func TestFirewall_Update(t *testing.T) {
-	rules := linodego.FirewallRuleSet{
+	rules := linodego.FirewallRulesCreateOptions{
 		InboundPolicy: "ACCEPT",
-		Inbound: []linodego.FirewallRule{
+		Inbound: []linodego.FirewallRuleInbound{
 			{
 				Label:    "linodego-fwrule-test",
 				Action:   "DROP",
