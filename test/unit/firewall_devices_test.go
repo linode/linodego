@@ -8,6 +8,7 @@ import (
 	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestFirewallDevice_List(t *testing.T) {
@@ -37,12 +38,14 @@ func TestFirewallDevice_List(t *testing.T) {
 		switch device.Entity.Type {
 		case "linode":
 			assert.Equal(t, 123, device.Entity.ID)
-			assert.Equal(t, "my-linode", device.Entity.Label)
+			require.NotNil(t, device.Entity.Label)
+			assert.Equal(t, "my-linode", *device.Entity.Label)
 			assert.Equal(t, "/v4/linode/instances/123", device.Entity.URL)
 			assert.Nil(t, device.Entity.ParentEntity)
 		case "nodebalancer":
 			assert.Equal(t, 321, device.Entity.ID)
-			assert.Equal(t, "my-nodebalancer", device.Entity.Label)
+			require.NotNil(t, device.Entity.Label)
+			assert.Equal(t, "my-nodebalancer", *device.Entity.Label)
 			assert.Equal(t, "/v4/nodebalancers/123", device.Entity.URL)
 			assert.Nil(t, device.Entity.ParentEntity)
 		default:
@@ -73,7 +76,8 @@ func TestFirewallDevice_Get(t *testing.T) {
 	assert.NotNil(t, firewallDevice.Entity)
 
 	assert.Equal(t, 123, firewallDevice.Entity.ID)
-	assert.Equal(t, "my-linode", firewallDevice.Entity.Label)
+	require.NotNil(t, firewallDevice.Entity.Label)
+	assert.Equal(t, "my-linode", *firewallDevice.Entity.Label)
 	assert.Equal(t, linodego.FirewallDeviceType("linode"), firewallDevice.Entity.Type)
 	assert.Equal(t, "/v4/linode/instances/123", firewallDevice.Entity.URL)
 	assert.Nil(t, firewallDevice.Entity.ParentEntity)
@@ -106,7 +110,8 @@ func TestFirewallDevice_Create(t *testing.T) {
 	assert.NotNil(t, firewallDevice.Entity)
 
 	assert.Equal(t, 123, firewallDevice.Entity.ID)
-	assert.Equal(t, "my-linode", firewallDevice.Entity.Label)
+	require.NotNil(t, firewallDevice.Entity.Label)
+	assert.Equal(t, "my-linode", *firewallDevice.Entity.Label)
 	assert.Equal(t, linodego.FirewallDeviceType("linode"), firewallDevice.Entity.Type)
 	assert.Equal(t, "/v4/linode/instances/123", firewallDevice.Entity.URL)
 	assert.Nil(t, firewallDevice.Entity.ParentEntity)
@@ -163,12 +168,13 @@ func TestFirewallDevice_Get_WithParentEntity(t *testing.T) {
 	assert.NotNil(t, device)
 
 	assert.Equal(t, linodego.FirewallDeviceLinodeInterface, device.Entity.Type)
-	assert.Equal(t, device.Entity.Label, "")
+	assert.Nil(t, device.Entity.Label, nil)
 
 	if assert.NotNil(t, device.Entity.ParentEntity) {
 		assert.Equal(t, 123, device.Entity.ParentEntity.ID)
 		assert.Equal(t, linodego.FirewallDeviceLinode, device.Entity.ParentEntity.Type)
-		assert.Equal(t, "my-linode", device.Entity.ParentEntity.Label)
+		require.NotNil(t, device.Entity.ParentEntity.Label)
+		assert.Equal(t, "my-linode", *device.Entity.ParentEntity.Label)
 		assert.Equal(t, "/v4/linode/instances/123", device.Entity.ParentEntity.URL)
 	}
 }
