@@ -119,10 +119,10 @@ func testRecorder(t *testing.T, fixturesYaml string, testingMode recorder.Mode, 
 		// LogsDestination that requires valid object-storage credentials).
 
 		// Object Storage access_key / secret_key (response and request bodies)
-		re := regexp.MustCompile(`"access_key": "[[:alnum:]]*"`)
+		re := regexp.MustCompile(`"access_key":\s*"[^"]*"`)
 		i.Response.Body = re.ReplaceAllString(i.Response.Body, `"access_key": "[SANITIZED]"`)
 		i.Request.Body = re.ReplaceAllString(i.Request.Body, `"access_key": "[SANITIZED]"`)
-		re = regexp.MustCompile(`"secret_key": "[[:alnum:]]*"`)
+		re = regexp.MustCompile(`"secret_key":\s*"[^"]*"`)
 		i.Response.Body = re.ReplaceAllString(i.Response.Body, `"secret_key": "[SANITIZED]"`)
 		i.Request.Body = re.ReplaceAllString(i.Request.Body, `"secret_key": "[SANITIZED]"`)
 
