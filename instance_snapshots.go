@@ -10,7 +10,7 @@ import (
 
 // InstanceBackupsResponse response struct for backup snapshot
 type InstanceBackupsResponse struct {
-	Automatic []*InstanceSnapshot             `json:"automatic"`
+	Automatic []InstanceSnapshot              `json:"automatic"`
 	Snapshot  *InstanceBackupSnapshotResponse `json:"snapshot"`
 }
 
@@ -32,16 +32,16 @@ type RestoreInstanceOptions struct {
 
 // InstanceSnapshot represents a linode backup snapshot
 type InstanceSnapshot struct {
-	ID        int                     `json:"id"`
-	Label     string                  `json:"label"`
-	Status    InstanceSnapshotStatus  `json:"status"`
-	Type      string                  `json:"type"`
-	Created   *time.Time              `json:"-"`
-	Updated   *time.Time              `json:"-"`
-	Finished  *time.Time              `json:"-"`
-	Configs   []string                `json:"configs"`
-	Disks     []*InstanceSnapshotDisk `json:"disks"`
-	Available bool                    `json:"available"`
+	ID        int                    `json:"id"`
+	Label     string                 `json:"label"`
+	Status    InstanceSnapshotStatus `json:"status"`
+	Type      string                 `json:"type"`
+	Created   *time.Time             `json:"-"`
+	Updated   *time.Time             `json:"-"`
+	Finished  *time.Time             `json:"-"`
+	Configs   []string               `json:"configs"`
+	Disks     []InstanceSnapshotDisk `json:"disks"`
+	Available bool                   `json:"available"`
 }
 
 // InstanceSnapshotDisk fields represent the source disk of a Snapshot

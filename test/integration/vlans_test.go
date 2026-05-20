@@ -19,7 +19,7 @@ func TestVLANs_List_smoke(t *testing.T) {
 	client, fixturesTeardown := createTestClient(t, "fixtures/TestVLANs_List")
 	defer fixturesTeardown()
 
-	var instances []*linodego.Instance
+	var instances []linodego.Instance
 	for i := 0; i < 2; i++ {
 		instance, instanceTeardown, err := createVLANInstance(t, client, fmt.Sprintf("%s-%d", instancePrefix, i), vlanName)
 		if err != nil {
@@ -27,7 +27,7 @@ func TestVLANs_List_smoke(t *testing.T) {
 		}
 		defer instanceTeardown()
 
-		instances = append(instances, instance)
+		instances = append(instances, *instance)
 	}
 
 	for _, instance := range instances {

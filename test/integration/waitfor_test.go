@@ -177,7 +177,7 @@ func TestEventPoller_Secondary(t *testing.T) {
 	}
 
 	// Create two instance disks
-	disks := make([]*linodego.InstanceDisk, 2)
+	disks := make([]linodego.InstanceDisk, 2)
 
 	for i := 0; i < 2; i++ {
 		disk, err := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
@@ -188,7 +188,7 @@ func TestEventPoller_Secondary(t *testing.T) {
 			t.Fatalf("failed to create instance disk: %s", err)
 		}
 
-		disks[i] = disk
+		disks[i] = *disk
 	}
 
 	// Poll for the first disk to be deleted

@@ -12,11 +12,11 @@ type InstanceIPAddressResponse struct {
 
 // InstanceIPv4Response contains the details of all IPv4 addresses associated with an Instance
 type InstanceIPv4Response struct {
-	Public   []*InstanceIP `json:"public"`
-	Private  []*InstanceIP `json:"private"`
-	Shared   []*InstanceIP `json:"shared"`
-	Reserved []*InstanceIP `json:"reserved"`
-	VPC      []*VPCIP      `json:"vpc"`
+	Public   []InstanceIP `json:"public"`
+	Private  []InstanceIP `json:"private"`
+	Shared   []InstanceIP `json:"shared"`
+	Reserved []InstanceIP `json:"reserved"`
+	VPC      []VPCIP      `json:"vpc"`
 }
 
 // InstanceIP represents an Instance IP with additional DNS and networking details
