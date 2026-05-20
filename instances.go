@@ -57,7 +57,7 @@ type Instance struct {
 	Backups             *InstanceBackup         `json:"backups"`
 	Image               string                  `json:"image"`
 	Group               string                  `json:"group"`
-	IPv4                []*net.IP               `json:"ipv4"`
+	IPv4                []net.IP                `json:"ipv4"`
 	IPv6                string                  `json:"ipv6"`
 	Label               string                  `json:"label"`
 	Type                string                  `json:"type"`

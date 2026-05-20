@@ -72,12 +72,12 @@ type NodeBalancerCreateOptions struct {
 	// NOTE: ClientUDPSessThrottle may not currently be available to all users.
 	ClientUDPSessThrottle *int `json:"client_udp_sess_throttle,omitzero"`
 
-	Configs    []*NodeBalancerConfigCreateOptions `json:"configs,omitzero"`
-	Tags       []string                           `json:"tags"`
-	FirewallID int                                `json:"firewall_id,omitzero"`
-	Type       NodeBalancerPlanType               `json:"type,omitzero"`
-	VPCs       []NodeBalancerVPCOptions           `json:"vpcs,omitzero"`
-	IPv4       *string                            `json:"ipv4,omitzero"`
+	Configs    []NodeBalancerConfigCreateOptions `json:"configs,omitzero"`
+	Tags       []string                          `json:"tags"`
+	FirewallID int                               `json:"firewall_id,omitzero"`
+	Type       NodeBalancerPlanType              `json:"type,omitzero"`
+	VPCs       []NodeBalancerVPCOptions          `json:"vpcs,omitzero"`
+	IPv4       *string                           `json:"ipv4,omitzero"`
 }
 
 // NodeBalancerUpdateOptions are the options permitted for UpdateNodeBalancer
