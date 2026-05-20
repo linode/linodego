@@ -69,7 +69,6 @@ func setupObjectStorageForLogs(t *testing.T, client *linodego.Client) (*linodego
 					Method:    http.MethodDelete,
 					ExpiresIn: &objectStorageObjectURLExpirySeconds,
 				})
-
 				if err != nil {
 					t.Errorf("failed to get object DELETE url: %s", err)
 					continue
@@ -280,7 +279,8 @@ func TestLogsDestination_List(t *testing.T) {
 	}
 	require.NotNil(t, found, "created destination not found in list")
 	assert.Equal(t, linodego.LogsDestinationTypeAkamaiObjectStorage, found.Type)
-	assert.Contains(t,
+	assert.Contains(
+		t,
 		[]linodego.LogsDestinationStatus{
 			linodego.LogsDestinationStatusActive,
 			linodego.LogsDestinationStatusInactive,
