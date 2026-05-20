@@ -6,16 +6,19 @@ import (
 	"time"
 
 	"github.com/linode/linodego/v2"
+	"github.com/stretchr/testify/require"
 )
 
 type volumeModifier func(*linodego.Client, *linodego.VolumeCreateOptions)
 
 func TestVolume_Create_smoke(t *testing.T) {
+	ctx := waitContext(t, 30*time.Second)
+
 	client, teardown := createTestClient(t, "fixtures/TestVolume_Create")
 	defer teardown()
 
 	createOpts := linodego.VolumeCreateOptions{
-		Label:  "go-vol-test-create",
+		Label:  "go-vol-test-create-" + randString(6, digits),
 		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes})[0],
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
@@ -28,6 +31,9 @@ func TestVolume_Create_smoke(t *testing.T) {
 
 	assertDateSet(t, volume.Created)
 	assertDateSet(t, volume.Updated)
+
+	volume, err = client.WaitForVolumeStatus(ctx, volume.ID, linodego.VolumeActive)
+	require.NoErrorf(t, err, "Error waiting for volume to be active: %v", err)
 
 	// volumes deleted too fast tend to stick, adding a few seconds to catch up
 	time.Sleep(time.Second * 5)

@@ -88,7 +88,10 @@ func TestLKECluster_Enterprise_BYOVPC_smoke(t *testing.T) {
 	// bring your own vpc
 	client, fixtureTeardown := createTestClient(t, "fixtures/TestLKECluster_Enterprise_VPC_smoke")
 
-	region := "no-osl-1"
+	region := getRegionsWithCaps(t, client, []linodego.RegionCapability{
+		linodego.CapabilityLKE,
+		linodego.CapabilityDiskEncryption,
+	})[1]
 	vpc, vpcTeardown, err := createVPC(t, client, []vpcModifier{func(l *linodego.Client, options *linodego.VPCCreateOptions) {
 		options.Region = region
 	}}...)
