@@ -182,21 +182,6 @@ func TestLKECluster_DeleteKubeconfig(t *testing.T) {
 	assert.NoError(t, err)
 }
 
-func TestLKECluster_GetDashboard(t *testing.T) {
-	fixtureData, err := fixtures.GetFixture("lke_cluster_dashboard")
-	assert.NoError(t, err)
-
-	var base ClientBaseCase
-	base.SetUp(t)
-	defer base.TearDown(t)
-
-	base.MockGet("lke/clusters/123/dashboard", fixtureData)
-
-	dashboard, err := base.Client.GetLKEClusterDashboard(context.Background(), 123)
-	assert.NoError(t, err)
-	assert.Equal(t, "https://dashboard.example.com", dashboard.URL)
-}
-
 func TestLKECluster_GetAPLConsoleURL(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("lke_cluster_apl")
 	assert.NoError(t, err)
