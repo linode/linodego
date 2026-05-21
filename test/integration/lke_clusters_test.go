@@ -94,6 +94,11 @@ func TestLKECluster_Enterprise_BYOVPC_smoke(t *testing.T) {
 	})[1]
 	vpc, vpcTeardown, err := createVPC(t, client, []vpcModifier{func(l *linodego.Client, options *linodego.VPCCreateOptions) {
 		options.Region = region
+		options.IPv6 = []linodego.VPCCreateOptionsIPv6{
+			{
+				Range: linodego.Pointer("/52"),
+			},
+		}
 	}}...)
 
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
