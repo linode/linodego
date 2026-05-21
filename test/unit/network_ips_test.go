@@ -33,12 +33,12 @@ func TestIPUpdateAddress(t *testing.T) {
 	assert.True(t, updatedIP.Reserved, "Expected Reserved to be true")
 }
 
-// TestIPUpdateAddressV2_BothFields: both "rdns" and "reserved" present in request body.
-func TestIPUpdateAddressV2_BothFields(t *testing.T) {
+// TestIPUpdateAddress_BothFields: both "rdns" and "reserved" present in request body.
+func TestIPUpdateAddress_BothFields(t *testing.T) {
 	client := createMockClient(t)
 
 	rdns := "test.example.org"
-	opts := linodego.IPAddressUpdateOptionsV2{
+	opts := linodego.IPAddressUpdateOptions{
 		RDNS:     linodego.Pointer(&rdns),
 		Reserved: linodego.Pointer(true),
 	}
@@ -54,7 +54,7 @@ func TestIPUpdateAddressV2_BothFields(t *testing.T) {
 			return httpmock.NewJsonResponse(http.StatusOK, nil)
 		})
 
-	if _, err := client.UpdateIPAddressV2(context.Background(), "192.168.1.1", opts); err != nil {
+	if _, err := client.UpdateIPAddress(context.Background(), "192.168.1.1", opts); err != nil {
 		t.Fatal(err)
 	}
 }
