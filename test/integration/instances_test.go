@@ -9,6 +9,7 @@ import (
 	"testing"
 
 	"github.com/linode/linodego"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -707,7 +708,7 @@ func TestInstance_Rebuild(t *testing.T) {
 	}
 
 	rebuildOpts := linodego.InstanceRebuildOptions{
-		Image: "linode/alpine3.19",
+		Image: "linode/alpine3.23",
 		Metadata: &linodego.InstanceMetadataOptions{
 			UserData: base64.StdEncoding.EncodeToString([]byte("cool")),
 		},
@@ -746,7 +747,7 @@ func TestInstance_RebuildWithEncryption(t *testing.T) {
 	}
 
 	rebuildOpts := linodego.InstanceRebuildOptions{
-		Image:          "linode/alpine3.19",
+		Image:          "linode/alpine3.23",
 		RootPass:       randPassword(),
 		Type:           "g6-standard-2",
 		DiskEncryption: linodego.InstanceDiskEncryptionDisabled,
@@ -1148,4 +1149,93 @@ func TestInstance_MaintenancePolicy(t *testing.T) {
 	_, err = client.UpdateInstance(context.Background(), instToUpdate.ID, updateOpts)
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "Unsupported maintenance policy slug format")
+}
+
+func TestExpectedErrorIfFieldsAuthorizedUsersAuthorizedKeysRootPassAreNotSet(t *testing.T) {
+	client, teardown := createTestClient(t,
+		"fixtures/TestInstance_TestExpectedErrorIfFieldsAuthorizedUsersAuthorizedKeysRootPassAreNotSet")
+	defer teardown()
+
+	region := getRegionsWithCapsAndSiteType(
+		t,
+		client,
+		[]string{linodego.CapabilityLinodes, linodego.CapabilityMaintenancePolicy},
+		"core",
+	)[0]
+	_, err := client.CreateInstance(context.Background(),
+		linodego.InstanceCreateOptions{
+			Label:    "go-test-ins-" + randLabel(),
+			Region:   region,
+			Type:     "g6-nanode-1",
+			Image:    "linode/debian12",
+			Kernel:   linodego.Pointer("linode/6.15.7-x86_64-linode169"),
+			BootSize: linodego.Pointer(9000),
+		},
+	)
+	require.Error(t, err)
+	assert.Contains(t, err.Error(), "[400] Must provide valid root_pass, authorized_keys, or authorized_users")
+}
+
+func TestCreateLinodeWithKernelAndBootSizeThenAddDiskAndRebuild(t *testing.T) {
+	client, teardown := createTestClient(t,
+		"fixtures/TestInstance_TestCreateLinodeWithKernelAndBootSizeThenAddDiskAndRebuild")
+	defer teardown()
+
+	region := getRegionsWithCapsAndSiteType(
+		t,
+		client,
+		[]string{linodego.CapabilityLinodes, linodego.CapabilityMaintenancePolicy},
+		"core",
+	)[0]
+	instance, err := client.CreateInstance(context.Background(),
+		linodego.InstanceCreateOptions{
+			Label:          "go-test-ins-" + randLabel(),
+			Region:         region,
+			Type:           "g6-nanode-1",
+			Image:          "linode/debian12",
+			Kernel:         linodego.Pointer("linode/latest-64bit"),
+			BootSize:       linodego.Pointer(8192),
+			AuthorizedKeys: []string{testSSHKeyCreateOpts.SSHKey},
+		},
+	)
+	defer func() {
+		if instance != nil {
+			err := client.DeleteInstance(context.Background(), instance.ID)
+			require.NoError(t, err)
+		}
+	}()
+	require.NoError(t, err)
+	assert.Equal(t, "linode/debian12", instance.Image)
+	_, err = client.WaitForEventFinished(
+		context.Background(),
+		instance.ID,
+		linodego.EntityLinode,
+		linodego.ActionLinodeCreate,
+		*instance.Created,
+		180,
+	)
+	require.NoErrorf(t, err, "Error waiting for instance created: %s", err)
+
+	createDiskResponse, errCreateDisk := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
+		Label:      "go-disk-test-" + randLabel(),
+		Filesystem: "ext4",
+		Image:      "linode/debian12",
+		Size:       2000,
+		RootPass:   randPassword(),
+	})
+	require.NoError(t, errCreateDisk)
+	createDiskResponse, err = client.WaitForInstanceDiskStatus(context.Background(), instance.ID, createDiskResponse.ID, linodego.DiskReady, 180)
+	require.NoError(t, err)
+	assert.Equal(t, linodego.DiskReady, createDiskResponse.Status)
+
+	rebuildResponse, errRebuild := client.RebuildInstance(context.Background(), instance.ID, linodego.InstanceRebuildOptions{
+		Image: "linode/alpine3.23",
+		Metadata: &linodego.InstanceMetadataOptions{
+			UserData: base64.StdEncoding.EncodeToString([]byte("cool")),
+		},
+		Type:           "g6-standard-2",
+		AuthorizedKeys: []string{"ecdsa-sha2-nistp"},
+	})
+	require.NoError(t, errRebuild)
+	assert.Equal(t, "linode/alpine3.23", rebuildResponse.Image)
 }
