@@ -212,7 +212,6 @@ func NewClient(hc *http.Client) (client Client, err error) {
 		SetRetryWaitTime(APISecondsPerPoll * time.Second).
 		SetPollDelay(APISecondsPerPoll * time.Second).
 		SetRetries().
-		SetLogger(createLogger()).
 		SetDebug(envDebug).
 		enableLogSanitization()
 
@@ -516,13 +515,7 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 	)
 
 	for range c.retryCount {
-		// Reset the body to the start for each retry if it's not nil
-		if params.Body != nil {
-			if _, seekErr := params.Body.Seek(0, io.SeekStart); seekErr != nil {
-				return c.ErrorAndLogf("failed to seek to the start of the body: %v", seekErr.Error())
-			}
-		}
-
+		// createRequest seeks params.Body back to the start, so it's safe to retry.
 		req, err = c.createRequest(ctx, method, endpoint, params)
 		if err != nil {
 			return err
@@ -784,9 +777,7 @@ func formatBody(body string) (string, error) {
 	}
 
 	var jsonData any
-
-	err := json.Unmarshal([]byte(body), &jsonData)
-	if err != nil {
+	if err := json.Unmarshal([]byte(body), &jsonData); err != nil {
 		return "", fmt.Errorf("error unmarshalling JSON: %w", err)
 	}
 
