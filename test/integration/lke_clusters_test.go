@@ -3,7 +3,6 @@ package integration
 import (
 	"context"
 	"fmt"
-	"net/url"
 	"reflect"
 	"testing"
 	"time"
@@ -250,32 +249,6 @@ func TestLKECluster_Kubeconfig_Delete(t *testing.T) {
 	delete_err := client.DeleteLKEClusterKubeconfig(context.Background(), lkeCluster.ID)
 	if err != nil {
 		t.Errorf("Error deleting lkeCluster Kubeconfig, got error %v", delete_err)
-	}
-}
-
-func TestLKECluster_Dashboard_Get(t *testing.T) {
-	ctx := waitContext(t, 180*time.Second)
-
-	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
-		createOpts.Label = "go-lke-test-dash"
-	}}, "fixtures/TestLKECluster_Dashboard_Get")
-	defer teardown()
-
-	_, err = client.WaitForLKEClusterStatus(ctx, lkeCluster.ID, linodego.LKEClusterReady)
-	if err != nil {
-		t.Errorf("Error waiting for LKECluster readiness: %s", err)
-	}
-	i, err := client.GetLKEClusterDashboard(context.Background(), lkeCluster.ID)
-	if err != nil {
-		t.Errorf("Error getting LKE cluster dashboard URL, expected struct, got %v and error %v", i, err)
-	}
-
-	if len(i.URL) == 0 {
-		t.Errorf("Expected an LKE cluster dashboard URL, but got empty string %v", i)
-	}
-
-	if _, err := url.ParseRequestURI(i.URL); err != nil {
-		t.Errorf("invalid url: %s", err)
 	}
 }
 

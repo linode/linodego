@@ -88,11 +88,6 @@ type LKEClusterKubeconfig struct {
 	KubeConfig string `json:"kubeconfig"` // Base64-encoded Kubeconfig file for this Cluster.
 }
 
-// LKEClusterDashboard fields are those returned by GetLKEClusterDashboard
-type LKEClusterDashboard struct {
-	URL string `json:"url"`
-}
-
 // LKEVersion fields are those returned by GetLKEVersion
 type LKEVersion struct {
 	ID string `json:"id"`
@@ -274,12 +269,6 @@ func (c *Client) GetLKEClusterKubeconfig(ctx context.Context, clusterID int) (*L
 func (c *Client) DeleteLKEClusterKubeconfig(ctx context.Context, clusterID int) error {
 	e := formatAPIPath("lke/clusters/%d/kubeconfig", clusterID)
 	return doDELETERequest(ctx, c, e)
-}
-
-// GetLKEClusterDashboard gets information about the dashboard for an LKE cluster
-func (c *Client) GetLKEClusterDashboard(ctx context.Context, clusterID int) (*LKEClusterDashboard, error) {
-	e := formatAPIPath("lke/clusters/%d/dashboard", clusterID)
-	return doGETRequest[LKEClusterDashboard](ctx, c, e)
 }
 
 // RecycleLKEClusterNodes recycles all nodes in all pools of the specified LKE Cluster.
