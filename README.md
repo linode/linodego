@@ -2,20 +2,20 @@
 
 ![Tests](https://img.shields.io/github/actions/workflow/status/linode/linodego/ci.yml?branch=main)
 [![Release](https://img.shields.io/github/v/release/linode/linodego)](https://github.com/linode/linodego/releases/latest)
-[![GoDoc](https://godoc.org/github.com/linode/linodego?status.svg)](https://godoc.org/github.com/linode/linodego)
-[![Go Report Card](https://goreportcard.com/badge/github.com/linode/linodego)](https://goreportcard.com/report/github.com/linode/linodego)
+[![GoDoc](https://godoc.org/github.com/linode/linodego/v2?status.svg)](https://godoc.org/github.com/linode/linodego/v2)
+[![Go Report Card](https://goreportcard.com/badge/github.com/linode/linodego/v2)](https://goreportcard.com/report/github.com/linode/linodego/v2)
 
 Go client for [Linode REST v4 API](https://techdocs.akamai.com/linode-api/reference/api)
 
 ## Installation
 
 ```sh
-go get -u github.com/linode/linodego
+go get -u github.com/linode/linodego/v2
 ```
 
 ## Documentation
 
-See [godoc](https://godoc.org/github.com/linode/linodego) for a complete reference.
+See [godoc](https://godoc.org/github.com/linode/linodego/v2) for a complete reference.
 
 The API generally follows the naming patterns prescribed in the [OpenAPIv3 document for Linode APIv4](https://techdocs.akamai.com/linode-api/reference/api).
 
@@ -37,7 +37,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"golang.org/x/oauth2"
 )
 
@@ -152,7 +152,7 @@ linodes, err := linodego.ListInstances(context.Background(), linodego.NewListOpt
 ### Response Caching
 
 By default, certain endpoints with static responses will be cached into memory. 
-Endpoints with cached responses are identified in their [accompanying documentation](https://pkg.go.dev/github.com/linode/linodego?utm_source=godoc).
+Endpoints with cached responses are identified in their [accompanying documentation](https://pkg.go.dev/github.com/linode/linodego/v2?utm_source=godoc).
 
 The default cache entry expiry time is `15` minutes. Certain endpoints may override this value to allow for more frequent refreshes (e.g. `client.GetRegion(...)`).
 The global cache expiry time can be customized using the `client.SetGlobalCacheExpiration(...)` method.

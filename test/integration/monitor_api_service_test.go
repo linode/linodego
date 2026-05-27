@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 )
 
 func TestMonitorAPI_Fetch_Entity_Metrics(t *testing.T) {

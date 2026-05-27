@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 )
 
 func TestEventPoller_InstancePower(t *testing.T) {

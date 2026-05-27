@@ -5,8 +5,8 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/linode/linodego"
-	. "github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
+	. "github.com/linode/linodego/v2"
 )
 
 var objectStorageBucketTestLabel = "go-bucket-test-def"

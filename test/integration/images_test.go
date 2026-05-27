@@ -8,8 +8,8 @@ import (
 	"time"
 
 	"github.com/dnaeon/go-vcr/recorder"
-	"github.com/linode/linodego"
-	. "github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
+	. "github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

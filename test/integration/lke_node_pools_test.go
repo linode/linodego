@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/linode/linodego"
-	k8scondition "github.com/linode/linodego/k8s/pkg/condition"
+	"github.com/linode/linodego/v2"
+	k8scondition "github.com/linode/linodego/v2/k8s/pkg/condition"
 )
 
 var testLKENodePoolCreateOpts = linodego.LKENodePoolCreateOptions{

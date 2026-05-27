@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 )
 
 func TestUserGrants_Update(t *testing.T) {

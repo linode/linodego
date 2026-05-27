@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 )
 
 func TestVLANs_List_smoke(t *testing.T) {

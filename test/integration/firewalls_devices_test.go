@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 )
 
 func TestFirewallDevices_List_smoke(t *testing.T) {

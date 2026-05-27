@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 )
 
 func TestNodeBalancerStats_Get(t *testing.T) {
