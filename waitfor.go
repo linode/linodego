@@ -790,9 +790,10 @@ func eventMatchesSecondary(configuredID any, e Event) bool {
 	return secondaryID == configuredID
 }
 
-// WaitForAlertDefinitionStatusReady waits for the Alert Definition to reach the ready status (not in progress)
-func (client Client) WaitForAlertDefinitionStatusReady(
+// WaitForAlertDefinitionStatus waits for the Alert Definition to reach the specified status
+func (client Client) WaitForAlertDefinitionStatus(
 	ctx context.Context,
+	status AlertDefinitionStatus,
 	serviceType string,
 	alertID int,
 	timeoutSeconds int,
@@ -811,11 +812,43 @@ func (client Client) WaitForAlertDefinitionStatusReady(
 				return alertDef, err
 			}
 
-			if alertDef.Status != AlertDefinitionStatusInProgress {
+			if alertDef.Status == status {
 				return alertDef, nil
 			}
 		case <-ctx.Done():
-			return nil, fmt.Errorf("failed to wait for AlertDefinition %d status ready: %w", alertID, ctx.Err())
+			return nil, fmt.Errorf("failed to wait for AlertDefinition %d status %s: %w", alertID, status, ctx.Err())
+		}
+	}
+}
+
+// WaitForVolumeIOReadyStatus waits for the io_ready status to verify whether the volume is
+// successfully attached to a Linode instance and ready for read and write operations
+func (client Client) WaitForVolumeIOReadyStatus(
+	ctx context.Context,
+	volumeID int,
+	status bool,
+	timeoutSeconds int,
+) (*Volume, error) {
+	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
+	defer cancel()
+
+	ticker := time.NewTicker(client.pollInterval)
+	defer ticker.Stop()
+
+	for {
+		select {
+		case <-ticker.C:
+			volume, err := client.GetVolume(ctx, volumeID)
+			if err != nil {
+				return volume, err
+			}
+
+			if volume.IOReady == status {
+				return volume, nil
+			}
+
+		case <-ctx.Done():
+			return nil, fmt.Errorf("failed to wait for Volume %d IO Ready status %t: %w", volumeID, status, ctx.Err())
 		}
 	}
 }

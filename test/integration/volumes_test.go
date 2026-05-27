@@ -244,6 +244,9 @@ func TestVolume_Update(t *testing.T) {
 	if volume.Label != updatedLabel {
 		t.Errorf("Expected volume label to be equal to updated volume label")
 	}
+	if volume.IOReady {
+		t.Errorf("Expected volume IOReady to be False, got True")
+	}
 	assertDateSet(t, volume.Created)
 	assertDateSet(t, volume.Updated)
 }

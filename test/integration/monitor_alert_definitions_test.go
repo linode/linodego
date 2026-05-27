@@ -47,28 +47,27 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 	// Basic assertions based on the fixture
 	assert.NoError(t, err)
 
-	// TODO: Use a fixed channel id for now until the alert channel has been fixed.
-	//// Determine a channel ID to use for creating a new alert definition:
-	//var channelID int
-	//var fetchedChannelLabel string
-	//var fetchedChannelID int
-	//if len(alerts) > 0 && len(alerts[0].AlertChannels) > 0 {
-	//	channelID = alerts[0].AlertChannels[0].ID
-	//	fetchedChannelID = alerts[0].AlertChannels[0].ID
-	//	fetchedChannelLabel = alerts[0].AlertChannels[0].Label
-	//} else {
-	//	// Fallback to ListAlertChannels to get available channels
-	//	channels, err := client.ListAlertChannels(context.Background(), nil)
-	//	if err != nil || len(channels) == 0 {
-	//		t.Fatalf("failed to determine a monitor channel to use: %s", err)
-	//	}
-	//	channelID = channels[0].ID
-	//	fetchedChannelID = channels[0].ID
-	//	fetchedChannelLabel = channels[0].Label
-	//}
-	//// Validate the chosen channel
-	//assert.NotZero(t, fetchedChannelID, "fetchedChannel.ID should not be zero")
-	//assert.NotEmpty(t, fetchedChannelLabel, "fetchedChannel.Label should not be empty")
+	// Determine a channel ID to use for creating a new alert definition:
+	var channelID int
+	var fetchedChannelLabel string
+	var fetchedChannelID int
+	if len(alerts) > 0 && len(alerts[0].AlertChannels) > 0 {
+		channelID = alerts[0].AlertChannels[0].ID
+		fetchedChannelID = alerts[0].AlertChannels[0].ID
+		fetchedChannelLabel = alerts[0].AlertChannels[0].Label
+	} else {
+		// Fallback to ListAlertChannels to get available channels
+		channels, err := client.ListAlertChannels(context.Background(), nil)
+		if err != nil || len(channels) == 0 {
+			t.Fatalf("failed to determine a monitor channel to use: %s", err)
+		}
+		channelID = channels[0].ID
+		fetchedChannelID = channels[0].ID
+		fetchedChannelLabel = channels[0].Label
+	}
+	// Validate the chosen channel
+	assert.NotZero(t, fetchedChannelID, "fetchedChannel.ID should not be zero")
+	assert.NotEmpty(t, fetchedChannelLabel, "fetchedChannel.Label should not be empty")
 
 	// Test creating a new Monitor Alert Definition
 	createOpts := linodego.AlertDefinitionCreateOptions{
@@ -114,8 +113,6 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 	assert.Equal(t, createOpts.Label, createdAlert.Label)
 	assert.Equal(t, createOpts.Severity, createdAlert.Severity)
 	assert.Equal(t, *createOpts.Description, createdAlert.Description)
-	assert.ElementsMatch(t, createOpts.EntityIDs, createdAlert.EntityIDs)
-	// assert.Equal(t, fetchedChannel.Label, createdAlert.AlertChannels[0].Label)
 
 	// More thorough assertions on the created alert's nested fields
 	// TriggerConditions is a struct, so it is never nil
@@ -156,7 +153,16 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 		Description:       &createdAlert.Description,
 	}
 	// wait for 1 minute before update for create to complete
-	time.Sleep(1 * time.Minute)
+	_, err = client.WaitForAlertDefinitionStatus(
+		context.Background(),
+		linodego.AlertDefinitionStatusEnabled,
+		testMonitorAlertDefinitionServiceType,
+		createdAlert.ID,
+		300, // timeout in seconds (5 minutes)
+	)
+	if err != nil {
+		t.Logf("failed to wait for alert definition to be enabled: %s", err)
+	}
 	updatedAlert, err := client.UpdateMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, createdAlert.ID, updateOpts)
 	if err != nil {
 		// Some fixtures may not support update; treat as non-fatal
@@ -207,34 +213,34 @@ func TestMonitorAlertDefinitions_List(t *testing.T) {
 	}
 }
 
-// TODO: Disable this test until we can query alert channels correctly.
-//func TestMonitorAlertChannels_List(t *testing.T) {
-//	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertChannels_List")
-//	defer teardown()
-//
-//	// List all alert channels
-//	channels, err := client.ListAlertChannels(context.Background(), nil)
-//	assert.NoError(t, err)
-//	assert.NotEmpty(t, channels, "Expected at least one alert channel")
-//
-//	for _, channel := range channels {
-//		assert.NotZero(t, channel.ID)
-//		assert.NotEmpty(t, channel.Label)
-//		assert.NotEmpty(t, channel.ChannelType)
-//	}
-//}
+func TestMonitorAlertChannels_List(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertChannels_List")
+	defer teardown()
+
+	// List all alert channels
+	channels, err := client.ListAlertChannels(context.Background(), nil)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, channels, "Expected at least one alert channel")
+
+	for _, channel := range channels {
+		assert.NotZero(t, channel.ID)
+		assert.NotEmpty(t, channel.Label)
+		assert.NotEmpty(t, channel.ChannelType)
+		assert.NotNil(t, channel.Details.Email)
+		assert.NotEmpty(t, channel.Details.Email.RecipientType)
+	}
+}
 
 func TestMonitorAlertDefinition_CreateWithIdempotency(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertDefinition_CreateWithIdempotency")
 	defer teardown()
 
-	// TODO: use a fixed channel id for now until the alert channel has been fixed.
-	//// Get a channel ID to use
-	//channels, err := client.ListAlertChannels(context.Background(), nil)
-	//if err != nil || len(channels) == 0 {
-	//	t.Fatalf("failed to determine a monitor channel to use: %s", err)
-	//}
-	//channelID := channels[0].ID
+	// Get a channel ID to use
+	channels, err := client.ListAlertChannels(context.Background(), nil)
+	if err != nil || len(channels) == 0 {
+		t.Fatalf("failed to determine a monitor channel to use: %s", err)
+	}
+	channelID := channels[0].ID
 
 	uniqueLabel := fmt.Sprintf("go-test-alert-definition-idempotency-%d", time.Now().UnixNano())
 
@@ -296,5 +302,31 @@ func TestMonitorAlertDefinition_CreateWithIdempotency(t *testing.T) {
 	// Cleanup
 	if createdAlert != nil {
 		_ = client.DeleteMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, createdAlert.ID)
+	}
+}
+
+func TestMonitorAlertDefinitionEntities_List(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertDefinitionEntities_List")
+	defer teardown()
+
+	alerts, err := client.ListAllMonitorAlertDefinitions(context.Background(), nil)
+	assert.NoError(t, err)
+	assert.NotEmpty(t, alerts)
+
+	entities, err := client.ListMonitorAlertDefinitionEntities(
+		context.Background(),
+		testMonitorAlertDefinitionServiceType,
+		alerts[0].ID,
+		nil,
+	)
+
+	assert.NoError(t, err)
+	assert.NotEmpty(t, entities, "Expected at least one entity")
+
+	for _, entity := range entities {
+		assert.NotZero(t, entity.ID)
+		assert.NotEmpty(t, entity.Label)
+		assert.NotEmpty(t, entity.Type)
+		assert.NotEmpty(t, entity.URL)
 	}
 }

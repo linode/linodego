@@ -2,6 +2,7 @@ package unit
 
 import (
 	"context"
+	"fmt"
 	"testing"
 
 	"github.com/linode/linodego"
@@ -66,25 +67,56 @@ func String(s string) *string {
 }
 
 func TestNodeBalancer_Get(t *testing.T) {
-	fixtureData, err := fixtures.GetFixture("nodebalancer_get")
-	assert.NoError(t, err)
+	tests := []struct {
+		name               string
+		nodeBalancerID     int
+		fixture            string
+		expectedLKECluster *linodego.NodeBalancerLKECluster
+	}{
+		{
+			name:               "basic get",
+			nodeBalancerID:     123,
+			fixture:            "nodebalancer_get",
+			expectedLKECluster: nil,
+		},
+		{
+			name:           "get with lke_cluster",
+			nodeBalancerID: 123,
+			fixture:        "nodebalancer_get_with_lke_cluster",
+			expectedLKECluster: &linodego.NodeBalancerLKECluster{
+				ID:    1234,
+				Type:  "lkecluster",
+				Label: "test-cluster",
+				URL:   "/v4/lke/clusters/1234",
+			},
+		},
+	}
 
-	var base ClientBaseCase
-	base.SetUp(t)
-	defer base.TearDown(t)
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			fixtureData, err := fixtures.GetFixture(tt.fixture)
+			assert.NoError(t, err)
 
-	// Mock the GET request with the fixture response
-	base.MockGet("nodebalancers/123", fixtureData)
+			var base ClientBaseCase
+			base.SetUp(t)
+			defer base.TearDown(t)
 
-	nodebalancer, err := base.Client.GetNodeBalancer(context.Background(), 123)
-	assert.NoError(t, err)
+			// Mock the GET request with the fixture response
+			base.MockGet(fmt.Sprintf("nodebalancers/%d", tt.nodeBalancerID), fixtureData)
 
-	assert.Equal(t, 123, nodebalancer.ID, "Expected NodeBalancer ID to match")
-	assert.Equal(t, "Existing NodeBalancer", *nodebalancer.Label, "Expected NodeBalancer label to match")
-	assert.Equal(t, "us-west", nodebalancer.Region, "Expected NodeBalancer region to match")
-	assert.Equal(t, linodego.NBTypePremium40GB, nodebalancer.Type)
-	assert.Equal(t, linodego.NodeBalancerVPCFrontendAddressTypeVPC, nodebalancer.FrontendAddressType)
-	assert.Equal(t, 456, *nodebalancer.FrontendVPCSubnetID)
+			nodebalancer, err := base.Client.GetNodeBalancer(context.Background(), tt.nodeBalancerID)
+			assert.NoError(t, err)
+
+			assert.Equal(t, tt.nodeBalancerID, nodebalancer.ID, "Expected NodeBalancer ID to match")
+			assert.Equal(t, "Existing NodeBalancer", *nodebalancer.Label, "Expected NodeBalancer label to match")
+			assert.Equal(t, "us-west", nodebalancer.Region, "Expected NodeBalancer region to match")
+			assert.Equal(t, []linodego.LockType{linodego.LockTypeCannotDeleteWithSubresources}, nodebalancer.Locks, "Expected NodeBalancer locks to match")
+			assert.Equal(t, tt.expectedLKECluster, nodebalancer.LKECluster, "Expected NodeBalancer LKECluster to match")
+			assert.Equal(t, linodego.NBTypePremium40GB, nodebalancer.Type)
+			assert.Equal(t, linodego.NodeBalancerVPCFrontendAddressTypeVPC, nodebalancer.FrontendAddressType)
+			assert.Equal(t, 456, *nodebalancer.FrontendVPCSubnetID)
+		})
+	}
 }
 
 func TestNodeBalancer_List(t *testing.T) {
@@ -108,6 +140,8 @@ func TestNodeBalancer_List(t *testing.T) {
 	assert.Equal(t, "NodeBalancer A", *nodebalancers[0].Label, "Expected first NodeBalancer label to match")
 	assert.Equal(t, "us-east", nodebalancers[0].Region, "Expected first NodeBalancer region to match")
 	assert.Equal(t, []string{"tag1", "tag2"}, nodebalancers[0].Tags, "Expected first NodeBalancer tags to match")
+	assert.Equal(t, []linodego.LockType{linodego.LockTypeCannotDelete}, nodebalancers[0].Locks, "Expected first NodeBalancer locks to match")
+	assert.Nil(t, nodebalancers[0].LKECluster, "Expected first NodeBalancer LKECluster to match")
 	assert.Equal(t, linodego.NBTypePremium40GB, nodebalancers[0].Type)
 	assert.Equal(t, linodego.NodeBalancerVPCFrontendAddressTypeVPC, nodebalancers[0].FrontendAddressType)
 	assert.Equal(t, 123, *nodebalancers[0].FrontendVPCSubnetID)
@@ -117,6 +151,13 @@ func TestNodeBalancer_List(t *testing.T) {
 	assert.Equal(t, "NodeBalancer B", *nodebalancers[1].Label, "Expected second NodeBalancer label to match")
 	assert.Equal(t, "us-west", nodebalancers[1].Region, "Expected second NodeBalancer region to match")
 	assert.Equal(t, []string{"tag3"}, nodebalancers[1].Tags, "Expected second NodeBalancer tags to match")
+	assert.Empty(t, nodebalancers[1].Locks, "Expected second NodeBalancer to have no locks")
+	assert.Equal(t, &linodego.NodeBalancerLKECluster{
+		ID:    1234,
+		Type:  "lkecluster",
+		Label: "test-cluster",
+		URL:   "/v4/lke/clusters/1234",
+	}, nodebalancers[1].LKECluster, "Expected second NodeBalancer LKECluster to match")
 	assert.Equal(t, linodego.NBTypePremium40GB, nodebalancers[1].Type)
 	assert.Equal(t, linodego.NodeBalancerVPCFrontendAddressTypeVPC, nodebalancers[1].FrontendAddressType)
 	assert.Equal(t, 456, *nodebalancers[1].FrontendVPCSubnetID)
@@ -144,6 +185,7 @@ func TestNodeBalancer_Update(t *testing.T) {
 	assert.Equal(t, 456, nodebalancer.ID)
 	assert.Equal(t, "Updated NodeBalancer", *nodebalancer.Label)
 	assert.Equal(t, []string{"updated", "production"}, nodebalancer.Tags)
+	assert.Equal(t, []linodego.LockType{linodego.LockTypeCannotDeleteWithSubresources}, nodebalancer.Locks, "Expected NodeBalancer locks to match")
 }
 
 func TestNodeBalancer_Delete(t *testing.T) {

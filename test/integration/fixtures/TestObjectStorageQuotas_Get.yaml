@@ -17,7 +17,8 @@ interactions:
     body: '{"quota_id": "obj-objects-us-ord-1.linodeobjects.com", "quota_name": "max_objects",
       "endpoint_type": "E1", "s3_endpoint": "us-ord-1.linodeobjects.com", "description":
       "Maximum number of objects this customer is allowed to have on this endpoint",
-      "quota_limit": 100000000, "resource_metric": "object"}'
+      "quota_limit": 100000000, "resource_metric": "object", "quota_type": "obj-objects",
+      "has_usage": true}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
