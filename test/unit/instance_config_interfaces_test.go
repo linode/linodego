@@ -75,7 +75,7 @@ func TestInstanceConfigInterface_Create(t *testing.T) {
 		Purpose:  linodego.InterfacePurposeVPC,
 		Primary:  true,
 		SubnetID: &subnetID,
-		IPv4: &linodego.VPCIPv4{
+		IPv4: &linodego.VPCIPv4CreateOptions{
 			NAT1To1: &nat1to1,
 		},
 		IPRanges: []string{"192.168.1.0/24"},
@@ -111,10 +111,10 @@ func TestInstanceConfigInterface_Update(t *testing.T) {
 
 	updateOptions := linodego.InstanceConfigInterfaceUpdateOptions{
 		Primary: true,
-		IPv4: &linodego.VPCIPv4{
+		IPv4: &linodego.VPCIPv4UpdateOptions{
 			NAT1To1: &nat1to1,
 		},
-		IPRanges: &ipRanges,
+		IPRanges: ipRanges,
 	}
 
 	base.MockPut("linode/instances/123/configs/456/interfaces/1", fixtureData)

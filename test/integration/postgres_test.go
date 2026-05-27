@@ -12,7 +12,9 @@ import (
 )
 
 func TestDatabase_Postgres_Suite(t *testing.T) {
-	client, database, teardown, err := setupPostgresDatabase(t, nil, "fixtures/TestDatabase_Postgres_Suite")
+	ctx := waitContext(t, 14160*time.Second)
+
+	client, database, teardown, err := setupPostgresDatabase(t, ctx, nil, "fixtures/TestDatabase_Postgres_Suite")
 	if err != nil {
 		t.Error(err)
 	}
@@ -55,7 +57,7 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 
 	updatedLabel := database.Label + "-updated"
 	opts := linodego.PostgresUpdateOptions{
-		AllowList: &allowList,
+		AllowList: allowList,
 		Label:     updatedLabel,
 		Updates:   &updatedWindow,
 	}
@@ -64,7 +66,7 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 		t.Errorf("failed to update db %d: %v", database.ID, err)
 	}
 
-	waitForDatabaseUpdated(t, client, db.ID, linodego.DatabaseEngineTypePostgres, db.Created)
+	waitForDatabaseUpdated(t, ctx, client, db.ID, linodego.DatabaseEngineTypePostgres, db.Created)
 
 	if db.ID != database.ID {
 		t.Errorf("updated db does not match original id")
@@ -121,15 +123,15 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 
 	// Wait for the DB to enter updating status
 	if err := client.WaitForDatabaseStatus(
-		context.Background(), database.ID, linodego.DatabaseEngineTypePostgres,
-		linodego.DatabaseStatusUpdating, 240); err != nil {
+		ctx, database.ID, linodego.DatabaseEngineTypePostgres,
+		linodego.DatabaseStatusUpdating); err != nil {
 		t.Fatalf("failed to wait for database updating: %s", err)
 	}
 
 	// Wait for the DB to re-enter active status
 	if err := client.WaitForDatabaseStatus(
-		context.Background(), database.ID, linodego.DatabaseEngineTypePostgres,
-		linodego.DatabaseStatusActive, 2400); err != nil {
+		ctx, database.ID, linodego.DatabaseEngineTypePostgres,
+		linodego.DatabaseStatusActive); err != nil {
 		t.Fatalf("failed to wait for database updating: %s", err)
 	}
 
@@ -139,8 +141,8 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 
 	// Wait for the DB to enter suspended status
 	if err := client.WaitForDatabaseStatus(
-		context.Background(), database.ID, linodego.DatabaseEngineTypePostgres,
-		linodego.DatabaseStatusSuspended, 2400); err != nil {
+		ctx, database.ID, linodego.DatabaseEngineTypePostgres,
+		linodego.DatabaseStatusSuspended); err != nil {
 		t.Fatalf("failed to wait for database suspended: %s", err)
 	}
 
@@ -150,8 +152,8 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 
 	// Wait for the DB to re-enter active status
 	if err := client.WaitForDatabaseStatus(
-		context.Background(), database.ID, linodego.DatabaseEngineTypePostgres,
-		linodego.DatabaseStatusActive, 2400); err != nil {
+		ctx, database.ID, linodego.DatabaseEngineTypePostgres,
+		linodego.DatabaseStatusActive); err != nil {
 		t.Fatalf("failed to wait for database active: %s", err)
 	}
 }
@@ -165,7 +167,7 @@ func createPostgresDatabase(t *testing.T, client *linodego.Client,
 
 	createOpts := linodego.PostgresCreateOptions{
 		Label:       "go-postgres-testing-def" + randLabel(),
-		Region:      getRegionsWithCaps(t, client, []string{"Managed Databases"})[0],
+		Region:      getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityDBAAS})[0],
 		Type:        "g6-nanode-1",
 		Engine:      "postgresql/14",
 		ClusterSize: 3,
@@ -211,7 +213,7 @@ func createPostgresDatabase(t *testing.T, client *linodego.Client,
 	return database, teardown, nil
 }
 
-func setupPostgresDatabase(t *testing.T, databaseMofidiers []postgresDatabaseModifier,
+func setupPostgresDatabase(t *testing.T, ctx context.Context, databaseMofidiers []postgresDatabaseModifier,
 	fixturesYaml string,
 ) (*linodego.Client, *linodego.PostgresDatabase, func(), error) {
 	t.Helper()
@@ -222,8 +224,8 @@ func setupPostgresDatabase(t *testing.T, databaseMofidiers []postgresDatabaseMod
 		t.Fatalf("failed to create db: %s", err)
 	}
 
-	_, err = client.WaitForEventFinished(context.Background(), database.ID, linodego.EntityDatabase,
-		linodego.ActionDatabaseCreate, now, 5400)
+	_, err = client.WaitForEventFinished(ctx, database.ID, linodego.EntityDatabase,
+		linodego.ActionDatabaseCreate, now)
 	if err != nil {
 		t.Fatalf("failed to wait for db create event: %s", err)
 	}

@@ -5,18 +5,21 @@ import (
 	"fmt"
 	"regexp"
 	"testing"
+	"time"
 
 	"github.com/linode/linodego"
 )
 
 func TestVLANs_List_smoke(t *testing.T) {
+	ctx := waitContext(t, 240*time.Second)
+
 	vlanName := "go-vlan-test-list"
 	instancePrefix := "go-ins-test-list"
 
 	client, fixturesTeardown := createTestClient(t, "fixtures/TestVLANs_List")
 	defer fixturesTeardown()
 
-	var instances []*linodego.Instance
+	var instances []linodego.Instance
 	for i := 0; i < 2; i++ {
 		instance, instanceTeardown, err := createVLANInstance(t, client, fmt.Sprintf("%s-%d", instancePrefix, i), vlanName)
 		if err != nil {
@@ -24,11 +27,11 @@ func TestVLANs_List_smoke(t *testing.T) {
 		}
 		defer instanceTeardown()
 
-		instances = append(instances, instance)
+		instances = append(instances, *instance)
 	}
 
 	for _, instance := range instances {
-		if _, err := client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceRunning, 240); err != nil {
+		if _, err := client.WaitForInstanceStatus(ctx, instance.ID, linodego.InstanceRunning); err != nil {
 			t.Error(err)
 		}
 	}
@@ -52,6 +55,8 @@ func TestVLANs_List_smoke(t *testing.T) {
 }
 
 func TestVLANs_GetIPAMAddress(t *testing.T) {
+	ctx := waitContext(t, 240*time.Second)
+
 	vlanName := "go-vlan-test-ipam"
 	instancePrefix := "go-ins-test-ipam"
 
@@ -64,7 +69,7 @@ func TestVLANs_GetIPAMAddress(t *testing.T) {
 	}
 	defer instanceTeardown()
 
-	_, err = client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceRunning, 240)
+	_, err = client.WaitForInstanceStatus(ctx, instance.ID, linodego.InstanceRunning)
 	if err != nil {
 		t.Error(err)
 	}
@@ -96,7 +101,7 @@ func createVLANInstance(t *testing.T, client *linodego.Client, instanceName, vla
 
 		opts.Booted = &trueBool
 		opts.Label = instanceName
-		opts.Region = getRegionsWithCaps(t, client, []string{"Vlans"})[0]
+		opts.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityVlans})[0]
 	})
 	if err != nil {
 		return nil, nil, err

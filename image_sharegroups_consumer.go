@@ -125,7 +125,7 @@ func (t *ImageShareGroupCreateTokenResponse) UnmarshalJSON(b []byte) error {
 
 // ImageShareGroupCreateTokenOptions fields are those accepted by ImageShareGroupCreateToken
 type ImageShareGroupCreateTokenOptions struct {
-	Label                  *string `json:"label,omitempty"`
+	Label                  *string `json:"label,omitzero"`
 	ValidForShareGroupUUID string  `json:"valid_for_sharegroup_uuid"`
 }
 

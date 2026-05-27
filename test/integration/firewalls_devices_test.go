@@ -56,7 +56,7 @@ func TestFirewallDevices_List_smoke(t *testing.T) {
 		if firewallDevices[0].Entity.ID != instance.ID {
 			t.Errorf("expected device entity id %d, got %d", instance.ID, firewallDevices[0].Entity.ID)
 		}
-		if firewallDevices[0].Entity.Label == "" {
+		if firewallDevices[0].Entity.Label == nil || *firewallDevices[0].Entity.Label == "" {
 			t.Error("expected non-empty device entity label")
 		}
 		if firewallDevices[0].Entity.ParentEntity != nil {
@@ -91,7 +91,7 @@ func TestFirewallDevice_Get(t *testing.T) {
 	} else if !cmp.Equal(device, firewallDevice) {
 		t.Errorf("expected device to match create result but got diffs: %s", cmp.Diff(device, firewallDevice))
 	} else {
-		if device.Entity.Label == "" {
+		if device.Entity.Label == nil || *device.Entity.Label == "" {
 			t.Error("expected non-empty device entity label")
 		}
 		if device.Entity.ParentEntity != nil {

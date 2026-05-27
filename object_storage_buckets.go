@@ -14,15 +14,7 @@ import (
 type ObjectStorageBucket struct {
 	Label string `json:"label"`
 
-	// Deprecated: The 'Cluster' field has been deprecated in favor of the 'Region' field.
-	// For example, a Cluster value of `us-mia-1` will translate to a Region value of `us-mia`.
-	//
-	// This is necessary because there are now multiple Object Storage clusters to a region.
-	//
-	// NOTE: The 'Cluster' field will always return a value similar to `<REGION>-1` (e.g., `us-mia-1`)
-	// for backward compatibility purposes.
-	Cluster string `json:"cluster"`
-	Region  string `json:"region"`
+	Region string `json:"region"`
 
 	S3Endpoint   string                    `json:"s3_endpoint"`
 	EndpointType ObjectStorageEndpointType `json:"endpoint_type"`
@@ -32,13 +24,7 @@ type ObjectStorageBucket struct {
 	Size         int                       `json:"size"`
 }
 
-// ObjectStorageBucketAccess holds Object Storage access info
 type ObjectStorageBucketAccess struct {
-	ACL         ObjectStorageACL `json:"acl"`
-	CorsEnabled bool             `json:"cors_enabled"`
-}
-
-type ObjectStorageBucketAccessV2 struct {
 	ACL         ObjectStorageACL `json:"acl"`
 	ACLXML      string           `json:"acl_xml"`
 	CorsEnabled *bool            `json:"cors_enabled"`
@@ -84,26 +70,26 @@ func (i *ObjectStorageBucket) UnmarshalJSON(b []byte) error {
 
 // ObjectStorageBucketCreateOptions fields are those accepted by CreateObjectStorageBucket
 type ObjectStorageBucketCreateOptions struct {
-	// Deprecated: The 'Cluster' field has been deprecated.
-	//
-	// Going forward, the 'Region' field will be the supported way to designate where an
-	// Object Storage Bucket should be created. For example, a 'Cluster' value of `us-mia-1`
-	// will translate to a Region value of `us-mia`.
-	Cluster string `json:"cluster,omitempty"`
-	Region  string `json:"region,omitempty"`
+	Region string `json:"region,omitzero"`
 
 	Label        string                    `json:"label"`
-	S3Endpoint   string                    `json:"s3_endpoint,omitempty"`
-	EndpointType ObjectStorageEndpointType `json:"endpoint_type,omitempty"`
+	S3Endpoint   string                    `json:"s3_endpoint,omitzero"`
+	EndpointType ObjectStorageEndpointType `json:"endpoint_type,omitzero"`
 
-	ACL         ObjectStorageACL `json:"acl,omitempty"`
-	CorsEnabled *bool            `json:"cors_enabled,omitempty"`
+	ACL         ObjectStorageACL `json:"acl,omitzero"`
+	CorsEnabled *bool            `json:"cors_enabled,omitzero"`
+}
+
+// ObjectStorageBucketModifyAccessOptions fields are those accepted by ModifyObjectStorageBucketAccess
+type ObjectStorageBucketModifyAccessOptions struct {
+	ACL         ObjectStorageACL `json:"acl,omitzero"`
+	CorsEnabled *bool            `json:"cors_enabled,omitzero"`
 }
 
 // ObjectStorageBucketUpdateAccessOptions fields are those accepted by UpdateObjectStorageBucketAccess
 type ObjectStorageBucketUpdateAccessOptions struct {
-	ACL         ObjectStorageACL `json:"acl,omitempty"`
-	CorsEnabled *bool            `json:"cors_enabled,omitempty"`
+	ACL         ObjectStorageACL `json:"acl,omitzero"`
+	CorsEnabled *bool            `json:"cors_enabled,omitzero"`
 }
 
 // ObjectStorageBucketListContentsParams fields are the query parameters for ListObjectStorageBucketContents
@@ -130,14 +116,14 @@ func (c *Client) ListObjectStorageBuckets(ctx context.Context, opts *ListOptions
 	return getPaginatedResults[ObjectStorageBucket](ctx, c, "object-storage/buckets", opts)
 }
 
-// ListObjectStorageBucketsInCluster lists all ObjectStorageBuckets of a cluster
-func (c *Client) ListObjectStorageBucketsInCluster(ctx context.Context, opts *ListOptions, clusterOrRegionID string) ([]ObjectStorageBucket, error) {
-	return getPaginatedResults[ObjectStorageBucket](ctx, c, formatAPIPath("object-storage/buckets/%s", clusterOrRegionID), opts)
+// ListObjectStorageBucketsInRegion lists all ObjectStorageBuckets in the specified region
+func (c *Client) ListObjectStorageBucketsInRegion(ctx context.Context, opts *ListOptions, regionID string) ([]ObjectStorageBucket, error) {
+	return getPaginatedResults[ObjectStorageBucket](ctx, c, formatAPIPath("object-storage/buckets/%s", regionID), opts)
 }
 
 // GetObjectStorageBucket gets the ObjectStorageBucket with the provided label
-func (c *Client) GetObjectStorageBucket(ctx context.Context, clusterOrRegionID, label string) (*ObjectStorageBucket, error) {
-	e := formatAPIPath("object-storage/buckets/%s/%s", clusterOrRegionID, label)
+func (c *Client) GetObjectStorageBucket(ctx context.Context, regionID, label string) (*ObjectStorageBucket, error) {
+	e := formatAPIPath("object-storage/buckets/%s/%s", regionID, label)
 	return doGETRequest[ObjectStorageBucket](ctx, c, e)
 }
 
@@ -146,39 +132,37 @@ func (c *Client) CreateObjectStorageBucket(ctx context.Context, opts ObjectStora
 	return doPOSTRequest[ObjectStorageBucket](ctx, c, "object-storage/buckets", opts)
 }
 
-// GetObjectStorageBucketAccess gets the current access config for a bucket
-//
-// Deprecated: use GetObjectStorageBucketAccessV2 for new implementations
-func (c *Client) GetObjectStorageBucketAccess(ctx context.Context, clusterOrRegionID, label string) (*ObjectStorageBucketAccess, error) {
-	e := formatAPIPath("object-storage/buckets/%s/%s/access", clusterOrRegionID, label)
-	return doGETRequest[ObjectStorageBucketAccess](ctx, c, e)
-}
-
-// UpdateObjectStorageBucketAccess updates the access configuration for an ObjectStorageBucket
-func (c *Client) UpdateObjectStorageBucketAccess(ctx context.Context, clusterOrRegionID, label string, opts ObjectStorageBucketUpdateAccessOptions) error {
-	e := formatAPIPath("object-storage/buckets/%s/%s/access", clusterOrRegionID, label)
+// ModifyObjectStorageBucketAccess modifies the access configuration for an ObjectStorageBucket
+func (c *Client) ModifyObjectStorageBucketAccess(ctx context.Context, regionID, label string, opts ObjectStorageBucketModifyAccessOptions) error {
+	e := formatAPIPath("object-storage/buckets/%s/%s/access", regionID, label)
 	return doPOSTRequestNoResponseBody(ctx, c, e, opts)
 }
 
-// GetObjectStorageBucketAccessV2 gets the current access config for a bucket
-func (c *Client) GetObjectStorageBucketAccessV2(ctx context.Context, clusterOrRegionID, label string) (*ObjectStorageBucketAccessV2, error) {
-	e := formatAPIPath("object-storage/buckets/%s/%s/access", clusterOrRegionID, label)
-	return doGETRequest[ObjectStorageBucketAccessV2](ctx, c, e)
+// UpdateObjectStorageBucketAccess updates the access configuration for an ObjectStorageBucket
+func (c *Client) UpdateObjectStorageBucketAccess(ctx context.Context, regionID, label string, opts ObjectStorageBucketUpdateAccessOptions) error {
+	e := formatAPIPath("object-storage/buckets/%s/%s/access", regionID, label)
+	return doPUTRequestNoResponseBody(ctx, c, e, opts)
+}
+
+// GetObjectStorageBucketAccess gets the current access config for a bucket
+func (c *Client) GetObjectStorageBucketAccess(ctx context.Context, regionID, label string) (*ObjectStorageBucketAccess, error) {
+	e := formatAPIPath("object-storage/buckets/%s/%s/access", regionID, label)
+	return doGETRequest[ObjectStorageBucketAccess](ctx, c, e)
 }
 
 // DeleteObjectStorageBucket deletes the ObjectStorageBucket with the specified label
-func (c *Client) DeleteObjectStorageBucket(ctx context.Context, clusterOrRegionID, label string) error {
-	e := formatAPIPath("object-storage/buckets/%s/%s", clusterOrRegionID, label)
+func (c *Client) DeleteObjectStorageBucket(ctx context.Context, regionID, label string) error {
+	e := formatAPIPath("object-storage/buckets/%s/%s", regionID, label)
 	return doDELETERequest(ctx, c, e)
 }
 
 // ListObjectStorageBucketContents lists the contents of the specified ObjectStorageBucket
 func (c *Client) ListObjectStorageBucketContents(
 	ctx context.Context,
-	clusterOrRegionID, label string,
+	regionID, label string,
 	params *ObjectStorageBucketListContentsParams,
 ) (*ObjectStorageBucketContent, error) {
-	basePath := formatAPIPath("object-storage/buckets/%s/%s/object-list", clusterOrRegionID, label)
+	basePath := formatAPIPath("object-storage/buckets/%s/%s/object-list", regionID, label)
 
 	queryString := ""
 

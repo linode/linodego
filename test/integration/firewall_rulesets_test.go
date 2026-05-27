@@ -14,18 +14,18 @@ func TestFirewallRuleSets_CRUD(t *testing.T) {
 	ctx := context.Background()
 
 	label := "rs-51452000"
-	createOpts := linodego.RuleSetCreateOptions{
+	createOpts := linodego.FirewallRuleSetCreateOptions{
 		Label:       label,
 		Description: "Allow inbound HTTP",
 		Type:        linodego.FirewallRuleSetTypeInbound,
-		Rules: []linodego.FirewallRule{
+		Rules: []linodego.FirewallRuleSetRuleCreateOptions{
 			{
 				Label:    "allow-http",
 				Action:   "ACCEPT",
 				Protocol: linodego.NetworkProtocol("TCP"),
 				Ports:    "80",
 				Addresses: linodego.NetworkAddresses{
-					IPv4: &[]string{"0.0.0.0/0"},
+					IPv4: []string{"0.0.0.0/0"},
 				},
 			},
 		},
@@ -64,22 +64,22 @@ func TestFirewallRuleSets_CRUD(t *testing.T) {
 
 	updatedLabel := label + "-updated"
 	updatedDescription := "Updated description"
-	updatedRules := []linodego.FirewallRule{
+	updatedRules := []linodego.FirewallRuleSetRuleUpdateOptions{
 		{
 			Label:    "allow-https",
 			Action:   "ACCEPT",
 			Protocol: linodego.NetworkProtocol("TCP"),
 			Ports:    "443",
 			Addresses: linodego.NetworkAddresses{
-				IPv6: &[]string{"::/0"},
+				IPv6: []string{"::/0"},
 			},
 		},
 	}
 
-	updateOpts := linodego.RuleSetUpdateOptions{
+	updateOpts := linodego.FirewallRuleSetUpdateOptions{
 		Label:       &updatedLabel,
 		Description: &updatedDescription,
-		Rules:       &updatedRules,
+		Rules:       updatedRules,
 	}
 
 	updated, err := client.UpdateFirewallRuleSet(ctx, ruleSet.ID, updateOpts)

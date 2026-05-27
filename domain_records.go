@@ -30,27 +30,27 @@ type DomainRecordCreateOptions struct {
 	Type     DomainRecordType `json:"type"`
 	Name     string           `json:"name"`
 	Target   string           `json:"target"`
-	Priority *int             `json:"priority,omitempty"`
-	Weight   *int             `json:"weight,omitempty"`
-	Port     *int             `json:"port,omitempty"`
-	Service  *string          `json:"service,omitempty"`
-	Protocol *string          `json:"protocol,omitempty"`
-	TTLSec   int              `json:"ttl_sec,omitempty"` // 0 is not accepted by Linode, so can be omitted
-	Tag      *string          `json:"tag,omitempty"`
+	Priority *int             `json:"priority,omitzero"`
+	Weight   *int             `json:"weight,omitzero"`
+	Port     *int             `json:"port,omitzero"`
+	Service  *string          `json:"service,omitzero"`
+	Protocol *string          `json:"protocol,omitzero"`
+	TTLSec   int              `json:"ttl_sec,omitzero"` // 0 is not accepted by Linode, so can be omitted
+	Tag      *string          `json:"tag,omitzero"`
 }
 
 // DomainRecordUpdateOptions fields are those accepted by UpdateDomainRecord
 type DomainRecordUpdateOptions struct {
-	Type     DomainRecordType `json:"type,omitempty"`
-	Name     string           `json:"name,omitempty"`
-	Target   string           `json:"target,omitempty"`
-	Priority *int             `json:"priority,omitempty"` // 0 is valid, so omit only nil values
-	Weight   *int             `json:"weight,omitempty"`   // 0 is valid, so omit only nil values
-	Port     *int             `json:"port,omitempty"`     // 0 is valid to spec, so omit only nil values
-	Service  *string          `json:"service,omitempty"`
-	Protocol *string          `json:"protocol,omitempty"`
-	TTLSec   int              `json:"ttl_sec,omitempty"` // 0 is not accepted by Linode, so can be omitted
-	Tag      *string          `json:"tag,omitempty"`
+	Type     DomainRecordType `json:"type,omitzero"`
+	Name     string           `json:"name,omitzero"`
+	Target   string           `json:"target,omitzero"`
+	Priority *int             `json:"priority,omitzero"` // 0 is valid, so omit only nil values
+	Weight   *int             `json:"weight,omitzero"`   // 0 is valid, so omit only nil values
+	Port     *int             `json:"port,omitzero"`     // 0 is valid to spec, so omit only nil values
+	Service  *string          `json:"service,omitzero"`
+	Protocol *string          `json:"protocol,omitzero"`
+	TTLSec   int              `json:"ttl_sec,omitzero"` // 0 is not accepted by Linode, so can be omitted
+	Tag      *string          `json:"tag,omitzero"`
 }
 
 // DomainRecordType constants start with RecordType and include Linode API Domain Record Types

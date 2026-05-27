@@ -4,9 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"io"
+	"net/http"
 	"time"
 
-	"github.com/go-resty/resty/v2"
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
@@ -115,18 +115,18 @@ type ImageShareEntry struct {
 
 // ImageCreateOptions fields are those accepted by CreateImage
 type ImageCreateOptions struct {
-	DiskID      int       `json:"disk_id"`
-	Label       string    `json:"label"`
-	Description string    `json:"description,omitempty"`
-	CloudInit   bool      `json:"cloud_init,omitempty"`
-	Tags        *[]string `json:"tags,omitempty"`
+	DiskID      int      `json:"disk_id"`
+	Label       string   `json:"label"`
+	Description string   `json:"description,omitzero"`
+	CloudInit   bool     `json:"cloud_init,omitzero"`
+	Tags        []string `json:"tags,omitzero"`
 }
 
 // ImageUpdateOptions fields are those accepted by UpdateImage
 type ImageUpdateOptions struct {
-	Label       string    `json:"label,omitempty"`
-	Description *string   `json:"description,omitempty"`
-	Tags        *[]string `json:"tags,omitempty"`
+	Label       string   `json:"label,omitzero"`
+	Description *string  `json:"description,omitzero"`
+	Tags        []string `json:"tags,omitzero"`
 }
 
 // ImageReplicateOptions represents the options accepted by the
@@ -143,20 +143,20 @@ type ImageCreateUploadResponse struct {
 
 // ImageCreateUploadOptions fields are those accepted by CreateImageUpload
 type ImageCreateUploadOptions struct {
-	Region      string    `json:"region"`
-	Label       string    `json:"label"`
-	Description string    `json:"description,omitempty"`
-	CloudInit   bool      `json:"cloud_init,omitempty"`
-	Tags        *[]string `json:"tags,omitempty"`
+	Region      string   `json:"region"`
+	Label       string   `json:"label"`
+	Description string   `json:"description,omitzero"`
+	CloudInit   bool     `json:"cloud_init,omitzero"`
+	Tags        []string `json:"tags,omitzero"`
 }
 
 // ImageUploadOptions fields are those accepted by UploadImage
 type ImageUploadOptions struct {
-	Region      string    `json:"region"`
-	Label       string    `json:"label"`
-	Description string    `json:"description,omitempty"`
-	CloudInit   bool      `json:"cloud_init"`
-	Tags        *[]string `json:"tags,omitempty"`
+	Region      string   `json:"region"`
+	Label       string   `json:"label"`
+	Description string   `json:"description,omitzero"`
+	CloudInit   bool     `json:"cloud_init"`
+	Tags        []string `json:"tags,omitzero"`
 	Image       io.Reader
 }
 
@@ -297,17 +297,48 @@ func (c *Client) CreateImageUpload(ctx context.Context, opts ImageCreateUploadOp
 
 // UploadImageToURL uploads the given image to the given upload URL.
 func (c *Client) UploadImageToURL(ctx context.Context, uploadURL string, image io.Reader) error {
-	// Linode-specific headers do not need to be sent to this endpoint
-	req := resty.New().SetDebug(c.resty.Debug).R().
-		SetContext(ctx).
-		SetContentLength(true).
-		SetHeader("Content-Type", "application/octet-stream").
-		SetBody(image)
+	clonedClient := *c.httpClient
+	clonedClient.Transport = http.DefaultTransport
 
-	_, err := coupleAPIErrors(req.
-		Put(uploadURL))
+	var contentLength int64 = -1
 
-	return err
+	if seeker, ok := image.(io.Seeker); ok {
+		size, err := seeker.Seek(0, io.SeekEnd)
+		if err != nil {
+			return err
+		}
+
+		_, err = seeker.Seek(0, io.SeekStart)
+		if err != nil {
+			return err
+		}
+
+		contentLength = size
+	}
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPut, uploadURL, image)
+	if err != nil {
+		return err
+	}
+
+	if contentLength >= 0 {
+		req.ContentLength = contentLength
+	}
+
+	req.Header.Set("Content-Type", "application/octet-stream")
+	req.Header.Set("User-Agent", c.userAgent)
+
+	resp, err := clonedClient.Do(req)
+	if resp != nil && resp.Body != nil {
+		defer resp.Body.Close()
+	}
+
+	_, err = coupleAPIErrors(resp, err)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // UploadImage creates and uploads an image.

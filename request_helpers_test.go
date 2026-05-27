@@ -37,7 +37,7 @@ var testResponse = testResultType{
 }
 
 func TestRequestHelpers_get(t *testing.T) {
-	client := testutil.CreateMockClient(t, NewClient)
+	client := testutil.CreateMockClientWithError(t, NewClient)
 
 	httpmock.RegisterRegexpResponder("GET", testutil.MockRequestURL("/foo/bar"),
 		httpmock.NewJsonResponderOrPanic(200, &testResponse))
@@ -57,7 +57,7 @@ func TestRequestHelpers_get(t *testing.T) {
 }
 
 func TestRequestHelpers_post(t *testing.T) {
-	client := testutil.CreateMockClient(t, NewClient)
+	client := testutil.CreateMockClientWithError(t, NewClient)
 
 	httpmock.RegisterRegexpResponder("POST", testutil.MockRequestURL("/foo/bar"),
 		testutil.MockRequestBodyValidate(t, testResponse, testResponse))
@@ -78,13 +78,10 @@ func TestRequestHelpers_post(t *testing.T) {
 }
 
 func TestRequestHelpers_postNoOptions(t *testing.T) {
-	client := testutil.CreateMockClient(t, NewClient)
+	client := testutil.CreateMockClientWithError(t, NewClient)
 
-	httpmock.RegisterRegexpResponder(
-		"POST",
-		testutil.MockRequestURL("/foo/bar"),
-		testutil.MockRequestBodyValidateNoBody(t, testResponse),
-	)
+	httpmock.RegisterRegexpResponder("POST", testutil.MockRequestURL("/foo/bar"),
+		testutil.MockRequestBodyValidateNoBody(t, testResponse))
 
 	result, err := doPOSTRequest[testResultType, any](
 		context.Background(),
@@ -101,7 +98,7 @@ func TestRequestHelpers_postNoOptions(t *testing.T) {
 }
 
 func TestRequestHelpers_put(t *testing.T) {
-	client := testutil.CreateMockClient(t, NewClient)
+	client := testutil.CreateMockClientWithError(t, NewClient)
 
 	httpmock.RegisterRegexpResponder("PUT", testutil.MockRequestURL("/foo/bar"),
 		testutil.MockRequestBodyValidate(t, testResponse, testResponse))
@@ -122,13 +119,10 @@ func TestRequestHelpers_put(t *testing.T) {
 }
 
 func TestRequestHelpers_putNoOptions(t *testing.T) {
-	client := testutil.CreateMockClient(t, NewClient)
+	client := testutil.CreateMockClientWithError(t, NewClient)
 
-	httpmock.RegisterRegexpResponder(
-		"PUT",
-		testutil.MockRequestURL("/foo/bar"),
-		testutil.MockRequestBodyValidateNoBody(t, testResponse),
-	)
+	httpmock.RegisterRegexpResponder("PUT", testutil.MockRequestURL("/foo/bar"),
+		testutil.MockRequestBodyValidateNoBody(t, testResponse))
 
 	result, err := doPUTRequest[testResultType, any](
 		context.Background(),
@@ -145,13 +139,10 @@ func TestRequestHelpers_putNoOptions(t *testing.T) {
 }
 
 func TestRequestHelpers_delete(t *testing.T) {
-	client := testutil.CreateMockClient(t, NewClient)
+	client := testutil.CreateMockClientWithError(t, NewClient)
 
-	httpmock.RegisterRegexpResponder(
-		"DELETE",
-		testutil.MockRequestURL("/foo/bar/foo%20bar"),
-		httpmock.NewStringResponder(200, "{}"),
-	)
+	httpmock.RegisterRegexpResponder("DELETE", testutil.MockRequestURL("/foo/bar/foo%20bar"),
+		httpmock.NewStringResponder(200, "{}"))
 
 	if err := doDELETERequest(
 		context.Background(),
@@ -165,18 +156,12 @@ func TestRequestHelpers_delete(t *testing.T) {
 func TestRequestHelpers_paginateAll(t *testing.T) {
 	const totalResults = 4123
 
-	client := testutil.CreateMockClient(t, NewClient)
+	client := testutil.CreateMockClientWithError(t, NewClient)
 
 	numRequests := 0
 
-	httpmock.RegisterRegexpResponder(
-		"GET",
-		testutil.MockRequestURL("/foo/bar"),
-		mockPaginatedResponse(
-			buildPaginatedEntries(totalResults),
-			&numRequests,
-		),
-	)
+	httpmock.RegisterRegexpResponder("GET", testutil.MockRequestURL("/foo/bar"),
+		mockPaginatedResponse(buildPaginatedEntries(totalResults), &numRequests))
 
 	response, err := getPaginatedResults[testResultType](
 		context.Background(),
@@ -201,18 +186,12 @@ func TestRequestHelpers_paginateAll(t *testing.T) {
 }
 
 func TestRequestHelpers_paginateSingle(t *testing.T) {
-	client := testutil.CreateMockClient(t, NewClient)
+	client := testutil.CreateMockClientWithError(t, NewClient)
 
 	numRequests := 0
 
-	httpmock.RegisterRegexpResponder(
-		"GET",
-		testutil.MockRequestURL("/foo/bar"),
-		mockPaginatedResponse(
-			buildPaginatedEntries(12),
-			&numRequests,
-		),
-	)
+	httpmock.RegisterRegexpResponder("GET", testutil.MockRequestURL("/foo/bar"),
+		mockPaginatedResponse(buildPaginatedEntries(12), &numRequests))
 
 	response, err := getPaginatedResults[testResultType](
 		context.Background(),
@@ -289,7 +268,7 @@ func mockPaginatedResponse(
 
 		return httpmock.NewJsonResponse(
 			200,
-			paginatedResponse[testResultType]{
+			PaginatedResponse[testResultType]{
 				Page:    page,
 				Pages:   int(math.Ceil(float64(len(entries)) / float64(pageSize))),
 				Results: pageSize,

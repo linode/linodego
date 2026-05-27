@@ -5,16 +5,19 @@ import (
 	"fmt"
 	"slices"
 	"testing"
+	"time"
 
 	"github.com/linode/linodego"
 	"github.com/stretchr/testify/require"
 )
 
 func TestImageSharing_Suite(t *testing.T) {
+	ctx := waitContext(t, 600*time.Second)
+
 	client, instance, teardown, err := setupInstance(
 		t, "fixtures/TestImageSharing_Suite", true,
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-			options.Region = getRegionsWithCaps(t, client, []string{"Linodes"})[0]
+			options.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes})[0]
 			options.Image = "linode/alpine3.22"
 		})
 	if err != nil {
@@ -42,7 +45,7 @@ func TestImageSharing_Suite(t *testing.T) {
 		require.NoError(t, err)
 	})
 
-	_, err = client.WaitForImageStatus(context.Background(), image.ID, linodego.ImageStatusAvailable, 600)
+	_, err = client.WaitForImageStatus(ctx, image.ID, linodego.ImageStatusAvailable)
 	require.NoError(t, err)
 
 	if image.IsShared {

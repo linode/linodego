@@ -45,31 +45,41 @@ type InstanceConfigInterfaceIPv6Range struct {
 }
 
 type VPCIPv4 struct {
-	VPC     string  `json:"vpc,omitempty"`
-	NAT1To1 *string `json:"nat_1_1,omitempty"`
+	VPC     string  `json:"vpc,omitzero"`
+	NAT1To1 *string `json:"nat_1_1,omitzero"`
+}
+
+type VPCIPv4CreateOptions struct {
+	VPC     string  `json:"vpc,omitzero"`
+	NAT1To1 *string `json:"nat_1_1,omitzero"`
+}
+
+type VPCIPv4UpdateOptions struct {
+	VPC     string  `json:"vpc,omitzero"`
+	NAT1To1 *string `json:"nat_1_1,omitzero"`
 }
 
 type InstanceConfigInterfaceCreateOptions struct {
-	IPAMAddress string                 `json:"ipam_address,omitempty"`
-	Label       string                 `json:"label,omitempty"`
-	Purpose     ConfigInterfacePurpose `json:"purpose,omitempty"`
-	Primary     bool                   `json:"primary,omitempty"`
-	SubnetID    *int                   `json:"subnet_id,omitempty"`
-	IPv4        *VPCIPv4               `json:"ipv4,omitempty"`
+	IPAMAddress string                 `json:"ipam_address,omitzero"`
+	Label       string                 `json:"label,omitzero"`
+	Purpose     ConfigInterfacePurpose `json:"purpose,omitzero"`
+	Primary     bool                   `json:"primary,omitzero"`
+	SubnetID    *int                   `json:"subnet_id,omitzero"`
+	IPv4        *VPCIPv4CreateOptions  `json:"ipv4,omitzero"`
 
 	// NOTE: IPv6 interfaces may not currently be available to all users.
-	IPv6 *InstanceConfigInterfaceCreateOptionsIPv6 `json:"ipv6,omitempty"`
+	IPv6 *InstanceConfigInterfaceCreateOptionsIPv6 `json:"ipv6,omitzero"`
 
-	IPRanges []string `json:"ip_ranges,omitempty"`
+	IPRanges []string `json:"ip_ranges,omitzero"`
 }
 
 // InstanceConfigInterfaceCreateOptionsIPv6 represents the IPv6 configuration of a Linode interface
 // specified during creation.
 // NOTE: IPv6 interfaces may not currently be available to all users.
 type InstanceConfigInterfaceCreateOptionsIPv6 struct {
-	SLAAC    []InstanceConfigInterfaceCreateOptionsIPv6SLAAC `json:"slaac,omitempty"`
-	Ranges   []InstanceConfigInterfaceCreateOptionsIPv6Range `json:"ranges,omitempty"`
-	IsPublic *bool                                           `json:"is_public,omitempty"`
+	SLAAC    []InstanceConfigInterfaceCreateOptionsIPv6SLAAC `json:"slaac,omitzero"`
+	Ranges   []InstanceConfigInterfaceCreateOptionsIPv6Range `json:"ranges,omitzero"`
+	IsPublic *bool                                           `json:"is_public,omitzero"`
 }
 
 // InstanceConfigInterfaceCreateOptionsIPv6SLAAC represents a single IPv6 SLAAC of a Linode interface
@@ -83,40 +93,40 @@ type InstanceConfigInterfaceCreateOptionsIPv6SLAAC struct {
 // specified during creation.
 // NOTE: IPv6 interfaces may not currently be available to all users.
 type InstanceConfigInterfaceCreateOptionsIPv6Range struct {
-	Range *string `json:"range,omitempty"`
+	Range *string `json:"range,omitzero"`
 }
 
 type InstanceConfigInterfaceUpdateOptions struct {
-	Primary bool     `json:"primary,omitempty"`
-	IPv4    *VPCIPv4 `json:"ipv4,omitempty"`
+	Primary bool                  `json:"primary,omitzero"`
+	IPv4    *VPCIPv4UpdateOptions `json:"ipv4,omitzero"`
 
 	// NOTE: IPv6 interfaces may not currently be available to all users.
-	IPv6 *InstanceConfigInterfaceUpdateOptionsIPv6 `json:"ipv6,omitempty"`
+	IPv6 *InstanceConfigInterfaceUpdateOptionsIPv6 `json:"ipv6,omitzero"`
 
-	IPRanges *[]string `json:"ip_ranges,omitempty"`
+	IPRanges []string `json:"ip_ranges,omitzero"`
 }
 
 // InstanceConfigInterfaceUpdateOptionsIPv6 represents the IPv6 configuration of a Linode interface
 // specified during updates.
 // NOTE: IPv6 interfaces may not currently be available to all users.
 type InstanceConfigInterfaceUpdateOptionsIPv6 struct {
-	SLAAC    *[]InstanceConfigInterfaceUpdateOptionsIPv6SLAAC `json:"slaac,omitempty"`
-	Ranges   *[]InstanceConfigInterfaceUpdateOptionsIPv6Range `json:"ranges,omitempty"`
-	IsPublic *bool                                            `json:"is_public,omitempty"`
+	SLAAC    []InstanceConfigInterfaceUpdateOptionsIPv6SLAAC `json:"slaac,omitzero"`
+	Ranges   []InstanceConfigInterfaceUpdateOptionsIPv6Range `json:"ranges,omitzero"`
+	IsPublic *bool                                           `json:"is_public,omitzero"`
 }
 
 // InstanceConfigInterfaceUpdateOptionsIPv6SLAAC represents a single IPv6 SLAAC of a Linode interface
 // specified during updates.
 // NOTE: IPv6 interfaces may not currently be available to all users.
 type InstanceConfigInterfaceUpdateOptionsIPv6SLAAC struct {
-	Range *string `json:"range,omitempty"`
+	Range *string `json:"range,omitzero"`
 }
 
 // InstanceConfigInterfaceUpdateOptionsIPv6Range represents a single IPv6 ranges of a Linode interface
 // specified during updates.
 // NOTE: IPv6 interfaces may not currently be available to all users.
 type InstanceConfigInterfaceUpdateOptionsIPv6Range struct {
-	Range *string `json:"range,omitempty"`
+	Range *string `json:"range,omitzero"`
 }
 
 type InstanceConfigInterfacesReorderOptions struct {
@@ -147,7 +157,7 @@ func (i InstanceConfigInterface) GetCreateOptions() InstanceConfigInterfaceCreat
 	}
 
 	if i.IPv4 != nil {
-		opts.IPv4 = &VPCIPv4{
+		opts.IPv4 = &VPCIPv4CreateOptions{
 			VPC:     i.IPv4.VPC,
 			NAT1To1: i.IPv4.NAT1To1,
 		}
@@ -189,7 +199,7 @@ func (i InstanceConfigInterface) GetUpdateOptions() InstanceConfigInterfaceUpdat
 
 	if i.Purpose == InterfacePurposeVPC {
 		if i.IPv4 != nil {
-			opts.IPv4 = &VPCIPv4{
+			opts.IPv4 = &VPCIPv4UpdateOptions{
 				VPC:     i.IPv4.VPC,
 				NAT1To1: i.IPv4.NAT1To1,
 			}
@@ -217,8 +227,8 @@ func (i InstanceConfigInterface) GetUpdateOptions() InstanceConfigInterfaceUpdat
 			)
 
 			opts.IPv6 = &InstanceConfigInterfaceUpdateOptionsIPv6{
-				SLAAC:    &newSLAAC,
-				Ranges:   &newRanges,
+				SLAAC:    newSLAAC,
+				Ranges:   newRanges,
 				IsPublic: copyValue(ipv6.IsPublic),
 			}
 		}
@@ -230,7 +240,7 @@ func (i InstanceConfigInterface) GetUpdateOptions() InstanceConfigInterfaceUpdat
 		copiedIPRanges := make([]string, len(i.IPRanges))
 		copy(copiedIPRanges, i.IPRanges)
 
-		opts.IPRanges = &copiedIPRanges
+		opts.IPRanges = copiedIPRanges
 	}
 
 	return opts

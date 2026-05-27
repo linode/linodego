@@ -46,42 +46,42 @@ type MySQLDatabase struct {
 	Port              int                       `json:"port"`
 
 	EngineConfig   MySQLDatabaseEngineConfig `json:"engine_config"`
-	PrivateNetwork *DatabasePrivateNetwork   `json:"private_network,omitempty"`
+	PrivateNetwork *DatabasePrivateNetwork   `json:"private_network,omitzero"`
 }
 
 type MySQLDatabaseEngineConfig struct {
-	MySQL                 *MySQLDatabaseEngineConfigMySQL `json:"mysql,omitempty"`
-	BinlogRetentionPeriod *int                            `json:"binlog_retention_period,omitempty"`
+	MySQL                 *MySQLDatabaseEngineConfigMySQL `json:"mysql,omitzero"`
+	BinlogRetentionPeriod *int                            `json:"binlog_retention_period,omitzero"`
 }
 
 type MySQLDatabaseEngineConfigMySQL struct {
-	ConnectTimeout               *int     `json:"connect_timeout,omitempty"`
-	DefaultTimeZone              *string  `json:"default_time_zone,omitempty"`
-	GroupConcatMaxLen            *float64 `json:"group_concat_max_len,omitempty"`
-	InformationSchemaStatsExpiry *int     `json:"information_schema_stats_expiry,omitempty"`
-	InnoDBChangeBufferMaxSize    *int     `json:"innodb_change_buffer_max_size,omitempty"`
-	InnoDBFlushNeighbors         *int     `json:"innodb_flush_neighbors,omitempty"`
-	InnoDBFTMinTokenSize         *int     `json:"innodb_ft_min_token_size,omitempty"`
-	InnoDBFTServerStopwordTable  **string `json:"innodb_ft_server_stopword_table,omitempty"`
-	InnoDBLockWaitTimeout        *int     `json:"innodb_lock_wait_timeout,omitempty"`
-	InnoDBLogBufferSize          *int     `json:"innodb_log_buffer_size,omitempty"`
-	InnoDBOnlineAlterLogMaxSize  *int     `json:"innodb_online_alter_log_max_size,omitempty"`
-	InnoDBReadIOThreads          *int     `json:"innodb_read_io_threads,omitempty"`
-	InnoDBRollbackOnTimeout      *bool    `json:"innodb_rollback_on_timeout,omitempty"`
-	InnoDBThreadConcurrency      *int     `json:"innodb_thread_concurrency,omitempty"`
-	InnoDBWriteIOThreads         *int     `json:"innodb_write_io_threads,omitempty"`
-	InteractiveTimeout           *int     `json:"interactive_timeout,omitempty"`
-	InternalTmpMemStorageEngine  *string  `json:"internal_tmp_mem_storage_engine,omitempty"`
-	MaxAllowedPacket             *int     `json:"max_allowed_packet,omitempty"`
-	MaxHeapTableSize             *int     `json:"max_heap_table_size,omitempty"`
-	NetBufferLength              *int     `json:"net_buffer_length,omitempty"`
-	NetReadTimeout               *int     `json:"net_read_timeout,omitempty"`
-	NetWriteTimeout              *int     `json:"net_write_timeout,omitempty"`
-	SortBufferSize               *int     `json:"sort_buffer_size,omitempty"`
-	SQLMode                      *string  `json:"sql_mode,omitempty"`
-	SQLRequirePrimaryKey         *bool    `json:"sql_require_primary_key,omitempty"`
-	TmpTableSize                 *int     `json:"tmp_table_size,omitempty"`
-	WaitTimeout                  *int     `json:"wait_timeout,omitempty"`
+	ConnectTimeout               *int     `json:"connect_timeout,omitzero"`
+	DefaultTimeZone              *string  `json:"default_time_zone,omitzero"`
+	GroupConcatMaxLen            *float64 `json:"group_concat_max_len,omitzero"`
+	InformationSchemaStatsExpiry *int     `json:"information_schema_stats_expiry,omitzero"`
+	InnoDBChangeBufferMaxSize    *int     `json:"innodb_change_buffer_max_size,omitzero"`
+	InnoDBFlushNeighbors         *int     `json:"innodb_flush_neighbors,omitzero"`
+	InnoDBFTMinTokenSize         *int     `json:"innodb_ft_min_token_size,omitzero"`
+	InnoDBFTServerStopwordTable  **string `json:"innodb_ft_server_stopword_table,omitzero"`
+	InnoDBLockWaitTimeout        *int     `json:"innodb_lock_wait_timeout,omitzero"`
+	InnoDBLogBufferSize          *int     `json:"innodb_log_buffer_size,omitzero"`
+	InnoDBOnlineAlterLogMaxSize  *int     `json:"innodb_online_alter_log_max_size,omitzero"`
+	InnoDBReadIOThreads          *int     `json:"innodb_read_io_threads,omitzero"`
+	InnoDBRollbackOnTimeout      *bool    `json:"innodb_rollback_on_timeout,omitzero"`
+	InnoDBThreadConcurrency      *int     `json:"innodb_thread_concurrency,omitzero"`
+	InnoDBWriteIOThreads         *int     `json:"innodb_write_io_threads,omitzero"`
+	InteractiveTimeout           *int     `json:"interactive_timeout,omitzero"`
+	InternalTmpMemStorageEngine  *string  `json:"internal_tmp_mem_storage_engine,omitzero"`
+	MaxAllowedPacket             *int     `json:"max_allowed_packet,omitzero"`
+	MaxHeapTableSize             *int     `json:"max_heap_table_size,omitzero"`
+	NetBufferLength              *int     `json:"net_buffer_length,omitzero"`
+	NetReadTimeout               *int     `json:"net_read_timeout,omitzero"`
+	NetWriteTimeout              *int     `json:"net_write_timeout,omitzero"`
+	SortBufferSize               *int     `json:"sort_buffer_size,omitzero"`
+	SQLMode                      *string  `json:"sql_mode,omitzero"`
+	SQLRequirePrimaryKey         *bool    `json:"sql_require_primary_key,omitzero"`
+	TmpTableSize                 *int     `json:"tmp_table_size,omitzero"`
+	WaitTimeout                  *int     `json:"wait_timeout,omitzero"`
 }
 
 type MySQLDatabaseConfigInfo struct {
@@ -397,24 +397,24 @@ type MySQLCreateOptions struct {
 	Region      string   `json:"region"`
 	Type        string   `json:"type"`
 	Engine      string   `json:"engine"`
-	AllowList   []string `json:"allow_list,omitempty"`
-	ClusterSize int      `json:"cluster_size,omitempty"`
+	AllowList   []string `json:"allow_list,omitzero"`
+	ClusterSize int      `json:"cluster_size,omitzero"`
 
-	Fork           *DatabaseFork              `json:"fork,omitempty"`
-	EngineConfig   *MySQLDatabaseEngineConfig `json:"engine_config,omitempty"`
-	PrivateNetwork *DatabasePrivateNetwork    `json:"private_network,omitempty"`
+	Fork           *DatabaseFork              `json:"fork,omitzero"`
+	EngineConfig   *MySQLDatabaseEngineConfig `json:"engine_config,omitzero"`
+	PrivateNetwork *DatabasePrivateNetwork    `json:"private_network,omitzero"`
 }
 
 // MySQLUpdateOptions fields are used when altering the existing MySQL Database
 type MySQLUpdateOptions struct {
-	Label          string                     `json:"label,omitempty"`
-	AllowList      *[]string                  `json:"allow_list,omitempty"`
-	Updates        *DatabaseMaintenanceWindow `json:"updates,omitempty"`
-	Type           string                     `json:"type,omitempty"`
-	ClusterSize    int                        `json:"cluster_size,omitempty"`
-	Version        string                     `json:"version,omitempty"`
-	EngineConfig   *MySQLDatabaseEngineConfig `json:"engine_config,omitempty"`
-	PrivateNetwork **DatabasePrivateNetwork   `json:"private_network,omitempty"`
+	Label          string                     `json:"label,omitzero"`
+	AllowList      []string                   `json:"allow_list,omitzero"`
+	Updates        *DatabaseMaintenanceWindow `json:"updates,omitzero"`
+	Type           string                     `json:"type,omitzero"`
+	ClusterSize    int                        `json:"cluster_size,omitzero"`
+	Version        string                     `json:"version,omitzero"`
+	EngineConfig   *MySQLDatabaseEngineConfig `json:"engine_config,omitzero"`
+	PrivateNetwork **DatabasePrivateNetwork   `json:"private_network,omitzero"`
 }
 
 // MySQLDatabaseCredential is the Root Credentials to access the Linode Managed Database

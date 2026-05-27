@@ -39,10 +39,10 @@ func TestObjectStorageBucket_ListInCluster(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	clusterID := "us-east-1"
-	base.MockGet("object-storage/buckets/"+clusterID, fixtureData)
+	regionID := "us-east"
+	base.MockGet("object-storage/buckets/"+regionID, fixtureData)
 
-	buckets, err := base.Client.ListObjectStorageBucketsInCluster(context.Background(), nil, clusterID)
+	buckets, err := base.Client.ListObjectStorageBucketsInRegion(context.Background(), nil, regionID)
 	assert.NoError(t, err)
 	assert.NotEmpty(t, buckets)
 }
@@ -55,12 +55,12 @@ func TestObjectStorageBucket_Get(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	clusterID := "us-east-1"
+	regionID := "us-east"
 	bucketLabel := "my-bucket"
 
-	base.MockGet("object-storage/buckets/"+clusterID+"/"+bucketLabel, fixtureData)
+	base.MockGet("object-storage/buckets/"+regionID+"/"+bucketLabel, fixtureData)
 
-	bucket, err := base.Client.GetObjectStorageBucket(context.Background(), clusterID, bucketLabel)
+	bucket, err := base.Client.GetObjectStorageBucket(context.Background(), regionID, bucketLabel)
 	assert.NoError(t, err)
 	assert.NotNil(t, bucket)
 	assert.Equal(t, bucketLabel, bucket.Label)
@@ -92,12 +92,12 @@ func TestObjectStorageBucket_Delete(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	clusterID := "us-east-1"
+	regionID := "us-east"
 	bucketLabel := "my-bucket"
 
-	base.MockDelete("object-storage/buckets/"+clusterID+"/"+bucketLabel, nil)
+	base.MockDelete("object-storage/buckets/"+regionID+"/"+bucketLabel, nil)
 
-	err := base.Client.DeleteObjectStorageBucket(context.Background(), clusterID, bucketLabel)
+	err := base.Client.DeleteObjectStorageBucket(context.Background(), regionID, bucketLabel)
 	assert.NoError(t, err)
 }
 
@@ -109,15 +109,33 @@ func TestObjectStorageBucket_GetAccess(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	clusterID := "us-east-1"
+	regionID := "us-east"
 	bucketLabel := "my-bucket"
 
-	base.MockGet("object-storage/buckets/"+clusterID+"/"+bucketLabel+"/access", fixtureData)
+	base.MockGet("object-storage/buckets/"+regionID+"/"+bucketLabel+"/access", fixtureData)
 
-	access, err := base.Client.GetObjectStorageBucketAccess(context.Background(), clusterID, bucketLabel)
+	access, err := base.Client.GetObjectStorageBucketAccess(context.Background(), regionID, bucketLabel)
 	assert.NoError(t, err)
 	assert.NotNil(t, access)
 	assert.Equal(t, linodego.ACLPublicRead, access.ACL)
+}
+
+func TestObjectStorageBucket_ModifyAccess(t *testing.T) {
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	regionID := "us-east"
+	bucketLabel := "my-bucket"
+
+	modifyOpts := linodego.ObjectStorageBucketModifyAccessOptions{
+		ACL: linodego.ACLPrivate,
+	}
+
+	base.MockPost("object-storage/buckets/"+regionID+"/"+bucketLabel+"/access", nil)
+
+	err := base.Client.ModifyObjectStorageBucketAccess(context.Background(), regionID, bucketLabel, modifyOpts)
+	assert.NoError(t, err)
 }
 
 func TestObjectStorageBucket_UpdateAccess(t *testing.T) {
@@ -125,16 +143,16 @@ func TestObjectStorageBucket_UpdateAccess(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	clusterID := "us-east-1"
+	regionID := "us-east"
 	bucketLabel := "my-bucket"
 
 	updateOpts := linodego.ObjectStorageBucketUpdateAccessOptions{
 		ACL: linodego.ACLPrivate,
 	}
 
-	base.MockPost("object-storage/buckets/"+clusterID+"/"+bucketLabel+"/access", nil)
+	base.MockPut("object-storage/buckets/"+regionID+"/"+bucketLabel+"/access", nil)
 
-	err := base.Client.UpdateObjectStorageBucketAccess(context.Background(), clusterID, bucketLabel, updateOpts)
+	err := base.Client.UpdateObjectStorageBucketAccess(context.Background(), regionID, bucketLabel, updateOpts)
 	assert.NoError(t, err)
 }
 
@@ -146,12 +164,12 @@ func TestObjectStorageBucket_ListContents(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	clusterID := "us-east-1"
+	regionID := "us-east"
 	bucketLabel := "my-bucket"
 
-	base.MockGet("object-storage/buckets/"+clusterID+"/"+bucketLabel+"/object-list", fixtureData)
+	base.MockGet("object-storage/buckets/"+regionID+"/"+bucketLabel+"/object-list", fixtureData)
 
-	contents, err := base.Client.ListObjectStorageBucketContents(context.Background(), clusterID, bucketLabel, nil)
+	contents, err := base.Client.ListObjectStorageBucketContents(context.Background(), regionID, bucketLabel, nil)
 	assert.NoError(t, err)
 	assert.NotNil(t, contents)
 	assert.True(t, contents.IsTruncated)

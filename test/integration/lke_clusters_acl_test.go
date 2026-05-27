@@ -20,8 +20,8 @@ func TestLKECluster_withACL(t *testing.T) {
 					ACL: &linodego.LKEClusterControlPlaneACLOptions{
 						Enabled: &valueTrue,
 						Addresses: &linodego.LKEClusterControlPlaneACLAddressesOptions{
-							IPv4: &[]string{"10.0.0.1/32"},
-							IPv6: &[]string{"1234::5678"},
+							IPv4: []string{"10.0.0.1/32"},
+							IPv6: []string{"1234::5678"},
 						},
 					},
 				}
@@ -48,8 +48,8 @@ func TestLKECluster_withACL(t *testing.T) {
 			ACL: linodego.LKEClusterControlPlaneACLOptions{
 				Enabled: &valueTrue,
 				Addresses: &linodego.LKEClusterControlPlaneACLAddressesOptions{
-					IPv4: &[]string{"10.0.0.2/32"},
-					IPv6: &[]string{},
+					IPv4: []string{"10.0.0.2/32"},
+					IPv6: []string{},
 				},
 				RevisionID: testRevisionID,
 			},

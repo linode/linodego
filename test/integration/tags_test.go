@@ -4,6 +4,7 @@ import (
 	"context"
 	"testing"
 
+	"github.com/linode/linodego"
 	. "github.com/linode/linodego"
 )
 
@@ -19,11 +20,8 @@ func TestTag_Create_create_smoke(t *testing.T) {
 	}
 
 	updateOpts := instance.GetUpdateOptions()
-	if updateOpts.Tags == nil {
-		updateOpts.Tags = new([]string)
-	}
-	newTags := append(*updateOpts.Tags, "go-tag-test-bar")
-	updateOpts.Tags = &newTags
+	newTags := append(updateOpts.Tags, "go-tag-test-bar")
+	updateOpts.Tags = newTags
 	updateOpts.Backups = nil
 	instance, err = client.UpdateInstance(context.Background(), instance.ID, updateOpts)
 	if err != nil {
@@ -95,7 +93,7 @@ func setupTaggedInstance(t *testing.T, fixturesYaml string) (*Client, *Instance,
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := InstanceCreateOptions{
 		Label:  "go-ins-test-tag",
-		Region: getRegionsWithCaps(t, client, []string{"Linodes"})[0],
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes})[0],
 		Type:   "g6-nanode-1",
 		Tags:   []string{"go-tag-test"},
 	}
