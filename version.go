@@ -32,5 +32,5 @@ func init() {
 		}
 	}
 
-	DefaultUserAgent = fmt.Sprintf("linodego/%s https://github.com/linode/linodego/v2", Version)
+	DefaultUserAgent = fmt.Sprintf("linodego/%s https://github.com/linode/linodego", Version)
 }
