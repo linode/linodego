@@ -14,6 +14,7 @@ type MonitorDashboard struct {
 	Type        DashboardType     `json:"type"`
 	ServiceType ServiceType       `json:"service_type"`
 	Label       string            `json:"label"`
+	GroupBy     []string          `json:"group_by"`
 	Created     *time.Time        `json:"-"`
 	Updated     *time.Time        `json:"-"`
 	Widgets     []DashboardWidget `json:"widgets"`
