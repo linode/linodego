@@ -17,7 +17,7 @@ func TestImageSharing_Suite(t *testing.T) {
 	client, instance, teardown, err := setupInstance(
 		t, "fixtures/TestImageSharing_Suite", true,
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-			options.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityDBAAS})[0]
+			options.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes})[0]
 			options.Image = "linode/alpine3.22"
 		})
 	if err != nil {
