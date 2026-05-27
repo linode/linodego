@@ -47,7 +47,7 @@ type InstanceDiskCreateOptions struct {
 	Label string `json:"label"`
 	Size  int    `json:"size"`
 
-	// Image is optional, but requires RootPass if provided
+	// Image is optional, but requires at least one of RootPass, AuthorizedUsers, or AuthorizedKeys if provided
 	Image    string `json:"image,omitzero"`
 	RootPass string `json:"root_pass,omitzero"`
 
