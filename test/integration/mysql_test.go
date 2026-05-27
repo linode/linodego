@@ -8,7 +8,7 @@ import (
 
 	"github.com/dnaeon/go-vcr/recorder"
 	"github.com/google/go-cmp/cmp"
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 )
 
 func TestDatabase_MySQL_Suite(t *testing.T) {

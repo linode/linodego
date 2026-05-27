@@ -1,11 +1,11 @@
-module github.com/linode/linodego/test
+module github.com/linode/linodego/v2/test
 
 require (
 	github.com/dnaeon/go-vcr v1.2.0
 	github.com/google/go-cmp v0.7.0
 	github.com/jarcoal/httpmock v1.4.1
-	github.com/linode/linodego v1.33.0
-	github.com/linode/linodego/k8s v0.0.0-00010101000000-000000000000
+	github.com/linode/linodego/v2 v2.33.0
+	github.com/linode/linodego/v2/k8s v0.0.0-00010101000000-000000000000
 	github.com/stretchr/testify v1.11.1
 	golang.org/x/exp v0.0.0-20241217172543-b2144cdd0a67
 	golang.org/x/net v0.54.0
@@ -57,6 +57,6 @@ require (
 
 go 1.25.0
 
-replace github.com/linode/linodego => ../
+replace github.com/linode/linodego/v2 => ../
 
-replace github.com/linode/linodego/k8s => ../k8s
+replace github.com/linode/linodego/v2/k8s => ../k8s

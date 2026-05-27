@@ -5,7 +5,7 @@ import (
 	"runtime/debug"
 )
 
-const packagePath = "github.com/linode/linodego"
+const packagePath = "github.com/linode/linodego/v2"
 
 var (
 	Version = "dev"
@@ -32,5 +32,5 @@ func init() {
 		}
 	}
 
-	DefaultUserAgent = fmt.Sprintf("linodego/%s https://github.com/linode/linodego", Version)
+	DefaultUserAgent = fmt.Sprintf("linodego/%s https://github.com/linode/linodego/v2", Version)
 }

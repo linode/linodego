@@ -11,7 +11,7 @@ import (
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/jarcoal/httpmock"
-	"github.com/linode/linodego/internal/testutil"
+	"github.com/linode/linodego/v2/internal/testutil"
 	"github.com/stretchr/testify/require"
 )
 

@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 )
 
 var objectStorageObjectURLExpirySeconds = 360

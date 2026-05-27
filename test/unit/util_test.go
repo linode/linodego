@@ -7,8 +7,8 @@ import (
 	"testing"
 
 	"github.com/jarcoal/httpmock"
-	"github.com/linode/linodego"
-	"github.com/linode/linodego/internal/testutil"
+	"github.com/linode/linodego/v2"
+	"github.com/linode/linodego/v2/internal/testutil"
 )
 
 func mockRequestBodyValidate(t *testing.T, expected interface{}, response interface{}) httpmock.Responder {

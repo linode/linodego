@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 )
 
 func TestCache_RegionList(t *testing.T) {

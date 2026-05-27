@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/require"
 )
 

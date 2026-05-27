@@ -5,8 +5,8 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/linode/linodego/internal/duration"
-	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/v2/internal/duration"
+	"github.com/linode/linodego/v2/internal/parseabletime"
 )
 
 // Event represents an action taken on the Account.

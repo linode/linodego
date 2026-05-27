@@ -15,7 +15,7 @@ import (
 
 	"github.com/dnaeon/go-vcr/cassette"
 	"github.com/dnaeon/go-vcr/recorder"
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/require"
 	"golang.org/x/oauth2"
 	"k8s.io/client-go/transport"

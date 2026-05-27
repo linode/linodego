@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/google/go-cmp/cmp/cmpopts"
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 )
 
 var ignoreDatabaseTimestampes = cmpopts.IgnoreFields(linodego.Database{}, "Created", "Updated")

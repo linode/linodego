@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/google/go-querystring/query"
-	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/v2/internal/parseabletime"
 )
 
 // ObjectStorageBucket represents a ObjectStorage object

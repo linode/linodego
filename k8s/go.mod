@@ -1,7 +1,7 @@
-module github.com/linode/linodego/k8s
+module github.com/linode/linodego/v2/k8s
 
 require (
-	github.com/linode/linodego v1.33.0
+	github.com/linode/linodego/v2 v2.33.0
 	k8s.io/api v0.29.4
 	k8s.io/apimachinery v0.29.4
 	k8s.io/client-go v0.29.4
@@ -47,6 +47,6 @@ require (
 	sigs.k8s.io/yaml v1.3.0 // indirect
 )
 
-replace github.com/linode/linodego => ../
+replace github.com/linode/linodego/v2 => ../
 
 go 1.25.0
