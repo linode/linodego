@@ -92,7 +92,7 @@ func TestNodeBalancer_Get(t *testing.T) {
 		},
 	}
 
-	for _, tt := range tests {
+	for idx, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			fixtureData, err := fixtures.GetFixture(tt.fixture)
 			assert.NoError(t, err)
@@ -112,9 +112,13 @@ func TestNodeBalancer_Get(t *testing.T) {
 			assert.Equal(t, "us-west", nodebalancer.Region, "Expected NodeBalancer region to match")
 			assert.Equal(t, []linodego.LockType{linodego.LockTypeCannotDeleteWithSubresources}, nodebalancer.Locks, "Expected NodeBalancer locks to match")
 			assert.Equal(t, tt.expectedLKECluster, nodebalancer.LKECluster, "Expected NodeBalancer LKECluster to match")
-			assert.Equal(t, linodego.NBTypePremium40GB, nodebalancer.Type)
-			assert.Equal(t, linodego.NodeBalancerVPCFrontendAddressTypeVPC, nodebalancer.FrontendAddressType)
-			assert.Equal(t, 456, *nodebalancer.FrontendVPCSubnetID)
+			if idx == 0 {
+				assert.Equal(t, linodego.NBTypePremium40GB, nodebalancer.Type)
+				assert.Equal(t, linodego.NodeBalancerVPCFrontendAddressTypeVPC, nodebalancer.FrontendAddressType)
+				assert.Equal(t, 456, *nodebalancer.FrontendVPCSubnetID)
+			} else {
+				assert.Equal(t, linodego.NBTypeCommon, nodebalancer.Type)
+			}
 		})
 	}
 }
