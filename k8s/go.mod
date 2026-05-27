@@ -1,7 +1,7 @@
 module github.com/linode/linodego/v2/k8s
 
 require (
-	github.com/linode/linodego/v2 v2.33.0
+	github.com/linode/linodego/v2 v2.0.0
 	k8s.io/api v0.29.4
 	k8s.io/apimachinery v0.29.4
 	k8s.io/client-go v0.29.4
