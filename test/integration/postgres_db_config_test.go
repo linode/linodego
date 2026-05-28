@@ -4,8 +4,9 @@ import (
 	"context"
 	"os"
 	"testing"
+	"time"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -273,11 +274,13 @@ func TestDatabasePostgres_EngineConfig_Get(t *testing.T) {
 }
 
 func TestDatabasePostgres_EngineConfig_Suite(t *testing.T) {
+	ctx := waitContext(t, 6720*time.Second)
+
 	databaseModifiers := []postgresDatabaseModifier{
 		createPostgresOptionsModifier(),
 	}
 
-	client, database, teardown, err := setupPostgresDatabase(t, databaseModifiers, "fixtures/TestDatabasePostgres_EngineConfig_Suite")
+	client, database, teardown, err := setupPostgresDatabase(t, ctx, databaseModifiers, "fixtures/TestDatabasePostgres_EngineConfig_Suite")
 	if err != nil {
 		t.Error(err)
 	}
@@ -308,7 +311,7 @@ func TestDatabasePostgres_EngineConfig_Suite(t *testing.T) {
 		t.Errorf("failed to update db %d: %v", database.ID, err)
 	}
 
-	waitForDatabaseUpdated(t, client, updatedDB.ID, linodego.DatabaseEngineTypePostgres, updatedDB.Created)
+	waitForDatabaseUpdated(t, ctx, client, updatedDB.ID, linodego.DatabaseEngineTypePostgres, updatedDB.Created)
 
 	assertUpdatedPostgresFields(t, updatedDB.EngineConfig.PG)
 }

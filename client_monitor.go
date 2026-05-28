@@ -2,13 +2,17 @@ package linodego
 
 import (
 	"context"
+	"crypto/tls"
+	"crypto/x509"
+	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"net/url"
 	"os"
 	"path"
-
-	"github.com/go-resty/resty/v2"
+	"path/filepath"
+	"strings"
 )
 
 const (
@@ -24,24 +28,35 @@ const (
 	MonitorAPIEnvVar = "MONITOR_API_TOKEN"
 )
 
-// MonitorClient is a wrapper around the Resty client
+// MonitorClient is a wrapper around the http client
 type MonitorClient struct {
-	resty       *resty.Client
+	httpClient  *http.Client
 	debug       bool
 	apiBaseURL  string
 	apiProtocol string
 	apiVersion  string
+	hostURL     string
 	userAgent   string
+	header      http.Header
+	logger      Logger
 }
 
 // NewMonitorClient is the entry point for user to create a new MonitorClient
 // It utilizes default values and looks for environment variables to initialize a MonitorClient.
 func NewMonitorClient(hc *http.Client) (mClient MonitorClient) {
 	if hc != nil {
-		mClient.resty = resty.NewWithClient(hc)
+		mClient.httpClient = hc
 	} else {
-		mClient.resty = resty.New()
+		mClient.httpClient = &http.Client{}
 	}
+
+	// Ensure transport is initialized so SetRootCertificate can configure TLS
+	if mClient.httpClient.Transport == nil {
+		mClient.httpClient.Transport = &http.Transport{}
+	}
+
+	mClient.header = make(http.Header)
+	mClient.logger = createLogger()
 
 	mClient.SetUserAgent(DefaultUserAgent)
 
@@ -72,24 +87,14 @@ func NewMonitorClient(hc *http.Client) (mClient MonitorClient) {
 // SetUserAgent sets a custom user-agent for HTTP requests
 func (mc *MonitorClient) SetUserAgent(ua string) *MonitorClient {
 	mc.userAgent = ua
-	mc.resty.SetHeader("User-Agent", mc.userAgent)
+	mc.header.Set("User-Agent", ua)
 
 	return mc
 }
 
-// R wraps resty's R method
-func (mc *MonitorClient) R(ctx context.Context) *resty.Request {
-	return mc.resty.R().
-		ExpectContentType("application/json").
-		SetHeader("Content-Type", "application/json").
-		SetContext(ctx).
-		SetError(APIError{})
-}
-
-// SetDebug sets the debug on resty's client
+// SetDebug sets the debug on the client
 func (mc *MonitorClient) SetDebug(debug bool) *MonitorClient {
 	mc.debug = debug
-	mc.resty.SetDebug(debug)
 
 	return mc
 }
@@ -97,7 +102,7 @@ func (mc *MonitorClient) SetDebug(debug bool) *MonitorClient {
 // SetLogger allows the user to override the output
 // logger for debug logs.
 func (mc *MonitorClient) SetLogger(logger Logger) *MonitorClient {
-	mc.resty.SetLogger(logger)
+	mc.logger = logger
 
 	return mc
 }
@@ -123,22 +128,52 @@ func (mc *MonitorClient) SetAPIVersion(apiVersion string) *MonitorClient {
 	return mc
 }
 
-// SetRootCertificate adds a root certificate to the underlying TLS client config
-func (mc *MonitorClient) SetRootCertificate(path string) *MonitorClient {
-	mc.resty.SetRootCertificate(path)
-	return mc
+// SetRootCertificate adds a root certificate to the underlying TLS client config.
+func (mc *MonitorClient) SetRootCertificate(certPath string) error {
+	transport, ok := mc.httpClient.Transport.(*http.Transport)
+	if !ok {
+		err := fmt.Errorf("current transport is not an *http.Transport instance")
+		if mc.logger != nil {
+			mc.logger.Errorf("%s", err)
+		}
+
+		return err
+	}
+
+	if transport.TLSClientConfig == nil {
+		transport.TLSClientConfig = &tls.Config{
+			MinVersion: tls.VersionTLS12,
+		}
+	}
+
+	if transport.TLSClientConfig.RootCAs == nil {
+		transport.TLSClientConfig.RootCAs = x509.NewCertPool()
+	}
+
+	pem, err := os.ReadFile(filepath.Clean(certPath))
+	if err != nil {
+		if mc.logger != nil {
+			mc.logger.Errorf("Failed to read root certificate at %s: %s", certPath, err.Error())
+		}
+
+		return fmt.Errorf("failed to read root certificate at %s: %w", certPath, err)
+	}
+
+	transport.TLSClientConfig.RootCAs.AppendCertsFromPEM(pem)
+
+	return nil
 }
 
 // SetToken sets the API token for all requests from this client
 func (mc *MonitorClient) SetToken(token string) *MonitorClient {
-	mc.resty.SetHeader("Authorization", fmt.Sprintf("Bearer %s", token))
+	mc.header.Set("Authorization", fmt.Sprintf("Bearer %s", token))
 	return mc
 }
 
 // SetHeader sets a custom header to be used in all API requests made with the current client.
 // NOTE: Some headers may be overridden by the individual request functions.
 func (mc *MonitorClient) SetHeader(name, value string) {
-	mc.resty.SetHeader(name, value)
+	mc.header.Set(name, value)
 }
 
 func (mc *MonitorClient) updateMonitorHostURL() {
@@ -158,12 +193,66 @@ func (mc *MonitorClient) updateMonitorHostURL() {
 		apiProto = mc.apiProtocol
 	}
 
-	mc.resty.SetBaseURL(
-		fmt.Sprintf(
-			"%s://%s/%s",
-			apiProto,
-			baseURL,
-			url.PathEscape(apiVersion),
-		),
+	mc.hostURL = fmt.Sprintf(
+		"%s://%s/%s",
+		apiProto,
+		baseURL,
+		url.PathEscape(apiVersion),
 	)
+}
+
+// doRequest is a generic helper to execute HTTP requests for the MonitorClient
+func (mc *MonitorClient) doRequest(ctx context.Context, method, endpoint string, params requestParams) error {
+	var bodyReader io.Reader
+
+	if params.Body != nil {
+		if _, err := params.Body.Seek(0, io.SeekStart); err != nil {
+			return fmt.Errorf("failed to seek body: %w", err)
+		}
+
+		bodyReader = params.Body
+	}
+
+	reqURL := fmt.Sprintf("%s/%s", strings.TrimRight(mc.hostURL, "/"), strings.TrimLeft(endpoint, "/"))
+
+	req, err := http.NewRequestWithContext(ctx, method, reqURL, bodyReader)
+	if err != nil {
+		return fmt.Errorf("failed to create request: %w", err)
+	}
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Accept", "application/json")
+
+	for name, values := range mc.header {
+		for _, value := range values {
+			req.Header.Set(name, value)
+		}
+	}
+
+	if mc.debug && mc.logger != nil {
+		mc.logger.Debugf("Sending request: %s %s", method, reqURL)
+	}
+
+	resp, err := mc.httpClient.Do(req)
+	if err != nil {
+		return fmt.Errorf("failed to send request: %w", err)
+	}
+	defer resp.Body.Close()
+
+	_, err = coupleAPIErrors(resp, nil)
+	if err != nil {
+		return err
+	}
+
+	if mc.debug && mc.logger != nil {
+		mc.logger.Debugf("Received response: %s", resp.Status)
+	}
+
+	if params.Response != nil {
+		if err := json.NewDecoder(resp.Body).Decode(params.Response); err != nil {
+			return fmt.Errorf("failed to decode response: %w", err)
+		}
+	}
+
+	return nil
 }

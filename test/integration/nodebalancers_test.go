@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -442,7 +442,7 @@ func createVPCWithDualStackSubnetInRegion(t *testing.T, client *linodego.Client,
 }
 
 func getValidRegion(t *testing.T, client *linodego.Client, validRegions []string) string {
-	regionsWithCaps := getRegionsWithCaps(t, client, []string{
+	regionsWithCaps := getRegionsWithCaps(t, client, []linodego.RegionCapability{
 		linodego.CapabilityVPCs,
 		linodego.CapabilityVPCIPv6Stack,
 		linodego.CapabilityVPCDualStack,
@@ -463,7 +463,7 @@ func setupNodeBalancer(t *testing.T, fixturesYaml string, nbModifiers []nbModifi
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := linodego.NodeBalancerCreateOptions{
 		Label:              &label,
-		Region:             getRegionsWithCaps(t, client, []string{linodego.CapabilityNodeBalancers})[0],
+		Region:             getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityNodeBalancers})[0],
 		ClientConnThrottle: &clientConnThrottle,
 		FirewallID:         GetFirewallID(),
 	}
@@ -592,7 +592,7 @@ func setupNodeBalancerWithFrontendVPC(t *testing.T, fixturesYaml string, regions
 	}
 
 	nodebalancer, err := client.CreateNodeBalancer(context.Background(), createOpts)
-	require.NoErrorf(t, err, "Error listing nodebalancers, expected struct, got error %v", err)
+	require.NoErrorf(t, err, "Error creating nodebalancer, expected struct, got error %v", err)
 
 	teardown := func() {
 		err = client.DeleteNodeBalancer(context.Background(), nodebalancer.ID)

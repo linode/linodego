@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/linode/linodego"
-	. "github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
+	. "github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -83,9 +83,9 @@ func createVPCWithSubnet(t *testing.T, client *linodego.Client, vpcModifier ...v
 	t.Helper()
 	createOpts := linodego.VPCCreateOptions{
 		Label: "go-test-vpc-" + getUniqueText(),
-		Region: getRegionsWithCaps(t, client, []string{
-			linodego.CapabilityVPCs,
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{
 			linodego.CapabilityLinodes,
+			linodego.CapabilityVPCs,
 			linodego.CapabilityNodeBalancers,
 		})[0],
 		Subnets: []VPCSubnetCreateOptions{
@@ -122,7 +122,7 @@ func createVPCWithDualStackSubnet(t *testing.T, client *linodego.Client, vpcModi
 	t.Helper()
 	createOpts := linodego.VPCCreateOptions{
 		Label: "go-test-vpc-" + getUniqueText(),
-		Region: getRegionsWithCaps(t, client, []string{
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{
 			linodego.CapabilityVPCs,
 			linodego.CapabilityVPCDualStack,
 			linodego.CapabilityVPCIPv6Stack,

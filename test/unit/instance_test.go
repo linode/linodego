@@ -3,11 +3,10 @@ package unit
 import (
 	"context"
 	"fmt"
-	"strconv"
 	"testing"
 
 	"github.com/jarcoal/httpmock"
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -114,9 +113,6 @@ func TestInstance_ResetPassword(t *testing.T) {
 }
 
 func TestInstance_Get_MonthlyTransfer(t *testing.T) {
-	if strconv.IntSize < 64 {
-		t.Skip("V1 monthly transfer doesn't work on 32 or lower bits system")
-	}
 	fixtureData, err := fixtures.GetFixture("instance_monthly_transfer_get")
 	assert.NoError(t, err)
 
@@ -127,24 +123,6 @@ func TestInstance_Get_MonthlyTransfer(t *testing.T) {
 	base.MockGet("linode/instances/12345/transfer/2024/11", fixtureData)
 
 	stats, err := base.Client.GetInstanceTransferMonthly(context.Background(), 12345, 2024, 11)
-	assert.NoError(t, err)
-
-	assert.Equal(t, 30471077120, stats.BytesIn)
-	assert.Equal(t, 22956600198, stats.BytesOut)
-	assert.Equal(t, 53427677318, stats.BytesTotal)
-}
-
-func TestInstance_Get_MonthlyTransferV2(t *testing.T) {
-	fixtureData, err := fixtures.GetFixture("instance_monthly_transfer_get")
-	assert.NoError(t, err)
-
-	var base ClientBaseCase
-	base.SetUp(t)
-	defer base.TearDown(t)
-
-	base.MockGet("linode/instances/12345/transfer/2024/11", fixtureData)
-
-	stats, err := base.Client.GetInstanceTransferMonthlyV2(context.Background(), 12345, 2024, 11)
 	assert.NoError(t, err)
 
 	assert.Equal(t, uint64(30471077120), stats.BytesIn)
@@ -235,7 +213,9 @@ func TestInstance_Boot(t *testing.T) {
 
 	base.MockPost("linode/instances/123/boot", nil)
 
-	err := base.Client.BootInstance(context.Background(), 123, 0)
+	opts := linodego.InstanceBootOptions{ConfigID: linodego.Pointer(0)}
+
+	err := base.Client.BootInstance(context.Background(), 123, opts)
 	assert.NoError(t, err)
 }
 
@@ -246,7 +226,9 @@ func TestInstance_Reboot(t *testing.T) {
 
 	base.MockPost("linode/instances/123/reboot", nil)
 
-	err := base.Client.RebootInstance(context.Background(), 123, 0)
+	opts := linodego.InstanceRebootOptions{ConfigID: linodego.Pointer(0)}
+
+	err := base.Client.RebootInstance(context.Background(), 123, opts)
 	assert.NoError(t, err)
 }
 

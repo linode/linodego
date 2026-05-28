@@ -5,25 +5,35 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 )
 
 var (
-	testFirewallRule = linodego.FirewallRule{
+	testFirewallRuleInbound = linodego.FirewallRuleInbound{
 		Label:    "go-fwrule-test",
 		Action:   "ACCEPT",
 		Ports:    "22",
 		Protocol: "TCP",
 		Addresses: linodego.NetworkAddresses{
-			IPv4: &[]string{"0.0.0.0/0"},
-			IPv6: &[]string{"::0/0"},
+			IPv4: []string{"0.0.0.0/0"},
+			IPv6: []string{"::0/0"},
+		},
+	}
+	testFirewallRuleOutbound = linodego.FirewallRuleOutbound{
+		Label:    "go-fwrule-test",
+		Action:   "ACCEPT",
+		Ports:    "22",
+		Protocol: "TCP",
+		Addresses: linodego.NetworkAddresses{
+			IPv4: []string{"0.0.0.0/0"},
+			IPv6: []string{"::0/0"},
 		},
 	}
 
-	testFirewallRuleSet = linodego.FirewallRuleSet{
-		Inbound:        []linodego.FirewallRule{testFirewallRule},
+	testFirewallRuleSet = linodego.FirewallRulesCreateOptions{
+		Inbound:        []linodego.FirewallRuleInbound{testFirewallRuleInbound},
 		InboundPolicy:  "ACCEPT",
-		Outbound:       []linodego.FirewallRule{testFirewallRule},
+		Outbound:       []linodego.FirewallRuleOutbound{testFirewallRuleOutbound},
 		OutboundPolicy: "ACCEPT",
 	}
 )
@@ -74,16 +84,16 @@ func TestFirewallRules_Update(t *testing.T) {
 	}
 	defer teardown()
 
-	newRules := linodego.FirewallRuleSet{
-		Inbound: []linodego.FirewallRule{
+	newRules := linodego.FirewallRulesUpdateOptions{
+		Inbound: []linodego.FirewallRuleInbound{
 			{
-				Label:    testFirewallRule.Label + "_r",
+				Label:    testFirewallRuleInbound.Label + "_r",
 				Action:   "DROP",
 				Ports:    "22",
 				Protocol: "TCP",
 				Addresses: linodego.NetworkAddresses{
-					IPv4: &[]string{"0.0.0.0/0"},
-					IPv6: &[]string{"::0/0"},
+					IPv4: []string{"0.0.0.0/0"},
+					IPv6: []string{"::0/0"},
 				},
 			},
 		},

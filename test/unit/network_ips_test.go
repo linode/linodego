@@ -4,11 +4,11 @@ import (
 	"context"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 )
 
-func TestIPUpdateAddressV2(t *testing.T) {
+func TestIPUpdateAddress(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)
 	defer base.TearDown(t)
@@ -21,7 +21,7 @@ func TestIPUpdateAddressV2(t *testing.T) {
 		Reserved: true,
 	})
 
-	updatedIP, err := base.Client.UpdateIPAddressV2(context.Background(), ip, linodego.IPAddressUpdateOptionsV2{
+	updatedIP, err := base.Client.UpdateIPAddress(context.Background(), ip, linodego.IPAddressUpdateOptions{
 		Reserved: linodego.Pointer(true),
 	})
 	assert.NoError(t, err, "Expected no error when updating IP address")

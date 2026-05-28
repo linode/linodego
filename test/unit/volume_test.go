@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -103,7 +103,7 @@ func TestUpdateVolume(t *testing.T) {
 
 	opts := linodego.VolumeUpdateOptions{
 		Label: "updated-volume",
-		Tags:  &[]string{"updated"},
+		Tags:  []string{"updated"},
 	}
 
 	updatedVolume, err := base.Client.UpdateVolume(context.Background(), volumeID, opts)
@@ -175,6 +175,8 @@ func TestResizeVolume(t *testing.T) {
 	volumeID := 123
 	base.MockPost(fmt.Sprintf("volumes/%d/resize", volumeID), nil)
 
-	err := base.Client.ResizeVolume(context.Background(), volumeID, 50)
+	opts := linodego.VolumeResizeOptions{Size: 50}
+
+	err := base.Client.ResizeVolume(context.Background(), volumeID, opts)
 	assert.NoError(t, err, "Expected no error when resizing volume")
 }

@@ -36,12 +36,12 @@ type TaggedObjectList []TaggedObject
 // TagCreateOptions fields are those accepted by CreateTag
 type TagCreateOptions struct {
 	Label   string `json:"label"`
-	Linodes []int  `json:"linodes,omitempty"`
+	Linodes []int  `json:"linodes,omitzero"`
 	// @TODO is this implemented?
-	LKEClusters   []int `json:"lke_clusters,omitempty"`
-	Domains       []int `json:"domains,omitempty"`
-	Volumes       []int `json:"volumes,omitempty"`
-	NodeBalancers []int `json:"nodebalancers,omitempty"`
+	LKEClusters   []int `json:"lke_clusters,omitzero"`
+	Domains       []int `json:"domains,omitzero"`
+	Volumes       []int `json:"volumes,omitzero"`
+	NodeBalancers []int `json:"nodebalancers,omitzero"`
 }
 
 // GetCreateOptions converts a Tag to TagCreateOptions for use in CreateTag

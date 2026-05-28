@@ -7,13 +7,13 @@ import (
 // NodeBalancerVPCConfig objects represent a VPC config for a NodeBalancer
 // NOTE: NodeBalancer VPC support may not currently be available to all users.
 type NodeBalancerVPCConfig struct {
-	ID             int                          `json:"id"`
-	IPv4Range      string                       `json:"ipv4_range"`
-	IPv6Range      string                       `json:"ipv6_range"`
-	NodeBalancerID int                          `json:"nodebalancer_id"`
-	SubnetID       int                          `json:"subnet_id"`
-	VPCID          int                          `json:"vpc_id"`
-	Purpose        NodeBalancerVPCConfigPurpose `json:"purpose"`
+	ID             int    						`json:"id"`
+	IPv4Range      string 						`json:"ipv4_range"`
+	IPv6Range      string 						`json:"ipv6_range,omitzero"`
+	NodeBalancerID int    						`json:"nodebalancer_id"`
+	SubnetID       int    						`json:"subnet_id"`
+	VPCID          int    						`json:"vpc_id"`
+	Purpose        NodeBalancerVPCConfigPurpose `json:"purpose,omitzero"`
 }
 
 // NodeBalancerVPCConfigPurpose constants start with NodeBalancerVPCConfigPurpose and include the purposes of a NodeBalancer VPC config

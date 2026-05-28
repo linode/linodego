@@ -5,8 +5,8 @@ import (
 )
 
 type FirewallTemplate struct {
-	Slug  string          `json:"slug"`
-	Rules FirewallRuleSet `json:"rules"`
+	Slug  string        `json:"slug"`
+	Rules FirewallRules `json:"rules"`
 }
 
 // GetFirewallTemplate gets a FirewallTemplate given a slug.

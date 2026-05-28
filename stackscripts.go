@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/v2/internal/parseabletime"
 )
 
 // Stackscript represents a Linode StackScript
@@ -41,13 +41,13 @@ type StackscriptUDF struct {
 	Example string `json:"example"`
 
 	// A list of acceptable single values for the field.
-	OneOf string `json:"oneOf,omitempty"`
+	OneOf string `json:"oneOf,omitzero"`
 
 	// A list of acceptable values for the field in any quantity, combination or order.
-	ManyOf string `json:"manyOf,omitempty"`
+	ManyOf string `json:"manyOf,omitzero"`
 
 	// The default value. If not specified, this value will be used.
-	Default string `json:"default,omitempty"`
+	Default string `json:"default,omitzero"`
 }
 
 // StackscriptCreateOptions fields are those accepted by CreateStackscript
