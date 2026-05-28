@@ -100,6 +100,11 @@ func TestVolume_Resize(t *testing.T) {
 	if err := client.ResizeVolume(context.Background(), volume.ID, opts); err != nil {
 		t.Errorf("Error resizing volume, %s", err)
 	}
+
+	volume, err = client.WaitForVolumeStatus(ctx, volume.ID, linodego.VolumeActive)
+	if err != nil {
+		t.Errorf("Error waiting for volume to be active: %v", err)
+	}
 }
 
 func TestVolumes_List_smoke(t *testing.T) {
@@ -140,6 +145,8 @@ func TestVolume_Get(t *testing.T) {
 }
 
 func TestVolume_Get_withEncryption(t *testing.T) {
+	ctx := waitContext(t, 30*time.Second)
+
 	client, teardown := createTestClient(t, "fixtures/TestVolume_Get_withEncryption")
 	defer teardown()
 
@@ -157,6 +164,11 @@ func TestVolume_Get_withEncryption(t *testing.T) {
 	}
 	if volume.ID == 0 {
 		t.Errorf("Expected a volumes id, but got 0")
+	}
+
+	volume, err = client.WaitForVolumeStatus(ctx, volume.ID, linodego.VolumeActive)
+	if err != nil {
+		t.Errorf("Error waiting for volume to be active: %v", err)
 	}
 
 	returnedVolume, err := client.GetVolume(context.Background(), volume.ID)
@@ -192,7 +204,7 @@ func TestVolume_Get_withEncryption(t *testing.T) {
 }
 
 func TestVolume_WaitForLinodeID_nil(t *testing.T) {
-	ctx := waitContext(t, 20*time.Second)
+	ctx := waitContext(t, 45*time.Second)
 
 	client, volume, teardown, err := setupVolume(t, "fixtures/TestVolume_WaitForLinodeID_nil")
 	defer teardown()
