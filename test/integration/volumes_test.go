@@ -43,6 +43,8 @@ func TestVolume_Create_smoke(t *testing.T) {
 }
 
 func TestVolume_Create_withEncryption(t *testing.T) {
+	ctx := waitContext(t, 30*time.Second)
+
 	client, teardown := createTestClient(t, "fixtures/TestVolume_Create_withEncryption")
 	defer teardown()
 
@@ -60,6 +62,11 @@ func TestVolume_Create_withEncryption(t *testing.T) {
 	}
 	if volume.ID == 0 {
 		t.Errorf("Expected a volumes id, but got 0")
+	}
+
+	volume, err = client.WaitForVolumeStatus(ctx, volume.ID, linodego.VolumeActive)
+	if err != nil {
+		t.Errorf("Error waiting for volume to be active: %v", err)
 	}
 
 	assertDateSet(t, volume.Created)
@@ -98,6 +105,9 @@ func TestVolume_Resize(t *testing.T) {
 func TestVolumes_List_smoke(t *testing.T) {
 	client, volume, teardown, err := setupVolume(t, "fixtures/TestVolume_List")
 	defer teardown()
+	if err != nil {
+		t.Errorf("Error setting up volume test, %s", err)
+	}
 
 	volumes, err := client.ListVolumes(context.Background(), nil)
 	if err != nil {
@@ -274,6 +284,8 @@ func TestVolume_Update(t *testing.T) {
 
 func setupVolume(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.Volume, func(), error) {
 	t.Helper()
+	ctx := waitContext(t, 30*time.Second)
+
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := linodego.VolumeCreateOptions{
@@ -283,6 +295,11 @@ func setupVolume(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 	volume, err := client.CreateVolume(context.Background(), createOpts)
 	if err != nil {
 		t.Errorf("Error creating volume, got error %v", err)
+	}
+
+	volume, err = client.WaitForVolumeStatus(ctx, volume.ID, linodego.VolumeActive)
+	if err != nil {
+		t.Errorf("Error waiting for volume to be active: %v", err)
 	}
 
 	teardown := func() {
