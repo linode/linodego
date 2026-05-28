@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/jarcoal/httpmock"
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -134,7 +134,7 @@ func TestLKECluster_Update(t *testing.T) {
 
 	updateOptions := linodego.LKEClusterUpdateOptions{
 		Label: "updated-cluster",
-		Tags:  &[]string{"new-tag"},
+		Tags:  []string{"new-tag"},
 		ControlPlane: &linodego.LKEClusterControlPlaneOptions{
 			AuditLogsEnabled: linodego.Pointer(true),
 		},
@@ -183,21 +183,6 @@ func TestLKECluster_DeleteKubeconfig(t *testing.T) {
 
 	err := base.Client.DeleteLKEClusterKubeconfig(context.Background(), 123)
 	assert.NoError(t, err)
-}
-
-func TestLKECluster_GetDashboard(t *testing.T) {
-	fixtureData, err := fixtures.GetFixture("lke_cluster_dashboard")
-	assert.NoError(t, err)
-
-	var base ClientBaseCase
-	base.SetUp(t)
-	defer base.TearDown(t)
-
-	base.MockGet("lke/clusters/123/dashboard", fixtureData)
-
-	dashboard, err := base.Client.GetLKEClusterDashboard(context.Background(), 123)
-	assert.NoError(t, err)
-	assert.Equal(t, "https://dashboard.example.com", dashboard.URL)
 }
 
 func TestLKECluster_GetAPLConsoleURL(t *testing.T) {

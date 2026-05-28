@@ -6,7 +6,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -18,6 +18,8 @@ const (
 )
 
 func TestMonitorAlertDefinition_smoke(t *testing.T) {
+	ctx := waitContext(t, 300*time.Second)
+
 	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertDefinition")
 	defer teardown()
 
@@ -154,11 +156,10 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 	}
 	// wait for 1 minute before update for create to complete
 	_, err = client.WaitForAlertDefinitionStatus(
-		context.Background(),
+		ctx,
 		linodego.AlertDefinitionStatusEnabled,
 		testMonitorAlertDefinitionServiceType,
 		createdAlert.ID,
-		300, // timeout in seconds (5 minutes)
 	)
 	if err != nil {
 		t.Logf("failed to wait for alert definition to be enabled: %s", err)

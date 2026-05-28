@@ -8,7 +8,7 @@ import (
 	"time"
 
 	"github.com/jarcoal/httpmock"
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -178,7 +178,7 @@ func TestImage_Create(t *testing.T) {
 		Label:       "Debian 11",
 		Description: "Example image description.",
 		CloudInit:   true,
-		Tags:        &[]string{"repair-image", "fix-1"},
+		Tags:        []string{"repair-image", "fix-1"},
 	}
 
 	base.MockPost("images", fixtureData)
@@ -220,7 +220,7 @@ func TestImage_Update(t *testing.T) {
 	requestData := linodego.ImageUpdateOptions{
 		Label:       "Debian 11",
 		Description: &desc,
-		Tags:        &[]string{"repair-image", "fix-1"},
+		Tags:        []string{"repair-image", "fix-1"},
 	}
 
 	imageID := "123"
@@ -265,11 +265,19 @@ func TestImage_Upload(t *testing.T) {
 		Label:       "Debian 11",
 		Description: "Example image description.",
 		CloudInit:   true,
-		Tags:        &[]string{"repair-image", "fix-1"},
+		Tags:        []string{"repair-image", "fix-1"},
 		Image:       strings.NewReader("mock image data"),
 	}
 
 	base.MockPost("images/upload", fixtureData)
+
+	// Mock the PUT request to the upload URL returned in the fixture.
+	// UploadImageToURL uses http.DefaultTransport, so we need to
+	// activate httpmock on the default transport as well.
+	httpmock.Activate()
+	defer httpmock.DeactivateAndReset()
+	httpmock.RegisterResponder("PUT", "https://example.com/upload-endpoint",
+		httpmock.NewStringResponder(200, "{}"))
 
 	image, err := base.Client.UploadImage(context.Background(), requestData)
 	assert.NoError(t, err)

@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/jarcoal/httpmock"
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -126,7 +126,7 @@ func TestLKENodePool_Update(t *testing.T) {
 
 	updateOptions := linodego.LKENodePoolUpdateOptions{
 		Count:  5,
-		Tags:   &[]string{"updated-tag"},
+		Tags:   []string{"updated-tag"},
 		Labels: Ptr(linodego.LKENodePoolLabels{"env": "prod"}),
 		Autoscaler: &linodego.LKENodePoolAutoscaler{
 			Enabled: true,

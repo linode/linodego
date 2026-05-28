@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/v2/internal/parseabletime"
 )
 
 // FirewallDeviceType represents the different kinds of devices governable by a Firewall
@@ -59,7 +59,7 @@ func (device *FirewallDevice) UnmarshalJSON(b []byte) error {
 type FirewallDeviceEntity struct {
 	ID           int                   `json:"id"`
 	Type         FirewallDeviceType    `json:"type"`
-	Label        string                `json:"label"`
+	Label        *string               `json:"label"`
 	URL          string                `json:"url"`
 	ParentEntity *FirewallDeviceEntity `json:"parent_entity"`
 }

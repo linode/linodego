@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/v2/internal/parseabletime"
 )
 
 type VPC struct {
@@ -30,26 +30,26 @@ type VPCIPv6Range struct {
 
 type VPCCreateOptions struct {
 	Label       string `json:"label"`
-	Description string `json:"description,omitempty"`
+	Description string `json:"description,omitzero"`
 	Region      string `json:"region"`
 
 	// NOTE: IPv6 VPCs may not currently be available to all users.
-	IPv6 []VPCCreateOptionsIPv6 `json:"ipv6,omitempty"`
+	IPv6 []VPCCreateOptionsIPv6 `json:"ipv6,omitzero"`
 
-	Subnets []VPCSubnetCreateOptions `json:"subnets,omitempty"`
+	Subnets []VPCSubnetCreateOptions `json:"subnets,omitzero"`
 }
 
 // VPCCreateOptionsIPv6 represents a single IPv6 range assigned to a VPC
 // which is specified during a VPC's creation.
 // NOTE: IPv6 VPCs may not currently be available to all users.
 type VPCCreateOptionsIPv6 struct {
-	Range           *string `json:"range,omitempty"`
-	AllocationClass *string `json:"allocation_class,omitempty"`
+	Range           *string `json:"range,omitzero"`
+	AllocationClass *string `json:"allocation_class,omitzero"`
 }
 
 type VPCUpdateOptions struct {
-	Label       string `json:"label,omitempty"`
-	Description string `json:"description,omitempty"`
+	Label       string `json:"label,omitzero"`
+	Description string `json:"description,omitzero"`
 }
 
 func (v VPC) GetCreateOptions() VPCCreateOptions {

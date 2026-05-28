@@ -5,8 +5,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/linode/linodego"
-	. "github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
+	. "github.com/linode/linodego/v2"
 )
 
 // TestReservedIPAddresses_InsufficientPermissions tests the behavior when a user account

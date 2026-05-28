@@ -15,6 +15,7 @@ import (
 
 var englishTitle = cases.Title(language.English)
 
+// EventPoller waits for events associated with a given entity and action.
 type EventPoller struct {
 	EntityID   any
 	EntityType EntityType
@@ -30,189 +31,137 @@ type EventPoller struct {
 }
 
 // WaitForInstanceStatus waits for the Linode instance to reach the desired state
-// before returning. It will timeout with an error after timeoutSeconds.
-func (client Client) WaitForInstanceStatus(ctx context.Context, instanceID int, status InstanceStatus, timeoutSeconds int) (*Instance, error) {
-	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
-	defer cancel()
-
-	ticker := time.NewTicker(client.pollInterval)
-	defer ticker.Stop()
-
-	for {
-		select {
-		case <-ticker.C:
+// before returning.
+func (client Client) WaitForInstanceStatus(ctx context.Context, instanceID int, status InstanceStatus) (*Instance, error) {
+	return poll(ctx, &client,
+		func(ctx context.Context) (*Instance, bool, error) {
 			instance, err := client.GetInstance(ctx, instanceID)
 			if err != nil {
-				return instance, err
+				return instance, false, err
 			}
 
-			complete := (instance.Status == status)
-
-			if complete {
-				return instance, nil
-			}
-		case <-ctx.Done():
-			return nil, fmt.Errorf("Error waiting for Instance %d status %s: %w", instanceID, status, ctx.Err())
-		}
-	}
+			return instance, instance.Status == status, nil
+		},
+		func() error {
+			return fmt.Errorf("Error waiting for Instance %d status %s: %w", instanceID, status, ctx.Err())
+		},
+	)
 }
 
 // WaitForInstanceDiskStatus waits for the Linode instance disk to reach the desired state
-// before returning. It will timeout with an error after timeoutSeconds.
-func (client Client) WaitForInstanceDiskStatus(ctx context.Context, instanceID int, diskID int, status DiskStatus, timeoutSeconds int) (*InstanceDisk, error) {
-	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
-	defer cancel()
-
-	ticker := time.NewTicker(client.pollInterval)
-	defer ticker.Stop()
-
-	for {
-		select {
-		case <-ticker.C:
-			// GetInstanceDisk will 404 on newly created disks. use List instead.
-			// disk, err := client.GetInstanceDisk(ctx, instanceID, diskID)
+// before returning.
+func (client Client) WaitForInstanceDiskStatus(ctx context.Context, instanceID int, diskID int, status DiskStatus) (*InstanceDisk, error) {
+	return poll(ctx, &client,
+		func(ctx context.Context) (*InstanceDisk, bool, error) {
+			// GetInstanceDisk will 404 on newly created disks. Use List instead.
 			disks, err := client.ListInstanceDisks(ctx, instanceID, nil)
 			if err != nil {
-				return nil, err
+				return nil, false, err
 			}
 
 			for _, disk := range disks {
 				if disk.ID == diskID {
-					complete := (disk.Status == status)
-					if complete {
-						return &disk, nil
+					if disk.Status == status {
+						return &disk, true, nil
 					}
 
 					break
 				}
 			}
-		case <-ctx.Done():
-			return nil, fmt.Errorf("Error waiting for Instance %d Disk %d status %s: %w", instanceID, diskID, status, ctx.Err())
-		}
-	}
+
+			return nil, false, nil
+		},
+		func() error {
+			return fmt.Errorf("Error waiting for Instance %d Disk %d status %s: %w", instanceID, diskID, status, ctx.Err())
+		},
+	)
 }
 
 // WaitForVolumeStatus waits for the Volume to reach the desired state
-// before returning. It will timeout with an error after timeoutSeconds.
-func (client Client) WaitForVolumeStatus(ctx context.Context, volumeID int, status VolumeStatus, timeoutSeconds int) (*Volume, error) {
-	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
-	defer cancel()
-
-	ticker := time.NewTicker(client.pollInterval)
-	defer ticker.Stop()
-
-	for {
-		select {
-		case <-ticker.C:
+// before returning.
+func (client Client) WaitForVolumeStatus(ctx context.Context, volumeID int, status VolumeStatus) (*Volume, error) {
+	return poll(ctx, &client,
+		func(ctx context.Context) (*Volume, bool, error) {
 			volume, err := client.GetVolume(ctx, volumeID)
 			if err != nil {
-				return volume, err
+				return volume, false, err
 			}
 
-			complete := (volume.Status == status)
-
-			if complete {
-				return volume, nil
-			}
-		case <-ctx.Done():
-			return nil, fmt.Errorf("Error waiting for Volume %d status %s: %w", volumeID, status, ctx.Err())
-		}
-	}
+			return volume, volume.Status == status, nil
+		},
+		func() error {
+			return fmt.Errorf("Error waiting for Volume %d status %s: %w", volumeID, status, ctx.Err())
+		},
+	)
 }
 
 // WaitForSnapshotStatus waits for the Snapshot to reach the desired state
-// before returning. It will timeout with an error after timeoutSeconds.
+// before returning.
 func (client Client) WaitForSnapshotStatus(
 	ctx context.Context,
 	instanceID int,
 	snapshotID int,
 	status InstanceSnapshotStatus,
-	timeoutSeconds int,
 ) (*InstanceSnapshot, error) {
-	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
-	defer cancel()
-
-	ticker := time.NewTicker(client.pollInterval)
-	defer ticker.Stop()
-
-	for {
-		select {
-		case <-ticker.C:
+	return poll(ctx, &client,
+		func(ctx context.Context) (*InstanceSnapshot, bool, error) {
 			snapshot, err := client.GetInstanceSnapshot(ctx, instanceID, snapshotID)
 			if err != nil {
-				return snapshot, err
+				return snapshot, false, err
 			}
 
-			complete := (snapshot.Status == status)
-
-			if complete {
-				return snapshot, nil
-			}
-		case <-ctx.Done():
-			return nil, fmt.Errorf("Error waiting for Instance %d Snapshot %d status %s: %w", instanceID, snapshotID, status, ctx.Err())
-		}
-	}
+			return snapshot, snapshot.Status == status, nil
+		},
+		func() error {
+			return fmt.Errorf("Error waiting for Instance %d Snapshot %d status %s: %w", instanceID, snapshotID, status, ctx.Err())
+		},
+	)
 }
 
 // WaitForVolumeLinodeID waits for the Volume to match the desired LinodeID
 // before returning. An active Instance will not immediately attach or detach a volume, so
 // the LinodeID must be polled to determine volume readiness from the API.
-// WaitForVolumeLinodeID will timeout with an error after timeoutSeconds.
-func (client Client) WaitForVolumeLinodeID(ctx context.Context, volumeID int, linodeID *int, timeoutSeconds int) (*Volume, error) {
-	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
-	defer cancel()
-
-	ticker := time.NewTicker(client.pollInterval)
-	defer ticker.Stop()
-
-	for {
-		select {
-		case <-ticker.C:
+func (client Client) WaitForVolumeLinodeID(ctx context.Context, volumeID int, linodeID *int) (*Volume, error) {
+	return poll(ctx, &client,
+		func(ctx context.Context) (*Volume, bool, error) {
 			volume, err := client.GetVolume(ctx, volumeID)
 			if err != nil {
-				return volume, err
+				return volume, false, err
 			}
 
 			switch {
 			case linodeID == nil && volume.LinodeID == nil:
-				return volume, nil
+				return volume, true, nil
 			case linodeID == nil || volume.LinodeID == nil:
-				// continue waiting
+				// Continue waiting.
 			case *volume.LinodeID == *linodeID:
-				return volume, nil
+				return volume, true, nil
 			}
-		case <-ctx.Done():
-			return nil, fmt.Errorf("Error waiting for Volume %d to have Instance %v: %w", volumeID, linodeID, ctx.Err())
-		}
-	}
+
+			return volume, false, nil
+		},
+		func() error {
+			return fmt.Errorf("Error waiting for Volume %d to have Instance %v: %w", volumeID, linodeID, ctx.Err())
+		},
+	)
 }
 
 // WaitForLKEClusterStatus waits for the LKECluster to reach the desired state
-// before returning. It will timeout with an error after timeoutSeconds.
-func (client Client) WaitForLKEClusterStatus(ctx context.Context, clusterID int, status LKEClusterStatus, timeoutSeconds int) (*LKECluster, error) {
-	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
-	defer cancel()
-
-	ticker := time.NewTicker(client.pollInterval)
-	defer ticker.Stop()
-
-	for {
-		select {
-		case <-ticker.C:
+// before returning.
+func (client Client) WaitForLKEClusterStatus(ctx context.Context, clusterID int, status LKEClusterStatus) (*LKECluster, error) {
+	return poll(ctx, &client,
+		func(ctx context.Context) (*LKECluster, bool, error) {
 			cluster, err := client.GetLKECluster(ctx, clusterID)
 			if err != nil {
-				return cluster, err
+				return cluster, false, err
 			}
 
-			complete := (cluster.Status == status)
-
-			if complete {
-				return cluster, nil
-			}
-		case <-ctx.Done():
-			return nil, fmt.Errorf("Error waiting for Cluster %d status %s: %w", clusterID, status, ctx.Err())
-		}
-	}
+			return cluster, cluster.Status == status, nil
+		},
+		func() error {
+			return fmt.Errorf("Error waiting for Cluster %d status %s: %w", clusterID, status, ctx.Err())
+		},
+	)
 }
 
 // LKEClusterPollOptions configures polls against LKE Clusters.
@@ -220,15 +169,12 @@ type LKEClusterPollOptions struct {
 	// Retry will cause the Poll to ignore interimittent errors
 	Retry bool
 
-	// TimeoutSeconds is the number of Seconds to wait for the poll to succeed
-	// before exiting.
-	TimeoutSeconds int
-
 	// TansportWrapper allows adding a transport middleware function that will
 	// wrap the LKE Cluster client's underlying http.RoundTripper.
 	TransportWrapper func(http.RoundTripper) http.RoundTripper
 }
 
+// ClusterConditionOptions configures LKE cluster condition checks.
 type ClusterConditionOptions struct {
 	LKEClusterKubeconfig *LKEClusterKubeconfig
 	TransportWrapper     func(http.RoundTripper) http.RoundTripper
@@ -245,18 +191,12 @@ func (client Client) WaitForLKEClusterConditions(
 	options LKEClusterPollOptions,
 	conditions ...ClusterConditionFunc,
 ) error {
-	ctx, cancel := context.WithCancel(ctx)
-	if options.TimeoutSeconds != 0 {
-		ctx, cancel = context.WithTimeout(ctx, time.Duration(options.TimeoutSeconds)*time.Second)
-	}
-	defer cancel()
-
 	lkeKubeConfig, err := client.GetLKEClusterKubeconfig(ctx, clusterID)
 	if err != nil {
 		return fmt.Errorf("failed to get Kubeconfig for LKE cluster %d: %w", clusterID, err)
 	}
 
-	ticker := time.NewTicker(client.pollInterval)
+	ticker := newTicker(&client)
 	defer ticker.Stop()
 
 	conditionOptions := ClusterConditionOptions{LKEClusterKubeconfig: lkeKubeConfig, TransportWrapper: options.TransportWrapper}
@@ -289,7 +229,7 @@ func (client Client) WaitForLKEClusterConditions(
 }
 
 // WaitForEventFinished waits for an entity action to reach the 'finished' state
-// before returning. It will timeout with an error after timeoutSeconds.
+// before returning.
 // If the event indicates a failure both the failed event and the error will be returned.
 // nolint
 func (client Client) WaitForEventFinished(
@@ -298,7 +238,6 @@ func (client Client) WaitForEventFinished(
 	entityType EntityType,
 	action EventAction,
 	minStart time.Time,
-	timeoutSeconds int,
 ) (*Event, error) {
 	titledEntityType := englishTitle.String(string(entityType))
 	filter := Filter{
@@ -326,15 +265,11 @@ func (client Client) WaitForEventFinished(
 		filter.AddField(Eq, "entity.type", entityType)
 	}
 
-	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
-	defer cancel()
-
 	if deadline, ok := ctx.Deadline(); ok {
-		duration := time.Until(deadline)
-		log.Printf("[INFO] Waiting %d seconds for %s events since %v for %s %v", int(duration.Seconds()), action, minStart, titledEntityType, id)
+		log.Printf("[INFO] Waiting %d seconds for %s events since %v for %s %v", int(time.Until(deadline).Seconds()), action, minStart, titledEntityType, id)
 	}
 
-	ticker := time.NewTicker(client.pollInterval)
+	ticker := newTicker(&client)
 
 	// avoid repeating log messages
 	nextLog := ""
@@ -363,8 +298,6 @@ func (client Client) WaitForEventFinished(
 
 			// If there are events for this instance + action, inspect them
 			for _, event := range events {
-				event := event
-
 				if event.Entity == nil || event.Entity.Type != entityType {
 					// log.Println("type mismatch", event.Entity.Type, entityType)
 					continue
@@ -382,6 +315,7 @@ func (client Client) WaitForEventFinished(
 				}
 
 				var findID string
+
 				switch id := id.(type) {
 				case float64, float32:
 					findID = fmt.Sprintf("%.f", id)
@@ -428,45 +362,31 @@ func (client Client) WaitForEventFinished(
 }
 
 // WaitForImageStatus waits for the Image to reach the desired state
-// before returning. It will timeout with an error after timeoutSeconds.
-func (client Client) WaitForImageStatus(ctx context.Context, imageID string, status ImageStatus, timeoutSeconds int) (*Image, error) {
-	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
-	defer cancel()
-
-	ticker := time.NewTicker(client.pollInterval)
-	defer ticker.Stop()
-
-	for {
-		select {
-		case <-ticker.C:
+// before returning.
+func (client Client) WaitForImageStatus(ctx context.Context, imageID string, status ImageStatus) (*Image, error) {
+	return poll(ctx, &client,
+		func(ctx context.Context) (*Image, bool, error) {
 			image, err := client.GetImage(ctx, imageID)
 			if err != nil {
-				return image, err
+				return image, false, err
 			}
 
-			complete := image.Status == status
-
-			if complete {
-				return image, nil
-			}
-		case <-ctx.Done():
-			return nil, fmt.Errorf("failed to wait for Image %s status %s: %w", imageID, status, ctx.Err())
-		}
-	}
+			return image, image.Status == status, nil
+		},
+		func() error {
+			return fmt.Errorf("failed to wait for Image %s status %s: %w", imageID, status, ctx.Err())
+		},
+	)
 }
 
 // WaitForImageRegionStatus waits for an Image's replica to reach the desired state
 // before returning.
 func (client Client) WaitForImageRegionStatus(ctx context.Context, imageID, region string, status ImageRegionStatus) (*Image, error) {
-	ticker := time.NewTicker(client.pollInterval)
-	defer ticker.Stop()
-
-	for {
-		select {
-		case <-ticker.C:
+	return poll(ctx, &client,
+		func(ctx context.Context) (*Image, bool, error) {
 			image, err := client.GetImage(ctx, imageID)
 			if err != nil {
-				return image, err
+				return image, false, err
 			}
 
 			replicaIdx := slices.IndexFunc(
@@ -476,17 +396,16 @@ func (client Client) WaitForImageRegionStatus(ctx context.Context, imageID, regi
 				},
 			)
 
-			// If no replica was found or the status doesn't match, try again
 			if replicaIdx < 0 || image.Regions[replicaIdx].Status != status {
-				continue
+				return image, false, nil
 			}
 
-			return image, nil
-
-		case <-ctx.Done():
-			return nil, fmt.Errorf("failed to wait for Image %s status %s: %w", imageID, status, ctx.Err())
-		}
-	}
+			return image, true, nil
+		},
+		func() error {
+			return fmt.Errorf("failed to wait for Image %s status %s: %w", imageID, status, ctx.Err())
+		},
+	)
 }
 
 type databaseStatusFunc func(ctx context.Context, client Client, dbID int) (DatabaseStatus, error)
@@ -512,34 +431,28 @@ var databaseStatusHandlers = map[DatabaseEngineType]databaseStatusFunc{
 
 // WaitForDatabaseStatus waits for the provided database to have the given status.
 func (client Client) WaitForDatabaseStatus(
-	ctx context.Context, dbID int, dbEngine DatabaseEngineType, status DatabaseStatus, timeoutSeconds int,
+	ctx context.Context, dbID int, dbEngine DatabaseEngineType, status DatabaseStatus,
 ) error {
-	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
-	defer cancel()
-
-	ticker := time.NewTicker(client.pollInterval)
-	defer ticker.Stop()
-
-	for {
-		select {
-		case <-ticker.C:
+	_, err := poll(ctx, &client,
+		func(ctx context.Context) (struct{}, bool, error) {
 			statusHandler, ok := databaseStatusHandlers[dbEngine]
 			if !ok {
-				return fmt.Errorf("invalid db engine: %s", dbEngine)
+				return struct{}{}, false, fmt.Errorf("invalid db engine: %s", dbEngine)
 			}
 
 			currentStatus, err := statusHandler(ctx, client, dbID)
 			if err != nil {
-				return fmt.Errorf("failed to get db status: %w", err)
+				return struct{}{}, false, fmt.Errorf("failed to get db status: %w", err)
 			}
 
-			if currentStatus == status {
-				return nil
-			}
-		case <-ctx.Done():
+			return struct{}{}, currentStatus == status, nil
+		},
+		func() error {
 			return fmt.Errorf("failed to wait for database %d status: %w", dbID, ctx.Err())
-		}
-	}
+		},
+	)
+
+	return err
 }
 
 // NewEventPoller initializes a new Linode event poller. This should be run before the event is triggered as it stores
@@ -555,7 +468,7 @@ func (client Client) NewEventPoller(
 		client: client,
 	}
 
-	if err := result.PreTask(ctx); err != nil {
+	if err := result.preTask(ctx); err != nil {
 		return nil, fmt.Errorf("failed to run pretask: %w", err)
 	}
 
@@ -597,42 +510,9 @@ func (client Client) NewEventPollerWithoutEntity(entityType EntityType, action E
 	return &result, nil
 }
 
-// PreTask stores all current events for the given entity to prevent them from being
-// processed on subsequent runs.
-func (p *EventPoller) PreTask(ctx context.Context) error {
-	f := Filter{
-		OrderBy: "created",
-		Order:   Descending,
-	}
-	f.AddField(Eq, "entity.type", p.EntityType)
-	f.AddField(Eq, "entity.id", p.EntityID)
-	f.AddField(Eq, "action", p.Action)
-
-	fBytes, err := f.MarshalJSON()
-	if err != nil {
-		return err
-	}
-
-	events, err := p.client.ListEvents(ctx, &ListOptions{
-		Filter:      string(fBytes),
-		PageOptions: &PageOptions{Page: 1},
-	})
-	if err != nil {
-		return fmt.Errorf("failed to list events: %w", err)
-	}
-
-	eventIDs := make(map[int]bool, len(events))
-	for _, event := range events {
-		eventIDs[event.ID] = true
-	}
-
-	p.previousEvents = eventIDs
-
-	return nil
-}
-
+// WaitForLatestUnknownEvent waits for the next event not observed by this poller.
 func (p *EventPoller) WaitForLatestUnknownEvent(ctx context.Context) (*Event, error) {
-	ticker := time.NewTicker(p.client.pollInterval)
+	ticker := newTicker(&p.client)
 	defer ticker.Stop()
 
 	f := Filter{
@@ -681,13 +561,8 @@ func (p *EventPoller) WaitForLatestUnknownEvent(ctx context.Context) (*Event, er
 }
 
 // WaitForFinished waits for a new event to be finished.
-func (p *EventPoller) WaitForFinished(
-	ctx context.Context, timeoutSeconds int,
-) (*Event, error) {
-	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
-	defer cancel()
-
-	ticker := time.NewTicker(p.client.pollInterval)
+func (p *EventPoller) WaitForFinished(ctx context.Context) (*Event, error) {
+	ticker := newTicker(&p.client)
 	defer ticker.Stop()
 
 	event, err := p.WaitForLatestUnknownEvent(ctx)
@@ -719,7 +594,7 @@ func (p *EventPoller) WaitForFinished(
 
 // WaitForResourceFree waits for a resource to have no running events.
 func (client Client) WaitForResourceFree(
-	ctx context.Context, entityType EntityType, entityID any, timeoutSeconds int,
+	ctx context.Context, entityType EntityType, entityID any,
 ) error {
 	apiFilter := Filter{
 		Order:   Descending,
@@ -733,10 +608,7 @@ func (client Client) WaitForResourceFree(
 		return fmt.Errorf("failed to create filter: %s", err)
 	}
 
-	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
-	defer cancel()
-
-	ticker := time.NewTicker(client.pollInterval)
+	ticker := newTicker(&client)
 	defer ticker.Stop()
 
 	// A helper function to determine whether a resource is busy
@@ -796,29 +668,20 @@ func (client Client) WaitForAlertDefinitionStatus(
 	status AlertDefinitionStatus,
 	serviceType string,
 	alertID int,
-	timeoutSeconds int,
 ) (*AlertDefinition, error) {
-	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
-	defer cancel()
-
-	ticker := time.NewTicker(client.pollInterval)
-	defer ticker.Stop()
-
-	for {
-		select {
-		case <-ticker.C:
+	return poll(ctx, &client,
+		func(ctx context.Context) (*AlertDefinition, bool, error) {
 			alertDef, err := client.GetMonitorAlertDefinition(ctx, serviceType, alertID)
 			if err != nil {
-				return alertDef, err
+				return alertDef, false, err
 			}
 
-			if alertDef.Status == status {
-				return alertDef, nil
-			}
-		case <-ctx.Done():
-			return nil, fmt.Errorf("failed to wait for AlertDefinition %d status %s: %w", alertID, status, ctx.Err())
-		}
-	}
+			return alertDef, alertDef.Status == status, nil
+		},
+		func() error {
+			return fmt.Errorf("failed to wait for AlertDefinition %d status %s: %w", alertID, status, ctx.Err())
+		},
+	)
 }
 
 // WaitForVolumeIOReadyStatus waits for the io_ready status to verify whether the volume is
@@ -827,28 +690,86 @@ func (client Client) WaitForVolumeIOReadyStatus(
 	ctx context.Context,
 	volumeID int,
 	status bool,
-	timeoutSeconds int,
 ) (*Volume, error) {
-	ctx, cancel := context.WithTimeout(ctx, time.Duration(timeoutSeconds)*time.Second)
-	defer cancel()
+	return poll(ctx, &client,
+		func(ctx context.Context) (*Volume, bool, error) {
+			volume, err := client.GetVolume(ctx, volumeID)
+			if err != nil {
+				return volume, false, fmt.Errorf("failed to get volume: %w", err)
+			}
 
-	ticker := time.NewTicker(client.pollInterval)
+			return volume, volume.IOReady == status, nil
+		},
+		func() error {
+			return fmt.Errorf("failed to wait for Volume %d IO Ready status %t: %w", volumeID, status, ctx.Err())
+		},
+	)
+}
+
+// preTask stores all current events for the given entity to prevent them from being
+// processed on subsequent runs.
+func (p *EventPoller) preTask(ctx context.Context) error {
+	f := Filter{
+		OrderBy: "created",
+		Order:   Descending,
+	}
+	f.AddField(Eq, "entity.type", p.EntityType)
+	f.AddField(Eq, "entity.id", p.EntityID)
+	f.AddField(Eq, "action", p.Action)
+
+	fBytes, err := f.MarshalJSON()
+	if err != nil {
+		return err
+	}
+
+	events, err := p.client.ListEvents(ctx, &ListOptions{
+		Filter:      string(fBytes),
+		PageOptions: &PageOptions{Page: 1},
+	})
+	if err != nil {
+		return fmt.Errorf("failed to list events: %w", err)
+	}
+
+	eventIDs := make(map[int]bool, len(events))
+	for _, event := range events {
+		eventIDs[event.ID] = true
+	}
+
+	p.previousEvents = eventIDs
+
+	return nil
+}
+
+// poll runs check on each tick until check reports done, returns an error, or ctx is canceled.
+//
+//nolint:ireturn // false positive: returning a generic concrete type, not an interface
+func poll[T any](
+	ctx context.Context,
+	client *Client,
+	check func(context.Context) (T, bool, error),
+	timeoutErr func() error,
+) (T, error) {
+	ticker := newTicker(client)
 	defer ticker.Stop()
 
 	for {
 		select {
 		case <-ticker.C:
-			volume, err := client.GetVolume(ctx, volumeID)
+			result, done, err := check(ctx)
 			if err != nil {
-				return volume, err
+				return result, err
 			}
 
-			if volume.IOReady == status {
-				return volume, nil
+			if done {
+				return result, nil
 			}
-
 		case <-ctx.Done():
-			return nil, fmt.Errorf("failed to wait for Volume %d IO Ready status %t: %w", volumeID, status, ctx.Err())
+			var zero T
+			return zero, timeoutErr()
 		}
 	}
+}
+
+func newTicker(client *Client) *time.Ticker {
+	return time.NewTicker(client.GetPollDelay())
 }
