@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -12,15 +12,16 @@ func TestObjectStorageQuotas_Get(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestObjectStorageQuotas_Get")
 	defer teardown()
 
-	quota, err := client.GetObjectStorageQuota(context.Background(), "obj-objects-us-ord-1.linodeobjects.com")
+	targetQuotaID := "obj-objects-us-ord-1.linodeobjects.com"
+	quota, err := client.GetObjectStorageQuota(context.Background(), targetQuotaID)
 	assert.NoError(t, err)
 
 	expected := linodego.ObjectStorageQuota{
 		QuotaID:        "obj-objects-us-ord-1.linodeobjects.com",
-		QuotaName:      "max_objects",
+		QuotaName:      "Number of Objects",
 		EndpointType:   "E1",
 		S3Endpoint:     "us-ord-1.linodeobjects.com",
-		Description:    "Maximum number of objects this customer is allowed to have on this endpoint",
+		Description:    "Current number of objects per account, per endpoint",
 		QuotaLimit:     100000000,
 		ResourceMetric: "object",
 	}
@@ -54,10 +55,10 @@ func TestObjectStorageQuotas_List(t *testing.T) {
 	if assert.NotNil(t, foundQuota, "Expected quota_id %q not found", targetQuotaID) {
 		expected := linodego.ObjectStorageQuota{
 			QuotaID:        "obj-buckets-us-mia-1.linodeobjects.com",
-			QuotaName:      "max_buckets",
+			QuotaName:      "Number of Buckets",
 			EndpointType:   "E1",
 			S3Endpoint:     "us-mia-1.linodeobjects.com",
-			Description:    "Maximum number of buckets this customer is allowed to have on this endpoint",
+			Description:    "Current number of buckets per account, per endpoint",
 			QuotaLimit:     1000,
 			ResourceMetric: "bucket",
 		}

@@ -3,12 +3,12 @@ package integration
 import (
 	"context"
 	"fmt"
-	"net/url"
 	"reflect"
 	"testing"
+	"time"
 
-	"github.com/linode/linodego"
-	k8scondition "github.com/linode/linodego/k8s/pkg/condition"
+	"github.com/linode/linodego/v2"
+	k8scondition "github.com/linode/linodego/v2/k8s/pkg/condition"
 )
 
 func TestLKECluster_GetMissing(t *testing.T) {
@@ -30,6 +30,8 @@ func TestLKECluster_GetMissing(t *testing.T) {
 }
 
 func TestLKECluster_WaitForReady(t *testing.T) {
+	ctx := waitContext(t, 10*60*time.Second)
+
 	client, cluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = "go-lke-test-wait"
 		createOpts.NodePools = []linodego.LKENodePoolCreateOptions{
@@ -41,9 +43,8 @@ func TestLKECluster_WaitForReady(t *testing.T) {
 	wrapper, teardownClusterClient := transportRecorderWrapper(t, "fixtures/TestLKECluster_WaitForReady_Cluster")
 	defer teardownClusterClient()
 
-	if err = k8scondition.WaitForLKEClusterReady(context.Background(), *client, cluster.ID, linodego.LKEClusterPollOptions{
+	if err = k8scondition.WaitForLKEClusterReady(ctx, *client, cluster.ID, linodego.LKEClusterPollOptions{
 		Retry:            true,
-		TimeoutSeconds:   10 * 60,
 		TransportWrapper: wrapper,
 	}); err != nil {
 		t.Errorf("Error waiting for the LKE cluster pools to be ready: %s", err)
@@ -128,7 +129,6 @@ func TestLKECluster_Enterprise_BYOVPC_smoke(t *testing.T) {
 func TestLKECluster_Update(t *testing.T) {
 	client, cluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = "go-lke-test-update"
-		createOpts.K8sVersion = "1.31"
 	}}, "fixtures/TestLKECluster_Update")
 	defer teardown()
 	if err != nil {
@@ -137,12 +137,10 @@ func TestLKECluster_Update(t *testing.T) {
 
 	updatedTags := []string{"test=true"}
 	updatedLabel := cluster.Label + "-updated"
-	updatedK8sVersion := "1.32"
 
 	updatedCluster, err := client.UpdateLKECluster(context.Background(), cluster.ID, linodego.LKEClusterUpdateOptions{
-		Tags:       &updatedTags,
-		Label:      updatedLabel,
-		K8sVersion: updatedK8sVersion,
+		Tags:  updatedTags,
+		Label: updatedLabel,
 	})
 	if err != nil {
 		t.Fatalf("failed to update LKE Cluster (%d): %s", cluster.ID, err)
@@ -150,10 +148,6 @@ func TestLKECluster_Update(t *testing.T) {
 
 	if updatedCluster.Label != updatedLabel {
 		t.Errorf("expected label to be updated to %q; got %q", updatedLabel, updatedCluster.Label)
-	}
-
-	if updatedCluster.K8sVersion != updatedK8sVersion {
-		t.Errorf("expected k8s version to be updated to %q; got %q", updatedK8sVersion, updatedCluster.K8sVersion)
 	}
 
 	if !reflect.DeepEqual(updatedTags, updatedCluster.Tags) {
@@ -212,12 +206,14 @@ func TestLKECluster_APIEndpoints_List(t *testing.T) {
 }
 
 func TestLKECluster_Kubeconfig_Get(t *testing.T) {
+	ctx := waitContext(t, 180*time.Second)
+
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = "go-lke-test-kube-get"
 	}}, "fixtures/TestLKECluster_Kubeconfig_Get")
 	defer teardown()
 
-	_, err = client.WaitForLKEClusterStatus(context.Background(), lkeCluster.ID, linodego.LKEClusterReady, 180)
+	_, err = client.WaitForLKEClusterStatus(ctx, lkeCluster.ID, linodego.LKEClusterReady)
 	if err != nil {
 		t.Errorf("Error waiting for LKECluster readiness: %s", err)
 	}
@@ -231,12 +227,14 @@ func TestLKECluster_Kubeconfig_Get(t *testing.T) {
 }
 
 func TestLKECluster_Kubeconfig_Delete(t *testing.T) {
+	ctx := waitContext(t, 180*time.Second)
+
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Label = "go-lke-test-kube-delete"
 	}}, "fixtures/TestLKECluster_Kubeconfig_Delete")
 	defer teardown()
 
-	_, err = client.WaitForLKEClusterStatus(context.Background(), lkeCluster.ID, linodego.LKEClusterReady, 180)
+	_, err = client.WaitForLKEClusterStatus(ctx, lkeCluster.ID, linodego.LKEClusterReady)
 	if err != nil {
 		t.Errorf("Error waiting for LKECluster readiness: %s", err)
 	}
@@ -251,30 +249,6 @@ func TestLKECluster_Kubeconfig_Delete(t *testing.T) {
 	delete_err := client.DeleteLKEClusterKubeconfig(context.Background(), lkeCluster.ID)
 	if err != nil {
 		t.Errorf("Error deleting lkeCluster Kubeconfig, got error %v", delete_err)
-	}
-}
-
-func TestLKECluster_Dashboard_Get(t *testing.T) {
-	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
-		createOpts.Label = "go-lke-test-dash"
-	}}, "fixtures/TestLKECluster_Dashboard_Get")
-	defer teardown()
-
-	_, err = client.WaitForLKEClusterStatus(context.Background(), lkeCluster.ID, linodego.LKEClusterReady, 180)
-	if err != nil {
-		t.Errorf("Error waiting for LKECluster readiness: %s", err)
-	}
-	i, err := client.GetLKEClusterDashboard(context.Background(), lkeCluster.ID)
-	if err != nil {
-		t.Errorf("Error getting LKE cluster dashboard URL, expected struct, got %v and error %v", i, err)
-	}
-
-	if len(i.URL) == 0 {
-		t.Errorf("Expected an LKE cluster dashboard URL, but got empty string %v", i)
-	}
-
-	if _, err := url.ParseRequestURI(i.URL); err != nil {
-		t.Errorf("invalid url: %s", err)
 	}
 }
 
@@ -441,7 +415,10 @@ func setupLKECluster(t *testing.T, clusterModifiers []clusterModifier, fixturesY
 	}
 
 	if createOpts.Region == "" {
-		createOpts.Region = getRegionsWithCaps(t, client, []string{"Kubernetes", "LA Disk Encryption"})[0]
+		createOpts.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{
+			linodego.CapabilityLKE,
+			linodego.CapabilityLADiskEncryption,
+		})[0]
 	}
 
 	if createOpts.K8sVersion == "" {

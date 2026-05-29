@@ -7,8 +7,10 @@ import (
 	"strconv"
 	"strings"
 	"testing"
+	"time"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -120,14 +122,11 @@ func TestInstance_GetMonthlyTransfer(t *testing.T) {
 	if err != nil {
 		t.Errorf("Error getting monthly instance transfer, expected struct, got error %v", err)
 	}
-
-	_, err = client.GetInstanceTransferMonthlyV2(context.Background(), instance.ID, testYear, testMonth)
-	if err != nil {
-		t.Errorf("Error getting monthly instance transfer, expected struct, got error %v", err)
-	}
 }
 
 func TestInstance_ResetPassword(t *testing.T) {
+	ctx := waitContext(t, 180*time.Second)
+
 	client, instance, teardown, err := setupInstance(
 		t,
 		"fixtures/TestInstance_ResetPassword", true,
@@ -145,10 +144,9 @@ func TestInstance_ResetPassword(t *testing.T) {
 	}
 
 	instance, err = client.WaitForInstanceStatus(
-		context.Background(),
+		ctx,
 		instance.ID,
 		linodego.InstanceOffline,
-		180,
 	)
 	if err != nil {
 		t.Errorf("Error waiting for instance readiness for password reset: %s", err.Error())
@@ -167,6 +165,8 @@ func TestInstance_ResetPassword(t *testing.T) {
 }
 
 func TestInstance_Resize(t *testing.T) {
+	ctx := waitContext(t, 180*time.Second)
+
 	client, instance, teardown, err := setupInstance(
 		t,
 		"fixtures/TestInstance_Resize", true,
@@ -183,10 +183,9 @@ func TestInstance_Resize(t *testing.T) {
 	}
 
 	instance, err = client.WaitForInstanceStatus(
-		context.Background(),
+		ctx,
 		instance.ID,
 		linodego.InstanceRunning,
-		180,
 	)
 	if err != nil {
 		t.Errorf("Error waiting for instance readiness for resize: %s", err.Error())
@@ -206,6 +205,8 @@ func TestInstance_Resize(t *testing.T) {
 }
 
 func TestInstance_Migrate(t *testing.T) {
+	ctx := waitContext(t, 180*time.Second)
+
 	client, instance, teardown, err := setupInstance(
 		t,
 		"fixtures/TestInstance_Migrate", true,
@@ -222,10 +223,9 @@ func TestInstance_Migrate(t *testing.T) {
 	}
 
 	instance, err = client.WaitForInstanceStatus(
-		context.Background(),
+		ctx,
 		instance.ID,
 		linodego.InstanceRunning,
-		180,
 	)
 	if err != nil {
 		t.Errorf("Error waiting for instance readiness for migration: %s", err.Error())
@@ -248,13 +248,15 @@ func TestInstance_Migrate(t *testing.T) {
 }
 
 func TestInstance_MigrateToPG(t *testing.T) {
+	ctx := waitContext(t, 180*time.Second)
+
 	client, clientTeardown := createTestClient(t, "fixtures/TestInstance_MigrateToPG")
 
 	defer func() {
 		clientTeardown()
 	}()
 
-	regions := getRegionsWithCaps(t, client, []string{"Placement Group"})
+	regions := getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityPlacementGroup})
 
 	pgOutboundCreateOpts := linodego.PlacementGroupCreateOptions{
 		Label:                "linodego-test-" + getUniqueText(),
@@ -286,10 +288,9 @@ func TestInstance_MigrateToPG(t *testing.T) {
 	}
 
 	instance, err = client.WaitForInstanceStatus(
-		context.Background(),
+		ctx,
 		instance.ID,
 		linodego.InstanceRunning,
-		180,
 	)
 	if err != nil {
 		t.Errorf("Error waiting for instance readiness for migration: %s", err.Error())
@@ -372,7 +373,7 @@ func TestInstance_Disks_List_WithEncryption(t *testing.T) {
 		"fixtures/TestInstance_Disks_List_WithEncryption",
 		true,
 		func(c *linodego.Client, ico *linodego.InstanceCreateOptions) {
-			ico.Region = getRegionsWithCaps(t, c, []string{"Disk Encryption"})[0]
+			ico.Region = getRegionsWithCaps(t, c, []linodego.RegionCapability{linodego.CapabilityDiskEncryption})[0]
 		},
 	)
 	defer teardown()
@@ -397,13 +398,15 @@ func TestInstance_Disks_List_WithEncryption(t *testing.T) {
 }
 
 func TestInstance_Disk_Resize(t *testing.T) {
+	ctx := waitContext(t, 360*time.Second)
+
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Disk_Resize", true)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
 	}
 
-	instance, err = client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceOffline, 180)
+	instance, err = client.WaitForInstanceStatus(ctx, instance.ID, linodego.InstanceOffline)
 	if err != nil {
 		t.Errorf("Error waiting for instance readiness for resize: %s", err)
 	}
@@ -417,29 +420,39 @@ func TestInstance_Disk_Resize(t *testing.T) {
 		t.Errorf("Error creating disk for resize: %s", err)
 	}
 
-	disk, err = client.WaitForInstanceDiskStatus(context.Background(), instance.ID, disk.ID, linodego.DiskReady, 180)
+	disk, err = client.WaitForInstanceDiskStatus(ctx, instance.ID, disk.ID, linodego.DiskReady)
 	if err != nil {
 		t.Errorf("Error waiting for disk readiness for resize: %s", err)
 	}
 
-	err = client.ResizeInstanceDisk(context.Background(), instance.ID, disk.ID, 4000)
+	opts := linodego.InstanceDiskResizeOptions{
+		Size: 4000,
+	}
+
+	err = client.ResizeInstanceDisk(context.Background(), instance.ID, disk.ID, opts)
 	if err != nil {
 		t.Errorf("Error resizing instance disk: %s", err)
 	}
 }
 
 func TestInstance_Disk_ListMultiple(t *testing.T) {
+	ctx := waitContext(t, 840*time.Second)
+
 	// This is a long running test
 	client, instance1, teardown1, err := setupInstance(t, "fixtures/TestInstance_Disk_ListMultiple_Primary", true)
 	defer teardown1()
 	if err != nil {
 		t.Error(err)
 	}
-	err = client.BootInstance(context.Background(), instance1.ID, 0)
+
+	opts := linodego.InstanceBootOptions{
+		ConfigID: linodego.Pointer(0),
+	}
+	err = client.BootInstance(context.Background(), instance1.ID, opts)
 	if err != nil {
 		t.Error(err)
 	}
-	instance1, err = client.WaitForInstanceStatus(context.Background(), instance1.ID, linodego.InstanceRunning, 180)
+	instance1, err = client.WaitForInstanceStatus(ctx, instance1.ID, linodego.InstanceRunning)
 	if err != nil {
 		t.Errorf("Error waiting for instance readiness: %s", err)
 	}
@@ -449,7 +462,7 @@ func TestInstance_Disk_ListMultiple(t *testing.T) {
 		t.Error(err)
 	}
 
-	disk, err := client.WaitForInstanceDiskStatus(context.Background(), instance1.ID, disks[0].ID, linodego.DiskReady, 180)
+	disk, err := client.WaitForInstanceDiskStatus(ctx, instance1.ID, disks[0].ID, linodego.DiskReady)
 	if err != nil {
 		t.Errorf("Error waiting for disk readiness: %s", err)
 	}
@@ -468,12 +481,12 @@ func TestInstance_Disk_ListMultiple(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-	instance2, err = client.WaitForInstanceStatus(context.Background(), instance2.ID, linodego.InstanceOffline, 180)
+	instance2, err = client.WaitForInstanceStatus(ctx, instance2.ID, linodego.InstanceOffline)
 	if err != nil {
 		t.Errorf("Error waiting for instance readiness: %s", err)
 	}
 
-	_, err = client.WaitForEventFinished(context.Background(), instance1.ID, linodego.EntityLinode, linodego.ActionDiskImagize, *disk.Created, 300)
+	_, err = client.WaitForEventFinished(ctx, instance1.ID, linodego.EntityLinode, linodego.ActionDiskImagize, *disk.Created)
 	if err != nil {
 		t.Errorf("Error waiting for imagize event: %s", err)
 	}
@@ -506,13 +519,15 @@ func TestInstance_Disk_ListMultiple(t *testing.T) {
 }
 
 func TestInstance_Disk_Clone(t *testing.T) {
+	ctx := waitContext(t, 540*time.Second)
+
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Disk_Clone", true)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
 	}
 
-	instance, err = client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceOffline, 180)
+	instance, err = client.WaitForInstanceStatus(ctx, instance.ID, linodego.InstanceOffline)
 	if err != nil {
 		t.Errorf("Error waiting for instance readiness for disk clone: %s", err)
 	}
@@ -528,31 +543,31 @@ func TestInstance_Disk_Clone(t *testing.T) {
 		t.Errorf("Error creating disk for disk clone: %s", err)
 	}
 
-	instance, err = client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceOffline, 180)
+	instance, err = client.WaitForInstanceStatus(ctx, instance.ID, linodego.InstanceOffline)
 	if err != nil {
 		t.Errorf("Error waiting for instance readiness after creating disk for disk clone: %s", err)
 	}
-	disk, err = client.WaitForInstanceDiskStatus(context.Background(), instance.ID, disk.ID, linodego.DiskReady, 180)
+	disk, err = client.WaitForInstanceDiskStatus(ctx, instance.ID, disk.ID, linodego.DiskReady)
 	if err != nil {
 		t.Errorf("Error waiting for disk readiness for disk clone: %s", err)
 	}
 
-	opts := linodego.InstanceDiskCloneOptions{}
-
-	_, err = client.CloneInstanceDisk(context.Background(), instance.ID, disk.ID, opts)
+	_, err = client.CloneInstanceDisk(context.Background(), instance.ID, disk.ID)
 	if err != nil {
 		t.Errorf("Error cloning instance disk: %s", err)
 	}
 }
 
 func TestInstance_Disk_ResetPassword(t *testing.T) {
+	ctx := waitContext(t, 540*time.Second)
+
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Disk_ResetPassword", true)
 	defer teardown()
 	if err != nil {
 		t.Error(err)
 	}
 
-	instance, err = client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceOffline, 180)
+	instance, err = client.WaitForInstanceStatus(ctx, instance.ID, linodego.InstanceOffline)
 	if err != nil {
 		t.Errorf("Error waiting for instance readiness for password reset: %s", err)
 	}
@@ -568,16 +583,19 @@ func TestInstance_Disk_ResetPassword(t *testing.T) {
 		t.Errorf("Error creating disk for password reset: %s", err)
 	}
 
-	instance, err = client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceOffline, 180)
+	instance, err = client.WaitForInstanceStatus(ctx, instance.ID, linodego.InstanceOffline)
 	if err != nil {
 		t.Errorf("Error waiting for instance readiness after creating disk for password reset: %s", err)
 	}
-	disk, err = client.WaitForInstanceDiskStatus(context.Background(), instance.ID, disk.ID, linodego.DiskReady, 180)
+	disk, err = client.WaitForInstanceDiskStatus(ctx, instance.ID, disk.ID, linodego.DiskReady)
 	if err != nil {
 		t.Errorf("Error waiting for disk readiness for password reset: %s", err)
 	}
 
-	err = client.PasswordResetInstanceDisk(context.Background(), instance.ID, disk.ID, "r34!_b4d_p455")
+	opts := linodego.InstanceDiskPasswordResetOptions{
+		Password: "r34!_b4d_p455",
+	}
+	err = client.PasswordResetInstanceDisk(context.Background(), instance.ID, disk.ID, opts)
 	if err != nil {
 		t.Errorf("Error reseting password on instance disk: %s", err)
 	}
@@ -620,6 +638,8 @@ func TestInstance_NodeBalancers_List(t *testing.T) {
 }
 
 func TestInstance_Volumes_List(t *testing.T) {
+	ctx := waitContext(t, 500*time.Second)
+
 	client, instance, config, teardown, err := setupInstanceWithoutDisks(t, "fixtures/TestInstance_Volumes_List_Instance", true)
 	defer teardown()
 	if err != nil {
@@ -630,7 +650,7 @@ func TestInstance_Volumes_List(t *testing.T) {
 		options.Region = instance.Region
 	})
 
-	_, err = client.WaitForVolumeStatus(context.Background(), volume.ID, linodego.VolumeActive, 500)
+	_, err = client.WaitForVolumeStatus(ctx, volume.ID, linodego.VolumeActive)
 	if err != nil {
 		t.Errorf("Error waiting for volume to be active, %s", err)
 	}
@@ -688,11 +708,13 @@ func TestInstance_CreateUnderFirewall(t *testing.T) {
 }
 
 func TestInstance_Rebuild(t *testing.T) {
+	ctx := waitContext(t, 180*time.Second)
+
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(
 		t,
 		"fixtures/TestInstance_Rebuild", true,
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-			options.Region = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
+			options.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityMetadata})[0]
 		},
 	)
 	defer teardown()
@@ -701,13 +723,13 @@ func TestInstance_Rebuild(t *testing.T) {
 		t.Error(err)
 	}
 
-	_, err = client.WaitForEventFinished(context.Background(), instance.ID, linodego.EntityLinode, linodego.ActionLinodeCreate, *instance.Created, 180)
+	_, err = client.WaitForEventFinished(ctx, instance.ID, linodego.EntityLinode, linodego.ActionLinodeCreate, *instance.Created)
 	if err != nil {
 		t.Errorf("Error waiting for instance created: %s", err)
 	}
 
 	rebuildOpts := linodego.InstanceRebuildOptions{
-		Image: "linode/alpine3.19",
+		Image: "linode/alpine3.23",
 		Metadata: &linodego.InstanceMetadataOptions{
 			UserData: base64.StdEncoding.EncodeToString([]byte("cool")),
 		},
@@ -725,12 +747,14 @@ func TestInstance_Rebuild(t *testing.T) {
 }
 
 func TestInstance_RebuildWithEncryption(t *testing.T) {
+	ctx := waitContext(t, 180*time.Second)
+
 	client, instance, _, teardown, err := setupInstanceWithoutDisks(
 		t,
 		"fixtures/TestInstance_RebuildWithEncryption",
 		true,
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-			options.Region = getRegionsWithCaps(t, client, []string{"Disk Encryption"})[0]
+			options.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityDiskEncryption})[0]
 			options.DiskEncryption = linodego.InstanceDiskEncryptionEnabled
 		},
 	)
@@ -740,13 +764,13 @@ func TestInstance_RebuildWithEncryption(t *testing.T) {
 		t.Error(err)
 	}
 
-	_, err = client.WaitForEventFinished(context.Background(), instance.ID, linodego.EntityLinode, linodego.ActionLinodeCreate, *instance.Created, 180)
+	_, err = client.WaitForEventFinished(ctx, instance.ID, linodego.EntityLinode, linodego.ActionLinodeCreate, *instance.Created)
 	if err != nil {
 		t.Errorf("Error waiting for instance created: %s", err)
 	}
 
 	rebuildOpts := linodego.InstanceRebuildOptions{
-		Image:          "linode/alpine3.19",
+		Image:          "linode/alpine3.23",
 		RootPass:       randPassword(),
 		Type:           "g6-standard-2",
 		DiskEncryption: linodego.InstanceDiskEncryptionDisabled,
@@ -762,12 +786,14 @@ func TestInstance_RebuildWithEncryption(t *testing.T) {
 }
 
 func TestInstance_Clone(t *testing.T) {
+	ctx := waitContext(t, 420*time.Second)
+
 	var targetRegion string
 
 	client, instance, teardownOriginalLinode, err := setupInstance(
 		t, "fixtures/TestInstance_Clone", true,
 		func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-			targetRegion = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
+			targetRegion = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityMetadata})[0]
 
 			options.Region = targetRegion
 		})
@@ -777,12 +803,11 @@ func TestInstance_Clone(t *testing.T) {
 	t.Cleanup(teardownOriginalLinode)
 
 	_, err = client.WaitForEventFinished(
-		context.Background(),
+		ctx,
 		instance.ID,
 		linodego.EntityLinode,
 		linodego.ActionLinodeCreate,
 		*instance.Created,
-		180,
 	)
 	if err != nil {
 		t.Errorf("Error waiting for instance created: %s", err)
@@ -810,17 +835,12 @@ func TestInstance_Clone(t *testing.T) {
 		client.DeleteInstance(context.Background(), clonedInstance.ID)
 	})
 
-	if err != nil {
-		t.Error(err)
-	}
-
 	_, err = client.WaitForEventFinished(
-		context.Background(),
+		ctx,
 		instance.ID,
 		linodego.EntityLinode,
 		linodego.ActionLinodeClone,
 		*clonedInstance.Created,
-		240,
 	)
 	if err != nil {
 		t.Fatal(err)
@@ -863,7 +883,7 @@ func TestInstance_withMetadata(t *testing.T) {
 			options.Metadata = &linodego.InstanceMetadataOptions{
 				UserData: base64.StdEncoding.EncodeToString([]byte("reallycoolmetadata")),
 			}
-			options.Region = getRegionsWithCaps(t, client, []string{"Metadata"})[0]
+			options.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityMetadata})[0]
 		})
 	if err != nil {
 		t.Fatal(err)
@@ -896,7 +916,10 @@ func TestInstance_withBlockStorageEncryption(t *testing.T) {
 	client, clientTeardown := createTestClient(t, "fixtures/TestInstance_withBlockStorageEncryption")
 
 	inst, err := createInstance(t, client, true, func(client *linodego.Client, options *linodego.InstanceCreateOptions) {
-		options.Region = getRegionsWithCaps(t, client, []string{"Linodes", "Block Storage Encryption"})[0]
+		options.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{
+			linodego.CapabilityLinodes,
+			linodego.CapabilityBlockStorageEncryption,
+		})[0]
 		options.Label = "go-inst-test-create-bde"
 	})
 	require.NoError(t, err)
@@ -964,7 +987,7 @@ func createInstance(t *testing.T, client *linodego.Client, enableCloudFirewall b
 	createOpts := linodego.InstanceCreateOptions{
 		Label:    "go-test-ins-" + randLabel(),
 		RootPass: randPassword(),
-		Region:   getRegionsWithCaps(t, client, []string{"linodes"})[0],
+		Region:   getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes})[0],
 		Type:     "g6-nanode-1",
 		Image:    "linode/debian12",
 		Booted:   linodego.Pointer(false),
@@ -1016,8 +1039,11 @@ func createInstanceWithoutDisks(
 	t.Helper()
 
 	createOpts := linodego.InstanceCreateOptions{
-		Label:  "go-test-ins-wo-disk-" + randLabel(),
-		Region: getRegionsWithCaps(t, client, []string{"Linodes", "Maintenance Policy"})[0],
+		Label: "go-test-ins-wo-disk-" + randLabel(),
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{
+			linodego.CapabilityLinodes,
+			linodego.CapabilityMaintenancePolicy,
+		})[0],
 		Type:   "g6-nanode-1",
 		Booted: linodego.Pointer(false),
 	}
@@ -1076,7 +1102,7 @@ func TestInstance_MaintenancePolicy(t *testing.T) {
 	region := getRegionsWithCapsAndSiteType(
 		t,
 		client,
-		[]string{"Linodes", "Maintenance Policy"},
+		[]linodego.RegionCapability{linodego.CapabilityLinodes, linodego.CapabilityMaintenancePolicy},
 		"core",
 	)[0]
 
@@ -1148,4 +1174,94 @@ func TestInstance_MaintenancePolicy(t *testing.T) {
 	_, err = client.UpdateInstance(context.Background(), instToUpdate.ID, updateOpts)
 	require.Error(t, err)
 	require.Contains(t, err.Error(), "Unsupported maintenance policy slug format")
+}
+
+func TestExpectedErrorIfFieldsAuthorizedUsersAuthorizedKeysRootPassAreNotSet(t *testing.T) {
+	client, teardown := createTestClient(t,
+		"fixtures/TestInstance_TestExpectedErrorIfFieldsAuthorizedUsersAuthorizedKeysRootPassAreNotSet")
+	defer teardown()
+
+	region := getRegionsWithCapsAndSiteType(
+		t,
+		client,
+		[]linodego.RegionCapability{linodego.CapabilityLinodes, linodego.CapabilityMaintenancePolicy},
+		"core",
+	)[0]
+	_, err := client.CreateInstance(context.Background(),
+		linodego.InstanceCreateOptions{
+			Label:    "go-test-ins-" + randLabel(),
+			Region:   region,
+			Type:     "g6-nanode-1",
+			Image:    "linode/debian12",
+			Kernel:   linodego.Pointer("linode/6.15.7-x86_64-linode169"),
+			BootSize: linodego.Pointer(9000),
+		},
+	)
+	require.Error(t, err)
+	assert.Contains(t, err.Error(), "[400] Must provide valid root_pass, authorized_keys, or authorized_users")
+}
+
+func TestCreateLinodeWithKernelAndBootSizeThenAddDiskAndRebuild(t *testing.T) {
+	ctx := waitContext(t, 360*time.Second)
+
+	client, teardown := createTestClient(t,
+		"fixtures/TestInstance_TestCreateLinodeWithKernelAndBootSizeThenAddDiskAndRebuild")
+	defer teardown()
+
+	region := getRegionsWithCapsAndSiteType(
+		t,
+		client,
+		[]linodego.RegionCapability{linodego.CapabilityLinodes, linodego.CapabilityMaintenancePolicy},
+		"core",
+	)[0]
+	instance, err := client.CreateInstance(context.Background(),
+		linodego.InstanceCreateOptions{
+			Label:          "go-test-ins-" + randLabel(),
+			Region:         region,
+			Type:           "g6-nanode-1",
+			Image:          "linode/debian12",
+			Kernel:         linodego.Pointer("linode/latest-64bit"),
+			BootSize:       linodego.Pointer(8192),
+			AuthorizedKeys: []string{testSSHKeyCreateOpts.SSHKey},
+		},
+	)
+	defer func() {
+		if instance != nil {
+			err := client.DeleteInstance(context.Background(), instance.ID)
+			require.NoError(t, err)
+		}
+	}()
+	require.NoError(t, err)
+	assert.Equal(t, "linode/debian12", instance.Image)
+	_, err = client.WaitForEventFinished(
+		ctx,
+		instance.ID,
+		linodego.EntityLinode,
+		linodego.ActionLinodeCreate,
+		*instance.Created,
+	)
+	require.NoErrorf(t, err, "Error waiting for instance created: %s", err)
+
+	createDiskResponse, errCreateDisk := client.CreateInstanceDisk(context.Background(), instance.ID, linodego.InstanceDiskCreateOptions{
+		Label:      "go-disk-test-" + randLabel(),
+		Filesystem: "ext4",
+		Image:      "linode/debian12",
+		Size:       2000,
+		RootPass:   randPassword(),
+	})
+	require.NoError(t, errCreateDisk)
+	createDiskResponse, err = client.WaitForInstanceDiskStatus(ctx, instance.ID, createDiskResponse.ID, linodego.DiskReady)
+	require.NoError(t, err)
+	assert.Equal(t, linodego.DiskReady, createDiskResponse.Status)
+
+	rebuildResponse, errRebuild := client.RebuildInstance(context.Background(), instance.ID, linodego.InstanceRebuildOptions{
+		Image: "linode/alpine3.23",
+		Metadata: &linodego.InstanceMetadataOptions{
+			UserData: base64.StdEncoding.EncodeToString([]byte("cool")),
+		},
+		Type:           "g6-standard-2",
+		AuthorizedKeys: []string{"ecdsa-sha2-nistp"},
+	})
+	require.NoError(t, errRebuild)
+	assert.Equal(t, "linode/alpine3.23", rebuildResponse.Image)
 }

@@ -1,11 +1,13 @@
 package linodego
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
+	"net/http"
 	"time"
 
-	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/v2/internal/parseabletime"
 )
 
 type AlertDefinitionStatus string
@@ -19,45 +21,65 @@ const (
 	AlertDefinitionStatusFailed       AlertDefinitionStatus = "failed"
 )
 
-// AlertDefinition represents an ACLP Alert Definition object
-type AlertDefinition struct {
-	ID                int                    `json:"id"`
-	Label             string                 `json:"label"`
-	Severity          int                    `json:"severity"`
-	Type              string                 `json:"type"`
-	ServiceType       string                 `json:"service_type"`
-	Status            AlertDefinitionStatus  `json:"status"`
-	HasMoreResources  bool                   `json:"has_more_resources"`
-	RuleCriteria      RuleCriteria           `json:"rule_criteria"`
-	TriggerConditions TriggerConditions      `json:"trigger_conditions"`
-	AlertChannels     []AlertChannelEnvelope `json:"alert_channels"`
-	Created           *time.Time             `json:"-"`
-	Updated           *time.Time             `json:"-"`
-	UpdatedBy         string                 `json:"updated_by"`
-	CreatedBy         string                 `json:"created_by"`
-	EntityIDs         []string               `json:"entity_ids"`
-	Description       string                 `json:"description"`
-	Class             string                 `json:"class"`
+// AlertDefinitionScope represents the scope of an alert definition: "account", "entity", or "region". Defaults to "entity".
+type AlertDefinitionScope string
+
+const (
+	AlertDefinitionScopeAccount AlertDefinitionScope = "account"
+	AlertDefinitionScopeEntity  AlertDefinitionScope = "entity"
+	AlertDefinitionScopeRegion  AlertDefinitionScope = "region"
+)
+
+// AlertDefinitionEntities represents entity metadata for an alert definition.
+// For entity scoped alerts, entities contains the URL to list entities, a count, and a has_more_resources flag.
+// For region/account scoped alerts, the entities are returned as an empty object.
+type AlertDefinitionEntities struct {
+	URL              string `json:"url"`
+	Count            int    `json:"count"`
+	HasMoreResources bool   `json:"has_more_resources"`
 }
 
-// Backwards-compatible alias
+// AlertDefinitionEntity represents a single entity associated with an alert definition.
+type AlertDefinitionEntity struct {
+	ID    string `json:"id"`
+	Label string `json:"label"`
+	URL   string `json:"url"`
+	Type  string `json:"type"`
+}
 
-// MonitorAlertDefinition represents an ACLP Alert Definition object
-//
-// Deprecated: AlertDefinition should be used in all new implementations.
-type MonitorAlertDefinition = AlertDefinition
+// AlertDefinition represents an ACLP Alert Definition object
+type AlertDefinition struct {
+	ID                int                     `json:"id"`
+	Label             string                  `json:"label"`
+	Severity          int                     `json:"severity"`
+	Type              string                  `json:"type"`
+	ServiceType       string                  `json:"service_type"`
+	Status            AlertDefinitionStatus   `json:"status"`
+	RuleCriteria      RuleCriteria            `json:"rule_criteria"`
+	TriggerConditions TriggerConditions       `json:"trigger_conditions"`
+	AlertChannels     []AlertChannelEnvelope  `json:"alert_channels"`
+	Created           *time.Time              `json:"-"`
+	Updated           *time.Time              `json:"-"`
+	UpdatedBy         string                  `json:"updated_by"`
+	CreatedBy         string                  `json:"created_by"`
+	Description       string                  `json:"description"`
+	Class             string                  `json:"class"`
+	Scope             AlertDefinitionScope    `json:"scope"`
+	Regions           []string                `json:"regions"`
+	Entities          AlertDefinitionEntities `json:"entities"`
+}
 
 // TriggerConditions represents the trigger conditions for an alert.
 type TriggerConditions struct {
-	CriteriaCondition       string `json:"criteria_condition,omitempty"`
-	EvaluationPeriodSeconds int    `json:"evaluation_period_seconds,omitempty"`
-	PollingIntervalSeconds  int    `json:"polling_interval_seconds,omitempty"`
-	TriggerOccurrences      int    `json:"trigger_occurrences,omitempty"`
+	CriteriaCondition       string `json:"criteria_condition,omitzero"`
+	EvaluationPeriodSeconds int    `json:"evaluation_period_seconds,omitzero"`
+	PollingIntervalSeconds  int    `json:"polling_interval_seconds,omitzero"`
+	TriggerOccurrences      int    `json:"trigger_occurrences,omitzero"`
 }
 
 // RuleCriteria represents the rule criteria for an alert.
 type RuleCriteria struct {
-	Rules []Rule `json:"rules,omitempty"`
+	Rules []Rule `json:"rules,omitzero"`
 }
 
 // Rule represents a single rule for an alert.
@@ -81,23 +103,23 @@ type DimensionFilter struct {
 
 // RuleCriteriaOptions represents the rule criteria options for an alert.
 type RuleCriteriaOptions struct {
-	Rules []RuleOptions `json:"rules,omitempty"`
+	Rules []RuleOptions `json:"rules,omitzero"`
 }
 
 // RuleOptions represents a single rule option for an alert.
 type RuleOptions struct {
-	AggregateFunction string                   `json:"aggregate_function,omitempty"`
-	DimensionFilters  []DimensionFilterOptions `json:"dimension_filters,omitempty"`
-	Metric            string                   `json:"metric,omitempty"`
-	Operator          string                   `json:"operator,omitempty"`
-	Threshold         float64                  `json:"threshold,omitempty"`
+	AggregateFunction string                   `json:"aggregate_function,omitzero"`
+	DimensionFilters  []DimensionFilterOptions `json:"dimension_filters,omitzero"`
+	Metric            string                   `json:"metric,omitzero"`
+	Operator          string                   `json:"operator,omitzero"`
+	Threshold         float64                  `json:"threshold,omitzero"`
 }
 
 // DimensionFilterOptions represents a single dimension filter option used inside a Rule.
 type DimensionFilterOptions struct {
-	DimensionLabel string `json:"dimension_label,omitempty"`
-	Operator       string `json:"operator,omitempty"`
-	Value          string `json:"value,omitempty"`
+	DimensionLabel string `json:"dimension_label,omitzero"`
+	Operator       string `json:"operator,omitzero"`
+	Value          string `json:"value,omitzero"`
 }
 
 // AlertChannelEnvelope represents a single alert channel entry returned inside alert definition
@@ -139,10 +161,12 @@ type AlertDefinitionCreateOptions struct {
 	Label             string               `json:"label"`
 	Severity          int                  `json:"severity"`
 	ChannelIDs        []int                `json:"channel_ids"`
-	RuleCriteria      *RuleCriteriaOptions `json:"rule_criteria,omitempty"`
-	TriggerConditions *TriggerConditions   `json:"trigger_conditions,omitempty"`
-	EntityIDs         []string             `json:"entity_ids,omitempty"`
-	Description       *string              `json:"description,omitempty"`
+	RuleCriteria      *RuleCriteriaOptions `json:"rule_criteria,omitzero"`
+	TriggerConditions *TriggerConditions   `json:"trigger_conditions,omitzero"`
+	EntityIDs         []string             `json:"entity_ids,omitzero"`
+	Description       *string              `json:"description,omitzero"`
+	Scope             AlertDefinitionScope `json:"scope,omitzero"`
+	Regions           []string             `json:"regions,omitzero"`
 }
 
 // AlertDefinitionUpdateOptions are the options used to update an alert definition.
@@ -150,11 +174,12 @@ type AlertDefinitionUpdateOptions struct {
 	Label             string                 `json:"label"`
 	Severity          int                    `json:"severity"`
 	ChannelIDs        []int                  `json:"channel_ids"`
-	RuleCriteria      *RuleCriteriaOptions   `json:"rule_criteria,omitempty"`
-	TriggerConditions *TriggerConditions     `json:"trigger_conditions,omitempty"`
-	EntityIDs         []string               `json:"entity_ids,omitempty"`
-	Description       *string                `json:"description,omitempty"`
-	Status            *AlertDefinitionStatus `json:"status,omitempty"`
+	RuleCriteria      *RuleCriteriaOptions   `json:"rule_criteria,omitzero"`
+	TriggerConditions *TriggerConditions     `json:"trigger_conditions,omitzero"`
+	EntityIDs         []string               `json:"entity_ids,omitzero"`
+	Description       *string                `json:"description,omitzero"`
+	Status            *AlertDefinitionStatus `json:"status,omitzero"`
+	Regions           []string               `json:"regions,omitzero"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
@@ -204,7 +229,7 @@ func (c *Client) GetMonitorAlertDefinition(
 	ctx context.Context,
 	serviceType string,
 	alertID int,
-) (*MonitorAlertDefinition, error) {
+) (*AlertDefinition, error) {
 	e := formatAPIPath("monitor/services/%s/alert-definitions/%d", serviceType, alertID)
 	return doGETRequest[AlertDefinition](ctx, c, e)
 }
@@ -214,7 +239,7 @@ func (c *Client) CreateMonitorAlertDefinition(
 	ctx context.Context,
 	serviceType string,
 	opts AlertDefinitionCreateOptions,
-) (*MonitorAlertDefinition, error) {
+) (*AlertDefinition, error) {
 	e := formatAPIPath("monitor/services/%s/alert-definitions", serviceType)
 	return doPOSTRequest[AlertDefinition](ctx, c, e, opts)
 }
@@ -226,30 +251,33 @@ func (c *Client) CreateMonitorAlertDefinitionWithIdempotency(
 	serviceType string,
 	opts AlertDefinitionCreateOptions,
 	idempotencyKey string,
-) (*MonitorAlertDefinition, error) {
+) (*AlertDefinition, error) {
 	e := formatAPIPath("monitor/services/%s/alert-definitions", serviceType)
 
 	var result AlertDefinition
-
-	req := c.R(ctx).SetResult(&result)
-
-	if idempotencyKey != "" {
-		req.SetHeader("Idempotency-Key", idempotencyKey)
-	}
 
 	body, err := json.Marshal(opts)
 	if err != nil {
 		return nil, err
 	}
 
-	req.SetBody(string(body))
+	params := requestParams{
+		Response: &result,
+		Body:     bytes.NewReader(body),
+	}
 
-	r, err := coupleAPIErrors(req.Post(e))
+	if idempotencyKey != "" {
+		params.Headers = http.Header{
+			"Idempotency-Key": {idempotencyKey},
+		}
+	}
+
+	err = c.doRequest(ctx, http.MethodPost, e, params, nil)
 	if err != nil {
 		return nil, err
 	}
 
-	return r.Result().(*AlertDefinition), nil
+	return &result, nil
 }
 
 // UpdateMonitorAlertDefinition updates an ACLP Monitor Alert Definition.
@@ -267,4 +295,15 @@ func (c *Client) UpdateMonitorAlertDefinition(
 func (c *Client) DeleteMonitorAlertDefinition(ctx context.Context, serviceType string, alertID int) error {
 	e := formatAPIPath("monitor/services/%s/alert-definitions/%d", serviceType, alertID)
 	return doDELETERequest(ctx, c, e)
+}
+
+// ListMonitorAlertDefinitionEntities gets the entities associated with an ACLP Monitor Alert Definition.
+func (c *Client) ListMonitorAlertDefinitionEntities(
+	ctx context.Context,
+	serviceType string,
+	alertID int,
+	opts *ListOptions,
+) ([]AlertDefinitionEntity, error) {
+	e := formatAPIPath("monitor/services/%s/alert-definitions/%d/entities", serviceType, alertID)
+	return getPaginatedResults[AlertDefinitionEntity](ctx, c, e, opts)
 }

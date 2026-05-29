@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -31,6 +31,7 @@ func TestListVolumes(t *testing.T) {
 	assert.Equal(t, "us-east", volumes[0].Region, "Expected volume region to match")
 	assert.Equal(t, 20, volumes[0].Size, "Expected volume size to match")
 	assert.Equal(t, "test", volumes[0].Tags[0], "Expected volume tag to match")
+	assert.Equal(t, []linodego.LockType{linodego.LockTypeCannotDelete}, volumes[0].Locks, "Expected volume locks to match")
 }
 
 func TestGetVolume(t *testing.T) {
@@ -59,6 +60,7 @@ func TestGetVolume(t *testing.T) {
 	assert.Empty(t, volume.HardwareType, "Expected hardware type to be empty")
 	assert.Empty(t, volume.LinodeLabel, "Expected Linode label to be empty")
 	assert.True(t, volume.IOReady, "Expected IO Ready true")
+	assert.Equal(t, []linodego.LockType{linodego.LockTypeCannotDeleteWithSubresources}, volume.Locks, "Expected volume locks to match")
 }
 
 func TestCreateVolume(t *testing.T) {
@@ -103,7 +105,7 @@ func TestUpdateVolume(t *testing.T) {
 
 	opts := linodego.VolumeUpdateOptions{
 		Label: "updated-volume",
-		Tags:  &[]string{"updated"},
+		Tags:  []string{"updated"},
 	}
 
 	updatedVolume, err := base.Client.UpdateVolume(context.Background(), volumeID, opts)
@@ -175,6 +177,8 @@ func TestResizeVolume(t *testing.T) {
 	volumeID := 123
 	base.MockPost(fmt.Sprintf("volumes/%d/resize", volumeID), nil)
 
-	err := base.Client.ResizeVolume(context.Background(), volumeID, 50)
+	opts := linodego.VolumeResizeOptions{Size: 50}
+
+	err := base.Client.ResizeVolume(context.Background(), volumeID, opts)
 	assert.NoError(t, err, "Expected no error when resizing volume")
 }

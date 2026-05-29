@@ -2,70 +2,6 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-east","label":"go-bucket-test-def"}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets
-    method: POST
-  response:
-    body: '{"hostname": "go-bucket-test-def.us-east-1.linodeobjects.com", "label":
-      "go-bucket-test-def", "created": "2018-01-02T03:04:05", "region": "us-east",
-      "cluster": "us-east-1", "size": 0, "objects": 0, "endpoint_type": "E0", "s3_endpoint":
-      "us-east-1.linodeobjects.com"}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "266"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Wed, 08 Jan 2025 06:03:28 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - object_storage:read_write
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "1600"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
     body: ""
     form: {}
     headers:
@@ -75,13 +11,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1?page=1
+    url: https://api.linode.com/v4beta/object-storage/global-quotas?page=1
     method: GET
   response:
-    body: '{"data": [{"hostname": "go-bucket-test-def.us-east-1.linodeobjects.com",
-      "label": "go-bucket-test-def", "created": "2018-01-02T03:04:05", "region": "us-east",
-      "cluster": "us-east-1", "size": 0, "objects": 0, "endpoint_type": "E0", "s3_endpoint":
-      "us-east-1.linodeobjects.com"}], "page": 1, "pages": 1, "results": 1}'
+    body: '{"data": [{"quota_id": "keys", "quota_name": "Number of Access Keys", "quota_type":
+      "keys", "description": "Current number of access keys per account", "quota_limit":
+      100, "resource_metric": "key", "has_usage": true}], "page": 1, "pages": 1, "results":
+      1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -100,13 +36,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "315"
+      - "255"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Wed, 08 Jan 2025 06:03:29 GMT
+      - Wed, 18 Feb 2026 07:24:58 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -124,7 +60,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -140,10 +76,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/go-bucket-test-def
-    method: DELETE
+    url: https://api.linode.com/v4beta/object-storage/global-quotas/keys/usage
+    method: GET
   response:
-    body: '{}'
+    body: '{"quota_limit": 100, "usage": 0}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -162,21 +98,22 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "2"
+      - "32"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Wed, 08 Jan 2025 06:03:33 GMT
+      - Wed, 18 Feb 2026 07:24:59 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
+      - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - object_storage:read_write
+      - object_storage:read_only
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -185,7 +122,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

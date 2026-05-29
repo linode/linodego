@@ -4,7 +4,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/jarcoal/httpmock"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -18,9 +19,7 @@ func TestInstance_Disks_Clone(t *testing.T) {
 
 	base.MockPost("linode/instances/12345/disks/123/clone", fixtureData)
 
-	opts := linodego.InstanceDiskCloneOptions{}
-
-	disk, err := base.Client.CloneInstanceDisk(context.Background(), 12345, 123, opts)
+	disk, err := base.Client.CloneInstanceDisk(context.Background(), 12345, 123)
 	assert.NoError(t, err)
 
 	assert.Equal(t, linodego.DiskFilesystem("ext4"), disk.Filesystem)
@@ -85,9 +84,14 @@ func TestInstanceDisk_Create(t *testing.T) {
 		Label:      "New Disk",
 		Size:       20480,
 		Filesystem: "ext4",
+		RootPass:   "@S3cur3p@ssw0rd",
 	}
 
-	base.MockPost("linode/instances/123/disks", fixtureData)
+	httpmock.RegisterRegexpResponder(
+		"POST",
+		mockRequestURL(t, "/linode/instances/123/disks"),
+		mockRequestBodyValidate(t, createOptions, fixtureData),
+	)
 
 	disk, err := base.Client.CreateInstanceDisk(context.Background(), 123, createOptions)
 	assert.NoError(t, err)
@@ -145,7 +149,9 @@ func TestInstanceDisk_Resize(t *testing.T) {
 
 	base.MockPost("linode/instances/123/disks/1/resize", nil)
 
-	err := base.Client.ResizeInstanceDisk(context.Background(), 123, 1, 40960)
+	opts := linodego.InstanceDiskResizeOptions{Size: 40960}
+
+	err := base.Client.ResizeInstanceDisk(context.Background(), 123, 1, opts)
 	assert.NoError(t, err)
 }
 
@@ -156,6 +162,8 @@ func TestInstanceDisk_PasswordReset(t *testing.T) {
 
 	base.MockPost("linode/instances/123/disks/1/password", nil)
 
-	err := base.Client.PasswordResetInstanceDisk(context.Background(), 123, 1, "new-password")
+	opts := linodego.InstanceDiskPasswordResetOptions{Password: "new-password"}
+
+	err := base.Client.PasswordResetInstanceDisk(context.Background(), 123, 1, opts)
 	assert.NoError(t, err)
 }
