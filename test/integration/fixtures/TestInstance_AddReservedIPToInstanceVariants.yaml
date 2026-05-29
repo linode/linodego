@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"test-instance-for-ip-reservation","root_pass":"-H~]1qcz32[;5j^3KT=''sOf~T6-IyJ975~9xmK7?VKo8R,04CvbG$30^l^OAFwsh"}'
+    body: '{"region":"us-east","type":"g6-nanode-1","label":"test-instance-for-ip-reservation","root_pass":"thisIsYourRootPassword"}'
     form: {}
     headers:
       Accept:
@@ -16,7 +16,7 @@ interactions:
   response:
     body: '{"id": 82372537, "label": "test-instance-for-ip-reservation", "group":
       "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.104.215.54"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["192.0.2.0"], "ipv6": "1234::5678/128",
       "image": null, "region": "us-east", "site_type": "core", "specs": {"disk": 25600,
       "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
       0}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota":
@@ -84,7 +84,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips
     method: POST
   response:
-    body: '{"address": "45.33.88.15", "gateway": "45.33.88.1", "subnet_mask": "255.255.255.0",
+    body: '{"address": "192.0.2.0", "gateway": "45.33.88.1", "subnet_mask": "255.255.255.0",
       "prefix": 24, "type": "ipv4", "public": true, "rdns": null, "linode_id": null,
       "interface_id": null, "region": "us-east", "vpc_nat_1_1": null, "reserved":
       true, "assigned_entity": null}'
@@ -136,7 +136,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"type":"ipv4","public":true,"address":"45.33.88.15"}'
+    body: '{"type":"ipv4","public":true,"address":"192.0.2.0"}'
     form: {}
     headers:
       Accept:
@@ -148,7 +148,7 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances/82372537/ips
     method: POST
   response:
-    body: '{"address": "45.33.88.15", "gateway": "45.33.88.1", "subnet_mask": "255.255.255.0",
+    body: '{"address": "192.0.2.0", "gateway": "45.33.88.1", "subnet_mask": "255.255.255.0",
       "prefix": 24, "type": "ipv4", "public": true, "rdns": "45-33-88-15.ip.linodeusercontent.com",
       "linode_id": 82372537, "interface_id": null, "region": "us-east", "vpc_nat_1_1":
       null, "reserved": true, "assigned_entity": {"id": 82372537, "type": "linode",
@@ -201,7 +201,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"type":"ipv4","public":false,"address":"45.33.88.15"}'
+    body: '{"type":"ipv4","public":false,"address":"192.0.2.0"}'
     form: {}
     headers:
       Accept:
@@ -259,7 +259,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips
     method: POST
   response:
-    body: '{"address": "45.33.88.68", "gateway": "45.33.88.1", "subnet_mask": "255.255.255.0",
+    body: '{"address": "192.0.2.0", "gateway": "45.33.88.1", "subnet_mask": "255.255.255.0",
       "prefix": 24, "type": "ipv4", "public": true, "rdns": null, "linode_id": null,
       "interface_id": null, "region": "us-east", "vpc_nat_1_1": null, "reserved":
       true, "assigned_entity": null}'
@@ -311,7 +311,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"type":"ipv4","public":true,"address":"45.33.88.68"}'
+    body: '{"type":"ipv4","public":true,"address":"192.0.2.0"}'
     form: {}
     headers:
       Accept:
@@ -366,7 +366,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips/45.33.88.68
+    url: https://api.linode.com/v4beta/networking/reserved/ips/192.0.2.0
     method: DELETE
   response:
     body: '{}'
@@ -418,7 +418,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"type":"ipv4","public":true,"address":"45.33.88.15"}'
+    body: '{"type":"ipv4","public":true,"address":"192.0.2.0"}'
     form: {}
     headers:
       Accept:
@@ -464,7 +464,7 @@ interactions:
     code: 404
     duration: ""
 - request:
-    body: '{"type":"ipv4","public":true,"address":"45.33.88.15"}'
+    body: '{"type":"ipv4","public":true,"address":"192.0.2.0"}'
     form: {}
     headers:
       Accept:
@@ -570,7 +570,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips
     method: POST
   response:
-    body: '{"address": "172.105.98.39", "gateway": "172.105.98.1", "subnet_mask":
+    body: '{"address": "192.0.2.0", "gateway": "172.105.98.1", "subnet_mask":
       "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true, "rdns": null,
       "linode_id": null, "interface_id": null, "region": "ca-central", "vpc_nat_1_1":
       null, "reserved": true, "assigned_entity": null}'
@@ -622,7 +622,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"type":"ipv4","public":true,"address":"172.105.98.39"}'
+    body: '{"type":"ipv4","public":true,"address":"192.0.2.0"}'
     form: {}
     headers:
       Accept:
@@ -669,7 +669,7 @@ interactions:
     code: 400
     duration: ""
 - request:
-    body: '{"type":"ipv6","public":true,"address":"45.33.88.15"}'
+    body: '{"type":"ipv6","public":true,"address":"192.0.2.0"}'
     form: {}
     headers:
       Accept:
@@ -717,7 +717,7 @@ interactions:
     code: 400
     duration: ""
 - request:
-    body: '{"type":"ipv4","public":false,"address":"45.33.88.15"}'
+    body: '{"type":"ipv4","public":false,"address":"192.0.2.0"}'
     form: {}
     headers:
       Accept:
@@ -960,7 +960,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips/172.105.98.39
+    url: https://api.linode.com/v4beta/networking/reserved/ips/192.0.2.0
     method: DELETE
   response:
     body: '{}'
@@ -1021,7 +1021,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips/45.33.88.15
+    url: https://api.linode.com/v4beta/networking/reserved/ips/192.0.2.0
     method: DELETE
   response:
     body: '{}'

@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/buckets
     method: POST
   response:
-    body: '{"hostname": "go-bucket-test-def.us-east-1.linodeobjects.com", "label":
+    body: '{"hostname":"thisIsYourHostName", "label":
       "go-bucket-test-def", "created": "2018-01-02T03:04:05", "region": "us-east",
       "cluster": "us-east-1", "size": 0, "objects": 0, "endpoint_type": "E0", "s3_endpoint":
       "us-east-1.linodeobjects.com"}'
@@ -78,7 +78,7 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/buckets/us-east/go-bucket-test-def
     method: GET
   response:
-    body: '{"hostname": "go-bucket-test-def.us-east-1.linodeobjects.com", "label":
+    body: '{"hostname":"thisIsYourHostName", "label":
       "go-bucket-test-def", "created": "2018-01-02T03:04:05", "region": "us-east",
       "cluster": "us-east-1", "size": 0, "objects": 0, "endpoint_type": "E0", "s3_endpoint":
       "us-east-1.linodeobjects.com"}'

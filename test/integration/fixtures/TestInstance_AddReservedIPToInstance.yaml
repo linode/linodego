@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"test-instance-for-ip-reservation","root_pass":"y=6D\u003e36~AV)?z3Q83''VMmW1k+1f5KY=)697Gv5gO$!}haG6@TZonhl+s45JfUa.\u0026"}'
+    body: '{"region":"us-east","type":"g6-nanode-1","label":"test-instance-for-ip-reservation","root_pass":"thisIsYourRootPassword"}'
     form: {}
     headers:
       Accept:
@@ -16,7 +16,7 @@ interactions:
   response:
     body: '{"id": 82372534, "label": "test-instance-for-ip-reservation", "group":
       "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.104.215.50"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["192.0.2.0"], "ipv6": "1234::5678/128",
       "image": null, "region": "us-east", "site_type": "core", "specs": {"disk": 25600,
       "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
       0}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota":
@@ -218,7 +218,7 @@ interactions:
       "rdns": "50-116-56-8.ip.linodeusercontent.com", "linode_id": 82372534, "interface_id":
       null, "region": "us-east", "vpc_nat_1_1": null, "reserved": true, "assigned_entity":
       {"id": 82372534, "type": "linode", "label": "test-instance-for-ip-reservation",
-      "url": "/v4/linode/instances/82372534"}}, {"address": "172.104.215.50", "gateway":
+      "url": "/v4/linode/instances/82372534"}}, {"address": "192.0.2.0", "gateway":
       "172.104.215.1", "subnet_mask": "255.255.255.0", "prefix": 24, "type": "ipv4",
       "public": true, "rdns": "172-104-215-50.ip.linodeusercontent.com", "linode_id":
       82372534, "interface_id": null, "region": "us-east", "vpc_nat_1_1": null, "reserved":

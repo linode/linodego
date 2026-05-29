@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips
     method: POST
   response:
-    body: '{"address": "45.33.88.68", "gateway": "45.33.88.1", "subnet_mask": "255.255.255.0",
+    body: '{"address": "192.0.2.0", "gateway": "45.33.88.1", "subnet_mask": "255.255.255.0",
       "prefix": 24, "type": "ipv4", "public": true, "rdns": null, "linode_id": null,
       "interface_id": null, "region": "us-east", "vpc_nat_1_1": null, "reserved":
       true, "assigned_entity": null}'
@@ -66,7 +66,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-5c8ya23fj00j","root_pass":"N9Dh,M@[4''20SY54xk7:W|#/\u003e4tUke0w5AiB.omQ[ve0c^F3T8\u003eTW6;#93Kujs''W","image":"linode/alpine3.20","booted":false,"ipv4":["45.33.88.68"],"interfaces":[{"purpose":"public"}]}'
+    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-5c8ya23fj00j","root_pass":"thisIsYourRootPassword","image":"linode/alpine3.20","booted":false,"ipv4":["192.0.2.0"],"interfaces":[{"purpose":"public"}]}'
     form: {}
     headers:
       Accept:
@@ -80,7 +80,7 @@ interactions:
   response:
     body: '{"id": 82372546, "label": "go-test-ins-reserved-ip-5c8ya23fj00j", "group":
       "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["45.33.88.68"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["192.0.2.0"], "ipv6": "1234::5678/128",
       "image": "linode/alpine3.20", "region": "us-east", "site_type": "core", "specs":
       {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
       0}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota":
@@ -206,10 +206,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips/45.33.88.68
+    url: https://api.linode.com/v4beta/networking/reserved/ips/192.0.2.0
     method: GET
   response:
-    body: '{"address": "45.33.88.68", "gateway": "45.33.88.1", "subnet_mask": "255.255.255.0",
+    body: '{"address": "192.0.2.0", "gateway": "45.33.88.1", "subnet_mask": "255.255.255.0",
       "prefix": 24, "type": "ipv4", "public": true, "rdns": null, "linode_id": null,
       "interface_id": null, "region": "us-east", "vpc_nat_1_1": null, "reserved":
       true, "assigned_entity": null}'
@@ -262,7 +262,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"test-instance-freed-ip","root_pass":"0$`/Z|82l8?*$Ht\u0026GlcocHOk7W8C`2qTZzirp#bS5A33T314e=4,S''Y3OCc?2(*u","ipv4":["45.33.88.68"]}'
+    body: '{"region":"us-east","type":"g6-nanode-1","label":"test-instance-freed-ip","root_pass":"thisIsYourRootPassword","ipv4":["192.0.2.0"]}'
     form: {}
     headers:
       Accept:
@@ -276,7 +276,7 @@ interactions:
   response:
     body: '{"id": 82372552, "label": "test-instance-freed-ip", "group": "", "status":
       "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["45.33.88.68"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["192.0.2.0"], "ipv6": "1234::5678/128",
       "image": null, "region": "us-east", "site_type": "core", "specs": {"disk": 25600,
       "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
       0}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota":
@@ -341,10 +341,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips/45.33.88.68
+    url: https://api.linode.com/v4beta/networking/reserved/ips/192.0.2.0
     method: GET
   response:
-    body: '{"address": "45.33.88.68", "gateway": "45.33.88.1", "subnet_mask": "255.255.255.0",
+    body: '{"address": "192.0.2.0", "gateway": "45.33.88.1", "subnet_mask": "255.255.255.0",
       "prefix": 24, "type": "ipv4", "public": true, "rdns": "45-33-88-68.ip.linodeusercontent.com",
       "linode_id": 82372552, "interface_id": null, "region": "us-east", "vpc_nat_1_1":
       null, "reserved": true, "assigned_entity": {"id": 82372552, "type": "linode",
@@ -398,7 +398,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"ephemeral-ip-test","root_pass":"[m\u003cnEY3E4\u003eFhb1NqVG=5+93f2k^(}DXthr1\u00261?D;04;24fo8-d\u0026I\u003c4,Ua3eqTKDB"}'
+    body: '{"region":"us-east","type":"g6-nanode-1","label":"ephemeral-ip-test","root_pass":"thisIsYourRootPassword"}'
     form: {}
     headers:
       Accept:
@@ -412,7 +412,7 @@ interactions:
   response:
     body: '{"id": 82372554, "label": "ephemeral-ip-test", "group": "", "status": "provisioning",
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "type":
-      "g6-nanode-1", "ipv4": ["172.104.215.64"], "ipv6": "1234::5678/128",
+      "g6-nanode-1", "ipv4": ["192.0.2.0"], "ipv6": "1234::5678/128",
       "image": null, "region": "us-east", "site_type": "core", "specs": {"disk": 25600,
       "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
       0}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota":
@@ -599,7 +599,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips/45.33.88.68
+    url: https://api.linode.com/v4beta/networking/reserved/ips/192.0.2.0
     method: DELETE
   response:
     body: '{}'

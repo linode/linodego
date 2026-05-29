@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-395a5x5muc8e","root_pass":"iw~U0\u003c2PuTmt{Z;\u0026d2F.6.H:Rn3fGK{5hl007#l$W7Q6+7`l4UEgKH|m=st7\u003e34P","image":"linode/alpine3.20","booted":false,"interfaces":[{"purpose":"public"}]}'
+    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-395a5x5muc8e","root_pass":"thisIsYourRootPassword","image":"linode/alpine3.20","booted":false,"interfaces":[{"purpose":"public"}]}'
     form: {}
     headers:
       Accept:
@@ -16,7 +16,7 @@ interactions:
   response:
     body: '{"id": 82372531, "label": "go-test-ins-reserved-ip-395a5x5muc8e", "group":
       "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.104.215.34"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["192.0.2.0"], "ipv6": "1234::5678/128",
       "image": "linode/alpine3.20", "region": "us-east", "site_type": "core", "specs":
       {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
       0}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota":

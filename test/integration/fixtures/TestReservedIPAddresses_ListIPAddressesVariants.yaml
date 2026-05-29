@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips
     method: POST
   response:
-    body: '{"address": "66.175.209.108", "gateway": "66.175.209.1", "subnet_mask":
+    body: '{"address": "192.0.2.0", "gateway": "66.175.209.1", "subnet_mask":
       "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true, "rdns": "66-175-209-108.ip.linodeusercontent.com",
       "linode_id": null, "region": "us-east", "vpc_nat_1_1": null, "reserved": true}'
     headers:
@@ -77,7 +77,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips
     method: POST
   response:
-    body: '{"address": "66.175.209.141", "gateway": "66.175.209.1", "subnet_mask":
+    body: '{"address": "192.0.2.0", "gateway": "66.175.209.1", "subnet_mask":
       "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true, "rdns": "66-175-209-141.ip.linodeusercontent.com",
       "linode_id": null, "region": "us-east", "vpc_nat_1_1": null, "reserved": true}'
     headers:
@@ -142,11 +142,11 @@ interactions:
     url: https://api.linode.com/v4beta/networking/ips?page=1
     method: GET
   response:
-    body: '{"page": 1, "pages": 1, "results": 2, "data": [{"address": "66.175.209.108",
+    body: '{"page": 1, "pages": 1, "results": 2, "data": [{"address": "192.0.2.0",
       "gateway": "66.175.209.1", "subnet_mask": "255.255.255.0", "prefix": 24, "type":
       "ipv4", "public": true, "rdns": "66-175-209-108.ip.linodeusercontent.com", "linode_id":
       null, "region": "us-east", "vpc_nat_1_1": null, "reserved": true}, {"address":
-      "66.175.209.141", "gateway": "66.175.209.1", "subnet_mask": "255.255.255.0",
+      "192.0.2.0", "gateway": "66.175.209.1", "subnet_mask": "255.255.255.0",
       "prefix": 24, "type": "ipv4", "public": true, "rdns": "66-175-209-141.ip.linodeusercontent.com",
       "linode_id": null, "region": "us-east", "vpc_nat_1_1": null, "reserved": true}]}'
     headers:
@@ -207,7 +207,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips/66.175.209.108
+    url: https://api.linode.com/v4beta/networking/reserved/ips/192.0.2.0
     method: DELETE
   response:
     body: '{}'
@@ -268,7 +268,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips/66.175.209.141
+    url: https://api.linode.com/v4beta/networking/reserved/ips/192.0.2.0
     method: DELETE
   response:
     body: '{}'
