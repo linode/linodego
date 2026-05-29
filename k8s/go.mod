@@ -2,9 +2,9 @@ module github.com/linode/linodego/v2/k8s
 
 require (
 	github.com/linode/linodego/v2 v2.0.0
-	k8s.io/api v0.36.1
-	k8s.io/apimachinery v0.36.1
-	k8s.io/client-go v0.36.1
+	k8s.io/api v0.35.5
+	k8s.io/apimachinery v0.35.5
+	k8s.io/client-go v0.35.5
 )
 
 require (
@@ -50,4 +50,4 @@ require (
 
 replace github.com/linode/linodego/v2 => ../
 
-go 1.26.0
+go 1.25.0
