@@ -83,6 +83,9 @@ type LKENodePool struct {
 	// It may not currently be available to all users and is under v4beta.
 	K8sVersion     *string                    `json:"k8s_version,omitzero"`
 	UpdateStrategy *LKENodePoolUpdateStrategy `json:"update_strategy,omitzero"`
+
+	// NOTE: Only cannot_delete applies to LKE node pools and can only be used with v4beta.
+	Locks []LockType `json:"locks"`
 }
 
 // LKENodePoolCreateOptions fields are those accepted by CreateLKENodePool
