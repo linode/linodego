@@ -15,7 +15,7 @@
 
 ## Lint And Formatting
 - `make lint` uses Docker by default: `docker run ... golangci/golangci-lint:latest`; set `SKIP_DOCKER=1` to use local `golangci-lint`.
-- `golangci-lint fmt` is preferred the formatter, if available. Fallback to `gofumpt` if `golangci-lint` is unavailable. Fallback to `go fmt` if `gofumpt` is unavailable.
+- `golangci-lint fmt` is the preferred formatter, if available. Fallback to `gofumpt` if `golangci-lint` is unavailable. Fallback to `go fmt` if `gofumpt` is unavailable.
 - `make build` already depends on `vet` and `lint`; use `SKIP_LINT=1 make test` only when intentionally matching CI's test job behavior.
 - CI runs `make tidy`, then installs `gofumpt` at commit `86bffd62437a3c437c0b84d5d5ab244824e762fc` and runs `gofumpt -l -w .`, then fails on any diff.
 
