@@ -4,6 +4,7 @@
         "id": 456,
         "count": 3,
         "type": "g6-standard-2",
+        "locks": ["cannot_delete"],
         "tags": ["tag1"],
         "labels": {"env": "staging"},
         "autoscaler": {"enabled": true, "min": 1, "max": 5}
@@ -12,6 +13,7 @@
         "id": 789,
         "count": 2,
         "type": "g6-standard-4",
+        "locks": [],
         "tags": ["tag2"],
         "labels": {"env": "prod"},
         "autoscaler": {"enabled": false, "min": 0, "max": 0}

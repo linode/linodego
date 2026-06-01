@@ -41,6 +41,9 @@ type Volume struct {
 	Created        *time.Time   `json:"-"`
 	Updated        *time.Time   `json:"-"`
 	Encryption     string       `json:"encryption"`
+
+	// NOTE: Locks can only be used with v4beta.
+	Locks []LockType `json:"locks"`
 }
 
 // VolumeCreateOptions fields are those accepted by CreateVolume
