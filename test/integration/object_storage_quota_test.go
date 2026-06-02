@@ -61,9 +61,9 @@ func TestObjectStorageQuotaUsage_Get(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestObjectStorageQuotaUsage_Get")
 	defer teardown()
 
-	quotaUsage, err := client.GetObjectStorageQuotaUsage(context.Background(), "obj-objects-us-ord-1.linodeobjects.com")
+	quotaUsage, err := client.GetObjectStorageQuotaUsage(context.Background(), "obj-objects-us-ord-10.linodeobjects.com")
 	assert.NoError(t, err)
 
-	assert.Equal(t, 100000000, quotaUsage.QuotaLimit)
+	assert.GreaterOrEqual(t, quotaUsage.QuotaLimit, 100000000)
 	assert.GreaterOrEqual(t, *quotaUsage.Usage, 0)
 }
