@@ -88,10 +88,16 @@ func TestLKECluster_Enterprise_BYOVPC_smoke(t *testing.T) {
 	// bring your own vpc
 	client, fixtureTeardown := createTestClient(t, "fixtures/TestLKECluster_Enterprise_VPC_smoke")
 
-	region := getRegionsWithCaps(t, client, []linodego.RegionCapability{
+	regions := getRegionsWithCaps(t, client, []linodego.RegionCapability{
 		linodego.CapabilityLKE,
 		linodego.CapabilityDiskEncryption,
-	})[1]
+		linodego.CapabilityKubernetesEnterprise,
+	})
+	if len(regions) < 1 {
+		t.Fatal("No regions with required capabilities found")
+	}
+
+	region := regions[0]
 	vpc, vpcTeardown, err := createVPC(t, client, []vpcModifier{func(l *linodego.Client, options *linodego.VPCCreateOptions) {
 		options.Region = region
 		options.IPv6 = []linodego.VPCCreateOptionsIPv6{
