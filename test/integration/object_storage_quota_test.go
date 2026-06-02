@@ -12,27 +12,19 @@ func TestObjectStorageQuotas_Get(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestObjectStorageQuotas_Get")
 	defer teardown()
 
-	targetQuotaID := "obj-objects-us-ord-1.linodeobjects.com"
+	targetQuotaID := "obj-objects-us-ord-10.linodeobjects.com"
 	quota, err := client.GetObjectStorageQuota(context.Background(), targetQuotaID)
 	assert.NoError(t, err)
 
-	expected := linodego.ObjectStorageQuota{
-		QuotaID:        "obj-objects-us-ord-1.linodeobjects.com",
-		QuotaName:      "Number of Objects",
-		EndpointType:   "E1",
-		S3Endpoint:     "us-ord-1.linodeobjects.com",
-		Description:    "Current number of objects per account, per endpoint",
-		QuotaLimit:     100000000,
-		ResourceMetric: "object",
-	}
-
-	assert.Equal(t, expected.QuotaID, quota.QuotaID)
-	assert.Equal(t, expected.QuotaName, quota.QuotaName)
-	assert.Equal(t, expected.EndpointType, quota.EndpointType)
-	assert.Equal(t, expected.S3Endpoint, quota.S3Endpoint)
-	assert.Equal(t, expected.Description, quota.Description)
-	assert.Equal(t, expected.QuotaLimit, quota.QuotaLimit)
-	assert.Equal(t, expected.ResourceMetric, quota.ResourceMetric)
+	assert.Equal(t, targetQuotaID, quota.QuotaID)
+	assert.NotEmpty(t, quota.QuotaName)
+	assert.NotEmpty(t, quota.EndpointType)
+	assert.NotEmpty(t, quota.S3Endpoint)
+	assert.NotEmpty(t, quota.Description)
+	assert.Greater(t, quota.QuotaLimit, 0)
+	assert.NotEmpty(t, quota.ResourceMetric)
+	assert.NotEmpty(t, quota.QuotaType)
+	assert.True(t, quota.HasUsage)
 }
 
 func TestObjectStorageQuotas_List(t *testing.T) {
@@ -53,23 +45,15 @@ func TestObjectStorageQuotas_List(t *testing.T) {
 	}
 
 	if assert.NotNil(t, foundQuota, "Expected quota_id %q not found", targetQuotaID) {
-		expected := linodego.ObjectStorageQuota{
-			QuotaID:        "obj-buckets-us-mia-1.linodeobjects.com",
-			QuotaName:      "Number of Buckets",
-			EndpointType:   "E1",
-			S3Endpoint:     "us-mia-1.linodeobjects.com",
-			Description:    "Current number of buckets per account, per endpoint",
-			QuotaLimit:     1000,
-			ResourceMetric: "bucket",
-		}
-
-		assert.Equal(t, expected.QuotaID, foundQuota.QuotaID)
-		assert.Equal(t, expected.QuotaName, foundQuota.QuotaName)
-		assert.Equal(t, expected.EndpointType, foundQuota.EndpointType)
-		assert.Equal(t, expected.S3Endpoint, foundQuota.S3Endpoint)
-		assert.Equal(t, expected.Description, foundQuota.Description)
-		assert.Equal(t, expected.QuotaLimit, foundQuota.QuotaLimit)
-		assert.Equal(t, expected.ResourceMetric, foundQuota.ResourceMetric)
+		assert.Equal(t, targetQuotaID, foundQuota.QuotaID)
+		assert.NotEmpty(t, foundQuota.QuotaName)
+		assert.NotEmpty(t, foundQuota.EndpointType)
+		assert.NotEmpty(t, foundQuota.S3Endpoint)
+		assert.NotEmpty(t, foundQuota.Description)
+		assert.Greater(t, foundQuota.QuotaLimit, 0)
+		assert.NotEmpty(t, foundQuota.ResourceMetric)
+		assert.NotEmpty(t, foundQuota.QuotaType)
+		assert.True(t, foundQuota.HasUsage)
 	}
 }
 

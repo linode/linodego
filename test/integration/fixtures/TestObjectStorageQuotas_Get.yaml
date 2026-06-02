@@ -11,13 +11,13 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/quotas/obj-objects-us-ord-1.linodeobjects.com
+    url: https://api.linode.com/v4beta/object-storage/quotas/obj-objects-us-ord-10.linodeobjects.com
     method: GET
   response:
-    body: '{"quota_id": "obj-objects-us-ord-1.linodeobjects.com", "quota_name": "Number
-      of Objects", "quota_type": "obj-objects", "endpoint_type": "E1", "s3_endpoint":
-      "us-ord-1.linodeobjects.com", "description": "Current number of objects per
-      account, per endpoint", "quota_limit": 100000000, "resource_metric": "object",
+    body: '{"quota_id": "obj-objects-us-ord-10.linodeobjects.com", "quota_name": "Number
+      of Objects", "quota_type": "obj-objects", "endpoint_type": "E3", "s3_endpoint":
+      "us-ord-10.linodeobjects.com", "description": "Current number of objects per
+      account, per endpoint", "quota_limit": 500000000, "resource_metric": "object",
       "has_usage": true}'
     headers:
       Access-Control-Allow-Credentials:
@@ -37,13 +37,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "330"
+      - "332"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 30 Apr 2026 20:20:06 GMT
+      - Tue, 02 Jun 2026 09:03:57 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
