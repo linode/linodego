@@ -32,6 +32,7 @@ Also update your module dependencies:
 
 ```shell
 go get github.com/linode/linodego/v2
+go get github.com/linode/linodego/v2/k8s # if you import the Kubernetes helper module
 go mod tidy
 ```
 
@@ -84,6 +85,8 @@ If your code still references any of these, it must be updated before moving to 
 Common replacements include:
 
 - MarkEventRead → MarkEventsSeen  
+- ActionVolumeDelte → ActionVolumeDelete  
+- ActionCreateCardUpdated → ActionCreditCardUpdated  
 - MutateInstance → UpgradeInstance  
 - LKEClusterPool\* → LKENodePool\*
 
@@ -278,4 +281,3 @@ If your code directly integrates with retry helpers, logging hooks, or response-
 8. Fix request hook code that assumed Resty types  
 9. Review any code depending on region capability constants as plain strings  
 10. Run integration tests, especially around update payloads and object/firewall APIs
-1. 
