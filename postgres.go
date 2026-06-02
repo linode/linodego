@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/v2/internal/parseabletime"
 )
 
 type PostgresDatabaseTarget string
@@ -62,65 +62,65 @@ type PostgresDatabase struct {
 	UsedDiskSizeGB    int                          `json:"used_disk_size_gb"`
 	TotalDiskSizeGB   int                          `json:"total_disk_size_gb"`
 	EngineConfig      PostgresDatabaseEngineConfig `json:"engine_config"`
-	PrivateNetwork    *DatabasePrivateNetwork      `json:"private_network,omitempty"`
+	PrivateNetwork    *DatabasePrivateNetwork      `json:"private_network,omitzero"`
 }
 
 type PostgresDatabaseEngineConfig struct {
-	PG                      *PostgresDatabaseEngineConfigPG        `json:"pg,omitempty"`
-	PGStatMonitorEnable     *bool                                  `json:"pg_stat_monitor_enable,omitempty"`
-	PGLookout               *PostgresDatabaseEngineConfigPGLookout `json:"pglookout,omitempty"`
-	SharedBuffersPercentage *float64                               `json:"shared_buffers_percentage,omitempty"`
-	WorkMem                 *int                                   `json:"work_mem,omitempty"`
+	PG                      *PostgresDatabaseEngineConfigPG        `json:"pg,omitzero"`
+	PGStatMonitorEnable     *bool                                  `json:"pg_stat_monitor_enable,omitzero"`
+	PGLookout               *PostgresDatabaseEngineConfigPGLookout `json:"pglookout,omitzero"`
+	SharedBuffersPercentage *float64                               `json:"shared_buffers_percentage,omitzero"`
+	WorkMem                 *int                                   `json:"work_mem,omitzero"`
 }
 
 type PostgresDatabaseEngineConfigPG struct {
-	AutovacuumAnalyzeScaleFactor     *float64 `json:"autovacuum_analyze_scale_factor,omitempty"`
-	AutovacuumAnalyzeThreshold       *int32   `json:"autovacuum_analyze_threshold,omitempty"`
-	AutovacuumMaxWorkers             *int     `json:"autovacuum_max_workers,omitempty"`
-	AutovacuumNaptime                *int     `json:"autovacuum_naptime,omitempty"`
-	AutovacuumVacuumCostDelay        *int     `json:"autovacuum_vacuum_cost_delay,omitempty"`
-	AutovacuumVacuumCostLimit        *int     `json:"autovacuum_vacuum_cost_limit,omitempty"`
-	AutovacuumVacuumScaleFactor      *float64 `json:"autovacuum_vacuum_scale_factor,omitempty"`
-	AutovacuumVacuumThreshold        *int32   `json:"autovacuum_vacuum_threshold,omitempty"`
-	BGWriterDelay                    *int     `json:"bgwriter_delay,omitempty"`
-	BGWriterFlushAfter               *int     `json:"bgwriter_flush_after,omitempty"`
-	BGWriterLRUMaxPages              *int     `json:"bgwriter_lru_maxpages,omitempty"`
-	BGWriterLRUMultiplier            *float64 `json:"bgwriter_lru_multiplier,omitempty"`
-	DeadlockTimeout                  *int     `json:"deadlock_timeout,omitempty"`
-	DefaultToastCompression          *string  `json:"default_toast_compression,omitempty"`
-	IdleInTransactionSessionTimeout  *int     `json:"idle_in_transaction_session_timeout,omitempty"`
-	JIT                              *bool    `json:"jit,omitempty"`
-	MaxFilesPerProcess               *int     `json:"max_files_per_process,omitempty"`
-	MaxLocksPerTransaction           *int     `json:"max_locks_per_transaction,omitempty"`
-	MaxLogicalReplicationWorkers     *int     `json:"max_logical_replication_workers,omitempty"`
-	MaxParallelWorkers               *int     `json:"max_parallel_workers,omitempty"`
-	MaxParallelWorkersPerGather      *int     `json:"max_parallel_workers_per_gather,omitempty"`
-	MaxPredLocksPerTransaction       *int     `json:"max_pred_locks_per_transaction,omitempty"`
-	MaxReplicationSlots              *int     `json:"max_replication_slots,omitempty"`
-	MaxSlotWALKeepSize               *int32   `json:"max_slot_wal_keep_size,omitempty"`
-	MaxStackDepth                    *int     `json:"max_stack_depth,omitempty"`
-	MaxStandbyArchiveDelay           *int     `json:"max_standby_archive_delay,omitempty"`
-	MaxStandbyStreamingDelay         *int     `json:"max_standby_streaming_delay,omitempty"`
-	MaxWALSenders                    *int     `json:"max_wal_senders,omitempty"`
-	MaxWorkerProcesses               *int     `json:"max_worker_processes,omitempty"`
-	PasswordEncryption               *string  `json:"password_encryption,omitempty"`
-	PGPartmanBGWInterval             *int     `json:"pg_partman_bgw.interval,omitempty"`
-	PGPartmanBGWRole                 *string  `json:"pg_partman_bgw.role,omitempty"`
-	PGStatMonitorPGSMEnableQueryPlan *bool    `json:"pg_stat_monitor.pgsm_enable_query_plan,omitempty"`
-	PGStatMonitorPGSMMaxBuckets      *int     `json:"pg_stat_monitor.pgsm_max_buckets,omitempty"`
-	PGStatStatementsTrack            *string  `json:"pg_stat_statements.track,omitempty"`
-	TempFileLimit                    *int32   `json:"temp_file_limit,omitempty"`
-	Timezone                         *string  `json:"timezone,omitempty"`
-	TrackActivityQuerySize           *int     `json:"track_activity_query_size,omitempty"`
-	TrackCommitTimestamp             *string  `json:"track_commit_timestamp,omitempty"`
-	TrackFunctions                   *string  `json:"track_functions,omitempty"`
-	TrackIOTiming                    *string  `json:"track_io_timing,omitempty"`
-	WALSenderTimeout                 *int     `json:"wal_sender_timeout,omitempty"`
-	WALWriterDelay                   *int     `json:"wal_writer_delay,omitempty"`
+	AutovacuumAnalyzeScaleFactor     *float64 `json:"autovacuum_analyze_scale_factor,omitzero"`
+	AutovacuumAnalyzeThreshold       *int32   `json:"autovacuum_analyze_threshold,omitzero"`
+	AutovacuumMaxWorkers             *int     `json:"autovacuum_max_workers,omitzero"`
+	AutovacuumNaptime                *int     `json:"autovacuum_naptime,omitzero"`
+	AutovacuumVacuumCostDelay        *int     `json:"autovacuum_vacuum_cost_delay,omitzero"`
+	AutovacuumVacuumCostLimit        *int     `json:"autovacuum_vacuum_cost_limit,omitzero"`
+	AutovacuumVacuumScaleFactor      *float64 `json:"autovacuum_vacuum_scale_factor,omitzero"`
+	AutovacuumVacuumThreshold        *int32   `json:"autovacuum_vacuum_threshold,omitzero"`
+	BGWriterDelay                    *int     `json:"bgwriter_delay,omitzero"`
+	BGWriterFlushAfter               *int     `json:"bgwriter_flush_after,omitzero"`
+	BGWriterLRUMaxPages              *int     `json:"bgwriter_lru_maxpages,omitzero"`
+	BGWriterLRUMultiplier            *float64 `json:"bgwriter_lru_multiplier,omitzero"`
+	DeadlockTimeout                  *int     `json:"deadlock_timeout,omitzero"`
+	DefaultToastCompression          *string  `json:"default_toast_compression,omitzero"`
+	IdleInTransactionSessionTimeout  *int     `json:"idle_in_transaction_session_timeout,omitzero"`
+	JIT                              *bool    `json:"jit,omitzero"`
+	MaxFilesPerProcess               *int     `json:"max_files_per_process,omitzero"`
+	MaxLocksPerTransaction           *int     `json:"max_locks_per_transaction,omitzero"`
+	MaxLogicalReplicationWorkers     *int     `json:"max_logical_replication_workers,omitzero"`
+	MaxParallelWorkers               *int     `json:"max_parallel_workers,omitzero"`
+	MaxParallelWorkersPerGather      *int     `json:"max_parallel_workers_per_gather,omitzero"`
+	MaxPredLocksPerTransaction       *int     `json:"max_pred_locks_per_transaction,omitzero"`
+	MaxReplicationSlots              *int     `json:"max_replication_slots,omitzero"`
+	MaxSlotWALKeepSize               *int32   `json:"max_slot_wal_keep_size,omitzero"`
+	MaxStackDepth                    *int     `json:"max_stack_depth,omitzero"`
+	MaxStandbyArchiveDelay           *int     `json:"max_standby_archive_delay,omitzero"`
+	MaxStandbyStreamingDelay         *int     `json:"max_standby_streaming_delay,omitzero"`
+	MaxWALSenders                    *int     `json:"max_wal_senders,omitzero"`
+	MaxWorkerProcesses               *int     `json:"max_worker_processes,omitzero"`
+	PasswordEncryption               *string  `json:"password_encryption,omitzero"`
+	PGPartmanBGWInterval             *int     `json:"pg_partman_bgw.interval,omitzero"`
+	PGPartmanBGWRole                 *string  `json:"pg_partman_bgw.role,omitzero"`
+	PGStatMonitorPGSMEnableQueryPlan *bool    `json:"pg_stat_monitor.pgsm_enable_query_plan,omitzero"`
+	PGStatMonitorPGSMMaxBuckets      *int     `json:"pg_stat_monitor.pgsm_max_buckets,omitzero"`
+	PGStatStatementsTrack            *string  `json:"pg_stat_statements.track,omitzero"`
+	TempFileLimit                    *int32   `json:"temp_file_limit,omitzero"`
+	Timezone                         *string  `json:"timezone,omitzero"`
+	TrackActivityQuerySize           *int     `json:"track_activity_query_size,omitzero"`
+	TrackCommitTimestamp             *string  `json:"track_commit_timestamp,omitzero"`
+	TrackFunctions                   *string  `json:"track_functions,omitzero"`
+	TrackIOTiming                    *string  `json:"track_io_timing,omitzero"`
+	WALSenderTimeout                 *int     `json:"wal_sender_timeout,omitzero"`
+	WALWriterDelay                   *int     `json:"wal_writer_delay,omitzero"`
 }
 
 type PostgresDatabaseEngineConfigPGLookout struct {
-	MaxFailoverReplicationTimeLag *int64 `json:"max_failover_replication_time_lag,omitempty"`
+	MaxFailoverReplicationTimeLag *int64 `json:"max_failover_replication_time_lag,omitzero"`
 }
 
 type PostgresDatabaseConfigInfo struct {
@@ -594,25 +594,25 @@ type PostgresCreateOptions struct {
 	Region      string   `json:"region"`
 	Type        string   `json:"type"`
 	Engine      string   `json:"engine"`
-	AllowList   []string `json:"allow_list,omitempty"`
-	ClusterSize int      `json:"cluster_size,omitempty"`
+	AllowList   []string `json:"allow_list,omitzero"`
+	ClusterSize int      `json:"cluster_size,omitzero"`
 
-	Fork *DatabaseFork `json:"fork,omitempty"`
+	Fork *DatabaseFork `json:"fork,omitzero"`
 
-	EngineConfig   *PostgresDatabaseEngineConfig `json:"engine_config,omitempty"`
-	PrivateNetwork *DatabasePrivateNetwork       `json:"private_network,omitempty"`
+	EngineConfig   *PostgresDatabaseEngineConfig `json:"engine_config,omitzero"`
+	PrivateNetwork *DatabasePrivateNetwork       `json:"private_network,omitzero"`
 }
 
 // PostgresUpdateOptions fields are used when altering the existing Postgres Database
 type PostgresUpdateOptions struct {
-	Label          string                        `json:"label,omitempty"`
-	AllowList      *[]string                     `json:"allow_list,omitempty"`
-	Updates        *DatabaseMaintenanceWindow    `json:"updates,omitempty"`
-	Type           string                        `json:"type,omitempty"`
-	ClusterSize    int                           `json:"cluster_size,omitempty"`
-	Version        string                        `json:"version,omitempty"`
-	EngineConfig   *PostgresDatabaseEngineConfig `json:"engine_config,omitempty"`
-	PrivateNetwork *DatabasePrivateNetwork       `json:"private_network,omitempty"`
+	Label          string                        `json:"label,omitzero"`
+	AllowList      []string                      `json:"allow_list,omitzero"`
+	Updates        *DatabaseMaintenanceWindow    `json:"updates,omitzero"`
+	Type           string                        `json:"type,omitzero"`
+	ClusterSize    int                           `json:"cluster_size,omitzero"`
+	Version        string                        `json:"version,omitzero"`
+	EngineConfig   *PostgresDatabaseEngineConfig `json:"engine_config,omitzero"`
+	PrivateNetwork *DatabasePrivateNetwork       `json:"private_network,omitzero"`
 }
 
 // PostgresDatabaseSSL is the SSL Certificate to access the Linode Managed Postgres Database

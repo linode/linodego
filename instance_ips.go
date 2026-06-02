@@ -12,11 +12,11 @@ type InstanceIPAddressResponse struct {
 
 // InstanceIPv4Response contains the details of all IPv4 addresses associated with an Instance
 type InstanceIPv4Response struct {
-	Public   []*InstanceIP `json:"public"`
-	Private  []*InstanceIP `json:"private"`
-	Shared   []*InstanceIP `json:"shared"`
-	Reserved []*InstanceIP `json:"reserved"`
-	VPC      []*VPCIP      `json:"vpc"`
+	Public   []InstanceIP `json:"public"`
+	Private  []InstanceIP `json:"private"`
+	Shared   []InstanceIP `json:"shared"`
+	Reserved []InstanceIP `json:"reserved"`
+	VPC      []VPCIP      `json:"vpc"`
 }
 
 // InstanceIP represents an Instance IP with additional DNS and networking details
@@ -33,6 +33,15 @@ type InstanceIP struct {
 	Region      string             `json:"region"`
 	VPCNAT1To1  *InstanceIPNAT1To1 `json:"vpc_nat_1_1"`
 	Reserved    bool               `json:"reserved"`
+}
+
+type InstanceIPAddOptions struct {
+	Type   string `json:"type"`
+	Public bool   `json:"public"`
+}
+
+type InstanceIPAddressUpdateOptions struct {
+	RDNS **string `json:"rdns,omitzero"`
 }
 
 // VPCIP represents a private IP address in a VPC subnet with additional networking details
@@ -127,19 +136,15 @@ func (c *Client) GetInstanceIPAddress(ctx context.Context, linodeID int, ipaddre
 }
 
 // AddInstanceIPAddress adds a public or private IP to a Linode instance
-func (c *Client) AddInstanceIPAddress(ctx context.Context, linodeID int, public bool) (*InstanceIP, error) {
-	instanceipRequest := struct {
-		Type   string `json:"type"`
-		Public bool   `json:"public"`
-	}{"ipv4", public}
-
+func (c *Client) AddInstanceIPAddress(ctx context.Context, linodeID int, opts InstanceIPAddOptions) (*InstanceIP, error) {
+	opts.Type = "ipv4"
 	e := formatAPIPath("linode/instances/%d/ips", linodeID)
 
-	return doPOSTRequest[InstanceIP](ctx, c, e, instanceipRequest)
+	return doPOSTRequest[InstanceIP](ctx, c, e, opts)
 }
 
 // UpdateInstanceIPAddress updates the IPAddress with the specified instance id and IP address
-func (c *Client) UpdateInstanceIPAddress(ctx context.Context, linodeID int, ipAddress string, opts IPAddressUpdateOptions) (*InstanceIP, error) {
+func (c *Client) UpdateInstanceIPAddress(ctx context.Context, linodeID int, ipAddress string, opts InstanceIPAddressUpdateOptions) (*InstanceIP, error) {
 	e := formatAPIPath("linode/instances/%d/ips/%s", linodeID, ipAddress)
 	return doPUTRequest[InstanceIP](ctx, c, e, opts)
 }

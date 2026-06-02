@@ -61,14 +61,14 @@ type PlacementGroupCreateOptions struct {
 // PlacementGroupUpdateOptions represents the options to use
 // when updating a placement group.
 type PlacementGroupUpdateOptions struct {
-	Label string `json:"label,omitempty"`
+	Label string `json:"label,omitzero"`
 }
 
 // PlacementGroupAssignOptions represents options used when
 // assigning Linodes to a placement group.
 type PlacementGroupAssignOptions struct {
 	Linodes       []int `json:"linodes"`
-	CompliantOnly *bool `json:"compliant_only,omitempty"`
+	CompliantOnly *bool `json:"compliant_only,omitzero"`
 }
 
 // PlacementGroupUnAssignOptions represents options used when

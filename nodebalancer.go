@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/v2/internal/parseabletime"
 )
 
 // NodeBalancer represents a NodeBalancer object
@@ -60,38 +60,38 @@ type NodeBalancerTransfer struct {
 }
 
 type NodeBalancerVPCOptions struct {
-	IPv4Range           string `json:"ipv4_range,omitempty"`
-	IPv6Range           string `json:"ipv6_range,omitempty"`
+	IPv4Range           string `json:"ipv4_range,omitzero"`
+	IPv6Range           string `json:"ipv6_range,omitzero"`
 	SubnetID            int    `json:"subnet_id"`
-	IPv4RangeAutoAssign bool   `json:"ipv4_range_auto_assign,omitempty"`
+	IPv4RangeAutoAssign bool   `json:"ipv4_range_auto_assign,omitzero"`
 }
 
 // NodeBalancerCreateOptions are the options permitted for CreateNodeBalancer
 type NodeBalancerCreateOptions struct {
-	Label              *string `json:"label,omitempty"`
-	Region             string  `json:"region,omitempty"`
-	ClientConnThrottle *int    `json:"client_conn_throttle,omitempty"`
+	Label              *string `json:"label,omitzero"`
+	Region             string  `json:"region,omitzero"`
+	ClientConnThrottle *int    `json:"client_conn_throttle,omitzero"`
 
 	// NOTE: ClientUDPSessThrottle may not currently be available to all users.
-	ClientUDPSessThrottle *int `json:"client_udp_sess_throttle,omitempty"`
+	ClientUDPSessThrottle *int `json:"client_udp_sess_throttle,omitzero"`
 
-	Configs    []*NodeBalancerConfigCreateOptions `json:"configs,omitempty"`
-	Tags       []string                           `json:"tags"`
-	FirewallID int                                `json:"firewall_id,omitempty"`
-	Type       NodeBalancerPlanType               `json:"type,omitempty"`
-	VPCs       []NodeBalancerVPCOptions           `json:"vpcs,omitempty"`
-	IPv4       *string                            `json:"ipv4,omitempty"`
+	Configs    []NodeBalancerConfigCreateOptions `json:"configs,omitzero"`
+	Tags       []string                          `json:"tags"`
+	FirewallID int                               `json:"firewall_id,omitzero"`
+	Type       NodeBalancerPlanType              `json:"type,omitzero"`
+	VPCs       []NodeBalancerVPCOptions          `json:"vpcs,omitzero"`
+	IPv4       *string                           `json:"ipv4,omitzero"`
 }
 
 // NodeBalancerUpdateOptions are the options permitted for UpdateNodeBalancer
 type NodeBalancerUpdateOptions struct {
-	Label              *string `json:"label,omitempty"`
-	ClientConnThrottle *int    `json:"client_conn_throttle,omitempty"`
+	Label              *string `json:"label,omitzero"`
+	ClientConnThrottle *int    `json:"client_conn_throttle,omitzero"`
 
 	// NOTE: ClientUDPSessThrottle may not currently be available to all users.
-	ClientUDPSessThrottle *int `json:"client_udp_sess_throttle,omitempty"`
+	ClientUDPSessThrottle *int `json:"client_udp_sess_throttle,omitzero"`
 
-	Tags *[]string `json:"tags,omitempty"`
+	Tags []string `json:"tags,omitzero"`
 }
 
 type NodeBalancerLKECluster struct {
@@ -156,7 +156,7 @@ func (i NodeBalancer) GetUpdateOptions() NodeBalancerUpdateOptions {
 		Label:                 i.Label,
 		ClientConnThrottle:    &i.ClientConnThrottle,
 		ClientUDPSessThrottle: &i.ClientUDPSessThrottle,
-		Tags:                  &i.Tags,
+		Tags:                  i.Tags,
 	}
 }
 
