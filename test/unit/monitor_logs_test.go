@@ -369,12 +369,10 @@ func TestUpdateLogStream(t *testing.T) {
 	base.MockPut("monitor/streams/456", fixtureData)
 
 	label := "AuditLog-config"
-	streamType := linodego.StreamTypeAuditLogs
 	status := linodego.StreamStatusActive
 	updateOpts := linodego.StreamUpdateOptions{
 		Destinations: []int{testLogsDestinationID},
 		Label:        &label,
-		Type:         &streamType,
 		Status:       &status,
 	}
 
