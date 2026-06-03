@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/v2/internal/parseabletime"
 )
 
 // Account associated with the token in use.
@@ -34,18 +34,18 @@ type Account struct {
 
 // AccountUpdateOptions fields are those accepted by UpdateAccount
 type AccountUpdateOptions struct {
-	Address1  string `json:"address_1,omitempty"`
-	Address2  string `json:"address_2,omitempty"`
-	City      string `json:"city,omitempty"`
-	Company   string `json:"company,omitempty"`
-	Country   string `json:"country,omitempty"`
-	Email     string `json:"email,omitempty"`
-	FirstName string `json:"first_name,omitempty"`
-	LastName  string `json:"last_name,omitempty"`
-	Phone     string `json:"phone,omitempty"`
-	State     string `json:"state,omitempty"`
-	TaxID     string `json:"tax_id,omitempty"`
-	Zip       string `json:"zip,omitempty"`
+	Address1  string `json:"address_1,omitzero"`
+	Address2  string `json:"address_2,omitzero"`
+	City      string `json:"city,omitzero"`
+	Company   string `json:"company,omitzero"`
+	Country   string `json:"country,omitzero"`
+	Email     string `json:"email,omitzero"`
+	FirstName string `json:"first_name,omitzero"`
+	LastName  string `json:"last_name,omitzero"`
+	Phone     string `json:"phone,omitzero"`
+	State     string `json:"state,omitzero"`
+	TaxID     string `json:"tax_id,omitzero"`
+	Zip       string `json:"zip,omitzero"`
 }
 
 // GetUpdateOptions converts an Account to AccountUpdateOptions for use in UpdateAccount

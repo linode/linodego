@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 )
 
 func createInstanceWithLinodeInterfaces(
@@ -21,7 +21,7 @@ func createInstanceWithLinodeInterfaces(
 	createOpts := linodego.InstanceCreateOptions{
 		Label:               "go-test-intf-" + randLabel(),
 		RootPass:            randPassword(),
-		Region:              getRegionsWithCaps(t, client, []string{linodego.CapabilityLinodeInterfaces})[0],
+		Region:              getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodeInterfaces})[0],
 		Type:                "g6-nanode-1",
 		Image:               "linode/debian12",
 		Booted:              linodego.Pointer(false),
@@ -80,7 +80,7 @@ func TestInstance_CreateWithLinodeInterfaces(
 	client, fixtureTeardown := createTestClient(t, "fixtures/TestInstance_CreateWithLinodeInterfaces")
 	t.Cleanup(fixtureTeardown)
 
-	testRegion := getRegionsWithCaps(t, client, []string{linodego.CapabilityVPCs, linodego.CapabilityLinodeInterfaces})[0]
+	testRegion := getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityVPCs, linodego.CapabilityLinodeInterfaces})[0]
 	_, vpcSubnet, vpcTeardown, err := createVPCWithSubnet(
 		t,
 		client,
@@ -102,7 +102,7 @@ func TestInstance_CreateWithLinodeInterfaces(
 				FirewallID: linodego.Pointer(firewallID),
 				Public: &linodego.PublicInterfaceCreateOptions{
 					IPv4: &linodego.PublicInterfaceIPv4CreateOptions{
-						Addresses: &[]linodego.PublicInterfaceIPv4AddressCreateOptions{
+						Addresses: []linodego.PublicInterfaceIPv4AddressCreateOptions{
 							{
 								Address: linodego.Pointer("auto"),
 								Primary: linodego.Pointer(true),
@@ -117,7 +117,7 @@ func TestInstance_CreateWithLinodeInterfaces(
 				VPC: &linodego.VPCInterfaceCreateOptions{
 					SubnetID: vpcSubnet.ID,
 					IPv4: &linodego.VPCInterfaceIPv4CreateOptions{
-						Addresses: &[]linodego.VPCInterfaceIPv4AddressCreateOptions{
+						Addresses: []linodego.VPCInterfaceIPv4AddressCreateOptions{
 							{
 								Address:        linodego.Pointer("auto"),
 								Primary:        linodego.Pointer(true),

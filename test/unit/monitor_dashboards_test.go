@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -27,10 +27,8 @@ func TestListMonitorDashboards(t *testing.T) {
 
 	assert.Equal(t, linodego.DashboardType("standard"), clients[0].Type, "Expected dashboard type to match")
 	assert.Equal(t, linodego.ServiceType("dbaas"), clients[0].ServiceType, "Expected service_type to match")
-
-	// Assert group_by field (on first widget)
-	assert.NotNil(t, clients[0].Widgets[0].GroupBy, "Expected group_by to be present")
-	assert.NotEmpty(t, clients[0].Widgets[0].GroupBy, "group_by should not be empty if present")
+	assert.NotEmpty(t, clients[0].GroupBy, "Expected group_by to be present at dashboard level")
+	assert.Equal(t, []string{"entity_id"}, clients[0].GroupBy, "Expected dashboard group_by to match")
 
 	// Assert filters field (optional, on first widget)
 	if clients[0].Widgets[0].Filters != nil {
@@ -57,6 +55,8 @@ func TestListMonitorDashboardsByID(t *testing.T) {
 
 	assert.Equal(t, linodego.DashboardType("standard"), clients.Type, "Expected dashboard type to match")
 	assert.Equal(t, linodego.ServiceType("dbaas"), clients.ServiceType, "Expected service_type to match")
+	assert.NotEmpty(t, clients.GroupBy, "Expected group_by to be present at dashboard level")
+	assert.Equal(t, []string{"entity_id"}, clients.GroupBy, "Expected dashboard group_by to match")
 }
 
 // monitor_dashboard_by_service_type
@@ -79,10 +79,8 @@ func TestListMonitorDashboardsByServiceType(t *testing.T) {
 
 	assert.Equal(t, linodego.DashboardType("standard"), clients[0].Type, "Expected dashboard type to match")
 	assert.Equal(t, linodego.ServiceType("dbaas"), clients[0].ServiceType, "Expected service_type to match")
-
-	// Assert group_by field (on first widget)
-	assert.NotNil(t, clients[0].Widgets[0].GroupBy, "Expected group_by to be present")
-	assert.NotEmpty(t, clients[0].Widgets[0].GroupBy, "group_by should not be empty if present")
+	assert.NotEmpty(t, clients[0].GroupBy, "Expected group_by to be present at dashboard level")
+	assert.Equal(t, []string{"entity_id"}, clients[0].GroupBy, "Expected dashboard group_by to match")
 
 	// Assert filters field (optional, on first widget)
 	if clients[0].Widgets[0].Filters != nil {

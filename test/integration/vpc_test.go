@@ -6,8 +6,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/linode/linodego"
-	. "github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
+	. "github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/require"
 )
 
@@ -36,7 +36,7 @@ func createVPC(t *testing.T, client *linodego.Client, vpcModifier ...vpcModifier
 	t.Helper()
 	createOpts := linodego.VPCCreateOptions{
 		Label:  "go-test-vpc-" + getUniqueText(),
-		Region: getRegionsWithCaps(t, client, []string{"VPCs"})[0],
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{CapabilityVPCs})[0],
 	}
 
 	for _, mod := range vpcModifier {
@@ -60,7 +60,7 @@ func createVPC_invalid_label(t *testing.T, client *linodego.Client) error {
 	t.Helper()
 	createOpts := linodego.VPCCreateOptions{
 		Label:  "gotest_vpc_invalid_label" + getUniqueText(),
-		Region: getRegionsWithCaps(t, client, []string{"VPCs"})[0],
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{CapabilityVPCs})[0],
 	}
 	_, err := client.CreateVPC(context.Background(), createOpts)
 

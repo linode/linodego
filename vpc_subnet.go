@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/v2/internal/parseabletime"
 )
 
 // VPCSubnetLinodeInterface represents an interface on a Linode that is currently
@@ -62,14 +62,14 @@ type VPCSubnetCreateOptions struct {
 	IPv4  string `json:"ipv4"`
 
 	// NOTE: IPv6 VPCs may not currently be available to all users.
-	IPv6 []VPCSubnetCreateOptionsIPv6 `json:"ipv6,omitempty"`
+	IPv6 []VPCSubnetCreateOptionsIPv6 `json:"ipv6,omitzero"`
 }
 
 // VPCSubnetCreateOptionsIPv6 represents a single IPv6 range assigned to a VPC
 // which is specified during a VPC subnet's creation.
 // NOTE: IPv6 VPCs may not currently be available to all users.
 type VPCSubnetCreateOptionsIPv6 struct {
-	Range *string `json:"range,omitempty"`
+	Range *string `json:"range,omitzero"`
 }
 
 type VPCSubnetUpdateOptions struct {

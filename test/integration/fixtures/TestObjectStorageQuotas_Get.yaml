@@ -14,10 +14,11 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/quotas/obj-objects-us-ord-1.linodeobjects.com
     method: GET
   response:
-    body: '{"quota_id": "obj-objects-us-ord-1.linodeobjects.com", "quota_name": "max_objects",
-      "endpoint_type": "E1", "s3_endpoint": "us-ord-1.linodeobjects.com", "description":
-      "Maximum number of objects this customer is allowed to have on this endpoint",
-      "quota_limit": 100000000, "resource_metric": "object"}'
+    body: '{"quota_id": "obj-objects-us-ord-1.linodeobjects.com", "quota_name": "Number
+      of Objects", "quota_type": "obj-objects", "endpoint_type": "E1", "s3_endpoint":
+      "us-ord-1.linodeobjects.com", "description": "Current number of objects per
+      account, per endpoint", "quota_limit": 100000000, "resource_metric": "object",
+      "has_usage": true}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -36,13 +37,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "300"
+      - "330"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 24 Apr 2025 17:38:46 GMT
+      - Thu, 30 Apr 2026 20:20:06 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -60,7 +61,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

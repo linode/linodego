@@ -7,8 +7,9 @@ import (
 	"time"
 
 	"github.com/jarcoal/httpmock"
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestFirewall_List(t *testing.T) {
@@ -50,8 +51,8 @@ func TestFirewall_List(t *testing.T) {
 	assert.Equal(t, "ACCEPT", outboundRule.Action)
 	assert.Equal(t, linodego.NetworkProtocol("TCP"), outboundRule.Protocol)
 	assert.Equal(t, "22-24, 80, 443", outboundRule.Ports)
-	assert.ElementsMatch(t, []string{"192.0.2.0/24", "198.51.100.2/32"}, *outboundRule.Addresses.IPv4)
-	assert.ElementsMatch(t, []string{"2001:DB8::/128"}, *outboundRule.Addresses.IPv6)
+	assert.ElementsMatch(t, []string{"192.0.2.0/24", "198.51.100.2/32"}, outboundRule.Addresses.IPv4)
+	assert.ElementsMatch(t, []string{"2001:DB8::/128"}, outboundRule.Addresses.IPv6)
 
 	assert.ElementsMatch(t, []string{"example tag", "another example"}, firewall.Tags)
 
@@ -69,15 +70,15 @@ func TestFirewall_Create(t *testing.T) {
 
 	requestData := linodego.FirewallCreateOptions{
 		Label: "firewall123",
-		Rules: linodego.FirewallRuleSet{
+		Rules: linodego.FirewallRulesCreateOptions{
 			InboundPolicy:  "DROP",
 			OutboundPolicy: "DROP",
-			Inbound: []linodego.FirewallRule{
+			Inbound: []linodego.FirewallRuleInbound{
 				{
 					Action: "ACCEPT",
 					Addresses: linodego.NetworkAddresses{
-						IPv4: &[]string{"192.0.2.0/24", "198.51.100.2/32"},
-						IPv6: &[]string{"2001:DB8::/128"},
+						IPv4: []string{"192.0.2.0/24", "198.51.100.2/32"},
+						IPv6: []string{"2001:DB8::/128"},
 					},
 					Description: "An example firewall rule description.",
 					Label:       "firewallrule123",
@@ -85,12 +86,12 @@ func TestFirewall_Create(t *testing.T) {
 					Protocol:    "TCP",
 				},
 			},
-			Outbound: []linodego.FirewallRule{
+			Outbound: []linodego.FirewallRuleOutbound{
 				{
 					Action: "ACCEPT",
 					Addresses: linodego.NetworkAddresses{
-						IPv4: &[]string{"192.0.2.0/24", "198.51.100.2/32"},
-						IPv6: &[]string{"2001:DB8::/128"},
+						IPv4: []string{"192.0.2.0/24", "198.51.100.2/32"},
+						IPv6: []string{"2001:DB8::/128"},
 					},
 					Description: "An example firewall rule description.",
 					Label:       "firewallrule123",
@@ -131,8 +132,8 @@ func TestFirewall_Create(t *testing.T) {
 	assert.Equal(t, "An example firewall rule description.", inboundRule.Description)
 	assert.Equal(t, "22-24, 80, 443", inboundRule.Ports)
 	assert.Equal(t, linodego.NetworkProtocol("TCP"), inboundRule.Protocol)
-	assert.ElementsMatch(t, []string{"192.0.2.0/24", "198.51.100.2/32"}, *inboundRule.Addresses.IPv4)
-	assert.ElementsMatch(t, []string{"2001:DB8::/128"}, *inboundRule.Addresses.IPv6)
+	assert.ElementsMatch(t, []string{"192.0.2.0/24", "198.51.100.2/32"}, inboundRule.Addresses.IPv4)
+	assert.ElementsMatch(t, []string{"2001:DB8::/128"}, inboundRule.Addresses.IPv6)
 
 	assert.Len(t, firewall.Rules.Outbound, 1)
 	outboundRule := firewall.Rules.Outbound[0]
@@ -141,8 +142,8 @@ func TestFirewall_Create(t *testing.T) {
 	assert.Equal(t, "An example firewall rule description.", outboundRule.Description)
 	assert.Equal(t, "22-24, 80, 443", outboundRule.Ports)
 	assert.Equal(t, linodego.NetworkProtocol("TCP"), outboundRule.Protocol)
-	assert.ElementsMatch(t, []string{"192.0.2.0/24", "198.51.100.2/32"}, *outboundRule.Addresses.IPv4)
-	assert.ElementsMatch(t, []string{"2001:DB8::/128"}, *outboundRule.Addresses.IPv6)
+	assert.ElementsMatch(t, []string{"192.0.2.0/24", "198.51.100.2/32"}, outboundRule.Addresses.IPv4)
+	assert.ElementsMatch(t, []string{"2001:DB8::/128"}, outboundRule.Addresses.IPv6)
 
 	assert.Len(t, firewall.Entities, 1)
 	entity := firewall.Entities[0]
@@ -153,7 +154,8 @@ func TestFirewall_Create(t *testing.T) {
 	assert.NotNil(t, entity.ParentEntity)
 	assert.Equal(t, 92759172, entity.ParentEntity.ID)
 	assert.Equal(t, linodego.FirewallDeviceLinode, entity.ParentEntity.Type)
-	assert.Equal(t, "test-01", entity.ParentEntity.Label)
+	require.NotNil(t, entity.ParentEntity.Label)
+	assert.Equal(t, "test-01", *entity.ParentEntity.Label)
 	assert.Equal(t, "/v4/linode/instances/92759172", entity.ParentEntity.URL)
 	assert.Nil(t, entity.ParentEntity.ParentEntity)
 }
@@ -194,8 +196,8 @@ func TestFirewall_Get(t *testing.T) {
 	assert.Equal(t, "An example firewall rule description.", inboundRule.Description)
 	assert.Equal(t, "22-24, 80, 443", inboundRule.Ports)
 	assert.Equal(t, linodego.NetworkProtocol("TCP"), inboundRule.Protocol)
-	assert.ElementsMatch(t, []string{"192.0.2.0/24", "198.51.100.2/32"}, *inboundRule.Addresses.IPv4)
-	assert.ElementsMatch(t, []string{"2001:DB8::/128"}, *inboundRule.Addresses.IPv6)
+	assert.ElementsMatch(t, []string{"192.0.2.0/24", "198.51.100.2/32"}, inboundRule.Addresses.IPv4)
+	assert.ElementsMatch(t, []string{"2001:DB8::/128"}, inboundRule.Addresses.IPv6)
 
 	assert.Len(t, firewall.Rules.Outbound, 1)
 	outboundRule := firewall.Rules.Outbound[0]
@@ -204,8 +206,8 @@ func TestFirewall_Get(t *testing.T) {
 	assert.Equal(t, "An example firewall rule description.", outboundRule.Description)
 	assert.Equal(t, "22-24, 80, 443", outboundRule.Ports)
 	assert.Equal(t, linodego.NetworkProtocol("TCP"), outboundRule.Protocol)
-	assert.ElementsMatch(t, []string{"192.0.2.0/24", "198.51.100.2/32"}, *outboundRule.Addresses.IPv4)
-	assert.ElementsMatch(t, []string{"2001:DB8::/128"}, *outboundRule.Addresses.IPv6)
+	assert.ElementsMatch(t, []string{"192.0.2.0/24", "198.51.100.2/32"}, outboundRule.Addresses.IPv4)
+	assert.ElementsMatch(t, []string{"2001:DB8::/128"}, outboundRule.Addresses.IPv6)
 }
 
 func TestFirewall_Update(t *testing.T) {
@@ -222,7 +224,7 @@ func TestFirewall_Update(t *testing.T) {
 	requestData := linodego.FirewallUpdateOptions{
 		Label:  "firewall123",
 		Status: "enabled",
-		Tags:   &[]string{"updated tag", "another updated tag"},
+		Tags:   []string{"updated tag", "another updated tag"},
 	}
 
 	firewall, err := base.Client.UpdateFirewall(context.Background(), firewallID, requestData)
@@ -250,8 +252,8 @@ func TestFirewall_Update(t *testing.T) {
 	assert.Equal(t, "An example firewall rule description.", inboundRule.Description)
 	assert.Equal(t, "22-24, 80, 443", inboundRule.Ports)
 	assert.Equal(t, linodego.NetworkProtocol("TCP"), inboundRule.Protocol)
-	assert.ElementsMatch(t, []string{"192.0.2.0/24", "198.51.100.2/32"}, *inboundRule.Addresses.IPv4)
-	assert.ElementsMatch(t, []string{"2001:DB8::/128"}, *inboundRule.Addresses.IPv6)
+	assert.ElementsMatch(t, []string{"192.0.2.0/24", "198.51.100.2/32"}, inboundRule.Addresses.IPv4)
+	assert.ElementsMatch(t, []string{"2001:DB8::/128"}, inboundRule.Addresses.IPv6)
 
 	assert.Len(t, firewall.Rules.Outbound, 1)
 	outboundRule := firewall.Rules.Outbound[0]
@@ -260,8 +262,8 @@ func TestFirewall_Update(t *testing.T) {
 	assert.Equal(t, "An example firewall rule description.", outboundRule.Description)
 	assert.Equal(t, "22-24, 80, 443", outboundRule.Ports)
 	assert.Equal(t, linodego.NetworkProtocol("TCP"), outboundRule.Protocol)
-	assert.ElementsMatch(t, []string{"192.0.2.0/24", "198.51.100.2/32"}, *outboundRule.Addresses.IPv4)
-	assert.ElementsMatch(t, []string{"2001:DB8::/128"}, *outboundRule.Addresses.IPv6)
+	assert.ElementsMatch(t, []string{"192.0.2.0/24", "198.51.100.2/32"}, outboundRule.Addresses.IPv4)
+	assert.ElementsMatch(t, []string{"2001:DB8::/128"}, outboundRule.Addresses.IPv6)
 }
 
 func TestFirewall_Delete(t *testing.T) {

@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/v2/internal/parseabletime"
 )
 
 // NodeBalancer represents a NodeBalancer object
@@ -37,6 +37,9 @@ type NodeBalancer struct {
 	// An array of tags applied to this object. Tags are for organizational purposes only.
 	Tags []string `json:"tags"`
 
+	// This NodeBalancer's related LKE cluster, if any. The value is null if this NodeBalancer is not related to an LKE cluster.
+	LKECluster *NodeBalancerLKECluster `json:"lke_cluster"`
+
 	// An array of locks applied to this NodeBalancer for deletion protection.
 	// Locks prevent the NodeBalancer or its subresources from being deleted.
 	// NOTE: Locks can only be used with v4beta.
@@ -57,38 +60,49 @@ type NodeBalancerTransfer struct {
 }
 
 type NodeBalancerVPCOptions struct {
-	IPv4Range           string `json:"ipv4_range,omitempty"`
-	IPv6Range           string `json:"ipv6_range,omitempty"`
+	IPv4Range           string `json:"ipv4_range,omitzero"`
+	IPv6Range           string `json:"ipv6_range,omitzero"`
 	SubnetID            int    `json:"subnet_id"`
-	IPv4RangeAutoAssign bool   `json:"ipv4_range_auto_assign,omitempty"`
+	IPv4RangeAutoAssign bool   `json:"ipv4_range_auto_assign,omitzero"`
 }
 
 // NodeBalancerCreateOptions are the options permitted for CreateNodeBalancer
 type NodeBalancerCreateOptions struct {
-	Label              *string `json:"label,omitempty"`
-	Region             string  `json:"region,omitempty"`
-	ClientConnThrottle *int    `json:"client_conn_throttle,omitempty"`
+	Label              *string `json:"label,omitzero"`
+	Region             string  `json:"region,omitzero"`
+	ClientConnThrottle *int    `json:"client_conn_throttle,omitzero"`
 
 	// NOTE: ClientUDPSessThrottle may not currently be available to all users.
-	ClientUDPSessThrottle *int `json:"client_udp_sess_throttle,omitempty"`
+	ClientUDPSessThrottle *int `json:"client_udp_sess_throttle,omitzero"`
 
-	Configs    []*NodeBalancerConfigCreateOptions `json:"configs,omitempty"`
-	Tags       []string                           `json:"tags"`
-	FirewallID int                                `json:"firewall_id,omitempty"`
-	Type       NodeBalancerPlanType               `json:"type,omitempty"`
-	VPCs       []NodeBalancerVPCOptions           `json:"vpcs,omitempty"`
-	IPv4       *string                            `json:"ipv4,omitempty"`
+	Configs    []NodeBalancerConfigCreateOptions `json:"configs,omitzero"`
+	Tags       []string                          `json:"tags"`
+	FirewallID int                               `json:"firewall_id,omitzero"`
+	Type       NodeBalancerPlanType              `json:"type,omitzero"`
+	VPCs       []NodeBalancerVPCOptions          `json:"vpcs,omitzero"`
+	IPv4       *string                           `json:"ipv4,omitzero"`
 }
 
 // NodeBalancerUpdateOptions are the options permitted for UpdateNodeBalancer
 type NodeBalancerUpdateOptions struct {
-	Label              *string `json:"label,omitempty"`
-	ClientConnThrottle *int    `json:"client_conn_throttle,omitempty"`
+	Label              *string `json:"label,omitzero"`
+	ClientConnThrottle *int    `json:"client_conn_throttle,omitzero"`
 
 	// NOTE: ClientUDPSessThrottle may not currently be available to all users.
-	ClientUDPSessThrottle *int `json:"client_udp_sess_throttle,omitempty"`
+	ClientUDPSessThrottle *int `json:"client_udp_sess_throttle,omitzero"`
 
-	Tags *[]string `json:"tags,omitempty"`
+	Tags []string `json:"tags,omitzero"`
+}
+
+type NodeBalancerLKECluster struct {
+	// The ID of the related LKE cluster.
+	ID int `json:"id"`
+	// The label of the related LKE cluster.
+	Label string `json:"label"`
+	// The type for LKE clusters.
+	Type string `json:"type"`
+	// The URL where you can access the related LKE cluster.
+	URL string `json:"url"`
 }
 
 // NodeBalancerPlanType constants start with NBType and include Linode API NodeBalancer's plan types
@@ -142,7 +156,7 @@ func (i NodeBalancer) GetUpdateOptions() NodeBalancerUpdateOptions {
 		Label:                 i.Label,
 		ClientConnThrottle:    &i.ClientConnThrottle,
 		ClientUDPSessThrottle: &i.ClientUDPSessThrottle,
-		Tags:                  &i.Tags,
+		Tags:                  i.Tags,
 	}
 }
 
