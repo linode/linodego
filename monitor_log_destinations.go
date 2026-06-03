@@ -28,18 +28,18 @@ const (
 // Fields are populated based on the destination type.
 type LogsDestinationDetails struct {
 	// akamai_object_storage fields
-	AccessKeyID string `json:"access_key_id,omitempty"`
-	BucketName  string `json:"bucket_name,omitempty"`
-	Host        string `json:"host,omitempty"`
-	Path        string `json:"path,omitempty"`
+	AccessKeyID string `json:"access_key_id,omitzero"`
+	BucketName  string `json:"bucket_name,omitzero"`
+	Host        string `json:"host,omitzero"`
+	Path        string `json:"path,omitzero"`
 
 	// custom_https fields
-	EndpointURL              string                                   `json:"endpoint_url,omitempty"`
-	Authentication           *LogsDestinationCustomHTTPSAuthDetails   `json:"authentication,omitempty"`
-	ClientCertificateDetails *LogsDestinationClientCertificateDetails `json:"client_certificate_details,omitempty"`
-	ContentType              string                                   `json:"content_type,omitempty"`
-	CustomHeaders            []LogsDestinationCustomHTTPSHeader       `json:"custom_headers,omitempty"`
-	DataCompression          string                                   `json:"data_compression,omitempty"`
+	EndpointURL              string                                   `json:"endpoint_url,omitzero"`
+	Authentication           *LogsDestinationCustomHTTPSAuthDetails   `json:"authentication,omitzero"`
+	ClientCertificateDetails *LogsDestinationClientCertificateDetails `json:"client_certificate_details,omitzero"`
+	ContentType              string                                   `json:"content_type,omitzero"`
+	CustomHeaders            []LogsDestinationCustomHTTPSHeader       `json:"custom_headers,omitzero"`
+	DataCompression          string                                   `json:"data_compression,omitzero"`
 }
 
 // LogsDestinationDetailsCreateOptions represents the details block used when creating
@@ -49,7 +49,7 @@ type LogsDestinationDetailsCreateOptions struct {
 	AccessKeySecret string  `json:"access_key_secret"`
 	BucketName      string  `json:"bucket_name"`
 	Host            string  `json:"host"`
-	Path            *string `json:"path,omitempty"`
+	Path            *string `json:"path,omitzero"`
 }
 
 // LogsDestinationCustomHTTPSAuthType represents the authentication type for a custom_https destination.
@@ -70,7 +70,7 @@ type LogsDestinationCustomHTTPSBasicAuthDetails struct {
 // LogsDestinationCustomHTTPSAuthDetails holds authentication configuration for a custom_https destination.
 type LogsDestinationCustomHTTPSAuthDetails struct {
 	Type    LogsDestinationCustomHTTPSAuthType          `json:"type"`
-	Details *LogsDestinationCustomHTTPSBasicAuthDetails `json:"details,omitempty"`
+	Details *LogsDestinationCustomHTTPSBasicAuthDetails `json:"details,omitzero"`
 }
 
 // LogsDestinationCustomHTTPSHeader represents a single custom HTTP header.
@@ -92,10 +92,10 @@ type LogsDestinationClientCertificateDetails struct {
 type LogsDestinationCustomHTTPSDetailsCreateOptions struct {
 	EndpointURL              string                                   `json:"endpoint_url"`
 	Authentication           *LogsDestinationCustomHTTPSAuthDetails   `json:"authentication"`
-	ClientCertificateDetails *LogsDestinationClientCertificateDetails `json:"client_certificate_details,omitempty"`
-	ContentType              string                                   `json:"content_type,omitempty"`
-	CustomHeaders            []LogsDestinationCustomHTTPSHeader       `json:"custom_headers,omitempty"`
-	DataCompression          string                                   `json:"data_compression,omitempty"`
+	ClientCertificateDetails *LogsDestinationClientCertificateDetails `json:"client_certificate_details,omitzero"`
+	ContentType              string                                   `json:"content_type,omitzero"`
+	CustomHeaders            []LogsDestinationCustomHTTPSHeader       `json:"custom_headers,omitzero"`
+	DataCompression          string                                   `json:"data_compression,omitzero"`
 }
 
 // LogsDestination represents a logs destination object.
@@ -147,30 +147,30 @@ type LogsDestinationCreateOptions struct {
 // LogsDestinationDetailsUpdateOptions represents the details block used when updating
 // an akamai_object_storage LogsDestination.
 type LogsDestinationDetailsUpdateOptions struct {
-	AccessKeyID     string  `json:"access_key_id,omitempty"`
-	AccessKeySecret string  `json:"access_key_secret,omitempty"`
-	BucketName      string  `json:"bucket_name,omitempty"`
-	Host            string  `json:"host,omitempty"`
-	Path            *string `json:"path,omitempty"`
+	AccessKeyID     string  `json:"access_key_id,omitzero"`
+	AccessKeySecret string  `json:"access_key_secret,omitzero"`
+	BucketName      string  `json:"bucket_name,omitzero"`
+	Host            string  `json:"host,omitzero"`
+	Path            *string `json:"path,omitzero"`
 }
 
 // LogsDestinationCustomHTTPSDetailsUpdateOptions represents the details block used when
 // updating a custom_https LogsDestination.
 type LogsDestinationCustomHTTPSDetailsUpdateOptions struct {
-	EndpointURL              string                                   `json:"endpoint_url,omitempty"`
-	Authentication           *LogsDestinationCustomHTTPSAuthDetails   `json:"authentication,omitempty"`
-	ClientCertificateDetails *LogsDestinationClientCertificateDetails `json:"client_certificate_details,omitempty"`
-	ContentType              string                                   `json:"content_type,omitempty"`
-	CustomHeaders            []LogsDestinationCustomHTTPSHeader       `json:"custom_headers,omitempty"`
-	DataCompression          string                                   `json:"data_compression,omitempty"`
+	EndpointURL              string                                   `json:"endpoint_url,omitzero"`
+	Authentication           *LogsDestinationCustomHTTPSAuthDetails   `json:"authentication,omitzero"`
+	ClientCertificateDetails *LogsDestinationClientCertificateDetails `json:"client_certificate_details,omitzero"`
+	ContentType              string                                   `json:"content_type,omitzero"`
+	CustomHeaders            []LogsDestinationCustomHTTPSHeader       `json:"custom_headers,omitzero"`
+	DataCompression          string                                   `json:"data_compression,omitzero"`
 }
 
 // LogsDestinationUpdateOptions are the options used to update a LogsDestination.
 // Set Details to *LogsDestinationDetailsUpdateOptions for akamai_object_storage,
 // or *LogsDestinationCustomHTTPSDetailsUpdateOptions for custom_https.
 type LogsDestinationUpdateOptions struct {
-	Label   string `json:"label,omitempty"`
-	Details any    `json:"details,omitempty"`
+	Label   string `json:"label,omitzero"`
+	Details any    `json:"details,omitzero"`
 }
 
 // ListLogsDestinations returns a paginated list of logs destinations.

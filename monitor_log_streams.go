@@ -38,12 +38,14 @@ type StreamDestinationType string
 const (
 	// StreamDestinationTypeAkamaiObjectStorage sends logs to Akamai Object Storage.
 	StreamDestinationTypeAkamaiObjectStorage StreamDestinationType = "akamai_object_storage"
+	// StreamDestinationTypeCustomHTTPS sends logs to a custom HTTPS endpoint.
+	StreamDestinationTypeCustomHTTPS StreamDestinationType = "custom_https"
 )
 
 // StreamDetails contains additional details for a logs stream.
 // This only applies to streams with a Type of StreamTypeLKEAuditLogs.
 type StreamDetails struct {
-	ClusterIDs                  []int `json:"cluster_ids,omitempty"`
+	ClusterIDs                  []int `json:"cluster_ids,omitzero"`
 	IsAutoAddAllClustersEnabled bool  `json:"is_auto_add_all_clusters_enabled"`
 }
 
@@ -63,7 +65,7 @@ type Stream struct {
 	Status       StreamStatus        `json:"status"`
 	Version      int                 `json:"version"`
 	Destinations []StreamDestination `json:"destinations"`
-	Details      *StreamDetails      `json:"details,omitempty"`
+	Details      *StreamDetails      `json:"details,omitzero"`
 	Created      *time.Time          `json:"-"`
 	Updated      *time.Time          `json:"-"`
 	CreatedBy    string              `json:"created_by"`
@@ -75,17 +77,16 @@ type StreamCreateOptions struct {
 	Destinations []int          `json:"destinations"`
 	Label        string         `json:"label"`
 	Type         StreamType     `json:"type"`
-	Status       *StreamStatus  `json:"status,omitempty"`
-	Details      *StreamDetails `json:"details,omitempty"`
+	Status       *StreamStatus  `json:"status,omitzero"`
+	Details      *StreamDetails `json:"details,omitzero"`
 }
 
 // StreamUpdateOptions are the fields used to update an ACLP logs stream.
 type StreamUpdateOptions struct {
-	Destinations []int          `json:"destinations,omitempty"`
-	Label        *string        `json:"label,omitempty"`
-	Type         *StreamType    `json:"type,omitempty"`
-	Status       *StreamStatus  `json:"status,omitempty"`
-	Details      *StreamDetails `json:"details,omitempty"`
+	Destinations []int          `json:"destinations,omitzero"`
+	Label        *string        `json:"label,omitzero"`
+	Status       *StreamStatus  `json:"status,omitzero"`
+	Details      *StreamDetails `json:"details,omitzero"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface.
