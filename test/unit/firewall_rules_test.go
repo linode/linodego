@@ -148,7 +148,6 @@ func TestFirewallRule_GetExpansion(t *testing.T) {
 	outboundIPv6 := []string{"pl::vpcs:<current>"}
 
 	mockResponse := linodego.FirewallRules{
-		Version: 2,
 		Inbound: []linodego.FirewallRuleInbound{
 			{
 				Action:      "ACCEPT",

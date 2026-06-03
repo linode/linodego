@@ -50,16 +50,6 @@ type LKECluster struct {
 
 	// NOTE: Locks can only be used with v4beta.
 	Locks []LockType `json:"locks"`
-
-	// RuleSetIDs contains the IDs of the service-managed firewall rulesets
-	// automatically created for LKE Enterprise clusters.
-	RuleSetIDs *LKEClusterRuleSetIDs `json:"ruleset_ids"`
-}
-
-// LKEClusterRuleSetIDs contains the inbound and outbound ruleset IDs for an LKE-E cluster.
-type LKEClusterRuleSetIDs struct {
-	Inbound  int `json:"inbound"`
-	Outbound int `json:"outbound"`
 }
 
 // LKEClusterCreateOptions fields are those accepted by CreateLKECluster
