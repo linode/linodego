@@ -11,10 +11,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/quotas/obj-objects-us-ord-10.linodeobjects.com/usage
+    url: https://api.linode.com/v4beta/object-storage/quotas/obj-objects-es-mad-1.linodeobjects.com/usage
     method: GET
   response:
-    body: '{"quota_limit": 500000000, "usage": 0}'
+    body: '{"quota_limit": 100000000, "usage": 0}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -39,7 +39,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 02 Jun 2026 09:06:26 GMT
+      - Wed, 03 Jun 2026 12:45:16 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
