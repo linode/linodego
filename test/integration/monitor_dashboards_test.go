@@ -10,8 +10,6 @@ import (
 )
 
 func TestMonitorDashboards_Get_smoke(t *testing.T) {
-	t.Skip("Skipping the test due to unexpected API change that will be fixed soon by ACLP team")
-
 	client, teardown := createTestClient(t, "fixtures/TestMonitorDashboards_Get")
 	defer teardown()
 
