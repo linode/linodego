@@ -26,7 +26,7 @@ type Firewall struct {
 	Tags     []string               `json:"tags"`
 	Rules    FirewallRules          `json:"rules"`
 	Entities []FirewallDeviceEntity `json:"entities"`
-  Version  int                    `json:"version"`
+	Version  int                    `json:"version"`
 	Created  *time.Time             `json:"-"`
 	Updated  *time.Time             `json:"-"`
 }
