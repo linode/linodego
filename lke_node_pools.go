@@ -85,7 +85,7 @@ type LKENodePool struct {
 
 	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitzero"`
 
-	Isolation *LKENodePoolIsolation `json:"isolation,omitzero"`
+	Isolation *LKENodePoolIsolation `json:"isolation"`
 
 	// K8sVersion and UpdateStrategy are only for LKE Enterprise to support node pool upgrades.
 	// It may not currently be available to all users and is under v4beta.
