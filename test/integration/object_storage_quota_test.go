@@ -12,7 +12,7 @@ import (
 
 // getExistingObjectStorageQuotaID is a helper function to retrieve an existing Object Storage quota ID
 // It is used because accounts may differ in their QuotaID names
-func getExistingObjectStorageQuotaID(t *testing.T, prefix string) string {
+func getExistingObjectStorageQuotaID(t *testing.T, client *linodego.Client, prefix string) string {
 	targetQuotaID := "obj-objects-us-ord-10.linodeobjects.com"
 
 	quotas, err := client.ListObjectStorageQuotas(context.Background(), &linodego.ListOptions{})
@@ -31,7 +31,7 @@ func TestObjectStorageQuotas_Get(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestObjectStorageQuotas_Get")
 	defer teardown()
 
-	targetQuotaID := getExistingObjectStorageQuotaID(t, "obj-objects")
+	targetQuotaID := getExistingObjectStorageQuotaID(t, client, "obj-objects")
 	quota, err := client.GetObjectStorageQuota(context.Background(), targetQuotaID)
 	assert.NoError(t, err)
 
@@ -69,7 +69,7 @@ func TestObjectStorageQuotaUsage_Get(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestObjectStorageQuotaUsage_Get")
 	defer teardown()
 
-	objectQuotaID := getExistingObjectStorageQuotaID(t, "obj-objects")
+	objectQuotaID := getExistingObjectStorageQuotaID(t, client, "obj-objects")
 	quotaUsage, err := client.GetObjectStorageQuotaUsage(context.Background(), objectQuotaID)
 	assert.NoError(t, err)
 

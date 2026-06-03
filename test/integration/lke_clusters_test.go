@@ -9,6 +9,7 @@ import (
 
 	"github.com/linode/linodego/v2"
 	k8scondition "github.com/linode/linodego/v2/k8s/pkg/condition"
+	"github.com/stretchr/testify/require"
 )
 
 func TestLKECluster_GetMissing(t *testing.T) {
@@ -93,9 +94,7 @@ func TestLKECluster_Enterprise_BYOVPC_smoke(t *testing.T) {
 		linodego.CapabilityDiskEncryption,
 		linodego.CapabilityKubernetesEnterprise,
 	})
-	if len(regions) < 1 {
-		t.Fatal("No regions with required capabilities found")
-	}
+	require.Greater(t, len(regions), 0, "Error getting regions with required capabilities")
 
 	region := regions[0]
 	vpc, vpcTeardown, err := createVPC(t, client, []vpcModifier{func(l *linodego.Client, options *linodego.VPCCreateOptions) {
@@ -106,9 +105,7 @@ func TestLKECluster_Enterprise_BYOVPC_smoke(t *testing.T) {
 			},
 		}
 	}}...)
-	if err != nil {
-		t.Errorf("Error creating VPC, GOT ERROR %v", err)
-	}
+	require.NoErrorf(t, err, "Error creating VPC, got: %v", err)
 
 	client, lkeCluster, teardown, err := setupLKECluster(t, []clusterModifier{func(createOpts *linodego.LKEClusterCreateOptions) {
 		createOpts.Tier = "enterprise"

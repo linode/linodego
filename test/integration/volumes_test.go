@@ -65,9 +65,7 @@ func TestVolume_Create_withEncryption(t *testing.T) {
 	}
 
 	volume, err = client.WaitForVolumeStatus(ctx, volume.ID, linodego.VolumeActive)
-	if err != nil {
-		t.Errorf("Error waiting for volume to be active: %v", err)
-	}
+	require.NoErrorf(t, err, "Error waiting for volume to be active: %v", err)
 
 	assertDateSet(t, volume.Created)
 	assertDateSet(t, volume.Updated)
@@ -90,9 +88,7 @@ func TestVolume_Resize(t *testing.T) {
 	}
 
 	_, err = client.WaitForVolumeStatus(ctx, volume.ID, linodego.VolumeActive)
-	if err != nil {
-		t.Errorf("Error waiting for volume to be active, %s", err)
-	}
+	require.NoErrorf(t, err, "Error waiting for volume to be active: %v", err)
 
 	opts := linodego.VolumeResizeOptions{
 		Size: volume.Size + 1,
@@ -102,17 +98,13 @@ func TestVolume_Resize(t *testing.T) {
 	}
 
 	volume, err = client.WaitForVolumeStatus(ctx, volume.ID, linodego.VolumeActive)
-	if err != nil {
-		t.Errorf("Error waiting for volume to be active: %v", err)
-	}
+	require.NoErrorf(t, err, "Error waiting for volume to be active: %v", err)
 }
 
 func TestVolumes_List_smoke(t *testing.T) {
 	client, volume, teardown, err := setupVolume(t, "fixtures/TestVolume_List")
 	defer teardown()
-	if err != nil {
-		t.Errorf("Error setting up volume test, %s", err)
-	}
+	require.NoErrorf(t, err, "Error setting up volume test, %s", err)
 
 	volumes, err := client.ListVolumes(context.Background(), nil)
 	if err != nil {
@@ -167,9 +159,7 @@ func TestVolume_Get_withEncryption(t *testing.T) {
 	}
 
 	volume, err = client.WaitForVolumeStatus(ctx, volume.ID, linodego.VolumeActive)
-	if err != nil {
-		t.Errorf("Error waiting for volume to be active: %v", err)
-	}
+	require.NoErrorf(t, err, "Error waiting for volume to be active: %v", err)
 
 	returnedVolume, err := client.GetVolume(context.Background(), volume.ID)
 	if err != nil {
@@ -180,9 +170,7 @@ func TestVolume_Get_withEncryption(t *testing.T) {
 	}
 
 	volumes, err := client.ListVolumes(context.Background(), nil)
-	if err != nil {
-		t.Errorf("Error listing volumes, expected struct, got error %v", err)
-	}
+	require.NoErrorf(t, err, "Error listing volumes, expected struct, got error %v", err)
 	found := false
 	for _, v := range volumes {
 		if v.ID == volume.ID {
@@ -310,9 +298,7 @@ func setupVolume(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 	}
 
 	volume, err = client.WaitForVolumeStatus(ctx, volume.ID, linodego.VolumeActive)
-	if err != nil {
-		t.Errorf("Error waiting for volume to be active: %v", err)
-	}
+	require.NoErrorf(t, err, "Error waiting for volume to be active: %v", err)
 
 	teardown := func() {
 		// volumes deleted too fast tend to stick, adding a few seconds to catch up
