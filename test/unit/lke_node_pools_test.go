@@ -74,6 +74,10 @@ func TestLKENodePool_Get(t *testing.T) {
 	assert.Equal(t, 3, nodePool.Count)
 	assert.Equal(t, []string{"tag1", "tag2"}, nodePool.Tags)
 	assert.Equal(t, []linodego.LockType{linodego.LockTypeCannotDelete}, nodePool.Locks)
+	if assert.NotNil(t, nodePool.Isolation) {
+		assert.True(t, nodePool.Isolation.PublicIPv4)
+		assert.False(t, nodePool.Isolation.PublicIPv6)
+	}
 }
 
 func TestLKENodePool_Create(t *testing.T) {
@@ -100,6 +104,10 @@ func TestLKENodePool_Create(t *testing.T) {
 			Max:     5,
 		},
 		Label: &label,
+		Isolation: &linodego.LKENodePoolIsolationCreateOptions{
+			PublicIPv4: Ptr(true),
+			PublicIPv6: Ptr(false),
+		},
 	}
 
 	base.MockPost("lke/clusters/123/pools", fixtureData)
@@ -112,6 +120,10 @@ func TestLKENodePool_Create(t *testing.T) {
 	assert.Equal(t, 1, nodePool.Autoscaler.Min)
 	assert.Equal(t, 5, nodePool.Autoscaler.Max)
 	assert.Equal(t, &label, nodePool.Label)
+	if assert.NotNil(t, nodePool.Isolation) {
+		assert.True(t, nodePool.Isolation.PublicIPv4)
+		assert.False(t, nodePool.Isolation.PublicIPv6)
+	}
 }
 
 func TestLKENodePool_Update(t *testing.T) {
@@ -134,6 +146,10 @@ func TestLKENodePool_Update(t *testing.T) {
 			Max:     8,
 		},
 		Label: &label,
+		Isolation: &linodego.LKENodePoolIsolationUpdateOptions{
+			PublicIPv4: Ptr(false),
+			PublicIPv6: Ptr(true),
+		},
 	}
 
 	base.MockPut("lke/clusters/123/pools/456", fixtureData)
@@ -146,6 +162,10 @@ func TestLKENodePool_Update(t *testing.T) {
 	assert.Equal(t, 2, nodePool.Autoscaler.Min)
 	assert.Equal(t, 8, nodePool.Autoscaler.Max)
 	assert.Equal(t, &label, nodePool.Label)
+	if assert.NotNil(t, nodePool.Isolation) {
+		assert.False(t, nodePool.Isolation.PublicIPv4)
+		assert.True(t, nodePool.Isolation.PublicIPv6)
+	}
 }
 
 func TestLKENodePool_Delete(t *testing.T) {
