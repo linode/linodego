@@ -119,7 +119,6 @@ func TestFirewallRule_Update(t *testing.T) {
 	assert.Equal(t, 1, firewallRule.Version)
 	assert.Equal(t, "997dd135", firewallRule.Fingerprint)
 
-	assert.Equal(t, 1, firewallRule.Version)
 	assert.Equal(t, "DROP", firewallRule.InboundPolicy)
 	assert.Equal(t, 1, len(firewallRule.Inbound))
 	assert.Equal(t, "ACCEPT", firewallRule.Inbound[0].Action)
