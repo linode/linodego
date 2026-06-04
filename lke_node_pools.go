@@ -97,6 +97,7 @@ type LKENodePool struct {
 
 	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitzero"`
 
+	// Isolation may not currently be available to all users.
 	Isolation *LKENodePoolIsolation `json:"isolation"`
 
 	// K8sVersion and UpdateStrategy are only for LKE Enterprise to support node pool upgrades.
@@ -118,9 +119,11 @@ type LKENodePoolCreateOptions struct {
 	Taints []LKENodePoolTaint `json:"taints"`
 	Label  *string            `json:"label,omitzero"`
 
-	Autoscaler *LKENodePoolAutoscaler             `json:"autoscaler,omitzero"`
-	FirewallID *int                               `json:"firewall_id,omitzero"`
-	Isolation  *LKENodePoolIsolationCreateOptions `json:"isolation,omitzero"`
+	Autoscaler *LKENodePoolAutoscaler `json:"autoscaler,omitzero"`
+	FirewallID *int                   `json:"firewall_id,omitzero"`
+
+	// Isolation may not currently be available to all users.
+	Isolation *LKENodePoolIsolationCreateOptions `json:"isolation,omitzero"`
 
 	// K8sVersion and UpdateStrategy only works for LKE Enterprise to support node pool upgrades.
 	// It may not currently be available to all users and is under v4beta.
@@ -143,9 +146,11 @@ type LKENodePoolUpdateOptions struct {
 
 	// K8sVersion and UpdateStrategy only works for LKE Enterprise to support node pool upgrades.
 	// It may not currently be available to all users and is under v4beta.
-	K8sVersion     *string                            `json:"k8s_version,omitzero"`
-	UpdateStrategy *LKENodePoolUpdateStrategy         `json:"update_strategy,omitzero"`
-	Isolation      *LKENodePoolIsolationUpdateOptions `json:"isolation,omitzero"`
+	K8sVersion     *string                    `json:"k8s_version,omitzero"`
+	UpdateStrategy *LKENodePoolUpdateStrategy `json:"update_strategy,omitzero"`
+
+	// Isolation may not currently be available to all users.
+	Isolation *LKENodePoolIsolationUpdateOptions `json:"isolation,omitzero"`
 }
 
 // GetCreateOptions converts a LKENodePool to LKENodePoolCreateOptions for
