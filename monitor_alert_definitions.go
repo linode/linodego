@@ -67,6 +67,7 @@ type AlertDefinition struct {
 	Scope             AlertDefinitionScope    `json:"scope"`
 	Regions           []string                `json:"regions"`
 	Entities          AlertDefinitionEntities `json:"entities"`
+	GroupBy           []string                `json:"group_by"`
 }
 
 // TriggerConditions represents the trigger conditions for an alert.
@@ -167,6 +168,7 @@ type AlertDefinitionCreateOptions struct {
 	Description       *string              `json:"description,omitzero"`
 	Scope             AlertDefinitionScope `json:"scope,omitzero"`
 	Regions           []string             `json:"regions,omitzero"`
+	GroupBy           []string             `json:"group_by,omitzero"`
 }
 
 // AlertDefinitionUpdateOptions are the options used to update an alert definition.
@@ -180,6 +182,21 @@ type AlertDefinitionUpdateOptions struct {
 	Description       *string                `json:"description,omitzero"`
 	Status            *AlertDefinitionStatus `json:"status,omitzero"`
 	Regions           []string               `json:"regions,omitzero"`
+	GroupBy           []string               `json:"group_by,omitzero"`
+}
+
+// AlertDefinitionCloneOptions are the options used to clone an existing alert definition.
+type AlertDefinitionCloneOptions struct {
+	Label             string               `json:"label"`
+	Severity          *int                 `json:"severity,omitzero"`
+	ChannelIDs        []int                `json:"channel_ids,omitzero"`
+	RuleCriteria      *RuleCriteriaOptions `json:"rule_criteria,omitzero"`
+	TriggerConditions *TriggerConditions   `json:"trigger_conditions,omitzero"`
+	EntityIDs         []string             `json:"entity_ids,omitzero"`
+	Description       *string              `json:"description,omitzero"`
+	Scope             AlertDefinitionScope `json:"scope,omitzero"`
+	Regions           []string             `json:"regions,omitzero"`
+	GroupBy           []string             `json:"group_by,omitzero"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
@@ -306,4 +323,15 @@ func (c *Client) ListMonitorAlertDefinitionEntities(
 ) ([]AlertDefinitionEntity, error) {
 	e := formatAPIPath("monitor/services/%s/alert-definitions/%d/entities", serviceType, alertID)
 	return getPaginatedResults[AlertDefinitionEntity](ctx, c, e, opts)
+}
+
+// CloneMonitorAlertDefinition clones an ACLP Monitor Alert Definition.
+func (c *Client) CloneMonitorAlertDefinition(
+	ctx context.Context,
+	serviceType string,
+	alertID int,
+	opts AlertDefinitionCloneOptions,
+) (*AlertDefinition, error) {
+	e := formatAPIPath("monitor/services/%s/alert-definitions/%d/clone", serviceType, alertID)
+	return doPOSTRequest[AlertDefinition](ctx, c, e, opts)
 }
