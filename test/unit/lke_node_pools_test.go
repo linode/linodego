@@ -146,10 +146,6 @@ func TestLKENodePool_Update(t *testing.T) {
 			Max:     8,
 		},
 		Label: &label,
-		Isolation: &linodego.LKENodePoolIsolationUpdateOptions{
-			PublicIPv4: Ptr(false),
-			PublicIPv6: Ptr(true),
-		},
 	}
 
 	base.MockPut("lke/clusters/123/pools/456", fixtureData)
@@ -162,10 +158,6 @@ func TestLKENodePool_Update(t *testing.T) {
 	assert.Equal(t, 2, nodePool.Autoscaler.Min)
 	assert.Equal(t, 8, nodePool.Autoscaler.Max)
 	assert.Equal(t, &label, nodePool.Label)
-	if assert.NotNil(t, nodePool.Isolation) {
-		assert.False(t, nodePool.Isolation.PublicIPv4)
-		assert.True(t, nodePool.Isolation.PublicIPv6)
-	}
 }
 
 func TestLKENodePool_Delete(t *testing.T) {

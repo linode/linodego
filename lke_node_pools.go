@@ -71,12 +71,6 @@ type LKENodePoolIsolationCreateOptions struct {
 	PublicIPv6 *bool `json:"public_ipv6,omitzero"`
 }
 
-// LKENodePoolIsolationUpdateOptions controls network isolation for node pool update requests.
-type LKENodePoolIsolationUpdateOptions struct {
-	PublicIPv4 *bool `json:"public_ipv4,omitzero"`
-	PublicIPv6 *bool `json:"public_ipv6,omitzero"`
-}
-
 // LKENodePoolLabels represents Kubernetes labels to add to an LKENodePool
 type LKENodePoolLabels map[string]string
 
@@ -148,9 +142,6 @@ type LKENodePoolUpdateOptions struct {
 	// It may not currently be available to all users and is under v4beta.
 	K8sVersion     *string                    `json:"k8s_version,omitzero"`
 	UpdateStrategy *LKENodePoolUpdateStrategy `json:"update_strategy,omitzero"`
-
-	// Isolation may not currently be available to all users.
-	Isolation *LKENodePoolIsolationUpdateOptions `json:"isolation,omitzero"`
 }
 
 // GetCreateOptions converts a LKENodePool to LKENodePoolCreateOptions for
@@ -189,13 +180,6 @@ func (l LKENodePool) GetUpdateOptions() (o LKENodePoolUpdateOptions) {
 	o.UpdateStrategy = l.UpdateStrategy
 	o.Label = l.Label
 	o.FirewallID = l.FirewallID
-
-	if l.Isolation != nil {
-		o.Isolation = &LKENodePoolIsolationUpdateOptions{
-			PublicIPv4: Pointer(l.Isolation.PublicIPv4),
-			PublicIPv6: Pointer(l.Isolation.PublicIPv6),
-		}
-	}
 
 	return o
 }
