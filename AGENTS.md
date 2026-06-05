@@ -33,7 +33,8 @@
 - `NewClient` reads `LINODE_URL`, `LINODE_API_VERSION`, `LINODE_CA`, and `LINODE_DEBUG`; `NewClientFromEnv` prefers `LINODE_TOKEN` over config-file profiles.
 
 ## Conventions And Gotchas
-- Many option structs use `json:",omitzero"`; use pointers for fields that must serialize explicit zero values.
+- Optional fields in create or update options structs must use `json:",omitzero"`.
+- Optional fields in create or update options structs must be pointer types so explicit zero values can be serialized when needed.
 - List APIs mutate the supplied `*ListOptions` with `Page`, `Pages`, and `Results`; do not reuse one `ListOptions` across list calls.
 - Use `formatAPIPath` for endpoint paths with user-provided string path segments so path escaping matches the client helpers.
 - CI enforces PR titles like `TPT-1234: Description` unless labels exempt the PR (`dependencies`, `hotfix`, `community-contribution`, `ignore-for-release`).
