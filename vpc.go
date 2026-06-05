@@ -39,7 +39,7 @@ type VPCIPv6Range struct {
 // VPCDefaultRanges represents the default settings for the internal and forbidden IPv4 address ranges in VPCs
 // NOTE: VPCDefaultRanges may not currently be available to all users.
 type VPCDefaultRanges struct {
-	DefaultIPV4Ranges   []string `json:"default_ipv4_ranges"`
+	IPV4Ranges          []string `json:"ipv4_ranges"`
 	ForbiddenIPV4Ranges []string `json:"forbidden_ipv4_ranges"`
 }
 
@@ -95,6 +95,11 @@ func (v VPC) GetCreateOptions() VPCCreateOptions {
 		Description: v.Description,
 		Region:      v.Region,
 		Subnets:     subnetCreations,
+		IPv4: mapSlice(v.IPv4, func(i VPCIPv4Range) VPCCreateOptionsIPv4 {
+			return VPCCreateOptionsIPv4{
+				Range: copyValue(&i.Range),
+			}
+		}),
 		IPv6: mapSlice(v.IPv6, func(i VPCIPv6Range) VPCCreateOptionsIPv6 {
 			return VPCCreateOptionsIPv6{
 				Range: copyValue(&i.Range),
@@ -107,6 +112,11 @@ func (v VPC) GetUpdateOptions() VPCUpdateOptions {
 	return VPCUpdateOptions{
 		Label:       v.Label,
 		Description: v.Description,
+		IPv4: mapSlice(v.IPv4, func(i VPCIPv4Range) VPCUpdateOptionsIPv4 {
+			return VPCUpdateOptionsIPv4{
+				Range: copyValue(&i.Range),
+			}
+		}),
 	}
 }
 
