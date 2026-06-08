@@ -33,6 +33,7 @@ func TestFirewall_List(t *testing.T) {
 	assert.Equal(t, linodego.FirewallStatus("enabled"), firewall.Status)
 
 	assert.Equal(t, "DROP", firewall.Rules.InboundPolicy)
+	assert.Equal(t, 1, firewall.Rules.Version)
 	assert.Len(t, firewall.Rules.Inbound, 1)
 
 	inboundRule := firewall.Rules.Inbound[0]
@@ -120,6 +121,7 @@ func TestFirewall_Create(t *testing.T) {
 	assert.NotNil(t, firewall.Rules)
 	assert.Equal(t, "DROP", firewall.Rules.InboundPolicy)
 	assert.Equal(t, "DROP", firewall.Rules.OutboundPolicy)
+	assert.Equal(t, 1, firewall.Rules.Version)
 
 	assert.Len(t, firewall.Rules.Inbound, 1)
 	inboundRule := firewall.Rules.Inbound[0]
@@ -182,6 +184,7 @@ func TestFirewall_Get(t *testing.T) {
 	assert.NotNil(t, firewall.Rules)
 	assert.Equal(t, "DROP", firewall.Rules.InboundPolicy)
 	assert.Equal(t, "DROP", firewall.Rules.OutboundPolicy)
+	assert.Equal(t, 1, firewall.Rules.Version)
 
 	assert.Len(t, firewall.Rules.Inbound, 1)
 	inboundRule := firewall.Rules.Inbound[0]
@@ -236,6 +239,7 @@ func TestFirewall_Update(t *testing.T) {
 	assert.NotNil(t, firewall.Rules)
 	assert.Equal(t, "DROP", firewall.Rules.InboundPolicy)
 	assert.Equal(t, "DROP", firewall.Rules.OutboundPolicy)
+	assert.Equal(t, 1, firewall.Rules.Version)
 
 	assert.Len(t, firewall.Rules.Inbound, 1)
 	inboundRule := firewall.Rules.Inbound[0]
