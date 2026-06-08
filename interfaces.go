@@ -254,14 +254,14 @@ type RDMAVPCInterfaceUpdateOptions struct {
 	IPv4     RDMAVPCInterfaceIPv4Options `json:"ipv4,omitzero"`
 }
 
-// RDMAVPCInterfaceIPv4CreateOptions specifies IPv4 parameters for an RDMA VPC
+// RDMAVPCInterfaceIPv4Options specifies IPv4 parameters for an RDMA VPC
 // interface.
 // NOTE: RDMA VPC interfaces may not currently be available to all users.
 type RDMAVPCInterfaceIPv4Options struct {
 	Addresses []RDMAVPCInterfaceIPv4AddressOptions `json:"addresses,omitzero"`
 }
 
-// RDMAVPCInterfaceIPv4AddressCreateOptions represents a single IPv4 address
+// RDMAVPCInterfaceIPv4AddressOptions represents a single IPv4 address
 // configuration for an RDMA VPC interface.
 // NOTE: RDMA VPC interfaces may not currently be available to all users.
 type RDMAVPCInterfaceIPv4AddressOptions struct {
