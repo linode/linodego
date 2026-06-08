@@ -15,117 +15,246 @@ interactions:
     method: GET
   response:
     body: '{"data": [{"id": 1, "type": "standard", "service_type": "dbaas", "label":
-      "Resource Usage", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "widgets": [{"metric": "cpu_usage", "unit": "%", "label": "CPU Usage", "color":
-      "default", "size": 12, "chart_type": "area", "y_label": "cpu_usage", "group_by":
-      ["entity_id"], "aggregate_function": "avg"}, {"metric": "memory_usage", "unit":
-      "%", "label": "Memory Usage", "color": "default", "size": 6, "chart_type": "area",
-      "y_label": "memory_usage", "group_by": ["entity_id"], "aggregate_function":
-      "avg"}, {"metric": "available_memory", "unit": "GB", "label": "Available Memory",
-      "color": "default", "size": 6, "chart_type": "area", "y_label": "available_memory",
-      "group_by": ["entity_id"], "aggregate_function": "avg"}, {"metric": "disk_usage",
-      "unit": "%", "label": "Disk Space Usage", "color": "default", "size": 6, "chart_type":
-      "area", "y_label": "disk_usage", "group_by": ["entity_id"], "aggregate_function":
+      "Resource Usage", "group_by": ["entity_id"], "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "widgets": [{"metric": "cpu_usage", "unit":
+      "%", "label": "CPU Usage", "color": "default", "size": 12, "chart_type": "area",
+      "y_label": "cpu_usage", "aggregate_function": "avg"}, {"metric": "memory_usage",
+      "unit": "%", "label": "Memory Usage", "color": "default", "size": 6, "chart_type":
+      "area", "y_label": "memory_usage", "aggregate_function": "avg"}, {"metric":
+      "available_memory", "unit": "GB", "label": "Available Memory", "color": "default",
+      "size": 6, "chart_type": "area", "y_label": "available_memory", "aggregate_function":
+      "avg"}, {"metric": "disk_usage", "unit": "%", "label": "Disk Space Usage", "color":
+      "default", "size": 6, "chart_type": "area", "y_label": "disk_usage", "aggregate_function":
       "avg"}, {"metric": "available_disk", "unit": "GB", "label": "Available Disk
       Space", "color": "default", "size": 6, "chart_type": "area", "y_label": "available_disk",
-      "group_by": ["entity_id"], "aggregate_function": "avg"}, {"metric": "read_iops",
-      "unit": "IOPS", "label": "Disk I/O Read", "color": "default", "size": 6, "chart_type":
-      "area", "y_label": "read_iops", "group_by": ["entity_id"], "aggregate_function":
-      "avg"}, {"metric": "write_iops", "unit": "IOPS", "label": "Disk I/O Write",
-      "color": "default", "size": 6, "chart_type": "area", "y_label": "write_iops",
-      "group_by": ["entity_id"], "aggregate_function": "avg"}]}, {"id": 2, "type":
-      "standard", "service_type": "linode", "label": "Linode Default Statistics",
+      "aggregate_function": "avg"}, {"metric": "read_iops", "unit": "IOPS", "label":
+      "Disk I/O Read", "color": "default", "size": 6, "chart_type": "area", "y_label":
+      "read_iops", "aggregate_function": "avg"}, {"metric": "write_iops", "unit":
+      "IOPS", "label": "Disk I/O Write", "color": "default", "size": 6, "chart_type":
+      "area", "y_label": "write_iops", "aggregate_function": "avg"}]}, {"id": 2, "type":
+      "standard", "service_type": "linode", "label": "Overview", "group_by": ["entity_id"],
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "widgets":
       [{"metric": "vm_cpu_time_total", "unit": "%", "label": "CPU Usage by Instance",
       "color": "default", "size": 12, "chart_type": "area", "y_label": "vm_cpu_time_total",
-      "group_by": ["entity_id"], "aggregate_function": "avg"}, {"metric": "vm_local_disk_iops_total",
-      "unit": "IOPS", "label": "Local Disk I/O by Instance", "color": "default", "size":
-      12, "chart_type": "area", "y_label": "vm_local_disk_iops_total", "group_by":
-      ["entity_id"], "aggregate_function": "avg"}, {"metric": "vm_network_bytes_total",
-      "unit": "Kbps", "label": "Network Traffic In by Instance", "color": "default",
-      "size": 12, "chart_type": "area", "y_label": "vm_network_bytes_total", "group_by":
-      ["entity_id"], "aggregate_function": "avg", "filters": [{"dimension_label":
-      "pattern", "operator": "in", "value": "publicin,privatein"}]}, {"metric": "vm_network_bytes_total",
-      "unit": "Kbps", "label": "Network Traffic Out by Instance", "color": "default",
-      "size": 12, "chart_type": "area", "y_label": "vm_network_bytes_total", "group_by":
-      ["entity_id"], "aggregate_function": "avg", "filters": [{"dimension_label":
+      "aggregate_function": "avg"}, {"metric": "vm_local_disk_iops_total", "unit":
+      "IOPS", "label": "Local Disk I/O by Instance", "color": "default", "size": 12,
+      "chart_type": "area", "y_label": "vm_local_disk_iops_total", "aggregate_function":
+      "avg"}, {"metric": "vm_network_bytes_total", "unit": "Kbps", "label": "Network
+      Traffic In by Instance", "color": "default", "size": 12, "chart_type": "area",
+      "y_label": "vm_network_bytes_total", "aggregate_function": "avg", "filters":
+      [{"dimension_label": "pattern", "operator": "in", "value": "publicin,privatein"}]},
+      {"metric": "vm_network_bytes_total", "unit": "Kbps", "label": "Network Traffic
+      Out by Instance", "color": "default", "size": 12, "chart_type": "area", "y_label":
+      "vm_network_bytes_total", "aggregate_function": "avg", "filters": [{"dimension_label":
       "pattern", "operator": "in", "value": "publicout,privateout"}]}]}, {"id": 3,
-      "type": "standard", "service_type": "nodebalancer", "label": "NodeBalancer",
-      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "widgets":
-      [{"metric": "nb_ingress_traffic_rate", "unit": "Bps", "label": "Ingress Traffic
-      Rate", "color": "default", "size": 12, "chart_type": "line", "y_label": "nb_ingress_traffic_rate",
-      "group_by": ["entity_id"], "aggregate_function": "sum"}, {"metric": "nb_egress_traffic_rate",
+      "type": "standard", "service_type": "nodebalancer", "label": "Traffic Overview",
+      "group_by": ["entity_id"], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
+      "widgets": [{"metric": "nb_ingress_traffic_rate", "unit": "Bps", "label": "Ingress
+      Traffic Rate", "color": "default", "size": 12, "chart_type": "line", "y_label":
+      "nb_ingress_traffic_rate", "aggregate_function": "sum"}, {"metric": "nb_egress_traffic_rate",
       "unit": "Bps", "label": "Egress Traffic Rate", "color": "default", "size": 12,
-      "chart_type": "line", "y_label": "nb_egress_traffic_rate", "group_by": ["entity_id"],
-      "aggregate_function": "sum"}, {"metric": "nb_ingress_tcp_traffic_rate", "unit":
-      "Bps", "label": "Ingress TCP Traffic Rate", "color": "default", "size": 6, "chart_type":
-      "line", "y_label": "nb_ingress_tcp_traffic_rate", "group_by": ["entity_id"],
-      "aggregate_function": "sum"}, {"metric": "nb_egress_tcp_traffic_rate", "unit":
-      "Bps", "label": "Egress TCP Traffic Rate", "color": "default", "size": 6, "chart_type":
-      "line", "y_label": "nb_egress_tcp_traffic_rate", "group_by": ["entity_id"],
-      "aggregate_function": "sum"}, {"metric": "nb_ingress_udp_traffic_rate", "unit":
-      "Bps", "label": "Ingress UDP Traffic Rate", "color": "default", "size": 6, "chart_type":
-      "line", "y_label": "nb_ingress_udp_traffic_rate", "group_by": ["entity_id"],
-      "aggregate_function": "sum"}, {"metric": "nb_egress_udp_traffic_rate", "unit":
-      "Bps", "label": "Egress UDP Traffic Rate", "color": "default", "size": 6, "chart_type":
-      "line", "y_label": "nb_egress_udp_traffic_rate", "group_by": ["entity_id"],
-      "aggregate_function": "sum"}, {"metric": "nb_total_active_sessions", "unit":
-      "Count", "label": "Total Active Sessions", "color": "default", "size": 12, "chart_type":
-      "line", "y_label": "nb_total_active_sessions", "group_by": ["entity_id"], "aggregate_function":
-      "avg"}, {"metric": "nb_active_tcp_sessions", "unit": "Count", "label": "Active
-      TCP Sessions", "color": "default", "size": 6, "chart_type": "line", "y_label":
-      "nb_active_tcp_sessions", "group_by": ["entity_id"], "aggregate_function": "avg"},
-      {"metric": "nb_active_udp_sessions", "unit": "Count", "label": "Active UDP Sessions",
-      "color": "default", "size": 6, "chart_type": "line", "y_label": "nb_active_udp_sessions",
-      "group_by": ["entity_id"], "aggregate_function": "avg"}, {"metric": "nb_new_sessions_per_second",
+      "chart_type": "line", "y_label": "nb_egress_traffic_rate", "aggregate_function":
+      "sum"}, {"metric": "nb_ingress_tcp_traffic_rate", "unit": "Bps", "label": "Ingress
+      TCP Traffic Rate", "color": "default", "size": 6, "chart_type": "line", "y_label":
+      "nb_ingress_tcp_traffic_rate", "aggregate_function": "sum"}, {"metric": "nb_egress_tcp_traffic_rate",
+      "unit": "Bps", "label": "Egress TCP Traffic Rate", "color": "default", "size":
+      6, "chart_type": "line", "y_label": "nb_egress_tcp_traffic_rate", "aggregate_function":
+      "sum"}, {"metric": "nb_ingress_udp_traffic_rate", "unit": "Bps", "label": "Ingress
+      UDP Traffic Rate", "color": "default", "size": 6, "chart_type": "line", "y_label":
+      "nb_ingress_udp_traffic_rate", "aggregate_function": "sum"}, {"metric": "nb_egress_udp_traffic_rate",
+      "unit": "Bps", "label": "Egress UDP Traffic Rate", "color": "default", "size":
+      6, "chart_type": "line", "y_label": "nb_egress_udp_traffic_rate", "aggregate_function":
+      "sum"}, {"metric": "nb_total_active_sessions", "unit": "Count", "label": "Total
+      Active Sessions", "color": "default", "size": 12, "chart_type": "line", "y_label":
+      "nb_total_active_sessions", "aggregate_function": "avg"}, {"metric": "nb_active_tcp_sessions",
+      "unit": "Count", "label": "Active TCP Sessions", "color": "default", "size":
+      6, "chart_type": "line", "y_label": "nb_active_tcp_sessions", "aggregate_function":
+      "avg"}, {"metric": "nb_active_udp_sessions", "unit": "Count", "label": "Active
+      UDP Sessions", "color": "default", "size": 6, "chart_type": "line", "y_label":
+      "nb_active_udp_sessions", "aggregate_function": "avg"}, {"metric": "nb_new_sessions_per_second",
       "unit": "sessions/s", "label": "New Sessions", "color": "default", "size": 12,
-      "chart_type": "line", "y_label": "nb_new_sessions_per_second", "group_by": ["entity_id"],
-      "aggregate_function": "sum"}, {"metric": "nb_new_tcp_sessions_per_second", "unit":
-      "sessions/s", "label": "New TCP Sessions", "color": "default", "size": 6, "chart_type":
-      "line", "y_label": "nb_new_tcp_sessions_per_second", "group_by": ["entity_id"],
-      "aggregate_function": "sum"}, {"metric": "nb_new_udp_sessions_per_second", "unit":
-      "sessions/s", "label": "New UDP Sessions", "color": "default", "size": 6, "chart_type":
-      "line", "y_label": "nb_new_udp_sessions_per_second", "group_by": ["entity_id"],
-      "aggregate_function": "sum"}, {"metric": "nb_active_tcp_backends", "unit": "Count",
-      "label": "Active TCP Backends", "color": "default", "size": 6, "chart_type":
-      "line", "y_label": "nb_active_tcp_backends", "group_by": ["entity_id"], "aggregate_function":
-      "avg"}, {"metric": "nb_active_udp_backends", "unit": "Count", "label": "Active
-      UDP Backends", "color": "default", "size": 6, "chart_type": "line", "y_label":
-      "nb_active_udp_backends", "group_by": ["entity_id"], "aggregate_function": "avg"}]},
-      {"id": 4, "type": "standard", "service_type": "firewall", "label": "Cloud Firewall
-      for Linodes", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "widgets": [{"metric": "fw_active_connections", "unit": "Count", "label": "Current
-      Connections", "color": "default", "size": 12, "chart_type": "line", "y_label":
-      "fw_active_connections", "group_by": ["entity_id", "linode_id", "interface_id"],
+      "chart_type": "line", "y_label": "nb_new_sessions_per_second", "aggregate_function":
+      "sum"}, {"metric": "nb_new_tcp_sessions_per_second", "unit": "sessions/s", "label":
+      "New TCP Sessions", "color": "default", "size": 6, "chart_type": "line", "y_label":
+      "nb_new_tcp_sessions_per_second", "aggregate_function": "sum"}, {"metric": "nb_new_udp_sessions_per_second",
+      "unit": "sessions/s", "label": "New UDP Sessions", "color": "default", "size":
+      6, "chart_type": "line", "y_label": "nb_new_udp_sessions_per_second", "aggregate_function":
+      "sum"}, {"metric": "nb_active_tcp_backends", "unit": "Count", "label": "Active
+      TCP Backends", "color": "default", "size": 6, "chart_type": "line", "y_label":
+      "nb_active_tcp_backends", "aggregate_function": "avg"}, {"metric": "nb_active_udp_backends",
+      "unit": "Count", "label": "Active UDP Backends", "color": "default", "size":
+      6, "chart_type": "line", "y_label": "nb_active_udp_backends", "aggregate_function":
+      "avg"}]}, {"id": 4, "type": "standard", "service_type": "firewall", "label":
+      "Connection Metrics", "group_by": ["entity_id", "linode_id", "interface_id"],
+      "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "widgets":
+      [{"metric": "fw_active_connections", "unit": "Count", "label": "Current Connections",
+      "color": "default", "size": 12, "chart_type": "line", "y_label": "fw_active_connections",
       "aggregate_function": "avg"}, {"metric": "fw_available_connections", "unit":
       "Count", "label": "Available Connections", "color": "default", "size": 12, "chart_type":
-      "line", "y_label": "fw_available_connections", "group_by": ["entity_id", "linode_id",
-      "interface_id"], "aggregate_function": "avg"}, {"metric": "fw_ingress_packets_accepted",
-      "unit": "packets/s", "label": "Ingress Packets Accepted", "color": "default",
-      "size": 12, "chart_type": "line", "y_label": "fw_ingress_packets_accepted",
-      "group_by": ["entity_id", "linode_id", "interface_id"], "aggregate_function":
-      "sum"}, {"metric": "fw_egress_packets_accepted", "unit": "packets/s", "label":
-      "Egress Packets Accepted", "color": "default", "size": 12, "chart_type": "line",
-      "y_label": "fw_egress_packets_accepted", "group_by": ["entity_id", "linode_id",
-      "interface_id"], "aggregate_function": "sum"}, {"metric": "fw_ingress_bytes_accepted",
-      "unit": "Bps", "label": "Ingress Bytes Accepted", "color": "default", "size":
-      12, "chart_type": "line", "y_label": "fw_ingress_bytes_accepted", "group_by":
-      ["entity_id", "linode_id", "interface_id"], "aggregate_function": "sum"}, {"metric":
-      "fw_egress_bytes_accepted", "unit": "Bps", "label": "Egress Bytes Accepted",
-      "color": "default", "size": 12, "chart_type": "line", "y_label": "fw_egress_bytes_accepted",
-      "group_by": ["entity_id", "linode_id", "interface_id"], "aggregate_function":
+      "line", "y_label": "fw_available_connections", "aggregate_function": "avg"},
+      {"metric": "fw_ingress_packets_accepted", "unit": "packets/s", "label": "Ingress
+      Packets Accepted", "color": "default", "size": 12, "chart_type": "line", "y_label":
+      "fw_ingress_packets_accepted", "aggregate_function": "sum"}, {"metric": "fw_egress_packets_accepted",
+      "unit": "packets/s", "label": "Egress Packets Accepted", "color": "default",
+      "size": 12, "chart_type": "line", "y_label": "fw_egress_packets_accepted", "aggregate_function":
+      "sum"}, {"metric": "fw_ingress_bytes_accepted", "unit": "Bps", "label": "Ingress
+      Bytes Accepted", "color": "default", "size": 12, "chart_type": "line", "y_label":
+      "fw_ingress_bytes_accepted", "aggregate_function": "sum"}, {"metric": "fw_egress_bytes_accepted",
+      "unit": "Bps", "label": "Egress Bytes Accepted", "color": "default", "size":
+      12, "chart_type": "line", "y_label": "fw_egress_bytes_accepted", "aggregate_function":
       "sum"}, {"metric": "fw_ingress_packets_dropped", "unit": "packets/s", "label":
       "Ingress Packets Dropped", "color": "default", "size": 12, "chart_type": "line",
-      "y_label": "fw_ingress_packets_dropped", "group_by": ["entity_id", "linode_id",
-      "interface_id"], "aggregate_function": "sum"}, {"metric": "fw_egress_packets_dropped",
-      "unit": "packets/s", "label": "Egress Packets Dropped", "color": "default",
-      "size": 12, "chart_type": "line", "y_label": "fw_egress_packets_dropped", "group_by":
-      ["entity_id", "linode_id", "interface_id"], "aggregate_function": "sum"}, {"metric":
-      "fw_packets_dropped_connection_table_full", "unit": "packets/s", "label": "Packets
-      Dropped Connection Table Full", "color": "default", "size": 12, "chart_type":
-      "line", "y_label": "fw_packets_dropped_connection_table_full", "group_by": ["entity_id",
-      "linode_id", "interface_id"], "aggregate_function": "sum"}]}], "page": 1, "pages":
-      1, "results": 4}'
+      "y_label": "fw_ingress_packets_dropped", "aggregate_function": "sum"}, {"metric":
+      "fw_egress_packets_dropped", "unit": "packets/s", "label": "Egress Packets Dropped",
+      "color": "default", "size": 12, "chart_type": "line", "y_label": "fw_egress_packets_dropped",
+      "aggregate_function": "sum"}, {"metric": "fw_packets_dropped_connection_table_full",
+      "unit": "packets/s", "label": "Packets Dropped Connection Table Full", "color":
+      "default", "size": 12, "chart_type": "line", "y_label": "fw_packets_dropped_connection_table_full",
+      "aggregate_function": "sum"}]}, {"id": 5, "type": "standard", "service_type":
+      "netloadbalancer", "label": "Traffic Overview", "group_by": ["entity_id"], "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "widgets": [{"metric":
+      "nlb_ingress_traffic", "unit": "Bps", "label": "Ingress Traffic Rate", "color":
+      "default", "size": 12, "chart_type": "line", "y_label": "nlb_ingress_traffic",
+      "aggregate_function": "sum"}, {"metric": "nlb_ingress_packets", "unit": "packets/s",
+      "label": "Ingress Packets Rate", "color": "default", "size": 12, "chart_type":
+      "line", "y_label": "nlb_ingress_packets", "aggregate_function": "sum"}, {"metric":
+      "nlb_backend_ingress_traffic", "unit": "Bps", "label": "Ingress Traffic Rate
+      Per Backend Node", "color": "default", "size": 12, "chart_type": "line", "y_label":
+      "nlb_backend_ingress_traffic", "group_by": ["node_id"], "aggregate_function":
+      "sum"}, {"metric": "nlb_backend_ingress_packets", "unit": "packets/s", "label":
+      "Ingress Packets Rate Per Backend Node", "color": "default", "size": 12, "chart_type":
+      "line", "y_label": "nlb_backend_ingress_packets", "group_by": ["node_id"], "aggregate_function":
+      "sum"}, {"metric": "nlb_ingress_tcp_syn_total", "unit": "Count", "label": "Ingress
+      SYN TCP / VIP", "color": "default", "size": 12, "chart_type": "line", "y_label":
+      "nlb_ingress_tcp_syn_total", "aggregate_function": "sum"}, {"metric": "nlb_ingress_tcp_rst_total",
+      "unit": "Count", "label": "Ingress RST TCP / VIP", "color": "default", "size":
+      12, "chart_type": "line", "y_label": "nlb_ingress_tcp_rst_total", "aggregate_function":
+      "sum"}]}, {"id": 6, "type": "standard", "service_type": "objectstorage", "label":
+      "Bucket Activity", "group_by": ["entity_id"], "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "widgets": [{"metric": "obj_bucket_size",
+      "unit": "Bytes", "label": "Content Stored", "color": "default", "size": 6, "chart_type":
+      "line", "y_label": "obj_bucket_size", "aggregate_function": "sum"}, {"metric":
+      "obj_bucket_num_objects", "unit": "Count", "label": "Number of Objects", "color":
+      "default", "size": 6, "chart_type": "line", "y_label": "obj_bucket_num_objects",
+      "aggregate_function": "sum"}, {"metric": "obj_requests_rps", "unit": "Count",
+      "label": "Requests per second", "color": "default", "size": 6, "chart_type":
+      "line", "y_label": "obj_requests_rps", "group_by": ["request_type"], "aggregate_function":
+      "sum"}, {"metric": "obj_ttfb_average", "unit": "ms", "label": "Average Time
+      To First Byte (TTFB)", "color": "default", "size": 6, "chart_type": "line",
+      "y_label": "obj_ttfb_average", "aggregate_function": "avg"}, {"metric": "obj_egress_throughput",
+      "unit": "Bps", "label": "Egress Throughput", "color": "default", "size": 6,
+      "chart_type": "line", "y_label": "obj_egress_throughput", "aggregate_function":
+      "sum"}, {"metric": "obj_ingress_throughput", "unit": "Bps", "label": "Ingress
+      Throughput", "color": "default", "size": 6, "chart_type": "line", "y_label":
+      "obj_ingress_throughput", "aggregate_function": "sum"}, {"metric": "obj_bytes_downloaded",
+      "unit": "Bytes", "label": "Bytes downloaded", "color": "default", "size": 6,
+      "chart_type": "line", "y_label": "obj_bytes_downloaded", "aggregate_function":
+      "sum"}, {"metric": "obj_bytes_uploaded", "unit": "Bytes", "label": "Bytes uploaded",
+      "color": "default", "size": 6, "chart_type": "line", "y_label": "obj_bytes_uploaded",
+      "aggregate_function": "sum"}, {"metric": "obj_requests_num", "unit": "Count",
+      "label": "Total Requests", "color": "default", "size": 6, "chart_type": "line",
+      "y_label": "obj_requests_num", "group_by": ["request_type"], "aggregate_function":
+      "sum"}, {"metric": "obj_responses_num", "unit": "Count", "label": "Total Responses",
+      "color": "default", "size": 6, "chart_type": "line", "y_label": "obj_responses_num",
+      "group_by": ["response_type"], "aggregate_function": "sum"}]}, {"id": 7, "type":
+      "standard", "service_type": "blockstorage", "label": "Storage Performance",
+      "group_by": ["entity_id", "linode_id"], "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "widgets": [{"metric": "volume_read_ops", "unit": "Count",
+      "label": "Volume Read Operations", "color": "default", "size": 6, "chart_type":
+      "line", "y_label": "volume_read_ops", "aggregate_function": "sum"}, {"metric":
+      "volume_write_ops", "unit": "Count", "label": "Volume Write Operations", "color":
+      "default", "size": 6, "chart_type": "line", "y_label": "volume_write_ops", "aggregate_function":
+      "sum"}, {"metric": "volume_read_bytes", "unit": "KB", "label": "Volume Read
+      Bytes", "color": "default", "size": 6, "chart_type": "line", "y_label": "volume_read_bytes",
+      "aggregate_function": "sum"}, {"metric": "volume_write_bytes", "unit": "KB",
+      "label": "Volume Write Bytes", "color": "default", "size": 6, "chart_type":
+      "line", "y_label": "volume_write_bytes", "aggregate_function": "sum"}, {"metric":
+      "volume_read_latency_p50", "unit": "ms", "label": "Volume Read Latency p50",
+      "color": "default", "size": 6, "chart_type": "line", "y_label": "volume_read_latency_p50",
+      "aggregate_function": "avg"}, {"metric": "volume_write_latency_p50", "unit":
+      "ms", "label": "Volume Write Latency p50", "color": "default", "size": 6, "chart_type":
+      "line", "y_label": "volume_write_latency_p50", "aggregate_function": "avg"},
+      {"metric": "volume_read_latency_p90", "unit": "ms", "label": "Volume Read Latency
+      p90", "color": "default", "size": 6, "chart_type": "line", "y_label": "volume_read_latency_p90",
+      "aggregate_function": "avg"}, {"metric": "volume_write_latency_p90", "unit":
+      "ms", "label": "Volume Write Latency p90", "color": "default", "size": 6, "chart_type":
+      "line", "y_label": "volume_write_latency_p90", "aggregate_function": "avg"},
+      {"metric": "volume_read_latency_p95", "unit": "ms", "label": "Volume Read Latency
+      p95", "color": "default", "size": 6, "chart_type": "line", "y_label": "volume_read_latency_p95",
+      "aggregate_function": "avg"}, {"metric": "volume_write_latency_p95", "unit":
+      "ms", "label": "Volume Write Latency p95", "color": "default", "size": 6, "chart_type":
+      "line", "y_label": "volume_write_latency_p95", "aggregate_function": "avg"},
+      {"metric": "volume_read_latency_p99", "unit": "ms", "label": "Volume Read Latency
+      p99", "color": "default", "size": 6, "chart_type": "line", "y_label": "volume_read_latency_p99",
+      "aggregate_function": "avg"}, {"metric": "volume_write_latency_p99", "unit":
+      "ms", "label": "Volume Write Latency p99", "color": "default", "size": 6, "chart_type":
+      "line", "y_label": "volume_write_latency_p99", "aggregate_function": "avg"}]},
+      {"id": 8, "type": "standard", "service_type": "firewall", "label": "Ingress
+      Activity", "group_by": ["entity_id", "nodebalancer_id"], "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "widgets": [{"metric": "nb_ingress_bytes_accepted",
+      "unit": "Bps", "label": "Accepted Bytes", "color": "default", "size": 12, "chart_type":
+      "line", "y_label": "nb_ingress_bytes_accepted", "aggregate_function": "sum"},
+      {"metric": "nb_ingress_bytes_dropped", "unit": "Bps", "label": "Dropped Bytes",
+      "color": "default", "size": 12, "chart_type": "line", "y_label": "nb_ingress_bytes_dropped",
+      "aggregate_function": "sum"}, {"metric": "nb_ingress_packets_accepted", "unit":
+      "packets/s", "label": "Accepted Packets", "color": "default", "size": 12, "chart_type":
+      "line", "y_label": "nb_ingress_packets_accepted", "aggregate_function": "sum"},
+      {"metric": "nb_ingress_packets_dropped", "unit": "packets/s", "label": "Dropped
+      Packets", "color": "default", "size": 12, "chart_type": "line", "y_label": "nb_ingress_packets_dropped",
+      "aggregate_function": "sum"}]}, {"id": 9, "type": "standard", "service_type":
+      "lke", "label": "Cluster status", "group_by": ["entity_id"], "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "widgets": [{"metric": "lke_e_ready_worker_nodes",
+      "unit": "Count", "label": "Ready Worker Nodes", "color": "default", "size":
+      6, "chart_type": "line", "y_label": "lke_e_ready_worker_nodes", "aggregate_function":
+      "max"}, {"metric": "lke_e_not_ready_worker_nodes", "unit": "Count", "label":
+      "Not Ready Worker Nodes", "color": "default", "size": 6, "chart_type": "line",
+      "y_label": "lke_e_not_ready_worker_nodes", "aggregate_function": "max"}, {"metric":
+      "lke_e_apiserver_request_rate", "unit": "rate", "label": "Apiserver request",
+      "color": "default", "size": 6, "chart_type": "line", "y_label": "lke_e_apiserver_request_rate",
+      "aggregate_function": "sum"}, {"metric": "lke_e_apiserver_request_error_rate",
+      "unit": "rate", "label": "Apiserver request error", "color": "default", "size":
+      6, "chart_type": "line", "y_label": "lke_e_apiserver_request_error_rate", "aggregate_function":
+      "sum"}, {"metric": "lke_e_apiserver_availability_percent", "unit": "%", "label":
+      "Apiserver availability", "color": "default", "size": 12, "chart_type": "line",
+      "y_label": "lke_e_apiserver_availability_percent", "aggregate_function": "max"}]},
+      {"id": 10, "type": "standard", "service_type": "objectstorage", "label": "Endpoint
+      Activity", "group_by": ["endpoint"], "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "widgets": [{"metric": "obj_bucket_size", "unit": "Bytes",
+      "label": "Content Stored", "color": "default", "size": 6, "chart_type": "line",
+      "y_label": "obj_bucket_size", "aggregate_function": "sum"}, {"metric": "obj_bucket_num_objects",
+      "unit": "Count", "label": "Number Of Objects", "color": "default", "size": 6,
+      "chart_type": "line", "y_label": "obj_bucket_num_objects", "aggregate_function":
+      "sum"}, {"metric": "obj_requests_rps", "unit": "Count", "label": "Requests per
+      second", "color": "default", "size": 6, "chart_type": "line", "y_label": "obj_requests_rps",
+      "group_by": ["request_type"], "aggregate_function": "sum"}, {"metric": "obj_ttfb_average",
+      "unit": "ms", "label": "Average Time To First Byte (TTFB)", "color": "default",
+      "size": 6, "chart_type": "line", "y_label": "obj_ttfb_average", "aggregate_function":
+      "avg"}, {"metric": "obj_egress_throughput", "unit": "Bps", "label": "Egress
+      Throughput ", "color": "default", "size": 6, "chart_type": "line", "y_label":
+      "obj_egress_throughput", "aggregate_function": "sum"}, {"metric": "obj_ingress_throughput",
+      "unit": "Bps", "label": "Ingress Throughput", "color": "default", "size": 6,
+      "chart_type": "line", "y_label": "obj_ingress_throughput", "aggregate_function":
+      "sum"}, {"metric": "obj_bytes_downloaded", "unit": "Bytes", "label": "Bytes
+      Downloaded", "color": "default", "size": 6, "chart_type": "line", "y_label":
+      "obj_bytes_downloaded", "aggregate_function": "sum"}, {"metric": "obj_bytes_uploaded",
+      "unit": "Bytes", "label": "Bytes Uploaded", "color": "default", "size": 6, "chart_type":
+      "line", "y_label": "obj_bytes_uploaded", "aggregate_function": "sum"}, {"metric":
+      "obj_requests_num", "unit": "Count", "label": "Total Requests", "color": "default",
+      "size": 6, "chart_type": "line", "y_label": "obj_requests_num", "group_by":
+      ["request_type"], "aggregate_function": "sum"}, {"metric": "obj_responses_num",
+      "unit": "Count", "label": "Total Responses", "color": "default", "size": 6,
+      "chart_type": "line", "y_label": "obj_responses_num", "group_by": ["response_type"],
+      "aggregate_function": "sum"}]}, {"id": 11, "type": "standard", "service_type":
+      "logs", "label": "Log Delivery Status", "group_by": ["entity_id"], "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "widgets": [{"metric":
+      "success_upload_count", "unit": "Count", "label": "Successful Uploads", "color":
+      "default", "size": 6, "chart_type": "area", "y_label": "success_upload_count",
+      "aggregate_function": "sum"}, {"metric": "error_upload_count", "unit": "Count",
+      "label": "Failed Uploads", "color": "default", "size": 6, "chart_type": "area",
+      "y_label": "error_upload_count", "aggregate_function": "sum"}, {"metric": "error_upload_rate",
+      "unit": "%", "label": "Error Rate", "color": "default", "size": 12, "chart_type":
+      "area", "y_label": "error_upload_rate", "aggregate_function": "avg"}]}], "page":
+      1, "pages": 1, "results": 11}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -148,7 +277,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 25 Aug 2025 11:12:26 GMT
+      - Wed, 27 May 2026 07:51:52 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -165,10 +294,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
-        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
-        monitor:read_only nodebalancers:read_only object_storage:read_only stackscripts:read_only
-        volumes:read_only
+      - '*'
       X-Ratelimit-Limit:
       - "1840"
       X-Xss-Protection:
@@ -190,25 +316,23 @@ interactions:
     method: GET
   response:
     body: '{"id": 1, "type": "standard", "service_type": "dbaas", "label": "Resource
-      Usage", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "widgets": [{"metric": "cpu_usage", "unit": "%", "label": "CPU Usage", "color":
-      "default", "size": 12, "chart_type": "area", "y_label": "cpu_usage", "group_by":
-      ["entity_id"], "aggregate_function": "avg"}, {"metric": "memory_usage", "unit":
+      Usage", "group_by": ["entity_id"], "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "widgets": [{"metric": "cpu_usage", "unit": "%", "label":
+      "CPU Usage", "color": "default", "size": 12, "chart_type": "area", "y_label":
+      "cpu_usage", "aggregate_function": "avg"}, {"metric": "memory_usage", "unit":
       "%", "label": "Memory Usage", "color": "default", "size": 6, "chart_type": "area",
-      "y_label": "memory_usage", "group_by": ["entity_id"], "aggregate_function":
-      "avg"}, {"metric": "available_memory", "unit": "GB", "label": "Available Memory",
-      "color": "default", "size": 6, "chart_type": "area", "y_label": "available_memory",
-      "group_by": ["entity_id"], "aggregate_function": "avg"}, {"metric": "disk_usage",
-      "unit": "%", "label": "Disk Space Usage", "color": "default", "size": 6, "chart_type":
-      "area", "y_label": "disk_usage", "group_by": ["entity_id"], "aggregate_function":
+      "y_label": "memory_usage", "aggregate_function": "avg"}, {"metric": "available_memory",
+      "unit": "GB", "label": "Available Memory", "color": "default", "size": 6, "chart_type":
+      "area", "y_label": "available_memory", "aggregate_function": "avg"}, {"metric":
+      "disk_usage", "unit": "%", "label": "Disk Space Usage", "color": "default",
+      "size": 6, "chart_type": "area", "y_label": "disk_usage", "aggregate_function":
       "avg"}, {"metric": "available_disk", "unit": "GB", "label": "Available Disk
       Space", "color": "default", "size": 6, "chart_type": "area", "y_label": "available_disk",
-      "group_by": ["entity_id"], "aggregate_function": "avg"}, {"metric": "read_iops",
-      "unit": "IOPS", "label": "Disk I/O Read", "color": "default", "size": 6, "chart_type":
-      "area", "y_label": "read_iops", "group_by": ["entity_id"], "aggregate_function":
-      "avg"}, {"metric": "write_iops", "unit": "IOPS", "label": "Disk I/O Write",
-      "color": "default", "size": 6, "chart_type": "area", "y_label": "write_iops",
-      "group_by": ["entity_id"], "aggregate_function": "avg"}]}'
+      "aggregate_function": "avg"}, {"metric": "read_iops", "unit": "IOPS", "label":
+      "Disk I/O Read", "color": "default", "size": 6, "chart_type": "area", "y_label":
+      "read_iops", "aggregate_function": "avg"}, {"metric": "write_iops", "unit":
+      "IOPS", "label": "Disk I/O Write", "color": "default", "size": 6, "chart_type":
+      "area", "y_label": "write_iops", "aggregate_function": "avg"}]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -231,7 +355,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 25 Aug 2025 11:12:27 GMT
+      - Wed, 27 May 2026 07:51:52 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -248,10 +372,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
-        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
-        monitor:read_only nodebalancers:read_only object_storage:read_only stackscripts:read_only
-        volumes:read_only
+      - '*'
       X-Ratelimit-Limit:
       - "1840"
       X-Xss-Protection:
@@ -273,26 +394,24 @@ interactions:
     method: GET
   response:
     body: '{"data": [{"id": 1, "type": "standard", "service_type": "dbaas", "label":
-      "Resource Usage", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "widgets": [{"metric": "cpu_usage", "unit": "%", "label": "CPU Usage", "color":
-      "default", "size": 12, "chart_type": "area", "y_label": "cpu_usage", "group_by":
-      ["entity_id"], "aggregate_function": "avg"}, {"metric": "memory_usage", "unit":
-      "%", "label": "Memory Usage", "color": "default", "size": 6, "chart_type": "area",
-      "y_label": "memory_usage", "group_by": ["entity_id"], "aggregate_function":
-      "avg"}, {"metric": "available_memory", "unit": "GB", "label": "Available Memory",
-      "color": "default", "size": 6, "chart_type": "area", "y_label": "available_memory",
-      "group_by": ["entity_id"], "aggregate_function": "avg"}, {"metric": "disk_usage",
-      "unit": "%", "label": "Disk Space Usage", "color": "default", "size": 6, "chart_type":
-      "area", "y_label": "disk_usage", "group_by": ["entity_id"], "aggregate_function":
+      "Resource Usage", "group_by": ["entity_id"], "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "widgets": [{"metric": "cpu_usage", "unit":
+      "%", "label": "CPU Usage", "color": "default", "size": 12, "chart_type": "area",
+      "y_label": "cpu_usage", "aggregate_function": "avg"}, {"metric": "memory_usage",
+      "unit": "%", "label": "Memory Usage", "color": "default", "size": 6, "chart_type":
+      "area", "y_label": "memory_usage", "aggregate_function": "avg"}, {"metric":
+      "available_memory", "unit": "GB", "label": "Available Memory", "color": "default",
+      "size": 6, "chart_type": "area", "y_label": "available_memory", "aggregate_function":
+      "avg"}, {"metric": "disk_usage", "unit": "%", "label": "Disk Space Usage", "color":
+      "default", "size": 6, "chart_type": "area", "y_label": "disk_usage", "aggregate_function":
       "avg"}, {"metric": "available_disk", "unit": "GB", "label": "Available Disk
       Space", "color": "default", "size": 6, "chart_type": "area", "y_label": "available_disk",
-      "group_by": ["entity_id"], "aggregate_function": "avg"}, {"metric": "read_iops",
-      "unit": "IOPS", "label": "Disk I/O Read", "color": "default", "size": 6, "chart_type":
-      "area", "y_label": "read_iops", "group_by": ["entity_id"], "aggregate_function":
-      "avg"}, {"metric": "write_iops", "unit": "IOPS", "label": "Disk I/O Write",
-      "color": "default", "size": 6, "chart_type": "area", "y_label": "write_iops",
-      "group_by": ["entity_id"], "aggregate_function": "avg"}]}], "page": 1, "pages":
-      1, "results": 1}'
+      "aggregate_function": "avg"}, {"metric": "read_iops", "unit": "IOPS", "label":
+      "Disk I/O Read", "color": "default", "size": 6, "chart_type": "area", "y_label":
+      "read_iops", "aggregate_function": "avg"}, {"metric": "write_iops", "unit":
+      "IOPS", "label": "Disk I/O Write", "color": "default", "size": 6, "chart_type":
+      "area", "y_label": "write_iops", "aggregate_function": "avg"}]}], "page": 1,
+      "pages": 1, "results": 1}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -315,7 +434,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 25 Aug 2025 11:12:27 GMT
+      - Wed, 27 May 2026 07:51:53 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -332,10 +451,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
-        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
-        monitor:read_only nodebalancers:read_only object_storage:read_only stackscripts:read_only
-        volumes:read_only
+      - '*'
       X-Ratelimit-Limit:
       - "1840"
       X-Xss-Protection:
