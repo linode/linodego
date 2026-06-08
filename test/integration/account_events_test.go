@@ -3,6 +3,7 @@ package integration
 import (
 	"context"
 	"testing"
+	"time"
 
 	"github.com/linode/linodego/v2"
 )
@@ -20,6 +21,9 @@ func TestAccountEvents_List_smoke(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
+
+	// Sometimes it takes a bit longer to create a config
+	time.Sleep(time.Second * 3)
 
 	f := linodego.Filter{}
 	f.AddField(linodego.Eq, "entity.id", instance.ID)
