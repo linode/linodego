@@ -8,11 +8,26 @@ import (
 	"github.com/linode/linodego/internal/parseabletime"
 )
 
+// VPCType represents the type of a VPC.
+type VPCType string
+
+const (
+	// VPCTypeRegular is the default VPC type.
+	VPCTypeRegular VPCType = "regular"
+
+	// VPCTypeRDMA represents a GPUDirect RDMA VPC.
+	// NOTE: RDMA VPCs may not currently be available to all users.
+	VPCTypeRDMA VPCType = "rdma"
+)
+
 type VPC struct {
 	ID          int    `json:"id"`
 	Label       string `json:"label"`
 	Description string `json:"description"`
 	Region      string `json:"region"`
+
+	// NOTE: RDMA VPCs may not currently be available to all users.
+	VPCType VPCType `json:"vpc_type"`
 
 	// NOTE: IPv6 VPCs may not currently be available to all users.
 	IPv6 []VPCIPv6Range `json:"ipv6"`
@@ -32,6 +47,11 @@ type VPCCreateOptions struct {
 	Label       string `json:"label"`
 	Description string `json:"description,omitempty"`
 	Region      string `json:"region"`
+
+	// This field is omitted by the API for customers that do not have
+	// access to the GPUDirect RDMA functionality.
+	// NOTE: RDMA VPCs may not currently be available to all users.
+	VPCType VPCType `json:"vpc_type,omitzero"`
 
 	// NOTE: IPv6 VPCs may not currently be available to all users.
 	IPv6 []VPCCreateOptionsIPv6 `json:"ipv6,omitempty"`
@@ -62,6 +82,7 @@ func (v VPC) GetCreateOptions() VPCCreateOptions {
 		Label:       v.Label,
 		Description: v.Description,
 		Region:      v.Region,
+		VPCType:     v.VPCType,
 		Subnets:     subnetCreations,
 		IPv6: mapSlice(v.IPv6, func(i VPCIPv6Range) VPCCreateOptionsIPv6 {
 			return VPCCreateOptionsIPv6{

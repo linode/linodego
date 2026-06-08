@@ -18,6 +18,11 @@ type LinodeInterface struct {
 	Public       *PublicInterface       `json:"public"`
 	VPC          *VPCInterface          `json:"vpc"`
 	VLAN         *VLANInterface         `json:"vlan"`
+
+	// RDMAVPC contains the configuration for an RDMA VPC interface attached
+	// to a GPUDirect RDMA capable Linode.
+	// NOTE: RDMA VPC interfaces may not currently be available to all users.
+	RDMAVPC *RDMAVPCInterface `json:"rdma_vpc"`
 }
 
 type InterfaceDefaultRoute struct {
@@ -111,6 +116,29 @@ type VLANInterface struct {
 	IPAMAddress *string `json:"ipam_address,omitempty"`
 }
 
+// RDMAVPCInterface contains information about an RDMA VPC interface attached
+// to a GPUDirect RDMA capable Linode.
+// NOTE: RDMA VPC interfaces may not currently be available to all users.
+type RDMAVPCInterface struct {
+	VPCID    int                  `json:"vpc_id"`
+	SubnetID int                  `json:"subnet_id"`
+	IPv4     RDMAVPCInterfaceIPv4 `json:"ipv4"`
+}
+
+// RDMAVPCInterfaceIPv4 contains the IPv4 configuration for an RDMA VPC interface.
+// NOTE: RDMA VPC interfaces may not currently be available to all users.
+type RDMAVPCInterfaceIPv4 struct {
+	Addresses []RDMAVPCInterfaceIPv4Address `json:"addresses"`
+}
+
+// RDMAVPCInterfaceIPv4Address represents a single IPv4 address assigned to an
+// RDMA VPC interface.
+// NOTE: RDMA VPC interfaces may not currently be available to all users.
+type RDMAVPCInterfaceIPv4Address struct {
+	Address string `json:"address"`
+	Primary bool   `json:"primary"`
+}
+
 type LinodeInterfaceCreateOptions struct {
 	FirewallID   *int                          `json:"firewall_id,omitempty"`
 	DefaultRoute *InterfaceDefaultRoute        `json:"default_route,omitempty"`
@@ -119,10 +147,27 @@ type LinodeInterfaceCreateOptions struct {
 	VLAN         *VLANInterface                `json:"vlan,omitempty"`
 }
 
+// LinodeInstanceInterfaceCreateOptions specifies a Linode Interface to be
+// created as part of a Linode creation request with RDMA VPC options available.
+//
+// The standalone interface create endpoint does NOT accept RDMA VPC
+// interfaces and therefore continues to use LinodeInterfaceCreateOptions.
+type LinodeInstanceInterfaceCreateOptions struct {
+	LinodeInterfaceCreateOptions
+
+	// RDMAVPC creates an RDMA VPC interface attached to the new Linode.
+	// Only one of Public, VPC, VLAN or RDMAVPC may be set per interface.
+	// NOTE: RDMA VPC interfaces may not currently be available to all users.
+	RDMAVPC *RDMAVPCInterfaceCreateOptions `json:"rdma_vpc,omitzero"`
+}
+
 type LinodeInterfaceUpdateOptions struct {
 	DefaultRoute *InterfaceDefaultRoute        `json:"default_route,omitempty"`
 	Public       *PublicInterfaceCreateOptions `json:"public,omitempty"`
 	VPC          *VPCInterfaceUpdateOptions    `json:"vpc,omitempty"`
+
+	// NOTE: RDMA VPC interfaces may not currently be available to all users.
+	RDMAVPC *RDMAVPCInterfaceUpdateOptions `json:"rdma_vpc,omitzero"`
 }
 
 type PublicInterfaceCreateOptions struct {
@@ -191,6 +236,37 @@ type VPCInterfaceIPv6RangeCreateOptions struct {
 type VPCInterfaceUpdateOptions struct {
 	IPv4 *VPCInterfaceIPv4CreateOptions `json:"ipv4,omitempty"`
 	IPv6 *VPCInterfaceIPv6CreateOptions `json:"ipv6,omitempty"`
+}
+
+// RDMAVPCInterfaceCreateOptions specifies parameters for creating an RDMA VPC
+// interface as part of a Linode creation.
+// NOTE: RDMA VPC interfaces may not currently be available to all users.
+type RDMAVPCInterfaceCreateOptions struct {
+	SubnetID int                         `json:"subnet_id"`
+	IPv4     RDMAVPCInterfaceIPv4Options `json:"ipv4,omitzero"`
+}
+
+// RDMAVPCInterfaceUpdateOptions specifies the mutable fields of an RDMA VPC
+// interface.
+// NOTE: RDMA VPC interfaces may not currently be available to all users.
+type RDMAVPCInterfaceUpdateOptions struct {
+	SubnetID int                         `json:"subnet_id,omitzero"`
+	IPv4     RDMAVPCInterfaceIPv4Options `json:"ipv4,omitzero"`
+}
+
+// RDMAVPCInterfaceIPv4CreateOptions specifies IPv4 parameters for an RDMA VPC
+// interface.
+// NOTE: RDMA VPC interfaces may not currently be available to all users.
+type RDMAVPCInterfaceIPv4Options struct {
+	Addresses []RDMAVPCInterfaceIPv4AddressOptions `json:"addresses,omitzero"`
+}
+
+// RDMAVPCInterfaceIPv4AddressCreateOptions represents a single IPv4 address
+// configuration for an RDMA VPC interface.
+// NOTE: RDMA VPC interfaces may not currently be available to all users.
+type RDMAVPCInterfaceIPv4AddressOptions struct {
+	Address string `json:"address,omitzero"`
+	Primary bool   `json:"primary,omitzero"`
 }
 
 type LinodeInterfacesUpgrade struct {

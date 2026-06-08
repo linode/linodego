@@ -1,0 +1,92 @@
+{
+    "data": [
+        {
+            "id": 10,
+            "mac_address": "22:00:f2:9e:d3:48",
+            "created": "2026-03-12T09:54:34",
+            "updated": "2026-03-12T09:54:35",
+            "default_route": {
+                "ipv4": false,
+                "ipv6": false
+            },
+            "version": 1,
+            "public": null,
+            "vpc": null,
+            "vlan": null,
+            "rdma_vpc": {
+                "vpc_id": 39,
+                "subnet_id": 1234,
+                "ipv4": {
+                    "addresses": [
+                        {
+                            "address": "10.0.0.1",
+                            "primary": true
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "id": 11,
+            "mac_address": "22:00:f2:9e:d3:49",
+            "created": "2026-03-12T09:54:34",
+            "updated": "2026-03-12T09:54:35",
+            "default_route": {
+                "ipv4": false,
+                "ipv6": false
+            },
+            "version": 1,
+            "public": null,
+            "vpc": null,
+            "vlan": null,
+            "rdma_vpc": {
+                "vpc_id": 39,
+                "subnet_id": 1234,
+                "ipv4": {
+                    "addresses": [
+                        {
+                            "address": "10.0.0.25",
+                            "primary": true
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "id": 12,
+            "mac_address": "22:00:f2:9e:d3:4a",
+            "created": "2026-03-12T09:54:34",
+            "updated": "2026-03-12T09:54:35",
+            "default_route": {
+                "ipv4": true,
+                "ipv6": false
+            },
+            "version": 1,
+            "public": null,
+            "vlan": null,
+            "rdma_vpc": null,
+            "vpc": {
+                "vpc_id": 3,
+                "subnet_id": 4,
+                "ipv4": {
+                    "addresses": [
+                        {
+                            "address": "10.0.0.25",
+                            "primary": true
+                        }
+                    ],
+                    "ranges": []
+                },
+                "ipv6": {
+                    "slaac": [],
+                    "ranges": [],
+                    "is_public": null
+                }
+            }
+        }
+    ],
+    "page": 1,
+    "pages": 1,
+    "results": 3
+}
+

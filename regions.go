@@ -29,6 +29,7 @@ const (
 	CapabilityDistributedPlans                 string = "Distributed Plans"
 	CapabilityEdgePlans                        string = "Edge Plans"
 	CapabilityGPU                              string = "GPU Linodes"
+	CapabilityGPUDirectRDMA                    string = "GPUDirect RDMA"
 	CapabilityKubernetesEnterprise             string = "Kubernetes Enterprise"
 	CapabilityKubernetesEnterpriseBYOVPC       string = "Kubernetes Enterprise BYO VPC"
 	CapabilityKubernetesEnterpriseDualStack    string = "Kubernetes Enterprise Dual Stack"
