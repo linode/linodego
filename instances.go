@@ -190,6 +190,12 @@ type InstanceCreateOptions struct {
 	// NOTE: RDMA VPC interfaces may not currently be available to all users.
 	LinodeInstanceInterfaces []LinodeInstanceInterfaceCreateOptions `json:"-"`
 
+	// LinodeInstanceInterfaces are the Linode Interfaces (including
+	// RDMA VPC interfaces) to create the new instance with.
+	// Conflicts with Interfaces and LinodeInterfaces.
+	// NOTE: RDMA VPC interfaces may not currently be available to all users.
+	LinodeInstanceInterfaces []LinodeInstanceInterfaceCreateOptions `json:"-"`
+
 	// Linode Interfaces to create the new instance with.
 	// Conflicts with Interfaces and LinodeInstanceInterfaces.
 	//
