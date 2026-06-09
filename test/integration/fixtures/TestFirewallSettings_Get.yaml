@@ -14,8 +14,8 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls/settings
     method: GET
   response:
-    body: '{"default_firewall_ids": {"linode": 2630203, "nodebalancer": 1629606, "public_interface":
-      1629606, "vpc_interface": 1629606}}'
+    body: '{"default_firewall_ids": {"linode": null, "nodebalancer": null, "public_interface":
+      null, "vpc_interface": null}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -34,13 +34,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "125"
+      - "113"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 20 Jun 2025 21:00:18 GMT
+      - Tue, 05 May 2026 23:45:26 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -58,7 +58,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

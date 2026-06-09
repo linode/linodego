@@ -1,7 +1,7 @@
 package linodego
 
 import (
-	"encoding/json"
+	"bytes"
 	"errors"
 	"fmt"
 	"io"
@@ -9,8 +9,6 @@ import (
 	"reflect"
 	"slices"
 	"strings"
-
-	"github.com/go-resty/resty/v2"
 )
 
 const (
@@ -49,74 +47,43 @@ type APIError struct {
 	Errors []APIErrorReason `json:"errors"`
 }
 
-// String returns the error reason in a formatted string
-func (r APIErrorReason) String() string {
-	return fmt.Sprintf("[%s] %s", r.Field, r.Reason)
-}
-
-func coupleAPIErrors(r *resty.Response, err error) (*resty.Response, error) {
+//nolint:nestif,unparam
+func coupleAPIErrors(resp *http.Response, err error) (*http.Response, error) {
 	if err != nil {
-		// an error was raised in go code, no need to check the resty Response
 		return nil, NewError(err)
 	}
 
-	if r.Error() == nil {
-		// no error in the resty Response
-		return r, nil
+	if resp == nil {
+		return nil, NewError(fmt.Errorf("response is nil"))
 	}
 
-	// handle the resty Response errors
-
-	// Check that response is of the correct content-type before unmarshalling
-	expectedContentType := r.Request.Header.Get("Accept")
-	responseContentType := r.Header().Get("Content-Type")
-
-	// If the upstream Linode API server being fronted fails to respond to the request,
-	// the http server will respond with a default "Bad Gateway" page with Content-Type
-	// "text/html".
-	if r.StatusCode() == http.StatusBadGateway && responseContentType == "text/html" { //nolint:goconst
-		return nil, Error{Code: http.StatusBadGateway, Message: http.StatusText(http.StatusBadGateway)}
-	}
-
-	if responseContentType != expectedContentType {
-		msg := fmt.Sprintf(
-			"Unexpected Content-Type: Expected: %v, Received: %v\nResponse body: %s",
-			expectedContentType,
-			responseContentType,
-			string(r.Body()),
-		)
-
-		return nil, Error{Code: r.StatusCode(), Message: msg}
-	}
-
-	apiError, ok := r.Error().(*APIError)
-	if !ok || (ok && len(apiError.Errors) == 0) {
-		return r, nil
-	}
-
-	return nil, NewError(r)
-}
-
-//nolint:unused
-func coupleAPIErrorsHTTP(resp *http.Response, err error) (*http.Response, error) {
-	if err != nil {
-		// an error was raised in go code, no need to check the http.Response
-		return nil, NewError(err)
-	}
-
-	if resp == nil || resp.StatusCode < 200 || resp.StatusCode >= 300 {
+	if resp.StatusCode < 200 || resp.StatusCode >= 300 {
 		// Check that response is of the correct content-type before unmarshalling
-		expectedContentType := resp.Request.Header.Get("Accept")
+		expectedContentType := ""
+		if resp.Request != nil && resp.Request.Header != nil {
+			expectedContentType = resp.Request.Header.Get("Accept")
+		}
+
 		responseContentType := resp.Header.Get("Content-Type")
 
 		// If the upstream server fails to respond to the request,
-		// the http server will respond with a default error page with Content-Type "text/html".
-		if resp.StatusCode == http.StatusBadGateway && responseContentType == "text/html" { //nolint:goconst
-			return nil, Error{Code: http.StatusBadGateway, Message: http.StatusText(http.StatusBadGateway)}
+		// the HTTP server will respond with a default error page with Content-Type "text/html".
+		if resp.StatusCode == http.StatusBadGateway && responseContentType == "text/html" {
+			return nil, &Error{Code: http.StatusBadGateway, Message: http.StatusText(http.StatusBadGateway), Response: resp}
 		}
 
 		if responseContentType != expectedContentType {
-			bodyBytes, _ := io.ReadAll(resp.Body)
+			if resp.Body == nil {
+				return nil, NewError(fmt.Errorf("response body is nil"))
+			}
+
+			bodyBytes, readErr := io.ReadAll(resp.Body)
+			if readErr != nil {
+				return nil, NewError(fmt.Errorf("failed to read response body: %w", readErr))
+			}
+
+			resp.Body = io.NopCloser(bytes.NewBuffer(bodyBytes))
+
 			msg := fmt.Sprintf(
 				"Unexpected Content-Type: Expected: %v, Received: %v\nResponse body: %s",
 				expectedContentType,
@@ -124,22 +91,22 @@ func coupleAPIErrorsHTTP(resp *http.Response, err error) (*http.Response, error)
 				string(bodyBytes),
 			)
 
-			return nil, Error{Code: resp.StatusCode, Message: msg}
+			return nil, &Error{Code: resp.StatusCode, Message: msg, Response: resp}
 		}
 
-		var apiError APIError
-		if err := json.NewDecoder(resp.Body).Decode(&apiError); err != nil {
-			return nil, NewError(fmt.Errorf("failed to decode response body: %w", err))
+		// Must check if there is no list of reasons in the error before making a call to NewError
+		apiError, ok := getAPIError(resp)
+		if !ok {
+			return nil, NewError(fmt.Errorf("failed to decode response body"))
 		}
 
 		if len(apiError.Errors) == 0 {
 			return resp, nil
 		}
 
-		return nil, Error{Code: resp.StatusCode, Message: apiError.Errors[0].String()}
+		return nil, NewError(resp)
 	}
 
-	// no error in the http.Response
 	return resp, nil
 }
 
@@ -156,7 +123,7 @@ func (e APIError) Error() string {
 // - ErrorFromString   (1) from a string
 // - ErrorFromError    (2) for an error
 // - ErrorFromStringer (3) for a Stringer
-// - HTTP Status Codes (100-600) for a resty.Response object
+// - HTTP Status Codes (100-600) for a http.Response object
 func NewError(err any) *Error {
 	if err == nil {
 		return nil
@@ -165,17 +132,17 @@ func NewError(err any) *Error {
 	switch e := err.(type) {
 	case *Error:
 		return e
-	case *resty.Response:
-		apiError, ok := e.Error().(*APIError)
+	case *http.Response:
+		apiError, ok := getAPIError(e)
 
 		if !ok {
-			return &Error{Code: ErrorUnsupported, Message: "Unexpected Resty Error Response, no error"}
+			return &Error{Code: ErrorUnsupported, Message: "Unexpected HTTP Error Response, no error"}
 		}
 
 		return &Error{
-			Code:     e.RawResponse.StatusCode,
+			Code:     e.StatusCode,
 			Message:  apiError.Error(),
-			Response: e.RawResponse,
+			Response: e,
 		}
 	case error:
 		return &Error{Code: ErrorFromError, Message: e.Error()}

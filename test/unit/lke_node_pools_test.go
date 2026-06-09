@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/jarcoal/httpmock"
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -73,6 +73,11 @@ func TestLKENodePool_Get(t *testing.T) {
 	assert.Equal(t, "g6-standard-2", nodePool.Type)
 	assert.Equal(t, 3, nodePool.Count)
 	assert.Equal(t, []string{"tag1", "tag2"}, nodePool.Tags)
+	assert.Equal(t, []linodego.LockType{linodego.LockTypeCannotDelete}, nodePool.Locks)
+	if assert.NotNil(t, nodePool.Isolation) {
+		assert.True(t, nodePool.Isolation.PublicIPv4)
+		assert.False(t, nodePool.Isolation.PublicIPv6)
+	}
 }
 
 func TestLKENodePool_Create(t *testing.T) {
@@ -99,6 +104,10 @@ func TestLKENodePool_Create(t *testing.T) {
 			Max:     5,
 		},
 		Label: &label,
+		Isolation: &linodego.LKENodePoolIsolationCreateOptions{
+			PublicIPv4: Ptr(true),
+			PublicIPv6: Ptr(false),
+		},
 	}
 
 	base.MockPost("lke/clusters/123/pools", fixtureData)
@@ -111,6 +120,10 @@ func TestLKENodePool_Create(t *testing.T) {
 	assert.Equal(t, 1, nodePool.Autoscaler.Min)
 	assert.Equal(t, 5, nodePool.Autoscaler.Max)
 	assert.Equal(t, &label, nodePool.Label)
+	if assert.NotNil(t, nodePool.Isolation) {
+		assert.True(t, nodePool.Isolation.PublicIPv4)
+		assert.False(t, nodePool.Isolation.PublicIPv6)
+	}
 }
 
 func TestLKENodePool_Update(t *testing.T) {
@@ -125,7 +138,7 @@ func TestLKENodePool_Update(t *testing.T) {
 
 	updateOptions := linodego.LKENodePoolUpdateOptions{
 		Count:  5,
-		Tags:   &[]string{"updated-tag"},
+		Tags:   []string{"updated-tag"},
 		Labels: Ptr(linodego.LKENodePoolLabels{"env": "prod"}),
 		Autoscaler: &linodego.LKENodePoolAutoscaler{
 			Enabled: true,
@@ -172,7 +185,9 @@ func TestLKENodePool_List(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Len(t, nodePools, 2)
 	assert.Equal(t, 456, nodePools[0].ID)
+	assert.Equal(t, []linodego.LockType{linodego.LockTypeCannotDelete}, nodePools[0].Locks)
 	assert.Equal(t, 789, nodePools[1].ID)
+	assert.Empty(t, nodePools[1].Locks)
 }
 
 func TestLKENodePoolNode_Delete(t *testing.T) {

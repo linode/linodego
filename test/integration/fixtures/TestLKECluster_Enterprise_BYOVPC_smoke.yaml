@@ -14,8 +14,17 @@ interactions:
     url: https://api.linode.com/v4beta/lke/tiers/enterprise/versions?page=1
     method: GET
   response:
-    body: '{"data": [{"id": "v1.31.8+lke5", "tier": "enterprise"}], "page": 1, "pages":
-      1, "results": 1}'
+    body: '{"data": [{"id": "v1.33.6+lke7", "tier": "enterprise"}, {"id": "v1.33.6+lke6",
+      "tier": "enterprise"}, {"id": "v1.32.9+lke4", "tier": "enterprise"}, {"id":
+      "v1.32.9+lke2", "tier": "enterprise"}, {"id": "v1.32.8+lke13", "tier": "enterprise"},
+      {"id": "v1.32.8+lke12", "tier": "enterprise"}, {"id": "v1.32.8+lke10", "tier":
+      "enterprise"}, {"id": "v1.31.9+lke7", "tier": "enterprise"}, {"id": "v1.31.9+lke6",
+      "tier": "enterprise"}, {"id": "v1.31.9+lke5", "tier": "enterprise"}, {"id":
+      "v1.31.8+lke5", "tier": "enterprise"}, {"id": "v1.31.8+lke3", "tier": "enterprise"},
+      {"id": "v1.31.8+lke1", "tier": "enterprise"}, {"id": "v1.31.6+lke3", "tier":
+      "enterprise"}, {"id": "v1.31.6+lke2", "tier": "enterprise"}, {"id": "v1.31.1+lke4",
+      "tier": "enterprise"}, {"id": "v1.31.1+lke1", "tier": "enterprise"}, {"id":
+      "v1.29.4+lke1", "tier": "enterprise"}], "page": 1, "pages": 1, "results": 18}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -33,14 +42,12 @@ interactions:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
-      Content-Length:
-      - "93"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Tue, 19 Aug 2025 16:56:21 GMT
+      - Tue, 02 Jun 2026 10:03:27 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -48,6 +55,7 @@ interactions:
       Vary:
       - Authorization, X-Filter
       - Authorization, X-Filter
+      - Accept-Encoding
       X-Accepted-Oauth-Scopes:
       - lke:read_only
       X-Content-Type-Options:
@@ -63,7 +71,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"],"labels":null,"taints":null}],"label":"go-test-def","region":"no-osl-1","k8s_version":"v1.31.8+lke5","tags":["testing"],"tier":"enterprise","vpc_id":224219,"stack_type":"ipv4-ipv6"}'
+    body: '{"node_pools":[{"count":1,"type":"g6-standard-2","disks":null,"tags":["test"],"labels":null,"taints":null}],"label":"go-test-def","region":"es-mad","k8s_version":"v1.33.6+lke7","tags":["testing"],"tier":"enterprise","vpc_id":505334,"stack_type":"ipv4-ipv6"}'
     form: {}
     headers:
       Accept:
@@ -75,11 +83,12 @@ interactions:
     url: https://api.linode.com/v4beta/lke/clusters
     method: POST
   response:
-    body: '{"id": 508689, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "label": "go-test-def", "region": "no-osl-1", "k8s_version":
-      "v1.31.8+lke5", "tier": "enterprise", "control_plane": {"high_availability":
-      true, "audit_logs_enabled": false}, "apl_enabled": false, "vpc_id": 224219,
-      "subnet_id": null, "tags": ["testing"], "stack_type": "ipv4-ipv6"}'
+    body: '{"id": 611915, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "label": "go-test-def", "region": "es-mad", "k8s_version":
+      "v1.33.6+lke7", "tier": "enterprise", "control_plane": {"high_availability":
+      true, "audit_logs_enabled": false}, "apl_enabled": false, "vpc_id": 505334,
+      "subnet_id": null, "tags": ["testing"], "stack_type": "ipv4-ipv6", "locks":
+      []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -98,13 +107,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "382"
+      - "393"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Tue, 19 Aug 2025 16:56:27 GMT
+      - Tue, 02 Jun 2026 10:03:34 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -137,14 +146,15 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/508689
+    url: https://api.linode.com/v4beta/lke/clusters/611915
     method: GET
   response:
-    body: '{"id": 508689, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "label": "go-test-def", "region": "no-osl-1", "k8s_version":
-      "v1.31.8+lke5", "tier": "enterprise", "control_plane": {"high_availability":
-      true, "audit_logs_enabled": false}, "apl_enabled": false, "vpc_id": 224219,
-      "subnet_id": null, "tags": ["testing"], "stack_type": "ipv4-ipv6"}'
+    body: '{"id": 611915, "status": "ready", "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "label": "go-test-def", "region": "es-mad", "k8s_version":
+      "v1.33.6+lke7", "tier": "enterprise", "control_plane": {"high_availability":
+      true, "audit_logs_enabled": false}, "apl_enabled": false, "vpc_id": 505334,
+      "subnet_id": null, "tags": ["testing"], "stack_type": "ipv4-ipv6", "locks":
+      []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -163,13 +173,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "382"
+      - "393"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Tue, 19 Aug 2025 16:56:27 GMT
+      - Tue, 02 Jun 2026 10:03:34 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -203,7 +213,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/lke/clusters/508689
+    url: https://api.linode.com/v4beta/lke/clusters/611915
     method: DELETE
   response:
     body: '{}'
@@ -231,7 +241,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 19 Aug 2025 16:56:29 GMT
+      - Tue, 02 Jun 2026 10:03:36 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

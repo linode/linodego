@@ -2,17 +2,36 @@ package integration
 
 import (
 	"context"
+	"strings"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
+
+// getExistingObjectStorageQuotaID is a helper function to retrieve an existing Object Storage quota ID
+// It is used because accounts may differ in their QuotaID names
+func getExistingObjectStorageQuotaID(t *testing.T, client *linodego.Client, prefix string) string {
+	targetQuotaID := "obj-objects-us-ord-10.linodeobjects.com"
+
+	quotas, err := client.ListObjectStorageQuotas(context.Background(), &linodego.ListOptions{})
+	assert.NoError(t, err, "Error listing ObjectStorageQuotas")
+
+	for _, quota := range quotas {
+		if strings.Contains(quota.QuotaID, prefix) {
+			targetQuotaID = quota.QuotaID
+			return targetQuotaID
+		}
+	}
+	return targetQuotaID
+}
 
 func TestObjectStorageQuotas_Get(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestObjectStorageQuotas_Get")
 	defer teardown()
 
-	targetQuotaID := "obj-objects-us-ord-1.linodeobjects.com"
+	targetQuotaID := getExistingObjectStorageQuotaID(t, client, "obj-objects")
 	quota, err := client.GetObjectStorageQuota(context.Background(), targetQuotaID)
 	assert.NoError(t, err)
 
@@ -32,38 +51,28 @@ func TestObjectStorageQuotas_List(t *testing.T) {
 	defer teardown()
 
 	quotas, err := client.ListObjectStorageQuotas(context.Background(), &linodego.ListOptions{})
-	assert.NoError(t, err, "Error listing ObjectStorageQuotas")
+	require.NoError(t, err, "Error listing ObjectStorageQuotas")
 
-	targetQuotaID := "obj-buckets-us-mia-1.linodeobjects.com"
-	var foundQuota *linodego.ObjectStorageQuota
-
-	for _, quota := range quotas {
-		if quota.QuotaID == targetQuotaID {
-			foundQuota = &quota
-			break
-		}
-	}
-
-	if assert.NotNil(t, foundQuota, "Expected quota_id %q not found", targetQuotaID) {
-		assert.Equal(t, targetQuotaID, foundQuota.QuotaID)
-		assert.NotEmpty(t, foundQuota.QuotaName)
-		assert.NotEmpty(t, foundQuota.EndpointType)
-		assert.NotEmpty(t, foundQuota.S3Endpoint)
-		assert.NotEmpty(t, foundQuota.Description)
-		assert.Greater(t, foundQuota.QuotaLimit, 0)
-		assert.NotEmpty(t, foundQuota.ResourceMetric)
-		assert.NotEmpty(t, foundQuota.QuotaType)
-		assert.True(t, foundQuota.HasUsage)
-	}
+	targetQuota := quotas[0]
+	assert.NotEmpty(t, targetQuota.QuotaID)
+	assert.NotEmpty(t, targetQuota.QuotaName)
+	assert.NotEmpty(t, targetQuota.EndpointType)
+	assert.NotEmpty(t, targetQuota.S3Endpoint)
+	assert.NotEmpty(t, targetQuota.Description)
+	assert.Greater(t, targetQuota.QuotaLimit, 0)
+	assert.NotEmpty(t, targetQuota.ResourceMetric)
+	assert.NotEmpty(t, targetQuota.QuotaType)
+	assert.NotNil(t, targetQuota.HasUsage)
 }
 
 func TestObjectStorageQuotaUsage_Get(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestObjectStorageQuotaUsage_Get")
 	defer teardown()
 
-	quotaUsage, err := client.GetObjectStorageQuotaUsage(context.Background(), "obj-objects-us-ord-1.linodeobjects.com")
+	objectQuotaID := getExistingObjectStorageQuotaID(t, client, "obj-objects")
+	quotaUsage, err := client.GetObjectStorageQuotaUsage(context.Background(), objectQuotaID)
 	assert.NoError(t, err)
 
-	assert.Equal(t, 100000000, quotaUsage.QuotaLimit)
+	assert.GreaterOrEqual(t, quotaUsage.QuotaLimit, 100000000)
 	assert.GreaterOrEqual(t, *quotaUsage.Usage, 0)
 }

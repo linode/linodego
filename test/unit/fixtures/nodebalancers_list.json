@@ -5,14 +5,21 @@
             "label": "NodeBalancer A",
             "region": "us-east",
             "tags": ["tag1", "tag2"],
-            "locks": ["cannot_delete"]
+            "locks": ["cannot_delete"],
+            "lke_cluster": null
         },
         {
             "id": 456,
             "label": "NodeBalancer B",
             "region": "us-west",
             "tags": ["tag3"],
-            "locks": []
+            "locks": [],
+            "lke_cluster": {
+                "id": 1234,
+                "type": "lkecluster",
+                "label": "test-cluster",
+                "url": "/v4/lke/clusters/1234"
+            }
         }
     ],
     "page": 1,

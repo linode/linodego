@@ -2,10 +2,8 @@ package integration
 
 import (
 	"context"
-	"encoding/json"
 	"testing"
 
-	"github.com/linode/linodego"
 	"github.com/stretchr/testify/require"
 )
 
@@ -13,21 +11,7 @@ func TestMaintenancePolicies_List(t *testing.T) {
 	client, fixtureTeardown := createTestClient(t, "fixtures/TestMaintenancePolicies_List")
 	defer fixtureTeardown()
 
-	resp, err := client.R(context.Background()).Get("maintenance/policies")
-	require.NoError(t, err)
-
-	var result map[string]any
-	err = json.Unmarshal(resp.Body(), &result)
-	require.NoError(t, err)
-
-	dataRaw, ok := result["data"]
-	require.True(t, ok, "Expected 'data' key in response")
-
-	dataJSON, err := json.Marshal(dataRaw)
-	require.NoError(t, err)
-
-	var policies []linodego.MaintenancePolicy
-	err = json.Unmarshal(dataJSON, &policies)
+	policies, err := client.ListMaintenancePolicies(context.Background(), nil)
 	require.NoError(t, err)
 
 	if len(policies) == 0 {

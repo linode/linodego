@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 	"golang.org/x/exp/slices"
 )
@@ -46,7 +46,7 @@ func TestListRegions(t *testing.T) {
 			assert.Greater(t, region.PlacementGroupLimits.MaximumPGsPerCustomer, 0, "Expected MaximumPGsPerCustomer to be greater than 0")
 			assert.Greater(t, region.PlacementGroupLimits.MaximumLinodesPerPG, 0, "Expected MaximumLinodesPerPG to be greater than 0")
 		}
-		assert.Contains(t, region.Capabilities, linodego.CapabilityLinodes, "Expected region to support Linodes")
+		assert.Contains(t, region.Capabilities, string(linodego.CapabilityLinodes), "Expected region to support Linodes")
 		// Test monitors field
 		assert.NotNil(t, region.Monitors.Alerts, "Expected monitors alerts to be initialized")
 		assert.NotNil(t, region.Monitors.Metrics, "Expected monitors metrics to be initialized")
@@ -82,7 +82,7 @@ func TestGetRegion(t *testing.T) {
 		assert.Greater(t, region.PlacementGroupLimits.MaximumPGsPerCustomer, 0, "Expected MaximumPGsPerCustomer to be greater than 0")
 		assert.Greater(t, region.PlacementGroupLimits.MaximumLinodesPerPG, 0, "Expected MaximumLinodesPerPG to be greater than 0")
 	}
-	assert.Contains(t, region.Capabilities, linodego.CapabilityLinodes, "Expected region to support Linodes")
+	assert.Contains(t, region.Capabilities, string(linodego.CapabilityLinodes), "Expected region to support Linodes")
 	// Test monitors field
 	assert.NotNil(t, region.Monitors.Alerts, "Expected monitors alerts to be initialized")
 	assert.NotNil(t, region.Monitors.Metrics, "Expected monitors metrics to be initialized")

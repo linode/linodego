@@ -11,13 +11,618 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/quotas/obj-objects-us-ord-1.linodeobjects.com
+    url: https://api.linode.com/v4beta/object-storage/quotas?page=1
     method: GET
   response:
-    body: '{"quota_id": "obj-objects-us-ord-1.linodeobjects.com", "quota_name": "max_objects",
-      "endpoint_type": "E1", "s3_endpoint": "us-ord-1.linodeobjects.com", "description":
-      "Maximum number of objects this customer is allowed to have on this endpoint",
-      "quota_limit": 100000000, "resource_metric": "object", "quota_type": "obj-objects",
+    body: '{"data": [{"quota_id": "obj-bytes-id-cgk-1.linodeobjects.com", "quota_name":
+      "Total Capacity", "quota_type": "obj-bytes", "endpoint_type": "E1", "s3_endpoint":
+      "id-cgk-1.linodeobjects.com", "description": "Current total capacity per account,
+      per endpoint", "quota_limit": 109951162777600, "resource_metric": "byte", "has_usage":
+      true}, {"quota_id": "obj-objects-id-cgk-1.linodeobjects.com", "quota_name":
+      "Number of Objects", "quota_type": "obj-objects", "endpoint_type": "E1", "s3_endpoint":
+      "id-cgk-1.linodeobjects.com", "description": "Current number of objects per
+      account, per endpoint", "quota_limit": 100000000, "resource_metric": "object",
+      "has_usage": true}, {"quota_id": "obj-buckets-id-cgk-1.linodeobjects.com", "quota_name":
+      "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type": "E1", "s3_endpoint":
+      "id-cgk-1.linodeobjects.com", "description": "Current number of buckets per
+      account, per endpoint", "quota_limit": 1000, "resource_metric": "bucket", "has_usage":
+      true}, {"quota_id": "obj-bytes-in-maa-1.linodeobjects.com", "quota_name": "Total
+      Capacity", "quota_type": "obj-bytes", "endpoint_type": "E1", "s3_endpoint":
+      "in-maa-1.linodeobjects.com", "description": "Current total capacity per account,
+      per endpoint", "quota_limit": 109951162777600, "resource_metric": "byte", "has_usage":
+      true}, {"quota_id": "obj-objects-in-maa-1.linodeobjects.com", "quota_name":
+      "Number of Objects", "quota_type": "obj-objects", "endpoint_type": "E1", "s3_endpoint":
+      "in-maa-1.linodeobjects.com", "description": "Current number of objects per
+      account, per endpoint", "quota_limit": 100000000, "resource_metric": "object",
+      "has_usage": true}, {"quota_id": "obj-buckets-in-maa-1.linodeobjects.com", "quota_name":
+      "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type": "E1", "s3_endpoint":
+      "in-maa-1.linodeobjects.com", "description": "Current number of buckets per
+      account, per endpoint", "quota_limit": 1000, "resource_metric": "bucket", "has_usage":
+      true}, {"quota_id": "obj-bytes-us-southeast-1.linodeobjects.com", "quota_name":
+      "Total Capacity", "quota_type": "obj-bytes", "endpoint_type": "E0", "s3_endpoint":
+      "us-southeast-1.linodeobjects.com", "description": "Current total capacity per
+      account, per endpoint", "quota_limit": 54975581388800, "resource_metric": "byte",
+      "has_usage": true}, {"quota_id": "obj-objects-us-southeast-1.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E0", "s3_endpoint": "us-southeast-1.linodeobjects.com", "description": "Current
+      number of objects per account, per endpoint", "quota_limit": 50000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-us-southeast-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E0", "s3_endpoint": "us-southeast-1.linodeobjects.com", "description": "Current
+      number of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-bytes-us-east-1.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E0", "s3_endpoint": "us-east-1.linodeobjects.com", "description": "Current
+      total capacity per account, per endpoint", "quota_limit": 54975581388800, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-us-east-1.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E0", "s3_endpoint": "us-east-1.linodeobjects.com", "description": "Current
+      number of objects per account, per endpoint", "quota_limit": 50000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-us-east-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E0", "s3_endpoint": "us-east-1.linodeobjects.com", "description": "Current
+      number of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-bytes-au-mel-1.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E2", "s3_endpoint": "au-mel-1.linodeobjects.com", "description": "Current total
+      capacity per account, per endpoint", "quota_limit": 109951162777600, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-au-mel-1.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E2", "s3_endpoint": "au-mel-1.linodeobjects.com", "description": "Current number
+      of objects per account, per endpoint", "quota_limit": 100000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-au-mel-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E2", "s3_endpoint": "au-mel-1.linodeobjects.com", "description": "Current number
+      of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-total-ingress-throughput-au-mel-1.linodeobjects.com",
+      "quota_name": "Ingress Throughput (per endpoint)", "quota_type": "obj-total-ingress-throughput",
+      "endpoint_type": "E2", "s3_endpoint": "au-mel-1.linodeobjects.com", "description":
+      "Current total ingress bandwidth per account, per endpoint", "quota_limit":
+      1250000000, "resource_metric": "byte_per_second", "has_usage": false}, {"quota_id":
+      "obj-total-egress-throughput-au-mel-1.linodeobjects.com", "quota_name": "Egress
+      Throughput (per endpoint)", "quota_type": "obj-total-egress-throughput", "endpoint_type":
+      "E2", "s3_endpoint": "au-mel-1.linodeobjects.com", "description": "Current total
+      egress bandwidth per account, per endpoint", "quota_limit": 1250000000, "resource_metric":
+      "byte_per_second", "has_usage": false}, {"quota_id": "obj-per-ip-ingress-throughput-au-mel-1.linodeobjects.com",
+      "quota_name": "Ingress Throughput (per IP)", "quota_type": "obj-per-ip-ingress-throughput",
+      "endpoint_type": "E2", "s3_endpoint": "au-mel-1.linodeobjects.com", "description":
+      "Current ingress bandwidth per account, per destination IP address", "quota_limit":
+      156250000, "resource_metric": "byte_per_second", "has_usage": false}, {"quota_id":
+      "obj-per-ip-egress-throughput-au-mel-1.linodeobjects.com", "quota_name": "Egress
+      Throughput (per IP)", "quota_type": "obj-per-ip-egress-throughput", "endpoint_type":
+      "E2", "s3_endpoint": "au-mel-1.linodeobjects.com", "description": "Current egress
+      bandwidth per account, per destination IP address", "quota_limit": 250000000,
+      "resource_metric": "byte_per_second", "has_usage": false}, {"quota_id": "obj-bytes-es-mad-1.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E1", "s3_endpoint": "es-mad-1.linodeobjects.com", "description": "Current total
+      capacity per account, per endpoint", "quota_limit": 109951162777600, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-es-mad-1.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E1", "s3_endpoint": "es-mad-1.linodeobjects.com", "description": "Current number
+      of objects per account, per endpoint", "quota_limit": 100000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-es-mad-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E1", "s3_endpoint": "es-mad-1.linodeobjects.com", "description": "Current number
+      of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-bytes-se-sto-1.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E1", "s3_endpoint": "se-sto-1.linodeobjects.com", "description": "Current total
+      capacity per account, per endpoint", "quota_limit": 109951162777600, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-se-sto-1.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E1", "s3_endpoint": "se-sto-1.linodeobjects.com", "description": "Current number
+      of objects per account, per endpoint", "quota_limit": 100000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-se-sto-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E1", "s3_endpoint": "se-sto-1.linodeobjects.com", "description": "Current number
+      of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-bytes-us-lax-4.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E3", "s3_endpoint": "us-lax-4.linodeobjects.com", "description": "Current total
+      capacity per account, per endpoint", "quota_limit": 549755813888000, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-us-lax-4.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E3", "s3_endpoint": "us-lax-4.linodeobjects.com", "description": "Current number
+      of objects per account, per endpoint", "quota_limit": 500000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-us-lax-4.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E3", "s3_endpoint": "us-lax-4.linodeobjects.com", "description": "Current number
+      of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-total-ingress-throughput-us-lax-4.linodeobjects.com",
+      "quota_name": "Ingress Throughput (per endpoint)", "quota_type": "obj-total-ingress-throughput",
+      "endpoint_type": "E3", "s3_endpoint": "us-lax-4.linodeobjects.com", "description":
+      "Current total ingress bandwidth per account, per endpoint", "quota_limit":
+      1250000000, "resource_metric": "byte_per_second", "has_usage": false}, {"quota_id":
+      "obj-total-egress-throughput-us-lax-4.linodeobjects.com", "quota_name": "Egress
+      Throughput (per endpoint)", "quota_type": "obj-total-egress-throughput", "endpoint_type":
+      "E3", "s3_endpoint": "us-lax-4.linodeobjects.com", "description": "Current total
+      egress bandwidth per account, per endpoint", "quota_limit": 1250000000, "resource_metric":
+      "byte_per_second", "has_usage": false}, {"quota_id": "obj-per-ip-ingress-throughput-us-lax-4.linodeobjects.com",
+      "quota_name": "Ingress Throughput (per IP)", "quota_type": "obj-per-ip-ingress-throughput",
+      "endpoint_type": "E3", "s3_endpoint": "us-lax-4.linodeobjects.com", "description":
+      "Current ingress bandwidth per account, per destination IP address", "quota_limit":
+      156250000, "resource_metric": "byte_per_second", "has_usage": false}, {"quota_id":
+      "obj-per-ip-egress-throughput-us-lax-4.linodeobjects.com", "quota_name": "Egress
+      Throughput (per IP)", "quota_type": "obj-per-ip-egress-throughput", "endpoint_type":
+      "E3", "s3_endpoint": "us-lax-4.linodeobjects.com", "description": "Current egress
+      bandwidth per account, per destination IP address", "quota_limit": 250000000,
+      "resource_metric": "byte_per_second", "has_usage": false}, {"quota_id": "obj-bytes-eu-central-1.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E0", "s3_endpoint": "eu-central-1.linodeobjects.com", "description": "Current
+      total capacity per account, per endpoint", "quota_limit": 54975581388800, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-eu-central-1.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E0", "s3_endpoint": "eu-central-1.linodeobjects.com", "description": "Current
+      number of objects per account, per endpoint", "quota_limit": 50000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-eu-central-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E0", "s3_endpoint": "eu-central-1.linodeobjects.com", "description": "Current
+      number of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-bytes-nl-ams-1.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E1", "s3_endpoint": "nl-ams-1.linodeobjects.com", "description": "Current total
+      capacity per account, per endpoint", "quota_limit": 109951162777600, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-nl-ams-1.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E1", "s3_endpoint": "nl-ams-1.linodeobjects.com", "description": "Current number
+      of objects per account, per endpoint", "quota_limit": 100000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-nl-ams-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E1", "s3_endpoint": "nl-ams-1.linodeobjects.com", "description": "Current number
+      of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-bytes-it-mil-1.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E1", "s3_endpoint": "it-mil-1.linodeobjects.com", "description": "Current total
+      capacity per account, per endpoint", "quota_limit": 109951162777600, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-it-mil-1.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E1", "s3_endpoint": "it-mil-1.linodeobjects.com", "description": "Current number
+      of objects per account, per endpoint", "quota_limit": 100000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-it-mil-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E1", "s3_endpoint": "it-mil-1.linodeobjects.com", "description": "Current number
+      of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-bytes-br-gru-1.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E1", "s3_endpoint": "br-gru-1.linodeobjects.com", "description": "Current total
+      capacity per account, per endpoint", "quota_limit": 109951162777600, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-br-gru-1.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E1", "s3_endpoint": "br-gru-1.linodeobjects.com", "description": "Current number
+      of objects per account, per endpoint", "quota_limit": 100000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-br-gru-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E1", "s3_endpoint": "br-gru-1.linodeobjects.com", "description": "Current number
+      of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-bytes-gb-lon-1.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E3", "s3_endpoint": "gb-lon-1.linodeobjects.com", "description": "Current total
+      capacity per account, per endpoint", "quota_limit": 549755813888000, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-gb-lon-1.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E3", "s3_endpoint": "gb-lon-1.linodeobjects.com", "description": "Current number
+      of objects per account, per endpoint", "quota_limit": 500000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-gb-lon-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E3", "s3_endpoint": "gb-lon-1.linodeobjects.com", "description": "Current number
+      of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-total-ingress-throughput-gb-lon-1.linodeobjects.com",
+      "quota_name": "Ingress Throughput (per endpoint)", "quota_type": "obj-total-ingress-throughput",
+      "endpoint_type": "E3", "s3_endpoint": "gb-lon-1.linodeobjects.com", "description":
+      "Current total ingress bandwidth per account, per endpoint", "quota_limit":
+      1250000000, "resource_metric": "byte_per_second", "has_usage": false}, {"quota_id":
+      "obj-total-egress-throughput-gb-lon-1.linodeobjects.com", "quota_name": "Egress
+      Throughput (per endpoint)", "quota_type": "obj-total-egress-throughput", "endpoint_type":
+      "E3", "s3_endpoint": "gb-lon-1.linodeobjects.com", "description": "Current total
+      egress bandwidth per account, per endpoint", "quota_limit": 1250000000, "resource_metric":
+      "byte_per_second", "has_usage": false}, {"quota_id": "obj-per-ip-ingress-throughput-gb-lon-1.linodeobjects.com",
+      "quota_name": "Ingress Throughput (per IP)", "quota_type": "obj-per-ip-ingress-throughput",
+      "endpoint_type": "E3", "s3_endpoint": "gb-lon-1.linodeobjects.com", "description":
+      "Current ingress bandwidth per account, per destination IP address", "quota_limit":
+      156250000, "resource_metric": "byte_per_second", "has_usage": false}, {"quota_id":
+      "obj-per-ip-egress-throughput-gb-lon-1.linodeobjects.com", "quota_name": "Egress
+      Throughput (per IP)", "quota_type": "obj-per-ip-egress-throughput", "endpoint_type":
+      "E3", "s3_endpoint": "gb-lon-1.linodeobjects.com", "description": "Current egress
+      bandwidth per account, per destination IP address", "quota_limit": 250000000,
+      "resource_metric": "byte_per_second", "has_usage": false}, {"quota_id": "obj-bytes-fr-par-1.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E1", "s3_endpoint": "fr-par-1.linodeobjects.com", "description": "Current total
+      capacity per account, per endpoint", "quota_limit": 109951162777600, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-fr-par-1.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E1", "s3_endpoint": "fr-par-1.linodeobjects.com", "description": "Current number
+      of objects per account, per endpoint", "quota_limit": 100000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-fr-par-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E1", "s3_endpoint": "fr-par-1.linodeobjects.com", "description": "Current number
+      of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-bytes-us-sea-1.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E1", "s3_endpoint": "us-sea-1.linodeobjects.com", "description": "Current total
+      capacity per account, per endpoint", "quota_limit": 109951162777600, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-us-sea-1.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E1", "s3_endpoint": "us-sea-1.linodeobjects.com", "description": "Current number
+      of objects per account, per endpoint", "quota_limit": 100000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-us-sea-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E1", "s3_endpoint": "us-sea-1.linodeobjects.com", "description": "Current number
+      of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-bytes-us-ord-1.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E1", "s3_endpoint": "us-ord-1.linodeobjects.com", "description": "Current total
+      capacity per account, per endpoint", "quota_limit": 109951162777600, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-us-ord-1.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E1", "s3_endpoint": "us-ord-1.linodeobjects.com", "description": "Current number
+      of objects per account, per endpoint", "quota_limit": 100000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-us-ord-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E1", "s3_endpoint": "us-ord-1.linodeobjects.com", "description": "Current number
+      of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-bytes-us-mia-1.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E1", "s3_endpoint": "us-mia-1.linodeobjects.com", "description": "Current total
+      capacity per account, per endpoint", "quota_limit": 109951162777600, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-us-mia-1.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E1", "s3_endpoint": "us-mia-1.linodeobjects.com", "description": "Current number
+      of objects per account, per endpoint", "quota_limit": 100000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-us-mia-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E1", "s3_endpoint": "us-mia-1.linodeobjects.com", "description": "Current number
+      of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-bytes-jp-osa-1.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E1", "s3_endpoint": "jp-osa-1.linodeobjects.com", "description": "Current total
+      capacity per account, per endpoint", "quota_limit": 109951162777600, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-jp-osa-1.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E1", "s3_endpoint": "jp-osa-1.linodeobjects.com", "description": "Current number
+      of objects per account, per endpoint", "quota_limit": 100000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-jp-osa-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E1", "s3_endpoint": "jp-osa-1.linodeobjects.com", "description": "Current number
+      of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-bytes-us-iad-1.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E1", "s3_endpoint": "us-iad-1.linodeobjects.com", "description": "Current total
+      capacity per account, per endpoint", "quota_limit": 109951162777600, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-us-iad-1.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E1", "s3_endpoint": "us-iad-1.linodeobjects.com", "description": "Current number
+      of objects per account, per endpoint", "quota_limit": 100000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-us-iad-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E1", "s3_endpoint": "us-iad-1.linodeobjects.com", "description": "Current number
+      of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-bytes-ap-south-1.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E0", "s3_endpoint": "ap-south-1.linodeobjects.com", "description": "Current
+      total capacity per account, per endpoint", "quota_limit": 54975581388800, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-ap-south-1.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E0", "s3_endpoint": "ap-south-1.linodeobjects.com", "description": "Current
+      number of objects per account, per endpoint", "quota_limit": 50000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-ap-south-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E0", "s3_endpoint": "ap-south-1.linodeobjects.com", "description": "Current
+      number of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-bytes-in-bom-1.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E3", "s3_endpoint": "in-bom-1.linodeobjects.com", "description": "Current total
+      capacity per account, per endpoint", "quota_limit": 549755813888000, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-in-bom-1.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E3", "s3_endpoint": "in-bom-1.linodeobjects.com", "description": "Current number
+      of objects per account, per endpoint", "quota_limit": 500000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-in-bom-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E3", "s3_endpoint": "in-bom-1.linodeobjects.com", "description": "Current number
+      of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-total-ingress-throughput-in-bom-1.linodeobjects.com",
+      "quota_name": "Ingress Throughput (per endpoint)", "quota_type": "obj-total-ingress-throughput",
+      "endpoint_type": "E3", "s3_endpoint": "in-bom-1.linodeobjects.com", "description":
+      "Current total ingress bandwidth per account, per endpoint", "quota_limit":
+      1250000000, "resource_metric": "byte_per_second", "has_usage": false}, {"quota_id":
+      "obj-total-egress-throughput-in-bom-1.linodeobjects.com", "quota_name": "Egress
+      Throughput (per endpoint)", "quota_type": "obj-total-egress-throughput", "endpoint_type":
+      "E3", "s3_endpoint": "in-bom-1.linodeobjects.com", "description": "Current total
+      egress bandwidth per account, per endpoint", "quota_limit": 1250000000, "resource_metric":
+      "byte_per_second", "has_usage": false}, {"quota_id": "obj-per-ip-ingress-throughput-in-bom-1.linodeobjects.com",
+      "quota_name": "Ingress Throughput (per IP)", "quota_type": "obj-per-ip-ingress-throughput",
+      "endpoint_type": "E3", "s3_endpoint": "in-bom-1.linodeobjects.com", "description":
+      "Current ingress bandwidth per account, per destination IP address", "quota_limit":
+      156250000, "resource_metric": "byte_per_second", "has_usage": false}, {"quota_id":
+      "obj-per-ip-egress-throughput-in-bom-1.linodeobjects.com", "quota_name": "Egress
+      Throughput (per IP)", "quota_type": "obj-per-ip-egress-throughput", "endpoint_type":
+      "E3", "s3_endpoint": "in-bom-1.linodeobjects.com", "description": "Current egress
+      bandwidth per account, per destination IP address", "quota_limit": 250000000,
+      "resource_metric": "byte_per_second", "has_usage": false}, {"quota_id": "obj-bytes-us-lax-1.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E1", "s3_endpoint": "us-lax-1.linodeobjects.com", "description": "Current total
+      capacity per account, per endpoint", "quota_limit": 109951162777600, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-us-lax-1.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E1", "s3_endpoint": "us-lax-1.linodeobjects.com", "description": "Current number
+      of objects per account, per endpoint", "quota_limit": 100000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-us-lax-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E1", "s3_endpoint": "us-lax-1.linodeobjects.com", "description": "Current number
+      of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-bytes-jp-tyo-1.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E3", "s3_endpoint": "jp-tyo-1.linodeobjects.com", "description": "Current total
+      capacity per account, per endpoint", "quota_limit": 549755813888000, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-jp-tyo-1.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E3", "s3_endpoint": "jp-tyo-1.linodeobjects.com", "description": "Current number
+      of objects per account, per endpoint", "quota_limit": 500000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-jp-tyo-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E3", "s3_endpoint": "jp-tyo-1.linodeobjects.com", "description": "Current number
+      of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-total-ingress-throughput-jp-tyo-1.linodeobjects.com",
+      "quota_name": "Ingress Throughput (per endpoint)", "quota_type": "obj-total-ingress-throughput",
+      "endpoint_type": "E3", "s3_endpoint": "jp-tyo-1.linodeobjects.com", "description":
+      "Current total ingress bandwidth per account, per endpoint", "quota_limit":
+      1250000000, "resource_metric": "byte_per_second", "has_usage": false}, {"quota_id":
+      "obj-total-egress-throughput-jp-tyo-1.linodeobjects.com", "quota_name": "Egress
+      Throughput (per endpoint)", "quota_type": "obj-total-egress-throughput", "endpoint_type":
+      "E3", "s3_endpoint": "jp-tyo-1.linodeobjects.com", "description": "Current total
+      egress bandwidth per account, per endpoint", "quota_limit": 1250000000, "resource_metric":
+      "byte_per_second", "has_usage": false}, {"quota_id": "obj-per-ip-ingress-throughput-jp-tyo-1.linodeobjects.com",
+      "quota_name": "Ingress Throughput (per IP)", "quota_type": "obj-per-ip-ingress-throughput",
+      "endpoint_type": "E3", "s3_endpoint": "jp-tyo-1.linodeobjects.com", "description":
+      "Current ingress bandwidth per account, per destination IP address", "quota_limit":
+      156250000, "resource_metric": "byte_per_second", "has_usage": false}, {"quota_id":
+      "obj-per-ip-egress-throughput-jp-tyo-1.linodeobjects.com", "quota_name": "Egress
+      Throughput (per IP)", "quota_type": "obj-per-ip-egress-throughput", "endpoint_type":
+      "E3", "s3_endpoint": "jp-tyo-1.linodeobjects.com", "description": "Current egress
+      bandwidth per account, per destination IP address", "quota_limit": 250000000,
+      "resource_metric": "byte_per_second", "has_usage": false}, {"quota_id": "obj-bytes-us-sea-9.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E3", "s3_endpoint": "us-sea-9.linodeobjects.com", "description": "Current total
+      capacity per account, per endpoint", "quota_limit": 549755813888000, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-us-sea-9.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E3", "s3_endpoint": "us-sea-9.linodeobjects.com", "description": "Current number
+      of objects per account, per endpoint", "quota_limit": 500000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-us-sea-9.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E3", "s3_endpoint": "us-sea-9.linodeobjects.com", "description": "Current number
+      of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-total-ingress-throughput-us-sea-9.linodeobjects.com",
+      "quota_name": "Ingress Throughput (per endpoint)", "quota_type": "obj-total-ingress-throughput",
+      "endpoint_type": "E3", "s3_endpoint": "us-sea-9.linodeobjects.com", "description":
+      "Current total ingress bandwidth per account, per endpoint", "quota_limit":
+      1250000000, "resource_metric": "byte_per_second", "has_usage": false}, {"quota_id":
+      "obj-total-egress-throughput-us-sea-9.linodeobjects.com", "quota_name": "Egress
+      Throughput (per endpoint)", "quota_type": "obj-total-egress-throughput", "endpoint_type":
+      "E3", "s3_endpoint": "us-sea-9.linodeobjects.com", "description": "Current total
+      egress bandwidth per account, per endpoint", "quota_limit": 1250000000, "resource_metric":
+      "byte_per_second", "has_usage": false}, {"quota_id": "obj-per-ip-ingress-throughput-us-sea-9.linodeobjects.com",
+      "quota_name": "Ingress Throughput (per IP)", "quota_type": "obj-per-ip-ingress-throughput",
+      "endpoint_type": "E3", "s3_endpoint": "us-sea-9.linodeobjects.com", "description":
+      "Current ingress bandwidth per account, per destination IP address", "quota_limit":
+      156250000, "resource_metric": "byte_per_second", "has_usage": false}, {"quota_id":
+      "obj-per-ip-egress-throughput-us-sea-9.linodeobjects.com", "quota_name": "Egress
+      Throughput (per IP)", "quota_type": "obj-per-ip-egress-throughput", "endpoint_type":
+      "E3", "s3_endpoint": "us-sea-9.linodeobjects.com", "description": "Current egress
+      bandwidth per account, per destination IP address", "quota_limit": 250000000,
+      "resource_metric": "byte_per_second", "has_usage": false}, {"quota_id": "obj-bytes-sg-sin-1.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E3", "s3_endpoint": "sg-sin-1.linodeobjects.com", "description": "Current total
+      capacity per account, per endpoint", "quota_limit": 549755813888000, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-sg-sin-1.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E3", "s3_endpoint": "sg-sin-1.linodeobjects.com", "description": "Current number
+      of objects per account, per endpoint", "quota_limit": 500000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-sg-sin-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E3", "s3_endpoint": "sg-sin-1.linodeobjects.com", "description": "Current number
+      of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-total-ingress-throughput-sg-sin-1.linodeobjects.com",
+      "quota_name": "Ingress Throughput (per endpoint)", "quota_type": "obj-total-ingress-throughput",
+      "endpoint_type": "E3", "s3_endpoint": "sg-sin-1.linodeobjects.com", "description":
+      "Current total ingress bandwidth per account, per endpoint", "quota_limit":
+      1250000000, "resource_metric": "byte_per_second", "has_usage": false}], "page":
+      1, "pages": 2, "results": 117}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Wed, 03 Jun 2026 14:01:41 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/quotas?page=2
+    method: GET
+  response:
+    body: '{"data": [{"quota_id": "obj-per-ip-egress-throughput-jp-tyo-1.linodeobjects.com",
+      "quota_name": "Egress Throughput (per IP)", "quota_type": "obj-per-ip-egress-throughput",
+      "endpoint_type": "E3", "s3_endpoint": "jp-tyo-1.linodeobjects.com", "description":
+      "Current egress bandwidth per account, per destination IP address", "quota_limit":
+      250000000, "resource_metric": "byte_per_second", "has_usage": false}, {"quota_id":
+      "obj-bytes-us-ord-1.linodeobjects.com", "quota_name": "Total Capacity", "quota_type":
+      "obj-bytes", "endpoint_type": "E1", "s3_endpoint": "us-ord-1.linodeobjects.com",
+      "description": "Current total capacity per account, per endpoint", "quota_limit":
+      109951162777600, "resource_metric": "byte", "has_usage": true}, {"quota_id":
+      "obj-objects-us-ord-1.linodeobjects.com", "quota_name": "Number of Objects",
+      "quota_type": "obj-objects", "endpoint_type": "E1", "s3_endpoint": "us-ord-1.linodeobjects.com",
+      "description": "Current number of objects per account, per endpoint", "quota_limit":
+      100000000, "resource_metric": "object", "has_usage": true}, {"quota_id": "obj-buckets-us-ord-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E1", "s3_endpoint": "us-ord-1.linodeobjects.com", "description": "Current number
+      of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-bytes-br-gru-1.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E1", "s3_endpoint": "br-gru-1.linodeobjects.com", "description": "Current total
+      capacity per account, per endpoint", "quota_limit": 109951162777600, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-br-gru-1.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E1", "s3_endpoint": "br-gru-1.linodeobjects.com", "description": "Current number
+      of objects per account, per endpoint", "quota_limit": 100000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-br-gru-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E1", "s3_endpoint": "br-gru-1.linodeobjects.com", "description": "Current number
+      of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-bytes-au-mel-1.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E2", "s3_endpoint": "au-mel-1.linodeobjects.com", "description": "Current total
+      capacity per account, per endpoint", "quota_limit": 109951162777600, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-au-mel-1.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E2", "s3_endpoint": "au-mel-1.linodeobjects.com", "description": "Current number
+      of objects per account, per endpoint", "quota_limit": 100000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-au-mel-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E2", "s3_endpoint": "au-mel-1.linodeobjects.com", "description": "Current number
+      of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}, {"quota_id": "obj-total-ingress-throughput-au-mel-1.linodeobjects.com",
+      "quota_name": "Ingress Throughput (per endpoint)", "quota_type": "obj-total-ingress-throughput",
+      "endpoint_type": "E2", "s3_endpoint": "au-mel-1.linodeobjects.com", "description":
+      "Current total ingress bandwidth per account, per endpoint", "quota_limit":
+      1250000000, "resource_metric": "byte_per_second", "has_usage": false}, {"quota_id":
+      "obj-total-egress-throughput-au-mel-1.linodeobjects.com", "quota_name": "Egress
+      Throughput (per endpoint)", "quota_type": "obj-total-egress-throughput", "endpoint_type":
+      "E2", "s3_endpoint": "au-mel-1.linodeobjects.com", "description": "Current total
+      egress bandwidth per account, per endpoint", "quota_limit": 1250000000, "resource_metric":
+      "byte_per_second", "has_usage": false}, {"quota_id": "obj-per-ip-ingress-throughput-au-mel-1.linodeobjects.com",
+      "quota_name": "Ingress Throughput (per IP)", "quota_type": "obj-per-ip-ingress-throughput",
+      "endpoint_type": "E2", "s3_endpoint": "au-mel-1.linodeobjects.com", "description":
+      "Current ingress bandwidth per account, per destination IP address", "quota_limit":
+      156250000, "resource_metric": "byte_per_second", "has_usage": false}, {"quota_id":
+      "obj-per-ip-egress-throughput-au-mel-1.linodeobjects.com", "quota_name": "Egress
+      Throughput (per IP)", "quota_type": "obj-per-ip-egress-throughput", "endpoint_type":
+      "E2", "s3_endpoint": "au-mel-1.linodeobjects.com", "description": "Current egress
+      bandwidth per account, per destination IP address", "quota_limit": 250000000,
+      "resource_metric": "byte_per_second", "has_usage": false}, {"quota_id": "obj-bytes-us-lax-1.linodeobjects.com",
+      "quota_name": "Total Capacity", "quota_type": "obj-bytes", "endpoint_type":
+      "E1", "s3_endpoint": "us-lax-1.linodeobjects.com", "description": "Current total
+      capacity per account, per endpoint", "quota_limit": 109951162777600, "resource_metric":
+      "byte", "has_usage": true}, {"quota_id": "obj-objects-us-lax-1.linodeobjects.com",
+      "quota_name": "Number of Objects", "quota_type": "obj-objects", "endpoint_type":
+      "E1", "s3_endpoint": "us-lax-1.linodeobjects.com", "description": "Current number
+      of objects per account, per endpoint", "quota_limit": 100000000, "resource_metric":
+      "object", "has_usage": true}, {"quota_id": "obj-buckets-us-lax-1.linodeobjects.com",
+      "quota_name": "Number of Buckets", "quota_type": "obj-buckets", "endpoint_type":
+      "E1", "s3_endpoint": "us-lax-1.linodeobjects.com", "description": "Current number
+      of buckets per account, per endpoint", "quota_limit": 1000, "resource_metric":
+      "bucket", "has_usage": true}], "page": 2, "pages": 2, "results": 117}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Wed, 03 Jun 2026 14:01:42 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - object_storage:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/object-storage/quotas/obj-objects-id-cgk-1.linodeobjects.com
+    method: GET
+  response:
+    body: '{"quota_id": "obj-objects-id-cgk-1.linodeobjects.com", "quota_name": "Number
+      of Objects", "quota_type": "obj-objects", "endpoint_type": "E1", "s3_endpoint":
+      "id-cgk-1.linodeobjects.com", "description": "Current number of objects per
+      account, per endpoint", "quota_limit": 100000000, "resource_metric": "object",
       "has_usage": true}'
     headers:
       Access-Control-Allow-Credentials:
@@ -37,13 +642,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "300"
+      - "330"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 24 Apr 2025 17:38:46 GMT
+      - Wed, 03 Jun 2026 14:01:42 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -61,7 +666,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

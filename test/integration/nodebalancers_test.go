@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/require"
 )
 
@@ -201,7 +201,7 @@ func setupNodeBalancer(t *testing.T, fixturesYaml string, nbModifiers []nbModifi
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := linodego.NodeBalancerCreateOptions{
 		Label:              &label,
-		Region:             getRegionsWithCaps(t, client, []string{"NodeBalancers"})[0],
+		Region:             getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityNodeBalancers})[0],
 		ClientConnThrottle: &clientConnThrottle,
 		FirewallID:         GetFirewallID(),
 	}

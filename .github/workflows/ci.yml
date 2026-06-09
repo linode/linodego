@@ -76,7 +76,7 @@ jobs:
           gofumpt -l -w .
 
       - name: Fail if changes
-        run: git diff-index --exit-code HEAD
+        run: git diff --exit-code HEAD
 
   test:
     runs-on: ubuntu-latest

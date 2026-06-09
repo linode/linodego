@@ -31,74 +31,74 @@ interactions:
       Enterprise", "Cloud Firewall", "Vlans", "VPCs", "VPC Dual Stack", "Managed Databases",
       "Metadata", "Premium Plans", "Placement Group", "StackScripts", "NETINT Quadra
       T1U", "Maintenance Policy", "Linode Interfaces", "ACLP Logs Datacenter LKE-E"],
-      "monitors": {"alerts": ["Managed Databases"], "metrics": ["Managed Databases",
-      "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "172.233.128.45,172.233.128.38,172.233.128.53,172.233.128.37,172.233.128.34,172.233.128.36,172.233.128.33,172.233.128.39,172.233.128.43,172.233.128.44",
+      "monitors": {"alerts": ["Managed Databases", "NodeBalancers"], "metrics": ["Managed
+      Databases", "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "172.233.128.45,172.233.128.38,172.233.128.53,172.233.128.37,172.233.128.34,172.233.128.36,172.233.128.33,172.233.128.39,172.233.128.43,172.233.128.44",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "nz-akl-1",
       "label": "Auckland, NZ", "country": "nz", "capabilities": ["Linodes", "Disk
-      Encryption", "Cloud Firewall", "Vlans", "VPCs", "Metadata", "Distributed Plans",
+      Encryption", "Cloud Firewall", "Vlans", "Metadata", "Distributed Plans", "Maintenance
+      Policy"], "monitors": {"alerts": [], "metrics": []}, "status": "ok", "resolvers":
+      {"ipv4": "173.223.100.53,173.223.101.53", "ipv6": "1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 0, "maximum_linodes_per_pg":
+      0, "maximum_linodes_per_flexible_pg": 0}, "site_type": "distributed"}, {"id":
+      "us-den-1", "label": "Denver, CO", "country": "us", "capabilities": ["Linodes",
+      "Disk Encryption", "Cloud Firewall", "Vlans", "Metadata", "Distributed Plans",
       "Maintenance Policy"], "monitors": {"alerts": [], "metrics": []}, "status":
       "ok", "resolvers": {"ipv4": "173.223.100.53,173.223.101.53", "ipv6": "1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 0, "maximum_linodes_per_pg":
       0, "maximum_linodes_per_flexible_pg": 0}, "site_type": "distributed"}, {"id":
-      "us-den-1", "label": "Denver, CO", "country": "us", "capabilities": ["Linodes",
-      "Disk Encryption", "Cloud Firewall", "Vlans", "VPCs", "Metadata", "Distributed
-      Plans", "Maintenance Policy"], "monitors": {"alerts": [], "metrics": []}, "status":
-      "ok", "resolvers": {"ipv4": "173.223.100.53,173.223.101.53", "ipv6": "1234::5678,1234::5678"},
-      "placement_group_limits": {"maximum_pgs_per_customer": 0, "maximum_linodes_per_pg":
-      0, "maximum_linodes_per_flexible_pg": 0}, "site_type": "distributed"}, {"id":
       "de-ham-1", "label": "Hamburg, DE", "country": "de", "capabilities": ["Linodes",
-      "Disk Encryption", "Cloud Firewall", "Vlans", "VPCs", "Metadata", "Distributed
-      Plans", "Maintenance Policy"], "monitors": {"alerts": [], "metrics": []}, "status":
+      "Disk Encryption", "Cloud Firewall", "Vlans", "Metadata", "Distributed Plans",
+      "Maintenance Policy"], "monitors": {"alerts": [], "metrics": []}, "status":
       "ok", "resolvers": {"ipv4": "173.223.100.53,173.223.101.53", "ipv6": "1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 0, "maximum_linodes_per_pg":
       0, "maximum_linodes_per_flexible_pg": 0}, "site_type": "distributed"}, {"id":
       "za-jnb-1", "label": "Johannesburg, ZA", "country": "za", "capabilities": ["Linodes",
-      "Disk Encryption", "Cloud Firewall", "Vlans", "VPCs", "Metadata", "Distributed
-      Plans", "Maintenance Policy"], "monitors": {"alerts": [], "metrics": []}, "status":
+      "Disk Encryption", "Cloud Firewall", "Vlans", "Metadata", "Distributed Plans",
+      "Maintenance Policy"], "monitors": {"alerts": [], "metrics": []}, "status":
       "ok", "resolvers": {"ipv4": "173.223.100.53,173.223.101.53", "ipv6": "1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 0, "maximum_linodes_per_pg":
       0, "maximum_linodes_per_flexible_pg": 0}, "site_type": "distributed"}, {"id":
       "my-kul-1", "label": "Kuala Lumpur, MY", "country": "my", "capabilities": ["Linodes",
-      "Disk Encryption", "Cloud Firewall", "Vlans", "VPCs", "Metadata", "Distributed
-      Plans", "Maintenance Policy"], "monitors": {"alerts": [], "metrics": []}, "status":
+      "Disk Encryption", "Cloud Firewall", "Vlans", "Metadata", "Distributed Plans",
+      "Maintenance Policy"], "monitors": {"alerts": [], "metrics": []}, "status":
       "ok", "resolvers": {"ipv4": "173.223.100.53,173.223.101.53", "ipv6": "1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 0, "maximum_linodes_per_pg":
       0, "maximum_linodes_per_flexible_pg": 0}, "site_type": "distributed"}, {"id":
       "co-bog-1", "label": "Bogot\u00e1, CO", "country": "co", "capabilities": ["Linodes",
-      "Disk Encryption", "Cloud Firewall", "Vlans", "VPCs", "Metadata", "Distributed
-      Plans", "Maintenance Policy"], "monitors": {"alerts": [], "metrics": []}, "status":
+      "Disk Encryption", "Cloud Firewall", "Vlans", "Metadata", "Distributed Plans",
+      "Maintenance Policy"], "monitors": {"alerts": [], "metrics": []}, "status":
       "ok", "resolvers": {"ipv4": "173.223.100.53,173.223.101.53", "ipv6": "1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 0, "maximum_linodes_per_pg":
       0, "maximum_linodes_per_flexible_pg": 0}, "site_type": "distributed"}, {"id":
       "mx-qro-1", "label": "Quer\u00e9taro, MX", "country": "mx", "capabilities":
-      ["Linodes", "Disk Encryption", "Cloud Firewall", "Vlans", "VPCs", "Metadata",
-      "Distributed Plans", "Maintenance Policy"], "monitors": {"alerts": [], "metrics":
-      []}, "status": "ok", "resolvers": {"ipv4": "173.223.100.53,173.223.101.53",
-      "ipv6": "1234::5678,1234::5678"}, "placement_group_limits": {"maximum_pgs_per_customer":
-      0, "maximum_linodes_per_pg": 0, "maximum_linodes_per_flexible_pg": 0}, "site_type":
-      "distributed"}, {"id": "us-hou-1", "label": "Houston, TX", "country": "us",
-      "capabilities": ["Linodes", "Disk Encryption", "Cloud Firewall", "Vlans", "VPCs",
-      "Metadata", "Distributed Plans", "Maintenance Policy"], "monitors": {"alerts":
-      [], "metrics": []}, "status": "ok", "resolvers": {"ipv4": "173.223.100.53,173.223.101.53",
-      "ipv6": "1234::5678,1234::5678"}, "placement_group_limits": {"maximum_pgs_per_customer":
-      0, "maximum_linodes_per_pg": 0, "maximum_linodes_per_flexible_pg": 0}, "site_type":
-      "distributed"}, {"id": "cl-scl-1", "label": "Santiago, CL", "country": "cl",
-      "capabilities": ["Linodes", "Disk Encryption", "Cloud Firewall", "Vlans", "VPCs",
-      "Metadata", "Distributed Plans", "Maintenance Policy"], "monitors": {"alerts":
-      [], "metrics": []}, "status": "ok", "resolvers": {"ipv4": "173.223.100.53,173.223.101.53",
-      "ipv6": "1234::5678,1234::5678"}, "placement_group_limits": {"maximum_pgs_per_customer":
-      0, "maximum_linodes_per_pg": 0, "maximum_linodes_per_flexible_pg": 0}, "site_type":
-      "distributed"}, {"id": "gb-lon", "label": "London 2, UK", "country": "gb", "capabilities":
-      ["Linodes", "Block Storage Encryption", "LA Disk Encryption", "Disk Encryption",
-      "Backups", "NodeBalancers", "Block Storage", "Object Storage", "GPU Linodes",
-      "Kubernetes", "Kubernetes Enterprise", "Cloud Firewall", "Vlans", "VPCs", "VPC
-      Dual Stack", "Managed Databases", "Metadata", "Premium Plans", "Placement Group",
-      "StackScripts", "NETINT Quadra T1U", "Maintenance Policy", "Linode Interfaces",
-      "ACLP Logs Datacenter LKE-E"], "monitors": {"alerts": ["Managed Databases"],
-      "metrics": ["Managed Databases", "NodeBalancers"]}, "status": "ok", "resolvers":
-      {"ipv4": "172.236.0.46,172.236.0.50,172.236.0.47,172.236.0.53,172.236.0.52,172.236.0.45,172.236.0.49,172.236.0.51,172.236.0.54,172.236.0.48",
+      ["Linodes", "Disk Encryption", "Cloud Firewall", "Vlans", "Metadata", "Distributed
+      Plans", "Maintenance Policy"], "monitors": {"alerts": [], "metrics": []}, "status":
+      "ok", "resolvers": {"ipv4": "173.223.100.53,173.223.101.53", "ipv6": "1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 0, "maximum_linodes_per_pg":
+      0, "maximum_linodes_per_flexible_pg": 0}, "site_type": "distributed"}, {"id":
+      "us-hou-1", "label": "Houston, TX", "country": "us", "capabilities": ["Linodes",
+      "Disk Encryption", "Cloud Firewall", "Vlans", "Metadata", "Distributed Plans",
+      "Maintenance Policy"], "monitors": {"alerts": [], "metrics": []}, "status":
+      "ok", "resolvers": {"ipv4": "173.223.100.53,173.223.101.53", "ipv6": "1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 0, "maximum_linodes_per_pg":
+      0, "maximum_linodes_per_flexible_pg": 0}, "site_type": "distributed"}, {"id":
+      "cl-scl-1", "label": "Santiago, CL", "country": "cl", "capabilities": ["Linodes",
+      "Disk Encryption", "Cloud Firewall", "Vlans", "Metadata", "Distributed Plans",
+      "Maintenance Policy"], "monitors": {"alerts": [], "metrics": []}, "status":
+      "ok", "resolvers": {"ipv4": "173.223.100.53,173.223.101.53", "ipv6": "1234::5678,1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": 0, "maximum_linodes_per_pg":
+      0, "maximum_linodes_per_flexible_pg": 0}, "site_type": "distributed"}, {"id":
+      "gb-lon", "label": "London 2, UK", "country": "gb", "capabilities": ["Linodes",
+      "Block Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups",
+      "NodeBalancers", "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes",
+      "Kubernetes Enterprise", "Cloud Firewall", "Vlans", "VPCs", "VPC Dual Stack",
+      "Managed Databases", "Metadata", "Premium Plans", "Placement Group", "StackScripts",
+      "NETINT Quadra T1U", "Maintenance Policy", "Linode Interfaces", "ACLP Logs Datacenter
+      LKE-E"], "monitors": {"alerts": ["Managed Databases", "NodeBalancers"], "metrics":
+      ["Managed Databases", "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4":
+      "172.236.0.46,172.236.0.50,172.236.0.47,172.236.0.53,172.236.0.52,172.236.0.45,172.236.0.49,172.236.0.51,172.236.0.54,172.236.0.48",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "id-cgk",
@@ -107,20 +107,20 @@ interactions:
       "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Kubernetes
       Enterprise", "Cloud Firewall", "Vlans", "VPCs", "VPC Dual Stack", "Managed Databases",
       "Metadata", "Premium Plans", "Placement Group", "StackScripts", "Maintenance
-      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases"],
-      "metrics": ["Managed Databases", "NodeBalancers"]}, "status": "ok", "resolvers":
-      {"ipv4": "172.232.224.23,172.232.224.32,172.232.224.26,172.232.224.27,172.232.224.21,172.232.224.24,172.232.224.22,172.232.224.20,172.232.224.31,172.232.224.28",
+      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases",
+      "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status":
+      "ok", "resolvers": {"ipv4": "172.232.224.23,172.232.224.32,172.232.224.26,172.232.224.27,172.232.224.21,172.232.224.24,172.232.224.22,172.232.224.20,172.232.224.31,172.232.224.28",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "in-bom-2",
       "label": "Mumbai 2, IN", "country": "in", "capabilities": ["Linodes", "Block
       Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
-      "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Kubernetes
-      Enterprise", "Cloud Firewall", "Vlans", "VPCs", "VPC Dual Stack", "Managed Databases",
-      "Metadata", "Premium Plans", "Placement Group", "StackScripts", "Maintenance
-      Policy", "Linode Interfaces", "ACLP Logs Datacenter LKE-E"], "monitors": {"alerts":
-      ["Managed Databases"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status":
-      "ok", "resolvers": {"ipv4": "172.236.171.41,172.236.171.42,172.236.171.25,172.236.171.44,172.236.171.26,172.236.171.45,172.236.171.24,172.236.171.43,172.236.171.27,172.236.171.28",
+      "Block Storage", "GPU Linodes", "Kubernetes", "Kubernetes Enterprise", "Cloud
+      Firewall", "Vlans", "VPCs", "VPC Dual Stack", "Managed Databases", "Metadata",
+      "Premium Plans", "Placement Group", "StackScripts", "Maintenance Policy", "Linode
+      Interfaces", "ACLP Logs Datacenter LKE-E"], "monitors": {"alerts": ["Managed
+      Databases", "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]},
+      "status": "ok", "resolvers": {"ipv4": "172.236.171.41,172.236.171.42,172.236.171.25,172.236.171.44,172.236.171.26,172.236.171.45,172.236.171.24,172.236.171.43,172.236.171.27,172.236.171.28",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "de-fra-2",
@@ -130,8 +130,8 @@ interactions:
       Enterprise", "Cloud Firewall", "Vlans", "VPCs", "VPC Dual Stack", "Managed Databases",
       "Metadata", "Premium Plans", "Placement Group", "StackScripts", "NETINT Quadra
       T1U", "Maintenance Policy", "Linode Interfaces", "ACLP Logs Datacenter LKE-E"],
-      "monitors": {"alerts": ["Managed Databases"], "metrics": ["Managed Databases",
-      "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "172.236.203.9,172.236.203.16,172.236.203.19,172.236.203.15,172.236.203.17,172.236.203.11,172.236.203.18,172.236.203.14,172.236.203.13,172.236.203.12",
+      "monitors": {"alerts": ["Managed Databases", "NodeBalancers"], "metrics": ["Managed
+      Databases", "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "172.236.203.9,172.236.203.16,172.236.203.19,172.236.203.15,172.236.203.17,172.236.203.11,172.236.203.18,172.236.203.14,172.236.203.13,172.236.203.12",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "sg-sin-2",
@@ -141,8 +141,8 @@ interactions:
       Enterprise", "Cloud Firewall", "Vlans", "VPCs", "VPC Dual Stack", "Managed Databases",
       "Metadata", "Premium Plans", "Placement Group", "StackScripts", "Maintenance
       Policy", "Linode Interfaces", "ACLP Logs Datacenter LKE-E"], "monitors": {"alerts":
-      ["Managed Databases"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status":
-      "ok", "resolvers": {"ipv4": "172.236.129.8,172.236.129.42,172.236.129.41,172.236.129.19,172.236.129.46,172.236.129.23,172.236.129.48,172.236.129.20,172.236.129.21,172.236.129.47",
+      ["Managed Databases", "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]},
+      "status": "ok", "resolvers": {"ipv4": "172.236.129.8,172.236.129.42,172.236.129.41,172.236.129.19,172.236.129.46,172.236.129.23,172.236.129.48,172.236.129.20,172.236.129.21,172.236.129.47",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "jp-tyo-3",
@@ -152,15 +152,15 @@ interactions:
       Enterprise", "Cloud Firewall", "Vlans", "VPCs", "VPC Dual Stack", "Managed Databases",
       "Metadata", "Premium Plans", "Placement Group", "StackScripts", "Maintenance
       Policy", "Linode Interfaces", "ACLP Logs Datacenter LKE-E"], "monitors": {"alerts":
-      ["Managed Databases"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status":
-      "ok", "resolvers": {"ipv4": "172.237.4.15,172.237.4.19,172.237.4.17,172.237.4.21,172.237.4.16,172.237.4.18,172.237.4.23,172.237.4.24,172.237.4.20,172.237.4.14",
+      ["Managed Databases", "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]},
+      "status": "ok", "resolvers": {"ipv4": "172.237.4.15,172.237.4.19,172.237.4.17,172.237.4.21,172.237.4.16,172.237.4.18,172.237.4.23,172.237.4.24,172.237.4.20,172.237.4.14",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "de-ber-1",
       "label": "Berlin, DE", "country": "de", "capabilities": ["Linodes", "Disk Encryption",
-      "Cloud Firewall", "Vlans", "VPCs", "Metadata", "Distributed Plans", "Maintenance
-      Policy"], "monitors": {"alerts": [], "metrics": []}, "status": "ok", "resolvers":
-      {"ipv4": "173.223.100.53,173.223.101.53", "ipv6": "1234::5678,1234::5678"},
+      "Cloud Firewall", "Vlans", "Metadata", "Distributed Plans", "Maintenance Policy"],
+      "monitors": {"alerts": [], "metrics": []}, "status": "ok", "resolvers": {"ipv4":
+      "173.223.100.53,173.223.101.53", "ipv6": "1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 0, "maximum_linodes_per_pg":
       0, "maximum_linodes_per_flexible_pg": 0}, "site_type": "distributed"}, {"id":
       "no-osl-1", "label": "Oslo, NO", "country": "no", "capabilities": ["Linodes",
@@ -179,31 +179,37 @@ interactions:
       "Object Storage", "Kubernetes", "Kubernetes Enterprise", "Cloud Firewall", "Vlans",
       "VPCs", "VPC Dual Stack", "Managed Databases", "Metadata", "Premium Plans",
       "Placement Group", "StackScripts", "Maintenance Policy", "Linode Interfaces"],
-      "monitors": {"alerts": ["Managed Databases"], "metrics": ["Managed Databases",
-      "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "172.239.142.102,172.239.142.89,172.239.142.92,172.239.142.87,172.239.142.88,172.239.142.103,172.239.142.91,172.239.142.90,172.239.142.86,172.239.142.100",
+      "monitors": {"alerts": ["Managed Databases", "NodeBalancers"], "metrics": ["Managed
+      Databases", "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "172.239.142.102,172.239.142.89,172.239.142.92,172.239.142.87,172.239.142.88,172.239.142.103,172.239.142.91,172.239.142.90,172.239.142.86,172.239.142.100",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "fr-par-2",
       "label": "Paris 2, FR", "country": "fr", "capabilities": ["Linodes", "Block
       Storage Encryption", "Disk Encryption", "Backups", "NodeBalancers", "Block Storage",
-      "Object Storage", "GPU Linodes", "Kubernetes", "Kubernetes Enterprise", "Cloud
-      Firewall", "Vlans", "VPCs", "VPC Dual Stack", "Managed Databases", "Metadata",
-      "Premium Plans", "Placement Group", "StackScripts", "Maintenance Policy", "Linode
-      Interfaces", "ACLP Logs Datacenter LKE-E"], "monitors": {"alerts": ["Managed
-      Databases"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status": "ok",
-      "resolvers": {"ipv4": "172.239.11.24,172.239.11.22,172.239.11.17,172.239.11.20,172.239.11.23,172.239.11.19,172.239.11.21,172.239.11.15,172.239.11.16,172.239.11.18",
+      "GPU Linodes", "Kubernetes", "Kubernetes Enterprise", "Cloud Firewall", "Vlans",
+      "VPCs", "VPC Dual Stack", "Managed Databases", "Metadata", "Premium Plans",
+      "Placement Group", "StackScripts", "Maintenance Policy", "Linode Interfaces",
+      "ACLP Logs Datacenter LKE-E"], "monitors": {"alerts": ["Managed Databases",
+      "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status":
+      "ok", "resolvers": {"ipv4": "172.239.11.24,172.239.11.22,172.239.11.17,172.239.11.20,172.239.11.23,172.239.11.19,172.239.11.21,172.239.11.15,172.239.11.16,172.239.11.18",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "us-rno-1",
+      "label": "Reno, NV", "country": "us", "capabilities": ["Linodes", "Disk Encryption",
+      "Backups", "NodeBalancers", "GPU Linodes", "Metadata", "Premium Plans", "Placement
+      Group", "StackScripts", "Maintenance Policy"], "monitors": {"alerts": ["NodeBalancers"],
+      "metrics": ["NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "", "ipv6":
+      ""}, "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "co-bog-2",
       "label": "Bogot\u00e1 2, CO", "country": "co", "capabilities": ["Linodes", "Disk
-      Encryption", "Cloud Firewall", "Vlans", "VPCs", "Metadata", "Distributed Plans",
-      "Maintenance Policy"], "monitors": {"alerts": [], "metrics": []}, "status":
-      "ok", "resolvers": {"ipv4": "173.223.100.53,173.223.101.53", "ipv6": "1234::5678,1234::5678"},
+      Encryption", "Cloud Firewall", "Vlans", "Metadata", "Distributed Plans", "Maintenance
+      Policy"], "monitors": {"alerts": [], "metrics": []}, "status": "ok", "resolvers":
+      {"ipv4": "173.223.100.53,173.223.101.53", "ipv6": "1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 0, "maximum_linodes_per_pg":
       0, "maximum_linodes_per_flexible_pg": 0}, "site_type": "distributed"}, {"id":
       "fr-mrs-2", "label": "Marseille 2, FR", "country": "fr", "capabilities": ["Linodes",
-      "Disk Encryption", "Cloud Firewall", "Vlans", "VPCs", "Metadata", "Distributed
-      Plans", "Maintenance Policy"], "monitors": {"alerts": [], "metrics": []}, "status":
+      "Disk Encryption", "Cloud Firewall", "Vlans", "Metadata", "Distributed Plans",
+      "Maintenance Policy"], "monitors": {"alerts": [], "metrics": []}, "status":
       "ok", "resolvers": {"ipv4": "173.223.100.53,173.223.101.53", "ipv6": "1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 0, "maximum_linodes_per_pg":
       0, "maximum_linodes_per_flexible_pg": 0}, "site_type": "distributed"}, {"id":
@@ -213,8 +219,8 @@ interactions:
       "Kubernetes Enterprise", "Cloud Firewall", "Vlans", "VPCs", "VPC Dual Stack",
       "Managed Databases", "Metadata", "Premium Plans", "Placement Group", "StackScripts",
       "NETINT Quadra T1U", "Maintenance Policy", "Linode Interfaces"], "monitors":
-      {"alerts": ["Managed Databases"], "metrics": ["Managed Databases", "NodeBalancers"]},
-      "status": "ok", "resolvers": {"ipv4": "172.233.160.34,172.233.160.27,172.233.160.30,172.233.160.29,172.233.160.32,172.233.160.28,172.233.160.33,172.233.160.26,172.233.160.25,172.233.160.31",
+      {"alerts": ["Managed Databases", "NodeBalancers"], "metrics": ["Managed Databases",
+      "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "172.233.160.34,172.233.160.27,172.233.160.30,172.233.160.29,172.233.160.32,172.233.160.28,172.233.160.33,172.233.160.26,172.233.160.25,172.233.160.31",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "ap-west",
@@ -223,8 +229,8 @@ interactions:
       "Block Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall", "Vlans", "Block
       Storage Migrations", "Managed Databases", "Metadata", "Placement Group", "StackScripts",
       "Maintenance Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed
-      Databases"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status": "ok",
-      "resolvers": {"ipv4": "172.105.34.5,172.105.35.5,172.105.36.5,172.105.37.5,172.105.38.5,172.105.39.5,172.105.40.5,172.105.41.5,172.105.42.5,172.105.43.5",
+      Databases", "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]},
+      "status": "ok", "resolvers": {"ipv4": "172.105.34.5,172.105.35.5,172.105.36.5,172.105.37.5,172.105.38.5,172.105.39.5,172.105.40.5,172.105.41.5,172.105.42.5,172.105.43.5",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "ca-central",
@@ -233,8 +239,8 @@ interactions:
       "Block Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall", "Vlans", "Block
       Storage Migrations", "Managed Databases", "Metadata", "Placement Group", "StackScripts",
       "Maintenance Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed
-      Databases"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status": "ok",
-      "resolvers": {"ipv4": "172.105.0.5,172.105.3.5,172.105.4.5,172.105.5.5,172.105.6.5,172.105.7.5,172.105.8.5,172.105.9.5,172.105.10.5,172.105.11.5",
+      Databases", "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]},
+      "status": "ok", "resolvers": {"ipv4": "172.105.0.5,172.105.3.5,172.105.4.5,172.105.5.5,172.105.6.5,172.105.7.5,172.105.8.5,172.105.9.5,172.105.10.5,172.105.11.5",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "ap-southeast",
@@ -265,8 +271,8 @@ interactions:
       Enterprise", "Cloud Firewall", "Vlans", "VPCs", "VPC Dual Stack", "Managed Databases",
       "Metadata", "Premium Plans", "Placement Group", "StackScripts", "Maintenance
       Policy", "Linode Interfaces", "ACLP Logs Datacenter LKE-E"], "monitors": {"alerts":
-      ["Managed Databases"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status":
-      "ok", "resolvers": {"ipv4": "172.232.0.17,172.232.0.16,172.232.0.21,172.232.0.13,172.232.0.22,172.232.0.9,172.232.0.19,172.232.0.20,172.232.0.15,172.232.0.18",
+      ["Managed Databases", "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]},
+      "status": "ok", "resolvers": {"ipv4": "172.232.0.17,172.232.0.16,172.232.0.21,172.232.0.13,172.232.0.22,172.232.0.9,172.232.0.19,172.232.0.20,172.232.0.15,172.232.0.18",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "fr-par",
@@ -275,9 +281,9 @@ interactions:
       "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Kubernetes
       Enterprise", "Cloud Firewall", "Vlans", "VPCs", "VPC Dual Stack", "Managed Databases",
       "Metadata", "Premium Plans", "Placement Group", "StackScripts", "Maintenance
-      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases"],
-      "metrics": ["Managed Databases", "NodeBalancers"]}, "status": "ok", "resolvers":
-      {"ipv4": "172.232.32.21,172.232.32.23,172.232.32.17,172.232.32.18,172.232.32.16,172.232.32.22,172.232.32.20,172.232.32.14,172.232.32.11,172.232.32.12",
+      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases",
+      "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status":
+      "ok", "resolvers": {"ipv4": "172.232.32.21,172.232.32.23,172.232.32.17,172.232.32.18,172.232.32.16,172.232.32.22,172.232.32.20,172.232.32.14,172.232.32.11,172.232.32.12",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "us-sea",
@@ -287,8 +293,8 @@ interactions:
       Enterprise", "Cloud Firewall", "Vlans", "VPCs", "VPC Dual Stack", "Managed Databases",
       "Metadata", "Premium Plans", "Placement Group", "StackScripts", "Maintenance
       Policy", "Linode Interfaces", "ACLP Logs Datacenter LKE-E"], "monitors": {"alerts":
-      ["Managed Databases"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status":
-      "ok", "resolvers": {"ipv4": "172.232.160.19,172.232.160.21,172.232.160.17,172.232.160.15,172.232.160.18,172.232.160.8,172.232.160.12,172.232.160.11,172.232.160.14,172.232.160.16",
+      ["Managed Databases", "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]},
+      "status": "ok", "resolvers": {"ipv4": "172.232.160.19,172.232.160.21,172.232.160.17,172.232.160.15,172.232.160.18,172.232.160.8,172.232.160.12,172.232.160.11,172.232.160.14,172.232.160.16",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "br-gru",
@@ -297,8 +303,9 @@ interactions:
       "Block Storage", "Object Storage", "Kubernetes", "Kubernetes Enterprise", "Cloud
       Firewall", "Vlans", "VPCs", "VPC Dual Stack", "Managed Databases", "Metadata",
       "Premium Plans", "Placement Group", "StackScripts", "Maintenance Policy", "Linode
-      Interfaces"], "monitors": {"alerts": ["Managed Databases"], "metrics": ["Managed
-      Databases", "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "172.233.0.4,172.233.0.9,172.233.0.7,172.233.0.12,172.233.0.5,172.233.0.13,172.233.0.10,172.233.0.6,172.233.0.8,172.233.0.11",
+      Interfaces"], "monitors": {"alerts": ["Managed Databases", "NodeBalancers"],
+      "metrics": ["Managed Databases", "NodeBalancers"]}, "status": "ok", "resolvers":
+      {"ipv4": "172.233.0.4,172.233.0.9,172.233.0.7,172.233.0.12,172.233.0.5,172.233.0.13,172.233.0.10,172.233.0.6,172.233.0.8,172.233.0.11",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "nl-ams",
@@ -307,9 +314,9 @@ interactions:
       "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Kubernetes
       Enterprise", "Cloud Firewall", "Vlans", "VPCs", "VPC Dual Stack", "Managed Databases",
       "Metadata", "Premium Plans", "Placement Group", "StackScripts", "Maintenance
-      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases"],
-      "metrics": ["Managed Databases", "NodeBalancers"]}, "status": "ok", "resolvers":
-      {"ipv4": "172.233.33.36,172.233.33.38,172.233.33.35,172.233.33.39,172.233.33.34,172.233.33.33,172.233.33.31,172.233.33.30,172.233.33.37,172.233.33.32",
+      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases",
+      "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status":
+      "ok", "resolvers": {"ipv4": "172.233.33.36,172.233.33.38,172.233.33.35,172.233.33.39,172.233.33.34,172.233.33.33,172.233.33.31,172.233.33.30,172.233.33.37,172.233.33.32",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "se-sto",
@@ -318,9 +325,9 @@ interactions:
       "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Kubernetes
       Enterprise", "Cloud Firewall", "Vlans", "VPCs", "VPC Dual Stack", "Managed Databases",
       "Metadata", "Premium Plans", "Placement Group", "StackScripts", "Maintenance
-      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases"],
-      "metrics": ["Managed Databases", "NodeBalancers"]}, "status": "ok", "resolvers":
-      {"ipv4": "172.232.128.24,172.232.128.26,172.232.128.20,172.232.128.22,172.232.128.25,172.232.128.19,172.232.128.23,172.232.128.18,172.232.128.21,172.232.128.27",
+      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases",
+      "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status":
+      "ok", "resolvers": {"ipv4": "172.232.128.24,172.232.128.26,172.232.128.20,172.232.128.22,172.232.128.25,172.232.128.19,172.232.128.23,172.232.128.18,172.232.128.21,172.232.128.27",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "es-mad",
@@ -329,9 +336,9 @@ interactions:
       "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Kubernetes
       Enterprise", "Cloud Firewall", "Vlans", "VPCs", "VPC Dual Stack", "Managed Databases",
       "Metadata", "Premium Plans", "Placement Group", "StackScripts", "Maintenance
-      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases"],
-      "metrics": ["Managed Databases", "NodeBalancers"]}, "status": "ok", "resolvers":
-      {"ipv4": "172.233.111.6,172.233.111.17,172.233.111.21,172.233.111.25,172.233.111.19,172.233.111.12,172.233.111.26,172.233.111.16,172.233.111.18,172.233.111.9",
+      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases",
+      "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status":
+      "ok", "resolvers": {"ipv4": "172.233.111.6,172.233.111.17,172.233.111.21,172.233.111.25,172.233.111.19,172.233.111.12,172.233.111.26,172.233.111.16,172.233.111.18,172.233.111.9",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "in-maa",
@@ -341,8 +348,8 @@ interactions:
       Enterprise", "Cloud Firewall", "Vlans", "VPCs", "VPC Dual Stack", "Managed Databases",
       "Metadata", "Premium Plans", "Placement Group", "StackScripts", "NETINT Quadra
       T1U", "Maintenance Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed
-      Databases"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status": "ok",
-      "resolvers": {"ipv4": "172.232.96.17,172.232.96.26,172.232.96.19,172.232.96.20,172.232.96.25,172.232.96.21,172.232.96.18,172.232.96.22,172.232.96.23,172.232.96.24",
+      Databases", "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]},
+      "status": "ok", "resolvers": {"ipv4": "172.232.96.17,172.232.96.26,172.232.96.19,172.232.96.20,172.232.96.25,172.232.96.21,172.232.96.18,172.232.96.22,172.232.96.23,172.232.96.24",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "jp-osa",
@@ -351,9 +358,9 @@ interactions:
       "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Kubernetes
       Enterprise", "Cloud Firewall", "Vlans", "VPCs", "VPC Dual Stack", "Managed Databases",
       "Metadata", "Premium Plans", "Placement Group", "StackScripts", "Maintenance
-      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases"],
-      "metrics": ["Managed Databases", "NodeBalancers"]}, "status": "ok", "resolvers":
-      {"ipv4": "172.233.64.44,172.233.64.43,172.233.64.37,172.233.64.40,172.233.64.46,172.233.64.41,172.233.64.39,172.233.64.42,172.233.64.45,172.233.64.38",
+      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases",
+      "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status":
+      "ok", "resolvers": {"ipv4": "172.233.64.44,172.233.64.43,172.233.64.37,172.233.64.40,172.233.64.46,172.233.64.41,172.233.64.39,172.233.64.42,172.233.64.45,172.233.64.38",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "it-mil",
@@ -362,9 +369,9 @@ interactions:
       "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Kubernetes
       Enterprise", "Cloud Firewall", "Vlans", "VPCs", "VPC Dual Stack", "Managed Databases",
       "Metadata", "Premium Plans", "Placement Group", "StackScripts", "Maintenance
-      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases"],
-      "metrics": ["Managed Databases", "NodeBalancers"]}, "status": "ok", "resolvers":
-      {"ipv4": "172.232.192.19,172.232.192.18,172.232.192.16,172.232.192.20,172.232.192.24,172.232.192.21,172.232.192.22,172.232.192.17,172.232.192.15,172.232.192.23",
+      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases",
+      "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status":
+      "ok", "resolvers": {"ipv4": "172.232.192.19,172.232.192.18,172.232.192.16,172.232.192.20,172.232.192.24,172.232.192.21,172.232.192.22,172.232.192.17,172.232.192.15,172.232.192.23",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "us-central",
@@ -372,9 +379,9 @@ interactions:
       Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
       "Block Storage", "Kubernetes", "Cloud Firewall", "Vlans", "Block Storage Migrations",
       "Managed Databases", "Metadata", "Placement Group", "StackScripts", "Maintenance
-      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases"],
-      "metrics": ["Managed Databases", "NodeBalancers"]}, "status": "ok", "resolvers":
-      {"ipv4": "72.14.179.5,72.14.188.5,173.255.199.5,66.228.53.5,96.126.122.5,96.126.124.5,96.126.127.5,198.58.107.5,198.58.111.5,23.239.24.5",
+      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases",
+      "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status":
+      "ok", "resolvers": {"ipv4": "72.14.179.5,72.14.188.5,173.255.199.5,66.228.53.5,96.126.122.5,96.126.124.5,96.126.127.5,198.58.107.5,198.58.111.5,23.239.24.5",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "ap-northeast",
@@ -382,9 +389,9 @@ interactions:
       Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
       "Block Storage", "Kubernetes", "Cloud Firewall", "Vlans", "Block Storage Migrations",
       "Managed Databases", "Metadata", "Placement Group", "StackScripts", "Maintenance
-      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases"],
-      "metrics": ["Managed Databases", "NodeBalancers"]}, "status": "ok", "resolvers":
-      {"ipv4": "139.162.66.5,139.162.67.5,139.162.68.5,139.162.69.5,139.162.70.5,139.162.71.5,139.162.72.5,139.162.73.5,139.162.74.5,139.162.75.5",
+      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases",
+      "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status":
+      "ok", "resolvers": {"ipv4": "139.162.66.5,139.162.67.5,139.162.68.5,139.162.69.5,139.162.70.5,139.162.71.5,139.162.72.5,139.162.73.5,139.162.74.5,139.162.75.5",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "eu-central",
@@ -393,8 +400,8 @@ interactions:
       "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
       "Vlans", "Block Storage Migrations", "Managed Databases", "Metadata", "Placement
       Group", "StackScripts", "Maintenance Policy", "Linode Interfaces"], "monitors":
-      {"alerts": ["Managed Databases"], "metrics": ["Managed Databases", "NodeBalancers"]},
-      "status": "ok", "resolvers": {"ipv4": "139.162.130.5,139.162.131.5,139.162.132.5,139.162.133.5,139.162.134.5,139.162.135.5,139.162.136.5,139.162.137.5,139.162.138.5,139.162.139.5",
+      {"alerts": ["Managed Databases", "NodeBalancers"], "metrics": ["Managed Databases",
+      "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "139.162.130.5,139.162.131.5,139.162.132.5,139.162.133.5,139.162.134.5,139.162.135.5,139.162.136.5,139.162.137.5,139.162.138.5,139.162.139.5",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "ap-south",
@@ -402,8 +409,8 @@ interactions:
       Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
       "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
       "Vlans", "Block Storage Migrations", "Metadata", "Placement Group", "StackScripts",
-      "Maintenance Policy", "Linode Interfaces"], "monitors": {"alerts": [], "metrics":
-      ["NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "139.162.11.5,139.162.13.5,139.162.14.5,139.162.15.5,139.162.16.5,139.162.21.5,139.162.27.5,103.3.60.18,103.3.60.19,103.3.60.20",
+      "Maintenance Policy", "Linode Interfaces"], "monitors": {"alerts": ["NodeBalancers"],
+      "metrics": ["NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "139.162.11.5,139.162.13.5,139.162.14.5,139.162.15.5,139.162.16.5,139.162.21.5,139.162.27.5,103.3.60.18,103.3.60.19,103.3.60.20",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "eu-west",
@@ -411,20 +418,20 @@ interactions:
       Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
       "Block Storage", "Kubernetes", "Cloud Firewall", "Vlans", "Block Storage Migrations",
       "Metadata", "Placement Group", "StackScripts", "Maintenance Policy", "Linode
-      Interfaces"], "monitors": {"alerts": [], "metrics": ["NodeBalancers"]}, "status":
-      "ok", "resolvers": {"ipv4": "178.79.182.5, 176.58.107.5, 176.58.116.5, 176.58.121.5,
-      151.236.220.5, 212.71.252.5, 212.71.253.5, 109.74.192.20, 109.74.193.20, 109.74.194.20",
-      "ipv6": "1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678,
-      1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678"}, "placement_group_limits":
-      {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg": 5, "maximum_linodes_per_flexible_pg":
-      5}, "site_type": "core"}, {"id": "us-east", "label": "Newark, NJ", "country":
-      "us", "capabilities": ["Linodes", "Block Storage Encryption", "LA Disk Encryption",
-      "Disk Encryption", "Backups", "NodeBalancers", "Block Storage", "Object Storage",
-      "GPU Linodes", "Kubernetes", "Cloud Firewall", "Vlans", "Block Storage Migrations",
-      "Managed Databases", "Metadata", "Placement Group", "StackScripts", "Maintenance
-      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases"],
-      "metrics": ["Managed Databases", "NodeBalancers"]}, "status": "ok", "resolvers":
-      {"ipv4": "66.228.42.5,96.126.106.5,50.116.53.5,50.116.58.5,50.116.61.5,50.116.62.5,66.175.211.5,97.107.133.4,173.255.225.5,66.228.35.5",
+      Interfaces"], "monitors": {"alerts": ["NodeBalancers"], "metrics": ["NodeBalancers"]},
+      "status": "ok", "resolvers": {"ipv4": "178.79.182.5, 176.58.107.5, 176.58.116.5,
+      176.58.121.5, 151.236.220.5, 212.71.252.5, 212.71.253.5, 109.74.192.20, 109.74.193.20,
+      109.74.194.20", "ipv6": "1234::5678, 1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678"},
+      "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
+      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "us-east",
+      "label": "Newark, NJ", "country": "us", "capabilities": ["Linodes", "Block Storage
+      Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
+      "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
+      "Vlans", "Block Storage Migrations", "Managed Databases", "Metadata", "Placement
+      Group", "StackScripts", "Maintenance Policy", "Linode Interfaces"], "monitors":
+      {"alerts": ["Managed Databases", "NodeBalancers"], "metrics": ["Managed Databases",
+      "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "66.228.42.5,96.126.106.5,50.116.53.5,50.116.58.5,50.116.61.5,50.116.62.5,66.175.211.5,97.107.133.4,173.255.225.5,66.228.35.5",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "us-southeast",
@@ -433,8 +440,8 @@ interactions:
       "Block Storage", "Object Storage", "GPU Linodes", "Kubernetes", "Cloud Firewall",
       "Vlans", "Block Storage Migrations", "Managed Databases", "Metadata", "Placement
       Group", "StackScripts", "Maintenance Policy", "Linode Interfaces"], "monitors":
-      {"alerts": ["Managed Databases"], "metrics": ["Managed Databases", "NodeBalancers"]},
-      "status": "ok", "resolvers": {"ipv4": "74.207.231.5,173.230.128.5,173.230.129.5,173.230.136.5,173.230.140.5,66.228.59.5,66.228.62.5,50.116.35.5,50.116.41.5,23.239.18.5",
+      {"alerts": ["Managed Databases", "NodeBalancers"], "metrics": ["Managed Databases",
+      "NodeBalancers"]}, "status": "ok", "resolvers": {"ipv4": "74.207.231.5,173.230.128.5,173.230.129.5,173.230.136.5,173.230.140.5,66.228.59.5,66.228.62.5,50.116.35.5,50.116.41.5,23.239.18.5",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "us-west",
@@ -442,14 +449,14 @@ interactions:
       Storage Encryption", "LA Disk Encryption", "Disk Encryption", "Backups", "NodeBalancers",
       "Block Storage", "Kubernetes", "Cloud Firewall", "Vlans", "Block Storage Migrations",
       "Managed Databases", "Metadata", "Placement Group", "StackScripts", "Maintenance
-      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases"],
-      "metrics": ["Managed Databases", "NodeBalancers"]}, "status": "ok", "resolvers":
-      {"ipv4": "173.230.145.5, 173.230.147.5, 173.230.155.5, 173.255.212.5, 173.255.219.5,
-      173.255.241.5, 173.255.243.5, 173.255.244.5, 74.207.241.5, 74.207.242.5", "ipv6":
-      "1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678,
-      1234::5678, 1234::5678, 1234::5678, 1234::5678"}, "placement_group_limits":
+      Policy", "Linode Interfaces"], "monitors": {"alerts": ["Managed Databases",
+      "NodeBalancers"], "metrics": ["Managed Databases", "NodeBalancers"]}, "status":
+      "ok", "resolvers": {"ipv4": "173.230.145.5, 173.230.147.5, 173.230.155.5, 173.255.212.5,
+      173.255.219.5, 173.255.241.5, 173.255.243.5, 173.255.244.5, 74.207.241.5, 74.207.242.5",
+      "ipv6": "1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678,
+      1234::5678, 1234::5678, 1234::5678, 1234::5678, 1234::5678"}, "placement_group_limits":
       {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg": 5, "maximum_linodes_per_flexible_pg":
-      5}, "site_type": "core"}], "page": 1, "pages": 1, "results": 46}'
+      5}, "site_type": "core"}], "page": 1, "pages": 1, "results": 47}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -472,7 +479,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 24 Mar 2026 17:06:58 GMT
+      - Wed, 06 May 2026 01:42:52 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -498,261 +505,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/availability?page=1
-    method: GET
-  response:
-    body: '{"data": [{"region": "us-central", "available": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "us-west", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "us-southeast", "available": ["Linodes", "NodeBalancers", "Block
-      Storage", "Kubernetes"], "unavailable": []}, {"region": "us-east", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "eu-west", "available": [], "unavailable": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"]}, {"region": "ap-south", "available": ["Linodes",
-      "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable": []}, {"region":
-      "eu-central", "available": ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"],
-      "unavailable": []}, {"region": "ap-northeast", "available": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "ap-west", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "ca-central", "available": ["Linodes", "NodeBalancers", "Block
-      Storage", "Kubernetes"], "unavailable": []}, {"region": "ap-southeast", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "us-iad", "available": ["Linodes", "NodeBalancers", "Block Storage",
-      "Kubernetes"], "unavailable": []}, {"region": "us-ord", "available": ["Linodes",
-      "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable": []}, {"region":
-      "fr-par", "available": ["Linodes", "NodeBalancers"], "unavailable": ["Block
-      Storage", "Kubernetes"]}, {"region": "us-sea", "available": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "br-gru", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "nl-ams", "available": ["Linodes", "NodeBalancers", "Block Storage",
-      "Kubernetes"], "unavailable": []}, {"region": "se-sto", "available": ["Linodes",
-      "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable": []}, {"region":
-      "es-mad", "available": ["Linodes", "Kubernetes"], "unavailable": ["NodeBalancers",
-      "Block Storage"]}, {"region": "in-maa", "available": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "jp-osa", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "it-mil", "available": ["Linodes", "NodeBalancers", "Block Storage",
-      "Kubernetes"], "unavailable": []}, {"region": "us-mia", "available": ["Linodes",
-      "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable": []}, {"region":
-      "id-cgk", "available": ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"],
-      "unavailable": []}, {"region": "us-lax", "available": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "nz-akl-1", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "us-den-1", "available": ["Linodes"], "unavailable": ["NodeBalancers",
-      "Block Storage", "Kubernetes"]}, {"region": "de-ham-1", "available": ["Linodes"],
-      "unavailable": ["NodeBalancers", "Block Storage", "Kubernetes"]}, {"region":
-      "za-jnb-1", "available": ["Linodes"], "unavailable": ["NodeBalancers", "Block
-      Storage", "Kubernetes"]}, {"region": "my-kul-1", "available": ["Linodes"], "unavailable":
-      ["NodeBalancers", "Block Storage", "Kubernetes"]}, {"region": "co-bog-1", "available":
-      ["Linodes"], "unavailable": ["NodeBalancers", "Block Storage", "Kubernetes"]},
-      {"region": "mx-qro-1", "available": ["Linodes"], "unavailable": ["NodeBalancers",
-      "Block Storage", "Kubernetes"]}, {"region": "us-hou-1", "available": ["Linodes"],
-      "unavailable": ["NodeBalancers", "Block Storage", "Kubernetes"]}, {"region":
-      "cl-scl-1", "available": ["Linodes"], "unavailable": ["NodeBalancers", "Block
-      Storage", "Kubernetes"]}, {"region": "gb-lon", "available": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "au-mel", "available":
-      ["Linodes", "Kubernetes"], "unavailable": ["NodeBalancers", "Block Storage"]},
-      {"region": "in-bom-2", "available": ["Linodes", "NodeBalancers", "Block Storage",
-      "Kubernetes"], "unavailable": []}, {"region": "de-fra-2", "available": ["Linodes",
-      "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable": []}, {"region":
-      "sg-sin-2", "available": ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"],
-      "unavailable": []}, {"region": "jp-tyo-3", "available": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "de-ber-1", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "no-osl-1", "available": ["Linodes", "NodeBalancers", "Block
-      Storage", "Kubernetes"], "unavailable": []}, {"region": "us-iad-2", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "fr-par-2", "available": ["Linodes", "NodeBalancers", "Block
-      Storage", "Kubernetes"], "unavailable": []}, {"region": "co-bog-2", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "fr-mrs-2", "available": ["Linodes", "NodeBalancers", "Block
-      Storage", "Kubernetes"], "unavailable": []}], "page": 1, "pages": 1, "results":
-      46}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Tue, 24 Mar 2026 17:06:58 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      - Accept-Encoding
-      X-Accepted-Oauth-Scopes:
-      - account:read_only
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "1840"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/availability?page=1
-    method: GET
-  response:
-    body: '{"data": [{"region": "us-central", "available": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "us-west", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "us-southeast", "available": ["Linodes", "NodeBalancers", "Block
-      Storage", "Kubernetes"], "unavailable": []}, {"region": "us-east", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "eu-west", "available": [], "unavailable": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"]}, {"region": "ap-south", "available": ["Linodes",
-      "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable": []}, {"region":
-      "eu-central", "available": ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"],
-      "unavailable": []}, {"region": "ap-northeast", "available": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "ap-west", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "ca-central", "available": ["Linodes", "NodeBalancers", "Block
-      Storage", "Kubernetes"], "unavailable": []}, {"region": "ap-southeast", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "us-iad", "available": ["Linodes", "NodeBalancers", "Block Storage",
-      "Kubernetes"], "unavailable": []}, {"region": "us-ord", "available": ["Linodes",
-      "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable": []}, {"region":
-      "fr-par", "available": ["Linodes", "NodeBalancers"], "unavailable": ["Block
-      Storage", "Kubernetes"]}, {"region": "us-sea", "available": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "br-gru", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "nl-ams", "available": ["Linodes", "NodeBalancers", "Block Storage",
-      "Kubernetes"], "unavailable": []}, {"region": "se-sto", "available": ["Linodes",
-      "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable": []}, {"region":
-      "es-mad", "available": ["Linodes", "Kubernetes"], "unavailable": ["NodeBalancers",
-      "Block Storage"]}, {"region": "in-maa", "available": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "jp-osa", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "it-mil", "available": ["Linodes", "NodeBalancers", "Block Storage",
-      "Kubernetes"], "unavailable": []}, {"region": "us-mia", "available": ["Linodes",
-      "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable": []}, {"region":
-      "id-cgk", "available": ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"],
-      "unavailable": []}, {"region": "us-lax", "available": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "nz-akl-1", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "us-den-1", "available": ["Linodes"], "unavailable": ["NodeBalancers",
-      "Block Storage", "Kubernetes"]}, {"region": "de-ham-1", "available": ["Linodes"],
-      "unavailable": ["NodeBalancers", "Block Storage", "Kubernetes"]}, {"region":
-      "za-jnb-1", "available": ["Linodes"], "unavailable": ["NodeBalancers", "Block
-      Storage", "Kubernetes"]}, {"region": "my-kul-1", "available": ["Linodes"], "unavailable":
-      ["NodeBalancers", "Block Storage", "Kubernetes"]}, {"region": "co-bog-1", "available":
-      ["Linodes"], "unavailable": ["NodeBalancers", "Block Storage", "Kubernetes"]},
-      {"region": "mx-qro-1", "available": ["Linodes"], "unavailable": ["NodeBalancers",
-      "Block Storage", "Kubernetes"]}, {"region": "us-hou-1", "available": ["Linodes"],
-      "unavailable": ["NodeBalancers", "Block Storage", "Kubernetes"]}, {"region":
-      "cl-scl-1", "available": ["Linodes"], "unavailable": ["NodeBalancers", "Block
-      Storage", "Kubernetes"]}, {"region": "gb-lon", "available": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "au-mel", "available":
-      ["Linodes", "Kubernetes"], "unavailable": ["NodeBalancers", "Block Storage"]},
-      {"region": "in-bom-2", "available": ["Linodes", "NodeBalancers", "Block Storage",
-      "Kubernetes"], "unavailable": []}, {"region": "de-fra-2", "available": ["Linodes",
-      "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable": []}, {"region":
-      "sg-sin-2", "available": ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"],
-      "unavailable": []}, {"region": "jp-tyo-3", "available": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "de-ber-1", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "no-osl-1", "available": ["Linodes", "NodeBalancers", "Block
-      Storage", "Kubernetes"], "unavailable": []}, {"region": "us-iad-2", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "fr-par-2", "available": ["Linodes", "NodeBalancers", "Block
-      Storage", "Kubernetes"], "unavailable": []}, {"region": "co-bog-2", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "fr-mrs-2", "available": ["Linodes", "NodeBalancers", "Block
-      Storage", "Kubernetes"], "unavailable": []}], "page": 1, "pages": 1, "results":
-      46}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Tue, 24 Mar 2026 17:06:58 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      - Accept-Encoding
-      X-Accepted-Oauth-Scopes:
-      - account:read_only
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "1840"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: '{"label":"go-test-vpc-1774372018772667000","region":"au-mel","subnets":[{"label":"linodego-vpc-test-1774372018952471000","ipv4":"192.168.0.0/25"}]}'
+    body: '{"label":"go-test-vpc-1778031772656360000","region":"au-mel","subnets":[{"label":"linodego-vpc-test-1778031772656574000","ipv4":"192.168.0.0/25"}]}'
     form: {}
     headers:
       Accept:
@@ -764,11 +517,13 @@ interactions:
     url: https://api.linode.com/v4beta/vpcs
     method: POST
   response:
-    body: '{"id": 422885, "label": "go-test-vpc-1774372018772667000", "description":
-      "", "region": "au-mel", "ipv6": null, "subnets": [{"id": 523986, "label": "linodego-vpc-test-1774372018952471000",
-      "ipv4": "192.168.0.0/25", "ipv6": null, "linodes": [], "databases": [], "nodebalancers":
-      [], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}], "created":
-      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
+    body: '{"id": 471962, "label": "go-test-vpc-1778031772656360000", "description":
+      "", "region": "au-mel", "ipv4": [{"range": "10.0.0.0/8"}, {"range": "172.16.0.0/12"},
+      {"range": "192.168.0.0/16"}], "ipv6": null, "subnets": [{"id": 629501, "label":
+      "linodego-vpc-test-1778031772656574000", "ipv4": "192.168.0.0/25", "ipv6": null,
+      "linodes": [], "databases": [], "nodebalancers": [], "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05"}], "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -787,13 +542,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "419"
+      - "511"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Tue, 24 Mar 2026 17:06:59 GMT
+      - Wed, 06 May 2026 01:42:53 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -817,134 +572,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/account/availability?page=1
-    method: GET
-  response:
-    body: '{"data": [{"region": "us-central", "available": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "us-west", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "us-southeast", "available": ["Linodes", "NodeBalancers", "Block
-      Storage", "Kubernetes"], "unavailable": []}, {"region": "us-east", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "eu-west", "available": [], "unavailable": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"]}, {"region": "ap-south", "available": ["Linodes",
-      "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable": []}, {"region":
-      "eu-central", "available": ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"],
-      "unavailable": []}, {"region": "ap-northeast", "available": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "ap-west", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "ca-central", "available": ["Linodes", "NodeBalancers", "Block
-      Storage", "Kubernetes"], "unavailable": []}, {"region": "ap-southeast", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "us-iad", "available": ["Linodes", "NodeBalancers", "Block Storage",
-      "Kubernetes"], "unavailable": []}, {"region": "us-ord", "available": ["Linodes",
-      "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable": []}, {"region":
-      "fr-par", "available": ["Linodes", "NodeBalancers"], "unavailable": ["Block
-      Storage", "Kubernetes"]}, {"region": "us-sea", "available": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "br-gru", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "nl-ams", "available": ["Linodes", "NodeBalancers", "Block Storage",
-      "Kubernetes"], "unavailable": []}, {"region": "se-sto", "available": ["Linodes",
-      "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable": []}, {"region":
-      "es-mad", "available": ["Linodes", "Kubernetes"], "unavailable": ["NodeBalancers",
-      "Block Storage"]}, {"region": "in-maa", "available": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "jp-osa", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "it-mil", "available": ["Linodes", "NodeBalancers", "Block Storage",
-      "Kubernetes"], "unavailable": []}, {"region": "us-mia", "available": ["Linodes",
-      "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable": []}, {"region":
-      "id-cgk", "available": ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"],
-      "unavailable": []}, {"region": "us-lax", "available": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "nz-akl-1", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "us-den-1", "available": ["Linodes"], "unavailable": ["NodeBalancers",
-      "Block Storage", "Kubernetes"]}, {"region": "de-ham-1", "available": ["Linodes"],
-      "unavailable": ["NodeBalancers", "Block Storage", "Kubernetes"]}, {"region":
-      "za-jnb-1", "available": ["Linodes"], "unavailable": ["NodeBalancers", "Block
-      Storage", "Kubernetes"]}, {"region": "my-kul-1", "available": ["Linodes"], "unavailable":
-      ["NodeBalancers", "Block Storage", "Kubernetes"]}, {"region": "co-bog-1", "available":
-      ["Linodes"], "unavailable": ["NodeBalancers", "Block Storage", "Kubernetes"]},
-      {"region": "mx-qro-1", "available": ["Linodes"], "unavailable": ["NodeBalancers",
-      "Block Storage", "Kubernetes"]}, {"region": "us-hou-1", "available": ["Linodes"],
-      "unavailable": ["NodeBalancers", "Block Storage", "Kubernetes"]}, {"region":
-      "cl-scl-1", "available": ["Linodes"], "unavailable": ["NodeBalancers", "Block
-      Storage", "Kubernetes"]}, {"region": "gb-lon", "available": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "au-mel", "available":
-      ["Linodes", "Kubernetes"], "unavailable": ["NodeBalancers", "Block Storage"]},
-      {"region": "in-bom-2", "available": ["Linodes", "NodeBalancers", "Block Storage",
-      "Kubernetes"], "unavailable": []}, {"region": "de-fra-2", "available": ["Linodes",
-      "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable": []}, {"region":
-      "sg-sin-2", "available": ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"],
-      "unavailable": []}, {"region": "jp-tyo-3", "available": ["Linodes", "NodeBalancers",
-      "Block Storage", "Kubernetes"], "unavailable": []}, {"region": "de-ber-1", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "no-osl-1", "available": ["Linodes", "NodeBalancers", "Block
-      Storage", "Kubernetes"], "unavailable": []}, {"region": "us-iad-2", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "fr-par-2", "available": ["Linodes", "NodeBalancers", "Block
-      Storage", "Kubernetes"], "unavailable": []}, {"region": "co-bog-2", "available":
-      ["Linodes", "NodeBalancers", "Block Storage", "Kubernetes"], "unavailable":
-      []}, {"region": "fr-mrs-2", "available": ["Linodes", "NodeBalancers", "Block
-      Storage", "Kubernetes"], "unavailable": []}], "page": 1, "pages": 1, "results":
-      46}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Tue, 24 Mar 2026 17:06:59 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      - Accept-Encoding
-      X-Accepted-Oauth-Scopes:
-      - account:read_only
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "1840"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: '{"region":"au-mel","type":"g6-nanode-1","label":"go-test-intf-du996l59d1lu","root_pass":"CP00c?8nd4w9;F@92B:ov[(h{Z)00Z07qxY*B8@1iaRhD/JA=jGd05O[u\u0026Y@R\u00261g","image":"linode/debian12","interface_generation":"linode","booted":false,"interfaces":[{"firewall_id":4016480,"public":{"ipv4":{"addresses":[{"address":"auto","primary":true}]},"ipv6":{}}},{"firewall_id":4016480,"vpc":{"subnet_id":523986,"ipv4":{"addresses":[{"address":"auto","primary":true,"nat_1_1_address":"auto"}]}}}]}'
+    body: '{"region":"au-mel","type":"g6-nanode-1","label":"go-test-intf-2x63ssy273oo","root_pass":"iDl^x+k7y)mu,3[A4~Z+2MtK04k(6HVCT^D5B6x-/0Qz{2m5eZ\u003cL*2l148.uKsI[","image":"linode/debian12","interface_generation":"linode","booted":false,"interfaces":[{"firewall_id":9690627,"public":{"ipv4":{"addresses":[{"address":"auto","primary":true}]},"ipv6":{}}},{"firewall_id":9690627,"vpc":{"subnet_id":629501,"ipv4":{"addresses":[{"address":"auto","primary":true,"nat_1_1_address":"auto"}]}}}]}'
     form: {}
     headers:
       Accept:
@@ -956,20 +584,19 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 94760148, "label": "go-test-intf-du996l59d1lu", "group": "", "status":
+    body: '{"id": 97189542, "label": "go-test-intf-2x63ssy273oo", "group": "", "status":
       "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.236.62.246", "172.236.62.247"], "ipv6":
-      "1234::5678/128", "image": "linode/debian12", "region":
-      "au-mel", "site_type": "core", "specs": {"disk": 25600, "memory": 1024, "vcpus":
-      1, "gpus": 0, "transfer": 1000, "accelerated_devices": 0}, "alerts": {"cpu":
-      90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io": 10000,
-      "system_alerts": [], "user_alerts": []}, "backups": {"enabled": false, "available":
-      false, "schedule": {"day": null, "window": null}, "last_successful": null},
-      "hypervisor": "kvm", "watchdog_enabled": true, "tags": [], "host_uuid": "9a7697483a9ca8c5ddfadf4ddee2c1f1819f1be4",
-      "has_user_data": false, "placement_group": null, "disk_encryption": "enabled",
-      "lke_cluster_id": null, "capabilities": ["Block Storage Encryption", "SMTP Enabled",
-      "Maintenance Policy"], "interface_generation": "linode", "maintenance_policy":
-      "linode/migrate", "locks": []}'
+      "type": "g6-nanode-1", "ipv4": ["172.236.53.76", "172.236.53.98"], "ipv6": "1234::5678/128",
+      "image": "linode/debian12", "region": "au-mel", "site_type": "core", "specs":
+      {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
+      0}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota":
+      80, "io": 10000, "system_alerts": [], "user_alerts": []}, "backups": {"enabled":
+      false, "available": false, "schedule": {"day": null, "window": null}, "last_successful":
+      null}, "hypervisor": "kvm", "watchdog_enabled": true, "tags": [], "host_uuid":
+      "7c21ff8b1596655206e1b4c6bc4f1c8ebd03c68c", "has_user_data": false, "placement_group":
+      null, "disk_encryption": "enabled", "lke_cluster_id": null, "capabilities":
+      ["Block Storage Encryption", "SMTP Enabled", "Maintenance Policy"], "interface_generation":
+      "linode", "maintenance_policy": "linode/migrate", "locks": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -992,7 +619,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 24 Mar 2026 17:07:01 GMT
+      - Wed, 06 May 2026 01:42:55 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -1026,7 +653,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/linode/instances/94760148
+    url: https://api.linode.com/v4beta/linode/instances/97189542
     method: DELETE
   response:
     body: '{}'
@@ -1054,7 +681,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 24 Mar 2026 17:07:01 GMT
+      - Wed, 06 May 2026 01:42:55 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -1087,7 +714,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/vpcs/422885
+    url: https://api.linode.com/v4beta/vpcs/471962
     method: DELETE
   response:
     body: '{}'
@@ -1115,7 +742,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Tue, 24 Mar 2026 17:07:02 GMT
+      - Wed, 06 May 2026 01:42:56 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

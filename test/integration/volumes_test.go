@@ -5,18 +5,21 @@ import (
 	"testing"
 	"time"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
+	"github.com/stretchr/testify/require"
 )
 
 type volumeModifier func(*linodego.Client, *linodego.VolumeCreateOptions)
 
 func TestVolume_Create_smoke(t *testing.T) {
+	ctx := waitContext(t, 30*time.Second)
+
 	client, teardown := createTestClient(t, "fixtures/TestVolume_Create")
 	defer teardown()
 
 	createOpts := linodego.VolumeCreateOptions{
-		Label:  "go-vol-test-create",
-		Region: getRegionsWithCaps(t, client, []string{"Linodes"})[0],
+		Label:  "go-vol-test-create-" + randString(6, digits),
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes})[0],
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
 	if err != nil {
@@ -29,6 +32,9 @@ func TestVolume_Create_smoke(t *testing.T) {
 	assertDateSet(t, volume.Created)
 	assertDateSet(t, volume.Updated)
 
+	volume, err = client.WaitForVolumeStatus(ctx, volume.ID, linodego.VolumeActive)
+	require.NoErrorf(t, err, "Error waiting for volume to be active: %v", err)
+
 	// volumes deleted too fast tend to stick, adding a few seconds to catch up
 	time.Sleep(time.Second * 5)
 	if err := client.DeleteVolume(context.Background(), volume.ID); err != nil {
@@ -37,12 +43,17 @@ func TestVolume_Create_smoke(t *testing.T) {
 }
 
 func TestVolume_Create_withEncryption(t *testing.T) {
+	ctx := waitContext(t, 30*time.Second)
+
 	client, teardown := createTestClient(t, "fixtures/TestVolume_Create_withEncryption")
 	defer teardown()
 
 	createOpts := linodego.VolumeCreateOptions{
-		Label:      "go-vol-test-create-encryption",
-		Region:     getRegionsWithCaps(t, client, []string{"Linodes", "Block Storage Encryption"})[0],
+		Label: "go-vol-test-create-encryption",
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{
+			linodego.CapabilityLinodes,
+			linodego.CapabilityBlockStorageEncryption,
+		})[0],
 		Encryption: "enabled",
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
@@ -52,6 +63,9 @@ func TestVolume_Create_withEncryption(t *testing.T) {
 	if volume.ID == 0 {
 		t.Errorf("Expected a volumes id, but got 0")
 	}
+
+	volume, err = client.WaitForVolumeStatus(ctx, volume.ID, linodego.VolumeActive)
+	require.NoErrorf(t, err, "Error waiting for volume to be active: %v", err)
 
 	assertDateSet(t, volume.Created)
 	assertDateSet(t, volume.Updated)
@@ -64,6 +78,8 @@ func TestVolume_Create_withEncryption(t *testing.T) {
 }
 
 func TestVolume_Resize(t *testing.T) {
+	ctx := waitContext(t, 500*time.Second)
+
 	client, volume, teardown, err := setupVolume(t, "fixtures/TestVolume_Resize")
 	defer teardown()
 
@@ -71,19 +87,24 @@ func TestVolume_Resize(t *testing.T) {
 		t.Errorf("Error setting up volume test, %s", err)
 	}
 
-	_, err = client.WaitForVolumeStatus(context.Background(), volume.ID, linodego.VolumeActive, 500)
-	if err != nil {
-		t.Errorf("Error waiting for volume to be active, %s", err)
-	}
+	_, err = client.WaitForVolumeStatus(ctx, volume.ID, linodego.VolumeActive)
+	require.NoErrorf(t, err, "Error waiting for volume to be active: %v", err)
 
-	if err := client.ResizeVolume(context.Background(), volume.ID, volume.Size+1); err != nil {
+	opts := linodego.VolumeResizeOptions{
+		Size: volume.Size + 1,
+	}
+	if err := client.ResizeVolume(context.Background(), volume.ID, opts); err != nil {
 		t.Errorf("Error resizing volume, %s", err)
 	}
+
+	volume, err = client.WaitForVolumeStatus(ctx, volume.ID, linodego.VolumeActive)
+	require.NoErrorf(t, err, "Error waiting for volume to be active: %v", err)
 }
 
 func TestVolumes_List_smoke(t *testing.T) {
 	client, volume, teardown, err := setupVolume(t, "fixtures/TestVolume_List")
 	defer teardown()
+	require.NoErrorf(t, err, "Error setting up volume test, %s", err)
 
 	volumes, err := client.ListVolumes(context.Background(), nil)
 	if err != nil {
@@ -116,12 +137,17 @@ func TestVolume_Get(t *testing.T) {
 }
 
 func TestVolume_Get_withEncryption(t *testing.T) {
+	ctx := waitContext(t, 30*time.Second)
+
 	client, teardown := createTestClient(t, "fixtures/TestVolume_Get_withEncryption")
 	defer teardown()
 
 	createOpts := linodego.VolumeCreateOptions{
-		Label:      "go-vol-test-get-encryption",
-		Region:     getRegionsWithCaps(t, client, []string{"Linodes", "Block Storage Encryption"})[0],
+		Label: "go-vol-test-get-encryption",
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{
+			linodego.CapabilityLinodes,
+			linodego.CapabilityBlockStorageEncryption,
+		})[0],
 		Encryption: "enabled",
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
@@ -132,6 +158,9 @@ func TestVolume_Get_withEncryption(t *testing.T) {
 		t.Errorf("Expected a volumes id, but got 0")
 	}
 
+	volume, err = client.WaitForVolumeStatus(ctx, volume.ID, linodego.VolumeActive)
+	require.NoErrorf(t, err, "Error waiting for volume to be active: %v", err)
+
 	returnedVolume, err := client.GetVolume(context.Background(), volume.ID)
 	if err != nil {
 		t.Errorf("Error getting volume %d, expected *LinodeVolume, got error %v", volume.ID, err)
@@ -141,9 +170,7 @@ func TestVolume_Get_withEncryption(t *testing.T) {
 	}
 
 	volumes, err := client.ListVolumes(context.Background(), nil)
-	if err != nil {
-		t.Errorf("Error listing volumes, expected struct, got error %v", err)
-	}
+	require.NoErrorf(t, err, "Error listing volumes, expected struct, got error %v", err)
 	found := false
 	for _, v := range volumes {
 		if v.ID == volume.ID {
@@ -165,19 +192,23 @@ func TestVolume_Get_withEncryption(t *testing.T) {
 }
 
 func TestVolume_WaitForLinodeID_nil(t *testing.T) {
+	ctx := waitContext(t, 45*time.Second)
+
 	client, volume, teardown, err := setupVolume(t, "fixtures/TestVolume_WaitForLinodeID_nil")
 	defer teardown()
 
 	if err != nil {
 		t.Errorf("Error setting up volume test, %s", err)
 	}
-	_, err = client.WaitForVolumeLinodeID(context.Background(), volume.ID, nil, 20)
+	_, err = client.WaitForVolumeLinodeID(ctx, volume.ID, nil)
 	if err != nil {
 		t.Errorf("Error getting volume %d, expected *LinodeVolume, got error %v", volume.ID, err)
 	}
 }
 
 func TestVolume_WaitForLinodeID(t *testing.T) {
+	ctx := waitContext(t, 40*time.Second)
+
 	client, instance, teardownInstance, errInstance := setupInstance(t, "fixtures/TestVolume_WaitForLinodeID_linode", true)
 	if errInstance != nil {
 		t.Errorf("Error setting up instance for volume test, %s", errInstance)
@@ -207,7 +238,7 @@ func TestVolume_WaitForLinodeID(t *testing.T) {
 		t.Errorf("Could not attach test volume to test instance")
 	}
 
-	_, errWait := client.WaitForVolumeLinodeID(context.Background(), volume.ID, nil, 20)
+	_, errWait := client.WaitForVolumeLinodeID(ctx, volume.ID, nil)
 	if errWait == nil {
 		t.Errorf("Expected to timeout waiting for nil LinodeID on volume %d : %s", volume.ID, errWait)
 	}
@@ -215,7 +246,7 @@ func TestVolume_WaitForLinodeID(t *testing.T) {
 	client, teardownWait := createTestClient(t, "fixtures/TestVolume_WaitForLinodeID_waiting")
 	defer teardownWait()
 
-	v, errWait := client.WaitForVolumeLinodeID(context.Background(), volume.ID, &instance.ID, 20)
+	v, errWait := client.WaitForVolumeLinodeID(ctx, volume.ID, &instance.ID)
 	if errWait != nil {
 		t.Errorf("Error waiting for volume %d to attach to instance %d: %s", volume.ID, instance.ID, errWait)
 	}
@@ -253,16 +284,21 @@ func TestVolume_Update(t *testing.T) {
 
 func setupVolume(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.Volume, func(), error) {
 	t.Helper()
+	ctx := waitContext(t, 30*time.Second)
+
 	var fixtureTeardown func()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := linodego.VolumeCreateOptions{
 		Label:  "go-vol-test-def",
-		Region: getRegionsWithCaps(t, client, []string{"Linodes"})[0],
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes})[0],
 	}
 	volume, err := client.CreateVolume(context.Background(), createOpts)
 	if err != nil {
 		t.Errorf("Error creating volume, got error %v", err)
 	}
+
+	volume, err = client.WaitForVolumeStatus(ctx, volume.ID, linodego.VolumeActive)
+	require.NoErrorf(t, err, "Error waiting for volume to be active: %v", err)
 
 	teardown := func() {
 		// volumes deleted too fast tend to stick, adding a few seconds to catch up
@@ -283,7 +319,7 @@ func createVolume(
 	t.Helper()
 	createOpts := linodego.VolumeCreateOptions{
 		Label:  "go-vol-test" + randLabel(),
-		Region: getRegionsWithCaps(t, client, []string{"Linodes"})[0],
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes})[0],
 	}
 
 	for _, mod := range vModifier {

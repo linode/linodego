@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 )
 
 var testDomainCreateOpts = linodego.DomainCreateOptions{
@@ -92,7 +92,7 @@ func setupDomain(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 
 	createOpts := testDomainCreateOpts
-	createOpts.Domain = "linodego-blue-test.com"
+	createOpts.Domain = "linodego-blue-" + randString(6, digits) + "-test.com"
 
 	domain, err := client.CreateDomain(context.Background(), createOpts)
 	if err != nil {
