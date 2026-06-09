@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/dnaeon/go-vcr/recorder"
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -32,7 +32,7 @@ func requireACLPLogsStreamTests(t *testing.T) {
 func setupObjectStorageForLogs(t *testing.T, client *linodego.Client) (*linodego.ObjectStorageBucket, *linodego.ObjectStorageKey, func()) {
 	t.Helper()
 
-	regions := getRegionsWithCaps(t, client, []string{linodego.CapabilityObjectStorage})
+	regions := getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityObjectStorage})
 	if len(regions) == 0 {
 		t.Fatal("no region with Object Storage capability found")
 	}
