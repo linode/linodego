@@ -93,7 +93,7 @@ func TestTag_CreateTagWithReservedIP(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestTag_CreateTagWithReservedIP")
 	defer teardown()
 
-	region := getRegionsWithCaps(t, client, []string{CapabilityLinodes, CapabilityCloudFirewall})[0]
+	region := getRegionsWithCaps(t, client, []linodego.RegionCapability{CapabilityLinodes, CapabilityCloudFirewall})[0]
 
 	// Reserve an IP for testing
 	reservedIP, err := client.ReserveIPAddress(context.Background(), ReserveIPOptions{Region: region})
