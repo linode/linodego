@@ -65,7 +65,6 @@ jobs:
         uses: golangci/golangci-lint-action@v9
         with:
           version: latest
-          cache-invalidation-interval: 1
 
       - name: Run tidy
         run: make tidy
