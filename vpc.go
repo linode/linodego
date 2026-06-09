@@ -171,6 +171,7 @@ func (c *Client) DeleteVPC(ctx context.Context, vpcID int) error {
 	return doDELETERequest(ctx, c, e)
 }
 
+// GetVPCDefaultRanges may not currently be available to all users.
 func (c *Client) GetVPCDefaultRanges(ctx context.Context) (*VPCDefaultRanges, error) {
 	return doGETRequest[VPCDefaultRanges](ctx, c, "/vpcs/default-ranges")
 }
