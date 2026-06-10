@@ -17,7 +17,7 @@ type ReservedIPAssignedEntity struct {
 // NOTE: Reserved IP feature may not currently be available to all users.
 type ReserveIPOptions struct {
 	Region string   `json:"region"`
-	Tags   []string `json:"tags,omitempty"`
+	Tags   []string `json:"tags,omitzero"`
 }
 
 // UpdateReservedIPOptions represents the options for updating a reserved IP address
