@@ -333,8 +333,8 @@ func TestVPC_ListIPv6Addresses(t *testing.T) {
 	require.True(t, *vpcIPs[0].IPv6IsPublic)
 }
 
-func TestVPC_IPv4DefaultRanges(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestVPC_IPv4DefaultRanges")
+func TestVPC_IPv4Ranges(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestVPC_IPv4Ranges")
 	defer teardown()
 
 	regions := getRegionsWithCaps(t, client, []linodego.RegionCapability{CapabilityVPCCustomIPv4Ranges})
@@ -390,11 +390,19 @@ func TestVPC_IPv4DefaultRanges(t *testing.T) {
 	updated, err := client.UpdateVPC(ctx, vpc.ID, updateOpts)
 	require.NoError(t, err, "failed to update VPC")
 	requireIPv4Contains(t, updated.IPv4, newIPv4Range, "Update")
+}
 
-	dr, err := client.GetVPCDefaultRanges(ctx)
+func TestVPC_DefaultRanges(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestVPC_DefaultRanges")
+	defer teardown()
+
+	dr, err := client.GetVPCDefaultRanges(context.Background())
 	require.NoError(t, err, "failed to get VPC default ranges")
 	require.NotEmpty(t, dr.IPV4Ranges,
 		"expected IPv4 ranges to be present, got %+v", dr,
+	)
+	require.NotEmpty(t, dr.ForbiddenIPV4Ranges,
+		"expected forbidden IPv4 ranges to be present, got %+v", dr,
 	)
 }
 
