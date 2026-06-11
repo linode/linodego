@@ -343,22 +343,21 @@ func TestVPC_IPv4Ranges(t *testing.T) {
 	ctx := context.Background()
 	ipv4Range := "10.118.0.0/20"
 
-	createOpts := linodego.VPCCreateOptions{
-		Label:  "go-test-vpc-" + getUniqueText(),
-		Region: regions[0],
-		IPv4: []linodego.VPCCreateOptionsIPv4{
-			{Range: linodego.Pointer(ipv4Range)},
+	vpc, vpcTeardown, err := createVPC(
+		t,
+		client,
+		func(_ *linodego.Client, options *linodego.VPCCreateOptions) {
+			options.Region = regions[0]
+			options.IPv4 = []linodego.VPCCreateOptionsIPv4{
+				{
+					Range: linodego.Pointer(ipv4Range),
+				},
+			}
 		},
-	}
+	)
+	require.NoError(t, err)
 
-	vpc, err := client.CreateVPC(ctx, createOpts)
-	require.NoError(t, err, "failed to create VPC")
-
-	defer func() {
-		if err := client.DeleteVPC(ctx, vpc.ID); err != nil {
-			t.Logf("failed to delete VPC %d: %v", vpc.ID, err)
-		}
-	}()
+	defer vpcTeardown()
 
 	requireIPv4Contains(t, vpc.IPv4, ipv4Range, "Create")
 
