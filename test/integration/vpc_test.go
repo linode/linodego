@@ -106,6 +106,8 @@ func vpcCreateOptionsCheck(
 
 	if opts.VPCType == "" {
 		good = good && vpc.VPCType == "regular"
+	} else {
+		good = good && opts.VPCType == vpc.VPCType
 	}
 
 	for i := 0; i < minInt(len(opts.Subnets), len(vpc.Subnets)); i++ {
@@ -421,4 +423,40 @@ func requireIPv4Contains(t *testing.T, ranges []linodego.VPCIPv4Range, wantRange
 
 	require.Failf(t, "IPv4 range not found",
 		"%s: expected IPv4 range %s in %+v", context, wantRange, ranges)
+}
+
+func TestVPC_WithRDMAType(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestVPC_WithRDMAType")
+	defer teardown()
+
+	// GPUDirect RDMA capability not available for now
+	// regions := getRegionsWithCaps(t, client, []string{linodego.CapabilityVPCs, linodego.CapabilityGPUDirectRDMA})
+	regions := getRegionsWithCaps(t, client, []RegionCapability{linodego.CapabilityVPCs})
+	require.NotEmpty(t, regions, "No region with GPUDirect RDMA capability available")
+
+	vpc, createOpts, vpcTeardown, err := createVPC(t, client, []vpcModifier{func(l *linodego.Client, options *linodego.VPCCreateOptions) {
+		options.Region = regions[0]
+		options.VPCType = linodego.VPCTypeRDMA
+	}}...)
+	require.NoError(t, err, "Error creating VPC with RDMA type")
+	defer vpcTeardown()
+	vpcCheck(vpc, t)
+	vpcCreateOptionsCheck(&createOpts, vpc, t)
+
+	vpc, err = client.GetVPC(context.Background(), vpc.ID)
+	require.NoError(t, err, "Error retrieving VPC")
+	vpcCreateOptionsCheck(&createOpts, vpc, t)
+
+	vpcs, err := client.ListVPCs(context.Background(), nil)
+	require.NoError(t, err, "Error listing VPCs")
+
+	var found *linodego.VPC
+	for idx := range vpcs {
+		if vpcs[idx].ID == vpc.ID {
+			found = &vpcs[idx]
+			break
+		}
+	}
+	require.NotNil(t, found, "VPC not found in list")
+	vpcCreateOptionsCheck(&createOpts, found, t)
 }

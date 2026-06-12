@@ -9,6 +9,7 @@ import (
 	"github.com/linode/linodego/v2"
 	. "github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 const (
@@ -369,4 +370,37 @@ func TestVPC_Subnet_WithNodeBalancer(t *testing.T) {
 	assert.Equal(t, 1, len(refreshedSubnet.Nodebalancers), "expected 1 assigned node balancer")
 	assert.Equal(t, "192.168.0.64/30", refreshedSubnet.Nodebalancers[0].Ipv4Range, "expected matching ipv4 range")
 	assert.Equal(t, 0, len(refreshedSubnet.Nodebalancers[0].Ipv6Ranges), "expected 0 ipv6 ranges")
+}
+
+func TestVPC_Subnet_WithRDMAType(t *testing.T) {
+	client, vpc, vpcSubnet, teardown, err := setupVPCWithSubnet(
+		t,
+		"fixtures/TestVPC_Subnet_WithRDMAType",
+		func(client *linodego.Client, opts *linodego.VPCCreateOptions) {
+			//GPUDirect RDMA capability not available for now
+			//opts.Region = getRegionsWithCaps(t, client, []string{linodego.CapabilityVPCs, linodego.CapabilityGPUDirectRDMA})
+			opts.Region = getRegionsWithCaps(t, client, []RegionCapability{linodego.CapabilityVPCs})[0]
+			opts.VPCType = linodego.VPCTypeRDMA
+		},
+	)
+	defer teardown()
+	require.NoError(t, err, "Error creating RDMA VPC with subnet")
+	assert.Equal(t, linodego.VPCTypeRDMA, vpcSubnet.VPCType, "Expected VPC subnet type to be RDMA")
+
+	vpcSubnet, err = client.GetVPCSubnet(context.Background(), vpc.ID, vpcSubnet.ID)
+	require.NoError(t, err, "Error retrieving VPC subnet")
+	assert.Equal(t, linodego.VPCTypeRDMA, vpcSubnet.VPCType, "Expected VPC subnet type to be RDMA")
+
+	subnets, err := client.ListVPCSubnets(context.Background(), vpc.ID, nil)
+	require.NoError(t, err, "Error listing VPC subnets")
+
+	var found *linodego.VPCSubnet
+	for idx := range subnets {
+		if subnets[idx].ID == vpcSubnet.ID {
+			found = &subnets[idx]
+			break
+		}
+	}
+	require.NotNil(t, found, "VPC subnet not found in list")
+	assert.Equal(t, linodego.VPCTypeRDMA, found.VPCType, "Expected VPC subnet type to be RDMA")
 }
