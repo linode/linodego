@@ -97,7 +97,7 @@ func TestLKECluster_Enterprise_BYOVPC_smoke(t *testing.T) {
 	require.Greater(t, len(regions), 0, "Error getting regions with required capabilities")
 
 	region := regions[0]
-	vpc, vpcTeardown, err := createVPC(t, client, []vpcModifier{func(l *linodego.Client, options *linodego.VPCCreateOptions) {
+	vpc, _, vpcTeardown, err := createVPC(t, client, []vpcModifier{func(l *linodego.Client, options *linodego.VPCCreateOptions) {
 		options.Region = region
 		options.IPv6 = []linodego.VPCCreateOptionsIPv6{
 			{

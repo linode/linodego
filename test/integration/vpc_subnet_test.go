@@ -249,7 +249,7 @@ func TestVPC_Subnet_List(t *testing.T) {
 }
 
 func TestVPC_Subnet_Create_Invalid_data(t *testing.T) {
-	client, vpc, teardown, err := setupVPC(t, "fixtures/TestVPC_Subnet_Create_Invalid_data")
+	client, vpc, _, teardown, err := setupVPC(t, "fixtures/TestVPC_Subnet_Create_Invalid_data")
 	defer teardown()
 	if err != nil {
 		t.Error(formatVPCSubnetError(err, "setting up", nil, nil))
@@ -265,7 +265,7 @@ func TestVPC_Subnet_Create_Invalid_data(t *testing.T) {
 	if e.Code != 400 {
 		t.Errorf("should have received a 400 Code with invalid label, got %v", e.Code)
 	}
-	expectedErrorMessage := "Label must include only ASCII letters, numbers, and dashes"
+	expectedErrorMessage := "Must only use ASCII letters, numbers, and dashes"
 	if !strings.Contains(e.Message, expectedErrorMessage) {
 		t.Errorf("Wrong error message displayed should have contained, %s", expectedErrorMessage)
 	}

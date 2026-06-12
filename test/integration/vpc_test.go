@@ -32,7 +32,7 @@ func formatVPCError(err error, action string, vpcID *int) error {
 	)
 }
 
-func createVPC(t *testing.T, client *linodego.Client, vpcModifier ...vpcModifier) (*linodego.VPC, func(), error) {
+func createVPC(t *testing.T, client *linodego.Client, vpcModifier ...vpcModifier) (*linodego.VPC, linodego.VPCCreateOptions, func(), error) {
 	t.Helper()
 	createOpts := linodego.VPCCreateOptions{
 		Label:  "go-test-vpc-" + getUniqueText(),
@@ -53,7 +53,7 @@ func createVPC(t *testing.T, client *linodego.Client, vpcModifier ...vpcModifier
 			t.Error(formatVPCError(err, "deleting", &vpc.ID))
 		}
 	}
-	return vpc, teardown, err
+	return vpc, createOpts, teardown, err
 }
 
 func createVPC_invalid_label(t *testing.T, client *linodego.Client) error {
@@ -70,19 +70,20 @@ func createVPC_invalid_label(t *testing.T, client *linodego.Client) error {
 func setupVPC(t *testing.T, fixturesYaml string) (
 	*linodego.Client,
 	*linodego.VPC,
+	linodego.VPCCreateOptions,
 	func(),
 	error,
 ) {
 	t.Helper()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 
-	vpc, vpcTeardown, err := createVPC(t, client)
+	vpc, createOpts, vpcTeardown, err := createVPC(t, client)
 
 	teardown := func() {
 		vpcTeardown()
 		fixtureTeardown()
 	}
-	return client, vpc, teardown, err
+	return client, vpc, createOpts, teardown, err
 }
 
 func vpcCheck(vpc *linodego.VPC, t *testing.T) {
@@ -102,6 +103,10 @@ func vpcCreateOptionsCheck(
 		opts.Label == vpc.Label &&
 		opts.Region == vpc.Region &&
 		len(opts.Subnets) == len(vpc.Subnets))
+
+	if opts.VPCType == "" {
+		good = good && vpc.VPCType == "regular"
+	}
 
 	for i := 0; i < minInt(len(opts.Subnets), len(vpc.Subnets)); i++ {
 		good = good && (opts.Subnets[i].IPv4 == vpc.Subnets[i].IPv4 &&
@@ -126,19 +131,18 @@ func vpcUpdateOptionsCheck(
 }
 
 func TestVPC_CreateGet_smoke(t *testing.T) {
-	client, vpc, teardown, err := setupVPC(t, "fixtures/TestVPC_CreateGet")
+	client, vpc, createOpts, teardown, err := setupVPC(t, "fixtures/TestVPC_CreateGet")
 	defer teardown()
 	if err != nil {
 		t.Error(formatVPCError(err, "setting up", nil))
 	}
 	vpcCheck(vpc, t)
-	opts := vpc.GetCreateOptions()
-	vpcCreateOptionsCheck(&opts, vpc, t)
+	vpcCreateOptionsCheck(&createOpts, vpc, t)
 	client.GetVPC(context.TODO(), vpc.ID)
 }
 
 func TestVPC_Update(t *testing.T) {
-	client, vpc, teardown, err := setupVPC(t, "fixtures/TestVPC_Update")
+	client, vpc, _, teardown, err := setupVPC(t, "fixtures/TestVPC_Update")
 	defer teardown()
 	if err != nil {
 		t.Error(formatVPCError(err, "setting up", nil))
@@ -161,7 +165,7 @@ func TestVPC_Update(t *testing.T) {
 }
 
 func TestVPC_List(t *testing.T) {
-	client, vpc, teardown, err := setupVPC(t, "fixtures/TestVPC_List")
+	client, vpc, _, teardown, err := setupVPC(t, "fixtures/TestVPC_List")
 	defer teardown()
 	if err != nil {
 		t.Error(formatVPCError(err, "setting up", nil))
@@ -202,7 +206,7 @@ func TestVPC_Create_Invalid_data(t *testing.T) {
 }
 
 func TestVPC_Update_Invalid_data(t *testing.T) {
-	client, vpc, teardown, err := setupVPC(t, "fixtures/TestVPC_Update_Invalid")
+	client, vpc, _, teardown, err := setupVPC(t, "fixtures/TestVPC_Update_Invalid")
 	defer teardown()
 	if err != nil {
 		t.Error(formatVPCError(err, "setting up", nil))
@@ -225,7 +229,7 @@ func TestVPC_Update_Invalid_data(t *testing.T) {
 	if e.Code != 400 {
 		t.Errorf("should have received a 400 Code with invalid label, got %v", e.Code)
 	}
-	expectedErrorMessage := "Label must include only ASCII letters, numbers, and dashes"
+	expectedErrorMessage := "Must only use ASCII letters, numbers, and dashes"
 	if !strings.Contains(e.Message, expectedErrorMessage) {
 		t.Errorf("Wrong error message displayed should have contained, %s", expectedErrorMessage)
 	}
