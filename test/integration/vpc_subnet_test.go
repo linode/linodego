@@ -199,6 +199,7 @@ func TestVPC_Subnet_Create(t *testing.T) {
 	vpcSubnetCheck(vpcSubnet, t)
 	opts := vpcSubnet.GetCreateOptions()
 	vpcSubnetCreateOptionsCheck(&opts, vpcSubnet, t)
+	assert.Equal(t, linodego.VPCTypeRegular, vpcSubnet.VPCType, "Expected VPC type to be regular")
 }
 
 func TestVPC_Subnet_Update(t *testing.T) {
