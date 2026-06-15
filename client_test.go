@@ -5,6 +5,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
 	"net/http/httptest"
 	"os"
@@ -593,8 +594,13 @@ func TestClient_CustomRootCAWithCustomRoundTripper(t *testing.T) {
 		Transport: server.Client().Transport,
 	}
 
+	var logBuf bytes.Buffer
+	log.SetOutput(&logBuf)
+	defer log.SetOutput(os.Stderr)
+
 	_, err = NewClient(&http.Client{Transport: tr})
-	require.ErrorContains(t, err, "custom transport is not allowed with a custom root CA")
+	require.NoError(t, err)
+	require.Contains(t, logBuf.String(), "[WARN] Custom root certificate is not supported with a custom transport")
 }
 
 func TestClient_CustomRootCAWithMissingFile(t *testing.T) {

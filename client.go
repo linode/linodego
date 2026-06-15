@@ -198,7 +198,8 @@ func NewClient(hc *http.Client) (client Client, err error) {
 	}
 
 	certPath, certPathExists := os.LookupEnv(APIHostCert)
-	if certPathExists {
+
+	if certPathExists { //nolint:nestif
 		if _, ok := client.httpClient.Transport.(*http.Transport); ok {
 			if err := client.SetRootCertificate(certPath); err != nil {
 				return Client{}, err
