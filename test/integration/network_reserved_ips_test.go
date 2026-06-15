@@ -237,7 +237,7 @@ func TestReservedIPAddresses_EndToEndTest(t *testing.T) {
 	}
 
 	for _, addressIP := range verifyList {
-		if addressIP.Address == resIP.Address {
+		if addressIP.Address == resIP.Address && addressIP.Region == resIP.Region {
 			assert.Nil(t, addressIP.AssignedEntity)
 			assert.True(t, addressIP.Reserved)
 			assert.Equal(t, 0, addressIP.LinodeID)
