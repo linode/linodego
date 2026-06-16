@@ -266,7 +266,7 @@ type RDMAVPCInterfaceIPv4Options struct {
 // NOTE: RDMA VPC interfaces may not currently be available to all users.
 type RDMAVPCInterfaceIPv4AddressOptions struct {
 	Address string `json:"address,omitzero"`
-	Primary *bool `json:"primary,omitzero"`
+	Primary *bool  `json:"primary,omitzero"`
 }
 
 type LinodeInterfacesUpgrade struct {
