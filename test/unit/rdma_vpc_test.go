@@ -215,7 +215,7 @@ func TestInterface_UpdateRDMAVPC(t *testing.T) {
 			SubnetID: 9,
 			IPv4: linodego.RDMAVPCInterfaceIPv4Options{
 				Addresses: []linodego.RDMAVPCInterfaceIPv4AddressOptions{
-					{Address: "10.0.1.5", Primary: true},
+					{Address: "10.0.1.5", Primary: linodego.Pointer(true)},
 				},
 			},
 		},
@@ -249,7 +249,7 @@ func TestInstance_CreateWithRDMAInterfaces_MarshalJSON(t *testing.T) {
 					SubnetID: 1234,
 					IPv4: linodego.RDMAVPCInterfaceIPv4Options{
 						Addresses: []linodego.RDMAVPCInterfaceIPv4AddressOptions{
-							{Address: "auto", Primary: true},
+							{Address: "auto", Primary: linodego.Pointer(true)},
 						},
 					},
 				},
@@ -393,4 +393,70 @@ func TestVPCSubnet_RDMA_VPCType(t *testing.T) {
 	assert.Equal(t, 8, subnet.ID)
 	assert.Equal(t, "rdma-subnet", subnet.Label)
 	assert.Equal(t, linodego.VPCTypeRDMA, subnet.VPCType)
+}
+
+// =============================================================================
+// RDMA VPC Interface Option Marshaling-Semantics Tests
+// =============================================================================
+
+// jsonToMap marshals v and unmarshals it into a generic map for key inspection.
+func jsonToMap(t *testing.T, v any) map[string]any {
+	t.Helper()
+
+	data, err := json.Marshal(v)
+	require.NoError(t, err)
+
+	var parsed map[string]any
+	require.NoError(t, json.Unmarshal(data, &parsed))
+
+	return parsed
+}
+
+func TestRDMAVPCInterface_ExplicitPrimaryFalse(t *testing.T) {
+	// A caller MUST be able to send "primary": false explicitly.
+	// Primary is a pointer precisely so that false != unset.
+	opts := linodego.RDMAVPCInterfaceCreateOptions{
+		SubnetID: 1234,
+		IPv4: linodego.RDMAVPCInterfaceIPv4Options{
+			Addresses: []linodego.RDMAVPCInterfaceIPv4AddressOptions{
+				{
+					Address: "10.0.0.5",
+					Primary: linodego.Pointer(false),
+				},
+			},
+		},
+	}
+
+	parsed := jsonToMap(t, opts)
+
+	ipv4 := parsed["ipv4"].(map[string]any)
+	addresses := ipv4["addresses"].([]any)
+	require.Len(t, addresses, 1)
+
+	addr := addresses[0].(map[string]any)
+	primary, exists := addr["primary"]
+	require.True(t, exists, "primary must be present when explicitly set to false")
+	assert.Equal(t, false, primary)
+}
+
+func TestRDMAVPCInterface_ExplicitEmptyAddresses(t *testing.T) {
+	// On update, a caller MUST be able to send an explicit empty addresses list.
+	// A non-nil empty slice is NOT the zero value, so omitzero still marshals it.
+	opts := linodego.RDMAVPCInterfaceUpdateOptions{
+		IPv4: linodego.RDMAVPCInterfaceIPv4Options{
+			Addresses: []linodego.RDMAVPCInterfaceIPv4AddressOptions{},
+		},
+	}
+
+	parsed := jsonToMap(t, opts)
+
+	ipv4, exists := parsed["ipv4"]
+	require.True(t, exists, "ipv4 must be present when it holds an explicit empty addresses list")
+
+	addresses, exists := ipv4.(map[string]any)["addresses"]
+	require.True(t, exists, "addresses must be present when explicitly set to an empty slice")
+
+	addrSlice, ok := addresses.([]any)
+	require.True(t, ok, "addresses should serialize as a JSON array")
+	assert.Empty(t, addrSlice, "addresses should be an explicit empty array")
 }
