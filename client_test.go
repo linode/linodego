@@ -595,9 +595,9 @@ func TestClient_CustomRootCAWithCustomRoundTripper(t *testing.T) {
 	}
 
 	var logBuf bytes.Buffer
+	prevWriter := log.Writer()
 	log.SetOutput(&logBuf)
-	defer log.SetOutput(os.Stderr)
-
+	defer log.SetOutput(prevWriter)
 	_, err = NewClient(&http.Client{Transport: tr})
 	require.NoError(t, err)
 	require.Contains(t, logBuf.String(), "[WARN] Custom root certificate is not supported with a custom transport")
