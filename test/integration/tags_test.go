@@ -105,7 +105,8 @@ func TestTag_CreateTagWithReservedIP(t *testing.T) {
 	tagObjects, err := client.ListTaggedObjects(context.Background(), tag.Label, nil)
 	require.NoErrorf(t, err, "Failed to list tagged objects: %v", err)
 
-	if len(tagObjects) == 0 || tagObjects[0].Type != "reserved_ipv4_address" || !tagObjects[0].Data.(InstanceIP).Reserved || tagObjects[0].Data.(InstanceIP).Tags[0] != tag.Label {
+	if len(tagObjects) == 0 || tagObjects[0].Type != "reserved_ipv4_address" || !tagObjects[0].Data.(InstanceIP).Reserved ||
+		tagObjects[0].Data.(InstanceIP).Tags[0] != tag.Label {
 		t.Fatalf("Should have found Tag in tagged objects list, got %v", tagObjects)
 	}
 
