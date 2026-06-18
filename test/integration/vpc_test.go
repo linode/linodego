@@ -397,7 +397,7 @@ func TestVPC_DefaultRanges(t *testing.T) {
 
 	dr, err := client.GetVPCDefaultRanges(context.Background())
 	require.NoError(t, err, "failed to get VPC default ranges")
-	require.NotEmpty(t, dr.IPV4Ranges,
+	require.NotEmpty(t, dr.DefaultIPV4Ranges,
 		"expected IPv4 ranges to be present, got %+v", dr,
 	)
 	require.NotEmpty(t, dr.ForbiddenIPV4Ranges,

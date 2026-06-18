@@ -411,7 +411,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 11 Jun 2026 15:15:26 GMT
+      - Thu, 18 Jun 2026 19:00:43 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -437,7 +437,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-vpc-1781190926455217000","region":"no-osl-1","ipv4":[{"range":"10.118.0.0/20"}]}'
+    body: '{"label":"go-test-vpc-1781809243397959000","region":"no-osl-1","ipv4":[{"range":"10.118.0.0/20"}]}'
     form: {}
     headers:
       Accept:
@@ -449,7 +449,7 @@ interactions:
     url: https://api.linode.com/v4beta/vpcs
     method: POST
   response:
-    body: '{"id": 513702, "label": "go-test-vpc-1781190926455217000", "description":
+    body: '{"id": 546901, "label": "go-test-vpc-1781809243397959000", "description":
       "", "region": "no-osl-1", "ipv4": [{"range": "10.118.0.0/20"}], "ipv6": null,
       "subnets": [], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
     headers:
@@ -476,7 +476,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 11 Jun 2026 15:15:26 GMT
+      - Thu, 18 Jun 2026 19:00:43 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -509,10 +509,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/vpcs/513702
+    url: https://api.linode.com/v4beta/vpcs/546901
     method: GET
   response:
-    body: '{"id": 513702, "label": "go-test-vpc-1781190926455217000", "description":
+    body: '{"id": 546901, "label": "go-test-vpc-1781809243397959000", "description":
       "", "region": "no-osl-1", "ipv4": [{"range": "10.118.0.0/20"}], "ipv6": null,
       "subnets": [], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
     headers:
@@ -539,7 +539,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 11 Jun 2026 15:15:26 GMT
+      - Thu, 18 Jun 2026 19:00:43 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -576,7 +576,7 @@ interactions:
     url: https://api.linode.com/v4beta/vpcs?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 513702, "label": "go-test-vpc-1781190926455217000", "description":
+    body: '{"data": [{"id": 546901, "label": "go-test-vpc-1781809243397959000", "description":
       "", "region": "no-osl-1", "ipv4": [{"range": "10.118.0.0/20"}], "ipv6": null,
       "subnets": [], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}],
       "page": 1, "pages": 1, "results": 1}'
@@ -604,7 +604,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 11 Jun 2026 15:15:26 GMT
+      - Thu, 18 Jun 2026 19:00:44 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -622,14 +622,14 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1840"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-vpc-1781190926455217000","ipv4":[{"range":"10.200.0.0/20"}]}'
+    body: '{"label":"go-test-vpc-1781809243397959000","ipv4":[{"range":"10.200.0.0/20"}]}'
     form: {}
     headers:
       Accept:
@@ -638,10 +638,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/vpcs/513702
+    url: https://api.linode.com/v4beta/vpcs/546901
     method: PUT
   response:
-    body: '{"id": 513702, "label": "go-test-vpc-1781190926455217000", "description":
+    body: '{"id": 546901, "label": "go-test-vpc-1781809243397959000", "description":
       "", "region": "no-osl-1", "ipv4": [{"range": "10.200.0.0/20"}], "ipv6": null,
       "subnets": [], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
     headers:
@@ -668,7 +668,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 11 Jun 2026 15:15:27 GMT
+      - Thu, 18 Jun 2026 19:00:44 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -685,7 +685,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "20"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -701,7 +701,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/vpcs/513702
+    url: https://api.linode.com/v4beta/vpcs/546901
     method: DELETE
   response:
     body: '{}'
@@ -729,7 +729,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 11 Jun 2026 15:15:27 GMT
+      - Thu, 18 Jun 2026 19:00:44 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -746,7 +746,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1840"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

@@ -39,7 +39,7 @@ type VPCIPv6Range struct {
 // VPCDefaultRanges represents the default settings for the internal and forbidden IPv4 address ranges in VPCs
 // NOTE: VPCDefaultRanges may not currently be available to all users.
 type VPCDefaultRanges struct {
-	IPV4Ranges          []string `json:"ipv4_ranges"`
+	DefaultIPV4Ranges   []string `json:"default_ipv4_ranges"`
 	ForbiddenIPV4Ranges []string `json:"forbidden_ipv4_ranges"`
 }
 
