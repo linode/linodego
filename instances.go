@@ -257,8 +257,8 @@ type InstanceUpdateOptions struct {
 }
 
 // MarshalJSON contains logic necessary to populate the `interfaces` field of
-// InstanceCreateOptions depending on whether Interfaces or LinodeInterfaces
-// is specified.
+// InstanceCreateOptions depending on whether Interfaces, LinodeInterfaces,
+// or LinodeInstanceInterfaces is specified.
 func (i InstanceCreateOptions) MarshalJSON() ([]byte, error) {
 	type Mask InstanceCreateOptions
 
