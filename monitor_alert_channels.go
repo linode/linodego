@@ -77,8 +77,32 @@ func (a *AlertChannel) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// AlertChannelCreateOptions represents options for creating an alert notification channel.
+type AlertChannelCreateOptions struct {
+	ChannelType AlertNotificationType      `json:"channel_type"`
+	Details     AlertChannelDetailsOptions `json:"details"`
+	Label       *string                    `json:"label,omitzero"`
+}
+
+// AlertChannelDetailsOptions represents the details configuration for an alert channel.
+type AlertChannelDetailsOptions struct {
+	Email *EmailChannelCreateOptions `json:"email,omitzero"`
+}
+
+// EmailChannelCreateOptions represents email-specific configuration for an alert channel.
+type EmailChannelCreateOptions struct {
+	Usernames     []string `json:"usernames"`
+	RecipientType *string  `json:"recipient_type,omitzero"`
+}
+
 // ListAlertChannels gets a paginated list of Alert Channels.
 func (c *Client) ListAlertChannels(ctx context.Context, opts *ListOptions) ([]AlertChannel, error) {
 	endpoint := formatAPIPath("monitor/alert-channels")
 	return getPaginatedResults[AlertChannel](ctx, c, endpoint, opts)
+}
+
+// CreateAlertChannel creates a new alert notification channel.
+func (c *Client) CreateAlertChannel(ctx context.Context, opts AlertChannelCreateOptions) (*AlertChannel, error) {
+	endpoint := formatAPIPath("monitor/alert-channels")
+	return doPOSTRequest[AlertChannel](ctx, c, endpoint, opts)
 }

@@ -8,6 +8,7 @@ import (
 
 	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 const (
@@ -330,4 +331,49 @@ func TestMonitorAlertDefinitionEntities_List(t *testing.T) {
 		assert.NotEmpty(t, entity.Type)
 		assert.NotEmpty(t, entity.URL)
 	}
+}
+
+func TestMonitorAlertChannel_Create_smoke(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertChannel_Create")
+	defer teardown()
+
+	profile, err := client.GetProfile(context.Background()) //To supply a valid email recipient username
+	require.NoError(t, err)
+	require.NotEmpty(t, profile.Username)
+
+	label := "go-test-alert-channel-create-" + getUniqueText()
+	recipientType := "user"
+
+	createOpts := linodego.AlertChannelCreateOptions{
+		ChannelType: linodego.EmailAlertNotification,
+		Label:       &label,
+		Details: linodego.AlertChannelDetailsOptions{
+			Email: &linodego.EmailChannelCreateOptions{
+				Usernames:     []string{profile.Username},
+				RecipientType: &recipientType,
+			},
+		},
+	}
+
+	channel, err := client.CreateAlertChannel(context.Background(), createOpts)
+	require.NoError(t, err)
+	require.NotNil(t, channel)
+
+	assert.NotZero(t, channel.ID)
+	assert.Equal(t, label, channel.Label)
+	assert.Equal(t, createOpts.ChannelType, channel.ChannelType)
+	assert.Equal(t, linodego.UserAlertChannel, channel.Type)
+
+	require.NotNil(t, channel.Details.Email)
+	assert.Equal(t, createOpts.Details.Email.Usernames, channel.Details.Email.Usernames)
+	assert.Equal(t, recipientType, channel.Details.Email.RecipientType)
+
+	assert.NotEmpty(t, channel.Alerts.URL)
+	assert.NotEmpty(t, channel.Alerts.Type)
+	assert.GreaterOrEqual(t, channel.Alerts.AlertCount, 0)
+
+	assertDateSet(t, channel.Created)
+	assertDateSet(t, channel.Updated)
+
+	// Intentionally no cleanup: delete API for monitor alert channels is not available.
 }
