@@ -59,6 +59,7 @@ const (
 	CapabilityVPCIPv6LargePrefixes             RegionCapability = "VPC IPv6 Large Prefixes"
 	CapabilityVPCIPv6Stack                     RegionCapability = "VPC IPv6 Stack"
 	CapabilityVPCsExtra                        RegionCapability = "VPCs Extra"
+	CapabilityVPCCustomIPv4Ranges              RegionCapability = "Custom VPC IPv4 Ranges"
 )
 
 // Region-related endpoints have a custom expiry time as the
