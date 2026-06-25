@@ -7,8 +7,8 @@ import (
 	"testing"
 	"time"
 
+	k8scondition "github.com/linode/linodego/k8s/pkg/condition"
 	"github.com/linode/linodego/v2"
-	k8scondition "github.com/linode/linodego/v2/k8s/pkg/condition"
 	"github.com/stretchr/testify/require"
 )
 

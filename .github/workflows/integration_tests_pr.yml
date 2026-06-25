@@ -2,6 +2,14 @@ on:
   pull_request:
   workflow_dispatch:
     inputs:
+      run_aclp_logs_stream_tests:
+        description: 'Set this parameter to "true" to run ACLP logs stream related test cases'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
       sha:
         description: 'The hash value of the commit.'
         required: true
@@ -40,11 +48,13 @@ jobs:
         if: ${{ inputs.module != '' && steps.disallowed-char-check.outputs.match == '' }}
         env:
           LINODE_TOKEN: ${{ secrets.DX_LINODE_TOKEN }}
+          RUN_ACLP_LOGS_STREAM_TESTS: ${{ github.event.inputs.run_aclp_logs_stream_tests }}
 
       - run: make fixtures
         if: ${{ inputs.module == '' }}
         env:
           LINODE_TOKEN: ${{ secrets.DX_LINODE_TOKEN }}
+          RUN_ACLP_LOGS_STREAM_TESTS: ${{ github.event.inputs.run_aclp_logs_stream_tests }}
       
       - name: Get the hash value of the latest commit from the PR branch
         uses: octokit/graphql-action@v2.x

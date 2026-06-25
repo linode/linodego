@@ -16,23 +16,10 @@ to:
 import "github.com/linode/linodego/v2"
 ```
 
-If you use the helper Kubernetes package, also change:
-
-```go
-import "github.com/linode/linodego/k8s"
-```
-
-to:
-
-```go
-import "github.com/linode/linodego/v2/k8s"
-```
-
 Also update your module dependencies:
 
 ```shell
 go get github.com/linode/linodego/v2
-go get github.com/linode/linodego/v2/k8s # if you import the Kubernetes helper module
 go mod tidy
 ```
 
