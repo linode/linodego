@@ -8,6 +8,7 @@ import (
 
 	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 const (
@@ -16,6 +17,34 @@ const (
 	// TODO: use a fixed channel id for now until the alert channel has been fixed.
 	channelID = 10000
 )
+
+func deleteMonitorAlertDefinitionWithRetry(t *testing.T, client *linodego.Client, serviceType string, alertID int) {
+	t.Helper()
+
+	// Retry deletion with exponential backoff for up to 2 minutes
+	maxWait := 2 * time.Minute
+	baseDelay := 2 * time.Second
+	var err error
+	var lastErr error
+	start := time.Now()
+
+	for attempt := 0; time.Since(start) < maxWait; attempt++ {
+		err = client.DeleteMonitorAlertDefinition(context.Background(), serviceType, alertID)
+		if err == nil {
+			break
+		}
+
+		lastErr = err
+		// Exponential backoff, capped at 30s
+		sleep := baseDelay * (1 << attempt)
+		if sleep > 30*time.Second {
+			sleep = 30 * time.Second
+		}
+		time.Sleep(sleep)
+	}
+
+	assert.NoError(t, err, "DeleteMonitorAlertDefinition failed after retries for alert ID %d: %v", alertID, lastErr)
+}
 
 func TestMonitorAlertDefinition_smoke(t *testing.T) {
 	ctx := waitContext(t, 300*time.Second)
@@ -180,25 +209,7 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 
 	// Clean up created alert definition
 	if createdAlert != nil {
-		// Retry deletion with exponential backoff for up to 2 minutes
-		maxWait := 2 * time.Minute
-		baseDelay := 2 * time.Second
-		var lastErr error
-		start := time.Now()
-		for attempt := 0; time.Since(start) < maxWait; attempt++ {
-			err = client.DeleteMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, createdAlert.ID)
-			if err == nil {
-				break
-			}
-			lastErr = err
-			// Exponential backoff, capped at 30s
-			sleep := baseDelay * (1 << attempt)
-			if sleep > 30*time.Second {
-				sleep = 30 * time.Second
-			}
-			time.Sleep(sleep)
-		}
-		assert.NoError(t, err, "DeleteMonitorAlertDefinition failed after retries: %v", lastErr)
+		deleteMonitorAlertDefinitionWithRetry(t, client, testMonitorAlertDefinitionServiceType, createdAlert.ID)
 	}
 }
 
@@ -345,9 +356,8 @@ func TestMonitorAlertDefinition_Clone(t *testing.T) {
 
 	// Get a channel ID to use
 	channels, err := client.ListAlertChannels(context.Background(), nil)
-	if err != nil || len(channels) == 0 {
-		t.Fatalf("failed to determine a monitor channel to use: %s", err)
-	}
+	require.NoErrorf(t, err, "failed to determine a monitor channel to use: %v", err)
+	require.NotEmpty(t, channels, "no alert channels available to use for cloning test")
 	testChannelID := channels[0].ID
 
 	// Create the source alert definition
@@ -384,9 +394,7 @@ func TestMonitorAlertDefinition_Clone(t *testing.T) {
 	}
 
 	sourceAlert, err := client.CreateMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, createOpts)
-	if err != nil {
-		t.Fatalf("CreateMonitorAlertDefinition failed: %s", err)
-	}
+	require.NoErrorf(t, err, "CreateMonitorAlertDefinition failed: %s", err)
 	assert.NotNil(t, sourceAlert)
 	assert.Equal(t, createOpts.Label, sourceAlert.Label)
 	assert.NotNil(t, sourceAlert.GroupBy)
@@ -398,9 +406,7 @@ func TestMonitorAlertDefinition_Clone(t *testing.T) {
 		testMonitorAlertDefinitionServiceType,
 		sourceAlert.ID,
 	)
-	if err != nil {
-		t.Fatalf("failed to wait for source alert definition to be enabled: %s", err)
-	}
+	require.NoErrorf(t, err, "failed to wait for source alert definition to be enabled: %s", err)
 
 	// Clone the source alert definition with overridden fields
 	cloneLabel := sourceAlert.Label + "-clone"
@@ -437,22 +443,6 @@ func TestMonitorAlertDefinition_Clone(t *testing.T) {
 
 	// Cleanup both source and cloned alert definitions
 	for _, alertID := range []int{sourceAlert.ID, clonedAlert.ID} {
-		maxWait := 2 * time.Minute
-		baseDelay := 2 * time.Second
-		var lastErr error
-		start := time.Now()
-		for attempt := 0; time.Since(start) < maxWait; attempt++ {
-			err = client.DeleteMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, alertID)
-			if err == nil {
-				break
-			}
-			lastErr = err
-			sleep := baseDelay * (1 << attempt)
-			if sleep > 30*time.Second {
-				sleep = 30 * time.Second
-			}
-			time.Sleep(sleep)
-		}
-		assert.NoError(t, err, "DeleteMonitorAlertDefinition failed after retries for alert ID %d: %v", alertID, lastErr)
+		deleteMonitorAlertDefinitionWithRetry(t, client, testMonitorAlertDefinitionServiceType, alertID)
 	}
 }
