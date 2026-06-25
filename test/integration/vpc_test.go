@@ -99,26 +99,20 @@ func vpcCreateOptionsCheck(
 	vpc *linodego.VPC,
 	t *testing.T,
 ) {
-	good := (opts.Description == vpc.Description &&
-		opts.Label == vpc.Label &&
-		opts.Region == vpc.Region &&
-		len(opts.Subnets) == len(vpc.Subnets))
+	require.NotEmpty(t, vpc.Label, "VPC label should not be empty")
+	require.Equal(t, opts.Description, vpc.Description, "VPC description mismatch")
+	require.Equal(t, opts.Region, vpc.Region, "VPC region mismatch")
+	require.Equal(t, len(opts.Subnets), len(vpc.Subnets), "VPC subnet count mismatch")
 
-	if opts.VPCType == "" {
-		good = good && vpc.VPCType == "regular"
-	} else {
-		good = good && opts.VPCType == vpc.VPCType
+	expectedVPCType := opts.VPCType
+	if expectedVPCType == "" {
+		expectedVPCType = VPCTypeRegular
 	}
+	require.Equal(t, expectedVPCType, vpc.VPCType, "VPC type mismatch")
 
 	for i := 0; i < minInt(len(opts.Subnets), len(vpc.Subnets)); i++ {
-		good = good && (opts.Subnets[i].IPv4 == vpc.Subnets[i].IPv4 &&
-			opts.Subnets[i].Label == vpc.Subnets[i].Label)
-	}
-
-	if !good {
-		t.Error(
-			"the VPC instance and the VPC creation options instance are mismatched",
-		)
+		require.Equal(t, opts.Subnets[i].IPv4, vpc.Subnets[i].IPv4, "VPC subnet IPv4 mismatch at index %d", i)
+		require.Equal(t, opts.Subnets[i].Label, vpc.Subnets[i].Label, "VPC subnet label mismatch at index %d", i)
 	}
 }
 
@@ -447,7 +441,11 @@ func TestVPC_WithRDMAType(t *testing.T) {
 	require.NoError(t, err, "Error retrieving VPC")
 	vpcCreateOptionsCheck(&createOpts, vpc, t)
 
-	vpcs, err := client.ListVPCs(context.Background(), nil)
+	f := linodego.Filter{}
+	f.AddField(linodego.Eq, "vpc_type", "rdma")
+	filter, err := f.MarshalJSON()
+
+	vpcs, err := client.ListVPCs(context.Background(), &linodego.ListOptions{Filter: string(filter)})
 	require.NoError(t, err, "Error listing VPCs")
 
 	var found *linodego.VPC
