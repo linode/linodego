@@ -423,13 +423,10 @@ func TestVPC_WithRDMAType(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestVPC_WithRDMAType")
 	defer teardown()
 
-	// GPUDirect RDMA capability not available for now
-	// regions := getRegionsWithCaps(t, client, []string{linodego.CapabilityVPCs, linodego.CapabilityGPUDirectRDMA})
-	regions := getRegionsWithCaps(t, client, []RegionCapability{linodego.CapabilityVPCs})
-	require.NotEmpty(t, regions, "No region with GPUDirect RDMA capability available")
-
 	vpc, createOpts, vpcTeardown, err := createVPC(t, client, []vpcModifier{func(l *linodego.Client, options *linodego.VPCCreateOptions) {
-		options.Region = regions[0]
+		// GPUDirect RDMA capability not available for now
+		// regions := getRegionsWithCaps(t, client, []string{linodego.CapabilityVPCs, linodego.CapabilityGPUDirectRDMA})
+		options.Region = getRegionsWithCaps(t, client, []RegionCapability{linodego.CapabilityVPCs})[0]
 		options.VPCType = linodego.VPCTypeRDMA
 	}}...)
 	require.NoError(t, err, "Error creating VPC with RDMA type")
@@ -458,3 +455,28 @@ func TestVPC_WithRDMAType(t *testing.T) {
 	require.NotNil(t, found, "VPC not found in list")
 	vpcCreateOptionsCheck(&createOpts, found, t)
 }
+
+// TODO: uncomment when RDMA VPC with IPv6 is blocked
+//func TestVPC_WithRDMATypeIPv6_Fail(t *testing.T) {
+//	client, teardown := createTestClient(t, "fixtures/TestVPC_WithRDMAType")
+//	defer teardown()
+//
+//	_, _, teardown, err := createVPC(t, client, []vpcModifier{func(l *linodego.Client, options *linodego.VPCCreateOptions) {
+//		// GPUDirect RDMA capability not available for now
+//		// regions := getRegionsWithCaps(t, client, []string{linodego.CapabilityVPCs, linodego.CapabilityGPUDirectRDMA})
+//		options.Region = getRegionsWithCaps(t, client, []RegionCapability{linodego.CapabilityVPCs})[0]
+//		options.VPCType = linodego.VPCTypeRDMA
+//		options.IPv6 = []VPCCreateOptionsIPv6{
+//			{
+//				Range: linodego.Pointer("/52"),
+//			},
+//		}
+//	}}...)
+//	require.Error(t, err, "Expected error creating VPC with RDMA type and IPv6")
+//	defer teardown()
+//
+//	e, _ := err.(*Error)
+//	assert.Equal(t, 400, e.Code, "Expected error code 400, got: %d", e.Code)
+//	expectedErrorMessage := "RDMA VPCs cannot have IPv6 ranges"
+//	assert.Contains(t, e.Message, expectedErrorMessage, "Expected error message to contain: %s, got: %s", expectedErrorMessage, e.Message)
+//}
