@@ -59,7 +59,7 @@ func createVPC(t *testing.T, client *linodego.Client, vpcModifier ...vpcModifier
 func createVPC_invalid_label(t *testing.T, client *linodego.Client) error {
 	t.Helper()
 	createOpts := linodego.VPCCreateOptions{
-		Label:  "gotest_vpc_invalid_label" + getUniqueText(),
+		Label:  "gotest_vpc_invalid_label!" + getUniqueText(),
 		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{CapabilityVPCs})[0],
 	}
 	_, err := client.CreateVPC(context.Background(), createOpts)
@@ -195,7 +195,7 @@ func TestVPC_Create_Invalid_data(t *testing.T) {
 	if e.Code != 400 {
 		t.Errorf("should have received a 400 Code with invalid label, got %v", e.Code)
 	}
-	expectedErrorMessage := "Label must include only ASCII letters, numbers, and dashes"
+	expectedErrorMessage := "Must only use ASCII letters, numbers, and underscores"
 	if !strings.Contains(e.Message, expectedErrorMessage) {
 		t.Errorf("Wrong error message displayed should have contained, %s", expectedErrorMessage)
 	}

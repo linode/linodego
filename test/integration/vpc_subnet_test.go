@@ -258,7 +258,7 @@ func TestVPC_Subnet_Create_Invalid_data(t *testing.T) {
 	}
 
 	createOpts := linodego.VPCSubnetCreateOptions{
-		Label: "linodego-vpc-test_invalid_label" + getUniqueText(),
+		Label: "linodego-vpc-test_invalid_label!" + getUniqueText(),
 		IPv4:  TestSubnetIPv4,
 	}
 	_, err = client.CreateVPCSubnet(context.Background(), createOpts, vpc.ID)
@@ -267,7 +267,7 @@ func TestVPC_Subnet_Create_Invalid_data(t *testing.T) {
 	if e.Code != 400 {
 		t.Errorf("should have received a 400 Code with invalid label, got %v", e.Code)
 	}
-	expectedErrorMessage := "Must only use ASCII letters, numbers, and dashes"
+	expectedErrorMessage := "Must only use ASCII letters, numbers, and underscores"
 	if !strings.Contains(e.Message, expectedErrorMessage) {
 		t.Errorf("Wrong error message displayed should have contained, %s", expectedErrorMessage)
 	}
@@ -284,7 +284,7 @@ func TestVPC_Subnet_Update_Invalid_data(t *testing.T) {
 	opts := vpcSubnet.GetUpdateOptions()
 	vpcSubnetUpdateOptionsCheck(&opts, vpcSubnet, t)
 
-	opts.Label = "invalid_label"
+	opts.Label = "invalid_label!"
 	_, err = client.UpdateVPCSubnet(
 		context.Background(),
 		vpc.ID,
@@ -297,7 +297,7 @@ func TestVPC_Subnet_Update_Invalid_data(t *testing.T) {
 	if e.Code != 400 {
 		t.Errorf("should have received a 400 Code with invalid label, got %v", e.Code)
 	}
-	expectedErrorMessage := "Label must include only ASCII letters, numbers, and dashes"
+	expectedErrorMessage := "Must only use ASCII letters, numbers, and underscores"
 	if !strings.Contains(e.Message, expectedErrorMessage) {
 		t.Errorf("Wrong error message displayed should have contained, %s", expectedErrorMessage)
 	}
