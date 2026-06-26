@@ -213,7 +213,7 @@ func TestVPC_Update_Invalid_data(t *testing.T) {
 	vpcUpdateOptionsCheck(&opts, vpc, t)
 
 	updatedDescription := "updated description"
-	updatedLabel := "updated_invalid_label"
+	updatedLabel := "updated-invalid_label!"
 
 	opts.Description = updatedDescription
 	opts.Label = updatedLabel
@@ -225,7 +225,7 @@ func TestVPC_Update_Invalid_data(t *testing.T) {
 	if e.Code != 400 {
 		t.Errorf("should have received a 400 Code with invalid label, got %v", e.Code)
 	}
-	expectedErrorMessage := "Must only use ASCII letters, numbers, and dashes"
+	expectedErrorMessage := "Must only use ASCII letters, numbers, and underscores"
 	if !strings.Contains(e.Message, expectedErrorMessage) {
 		t.Errorf("Wrong error message displayed should have contained, %s", expectedErrorMessage)
 	}
