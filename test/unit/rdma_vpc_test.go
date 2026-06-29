@@ -169,35 +169,30 @@ func TestInterface_ListWithRDMA(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	base.MockGet("linode/instances/506958/interfaces", fixtureData)
+	base.MockGet("linode/instances/111/interfaces", fixtureData)
 
-	ifaces, err := base.Client.ListInterfaces(context.Background(), 506958, nil)
+	ifaces, err := base.Client.ListInterfaces(context.Background(), 111, nil)
 	require.NoError(t, err)
-	require.Len(t, ifaces, 3)
+	require.Len(t, ifaces, 2)
 
-	// First interface: RDMA VPC
-	assert.Equal(t, 10, ifaces[0].ID)
-	require.NotNil(t, ifaces[0].RDMAVPC)
-	assert.Equal(t, 39, ifaces[0].RDMAVPC.VPCID)
-	assert.Equal(t, 1234, ifaces[0].RDMAVPC.SubnetID)
-	assert.Equal(t, "10.0.0.1", ifaces[0].RDMAVPC.IPv4.Addresses[0].Address)
-	assert.True(t, ifaces[0].RDMAVPC.IPv4.Addresses[0].Primary)
-	assert.Nil(t, ifaces[0].VPC)
+	// First interface: regular VPC
+	assert.Equal(t, 111111, ifaces[0].ID)
+	assert.Nil(t, ifaces[0].RDMAVPC)
+	require.NotNil(t, ifaces[0].VPC)
+	assert.Equal(t, 123, ifaces[0].VPC.VPCID)
+	assert.Equal(t, 456, ifaces[0].VPC.SubnetID)
+	assert.True(t, *ifaces[0].DefaultRoute.IPv4)
 	assert.Nil(t, ifaces[0].Public)
 
 	// Second interface: RDMA VPC
-	assert.Equal(t, 11, ifaces[1].ID)
+	assert.Equal(t, 222222, ifaces[1].ID)
 	require.NotNil(t, ifaces[1].RDMAVPC)
-	assert.Equal(t, 39, ifaces[1].RDMAVPC.VPCID)
-	assert.Equal(t, "10.0.0.25", ifaces[1].RDMAVPC.IPv4.Addresses[0].Address)
-
-	// Third interface: regular VPC
-	assert.Equal(t, 12, ifaces[2].ID)
-	assert.Nil(t, ifaces[2].RDMAVPC)
-	require.NotNil(t, ifaces[2].VPC)
-	assert.Equal(t, 3, ifaces[2].VPC.VPCID)
-	assert.Equal(t, 4, ifaces[2].VPC.SubnetID)
-	assert.True(t, *ifaces[2].DefaultRoute.IPv4)
+	assert.Equal(t, 123, ifaces[1].RDMAVPC.VPCID)
+	assert.Equal(t, 456, ifaces[1].RDMAVPC.SubnetID)
+	assert.Equal(t, "10.0.0.2", ifaces[1].RDMAVPC.IPv4.Addresses[0].Address)
+	assert.True(t, ifaces[1].RDMAVPC.IPv4.Addresses[0].Primary)
+	assert.Nil(t, ifaces[1].VPC)
+	assert.Nil(t, ifaces[1].Public)
 }
 
 func TestInterface_UpdateRDMAVPC(t *testing.T) {

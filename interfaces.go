@@ -326,7 +326,15 @@ func (i *LinodeInterface) UnmarshalJSON(b []byte) error {
 
 func (c *Client) ListInterfaces(ctx context.Context, linodeID int, opts *ListOptions) ([]LinodeInterface, error) {
 	e := formatAPIPath("linode/instances/%d/interfaces", linodeID)
-	return getPaginatedResults[LinodeInterface](ctx, c, e, opts)
+
+	response, err := doGETRequest[struct {
+		Interfaces []LinodeInterface `json:"interfaces"`
+	}](ctx, c, e)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Interfaces, nil
 }
 
 func (c *Client) GetInterface(ctx context.Context, linodeID int, interfaceID int) (*LinodeInterface, error) {
