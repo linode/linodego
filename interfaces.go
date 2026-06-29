@@ -324,7 +324,7 @@ func (i *LinodeInterface) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-func (c *Client) ListInterfaces(ctx context.Context, linodeID int, opts *ListOptions) ([]LinodeInterface, error) {
+func (c *Client) ListInterfaces(ctx context.Context, linodeID int, _ *ListOptions) ([]LinodeInterface, error) {
 	e := formatAPIPath("linode/instances/%d/interfaces", linodeID)
 
 	response, err := doGETRequest[struct {
