@@ -1,4 +1,4 @@
-module github.com/linode/linodego/v2/k8s
+module github.com/linode/linodego/k8s
 
 require (
 	github.com/linode/linodego/v2 v2.0.0

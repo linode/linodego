@@ -102,11 +102,7 @@ func testRecorder(t *testing.T, fixturesYaml string, testingMode recorder.Mode, 
 	})
 
 	r.AddFilter(func(i *cassette.Interaction) error {
-		re := regexp.MustCompile(`"access_key": "[[:alnum:]]*"`)
-		i.Response.Body = re.ReplaceAllString(i.Response.Body, `"access_key": "[SANITIZED]"`)
-		re = regexp.MustCompile(`"secret_key": "[[:alnum:]]*"`)
-		i.Response.Body = re.ReplaceAllString(i.Response.Body, `"secret_key": "[SANITIZED]"`)
-		re = regexp.MustCompile("20[0-9]{2}-[01][0-9]-[0-3][0-9]T[0-2][0-9]:[0-9]{2}:[0-9]{2}")
+		re := regexp.MustCompile("20[0-9]{2}-[01][0-9]-[0-3][0-9]T[0-2][0-9]:[0-9]{2}:[0-9]{2}")
 		i.Response.Body = re.ReplaceAllString(i.Response.Body, "2018-01-02T03:04:05")
 		// re = regexp.MustCompile("192\\.168\\.((1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])\\.)(1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])")
 		// i.Response.Body = re.ReplaceAllString(i.Response.Body, "10.0.0.1")
@@ -118,7 +114,32 @@ func testRecorder(t *testing.T, fixturesYaml string, testingMode recorder.Mode, 
 	})
 
 	r.AddSaveFilter(func(i *cassette.Interaction) error {
-		re := regexp.MustCompile("AWSAccessKeyId=[[:alnum:]]{20}")
+		// Sanitize credentials only when saving to cassette, so that real access/secret
+		// keys are available to test code during recording (e.g. for creating a
+		// LogsDestination that requires valid object-storage credentials).
+
+		// Object Storage access_key / secret_key (response and request bodies)
+		re := regexp.MustCompile(`"access_key":\s*"[^"]*"`)
+		i.Response.Body = re.ReplaceAllString(i.Response.Body, `"access_key": "[SANITIZED]"`)
+		i.Request.Body = re.ReplaceAllString(i.Request.Body, `"access_key": "[SANITIZED]"`)
+		re = regexp.MustCompile(`"secret_key":\s*"[^"]*"`)
+		i.Response.Body = re.ReplaceAllString(i.Response.Body, `"secret_key": "[SANITIZED]"`)
+		i.Request.Body = re.ReplaceAllString(i.Request.Body, `"secret_key": "[SANITIZED]"`)
+
+		// LogsDestination credentials (access_key_id / access_key_secret)
+		re = regexp.MustCompile(`"access_key_id":\s*"[^"]*"`)
+		i.Response.Body = re.ReplaceAllString(i.Response.Body, `"access_key_id": "[SANITIZED]"`)
+		i.Request.Body = re.ReplaceAllString(i.Request.Body, `"access_key_id":"[SANITIZED]"`)
+		re = regexp.MustCompile(`"access_key_secret":\s*"[^"]*"`)
+		i.Response.Body = re.ReplaceAllString(i.Response.Body, `"access_key_secret": "[SANITIZED]"`)
+		i.Request.Body = re.ReplaceAllString(i.Request.Body, `"access_key_secret":"[SANITIZED]"`)
+
+		// Custom HTTPS basic authentication password
+		re = regexp.MustCompile(`"basic_authentication_password":\s*"[^"]*"`)
+		i.Response.Body = re.ReplaceAllString(i.Response.Body, `"basic_authentication_password": "[SANITIZED]"`)
+		i.Request.Body = re.ReplaceAllString(i.Request.Body, `"basic_authentication_password":"[SANITIZED]"`)
+
+		re = regexp.MustCompile("AWSAccessKeyId=[[:alnum:]]{20}")
 		i.Response.Body = re.ReplaceAllString(i.Response.Body, "AWSAccessKeyID=SANITIZED")
 		i.Request.URL = re.ReplaceAllString(i.Request.URL, "AWSAccessKeyID=SANITIZED")
 		return nil

@@ -2,12 +2,136 @@ package integration
 
 import (
 	"context"
+	"fmt"
 	"strings"
 	"testing"
 
 	"github.com/linode/linodego/v2"
-	. "github.com/linode/linodego/v2"
+	"github.com/stretchr/testify/assert"
 )
+
+// TestReservedIPAddress_ReserveWithTags verifies that tags can be passed when reserving
+// an IP and are returned in the response.
+func TestReservedIPAddress_ReserveWithTags(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestReservedIPAddress_ReserveWithTags")
+	defer teardown()
+
+	resIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes, linodego.CapabilityCloudFirewall})[0],
+		Tags:   []string{"lb"},
+	})
+	if err != nil {
+		t.Fatalf("Failed to reserve IP with tags: %v", err)
+	}
+
+	if resIP.Address == "" {
+		t.Fatal("Expected a non-empty address in the response")
+	}
+	if !resIP.Reserved {
+		t.Errorf("Expected Reserved=true, got false")
+	}
+	found := false
+	for _, tag := range resIP.Tags {
+		if tag == "lb" {
+			found = true
+			break
+		}
+	}
+	if !found {
+		t.Errorf("Expected tag 'lb' in response tags, got %v", resIP.Tags)
+	}
+
+	defer func() {
+		if err := client.DeleteReservedIPAddress(context.Background(), resIP.Address); err != nil {
+			t.Errorf("Failed to delete reserved IP %s: %v", resIP.Address, err)
+		}
+	}()
+
+	// Verify tags round-trip via Get
+	fetched, err := client.GetReservedIPAddress(context.Background(), resIP.Address)
+	if err != nil {
+		t.Fatalf("Failed to get reserved IP: %v", err)
+	}
+	foundInFetch := false
+	for _, tag := range fetched.Tags {
+		if tag == "lb" {
+			foundInFetch = true
+			break
+		}
+	}
+	if !foundInFetch {
+		t.Errorf("Expected tag 'lb' in fetched IP tags, got %v", fetched.Tags)
+	}
+}
+
+// TestReservedIPAddress_UpdateTags verifies that PUT /networking/reserved/ips/{address}
+// replaces tags in full.
+func TestReservedIPAddress_UpdateTags(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestReservedIPAddress_UpdateTags")
+	defer teardown()
+
+	// Reserve without tags first
+	resIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes, linodego.CapabilityCloudFirewall})[0],
+	})
+	if err != nil {
+		t.Fatalf("Failed to reserve IP: %v", err)
+	}
+	defer func() {
+		if err := client.DeleteReservedIPAddress(context.Background(), resIP.Address); err != nil {
+			t.Errorf("Failed to delete reserved IP %s: %v", resIP.Address, err)
+		}
+	}()
+
+	// Set tags
+	updated, err := client.UpdateReservedIPAddress(context.Background(), resIP.Address, linodego.UpdateReservedIPOptions{
+		Tags: []string{"lb"},
+	})
+	if err != nil {
+		t.Fatalf("Failed to update reserved IP tags: %v", err)
+	}
+	if len(updated.Tags) != 1 || updated.Tags[0] != "lb" {
+		t.Errorf("Expected tags=[lb] after update, got %v", updated.Tags)
+	}
+
+	// Replace tags entirely (full replacement semantics)
+	cleared, err := client.UpdateReservedIPAddress(context.Background(), resIP.Address, linodego.UpdateReservedIPOptions{
+		Tags: []string{},
+	})
+	if err != nil {
+		t.Fatalf("Failed to clear reserved IP tags: %v", err)
+	}
+	if len(cleared.Tags) != 0 {
+		t.Errorf("Expected empty tags after clearing, got %v", cleared.Tags)
+	}
+}
+
+// TestReservedIPTypes_List verifies that GET /networking/reserved/ips/types returns
+// pricing structs with all expected fields populated.
+func TestReservedIPTypes_List(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestReservedIPTypes_List")
+	defer teardown()
+
+	types, err := client.ListReservedIPTypes(context.Background(), nil)
+	if err != nil {
+		t.Fatalf("Failed to list reserved IP types: %v", err)
+	}
+	if len(types) == 0 {
+		t.Fatal("Expected at least one reserved IP type, got none")
+	}
+
+	for _, rt := range types {
+		if rt.ID == "" {
+			t.Errorf("Expected non-empty ID for reserved IP type")
+		}
+		if rt.Label == "" {
+			t.Errorf("Expected non-empty Label for reserved IP type")
+		}
+		if rt.Price.Hourly == 0 && rt.Price.Monthly == 0 {
+			t.Errorf("Expected non-zero pricing for type %s", rt.ID)
+		}
+	}
+}
 
 // TestReservedIPAddresses_InsufficientPermissions tests the behavior when a user account
 // doesn't have the permission to use the Reserved IP feature
@@ -20,8 +144,9 @@ func TestReservedIPAddresses_InsufficientPermissions(t *testing.T) {
 	defer teardown()
 	defer func() { validTestAPIKey = original }()
 
+	region := getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes, linodego.CapabilityCloudFirewall})[0]
 	filter := ""
-	ips, listErr := client.ListReservedIPAddresses(context.Background(), NewListOptions(0, filter))
+	ips, listErr := client.ListReservedIPAddresses(context.Background(), linodego.NewListOptions(0, filter))
 	if listErr == nil {
 		t.Errorf("Expected error due to insufficient permissions, but got none %v", ips)
 	} else {
@@ -33,8 +158,8 @@ func TestReservedIPAddresses_InsufficientPermissions(t *testing.T) {
 	}
 
 	// Attempt to reserve an IP address
-	resIP, resErr := client.ReserveIPAddress(context.Background(), ReserveIPOptions{
-		Region: "us-east",
+	resIP, resErr := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{
+		Region: region,
 	})
 	if resErr == nil {
 		t.Errorf("Expected error when reserving IP due to insufficient permissions, but got none")
@@ -69,7 +194,7 @@ func TestReservedIPAddresses_EndToEndTest(t *testing.T) {
 
 	filter := ""
 
-	ipList, err := client.ListReservedIPAddresses(context.Background(), NewListOptions(0, filter))
+	ipList, err := client.ListReservedIPAddresses(context.Background(), linodego.NewListOptions(0, filter))
 	if err != nil {
 		t.Fatalf("Error listing IP addresses: %v", err)
 	}
@@ -77,8 +202,9 @@ func TestReservedIPAddresses_EndToEndTest(t *testing.T) {
 	initialCount := len(ipList)
 
 	// Attempt to reserve an IP
-	resIP, resErr := client.ReserveIPAddress(context.Background(), ReserveIPOptions{
-		Region: "us-east",
+	resIP, resErr := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes, linodego.CapabilityCloudFirewall})[0],
+		Tags:   []string{"lb"},
 	})
 
 	if resErr != nil {
@@ -101,13 +227,22 @@ func TestReservedIPAddresses_EndToEndTest(t *testing.T) {
 	}
 
 	// Verify the list of IPs has increased
-	verifyList, verifyErr := client.ListReservedIPAddresses(context.Background(), NewListOptions(0, filter))
+	verifyList, verifyErr := client.ListReservedIPAddresses(context.Background(), linodego.NewListOptions(0, filter))
 	if verifyErr != nil {
 		t.Fatalf("Error listing IP addresses after reservation: %v", verifyErr)
 	}
 
 	if len(verifyList) != initialCount+1 {
 		t.Errorf("Expected IP count to increase by 1, got %d, want %d", len(verifyList), initialCount+1)
+	}
+
+	for _, addressIP := range verifyList {
+		if addressIP.Address == resIP.Address {
+			assert.Nil(t, addressIP.AssignedEntity)
+			assert.True(t, addressIP.Reserved)
+			assert.Equal(t, 0, addressIP.LinodeID)
+			assert.Equal(t, []string{"lb"}, addressIP.Tags)
+		}
 	}
 
 	// Delete the reserved IP
@@ -122,7 +257,7 @@ func TestReservedIPAddresses_EndToEndTest(t *testing.T) {
 		t.Errorf("Expected error when fetching %s, got nil", resIP.Address)
 	}
 
-	verifyDelList, verifyDelErr := client.ListReservedIPAddresses(context.Background(), NewListOptions(0, filter))
+	verifyDelList, verifyDelErr := client.ListReservedIPAddresses(context.Background(), linodego.NewListOptions(0, filter))
 	if verifyDelErr != nil {
 		t.Fatalf("Error listing IP addresses after deletion: %v", verifyDelErr)
 	}
@@ -137,13 +272,14 @@ func TestReservedIPAddresses_ListIPAddressesVariants(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestReservedIPAddresses_ListIPAddressesVariants")
 	defer teardown()
 
-	expected_ips := 2
+	expectedIPs := 2
+	region := getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes, linodego.CapabilityCloudFirewall})[0]
 
-	// Reserve two IP addresses in us-east region
-	reservedIPs := make([]string, expected_ips)
-	for i := 0; i < expected_ips; i++ {
+	// Reserve two IP addresses in region
+	reservedIPs := make([]string, expectedIPs)
+	for i := 0; i < expectedIPs; i++ {
 		reserveIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{
-			Region: "us-east",
+			Region: region,
 		})
 		if err != nil {
 			t.Fatalf("Failed to reserve IP %d: %v", i+1, err)
@@ -162,20 +298,20 @@ func TestReservedIPAddresses_ListIPAddressesVariants(t *testing.T) {
 		}
 	}()
 
-	// Create ListOptions with the filter for reserved IPs in us-east region
+	// Create ListOptions with the filter for reserved IPs in region
 	listOptions := linodego.ListOptions{
 		PageOptions: &linodego.PageOptions{
 			Page: 0,
 		},
-		Filter: "{\"reserved\":true,\"region\":\"us-east\"}",
+		Filter: fmt.Sprintf("{\"reserved\":true,\"region\":\"%s\"}", region),
 	}
 
 	ipList, err := client.ListIPAddresses(context.Background(), &listOptions)
 	if err != nil {
-		t.Fatalf("Error listing reserved IP addresses in us-east: %v", err)
+		t.Fatalf("Error listing reserved IP addresses in %s: %v", region, err)
 	}
 
-	t.Logf("Retrieved %d reserved IP addresses in us-east", len(ipList))
+	t.Logf("Retrieved %d reserved IP addresses in %s", len(ipList), region)
 
 	// Check if at least the two reserved IPs are in the list
 	foundReservedIPs := 0
@@ -183,8 +319,8 @@ func TestReservedIPAddresses_ListIPAddressesVariants(t *testing.T) {
 		if !ip.Reserved {
 			t.Errorf("Expected all IPs to be reserved, but found non-reserved IP: %s", ip.Address)
 		}
-		if ip.Region != "us-east" {
-			t.Errorf("Expected all IPs to be in us-east region, but found IP in %s region: %s", ip.Region, ip.Address)
+		if ip.Region != region {
+			t.Errorf("Expected all IPs to be in %s region, but found IP in %s region: %s", region, ip.Region, ip.Address)
 		}
 		for _, reservedIP := range reservedIPs {
 			if ip.Address == reservedIP {
@@ -193,8 +329,8 @@ func TestReservedIPAddresses_ListIPAddressesVariants(t *testing.T) {
 			}
 		}
 	}
-	if foundReservedIPs != expected_ips {
-		t.Errorf("Expected %d but found %d while listing reserved IP addresses", expected_ips, foundReservedIPs)
+	if foundReservedIPs != expectedIPs {
+		t.Errorf("Expected %d but found %d while listing reserved IP addresses", expectedIPs, foundReservedIPs)
 	}
 }
 
@@ -204,8 +340,8 @@ func TestReservedIPAddresses_GetIPAddressVariants(t *testing.T) {
 	defer teardown()
 
 	// Reserve an IP for testing
-	resIP, resErr := client.ReserveIPAddress(context.Background(), ReserveIPOptions{
-		Region: "us-east",
+	resIP, resErr := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes, linodego.CapabilityCloudFirewall})[0],
 	})
 
 	if resErr != nil {
@@ -269,19 +405,19 @@ func TestReservedIPAddresses_ReserveIPAddressVariants(t *testing.T) {
 	defer cleanupIPs()
 
 	// Test reserving IP with omitted region
-	_, omitErr := client.ReserveIPAddress(context.Background(), ReserveIPOptions{})
+	_, omitErr := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{})
 	if omitErr == nil {
 		t.Errorf("Expected error when reserving IP with omitted region, got nil")
 	}
 
 	// Test reserving IP with invalid region
-	_, invalidErr := client.ReserveIPAddress(context.Background(), ReserveIPOptions{Region: "us"})
+	_, invalidErr := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{Region: "us"})
 	if invalidErr == nil {
 		t.Errorf("Expected error when reserving IP with invalid region, got nil")
 	}
 
 	// Test reserving IP with empty region
-	_, emptyErr := client.ReserveIPAddress(context.Background(), ReserveIPOptions{Region: ""})
+	_, emptyErr := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{Region: ""})
 	if emptyErr == nil {
 		t.Errorf("Expected error when reserving IP with empty region, got nil")
 	}
@@ -289,7 +425,7 @@ func TestReservedIPAddresses_ReserveIPAddressVariants(t *testing.T) {
 	// Make 2 valid IP Reservations
 	for i := 0; i < 2; i++ {
 		reserveIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{
-			Region: "us-east",
+			Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes, linodego.CapabilityCloudFirewall})[0],
 		})
 		if err != nil {
 			t.Fatalf("Failed to reserve IP %d: %v", i+1, err)
@@ -320,7 +456,7 @@ func TestReservedIPAddresses_ExceedLimit(t *testing.T) {
 	// Reserve IPs until the limit is reached and assert the error message
 	for i := 0; i < 100; i++ {
 		reservedIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{
-			Region: "us-east",
+			Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes, linodego.CapabilityCloudFirewall})[0],
 		})
 		if err != nil {
 			expectedErrorMessage := "[400] Additional Reserved IPv4 addresses require technical justification."
@@ -345,7 +481,9 @@ func TestReservedIPAddresses_DeleteIPAddressVariants(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestReservedIPAddresses_DeleteIPAddressVariants")
 	defer teardown()
 
-	validRes, validErr := client.ReserveIPAddress(context.Background(), ReserveIPOptions{Region: "us-east"})
+	validRes, validErr := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes, linodego.CapabilityCloudFirewall})[0],
+	})
 	if validErr != nil {
 		t.Fatalf("Failed to reserve IP. This test should start with 0 reservations or reservations < limit. Error from the API: %v", validErr)
 	}
@@ -357,7 +495,7 @@ func TestReservedIPAddresses_DeleteIPAddressVariants(t *testing.T) {
 	t.Logf("Successfully reserved IP: %+v", validRes)
 
 	filter := ""
-	ipList, listErr := client.ListReservedIPAddresses(context.Background(), NewListOptions(0, filter))
+	ipList, listErr := client.ListReservedIPAddresses(context.Background(), linodego.NewListOptions(0, filter))
 	if listErr != nil {
 		t.Fatalf("Error listing IP addresses: %v", listErr)
 	}
@@ -372,7 +510,7 @@ func TestReservedIPAddresses_DeleteIPAddressVariants(t *testing.T) {
 	}
 
 	// Verify deletion
-	verifyDelList, verifyDelErr := client.ListReservedIPAddresses(context.Background(), NewListOptions(0, filter))
+	verifyDelList, verifyDelErr := client.ListReservedIPAddresses(context.Background(), linodego.NewListOptions(0, filter))
 	if verifyDelErr != nil {
 		t.Fatalf("Error listing IP addresses after deletion: %v", verifyDelErr)
 	}
@@ -395,11 +533,13 @@ func TestReservedIPAddresses_DeleteIPAddressVariants(t *testing.T) {
 }
 
 func TestReservedIPAddresses_GetIPReservationStatus(t *testing.T) {
-	client, teardown := createTestClient(t, "TestReservedIPAddresses_GetInstanceIPReservationStatus")
+	client, teardown := createTestClient(t, "fixtures/TestReservedIPAddresses_GetIPReservationStatus")
 	defer teardown()
 
+	region := getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes, linodego.CapabilityCloudFirewall})[0]
+
 	// Create a Linode with a reserved IP
-	reservedIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{Region: "us-east"})
+	reservedIP, err := client.ReserveIPAddress(context.Background(), linodego.ReserveIPOptions{Region: region})
 	if err != nil {
 		t.Fatalf("Failed to reserve IP: %v", err)
 	}
@@ -410,7 +550,10 @@ func TestReservedIPAddresses_GetIPReservationStatus(t *testing.T) {
 		}
 	}()
 
-	instanceWithReservedIP, instanceTeardown, err := createInstanceWithReservedIP(t, client, reservedIP.Address)
+	instanceWithReservedIP, instanceTeardown, err := createInstanceWithReservedIP(
+		t, client, reservedIP.Address, func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
+			opts.Region = region
+		})
 	if err != nil {
 		t.Fatalf("Error creating instance with reserved IP: %s", err)
 	}
@@ -439,7 +582,7 @@ func TestReservedIPAddresses_GetIPReservationStatus(t *testing.T) {
 
 	// Create a Linode with an ephemeral IP
 	instanceWithEphemeralIP, err := client.CreateInstance(context.Background(), linodego.InstanceCreateOptions{
-		Region:   "us-east",
+		Region:   region,
 		Type:     "g6-nanode-1",
 		Label:    "test-instance-ephemeral-ip",
 		RootPass: randPassword(),
