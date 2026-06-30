@@ -14,7 +14,7 @@ func createInstanceWithLinodeInterfaces(
 	t *testing.T,
 	client *linodego.Client,
 	enableCloudFirewall bool,
-	interfaces []linodego.LinodeInterfaceCreateOptions,
+	interfaces []linodego.LinodeInstanceInterfaceCreateOptions,
 	modifiers ...instanceModifier,
 ) (*linodego.Instance, func(), error) {
 	if t != nil {
@@ -22,14 +22,14 @@ func createInstanceWithLinodeInterfaces(
 	}
 
 	createOpts := linodego.InstanceCreateOptions{
-		Label:               "go-test-intf-" + randLabel(),
-		RootPass:            randPassword(),
-		Region:              getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodeInterfaces})[0],
-		Type:                "g6-nanode-1",
-		Image:               "linode/debian12",
-		Booted:              linodego.Pointer(false),
-		InterfaceGeneration: linodego.GenerationLinode,
-		LinodeInterfaces:    interfaces,
+		Label:                    "go-test-intf-" + randLabel(),
+		RootPass:                 randPassword(),
+		Region:                   getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodeInterfaces})[0],
+		Type:                     "g6-nanode-1",
+		Image:                    "linode/debian12",
+		Booted:                   linodego.Pointer(false),
+		InterfaceGeneration:      linodego.GenerationLinode,
+		LinodeInstanceInterfaces: interfaces,
 	}
 
 	if enableCloudFirewall {
@@ -50,31 +50,6 @@ func createInstanceWithLinodeInterfaces(
 		}
 	}
 	return instance, teardown, err
-}
-
-func setupInstanceWithLinodeInterfaces(
-	t *testing.T,
-	fixturesYaml string,
-	EnableCloudFirewall bool,
-	interfaces []linodego.LinodeInterfaceCreateOptions,
-	modifiers ...instanceModifier,
-) (*linodego.Client, *linodego.Instance, func(), error) {
-	if t != nil {
-		t.Helper()
-	}
-	client, fixtureTeardown := createTestClient(t, fixturesYaml)
-
-	instance, teardownInstance, err := createInstanceWithLinodeInterfaces(t, client, EnableCloudFirewall, interfaces, modifiers...)
-	if err != nil {
-		t.Errorf("failed to create test instance: %s", err)
-	}
-
-	teardown := func() {
-		teardownInstance()
-		fixtureTeardown()
-	}
-
-	return client, instance, teardown, err
 }
 
 func prepareMultipleRDMAInterfaces(amount int, subnet *linodego.VPCSubnet) []linodego.LinodeInstanceInterfaceCreateOptions {
@@ -121,31 +96,35 @@ func TestInstance_CreateWithLinodeInterfaces(
 		t,
 		client,
 		true,
-		[]linodego.LinodeInterfaceCreateOptions{
+		[]linodego.LinodeInstanceInterfaceCreateOptions{
 			{
-				FirewallID: linodego.Pointer(firewallID),
-				Public: &linodego.PublicInterfaceCreateOptions{
-					IPv4: &linodego.PublicInterfaceIPv4CreateOptions{
-						Addresses: []linodego.PublicInterfaceIPv4AddressCreateOptions{
-							{
-								Address: linodego.Pointer("auto"),
-								Primary: linodego.Pointer(true),
+				LinodeInterfaceCreateOptions: linodego.LinodeInterfaceCreateOptions{
+					FirewallID: linodego.Pointer(firewallID),
+					Public: &linodego.PublicInterfaceCreateOptions{
+						IPv4: &linodego.PublicInterfaceIPv4CreateOptions{
+							Addresses: []linodego.PublicInterfaceIPv4AddressCreateOptions{
+								{
+									Address: linodego.Pointer("auto"),
+									Primary: linodego.Pointer(true),
+								},
 							},
 						},
+						IPv6: &linodego.PublicInterfaceIPv6CreateOptions{},
 					},
-					IPv6: &linodego.PublicInterfaceIPv6CreateOptions{},
 				},
 			},
 			{
-				FirewallID: linodego.Pointer(firewallID),
-				VPC: &linodego.VPCInterfaceCreateOptions{
-					SubnetID: vpcSubnet.ID,
-					IPv4: &linodego.VPCInterfaceIPv4CreateOptions{
-						Addresses: []linodego.VPCInterfaceIPv4AddressCreateOptions{
-							{
-								Address:        linodego.Pointer("auto"),
-								Primary:        linodego.Pointer(true),
-								NAT1To1Address: linodego.Pointer("auto"),
+				LinodeInterfaceCreateOptions: linodego.LinodeInterfaceCreateOptions{
+					FirewallID: linodego.Pointer(firewallID),
+					VPC: &linodego.VPCInterfaceCreateOptions{
+						SubnetID: vpcSubnet.ID,
+						IPv4: &linodego.VPCInterfaceIPv4CreateOptions{
+							Addresses: []linodego.VPCInterfaceIPv4AddressCreateOptions{
+								{
+									Address:        linodego.Pointer("auto"),
+									Primary:        linodego.Pointer(true),
+									NAT1To1Address: linodego.Pointer("auto"),
+								},
 							},
 						},
 					},
