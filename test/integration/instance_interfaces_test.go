@@ -33,8 +33,8 @@ func createInstanceWithLinodeInterfaces(
 	}
 
 	if enableCloudFirewall {
-		for i := range createOpts.LinodeInterfaces {
-			createOpts.LinodeInterfaces[i].FirewallID = linodego.Pointer(firewallID)
+		for i := range createOpts.LinodeInstanceInterfaces {
+			createOpts.LinodeInstanceInterfaces[i].FirewallID = linodego.Pointer(firewallID)
 		}
 	}
 
@@ -146,7 +146,7 @@ func TestInstance_CreateWithLinodeInterfaces(
 }
 
 func TestInstance_CreateWithRDMAVPCInterfaces(t *testing.T) {
-	client, fixtureTeardown := createTestClient(t, "fixtures/TestInstance_CreateWithLinodeInterfaces")
+	client, fixtureTeardown := createTestClient(t, "fixtures/TestInstance_CreateWithRDMAVPCInterfaces")
 	t.Cleanup(fixtureTeardown)
 
 	//GPUDirect RDMA capability not available for now
@@ -181,7 +181,7 @@ func TestInstance_CreateWithRDMAVPCInterfaces(t *testing.T) {
 	multiRDMAInterfaces := prepareMultipleRDMAInterfaces(8, vpcSubnetRDMA)
 	interfaceCreateOptions = append(interfaceCreateOptions, multiRDMAInterfaces...)
 
-	//// Include at least one regular interface
+	// Include at least one regular interface
 	interfaceCreateOptions = append(interfaceCreateOptions, linodego.LinodeInstanceInterfaceCreateOptions{
 		LinodeInterfaceCreateOptions: linodego.LinodeInterfaceCreateOptions{
 			FirewallID: linodego.Pointer(firewallID),

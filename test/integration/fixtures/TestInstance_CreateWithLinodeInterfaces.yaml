@@ -88,7 +88,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-vpc-1782807920726503000","region":"pl-labkrk-2","subnets":[{"label":"linodego-vpc-test-1782807920726528000","ipv4":"192.168.0.0/25"}]}'
+    body: '{"label":"go-test-vpc-1782810640594955000","region":"pl-labkrk-2","subnets":[{"label":"linodego-vpc-test-1782810640594977000","ipv4":"192.168.0.0/25"}]}'
     form: {}
     headers:
       Accept:
@@ -100,9 +100,9 @@ interactions:
     url: https://api.devcloud.linode.com/v4beta/vpcs
     method: POST
   response:
-    body: '{"id": 510516, "label": "go-test-vpc-1782807920726503000", "description":
+    body: '{"id": 510567, "label": "go-test-vpc-1782810640594955000", "description":
       "", "region": "pl-labkrk-2", "ipv4": [{"range": "10.0.0.0/8"}, {"range": "192.168.0.0/17"}],
-      "ipv6": null, "subnets": [{"id": 381533, "label": "linodego-vpc-test-1782807920726528000",
+      "ipv6": null, "subnets": [{"id": 381571, "label": "linodego-vpc-test-1782810640594977000",
       "ipv4": "192.168.0.0/25", "ipv6": null, "linodes": [], "databases": [], "nodebalancers":
       [], "vpc_type": "regular", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}],
       "vpc_type": "regular", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
@@ -152,7 +152,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"pl-labkrk-2","type":"g6-nanode-1","label":"go-test-intf-k5gum4290k2c","root_pass":"0w90!;I2W37#cP95c~6)W=AOqT7LJsYT8A2GfGj$6a\u003e^xP$d\u0026a7oG\u003c7m][1yt~$g","image":"linode/debian12","interface_generation":"linode","booted":false,"interfaces":[{"firewall_id":1631063,"public":{"ipv4":{"addresses":[{"address":"auto","primary":true}]},"ipv6":{}}},{"firewall_id":1631063,"vpc":{"subnet_id":381533,"ipv4":{"addresses":[{"address":"auto","primary":true,"nat_1_1_address":"auto"}]}}}]}'
+    body: '{"region":"pl-labkrk-2","type":"g6-nanode-1","label":"go-test-intf-25g4ful86h1d","root_pass":"d:fg+u[O3H!yn67.m8GQR654P^Sf5~Dvn:Vkd*8;IG86G/A=T*es056/Y]0@Bln4","image":"linode/debian12","interface_generation":"linode","booted":false,"interfaces":[{"firewall_id":1631285,"public":{"ipv4":{"addresses":[{"address":"auto","primary":true}]},"ipv6":{}}},{"firewall_id":1631285,"vpc":{"subnet_id":381571,"ipv4":{"addresses":[{"address":"auto","primary":true,"nat_1_1_address":"auto"}]}}}]}'
     form: {}
     headers:
       Accept:
@@ -164,7 +164,7 @@ interactions:
     url: https://api.devcloud.linode.com/v4beta/linode/instances
     method: POST
   response:
-    body: '{"id": 102106023, "label": "go-test-intf-k5gum4290k2c", "group": "", "status":
+    body: '{"id": 102106684, "label": "go-test-intf-25g4ful86h1d", "group": "", "status":
       "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
       "type": "g6-nanode-1", "ipv4": ["172.24.221.11", "172.24.221.195"], "ipv6":
       "1234::5678/128", "image": "linode/debian12", "region":
@@ -174,7 +174,7 @@ interactions:
       10000, "system_alerts": [], "user_alerts": []}, "backups": {"enabled": true,
       "available": false, "schedule": {"day": null, "window": null}, "last_successful":
       null}, "hypervisor": "kvm", "watchdog_enabled": true, "tags": [], "host_uuid":
-      "de0844c3e8325b799c19259d463a9506f9a2b2d7", "has_user_data": false, "placement_group":
+      "c6a84401030a8a5a3cf1b07e8152033ff27390b0", "has_user_data": false, "placement_group":
       null, "disk_encryption": "enabled", "lke_cluster_id": null, "capabilities":
       ["Block Storage Encryption", "SMTP Enabled", "Maintenance Policy"], "interface_generation":
       "linode", "maintenance_policy": "linode/migrate", "locks": []}'
@@ -231,7 +231,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/linode/instances/102106023
+    url: https://api.devcloud.linode.com/v4beta/linode/instances/102106684
     method: DELETE
   response:
     body: '{}'
@@ -290,7 +290,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/vpcs/510516
+    url: https://api.devcloud.linode.com/v4beta/vpcs/510567
     method: DELETE
   response:
     body: '{}'
