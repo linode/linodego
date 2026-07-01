@@ -7,9 +7,10 @@ import (
 
 // NetworkProtocol is used for firewall rule protocol fields.
 //
-// This can also represent arbitrary ports, for example `NetworkProtocol("50")`.
+// This can also represent arbitrary protocols, for example an IP protocol number
+// like `NetworkProtocol("50")`.
 //
-// NOTE: ProtocolALL and numeric protocols may not yet
+// NOTE: ALL and numeric protocols may not yet
 // be available to all users.
 type NetworkProtocol string
 
