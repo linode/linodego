@@ -22,20 +22,20 @@ interactions:
       Group", "StackScripts", "NETINT Quadra T1U", "Maintenance Policy", "Linode Interfaces",
       "ACLP Logs Datacenter LKE-E"], "monitors": {"alerts": ["Linodes", "Managed Databases",
       "NodeBalancers"], "metrics": ["Linodes", "Managed Databases", "NodeBalancers"]},
-      "status": "ok", "resolvers": {"ipv4": "172.24.224.240,172.24.224.229,172.24.224.236,172.24.224.238,172.24.224.235,172.24.224.241,172.24.224.230,172.24.224.239,172.24.224.233,172.24.224.234",
+      "status": "ok", "resolvers": {"ipv4": "192.0.2.0,192.0.2.0,192.0.2.0,192.0.2.0,192.0.2.0,192.0.2.0,192.0.2.0,192.0.2.0,192.0.2.0,192.0.2.0",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "us-labedgeeat-2",
       "label": "East Wenatchee, US", "country": "us", "capabilities": ["Linodes",
       "Disk Encryption", "Cloud Firewall", "Vlans", "VPCs", "VPC Dual Stack", "VPC
       IPv6 Stack", "Metadata", "Distributed Plans", "Linode Interfaces"], "monitors":
-      {"alerts": [], "metrics": []}, "status": "ok", "resolvers": {"ipv4": "173.223.100.53,173.223.101.53",
+      {"alerts": [], "metrics": []}, "status": "ok", "resolvers": {"ipv4": "192.0.2.0,192.0.2.0",
       "ipv6": "1234::5678,1234::5678"}, "placement_group_limits": {"maximum_pgs_per_customer":
       0, "maximum_linodes_per_pg": 0, "maximum_linodes_per_flexible_pg": 0}, "site_type":
       "distributed"}, {"id": "us-labedgeeat-3", "label": "East Wenatchee, US", "country":
       "us", "capabilities": ["Linodes", "Disk Encryption", "Cloud Firewall", "Metadata",
       "Distributed Plans"], "monitors": {"alerts": [], "metrics": []}, "status": "ok",
-      "resolvers": {"ipv4": "173.223.100.53,173.223.101.53", "ipv6": "1234::5678,1234::5678"},
+      "resolvers": {"ipv4": "192.0.2.0,192.0.2.0", "ipv6": "1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 0, "maximum_linodes_per_pg":
       0, "maximum_linodes_per_flexible_pg": 0}, "site_type": "distributed"}], "page":
       1, "pages": 1, "results": 3}'
@@ -85,7 +85,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"pl-labkrk-2","type":"g6-nanode-1","label":"go-test-ins-s97188hmw2qo","root_pass":"Wr7s{7EK4vT?Gk#/4s0tI\u003erv62;{p=350rFBehwU.:5Z)8?0?zm1|[WW$ZUKU36l","image":"linode/alpine3.22","firewall_id":1286587,"booted":false}'
+    body: '{"region":"pl-labkrk-2","type":"g6-nanode-1","label":"go-test-ins-s97188hmw2qo","root_pass":"thisIsYourRootPassword","image":"linode/alpine3.22","firewall_id":1286587,"booted":false}'
     form: {}
     headers:
       Accept:
@@ -99,7 +99,7 @@ interactions:
   response:
     body: '{"id": 101560404, "label": "go-test-ins-s97188hmw2qo", "group": "", "status":
       "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.24.253.209"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["192.0.2.0"], "ipv6": "1234::5678/128",
       "image": "linode/alpine3.22", "region": "pl-labkrk-2", "site_type": "core",
       "specs": {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer":
       1000, "accelerated_devices": 0}, "alerts": {"cpu": 90, "network_in": 10, "network_out":
