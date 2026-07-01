@@ -7,6 +7,7 @@ import (
 
 	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestFirewallRule_Get(t *testing.T) {
@@ -68,6 +69,81 @@ func TestFirewallRule_MarshalJSON(t *testing.T) {
         "protocol":"TCP",
         "addresses":{"ipv4":["pl::vpcs:123"]}
     }`, string(data))
+}
+
+func TestFirewallRule_MarshalExtendedProtocols(t *testing.T) {
+	tests := []struct {
+		name        string
+		rule        any
+		label       string
+		protocol    string
+		ports       string
+		expectPorts bool
+	}{
+		{
+			name: "all without ports",
+			rule: linodego.FirewallRuleInbound{
+				Action:   "ACCEPT",
+				Label:    "allow-all",
+				Protocol: linodego.ProtocolALL,
+				Addresses: linodego.NetworkAddresses{
+					IPv4: []string{"0.0.0.0/0"},
+				},
+			},
+			label:    "allow-all",
+			protocol: "ALL",
+		},
+		{
+			name: "numeric without ports",
+			rule: linodego.FirewallRuleOutbound{
+				Action:   "ACCEPT",
+				Label:    "allow-esp",
+				Protocol: linodego.NetworkProtocol("50"),
+				Addresses: linodego.NetworkAddresses{
+					IPv4: []string{"0.0.0.0/0"},
+				},
+			},
+			label:    "allow-esp",
+			protocol: "50",
+		},
+		{
+			name: "numeric tcp with ports",
+			rule: linodego.FirewallRuleSetRuleCreateOptions{
+				Action:   "ACCEPT",
+				Label:    "allow-https",
+				Ports:    "443",
+				Protocol: linodego.NetworkProtocol("6"),
+				Addresses: linodego.NetworkAddresses{
+					IPv4: []string{"0.0.0.0/0"},
+				},
+			},
+			label:       "allow-https",
+			protocol:    "6",
+			ports:       "443",
+			expectPorts: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			data, err := json.Marshal(tt.rule)
+			require.NoError(t, err)
+
+			var payload map[string]any
+			require.NoError(t, json.Unmarshal(data, &payload))
+
+			assert.Equal(t, "ACCEPT", payload["action"])
+			assert.Equal(t, tt.label, payload["label"])
+			assert.Equal(t, tt.protocol, payload["protocol"])
+			assert.Equal(t, map[string]any{"ipv4": []any{"0.0.0.0/0"}}, payload["addresses"])
+
+			if tt.expectPorts {
+				assert.Equal(t, tt.ports, payload["ports"])
+			} else {
+				assert.NotContains(t, payload, "ports")
+			}
+		})
+	}
 }
 
 func TestFirewallRule_Update(t *testing.T) {

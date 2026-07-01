@@ -5,7 +5,12 @@ import (
 	"encoding/json"
 )
 
-// NetworkProtocol enum type
+// NetworkProtocol is used for firewall rule protocol fields.
+//
+// This can also represent arbitrary ports, for example `NetworkProtocol("50")`.
+//
+// NOTE: ProtocolALL and numeric protocols may not yet
+// be available to all users.
 type NetworkProtocol string
 
 // NetworkProtocol enum values
@@ -14,6 +19,8 @@ const (
 	UDP     NetworkProtocol = "UDP"
 	ICMP    NetworkProtocol = "ICMP"
 	IPENCAP NetworkProtocol = "IPENCAP"
+
+	ProtocolALL NetworkProtocol = "ALL"
 )
 
 // NetworkAddresses are arrays of ipv4 and v6 addresses
