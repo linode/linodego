@@ -85,7 +85,7 @@ func TestFirewallRule_MarshalExtendedProtocols(t *testing.T) {
 			rule: linodego.FirewallRuleInbound{
 				Action:   "ACCEPT",
 				Label:    "allow-all",
-				Protocol: linodego.ProtocolALL,
+				Protocol: linodego.AllNetworkProtocols,
 				Addresses: linodego.NetworkAddresses{
 					IPv4: []string{"0.0.0.0/0"},
 				},

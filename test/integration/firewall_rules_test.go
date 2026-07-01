@@ -88,7 +88,7 @@ func TestFirewallRules_ExtendedProtocols(t *testing.T) {
 			{
 				Label:    "linodego-fwrule-all",
 				Action:   "ACCEPT",
-				Protocol: linodego.ProtocolALL,
+				Protocol: linodego.AllNetworkProtocols,
 				Addresses: linodego.NetworkAddresses{
 					IPv4: []string{"0.0.0.0/0"},
 				},
@@ -126,7 +126,7 @@ func TestFirewallRules_ExtendedProtocols(t *testing.T) {
 
 	require.Len(t, firewall.Rules.Inbound, 3)
 
-	assert.Equal(t, linodego.ProtocolALL, firewall.Rules.Inbound[0].Protocol)
+	assert.Equal(t, linodego.AllNetworkProtocols, firewall.Rules.Inbound[0].Protocol)
 	assert.Empty(t, firewall.Rules.Inbound[0].Ports)
 
 	assert.Equal(t, linodego.NetworkProtocol("50"), firewall.Rules.Inbound[1].Protocol)
@@ -140,7 +140,7 @@ func TestFirewallRules_ExtendedProtocols(t *testing.T) {
 
 	require.Len(t, result.Rules.Inbound, 3)
 
-	assert.Equal(t, linodego.ProtocolALL, result.Rules.Inbound[0].Protocol)
+	assert.Equal(t, linodego.AllNetworkProtocols, result.Rules.Inbound[0].Protocol)
 	assert.Empty(t, result.Rules.Inbound[0].Ports)
 
 	assert.Equal(t, linodego.NetworkProtocol("50"), result.Rules.Inbound[1].Protocol)

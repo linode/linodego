@@ -21,7 +21,7 @@ const (
 	ICMP    NetworkProtocol = "ICMP"
 	IPENCAP NetworkProtocol = "IPENCAP"
 
-	ProtocolALL NetworkProtocol = "ALL"
+	AllNetworkProtocols NetworkProtocol = "ALL"
 )
 
 // NetworkAddresses are arrays of ipv4 and v6 addresses
