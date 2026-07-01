@@ -120,7 +120,7 @@ func TestFirewallRules_ExtendedProtocols(t *testing.T) {
 			createOpts.Label = label
 			createOpts.Rules = rules
 		},
-	}, "fixtures/TestFirewall_CreateWithExtendedProtocols")
+	}, "fixtures/TestFirewallRules_ExtendedProtocols")
 	t.Cleanup(teardown)
 	require.NoError(t, err)
 
