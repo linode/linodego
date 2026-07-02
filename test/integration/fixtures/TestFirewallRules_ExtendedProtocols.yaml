@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"label":"fw-ext-1782930907178636000","rules":{"inbound":[{"action":"ACCEPT","label":"linodego-fwrule-all","protocol":"ALL","addresses":{"ipv4":["0.0.0.0/0"]}},{"action":"ACCEPT","label":"linodego-fwrule-numeric","protocol":"50","addresses":{"ipv4":["0.0.0.0/0"]}},{"action":"ACCEPT","label":"linodego-fwrule-tcp-numeric","ports":"443","protocol":"6","addresses":{"ipv4":["0.0.0.0/0"]}}],"inbound_policy":"DROP","outbound":null,"outbound_policy":"ACCEPT"},"tags":["testing"]}'
+    body: '{"label":"fw-ext-1782999745568178000","rules":{"inbound":[{"action":"ACCEPT","label":"linodego-fwrule-all","protocol":"ALL","addresses":{"ipv4":["0.0.0.0/0"]}},{"action":"ACCEPT","label":"linodego-fwrule-numeric","protocol":"50","addresses":{"ipv4":["0.0.0.0/0"]}},{"action":"ACCEPT","label":"linodego-fwrule-tcp-numeric","ports":"443","protocol":"6","addresses":{"ipv4":["0.0.0.0/0"]}}],"inbound_policy":"DROP","outbound":null,"outbound_policy":"ACCEPT"},"tags":["testing"]}'
     form: {}
     headers:
       Accept:
@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"id": 1639903, "label": "fw-ext-1782930907178636000", "created": "2018-01-02T03:04:05",
+    body: '{"id": 1645933, "label": "fw-ext-1782999745568178000", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"protocol": "ALL", "addresses": {"ipv4": ["0.0.0.0/0"]}, "action": "ACCEPT",
       "label": "linodego-fwrule-all"}, {"protocol": "50", "addresses": {"ipv4": ["0.0.0.0/0"]},
@@ -78,10 +78,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/1639903
+    url: https://api.linode.com/v4beta/networking/firewalls/1645933
     method: GET
   response:
-    body: '{"id": 1639903, "label": "fw-ext-1782930907178636000", "created": "2018-01-02T03:04:05",
+    body: '{"id": 1645933, "label": "fw-ext-1782999745568178000", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"protocol": "ALL", "addresses": {"ipv4": ["0.0.0.0/0"]}, "action": "ACCEPT",
       "label": "linodego-fwrule-all"}, {"protocol": "50", "addresses": {"ipv4": ["0.0.0.0/0"]},
@@ -147,7 +147,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/firewalls/1639903
+    url: https://api.linode.com/v4beta/networking/firewalls/1645933
     method: DELETE
   response:
     body: '{}'
