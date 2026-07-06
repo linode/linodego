@@ -858,3 +858,35 @@ func TestEnableLogSanitization(t *testing.T) {
 		t.Error("expected Authorization header to appear in request log output")
 	}
 }
+
+func TestDoRequest_RetryCountZero_StillExecutes(t *testing.T) {
+	called := false
+
+	handler := func(w http.ResponseWriter, r *http.Request) {
+		called = true
+		w.Header().Set("Content-Type", "application/json")
+		w.WriteHeader(http.StatusOK)
+		_, _ = w.Write([]byte(`{"id":1}`))
+	}
+
+	server := httptest.NewServer(http.HandlerFunc(handler))
+	defer server.Close()
+
+	client := newTestClient(t, nil)
+	client.SetBaseURL(server.URL)
+	client.SetRetryCount(0)
+
+	type result struct {
+		ID int `json:"id"`
+	}
+
+	var got result
+
+	err := client.doRequest(context.Background(), http.MethodGet, "/test", requestParams{
+		Response: &got,
+	}, nil)
+	require.NoError(t, err, "doRequest should not return an error")
+	require.True(t, called, "server handler should have been called even with retryCount=0")
+	require.Equal(t, 1, got.ID, "response should have been decoded")
+}
+
