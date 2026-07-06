@@ -43,17 +43,39 @@ const (
 
 	monitorAlertChannelCreateResponse = `{
 		"id": 10000,
-		"label": "My Email Alert Channel",
+		"label": "Email Alert Channel",
 		"channel_type": "email",
 		"type": "user",
 		"created": "2026-06-23T09:43:00",
-		"created_by": "johndoe",
+		"created_by": "tester",
 		"updated": "2026-06-23T09:43:00",
-		"updated_by": "johndoe",
+		"updated_by": "tester",
 		"details": {
 			"email": {
 				"recipient_type": "user",
-				"usernames": ["johndoe", "janedoe"]
+				"usernames": ["tester1", "tester2"]
+			}
+		},
+		"alerts": {
+			"alert_count": 0,
+			"type": "alert-definitions",
+			"url": "/monitor/alert-channels/10000/alerts"
+		}
+	}`
+
+	monitorAlertChannelUpdateResponse = `{
+		"id": 10000,
+		"label": "Email Alert Channel Updated",
+		"channel_type": "email",
+		"type": "user",
+		"created": "2026-06-23T09:43:00",
+		"created_by": "tester",
+		"updated": "2026-06-24T09:43:00",
+		"updated_by": "tester",
+		"details": {
+			"email": {
+				"recipient_type": "user",
+				"usernames": ["tester"]
 			}
 		},
 		"alerts": {
@@ -96,10 +118,10 @@ func TestCreateAlertChannel(t *testing.T) {
 
 	opts := linodego.AlertChannelCreateOptions{
 		ChannelType: linodego.EmailAlertNotification,
-		Label:       linodego.Pointer("My Email Alert Channel"),
+		Label:       linodego.Pointer("Email Alert Channel"),
 		Details: linodego.AlertChannelDetailsOptions{
 			Email: &linodego.EmailChannelCreateOptions{
-				Usernames: []string{"johndoe", "janedoe"},
+				Usernames: []string{"tester1", "tester2"},
 			},
 		},
 	}
@@ -109,11 +131,49 @@ func TestCreateAlertChannel(t *testing.T) {
 	require.NotNil(t, channel)
 
 	assert.Equal(t, 10000, channel.ID)
-	assert.Equal(t, "My Email Alert Channel", channel.Label)
+	assert.Equal(t, "Email Alert Channel", channel.Label)
 	assert.Equal(t, linodego.EmailAlertNotification, channel.ChannelType)
 	assert.Equal(t, linodego.UserAlertChannel, channel.Type)
 	require.NotNil(t, channel.Details.Email)
-	assert.Equal(t, []string{"johndoe", "janedoe"}, channel.Details.Email.Usernames)
+	assert.Equal(t, []string{"tester1", "tester2"}, channel.Details.Email.Usernames)
+	assert.Equal(t, "user", channel.Details.Email.RecipientType)
+	assert.Equal(t, 0, channel.Alerts.AlertCount)
+	assert.Equal(t, "/monitor/alert-channels/10000/alerts", channel.Alerts.URL)
+}
+
+func TestDeleteAlertChannel(t *testing.T) {
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockDelete("monitor/alert-channels/10000", nil)
+
+	err := base.Client.DeleteAlertChannel(context.Background(), 10000)
+	assert.NoError(t, err)
+}
+
+func TestUpdateAlertChannel(t *testing.T) {
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockPut("monitor/alert-channels/10000", json.RawMessage(monitorAlertChannelUpdateResponse))
+
+	label := "Email Alert Channel Updated"
+	opts := linodego.AlertChannelUpdateOptions{
+		Label: &label,
+	}
+
+	channel, err := base.Client.UpdateAlertChannel(context.Background(), 10000, opts)
+	require.NoError(t, err)
+	require.NotNil(t, channel)
+
+	assert.Equal(t, 10000, channel.ID)
+	assert.Equal(t, label, channel.Label)
+	assert.Equal(t, linodego.EmailAlertNotification, channel.ChannelType)
+	assert.Equal(t, linodego.UserAlertChannel, channel.Type)
+	require.NotNil(t, channel.Details.Email)
+	assert.Equal(t, []string{"tester"}, channel.Details.Email.Usernames)
 	assert.Equal(t, "user", channel.Details.Email.RecipientType)
 	assert.Equal(t, 0, channel.Alerts.AlertCount)
 	assert.Equal(t, "/monitor/alert-channels/10000/alerts", channel.Alerts.URL)

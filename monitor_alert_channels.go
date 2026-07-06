@@ -95,6 +95,22 @@ type EmailChannelCreateOptions struct {
 	RecipientType *string  `json:"recipient_type,omitzero"`
 }
 
+// AlertChannelUpdateOptions represents options for updating an alert notification channel.
+type AlertChannelUpdateOptions struct {
+	Details *AlertChannelUpdateDetailsOptions `json:"details,omitzero"`
+	Label   *string                           `json:"label,omitzero"`
+}
+
+// AlertChannelUpdateDetailsOptions represents update details for an alert channel.
+type AlertChannelUpdateDetailsOptions struct {
+	Email *EmailChannelUpdateOptions `json:"email,omitzero"`
+}
+
+// EmailChannelUpdateOptions represents email-specific update configuration for an alert channel.
+type EmailChannelUpdateOptions struct {
+	Usernames []string `json:"usernames,omitzero"`
+}
+
 // ListAlertChannels gets a paginated list of Alert Channels.
 func (c *Client) ListAlertChannels(ctx context.Context, opts *ListOptions) ([]AlertChannel, error) {
 	endpoint := formatAPIPath("monitor/alert-channels")
@@ -105,4 +121,16 @@ func (c *Client) ListAlertChannels(ctx context.Context, opts *ListOptions) ([]Al
 func (c *Client) CreateAlertChannel(ctx context.Context, opts AlertChannelCreateOptions) (*AlertChannel, error) {
 	endpoint := formatAPIPath("monitor/alert-channels")
 	return doPOSTRequest[AlertChannel](ctx, c, endpoint, opts)
+}
+
+// UpdateAlertChannel updates an alert notification channel.
+func (c *Client) UpdateAlertChannel(ctx context.Context, channelID int, opts AlertChannelUpdateOptions) (*AlertChannel, error) {
+	endpoint := formatAPIPath("monitor/alert-channels/%d", channelID)
+	return doPUTRequest[AlertChannel](ctx, c, endpoint, opts)
+}
+
+// DeleteAlertChannel deletes an alert notification channel.
+func (c *Client) DeleteAlertChannel(ctx context.Context, channelID int) error {
+	endpoint := formatAPIPath("monitor/alert-channels/%d", channelID)
+	return doDELETERequest(ctx, c, endpoint)
 }

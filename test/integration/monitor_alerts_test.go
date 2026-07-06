@@ -337,11 +337,13 @@ func TestMonitorAlertChannel_Create_smoke(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertChannel_Create")
 	defer teardown()
 
-	profile, err := client.GetProfile(context.Background()) //To supply a valid email recipient username
-	require.NoError(t, err)
-	require.NotEmpty(t, profile.Username)
+	// Get valid users to use for the email alert channel
+	users, err := client.ListUsers(context.Background(), nil)
+	if err != nil {
+		t.Fatalf("Error listing users: %v", err)
+	}
 
-	label := "go-test-alert-channel-create-" + getUniqueText()
+	label := "linodego-sdk-test-alert-channel"
 	recipientType := "user"
 
 	createOpts := linodego.AlertChannelCreateOptions{
@@ -349,15 +351,26 @@ func TestMonitorAlertChannel_Create_smoke(t *testing.T) {
 		Label:       &label,
 		Details: linodego.AlertChannelDetailsOptions{
 			Email: &linodego.EmailChannelCreateOptions{
-				Usernames:     []string{profile.Username},
+				Usernames:     []string{users[0].Username, users[1].Username},
 				RecipientType: &recipientType,
 			},
 		},
 	}
 
+	// Create the alert channel
 	channel, err := client.CreateAlertChannel(context.Background(), createOpts)
 	require.NoError(t, err)
 	require.NotNil(t, channel)
+
+	// Delete the created alert channel after the test completes
+	defer func() {
+		if channel != nil {
+			time.Sleep(2 * time.Second)
+			if err := client.DeleteAlertChannel(context.Background(), channel.ID); err != nil {
+				t.Logf("DeleteAlertChannel returned error: %#v", err)
+			}
+		}
+	}()
 
 	assert.NotZero(t, channel.ID)
 	assert.Equal(t, label, channel.Label)
@@ -375,5 +388,23 @@ func TestMonitorAlertChannel_Create_smoke(t *testing.T) {
 	assertDateSet(t, channel.Created)
 	assertDateSet(t, channel.Updated)
 
-	// Intentionally no cleanup: delete API for monitor alert channels is not available.
+	// Update the created alert channel
+	updatedLabel := label + "-updated"
+	updateOpts := linodego.AlertChannelUpdateOptions{
+		Label: &updatedLabel,
+		Details: &linodego.AlertChannelUpdateDetailsOptions{
+			Email: &linodego.EmailChannelUpdateOptions{
+				Usernames: []string{users[0].Username, users[1].Username},
+			},
+		},
+	}
+	updatedChannel, err := client.UpdateAlertChannel(context.Background(), channel.ID, updateOpts)
+	require.NoError(t, err)
+	require.NotNil(t, updatedChannel)
+
+	assert.Equal(t, channel.ID, updatedChannel.ID)
+	assert.Equal(t, updatedLabel, updatedChannel.Label)
+	assert.Equal(t, createOpts.ChannelType, updatedChannel.ChannelType)
+	require.NotNil(t, updatedChannel.Details.Email)
+	assert.Equal(t, createOpts.Details.Email.Usernames, updatedChannel.Details.Email.Usernames)
 }
