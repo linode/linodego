@@ -471,9 +471,15 @@ func (c *Client) SetRetryAfter(callback RetryAfter) *Client {
 	return c
 }
 
-// SetRetryCount sets the number of retries after the initial request before aborting. .
+// SetRetryCount sets the number of retries after the initial request before aborting.
+// Negative values are treated as 0 (no retries).
 func (c *Client) SetRetryCount(count int) *Client {
+	if count < 0 {
+		count = 0
+	}
+
 	c.retryCount = count
+
 	return c
 }
 
