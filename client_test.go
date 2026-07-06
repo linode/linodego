@@ -11,6 +11,7 @@ import (
 	"os"
 	"reflect"
 	"strings"
+	"sync/atomic"
 	"testing"
 	"time"
 
@@ -860,10 +861,10 @@ func TestEnableLogSanitization(t *testing.T) {
 }
 
 func TestDoRequest_RetryCountZero_StillExecutes(t *testing.T) {
-	called := false
+	var called atomic.Bool
 
 	handler := func(w http.ResponseWriter, r *http.Request) {
-		called = true
+		called.Store(true)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusOK)
 		_, _ = w.Write([]byte(`{"id":1}`))
@@ -886,7 +887,6 @@ func TestDoRequest_RetryCountZero_StillExecutes(t *testing.T) {
 		Response: &got,
 	}, nil)
 	require.NoError(t, err, "doRequest should not return an error")
-	require.True(t, called, "server handler should have been called even with retryCount=0")
+	require.True(t, called.Load(), "server handler should have been called even with retryCount=0")
 	require.Equal(t, 1, got.ID, "response should have been decoded")
 }
-
