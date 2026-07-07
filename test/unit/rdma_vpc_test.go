@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/jarcoal/httpmock"
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -294,7 +294,7 @@ func TestInstance_CreateWithLinodeInterfaces_BackwardsCompatible(t *testing.T) {
 				VPC: &linodego.VPCInterfaceCreateOptions{
 					SubnetID: 4,
 					IPv4: &linodego.VPCInterfaceIPv4CreateOptions{
-						Addresses: &[]linodego.VPCInterfaceIPv4AddressCreateOptions{
+						Addresses: []linodego.VPCInterfaceIPv4AddressCreateOptions{
 							{
 								Address: linodego.Pointer("10.0.0.5"),
 								Primary: linodego.Pointer(true),
