@@ -2,7 +2,7 @@
 version: 1
 interactions:
 - request:
-    body: '{"region":"us-east","label":"go-bucket-test-def"}'
+    body: '{"label":"fw-ext-1782999745568178000","rules":{"inbound":[{"action":"ACCEPT","label":"linodego-fwrule-all","protocol":"ALL","addresses":{"ipv4":["0.0.0.0/0"]}},{"action":"ACCEPT","label":"linodego-fwrule-numeric","protocol":"50","addresses":{"ipv4":["0.0.0.0/0"]}},{"action":"ACCEPT","label":"linodego-fwrule-tcp-numeric","ports":"443","protocol":"6","addresses":{"ipv4":["0.0.0.0/0"]}}],"inbound_policy":"DROP","outbound":null,"outbound_policy":"ACCEPT"},"tags":["testing"]}'
     form: {}
     headers:
       Accept:
@@ -11,13 +11,18 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets
+    url: https://api.linode.com/v4beta/networking/firewalls
     method: POST
   response:
-    body: '{"hostname": "go-bucket-test-def.us-east-1.linodeobjects.com", "label":
-      "go-bucket-test-def", "created": "2018-01-02T03:04:05", "region": "us-east",
-      "cluster": "us-east-1", "size": 0, "objects": 0, "endpoint_type": "E0", "s3_endpoint":
-      "us-east-1.linodeobjects.com"}'
+    body: '{"id": 1645933, "label": "fw-ext-1782999745568178000", "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
+      [{"protocol": "ALL", "addresses": {"ipv4": ["0.0.0.0/0"]}, "action": "ACCEPT",
+      "label": "linodego-fwrule-all"}, {"protocol": "50", "addresses": {"ipv4": ["0.0.0.0/0"]},
+      "action": "ACCEPT", "label": "linodego-fwrule-numeric"}, {"protocol": "6", "addresses":
+      {"ipv4": ["0.0.0.0/0"]}, "action": "ACCEPT", "label": "linodego-fwrule-tcp-numeric",
+      "ports": "443"}], "inbound_policy": "DROP", "outbound": null, "outbound_policy":
+      "ACCEPT", "version": 1, "fingerprint": "1e4bedfd"}, "tags": ["testing"], "entities":
+      []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -32,25 +37,23 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - max-age=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
       Connection:
       - keep-alive
       Content-Length:
-      - "266"
+      - "676"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Wed, 08 Jan 2025 06:03:28 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - object_storage:read_write
+      - firewall:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -59,7 +62,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -75,13 +78,18 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1?page=1
+    url: https://api.linode.com/v4beta/networking/firewalls/1645933
     method: GET
   response:
-    body: '{"data": [{"hostname": "go-bucket-test-def.us-east-1.linodeobjects.com",
-      "label": "go-bucket-test-def", "created": "2018-01-02T03:04:05", "region": "us-east",
-      "cluster": "us-east-1", "size": 0, "objects": 0, "endpoint_type": "E0", "s3_endpoint":
-      "us-east-1.linodeobjects.com"}], "page": 1, "pages": 1, "results": 1}'
+    body: '{"id": 1645933, "label": "fw-ext-1782999745568178000", "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
+      [{"protocol": "ALL", "addresses": {"ipv4": ["0.0.0.0/0"]}, "action": "ACCEPT",
+      "label": "linodego-fwrule-all"}, {"protocol": "50", "addresses": {"ipv4": ["0.0.0.0/0"]},
+      "action": "ACCEPT", "label": "linodego-fwrule-numeric"}, {"protocol": "6", "addresses":
+      {"ipv4": ["0.0.0.0/0"]}, "action": "ACCEPT", "label": "linodego-fwrule-tcp-numeric",
+      "ports": "443"}], "inbound_policy": "DROP", "outbound": null, "outbound_policy":
+      "ACCEPT", "version": 1, "fingerprint": "1e4bedfd"}, "tags": ["testing"], "entities":
+      []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -96,26 +104,25 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - max-age=0, no-cache, no-store
+      - private, max-age=0, s-maxage=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
       Connection:
       - keep-alive
       Content-Length:
-      - "315"
+      - "676"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Wed, 08 Jan 2025 06:03:29 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - object_storage:read_only
+      - firewall:read_only
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -124,7 +131,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -140,7 +147,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/go-bucket-test-def
+    url: https://api.linode.com/v4beta/networking/firewalls/1645933
     method: DELETE
   response:
     body: '{}'
@@ -158,7 +165,7 @@ interactions:
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
-      - max-age=0, no-cache, no-store
+      - private, max-age=60, s-maxage=60
       Connection:
       - keep-alive
       Content-Length:
@@ -167,16 +174,14 @@ interactions:
       - default-src 'none'
       Content-Type:
       - application/json
-      Expires:
-      - Wed, 08 Jan 2025 06:03:33 GMT
-      Pragma:
-      - no-cache
+      Server:
+      - nginx
       Strict-Transport-Security:
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - object_storage:read_write
+      - firewall:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:
@@ -185,7 +190,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
+      - "400"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

@@ -3,6 +3,14 @@ name: Continuous Integration
 on:
   workflow_dispatch:
     inputs:
+      run_aclp_logs_stream_tests:
+        description: 'Set this parameter to "true" to run ACLP logs stream related test cases'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
       test_report_upload:
         description: 'Indicates whether to upload the test report to object storage. Defaults to "false"'
         type: choice
@@ -48,7 +56,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: actions/setup-go@v6
         with:
           go-version: stable
@@ -67,7 +75,7 @@ jobs:
           gofumpt -l -w .
 
       - name: Fail if changes
-        run: git diff-index --exit-code HEAD
+        run: git diff --exit-code HEAD
 
   test:
     runs-on: ubuntu-latest
@@ -75,7 +83,7 @@ jobs:
       EXIT_STATUS: 0
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
           submodules: 'recursive'
@@ -105,6 +113,7 @@ jobs:
           make test | go-junit-report -set-exit-code -iocopy -out $REPORT_FILENAME
         env:
           SKIP_LINT: 1
+          RUN_ACLP_LOGS_STREAM_TESTS: ${{ github.event.inputs.run_aclp_logs_stream_tests }}
 
       - name: Upload test results to bucket
         if: always() && github.repository == 'linode/linodego' && github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && inputs.test_report_upload == 'true'))

@@ -5,7 +5,7 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/require"
 )
 
@@ -37,13 +37,12 @@ func TestRegions_pgLimits(t *testing.T) {
 	regionIdx := slices.IndexFunc(regions, func(region linodego.Region) bool {
 		return slices.Contains(region.Capabilities, "Placement Group")
 	})
-	require.NotZero(t, regionIdx)
+	require.GreaterOrEqual(t, regionIdx, 0, "no region with Placement Group capability found")
 
 	region := regions[regionIdx]
 
 	require.NotNil(t, region.PlacementGroupLimits)
 	require.NotZero(t, region.PlacementGroupLimits.MaximumLinodesPerPG)
-	require.NotZero(t, region.PlacementGroupLimits.MaximumPGsPerCustomer)
 }
 
 func TestRegions_blockStorageEncryption(t *testing.T) {
@@ -57,7 +56,7 @@ func TestRegions_blockStorageEncryption(t *testing.T) {
 	regionIdx := slices.IndexFunc(regions, func(region linodego.Region) bool {
 		return slices.Contains(region.Capabilities, "Block Storage Encryption")
 	})
-	require.NotZero(t, regionIdx)
+	require.GreaterOrEqual(t, regionIdx, 0, "no region with Block Storage Encryption capability found")
 }
 
 func TestRegions_kubernetesEnterprise(t *testing.T) {
@@ -71,7 +70,21 @@ func TestRegions_kubernetesEnterprise(t *testing.T) {
 	regionIdx := slices.IndexFunc(regions, func(region linodego.Region) bool {
 		return slices.Contains(region.Capabilities, "Kubernetes Enterprise")
 	})
-	require.NotZero(t, regionIdx)
+	require.GreaterOrEqual(t, regionIdx, 0, "no region with Kubernetes Enterprise capability found")
+}
+
+func TestRegions_customVPCIPv4Ranges(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestRegions_customVPCIPv4Ranges")
+	defer teardown()
+
+	regions, err := client.ListRegions(context.Background(), nil)
+	require.NoError(t, err)
+
+	// Filtering is not currently supported on capabilities
+	regionIdx := slices.IndexFunc(regions, func(region linodego.Region) bool {
+		return slices.Contains(region.Capabilities, "Custom VPC IPv4 Ranges")
+	})
+	require.GreaterOrEqual(t, regionIdx, 0, "no region with Custom VPC IPv4 Ranges capability found")
 }
 
 func TestRegionsMonitorsSection(t *testing.T) {

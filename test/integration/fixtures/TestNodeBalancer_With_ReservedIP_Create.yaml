@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips
     method: POST
   response:
-    body: '{"address": "66.228.41.111", "gateway": "66.228.41.1", "subnet_mask": "255.255.255.0",
+    body: '{"address": "192.0.2.0", "gateway": "66.228.41.1", "subnet_mask": "255.255.255.0",
       "prefix": 24, "type": "ipv4", "public": true, "rdns": null, "linode_id": null,
       "interface_id": null, "region": "us-east", "vpc_nat_1_1": null, "reserved":
       true, "assigned_entity": null}'
@@ -66,7 +66,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-def","region":"us-east","client_conn_throttle":20,"tags":null,"firewall_id":3123607,"ipv4":"66.228.41.111"}'
+    body: '{"label":"go-test-def","region":"us-east","client_conn_throttle":20,"tags":null,"firewall_id":3123607,"ipv4":"192.0.2.0"}'
     form: {}
     headers:
       Accept:
@@ -79,7 +79,7 @@ interactions:
     method: POST
   response:
     body: '{"id": 1774425, "label": "go-test-def", "region": "us-east", "type": "common",
-      "hostname": "66-228-41-111.ip.linodeusercontent.com", "ipv4": "66.228.41.111",
+      "hostname":"thisIsYourHostName", "ipv4": "192.0.2.0",
       "ipv6": "1234::5678", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "client_conn_throttle": 20, "client_udp_sess_throttle":
       0, "lke_cluster": null, "tags": [], "transfer": {"in": null, "out": null, "total":
@@ -202,7 +202,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips/66.228.41.111
+    url: https://api.linode.com/v4beta/networking/reserved/ips/192.0.2.0
     method: DELETE
   response:
     body: '{}'

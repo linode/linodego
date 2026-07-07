@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/v2/internal/parseabletime"
 )
 
 type LinodeInterface struct {
@@ -26,8 +26,18 @@ type LinodeInterface struct {
 }
 
 type InterfaceDefaultRoute struct {
-	IPv4 *bool `json:"ipv4,omitempty"`
-	IPv6 *bool `json:"ipv6,omitempty"`
+	IPv4 *bool `json:"ipv4,omitzero"`
+	IPv6 *bool `json:"ipv6,omitzero"`
+}
+
+type InterfaceDefaultRouteCreateOptions struct {
+	IPv4 *bool `json:"ipv4,omitzero"`
+	IPv6 *bool `json:"ipv6,omitzero"`
+}
+
+type InterfaceDefaultRouteUpdateOptions struct {
+	IPv4 *bool `json:"ipv4,omitzero"`
+	IPv6 *bool `json:"ipv6,omitzero"`
 }
 
 type PublicInterface struct {
@@ -113,7 +123,12 @@ type VPCInterfaceIPv6Range struct {
 
 type VLANInterface struct {
 	VLANLabel   string  `json:"vlan_label"`
-	IPAMAddress *string `json:"ipam_address,omitempty"`
+	IPAMAddress *string `json:"ipam_address,omitzero"`
+}
+
+type VLANInterfaceCreateOptions struct {
+	VLANLabel   string  `json:"vlan_label"`
+	IPAMAddress *string `json:"ipam_address,omitzero"`
 }
 
 // RDMAVPCInterface contains information about an RDMA VPC interface attached
@@ -140,11 +155,11 @@ type RDMAVPCInterfaceIPv4Address struct {
 }
 
 type LinodeInterfaceCreateOptions struct {
-	FirewallID   *int                          `json:"firewall_id,omitempty"`
-	DefaultRoute *InterfaceDefaultRoute        `json:"default_route,omitempty"`
-	Public       *PublicInterfaceCreateOptions `json:"public,omitempty"`
-	VPC          *VPCInterfaceCreateOptions    `json:"vpc,omitempty"`
-	VLAN         *VLANInterface                `json:"vlan,omitempty"`
+	FirewallID   *int                                `json:"firewall_id,omitzero"`
+	DefaultRoute *InterfaceDefaultRouteCreateOptions `json:"default_route,omitzero"`
+	Public       *PublicInterfaceCreateOptions       `json:"public,omitzero"`
+	VPC          *VPCInterfaceCreateOptions          `json:"vpc,omitzero"`
+	VLAN         *VLANInterfaceCreateOptions         `json:"vlan,omitzero"`
 }
 
 // LinodeInstanceInterfaceCreateOptions specifies a Linode Interface to be
@@ -171,21 +186,21 @@ type LinodeInterfaceUpdateOptions struct {
 }
 
 type PublicInterfaceCreateOptions struct {
-	IPv4 *PublicInterfaceIPv4CreateOptions `json:"ipv4,omitempty"`
-	IPv6 *PublicInterfaceIPv6CreateOptions `json:"ipv6,omitempty"`
+	IPv4 *PublicInterfaceIPv4CreateOptions `json:"ipv4,omitzero"`
+	IPv6 *PublicInterfaceIPv6CreateOptions `json:"ipv6,omitzero"`
 }
 
 type PublicInterfaceIPv4CreateOptions struct {
-	Addresses *[]PublicInterfaceIPv4AddressCreateOptions `json:"addresses,omitempty"`
+	Addresses []PublicInterfaceIPv4AddressCreateOptions `json:"addresses,omitzero"`
 }
 
 type PublicInterfaceIPv4AddressCreateOptions struct {
-	Address *string `json:"address,omitempty"`
-	Primary *bool   `json:"primary,omitempty"`
+	Address *string `json:"address,omitzero"`
+	Primary *bool   `json:"primary,omitzero"`
 }
 
 type PublicInterfaceIPv6CreateOptions struct {
-	Ranges *[]PublicInterfaceIPv6RangeCreateOptions `json:"ranges,omitempty"`
+	Ranges []PublicInterfaceIPv6RangeCreateOptions `json:"ranges,omitzero"`
 }
 
 type PublicInterfaceIPv6RangeCreateOptions struct {
@@ -194,19 +209,19 @@ type PublicInterfaceIPv6RangeCreateOptions struct {
 
 type VPCInterfaceCreateOptions struct {
 	SubnetID int                            `json:"subnet_id"`
-	IPv4     *VPCInterfaceIPv4CreateOptions `json:"ipv4,omitempty"`
-	IPv6     *VPCInterfaceIPv6CreateOptions `json:"ipv6,omitempty"`
+	IPv4     *VPCInterfaceIPv4CreateOptions `json:"ipv4,omitzero"`
+	IPv6     *VPCInterfaceIPv6CreateOptions `json:"ipv6,omitzero"`
 }
 
 type VPCInterfaceIPv4CreateOptions struct {
-	Addresses *[]VPCInterfaceIPv4AddressCreateOptions `json:"addresses,omitempty"`
-	Ranges    *[]VPCInterfaceIPv4RangeCreateOptions   `json:"ranges,omitempty"`
+	Addresses []VPCInterfaceIPv4AddressCreateOptions `json:"addresses,omitzero"`
+	Ranges    []VPCInterfaceIPv4RangeCreateOptions   `json:"ranges,omitzero"`
 }
 
 type VPCInterfaceIPv4AddressCreateOptions struct {
-	Address        *string `json:"address,omitempty"`
-	Primary        *bool   `json:"primary,omitempty"`
-	NAT1To1Address *string `json:"nat_1_1_address,omitempty"`
+	Address        *string `json:"address,omitzero"`
+	Primary        *bool   `json:"primary,omitzero"`
+	NAT1To1Address *string `json:"nat_1_1_address,omitzero"`
 }
 
 type VPCInterfaceIPv4RangeCreateOptions struct {
@@ -216,9 +231,9 @@ type VPCInterfaceIPv4RangeCreateOptions struct {
 // VPCInterfaceIPv6CreateOptions specifies IPv6 configuration parameters for VPC creation.
 // NOTE: IPv6 interfaces may not currently be available to all users.
 type VPCInterfaceIPv6CreateOptions struct {
-	SLAAC    *[]VPCInterfaceIPv6SLAACCreateOptions `json:"slaac,omitempty"`
-	Ranges   *[]VPCInterfaceIPv6RangeCreateOptions `json:"ranges,omitempty"`
-	IsPublic *bool                                 `json:"is_public"`
+	SLAAC    []VPCInterfaceIPv6SLAACCreateOptions `json:"slaac,omitzero"`
+	Ranges   []VPCInterfaceIPv6RangeCreateOptions `json:"ranges,omitzero"`
+	IsPublic *bool                                `json:"is_public"`
 }
 
 // VPCInterfaceIPv6SLAACCreateOptions defines the IPv6 SLAAC configuration parameters for VPC creation.
@@ -234,8 +249,8 @@ type VPCInterfaceIPv6RangeCreateOptions struct {
 }
 
 type VPCInterfaceUpdateOptions struct {
-	IPv4 *VPCInterfaceIPv4CreateOptions `json:"ipv4,omitempty"`
-	IPv6 *VPCInterfaceIPv6CreateOptions `json:"ipv6,omitempty"`
+	IPv4 *VPCInterfaceIPv4CreateOptions `json:"ipv4,omitzero"`
+	IPv6 *VPCInterfaceIPv6CreateOptions `json:"ipv6,omitzero"`
 }
 
 // RDMAVPCInterfaceCreateOptions specifies parameters for creating an RDMA VPC
@@ -276,8 +291,8 @@ type LinodeInterfacesUpgrade struct {
 }
 
 type LinodeInterfacesUpgradeOptions struct {
-	ConfigID *int  `json:"config_id,omitempty"`
-	DryRun   *bool `json:"dry_run,omitempty"`
+	ConfigID *int  `json:"config_id,omitzero"`
+	DryRun   *bool `json:"dry_run,omitzero"`
 }
 
 type InterfaceSettings struct {
@@ -286,13 +301,13 @@ type InterfaceSettings struct {
 }
 
 type InterfaceSettingsUpdateOptions struct {
-	NetworkHelper *bool                                      `json:"network_helper,omitempty"`
-	DefaultRoute  *InterfaceDefaultRouteSettingUpdateOptions `json:"default_route,omitempty"`
+	NetworkHelper *bool                                      `json:"network_helper,omitzero"`
+	DefaultRoute  *InterfaceDefaultRouteSettingUpdateOptions `json:"default_route,omitzero"`
 }
 
 type InterfaceDefaultRouteSettingUpdateOptions struct {
-	IPv4InterfaceID *int `json:"ipv4_interface_id,omitempty"`
-	IPv6InterfaceID *int `json:"ipv6_interface_id,omitempty"`
+	IPv4InterfaceID *int `json:"ipv4_interface_id,omitzero"`
+	IPv6InterfaceID *int `json:"ipv6_interface_id,omitzero"`
 }
 
 type InterfaceDefaultRouteSetting struct {

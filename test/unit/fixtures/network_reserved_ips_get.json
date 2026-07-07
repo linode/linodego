@@ -2,8 +2,12 @@
     "address": "192.168.1.10",
     "region": "us-east",
     "linode_id": 12345,
-    "label": "test-ip-1",
-    "created": "2025-02-03T12:00:00",
-    "status": "reserved"
+    "reserved": true,
+    "tags": ["lb"],
+    "assigned_entity": {
+        "id": 1234,
+        "label": "my-linode",
+        "type": "linode",
+        "url": "/v4/linode/instances/12345"
+    }
 }
-  

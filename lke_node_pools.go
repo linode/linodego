@@ -55,8 +55,20 @@ const (
 // LKENodePoolTaint represents a corev1.Taint to add to an LKENodePool
 type LKENodePoolTaint struct {
 	Key    string                 `json:"key"`
-	Value  string                 `json:"value,omitempty"`
+	Value  string                 `json:"value,omitzero"`
 	Effect LKENodePoolTaintEffect `json:"effect"`
+}
+
+// LKENodePoolIsolation controls network isolation for nodes in the pool.
+type LKENodePoolIsolation struct {
+	PublicIPv4 bool `json:"public_ipv4"`
+	PublicIPv6 bool `json:"public_ipv6"`
+}
+
+// LKENodePoolIsolationCreateOptions controls network isolation for node pool create requests.
+type LKENodePoolIsolationCreateOptions struct {
+	PublicIPv4 *bool `json:"public_ipv4,omitzero"`
+	PublicIPv6 *bool `json:"public_ipv6,omitzero"`
 }
 
 // LKENodePoolLabels represents Kubernetes labels to add to an LKENodePool
@@ -75,14 +87,20 @@ type LKENodePool struct {
 	Label   *string             `json:"label"`
 
 	Autoscaler LKENodePoolAutoscaler `json:"autoscaler"`
-	FirewallID *int                  `json:"firewall_id,omitempty"`
+	FirewallID *int                  `json:"firewall_id,omitzero"`
 
-	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitempty"`
+	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitzero"`
+
+	// Isolation may not currently be available to all users.
+	Isolation *LKENodePoolIsolation `json:"isolation"`
 
 	// K8sVersion and UpdateStrategy are only for LKE Enterprise to support node pool upgrades.
 	// It may not currently be available to all users and is under v4beta.
-	K8sVersion     *string                    `json:"k8s_version,omitempty"`
-	UpdateStrategy *LKENodePoolUpdateStrategy `json:"update_strategy,omitempty"`
+	K8sVersion     *string                    `json:"k8s_version,omitzero"`
+	UpdateStrategy *LKENodePoolUpdateStrategy `json:"update_strategy,omitzero"`
+
+	// NOTE: Only cannot_delete applies to LKE node pools and can only be used with v4beta.
+	Locks []LockType `json:"locks"`
 }
 
 // LKENodePoolCreateOptions fields are those accepted by CreateLKENodePool
@@ -93,34 +111,37 @@ type LKENodePoolCreateOptions struct {
 	Tags   []string           `json:"tags"`
 	Labels LKENodePoolLabels  `json:"labels"`
 	Taints []LKENodePoolTaint `json:"taints"`
-	Label  *string            `json:"label,omitempty"`
+	Label  *string            `json:"label,omitzero"`
 
-	Autoscaler *LKENodePoolAutoscaler `json:"autoscaler,omitempty"`
-	FirewallID *int                   `json:"firewall_id,omitempty"`
+	Autoscaler *LKENodePoolAutoscaler `json:"autoscaler,omitzero"`
+	FirewallID *int                   `json:"firewall_id,omitzero"`
+
+	// Isolation may not currently be available to all users.
+	Isolation *LKENodePoolIsolationCreateOptions `json:"isolation,omitzero"`
 
 	// K8sVersion and UpdateStrategy only works for LKE Enterprise to support node pool upgrades.
 	// It may not currently be available to all users and is under v4beta.
-	K8sVersion     *string                    `json:"k8s_version,omitempty"`
-	UpdateStrategy *LKENodePoolUpdateStrategy `json:"update_strategy,omitempty"`
+	K8sVersion     *string                    `json:"k8s_version,omitzero"`
+	UpdateStrategy *LKENodePoolUpdateStrategy `json:"update_strategy,omitzero"`
 
-	DiskEncryption *InstanceDiskEncryption `json:"disk_encryption,omitempty"`
+	DiskEncryption *InstanceDiskEncryption `json:"disk_encryption,omitzero"`
 }
 
 // LKENodePoolUpdateOptions fields are those accepted by UpdateLKENodePoolUpdate
 type LKENodePoolUpdateOptions struct {
-	Count  int                 `json:"count,omitempty"`
-	Tags   *[]string           `json:"tags,omitempty"`
-	Labels *LKENodePoolLabels  `json:"labels,omitempty"`
-	Taints *[]LKENodePoolTaint `json:"taints,omitempty"`
-	Label  *string             `json:"label,omitempty"`
+	Count  int                `json:"count,omitzero"`
+	Tags   []string           `json:"tags,omitzero"`
+	Labels *LKENodePoolLabels `json:"labels,omitzero"`
+	Taints []LKENodePoolTaint `json:"taints,omitzero"`
+	Label  *string            `json:"label,omitzero"`
 
-	Autoscaler *LKENodePoolAutoscaler `json:"autoscaler,omitempty"`
-	FirewallID *int                   `json:"firewall_id,omitempty"`
+	Autoscaler *LKENodePoolAutoscaler `json:"autoscaler,omitzero"`
+	FirewallID *int                   `json:"firewall_id,omitzero"`
 
 	// K8sVersion and UpdateStrategy only works for LKE Enterprise to support node pool upgrades.
 	// It may not currently be available to all users and is under v4beta.
-	K8sVersion     *string                    `json:"k8s_version,omitempty"`
-	UpdateStrategy *LKENodePoolUpdateStrategy `json:"update_strategy,omitempty"`
+	K8sVersion     *string                    `json:"k8s_version,omitzero"`
+	UpdateStrategy *LKENodePoolUpdateStrategy `json:"update_strategy,omitzero"`
 }
 
 // GetCreateOptions converts a LKENodePool to LKENodePoolCreateOptions for
@@ -138,15 +159,22 @@ func (l LKENodePool) GetCreateOptions() (o LKENodePoolCreateOptions) {
 	o.FirewallID = l.FirewallID
 	o.DiskEncryption = &l.DiskEncryption
 
+	if l.Isolation != nil {
+		o.Isolation = &LKENodePoolIsolationCreateOptions{
+			PublicIPv4: Pointer(l.Isolation.PublicIPv4),
+			PublicIPv6: Pointer(l.Isolation.PublicIPv6),
+		}
+	}
+
 	return o
 }
 
 // GetUpdateOptions converts a LKENodePool to LKENodePoolUpdateOptions for use in UpdateLKENodePoolUpdate
 func (l LKENodePool) GetUpdateOptions() (o LKENodePoolUpdateOptions) {
 	o.Count = l.Count
-	o.Tags = &l.Tags
+	o.Tags = l.Tags
 	o.Labels = &l.Labels
-	o.Taints = &l.Taints
+	o.Taints = l.Taints
 	o.Autoscaler = &l.Autoscaler
 	o.K8sVersion = l.K8sVersion
 	o.UpdateStrategy = l.UpdateStrategy

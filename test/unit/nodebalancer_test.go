@@ -5,7 +5,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/jarcoal/httpmock"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -168,7 +169,7 @@ func TestNodeBalancer_Update(t *testing.T) {
 	label := "Updated NodeBalancer"
 	updateOpts := linodego.NodeBalancerUpdateOptions{
 		Label: &label,
-		Tags:  &[]string{"updated", "production"},
+		Tags:  []string{"updated", "production"},
 	}
 	nodebalancer, err := base.Client.UpdateNodeBalancer(context.Background(), 123, updateOpts)
 	assert.NoError(t, err)
@@ -189,4 +190,21 @@ func TestNodeBalancer_Delete(t *testing.T) {
 
 	err := base.Client.DeleteNodeBalancer(context.Background(), 123)
 	assert.NoError(t, err, "Expected no error when deleting NodeBalancer")
+}
+
+func TestNodeBalancer_Create_IPv4RequestBody(t *testing.T) {
+	client := createMockClient(t)
+
+	opts := linodego.NodeBalancerCreateOptions{
+		Label:  String("Test NodeBalancer IPv4"),
+		Region: "us-east",
+		IPv4:   String("192.0.2.2"),
+	}
+
+	httpmock.RegisterRegexpResponder("POST", mockRequestURL(t, "/nodebalancers"),
+		mockRequestBodyValidate(t, opts, nil))
+
+	if _, err := client.CreateNodeBalancer(context.Background(), opts); err != nil {
+		t.Fatal(err)
+	}
 }

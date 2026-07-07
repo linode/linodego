@@ -14,37 +14,36 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls/templates?page=1
     method: GET
   response:
-    body: '{"data": [{"slug": "akamai-non-prod", "rules": {"inbound": [{"action":
-      "ACCEPT", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}, "protocol":
-      "ICMP", "label": "accept-inbound-icmp", "description": "Accept inbound ICMP"},
-      {"action": "ACCEPT", "addresses": {"ipv4": ["172.236.119.4/30", "172.234.160.4/30",
-      "172.236.94.4/30"], "ipv6": ["1234::5678/128", "1234::5678/128",
+    body: '{"data": [{"slug": "akamai-non-prod", "rules": {"inbound": [{"protocol":
+      "ICMP", "addresses": {"ipv6": ["1234::5678/0"], "ipv4": ["0.0.0.0/0"]}, "action": "ACCEPT",
+      "label": "accept-inbound-icmp", "description": "Accept inbound ICMP"}, {"protocol":
+      "TCP", "addresses": {"ipv6": ["1234::5678/128", "1234::5678/128",
       "1234::5678/128", "1234::5678/128",
       "1234::5678/128", "1234::5678/128",
       "1234::5678/128", "1234::5678/128",
-      "1234::5678/128"]}, "ports": "22,443", "protocol": "TCP",
-      "label": "accept-inbound-tcp-ssh-proxies", "description": "Accept inbound TCP
-      from SSH proxies"}, {"action": "ACCEPT", "addresses": {"ipv4": ["139.144.212.168/31",
-      "172.232.23.164/31"]}, "ports": "22,443", "protocol": "TCP", "label": "accept-inbound-tcp-eaa-proxies",
-      "description": "Accept inbound TCP from EAA proxies"}], "inbound_policy": "DROP",
-      "outbound": [], "outbound_policy": "ACCEPT"}}, {"slug": "vpc", "rules": {"inbound":
-      [{"action": "ACCEPT", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]},
-      "ports": "22", "protocol": "TCP", "label": "accept-inbound-ssh", "description":
-      "Accept inbound SSH"}, {"action": "ACCEPT", "addresses": {"ipv4": ["0.0.0.0/0"],
-      "ipv6": ["1234::5678/0"]}, "protocol": "ICMP", "label": "accept-inbound-icmp", "description":
-      "Accept inbound ICMP"}, {"action": "ACCEPT", "addresses": {"ipv4": ["10.0.0.0/8",
-      "192.168.0.0/17", "172.16.0.0/12"]}, "ports": "1-65535", "protocol": "TCP",
-      "label": "accept-inbound-rfc1918", "description": "Accept inbound RFC-1918"},
-      {"action": "ACCEPT", "addresses": {"ipv4": ["10.0.0.0/8", "192.168.0.0/17",
-      "172.16.0.0/12"]}, "description": "Accept inbound RFC-1918", "label": "accept-inbound-rfc1918",
-      "ports": "1-65535", "protocol": "UDP"}], "inbound_policy": "DROP", "outbound":
-      [], "outbound_policy": "ACCEPT"}}, {"slug": "public", "rules": {"inbound": [{"action":
-      "ACCEPT", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}, "ports": "22",
-      "protocol": "TCP", "label": "accept-inbound-ssh", "description": "Accept inbound
-      SSH"}, {"action": "ACCEPT", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]},
-      "protocol": "ICMP", "label": "accept-inbound-icmp", "description": "Accept inbound
-      ICMP"}], "inbound_policy": "DROP", "outbound": [], "outbound_policy": "ACCEPT"}}],
-      "page": 1, "pages": 1, "results": 3}'
+      "1234::5678/128"], "ipv4": ["172.236.119.4/30", "172.234.160.4/30",
+      "172.236.94.4/30"]}, "action": "ACCEPT", "label": "accept-inbound-tcp-ssh-proxies",
+      "ports": "22,443", "description": "Accept inbound TCP from SSH proxies"}, {"protocol":
+      "TCP", "addresses": {"ipv4": ["192.0.2.0/31", "192.0.2.0/31"]}, "action":
+      "ACCEPT", "label": "accept-inbound-tcp-eaa-proxies", "ports": "22,443", "description":
+      "Accept inbound TCP from EAA proxies"}], "inbound_policy": "DROP", "outbound":
+      [], "outbound_policy": "ACCEPT"}}, {"slug": "vpc", "rules": {"inbound": [{"protocol":
+      "TCP", "addresses": {"ipv6": ["1234::5678/0"], "ipv4": ["0.0.0.0/0"]}, "action": "ACCEPT",
+      "label": "accept-inbound-ssh", "ports": "22", "description": "Accept inbound
+      SSH"}, {"protocol": "ICMP", "addresses": {"ipv6": ["1234::5678/0"], "ipv4": ["0.0.0.0/0"]},
+      "action": "ACCEPT", "label": "accept-inbound-icmp", "description": "Accept inbound
+      ICMP"}, {"protocol": "TCP", "addresses": {"ipv4": ["10.0.0.0/8", "192.168.0.0/17",
+      "172.16.0.0/12"]}, "action": "ACCEPT", "label": "accept-inbound-rfc1918", "ports":
+      "1-65535", "description": "Accept inbound RFC-1918"}, {"protocol": "UDP", "addresses":
+      {"ipv4": ["10.0.0.0/8", "192.168.0.0/17", "172.16.0.0/12"]}, "action": "ACCEPT",
+      "label": "accept-inbound-rfc1918", "ports": "1-65535", "description": "Accept
+      inbound RFC-1918"}], "inbound_policy": "DROP", "outbound": [], "outbound_policy":
+      "ACCEPT"}}, {"slug": "public", "rules": {"inbound": [{"protocol": "TCP", "addresses":
+      {"ipv6": ["1234::5678/0"], "ipv4": ["0.0.0.0/0"]}, "action": "ACCEPT", "label": "accept-inbound-ssh",
+      "ports": "22", "description": "Accept inbound SSH"}, {"protocol": "ICMP", "addresses":
+      {"ipv6": ["1234::5678/0"], "ipv4": ["0.0.0.0/0"]}, "action": "ACCEPT", "label": "accept-inbound-icmp",
+      "description": "Accept inbound ICMP"}], "inbound_policy": "DROP", "outbound":
+      [], "outbound_policy": "ACCEPT"}}], "page": 1, "pages": 1, "results": 3}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -67,7 +66,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 21 Apr 2025 07:03:52 GMT
+      - Tue, 05 May 2026 23:45:07 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -86,7 +85,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

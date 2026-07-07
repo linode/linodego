@@ -5,8 +5,9 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestFirewallRule_Get(t *testing.T) {
@@ -34,8 +35,8 @@ func TestFirewallRule_Get(t *testing.T) {
 	assert.Equal(t, "An example firewall rule description.", firewallRule.Inbound[0].Description)
 	assert.Equal(t, "22-24, 80, 443", firewallRule.Inbound[0].Ports)
 	assert.Equal(t, linodego.NetworkProtocol("TCP"), firewallRule.Inbound[0].Protocol)
-	assert.ElementsMatch(t, []string{"192.0.2.0/24", "198.51.100.2/32"}, *firewallRule.Inbound[0].Addresses.IPv4)
-	assert.ElementsMatch(t, []string{"2001:DB8::/128"}, *firewallRule.Inbound[0].Addresses.IPv6)
+	assert.ElementsMatch(t, []string{"192.0.2.0/24", "198.51.100.2/32"}, firewallRule.Inbound[0].Addresses.IPv4)
+	assert.ElementsMatch(t, []string{"2001:DB8::/128"}, firewallRule.Inbound[0].Addresses.IPv6)
 
 	assert.Equal(t, "DROP", firewallRule.OutboundPolicy)
 	assert.Equal(t, 1, len(firewallRule.Outbound))
@@ -44,27 +45,22 @@ func TestFirewallRule_Get(t *testing.T) {
 	assert.Equal(t, "An example firewall rule description.", firewallRule.Outbound[0].Description)
 	assert.Equal(t, "22-24, 80, 443", firewallRule.Outbound[0].Ports)
 	assert.Equal(t, linodego.NetworkProtocol("TCP"), firewallRule.Outbound[0].Protocol)
-	assert.ElementsMatch(t, []string{"192.0.2.0/24", "198.51.100.2/32"}, *firewallRule.Outbound[0].Addresses.IPv4)
-	assert.ElementsMatch(t, []string{"2001:DB8::/128"}, *firewallRule.Outbound[0].Addresses.IPv6)
+	assert.ElementsMatch(t, []string{"192.0.2.0/24", "198.51.100.2/32"}, firewallRule.Outbound[0].Addresses.IPv4)
+	assert.ElementsMatch(t, []string{"2001:DB8::/128"}, firewallRule.Outbound[0].Addresses.IPv6)
 }
 
 func TestFirewallRule_MarshalJSON(t *testing.T) {
-	ruleWithRuleset := linodego.FirewallRule{RuleSet: 51}
-	data, err := json.Marshal(ruleWithRuleset)
-	assert.NoError(t, err)
-	assert.JSONEq(t, `{"ruleset":51}`, string(data))
-
 	ipv4 := []string{"pl::vpcs:123"}
-	ruleWithoutRuleset := linodego.FirewallRule{
+	ruleWithoutRuleset := linodego.FirewallRuleSetRuleCreateOptions{
 		Action:   "ACCEPT",
 		Label:    "allow-vpc",
 		Ports:    "443",
 		Protocol: linodego.NetworkProtocol("TCP"),
 		Addresses: linodego.NetworkAddresses{
-			IPv4: &ipv4,
+			IPv4: ipv4,
 		},
 	}
-	data, err = json.Marshal(ruleWithoutRuleset)
+	data, err := json.Marshal(ruleWithoutRuleset)
 	assert.NoError(t, err)
 	assert.JSONEq(t, `{
         "action":"ACCEPT",
@@ -73,6 +69,81 @@ func TestFirewallRule_MarshalJSON(t *testing.T) {
         "protocol":"TCP",
         "addresses":{"ipv4":["pl::vpcs:123"]}
     }`, string(data))
+}
+
+func TestFirewallRule_MarshalExtendedProtocols(t *testing.T) {
+	tests := []struct {
+		name        string
+		rule        any
+		label       string
+		protocol    string
+		ports       string
+		expectPorts bool
+	}{
+		{
+			name: "all without ports",
+			rule: linodego.FirewallRuleInbound{
+				Action:   "ACCEPT",
+				Label:    "allow-all",
+				Protocol: linodego.AllNetworkProtocols,
+				Addresses: linodego.NetworkAddresses{
+					IPv4: []string{"0.0.0.0/0"},
+				},
+			},
+			label:    "allow-all",
+			protocol: "ALL",
+		},
+		{
+			name: "numeric without ports",
+			rule: linodego.FirewallRuleOutbound{
+				Action:   "ACCEPT",
+				Label:    "allow-esp",
+				Protocol: linodego.NetworkProtocol("50"),
+				Addresses: linodego.NetworkAddresses{
+					IPv4: []string{"0.0.0.0/0"},
+				},
+			},
+			label:    "allow-esp",
+			protocol: "50",
+		},
+		{
+			name: "numeric tcp with ports",
+			rule: linodego.FirewallRuleSetRuleCreateOptions{
+				Action:   "ACCEPT",
+				Label:    "allow-https",
+				Ports:    "443",
+				Protocol: linodego.NetworkProtocol("6"),
+				Addresses: linodego.NetworkAddresses{
+					IPv4: []string{"0.0.0.0/0"},
+				},
+			},
+			label:       "allow-https",
+			protocol:    "6",
+			ports:       "443",
+			expectPorts: true,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			data, err := json.Marshal(tt.rule)
+			require.NoError(t, err)
+
+			var payload map[string]any
+			require.NoError(t, json.Unmarshal(data, &payload))
+
+			assert.Equal(t, "ACCEPT", payload["action"])
+			assert.Equal(t, tt.label, payload["label"])
+			assert.Equal(t, tt.protocol, payload["protocol"])
+			assert.Equal(t, map[string]any{"ipv4": []any{"0.0.0.0/0"}}, payload["addresses"])
+
+			if tt.expectPorts {
+				assert.Equal(t, tt.ports, payload["ports"])
+			} else {
+				assert.NotContains(t, payload, "ports")
+			}
+		})
+	}
 }
 
 func TestFirewallRule_Update(t *testing.T) {
@@ -86,8 +157,8 @@ func TestFirewallRule_Update(t *testing.T) {
 	firewallID := 123
 	base.MockPut(formatMockAPIPath("networking/firewalls/%d/rules", firewallID), fixtureData)
 
-	requestData := linodego.FirewallRuleSet{
-		Inbound: []linodego.FirewallRule{
+	requestData := linodego.FirewallRulesUpdateOptions{
+		Inbound: []linodego.FirewallRuleInbound{
 			{
 				Action:      "ACCEPT",
 				Label:       "firewallrule123",
@@ -95,13 +166,13 @@ func TestFirewallRule_Update(t *testing.T) {
 				Ports:       "22-24, 80, 443",
 				Protocol:    "TCP",
 				Addresses: linodego.NetworkAddresses{
-					IPv4: &[]string{"192.0.2.0/24", "198.51.100.2/32"},
-					IPv6: &[]string{"2001:DB8::/128"},
+					IPv4: []string{"192.0.2.0/24", "198.51.100.2/32"},
+					IPv6: []string{"2001:DB8::/128"},
 				},
 			},
 		},
 		InboundPolicy: "DROP",
-		Outbound: []linodego.FirewallRule{
+		Outbound: []linodego.FirewallRuleOutbound{
 			{
 				Action:      "ACCEPT",
 				Label:       "firewallrule123",
@@ -109,8 +180,8 @@ func TestFirewallRule_Update(t *testing.T) {
 				Ports:       "22-24, 80, 443",
 				Protocol:    "TCP",
 				Addresses: linodego.NetworkAddresses{
-					IPv4: &[]string{"192.0.2.0/24", "198.51.100.2/32"},
-					IPv6: &[]string{"2001:DB8::/128"},
+					IPv4: []string{"192.0.2.0/24", "198.51.100.2/32"},
+					IPv6: []string{"2001:DB8::/128"},
 				},
 			},
 		},
@@ -131,8 +202,8 @@ func TestFirewallRule_Update(t *testing.T) {
 	assert.Equal(t, "An example firewall rule description.", firewallRule.Inbound[0].Description)
 	assert.Equal(t, "22-24, 80, 443", firewallRule.Inbound[0].Ports)
 	assert.Equal(t, linodego.NetworkProtocol("TCP"), firewallRule.Inbound[0].Protocol)
-	assert.ElementsMatch(t, []string{"192.0.2.0/24", "198.51.100.2/32"}, *firewallRule.Inbound[0].Addresses.IPv4)
-	assert.ElementsMatch(t, []string{"2001:DB8::/128"}, *firewallRule.Inbound[0].Addresses.IPv6)
+	assert.ElementsMatch(t, []string{"192.0.2.0/24", "198.51.100.2/32"}, firewallRule.Inbound[0].Addresses.IPv4)
+	assert.ElementsMatch(t, []string{"2001:DB8::/128"}, firewallRule.Inbound[0].Addresses.IPv6)
 
 	assert.Equal(t, "DROP", firewallRule.OutboundPolicy)
 	assert.Equal(t, 1, len(firewallRule.Outbound))
@@ -141,8 +212,8 @@ func TestFirewallRule_Update(t *testing.T) {
 	assert.Equal(t, "An example firewall rule description.", firewallRule.Outbound[0].Description)
 	assert.Equal(t, "22-24, 80, 443", firewallRule.Outbound[0].Ports)
 	assert.Equal(t, linodego.NetworkProtocol("TCP"), firewallRule.Outbound[0].Protocol)
-	assert.ElementsMatch(t, []string{"192.0.2.0/24", "198.51.100.2/32"}, *firewallRule.Outbound[0].Addresses.IPv4)
-	assert.ElementsMatch(t, []string{"2001:DB8::/128"}, *firewallRule.Outbound[0].Addresses.IPv6)
+	assert.ElementsMatch(t, []string{"192.0.2.0/24", "198.51.100.2/32"}, firewallRule.Outbound[0].Addresses.IPv4)
+	assert.ElementsMatch(t, []string{"2001:DB8::/128"}, firewallRule.Outbound[0].Addresses.IPv6)
 }
 
 func TestFirewallRule_GetExpansion(t *testing.T) {
@@ -151,8 +222,8 @@ func TestFirewallRule_GetExpansion(t *testing.T) {
 	outboundIPv4 := []string{"pl::vpcs:1234"}
 	outboundIPv6 := []string{"pl::vpcs:<current>"}
 
-	mockResponse := linodego.FirewallRuleSet{
-		Inbound: []linodego.FirewallRule{
+	mockResponse := linodego.FirewallRules{
+		Inbound: []linodego.FirewallRuleInbound{
 			{
 				Action:      "ACCEPT",
 				Label:       "accept-inbound-ssh",
@@ -160,13 +231,13 @@ func TestFirewallRule_GetExpansion(t *testing.T) {
 				Ports:       "22",
 				Protocol:    linodego.NetworkProtocol("TCP"),
 				Addresses: linodego.NetworkAddresses{
-					IPv4: &inboundIPv4,
-					IPv6: &inboundIPv6,
+					IPv4: inboundIPv4,
+					IPv6: inboundIPv6,
 				},
 			},
 		},
 		InboundPolicy: "DROP",
-		Outbound: []linodego.FirewallRule{
+		Outbound: []linodego.FirewallRuleOutbound{
 			{
 				Action:      "ACCEPT",
 				Label:       "accept-outbound-ssh",
@@ -174,8 +245,8 @@ func TestFirewallRule_GetExpansion(t *testing.T) {
 				Ports:       "22",
 				Protocol:    linodego.NetworkProtocol("TCP"),
 				Addresses: linodego.NetworkAddresses{
-					IPv4: &outboundIPv4,
-					IPv6: &outboundIPv6,
+					IPv4: outboundIPv4,
+					IPv6: outboundIPv6,
 				},
 			},
 		},
@@ -204,10 +275,10 @@ func TestFirewallRule_GetExpansion(t *testing.T) {
 		assert.Equal(t, "22", firewallRuleSet.Inbound[0].Ports)
 		assert.Equal(t, linodego.NetworkProtocol("TCP"), firewallRuleSet.Inbound[0].Protocol)
 		if assert.NotNil(t, firewallRuleSet.Inbound[0].Addresses.IPv4) {
-			assert.ElementsMatch(t, []string{"pl::vpcs:1234"}, *firewallRuleSet.Inbound[0].Addresses.IPv4)
+			assert.ElementsMatch(t, []string{"pl::vpcs:1234"}, firewallRuleSet.Inbound[0].Addresses.IPv4)
 		}
 		if assert.NotNil(t, firewallRuleSet.Inbound[0].Addresses.IPv6) {
-			assert.ElementsMatch(t, []string{"pl::vpcs:<current>"}, *firewallRuleSet.Inbound[0].Addresses.IPv6)
+			assert.ElementsMatch(t, []string{"pl::vpcs:<current>"}, firewallRuleSet.Inbound[0].Addresses.IPv6)
 		}
 	}
 
@@ -220,10 +291,10 @@ func TestFirewallRule_GetExpansion(t *testing.T) {
 		assert.Equal(t, "22", firewallRuleSet.Outbound[0].Ports)
 		assert.Equal(t, linodego.NetworkProtocol("TCP"), firewallRuleSet.Outbound[0].Protocol)
 		if assert.NotNil(t, firewallRuleSet.Outbound[0].Addresses.IPv4) {
-			assert.ElementsMatch(t, []string{"pl::vpcs:1234"}, *firewallRuleSet.Outbound[0].Addresses.IPv4)
+			assert.ElementsMatch(t, []string{"pl::vpcs:1234"}, firewallRuleSet.Outbound[0].Addresses.IPv4)
 		}
 		if assert.NotNil(t, firewallRuleSet.Outbound[0].Addresses.IPv6) {
-			assert.ElementsMatch(t, []string{"pl::vpcs:<current>"}, *firewallRuleSet.Outbound[0].Addresses.IPv6)
+			assert.ElementsMatch(t, []string{"pl::vpcs:<current>"}, firewallRuleSet.Outbound[0].Addresses.IPv6)
 		}
 	}
 

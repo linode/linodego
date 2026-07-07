@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/object-storage/buckets
     method: POST
   response:
-    body: '{"hostname": "go-bucket-test-def.us-east-1.linodeobjects.com", "label":
+    body: '{"hostname":"thisIsYourHostName", "label":
       "go-bucket-test-def", "created": "2018-01-02T03:04:05", "region": "us-east",
       "cluster": "us-east-1", "size": 0, "objects": 0, "endpoint_type": "E0", "s3_endpoint":
       "us-east-1.linodeobjects.com"}'
@@ -42,7 +42,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 08 Jan 2025 06:04:03 GMT
+      - Wed, 06 May 2026 02:22:14 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -59,7 +59,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
+      - "60"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
@@ -75,7 +75,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/object-storage/buckets/us-east-1/go-bucket-test-def
+    url: https://api.linode.com/v4beta/object-storage/buckets/us-east/go-bucket-test-def
     method: DELETE
   response:
     body: '{}'
@@ -103,7 +103,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Wed, 08 Jan 2025 06:04:10 GMT
+      - Wed, 06 May 2026 02:22:23 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -120,7 +120,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

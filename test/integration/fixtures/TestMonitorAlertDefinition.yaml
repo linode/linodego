@@ -14,54 +14,31 @@ interactions:
     url: https://api.linode.com/v4beta/monitor/alert-definitions?page=1
     method: GET
   response:
-    body: '{"pages": 1, "page": 1, "results": 4, "data": [{"id": 10000, "label":
+    body: '{"pages": 1, "page": 1, "results": 2, "data": [{"id": 10000, "label":
       "High Memory Usage Plan Dedicated", "description": "Alert triggers when dedicated
-      plan nodes consistently reach critical memory usage, risking application performance
-      degradation.", "service_type": "dbaas", "type": "system", "scope": "entity",
-      "class": "dedicated", "regions": [], "status": "enabled", "severity":
-      2, "rule_criteria": {"rules": [{"label": "Memory Usage", "metric": "memory_usage",
-      "unit": "percent", "aggregate_function": "avg", "operator": "gt", "threshold":
-      95, "dimension_filters": []}]}, "alert_channels": [{"id": 10000, "label": "Read-Write
-      Channel", "url": "/monitor/alert-channels/10000", "type": "alert-channels"}],
-      "trigger_conditions": {"criteria_condition": "ALL", "polling_interval_seconds":
-      300, "evaluation_period_seconds": 300, "trigger_occurrences": 3}, "created":
-      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by": "system",
-      "updated_by": "system", "entities": {"url": "/monitor/services/dbaas/alert-definitions/10000/entities",
-      "has_more_resources": false, "count": 5}}, {"id": 10001, "label": "High Memory
-      Usage Plan Shared", "description": "Alert triggers when shared plan nodes consistently
-      reach critical memory usage, risking application performance degradation.",
-      "service_type": "dbaas", "type": "system", "scope": "entity", "class": "shared",
-      "regions": [], "status": "enabled", "severity": 2, "rule_criteria": {"rules": [{"label": "Memory Usage",
+      plan nodes consistently reach critical memory usage.", "service_type": "dbaas",
+      "type": "system", "scope": "entity", "class": "dedicated", "regions": [], "status":
+      "enabled", "severity": 2, "rule_criteria": {"rules": [{"label": "Memory Usage",
       "metric": "memory_usage", "unit": "percent", "aggregate_function": "avg", "operator":
-      "gt", "threshold": 90, "dimension_filters": []}]}, "alert_channels": [{"id":
+      "gt", "threshold": 95, "dimension_filters": []}]}, "alert_channels": [{"id":
       10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
       "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
       "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
       3}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
-      "system", "updated_by": "system", "entities": {"url": "/monitor/services/dbaas/alert-definitions/10001/entities",
-      "has_more_resources": false, "count": 2}}, {"id": 11001, "label": "test_alert_logs_prod",
-      "description": "some desc1", "service_type": "logs", "type": "user", "scope":
-      "entity", "class": null, "regions": [], "status": "enabled", "severity": 2, "rule_criteria": {"rules": [{"label":
-      "Successful Upload Count", "metric": "success_upload_count", "unit": "count",
-      "aggregate_function": "sum", "operator": "lt", "threshold": 100000, "dimension_filters":
-      []}]}, "alert_channels": [{"id": 10004, "label": "Alert Channel", "url":
+      "system", "updated_by": "system", "group_by": ["entity_id"], "entities": {"url":
+      "/monitor/services/dbaas/alert-definitions/10000/entities", "has_more_resources":
+      false, "count": 5}}, {"id": 11184, "label": "Test alert", "description":
+      "Test alert", "service_type": "dbaas", "type": "user", "scope":
+      "entity", "class": null, "regions": [], "status": "disabled", "severity": 3,
+      "rule_criteria": {"rules": [{"label": "CPU Usage", "metric": "cpu_usage", "unit":
+      "percent", "aggregate_function": "avg", "operator": "gt", "threshold": 0, "dimension_filters":
+      []}]}, "alert_channels": [{"id": 10004, "label": "Team Channel", "url":
       "/monitor/alert-channels/10004", "type": "alert-channels"}], "trigger_conditions":
       {"criteria_condition": "ALL", "polling_interval_seconds": 300, "evaluation_period_seconds":
       300, "trigger_occurrences": 1}, "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "created_by": "tester", "updated_by":
-      "tester", "entities": {"url": "/monitor/services/logs/alert-definitions/11001/entities",
-      "has_more_resources": false, "count": 1}}, {"id": 11021, "label": "Test Alert", "description": "Test Alert", "service_type":
-      "dbaas", "type": "user", "scope": "entity", "class": null, "regions": [], "status":
-      "enabled", "severity": 1, "rule_criteria": {"rules": [{"label": "Memory Usage", "metric":
-      "memory_usage", "unit": "percent", "aggregate_function": "sum", "operator":
-      "gt", "threshold": 100, "dimension_filters": []}]}, "alert_channels": [{"id":
-      10004, "label": "Alert Channel", "url": "/monitor/alert-channels/10004",
-      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
-      "polling_interval_seconds": 1800, "evaluation_period_seconds": 900, "trigger_occurrences":
-      10}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
-      "tester", "updated_by": "tester", "entities":
-      {"url": "/monitor/services/dbaas/alert-definitions/11021/entities", "has_more_resources":
-      false, "count": 2}}]}'
+      "tester", "group_by": ["entity_id"], "entities": {"url": "/monitor/services/dbaas/alert-definitions/11184/entities",
+      "has_more_resources": false, "count": 1}}]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -84,7 +61,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 27 Apr 2026 12:32:17 GMT
+      - Thu, 04 Jun 2026 10:41:16 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -114,7 +91,7 @@ interactions:
     duration: ""
 - request:
     body: '{"label":"go-test-alert-definition-create","severity":2,"channel_ids":[10000],"rule_criteria":{"rules":[{"aggregate_function":"avg","dimension_filters":[{"dimension_label":"node_type","operator":"eq","value":"primary"}],"metric":"memory_usage","operator":"gt","threshold":90}]},"trigger_conditions":{"criteria_condition":"ALL","evaluation_period_seconds":300,"polling_interval_seconds":300,"trigger_occurrences":1},"description":"Test
-      alert definition creation"}'
+      alert definition creation","group_by":["entity_id"]}'
     form: {}
     headers:
       Accept:
@@ -126,18 +103,19 @@ interactions:
     url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions
     method: POST
   response:
-    body: '{"id": 11072, "label": "go-test-alert-definition-create", "description":
+    body: '{"id": 11230, "label": "go-test-alert-definition-create", "description":
       "Test alert definition creation", "service_type": "dbaas", "type": "user", "scope":
-      "entity", "class": null, "regions": [], "status": "provisioning", "severity": 2, "rule_criteria": {"rules": [{"label":
-      "Memory Usage", "metric": "memory_usage", "unit": "percent", "aggregate_function":
-      "avg", "operator": "gt", "threshold": 90, "dimension_filters": [{"label": "Node
-      Type", "dimension_label": "node_type", "operator": "eq", "value": "primary"}]}]},
-      "alert_channels": [{"id": 10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
-      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
-      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
-      1}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
-      "tester", "updated_by": "tester", "entities":
-      {"url": "/monitor/services/dbaas/alert-definitions/11072/entities", "has_more_resources":
+      "entity", "class": null, "regions": [], "status": "provisioning", "severity":
+      2, "rule_criteria": {"rules": [{"label": "Memory Usage", "metric": "memory_usage",
+      "unit": "percent", "aggregate_function": "avg", "operator": "gt", "threshold":
+      90, "dimension_filters": [{"label": "Node Type", "dimension_label": "node_type",
+      "operator": "eq", "value": "primary"}]}]}, "alert_channels": [{"id": 10000,
+      "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000", "type":
+      "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL", "polling_interval_seconds":
+      300, "evaluation_period_seconds": 300, "trigger_occurrences": 1}, "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by": "tester",
+      "updated_by": "tester", "group_by": ["entity_id"], "entities":
+      {"url": "/monitor/services/dbaas/alert-definitions/11230/entities", "has_more_resources":
       false, "count": 0}}'
     headers:
       Access-Control-Allow-Credentials:
@@ -161,7 +139,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 27 Apr 2026 12:32:18 GMT
+      - Thu, 04 Jun 2026 10:41:17 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -198,21 +176,22 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/11072
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/11230
     method: GET
   response:
-    body: '{"id": 11072, "label": "go-test-alert-definition-create", "description":
+    body: '{"id": 11230, "label": "go-test-alert-definition-create", "description":
       "Test alert definition creation", "service_type": "dbaas", "type": "user", "scope":
-      "entity", "class": null, "regions": [], "status": "enabled", "severity": 2, "rule_criteria": {"rules": [{"label":
-      "Memory Usage", "metric": "memory_usage", "unit": "percent", "aggregate_function":
-      "avg", "operator": "gt", "threshold": 90, "dimension_filters": [{"label": "Node
-      Type", "dimension_label": "node_type", "operator": "eq", "value": "primary"}]}]},
-      "alert_channels": [{"id": 10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
-      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
-      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
-      1}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
-      "tester", "updated_by": "tester", "entities":
-      {"url": "/monitor/services/dbaas/alert-definitions/11072/entities", "has_more_resources":
+      "entity", "class": null, "regions": [], "status": "enabled", "severity": 2,
+      "rule_criteria": {"rules": [{"label": "Memory Usage", "metric": "memory_usage",
+      "unit": "percent", "aggregate_function": "avg", "operator": "gt", "threshold":
+      90, "dimension_filters": [{"label": "Node Type", "dimension_label": "node_type",
+      "operator": "eq", "value": "primary"}]}]}, "alert_channels": [{"id": 10000,
+      "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000", "type":
+      "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL", "polling_interval_seconds":
+      300, "evaluation_period_seconds": 300, "trigger_occurrences": 1}, "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by": "tester",
+      "updated_by": "tester", "group_by": ["entity_id"], "entities":
+      {"url": "/monitor/services/dbaas/alert-definitions/11230/entities", "has_more_resources":
       false, "count": 0}}'
     headers:
       Access-Control-Allow-Credentials:
@@ -236,7 +215,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 27 Apr 2026 12:32:35 GMT
+      - Thu, 04 Jun 2026 10:41:33 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -275,21 +254,22 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/11072
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/11230
     method: PUT
   response:
-    body: '{"id": 11072, "label": "go-test-alert-definition-create-updated", "description":
+    body: '{"id": 11230, "label": "go-test-alert-definition-create-updated", "description":
       "Test alert definition creation", "service_type": "dbaas", "type": "user", "scope":
-      "entity", "class": null, "regions": [], "status": "enabled", "severity": 2, "rule_criteria": {"rules": [{"label":
-      "Memory Usage", "metric": "memory_usage", "unit": "percent", "aggregate_function":
-      "avg", "operator": "gt", "threshold": 90, "dimension_filters": [{"label": "Node
-      Type", "dimension_label": "node_type", "operator": "eq", "value": "primary"}]}]},
-      "alert_channels": [{"id": 10000, "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000",
-      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
-      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
-      1}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
-      "tester", "updated_by": "tester", "entities":
-      {"url": "/monitor/services/dbaas/alert-definitions/11072/entities", "has_more_resources":
+      "entity", "class": null, "regions": [], "status": "enabled", "severity": 2,
+      "rule_criteria": {"rules": [{"label": "Memory Usage", "metric": "memory_usage",
+      "unit": "percent", "aggregate_function": "avg", "operator": "gt", "threshold":
+      90, "dimension_filters": [{"label": "Node Type", "dimension_label": "node_type",
+      "operator": "eq", "value": "primary"}]}]}, "alert_channels": [{"id": 10000,
+      "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000", "type":
+      "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL", "polling_interval_seconds":
+      300, "evaluation_period_seconds": 300, "trigger_occurrences": 1}, "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by": "tester",
+      "updated_by": "tester", "group_by": ["entity_id"], "entities":
+      {"url": "/monitor/services/dbaas/alert-definitions/11230/entities", "has_more_resources":
       false, "count": 0}}'
     headers:
       Access-Control-Allow-Credentials:
@@ -313,7 +293,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 27 Apr 2026 12:32:36 GMT
+      - Thu, 04 Jun 2026 10:41:35 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -350,7 +330,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/11072
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/11230
     method: DELETE
   response:
     body: '{}'
@@ -378,7 +358,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 27 Apr 2026 12:32:37 GMT
+      - Thu, 04 Jun 2026 10:41:36 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

@@ -6,8 +6,9 @@ import (
 	"testing"
 	"time"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 const (
@@ -17,7 +18,37 @@ const (
 	channelID = 10000
 )
 
+func deleteMonitorAlertDefinitionWithRetry(t *testing.T, client *linodego.Client, serviceType string, alertID int) {
+	t.Helper()
+
+	// Retry deletion with exponential backoff for up to 2 minutes
+	maxWait := 2 * time.Minute
+	baseDelay := 2 * time.Second
+	var err error
+	var lastErr error
+	start := time.Now()
+
+	for attempt := 0; time.Since(start) < maxWait; attempt++ {
+		err = client.DeleteMonitorAlertDefinition(context.Background(), serviceType, alertID)
+		if err == nil {
+			break
+		}
+
+		lastErr = err
+		// Exponential backoff, capped at 30s
+		sleep := baseDelay * (1 << attempt)
+		if sleep > 30*time.Second {
+			sleep = 30 * time.Second
+		}
+		time.Sleep(sleep)
+	}
+
+	assert.NoError(t, err, "DeleteMonitorAlertDefinition failed after retries for alert ID %d: %v", alertID, lastErr)
+}
+
 func TestMonitorAlertDefinition_smoke(t *testing.T) {
+	ctx := waitContext(t, 300*time.Second)
+
 	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertDefinition")
 	defer teardown()
 
@@ -33,6 +64,7 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 		// Check few mandatory fields on each listed alert
 		assert.NotZero(t, alert.ID, "alert.ID should not be zero")
 		assert.NotEmpty(t, alert.Label, "alert.Label should not be empty")
+		assert.NotNil(t, alert.GroupBy, "alert.GroupBy should be present")
 
 		// If alert has a rule, validate basic rule structure
 		if len(alert.RuleCriteria.Rules) > 0 {
@@ -76,6 +108,7 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 		Description: linodego.Pointer("Test alert definition creation"),
 		ChannelIDs:  []int{channelID},
 		EntityIDs:   nil,
+		GroupBy:     []string{"entity_id"},
 		TriggerConditions: &linodego.TriggerConditions{
 			CriteriaCondition:       "ALL",
 			EvaluationPeriodSeconds: 300,
@@ -113,6 +146,7 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 	assert.Equal(t, createOpts.Label, createdAlert.Label)
 	assert.Equal(t, createOpts.Severity, createdAlert.Severity)
 	assert.Equal(t, *createOpts.Description, createdAlert.Description)
+	assert.NotNil(t, createdAlert.GroupBy)
 
 	// More thorough assertions on the created alert's nested fields
 	// TriggerConditions is a struct, so it is never nil
@@ -154,11 +188,10 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 	}
 	// wait for 1 minute before update for create to complete
 	_, err = client.WaitForAlertDefinitionStatus(
-		context.Background(),
+		ctx,
 		linodego.AlertDefinitionStatusEnabled,
 		testMonitorAlertDefinitionServiceType,
 		createdAlert.ID,
-		300, // timeout in seconds (5 minutes)
 	)
 	if err != nil {
 		t.Logf("failed to wait for alert definition to be enabled: %s", err)
@@ -171,29 +204,12 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 		assert.NotNil(t, updatedAlert)
 		assert.Equal(t, createdAlert.ID, updatedAlert.ID, "updated alert should keep same ID")
 		assert.Equal(t, newLabel, updatedAlert.Label, "updated alert should have the new label")
+		assert.NotNil(t, updatedAlert.GroupBy)
 	}
 
 	// Clean up created alert definition
 	if createdAlert != nil {
-		// Retry deletion with exponential backoff for up to 2 minutes
-		maxWait := 2 * time.Minute
-		baseDelay := 2 * time.Second
-		var lastErr error
-		start := time.Now()
-		for attempt := 0; time.Since(start) < maxWait; attempt++ {
-			err = client.DeleteMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, createdAlert.ID)
-			if err == nil {
-				break
-			}
-			lastErr = err
-			// Exponential backoff, capped at 30s
-			sleep := baseDelay * (1 << attempt)
-			if sleep > 30*time.Second {
-				sleep = 30 * time.Second
-			}
-			time.Sleep(sleep)
-		}
-		assert.NoError(t, err, "DeleteMonitorAlertDefinition failed after retries: %v", lastErr)
+		deleteMonitorAlertDefinitionWithRetry(t, client, testMonitorAlertDefinitionServiceType, createdAlert.ID)
 	}
 }
 
@@ -210,6 +226,7 @@ func TestMonitorAlertDefinitions_List(t *testing.T) {
 		assert.NotZero(t, alert.ID)
 		assert.NotEmpty(t, alert.Label)
 		assert.NotEmpty(t, alert.ServiceType)
+		assert.NotNil(t, alert.GroupBy)
 	}
 }
 
@@ -328,5 +345,104 @@ func TestMonitorAlertDefinitionEntities_List(t *testing.T) {
 		assert.NotEmpty(t, entity.Label)
 		assert.NotEmpty(t, entity.Type)
 		assert.NotEmpty(t, entity.URL)
+	}
+}
+
+func TestMonitorAlertDefinition_Clone(t *testing.T) {
+	ctx := waitContext(t, 300*time.Second)
+
+	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertDefinition_Clone")
+	defer teardown()
+
+	// Get a channel ID to use
+	channels, err := client.ListAlertChannels(context.Background(), nil)
+	require.NoErrorf(t, err, "failed to determine a monitor channel to use: %v", err)
+	require.NotEmpty(t, channels, "no alert channels available to use for cloning test")
+	testChannelID := channels[0].ID
+
+	// Create the source alert definition
+	createOpts := linodego.AlertDefinitionCreateOptions{
+		Label:       "go-test-alert-definition-clone-source",
+		Severity:    int(linodego.SeverityLow),
+		Description: linodego.Pointer("Source alert definition for clone test"),
+		ChannelIDs:  []int{testChannelID},
+		EntityIDs:   nil,
+		GroupBy:     []string{"entity_id"},
+		TriggerConditions: &linodego.TriggerConditions{
+			CriteriaCondition:       "ALL",
+			EvaluationPeriodSeconds: 300,
+			PollingIntervalSeconds:  300,
+			TriggerOccurrences:      1,
+		},
+		RuleCriteria: &linodego.RuleCriteriaOptions{
+			Rules: []linodego.RuleOptions{
+				{
+					AggregateFunction: "avg",
+					Metric:            "memory_usage",
+					Operator:          "gt",
+					Threshold:         90.0,
+					DimensionFilters: []linodego.DimensionFilterOptions{
+						{
+							DimensionLabel: "node_type",
+							Operator:       "eq",
+							Value:          "primary",
+						},
+					},
+				},
+			},
+		},
+	}
+
+	sourceAlert, err := client.CreateMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, createOpts)
+	require.NoErrorf(t, err, "CreateMonitorAlertDefinition failed: %s", err)
+	assert.NotNil(t, sourceAlert)
+	assert.Equal(t, createOpts.Label, sourceAlert.Label)
+	assert.NotNil(t, sourceAlert.GroupBy)
+
+	// Wait for the source alert to be enabled before cloning
+	_, err = client.WaitForAlertDefinitionStatus(
+		ctx,
+		linodego.AlertDefinitionStatusEnabled,
+		testMonitorAlertDefinitionServiceType,
+		sourceAlert.ID,
+	)
+	require.NoErrorf(t, err, "failed to wait for source alert definition to be enabled: %s", err)
+
+	// Clone the source alert definition with overridden fields
+	cloneLabel := sourceAlert.Label + "-clone"
+	overrideSeverity := int(linodego.SeverityMedium)
+	cloneOpts := linodego.AlertDefinitionCloneOptions{
+		Label:       cloneLabel,
+		Description: linodego.Pointer("Cloned alert definition"),
+		Severity:    &overrideSeverity,
+		ChannelIDs:  []int{testChannelID},
+		TriggerConditions: &linodego.TriggerConditions{
+			CriteriaCondition:       "ALL",
+			EvaluationPeriodSeconds: 900,
+			PollingIntervalSeconds:  300,
+			TriggerOccurrences:      3,
+		},
+	}
+
+	clonedAlert, err := client.CloneMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, sourceAlert.ID, cloneOpts)
+	if err != nil {
+		// Cleanup source before failing
+		_ = client.DeleteMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, sourceAlert.ID)
+		t.Fatalf("CloneMonitorAlertDefinition failed: %s", err)
+	}
+	assert.NotNil(t, clonedAlert)
+	assert.NotEqual(t, sourceAlert.ID, clonedAlert.ID, "cloned alert should have a different ID")
+	assert.Equal(t, cloneLabel, clonedAlert.Label, "cloned alert should have the specified label")
+	assert.Equal(t, *cloneOpts.Description, clonedAlert.Description, "cloned alert should have the overridden description")
+	assert.Equal(t, overrideSeverity, clonedAlert.Severity, "cloned alert should have the overridden severity")
+	assert.Equal(t, sourceAlert.Scope, clonedAlert.Scope, "cloned alert scope should be inherited from source")
+	assert.NotNil(t, clonedAlert.GroupBy)
+	assert.Equal(t, cloneOpts.TriggerConditions.EvaluationPeriodSeconds, clonedAlert.TriggerConditions.EvaluationPeriodSeconds)
+	assert.Equal(t, cloneOpts.TriggerConditions.PollingIntervalSeconds, clonedAlert.TriggerConditions.PollingIntervalSeconds)
+	assert.Equal(t, cloneOpts.TriggerConditions.TriggerOccurrences, clonedAlert.TriggerConditions.TriggerOccurrences)
+
+	// Cleanup both source and cloned alert definitions
+	for _, alertID := range []int{sourceAlert.ID, clonedAlert.ID} {
+		deleteMonitorAlertDefinitionWithRetry(t, client, testMonitorAlertDefinitionServiceType, alertID)
 	}
 }
