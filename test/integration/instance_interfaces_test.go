@@ -149,8 +149,8 @@ func TestInstance_CreateWithRDMAVPCInterfaces(t *testing.T) {
 	client, fixtureTeardown := createTestClient(t, "fixtures/TestInstance_CreateWithRDMAVPCInterfaces")
 	t.Cleanup(fixtureTeardown)
 
-	//GPUDirect RDMA capability not available for now
-	//region := getRegionsWithCaps(t, client, []string{linodego.CapabilityVPCs, linodego.CapabilityGPUDirectRDMA})
+	// GPUDirect RDMA capability not available for now
+	// region := getRegionsWithCaps(t, client, []string{linodego.CapabilityVPCs, linodego.CapabilityGPUDirectRDMA})
 	testRegion := getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityVPCs})[0]
 	interfaceCreateOptions := make([]linodego.LinodeInstanceInterfaceCreateOptions, 0)
 
