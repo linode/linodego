@@ -3,11 +3,8 @@ package integration
 import (
 	"context"
 	"testing"
-	"time"
 
 	"github.com/linode/linodego/v2"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 )
 
 func createInstanceWithLinodeInterfaces(
@@ -50,27 +47,6 @@ func createInstanceWithLinodeInterfaces(
 		}
 	}
 	return instance, teardown, err
-}
-
-func prepareMultipleRDMAInterfaces(amount int, subnet *linodego.VPCSubnet) []linodego.LinodeInstanceInterfaceCreateOptions {
-	interfaces := make([]linodego.LinodeInstanceInterfaceCreateOptions, 0)
-
-	for i := 1; i <= amount; i++ {
-		interfaces = append(interfaces, linodego.LinodeInstanceInterfaceCreateOptions{
-			LinodeInterfaceCreateOptions: linodego.LinodeInterfaceCreateOptions{
-				FirewallID: linodego.Pointer(-1),
-			},
-			RDMAVPC: &linodego.RDMAVPCInterfaceCreateOptions{
-				SubnetID: subnet.ID,
-				IPv4: linodego.RDMAVPCInterfaceIPv4Options{
-					Addresses: []linodego.RDMAVPCInterfaceIPv4AddressOptions{
-						{Address: "auto", Primary: linodego.Pointer(true)},
-					},
-				},
-			},
-		})
-	}
-	return interfaces
 }
 
 func TestInstance_CreateWithLinodeInterfaces(
@@ -145,123 +121,146 @@ func TestInstance_CreateWithLinodeInterfaces(
 	}
 }
 
-func TestInstance_CreateWithRDMAVPCInterfaces(t *testing.T) {
-	client, fixtureTeardown := createTestClient(t, "fixtures/TestInstance_CreateWithRDMAVPCInterfaces")
-	t.Cleanup(fixtureTeardown)
-
-	// GPUDirect RDMA capability not available for now
-	// region := getRegionsWithCaps(t, client, []string{linodego.CapabilityVPCs, linodego.CapabilityGPUDirectRDMA})
-	testRegion := getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityVPCs})[0]
-	interfaceCreateOptions := make([]linodego.LinodeInstanceInterfaceCreateOptions, 0)
-
-	// CREATE
-	_, vpcSubnet, vpcTeardown, err := createVPCWithSubnet(
-		t,
-		client,
-		func(c *linodego.Client, opts *linodego.VPCCreateOptions) {
-			opts.Region = testRegion
-			opts.VPCType = linodego.VPCTypeRegular
-		},
-	)
-	require.NoErrorf(t, err, "Error creating RDMA VPC with subnet: %s", err)
-	t.Cleanup(vpcTeardown)
-
-	_, vpcSubnetRDMA, vpcRDMATeardown, err := createVPCWithSubnet(
-		t,
-		client,
-		func(c *linodego.Client, opts *linodego.VPCCreateOptions) {
-			opts.Region = testRegion
-			opts.VPCType = linodego.VPCTypeRDMA
-		},
-	)
-	require.NoErrorf(t, err, "Error creating RDMA VPC with subnet: %s", err)
-	t.Cleanup(vpcRDMATeardown)
-
-	// Add RDMA VPC interfaces
-	multiRDMAInterfaces := prepareMultipleRDMAInterfaces(8, vpcSubnetRDMA)
-	interfaceCreateOptions = append(interfaceCreateOptions, multiRDMAInterfaces...)
-
-	// Include at least one regular interface
-	interfaceCreateOptions = append(interfaceCreateOptions, linodego.LinodeInstanceInterfaceCreateOptions{
-		LinodeInterfaceCreateOptions: linodego.LinodeInterfaceCreateOptions{
-			FirewallID: linodego.Pointer(firewallID),
-			VPC: &linodego.VPCInterfaceCreateOptions{
-				SubnetID: vpcSubnet.ID,
-				IPv4: &linodego.VPCInterfaceIPv4CreateOptions{
-					Addresses: []linodego.VPCInterfaceIPv4AddressCreateOptions{
-						{
-							Address: linodego.Pointer("auto"),
-							Primary: linodego.Pointer(true),
-						},
-					},
-				},
-			},
-		},
-	})
-
-	instance, teardown, err := createInstanceWithLinodeInterfaces(
-		t,
-		client,
-		false,
-		interfaceCreateOptions,
-		func(c *linodego.Client, opts *linodego.InstanceCreateOptions) {
-			opts.Label = "go-test-rdma-" + randLabel()
-			opts.RootPass = randPassword()
-			opts.Image = "linode/ubuntu24.04"
-			opts.Region = testRegion
-			opts.Type = linodego.InstanceRDMAType
-			opts.HostID = linodego.InstanceRDMAHostID
-			opts.InterfaceGeneration = linodego.GenerationLinode
-			opts.LinodeInstanceInterfaces = interfaceCreateOptions
-		},
-	)
-	require.NoErrorf(t, err, "Error creating instance with RDMA interfaces: %s", err)
-	t.Cleanup(teardown)
-
-	instance, err = client.WaitForInstanceStatus(
-		waitContext(t, 180*time.Second),
-		instance.ID,
-		linodego.InstanceOffline,
-	)
-	require.NoErrorf(t, err, "Error waiting for instance to be offline: %s", err)
-
-	// READ
-	// TODO: Defect for ListInterfaces needs to be resolved
-	allInterfaces, err := client.ListInterfaces(context.Background(), instance.ID, nil)
-	require.NoErrorf(t, err, "Error listing interfaces for RDMA instance: %s", err)
-	assert.Equal(t, len(interfaceCreateOptions), len(allInterfaces), "Expected %d interfaces, got %d", len(interfaceCreateOptions), len(allInterfaces))
-
-	basicRDMAInterface := allInterfaces[0]
-	require.NotNil(t, basicRDMAInterface.RDMAVPC, "Expected interface to have RDMAVPC field populated")
-
-	// UPDATE
-	_, vpcSubnetRDMAUpdate, vpcRDMAUpdateTeardown, err := createVPCWithSubnet(
-		t,
-		client,
-		func(c *linodego.Client, opts *linodego.VPCCreateOptions) {
-			opts.Region = testRegion
-			opts.VPCType = linodego.VPCTypeRDMA
-		},
-	)
-	require.NoErrorf(t, err, "Error creating RDMA VPC with subnet: %s", err)
-	t.Cleanup(vpcRDMAUpdateTeardown)
-
-	updateOpts := linodego.LinodeInterfaceUpdateOptions{
-		RDMAVPC: &linodego.RDMAVPCInterfaceUpdateOptions{
-			SubnetID: vpcSubnetRDMAUpdate.ID,
-		},
-	}
-	updatedRDMAInterface, err := client.UpdateInterface(context.Background(), instance.ID, basicRDMAInterface.ID, updateOpts)
-	require.NoErrorf(t, err, "Error updating RDMA interface: %s", err)
-	assert.Equal(t, basicRDMAInterface.ID, updatedRDMAInterface.ID, "Expected RDMA interface ID to remain the same after update")
-	assert.Equal(t, basicRDMAInterface.RDMAVPC.SubnetID, vpcSubnetRDMAUpdate.ID, "Expected RDMA interface to be updated")
-
-	// DELETE
-	err = client.DeleteInterface(context.Background(), instance.ID, basicRDMAInterface.ID)
-	require.Error(t, err, "Expected error deleting RDMA interface from RDMA instance")
-
-	e, _ := err.(*linodego.Error)
-	assert.Equal(t, 400, e.Code, "Expected error code 400, got: %d", e.Code)
-	expectedErrorMessage := "RDMA VPC Interfaces cannot be deleted"
-	assert.Contains(t, e.Message, expectedErrorMessage, "Expected error message to contain: %s, got: %s", expectedErrorMessage, e.Message)
-}
+// TODO: Test is commented out because currently there is no possibility to run it without manual infra changes
+//func TestInstance_CreateWithRDMAVPCInterfaces(t *testing.T) {
+//	client, fixtureTeardown := createTestClient(t, "fixtures/TestInstance_CreateWithRDMAVPCInterfaces")
+//	t.Cleanup(fixtureTeardown)
+//
+//	// GPUDirect RDMA capability not available for now
+//	// region := getRegionsWithCaps(t, client, []string{linodego.CapabilityVPCs, linodego.CapabilityGPUDirectRDMA})
+//	testRegion := getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityVPCs})[0]
+//	interfaceCreateOptions := make([]linodego.LinodeInstanceInterfaceCreateOptions, 0)
+//
+//	// CREATE
+//	_, vpcSubnet, vpcTeardown, err := createVPCWithSubnet(
+//		t,
+//		client,
+//		func(c *linodego.Client, opts *linodego.VPCCreateOptions) {
+//			opts.Region = testRegion
+//			opts.VPCType = linodego.VPCTypeRegular
+//		},
+//	)
+//	require.NoErrorf(t, err, "Error creating RDMA VPC with subnet: %s", err)
+//	t.Cleanup(vpcTeardown)
+//
+//	_, vpcSubnetRDMA, vpcRDMATeardown, err := createVPCWithSubnet(
+//		t,
+//		client,
+//		func(c *linodego.Client, opts *linodego.VPCCreateOptions) {
+//			opts.Region = testRegion
+//			opts.VPCType = linodego.VPCTypeRDMA
+//		},
+//	)
+//	require.NoErrorf(t, err, "Error creating RDMA VPC with subnet: %s", err)
+//	t.Cleanup(vpcRDMATeardown)
+//
+//	// Add RDMA VPC interfaces
+//	multiRDMAInterfaces := prepareMultipleRDMAInterfaces(8, vpcSubnetRDMA)
+//	interfaceCreateOptions = append(interfaceCreateOptions, multiRDMAInterfaces...)
+//
+//	// Include at least one regular interface
+//	interfaceCreateOptions = append(interfaceCreateOptions, linodego.LinodeInstanceInterfaceCreateOptions{
+//		LinodeInterfaceCreateOptions: linodego.LinodeInterfaceCreateOptions{
+//			FirewallID: linodego.Pointer(firewallID),
+//			VPC: &linodego.VPCInterfaceCreateOptions{
+//				SubnetID: vpcSubnet.ID,
+//				IPv4: &linodego.VPCInterfaceIPv4CreateOptions{
+//					Addresses: []linodego.VPCInterfaceIPv4AddressCreateOptions{
+//						{
+//							Address: linodego.Pointer("auto"),
+//							Primary: linodego.Pointer(true),
+//						},
+//					},
+//				},
+//			},
+//		},
+//	})
+//
+//	instance, teardown, err := createInstanceWithLinodeInterfaces(
+//		t,
+//		client,
+//		false,
+//		interfaceCreateOptions,
+//		func(c *linodego.Client, opts *linodego.InstanceCreateOptions) {
+//			opts.Label = "go-test-rdma-" + randLabel()
+//			opts.RootPass = randPassword()
+//			opts.Image = "linode/ubuntu24.04"
+//			opts.Region = testRegion
+//			opts.Type = linodego.InstanceRDMAType
+//			opts.HostID = linodego.InstanceRDMAHostID
+//			opts.InterfaceGeneration = linodego.GenerationLinode
+//			opts.LinodeInstanceInterfaces = interfaceCreateOptions
+//		},
+//	)
+//	require.NoErrorf(t, err, "Error creating instance with RDMA interfaces: %s", err)
+//	t.Cleanup(teardown)
+//
+//	instance, err = client.WaitForInstanceStatus(
+//		waitContext(t, 180*time.Second),
+//		instance.ID,
+//		linodego.InstanceOffline,
+//	)
+//	require.NoErrorf(t, err, "Error waiting for instance to be offline: %s", err)
+//
+//	// READ
+//	allInterfaces, err := client.ListInterfaces(context.Background(), instance.ID, nil)
+//	require.NoErrorf(t, err, "Error listing interfaces for RDMA instance: %s", err)
+//	assert.Equal(t, len(interfaceCreateOptions), len(allInterfaces), "Expected %d interfaces, got %d", len(interfaceCreateOptions), len(allInterfaces))
+//
+//	basicRDMAInterface := allInterfaces[0]
+//	require.NotNil(t, basicRDMAInterface.RDMAVPC, "Expected interface to have RDMAVPC field populated")
+//
+//	// UPDATE
+//	_, vpcSubnetRDMAUpdate, vpcRDMAUpdateTeardown, err := createVPCWithSubnet(
+//		t,
+//		client,
+//		func(c *linodego.Client, opts *linodego.VPCCreateOptions) {
+//			opts.Region = testRegion
+//			opts.VPCType = linodego.VPCTypeRDMA
+//		},
+//	)
+//	require.NoErrorf(t, err, "Error creating RDMA VPC with subnet: %s", err)
+//	t.Cleanup(vpcRDMAUpdateTeardown)
+//
+//	updateOpts := linodego.LinodeInterfaceUpdateOptions{
+//		RDMAVPC: &linodego.RDMAVPCInterfaceUpdateOptions{
+//			SubnetID: vpcSubnetRDMAUpdate.ID,
+//		},
+//	}
+//	updatedRDMAInterface, err := client.UpdateInterface(context.Background(), instance.ID, basicRDMAInterface.ID, updateOpts)
+//	require.NoErrorf(t, err, "Error updating RDMA interface: %s", err)
+//	require.NotNil(t, updatedRDMAInterface.RDMAVPC, "Expected updated interface to have RDMAVPC field populated")
+//	assert.Equal(t, basicRDMAInterface.ID, updatedRDMAInterface.ID, "Expected RDMA interface ID to remain the same after update")
+//	assert.Equal(t, vpcSubnetRDMAUpdate.ID, updatedRDMAInterface.RDMAVPC.SubnetID, "Expected RDMA interface to be updated")
+//
+//	// DELETE
+//	err = client.DeleteInterface(context.Background(), instance.ID, basicRDMAInterface.ID)
+//	require.Error(t, err, "Expected error deleting RDMA interface from RDMA instance")
+//
+//	e, _ := err.(*linodego.Error)
+//	assert.Equal(t, 400, e.Code, "Expected error code 400, got: %d", e.Code)
+//	expectedErrorMessage := "RDMA VPC Interfaces cannot be deleted"
+//	assert.Contains(t, e.Message, expectedErrorMessage, "Expected error message to contain: %s, got: %s", expectedErrorMessage, e.Message)
+//}
+//
+//func prepareMultipleRDMAInterfaces(amount int, subnet *linodego.VPCSubnet) []linodego.LinodeInstanceInterfaceCreateOptions {
+//	interfaces := make([]linodego.LinodeInstanceInterfaceCreateOptions, 0)
+//
+//	for i := 1; i <= amount; i++ {
+//		interfaces = append(interfaces, linodego.LinodeInstanceInterfaceCreateOptions{
+//			LinodeInterfaceCreateOptions: linodego.LinodeInterfaceCreateOptions{
+//				//FirewallID: nil,
+//				FirewallID: linodego.Pointer(-1),
+//			},
+//			RDMAVPC: &linodego.RDMAVPCInterfaceCreateOptions{
+//				SubnetID: subnet.ID,
+//				IPv4: linodego.RDMAVPCInterfaceIPv4Options{
+//					Addresses: []linodego.RDMAVPCInterfaceIPv4AddressOptions{
+//						{Address: "auto", Primary: linodego.Pointer(true)},
+//					},
+//				},
+//			},
+//		})
+//	}
+//	return interfaces
+//}
