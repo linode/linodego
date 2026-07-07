@@ -456,7 +456,7 @@ func TestVPC_WithRDMAType(t *testing.T) {
 	vpcCreateOptionsCheck(&createOpts, found, t)
 }
 
-// TODO: uncomment when RDMA VPC with IPv6 is blocked
+// TODO: Test is commented out because currently it will fail as IPv6 is not blocked on API side (WIP)
 //func TestVPC_WithRDMATypeIPv6_Fail(t *testing.T) {
 //	client, teardown := createTestClient(t, "fixtures/TestVPC_WithRDMAType")
 //	defer teardown()
