@@ -28,7 +28,7 @@ interactions:
       "status": "ok", "resolvers": {"ipv4": "172.24.224.240,172.24.224.229,172.24.224.236,172.24.224.238,172.24.224.235,172.24.224.241,172.24.224.230,172.24.224.239,172.24.224.233,172.24.224.234",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
-      5, "maximum_linodes_per_flexible_pg": 5}, "site_type": "core"}, {"id": "us-labedgeeat-2",
+      5, "maximum_linodes_per_flexible_pg": 250}, "site_type": "core"}, {"id": "us-labedgeeat-2",
       "label": "East Wenatchee, US", "country": "us", "capabilities": ["Linodes",
       "Disk Encryption", "Cloud Firewall", "Vlans", "VPCs", "VPC Dual Stack", "VPC
       IPv6 Stack", "Metadata", "Distributed Plans", "Linode Interfaces"], "monitors":
@@ -88,7 +88,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-vpc-1781265517233035000","region":"pl-labkrk-2"}'
+    body: '{"label":"go-test-vpc-1783500487864220000","region":"pl-labkrk-2"}'
     form: {}
     headers:
       Accept:
@@ -100,7 +100,7 @@ interactions:
     url: https://api.devcloud.linode.com/v4beta/vpcs
     method: POST
   response:
-    body: '{"id": 410316, "label": "go-test-vpc-1781265517233035000", "description":
+    body: '{"id": 525039, "label": "go-test-vpc-1783500487864220000", "description":
       "", "region": "pl-labkrk-2", "ipv4": [{"range": "10.0.0.0/8"}, {"range": "192.168.0.0/17"}],
       "ipv6": null, "subnets": [], "vpc_type": "regular", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05"}'
@@ -159,10 +159,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/vpcs/410316
+    url: https://api.devcloud.linode.com/v4beta/vpcs/525039
     method: GET
   response:
-    body: '{"id": 410316, "label": "go-test-vpc-1781265517233035000", "description":
+    body: '{"id": 525039, "label": "go-test-vpc-1783500487864220000", "description":
       "", "region": "pl-labkrk-2", "ipv4": [{"range": "10.0.0.0/8"}, {"range": "192.168.0.0/17"}],
       "ipv6": null, "subnets": [], "vpc_type": "regular", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05"}'
@@ -223,7 +223,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/vpcs/410316
+    url: https://api.devcloud.linode.com/v4beta/vpcs/525039
     method: DELETE
   response:
     body: '{}'
