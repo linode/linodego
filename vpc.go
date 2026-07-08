@@ -63,7 +63,7 @@ type VPCCreateOptions struct {
 	Label       string `json:"label"`
 	Description string `json:"description,omitzero"`
 	Region      string `json:"region"`
-	
+
 	// This field is omitted by the API for customers that do not have
 	// access to the GPUDirect RDMA functionality.
 	// NOTE: RDMA VPCs may not currently be available to all users.

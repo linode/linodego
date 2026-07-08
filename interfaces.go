@@ -177,9 +177,9 @@ type LinodeInstanceInterfaceCreateOptions struct {
 }
 
 type LinodeInterfaceUpdateOptions struct {
-	DefaultRoute *InterfaceDefaultRoute        `json:"default_route,omitempty"`
-	Public       *PublicInterfaceCreateOptions `json:"public,omitempty"`
-	VPC          *VPCInterfaceUpdateOptions    `json:"vpc,omitempty"`
+	DefaultRoute *InterfaceDefaultRouteUpdateOptions `json:"default_route,omitzero"`
+	Public       *PublicInterfaceCreateOptions       `json:"public,omitzero"`
+	VPC          *VPCInterfaceUpdateOptions          `json:"vpc,omitzero"`
 
 	// NOTE: RDMA VPC interfaces may not currently be available to all users.
 	RDMAVPC *RDMAVPCInterfaceUpdateOptions `json:"rdma_vpc,omitzero"`
