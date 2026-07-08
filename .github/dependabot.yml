@@ -1,10 +1,17 @@
 version: 2
 updates:
   - package-ecosystem: gomod
-    directory: "/"
+    directories:
+      - /
+      - /k8s
+      - /test
     schedule:
       interval: daily
-    open-pull-requests-limit: 10
+    groups:
+      gomod:
+        patterns:
+          - "*"
+        group-by: dependency-name
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
