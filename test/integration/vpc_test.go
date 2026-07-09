@@ -343,7 +343,7 @@ func TestVPC_IPv4Ranges(t *testing.T) {
 	ctx := context.Background()
 	ipv4Range := "10.118.0.0/20"
 
-	vpc, vpcTeardown, err := createVPC(
+	vpc, _, vpcTeardown, err := createVPC(
 		t,
 		client,
 		func(_ *linodego.Client, options *linodego.VPCCreateOptions) {
