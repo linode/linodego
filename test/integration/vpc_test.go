@@ -134,7 +134,8 @@ func TestVPC_CreateGet_smoke(t *testing.T) {
 	}
 	vpcCheck(vpc, t)
 	vpcCreateOptionsCheck(&createOpts, vpc, t)
-	client.GetVPC(context.TODO(), vpc.ID)
+	_, err = client.GetVPC(context.TODO(), vpc.ID)
+	require.NoError(t, err)
 }
 
 func TestVPC_Update(t *testing.T) {
@@ -190,7 +191,8 @@ func TestVPC_Create_Invalid_data(t *testing.T) {
 	defer teardown()
 	err := createVPC_invalid_label(t, client)
 
-	e, _ := err.(*Error)
+	var e *linodego.Error
+	require.ErrorAsf(t, err, &e, "Expected error to be of type *linodego.Error, got: %T", err)
 
 	if e.Code != 400 {
 		t.Errorf("should have received a 400 Code with invalid label, got %v", e.Code)
@@ -220,7 +222,8 @@ func TestVPC_Update_Invalid_data(t *testing.T) {
 
 	_, err = client.UpdateVPC(context.Background(), vpc.ID, opts)
 
-	e, _ := err.(*Error)
+	var e *linodego.Error
+	require.ErrorAsf(t, err, &e, "Expected error to be of type *linodego.Error, got: %T", err)
 
 	if e.Code != 400 {
 		t.Errorf("should have received a 400 Code with invalid label, got %v", e.Code)
@@ -441,6 +444,7 @@ func TestVPC_WithRDMAType(t *testing.T) {
 	f := linodego.Filter{}
 	f.AddField(linodego.Eq, "vpc_type", "rdma")
 	filter, err := f.MarshalJSON()
+	require.NoError(t, err, "Error marshaling VPC list filter")
 
 	vpcs, err := client.ListVPCs(context.Background(), &linodego.ListOptions{Filter: string(filter)})
 	require.NoError(t, err, "Error listing VPCs")
@@ -475,7 +479,8 @@ func TestVPC_WithRDMAType(t *testing.T) {
 //	require.Error(t, err, "Expected error creating VPC with RDMA type and IPv6")
 //	defer teardown()
 //
-//	e, _ := err.(*Error)
+//	var e *linodego.Error
+//	require.ErrorAsf(t, err, &e, "Expected error to be of type *linodego.Error, got: %T", err)
 //	assert.Equal(t, 400, e.Code, "Expected error code 400, got: %d", e.Code)
 //	expectedErrorMessage := "RDMA VPCs cannot have IPv6 ranges"
 //	assert.Contains(t, e.Message, expectedErrorMessage, "Expected error message to contain: %s, got: %s", expectedErrorMessage, e.Message)

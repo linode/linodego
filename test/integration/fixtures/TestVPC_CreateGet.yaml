@@ -11,7 +11,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/regions?page=1
+    url: https://api.linode.com/v4beta/regions?page=1
     method: GET
   response:
     body: '{"data": [{"id": "pl-labkrk-2", "label": "Krakow, PL", "country": "pl",
@@ -97,7 +97,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/vpcs
+    url: https://api.linode.com/v4beta/vpcs
     method: POST
   response:
     body: '{"id": 525039, "label": "go-test-vpc-1783500487864220000", "description":
@@ -159,7 +159,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/vpcs/525039
+    url: https://api.linode.com/v4beta/vpcs/525039
     method: GET
   response:
     body: '{"id": 525039, "label": "go-test-vpc-1783500487864220000", "description":
@@ -223,7 +223,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.devcloud.linode.com/v4beta/vpcs/525039
+    url: https://api.linode.com/v4beta/vpcs/525039
     method: DELETE
   response:
     body: '{}'

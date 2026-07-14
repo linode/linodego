@@ -17,9 +17,7 @@ func createInstanceWithLinodeInterfaces(
 	interfaces []linodego.LinodeInstanceInterfaceCreateOptions,
 	modifiers ...instanceModifier,
 ) (*linodego.Instance, func(), error) {
-	if t != nil {
-		t.Helper()
-	}
+	t.Helper()
 
 	createOpts := linodego.InstanceCreateOptions{
 		Label:                    "go-test-intf-" + randLabel(),
@@ -58,15 +56,20 @@ func createInstanceWithLinodeInterfaces(
 		err = client.DeleteInstance(context.Background(), instance.ID)
 		require.NoErrorf(t, err, "Error deleting test instance: %s", err)
 
+		// NOTE: The linode_delete event is sometimes reported as "failed" by the
+		// API even though the instance is actually deleted successfully.
+		// Rather than treating that as fatal, we log it and fall back to
+		// GetInstance returning a 404 as the authoritative check that the instance
+		// was actually deleted.
 		event, err := p.WaitForFinished(ctx)
-		require.NoErrorf(t, err, "Error waiting for instance deletion event: %s", err)
-
-		if event.Action != linodego.ActionLinodeDelete {
+		if err != nil {
+			t.Logf("Warning: Error waiting for instance deletion event (instance deletion will still be verified directly): %s", err)
+		} else if event.Action != linodego.ActionLinodeDelete {
 			t.Errorf("Expected event action %s, got %s", linodego.ActionLinodeDelete, event.Action)
 		}
 
 		_, err = client.GetInstance(context.Background(), instance.ID)
-		require.NotNilf(t, err, "Expected error when getting instance after deletion, got nil")
+		require.Truef(t, linodego.IsNotFound(err), "Expected instance to be deleted (404), got: %v", err)
 	}
 	return instance, teardown, err
 }
@@ -236,6 +239,8 @@ func TestInstance_CreateWithRDMAVPCInterfaces(t *testing.T) {
 			opts.RootPass = randPassword()
 			opts.Image = "linode/ubuntu24.04"
 			opts.Region = testRegion
+			// opts.Type = linodego.InstanceRDMAType
+			// opts.HostID = linodego.InstanceRDMAHostID
 			opts.InterfaceGeneration = linodego.GenerationLinode
 			opts.LinodeInstanceInterfaces = interfaceCreateOptions
 		},
@@ -274,7 +279,8 @@ func TestInstance_CreateWithRDMAVPCInterfaces(t *testing.T) {
 	err = client.DeleteInterface(context.Background(), instance.ID, basicRDMAInterface.ID)
 	require.Error(t, err, "Expected error deleting RDMA interface from RDMA instance")
 
-	e, _ := err.(*linodego.Error)
+	var e *linodego.Error
+	require.ErrorAsf(t, err, &e, "Expected error to be of type *linodego.Error, got: %T", err)
 	assert.Equal(t, 400, e.Code, "Expected error code 400, got: %d", e.Code)
 	expectedErrorMessage := "RDMA VPC Interfaces cannot be deleted"
 	assert.Contains(t, e.Message, expectedErrorMessage, "Expected error message to contain: %s, got: %s", expectedErrorMessage, e.Message)
