@@ -379,7 +379,7 @@ func TestVPC_Subnet_WithRDMAType(t *testing.T) {
 		"fixtures/TestVPC_Subnet_WithRDMAType",
 		func(client *linodego.Client, opts *linodego.VPCCreateOptions) {
 			// GPUDirect RDMA capability not available for now
-			// opts.Region = getRegionsWithCaps(t, client, []string{linodego.CapabilityVPCs, linodego.CapabilityGPUDirectRDMA})
+			// opts.Region = getRegionsWithCaps(t, client, []RegionCapability{linodego.CapabilityVPCs, linodego.CapabilityGPUDirectRDMA})[0]
 			opts.Region = getRegionsWithCaps(t, client, []RegionCapability{linodego.CapabilityVPCs})[0]
 			opts.VPCType = linodego.VPCTypeRDMA
 		},
@@ -405,51 +405,3 @@ func TestVPC_Subnet_WithRDMAType(t *testing.T) {
 	require.NotNil(t, found, "VPC subnet not found in list")
 	assert.Equal(t, linodego.VPCTypeRDMA, found.VPCType, "Expected VPC subnet type to be RDMA")
 }
-
-// TODO: uncomment when RDMA VPC with IPv6 is blocked
-// Both tests probably will be removed completely (as it should be blocked on VPC level already)
-//func TestVPC_Subnet_WithRDMATypeAndIPv6(t *testing.T) {
-//	_, _, vpcSubnet, teardown, err := setupVPCWithSubnet(
-//		t,
-//		"fixtures/TestVPC_Subnet_WithRDMATypeAndIPv6",
-//		func(client *linodego.Client, opts *linodego.VPCCreateOptions) {
-//			//GPUDirect RDMA capability not available for now
-//			//opts.Region = getRegionsWithCaps(t, client, []string{linodego.CapabilityVPCs, linodego.CapabilityGPUDirectRDMA})
-//			opts.Region = getRegionsWithCaps(t, client, []RegionCapability{linodego.CapabilityVPCs})[0]
-//			opts.VPCType = linodego.VPCTypeRDMA
-//			opts.IPv6 = []VPCCreateOptionsIPv6{
-//				{
-//					Range: linodego.Pointer("/52"),
-//				},
-//			}
-//		},
-//	)
-//	defer teardown()
-//	require.NoError(t, err, "Error creating RDMA VPC with subnet")
-//	assert.Equal(t, linodego.VPCTypeRDMA, vpcSubnet.VPCType, "Expected VPC subnet type to be RDMA")
-//	assert.Nil(t, vpcSubnet.IPv6, "Expected VPC subnet IPv6 to be nil")
-//}
-//
-//func TestVPC_Subnet_WithRDMATypeAndIPv6_Fail(t *testing.T) {
-//	t.Helper()
-//	client, fixtureTeardown := createTestClient(t, "fixtures/TestVPC_Subnet_WithRDMATypeAndIPv6_Fail")
-//	defer fixtureTeardown()
-//
-//	_, _, teardown, err := createVPCWithDualStackSubnet(
-//		t,
-//		client,
-//		func(client *linodego.Client, opts *linodego.VPCCreateOptions) {
-//			//GPUDirect RDMA capability not available for now
-//			//opts.Region = getRegionsWithCaps(t, client, []string{linodego.CapabilityVPCs, linodego.CapabilityGPUDirectRDMA})
-//			opts.Region = getRegionsWithCaps(t, client, []RegionCapability{linodego.CapabilityVPCs})[0]
-//			opts.VPCType = linodego.VPCTypeRDMA
-//		},
-//	)
-//	defer teardown()
-//	require.Error(t, err, "Expected error creating VPC with RDMA type and IPv6")
-//
-//	e, _ := err.(*Error)
-//	assert.Equal(t, 400, e.Code, "Expected error code 400, got: %d", e.Code)
-//	expectedErrorMessage := "RDMA VPCs cannot have IPv6 ranges"
-//	assert.Contains(t, e.Message, expectedErrorMessage, "Expected error message to contain: %s, got: %s", expectedErrorMessage, e.Message)
-//}
