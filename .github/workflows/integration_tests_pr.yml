@@ -44,11 +44,12 @@ jobs:
         with:
           ref: ${{ inputs.sha }}
 
-      - run: make ARGS="-run ${{ inputs.module }}" fixtures
+      - run: make ARGS="-run $MODULE" fixtures
         if: ${{ inputs.module != '' && steps.disallowed-char-check.outputs.match == '' }}
         env:
           LINODE_TOKEN: ${{ secrets.DX_LINODE_TOKEN }}
           RUN_ACLP_LOGS_STREAM_TESTS: ${{ github.event.inputs.run_aclp_logs_stream_tests }}
+          MODULE: ${{ inputs.module }}
 
       - run: make fixtures
         if: ${{ inputs.module == '' }}
