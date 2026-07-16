@@ -333,7 +333,7 @@ func TestMonitorAlertDefinitionEntities_List(t *testing.T) {
 	}
 }
 
-func TestMonitorAlertChannel_Create_smoke(t *testing.T) {
+func TestMonitorAlertChannel_CRUD_E2E(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertChannel_Create")
 	defer teardown()
 
@@ -387,6 +387,22 @@ func TestMonitorAlertChannel_Create_smoke(t *testing.T) {
 
 	assertDateSet(t, channel.Created)
 	assertDateSet(t, channel.Updated)
+
+	// Fetch the channel via GetAlertChannel
+	fetchedChannel, err := client.GetAlertChannel(context.Background(), channel.ID)
+	require.NoError(t, err)
+	require.NotNil(t, fetchedChannel)
+
+	assert.Equal(t, channel.ID, fetchedChannel.ID)
+	assert.Equal(t, channel.Label, fetchedChannel.Label)
+	assert.Equal(t, channel.ChannelType, fetchedChannel.ChannelType)
+	assert.Equal(t, channel.Type, fetchedChannel.Type)
+	require.NotNil(t, fetchedChannel.Details.Email)
+	assert.Equal(t, channel.Details.Email.Usernames, fetchedChannel.Details.Email.Usernames)
+	assert.Equal(t, channel.Details.Email.RecipientType, fetchedChannel.Details.Email.RecipientType)
+	assert.Equal(t, channel.Alerts.URL, fetchedChannel.Alerts.URL)
+	assert.Equal(t, channel.Alerts.Type, fetchedChannel.Alerts.Type)
+	assert.Equal(t, channel.Alerts.AlertCount, fetchedChannel.Alerts.AlertCount)
 
 	// Update the created alert channel
 	updatedLabel := label + "-updated"

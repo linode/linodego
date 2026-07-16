@@ -16,11 +16,11 @@ interactions:
   response:
     body: '{"data": [{"username": "test_user1", "email": "test_user1@example.com",
       "restricted": false, "ssh_keys": [], "tfa_enabled": true, "verified_phone_number":
-      "+48695154186", "password_created": "2018-01-02T03:04:05", "last_login": {"login_datetime":
+      "+19895154186", "password_created": "2018-01-02T03:04:05", "last_login": {"login_datetime":
       "2018-01-02T03:04:05", "status": "successful"}, "user_type": "default"}, {"username":
       "test_user2", "email": "test_user2@example.com", "restricted": false,
-      "ssh_keys": ["bfenski", "fenio", "fenio", "fenio", "fenio"], "tfa_enabled":
-      true, "verified_phone_number": "+48513467293", "password_created": "2018-01-02T03:04:05",
+      "ssh_keys": ["key1", "key2", "key3", "key4", "key5"], "tfa_enabled":
+      true, "verified_phone_number": "+19895154187", "password_created": "2018-01-02T03:04:05",
       "last_login": {"login_datetime": "2018-01-02T03:04:05", "status": "successful"},
       "user_type": "default"}], "page": 1, "pages": 1, "results": 2}'
     headers:
@@ -45,7 +45,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 06 Jul 2026 18:46:20 GMT
+      - Thu, 16 Jul 2026 07:16:05 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -86,9 +86,9 @@ interactions:
     url: https://api.linode.com/v4beta/monitor/alert-channels
     method: POST
   response:
-    body: '{"id": 10284, "label": "linodego-sdk-test-alert-channel", "channel_type":
+    body: '{"id": 10304, "label": "linodego-sdk-test-alert-channel", "channel_type":
       "email", "type": "user", "details": {"email": {"usernames": ["test_user1",
-      "test_user2"], "recipient_type": "user"}}, "alerts": {"url": "/monitor/alert-channels/10284/alerts",
+      "test_user2"], "recipient_type": "user"}}, "alerts": {"url": "/monitor/alert-channels/10304/alerts",
       "type": "alerts-definitions", "alert_count": 0}, "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "created_by": "tester", "updated_by":
       "tester"}'
@@ -116,75 +116,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 06 Jul 2026 18:46:21 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      X-Accepted-Oauth-Scopes:
-      - monitor:read_write
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
-        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
-        monitor:read_write nodebalancers:read_only object_storage:read_only stackscripts:read_only
-        volumes:read_only
-      X-Ratelimit-Limit:
-      - "1840"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: '{"details":{"email":{"usernames":["test_user1","test_user2"]}},"label":"linodego-sdk-test-alert-channel-updated"}'
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/alert-channels/10284
-    method: PUT
-  response:
-    body: '{"id": 10284, "label": "linodego-sdk-test-alert-channel-updated", "channel_type":
-      "email", "type": "user", "details": {"email": {"usernames": ["test_user1",
-      "test_user2"], "recipient_type": "user"}}, "alerts": {"url": "/monitor/alert-channels/10284/alerts",
-      "type": "alerts-definitions", "alert_count": 0}, "created": "2018-01-02T03:04:05",
-      "created_by": "tester", "updated_by": "tester"}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Length:
-      - "478"
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Mon, 06 Jul 2026 18:46:22 GMT
+      - Thu, 16 Jul 2026 07:16:06 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -220,7 +152,146 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/alert-channels/10284
+    url: https://api.linode.com/v4beta/monitor/alert-channels/10304
+    method: GET
+  response:
+    body: '{"id": 10304, "label": "linodego-sdk-test-alert-channel", "channel_type":
+      "email", "type": "user", "details": {"email": {"usernames": ["test_user1",
+      "test_user2"], "recipient_type": "user"}}, "alerts": {"url": "/monitor/alert-channels/10304/alerts",
+      "type": "alerts-definitions", "alert_count": 0}, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "created_by": "tester", "updated_by":
+      "tester"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "470"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 16 Jul 2026 07:16:07 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
+        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
+        monitor:read_write nodebalancers:read_only object_storage:read_only stackscripts:read_only
+        volumes:read_only
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"details":{"email":{"usernames":["test_user1","test_user2"]}},"label":"linodego-sdk-test-alert-channel-updated"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/alert-channels/10304
+    method: PUT
+  response:
+    body: '{"id": 10304, "label": "linodego-sdk-test-alert-channel-updated", "channel_type":
+      "email", "type": "user", "details": {"email": {"usernames": ["test_user1",
+      "test_user2"], "recipient_type": "user"}}, "alerts": {"url": "/monitor/alert-channels/10304/alerts",
+      "type": "alerts-definitions", "alert_count": 0}, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "created_by": "tester", "updated_by":
+      "tester"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "478"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 16 Jul 2026 07:16:09 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
+        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
+        monitor:read_write nodebalancers:read_only object_storage:read_only stackscripts:read_only
+        volumes:read_only
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/alert-channels/10304
     method: DELETE
   response:
     body: '{}'
@@ -248,7 +319,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 06 Jul 2026 18:46:25 GMT
+      - Thu, 16 Jul 2026 07:16:12 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

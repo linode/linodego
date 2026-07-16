@@ -84,6 +84,21 @@ const (
 			"url": "/monitor/alert-channels/10000/alerts"
 		}
 	}`
+
+	monitorAlertChannelListAlertsForChannelResponse = `{
+		"data": [
+			{
+				"id": 10000,
+				"label": "Dbaas alert definition",
+				"service_type": "dbaas",
+				"type": "system",
+				"url": "/monitor/services/dbaas/alerts-definitions/10000"
+			}
+		],
+		"page": 1,
+		"pages": 1,
+		"results": 1
+	}`
 )
 
 func TestListAlertChannels(t *testing.T) {
@@ -177,4 +192,41 @@ func TestUpdateAlertChannel(t *testing.T) {
 	assert.Equal(t, "user", channel.Details.Email.RecipientType)
 	assert.Equal(t, 0, channel.Alerts.AlertCount)
 	assert.Equal(t, "/monitor/alert-channels/10000/alerts", channel.Alerts.URL)
+}
+func TestGetAlertChannel(t *testing.T) {
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockGet("monitor/alert-channels/10000", json.RawMessage(monitorAlertChannelCreateResponse))
+
+	channel, err := base.Client.GetAlertChannel(context.Background(), 10000)
+	require.NoError(t, err)
+	require.NotNil(t, channel)
+
+	assert.Equal(t, 10000, channel.ID)
+	assert.Equal(t, "Email Alert Channel", channel.Label)
+	assert.Equal(t, linodego.EmailAlertNotification, channel.ChannelType)
+	assert.Equal(t, linodego.UserAlertChannel, channel.Type)
+	require.NotNil(t, channel.Details.Email)
+	assert.Equal(t, []string{"tester1", "tester2"}, channel.Details.Email.Usernames)
+	assert.Equal(t, "user", channel.Details.Email.RecipientType)
+	assert.Equal(t, 0, channel.Alerts.AlertCount)
+	assert.Equal(t, "/monitor/alert-channels/10000/alerts", channel.Alerts.URL)
+}
+
+func TestListAlertsForAlertChannel(t *testing.T) {
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockGet("monitor/alert-channels/123/alerts", json.RawMessage(monitorAlertChannelListAlertsForChannelResponse))
+
+	alerts, err := base.Client.ListAlertsForChannel(context.Background(), 123, nil)
+	require.NoError(t, err)
+	require.Len(t, alerts, 1)
+
+	assert.Equal(t, 10000, alerts[0].ID)
+	assert.Equal(t, "dbaas", alerts[0].ServiceType)
+	assert.Equal(t, "system", alerts[0].Type)
 }
