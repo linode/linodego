@@ -2,10 +2,13 @@ package integration
 
 import (
 	"context"
+	"fmt"
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/linode/linodego/v2"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 var (
@@ -75,6 +78,76 @@ func TestFirewallRules_Get_smoke(t *testing.T) {
 	if !cmp.Equal(rules.Outbound, testFirewallRuleSet.Outbound, ignoreNetworkAddresses) {
 		t.Errorf("expected outbound rules to match, but got diff: %s", cmp.Diff(rules.Outbound, testFirewallRuleSet.Outbound, ignoreNetworkAddresses))
 	}
+}
+
+func TestFirewallRules_ExtendedProtocols(t *testing.T) {
+	label := fmt.Sprintf("fw-ext-%s", getUniqueText())
+
+	rules := linodego.FirewallRulesCreateOptions{
+		Inbound: []linodego.FirewallRuleInbound{
+			{
+				Label:    "linodego-fwrule-all",
+				Action:   "ACCEPT",
+				Protocol: linodego.AllNetworkProtocols,
+				Addresses: linodego.NetworkAddresses{
+					IPv4: []string{"0.0.0.0/0"},
+				},
+			},
+			{
+				Label:    "linodego-fwrule-numeric",
+				Action:   "ACCEPT",
+				Protocol: linodego.NetworkProtocol("50"),
+				Addresses: linodego.NetworkAddresses{
+					IPv4: []string{"0.0.0.0/0"},
+				},
+			},
+			{
+				Label:    "linodego-fwrule-tcp-numeric",
+				Action:   "ACCEPT",
+				Ports:    "443",
+				Protocol: linodego.NetworkProtocol("6"),
+				Addresses: linodego.NetworkAddresses{
+					IPv4: []string{"0.0.0.0/0"},
+				},
+			},
+		},
+		InboundPolicy:  "DROP",
+		OutboundPolicy: "ACCEPT",
+	}
+
+	client, firewall, teardown, err := setupFirewall(t, []firewallModifier{
+		func(createOpts *linodego.FirewallCreateOptions) {
+			createOpts.Label = label
+			createOpts.Rules = rules
+		},
+	}, "fixtures/TestFirewallRules_ExtendedProtocols")
+	t.Cleanup(teardown)
+	require.NoError(t, err)
+
+	require.Len(t, firewall.Rules.Inbound, 3)
+
+	assert.Equal(t, linodego.AllNetworkProtocols, firewall.Rules.Inbound[0].Protocol)
+	assert.Empty(t, firewall.Rules.Inbound[0].Ports)
+
+	assert.Equal(t, linodego.NetworkProtocol("50"), firewall.Rules.Inbound[1].Protocol)
+	assert.Empty(t, firewall.Rules.Inbound[1].Ports)
+
+	assert.Equal(t, linodego.NetworkProtocol("6"), firewall.Rules.Inbound[2].Protocol)
+	assert.Equal(t, "443", firewall.Rules.Inbound[2].Ports)
+
+	result, err := client.GetFirewall(context.Background(), firewall.ID)
+	require.NoErrorf(t, err, "failed to get firewall %d", firewall.ID)
+
+	require.Len(t, result.Rules.Inbound, 3)
+
+	assert.Equal(t, linodego.AllNetworkProtocols, result.Rules.Inbound[0].Protocol)
+	assert.Empty(t, result.Rules.Inbound[0].Ports)
+
+	assert.Equal(t, linodego.NetworkProtocol("50"), result.Rules.Inbound[1].Protocol)
+	assert.Empty(t, result.Rules.Inbound[1].Ports)
+
+	assert.Equal(t, linodego.NetworkProtocol("6"), result.Rules.Inbound[2].Protocol)
+	assert.Equal(t, "443", result.Rules.Inbound[2].Ports)
 }
 
 func TestFirewallRules_Update(t *testing.T) {

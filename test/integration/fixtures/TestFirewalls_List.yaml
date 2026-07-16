@@ -94,7 +94,7 @@ interactions:
       "ipv4": ["172.236.119.4/30", "172.234.160.4/30", "172.236.94.4/30"]}, "action":
       "ACCEPT", "label": "accept-inbound-tcp-ssh-proxies", "ports": "22,443", "description":
       "Accept inbound TCP from SSH proxies"}, {"protocol": "TCP", "addresses": {"ipv4":
-      ["139.144.212.168/31", "172.232.23.164/31"]}, "action": "ACCEPT", "label": "accept-inbound-tcp-eaa-proxies",
+      ["192.0.2.0/31", "192.0.2.0/31"]}, "action": "ACCEPT", "label": "accept-inbound-tcp-eaa-proxies",
       "ports": "22,443", "description": "Accept inbound TCP from EAA proxies"}], "inbound_policy":
       "DROP", "outbound": [], "outbound_policy": "ACCEPT", "version": 1, "fingerprint":
       "aaa34813"}, "tags": ["linuke-keep"], "entities": [{"id": 379283, "type": "linode_interface",
@@ -103,60 +103,60 @@ interactions:
       "parent_entity": null}}]}, {"id": 6487222, "label": "tf_test-4730363105259144210",
       "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "status":
       "enabled", "rules": {"inbound": [{"protocol": "TCP", "addresses": {"ipv6": ["1234::5678/128"],
-      "ipv4": ["74.102.235.249/32"]}, "action": "ACCEPT", "label": "tcp_inbound_ssh_accept_local",
+      "ipv4": ["192.0.2.0/32"]}, "action": "ACCEPT", "label": "tcp_inbound_ssh_accept_local",
       "ports": "22"}], "inbound_policy": "DROP", "outbound": [], "outbound_policy":
       "ACCEPT", "version": 1, "fingerprint": "5aa2d804"}, "tags": [], "entities":
       []}, {"id": 6487694, "label": "tf_test-8181405914570718692", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"protocol": "TCP", "addresses": {"ipv6": ["1234::5678/128"],
-      "ipv4": ["74.102.235.249/32"]}, "action": "ACCEPT", "label": "tcp_inbound_ssh_accept_local",
+      "ipv4": ["192.0.2.0/32"]}, "action": "ACCEPT", "label": "tcp_inbound_ssh_accept_local",
       "ports": "22"}], "inbound_policy": "DROP", "outbound": [], "outbound_policy":
       "ACCEPT", "version": 1, "fingerprint": "5aa2d804"}, "tags": [], "entities":
       []}, {"id": 6488076, "label": "tf-test-2662579243763295399", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"protocol": "TCP", "addresses": {"ipv6": ["1234::5678/128"],
-      "ipv4": ["74.102.235.249/32"]}, "action": "ACCEPT", "label": "tcp_inbound_ssh_accept_local",
+      "ipv4": ["192.0.2.0/32"]}, "action": "ACCEPT", "label": "tcp_inbound_ssh_accept_local",
       "ports": "22"}], "inbound_policy": "DROP", "outbound": [], "outbound_policy":
       "ACCEPT", "version": 1, "fingerprint": "5aa2d804"}, "tags": [], "entities":
       []}, {"id": 6488152, "label": "tf-test-7434155876252647646", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"protocol": "TCP", "addresses": {"ipv6": ["1234::5678/128"],
-      "ipv4": ["74.102.235.249/32"]}, "action": "ACCEPT", "label": "tcp_inbound_ssh_accept_local",
+      "ipv4": ["192.0.2.0/32"]}, "action": "ACCEPT", "label": "tcp_inbound_ssh_accept_local",
       "ports": "22"}], "inbound_policy": "DROP", "outbound": [], "outbound_policy":
       "ACCEPT", "version": 1, "fingerprint": "5aa2d804"}, "tags": [], "entities":
       []}, {"id": 6488643, "label": "tf_test-4497105480711871048", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"protocol": "TCP", "addresses": {"ipv6": ["1234::5678/128"],
-      "ipv4": ["74.102.235.249/32"]}, "action": "ACCEPT", "label": "tcp_inbound_ssh_accept_local",
+      "ipv4": ["192.0.2.0/32"]}, "action": "ACCEPT", "label": "tcp_inbound_ssh_accept_local",
       "ports": "22"}], "inbound_policy": "DROP", "outbound": [], "outbound_policy":
       "ACCEPT", "version": 1, "fingerprint": "5aa2d804"}, "tags": [], "entities":
       []}, {"id": 6488833, "label": "tf_test-2716164270344383334", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"protocol": "TCP", "addresses": {"ipv6": ["1234::5678/128"],
-      "ipv4": ["74.102.235.249/32"]}, "action": "ACCEPT", "label": "tcp_inbound_ssh_accept_local",
+      "ipv4": ["192.0.2.0/32"]}, "action": "ACCEPT", "label": "tcp_inbound_ssh_accept_local",
       "ports": "22"}], "inbound_policy": "DROP", "outbound": [], "outbound_policy":
       "ACCEPT", "version": 1, "fingerprint": "5aa2d804"}, "tags": [], "entities":
       []}, {"id": 6488942, "label": "tf_test-5198004906850423409", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"protocol": "TCP", "addresses": {"ipv6": ["1234::5678/128"],
-      "ipv4": ["74.102.235.249/32"]}, "action": "ACCEPT", "label": "tcp_inbound_ssh_accept_local",
+      "ipv4": ["192.0.2.0/32"]}, "action": "ACCEPT", "label": "tcp_inbound_ssh_accept_local",
       "ports": "22"}], "inbound_policy": "DROP", "outbound": [], "outbound_policy":
       "ACCEPT", "version": 1, "fingerprint": "5aa2d804"}, "tags": [], "entities":
       []}, {"id": 6488991, "label": "tf_test-8335666987695131249", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"protocol": "TCP", "addresses": {"ipv6": ["1234::5678/128"],
-      "ipv4": ["74.102.235.249/32"]}, "action": "ACCEPT", "label": "tcp_inbound_ssh_accept_local",
+      "ipv4": ["192.0.2.0/32"]}, "action": "ACCEPT", "label": "tcp_inbound_ssh_accept_local",
       "ports": "22"}], "inbound_policy": "DROP", "outbound": [], "outbound_policy":
       "ACCEPT", "version": 1, "fingerprint": "5aa2d804"}, "tags": [], "entities":
       []}, {"id": 6489132, "label": "tf_test-8711695578112956943", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
       [{"protocol": "TCP", "addresses": {"ipv6": ["1234::5678/128"],
-      "ipv4": ["74.102.235.249/32"]}, "action": "ACCEPT", "label": "tcp_inbound_ssh_accept_local",
+      "ipv4": ["192.0.2.0/32"]}, "action": "ACCEPT", "label": "tcp_inbound_ssh_accept_local",
       "ports": "22"}], "inbound_policy": "DROP", "outbound": [], "outbound_policy":
       "ACCEPT", "version": 1, "fingerprint": "5aa2d804"}, "tags": [], "entities":
       []}, {"id": 9618460, "label": "cloudfw-1778024706560062000", "created": "2018-01-02T03:04:05",
       "updated": "2018-01-02T03:04:05", "status": "enabled", "rules": {"inbound":
-      [{"protocol": "TCP", "addresses": {"ipv4": ["74.102.235.249/32"]}, "action":
+      [{"protocol": "TCP", "addresses": {"ipv4": ["192.0.2.0/32"]}, "action":
       "ACCEPT", "label": "ssh-inbound-accept-local", "ports": "22"}], "inbound_policy":
       "DROP", "outbound": [], "outbound_policy": "ACCEPT", "version": 1, "fingerprint":
       "e3c5e43b"}, "tags": [], "entities": []}, {"id": 9618652, "label": "linodego-fw-test",

@@ -332,3 +332,89 @@ func TestVPC_ListIPv6Addresses(t *testing.T) {
 	require.Equal(t, vpcIPs[0].IPv6Addresses[0].SLAACAddress, config.Interfaces[0].IPv6.SLAAC[0].Address)
 	require.True(t, *vpcIPs[0].IPv6IsPublic)
 }
+
+func TestVPC_IPv4Ranges(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestVPC_IPv4Ranges")
+	defer teardown()
+
+	regions := getRegionsWithCaps(t, client, []linodego.RegionCapability{CapabilityVPCCustomIPv4Ranges})
+	require.NotEmpty(t, regions, "no region with Custom VPC IPv4 Ranges capability available")
+
+	ctx := context.Background()
+	ipv4Range := "10.118.0.0/20"
+
+	vpc, vpcTeardown, err := createVPC(
+		t,
+		client,
+		func(_ *linodego.Client, options *linodego.VPCCreateOptions) {
+			options.Region = regions[0]
+			options.IPv4 = []linodego.VPCCreateOptionsIPv4{
+				{
+					Range: linodego.Pointer(ipv4Range),
+				},
+			}
+		},
+	)
+	require.NoError(t, err)
+
+	defer vpcTeardown()
+
+	requireIPv4Contains(t, vpc.IPv4, ipv4Range, "Create")
+
+	got, err := client.GetVPC(ctx, vpc.ID)
+	require.NoError(t, err, "failed to get VPC")
+	requireIPv4Contains(t, got.IPv4, ipv4Range, "Get")
+
+	vpcs, err := client.ListVPCs(ctx, nil)
+	require.NoError(t, err, "failed to list VPCs")
+
+	var listed *linodego.VPC
+	for i := range vpcs {
+		if vpcs[i].ID == vpc.ID {
+			listed = &vpcs[i]
+			break
+		}
+	}
+	require.NotNil(t, listed, "created VPC %d not found in list", vpc.ID)
+	requireIPv4Contains(t, listed.IPv4, ipv4Range, "List")
+
+	newIPv4Range := "10.200.0.0/20"
+	updateOpts := linodego.VPCUpdateOptions{
+		Label: vpc.Label,
+		IPv4: []linodego.VPCUpdateOptionsIPv4{
+			{Range: linodego.Pointer(newIPv4Range)},
+		},
+	}
+
+	updated, err := client.UpdateVPC(ctx, vpc.ID, updateOpts)
+	require.NoError(t, err, "failed to update VPC")
+	requireIPv4Contains(t, updated.IPv4, newIPv4Range, "Update")
+}
+
+func TestVPC_DefaultRanges(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestVPC_DefaultRanges")
+	defer teardown()
+
+	dr, err := client.GetVPCDefaultRanges(context.Background())
+	require.NoError(t, err, "failed to get VPC default ranges")
+	require.NotEmpty(t, dr.DefaultIPV4Ranges,
+		"expected IPv4 ranges to be present, got %+v", dr,
+	)
+	require.NotEmpty(t, dr.ForbiddenIPV4Ranges,
+		"expected forbidden IPv4 ranges to be present, got %+v", dr,
+	)
+}
+
+// requireIPv4Contains asserts that ranges contains an entry matching wantRange.
+func requireIPv4Contains(t *testing.T, ranges []linodego.VPCIPv4Range, wantRange, context string) {
+	t.Helper()
+
+	for _, r := range ranges {
+		if r.Range == wantRange {
+			return
+		}
+	}
+
+	require.Failf(t, "IPv4 range not found",
+		"%s: expected IPv4 range %s in %+v", context, wantRange, ranges)
+}
