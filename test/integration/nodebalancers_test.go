@@ -298,7 +298,13 @@ func TestNodeBalancer_Create_WithDeprecatedVPCsAttribute(t *testing.T) {
 	client, recordStopper := createTestClient(t, "fixtures/TestNodeBalancer_Create_WithDeprecatedVPCsAttribute")
 	defer recordStopper()
 
-	vpc, subnet, vpcTeardown, err := createVPCWithSubnet(t, client)
+	vpc, subnet, vpcTeardown, err := createVPCWithSubnet(
+		t,
+		client,
+		func(client *linodego.Client, opts *linodego.VPCCreateOptions) {
+			opts.Region = premiumRegions[0]
+		},
+	)
 	defer vpcTeardown()
 	require.NoError(t, err, "Error creating VPC with subnet for NodeBalancer")
 
