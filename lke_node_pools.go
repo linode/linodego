@@ -59,6 +59,18 @@ type LKENodePoolTaint struct {
 	Effect LKENodePoolTaintEffect `json:"effect"`
 }
 
+// LKENodePoolIsolation controls network isolation for nodes in the pool.
+type LKENodePoolIsolation struct {
+	PublicIPv4 bool `json:"public_ipv4"`
+	PublicIPv6 bool `json:"public_ipv6"`
+}
+
+// LKENodePoolIsolationCreateOptions controls network isolation for node pool create requests.
+type LKENodePoolIsolationCreateOptions struct {
+	PublicIPv4 *bool `json:"public_ipv4,omitzero"`
+	PublicIPv6 *bool `json:"public_ipv6,omitzero"`
+}
+
 // LKENodePoolLabels represents Kubernetes labels to add to an LKENodePool
 type LKENodePoolLabels map[string]string
 
@@ -78,6 +90,9 @@ type LKENodePool struct {
 	FirewallID *int                  `json:"firewall_id,omitzero"`
 
 	DiskEncryption InstanceDiskEncryption `json:"disk_encryption,omitzero"`
+
+	// Isolation may not currently be available to all users.
+	Isolation *LKENodePoolIsolation `json:"isolation"`
 
 	// K8sVersion and UpdateStrategy are only for LKE Enterprise to support node pool upgrades.
 	// It may not currently be available to all users and is under v4beta.
@@ -100,6 +115,9 @@ type LKENodePoolCreateOptions struct {
 
 	Autoscaler *LKENodePoolAutoscaler `json:"autoscaler,omitzero"`
 	FirewallID *int                   `json:"firewall_id,omitzero"`
+
+	// Isolation may not currently be available to all users.
+	Isolation *LKENodePoolIsolationCreateOptions `json:"isolation,omitzero"`
 
 	// K8sVersion and UpdateStrategy only works for LKE Enterprise to support node pool upgrades.
 	// It may not currently be available to all users and is under v4beta.
@@ -140,6 +158,13 @@ func (l LKENodePool) GetCreateOptions() (o LKENodePoolCreateOptions) {
 	o.Label = l.Label
 	o.FirewallID = l.FirewallID
 	o.DiskEncryption = &l.DiskEncryption
+
+	if l.Isolation != nil {
+		o.Isolation = &LKENodePoolIsolationCreateOptions{
+			PublicIPv4: Pointer(l.Isolation.PublicIPv4),
+			PublicIPv6: Pointer(l.Isolation.PublicIPv6),
+		}
+	}
 
 	return o
 }

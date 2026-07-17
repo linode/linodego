@@ -198,13 +198,18 @@ func NewClient(hc *http.Client) (client Client, err error) {
 	}
 
 	certPath, certPathExists := os.LookupEnv(APIHostCert)
-	if certPathExists {
-		if err := client.SetRootCertificate(certPath); err != nil {
-			return Client{}, err
-		}
 
-		if envDebug {
-			log.Printf("[DEBUG] Set API root certificate to %s\n", certPath)
+	if certPathExists { //nolint:nestif
+		if _, ok := client.httpClient.Transport.(*http.Transport); ok {
+			if err := client.SetRootCertificate(certPath); err != nil {
+				return Client{}, err
+			}
+
+			if envDebug {
+				log.Printf("[DEBUG] Set API root certificate to %s\n", certPath)
+			}
+		} else {
+			log.Println("[WARN] Custom root certificate is not supported with a custom transport")
 		}
 	}
 
@@ -466,9 +471,15 @@ func (c *Client) SetRetryAfter(callback RetryAfter) *Client {
 	return c
 }
 
-// SetRetryCount sets the maximum retry attempts before aborting.
+// SetRetryCount sets the number of retries after the initial request before aborting.
+// Negative values are treated as 0 (no retries).
 func (c *Client) SetRetryCount(count int) *Client {
+	if count < 0 {
+		count = 0
+	}
+
 	c.retryCount = count
+
 	return c
 }
 
@@ -514,7 +525,8 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 		err  error
 	)
 
-	for range c.retryCount {
+	// retryCount controls the number of retries after the initial attempt
+	for range c.retryCount + 1 {
 		// createRequest seeks params.Body back to the start, so it's safe to retry.
 		req, err = c.createRequest(ctx, method, endpoint, params)
 		if err != nil {

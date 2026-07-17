@@ -4,6 +4,7 @@ import (
 	"context"
 	"testing"
 
+	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 )
@@ -128,4 +129,29 @@ func TestInstanceReservedIP_Assign(t *testing.T) {
 	assert.NotNil(t, ip)
 	assert.Equal(t, "203.0.113.1", ip.Address)
 	assert.False(t, ip.Public)
+	assert.True(t, ip.Reserved)
+
+	// AssignedEntity assertions
+	assert.NotNil(t, ip.AssignedEntity)
+	assert.Equal(t, 123, ip.AssignedEntity.ID)
+	assert.Equal(t, "my-linode", ip.AssignedEntity.Label)
+	assert.Equal(t, "linode", ip.AssignedEntity.Type)
+	assert.Equal(t, "/v4/linode/instances/123", ip.AssignedEntity.URL)
+}
+
+func TestInstanceReservedIP_Assign_RequestBody(t *testing.T) {
+	client := createMockClient(t)
+
+	opts := linodego.InstanceReserveIPOptions{
+		Type:    "ipv4",
+		Public:  false,
+		Address: "203.0.113.1",
+	}
+
+	httpmock.RegisterRegexpResponder("POST", mockRequestURL(t, "/linode/instances/123/ips"),
+		mockRequestBodyValidate(t, opts, nil))
+
+	if _, err := client.AssignInstanceReservedIP(context.Background(), 123, opts); err != nil {
+		t.Fatal(err)
+	}
 }

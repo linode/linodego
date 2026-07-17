@@ -5,10 +5,10 @@ require (
 	github.com/google/go-querystring v1.2.0
 	github.com/jarcoal/httpmock v1.4.1
 	github.com/stretchr/testify v1.11.1
-	golang.org/x/net v0.55.0
+	golang.org/x/net v0.56.0
 	golang.org/x/oauth2 v0.36.0
-	golang.org/x/text v0.37.0
-	gopkg.in/ini.v1 v1.67.2
+	golang.org/x/text v0.40.0
+	gopkg.in/ini.v1 v1.67.3
 )
 
 require (
