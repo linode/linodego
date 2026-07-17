@@ -45,6 +45,9 @@ type NodeBalancer struct {
 	// NOTE: Locks can only be used with v4beta.
 	Locks []LockType `json:"locks"`
 
+	FrontendAddressType NodeBalancerVPCFrontendAddressType `json:"frontend_address_type"`
+	FrontendVPCSubnetID *int                               `json:"frontend_vpc_subnet_id"`
+
 	Created *time.Time `json:"-"`
 	Updated *time.Time `json:"-"`
 }
@@ -66,6 +69,19 @@ type NodeBalancerVPCOptions struct {
 	IPv4RangeAutoAssign bool   `json:"ipv4_range_auto_assign,omitzero"`
 }
 
+type NodeBalancerBackendVPCOptions struct {
+	IPv4Range           string `json:"ipv4_range,omitzero"`
+	IPv6Range           string `json:"ipv6_range,omitzero"`
+	SubnetID            int    `json:"subnet_id"`
+	IPv4RangeAutoAssign bool   `json:"ipv4_range_auto_assign,omitzero"`
+}
+
+type NodeBalancerFrontendVPCOptions struct {
+	IPv4Range string `json:"ipv4_range,omitzero"`
+	IPv6Range string `json:"ipv6_range,omitzero"`
+	SubnetID  int    `json:"subnet_id"`
+}
+
 // NodeBalancerCreateOptions are the options permitted for CreateNodeBalancer
 type NodeBalancerCreateOptions struct {
 	Label              *string `json:"label,omitzero"`
@@ -79,8 +95,12 @@ type NodeBalancerCreateOptions struct {
 	Tags       []string                          `json:"tags"`
 	FirewallID int                               `json:"firewall_id,omitzero"`
 	Type       NodeBalancerPlanType              `json:"type,omitzero"`
-	VPCs       []NodeBalancerVPCOptions          `json:"vpcs,omitzero"`
-	IPv4       *string                           `json:"ipv4,omitzero"`
+	// Deprecated: `VPCs` is deprecated in favor of `BackendVPCs`.
+	// This field may be removed in a later release.
+	VPCs         []NodeBalancerVPCOptions         `json:"vpcs,omitzero"`
+	BackendVPCs  []NodeBalancerBackendVPCOptions  `json:"backend_vpcs,omitzero"`
+	FrontendVPCs []NodeBalancerFrontendVPCOptions `json:"frontend_vpcs,omitzero"`
+	IPv4         *string                          `json:"ipv4,omitzero"`
 }
 
 // NodeBalancerUpdateOptions are the options permitted for UpdateNodeBalancer
@@ -113,6 +133,15 @@ const (
 	NBTypePremium     NodeBalancerPlanType = "premium"
 	NBTypePremium40GB NodeBalancerPlanType = "premium_40gb"
 	NBTypeCommon      NodeBalancerPlanType = "common"
+)
+
+// NodeBalancerVPCFrontendAddressType constants start with NodeBalancerVPCFrontendAddressType and include the types of frontend addresses a NodeBalancer VPC can have
+type NodeBalancerVPCFrontendAddressType string
+
+// NodeBalancerVPCFrontendAddressType constants reflect the types of frontend addresses a NodeBalancer VPC can have
+const (
+	NodeBalancerVPCFrontendAddressTypeVPC    NodeBalancerVPCFrontendAddressType = "vpc"
+	NodeBalancerVPCFrontendAddressTypePublic NodeBalancerVPCFrontendAddressType = "public"
 )
 
 // UnmarshalJSON implements the json.Unmarshaler interface

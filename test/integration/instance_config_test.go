@@ -162,12 +162,13 @@ func setupInstanceWithDualStackVPCAndNAT11(t *testing.T, fixturesYaml string) (
 		t,
 		fixturesYaml,
 		func(client *Client, opts *InstanceCreateOptions) {
-			// TODO: Revert once rolled out to all DCs.
-			// 		 NOTE: There is currently no VPC Dual Stack region capability
-			//	     so this needs to be hardcoded.
-			// opts.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes,
-			//				linodego.CapabilityVPCs})[0]
-			opts.Region = "no-osl-1"
+			opts.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{
+				linodego.CapabilityVPCs,
+				linodego.CapabilityVPCIPv6Stack,
+				linodego.CapabilityVPCDualStack,
+				linodego.CapabilityLinodeInterfaces,
+				linodego.CapabilityNodeBalancers,
+			})[0]
 		},
 	)
 	if err != nil {

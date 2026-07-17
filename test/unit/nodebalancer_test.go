@@ -93,7 +93,7 @@ func TestNodeBalancer_Get(t *testing.T) {
 		},
 	}
 
-	for _, tt := range tests {
+	for idx, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			fixtureData, err := fixtures.GetFixture(tt.fixture)
 			assert.NoError(t, err)
@@ -113,6 +113,13 @@ func TestNodeBalancer_Get(t *testing.T) {
 			assert.Equal(t, "us-west", nodebalancer.Region, "Expected NodeBalancer region to match")
 			assert.Equal(t, []linodego.LockType{linodego.LockTypeCannotDeleteWithSubresources}, nodebalancer.Locks, "Expected NodeBalancer locks to match")
 			assert.Equal(t, tt.expectedLKECluster, nodebalancer.LKECluster, "Expected NodeBalancer LKECluster to match")
+			if idx == 0 {
+				assert.Equal(t, linodego.NBTypePremium40GB, nodebalancer.Type)
+				assert.Equal(t, linodego.NodeBalancerVPCFrontendAddressTypeVPC, nodebalancer.FrontendAddressType)
+				assert.Equal(t, 456, *nodebalancer.FrontendVPCSubnetID)
+			} else {
+				assert.Equal(t, linodego.NBTypeCommon, nodebalancer.Type)
+			}
 		})
 	}
 }
@@ -140,6 +147,9 @@ func TestNodeBalancer_List(t *testing.T) {
 	assert.Equal(t, []string{"tag1", "tag2"}, nodebalancers[0].Tags, "Expected first NodeBalancer tags to match")
 	assert.Equal(t, []linodego.LockType{linodego.LockTypeCannotDelete}, nodebalancers[0].Locks, "Expected first NodeBalancer locks to match")
 	assert.Nil(t, nodebalancers[0].LKECluster, "Expected first NodeBalancer LKECluster to match")
+	assert.Equal(t, linodego.NBTypePremium40GB, nodebalancers[0].Type)
+	assert.Equal(t, linodego.NodeBalancerVPCFrontendAddressTypeVPC, nodebalancers[0].FrontendAddressType)
+	assert.Equal(t, 123, *nodebalancers[0].FrontendVPCSubnetID)
 
 	// Verify details of the second NodeBalancer
 	assert.Equal(t, 456, nodebalancers[1].ID, "Expected second NodeBalancer ID to match")
@@ -153,6 +163,9 @@ func TestNodeBalancer_List(t *testing.T) {
 		Label: "test-cluster",
 		URL:   "/v4/lke/clusters/1234",
 	}, nodebalancers[1].LKECluster, "Expected second NodeBalancer LKECluster to match")
+	assert.Equal(t, linodego.NBTypePremium40GB, nodebalancers[1].Type)
+	assert.Equal(t, linodego.NodeBalancerVPCFrontendAddressTypeVPC, nodebalancers[1].FrontendAddressType)
+	assert.Equal(t, 456, *nodebalancers[1].FrontendVPCSubnetID)
 }
 
 func TestNodeBalancer_Update(t *testing.T) {
@@ -207,4 +220,94 @@ func TestNodeBalancer_Create_IPv4RequestBody(t *testing.T) {
 	if _, err := client.CreateNodeBalancer(context.Background(), opts); err != nil {
 		t.Fatal(err)
 	}
+}
+
+func TestNodeBalancer_Create_with_VPCs(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("nodebalancer_create_with_vpcs")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	requestData := linodego.NodeBalancerCreateOptions{
+		Label:  String("Test NodeBalancer VPC"),
+		Region: "us-east",
+		Type:   linodego.NBTypePremium40GB,
+		VPCs: []linodego.NodeBalancerVPCOptions{
+			{
+				SubnetID:            123,
+				IPv4Range:           "10.200.4.16/28",
+				IPv6Range:           "2600:3c01:e000:1::/64",
+				IPv4RangeAutoAssign: false,
+			},
+		},
+		FrontendVPCs: []linodego.NodeBalancerFrontendVPCOptions{
+			{
+				SubnetID:  456,
+				IPv4Range: "10.200.5.16/28",
+				IPv6Range: "2600:3c01:e000:101::/64",
+			},
+		},
+	}
+
+	base.MockPost("nodebalancers", fixtureData)
+
+	nb, err := base.Client.CreateNodeBalancer(context.Background(), requestData)
+
+	assert.NoError(t, err)
+
+	assert.Equal(t, 12345, nb.ID)
+	assert.Equal(t, "Test NodeBalancer VPC", *nb.Label)
+	assert.Equal(t, "us-east", nb.Region)
+	assert.Equal(t, linodego.NBTypePremium40GB, nb.Type)
+
+	assert.Equal(t, linodego.NodeBalancerVPCFrontendAddressTypeVPC, nb.FrontendAddressType)
+	assert.Equal(t, 456, *nb.FrontendVPCSubnetID)
+}
+
+func TestNodeBalancer_Create_with_BackendVPCs(t *testing.T) {
+	// The response fixture is the same as the VPCs test since BackendVPCs and
+	// VPCs are currently both accepted by the API.
+	fixtureData, err := fixtures.GetFixture("nodebalancer_create_with_vpcs")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	requestData := linodego.NodeBalancerCreateOptions{
+		Label:  String("Test NodeBalancer VPC"),
+		Region: "us-east",
+		Type:   linodego.NBTypePremium40GB,
+		BackendVPCs: []linodego.NodeBalancerBackendVPCOptions{
+			{
+				SubnetID:            123,
+				IPv4Range:           "10.200.4.16/28",
+				IPv6Range:           "2600:3c01:e000:1::/64",
+				IPv4RangeAutoAssign: false,
+			},
+		},
+		FrontendVPCs: []linodego.NodeBalancerFrontendVPCOptions{
+			{
+				SubnetID:  456,
+				IPv4Range: "10.200.5.16/28",
+				IPv6Range: "2600:3c01:e000:101::/64",
+			},
+		},
+	}
+
+	base.MockPost("nodebalancers", fixtureData)
+
+	nb, err := base.Client.CreateNodeBalancer(context.Background(), requestData)
+
+	assert.NoError(t, err)
+
+	assert.Equal(t, 12345, nb.ID)
+	assert.Equal(t, "Test NodeBalancer VPC", *nb.Label)
+	assert.Equal(t, "us-east", nb.Region)
+	assert.Equal(t, linodego.NBTypePremium40GB, nb.Type)
+
+	assert.Equal(t, linodego.NodeBalancerVPCFrontendAddressTypeVPC, nb.FrontendAddressType)
+	assert.Equal(t, 456, *nb.FrontendVPCSubnetID)
 }
