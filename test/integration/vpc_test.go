@@ -8,6 +8,7 @@ import (
 
 	"github.com/linode/linodego/v2"
 	. "github.com/linode/linodego/v2"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -32,7 +33,7 @@ func formatVPCError(err error, action string, vpcID *int) error {
 	)
 }
 
-func createVPC(t *testing.T, client *linodego.Client, vpcModifier ...vpcModifier) (*linodego.VPC, func(), error) {
+func createVPC(t *testing.T, client *linodego.Client, vpcModifier ...vpcModifier) (*linodego.VPC, linodego.VPCCreateOptions, func(), error) {
 	t.Helper()
 	createOpts := linodego.VPCCreateOptions{
 		Label:  "go-test-vpc-" + getUniqueText(),
@@ -53,13 +54,13 @@ func createVPC(t *testing.T, client *linodego.Client, vpcModifier ...vpcModifier
 			t.Error(formatVPCError(err, "deleting", &vpc.ID))
 		}
 	}
-	return vpc, teardown, err
+	return vpc, createOpts, teardown, err
 }
 
 func createVPC_invalid_label(t *testing.T, client *linodego.Client) error {
 	t.Helper()
 	createOpts := linodego.VPCCreateOptions{
-		Label:  "gotest_vpc_invalid_label" + getUniqueText(),
+		Label:  "gotest_vpc_invalid_label!" + getUniqueText(),
 		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{CapabilityVPCs})[0],
 	}
 	_, err := client.CreateVPC(context.Background(), createOpts)
@@ -70,19 +71,20 @@ func createVPC_invalid_label(t *testing.T, client *linodego.Client) error {
 func setupVPC(t *testing.T, fixturesYaml string) (
 	*linodego.Client,
 	*linodego.VPC,
+	linodego.VPCCreateOptions,
 	func(),
 	error,
 ) {
 	t.Helper()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 
-	vpc, vpcTeardown, err := createVPC(t, client)
+	vpc, createOpts, vpcTeardown, err := createVPC(t, client)
 
 	teardown := func() {
 		vpcTeardown()
 		fixtureTeardown()
 	}
-	return client, vpc, teardown, err
+	return client, vpc, createOpts, teardown, err
 }
 
 func vpcCheck(vpc *linodego.VPC, t *testing.T) {
@@ -98,20 +100,20 @@ func vpcCreateOptionsCheck(
 	vpc *linodego.VPC,
 	t *testing.T,
 ) {
-	good := (opts.Description == vpc.Description &&
-		opts.Label == vpc.Label &&
-		opts.Region == vpc.Region &&
-		len(opts.Subnets) == len(vpc.Subnets))
+	require.NotEmpty(t, vpc.Label, "VPC label should not be empty")
+	require.Equal(t, opts.Description, vpc.Description, "VPC description mismatch")
+	require.Equal(t, opts.Region, vpc.Region, "VPC region mismatch")
+	require.Equal(t, len(opts.Subnets), len(vpc.Subnets), "VPC subnet count mismatch")
+
+	expectedVPCType := opts.VPCType
+	if expectedVPCType == "" {
+		expectedVPCType = VPCTypeRegular
+	}
+	require.Equal(t, expectedVPCType, vpc.VPCType, "VPC type mismatch")
 
 	for i := 0; i < minInt(len(opts.Subnets), len(vpc.Subnets)); i++ {
-		good = good && (opts.Subnets[i].IPv4 == vpc.Subnets[i].IPv4 &&
-			opts.Subnets[i].Label == vpc.Subnets[i].Label)
-	}
-
-	if !good {
-		t.Error(
-			"the VPC instance and the VPC creation options instance are mismatched",
-		)
+		require.Equal(t, opts.Subnets[i].IPv4, vpc.Subnets[i].IPv4, "VPC subnet IPv4 mismatch at index %d", i)
+		require.Equal(t, opts.Subnets[i].Label, vpc.Subnets[i].Label, "VPC subnet label mismatch at index %d", i)
 	}
 }
 
@@ -126,19 +128,19 @@ func vpcUpdateOptionsCheck(
 }
 
 func TestVPC_CreateGet_smoke(t *testing.T) {
-	client, vpc, teardown, err := setupVPC(t, "fixtures/TestVPC_CreateGet")
+	client, vpc, createOpts, teardown, err := setupVPC(t, "fixtures/TestVPC_CreateGet")
 	defer teardown()
 	if err != nil {
 		t.Error(formatVPCError(err, "setting up", nil))
 	}
 	vpcCheck(vpc, t)
-	opts := vpc.GetCreateOptions()
-	vpcCreateOptionsCheck(&opts, vpc, t)
-	client.GetVPC(context.TODO(), vpc.ID)
+	vpcCreateOptionsCheck(&createOpts, vpc, t)
+	_, err = client.GetVPC(context.TODO(), vpc.ID)
+	require.NoError(t, err)
 }
 
 func TestVPC_Update(t *testing.T) {
-	client, vpc, teardown, err := setupVPC(t, "fixtures/TestVPC_Update")
+	client, vpc, _, teardown, err := setupVPC(t, "fixtures/TestVPC_Update")
 	defer teardown()
 	if err != nil {
 		t.Error(formatVPCError(err, "setting up", nil))
@@ -161,7 +163,7 @@ func TestVPC_Update(t *testing.T) {
 }
 
 func TestVPC_List(t *testing.T) {
-	client, vpc, teardown, err := setupVPC(t, "fixtures/TestVPC_List")
+	client, vpc, _, teardown, err := setupVPC(t, "fixtures/TestVPC_List")
 	defer teardown()
 	if err != nil {
 		t.Error(formatVPCError(err, "setting up", nil))
@@ -190,19 +192,20 @@ func TestVPC_Create_Invalid_data(t *testing.T) {
 	defer teardown()
 	err := createVPC_invalid_label(t, client)
 
-	e, _ := err.(*Error)
+	var e *linodego.Error
+	require.ErrorAsf(t, err, &e, "Expected error to be of type *linodego.Error, got: %T", err)
 
 	if e.Code != 400 {
 		t.Errorf("should have received a 400 Code with invalid label, got %v", e.Code)
 	}
-	expectedErrorMessage := "Label must include only ASCII letters, numbers, and dashes"
+	expectedErrorMessage := "Must only use ASCII letters, numbers, and underscores"
 	if !strings.Contains(e.Message, expectedErrorMessage) {
 		t.Errorf("Wrong error message displayed should have contained, %s", expectedErrorMessage)
 	}
 }
 
 func TestVPC_Update_Invalid_data(t *testing.T) {
-	client, vpc, teardown, err := setupVPC(t, "fixtures/TestVPC_Update_Invalid")
+	client, vpc, _, teardown, err := setupVPC(t, "fixtures/TestVPC_Update_Invalid")
 	defer teardown()
 	if err != nil {
 		t.Error(formatVPCError(err, "setting up", nil))
@@ -213,19 +216,20 @@ func TestVPC_Update_Invalid_data(t *testing.T) {
 	vpcUpdateOptionsCheck(&opts, vpc, t)
 
 	updatedDescription := "updated description"
-	updatedLabel := "updated_invalid_label"
+	updatedLabel := "updated-invalid_label!"
 
 	opts.Description = updatedDescription
 	opts.Label = updatedLabel
 
 	_, err = client.UpdateVPC(context.Background(), vpc.ID, opts)
 
-	e, _ := err.(*Error)
+	var e *linodego.Error
+	require.ErrorAsf(t, err, &e, "Expected error to be of type *linodego.Error, got: %T", err)
 
 	if e.Code != 400 {
 		t.Errorf("should have received a 400 Code with invalid label, got %v", e.Code)
 	}
-	expectedErrorMessage := "Label must include only ASCII letters, numbers, and dashes"
+	expectedErrorMessage := "Must only use ASCII letters, numbers, and underscores"
 	if !strings.Contains(e.Message, expectedErrorMessage) {
 		t.Errorf("Wrong error message displayed should have contained, %s", expectedErrorMessage)
 	}
@@ -343,7 +347,7 @@ func TestVPC_IPv4Ranges(t *testing.T) {
 	ctx := context.Background()
 	ipv4Range := "10.118.0.0/20"
 
-	vpc, vpcTeardown, err := createVPC(
+	vpc, _, vpcTeardown, err := createVPC(
 		t,
 		client,
 		func(_ *linodego.Client, options *linodego.VPCCreateOptions) {
@@ -417,4 +421,69 @@ func requireIPv4Contains(t *testing.T, ranges []linodego.VPCIPv4Range, wantRange
 
 	require.Failf(t, "IPv4 range not found",
 		"%s: expected IPv4 range %s in %+v", context, wantRange, ranges)
+}
+
+func TestVPC_WithRDMAType(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestVPC_WithRDMAType")
+	defer teardown()
+
+	vpc, createOpts, vpcTeardown, err := createVPC(t, client, []vpcModifier{func(l *linodego.Client, options *linodego.VPCCreateOptions) {
+		// GPUDirect RDMA capability not available for now
+		// options.Region = getRegionsWithCaps(t, client, []RegionCapability{linodego.CapabilityVPCs, linodego.CapabilityGPUDirectRDMA})[0]
+		options.Region = getRegionsWithCaps(t, client, []RegionCapability{linodego.CapabilityVPCs})[0]
+		options.VPCType = linodego.VPCTypeRDMA
+	}}...)
+	require.NoError(t, err, "Error creating VPC with RDMA type")
+	defer vpcTeardown()
+	vpcCheck(vpc, t)
+	vpcCreateOptionsCheck(&createOpts, vpc, t)
+
+	vpc, err = client.GetVPC(context.Background(), vpc.ID)
+	require.NoError(t, err, "Error retrieving VPC")
+	vpcCreateOptionsCheck(&createOpts, vpc, t)
+
+	f := linodego.Filter{}
+	f.AddField(linodego.Eq, "vpc_type", "rdma")
+	filter, err := f.MarshalJSON()
+	require.NoError(t, err, "Error marshaling VPC list filter")
+
+	vpcs, err := client.ListVPCs(context.Background(), &linodego.ListOptions{Filter: string(filter)})
+	require.NoError(t, err, "Error listing VPCs")
+
+	var found *linodego.VPC
+	for idx := range vpcs {
+		if vpcs[idx].ID == vpc.ID {
+			found = &vpcs[idx]
+			break
+		}
+	}
+	require.NotNil(t, found, "VPC not found in list")
+	vpcCreateOptionsCheck(&createOpts, found, t)
+}
+
+func TestVPC_WithRDMATypeAndIPv6_Fail(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestVPC_WithRDMATypeAndIPv6_Fail")
+	defer teardown()
+
+	createOpts := linodego.VPCCreateOptions{
+		Label: "go-test-vpc-" + getUniqueText(),
+		// GPUDirect RDMA capability not available for now
+		// Region:  getRegionsWithCaps(t, client, []RegionCapability{linodego.CapabilityVPCs, linodego.CapabilityGPUDirectRDMA})[0]
+		Region:  getRegionsWithCaps(t, client, []RegionCapability{linodego.CapabilityVPCs})[0],
+		VPCType: linodego.VPCTypeRDMA,
+		IPv6: []VPCCreateOptionsIPv6{
+			{
+				Range: linodego.Pointer("/52"),
+			},
+		},
+	}
+	vpc, err := client.CreateVPC(context.Background(), createOpts)
+	require.Nil(t, vpc, "Expected VPC to be nil when creation fails")
+	require.Error(t, err, "Expected error creating VPC with RDMA type and IPv6")
+
+	var e *linodego.Error
+	require.ErrorAsf(t, err, &e, "Expected error to be of type *linodego.Error, got: %T", err)
+	assert.Equal(t, 400, e.Code, "Expected error code 400, got: %d", e.Code)
+	expectedErrorMessage := "RDMA VPCs cannot have IPv6 ranges"
+	assert.Contains(t, e.Message, expectedErrorMessage, "Expected error message to contain: %s, got: %s", expectedErrorMessage, e.Message)
 }
