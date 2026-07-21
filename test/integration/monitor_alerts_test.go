@@ -46,6 +46,32 @@ func deleteMonitorAlertDefinitionWithRetry(t *testing.T, client *linodego.Client
 	assert.NoError(t, err, "DeleteMonitorAlertDefinition failed after retries for alert ID %d: %v", alertID, lastErr)
 }
 
+func deleteAlertChannelWithRetry(t *testing.T, client *linodego.Client, channelID int) {
+	t.Helper()
+	if channelID == 0 {
+		return
+	}
+
+	maxWait := 2 * time.Minute
+	baseDelay := 2 * time.Second
+	var err error
+	start := time.Now()
+
+	for attempt := 0; time.Since(start) < maxWait; attempt++ {
+		err = client.DeleteAlertChannel(context.Background(), channelID)
+		if err == nil {
+			break
+		}
+		sleep := baseDelay * (1 << attempt)
+		if sleep > 30*time.Second {
+			sleep = 30 * time.Second
+		}
+		time.Sleep(sleep)
+	}
+
+	assert.NoError(t, err, "DeleteAlertChannel failed after retries for channel ID %d: %v", channelID, err)
+}
+
 func TestMonitorAlertDefinition_smoke(t *testing.T) {
 	ctx := waitContext(t, 300*time.Second)
 
@@ -79,31 +105,34 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 	// Basic assertions based on the fixture
 	assert.NoError(t, err)
 
-	// Determine a channel ID to use for creating a new alert definition:
-	var channelID int
-	var fetchedChannelLabel string
-	var fetchedChannelID int
-	if len(alerts) > 0 && len(alerts[0].AlertChannels) > 0 {
-		channelID = alerts[0].AlertChannels[0].ID
-		fetchedChannelID = alerts[0].AlertChannels[0].ID
-		fetchedChannelLabel = alerts[0].AlertChannels[0].Label
-	} else {
-		// Fallback to ListAlertChannels to get available channels
-		channels, err := client.ListAlertChannels(context.Background(), nil)
-		if err != nil || len(channels) == 0 {
-			t.Fatalf("failed to determine a monitor channel to use: %s", err)
-		}
-		channelID = channels[0].ID
-		fetchedChannelID = channels[0].ID
-		fetchedChannelLabel = channels[0].Label
+	// Create an alert channel to use for creating a new alert definition
+	users, err := client.ListUsers(context.Background(), nil)
+	require.NoErrorf(t, err, "failed to list users: %v", err)
+
+	label := fmt.Sprintf("linodego-alert-channel-%d", time.Now().UnixNano())
+	recipientType := "user"
+	createChannelOpts := linodego.AlertChannelCreateOptions{
+		ChannelType: linodego.EmailAlertNotification,
+		Label:       &label,
+		Details: linodego.AlertChannelDetailsOptions{
+			Email: &linodego.EmailChannelCreateOptions{
+				Usernames:     []string{users[0].Username, users[1].Username},
+				RecipientType: &recipientType,
+			},
+		},
 	}
-	// Validate the chosen channel
-	assert.NotZero(t, fetchedChannelID, "fetchedChannel.ID should not be zero")
-	assert.NotEmpty(t, fetchedChannelLabel, "fetchedChannel.Label should not be empty")
+
+	ch, err := client.CreateAlertChannel(context.Background(), createChannelOpts)
+	if err != nil {
+		t.Fatalf("failed to create alert channel: %v", err)
+	}
+	defer deleteAlertChannelWithRetry(t, client, ch.ID)
+
+	channelID := ch.ID
 
 	// Test creating a new Monitor Alert Definition
 	createOpts := linodego.AlertDefinitionCreateOptions{
-		Label:       "go-test-alert-definition-create",
+		Label:       fmt.Sprintf("linodego-alert-%d", time.Now().UnixNano()),
 		Severity:    int(linodego.SeverityLow),
 		Description: linodego.Pointer("Test alert definition creation"),
 		ChannelIDs:  []int{channelID},
@@ -141,9 +170,16 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 		t.Logf("CreateMonitorAlertDefinition returned error, skipping create assertions: %s", err)
 		return
 	}
-	assert.NoError(t, err)
-	assert.NotNil(t, createdAlert)
-	assert.Equal(t, createOpts.Label, createdAlert.Label)
+	require.NoError(t, err)
+	require.NotNil(t, createdAlert)
+	// ensure cleanup of created alert definition even if later assertions fail
+	defer func() {
+		if createdAlert != nil {
+			deleteMonitorAlertDefinitionWithRetry(t, client, testMonitorAlertDefinitionServiceType, createdAlert.ID)
+		}
+	}()
+
+	require.Contains(t, createdAlert.Label, "linodego-alert-")
 	assert.Equal(t, createOpts.Severity, createdAlert.Severity)
 	assert.Equal(t, *createOpts.Description, createdAlert.Description)
 	assert.NotNil(t, createdAlert.GroupBy)
@@ -207,10 +243,7 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 		assert.NotNil(t, updatedAlert.GroupBy)
 	}
 
-	// Clean up created alert definition
-	if createdAlert != nil {
-		deleteMonitorAlertDefinitionWithRetry(t, client, testMonitorAlertDefinitionServiceType, createdAlert.ID)
-	}
+	// Cleanup handled by deferred cleanup above
 }
 
 func TestMonitorAlertDefinitions_List(t *testing.T) {
@@ -252,12 +285,30 @@ func TestMonitorAlertDefinition_CreateWithIdempotency(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertDefinition_CreateWithIdempotency")
 	defer teardown()
 
-	// Get a channel ID to use
-	channels, err := client.ListAlertChannels(context.Background(), nil)
-	if err != nil || len(channels) == 0 {
-		t.Fatalf("failed to determine a monitor channel to use: %s", err)
+	// Create alert channel to use for this test
+	users, err := client.ListUsers(context.Background(), nil)
+	require.NoErrorf(t, err, "failed to list users: %v", err)
+
+	label := fmt.Sprintf("linodego-alert-channel-%d", time.Now().UnixNano())
+	recipientType := "user"
+	createChannelOpts := linodego.AlertChannelCreateOptions{
+		ChannelType: linodego.EmailAlertNotification,
+		Label:       &label,
+		Details: linodego.AlertChannelDetailsOptions{
+			Email: &linodego.EmailChannelCreateOptions{
+				Usernames:     []string{users[0].Username, users[1].Username},
+				RecipientType: &recipientType,
+			},
+		},
 	}
-	channelID := channels[0].ID
+
+	ch, err := client.CreateAlertChannel(context.Background(), createChannelOpts)
+	if err != nil {
+		t.Fatalf("failed to create alert channel: %v", err)
+	}
+	defer deleteAlertChannelWithRetry(t, client, ch.ID)
+
+	channelID := ch.ID
 
 	uniqueLabel := fmt.Sprintf("go-test-alert-definition-idempotency-%d", time.Now().UnixNano())
 
@@ -307,8 +358,14 @@ func TestMonitorAlertDefinition_CreateWithIdempotency(t *testing.T) {
 			createdAlert, err = client.CreateMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, createOpts)
 		}
 	}
-	assert.NoError(t, err)
-	assert.NotNil(t, createdAlert)
+	require.NoError(t, err)
+	require.NotNil(t, createdAlert)
+	// ensure cleanup of created alert definition
+	defer func() {
+		if createdAlert != nil {
+			_ = client.DeleteMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, createdAlert.ID)
+		}
+	}()
 
 	// Attempt to create the same alert definition again to test idempotency
 	// Expected to return Error as per the API behavior
@@ -316,10 +373,7 @@ func TestMonitorAlertDefinition_CreateWithIdempotency(t *testing.T) {
 	assert.Error(t, err)
 	assert.Contains(t, err.Error(), "An alert with this label already exists")
 
-	// Cleanup
-	if createdAlert != nil {
-		_ = client.DeleteMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, createdAlert.ID)
-	}
+	// Cleanup handled by deferred cleanup above
 }
 
 func TestMonitorAlertDefinitionEntities_List(t *testing.T) {
@@ -354,11 +408,30 @@ func TestMonitorAlertDefinition_Clone(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertDefinition_Clone")
 	defer teardown()
 
-	// Get a channel ID to use
-	channels, err := client.ListAlertChannels(context.Background(), nil)
-	require.NoErrorf(t, err, "failed to determine a monitor channel to use: %v", err)
-	require.NotEmpty(t, channels, "no alert channels available to use for cloning test")
-	testChannelID := channels[0].ID
+	// Create alert channel to use for cloning
+	users, err := client.ListUsers(context.Background(), nil)
+	require.NoErrorf(t, err, "failed to list users: %v", err)
+
+	label := fmt.Sprintf("linodego-alert-channel-%d", time.Now().UnixNano())
+	recipientType := "user"
+	createChannelOpts := linodego.AlertChannelCreateOptions{
+		ChannelType: linodego.EmailAlertNotification,
+		Label:       &label,
+		Details: linodego.AlertChannelDetailsOptions{
+			Email: &linodego.EmailChannelCreateOptions{
+				Usernames:     []string{users[0].Username, users[1].Username},
+				RecipientType: &recipientType,
+			},
+		},
+	}
+
+	ch, err := client.CreateAlertChannel(context.Background(), createChannelOpts)
+	if err != nil {
+		t.Fatalf("failed to create alert channel: %v", err)
+	}
+	defer deleteAlertChannelWithRetry(t, client, ch.ID)
+
+	testChannelID := ch.ID
 
 	// Create the source alert definition
 	createOpts := linodego.AlertDefinitionCreateOptions{
@@ -395,7 +468,17 @@ func TestMonitorAlertDefinition_Clone(t *testing.T) {
 
 	sourceAlert, err := client.CreateMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, createOpts)
 	require.NoErrorf(t, err, "CreateMonitorAlertDefinition failed: %s", err)
-	assert.NotNil(t, sourceAlert)
+	require.NotNil(t, sourceAlert)
+	// ensure cleanup of source and cloned alerts
+	var clonedAlert *linodego.AlertDefinition
+	defer func() {
+		if sourceAlert != nil {
+			deleteMonitorAlertDefinitionWithRetry(t, client, testMonitorAlertDefinitionServiceType, sourceAlert.ID)
+		}
+		if clonedAlert != nil {
+			deleteMonitorAlertDefinitionWithRetry(t, client, testMonitorAlertDefinitionServiceType, clonedAlert.ID)
+		}
+	}()
 	assert.Equal(t, createOpts.Label, sourceAlert.Label)
 	assert.NotNil(t, sourceAlert.GroupBy)
 
@@ -424,13 +507,11 @@ func TestMonitorAlertDefinition_Clone(t *testing.T) {
 		},
 	}
 
-	clonedAlert, err := client.CloneMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, sourceAlert.ID, cloneOpts)
+	clonedAlert, err = client.CloneMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, sourceAlert.ID, cloneOpts)
 	if err != nil {
-		// Cleanup source before failing
-		_ = client.DeleteMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, sourceAlert.ID)
 		t.Fatalf("CloneMonitorAlertDefinition failed: %s", err)
 	}
-	assert.NotNil(t, clonedAlert)
+	require.NotNil(t, clonedAlert)
 	assert.NotEqual(t, sourceAlert.ID, clonedAlert.ID, "cloned alert should have a different ID")
 	assert.Equal(t, cloneLabel, clonedAlert.Label, "cloned alert should have the specified label")
 	assert.Equal(t, *cloneOpts.Description, clonedAlert.Description, "cloned alert should have the overridden description")
@@ -441,8 +522,169 @@ func TestMonitorAlertDefinition_Clone(t *testing.T) {
 	assert.Equal(t, cloneOpts.TriggerConditions.PollingIntervalSeconds, clonedAlert.TriggerConditions.PollingIntervalSeconds)
 	assert.Equal(t, cloneOpts.TriggerConditions.TriggerOccurrences, clonedAlert.TriggerConditions.TriggerOccurrences)
 
-	// Cleanup both source and cloned alert definitions
-	for _, alertID := range []int{sourceAlert.ID, clonedAlert.ID} {
-		deleteMonitorAlertDefinitionWithRetry(t, client, testMonitorAlertDefinitionServiceType, alertID)
+	// Cleanup handled by deferred cleanup above
+}
+
+func TestMonitorAlertChannel_CRUD_E2E(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertChannel_CRUD")
+	defer teardown()
+
+	// Get valid users to use for the email alert channel
+	users, err := client.ListUsers(context.Background(), nil)
+	require.NoErrorf(t, err, "failed to list users: %v", err)
+
+	label := "linodego-sdk-test-alert-channel"
+	recipientType := "user"
+
+	createOpts := linodego.AlertChannelCreateOptions{
+		ChannelType: linodego.EmailAlertNotification,
+		Label:       &label,
+		Details: linodego.AlertChannelDetailsOptions{
+			Email: &linodego.EmailChannelCreateOptions{
+				Usernames:     []string{users[0].Username, users[1].Username},
+				RecipientType: &recipientType,
+			},
+		},
 	}
+
+	// Create the alert channel
+	channel, err := client.CreateAlertChannel(context.Background(), createOpts)
+	require.NoError(t, err)
+	require.NotNil(t, channel)
+
+	// Delete the created alert channel after the test completes
+	defer func() {
+		if channel != nil {
+			deleteAlertChannelWithRetry(t, client, channel.ID)
+		}
+	}()
+
+	assert.NotZero(t, channel.ID)
+	assert.Equal(t, label, channel.Label)
+	assert.Equal(t, createOpts.ChannelType, channel.ChannelType)
+	assert.Equal(t, linodego.UserAlertChannel, channel.Type)
+
+	require.NotNil(t, channel.Details.Email)
+	assert.Equal(t, createOpts.Details.Email.Usernames, channel.Details.Email.Usernames)
+	assert.Equal(t, recipientType, channel.Details.Email.RecipientType)
+
+	assert.NotEmpty(t, channel.Alerts.URL)
+	assert.NotEmpty(t, channel.Alerts.Type)
+	assert.GreaterOrEqual(t, channel.Alerts.AlertCount, 0)
+
+	assertDateSet(t, channel.Created)
+	assertDateSet(t, channel.Updated)
+
+	// Fetch the channel via GetAlertChannel
+	fetchedChannel, err := client.GetAlertChannel(context.Background(), channel.ID)
+	require.NoError(t, err)
+	require.NotNil(t, fetchedChannel)
+
+	assert.Equal(t, channel.ID, fetchedChannel.ID)
+	assert.Equal(t, channel.Label, fetchedChannel.Label)
+	assert.Equal(t, channel.ChannelType, fetchedChannel.ChannelType)
+	assert.Equal(t, channel.Type, fetchedChannel.Type)
+	require.NotNil(t, fetchedChannel.Details.Email)
+	assert.Equal(t, channel.Details.Email.Usernames, fetchedChannel.Details.Email.Usernames)
+	assert.Equal(t, channel.Details.Email.RecipientType, fetchedChannel.Details.Email.RecipientType)
+	assert.Equal(t, channel.Alerts.URL, fetchedChannel.Alerts.URL)
+	assert.Equal(t, channel.Alerts.Type, fetchedChannel.Alerts.Type)
+	assert.Equal(t, channel.Alerts.AlertCount, fetchedChannel.Alerts.AlertCount)
+
+	// Update the created alert channel
+	updatedLabel := label + "-updated"
+	updateOpts := linodego.AlertChannelUpdateOptions{
+		Label: &updatedLabel,
+		Details: &linodego.AlertChannelUpdateDetailsOptions{
+			Email: &linodego.EmailChannelUpdateOptions{
+				Usernames: []string{users[0].Username, users[1].Username},
+			},
+		},
+	}
+	updatedChannel, err := client.UpdateAlertChannel(context.Background(), channel.ID, updateOpts)
+	require.NoError(t, err)
+	require.NotNil(t, updatedChannel)
+
+	assert.Equal(t, channel.ID, updatedChannel.ID)
+	assert.Equal(t, updatedLabel, updatedChannel.Label)
+	assert.Equal(t, createOpts.ChannelType, updatedChannel.ChannelType)
+	require.NotNil(t, updatedChannel.Details.Email)
+	assert.Equal(t, createOpts.Details.Email.Usernames, updatedChannel.Details.Email.Usernames)
+}
+
+func TestMonitorAlertChannel_ListAlerts(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertChannel_ListAlerts")
+	defer teardown()
+
+	// Create an alert channel
+	users, err := client.ListUsers(context.Background(), nil)
+	require.NoErrorf(t, err, "failed to list users: %v", err)
+
+	label := "linodego-sdk-test-alert-channel-listalerts"
+	recipientType := "user"
+
+	createOpts := linodego.AlertChannelCreateOptions{
+		ChannelType: linodego.EmailAlertNotification,
+		Label:       &label,
+		Details: linodego.AlertChannelDetailsOptions{
+			Email: &linodego.EmailChannelCreateOptions{
+				Usernames:     []string{users[0].Username, users[1].Username},
+				RecipientType: &recipientType,
+			},
+		},
+	}
+
+	channel, err := client.CreateAlertChannel(context.Background(), createOpts)
+	require.NoErrorf(t, err, "failed to create alert channel: %v", err)
+	require.NotNil(t, channel, "created channel is nil")
+
+	// ensure cleanup
+	var createdAlert *linodego.AlertDefinition
+	defer func() {
+		if createdAlert != nil {
+			deleteMonitorAlertDefinitionWithRetry(t, client, testMonitorAlertDefinitionServiceType, createdAlert.ID)
+		}
+		deleteAlertChannelWithRetry(t, client, channel.ID)
+	}()
+
+	// Create an alert definition attached to the created channel
+	serviceType := "dbaas"
+	createAlertOpts := linodego.AlertDefinitionCreateOptions{
+		Label:      "go-integration-test-alert",
+		Severity:   int(linodego.SeverityLow),
+		ChannelIDs: []int{channel.ID},
+		TriggerConditions: &linodego.TriggerConditions{
+			CriteriaCondition:       string(linodego.CriteriaConditionAll),
+			EvaluationPeriodSeconds: 300,
+			PollingIntervalSeconds:  300,
+			TriggerOccurrences:      1,
+		},
+		RuleCriteria: &linodego.RuleCriteriaOptions{
+			Rules: []linodego.RuleOptions{
+				{
+					AggregateFunction: "avg",
+					Metric:            "memory_usage",
+					Operator:          "gt",
+					Threshold:         90.0,
+				},
+			},
+		},
+	}
+
+	createdAlert, err = client.CreateMonitorAlertDefinition(context.Background(), serviceType, createAlertOpts)
+	require.NoErrorf(t, err, "failed to create monitor alert definition: %v", err)
+	require.NotNil(t, createdAlert)
+
+	// List alerts for the channel and verify at least one alert is attached
+	alerts, err := client.ListAlertsForChannel(context.Background(), channel.ID, nil)
+	require.NoErrorf(t, err, "failed to list alerts for channel: %v", err)
+	require.NotEmpty(t, alerts, "expected at least one alert for channel %d", channel.ID)
+
+	// Assert fields on the first alert
+	a := alerts[0]
+	assert.NotZero(t, a.ID, "alert.ID should not be zero")
+	assert.NotEmpty(t, a.Label, "alert.Label should not be empty")
+	assert.NotEmpty(t, a.ServiceType, "alert.ServiceType should not be empty")
+	assert.NotEmpty(t, a.Type, "alert.Type should not be empty")
+	assert.NotEmpty(t, a.URL, "alert.URL should not be empty")
 }
