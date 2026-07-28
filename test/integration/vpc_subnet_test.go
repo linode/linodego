@@ -9,6 +9,7 @@ import (
 	"github.com/linode/linodego/v2"
 	. "github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 const (
@@ -198,6 +199,7 @@ func TestVPC_Subnet_Create(t *testing.T) {
 	vpcSubnetCheck(vpcSubnet, t)
 	opts := vpcSubnet.GetCreateOptions()
 	vpcSubnetCreateOptionsCheck(&opts, vpcSubnet, t)
+	assert.Equal(t, linodego.VPCTypeRegular, vpcSubnet.VPCType, "Expected VPC type to be regular")
 }
 
 func TestVPC_Subnet_Update(t *testing.T) {
@@ -249,14 +251,14 @@ func TestVPC_Subnet_List(t *testing.T) {
 }
 
 func TestVPC_Subnet_Create_Invalid_data(t *testing.T) {
-	client, vpc, teardown, err := setupVPC(t, "fixtures/TestVPC_Subnet_Create_Invalid_data")
+	client, vpc, _, teardown, err := setupVPC(t, "fixtures/TestVPC_Subnet_Create_Invalid_data")
 	defer teardown()
 	if err != nil {
 		t.Error(formatVPCSubnetError(err, "setting up", nil, nil))
 	}
 
 	createOpts := linodego.VPCSubnetCreateOptions{
-		Label: "linodego-vpc-test_invalid_label" + getUniqueText(),
+		Label: "linodego-vpc-test_invalid_label!" + getUniqueText(),
 		IPv4:  TestSubnetIPv4,
 	}
 	_, err = client.CreateVPCSubnet(context.Background(), createOpts, vpc.ID)
@@ -265,7 +267,7 @@ func TestVPC_Subnet_Create_Invalid_data(t *testing.T) {
 	if e.Code != 400 {
 		t.Errorf("should have received a 400 Code with invalid label, got %v", e.Code)
 	}
-	expectedErrorMessage := "Label must include only ASCII letters, numbers, and dashes"
+	expectedErrorMessage := "Must only use ASCII letters, numbers, and underscores"
 	if !strings.Contains(e.Message, expectedErrorMessage) {
 		t.Errorf("Wrong error message displayed should have contained, %s", expectedErrorMessage)
 	}
@@ -282,7 +284,7 @@ func TestVPC_Subnet_Update_Invalid_data(t *testing.T) {
 	opts := vpcSubnet.GetUpdateOptions()
 	vpcSubnetUpdateOptionsCheck(&opts, vpcSubnet, t)
 
-	opts.Label = "invalid_label"
+	opts.Label = "invalid_label!"
 	_, err = client.UpdateVPCSubnet(
 		context.Background(),
 		vpc.ID,
@@ -295,7 +297,7 @@ func TestVPC_Subnet_Update_Invalid_data(t *testing.T) {
 	if e.Code != 400 {
 		t.Errorf("should have received a 400 Code with invalid label, got %v", e.Code)
 	}
-	expectedErrorMessage := "Label must include only ASCII letters, numbers, and dashes"
+	expectedErrorMessage := "Must only use ASCII letters, numbers, and underscores"
 	if !strings.Contains(e.Message, expectedErrorMessage) {
 		t.Errorf("Wrong error message displayed should have contained, %s", expectedErrorMessage)
 	}
@@ -369,4 +371,37 @@ func TestVPC_Subnet_WithNodeBalancer(t *testing.T) {
 	assert.Equal(t, 1, len(refreshedSubnet.Nodebalancers), "expected 1 assigned node balancer")
 	assert.Equal(t, "192.168.0.64/30", refreshedSubnet.Nodebalancers[0].Ipv4Range, "expected matching ipv4 range")
 	assert.Equal(t, 0, len(refreshedSubnet.Nodebalancers[0].Ipv6Ranges), "expected 0 ipv6 ranges")
+}
+
+func TestVPC_Subnet_WithRDMAType(t *testing.T) {
+	client, vpc, vpcSubnet, teardown, err := setupVPCWithSubnet(
+		t,
+		"fixtures/TestVPC_Subnet_WithRDMAType",
+		func(client *linodego.Client, opts *linodego.VPCCreateOptions) {
+			// GPUDirect RDMA capability not available for now
+			// opts.Region = getRegionsWithCaps(t, client, []RegionCapability{linodego.CapabilityVPCs, linodego.CapabilityGPUDirectRDMA})[0]
+			opts.Region = getRegionsWithCaps(t, client, []RegionCapability{linodego.CapabilityVPCs})[0]
+			opts.VPCType = linodego.VPCTypeRDMA
+		},
+	)
+	defer teardown()
+	require.NoError(t, err, "Error creating RDMA VPC with subnet")
+	assert.Equal(t, linodego.VPCTypeRDMA, vpcSubnet.VPCType, "Expected VPC subnet type to be RDMA")
+
+	vpcSubnet, err = client.GetVPCSubnet(context.Background(), vpc.ID, vpcSubnet.ID)
+	require.NoError(t, err, "Error retrieving VPC subnet")
+	assert.Equal(t, linodego.VPCTypeRDMA, vpcSubnet.VPCType, "Expected VPC subnet type to be RDMA")
+
+	subnets, err := client.ListVPCSubnets(context.Background(), vpc.ID, nil)
+	require.NoError(t, err, "Error listing VPC subnets")
+
+	var found *linodego.VPCSubnet
+	for idx := range subnets {
+		if subnets[idx].ID == vpcSubnet.ID {
+			found = &subnets[idx]
+			break
+		}
+	}
+	require.NotNil(t, found, "VPC subnet not found in list")
+	assert.Equal(t, linodego.VPCTypeRDMA, found.VPCType, "Expected VPC subnet type to be RDMA")
 }
