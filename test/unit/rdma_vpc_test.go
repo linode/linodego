@@ -153,4 +153,3 @@ func TestVPCSubnet_RDMA_VPCType(t *testing.T) {
 	assert.Equal(t, "rdma-subnet", subnet.Label)
 	assert.Equal(t, linodego.VPCTypeRDMA, subnet.VPCType)
 }
-
