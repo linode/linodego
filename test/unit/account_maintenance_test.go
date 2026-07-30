@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestAccountMaintenances_List(t *testing.T) {
@@ -38,6 +39,8 @@ func TestAccountMaintenances_List(t *testing.T) {
 	assert.Equal(t, "2025-03-25T12:00:00Z", maintenances[0].StartTime.Format(time.RFC3339))
 	assert.Equal(t, "2025-03-25T14:00:00Z", maintenances[0].CompleteTime.Format(time.RFC3339))
 	assert.Equal(t, "scheduled", maintenances[0].Status)
+	require.NotNil(t, maintenances[0].When)
+	assert.Equal(t, "2025-03-25T09:00:00Z", maintenances[0].When.Format(time.RFC3339))
 
 	assert.Equal(t, 1234, maintenances[1].Entity.ID)
 	assert.Equal(t, "Linode #1234", maintenances[1].Entity.Label)
@@ -52,4 +55,6 @@ func TestAccountMaintenances_List(t *testing.T) {
 	assert.Equal(t, "2025-03-25T12:00:00Z", maintenances[1].StartTime.Format(time.RFC3339))
 	assert.Equal(t, "2025-03-25T14:00:00Z", maintenances[1].CompleteTime.Format(time.RFC3339))
 	assert.Equal(t, "in-progress", maintenances[1].Status)
+	require.NotNil(t, maintenances[1].When)
+	assert.Equal(t, "2025-03-25T11:00:00Z", maintenances[1].When.Format(time.RFC3339))
 }

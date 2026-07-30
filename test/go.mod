@@ -3,14 +3,14 @@ module github.com/linode/linodego/v2/test
 require (
 	github.com/dnaeon/go-vcr v1.2.0
 	github.com/google/go-cmp v0.7.0
-	github.com/jarcoal/httpmock v1.4.1
+	github.com/jarcoal/httpmock v1.4.2
 	github.com/linode/linodego/k8s v0.0.0-00010101000000-000000000000
 	github.com/linode/linodego/v2 v2.0.0
 	github.com/stretchr/testify v1.11.1
 	golang.org/x/exp v0.0.0-20241217172543-b2144cdd0a67
 	golang.org/x/net v0.57.0
 	golang.org/x/oauth2 v0.36.0
-	k8s.io/client-go v0.35.6
+	k8s.io/client-go v0.35.7
 )
 
 require (
@@ -46,8 +46,8 @@ require (
 	gopkg.in/ini.v1 v1.67.3 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	k8s.io/api v0.35.6 // indirect
-	k8s.io/apimachinery v0.35.6 // indirect
+	k8s.io/api v0.35.7 // indirect
+	k8s.io/apimachinery v0.35.7 // indirect
 	k8s.io/klog/v2 v2.140.0 // indirect
 	k8s.io/kube-openapi v0.0.0-20260317180543-43fb72c5454a // indirect
 	k8s.io/utils v0.0.0-20260210185600-b8788abfbbc2 // indirect
