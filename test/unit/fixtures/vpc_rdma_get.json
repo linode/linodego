@@ -1,0 +1,36 @@
+{
+    "created": "2026-03-12T09:30:01",
+    "description": "RDMA VPC for GPUDirect",
+    "id": 7,
+    "label": "test-vpc-rdma",
+    "vpc_type": "rdma",
+    "region": "fake-cph-5",
+    "ipv6": [],
+    "subnets": [
+        {
+            "id": 8,
+            "label": "rdma-subnet",
+            "ipv4": "10.0.0.0/8",
+            "vpc_type": "rdma",
+            "ipv6": [],
+            "linodes": [
+                {
+                    "id": 506958,
+                    "interfaces": [
+                        {
+                            "id": 10,
+                            "config_id": null,
+                            "active": false
+                        }
+                    ]
+                }
+            ],
+            "databases": [],
+            "nodebalancers": [],
+            "created": "2026-03-12T09:51:58",
+            "updated": "2026-03-12T09:51:58"
+        }
+    ],
+    "updated": "2026-03-12T09:30:01"
+}
+
