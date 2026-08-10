@@ -122,20 +122,18 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 		},
 	}
 
-	ch, err := client.CreateAlertChannel(context.Background(), createChannelOpts)
+	alertChannel, err := client.CreateAlertChannel(context.Background(), createChannelOpts)
 	if err != nil {
-		t.Fatalf("failed to create alert channel: %v", err)
+		require.NoError(t, err, "failed to create alert channel: %v", err)
 	}
-	defer deleteAlertChannelWithRetry(t, client, ch.ID)
-
-	channelID := ch.ID
+	defer deleteAlertChannelWithRetry(t, client, alertChannel.ID)
 
 	// Test creating a new Monitor Alert Definition
 	createOpts := linodego.AlertDefinitionCreateOptions{
 		Label:       fmt.Sprintf("linodego-alert-%d", time.Now().UnixNano()),
 		Severity:    int(linodego.SeverityLow),
 		Description: linodego.Pointer("Test alert definition creation"),
-		ChannelIDs:  []int{channelID},
+		ChannelIDs:  []int{alertChannel.ID},
 		EntityIDs:   nil,
 		GroupBy:     []string{"entity_id"},
 		TriggerConditions: &linodego.TriggerConditions{
@@ -173,11 +171,7 @@ func TestMonitorAlertDefinition_smoke(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, createdAlert)
 	// ensure cleanup of created alert definition even if later assertions fail
-	defer func() {
-		if createdAlert != nil {
-			deleteMonitorAlertDefinitionWithRetry(t, client, testMonitorAlertDefinitionServiceType, createdAlert.ID)
-		}
-	}()
+	defer deleteMonitorAlertDefinitionWithRetry(t, client, testMonitorAlertDefinitionServiceType, createdAlert.ID)
 
 	require.Contains(t, createdAlert.Label, "linodego-alert-")
 	assert.Equal(t, createOpts.Severity, createdAlert.Severity)
@@ -302,13 +296,11 @@ func TestMonitorAlertDefinition_CreateWithIdempotency(t *testing.T) {
 		},
 	}
 
-	ch, err := client.CreateAlertChannel(context.Background(), createChannelOpts)
+	alertChannel, err := client.CreateAlertChannel(context.Background(), createChannelOpts)
 	if err != nil {
-		t.Fatalf("failed to create alert channel: %v", err)
+		require.NoError(t, err, "failed to create alert channel: %v", err)
 	}
-	defer deleteAlertChannelWithRetry(t, client, ch.ID)
-
-	channelID := ch.ID
+	defer deleteAlertChannelWithRetry(t, client, alertChannel.ID)
 
 	uniqueLabel := fmt.Sprintf("go-test-alert-definition-idempotency-%d", time.Now().UnixNano())
 
@@ -316,7 +308,7 @@ func TestMonitorAlertDefinition_CreateWithIdempotency(t *testing.T) {
 		Label:       uniqueLabel,
 		Severity:    int(linodego.SeverityLow),
 		Description: linodego.Pointer("Test alert definition creation with idempotency"),
-		ChannelIDs:  []int{channelID},
+		ChannelIDs:  []int{alertChannel.ID},
 		EntityIDs:   nil,
 		TriggerConditions: &linodego.TriggerConditions{
 			CriteriaCondition:       "ALL",
@@ -362,9 +354,7 @@ func TestMonitorAlertDefinition_CreateWithIdempotency(t *testing.T) {
 	require.NotNil(t, createdAlert)
 	// ensure cleanup of created alert definition
 	defer func() {
-		if createdAlert != nil {
-			_ = client.DeleteMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, createdAlert.ID)
-		}
+		_ = client.DeleteMonitorAlertDefinition(context.Background(), testMonitorAlertDefinitionServiceType, createdAlert.ID)
 	}()
 
 	// Attempt to create the same alert definition again to test idempotency
@@ -425,13 +415,13 @@ func TestMonitorAlertDefinition_Clone(t *testing.T) {
 		},
 	}
 
-	ch, err := client.CreateAlertChannel(context.Background(), createChannelOpts)
+	alertChannel, err := client.CreateAlertChannel(context.Background(), createChannelOpts)
 	if err != nil {
-		t.Fatalf("failed to create alert channel: %v", err)
+		require.NoError(t, err, "failed to create alert channel: %v", err)
 	}
-	defer deleteAlertChannelWithRetry(t, client, ch.ID)
+	defer deleteAlertChannelWithRetry(t, client, alertChannel.ID)
 
-	testChannelID := ch.ID
+	testChannelID := alertChannel.ID
 
 	// Create the source alert definition
 	createOpts := linodego.AlertDefinitionCreateOptions{
