@@ -61,7 +61,7 @@ if err != nil {
 }
 ```
 
-When the context expires, wait helpers return an error that wraps `ctx.Err()`.
+When the context expires, wait helpers return an error that includes `ctx.Err()`.
 
 For `NewEventPoller` and `NewEventPollerWithSecondary`, the create-poller call also takes a context because those helpers list existing events first. For `NewEventPollerWithoutEntity`, only the later wait call needs the deadline context.
 
