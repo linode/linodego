@@ -622,8 +622,11 @@ func (c *Client) doRequest(ctx context.Context, method, endpoint string, params 
 			waitTime = c.retryMaxWaitTime
 		}
 
-		// Sleep for the calculated duration before retrying
-		time.Sleep(waitTime)
+		select {
+		case <-ctx.Done():
+			return ctx.Err()
+		case <-time.After(waitTime):
+		}
 	}
 
 	return err
