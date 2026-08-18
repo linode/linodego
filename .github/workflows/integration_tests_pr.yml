@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch' && inputs.sha != ''
     steps:
-      - uses: actions/setup-go@v6
+      - uses: actions/setup-go@v7
         with:
           go-version: 'stable'
       - run: go version
@@ -44,11 +44,12 @@ jobs:
         with:
           ref: ${{ inputs.sha }}
 
-      - run: make ARGS="-run ${{ inputs.module }}" fixtures
+      - run: make ARGS="-run $MODULE" fixtures
         if: ${{ inputs.module != '' && steps.disallowed-char-check.outputs.match == '' }}
         env:
           LINODE_TOKEN: ${{ secrets.DX_LINODE_TOKEN }}
           RUN_ACLP_LOGS_STREAM_TESTS: ${{ github.event.inputs.run_aclp_logs_stream_tests }}
+          MODULE: ${{ inputs.module }}
 
       - run: make fixtures
         if: ${{ inputs.module == '' }}
@@ -142,7 +143,7 @@ jobs:
 
     steps:
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: '3.x'
 

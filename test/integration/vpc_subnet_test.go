@@ -381,7 +381,7 @@ func TestVPC_Subnet_WithRDMAType(t *testing.T) {
 			// GPUDirect RDMA capability not available for now
 			// opts.Region = getRegionsWithCaps(t, client, []RegionCapability{linodego.CapabilityVPCs, linodego.CapabilityGPUDirectRDMA})[0]
 			opts.Region = getRegionsWithCaps(t, client, []RegionCapability{linodego.CapabilityVPCs})[0]
-			opts.VPCType = linodego.VPCTypeRDMA
+			opts.VPCType = linodego.Pointer(linodego.VPCTypeRDMA)
 		},
 	)
 	defer teardown()

@@ -67,7 +67,7 @@ type VPCCreateOptions struct {
 	// This field is omitted by the API for customers that do not have
 	// access to the GPUDirect RDMA functionality.
 	// NOTE: RDMA VPCs may not currently be available to all users.
-	VPCType VPCType `json:"vpc_type,omitzero"`
+	VPCType *VPCType `json:"vpc_type,omitzero"`
 
 	// NOTE: IPv4 VPCs may not currently be available to all users.
 	IPv4 []VPCCreateOptionsIPv4 `json:"ipv4,omitzero"`
@@ -116,7 +116,7 @@ func (v VPC) GetCreateOptions() VPCCreateOptions {
 		Label:       v.Label,
 		Description: v.Description,
 		Region:      v.Region,
-		VPCType:     v.VPCType,
+		VPCType:     copyValue(&v.VPCType),
 		Subnets:     subnetCreations,
 		IPv4: mapSlice(v.IPv4, func(i VPCIPv4Range) VPCCreateOptionsIPv4 {
 			return VPCCreateOptionsIPv4{

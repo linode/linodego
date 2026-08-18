@@ -62,7 +62,7 @@ func TestVPC_RDMA_Create(t *testing.T) {
 		Label:       "new-rdma-vpc",
 		Description: "A new RDMA VPC",
 		Region:      "fake-cph-5",
-		VPCType:     linodego.VPCTypeRDMA,
+		VPCType:     linodego.Pointer(linodego.VPCTypeRDMA),
 		Subnets: []linodego.VPCSubnetCreateOptions{
 			{Label: "rdma-subnet-1", IPv4: "10.0.0.0/24"},
 		},
@@ -103,7 +103,7 @@ func TestVPC_Regular_VPCType(t *testing.T) {
 	vpc, err := base.Client.CreateVPC(context.Background(), linodego.VPCCreateOptions{
 		Label:   "regular-vpc",
 		Region:  "us-east",
-		VPCType: linodego.VPCTypeRegular,
+		VPCType: linodego.Pointer(linodego.VPCTypeRegular),
 	})
 	require.NoError(t, err)
 	assert.Equal(t, linodego.VPCTypeRegular, vpc.VPCType)
@@ -361,6 +361,7 @@ func TestInstance_Create_ConflictingInterfaceFields(t *testing.T) {
 		assert.Contains(t, err.Error(), "Interfaces and LinodeInstanceInterfaces")
 	})
 }
+
 
 // =============================================================================
 // VPC Subnet RDMA Type Tests
