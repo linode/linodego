@@ -97,7 +97,7 @@ func createVPCWithSubnetAndType(t *testing.T, client *linodego.Client, region st
 		client,
 		func(c *linodego.Client, opts *linodego.VPCCreateOptions) {
 			opts.Region = region
-			opts.VPCType = vpcType
+			opts.VPCType = linodego.Pointer(vpcType)
 		},
 	)
 	return vpc, subnet, teardown, err

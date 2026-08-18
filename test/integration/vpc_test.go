@@ -105,9 +105,9 @@ func vpcCreateOptionsCheck(
 	require.Equal(t, opts.Region, vpc.Region, "VPC region mismatch")
 	require.Equal(t, len(opts.Subnets), len(vpc.Subnets), "VPC subnet count mismatch")
 
-	expectedVPCType := opts.VPCType
-	if expectedVPCType == "" {
-		expectedVPCType = VPCTypeRegular
+	expectedVPCType := VPCTypeRegular
+	if opts.VPCType != nil {
+		expectedVPCType = *opts.VPCType
 	}
 	require.Equal(t, expectedVPCType, vpc.VPCType, "VPC type mismatch")
 
@@ -431,7 +431,7 @@ func TestVPC_WithRDMAType(t *testing.T) {
 		// GPUDirect RDMA capability not available for now
 		// options.Region = getRegionsWithCaps(t, client, []RegionCapability{linodego.CapabilityVPCs, linodego.CapabilityGPUDirectRDMA})[0]
 		options.Region = getRegionsWithCaps(t, client, []RegionCapability{linodego.CapabilityVPCs})[0]
-		options.VPCType = linodego.VPCTypeRDMA
+		options.VPCType = linodego.Pointer(linodego.VPCTypeRDMA)
 	}}...)
 	require.NoError(t, err, "Error creating VPC with RDMA type")
 	defer vpcTeardown()
@@ -470,7 +470,7 @@ func TestVPC_WithRDMATypeAndIPv6_Fail(t *testing.T) {
 		// GPUDirect RDMA capability not available for now
 		// Region:  getRegionsWithCaps(t, client, []RegionCapability{linodego.CapabilityVPCs, linodego.CapabilityGPUDirectRDMA})[0]
 		Region:  getRegionsWithCaps(t, client, []RegionCapability{linodego.CapabilityVPCs})[0],
-		VPCType: linodego.VPCTypeRDMA,
+		VPCType: linodego.Pointer(linodego.VPCTypeRDMA),
 		IPv6: []VPCCreateOptionsIPv6{
 			{
 				Range: linodego.Pointer("/52"),
