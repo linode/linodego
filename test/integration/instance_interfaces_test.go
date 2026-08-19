@@ -215,6 +215,7 @@ func TestInstance_CreateWithRDMAVPCInterfaces(t *testing.T) {
 	// Include (at least one) regular interface
 	interfaceCreateOptions = append(interfaceCreateOptions, linodego.LinodeInstanceInterfaceCreateOptions{
 		LinodeInterfaceCreateOptions: linodego.LinodeInterfaceCreateOptions{
+			FirewallID: linodego.Pointer(-1),
 			VPC: &linodego.VPCInterfaceCreateOptions{
 				SubnetID: vpcSubnet.ID,
 				IPv4: &linodego.VPCInterfaceIPv4CreateOptions{
@@ -243,6 +244,7 @@ func TestInstance_CreateWithRDMAVPCInterfaces(t *testing.T) {
 			// opts.HostID = linodego.InstanceRDMAHostID
 			opts.InterfaceGeneration = linodego.GenerationLinode
 			opts.LinodeInstanceInterfaces = interfaceCreateOptions
+			opts.Booted = linodego.Pointer(false)
 		},
 	)
 	require.NoErrorf(t, err, "Error creating instance with RDMA interfaces: %s", err)
