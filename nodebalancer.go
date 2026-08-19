@@ -70,16 +70,16 @@ type NodeBalancerVPCOptions struct {
 }
 
 type NodeBalancerBackendVPCOptions struct {
-	IPv4Range           string `json:"ipv4_range,omitzero"`
-	IPv6Range           string `json:"ipv6_range,omitzero"`
-	SubnetID            int    `json:"subnet_id"`
-	IPv4RangeAutoAssign bool   `json:"ipv4_range_auto_assign,omitzero"`
+	IPv4Range           *string `json:"ipv4_range,omitzero"`
+	IPv6Range           *string `json:"ipv6_range,omitzero"`
+	SubnetID            int     `json:"subnet_id"`
+	IPv4RangeAutoAssign *bool   `json:"ipv4_range_auto_assign,omitzero"`
 }
 
 type NodeBalancerFrontendVPCOptions struct {
-	IPv4Range string `json:"ipv4_range,omitzero"`
-	IPv6Range string `json:"ipv6_range,omitzero"`
-	SubnetID  int    `json:"subnet_id"`
+	IPv4Range *string `json:"ipv4_range,omitzero"`
+	IPv6Range *string `json:"ipv6_range,omitzero"`
+	SubnetID  int     `json:"subnet_id"`
 }
 
 // NodeBalancerCreateOptions are the options permitted for CreateNodeBalancer

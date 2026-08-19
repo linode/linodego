@@ -245,8 +245,8 @@ func TestNodeBalancer_Create_with_VPCs(t *testing.T) {
 		FrontendVPCs: []linodego.NodeBalancerFrontendVPCOptions{
 			{
 				SubnetID:  456,
-				IPv4Range: "10.200.5.16/28",
-				IPv6Range: "2600:3c01:e000:101::/64",
+				IPv4Range: linodego.Pointer("10.200.5.16/28"),
+				IPv6Range: linodego.Pointer("2600:3c01:e000:101::/64"),
 			},
 		},
 	}
@@ -283,16 +283,16 @@ func TestNodeBalancer_Create_with_BackendVPCs(t *testing.T) {
 		BackendVPCs: []linodego.NodeBalancerBackendVPCOptions{
 			{
 				SubnetID:            123,
-				IPv4Range:           "10.200.4.16/28",
-				IPv6Range:           "2600:3c01:e000:1::/64",
-				IPv4RangeAutoAssign: false,
+				IPv4Range:           linodego.Pointer("10.200.4.16/28"),
+				IPv6Range:           linodego.Pointer("2600:3c01:e000:1::/64"),
+				IPv4RangeAutoAssign: linodego.Pointer(false),
 			},
 		},
 		FrontendVPCs: []linodego.NodeBalancerFrontendVPCOptions{
 			{
 				SubnetID:  456,
-				IPv4Range: "10.200.5.16/28",
-				IPv6Range: "2600:3c01:e000:101::/64",
+				IPv4Range: linodego.Pointer("10.200.5.16/28"),
+				IPv6Range: linodego.Pointer("2600:3c01:e000:101::/64"),
 			},
 		},
 	}

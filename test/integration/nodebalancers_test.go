@@ -192,7 +192,7 @@ func TestNodeBalancer_Create_WithFrontendIPv6Only_Fail(t *testing.T) {
 		Type:   linodego.NBTypePremium,
 		FrontendVPCs: []linodego.NodeBalancerFrontendVPCOptions{{
 			SubnetID:  subnet.ID,
-			IPv6Range: "/62",
+			IPv6Range: linodego.Pointer("/62"),
 		}},
 	}
 
@@ -547,8 +547,7 @@ func setupNodeBalancerWithVPC(
 		FirewallID:         GetFirewallID(),
 		BackendVPCs: []linodego.NodeBalancerBackendVPCOptions{
 			{
-				IPv4Range: "192.168.0.64/30",
-				IPv6Range: "",
+				IPv4Range: linodego.Pointer("192.168.0.64/30"),
 				SubnetID:  subnet.ID,
 			},
 		},
@@ -590,7 +589,7 @@ func setupNodeBalancerWithFrontendVPC(t *testing.T, fixturesYaml string, regions
 		ClientConnThrottle: &clientConnThrottle,
 		FrontendVPCs: []linodego.NodeBalancerFrontendVPCOptions{{
 			SubnetID:  subnet.ID,
-			IPv4Range: TestSubnetIPv4,
+			IPv4Range: linodego.Pointer(TestSubnetIPv4),
 		}},
 	}
 	for _, modifier := range nbModifiers {
@@ -640,7 +639,7 @@ func setupNodeBalancerWithPremiumTypeInDifferentVPCs(t *testing.T, fixturesYaml 
 		},
 		FrontendVPCs: []linodego.NodeBalancerFrontendVPCOptions{{
 			SubnetID:  subnetFrontend.ID,
-			IPv4Range: TestSubnetIPv4,
+			IPv4Range: linodego.Pointer(TestSubnetIPv4),
 		}},
 	}
 
