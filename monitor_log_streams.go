@@ -89,7 +89,7 @@ type StreamUpdateOptions struct {
 	Details      *StreamDetails `json:"details,omitzero"`
 }
 
-// LogStreamQuota represents a quota definition.
+// LogStreamQuota represents a per-account log stream limit.
 type LogStreamQuota struct {
 	QuotaID     string `json:"quota_id"`
 	QuotaName   string `json:"quota_name"`
@@ -156,7 +156,7 @@ func (c *Client) DeleteLogStream(ctx context.Context, streamID int) error {
 	return doDELETERequest(ctx, c, e)
 }
 
-// ListLogStreamQuotas returns all quotas for the account.
+// ListLogStreamQuotas returns the per-account log stream limits.
 func (c *Client) ListLogStreamQuotas(ctx context.Context, opts *ListOptions) ([]LogStreamQuota, error) {
 	return getPaginatedResults[LogStreamQuota](ctx, c, "monitor/streams/quotas", opts)
 }
