@@ -6,7 +6,10 @@
             "region": "us-east",
             "tags": ["tag1", "tag2"],
             "locks": ["cannot_delete"],
-            "lke_cluster": null
+            "lke_cluster": null,
+            "frontend_address_type": "vpc",
+            "frontend_vpc_subnet_id": 123,
+            "type": "premium_40gb"
         },
         {
             "id": 456,
@@ -19,7 +22,10 @@
                 "type": "lkecluster",
                 "label": "test-cluster",
                 "url": "/v4/lke/clusters/1234"
-            }
+            },
+            "frontend_address_type": "vpc",
+            "frontend_vpc_subnet_id": 456,
+            "type": "premium_40gb"
         }
     ],
     "page": 1,
