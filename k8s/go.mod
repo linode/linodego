@@ -3,7 +3,7 @@ module github.com/linode/linodego/k8s
 require (
 	github.com/linode/linodego/v2 v2.0.0
 	k8s.io/api v0.35.7
-	k8s.io/apimachinery v0.35.7
+	k8s.io/apimachinery v0.35.8
 	k8s.io/client-go v0.35.7
 )
 
