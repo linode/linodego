@@ -29,7 +29,7 @@ func TestNodebalancerVPCConfig_List(t *testing.T) {
 	assert.Equal(t, 123, configs[0].NodeBalancerID)
 	assert.Equal(t, 1, configs[0].SubnetID)
 	assert.Equal(t, 1, configs[0].VPCID)
-	assert.Equal(t, linodego.NodeBalancerVPCConfigPurposeBackend, configs[0].Purpose)
+	assert.Equal(t, linodego.NodeBalancerVPCConfigPurposeBackend, *configs[0].Purpose)
 
 	assert.Equal(t, 7, configs[1].ID)
 	assert.Equal(t, "10.0.1.8/30", configs[1].IPv4Range)
@@ -37,7 +37,7 @@ func TestNodebalancerVPCConfig_List(t *testing.T) {
 	assert.Equal(t, 123, configs[1].NodeBalancerID)
 	assert.Equal(t, 7, configs[1].SubnetID)
 	assert.Equal(t, 1, configs[1].VPCID)
-	assert.Equal(t, linodego.NodeBalancerVPCConfigPurposeFrontend, configs[1].Purpose)
+	assert.Equal(t, linodego.NodeBalancerVPCConfigPurposeFrontend, *configs[1].Purpose)
 }
 
 func TestNodebalancerVPCConfig_BackendList(t *testing.T) {
@@ -61,7 +61,7 @@ func TestNodebalancerVPCConfig_BackendList(t *testing.T) {
 	assert.Equal(t, 123, configs[0].NodeBalancerID)
 	assert.Equal(t, 3, configs[0].SubnetID)
 	assert.Equal(t, 1, configs[0].VPCID)
-	assert.Equal(t, linodego.NodeBalancerVPCConfigPurposeBackend, configs[0].Purpose)
+	assert.Equal(t, linodego.NodeBalancerVPCConfigPurposeBackend, *configs[0].Purpose)
 
 	assert.Equal(t, 10, configs[1].ID)
 	assert.Equal(t, "10.0.1.16/30", configs[1].IPv4Range)
@@ -69,7 +69,7 @@ func TestNodebalancerVPCConfig_BackendList(t *testing.T) {
 	assert.Equal(t, 123, configs[1].NodeBalancerID)
 	assert.Equal(t, 6, configs[1].SubnetID)
 	assert.Equal(t, 1, configs[1].VPCID)
-	assert.Equal(t, linodego.NodeBalancerVPCConfigPurposeBackend, configs[1].Purpose)
+	assert.Equal(t, linodego.NodeBalancerVPCConfigPurposeBackend, *configs[1].Purpose)
 }
 
 func TestNodebalancerVPCConfig_FrontendList(t *testing.T) {
@@ -93,7 +93,7 @@ func TestNodebalancerVPCConfig_FrontendList(t *testing.T) {
 	assert.Equal(t, 123, configs[0].NodeBalancerID)
 	assert.Equal(t, 3, configs[0].SubnetID)
 	assert.Equal(t, 1, configs[0].VPCID)
-	assert.Equal(t, linodego.NodeBalancerVPCConfigPurposeFrontend, configs[0].Purpose)
+	assert.Equal(t, linodego.NodeBalancerVPCConfigPurposeFrontend, *configs[0].Purpose)
 }
 
 func TestNodebalancerVPCConfig_Get(t *testing.T) {
@@ -115,5 +115,5 @@ func TestNodebalancerVPCConfig_Get(t *testing.T) {
 	assert.Equal(t, 123, config.NodeBalancerID)
 	assert.Equal(t, 1, config.SubnetID)
 	assert.Equal(t, 1, config.VPCID)
-	assert.Equal(t, linodego.NodeBalancerVPCConfigPurposeBackend, config.Purpose)
+	assert.Equal(t, linodego.NodeBalancerVPCConfigPurposeBackend, *config.Purpose)
 }
