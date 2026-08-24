@@ -232,7 +232,7 @@ func (client Client) WaitForLKEClusterConditions(
 // before returning.
 // If the event indicates a failure both the failed event and the error will be returned.
 //
-//nolint
+//nolint:funlen,gocognit,goconst,wsl_v5
 func (client Client) WaitForEventFinished(
 	ctx context.Context,
 	id any,
