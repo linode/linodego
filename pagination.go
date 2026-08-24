@@ -22,7 +22,8 @@ type PageOptions struct {
 }
 
 // ListOptions are the pagination and filtering (TODO) parameters for endpoints
-// nolint
+//
+//nolint
 type ListOptions struct {
 	*PageOptions
 	PageSize int    `json:"page_size"`
@@ -98,8 +99,8 @@ func createListOptionsToRequestMutator(opts *ListOptions) func(*http.Request) er
 }
 
 type PagedResponse interface {
-	endpoint(...any) string
-	castResult(*http.Request, string) (int, int, error)
+	endpoint(ids ...any) string
+	castResult(r *http.Request, endpoint string) (int, int, error)
 }
 
 // flattenQueryStruct flattens a structure into a Resty-compatible query param map.
