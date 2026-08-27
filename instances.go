@@ -212,7 +212,6 @@ type InstanceCreateOptions struct {
 
 	Kernel   *string `json:"kernel,omitzero"`
 	BootSize *int    `json:"boot_size,omitzero"`
-	HostID   int     `json:"host_id,omitzero"`
 }
 
 // InstanceCreatePlacementGroupOptions represents the placement group
