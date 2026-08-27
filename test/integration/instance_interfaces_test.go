@@ -30,21 +30,12 @@ func createInstanceWithLinodeInterfaces(
 		LinodeInstanceInterfaces: interfaces,
 	}
 
-	if enableCloudFirewall {
-		// Cloud Firewall setup may be disabled (ENABLE_CLOUD_FW=false), in which
-		// case -1 is used to explicitly opt out of a firewall.
-		fwID := firewallID
-		if fwID == 0 {
-			fwID = -1
-		}
-
-		for i := range createOpts.LinodeInstanceInterfaces {
-			// Cloud Firewalls cannot be assigned to RDMA VPC interfaces.
-			if createOpts.LinodeInstanceInterfaces[i].RDMAVPC != nil {
-				continue
-			}
-
-			createOpts.LinodeInstanceInterfaces[i].FirewallID = linodego.Pointer(fwID)
+	for i := range createOpts.LinodeInstanceInterfaces {
+		if enableCloudFirewall {
+			createOpts.LinodeInstanceInterfaces[i].FirewallID = linodego.Pointer(firewallID)
+		} else {
+			// If cloud firewall is not enabled, set the FirewallID explicitly to -1 to the interfaces.
+			createOpts.LinodeInstanceInterfaces[i].FirewallID = linodego.Pointer(-1)
 		}
 	}
 
@@ -242,7 +233,7 @@ func TestInstance_CreateWithRDMAVPCInterfaces(t *testing.T) {
 	instance, instanceTeardown, err := createInstanceWithLinodeInterfaces(
 		t,
 		client,
-		true,
+		false,
 		interfaceCreateOptions,
 		func(c *linodego.Client, opts *linodego.InstanceCreateOptions) {
 			opts.Label = "go-test-rdma-" + randLabel()
