@@ -122,11 +122,11 @@ func TestNodeBalancer_Create_WithBackendVPCOnly(t *testing.T) {
 	vpcConfigs, err := client.ListNodeBalancerVPCConfigs(context.Background(), nodebalancer.ID, nil)
 	require.NoErrorf(t, err, "Error listing nodebalancer VPC configs: %v", err)
 	require.Len(t, vpcConfigs, 1, "Expected exactly one nodebalancer VPC config, got %d", len(vpcConfigs))
-	assert.Equal(t, "backend", string(vpcConfigs[0].Purpose))
+	assert.Equal(t, "backend", string(*vpcConfigs[0].Purpose))
 
 	vpcConfig, err := client.GetNodeBalancerVPCConfig(context.Background(), nodebalancer.ID, vpcConfigs[0].ID)
 	require.NoErrorf(t, err, "Error getting nodebalancer VPC config: %v", err)
-	assert.Equal(t, "backend", string(vpcConfig.Purpose))
+	assert.Equal(t, "backend", string(*vpcConfig.Purpose))
 
 	// TODO: Uncomment when API implementation of /backend_vpcs and /frontend_vpcs endpoints is finished
 	//backendVPCs, err := client.ListNodeBalancerVPCBackendConfigs(context.Background(), nodebalancer.ID, nil)
@@ -161,11 +161,11 @@ func TestNodeBalancer_Create_WithFrontendVPCOnly(t *testing.T) {
 	vpcConfigs, err := client.ListNodeBalancerVPCConfigs(context.Background(), nodebalancer.ID, nil)
 	require.NoErrorf(t, err, "Error listing NodeBalancer VPC configs: %v", err)
 	require.Len(t, vpcConfigs, 1, "Expected exactly one NodeBalancer VPC config, got %d", len(vpcConfigs))
-	assert.Equal(t, "frontend", string(vpcConfigs[0].Purpose))
+	assert.Equal(t, "frontend", string(*vpcConfigs[0].Purpose))
 
 	vpcConfig, err := client.GetNodeBalancerVPCConfig(context.Background(), nodebalancer.ID, vpcConfigs[0].ID)
 	require.NoErrorf(t, err, "Error getting NodeBalancer VPC config: %v", err)
-	assert.Equal(t, "frontend", string(vpcConfig.Purpose))
+	assert.Equal(t, "frontend", string(*vpcConfig.Purpose))
 
 	// TODO: Uncomment when API implementation of /backend_vpcs and /frontend_vpcs endpoints is finished
 	//backendVPCs, err := client.ListNodeBalancerVPCBackendConfigs(context.Background(), nodebalancer.ID, nil)
@@ -273,11 +273,11 @@ func TestNodeBalancer_Create_WithFrontendAndBackendInDifferentVPCs(t *testing.T)
 	require.Len(t, vpcConfigs, 2, "Expected exactly two VPC configs, got %d", len(vpcConfigs))
 
 	slices.SortFunc(vpcConfigs, func(a, b linodego.NodeBalancerVPCConfig) int {
-		return strings.Compare(string(a.Purpose), string(b.Purpose))
+		return strings.Compare(string(*a.Purpose), string(*b.Purpose))
 	})
 
-	assert.Equal(t, "backend", string(vpcConfigs[0].Purpose))
-	assert.Equal(t, "frontend", string(vpcConfigs[1].Purpose))
+	assert.Equal(t, "backend", string(*vpcConfigs[0].Purpose))
+	assert.Equal(t, "frontend", string(*vpcConfigs[1].Purpose))
 	assert.Contains(t, vpcConfigs[1].IPv4Range, "/32")
 	assert.Contains(t, vpcConfigs[1].IPv6Range, "/64")
 
