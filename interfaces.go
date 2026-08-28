@@ -265,7 +265,7 @@ type RDMAVPCInterfaceCreateOptions struct {
 // interface.
 // NOTE: RDMA VPC interfaces may not currently be available to all users.
 type RDMAVPCInterfaceUpdateOptions struct {
-	SubnetID *int                          `json:"subnet_id,omitzero"`
+	SubnetID *int                         `json:"subnet_id,omitzero"`
 	IPv4     *RDMAVPCInterfaceIPv4Options `json:"ipv4,omitzero"`
 }
 
