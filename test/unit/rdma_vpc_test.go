@@ -207,8 +207,8 @@ func TestInterface_UpdateRDMAVPC(t *testing.T) {
 
 	opts := linodego.LinodeInterfaceUpdateOptions{
 		RDMAVPC: &linodego.RDMAVPCInterfaceUpdateOptions{
-			SubnetID: 9,
-			IPv4: linodego.RDMAVPCInterfaceIPv4Options{
+			SubnetID: linodego.Pointer(9),
+			IPv4: &linodego.RDMAVPCInterfaceIPv4Options{
 				Addresses: []linodego.RDMAVPCInterfaceIPv4AddressOptions{
 					{Address: "10.0.1.5", Primary: linodego.Pointer(true)},
 				},
@@ -242,7 +242,7 @@ func TestInstance_CreateWithRDMAInterfaces_MarshalJSON(t *testing.T) {
 			{
 				RDMAVPC: &linodego.RDMAVPCInterfaceCreateOptions{
 					SubnetID: 1234,
-					IPv4: linodego.RDMAVPCInterfaceIPv4Options{
+					IPv4: &linodego.RDMAVPCInterfaceIPv4Options{
 						Addresses: []linodego.RDMAVPCInterfaceIPv4AddressOptions{
 							{Address: "auto", Primary: linodego.Pointer(true)},
 						},
@@ -412,7 +412,7 @@ func TestRDMAVPCInterface_ExplicitPrimaryFalse(t *testing.T) {
 	// Primary is a pointer precisely so that false != unset.
 	opts := linodego.RDMAVPCInterfaceCreateOptions{
 		SubnetID: 1234,
-		IPv4: linodego.RDMAVPCInterfaceIPv4Options{
+		IPv4: &linodego.RDMAVPCInterfaceIPv4Options{
 			Addresses: []linodego.RDMAVPCInterfaceIPv4AddressOptions{
 				{
 					Address: "10.0.0.5",
@@ -438,7 +438,7 @@ func TestRDMAVPCInterface_ExplicitEmptyAddresses(t *testing.T) {
 	// On update, a caller MUST be able to send an explicit empty addresses list.
 	// A non-nil empty slice is NOT the zero value, so omitzero still marshals it.
 	opts := linodego.RDMAVPCInterfaceUpdateOptions{
-		IPv4: linodego.RDMAVPCInterfaceIPv4Options{
+		IPv4: &linodego.RDMAVPCInterfaceIPv4Options{
 			Addresses: []linodego.RDMAVPCInterfaceIPv4AddressOptions{},
 		},
 	}

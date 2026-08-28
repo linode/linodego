@@ -104,7 +104,7 @@ func prepareMultipleRDMAInterfaces(amount int, subnet *linodego.VPCSubnet) []lin
 			},
 			RDMAVPC: &linodego.RDMAVPCInterfaceCreateOptions{
 				SubnetID: subnet.ID,
-				IPv4: linodego.RDMAVPCInterfaceIPv4Options{
+				IPv4: &linodego.RDMAVPCInterfaceIPv4Options{
 					Addresses: []linodego.RDMAVPCInterfaceIPv4AddressOptions{
 						{Address: "auto", Primary: linodego.Pointer(true)},
 					},
@@ -268,7 +268,7 @@ func TestInstance_CreateWithRDMAVPCInterfaces(t *testing.T) {
 	// UPDATE
 	updateOpts := linodego.LinodeInterfaceUpdateOptions{
 		RDMAVPC: &linodego.RDMAVPCInterfaceUpdateOptions{
-			SubnetID: vpcSubnetRDMAUpdate.ID,
+			SubnetID: linodego.Pointer(vpcSubnetRDMAUpdate.ID),
 		},
 	}
 	updatedRDMAInterface, err := client.UpdateInterface(context.Background(), instance.ID, basicRDMAInterface.ID, updateOpts)

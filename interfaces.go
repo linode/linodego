@@ -257,16 +257,16 @@ type VPCInterfaceUpdateOptions struct {
 // interface as part of a Linode creation.
 // NOTE: RDMA VPC interfaces may not currently be available to all users.
 type RDMAVPCInterfaceCreateOptions struct {
-	SubnetID int                         `json:"subnet_id"`
-	IPv4     RDMAVPCInterfaceIPv4Options `json:"ipv4,omitzero"`
+	SubnetID int                          `json:"subnet_id"`
+	IPv4     *RDMAVPCInterfaceIPv4Options `json:"ipv4,omitzero"`
 }
 
 // RDMAVPCInterfaceUpdateOptions specifies the mutable fields of an RDMA VPC
 // interface.
 // NOTE: RDMA VPC interfaces may not currently be available to all users.
 type RDMAVPCInterfaceUpdateOptions struct {
-	SubnetID int                         `json:"subnet_id,omitzero"`
-	IPv4     RDMAVPCInterfaceIPv4Options `json:"ipv4,omitzero"`
+	SubnetID *int                          `json:"subnet_id,omitzero"`
+	IPv4     *RDMAVPCInterfaceIPv4Options `json:"ipv4,omitzero"`
 }
 
 // RDMAVPCInterfaceIPv4Options specifies IPv4 parameters for an RDMA VPC
@@ -280,7 +280,7 @@ type RDMAVPCInterfaceIPv4Options struct {
 // configuration for an RDMA VPC interface.
 // NOTE: RDMA VPC interfaces may not currently be available to all users.
 type RDMAVPCInterfaceIPv4AddressOptions struct {
-	Address string `json:"address,omitzero"`
+	Address string `json:"address"`
 	Primary *bool  `json:"primary,omitzero"`
 }
 
