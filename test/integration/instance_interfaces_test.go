@@ -30,9 +30,12 @@ func createInstanceWithLinodeInterfaces(
 		LinodeInstanceInterfaces: interfaces,
 	}
 
-	if enableCloudFirewall {
-		for i := range createOpts.LinodeInstanceInterfaces {
+	for i := range createOpts.LinodeInstanceInterfaces {
+		if enableCloudFirewall {
 			createOpts.LinodeInstanceInterfaces[i].FirewallID = linodego.Pointer(firewallID)
+		} else {
+			// If cloud firewall is not enabled, set the FirewallID explicitly to -1 to the interfaces.
+			createOpts.LinodeInstanceInterfaces[i].FirewallID = linodego.Pointer(-1)
 		}
 	}
 
@@ -185,14 +188,12 @@ func TestInstance_CreateWithLinodeInterfaces(
 }
 
 func TestInstance_CreateWithRDMAVPCInterfaces(t *testing.T) {
-	t.Skip("Skipping test because Linode with RDMA interfaces requires manual infra changes at the moment")
-
 	client, fixtureTeardown := createTestClient(t, "fixtures/TestInstance_CreateWithRDMAVPCInterfaces")
 	t.Cleanup(fixtureTeardown)
 
-	// GPUDirect RDMA capability not available for now
+	// GPUDirect RDMA capability not available in all regions, so we hardcode a region that supports it for this test.
 	// testRegion := getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityVPCs, linodego.CapabilityGPUDirectRDMA})[0]
-	testRegion := getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityVPCs})[0]
+	testRegion := "us-rno-1"
 	interfaceCreateOptions := make([]linodego.LinodeInstanceInterfaceCreateOptions, 0)
 
 	// CREATE
@@ -240,8 +241,7 @@ func TestInstance_CreateWithRDMAVPCInterfaces(t *testing.T) {
 			opts.RootPass = randPassword()
 			opts.Image = "linode/ubuntu24.04"
 			opts.Region = testRegion
-			// opts.Type = linodego.InstanceRDMAType
-			// opts.HostID = linodego.InstanceRDMAHostID
+			opts.Type = "g3-gpu-rtxpro6000-blackwell-rdma-8"
 			opts.InterfaceGeneration = linodego.GenerationLinode
 			opts.LinodeInstanceInterfaces = interfaceCreateOptions
 			opts.Booted = linodego.Pointer(false)
