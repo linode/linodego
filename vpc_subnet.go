@@ -56,16 +56,44 @@ type VPCSubnet struct {
 	Databases     []VPCSubnetDatabase      `json:"databases"`
 	Nodebalancers []VPCSubnetNodebalancers `json:"nodebalancers"`
 
+	NATGateway VPCSubnetNATGateway `json:"natgateway"`
+
 	Created *time.Time `json:"-"`
 	Updated *time.Time `json:"-"`
 }
 
 type VPCSubnetCreateOptions struct {
-	Label string `json:"label"`
-	IPv4  string `json:"ipv4"`
+	Label      string                            `json:"label"`
+	IPv4       string                            `json:"ipv4"`
+	NATGateway *VPCSubnetCreateOptionsNATGateway `json:"natgateway,omitzero"`
 
 	// NOTE: IPv6 VPCs may not currently be available to all users.
 	IPv6 []VPCSubnetCreateOptionsIPv6 `json:"ipv6,omitzero"`
+}
+
+type VPCSubnetCreateOptionsNATGateway struct {
+	ID **int `json:"id,omitzero"`
+}
+
+type VPCSubnetNATGateway struct {
+	ID                 int      `json:"id"`
+	Label              string   `json:"label"`
+	Addresses          []string `json:"addresses"`
+	PortsetAssignments int      `json:"portset_assignments"`
+	PortsetCapacity    int      `json:"portset_capacity"`
+
+	// NOTE: This field may not be available for all customers
+	Portsets []VPCSubnetNATGatewayPortset `json:"portsets"`
+}
+
+type VPCSubnetNATGatewayPortset struct {
+	Address string                           `json:"address"`
+	Ports   []VPCSubnetNATGatewayPortsetPort `json:"ports"`
+}
+
+type VPCSubnetNATGatewayPortsetPort struct {
+	Start int `json:"start"`
+	End   int `json:"end"`
 }
 
 // VPCSubnetCreateOptionsIPv6 represents a single IPv6 range assigned to a VPC
@@ -76,7 +104,12 @@ type VPCSubnetCreateOptionsIPv6 struct {
 }
 
 type VPCSubnetUpdateOptions struct {
-	Label string `json:"label"`
+	Label      string                            `json:"label"`
+	NATGateway *VPCSubnetUpdateOptionsNATGateway `json:"natgateway,omitzero"`
+}
+
+type VPCSubnetUpdateOptionsNATGateway struct {
+	ID **int `json:"id,omitzero"`
 }
 
 func (v *VPCSubnet) UnmarshalJSON(b []byte) error {

@@ -81,8 +81,32 @@ type VPCInterface struct {
 }
 
 type VPCInterfaceIPv4 struct {
-	Addresses []VPCInterfaceIPv4Address `json:"addresses"`
-	Ranges    []VPCInterfaceIPv4Range   `json:"ranges"`
+	Addresses  []VPCInterfaceIPv4Address  `json:"addresses"`
+	Ranges     []VPCInterfaceIPv4Range    `json:"ranges"`
+	NATGateway VPCInterfaceIPv4NATGateway `json:"natgateway"`
+}
+
+type VPCInterfaceIPv4NATGateway struct {
+	ID                 int      `json:"id"`
+	Label              string   `json:"label"`
+	Type               string   `json:"type"`
+	URL                string   `json:"url"`
+	Addresses          []string `json:"addresses"`
+	PortsetAssignments int      `json:"portset_assignments"`
+	PortsetCapacity    int      `json:"portset_capacity"`
+
+	// NOTE: This field may not be available for all customers
+	Portsets []VPCInterfaceIPv4NATGatewayPortset `json:"portsets"`
+}
+
+type VPCInterfaceIPv4NATGatewayPortset struct {
+	Address string                                  `json:"address"`
+	Ports   []VPCInterfaceIPv4NATGatewayPortsetPort `json:"ports"`
+}
+
+type VPCInterfaceIPv4NATGatewayPortsetPort struct {
+	Start int `json:"start"`
+	End   int `json:"end"`
 }
 
 type VPCInterfaceIPv4Address struct {
