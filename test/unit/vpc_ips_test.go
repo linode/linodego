@@ -6,6 +6,7 @@ import (
 
 	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestVPCAllIPAddresses_List(t *testing.T) {
@@ -26,6 +27,15 @@ func TestVPCAllIPAddresses_List(t *testing.T) {
 	assert.NotNil(t, vpcIPs[0].Address, "Expected IP address to be non-nil")
 	assert.Equal(t, "192.168.1.10", *vpcIPs[0].Address, "Expected IP address to match")
 	assert.Equal(t, 123, vpcIPs[0].VPCID, "Expected VPC ID to match")
+	assert.Equal(t, 42, vpcIPs[0].NATGateway.ID)
+	assert.Equal(t, []string{"203.0.113.42"}, vpcIPs[0].NATGateway.Addresses)
+	assert.Equal(t, 15, vpcIPs[0].NATGateway.PortsetAssignments)
+	assert.Equal(t, 30, vpcIPs[0].NATGateway.PortsetCapacity)
+	require.Len(t, vpcIPs[0].NATGateway.Portsets, 1)
+	assert.Equal(t, "203.0.113.42", vpcIPs[0].NATGateway.Portsets[0].Address)
+	require.Len(t, vpcIPs[0].NATGateway.Portsets[0].Ports, 1)
+	assert.Equal(t, 2048, vpcIPs[0].NATGateway.Portsets[0].Ports[0].Start)
+	assert.Equal(t, 3071, vpcIPs[0].NATGateway.Portsets[0].Ports[0].End)
 
 	assert.Equal(t, "fd71:1140:a9d0::/52", *vpcIPs[2].IPv6Range)
 	assert.Equal(t, true, *vpcIPs[2].IPv6IsPublic)
@@ -52,6 +62,15 @@ func TestVPCSpecificIPAddresses_List(t *testing.T) {
 	assert.NotNil(t, vpcIPs[0].Address, "Expected IP address to be non-nil")
 	assert.Equal(t, "192.168.1.20", *vpcIPs[0].Address, "Expected IP address to match")
 	assert.Equal(t, vpcID, vpcIPs[0].VPCID, "Expected VPC ID to match")
+	assert.Equal(t, 42, vpcIPs[0].NATGateway.ID)
+	assert.Equal(t, []string{"203.0.113.42"}, vpcIPs[0].NATGateway.Addresses)
+	assert.Equal(t, 15, vpcIPs[0].NATGateway.PortsetAssignments)
+	assert.Equal(t, 30, vpcIPs[0].NATGateway.PortsetCapacity)
+	require.Len(t, vpcIPs[0].NATGateway.Portsets, 1)
+	assert.Equal(t, "203.0.113.42", vpcIPs[0].NATGateway.Portsets[0].Address)
+	require.Len(t, vpcIPs[0].NATGateway.Portsets[0].Ports, 1)
+	assert.Equal(t, 2048, vpcIPs[0].NATGateway.Portsets[0].Ports[0].Start)
+	assert.Equal(t, 3071, vpcIPs[0].NATGateway.Portsets[0].Ports[0].End)
 
 	assert.Equal(t, "fd71:1140:a9d0::/52", *vpcIPs[2].IPv6Range)
 	assert.Equal(t, true, *vpcIPs[2].IPv6IsPublic)

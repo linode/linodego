@@ -2,7 +2,19 @@
     "data": [
         {
             "address": "192.168.1.20",
-            "vpc_id": 123
+            "vpc_id": 123,
+            "natgateway": {
+                "id": 42,
+                "addresses": ["203.0.113.42"],
+                "portset_assignments": 15,
+                "portset_capacity": 30,
+                "portsets": [
+                    {
+                        "address": "203.0.113.42",
+                        "ports": [{"start": 2048, "end": 3071}]
+                    }
+                ]
+            }
         },
         {
             "address": "192.168.1.21",
