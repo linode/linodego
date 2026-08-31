@@ -56,7 +56,7 @@ type VPCSubnet struct {
 	Databases     []VPCSubnetDatabase      `json:"databases"`
 	Nodebalancers []VPCSubnetNodebalancers `json:"nodebalancers"`
 
-	NATGateway VPCSubnetNATGateway `json:"natgateway"`
+	NATGateway *VPCSubnetNATGateway `json:"natgateway"`
 
 	Created *time.Time `json:"-"`
 	Updated *time.Time `json:"-"`

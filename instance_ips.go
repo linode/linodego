@@ -69,8 +69,8 @@ type VPCIP struct {
 	IPv6Addresses []VPCIPIPv6Address `json:"ipv6_addresses"`
 
 	// The type of this field will be made a pointer in the next major release of linodego.
-	ConfigID   int             `json:"config_id"`
-	NATGateway VPCIPNATGateway `json:"natgateway"`
+	ConfigID   int              `json:"config_id"`
+	NATGateway *VPCIPNATGateway `json:"natgateway"`
 }
 
 type VPCIPNATGateway struct {

@@ -2,7 +2,10 @@ package linodego
 
 import (
 	"context"
+	"encoding/json"
 	"time"
+
+	"github.com/linode/linodego/v2/internal/parseabletime"
 )
 
 type NATGateway struct {
@@ -17,6 +20,27 @@ type NATGateway struct {
 	VPCSubnet                NATGatewayVPCSubnet `json:"vpc_subnet"`
 	Created                  *time.Time          `json:"-"`
 	Updated                  *time.Time          `json:"-"`
+}
+
+func (n *NATGateway) UnmarshalJSON(b []byte) error {
+	type Mask NATGateway
+
+	p := struct {
+		*Mask
+
+		Created *parseabletime.ParseableTime `json:"created"`
+		Updated *parseabletime.ParseableTime `json:"updated"`
+	}{
+		Mask: (*Mask)(n),
+	}
+	if err := json.Unmarshal(b, &p); err != nil {
+		return err
+	}
+
+	n.Created = (*time.Time)(p.Created)
+	n.Updated = (*time.Time)(p.Updated)
+
+	return nil
 }
 
 type NATGatewayAddress struct {

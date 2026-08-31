@@ -81,9 +81,9 @@ type VPCInterface struct {
 }
 
 type VPCInterfaceIPv4 struct {
-	Addresses  []VPCInterfaceIPv4Address  `json:"addresses"`
-	Ranges     []VPCInterfaceIPv4Range    `json:"ranges"`
-	NATGateway VPCInterfaceIPv4NATGateway `json:"natgateway"`
+	Addresses  []VPCInterfaceIPv4Address   `json:"addresses"`
+	Ranges     []VPCInterfaceIPv4Range     `json:"ranges"`
+	NATGateway *VPCInterfaceIPv4NATGateway `json:"natgateway"`
 }
 
 type VPCInterfaceIPv4NATGateway struct {
