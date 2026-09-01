@@ -53,14 +53,21 @@ func TestInterface_List(t *testing.T) {
 		t.Fatalf("Error fetching interfaces: %v", err)
 	}
 
-	assert.Equal(t, 123, ifaces[0].ID)
+	require.Len(t, ifaces, 1)
+
+	assert.Equal(t, 1234, ifaces[0].ID)
 	assert.Equal(t, 1, ifaces[0].Version)
+	assert.Equal(t, "22:00:AB:CD:EF:01", ifaces[0].MACAddress)
+	assert.True(t, *ifaces[0].DefaultRoute.IPv4)
+	assert.True(t, *ifaces[0].DefaultRoute.IPv6)
 
-	assert.Equal(t, 456, ifaces[1].ID)
-	assert.Equal(t, 1, ifaces[1].Version)
+	assert.Nil(t, ifaces[0].VPC)
+	assert.Nil(t, ifaces[0].VLAN)
 
-	assert.Equal(t, 789, ifaces[2].ID)
-	assert.Equal(t, 1, ifaces[2].Version)
+	require.NotNil(t, ifaces[0].Public)
+	require.Len(t, ifaces[0].Public.IPv4.Addresses, 1)
+	assert.Equal(t, "172.30.0.50", ifaces[0].Public.IPv4.Addresses[0].Address)
+	assert.True(t, ifaces[0].Public.IPv4.Addresses[0].Primary)
 }
 
 func TestInterface_Delete(t *testing.T) {

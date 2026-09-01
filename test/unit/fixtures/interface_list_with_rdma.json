@@ -1,0 +1,59 @@
+{
+  "interfaces": [
+    {
+      "id": 111111,
+      "mac_address": "22:00:61:ec:92:4e",
+      "created": "2026-06-10T12:27:51",
+      "updated": "2026-06-10T12:27:52",
+      "default_route": {
+        "ipv4": true,
+        "ipv6": false
+      },
+      "version": 1,
+      "public": null,
+      "vpc": {
+        "vpc_id": 123,
+        "subnet_id": 456,
+        "ipv4": {
+          "addresses": [
+            {
+              "address": "10.0.0.2",
+              "primary": true,
+              "nat_1_1_address": null
+            }
+          ],
+          "ranges": []
+        },
+        "ipv6": null
+      },
+      "vlan": null,
+      "rdma_vpc": null
+    },
+    {
+      "id": 222222,
+      "mac_address": "22:00:7f:c4:3a:37",
+      "created": "2026-06-10T12:27:51",
+      "updated": "2026-06-10T12:27:52",
+      "default_route": {
+        "ipv4": false,
+        "ipv6": false
+      },
+      "version": 1,
+      "public": null,
+      "vpc": null,
+      "vlan": null,
+      "rdma_vpc": {
+        "vpc_id": 123,
+        "subnet_id": 456,
+        "ipv4": {
+          "addresses": [
+            {
+              "address": "10.0.0.2",
+              "primary": true
+            }
+          ]
+        }
+      }
+    }
+  ]
+}
