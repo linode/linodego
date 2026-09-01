@@ -34,6 +34,9 @@ type NodeBalancer struct {
 	// This NodeBalancer's plan Type
 	Type NodeBalancerPlanType `json:"type"`
 
+	// NOTE: BackendConnectivity may not currently be available to all users and can only be used with v4beta.
+	BackendConnectivity *NodeBalancerBackendConnectivity `json:"backend_connectivity"`
+
 	// An array of tags applied to this object. Tags are for organizational purposes only.
 	Tags []string `json:"tags"`
 
@@ -81,6 +84,9 @@ type NodeBalancerCreateOptions struct {
 	Type       NodeBalancerPlanType              `json:"type,omitzero"`
 	VPCs       []NodeBalancerVPCOptions          `json:"vpcs,omitzero"`
 	IPv4       *string                           `json:"ipv4,omitzero"`
+
+	// NOTE: BackendConnectivity may not currently be available to all users and can only be used with v4beta.
+	BackendConnectivity *NodeBalancerBackendConnectivity `json:"backend_connectivity,omitzero"`
 }
 
 // NodeBalancerUpdateOptions are the options permitted for UpdateNodeBalancer
@@ -110,9 +116,42 @@ type NodeBalancerPlanType string
 
 // NodeBalancerPlanType constants reflect the plan type used by a NodeBalancer Config
 const (
-	NBTypePremium     NodeBalancerPlanType = "premium"
+	// NBTypePremium supports higher connection and backend limits with guaranteed 10Gbps.
+	NBTypePremium NodeBalancerPlanType = "premium"
+
+	// NBTypeBasic is the default plan. Clients do not have to specify this value.
+	NBTypeBasic NodeBalancerPlanType = "basic"
+
+	// NBTypeEnterprise supports up to 40Gbps bandwidth.
+	NBTypeEnterprise NodeBalancerPlanType = "enterprise"
+
+	// NBTypeCommon is the default plan. Clients do not have to specify this value.
+	//
+	// Deprecated: NBTypeCommon will be replaced by NBTypeBasic.
+	NBTypeCommon NodeBalancerPlanType = "common"
+
+	// NBTypePremium40GB is the Enterprise offering with up to 40Gbps bandwidth.
+	//
+	// Deprecated: NBTypePremium40GB will be replaced by NBTypeEnterprise.
 	NBTypePremium40GB NodeBalancerPlanType = "premium_40gb"
-	NBTypeCommon      NodeBalancerPlanType = "common"
+)
+
+// NodeBalancerBackendConnectivity is the backend communication mode for a NodeBalancer.
+// NOTE: BackendConnectivity may not currently be available to all users and can only be used with v4beta.
+type NodeBalancerBackendConnectivity string
+
+const (
+	// NBBackendConnectivityLegacy communicates with backends over private IPv4.
+	NBBackendConnectivityLegacy NodeBalancerBackendConnectivity = "legacy"
+	// NBBackendConnectivityIPv6AndVPC is an unpublished value that will be deprecated.
+	NBBackendConnectivityIPv6AndVPC NodeBalancerBackendConnectivity = "ipv6_and_vpc"
+	// NBBackendConnectivityIPv6 communicates with backends using the NodeBalancer frontend IPv6.
+	NBBackendConnectivityIPv6 NodeBalancerBackendConnectivity = "ipv6"
+	// NBBackendConnectivityVPC communicates with backends using a VPC.
+	NBBackendConnectivityVPC NodeBalancerBackendConnectivity = "vpc"
+	// NBBackendConnectivityUndefined is assigned by the API when backend_connectivity, nodes, and vpcs are omitted.
+	// It cannot be specified in the Create NodeBalancer API.
+	NBBackendConnectivityUndefined NodeBalancerBackendConnectivity = "undefined"
 )
 
 // UnmarshalJSON implements the json.Unmarshaler interface
@@ -140,7 +179,7 @@ func (i *NodeBalancer) UnmarshalJSON(b []byte) error {
 
 // GetCreateOptions converts a NodeBalancer to NodeBalancerCreateOptions for use in CreateNodeBalancer
 func (i NodeBalancer) GetCreateOptions() NodeBalancerCreateOptions {
-	return NodeBalancerCreateOptions{
+	opts := NodeBalancerCreateOptions{
 		Label:                 i.Label,
 		Region:                i.Region,
 		ClientConnThrottle:    &i.ClientConnThrottle,
@@ -148,6 +187,12 @@ func (i NodeBalancer) GetCreateOptions() NodeBalancerCreateOptions {
 		Type:                  i.Type,
 		Tags:                  i.Tags,
 	}
+
+	if i.BackendConnectivity != nil && *i.BackendConnectivity != NBBackendConnectivityUndefined {
+		opts.BackendConnectivity = i.BackendConnectivity
+	}
+
+	return opts
 }
 
 // GetUpdateOptions converts a NodeBalancer to NodeBalancerUpdateOptions for use in UpdateNodeBalancer
