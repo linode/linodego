@@ -30,6 +30,7 @@ const (
 	CapabilityDistributedPlans                 RegionCapability = "Distributed Plans"
 	CapabilityEdgePlans                        RegionCapability = "Edge Plans"
 	CapabilityGPU                              RegionCapability = "GPU Linodes"
+	CapabilityGPUDirectRDMA                    RegionCapability = "GPUDirect RDMA"
 	CapabilityKubernetesEnterprise             RegionCapability = "Kubernetes Enterprise"
 	CapabilityKubernetesEnterpriseBYOVPC       RegionCapability = "Kubernetes Enterprise BYO VPC"
 	CapabilityKubernetesEnterpriseDualStack    RegionCapability = "Kubernetes Enterprise Dual Stack"
@@ -99,8 +100,9 @@ type RegionMonitors struct {
 // RegionPlacementGroupLimits contains information about the
 // placement group limits for the current user in the current region.
 type RegionPlacementGroupLimits struct {
-	MaximumPGsPerCustomer int `json:"maximum_pgs_per_customer"`
-	MaximumLinodesPerPG   int `json:"maximum_linodes_per_pg"`
+	MaximumPGsPerCustomer       int `json:"maximum_pgs_per_customer"`
+	MaximumLinodesPerPG         int `json:"maximum_linodes_per_pg"`
+	MaximumLinodesPerFlexiblePG int `json:"maximum_linodes_per_flexible_pg"`
 }
 
 // ListRegions lists Regions. This endpoint is cached by default.
