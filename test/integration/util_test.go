@@ -34,3 +34,20 @@ func minInt(a, b int) int {
 func getUniqueText() string {
 	return strconv.FormatInt(time.Now().UnixNano(), 10)
 }
+
+// getIntersection returns common items of two data structures (e.g. slices)
+func getIntersection[T comparable](a, b []T) []T {
+	set := make(map[T]struct{})
+	var result []T
+
+	for _, item := range a {
+		set[item] = struct{}{}
+	}
+
+	for _, item := range b {
+		if _, ok := set[item]; ok {
+			result = append(result, item)
+		}
+	}
+	return result
+}
