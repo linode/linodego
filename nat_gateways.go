@@ -143,7 +143,7 @@ func (c *Client) CreateNATGateway(ctx context.Context, opts NATGatewayCreateOpti
 }
 
 // UpdateNATGateway updates the NAT Gateway with the specified id
-func (c *Client) UpdateNATGateway(ctx context.Context, opts NATGatewayUpdateOptions, id int) (*NATGateway, error) {
+func (c *Client) UpdateNATGateway(ctx context.Context, id int, opts NATGatewayUpdateOptions) (*NATGateway, error) {
 	e := formatAPIPath("networking/natgateways/%d", id)
 	return doPUTRequest[NATGateway](ctx, c, e, opts)
 }
@@ -155,13 +155,13 @@ func (c *Client) DeleteNATGateway(ctx context.Context, id int) error {
 }
 
 // NATGatewayAddAddress adds an addresd to the NAT Gateway with the specified id
-func (c *Client) NATGatewayAddAddress(ctx context.Context, opts NATGatewayAddAddressOptions, id int) (*NATGatewayAddressObject, error) {
+func (c *Client) NATGatewayAddAddress(ctx context.Context, id int, opts NATGatewayAddAddressOptions) (*NATGatewayAddressObject, error) {
 	e := formatAPIPath("networking/natgateways/%d/addresses", id)
 	return doPOSTRequest[NATGatewayAddressObject](ctx, c, e, opts)
 }
 
 // NATGatewayListAddresses lists a NAT Gateway's addresses
-func (c *Client) NATGatewayListAddresses(ctx context.Context, opts *ListOptions, id int) ([]NATGatewayAddressObject, error) {
+func (c *Client) NATGatewayListAddresses(ctx context.Context, id int, opts *ListOptions) ([]NATGatewayAddressObject, error) {
 	e := formatAPIPath("networking/natgateways/%d/addresses", id)
 	return getPaginatedResults[NATGatewayAddressObject](ctx, c, e, opts)
 }
@@ -179,13 +179,13 @@ func (c *Client) NATGatewayDeleteAddress(ctx context.Context, id int, address st
 }
 
 // NATGatewayListAddressInterfaces lists a NAT Gateway's address' interfaces
-func (c *Client) NATGatewayListAddressInterfaces(ctx context.Context, opts *ListOptions, id int, address string) ([]NATGatewayInterface, error) {
+func (c *Client) NATGatewayListAddressInterfaces(ctx context.Context, id int, address string, opts *ListOptions) ([]NATGatewayInterface, error) {
 	e := formatAPIPath("networking/natgateways/%d/addresses/%s/interfaces", id, address)
 	return getPaginatedResults[NATGatewayInterface](ctx, c, e, opts)
 }
 
 // NATGatewayListInterfaces lists a NAT Gateway's interfaces
-func (c *Client) NATGatewayListInterfaces(ctx context.Context, opts *ListOptions, id int) ([]NATGatewayInterface, error) {
+func (c *Client) NATGatewayListInterfaces(ctx context.Context, id int, opts *ListOptions) ([]NATGatewayInterface, error) {
 	e := formatAPIPath("networking/natgateways/%d/interfaces", id)
 	return getPaginatedResults[NATGatewayInterface](ctx, c, e, opts)
 }

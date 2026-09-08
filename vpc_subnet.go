@@ -134,6 +134,13 @@ func (v *VPCSubnet) UnmarshalJSON(b []byte) error {
 }
 
 func (v VPCSubnet) GetCreateOptions() VPCSubnetCreateOptions {
+	var natGateway *VPCSubnetCreateOptionsNATGateway
+
+	if v.NATGateway != nil {
+		id := copyValue(&v.NATGateway.ID)
+		natGateway = &VPCSubnetCreateOptionsNATGateway{ID: &id}
+	}
+
 	return VPCSubnetCreateOptions{
 		Label: v.Label,
 		IPv4:  v.IPv4,
@@ -142,6 +149,7 @@ func (v VPCSubnet) GetCreateOptions() VPCSubnetCreateOptions {
 				Range: copyValue(&i.Range),
 			}
 		}),
+		NATGateway: natGateway,
 	}
 }
 

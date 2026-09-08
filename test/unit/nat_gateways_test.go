@@ -131,7 +131,7 @@ func TestNATGateways_Update(t *testing.T) {
 
 	base.MockPut("networking/natgateways/42", fixtureData)
 
-	gateway, err := base.Client.UpdateNATGateway(context.Background(), updateOptions, 42)
+	gateway, err := base.Client.UpdateNATGateway(context.Background(), 42, updateOptions)
 	assert.NoError(t, err)
 
 	assert.Equal(t, "my-cloud-nat-updated", gateway.Label)
@@ -162,7 +162,7 @@ func TestNATGateways_AddAddress(t *testing.T) {
 
 	base.MockPost("networking/natgateways/42/addresses", fixtureData)
 
-	address, err := base.Client.NATGatewayAddAddress(context.Background(), addAddressesOptions, 42)
+	address, err := base.Client.NATGatewayAddAddress(context.Background(), 42, addAddressesOptions)
 	assert.NoError(t, err)
 
 	assert.Equal(t, "203.0.113.43", address.Address)
@@ -183,7 +183,7 @@ func TestNATGateways_ListAddresses(t *testing.T) {
 
 	base.MockGet("networking/natgateways/42/addresses", fixtureData)
 
-	addresses, err := base.Client.NATGatewayListAddresses(context.Background(), nil, 42)
+	addresses, err := base.Client.NATGatewayListAddresses(context.Background(), 42, nil)
 	assert.NoError(t, err)
 	assert.Len(t, addresses, 1)
 
@@ -237,7 +237,7 @@ func TestNATGateways_ListInterfaces(t *testing.T) {
 
 	base.MockGet("networking/natgateways/42/interfaces", fixtureData)
 
-	interfaces, err := base.Client.NATGatewayListInterfaces(context.Background(), nil, 42)
+	interfaces, err := base.Client.NATGatewayListInterfaces(context.Background(), 42, nil)
 	assert.NoError(t, err)
 
 	assert.Len(t, interfaces, 2)
@@ -273,7 +273,7 @@ func TestNATGateways_ListAddressInterfaces(t *testing.T) {
 
 	base.MockGet("networking/natgateways/42/addresses/172.24.213.144/interfaces", fixtureData)
 
-	interfaces, err := base.Client.NATGatewayListAddressInterfaces(context.Background(), nil, 42, "172.24.213.144")
+	interfaces, err := base.Client.NATGatewayListAddressInterfaces(context.Background(), 42, "172.24.213.144", nil)
 	assert.NoError(t, err)
 
 	assert.Len(t, interfaces, 1)
