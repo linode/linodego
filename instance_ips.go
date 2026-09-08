@@ -69,7 +69,28 @@ type VPCIP struct {
 	IPv6Addresses []VPCIPIPv6Address `json:"ipv6_addresses"`
 
 	// The type of this field will be made a pointer in the next major release of linodego.
-	ConfigID int `json:"config_id"`
+	ConfigID   int              `json:"config_id"`
+	NATGateway *VPCIPNATGateway `json:"natgateway"`
+}
+
+type VPCIPNATGateway struct {
+	ID                 int      `json:"id"`
+	Addresses          []string `json:"addresses"`
+	PortsetAssignments int      `json:"portset_assignments"`
+	PortsetCapacity    int      `json:"portset_capacity"`
+
+	// NOTE: This field may not be available for all customers
+	Portsets []VPCIPNATGatewayPortset `json:"portsets"`
+}
+
+type VPCIPNATGatewayPortset struct {
+	Address string                       `json:"address"`
+	Ports   []VPCIPNATGatewayPortsetPort `json:"ports"`
+}
+
+type VPCIPNATGatewayPortsetPort struct {
+	Start int `json:"start"`
+	End   int `json:"end"`
 }
 
 // VPCIPIPv6Address represents a single IPv6 address under a VPCIP.
