@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"slices"
 	"testing"
+	"time"
 
 	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
@@ -82,6 +83,39 @@ func TestUnmarshalDatabase(t *testing.T) {
 	assert.Equal(t, "mysql", db.Engine, "Expected MySQL engine")
 	assert.Equal(t, 3, db.ClusterSize, "Expected cluster size 3")
 	assert.NotNil(t, db.Created, "Expected Created timestamp to be set")
+	assert.Nil(t, db.OldestRestoreTime, "Expected OldestRestoreTime to be nil")
+	assert.Equal(t, []time.Time{
+		time.Date(2025, time.December, 29, 20, 40, 15, 0, time.UTC),
+	}, db.AvailableRestoreTimes, "Expected available restore times to be parsed")
+}
+
+func TestUnmarshalDatabaseWithOldestRestoreTime(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("database_unmarshal_oldest_restore_time")
+	assert.NoError(t, err)
+
+	var data []byte
+	switch v := fixtureData.(type) {
+	case []byte:
+		data = v
+	case string:
+		data = []byte(v)
+	case map[string]interface{}:
+		data, err = json.Marshal(v)
+		assert.NoError(t, err, "Failed to marshal fixtureData")
+	default:
+		assert.Fail(t, "Unexpected fixtureData type")
+	}
+
+	var db linodego.Database
+	err = json.Unmarshal(data, &db)
+	assert.NoError(t, err)
+	assert.NotNil(t, db.OldestRestoreTime, "Expected OldestRestoreTime to be set")
+	assert.Equal(t,
+		time.Date(2025, time.December, 29, 20, 40, 15, 0, time.UTC),
+		*db.OldestRestoreTime,
+		"Expected OldestRestoreTime to be parsed",
+	)
+	assert.Empty(t, db.AvailableRestoreTimes, "Expected AvailableRestoreTimes to be empty")
 }
 
 func TestDatabaseMaintenanceWindowUnmarshal(t *testing.T) {

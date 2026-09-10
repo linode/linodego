@@ -83,12 +83,13 @@ type Database struct {
 	// Members has dynamic keys so it is a map
 	Members map[string]DatabaseMemberType `json:"members"`
 
-	Encrypted         bool       `json:"encrypted"`
-	AllowList         []string   `json:"allow_list"`
-	InstanceURI       string     `json:"instance_uri"`
-	Created           *time.Time `json:"-"`
-	Updated           *time.Time `json:"-"`
-	OldestRestoreTime *time.Time `json:"-"`
+	Encrypted             bool        `json:"encrypted"`
+	AllowList             []string    `json:"allow_list"`
+	InstanceURI           string      `json:"instance_uri"`
+	Created               *time.Time  `json:"-"`
+	Updated               *time.Time  `json:"-"`
+	OldestRestoreTime     *time.Time  `json:"-"`
+	AvailableRestoreTimes []time.Time `json:"-"`
 
 	PrivateNetwork *DatabasePrivateNetwork `json:"private_network,omitzero"`
 }
@@ -170,9 +171,10 @@ func (d *Database) UnmarshalJSON(b []byte) error {
 	p := struct {
 		*Mask
 
-		Created           *parseabletime.ParseableTime `json:"created"`
-		Updated           *parseabletime.ParseableTime `json:"updated"`
-		OldestRestoreTime *parseabletime.ParseableTime `json:"oldest_restore_time"`
+		Created               *parseabletime.ParseableTime  `json:"created"`
+		Updated               *parseabletime.ParseableTime  `json:"updated"`
+		OldestRestoreTime     *parseabletime.ParseableTime  `json:"oldest_restore_time"`
+		AvailableRestoreTimes []parseabletime.ParseableTime `json:"available_restore_times"`
 	}{
 		Mask: (*Mask)(d),
 	}
@@ -184,6 +186,10 @@ func (d *Database) UnmarshalJSON(b []byte) error {
 	d.Created = (*time.Time)(p.Created)
 	d.Updated = (*time.Time)(p.Updated)
 	d.OldestRestoreTime = (*time.Time)(p.OldestRestoreTime)
+	d.AvailableRestoreTimes = make([]time.Time, len(p.AvailableRestoreTimes))
+	for i, t := range p.AvailableRestoreTimes {
+		d.AvailableRestoreTimes[i] = time.Time(t)
+	}
 
 	return nil
 }
