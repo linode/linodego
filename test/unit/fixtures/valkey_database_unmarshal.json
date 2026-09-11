@@ -1,0 +1,52 @@
+{
+    "id": 495395,
+    "status": "active",
+    "label": "tes-valkey2-2026-07-13T18-31-20",
+    "region": "us-ord",
+    "type": "g7-dedicated-4-2",
+    "engine": "valkey",
+    "version": "8.1.9",
+    "cluster_size": 3,
+    "platform": "rdbms-default",
+    "ssl_connection": true,
+    "encrypted": true,
+    "allow_list": [],
+    "created": "2026-07-13T18:42:04",
+    "updated": "2026-09-11T07:54:54",
+    "used_disk_size_gb": 0,
+    "total_disk_size_gb": 0,
+    "port": 27283,
+    "members": {
+        "10.0.0.32": "primary",
+        "10.0.0.33": "failover"
+    },
+    "hosts": {
+        "primary": "private-a495395-akamai-prod-5951780-default.g2a.akamaidb.net",
+        "standby": "private-replica-a495395-akamai-prod-5951780-default.g2a.akamaidb.net"
+    },
+    "updates": {
+        "day_of_week": 5,
+        "duration": 4,
+        "frequency": "weekly",
+        "hour_of_day": 16,
+        "pending": []
+    },
+    "engine_config": {
+        "frequent_snapshots": true,
+        "valkey_active_expire_effort": 1,
+        "valkey_lfu_decay_time": 1,
+        "valkey_lfu_log_factor": 10,
+        "valkey_maxmemory_policy": "noeviction",
+        "valkey_timeout": 300
+    },
+    "private_network": {
+        "public_access": true,
+        "subnet_id": 798429,
+        "vpc_id": 570237
+    },
+    "fork": null,
+    "available_restore_times": [
+        "2026-08-28T19:37:09",
+        "2026-09-11T07:54:23"
+    ]
+}
