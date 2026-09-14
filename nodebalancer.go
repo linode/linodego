@@ -125,7 +125,7 @@ const (
 	// NBTypeEnterprise supports up to 40Gbps bandwidth.
 	NBTypeEnterprise NodeBalancerPlanType = "enterprise"
 
-	// NBTypeCommon is the default plan. Clients do not have to specify this value.
+	// NBTypeCommon is the legacy default plan. Clients do not have to specify this value.
 	//
 	// Deprecated: NBTypeCommon will be replaced by NBTypeBasic.
 	NBTypeCommon NodeBalancerPlanType = "common"
