@@ -43,6 +43,7 @@ func TestRegions_pgLimits(t *testing.T) {
 
 	require.NotNil(t, region.PlacementGroupLimits)
 	require.NotZero(t, region.PlacementGroupLimits.MaximumLinodesPerPG)
+	require.NotZero(t, region.PlacementGroupLimits.MaximumLinodesPerFlexiblePG)
 }
 
 func TestRegions_blockStorageEncryption(t *testing.T) {
