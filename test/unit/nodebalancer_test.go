@@ -74,9 +74,13 @@ func TestNodeBalancer_Create(t *testing.T) {
 				assert.Equal(t, tt.createOpts.Type, nodebalancer.Type)
 			}
 			if tt.createOpts.BackendConnectivity != nil {
-				assert.Equal(t, *tt.createOpts.BackendConnectivity, *nodebalancer.BackendConnectivity)
+				if assert.NotNil(t, nodebalancer.BackendConnectivity) {
+					assert.Equal(t, *tt.createOpts.BackendConnectivity, *nodebalancer.BackendConnectivity)
+				}
 			} else {
-				assert.Equal(t, linodego.NBBackendConnectivityUndefined, *nodebalancer.BackendConnectivity)
+				if assert.NotNil(t, nodebalancer.BackendConnectivity) {
+					assert.Equal(t, linodego.NBBackendConnectivityUndefined, *nodebalancer.BackendConnectivity)
+				}
 			}
 		})
 	}
