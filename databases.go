@@ -35,6 +35,7 @@ const (
 const (
 	DatabaseEngineTypeMySQL    DatabaseEngineType = "mysql"
 	DatabaseEngineTypePostgres DatabaseEngineType = "postgresql"
+	DatabaseEngineTypeValkey   DatabaseEngineType = "valkey"
 )
 
 const (
@@ -145,6 +146,7 @@ type DatabaseType struct {
 type DatabaseTypeEngineMap struct {
 	MySQL      []DatabaseTypeEngine `json:"mysql"`
 	PostgreSQL []DatabaseTypeEngine `json:"postgresql"`
+	Valkey     []DatabaseTypeEngine `json:"valkey"`
 }
 
 // DatabaseTypeEngine Sizes and Prices

@@ -1,6 +1,7 @@
 package linodego
 
 import (
+	"context"
 	"encoding/json"
 	"time"
 
@@ -119,4 +120,121 @@ type ValkeyDatabaseCredential struct {
 // ValkeyDatabaseSSL is the SSL Certificate to access the Linode Managed Valkey Database
 type ValkeyDatabaseSSL struct {
 	CACertificate []byte `json:"ca_certificate"`
+}
+
+// ConfigParamType handles API metadata "type" values that may be either a single
+// string or an array of strings.
+type ConfigParamType []string
+
+func (t *ConfigParamType) UnmarshalJSON(b []byte) error {
+	var single string
+	if err := json.Unmarshal(b, &single); err == nil {
+		*t = ConfigParamType{single}
+		return nil
+	}
+
+	var multi []string
+	if err := json.Unmarshal(b, &multi); err != nil {
+		return err
+	}
+
+	*t = ConfigParamType(multi)
+	return nil
+}
+
+type ValkeyDatabaseConfigInfo struct {
+	BackupHour                          ValkeyDatabaseConfigInfoOption `json:"backup_hour"`
+	BackupMinute                        ValkeyDatabaseConfigInfoOption `json:"backup_minute"`
+	FrequentSnapshots                   ValkeyDatabaseConfigInfoOption `json:"frequent_snapshots"`
+	ValkeyACLChannelsDefault            ValkeyDatabaseConfigInfoOption `json:"valkey_acl_channels_default"`
+	ValkeyActiveExpireEffort            ValkeyDatabaseConfigInfoOption `json:"valkey_active_expire_effort"`
+	ValkeyActiveDefrag                  ValkeyDatabaseConfigInfoOption `json:"valkey_activedefrag"`
+	ValkeyLFUDecayTime                  ValkeyDatabaseConfigInfoOption `json:"valkey_lfu_decay_time"`
+	ValkeyLFULogFactor                  ValkeyDatabaseConfigInfoOption `json:"valkey_lfu_log_factor"`
+	ValkeyMaxmemoryPolicy               ValkeyDatabaseConfigInfoOption `json:"valkey_maxmemory_policy"`
+	ValkeyNumberOfDatabases             ValkeyDatabaseConfigInfoOption `json:"valkey_number_of_databases"`
+	ValkeyPersistence                   ValkeyDatabaseConfigInfoOption `json:"valkey_persistence"`
+	ValkeyPubsubClientOutputBufferLimit ValkeyDatabaseConfigInfoOption `json:"valkey_pubsub_client_output_buffer_limit"`
+	ValkeyTimeout                       ValkeyDatabaseConfigInfoOption `json:"valkey_timeout"`
+}
+
+type ValkeyDatabaseConfigInfoOption struct {
+	Description     string          `json:"description"`
+	Example         any             `json:"example,omitzero"`
+	Maximum         *float64        `json:"maximum,omitzero"`
+	Minimum         *float64        `json:"minimum,omitzero"`
+	Default         any             `json:"default,omitzero"`
+	Enum            []string        `json:"enum,omitzero"`
+	RequiresRestart bool            `json:"requires_restart"`
+	Type            ConfigParamType `json:"type"`
+}
+
+// GetValkeyDatabaseConfig returns the catalog of configuration options for Valkey databases.
+func (c *Client) GetValkeyDatabaseConfig(ctx context.Context) (*ValkeyDatabaseConfigInfo, error) {
+	return doGETRequest[ValkeyDatabaseConfigInfo](ctx, c, "databases/valkey/config")
+}
+
+// ListValkeyDatabases lists all Valkey Databases associated with the account
+func (c *Client) ListValkeyDatabases(ctx context.Context, opts *ListOptions) ([]ValkeyDatabase, error) {
+	return getPaginatedResults[ValkeyDatabase](ctx, c, "databases/valkey/instances", opts)
+}
+
+// GetValkeyDatabase returns a single Valkey Database matching the id
+func (c *Client) GetValkeyDatabase(ctx context.Context, databaseID int) (*ValkeyDatabase, error) {
+	e := formatAPIPath("databases/valkey/instances/%d", databaseID)
+	return doGETRequest[ValkeyDatabase](ctx, c, e)
+}
+
+// CreateValkeyDatabase creates a new Valkey Database using the createOpts as configuration, returns the new Valkey Database
+func (c *Client) CreateValkeyDatabase(ctx context.Context, opts ValkeyCreateOptions) (*ValkeyDatabase, error) {
+	return doPOSTRequest[ValkeyDatabase](ctx, c, "databases/valkey/instances", opts)
+}
+
+// DeleteValkeyDatabase deletes an existing Valkey Database with the given id
+func (c *Client) DeleteValkeyDatabase(ctx context.Context, databaseID int) error {
+	e := formatAPIPath("databases/valkey/instances/%d", databaseID)
+	return doDELETERequest(ctx, c, e)
+}
+
+// UpdateValkeyDatabase updates the given Valkey Database with the provided opts, returns the ValkeyDatabase with the new settings
+func (c *Client) UpdateValkeyDatabase(ctx context.Context, databaseID int, opts ValkeyUpdateOptions) (*ValkeyDatabase, error) {
+	e := formatAPIPath("databases/valkey/instances/%d", databaseID)
+	return doPUTRequest[ValkeyDatabase](ctx, c, e, opts)
+}
+
+// GetValkeyDatabaseSSL returns the SSL Certificate for the given Valkey Database
+func (c *Client) GetValkeyDatabaseSSL(ctx context.Context, databaseID int) (*ValkeyDatabaseSSL, error) {
+	e := formatAPIPath("databases/valkey/instances/%d/ssl", databaseID)
+	return doGETRequest[ValkeyDatabaseSSL](ctx, c, e)
+}
+
+// GetValkeyDatabaseCredentials returns the Root Credentials for the given Valkey Database
+func (c *Client) GetValkeyDatabaseCredentials(ctx context.Context, databaseID int) (*ValkeyDatabaseCredential, error) {
+	e := formatAPIPath("databases/valkey/instances/%d/credentials", databaseID)
+	return doGETRequest[ValkeyDatabaseCredential](ctx, c, e)
+}
+
+// ResetValkeyDatabaseCredentials resets the Root Credentials for the given Valkey Database
+func (c *Client) ResetValkeyDatabaseCredentials(ctx context.Context, databaseID int) error {
+	e := formatAPIPath("databases/valkey/instances/%d/credentials/reset", databaseID)
+	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
+}
+
+// PatchValkeyDatabase applies security patches and updates to the underlying operating system of the Managed Valkey Database
+func (c *Client) PatchValkeyDatabase(ctx context.Context, databaseID int) error {
+	e := formatAPIPath("databases/valkey/instances/%d/patch", databaseID)
+	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
+}
+
+// SuspendValkeyDatabase suspends a Valkey Managed Database, releasing idle resources and keeping only necessary data.
+// All service data is lost if there are no backups available.
+func (c *Client) SuspendValkeyDatabase(ctx context.Context, databaseID int) error {
+	e := formatAPIPath("databases/valkey/instances/%d/suspend", databaseID)
+	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
+}
+
+// ResumeValkeyDatabase resumes a suspended Valkey Managed Database
+func (c *Client) ResumeValkeyDatabase(ctx context.Context, databaseID int) error {
+	e := formatAPIPath("databases/valkey/instances/%d/resume", databaseID)
+	return doPOSTRequestNoRequestResponseBody(ctx, c, e)
 }

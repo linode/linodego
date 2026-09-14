@@ -1,0 +1,60 @@
+{
+  "allow_list": [
+    "203.0.113.1/32"
+  ],
+  "cluster_size": 3,
+  "created": "2022-01-01T00:01:01",
+  "encrypted": true,
+  "engine": "valkey",
+  "engine_config": {
+    "backup_hour": 3,
+    "backup_minute": 30,
+    "frequent_snapshots": true,
+    "valkey_acl_channels_default": "resetchannels",
+    "valkey_active_expire_effort": 1,
+    "valkey_activedefrag": true,
+    "valkey_lfu_decay_time": 1,
+    "valkey_lfu_log_factor": 10,
+    "valkey_maxmemory_policy": "noeviction",
+    "valkey_number_of_databases": 32,
+    "valkey_persistence": "off",
+    "valkey_pubsub_client_output_buffer_limit": 64,
+    "valkey_timeout": 300
+  },
+  "fork": null,
+  "hosts": {
+    "primary": "lin-123-456-valkey-primary.servers.linodedb.net",
+    "standby": "lin-123-456-valkey-standby.servers.linodedb.net"
+  },
+  "id": 123,
+  "label": "example-db-updated",
+  "members": {
+    "45.56.110.70": "primary",
+    "45.79.159.239": "failover"
+  },
+  "platform": "rdbms-default",
+  "port": 6379,
+  "private_network": {
+    "vpc_id": 1234,
+    "subnet_id": 5678,
+    "public_access": true
+  },
+  "region": "us-east",
+  "ssl_connection": true,
+  "status": "active",
+  "total_disk_size_gb": 15,
+  "type": "g6-dedicated-2",
+  "updated": "2022-01-01T00:01:01",
+  "updates": {
+    "day_of_week": 1,
+    "duration": 3,
+    "frequency": "weekly",
+    "hour_of_day": 0,
+    "pending": []
+  },
+  "used_disk_size_gb": 2,
+  "version": "8.1.9",
+  "available_restore_times": [
+    "2024-10-14T19:55:12"
+  ]
+}
