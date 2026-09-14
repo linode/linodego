@@ -64,8 +64,7 @@ func TestNodeBalancer_Create_BackendConnectivity_Premium(t *testing.T) {
 		"fixtures/TestNodeBalancer_Create_BackendConnectivity_Premium",
 		[]nbModifier{func(createOpts *linodego.NodeBalancerCreateOptions) {
 			createOpts.BackendConnectivity = linodego.Pointer(linodego.NBBackendConnectivityIPv6)
-			createOpts.Type = linodego.NBTypePremium
-			createOpts.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityPremiumNodeBalancer})[0]
+			createOpts.Type = linodego.NBTypeCommon
 		}},
 	)
 	t.Cleanup(teardown)

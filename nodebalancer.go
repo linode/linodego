@@ -119,15 +119,10 @@ const (
 	// NBTypePremium supports higher connection and backend limits with guaranteed 10Gbps.
 	NBTypePremium NodeBalancerPlanType = "premium"
 
-	// NBTypeBasic is the default plan. Clients do not have to specify this value.
-	NBTypeBasic NodeBalancerPlanType = "basic"
-
 	// NBTypeEnterprise supports up to 40Gbps bandwidth.
 	NBTypeEnterprise NodeBalancerPlanType = "enterprise"
 
-	// NBTypeCommon is the legacy default plan. Clients do not have to specify this value.
-	//
-	// Deprecated: NBTypeCommon will be replaced by NBTypeBasic.
+	// NBTypeCommon is the default plan representing the basic NodeBalancer. Clients do not have to specify this value.
 	NBTypeCommon NodeBalancerPlanType = "common"
 
 	// NBTypePremium40GB is the Enterprise offering with up to 40Gbps bandwidth.
