@@ -146,6 +146,7 @@ type DatabaseType struct {
 type DatabaseTypeEngineMap struct {
 	MySQL      []DatabaseTypeEngine `json:"mysql"`
 	PostgreSQL []DatabaseTypeEngine `json:"postgresql"`
+	Valkey     []DatabaseTypeEngine `json:"valkey"`
 }
 
 // DatabaseTypeEngine Sizes and Prices
