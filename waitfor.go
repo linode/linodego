@@ -146,6 +146,149 @@ func (client Client) WaitForVolumeLinodeID(ctx context.Context, volumeID int, li
 	)
 }
 
+// WaitForNFSSpaceStatus waits for an NFS Space to reach the desired state before returning.
+func (client Client) WaitForNFSSpaceStatus(
+	ctx context.Context,
+	spaceID int,
+	status NFSSpaceStatus,
+) (*NFSSpace, error) {
+	return poll(ctx, &client,
+		func(ctx context.Context) (*NFSSpace, bool, error) {
+			space, err := client.GetNFSSpace(ctx, spaceID)
+			if err != nil {
+				return space, false, err
+			}
+
+			if space.Status == status {
+				return space, true, nil
+			}
+
+			if space.Status == NFSSpaceStatusError {
+				return space, false, fmt.Errorf(
+					"NFS Space %d reached status %s while waiting for status %s",
+					spaceID,
+					space.Status,
+					status,
+				)
+			}
+
+			return space, false, nil
+		},
+		func() error {
+			return fmt.Errorf("Error waiting for NFS Space %d status %s: %w", spaceID, status, ctx.Err())
+		},
+	)
+}
+
+// WaitForNFSFilesystemStatus waits for an NFS Filesystem to reach the desired state before returning.
+func (client Client) WaitForNFSFilesystemStatus(
+	ctx context.Context,
+	spaceID int,
+	filesystemID int,
+	status NFSFilesystemStatus,
+) (*NFSFilesystem, error) {
+	return poll(ctx, &client,
+		func(ctx context.Context) (*NFSFilesystem, bool, error) {
+			filesystem, err := client.GetNFSFilesystem(ctx, spaceID, filesystemID)
+			if err != nil {
+				return filesystem, false, err
+			}
+
+			if filesystem.Status == status {
+				return filesystem, true, nil
+			}
+
+			if filesystem.Status == NFSFilesystemStatusError {
+				return filesystem, false, fmt.Errorf(
+					"NFS Filesystem %d reached status %s while waiting for status %s",
+					filesystemID,
+					filesystem.Status,
+					status,
+				)
+			}
+
+			return filesystem, false, nil
+		},
+		func() error {
+			return fmt.Errorf("Error waiting for NFS Filesystem %d status %s: %w", filesystemID, status, ctx.Err())
+		},
+	)
+}
+
+// WaitForNFSSpaceAccessPolicyStatus waits for an NFS Space access policy to reach the desired state before returning.
+func (client Client) WaitForNFSSpaceAccessPolicyStatus(
+	ctx context.Context,
+	spaceID int,
+	status NFSAccessPolicyStatus,
+) (*NFSSpaceAccessPolicy, error) {
+	return poll(ctx, &client,
+		func(ctx context.Context) (*NFSSpaceAccessPolicy, bool, error) {
+			policy, err := client.GetNFSSpaceAccessPolicy(ctx, spaceID)
+			if err != nil {
+				return policy, false, err
+			}
+
+			if policy.Status == status {
+				return policy, true, nil
+			}
+
+			if policy.Status == NFSAccessPolicyStatusError {
+				return policy, false, fmt.Errorf(
+					"NFS Space Access Policy %d reached status %s while waiting for status %s",
+					spaceID,
+					policy.Status,
+					status,
+				)
+			}
+
+			return policy, false, nil
+		},
+		func() error {
+			return fmt.Errorf("Error waiting for NFS Space Access Policy %d status %s: %w", spaceID, status, ctx.Err())
+		},
+	)
+}
+
+// WaitForNFSFilesystemAccessPolicyStatus waits for an NFS Filesystem access policy to reach the desired state before returning.
+func (client Client) WaitForNFSFilesystemAccessPolicyStatus(
+	ctx context.Context,
+	spaceID int,
+	filesystemID int,
+	status NFSAccessPolicyStatus,
+) (*NFSFilesystemAccessPolicy, error) {
+	return poll(ctx, &client,
+		func(ctx context.Context) (*NFSFilesystemAccessPolicy, bool, error) {
+			policy, err := client.GetNFSFilesystemAccessPolicy(ctx, spaceID, filesystemID)
+			if err != nil {
+				return policy, false, err
+			}
+
+			if policy.Status == status {
+				return policy, true, nil
+			}
+
+			if policy.Status == NFSAccessPolicyStatusError {
+				return policy, false, fmt.Errorf(
+					"NFS Filesystem Access Policy %d reached status %s while waiting for status %s",
+					filesystemID,
+					policy.Status,
+					status,
+				)
+			}
+
+			return policy, false, nil
+		},
+		func() error {
+			return fmt.Errorf(
+				"Error waiting for NFS Filesystem Access Policy %d status %s: %w",
+				filesystemID,
+				status,
+				ctx.Err(),
+			)
+		},
+	)
+}
+
 // WaitForLKEClusterStatus waits for the LKECluster to reach the desired state
 // before returning.
 func (client Client) WaitForLKEClusterStatus(ctx context.Context, clusterID int, status LKEClusterStatus) (*LKECluster, error) {
