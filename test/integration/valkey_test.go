@@ -116,6 +116,14 @@ func setupValkeyDatabase(t *testing.T, ctx context.Context, fixturesYAML string)
 		return nil, nil, nil, err
 	}
 
+	if err := client.WaitForDatabaseStatus(ctx, database.ID, linodego.DatabaseEngineTypeValkey, linodego.DatabaseStatusActive); err != nil {
+		deleteCtx, cancel := context.WithTimeout(context.Background(), 180*time.Second)
+		defer cancel()
+		_ = client.DeleteValkeyDatabase(deleteCtx, database.ID)
+		fixtureTeardown()
+		return nil, nil, nil, err
+	}
+
 	teardown := func() {
 		deleteCtx, cancel := context.WithTimeout(context.Background(), 180*time.Second)
 		defer cancel()
