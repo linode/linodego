@@ -187,9 +187,11 @@ func (d *Database) UnmarshalJSON(b []byte) error {
 	d.Updated = (*time.Time)(p.Updated)
 	d.OldestRestoreTime = (*time.Time)(p.OldestRestoreTime)
 
-	d.AvailableRestoreTimes = make([]time.Time, len(p.AvailableRestoreTimes))
-	for i, t := range p.AvailableRestoreTimes {
-		d.AvailableRestoreTimes[i] = time.Time(t)
+	if p.AvailableRestoreTimes != nil {
+		d.AvailableRestoreTimes = make([]time.Time, len(p.AvailableRestoreTimes))
+		for i, t := range p.AvailableRestoreTimes {
+			d.AvailableRestoreTimes[i] = time.Time(t)
+		}
 	}
 
 	return nil

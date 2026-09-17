@@ -115,7 +115,7 @@ func TestUnmarshalDatabaseWithOldestRestoreTime(t *testing.T) {
 		*db.OldestRestoreTime,
 		"Expected OldestRestoreTime to be parsed",
 	)
-	assert.Empty(t, db.AvailableRestoreTimes, "Expected AvailableRestoreTimes to be empty")
+	assert.Nil(t, db.AvailableRestoreTimes, "Expected AvailableRestoreTimes to be nil")
 }
 
 func TestDatabaseMaintenanceWindowUnmarshal(t *testing.T) {
