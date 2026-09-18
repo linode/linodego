@@ -35,6 +35,7 @@ const (
 const (
 	DatabaseEngineTypeMySQL    DatabaseEngineType = "mysql"
 	DatabaseEngineTypePostgres DatabaseEngineType = "postgresql"
+	DatabaseEngineTypeValkey   DatabaseEngineType = "valkey"
 )
 
 const (
