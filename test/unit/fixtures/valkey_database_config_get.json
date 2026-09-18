@@ -1,0 +1,15 @@
+{
+  "backup_hour": {"description": "Hour of day for backups.", "example": 3, "maximum": 23, "minimum": 0, "requires_restart": false, "type": ["integer", "null"]},
+  "backup_minute": {"description": "Minute of hour for backups.", "example": 30, "maximum": 59, "minimum": 0, "requires_restart": false, "type": ["integer", "null"]},
+  "frequent_snapshots": {"description": "Whether to take frequent snapshots.", "example": true, "requires_restart": false, "type": "boolean"},
+  "valkey_acl_channels_default": {"description": "Default ACL channels policy.", "example": "resetchannels", "enum": ["allchannels", "resetchannels"], "requires_restart": false, "type": "string"},
+  "valkey_active_expire_effort": {"description": "Active expire effort.", "example": 1, "maximum": 10, "minimum": 1, "requires_restart": false, "type": "integer"},
+  "valkey_activedefrag": {"description": "Whether to enable active defrag.", "example": true, "requires_restart": false, "type": "boolean"},
+  "valkey_lfu_decay_time": {"description": "LFU decay time.", "example": 1, "maximum": 120, "minimum": 1, "requires_restart": false, "type": "integer"},
+  "valkey_lfu_log_factor": {"description": "LFU log factor.", "example": 10, "maximum": 100, "minimum": 1, "requires_restart": false, "type": "integer"},
+  "valkey_maxmemory_policy": {"description": "Maxmemory eviction policy.", "default": "noeviction", "example": "noeviction", "requires_restart": false, "type": "string"},
+  "valkey_number_of_databases": {"description": "Number of databases.", "example": 32, "maximum": 128, "minimum": 1, "requires_restart": true, "type": "integer"},
+  "valkey_persistence": {"description": "Persistence mode.", "default": "rdb", "enum": ["off", "rdb"], "example": "off", "requires_restart": false, "type": "string"},
+  "valkey_pubsub_client_output_buffer_limit": {"description": "Pubsub output buffer limit.", "example": 64, "maximum": 262144, "minimum": 32, "requires_restart": false, "type": "integer"},
+  "valkey_timeout": {"description": "Timeout.", "default": 300, "example": 300, "maximum": 2073600, "minimum": 1, "requires_restart": false, "type": "integer"}
+}
