@@ -5,12 +5,17 @@
 - Root package files implement the public API client; `k8s/` is a separate helper module for LKE Kubernetes client behavior; `test/` is a separate module for unit and integration tests and replaces both local modules.
 - API resource files follow a flat root pattern (`instances.go`, `volumes.go`, etc.) and usually pair public types with `Client` methods that call helpers in `request_helpers.go`.
 
+## Maintaining This File
+- When making changes that invalidate or alter facts documented in this file, update `AGENTS.md` in the same change.
+- When reviewing changes, flag anything that may invalidate or alter facts documented in this file if `AGENTS.md` was not updated in the same change.
+
 ## Commands
 - Full CI-like local check: `make test` runs build, lint, unit tests, and fixture-backed integration tests; it can be slow because `test-int` uses a 5h timeout.
 - Faster focused default: run `go test ./...` at the repo root for root-module unit coverage only, then run focused tests in `test/` or `k8s/` as needed.
 - Unit tests excluding integration playback: `make test-unit`; pass focused args as `make TEST_ARGS="-run TestName" test-unit`.
 - Integration fixture playback: `make test-int`; focused playback: `make TEST_ARGS="-run TestListVolumes" test-int`.
-- K8s module verification: `cd k8s && go test ./...` or use root `make build`/`make vet`, which enter `k8s/` explicitly.
+- Workspace-wide vet/build: root `make vet`/`make build` run `go vet work`/`go build work` (Go 1.25) so all workspace modules are checked in one command. `make tidy` stays per-module.
+- K8s module tests: `cd k8s && go test ./...`.
 - Tidy all modules after dependency changes: `make tidy`.
 
 ## Lint And Formatting
