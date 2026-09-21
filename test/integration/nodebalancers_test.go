@@ -58,10 +58,10 @@ func TestNodeBalancer_Create_Type(t *testing.T) {
 	assertDateSet(t, nodebalancer.Updated)
 }
 
-func TestNodeBalancer_Create_BackendConnectivity_Premium(t *testing.T) {
+func TestNodeBalancer_Create_BackendConnectivity_Common(t *testing.T) {
 	_, nodebalancer, teardown, err := setupNodeBalancer(
 		t,
-		"fixtures/TestNodeBalancer_Create_BackendConnectivity_Premium",
+		"fixtures/TestNodeBalancer_Create_BackendConnectivity_Common",
 		[]nbModifier{func(createOpts *linodego.NodeBalancerCreateOptions) {
 			createOpts.BackendConnectivity = linodego.Pointer(linodego.NBBackendConnectivityIPv6)
 			createOpts.Type = linodego.NBTypeCommon
