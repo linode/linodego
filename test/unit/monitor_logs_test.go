@@ -570,3 +570,30 @@ func TestCreateLogStream_AuditLogs_OmitsDetails(t *testing.T) {
 	assert.NotNil(t, stream)
 	assert.Nil(t, stream.Details)
 }
+
+func TestListLogStreamQuotas(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("monitor_log_streams_quotas_list")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockGet("monitor/streams/quotas", fixtureData)
+
+	quotas, err := base.Client.ListLogStreamQuotas(context.Background(), &linodego.ListOptions{})
+	assert.NoError(t, err)
+	assert.Len(t, quotas, 2)
+
+	assert.Equal(t, "aclp_audit_logs_streams", quotas[0].QuotaID)
+	assert.Equal(t, "Number of Audit Logs Streams", quotas[0].QuotaName)
+	assert.Equal(t, "Current number of audit logs streams per account", quotas[0].Description)
+	assert.Equal(t, 5, quotas[0].QuotaLimit)
+	assert.Equal(t, "logs_streams_aclp_audit_logs_streams", quotas[0].QuotaType)
+
+	assert.Equal(t, "aclp_lke_audit_logs_streams", quotas[1].QuotaID)
+	assert.Equal(t, "Number of LKE Audit Logs Streams", quotas[1].QuotaName)
+	assert.Equal(t, "Current number of LKE audit logs streams per account", quotas[1].Description)
+	assert.Equal(t, 10, quotas[1].QuotaLimit)
+	assert.Equal(t, "logs_streams_aclp_lke_audit_logs_streams", quotas[1].QuotaType)
+}
