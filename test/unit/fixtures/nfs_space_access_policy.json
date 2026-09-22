@@ -1,0 +1,26 @@
+{
+  "space_id": 123,
+  "label": "production-policy",
+  "enabled": true,
+  "vpc_acl": [
+    {
+      "id": 789,
+      "label": "production-vpc",
+      "url": "/v4/vpcs/789",
+      "range": null,
+      "subnets": [
+        {
+          "id": 101,
+          "label": "worker-subnet",
+          "url": "/v4/vpcs/789/subnets/101",
+          "range": "10.0.0.0/24"
+        }
+      ]
+    }
+  ],
+  "mtls_ca_cert": null,
+  "mtls_mode": "optional",
+  "status": "active",
+  "created": "2026-05-01T14:00:00",
+  "updated": "2026-05-10T10:00:00"
+}
