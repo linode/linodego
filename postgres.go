@@ -123,6 +123,37 @@ type PostgresDatabaseEngineConfigPGLookout struct {
 	MaxFailoverReplicationTimeLag *int64 `json:"max_failover_replication_time_lag,omitzero"`
 }
 
+type PostgresDatabaseConnectionPoolMode string
+
+const (
+	PostgresDatabaseConnectionPoolModeTransaction PostgresDatabaseConnectionPoolMode = "transaction"
+	PostgresDatabaseConnectionPoolModeSession     PostgresDatabaseConnectionPoolMode = "session"
+	PostgresDatabaseConnectionPoolModeStatement   PostgresDatabaseConnectionPoolMode = "statement"
+)
+
+type PostgresDatabaseConnectionPool struct {
+	Database string                             `json:"database"`
+	Mode     PostgresDatabaseConnectionPoolMode `json:"mode"`
+	Label    string                             `json:"label"`
+	Size     int                                `json:"size"`
+	Username string                             `json:"username"`
+}
+
+type PostgresDatabaseConnectionPoolCreateOptions struct {
+	Database string                             `json:"database"`
+	Mode     PostgresDatabaseConnectionPoolMode `json:"mode"`
+	Label    string                             `json:"label"`
+	Size     int                                `json:"size"`
+	Username **string                           `json:"username,omitempty"`
+}
+
+type PostgresDatabaseConnectionPoolUpdateOptions struct {
+	Database *string                             `json:"database,omitzero"`
+	Mode     *PostgresDatabaseConnectionPoolMode `json:"mode,omitzero"`
+	Size     *int                                `json:"size,omitzero"`
+	Username *string                             `json:"username,omitzero"`
+}
+
 type PostgresDatabaseConfigInfo struct {
 	PG                      PostgresDatabaseConfigInfoPG                      `json:"pg"`
 	PGStatMonitorEnable     PostgresDatabaseConfigInfoPGStatMonitorEnable     `json:"pg_stat_monitor_enable"`
@@ -694,4 +725,34 @@ func (c *Client) ResumePostgresDatabase(ctx context.Context, databaseID int) err
 // GetPostgresDatabaseConfig returns a detailed list of all the configuration options for PostgreSQL Databases
 func (c *Client) GetPostgresDatabaseConfig(ctx context.Context) (*PostgresDatabaseConfigInfo, error) {
 	return doGETRequest[PostgresDatabaseConfigInfo](ctx, c, "databases/postgresql/config")
+}
+
+// ListPostgresDatabaseConnectionPools lists all of a Postgres Database's connection pools
+func (c *Client) ListPostgresDatabaseConnectionPools(ctx context.Context, databaseID int, opts *ListOptions) ([]PostgresDatabaseConnectionPool, error) {
+	e := formatAPIPath("databases/postgresql/instances/%d/connection-pools", databaseID)
+	return getPaginatedResults[PostgresDatabaseConnectionPool](ctx, c, e, opts)
+}
+
+// GetPostgresDatabaseConnectionPool returns a specified connection pool of a Postgres Database
+func (c *Client) GetPostgresDatabaseConnectionPool(ctx context.Context, databaseID int, poolName string) (*PostgresDatabaseConnectionPool, error) {
+	e := formatAPIPath("databases/postgresql/instances/%d/connection-pools/%s", databaseID, poolName)
+	return doGETRequest[PostgresDatabaseConnectionPool](ctx, c, e)
+}
+
+// CreatePostgresDatabaseConnectionPool creates a connection pool for a Postgres Database
+func (c *Client) CreatePostgresDatabaseConnectionPool(ctx context.Context, databaseID int, opts PostgresDatabaseConnectionPoolCreateOptions) (*PostgresDatabaseConnectionPool, error) {
+	e := formatAPIPath("databases/postgresql/instances/%d/connection-pools", databaseID)
+	return doPOSTRequest[PostgresDatabaseConnectionPool](ctx, c, e, opts)
+}
+
+// UpdatePostgresDatabaseConnectionPool updates the connection pool for a  Postgres Database
+func (c *Client) UpdatePostgresDatabaseConnectionPool(ctx context.Context, databaseID int, poolName string, opts PostgresDatabaseConnectionPoolUpdateOptions) (*PostgresDatabaseConnectionPool, error) {
+	e := formatAPIPath("databases/postgresql/instances/%d/connection-pools/%s", databaseID, poolName)
+	return doPUTRequest[PostgresDatabaseConnectionPool](ctx, c, e, opts)
+}
+
+// DeletePostgresDatabaseConnectionPool deletes an existing connection pool for a Postgres Database
+func (c *Client) DeletePostgresDatabaseConnectionPool(ctx context.Context, databaseID int, poolName string) error {
+	e := formatAPIPath("databases/postgresql/instances/%d/connection-pools/%s", databaseID, poolName)
+	return doDELETERequest(ctx, c, e)
 }
