@@ -740,13 +740,22 @@ func (c *Client) GetPostgresDatabaseConnectionPool(ctx context.Context, database
 }
 
 // CreatePostgresDatabaseConnectionPool creates a connection pool for a Postgres Database
-func (c *Client) CreatePostgresDatabaseConnectionPool(ctx context.Context, databaseID int, opts PostgresDatabaseConnectionPoolCreateOptions) (*PostgresDatabaseConnectionPool, error) {
+func (c *Client) CreatePostgresDatabaseConnectionPool(
+	ctx context.Context,
+	databaseID int,
+	opts PostgresDatabaseConnectionPoolCreateOptions,
+) (*PostgresDatabaseConnectionPool, error) {
 	e := formatAPIPath("databases/postgresql/instances/%d/connection-pools", databaseID)
 	return doPOSTRequest[PostgresDatabaseConnectionPool](ctx, c, e, opts)
 }
 
 // UpdatePostgresDatabaseConnectionPool updates the connection pool for a  Postgres Database
-func (c *Client) UpdatePostgresDatabaseConnectionPool(ctx context.Context, databaseID int, poolName string, opts PostgresDatabaseConnectionPoolUpdateOptions) (*PostgresDatabaseConnectionPool, error) {
+func (c *Client) UpdatePostgresDatabaseConnectionPool(
+	ctx context.Context,
+	databaseID int,
+	poolName string,
+	opts PostgresDatabaseConnectionPoolUpdateOptions,
+) (*PostgresDatabaseConnectionPool, error) {
 	e := formatAPIPath("databases/postgresql/instances/%d/connection-pools/%s", databaseID, poolName)
 	return doPUTRequest[PostgresDatabaseConnectionPool](ctx, c, e, opts)
 }
