@@ -189,7 +189,7 @@ func (client Client) WaitForNFSFilesystemStatus(
 ) (*NFSFilesystem, error) {
 	return poll(ctx, &client,
 		func(ctx context.Context) (*NFSFilesystem, bool, error) {
-			filesystem, err := client.GetNFSFilesystem(ctx, spaceID, filesystemID)
+			filesystem, err := client.GetNFSFilesystemInSpace(ctx, spaceID, filesystemID)
 			if err != nil {
 				return filesystem, false, err
 			}

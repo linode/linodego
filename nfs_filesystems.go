@@ -157,8 +157,8 @@ func (c *Client) ListNFSFilesystems(ctx context.Context, spaceID int, opts *List
 	return getPaginatedResults[NFSFilesystem](ctx, c, formatAPIPath("nfs/spaces/%d/filesystems", spaceID), opts)
 }
 
-// GetNFSFilesystem returns an NFS Filesystem in an NFS Space. This endpoint requires the v4beta API.
-func (c *Client) GetNFSFilesystem(ctx context.Context, spaceID int, filesystemID int) (*NFSFilesystem, error) {
+// GetNFSFilesystemInSpace returns an NFS Filesystem in an NFS Space. This endpoint requires the v4beta API.
+func (c *Client) GetNFSFilesystemInSpace(ctx context.Context, spaceID int, filesystemID int) (*NFSFilesystem, error) {
 	return doGETRequest[NFSFilesystem](
 		ctx,
 		c,
@@ -166,8 +166,8 @@ func (c *Client) GetNFSFilesystem(ctx context.Context, spaceID int, filesystemID
 	)
 }
 
-// GetNFSFilesystemByID returns an NFS Filesystem by its ID. This endpoint requires the v4beta API.
-func (c *Client) GetNFSFilesystemByID(ctx context.Context, filesystemID int) (*NFSFilesystem, error) {
+// GetNFSFilesystem returns an NFS Filesystem by its ID. This endpoint requires the v4beta API.
+func (c *Client) GetNFSFilesystem(ctx context.Context, filesystemID int) (*NFSFilesystem, error) {
 	return doGETRequest[NFSFilesystem](ctx, c, formatAPIPath("nfs/filesystems/%d", filesystemID))
 }
 

@@ -28,7 +28,7 @@ func TestNFSFilesystem_List(t *testing.T) {
 	}
 }
 
-func TestNFSFilesystem_Get(t *testing.T) {
+func TestNFSFilesystem_GetInSpace(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("nfs_filesystem")
 	assert.NoError(t, err)
 
@@ -38,14 +38,14 @@ func TestNFSFilesystem_Get(t *testing.T) {
 
 	base.MockGet("nfs/spaces/123/filesystems/456", fixtureData)
 
-	filesystem, err := base.Client.GetNFSFilesystem(context.Background(), 123, 456)
+	filesystem, err := base.Client.GetNFSFilesystemInSpace(context.Background(), 123, 456)
 	assert.NoError(t, err)
 	assertNFSFilesystem(t, filesystem)
 	assert.Nil(t, filesystem.SnapshotUsageBytes)
 	assert.Nil(t, filesystem.Stats.CollectedAt)
 }
 
-func TestNFSFilesystem_GetByID(t *testing.T) {
+func TestNFSFilesystem_Get(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("nfs_filesystem")
 	assert.NoError(t, err)
 
@@ -55,7 +55,7 @@ func TestNFSFilesystem_GetByID(t *testing.T) {
 
 	base.MockGet("nfs/filesystems/456", fixtureData)
 
-	filesystem, err := base.Client.GetNFSFilesystemByID(context.Background(), 456)
+	filesystem, err := base.Client.GetNFSFilesystem(context.Background(), 456)
 	assert.NoError(t, err)
 	assertNFSFilesystem(t, filesystem)
 }
