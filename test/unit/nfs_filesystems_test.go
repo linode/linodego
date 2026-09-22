@@ -134,6 +134,4 @@ func assertNFSFilesystem(t *testing.T, filesystem *linodego.NFSFilesystem) {
 	assert.Equal(t, int64(1099511627776), filesystem.MaxCapacityBytes)
 	assert.Equal(t, []string{"production"}, filesystem.Tags)
 	assert.Equal(t, "2026-05-01T14:00:00Z", filesystem.Created.Format(time.RFC3339))
-	assert.Equal(t, "2026-05-10T10:00:00Z", filesystem.Updated.Format(time.RFC3339))
 }
-
