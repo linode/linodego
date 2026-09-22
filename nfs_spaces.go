@@ -38,14 +38,14 @@ type NFSSpace struct {
 // NFSSpaceCreateOptions contains fields accepted when creating an NFS Space.
 type NFSSpaceCreateOptions struct {
 	Label       string    `json:"label"`
-	Description **string  `json:"description,omitzero"`
+	Description *string   `json:"description,omitzero"`
 	Tags        *[]string `json:"tags,omitzero"`
 }
 
 // NFSSpaceUpdateOptions contains fields accepted when updating an NFS Space.
 type NFSSpaceUpdateOptions struct {
 	Label       *string   `json:"label,omitzero"`
-	Description **string  `json:"description,omitzero"`
+	Description *string   `json:"description,omitzero"`
 	Tags        *[]string `json:"tags,omitzero"`
 }
 
@@ -76,7 +76,7 @@ func (n *NFSSpace) UnmarshalJSON(b []byte) error {
 func (n NFSSpace) GetCreateOptions() NFSSpaceCreateOptions {
 	result := NFSSpaceCreateOptions{
 		Label:       n.Label,
-		Description: Pointer(n.Description),
+		Description: n.Description,
 	}
 
 	if n.Tags != nil {
@@ -90,7 +90,7 @@ func (n NFSSpace) GetCreateOptions() NFSSpaceCreateOptions {
 func (n NFSSpace) GetUpdateOptions() NFSSpaceUpdateOptions {
 	result := NFSSpaceUpdateOptions{
 		Label:       Pointer(n.Label),
-		Description: Pointer(n.Description),
+		Description: n.Description,
 	}
 
 	if n.Tags != nil {
