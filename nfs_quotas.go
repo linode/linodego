@@ -13,11 +13,11 @@ type NFSQuotaStatus string
 
 const (
 	// NFSQuotaStatusActive indicates that an NFS Quota is active.
-	NFSQuotaStatusActive   NFSQuotaStatus = "active"
+	NFSQuotaStatusActive NFSQuotaStatus = "active"
 	// NFSQuotaStatusUpdating indicates that an NFS Quota is being updated.
 	NFSQuotaStatusUpdating NFSQuotaStatus = "updating"
 	// NFSQuotaStatusError indicates that an NFS Quota reached an error state.
-	NFSQuotaStatusError    NFSQuotaStatus = "error"
+	NFSQuotaStatusError NFSQuotaStatus = "error"
 )
 
 // NFSQuotaRuleIdentifierType is the identifier type of an NFS Quota rule.
@@ -25,36 +25,35 @@ type NFSQuotaRuleIdentifierType string
 
 const (
 	// NFSQuotaRuleIdentifierTypeUID indicates the identifier is a user ID.
-	NFSQuotaRuleIdentifierTypeUID       NFSQuotaRuleIdentifierType = "uid"
+	NFSQuotaRuleIdentifierTypeUID NFSQuotaRuleIdentifierType = "uid"
 	// NFSQuotaRuleIdentifierTypeUsername indicates the identifier is a username.
-	NFSQuotaRuleIdentifierTypeUsername  NFSQuotaRuleIdentifierType = "username"
+	NFSQuotaRuleIdentifierTypeUsername NFSQuotaRuleIdentifierType = "username"
 	// NFSQuotaRuleIdentifierTypeGID indicates the identifier is a group ID.
-	NFSQuotaRuleIdentifierTypeGID       NFSQuotaRuleIdentifierType = "gid"
+	NFSQuotaRuleIdentifierTypeGID NFSQuotaRuleIdentifierType = "gid"
 	// NFSQuotaRuleIdentifierTypeGroupname indicates the identifier is a groupname.
 	NFSQuotaRuleIdentifierTypeGroupname NFSQuotaRuleIdentifierType = "groupname"
 )
 
 // NFSQuota represents an NFS Quota.
 type NFSQuota struct {
-	ID                int            `json:"id"`
-	FilesystemID      int            `json:"filesystem_id"`
-	Path              string         `json:"path"`
-	IsRoot            bool           `json:"is_root"`
-	MaxCapacityBytes  *int64         `json:"max_capacity_bytes"`
-	UsedCapacityBytes *int64         `json:"used_capacity_bytes"`
-	QuotaExceeded     bool           `json:"quota_exceeded"`
-	MaxFileCount      *int64          `json:"max_file_count"`
-	UsedFileCount     *int64          `json:"used_file_count"`
-	Status            NFSQuotaStatus `json:"status"`
-	Created           *time.Time     `json:"-"`
-	Updated           *time.Time     `json:"-"`
-	UserGroupConfig  *NFSUserGroupConfig `json:"user_group_config"`
-
+	ID                int                 `json:"id"`
+	FilesystemID      int                 `json:"filesystem_id"`
+	Path              string              `json:"path"`
+	IsRoot            bool                `json:"is_root"`
+	MaxCapacityBytes  *int64              `json:"max_capacity_bytes"`
+	UsedCapacityBytes *int64              `json:"used_capacity_bytes"`
+	QuotaExceeded     bool                `json:"quota_exceeded"`
+	MaxFileCount      *int64              `json:"max_file_count"`
+	UsedFileCount     *int64              `json:"used_file_count"`
+	Status            NFSQuotaStatus      `json:"status"`
+	Created           *time.Time          `json:"-"`
+	Updated           *time.Time          `json:"-"`
+	CollectedAt       *time.Time          `json:"-"`
+	UserGroupConfig   *NFSUserGroupConfig `json:"user_group_config"`
 }
 
 // NFSUserGroupConfig represents user and group quota configuration for an NFS Quota.
 type NFSUserGroupConfig struct {
-	Enabled           bool                        `json:"enabled"`
 	DefaultUserLimit  *NFSCapacityLimit           `json:"default_user_limit"`
 	DefaultGroupLimit *NFSCapacityLimit           `json:"default_group_limit"`
 	UserLimits        []NFSIdentifiedLimit        `json:"user_limits"`
@@ -92,24 +91,23 @@ type NFSUserGroupLimitIdentity struct {
 
 // NFSQuotaCreateOptions contains fields accepted when creating an NFS Quota.
 type NFSQuotaCreateOptions struct {
-	Path             string                            `json:"path"`
-	MaxCapacityBytes **int64                           `json:"max_capacity_bytes,omitzero"`
-	MaxFileCount     **int64                           `json:"max_file_count,omitzero"`
-	UserGroupConfig  **NFSUserGroupConfigUpdateOptions `json:"user_group_config,omitzero"`
+	Path             string                           `json:"path"`
+	MaxCapacityBytes int64                            `json:"max_capacity_bytes"`
+	MaxFileCount     int64                            `json:"max_file_count"`
+	UserGroupConfig  *NFSUserGroupConfigUpdateOptions `json:"user_group_config,omitzero"`
 }
 
 // NFSQuotaUpdateOptions contains fields accepted when updating an NFS Quota.
 type NFSQuotaUpdateOptions struct {
-	MaxCapacityBytes **int64                           `json:"max_capacity_bytes,omitzero"`
-	MaxFileCount     **int64                           `json:"max_file_count,omitzero"`
-	UserGroupConfig  **NFSUserGroupConfigUpdateOptions `json:"user_group_config,omitzero"`
+	MaxCapacityBytes *int64                           `json:"max_capacity_bytes,omitzero"`
+	MaxFileCount     *int64                           `json:"max_file_count,omitzero"`
+	UserGroupConfig  *NFSUserGroupConfigUpdateOptions `json:"user_group_config,omitzero"`
 }
 
 // NFSUserGroupConfigUpdateOptions contains fields for updating user and group quota configuration.
 type NFSUserGroupConfigUpdateOptions struct {
-	Enabled           bool                                      `json:"enabled"`
-	DefaultUserLimit  **NFSCapacityLimitUpdateOptions           `json:"default_user_limit,omitzero"`
-	DefaultGroupLimit **NFSCapacityLimitUpdateOptions           `json:"default_group_limit,omitzero"`
+	DefaultUserLimit  *NFSCapacityLimitUpdateOptions            `json:"default_user_limit,omitzero"`
+	DefaultGroupLimit *NFSCapacityLimitUpdateOptions            `json:"default_group_limit,omitzero"`
 	UserLimits        *[]NFSIdentifiedLimitUpdateOptions        `json:"user_limits,omitzero"`
 	GroupLimits       *[]NFSIdentifiedLimitUpdateOptions        `json:"group_limits,omitzero"`
 	UserGroupLimits   *[]NFSUserGroupCombinedLimitUpdateOptions `json:"user_group_limits,omitzero"`
@@ -117,24 +115,24 @@ type NFSUserGroupConfigUpdateOptions struct {
 
 // NFSCapacityLimitUpdateOptions contains fields for updating capacity and file count limits.
 type NFSCapacityLimitUpdateOptions struct {
-	MaxCapacityBytes **int64 `json:"max_capacity_bytes,omitzero"`
-	MaxFileCount     **int64 `json:"max_file_count,omitzero"`
+	MaxCapacityBytes *int64 `json:"max_capacity_bytes,omitzero"`
+	MaxFileCount     *int64 `json:"max_file_count,omitzero"`
 }
 
 // NFSIdentifiedLimitUpdateOptions contains fields for updating limits for a specific user or group.
 type NFSIdentifiedLimitUpdateOptions struct {
 	IdentifierType   NFSQuotaRuleIdentifierType `json:"identifier_type"`
 	Identifier       string                     `json:"identifier"`
-	MaxCapacityBytes **int64                    `json:"max_capacity_bytes,omitzero"`
-	MaxFileCount     **int64                    `json:"max_file_count,omitzero"`
+	MaxCapacityBytes *int64                    `json:"max_capacity_bytes,omitzero"`
+	MaxFileCount     *int64                    `json:"max_file_count,omitzero"`
 }
 
 // NFSUserGroupCombinedLimitUpdateOptions contains fields for updating limits for a combined user and group.
 type NFSUserGroupCombinedLimitUpdateOptions struct {
 	User             NFSUserGroupLimitIdentity `json:"user"`
 	Group            NFSUserGroupLimitIdentity `json:"group"`
-	MaxCapacityBytes **int64                   `json:"max_capacity_bytes,omitzero"`
-	MaxFileCount     **int64                   `json:"max_file_count,omitzero"`
+	MaxCapacityBytes *int64                    `json:"max_capacity_bytes,omitzero"`
+	MaxFileCount     *int64                    `json:"max_file_count,omitzero"`
 }
 
 // UnmarshalJSON implements json.Unmarshaler.
@@ -144,8 +142,9 @@ func (n *NFSQuota) UnmarshalJSON(b []byte) error {
 	p := struct {
 		*Mask
 
-		Created *parseabletime.ParseableTime `json:"created"`
-		Updated *parseabletime.ParseableTime `json:"updated"`
+		Created     *parseabletime.ParseableTime `json:"created"`
+		Updated     *parseabletime.ParseableTime `json:"updated"`
+		CollectedAt *parseabletime.ParseableTime `json:"collected_at"`
 	}{
 		Mask: (*Mask)(n),
 	}
@@ -156,6 +155,7 @@ func (n *NFSQuota) UnmarshalJSON(b []byte) error {
 
 	n.Created = (*time.Time)(p.Created)
 	n.Updated = (*time.Time)(p.Updated)
+	n.CollectedAt = (*time.Time)(p.CollectedAt)
 
 	return nil
 }
