@@ -107,6 +107,14 @@ func TestLKECluster_Create(t *testing.T) {
 		SubnetID:   linodego.Pointer(123),
 		VpcID:      linodego.Pointer(456),
 		StackType:  linodego.Pointer(linodego.LKEClusterStackIPv4),
+		Networking: &linodego.LKEClusterNetworkingOptions{
+			RoutingMode:                     linodego.Pointer(linodego.LKEClusterRoutingModeVXLAN),
+			ClusterCIDRIPv4:                 linodego.Pointer("100.64.0.0/11"),
+			NodeCIDRMaskSizeIPv4:            linodego.Pointer(24),
+			ServiceClusterIPRangeIPv4:       linodego.Pointer("100.96.0.0/20"),
+			MaxPods:                         linodego.Pointer(110),
+			NodeBalancerBackendPrefixLength: linodego.Pointer(21),
+		},
 		ControlPlane: &linodego.LKEClusterControlPlaneOptions{
 			AuditLogsEnabled: linodego.Pointer(false),
 		},
@@ -122,6 +130,69 @@ func TestLKECluster_Create(t *testing.T) {
 	assert.Equal(t, 456, cluster.VpcID)
 	assert.Equal(t, linodego.LKEClusterStackIPv4, cluster.StackType)
 	assert.Equal(t, false, cluster.ControlPlane.AuditLogsEnabled)
+	assert.NotNil(t, cluster.Networking)
+	assert.Equal(t, linodego.LKEClusterRoutingModeVXLAN, cluster.Networking.RoutingMode)
+	assert.Equal(t, "100.64.0.0/11", cluster.Networking.ClusterCIDRIPv4)
+	assert.Equal(t, 24, cluster.Networking.NodeCIDRMaskSizeIPv4)
+	assert.Equal(t, 110, cluster.Networking.MaxPods)
+}
+
+func TestLKECluster_CreateNetworkingRequest(t *testing.T) {
+	client := createMockClient(t)
+
+	createOptions := linodego.LKEClusterCreateOptions{
+		Label:      "new-cluster",
+		Region:     "us-west",
+		K8sVersion: "1.35",
+		NodePools: []linodego.LKENodePoolCreateOptions{
+			{
+				Type:  "g6-standard-1",
+				Count: 1,
+			},
+		},
+		Networking: &linodego.LKEClusterNetworkingOptions{
+			RoutingMode: linodego.Pointer(linodego.LKEClusterRoutingModeVXLAN),
+		},
+	}
+
+	httpmock.RegisterRegexpResponder(
+		"POST",
+		mockRequestURL(t, "clusters"),
+		mockRequestBodyValidate(t, createOptions, linodego.LKECluster{
+			ID:         125,
+			Label:      "new-cluster",
+			Region:     "us-west",
+			Networking: &linodego.LKEClusterNetworking{RoutingMode: linodego.LKEClusterRoutingModeVXLAN},
+		}),
+	)
+
+	cluster, err := client.CreateLKECluster(context.Background(), createOptions)
+	assert.NoError(t, err)
+	assert.NotNil(t, cluster.Networking)
+	assert.Equal(t, linodego.LKEClusterRoutingModeVXLAN, cluster.Networking.RoutingMode)
+}
+
+func TestLKECluster_GetNetworking(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("lke_cluster_networking_get")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockGet("lke/clusters/123/networking", fixtureData)
+
+	networking, err := base.Client.GetLKEClusterNetworking(context.Background(), 123)
+	assert.NoError(t, err)
+	assert.Equal(t, linodego.LKEClusterRoutingModeVXLAN, networking.RoutingMode)
+	assert.Equal(t, "100.64.0.0/11", networking.ClusterCIDRIPv4)
+	assert.Equal(t, 24, networking.NodeCIDRMaskSizeIPv4)
+	assert.Equal(t, "100.96.0.0/20", networking.ServiceClusterIPRangeIPv4)
+	assert.Equal(t, 110, networking.MaxPods)
+	assert.Equal(t, 21, networking.NodeBalancerBackendPrefixLength)
+	assert.Nil(t, networking.ClusterCIDRIPv6)
+	assert.Nil(t, networking.NodeCIDRMaskSizeIPv6)
+	assert.Nil(t, networking.ServiceClusterIPRangeIPv6)
 }
 
 func TestLKECluster_Update(t *testing.T) {
