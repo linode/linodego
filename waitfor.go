@@ -289,6 +289,30 @@ func (client Client) WaitForNFSFilesystemAccessPolicyStatus(
 	)
 }
 
+// WaitForNFSQuotaStatus waits for the NFS Quota to reach the desired state
+// before returning.
+func (client Client) WaitForNFSQuotaStatus(
+	ctx context.Context,
+	spaceID int,
+	filesystemID int,
+	quotaID int,
+	status NFSQuotaStatus,
+) (*NFSQuota, error) {
+	return poll(ctx, &client,
+		func(ctx context.Context) (*NFSQuota, bool, error) {
+			quota, err := client.GetNFSQuota(ctx, spaceID, filesystemID, quotaID)
+			if err != nil {
+				return quota, false, err
+			}
+
+			return quota, quota.Status == status, nil
+		},
+		func() error {
+			return fmt.Errorf("Error waiting for NFS Quota %d status %s: %w", quotaID, status, ctx.Err())
+		},
+	)
+}
+
 // WaitForLKEClusterStatus waits for the LKECluster to reach the desired state
 // before returning.
 func (client Client) WaitForLKEClusterStatus(ctx context.Context, clusterID int, status LKEClusterStatus) (*LKECluster, error) {
