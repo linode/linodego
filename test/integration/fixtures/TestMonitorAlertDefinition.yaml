@@ -61,7 +61,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 04 Jun 2026 10:41:16 GMT
+      - Thu, 16 Jul 2026 18:18:45 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -90,7 +90,143 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-alert-definition-create","severity":2,"channel_ids":[10000],"rule_criteria":{"rules":[{"aggregate_function":"avg","dimension_filters":[{"dimension_label":"node_type","operator":"eq","value":"primary"}],"metric":"memory_usage","operator":"gt","threshold":90}]},"trigger_conditions":{"criteria_condition":"ALL","evaluation_period_seconds":300,"polling_interval_seconds":300,"trigger_occurrences":1},"description":"Test
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/account/users?page=1
+    method: GET
+  response:
+    body: '{"data": [{"username": "test_user1", "email": "test_user1@example.com",
+      "restricted": false, "ssh_keys": [], "tfa_enabled": true, "verified_phone_number":
+      "+19895154186", "password_created": "2018-01-02T03:04:05", "last_login": {"login_datetime":
+      "2018-01-02T03:04:05", "status": "successful"}, "user_type": "default"}, {"username":
+      "test_user2", "email": "test_user2@example.com", "restricted": false,
+      "ssh_keys": ["key1", "key2", "key3", "key4", "key5"], "tfa_enabled":
+      true, "verified_phone_number": "+19895154187", "password_created": "2018-01-02T03:04:05",
+      "last_login": {"login_datetime": "2018-01-02T03:04:05", "status": "successful"},
+      "user_type": "default"}], "page": 1, "pages": 1, "results": 2}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 16 Jul 2026 18:18:45 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - account:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
+        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
+        monitor:read_write nodebalancers:read_only object_storage:read_only stackscripts:read_only
+        volumes:read_only
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"channel_type":"email","details":{"email":{"usernames":["test_user1","test_user2"],"recipient_type":"user"}},"label":"linodego-alert-channel-1784225925966684533"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/alert-channels
+    method: POST
+  response:
+    body: '{"id":10315,"label":"linodego-alert-channel-1784225926985434344","channel_type":"email","details":{"email":{"usernames":["test_user1","test_user2"],"recipient_type":"user"}},"alerts":{"url":"/monitor/alert-channels/10315/alerts","type":"alerts-definitions","alert_count":0},"created":"2018-01-02T03:04:05","updated":"2018-01-02T03:04:05","created_by":"tester","updated_by":"tester"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "481"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 16 Jul 2026 18:18:46 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
+        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
+        monitor:read_write nodebalancers:read_only object_storage:read_only stackscripts:read_only
+        volumes:read_only
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"label":"linodego-alert-1784225926985434344","severity":2,"channel_ids":[10315],"rule_criteria":{"rules":[{"aggregate_function":"avg","dimension_filters":[{"dimension_label":"node_type","operator":"eq","value":"primary"}],"metric":"memory_usage","operator":"gt","threshold":90}]},"trigger_conditions":{"criteria_condition":"ALL","evaluation_period_seconds":300,"polling_interval_seconds":300,"trigger_occurrences":1},"description":"Test
       alert definition creation","group_by":["entity_id"]}'
     form: {}
     headers:
@@ -103,20 +239,20 @@ interactions:
     url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions
     method: POST
   response:
-    body: '{"id": 11230, "label": "go-test-alert-definition-create", "description":
+    body: '{"id": 11638, "label": "linodego-alert-1784225926985434344", "description":
       "Test alert definition creation", "service_type": "dbaas", "type": "user", "scope":
       "entity", "class": null, "regions": [], "status": "provisioning", "severity":
       2, "rule_criteria": {"rules": [{"label": "Memory Usage", "metric": "memory_usage",
       "unit": "percent", "aggregate_function": "avg", "operator": "gt", "threshold":
       90, "dimension_filters": [{"label": "Node Type", "dimension_label": "node_type",
-      "operator": "eq", "value": "primary"}]}]}, "alert_channels": [{"id": 10000,
-      "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000", "type":
-      "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL", "polling_interval_seconds":
-      300, "evaluation_period_seconds": 300, "trigger_occurrences": 1}, "created":
-      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by": "tester",
-      "updated_by": "tester", "group_by": ["entity_id"], "entities":
-      {"url": "/monitor/services/dbaas/alert-definitions/11230/entities", "has_more_resources":
-      false, "count": 0}}'
+      "operator": "eq", "value": "primary"}]}]}, "alert_channels": [{"id": 10315,
+      "label": "linodego-alert-channel-1784225925966684533", "url": "/monitor/alert-channels/10315",
+      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
+      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
+      1}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
+      "tester", "updated_by": "tester", "group_by":
+      ["entity_id"], "entities": {"url": "/monitor/services/dbaas/alert-definitions/11638/entities",
+      "has_more_resources": false, "count": 0}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -139,7 +275,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 04 Jun 2026 10:41:17 GMT
+      - Thu, 16 Jul 2026 18:18:48 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -176,23 +312,23 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/11230
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/11638
     method: GET
   response:
-    body: '{"id": 11230, "label": "go-test-alert-definition-create", "description":
+    body: '{"id": 11638, "label": "linodego-alert-1784225926985434344", "description":
       "Test alert definition creation", "service_type": "dbaas", "type": "user", "scope":
       "entity", "class": null, "regions": [], "status": "enabled", "severity": 2,
       "rule_criteria": {"rules": [{"label": "Memory Usage", "metric": "memory_usage",
       "unit": "percent", "aggregate_function": "avg", "operator": "gt", "threshold":
       90, "dimension_filters": [{"label": "Node Type", "dimension_label": "node_type",
-      "operator": "eq", "value": "primary"}]}]}, "alert_channels": [{"id": 10000,
-      "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000", "type":
-      "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL", "polling_interval_seconds":
-      300, "evaluation_period_seconds": 300, "trigger_occurrences": 1}, "created":
-      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by": "tester",
-      "updated_by": "tester", "group_by": ["entity_id"], "entities":
-      {"url": "/monitor/services/dbaas/alert-definitions/11230/entities", "has_more_resources":
-      false, "count": 0}}'
+      "operator": "eq", "value": "primary"}]}]}, "alert_channels": [{"id": 10315,
+      "label": "linodego-alert-channel-1784225925966684533", "url": "/monitor/alert-channels/10315",
+      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
+      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
+      1}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
+      "tester", "updated_by": "tester", "group_by":
+      ["entity_id"], "entities": {"url": "/monitor/services/dbaas/alert-definitions/11638/entities",
+      "has_more_resources": false, "count": 0}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -215,7 +351,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 04 Jun 2026 10:41:33 GMT
+      - Thu, 16 Jul 2026 18:19:04 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -244,7 +380,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-alert-definition-create-updated","severity":2,"channel_ids":[10000],"rule_criteria":{"rules":[{"aggregate_function":"avg","dimension_filters":[{"dimension_label":"node_type","operator":"eq","value":"primary"}],"metric":"memory_usage","operator":"gt","threshold":90}]},"trigger_conditions":{"criteria_condition":"ALL","evaluation_period_seconds":300,"polling_interval_seconds":300,"trigger_occurrences":1},"description":"Test
+    body: '{"label":"linodego-alert-1784225926985434344-updated","severity":2,"channel_ids":[10315],"rule_criteria":{"rules":[{"aggregate_function":"avg","dimension_filters":[{"dimension_label":"node_type","operator":"eq","value":"primary"}],"metric":"memory_usage","operator":"gt","threshold":90}]},"trigger_conditions":{"criteria_condition":"ALL","evaluation_period_seconds":300,"polling_interval_seconds":300,"trigger_occurrences":1},"description":"Test
       alert definition creation"}'
     form: {}
     headers:
@@ -254,23 +390,23 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/11230
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/11638
     method: PUT
   response:
-    body: '{"id": 11230, "label": "go-test-alert-definition-create-updated", "description":
+    body: '{"id": 11638, "label": "linodego-alert-1784225926985434344-updated", "description":
       "Test alert definition creation", "service_type": "dbaas", "type": "user", "scope":
       "entity", "class": null, "regions": [], "status": "enabled", "severity": 2,
       "rule_criteria": {"rules": [{"label": "Memory Usage", "metric": "memory_usage",
       "unit": "percent", "aggregate_function": "avg", "operator": "gt", "threshold":
       90, "dimension_filters": [{"label": "Node Type", "dimension_label": "node_type",
-      "operator": "eq", "value": "primary"}]}]}, "alert_channels": [{"id": 10000,
-      "label": "Read-Write Channel", "url": "/monitor/alert-channels/10000", "type":
-      "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL", "polling_interval_seconds":
-      300, "evaluation_period_seconds": 300, "trigger_occurrences": 1}, "created":
-      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by": "tester",
-      "updated_by": "tester", "group_by": ["entity_id"], "entities":
-      {"url": "/monitor/services/dbaas/alert-definitions/11230/entities", "has_more_resources":
-      false, "count": 0}}'
+      "operator": "eq", "value": "primary"}]}]}, "alert_channels": [{"id": 10315,
+      "label": "linodego-alert-channel-1784225925966684533", "url": "/monitor/alert-channels/10315",
+      "type": "alert-channels"}], "trigger_conditions": {"criteria_condition": "ALL",
+      "polling_interval_seconds": 300, "evaluation_period_seconds": 300, "trigger_occurrences":
+      1}, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "created_by":
+      "tester", "updated_by": "tester", "group_by":
+      ["entity_id"], "entities": {"url": "/monitor/services/dbaas/alert-definitions/11638/entities",
+      "has_more_resources": false, "count": 0}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -293,7 +429,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 04 Jun 2026 10:41:35 GMT
+      - Thu, 16 Jul 2026 18:19:06 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -330,7 +466,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/11230
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/11638
     method: DELETE
   response:
     body: '{}'
@@ -358,7 +494,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 04 Jun 2026 10:41:36 GMT
+      - Thu, 16 Jul 2026 18:19:06 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -367,6 +503,70 @@ interactions:
       - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
       - databases:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
+        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
+        monitor:read_write nodebalancers:read_only object_storage:read_only stackscripts:read_only
+        volumes:read_only
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/alert-channels/10315
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 16 Jul 2026 18:19:07 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_write
       X-Content-Type-Options:
       - nosniff
       X-Frame-Options:

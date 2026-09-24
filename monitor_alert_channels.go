@@ -77,8 +77,81 @@ func (a *AlertChannel) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+// AlertChannelCreateOptions represents options for creating an alert notification channel.
+type AlertChannelCreateOptions struct {
+	ChannelType AlertNotificationType      `json:"channel_type"`
+	Details     AlertChannelDetailsOptions `json:"details"`
+	Label       *string                    `json:"label,omitzero"`
+}
+
+// AlertChannelDetailsOptions represents the details configuration for an alert channel.
+type AlertChannelDetailsOptions struct {
+	Email *EmailChannelCreateOptions `json:"email,omitzero"`
+}
+
+// EmailChannelCreateOptions represents email-specific configuration for an alert channel.
+type EmailChannelCreateOptions struct {
+	Usernames     []string `json:"usernames"`
+	RecipientType *string  `json:"recipient_type,omitzero"`
+}
+
+// AlertChannelUpdateOptions represents options for updating an alert notification channel.
+type AlertChannelUpdateOptions struct {
+	Details *AlertChannelUpdateDetailsOptions `json:"details,omitzero"`
+	Label   *string                           `json:"label,omitzero"`
+}
+
+// AlertChannelUpdateDetailsOptions represents update details for an alert channel.
+type AlertChannelUpdateDetailsOptions struct {
+	Email *EmailChannelUpdateOptions `json:"email,omitzero"`
+}
+
+// EmailChannelUpdateOptions represents email-specific update configuration for an alert channel.
+type EmailChannelUpdateOptions struct {
+	Usernames []string `json:"usernames,omitzero"`
+}
+
+// Alert represents an alert definition assigned to a notification channel.
+type Alert struct {
+	ID          int    `json:"id"`
+	Label       string `json:"label"`
+	ServiceType string `json:"service_type"`
+	Type        string `json:"type"`
+	URL         string `json:"url"`
+}
+
 // ListAlertChannels gets a paginated list of Alert Channels.
 func (c *Client) ListAlertChannels(ctx context.Context, opts *ListOptions) ([]AlertChannel, error) {
 	endpoint := formatAPIPath("monitor/alert-channels")
 	return getPaginatedResults[AlertChannel](ctx, c, endpoint, opts)
+}
+
+// GetAlertChannel retrieves a single Alert Channel by ID.
+func (c *Client) GetAlertChannel(ctx context.Context, channelID int) (*AlertChannel, error) {
+	endpoint := formatAPIPath("monitor/alert-channels/%d", channelID)
+	return doGETRequest[AlertChannel](ctx, c, endpoint)
+}
+
+// CreateAlertChannel creates a new alert notification channel.
+func (c *Client) CreateAlertChannel(ctx context.Context, opts AlertChannelCreateOptions) (*AlertChannel, error) {
+	endpoint := formatAPIPath("monitor/alert-channels")
+	return doPOSTRequest[AlertChannel](ctx, c, endpoint, opts)
+}
+
+// UpdateAlertChannel updates an alert notification channel.
+func (c *Client) UpdateAlertChannel(ctx context.Context, channelID int, opts AlertChannelUpdateOptions) (*AlertChannel, error) {
+	endpoint := formatAPIPath("monitor/alert-channels/%d", channelID)
+	return doPUTRequest[AlertChannel](ctx, c, endpoint, opts)
+}
+
+// DeleteAlertChannel deletes an alert notification channel.
+func (c *Client) DeleteAlertChannel(ctx context.Context, channelID int) error {
+	endpoint := formatAPIPath("monitor/alert-channels/%d", channelID)
+	return doDELETERequest(ctx, c, endpoint)
+}
+
+// ListAlertsForChannel gets a paginated list of Alert Definitions for a specific alert notification channel.
+func (c *Client) ListAlertsForChannel(ctx context.Context, channelID int, opts *ListOptions) ([]Alert, error) {
+	endpoint := formatAPIPath("monitor/alert-channels/%d/alerts", channelID)
+	return getPaginatedResults[Alert](ctx, c, endpoint, opts)
 }
