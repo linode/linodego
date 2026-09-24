@@ -123,8 +123,8 @@ type NFSCapacityLimitUpdateOptions struct {
 type NFSIdentifiedLimitUpdateOptions struct {
 	IdentifierType   NFSQuotaRuleIdentifierType `json:"identifier_type"`
 	Identifier       string                     `json:"identifier"`
-	MaxCapacityBytes *int64                    `json:"max_capacity_bytes,omitzero"`
-	MaxFileCount     *int64                    `json:"max_file_count,omitzero"`
+	MaxCapacityBytes *int64                     `json:"max_capacity_bytes,omitzero"`
+	MaxFileCount     *int64                     `json:"max_file_count,omitzero"`
 }
 
 // NFSUserGroupCombinedLimitUpdateOptions contains fields for updating limits for a combined user and group.
