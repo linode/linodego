@@ -305,7 +305,20 @@ func (client Client) WaitForNFSQuotaStatus(
 				return quota, false, err
 			}
 
-			return quota, quota.Status == status, nil
+			if quota.Status == status {
+				return quota, true, nil
+			}
+
+			if quota.Status == NFSQuotaStatusError {
+				return quota, false, fmt.Errorf(
+					"NFS Quota %d reached status %s while waiting for status %s",
+					quotaID,
+					quota.Status,
+					status,
+				)
+			}
+
+			return quota, false, nil
 		},
 		func() error {
 			return fmt.Errorf("Error waiting for NFS Quota %d status %s: %w", quotaID, status, ctx.Err())
