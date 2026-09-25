@@ -92,6 +92,23 @@ func TestUnmarshalValkeyDatabase_EngineConfigEdgeCases(t *testing.T) {
 	assert.Equal(t, 600, *cfg.ValkeyTimeout)
 }
 
+func TestMarshalValkeyCreateOptionsWithForkRestoreTime(t *testing.T) {
+	restoreTime := time.Date(2026, time.January, 2, 3, 4, 5, 0, time.UTC)
+
+	payload, err := json.Marshal(linodego.ValkeyCreateOptions{
+		Label:  "forked-valkey",
+		Region: "us-ord",
+		Type:   "g7-dedicated-4-2",
+		Engine: "valkey/8.1",
+		Fork: &linodego.DatabaseFork{
+			Source:      123,
+			RestoreTime: &restoreTime,
+		},
+	})
+	assert.NoError(t, err)
+	assert.JSONEq(t, `{"label":"forked-valkey","region":"us-ord","type":"g7-dedicated-4-2","engine":"valkey/8.1","fork":{"source":123,"restore_time":"2026-01-02T03:04:05Z"}}`, string(payload))
+}
+
 func TestUnmarshalValkeyDatabaseConfigInfo(t *testing.T) {
 	payload := []byte(`{
 		"backup_hour": {
