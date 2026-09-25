@@ -14,6 +14,7 @@ type LogsDestinationType string
 const (
 	LogsDestinationTypeAkamaiObjectStorage LogsDestinationType = "akamai_object_storage"
 	LogsDestinationTypeCustomHTTPS         LogsDestinationType = "custom_https"
+	LogsDestinationTypeTrafficPeak         LogsDestinationType = "traffic_peak"
 )
 
 // LogsDestinationStatus represents the status of a logs destination.
@@ -33,7 +34,7 @@ type LogsDestinationDetails struct {
 	Host        string `json:"host,omitzero"`
 	Path        string `json:"path,omitzero"`
 
-	// custom_https fields
+	// custom_https and traffic_peak fields
 	EndpointURL              string                                   `json:"endpoint_url,omitzero"`
 	Authentication           *LogsDestinationCustomHTTPSAuthDetails   `json:"authentication,omitzero"`
 	ClientCertificateDetails *LogsDestinationClientCertificateDetails `json:"client_certificate_details,omitzero"`
@@ -79,6 +80,23 @@ type LogsDestinationCustomHTTPSHeader struct {
 	Value string `json:"value"`
 }
 
+// LogsDestinationTrafficPeakBasicAuthDetails holds TrafficPeak basic authentication credentials.
+type LogsDestinationTrafficPeakBasicAuthDetails struct {
+	Username string `json:"basic_authentication_user"`
+	Password string `json:"basic_authentication_password"`
+}
+
+// LogsDestinationTrafficPeakAuthDetails wraps TrafficPeak authentication credentials.
+type LogsDestinationTrafficPeakAuthDetails struct {
+	Details LogsDestinationTrafficPeakBasicAuthDetails `json:"details"`
+}
+
+// LogsDestinationTrafficPeakHeader represents a custom HTTP header sent to TrafficPeak.
+type LogsDestinationTrafficPeakHeader struct {
+	Name  string `json:"name"`
+	Value string `json:"value"`
+}
+
 // LogsDestinationClientCertificateDetails contains TLS client certificate information
 type LogsDestinationClientCertificateDetails struct {
 	ClientCACertificate string `json:"client_ca_certificate"`
@@ -96,6 +114,16 @@ type LogsDestinationCustomHTTPSDetailsCreateOptions struct {
 	ContentType              string                                   `json:"content_type,omitzero"`
 	CustomHeaders            []LogsDestinationCustomHTTPSHeader       `json:"custom_headers,omitzero"`
 	DataCompression          string                                   `json:"data_compression,omitzero"`
+}
+
+// LogsDestinationTrafficPeakDetailsCreateOptions represents the details block used when
+// creating a traffic_peak LogsDestination.
+type LogsDestinationTrafficPeakDetailsCreateOptions struct {
+	EndpointURL     string                                `json:"endpoint_url"`
+	Authentication  LogsDestinationTrafficPeakAuthDetails `json:"authentication"`
+	ContentType     *string                               `json:"content_type,omitzero"`
+	CustomHeaders   []LogsDestinationTrafficPeakHeader    `json:"custom_headers,omitzero"`
+	DataCompression *string                               `json:"data_compression,omitzero"`
 }
 
 // LogsDestination represents a logs destination object.
@@ -144,8 +172,8 @@ type LogsDestinationCreateOptions struct {
 	Details any                 `json:"details"`
 }
 
-// LogsDestinationDetailsUpdateOptions represents the details block used when updating
-// an akamai_object_storage LogsDestination.
+// LogsDestinationDetailsUpdateOptions represents the details block used when
+// updating an akamai_object_storage LogsDestination.
 type LogsDestinationDetailsUpdateOptions struct {
 	AccessKeyID     string  `json:"access_key_id,omitzero"`
 	AccessKeySecret string  `json:"access_key_secret,omitzero"`
@@ -165,9 +193,21 @@ type LogsDestinationCustomHTTPSDetailsUpdateOptions struct {
 	DataCompression          string                                   `json:"data_compression,omitzero"`
 }
 
+// LogsDestinationTrafficPeakDetailsUpdateOptions represents the details block used when
+// updating a traffic_peak LogsDestination.
+type LogsDestinationTrafficPeakDetailsUpdateOptions struct {
+	EndpointURL     *string                                `json:"endpoint_url,omitzero"`
+	Authentication  *LogsDestinationTrafficPeakAuthDetails `json:"authentication,omitzero"`
+	ContentType     *string                                `json:"content_type,omitzero"`
+	CustomHeaders   []LogsDestinationTrafficPeakHeader     `json:"custom_headers,omitzero"`
+	DataCompression *string                                `json:"data_compression,omitzero"`
+}
+
 // LogsDestinationUpdateOptions are the options used to update a LogsDestination.
-// Set Details to *LogsDestinationDetailsUpdateOptions for akamai_object_storage,
-// or *LogsDestinationCustomHTTPSDetailsUpdateOptions for custom_https.
+// Set Details to
+// *LogsDestinationDetailsUpdateOptions for akamai_object_storage,
+// *LogsDestinationCustomHTTPSDetailsUpdateOptions for custom_https, or
+// *LogsDestinationTrafficPeakDetailsUpdateOptions for traffic_peak.
 type LogsDestinationUpdateOptions struct {
 	Label   string `json:"label,omitzero"`
 	Details any    `json:"details,omitzero"`
