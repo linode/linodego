@@ -198,9 +198,9 @@ func TestDatabaseValkey_Update(t *testing.T) {
 	defer base.TearDown(t)
 
 	requestData := linodego.ValkeyUpdateOptions{
-		Label: linodego.Pointer("example-db-updated"),
+		Label: new("example-db-updated"),
 		EngineConfig: &linodego.ValkeyDatabaseEngineConfig{
-			ValkeyTimeout: linodego.Pointer(600),
+			ValkeyTimeout: new(600),
 		},
 		PrivateNetwork: linodego.DoublePointer(
 			linodego.DatabasePrivateNetwork{
@@ -255,7 +255,7 @@ func TestDatabaseValkey_Create(t *testing.T) {
 		Type:   "g6-dedicated-2",
 		Engine: "valkey",
 		EngineConfig: &linodego.ValkeyDatabaseEngineConfig{
-			ValkeyTimeout: linodego.Pointer(300),
+			ValkeyTimeout: new(300),
 		},
 		PrivateNetwork: &linodego.DatabasePrivateNetwork{
 			VPCID:        1234,
@@ -445,7 +445,7 @@ func TestMarshalValkeyCreateOptions(t *testing.T) {
 func TestMarshalValkeyUpdateOptions_ClearsPrivateNetwork(t *testing.T) {
 	var nilNetwork *linodego.DatabasePrivateNetwork
 	opts := linodego.ValkeyUpdateOptions{
-		Label:          linodego.Pointer("renamed-db"),
+		Label:          new("renamed-db"),
 		PrivateNetwork: &nilNetwork,
 	}
 
@@ -470,7 +470,7 @@ func TestMarshalValkeyUpdateOptions_ClearsPrivateNetwork(t *testing.T) {
 }
 
 func TestMarshalValkeyCreateOptions_ExplicitZeroClusterSize(t *testing.T) {
-	opts := linodego.ValkeyCreateOptions{ClusterSize: linodego.Pointer(0)}
+	opts := linodego.ValkeyCreateOptions{ClusterSize: new(0)}
 
 	data, err := json.Marshal(opts)
 	assert.NoError(t, err)
@@ -482,11 +482,11 @@ func TestMarshalValkeyCreateOptions_ExplicitZeroClusterSize(t *testing.T) {
 
 func TestMarshalValkeyUpdateOptions_ExplicitZeroValues(t *testing.T) {
 	opts := linodego.ValkeyUpdateOptions{
-		Label:       linodego.Pointer(""),
-		Region:      linodego.Pointer(""),
-		Type:        linodego.Pointer(""),
-		ClusterSize: linodego.Pointer(0),
-		Version:     linodego.Pointer(""),
+		Label:       new(""),
+		Region:      new(""),
+		Type:        new(""),
+		ClusterSize: new(0),
+		Version:     new(""),
 	}
 
 	data, err := json.Marshal(opts)
