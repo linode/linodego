@@ -220,20 +220,19 @@ func TestNATGateway_GetLinodeInterfaces(t *testing.T) {
 	t.Cleanup(instanceTeardown)
 	require.NoErrorf(t, err, "Error creating instance with interfaces: %v", err)
 
-	// TODO: API response does not include 'data' key ('interfaces' instead)
-	// instanceInterfaces, err := client.ListInterfaces(context.Background(), instance.ID, nil)
-	// require.NoErrorf(t, err, "Error fetching Linode interfaces: %v", err)
-	// require.Len(t, instanceInterfaces, 1)
+	instanceInterfaces, err := client.ListInterfaces(context.Background(), instance.ID, nil)
+	require.NoErrorf(t, err, "Error fetching Linode interfaces: %v", err)
+	require.Len(t, instanceInterfaces, 1)
 
 	gatewayInterfaces, err := client.NATGatewayListInterfaces(context.Background(), gatewayCreated.ID, nil)
 	require.NoErrorf(t, err, "Error listing NAT Gateway interfaces: %v", err)
 	require.Len(t, gatewayInterfaces, 1)
-	// assert.Equal(t, gatewayInterfaces[0].ID, instanceInterfaces[0].ID)
+	assert.Equal(t, gatewayInterfaces[0].ID, instanceInterfaces[0].ID)
 	verifyNATGatewayInterface(t, gatewayInterfaces[0], *instance, *reservedIP)
 
 	gatewayInterfaces, err = client.NATGatewayListAddressInterfaces(context.Background(), gatewayCreated.ID, reservedIP.Address, nil)
 	require.NoErrorf(t, err, "Error listing NAT Gateway interfaces: %v", err)
-	// assert.Equal(t, gatewayInterfaces[0].ID, instanceInterfaces[0].ID)
+	assert.Equal(t, gatewayInterfaces[0].ID, instanceInterfaces[0].ID)
 	verifyNATGatewayInterface(t, gatewayInterfaces[0], *instance, *reservedIP)
 
 	address, err := client.NATGatewayGetAddress(context.Background(), gatewayCreated.ID, reservedIP.Address)
