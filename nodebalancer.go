@@ -22,6 +22,10 @@ type NodeBalancer struct {
 	IPv4 *string `json:"ipv4"`
 	// This NodeBalancer's public IPv6 address.
 	IPv6 *string `json:"ipv6"`
+	// This NodeBalancer's backend IPv6 prefix (/96 CIDR).
+	// This is the source range used when the NodeBalancer connects to backends.
+	// The value is null if no backend IPv6 prefix is assigned.
+	BackendIPv6Prefix *string `json:"backend_ipv6_prefix"`
 	// Throttle connections per second (0-20). Set to 0 (zero) to disable throttling.
 	ClientConnThrottle int `json:"client_conn_throttle"`
 
