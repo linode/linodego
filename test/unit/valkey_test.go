@@ -392,13 +392,15 @@ func TestDatabaseValkeyConfig_Get(t *testing.T) {
 
 	assert.Equal(t, "Hour of day for backups.", config.BackupHour.Description)
 	assert.Equal(t, float64(3), config.BackupHour.Example)
-	assert.Equal(t, 23.0, *config.BackupHour.Maximum)
-	assert.Equal(t, 0.0, *config.BackupHour.Minimum)
+	assert.Equal(t, 23, *config.BackupHour.Maximum)
+	assert.Equal(t, 0, *config.BackupHour.Minimum)
 	assert.False(t, config.BackupHour.RequiresRestart)
 	assert.Equal(t, linodego.ConfigParamType{"integer", "null"}, config.BackupHour.Type)
 
 	assert.Equal(t, "Default ACL channels policy.", config.ValkeyACLChannelsDefault.Description)
 	assert.Equal(t, "resetchannels", config.ValkeyACLChannelsDefault.Example)
+	assert.Nil(t, config.ValkeyACLChannelsDefault.Maximum)
+	assert.Nil(t, config.ValkeyACLChannelsDefault.Minimum)
 	assert.Equal(t, []string{"allchannels", "resetchannels"}, config.ValkeyACLChannelsDefault.Enum)
 	assert.False(t, config.ValkeyACLChannelsDefault.RequiresRestart)
 	assert.Equal(t, linodego.ConfigParamType{"string"}, config.ValkeyACLChannelsDefault.Type)

@@ -163,11 +163,11 @@ type ValkeyDatabaseConfigInfo struct {
 
 type ValkeyDatabaseConfigInfoOption struct {
 	Description     string          `json:"description"`
-	Example         any             `json:"example,omitzero"`
-	Maximum         *float64        `json:"maximum,omitzero"`
-	Minimum         *float64        `json:"minimum,omitzero"`
-	Default         any             `json:"default,omitzero"`
-	Enum            []string        `json:"enum,omitzero"`
+	Example         any             `json:"example"`
+	Maximum         *int            `json:"maximum"`
+	Minimum         *int            `json:"minimum"`
+	Default         any             `json:"default"`
+	Enum            []string        `json:"enum"`
 	RequiresRestart bool            `json:"requires_restart"`
 	Type            ConfigParamType `json:"type"`
 }
