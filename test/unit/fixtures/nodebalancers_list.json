@@ -6,6 +6,7 @@
             "region": "us-east",
             "type": "common",
             "backend_connectivity": "undefined",
+            "backend_ipv6_prefix": null,
             "tags": ["tag1", "tag2"],
             "locks": ["cannot_delete"],
             "lke_cluster": null
@@ -16,6 +17,7 @@
             "region": "us-west",
             "type": "premium",
             "backend_connectivity": "ipv6",
+            "backend_ipv6_prefix": "2600:3c22:1:20:0:3039::/96",
             "tags": ["tag3"],
             "locks": [],
             "lke_cluster": {
