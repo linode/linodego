@@ -436,11 +436,11 @@ func TestVPC_Subnet_WithNATGateway(t *testing.T) {
 		}
 	})
 
-	vpc, err = client.GetVPC(context.Background(), vpc.ID)
-	require.NoErrorf(t, err, "Error retrieving VPC %v", err)
-	assert.Equal(t, gatewayCreated.ID, vpc.Subnets[0].NATGateway.ID)
+	vpcSubnet, err := client.GetVPCSubnet(context.Background(), vpc.ID, vpc.Subnets[0].ID)
+	require.NoErrorf(t, err, "Error retrieving VPC Subnet %v", err)
+	assert.Equal(t, gatewayCreated.ID, vpcSubnet.NATGateway.ID)
 
 	gateway, err := client.GetNATGateway(context.Background(), gatewayCreated.ID)
 	require.NoErrorf(t, err, "Error retrieving NAT Gateway: %v", err)
-	assert.Equal(t, vpc.Subnets[0].ID, gateway.VPCSubnet.ID)
+	assert.Equal(t, vpcSubnet.ID, gateway.VPCSubnet.ID)
 }
