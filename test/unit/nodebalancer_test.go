@@ -93,16 +93,18 @@ func String(s string) *string {
 
 func TestNodeBalancer_Get(t *testing.T) {
 	tests := []struct {
-		name               string
-		nodeBalancerID     int
-		fixture            string
-		expectedLKECluster *linodego.NodeBalancerLKECluster
+		name                    string
+		nodeBalancerID          int
+		fixture                 string
+		expectedLKECluster      *linodego.NodeBalancerLKECluster
+		expectedBackendIPv6Pref *string
 	}{
 		{
-			name:               "basic get",
-			nodeBalancerID:     123,
-			fixture:            "nodebalancer_get",
-			expectedLKECluster: nil,
+			name:                    "basic get",
+			nodeBalancerID:          123,
+			fixture:                 "nodebalancer_get",
+			expectedLKECluster:      nil,
+			expectedBackendIPv6Pref: String("2600:3c22:1:20:0:3039::/96"),
 		},
 		{
 			name:           "get with lke_cluster",
@@ -114,6 +116,7 @@ func TestNodeBalancer_Get(t *testing.T) {
 				Label: "test-cluster",
 				URL:   "/v4/lke/clusters/1234",
 			},
+			expectedBackendIPv6Pref: nil,
 		},
 	}
 
@@ -139,6 +142,7 @@ func TestNodeBalancer_Get(t *testing.T) {
 			assert.Equal(t, tt.expectedLKECluster, nodebalancer.LKECluster, "Expected NodeBalancer LKECluster to match")
 			assert.Equal(t, linodego.NBTypeCommon, nodebalancer.Type)
 			assert.Equal(t, linodego.NBBackendConnectivityUndefined, *nodebalancer.BackendConnectivity)
+			assert.Equal(t, tt.expectedBackendIPv6Pref, nodebalancer.BackendIPv6Prefix)
 		})
 	}
 }
@@ -168,6 +172,7 @@ func TestNodeBalancer_List(t *testing.T) {
 	assert.Nil(t, nodebalancers[0].LKECluster, "Expected first NodeBalancer LKECluster to match")
 	assert.Equal(t, linodego.NBTypeCommon, nodebalancers[0].Type)
 	assert.Equal(t, linodego.NBBackendConnectivityUndefined, *nodebalancers[0].BackendConnectivity)
+	assert.Nil(t, nodebalancers[0].BackendIPv6Prefix)
 
 	// Verify details of the second NodeBalancer
 	assert.Equal(t, 456, nodebalancers[1].ID, "Expected second NodeBalancer ID to match")
@@ -177,6 +182,7 @@ func TestNodeBalancer_List(t *testing.T) {
 	assert.Empty(t, nodebalancers[1].Locks, "Expected second NodeBalancer to have no locks")
 	assert.Equal(t, linodego.NBTypePremium, nodebalancers[1].Type)
 	assert.Equal(t, linodego.NBBackendConnectivityIPv6, *nodebalancers[1].BackendConnectivity)
+	assert.Equal(t, "2600:3c22:1:20:0:3039::/96", *nodebalancers[1].BackendIPv6Prefix)
 	assert.Equal(t, &linodego.NodeBalancerLKECluster{
 		ID:    1234,
 		Type:  "lkecluster",

@@ -65,6 +65,7 @@ func TestNodeBalancer_Create_BackendConnectivity_Common(t *testing.T) {
 		[]nbModifier{func(createOpts *linodego.NodeBalancerCreateOptions) {
 			createOpts.BackendConnectivity = linodego.Pointer(linodego.NBBackendConnectivityIPv6)
 			createOpts.Type = linodego.NBTypeCommon
+			createOpts.BackendConnectivity = new(linodego.NBBackendConnectivityIPv6)
 		}},
 	)
 	t.Cleanup(teardown)
@@ -72,6 +73,7 @@ func TestNodeBalancer_Create_BackendConnectivity_Common(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, nodebalancer.BackendConnectivity)
 	require.Equal(t, linodego.NBBackendConnectivityIPv6, *nodebalancer.BackendConnectivity)
+	require.NotNil(t, nodebalancer.BackendIPv6Prefix)
 }
 
 func TestNodeBalancer_Create_with_ReservedIP(t *testing.T) {
