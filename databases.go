@@ -95,8 +95,16 @@ type Database struct {
 
 // DatabaseHost for Primary/Secondary of Database
 type DatabaseHost struct {
-	Primary string `json:"primary"`
-	Standby string `json:"standby"`
+	Primary   string                 `json:"primary"`
+	Standby   string                 `json:"standby"`
+	Endpoints []DatabaseHostEndpoint `json:"endpoints"`
+}
+
+type DatabaseHostEndpoint struct {
+	Role         string `json:"role"`
+	Address      string `json:"address"`
+	Port         int    `json:"port"`
+	PublicAccess bool   `json:"public_access"`
 }
 
 type DatabasePrivateNetwork struct {
