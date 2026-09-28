@@ -63,7 +63,6 @@ func TestNodeBalancer_Create_BackendConnectivity_Common(t *testing.T) {
 		t,
 		"fixtures/TestNodeBalancer_Create_BackendConnectivity_Common",
 		[]nbModifier{func(createOpts *linodego.NodeBalancerCreateOptions) {
-			createOpts.BackendConnectivity = linodego.Pointer(linodego.NBBackendConnectivityIPv6)
 			createOpts.Type = linodego.NBTypeCommon
 			createOpts.BackendConnectivity = new(linodego.NBBackendConnectivityIPv6)
 		}},
