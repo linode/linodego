@@ -35,7 +35,7 @@ func TestDatabase_Valkey_Suite(t *testing.T) {
 
 	updatedLabel := database.Label + "-updated"
 	db, err = client.UpdateValkeyDatabase(context.Background(), database.ID, linodego.ValkeyUpdateOptions{
-		Label: updatedLabel,
+		Label: linodego.Pointer(updatedLabel),
 	})
 	if err != nil {
 		t.Fatalf("error updating Valkey database: %v", err)
@@ -100,7 +100,7 @@ func setupValkeyDatabase(t *testing.T, ctx context.Context, fixturesYAML string)
 		Region:      regions[0],
 		Type:        "g7-dedicated-4-2",
 		Engine:      "valkey/8.1",
-		ClusterSize: 1,
+		ClusterSize: linodego.Pointer(1),
 		AllowList:   []string{"203.0.113.1"},
 	})
 	if err != nil {

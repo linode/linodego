@@ -135,7 +135,6 @@ func TestUnmarshalValkeyDatabaseConfigInfo(t *testing.T) {
 	assert.Equal(t, linodego.ConfigParamType{"integer", "null"}, config.BackupHour.Type)
 	assert.Equal(t, "string", config.ValkeyACLChannelsDefault.Type[0])
 	assert.Equal(t, []string{"allchannels", "resetchannels"}, config.ValkeyACLChannelsDefault.Enum)
-	assert.Equal(t, linodego.DatabaseEngineTypeValkey, linodego.DatabaseEngineTypeValkey)
 }
 
 func TestListDatabaseValkey_List(t *testing.T) {
@@ -199,7 +198,7 @@ func TestDatabaseValkey_Update(t *testing.T) {
 	defer base.TearDown(t)
 
 	requestData := linodego.ValkeyUpdateOptions{
-		Label: "example-db-updated",
+		Label: linodego.Pointer("example-db-updated"),
 		EngineConfig: &linodego.ValkeyDatabaseEngineConfig{
 			ValkeyTimeout: linodego.Pointer(600),
 		},
@@ -446,7 +445,7 @@ func TestMarshalValkeyCreateOptions(t *testing.T) {
 func TestMarshalValkeyUpdateOptions_ClearsPrivateNetwork(t *testing.T) {
 	var nilNetwork *linodego.DatabasePrivateNetwork
 	opts := linodego.ValkeyUpdateOptions{
-		Label:          "renamed-db",
+		Label:          linodego.Pointer("renamed-db"),
 		PrivateNetwork: &nilNetwork,
 	}
 
@@ -468,4 +467,36 @@ func TestMarshalValkeyUpdateOptions_ClearsPrivateNetwork(t *testing.T) {
 	assert.NotContains(t, m, "updates")
 	assert.NotContains(t, m, "engine_config")
 	assert.NotContains(t, m, "allow_list")
+}
+
+func TestMarshalValkeyCreateOptions_ExplicitZeroClusterSize(t *testing.T) {
+	opts := linodego.ValkeyCreateOptions{ClusterSize: linodego.Pointer(0)}
+
+	data, err := json.Marshal(opts)
+	assert.NoError(t, err)
+
+	var m map[string]interface{}
+	assert.NoError(t, json.Unmarshal(data, &m))
+	assert.Equal(t, float64(0), m["cluster_size"])
+}
+
+func TestMarshalValkeyUpdateOptions_ExplicitZeroValues(t *testing.T) {
+	opts := linodego.ValkeyUpdateOptions{
+		Label:       linodego.Pointer(""),
+		Region:      linodego.Pointer(""),
+		Type:        linodego.Pointer(""),
+		ClusterSize: linodego.Pointer(0),
+		Version:     linodego.Pointer(""),
+	}
+
+	data, err := json.Marshal(opts)
+	assert.NoError(t, err)
+
+	var m map[string]interface{}
+	assert.NoError(t, json.Unmarshal(data, &m))
+	assert.Equal(t, "", m["label"])
+	assert.Equal(t, "", m["region"])
+	assert.Equal(t, "", m["type"])
+	assert.Equal(t, float64(0), m["cluster_size"])
+	assert.Equal(t, "", m["version"])
 }
