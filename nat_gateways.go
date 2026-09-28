@@ -70,7 +70,7 @@ type NATGatewayCreateOptions struct {
 }
 
 type NATGatewayUpdateOptions struct {
-	Label *string `json:"label,omitempty"`
+	Label *string `json:"label,omitzero"`
 }
 
 type NATGatewayAddAddressOptions struct {
