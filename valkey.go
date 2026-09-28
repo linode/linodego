@@ -93,7 +93,7 @@ type ValkeyCreateOptions struct {
 	Type        string   `json:"type"`
 	Engine      string   `json:"engine"`
 	AllowList   []string `json:"allow_list,omitzero"`
-	ClusterSize int      `json:"cluster_size,omitzero"`
+	ClusterSize *int     `json:"cluster_size,omitzero"`
 
 	Fork           *DatabaseFork               `json:"fork,omitzero"`
 	EngineConfig   *ValkeyDatabaseEngineConfig `json:"engine_config,omitzero"`
@@ -102,13 +102,13 @@ type ValkeyCreateOptions struct {
 
 // ValkeyUpdateOptions fields are used when altering the existing Valkey Database
 type ValkeyUpdateOptions struct {
-	Label          string                      `json:"label,omitzero"`
-	Region         string                      `json:"region,omitzero"`
+	Label          *string                     `json:"label,omitzero"`
+	Region         *string                     `json:"region,omitzero"`
 	AllowList      []string                    `json:"allow_list,omitzero"`
 	Updates        *DatabaseMaintenanceWindow  `json:"updates,omitzero"`
-	Type           string                      `json:"type,omitzero"`
-	ClusterSize    int                         `json:"cluster_size,omitzero"`
-	Version        string                      `json:"version,omitzero"`
+	Type           *string                     `json:"type,omitzero"`
+	ClusterSize    *int                        `json:"cluster_size,omitzero"`
+	Version        *string                     `json:"version,omitzero"`
 	EngineConfig   *ValkeyDatabaseEngineConfig `json:"engine_config,omitzero"`
 	PrivateNetwork **DatabasePrivateNetwork    `json:"private_network,omitzero"`
 }
