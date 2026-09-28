@@ -177,8 +177,8 @@ func TestNATGateway_GetLinodeInterfaces(t *testing.T) {
 	vpc, vpcSubnet, vpcTeardown, err := createVPCWithSubnet(
 		t,
 		client,
-		func(c *linodego.Client, vo *linodego.VPCCreateOptions) {
-			vo.Region = gatewayCreated.Region
+		func(c *linodego.Client, opts *linodego.VPCCreateOptions) {
+			opts.Region = gatewayCreated.Region
 		},
 	)
 	t.Cleanup(vpcTeardown)
@@ -266,6 +266,3 @@ func TestNATGateway_GetSettings(t *testing.T) {
 	assert.Greater(t, settings.MaximumAutoscalingAddressesPerNATGateway, 0)
 	assert.Greater(t, settings.MaximumReservedAddressesPerNATGateway, 0)
 }
-
-// TODO: Move to VPC tests
-func TestNATGateway_VPCSubnetWithNATGateway(t *testing.T) {}
