@@ -56,15 +56,15 @@ func TestNFSQuota_Create(t *testing.T) {
 		MaxCapacityBytes: 107374182400,
 		MaxFileCount:     1000000,
 		UserGroupConfig: &linodego.NFSUserGroupConfigOptions{
-			DefaultUserLimit: &linodego.NFSCapacityLimitUpdateOptions{
+			DefaultUserLimit: &linodego.NFSCapacityLimitOptions{
 				MaxCapacityBytes: linodego.Pointer[int64](107374182400),
 				MaxFileCount:     linodego.Pointer[int64](1000000),
 			},
-			DefaultGroupLimit: &linodego.NFSCapacityLimitUpdateOptions{
+			DefaultGroupLimit: &linodego.NFSCapacityLimitOptions{
 				MaxCapacityBytes: linodego.Pointer[int64](107374182400),
 				MaxFileCount:     linodego.Pointer[int64](1000000),
 			},
-			UserLimits: &[]linodego.NFSIdentifiedLimitUpdateOptions{
+			UserLimits: &[]linodego.NFSIdentifiedLimitOptions{
 				{
 					IdentifierType:   linodego.NFSQuotaRuleIdentifierTypeUID,
 					Identifier:       "1001",
@@ -72,7 +72,7 @@ func TestNFSQuota_Create(t *testing.T) {
 					MaxFileCount:     linodego.Pointer[int64](1000000),
 				},
 			},
-			GroupLimits: &[]linodego.NFSIdentifiedLimitUpdateOptions{
+			GroupLimits: &[]linodego.NFSIdentifiedLimitOptions{
 				{
 					IdentifierType:   linodego.NFSQuotaRuleIdentifierTypeUID,
 					Identifier:       "1001",
@@ -103,15 +103,15 @@ func TestNFSQuota_Update(t *testing.T) {
 		MaxCapacityBytes: linodego.Pointer[int64](107374182400),
 		MaxFileCount:     linodego.Pointer[int64](1000000),
 		UserGroupConfig: &linodego.NFSUserGroupConfigOptions{
-			DefaultUserLimit: &linodego.NFSCapacityLimitUpdateOptions{
+			DefaultUserLimit: &linodego.NFSCapacityLimitOptions{
 				MaxCapacityBytes: linodego.Pointer[int64](107374182400),
 				MaxFileCount:     linodego.Pointer[int64](1000000),
 			},
-			DefaultGroupLimit: &linodego.NFSCapacityLimitUpdateOptions{
+			DefaultGroupLimit: &linodego.NFSCapacityLimitOptions{
 				MaxCapacityBytes: linodego.Pointer[int64](107374182400),
 				MaxFileCount:     linodego.Pointer[int64](1000000),
 			},
-			UserLimits: &[]linodego.NFSIdentifiedLimitUpdateOptions{
+			UserLimits: &[]linodego.NFSIdentifiedLimitOptions{
 				{
 					IdentifierType:   linodego.NFSQuotaRuleIdentifierTypeUID,
 					Identifier:       "1001",
@@ -119,7 +119,7 @@ func TestNFSQuota_Update(t *testing.T) {
 					MaxFileCount:     linodego.Pointer[int64](1000000),
 				},
 			},
-			GroupLimits: &[]linodego.NFSIdentifiedLimitUpdateOptions{
+			GroupLimits: &[]linodego.NFSIdentifiedLimitOptions{
 				{
 					IdentifierType:   linodego.NFSQuotaRuleIdentifierTypeUID,
 					Identifier:       "1001",

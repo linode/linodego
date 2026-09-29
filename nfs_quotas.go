@@ -106,29 +106,29 @@ type NFSQuotaUpdateOptions struct {
 
 // NFSUserGroupConfigOptions contains fields for updating user and group quota configuration.
 type NFSUserGroupConfigOptions struct {
-	DefaultUserLimit  *NFSCapacityLimitUpdateOptions            `json:"default_user_limit,omitzero"`
-	DefaultGroupLimit *NFSCapacityLimitUpdateOptions            `json:"default_group_limit,omitzero"`
-	UserLimits        *[]NFSIdentifiedLimitUpdateOptions        `json:"user_limits,omitzero"`
-	GroupLimits       *[]NFSIdentifiedLimitUpdateOptions        `json:"group_limits,omitzero"`
-	UserGroupLimits   *[]NFSUserGroupCombinedLimitUpdateOptions `json:"user_group_limits,omitzero"`
+	DefaultUserLimit  *NFSCapacityLimitOptions            `json:"default_user_limit,omitzero"`
+	DefaultGroupLimit *NFSCapacityLimitOptions            `json:"default_group_limit,omitzero"`
+	UserLimits        *[]NFSIdentifiedLimitOptions        `json:"user_limits,omitzero"`
+	GroupLimits       *[]NFSIdentifiedLimitOptions        `json:"group_limits,omitzero"`
+	UserGroupLimits   *[]NFSUserGroupCombinedLimitOptions `json:"user_group_limits,omitzero"`
 }
 
-// NFSCapacityLimitUpdateOptions contains fields for updating capacity and file count limits.
-type NFSCapacityLimitUpdateOptions struct {
+// NFSCapacityLimitOptions contains fields for updating capacity and file count limits.
+type NFSCapacityLimitOptions struct {
 	MaxCapacityBytes *int64 `json:"max_capacity_bytes,omitzero"`
 	MaxFileCount     *int64 `json:"max_file_count,omitzero"`
 }
 
-// NFSIdentifiedLimitUpdateOptions contains fields for updating limits for a specific user or group.
-type NFSIdentifiedLimitUpdateOptions struct {
+// NFSIdentifiedLimitOptions contains fields for updating limits for a specific user or group.
+type NFSIdentifiedLimitOptions struct {
 	IdentifierType   NFSQuotaRuleIdentifierType `json:"identifier_type"`
 	Identifier       string                     `json:"identifier"`
 	MaxCapacityBytes *int64                     `json:"max_capacity_bytes,omitzero"`
 	MaxFileCount     *int64                     `json:"max_file_count,omitzero"`
 }
 
-// NFSUserGroupCombinedLimitUpdateOptions contains fields for updating limits for a combined user and group.
-type NFSUserGroupCombinedLimitUpdateOptions struct {
+// NFSUserGroupCombinedLimitOptions contains fields for updating limits for a combined user and group.
+type NFSUserGroupCombinedLimitOptions struct {
 	User             NFSUserGroupLimitIdentity `json:"user"`
 	Group            NFSUserGroupLimitIdentity `json:"group"`
 	MaxCapacityBytes *int64                    `json:"max_capacity_bytes,omitzero"`
