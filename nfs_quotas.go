@@ -94,18 +94,18 @@ type NFSQuotaCreateOptions struct {
 	Path             string                           `json:"path"`
 	MaxCapacityBytes int64                            `json:"max_capacity_bytes"`
 	MaxFileCount     int64                            `json:"max_file_count"`
-	UserGroupConfig  *NFSUserGroupConfigUpdateOptions `json:"user_group_config,omitzero"`
+	UserGroupConfig  *NFSUserGroupConfigOptions `json:"user_group_config,omitzero"`
 }
 
 // NFSQuotaUpdateOptions contains fields accepted when updating an NFS Quota.
 type NFSQuotaUpdateOptions struct {
 	MaxCapacityBytes *int64                           `json:"max_capacity_bytes,omitzero"`
 	MaxFileCount     *int64                           `json:"max_file_count,omitzero"`
-	UserGroupConfig  *NFSUserGroupConfigUpdateOptions `json:"user_group_config,omitzero"`
+	UserGroupConfig  *NFSUserGroupConfigOptions `json:"user_group_config,omitzero"`
 }
 
-// NFSUserGroupConfigUpdateOptions contains fields for updating user and group quota configuration.
-type NFSUserGroupConfigUpdateOptions struct {
+// NFSUserGroupConfigOptions contains fields for updating user and group quota configuration.
+type NFSUserGroupConfigOptions struct {
 	DefaultUserLimit  *NFSCapacityLimitUpdateOptions            `json:"default_user_limit,omitzero"`
 	DefaultGroupLimit *NFSCapacityLimitUpdateOptions            `json:"default_group_limit,omitzero"`
 	UserLimits        *[]NFSIdentifiedLimitUpdateOptions        `json:"user_limits,omitzero"`

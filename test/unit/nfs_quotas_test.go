@@ -55,7 +55,7 @@ func TestNFSQuota_Create(t *testing.T) {
 		Path:             "/training-data-10932/data/project-x",
 		MaxCapacityBytes: 107374182400,
 		MaxFileCount:     1000000,
-		UserGroupConfig: &linodego.NFSUserGroupConfigUpdateOptions{
+		UserGroupConfig: &linodego.NFSUserGroupConfigOptions{
 			DefaultUserLimit: &linodego.NFSCapacityLimitUpdateOptions{
 				MaxCapacityBytes: linodego.Pointer[int64](107374182400),
 				MaxFileCount:     linodego.Pointer[int64](1000000),
@@ -102,7 +102,7 @@ func TestNFSQuota_Update(t *testing.T) {
 	opts := linodego.NFSQuotaUpdateOptions{
 		MaxCapacityBytes: linodego.Pointer[int64](107374182400),
 		MaxFileCount:     linodego.Pointer[int64](1000000),
-		UserGroupConfig: &linodego.NFSUserGroupConfigUpdateOptions{
+		UserGroupConfig: &linodego.NFSUserGroupConfigOptions{
 			DefaultUserLimit: &linodego.NFSCapacityLimitUpdateOptions{
 				MaxCapacityBytes: linodego.Pointer[int64](107374182400),
 				MaxFileCount:     linodego.Pointer[int64](1000000),
