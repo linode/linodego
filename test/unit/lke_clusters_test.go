@@ -107,7 +107,7 @@ func TestLKECluster_Create(t *testing.T) {
 		SubnetID:   linodego.Pointer(123),
 		VpcID:      linodego.Pointer(456),
 		StackType:  linodego.Pointer(linodego.LKEClusterStackIPv4),
-		Networking: &linodego.LKEClusterNetworkingOptions{
+		Networking: &linodego.LKEClusterNetworkingCreateOptions{
 			RoutingMode:                     linodego.Pointer(linodego.LKEClusterRoutingModeVXLAN),
 			ClusterCIDRIPv4:                 linodego.Pointer("100.64.0.0/11"),
 			NodeCIDRMaskSizeIPv4:            linodego.Pointer(24),
@@ -150,7 +150,7 @@ func TestLKECluster_CreateNetworkingRequest(t *testing.T) {
 				Count: 1,
 			},
 		},
-		Networking: &linodego.LKEClusterNetworkingOptions{
+		Networking: &linodego.LKEClusterNetworkingCreateOptions{
 			RoutingMode: linodego.Pointer(linodego.LKEClusterRoutingModeVXLAN),
 		},
 	}
