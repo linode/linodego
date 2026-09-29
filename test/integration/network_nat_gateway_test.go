@@ -148,7 +148,7 @@ func TestNATGateway_AssignReservedIP(t *testing.T) {
 	verifyNATGatewayAddress(t, address, reservedIP.Address)
 
 	err = client.NATGatewayDeleteAddress(context.Background(), gatewayCreated.ID, reservedIP.Address)
-	require.NoErrorf(t, err, "Error deleting address form NAT Gateway: %v", err)
+	require.NoErrorf(t, err, "Error deleting address from NAT Gateway: %v", err)
 
 	addresses, err = client.NATGatewayListAddresses(context.Background(), gatewayCreated.ID, nil)
 	require.NoErrorf(t, err, "Error retrieving list of NAT Gateway addresses: %v", err)
