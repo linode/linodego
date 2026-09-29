@@ -45,8 +45,8 @@ type LKEClusterNetworking struct {
 	ServiceClusterIPRangeIPv6       *string               `json:"service_cluster_ip_range_ipv6"`
 }
 
-// LKEClusterNetworkingOptions contains create-time network options for an LKE Enterprise cluster.
-type LKEClusterNetworkingOptions struct {
+// LKEClusterNetworkingCreateOptions contains create-time network options for an LKE Enterprise cluster.
+type LKEClusterNetworkingCreateOptions struct {
 	RoutingMode                     *LKEClusterRoutingMode `json:"routing_mode,omitzero"`
 	ClusterCIDRIPv4                 *string                `json:"cluster_cidr_ipv4,omitzero"`
 	NodeCIDRMaskSizeIPv4            *int                   `json:"node_cidr_mask_size_ipv4,omitzero"`
@@ -106,7 +106,7 @@ type LKEClusterCreateOptions struct {
 	StackType *LKEClusterStackType `json:"stack_type,omitzero"`
 
 	// NOTE: Networking may not currently be available to all users and can only be used with v4beta.
-	Networking *LKEClusterNetworkingOptions `json:"networking,omitzero"`
+	Networking *LKEClusterNetworkingCreateOptions `json:"networking,omitzero"`
 }
 
 // LKEClusterUpdateOptions fields are those accepted by UpdateLKECluster
