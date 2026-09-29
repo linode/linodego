@@ -1,0 +1,50 @@
+{
+    "id": 495396,
+    "status": "active",
+    "label": "tes-valkey1-2026-07-13T18-26-24",
+    "region": "us-ord",
+    "type": "g8-dedicated-4-2",
+    "engine": "valkey",
+    "version": "9.0.5",
+    "cluster_size": 1,
+    "platform": "rdbms-default",
+    "ssl_connection": true,
+    "encrypted": true,
+    "allow_list": [],
+    "created": "2026-07-13T18:51:09",
+    "updated": "2026-09-11T08:05:02",
+    "used_disk_size_gb": 0,
+    "total_disk_size_gb": 0,
+    "port": 27283,
+    "members": {
+        "172.234.205.183": "primary"
+    },
+    "hosts": {
+        "primary": "a495396-akamai-prod-5951780-default.g2a.akamaidb.net"
+    },
+    "updates": {
+        "day_of_week": 3,
+        "duration": 4,
+        "frequency": "weekly",
+        "hour_of_day": 22,
+        "pending": []
+    },
+    "engine_config": {
+        "backup_hour": 3,
+        "backup_minute": 30,
+        "frequent_snapshots": false,
+        "valkey_acl_channels_default": "resetchannels",
+        "valkey_active_expire_effort": 5,
+        "valkey_activedefrag": true,
+        "valkey_lfu_decay_time": 10,
+        "valkey_lfu_log_factor": 20,
+        "valkey_maxmemory_policy": null,
+        "valkey_number_of_databases": 32,
+        "valkey_persistence": "off",
+        "valkey_pubsub_client_output_buffer_limit": 64,
+        "valkey_timeout": 600
+    },
+    "private_network": null,
+    "fork": null,
+    "available_restore_times": []
+}

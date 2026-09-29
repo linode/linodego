@@ -1,0 +1,114 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/databases/valkey/config
+    method: GET
+  response:
+    body: '{"backup_hour": {"description": "The hour of day (in UTC) when backup for
+      the service is started. New backup is only started if previous backup has already
+      completed.", "example": 3, "maximum": 23, "minimum": 0, "requires_restart":
+      false, "type": ["integer", "null"]}, "backup_minute": {"description": "The minute
+      of an hour when backup for the service is started. New backup is only started
+      if previous backup has already completed.", "example": 30, "maximum": 59, "minimum":
+      0, "requires_restart": false, "type": ["integer", "null"]}, "frequent_snapshots":
+      {"default": true, "description": "When enabled, Valkey will create frequent
+      local RDB snapshots. When disabled, Valkey will only take RDB snapshots when
+      a backup is created, based on the backup schedule. This setting is ignored when
+      `valkey_persistence` is set to `off`.", "requires_restart": false, "type": "boolean"},
+      "valkey_acl_channels_default": {"description": "Determines default pub/sub channels''
+      ACL for new users if ACL is not supplied. When this option is not defined, all_channels
+      is assumed to keep backward compatibility. This option doesn''t affect Valkey
+      configuration acl-pubsub-default.", "enum": ["allchannels", "resetchannels"],
+      "requires_restart": false, "type": "string"}, "valkey_active_expire_effort":
+      {"default": 1, "description": "Valkey reclaims expired keys both when accessed
+      and in the background. The background process scans for expired keys to free
+      memory. Increasing the active-expire-effort setting (default 1, max 10) uses
+      more CPU to reclaim expired keys faster, reducing memory usage but potentially
+      increasing latency.", "maximum": 10, "minimum": 1, "requires_restart": false,
+      "type": "integer"}, "valkey_activedefrag": {"default": false, "description":
+      "Enable active memory defragmentation. When enabled, Valkey relocates objects
+      off sparsely-used memory pages to reduce fragmentation and return memory to
+      the operating system. Defragmentation runs on the main thread and consumes CPU,
+      so it may increase latency under load.", "requires_restart": false, "type":
+      "boolean"}, "valkey_lfu_decay_time": {"default": 1, "description": "LFU maxmemory-policy
+      counter decay time in minutes", "maximum": 120, "minimum": 1, "requires_restart":
+      false, "type": "integer"}, "valkey_lfu_log_factor": {"default": 10, "description":
+      "Counter logarithm factor for volatile-lfu and allkeys-lfu maxmemory-policies",
+      "maximum": 100, "minimum": 0, "requires_restart": false, "type": "integer"},
+      "valkey_maxmemory_policy": {"default": "noeviction", "description": "Valkey
+      maxmemory-policy", "enum": ["noeviction", "allkeys-lru", "volatile-lru", "allkeys-random",
+      "volatile-random", "volatile-ttl", "volatile-lfu", "allkeys-lfu"], "requires_restart":
+      false, "type": ["string", "null"]}, "valkey_number_of_databases": {"description":
+      "Set number of Valkey databases. Changing this will cause a restart of the Valkey
+      service.", "example": 16, "maximum": 128, "minimum": 1, "requires_restart":
+      true, "type": "integer"}, "valkey_persistence": {"description": "When persistence
+      is ''rdb'', Valkey does RDB dumps each 10 minutes if any key is changed. Also
+      RDB dumps are done according to backup schedule for backup purposes. When persistence
+      is ''off'', no RDB dumps and backups are done, so data can be lost at any moment
+      if service is restarted for any reason, or if service is powered off. Also service
+      can''t be forked.", "enum": ["off", "rdb"], "requires_restart": true, "type":
+      "string"}, "valkey_pubsub_client_output_buffer_limit": {"description": "Set
+      output buffer limit for pub / sub clients in MB. The value is the hard limit,
+      the soft limit is 1/4 of the hard limit. When setting the limit, be mindful
+      of the available memory in the selected service plan.", "example": 64, "maximum":
+      262144, "minimum": 32, "requires_restart": false, "type": "integer"}, "valkey_timeout":
+      {"default": 300, "description": "Valkey idle connection timeout in seconds",
+      "maximum": 2073600, "minimum": 0, "requires_restart": false, "type": "integer"}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Mon, 14 Sep 2026 19:36:45 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - '*'
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - databases:read_write ips:read_write linodes:read_write lke:read_write nodebalancers:read_write
+        vpc:read_write
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
