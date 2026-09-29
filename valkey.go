@@ -164,8 +164,8 @@ type ValkeyDatabaseConfigInfo struct {
 type ValkeyDatabaseConfigInfoBackupHour struct {
 	Description     string          `json:"description"`
 	Example         int             `json:"example"`
-	Maximum         *int            `json:"maximum"`
-	Minimum         *int            `json:"minimum"`
+	Maximum         int             `json:"maximum"`
+	Minimum         int             `json:"minimum"`
 	RequiresRestart bool            `json:"requires_restart"`
 	Type            ConfigParamType `json:"type"`
 }
@@ -173,22 +173,21 @@ type ValkeyDatabaseConfigInfoBackupHour struct {
 type ValkeyDatabaseConfigInfoBackupMinute struct {
 	Description     string          `json:"description"`
 	Example         int             `json:"example"`
-	Maximum         *int            `json:"maximum"`
-	Minimum         *int            `json:"minimum"`
+	Maximum         int             `json:"maximum"`
+	Minimum         int             `json:"minimum"`
 	RequiresRestart bool            `json:"requires_restart"`
 	Type            ConfigParamType `json:"type"`
 }
 
 type ValkeyDatabaseConfigInfoFrequentSnapshots struct {
 	Description     string          `json:"description"`
-	Example         bool            `json:"example"`
+	Default         bool            `json:"default"`
 	RequiresRestart bool            `json:"requires_restart"`
 	Type            ConfigParamType `json:"type"`
 }
 
 type ValkeyDatabaseConfigInfoACLChannelsDefault struct {
 	Description     string          `json:"description"`
-	Example         string          `json:"example"`
 	Enum            []string        `json:"enum"`
 	RequiresRestart bool            `json:"requires_restart"`
 	Type            ConfigParamType `json:"type"`
@@ -196,42 +195,42 @@ type ValkeyDatabaseConfigInfoACLChannelsDefault struct {
 
 type ValkeyDatabaseConfigInfoActiveExpireEffort struct {
 	Description     string          `json:"description"`
-	Example         int             `json:"example"`
-	Maximum         *int            `json:"maximum"`
-	Minimum         *int            `json:"minimum"`
+	Default         int             `json:"default"`
+	Maximum         int             `json:"maximum"`
+	Minimum         int             `json:"minimum"`
 	RequiresRestart bool            `json:"requires_restart"`
 	Type            ConfigParamType `json:"type"`
 }
 
 type ValkeyDatabaseConfigInfoActiveDefrag struct {
 	Description     string          `json:"description"`
-	Example         bool            `json:"example"`
+	Default         bool            `json:"default"`
 	RequiresRestart bool            `json:"requires_restart"`
 	Type            ConfigParamType `json:"type"`
 }
 
 type ValkeyDatabaseConfigInfoLFUDecayTime struct {
 	Description     string          `json:"description"`
-	Example         int             `json:"example"`
-	Maximum         *int            `json:"maximum"`
-	Minimum         *int            `json:"minimum"`
+	Default         int             `json:"default"`
+	Maximum         int             `json:"maximum"`
+	Minimum         int             `json:"minimum"`
 	RequiresRestart bool            `json:"requires_restart"`
 	Type            ConfigParamType `json:"type"`
 }
 
 type ValkeyDatabaseConfigInfoLFULogFactor struct {
 	Description     string          `json:"description"`
-	Example         int             `json:"example"`
-	Maximum         *int            `json:"maximum"`
-	Minimum         *int            `json:"minimum"`
+	Default         int             `json:"default"`
+	Maximum         int             `json:"maximum"`
+	Minimum         int             `json:"minimum"`
 	RequiresRestart bool            `json:"requires_restart"`
 	Type            ConfigParamType `json:"type"`
 }
 
 type ValkeyDatabaseConfigInfoMaxmemoryPolicy struct {
 	Description     string          `json:"description"`
-	Example         string          `json:"example"`
-	Default         *string         `json:"default"`
+	Default         string          `json:"default"`
+	Enum            []string        `json:"enum"`
 	RequiresRestart bool            `json:"requires_restart"`
 	Type            ConfigParamType `json:"type"`
 }
@@ -239,16 +238,14 @@ type ValkeyDatabaseConfigInfoMaxmemoryPolicy struct {
 type ValkeyDatabaseConfigInfoNumberOfDatabases struct {
 	Description     string          `json:"description"`
 	Example         int             `json:"example"`
-	Maximum         *int            `json:"maximum"`
-	Minimum         *int            `json:"minimum"`
+	Maximum         int             `json:"maximum"`
+	Minimum         int             `json:"minimum"`
 	RequiresRestart bool            `json:"requires_restart"`
 	Type            ConfigParamType `json:"type"`
 }
 
 type ValkeyDatabaseConfigInfoPersistence struct {
 	Description     string          `json:"description"`
-	Example         string          `json:"example"`
-	Default         *string         `json:"default"`
 	Enum            []string        `json:"enum"`
 	RequiresRestart bool            `json:"requires_restart"`
 	Type            ConfigParamType `json:"type"`
@@ -257,18 +254,17 @@ type ValkeyDatabaseConfigInfoPersistence struct {
 type ValkeyDatabaseConfigInfoPubsubClientOutputBufferLimit struct {
 	Description     string          `json:"description"`
 	Example         int             `json:"example"`
-	Maximum         *int            `json:"maximum"`
-	Minimum         *int            `json:"minimum"`
+	Maximum         int             `json:"maximum"`
+	Minimum         int             `json:"minimum"`
 	RequiresRestart bool            `json:"requires_restart"`
 	Type            ConfigParamType `json:"type"`
 }
 
 type ValkeyDatabaseConfigInfoTimeout struct {
 	Description     string          `json:"description"`
-	Example         int             `json:"example"`
-	Default         *int            `json:"default"`
-	Maximum         *int            `json:"maximum"`
-	Minimum         *int            `json:"minimum"`
+	Default         int             `json:"default"`
+	Maximum         int             `json:"maximum"`
+	Minimum         int             `json:"minimum"`
 	RequiresRestart bool            `json:"requires_restart"`
 	Type            ConfigParamType `json:"type"`
 }
