@@ -44,7 +44,7 @@ func TestVPC_Create(t *testing.T) {
 			},
 		},
 		Subnets: []linodego.VPCSubnetCreateOptions{
-			{Label: "subnet-1"},
+			{Label: "subnet-1", NATGateway: linodego.Pointer(linodego.VPCSubnetCreateOptionsNATGateway{ID: linodego.DoublePointer(42)})},
 			{Label: "subnet-2"},
 		},
 	})

@@ -40,7 +40,23 @@
                     "ranges": [
                         { "range": "192.168.22.16/28"},
                         { "range": "192.168.22.32/28"}
-                    ]
+                    ],
+                    "natgateway": {
+                      "id": 42,
+                      "label": "the-natgateway",
+                      "type": "natgateway",
+                      "url": "/v4/networking/natgateways/1",
+                      "addresses": [ "203.0.113.42" ],
+                      "portset_assignments": 15,
+                      "portset_capacity": 30,
+                      "portsets":
+                      [
+                        {
+                          "address": "203.0.113.42",
+                          "ports": [{"start": 2048, "end": 3071}]
+                        }
+                      ]
+                    }
                 },
                 "ipv6": {
                     "slaac": [
