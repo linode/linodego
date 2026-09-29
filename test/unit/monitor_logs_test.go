@@ -2,6 +2,7 @@ package unit
 
 import (
 	"context"
+	"encoding/json"
 	"testing"
 
 	"github.com/linode/linodego/v2"
@@ -46,7 +47,7 @@ func TestCreateLogsDestination(t *testing.T) {
 	assert.Equal(t, "OBJ_logs_destination", dest.Label)
 	assert.Equal(t, linodego.LogsDestinationStatusActive, dest.Status)
 	assert.Equal(t, linodego.LogsDestinationTypeAkamaiObjectStorage, dest.Type)
-	assert.Equal(t, "1ABCD23EFG4HIJKLMNO5", string(dest.Details.AccessKeyID))
+	assert.Equal(t, "1ABCD23EFG4HIJKLMNO5", dest.Details.AccessKeyID)
 	assert.Equal(t, "primary-bucket", dest.Details.BucketName)
 	assert.Equal(t, "primary-bucket-1.us-iad-12.linodeobjects.com", dest.Details.Host)
 	assert.Equal(t, "audit-logs", dest.Details.Path)
@@ -102,7 +103,7 @@ func TestGetLogsDestination(t *testing.T) {
 	assert.Equal(t, "user", dest.CreatedBy)
 	assert.Equal(t, "user", dest.UpdatedBy)
 	assert.Equal(t, 1, dest.Version)
-	assert.Equal(t, "1ABCD23EFG4HIJKLMNO5", string(dest.Details.AccessKeyID))
+	assert.Equal(t, "1ABCD23EFG4HIJKLMNO5", dest.Details.AccessKeyID)
 	assert.Equal(t, "primary-bucket", dest.Details.BucketName)
 	assert.Equal(t, "primary-bucket-1.us-iad-12.linodeobjects.com", dest.Details.Host)
 	assert.Equal(t, "audit-logs", dest.Details.Path)
@@ -239,11 +240,10 @@ func TestUpdateLogsDestination_CustomHTTPS(t *testing.T) {
 
 	base.MockPut("monitor/streams/destinations/67890", fixtureData)
 
-	newURL := "https://my-site.com/log-storage/v2"
 	opts := linodego.LogsDestinationUpdateOptions{
 		Label: "HTTPS_logs_destination_renamed",
 		Details: &linodego.LogsDestinationCustomHTTPSDetailsUpdateOptions{
-			EndpointURL: newURL,
+			EndpointURL: "https://my-site.com/log-storage/v2",
 			Authentication: &linodego.LogsDestinationCustomHTTPSAuthDetails{
 				Type: linodego.LogsDestinationCustomHTTPSAuthTypeBasic,
 				Details: &linodego.LogsDestinationCustomHTTPSBasicAuthDetails{
@@ -259,6 +259,162 @@ func TestUpdateLogsDestination_CustomHTTPS(t *testing.T) {
 	assert.NotNil(t, dest)
 	assert.Equal(t, 67890, dest.ID)
 	assert.Equal(t, linodego.LogsDestinationTypeCustomHTTPS, dest.Type)
+}
+
+func TestCreateLogsDestination_TrafficPeak(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("monitor_log_destination_traffic_peak")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockPost("monitor/streams/destinations", fixtureData)
+
+	opts := linodego.LogsDestinationCreateOptions{
+		Label: "TrafficPeak logs",
+		Type:  linodego.LogsDestinationTypeTrafficPeak,
+		Details: linodego.LogsDestinationTrafficPeakDetailsCreateOptions{
+			EndpointURL:     "https://example.com/",
+			DataCompression: linodego.Pointer("None"),
+			ContentType:     linodego.Pointer("application/json"),
+			CustomHeaders: []linodego.LogsDestinationTrafficPeakHeader{
+				{Name: "header", Value: "header_value"},
+			},
+			Authentication: linodego.LogsDestinationTrafficPeakAuthDetails{
+				Details: linodego.LogsDestinationTrafficPeakBasicAuthDetails{
+					Username: "user",
+					Password: "password",
+				},
+			},
+		},
+	}
+
+	requestJSON, err := json.Marshal(opts)
+	assert.NoError(t, err)
+	assert.JSONEq(t, `{
+		"label": "TrafficPeak logs",
+		"type": "traffic_peak",
+		"details": {
+			"endpoint_url": "https://example.com/",
+			"data_compression": "None",
+			"content_type": "application/json",
+			"custom_headers": [{"name": "header", "value": "header_value"}],
+			"authentication": {
+				"details": {
+					"basic_authentication_user": "user",
+					"basic_authentication_password": "password"
+				}
+			}
+		}
+	}`, string(requestJSON))
+
+	dest, err := base.Client.CreateLogsDestination(context.Background(), opts)
+	assert.NoError(t, err)
+	assert.NotNil(t, dest)
+	assert.Equal(t, 98765, dest.ID)
+	assert.Equal(t, linodego.LogsDestinationTypeTrafficPeak, dest.Type)
+	assert.Equal(t, "https://example.com", dest.Details.EndpointURL)
+	assert.Equal(t, "None", dest.Details.DataCompression)
+	assert.Equal(t, "application/json", dest.Details.ContentType)
+	assert.Equal(t, []linodego.LogsDestinationCustomHTTPSHeader{
+		{Name: "x", Value: "y"},
+	}, dest.Details.CustomHeaders)
+}
+
+func TestUpdateLogsDestination_TrafficPeak(t *testing.T) {
+	endpointURL := "https://example.com/v2"
+	opts := linodego.LogsDestinationUpdateOptions{
+		Details: &linodego.LogsDestinationTrafficPeakDetailsUpdateOptions{
+			EndpointURL: &endpointURL,
+			CustomHeaders: []linodego.LogsDestinationTrafficPeakHeader{
+				{Name: "x-environment", Value: "production"},
+			},
+		},
+	}
+
+	requestJSON, err := json.Marshal(opts)
+	assert.NoError(t, err)
+	assert.JSONEq(t, `{
+		"details": {
+			"endpoint_url": "https://example.com/v2",
+			"custom_headers": [{"name": "x-environment", "value": "production"}]
+		}
+	}`, string(requestJSON))
+}
+
+func TestLogsDestinationDetails_MarshalOmitsFieldsForOtherTypes(t *testing.T) {
+	details := linodego.LogsDestinationDetails{
+		EndpointURL:     "https://example.com",
+		ContentType:     "application/json",
+		DataCompression: "None",
+	}
+
+	detailsJSON, err := json.Marshal(details)
+	assert.NoError(t, err)
+	assert.JSONEq(t, `{
+		"endpoint_url": "https://example.com",
+		"content_type": "application/json",
+		"data_compression": "None"
+	}`, string(detailsJSON))
+}
+
+func TestLogsDestinationAuthenticationDetails_MarshalJSON(t *testing.T) {
+	customHTTPSBasicDetails := &linodego.LogsDestinationCustomHTTPSBasicAuthDetails{
+		Username: "user",
+		Password: "password",
+	}
+
+	tests := []struct {
+		name     string
+		details  any
+		expected string
+	}{
+		{
+			name: "authentication basic",
+			details: linodego.LogsDestinationCustomHTTPSAuthDetails{
+				Type:    linodego.LogsDestinationCustomHTTPSAuthTypeBasic,
+				Details: customHTTPSBasicDetails,
+			},
+			expected: `{
+				"type": "basic",
+				"details": {
+					"basic_authentication_user": "user",
+					"basic_authentication_password": "password"
+				}
+			}`,
+		},
+		{
+			name: "authentication none",
+			details: linodego.LogsDestinationCustomHTTPSAuthDetails{
+				Type: linodego.LogsDestinationCustomHTTPSAuthTypeNone,
+			},
+			expected: `{"type": "none"}`,
+		},
+		{
+			name: "TrafficPeak authentication",
+			details: linodego.LogsDestinationTrafficPeakAuthDetails{
+				Details: linodego.LogsDestinationTrafficPeakBasicAuthDetails{
+					Username: "user",
+					Password: "password",
+				},
+			},
+			expected: `{
+				"details": {
+					"basic_authentication_user": "user",
+					"basic_authentication_password": "password"
+				}
+			}`,
+		},
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			result, err := json.Marshal(tt.details)
+			assert.NoError(t, err)
+			assert.JSONEq(t, tt.expected, string(result))
+		})
+	}
 }
 
 func TestListLogsDestinationHistory(t *testing.T) {
@@ -427,6 +583,30 @@ func TestGetLogStream_DestinationDetails(t *testing.T) {
 	assert.Equal(t, "primary-bucket", dest.Details.BucketName)
 	assert.Equal(t, "primary-bucket-1.us-iad-12.linodeobjects.com", dest.Details.Host)
 	assert.Equal(t, "audit-logs", dest.Details.Path)
+}
+
+func TestGetLogStream_TrafficPeakDestination(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("monitor_log_stream_traffic_peak")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockGet("monitor/streams/456", fixtureData)
+
+	stream, err := base.Client.GetLogStream(context.Background(), testLogStreamID)
+	assert.NoError(t, err)
+	assert.Len(t, stream.Destinations, 1)
+
+	dest := stream.Destinations[0]
+	assert.Equal(t, linodego.StreamDestinationTypeTrafficPeak, dest.Type)
+	assert.Equal(t, "https://example.com", dest.Details.EndpointURL)
+	assert.Equal(t, "application/json", dest.Details.ContentType)
+	assert.Equal(t, "None", dest.Details.DataCompression)
+	assert.Equal(t, []linodego.LogsDestinationCustomHTTPSHeader{
+		{Name: "x", Value: "y"},
+	}, dest.Details.CustomHeaders)
 }
 
 func TestUpdateLogStream_DestinationsOnly(t *testing.T) {

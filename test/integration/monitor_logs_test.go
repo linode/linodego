@@ -15,6 +15,15 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+const (
+	testCustomHTTPSEndpointURL        = "https://pl-labkrk-2-https-server-dev.cloud-streams-dev.akadns.net/stream-custom-https-server-api/logs/no-auth"
+	testCustomHTTPSContentType        = "application/json"
+	testCustomHTTPSUpdatedContentType = "application/json; charset=utf-8"
+	testCustomHTTPSDataCompression    = "gzip"
+	testCustomHTTPSHeaderName         = "X-Logs-Custom-Path"
+	testCustomHTTPSHeaderValue        = "linodego-e2e-test"
+)
+
 // requireACLPLogsStreamTests skips the test if RUN_ACLP_LOGS_STREAM_TESTS is not set.
 // Call this before creating a test client so the env check short-circuits early.
 func requireACLPLogsStreamTests(t *testing.T) {
@@ -25,6 +34,34 @@ func requireACLPLogsStreamTests(t *testing.T) {
 	val := os.Getenv("RUN_ACLP_LOGS_STREAM_TESTS")
 	if val != "yes" && val != "true" {
 		t.Skipf("RUN_ACLP_LOGS_STREAM_TESTS must be set to 'yes' or 'true' to run stream tests")
+	}
+}
+
+// requireTrafficPeakDestinationTests skips TrafficPeak tests if
+// RUN_TRAFFIC_PEAK_DESTINATION_TESTS is not set
+// Unlike requireACLPLogsStreamTests, replay mode also
+// requires the flag because TrafficPeak fixtures do not exist yet.
+func requireTrafficPeakDestinationTests(t *testing.T) {
+	t.Helper()
+
+	val := os.Getenv("RUN_TRAFFIC_PEAK_DESTINATION_TESTS")
+	if val != "yes" && val != "true" {
+		t.Skipf("RUN_TRAFFIC_PEAK_DESTINATION_TESTS must be set to 'yes' or 'true' to run TrafficPeak tests")
+	}
+}
+
+// requireCustomHTTPSDestinationTests skips live Custom HTTPS integration tests
+// unless they are explicitly enabled.
+func requireCustomHTTPSDestinationTests(t *testing.T) {
+	t.Helper()
+
+	if testingMode == recorder.ModeReplaying {
+		return
+	}
+
+	val := os.Getenv("RUN_CUSTOM_HTTPS_DESTINATION_TESTS")
+	if val != "yes" && val != "true" {
+		t.Skipf("RUN_CUSTOM_HTTPS_DESTINATION_TESTS must be set to 'yes' or 'true' to run Custom HTTPS tests")
 	}
 }
 
@@ -149,6 +186,99 @@ func setupLogsDestination(t *testing.T, fixturesYaml string) (*linodego.Client, 
 	}
 
 	return client, dest, storageKey, teardown
+}
+
+// setupHTTPLogsDestination creates either a TrafficPeak or Custom HTTPS
+// destination and returns a teardown that tolerates deletion by the test itself.
+func setupHTTPLogsDestination(
+	t *testing.T,
+	fixturesYaml string,
+	destinationType linodego.LogsDestinationType,
+	details any,
+) (*linodego.Client, *linodego.LogsDestination, func()) {
+	t.Helper()
+
+	client, fixtureTeardown := createTestClient(t, fixturesYaml)
+	destination, err := client.CreateLogsDestination(context.Background(), linodego.LogsDestinationCreateOptions{
+		Label:   testLabel(),
+		Type:    destinationType,
+		Details: details,
+	})
+	if err != nil {
+		fixtureTeardown()
+	}
+	require.NoError(t, err)
+	require.NotNil(t, destination)
+
+	teardown := func() {
+		defer fixtureTeardown()
+
+		_, err := client.GetLogsDestination(context.Background(), destination.ID)
+		if apiErr, ok := err.(*linodego.Error); ok && apiErr.Code == http.StatusNotFound {
+			return
+		}
+		if err != nil {
+			t.Errorf("failed to check destination before cleanup: %v", err)
+		}
+		if err := client.DeleteLogsDestination(context.Background(), destination.ID); err != nil {
+			t.Errorf("failed to delete logs destination: %v", err)
+		}
+	}
+
+	return client, destination, teardown
+}
+
+func setupTrafficPeakLogsDestination(
+	t *testing.T,
+	fixturesYaml string,
+) (*linodego.Client, *linodego.LogsDestination, func()) {
+	t.Helper()
+	requireTrafficPeakDestinationTests(t)
+
+	return setupHTTPLogsDestination(
+		t,
+		fixturesYaml,
+		linodego.LogsDestinationTypeTrafficPeak,
+		linodego.LogsDestinationTrafficPeakDetailsCreateOptions{
+			EndpointURL:     "https://example.com/",
+			ContentType:     linodego.Pointer("application/json"),
+			DataCompression: linodego.Pointer("None"),
+			CustomHeaders: []linodego.LogsDestinationTrafficPeakHeader{
+				{Name: "x-test-header", Value: "traffic-peak"},
+			},
+			Authentication: linodego.LogsDestinationTrafficPeakAuthDetails{
+				Details: linodego.LogsDestinationTrafficPeakBasicAuthDetails{
+					Username: "user",
+					Password: "password",
+				},
+			},
+		},
+	)
+}
+
+func setupCustomHTTPSLogsDestination(
+	t *testing.T,
+	fixturesYaml string,
+) (*linodego.Client, *linodego.LogsDestination, func()) {
+	t.Helper()
+	requireCustomHTTPSDestinationTests(t)
+
+	return setupHTTPLogsDestination(
+		t,
+		fixturesYaml,
+		linodego.LogsDestinationTypeCustomHTTPS,
+		linodego.LogsDestinationCustomHTTPSDetailsCreateOptions{
+			EndpointURL: testCustomHTTPSEndpointURL,
+			Authentication: &linodego.LogsDestinationCustomHTTPSAuthDetails{
+				Type: linodego.LogsDestinationCustomHTTPSAuthTypeNone,
+			},
+			ContentType:     testCustomHTTPSContentType,
+			DataCompression: testCustomHTTPSDataCompression,
+			CustomHeaders: []linodego.LogsDestinationCustomHTTPSHeader{
+				{Name: testCustomHTTPSHeaderName, Value: testCustomHTTPSHeaderValue},
+			},
+		},
+	)
 }
 
 func testLabel() string {
@@ -363,6 +493,223 @@ func TestLogsDestination_UpdateAndHistory(t *testing.T) {
 
 	assert.Equal(t, dest.Label, v1.Label)
 	assert.Equal(t, newLabel, v2.Label)
+}
+
+func TestLogsDestination_TrafficPeakCreate(t *testing.T) {
+	_, destination, teardown := setupTrafficPeakLogsDestination(t, "fixtures/TestLogsDestination_TrafficPeakCreate")
+	defer teardown()
+
+	assert.Equal(t, linodego.LogsDestinationTypeTrafficPeak, destination.Type)
+	assert.Equal(t, "https://example.com", destination.Details.EndpointURL)
+	assert.Equal(t, "application/json", destination.Details.ContentType)
+	assert.Equal(t, "None", destination.Details.DataCompression)
+}
+
+func TestLogsDestination_TrafficPeakGet(t *testing.T) {
+	client, destination, teardown := setupTrafficPeakLogsDestination(t, "fixtures/TestLogsDestination_TrafficPeakGet")
+	defer teardown()
+
+	fetched, err := client.GetLogsDestination(context.Background(), destination.ID)
+	require.NoError(t, err)
+	assert.Equal(t, destination.ID, fetched.ID)
+	assert.Equal(t, linodego.LogsDestinationTypeTrafficPeak, fetched.Type)
+	assert.Equal(t, destination.Details.EndpointURL, fetched.Details.EndpointURL)
+}
+
+func TestLogsDestination_TrafficPeakList(t *testing.T) {
+	client, destination, teardown := setupTrafficPeakLogsDestination(t, "fixtures/TestLogsDestination_TrafficPeakList")
+	defer teardown()
+
+	destinations, err := client.ListLogsDestinations(context.Background(), nil)
+	require.NoError(t, err)
+	var found *linodego.LogsDestination
+	for i := range destinations {
+		if destinations[i].ID == destination.ID {
+			found = &destinations[i]
+			break
+		}
+	}
+	require.NotNil(t, found)
+	assert.Equal(t, linodego.LogsDestinationTypeTrafficPeak, found.Type)
+}
+
+func TestLogsDestination_TrafficPeakUpdateAndHistory(t *testing.T) {
+	client, destination, teardown := setupTrafficPeakLogsDestination(t, "fixtures/TestLogsDestination_TrafficPeakUpdateAndHistory")
+	defer teardown()
+
+	updatedLabel := destination.Label + "-updated"
+	updated, err := client.UpdateLogsDestination(context.Background(), destination.ID, linodego.LogsDestinationUpdateOptions{
+		Label: updatedLabel,
+		Details: &linodego.LogsDestinationTrafficPeakDetailsUpdateOptions{
+			ContentType: linodego.Pointer("application/x-ndjson"),
+		},
+	})
+	require.NoError(t, err)
+	assert.Equal(t, updatedLabel, updated.Label)
+	assert.Equal(t, "application/x-ndjson", updated.Details.ContentType)
+
+	history, err := client.ListLogsDestinationHistory(context.Background(), destination.ID, nil)
+	require.NoError(t, err)
+	assert.GreaterOrEqual(t, len(history), 2)
+}
+
+func TestLogsDestination_TrafficPeakDelete(t *testing.T) {
+	client, destination, teardown := setupTrafficPeakLogsDestination(t, "fixtures/TestLogsDestination_TrafficPeakDelete")
+	defer teardown()
+
+	require.NoError(t, client.DeleteLogsDestination(context.Background(), destination.ID))
+	_, err := client.GetLogsDestination(context.Background(), destination.ID)
+	require.Error(t, err)
+	apiErr, ok := err.(*linodego.Error)
+	require.True(t, ok)
+	assert.Equal(t, http.StatusNotFound, apiErr.Code)
+}
+
+func TestLogsDestination_CustomHTTPSCreate(t *testing.T) {
+	_, destination, teardown := setupCustomHTTPSLogsDestination(t, "fixtures/TestLogsDestination_CustomHTTPSCreate")
+	defer teardown()
+
+	assert.Equal(t, linodego.LogsDestinationTypeCustomHTTPS, destination.Type)
+	assert.Equal(t, testCustomHTTPSEndpointURL, destination.Details.EndpointURL)
+	assert.Equal(t, testCustomHTTPSContentType, destination.Details.ContentType)
+	assert.Equal(t, testCustomHTTPSDataCompression, destination.Details.DataCompression)
+	require.NotNil(t, destination.Details.Authentication)
+	assert.Equal(t, linodego.LogsDestinationCustomHTTPSAuthTypeNone, destination.Details.Authentication.Type)
+	assert.Nil(t, destination.Details.Authentication.Details)
+	assert.Equal(t, []linodego.LogsDestinationCustomHTTPSHeader{
+		{Name: testCustomHTTPSHeaderName, Value: testCustomHTTPSHeaderValue},
+	}, destination.Details.CustomHeaders)
+}
+
+func TestLogsDestination_CustomHTTPSGet(t *testing.T) {
+	client, destination, teardown := setupCustomHTTPSLogsDestination(t, "fixtures/TestLogsDestination_CustomHTTPSGet")
+	defer teardown()
+
+	fetched, err := client.GetLogsDestination(context.Background(), destination.ID)
+	require.NoError(t, err)
+	assert.Equal(t, destination.ID, fetched.ID)
+	assert.Equal(t, linodego.LogsDestinationTypeCustomHTTPS, fetched.Type)
+	assert.Equal(t, testCustomHTTPSEndpointURL, fetched.Details.EndpointURL)
+	require.NotNil(t, fetched.Details.Authentication)
+	assert.Equal(t, linodego.LogsDestinationCustomHTTPSAuthTypeNone, fetched.Details.Authentication.Type)
+}
+
+func TestLogsDestination_CustomHTTPSList(t *testing.T) {
+	client, destination, teardown := setupCustomHTTPSLogsDestination(t, "fixtures/TestLogsDestination_CustomHTTPSList")
+	defer teardown()
+
+	destinations, err := client.ListLogsDestinations(context.Background(), &linodego.ListOptions{
+		Filter: fmt.Sprintf(`{"id":%d}`, destination.ID),
+	})
+	require.NoError(t, err)
+	require.Len(t, destinations, 1)
+	assert.Equal(t, destination.ID, destinations[0].ID)
+	assert.Equal(t, linodego.LogsDestinationTypeCustomHTTPS, destinations[0].Type)
+	assert.Equal(t, testCustomHTTPSEndpointURL, destinations[0].Details.EndpointURL)
+}
+
+func TestLogsDestination_CustomHTTPSUpdateAndHistory(t *testing.T) {
+	client, destination, teardown := setupCustomHTTPSLogsDestination(t, "fixtures/TestLogsDestination_CustomHTTPSUpdateAndHistory")
+	defer teardown()
+
+	updatedLabel := destination.Label + "-updated"
+	updated, err := client.UpdateLogsDestination(context.Background(), destination.ID, linodego.LogsDestinationUpdateOptions{
+		Label: updatedLabel,
+		Details: &linodego.LogsDestinationCustomHTTPSDetailsUpdateOptions{
+			ContentType: testCustomHTTPSUpdatedContentType,
+			EndpointURL: testCustomHTTPSEndpointURL,
+			Authentication: &linodego.LogsDestinationCustomHTTPSAuthDetails{
+				Type: linodego.LogsDestinationCustomHTTPSAuthTypeNone,
+			},
+			DataCompression: testCustomHTTPSDataCompression,
+			CustomHeaders: []linodego.LogsDestinationCustomHTTPSHeader{
+				{Name: testCustomHTTPSHeaderName, Value: testCustomHTTPSHeaderValue},
+			},
+		},
+	})
+	require.NoError(t, err)
+	assert.Equal(t, updatedLabel, updated.Label)
+	assert.Equal(t, testCustomHTTPSUpdatedContentType, updated.Details.ContentType)
+	assert.Equal(t, testCustomHTTPSEndpointURL, updated.Details.EndpointURL)
+
+	history, err := client.ListLogsDestinationHistory(context.Background(), destination.ID, nil)
+	require.NoError(t, err)
+	assert.GreaterOrEqual(t, len(history), 2)
+}
+
+func TestLogsDestination_CustomHTTPSDelete(t *testing.T) {
+	client, destination, teardown := setupCustomHTTPSLogsDestination(t, "fixtures/TestLogsDestination_CustomHTTPSDelete")
+	defer teardown()
+
+	require.NoError(t, client.DeleteLogsDestination(context.Background(), destination.ID))
+	_, err := client.GetLogsDestination(context.Background(), destination.ID)
+	require.Error(t, err)
+	apiErr, ok := err.(*linodego.Error)
+	require.True(t, ok)
+	assert.Equal(t, http.StatusNotFound, apiErr.Code)
+}
+
+type setupHTTPLogsDestinationFunc func(
+	t *testing.T,
+	fixturesYaml string,
+) (*linodego.Client, *linodego.LogsDestination, func())
+
+func testLogStreamHTTPDestination(
+	t *testing.T,
+	fixturesYaml string,
+	setupDestination setupHTTPLogsDestinationFunc,
+	expectedType linodego.StreamDestinationType,
+) {
+	t.Helper()
+	requireACLPLogsStreamTests(t)
+
+	client, destination, destinationTeardown := setupDestination(t, fixturesYaml)
+	defer destinationTeardown()
+
+	requireNoExistingStreams(t, client)
+
+	stream, err := client.CreateLogStream(context.Background(), linodego.StreamCreateOptions{
+		Destinations: []int{destination.ID},
+		Label:        fmt.Sprintf("go-test-http-destination-stream-%d", time.Now().UnixNano()),
+		Type:         linodego.StreamTypeAuditLogs,
+	})
+	require.NoError(t, err)
+	require.NotNil(t, stream)
+
+	defer func() {
+		if err := client.DeleteLogStream(context.Background(), stream.ID); err != nil {
+			t.Errorf("failed to delete HTTP destination stream: %v", err)
+			return
+		}
+		if err := waitForLogStreamDeleted(context.Background(), client, stream.ID, 60, 3600); err != nil {
+			t.Errorf("failed waiting for HTTP destination stream deletion: %v", err)
+		}
+	}()
+
+	provisioned, err := waitForLogStreamProvisioned(context.Background(), client, stream.ID, 60, 3600)
+	require.NoError(t, err)
+	require.Len(t, provisioned.Destinations, 1)
+	assert.Equal(t, destination.ID, provisioned.Destinations[0].ID)
+	assert.Equal(t, expectedType, provisioned.Destinations[0].Type)
+	assert.Equal(t, destination.Details.EndpointURL, provisioned.Destinations[0].Details.EndpointURL)
+}
+
+func TestLogStream_TrafficPeakDestination(t *testing.T) {
+	testLogStreamHTTPDestination(
+		t,
+		"fixtures/TestLogStream_TrafficPeakDestination",
+		setupTrafficPeakLogsDestination,
+		linodego.StreamDestinationTypeTrafficPeak,
+	)
+}
+
+func TestLogStream_CustomHTTPSDestination(t *testing.T) {
+	testLogStreamHTTPDestination(
+		t,
+		"fixtures/TestLogStream_CustomHTTPSDestination",
+		setupCustomHTTPSLogsDestination,
+		linodego.StreamDestinationTypeCustomHTTPS,
+	)
 }
 
 func TestLogsDestination_Create_InvalidSecret(t *testing.T) {
