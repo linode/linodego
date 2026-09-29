@@ -154,7 +154,7 @@ func (c *Client) DeleteNATGateway(ctx context.Context, id int) error {
 	return doDELETERequest(ctx, c, e)
 }
 
-// NATGatewayAddAddress adds an addresd to the NAT Gateway with the specified id
+// NATGatewayAddAddress adds an addressed to the NAT Gateway with the specified id
 func (c *Client) NATGatewayAddAddress(ctx context.Context, id int, opts NATGatewayAddAddressOptions) (*NATGatewayAddressObject, error) {
 	e := formatAPIPath("networking/natgateways/%d/addresses", id)
 	return doPOSTRequest[NATGatewayAddressObject](ctx, c, e, opts)
