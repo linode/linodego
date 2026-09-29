@@ -146,28 +146,129 @@ func (t *ConfigParamType) UnmarshalJSON(b []byte) error {
 }
 
 type ValkeyDatabaseConfigInfo struct {
-	BackupHour                          ValkeyDatabaseConfigInfoOption `json:"backup_hour"`
-	BackupMinute                        ValkeyDatabaseConfigInfoOption `json:"backup_minute"`
-	FrequentSnapshots                   ValkeyDatabaseConfigInfoOption `json:"frequent_snapshots"`
-	ValkeyACLChannelsDefault            ValkeyDatabaseConfigInfoOption `json:"valkey_acl_channels_default"`
-	ValkeyActiveExpireEffort            ValkeyDatabaseConfigInfoOption `json:"valkey_active_expire_effort"`
-	ValkeyActiveDefrag                  ValkeyDatabaseConfigInfoOption `json:"valkey_activedefrag"`
-	ValkeyLFUDecayTime                  ValkeyDatabaseConfigInfoOption `json:"valkey_lfu_decay_time"`
-	ValkeyLFULogFactor                  ValkeyDatabaseConfigInfoOption `json:"valkey_lfu_log_factor"`
-	ValkeyMaxmemoryPolicy               ValkeyDatabaseConfigInfoOption `json:"valkey_maxmemory_policy"`
-	ValkeyNumberOfDatabases             ValkeyDatabaseConfigInfoOption `json:"valkey_number_of_databases"`
-	ValkeyPersistence                   ValkeyDatabaseConfigInfoOption `json:"valkey_persistence"`
-	ValkeyPubsubClientOutputBufferLimit ValkeyDatabaseConfigInfoOption `json:"valkey_pubsub_client_output_buffer_limit"`
-	ValkeyTimeout                       ValkeyDatabaseConfigInfoOption `json:"valkey_timeout"`
+	BackupHour                          ValkeyDatabaseConfigInfoBackupHour                    `json:"backup_hour"`
+	BackupMinute                        ValkeyDatabaseConfigInfoBackupMinute                  `json:"backup_minute"`
+	FrequentSnapshots                   ValkeyDatabaseConfigInfoFrequentSnapshots             `json:"frequent_snapshots"`
+	ValkeyACLChannelsDefault            ValkeyDatabaseConfigInfoACLChannelsDefault            `json:"valkey_acl_channels_default"`
+	ValkeyActiveExpireEffort            ValkeyDatabaseConfigInfoActiveExpireEffort            `json:"valkey_active_expire_effort"`
+	ValkeyActiveDefrag                  ValkeyDatabaseConfigInfoActiveDefrag                  `json:"valkey_activedefrag"`
+	ValkeyLFUDecayTime                  ValkeyDatabaseConfigInfoLFUDecayTime                  `json:"valkey_lfu_decay_time"`
+	ValkeyLFULogFactor                  ValkeyDatabaseConfigInfoLFULogFactor                  `json:"valkey_lfu_log_factor"`
+	ValkeyMaxmemoryPolicy               ValkeyDatabaseConfigInfoMaxmemoryPolicy               `json:"valkey_maxmemory_policy"`
+	ValkeyNumberOfDatabases             ValkeyDatabaseConfigInfoNumberOfDatabases             `json:"valkey_number_of_databases"`
+	ValkeyPersistence                   ValkeyDatabaseConfigInfoPersistence                   `json:"valkey_persistence"`
+	ValkeyPubsubClientOutputBufferLimit ValkeyDatabaseConfigInfoPubsubClientOutputBufferLimit `json:"valkey_pubsub_client_output_buffer_limit"`
+	ValkeyTimeout                       ValkeyDatabaseConfigInfoTimeout                       `json:"valkey_timeout"`
 }
 
-type ValkeyDatabaseConfigInfoOption struct {
+type ValkeyDatabaseConfigInfoBackupHour struct {
 	Description     string          `json:"description"`
-	Example         any             `json:"example"`
+	Example         int             `json:"example"`
 	Maximum         *int            `json:"maximum"`
 	Minimum         *int            `json:"minimum"`
-	Default         any             `json:"default"`
+	RequiresRestart bool            `json:"requires_restart"`
+	Type            ConfigParamType `json:"type"`
+}
+
+type ValkeyDatabaseConfigInfoBackupMinute struct {
+	Description     string          `json:"description"`
+	Example         int             `json:"example"`
+	Maximum         *int            `json:"maximum"`
+	Minimum         *int            `json:"minimum"`
+	RequiresRestart bool            `json:"requires_restart"`
+	Type            ConfigParamType `json:"type"`
+}
+
+type ValkeyDatabaseConfigInfoFrequentSnapshots struct {
+	Description     string          `json:"description"`
+	Example         bool            `json:"example"`
+	RequiresRestart bool            `json:"requires_restart"`
+	Type            ConfigParamType `json:"type"`
+}
+
+type ValkeyDatabaseConfigInfoACLChannelsDefault struct {
+	Description     string          `json:"description"`
+	Example         string          `json:"example"`
 	Enum            []string        `json:"enum"`
+	RequiresRestart bool            `json:"requires_restart"`
+	Type            ConfigParamType `json:"type"`
+}
+
+type ValkeyDatabaseConfigInfoActiveExpireEffort struct {
+	Description     string          `json:"description"`
+	Example         int             `json:"example"`
+	Maximum         *int            `json:"maximum"`
+	Minimum         *int            `json:"minimum"`
+	RequiresRestart bool            `json:"requires_restart"`
+	Type            ConfigParamType `json:"type"`
+}
+
+type ValkeyDatabaseConfigInfoActiveDefrag struct {
+	Description     string          `json:"description"`
+	Example         bool            `json:"example"`
+	RequiresRestart bool            `json:"requires_restart"`
+	Type            ConfigParamType `json:"type"`
+}
+
+type ValkeyDatabaseConfigInfoLFUDecayTime struct {
+	Description     string          `json:"description"`
+	Example         int             `json:"example"`
+	Maximum         *int            `json:"maximum"`
+	Minimum         *int            `json:"minimum"`
+	RequiresRestart bool            `json:"requires_restart"`
+	Type            ConfigParamType `json:"type"`
+}
+
+type ValkeyDatabaseConfigInfoLFULogFactor struct {
+	Description     string          `json:"description"`
+	Example         int             `json:"example"`
+	Maximum         *int            `json:"maximum"`
+	Minimum         *int            `json:"minimum"`
+	RequiresRestart bool            `json:"requires_restart"`
+	Type            ConfigParamType `json:"type"`
+}
+
+type ValkeyDatabaseConfigInfoMaxmemoryPolicy struct {
+	Description     string          `json:"description"`
+	Example         string          `json:"example"`
+	Default         *string         `json:"default"`
+	RequiresRestart bool            `json:"requires_restart"`
+	Type            ConfigParamType `json:"type"`
+}
+
+type ValkeyDatabaseConfigInfoNumberOfDatabases struct {
+	Description     string          `json:"description"`
+	Example         int             `json:"example"`
+	Maximum         *int            `json:"maximum"`
+	Minimum         *int            `json:"minimum"`
+	RequiresRestart bool            `json:"requires_restart"`
+	Type            ConfigParamType `json:"type"`
+}
+
+type ValkeyDatabaseConfigInfoPersistence struct {
+	Description     string          `json:"description"`
+	Example         string          `json:"example"`
+	Default         *string         `json:"default"`
+	Enum            []string        `json:"enum"`
+	RequiresRestart bool            `json:"requires_restart"`
+	Type            ConfigParamType `json:"type"`
+}
+
+type ValkeyDatabaseConfigInfoPubsubClientOutputBufferLimit struct {
+	Description     string          `json:"description"`
+	Example         int             `json:"example"`
+	Maximum         *int            `json:"maximum"`
+	Minimum         *int            `json:"minimum"`
+	RequiresRestart bool            `json:"requires_restart"`
+	Type            ConfigParamType `json:"type"`
+}
+
+type ValkeyDatabaseConfigInfoTimeout struct {
+	Description     string          `json:"description"`
+	Example         int             `json:"example"`
+	Default         *int            `json:"default"`
+	Maximum         *int            `json:"maximum"`
+	Minimum         *int            `json:"minimum"`
 	RequiresRestart bool            `json:"requires_restart"`
 	Type            ConfigParamType `json:"type"`
 }
