@@ -1,0 +1,89 @@
+---
+version: 1
+interactions:
+- request:
+    body: '{"webhook":{"endpoint_url":"https://httpbin.org/post","authentication":{"type":"none"},"data_compression":"none","custom_headers":[{"name":"x-trace-id","value":"1234"}]}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/alert-channels/verify
+    method: POST
+  response:
+    body: '{"webhook": {"http_status": 200, "response": "{\n  \"args\": {}, \n  \"data\":
+      \"{\\\"severity\\\": \\\"Low\\\", \\\"alert_name\\\": \\\"dummy alert 1\\\",
+      \\\"alert_description\\\": \\\"dummy alert definition to verify webhook connection\\\",
+      \\\"alert_definition_id\\\": 10001, \\\"alert_criteria\\\": [{\\\"metric_name\\\":
+      \\\"Volume Write Operations sum\\\", \\\"operator\\\": \\\"<\\\", \\\"threshold\\\":
+      \\\"999999999999\\\", \\\"unit\\\": \\\"Bytes\\\", \\\"metric_value\\\": \\\"0.0
+      B\\\"}], \\\"service_type\\\": \\\"Object Storage\\\", \\\"triggered_at\\\":
+      \\\"Feb 11, 2026, 04:08 PM (UTC)\\\", \\\"account\\\": \\\"Akamai Technologies
+      - Observability\\\", \\\"resource_name\\\": \\\"test-bucket1.linodeobjects.com\\\",
+      \\\"region\\\": \\\"Singapore 2\\\", \\\"status\\\": \\\"Fired\\\"}\", \n  \"files\":
+      {}, \n  \"form\": {}, \n  \"headers\": {\n    \"Accept\": \"*/*\", \n    \"Accept-Encoding\":
+      \"gzip, deflate\", \n    \"Content-Length\": \"539\", \n    \"Content-Type\":
+      \"application/json\", \n    \"Host\": \"httpbin.org\", \n    \"User-Agent\":
+      \"python-requests/2.34.2\", \n    \"X-Amzn-Trace-Id\": \"Root=1-6ab499c0-177f016809ee60175343ce53\",
+      \n    \"X-Trace-Id\": \"1234\"\n  }, \n  \"json\": {\n    \"account\": \"Akamai
+      Technologies - Observability\", \n    \"alert_criteria\": [\n      {\n        \"metric_name\":
+      \"Volume Write Operations sum\", \n        \"metric_value\": \"0.0 B\", \n        \"operator\":
+      \"<\", \n        \"threshold\": \"999999999999\", \n        \"unit\": \"Bytes\"\n      }\n    ],
+      \n    \"alert_definition_id\": 10001, \n    \"alert_description\": \"dummy alert
+      definition to verify webhook connection\", \n    \"alert_name\": \"dummy alert
+      1\", \n    \"region\": \"Singapore 2\", \n    \"resource_name\": \"test-bucket1.linodeobjects.com\",
+      \n    \"service_type\": \"Object Storage\", \n    \"severity\": \"Low\", \n    \"status\":
+      \"Fired\", \n    \"triggered_at\": \"Feb 11, 2026, 04:08 PM (UTC)\"\n  }, \n  \"origin\":
+      \"172.232.8.14\", \n  \"url\": \"https://httpbin.org/post\"\n}\n"}}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Thu, 24 Sep 2026 03:32:16 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
+        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
+        monitor:read_write nodebalancers:read_only object_storage:read_only stackscripts:read_only
+        volumes:read_only
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""

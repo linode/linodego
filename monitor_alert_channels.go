@@ -191,12 +191,22 @@ type AlertChannelUpdateOptions struct {
 
 // AlertChannelUpdateDetailsOptions represents update details for an alert channel.
 type AlertChannelUpdateDetailsOptions struct {
-	Email *EmailChannelUpdateOptions `json:"email,omitzero"`
+	Email   *EmailChannelUpdateOptions   `json:"email,omitzero"`
+	Webhook *WebhookChannelUpdateOptions `json:"webhook,omitzero"`
 }
 
 // EmailChannelUpdateOptions represents email-specific update configuration for an alert channel.
 type EmailChannelUpdateOptions struct {
 	Usernames []string `json:"usernames,omitzero"`
+}
+
+// WebhookChannelUpdateOptions represents webhook-specific update configuration for an alert channel.
+type WebhookChannelUpdateOptions struct {
+	EndpointURL              *string                                       `json:"endpoint_url,omitzero"`
+	Authentication           *WebhookChannelAuthenticationCreateOptions    `json:"authentication,omitzero"`
+	DataCompression          *WebhookDataCompressionType                   `json:"data_compression,omitzero"`
+	ClientCertificateDetails *WebhookChannelClientCertificateCreateOptions `json:"client_certificate_details,omitzero"`
+	CustomHeaders            []WebhookChannelCustomHeader                  `json:"custom_headers,omitzero"`
 }
 
 // Alert represents an alert definition assigned to a notification channel.

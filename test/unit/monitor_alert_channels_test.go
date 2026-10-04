@@ -41,6 +41,37 @@ const (
 		"results": 1
 	}`
 
+	monitorAlertChannelListWebhookResponse = `{
+		"data": [{
+			"id": 10001,
+			"label": "Webhook Alert Channel",
+			"channel_type": "webhook",
+			"type": "user",
+			"details": {
+				"webhook": {
+					"endpoint_url": "https://example.com/test",
+					"authentication": {
+						"type": "none"
+					},
+					"data_compression": "none",
+					"custom_headers": []
+				}
+			},
+			"alerts": {
+				"url": "/monitor/alert-channels/10001/alerts",
+				"type": "alerts-definitions",
+				"alert_count": 0
+			},
+			"created": "2024-01-01T00:00:00",
+			"updated": "2024-01-01T00:00:00",
+			"created_by": "tester",
+			"updated_by": "tester"
+		}],
+		"page": 1,
+		"pages": 1,
+		"results": 1
+	}`
+
 	monitorAlertChannelCreateResponse = `{
 		"id": 10000,
 		"label": "Email Alert Channel",
@@ -121,6 +152,32 @@ const (
 		}
 	}`
 
+	monitorAlertChannelUpdateWebhookResponse = `{
+		"id": 10001,
+		"label": "Webhook Alert Channel Updated",
+		"channel_type": "webhook",
+		"type": "user",
+		"created": "2026-06-23T09:43:00",
+		"created_by": "tester",
+		"updated": "2026-06-24T09:43:00",
+		"updated_by": "tester",
+		"details": {
+			"webhook": {
+				"endpoint_url": "https://example.com/updated",
+				"authentication": {
+					"type": "none"
+				},
+				"data_compression": "gzip",
+				"custom_headers": []
+			}
+		},
+		"alerts": {
+			"alert_count": 0,
+			"type": "alert-definitions",
+			"url": "/monitor/alert-channels/10001/alerts"
+		}
+	}`
+
 	monitorAlertChannelListAlertsForChannelResponse = `{
 		"data": [
 			{
@@ -158,6 +215,30 @@ func TestListAlertChannels(t *testing.T) {
 	assert.Equal(t, "user", channel.Details.Email.RecipientType)
 	assert.Equal(t, 0, channel.Alerts.AlertCount)
 	assert.Equal(t, "/monitor/alert-channels/123/alerts", channel.Alerts.URL)
+}
+
+func TestListAlertChannelsWebhook(t *testing.T) {
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockGet("monitor/alert-channels", json.RawMessage(monitorAlertChannelListWebhookResponse))
+
+	channels, err := base.Client.ListAlertChannels(context.Background(), nil)
+	require.NoError(t, err)
+	require.Len(t, channels, 1)
+
+	channel := channels[0]
+	assert.Equal(t, 10001, channel.ID)
+	assert.Equal(t, "Webhook Alert Channel", channel.Label)
+	assert.Equal(t, linodego.WebhookAlertNotification, channel.ChannelType)
+	assert.Equal(t, linodego.UserAlertChannel, channel.Type)
+	require.NotNil(t, channel.Details.Webhook)
+	assert.Equal(t, "https://example.com/test", channel.Details.Webhook.EndpointURL)
+	assert.Equal(t, linodego.WebhookAuthenticationTypeNone, channel.Details.Webhook.Authentication.Type)
+	assert.Equal(t, linodego.WebhookDataCompressionNone, channel.Details.Webhook.DataCompression)
+	assert.Equal(t, 0, channel.Alerts.AlertCount)
+	assert.Equal(t, "/monitor/alert-channels/10001/alerts", channel.Alerts.URL)
 }
 
 func TestCreateAlertChannel(t *testing.T) {
@@ -268,6 +349,17 @@ func TestDeleteAlertChannel(t *testing.T) {
 	assert.NoError(t, err)
 }
 
+func TestDeleteAlertChannelWebhook(t *testing.T) {
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockDelete("monitor/alert-channels/10001", nil)
+
+	err := base.Client.DeleteAlertChannel(context.Background(), 10001)
+	assert.NoError(t, err)
+}
+
 func TestUpdateAlertChannel(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)
@@ -294,6 +386,40 @@ func TestUpdateAlertChannel(t *testing.T) {
 	assert.Equal(t, 0, channel.Alerts.AlertCount)
 	assert.Equal(t, "/monitor/alert-channels/10000/alerts", channel.Alerts.URL)
 }
+func TestUpdateAlertChannelWebhook(t *testing.T) {
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockPut("monitor/alert-channels/10001", json.RawMessage(monitorAlertChannelUpdateWebhookResponse))
+
+	dataCompression := linodego.WebhookDataCompressionGZIP
+	opts := linodego.AlertChannelUpdateOptions{
+		Label: linodego.Pointer("Webhook Alert Channel Updated"),
+		Details: &linodego.AlertChannelUpdateDetailsOptions{
+			Webhook: &linodego.WebhookChannelUpdateOptions{
+				EndpointURL:     linodego.Pointer("https://example.com/updated"),
+				DataCompression: &dataCompression,
+			},
+		},
+	}
+
+	channel, err := base.Client.UpdateAlertChannel(context.Background(), 10001, opts)
+	require.NoError(t, err)
+	require.NotNil(t, channel)
+
+	assert.Equal(t, 10001, channel.ID)
+	assert.Equal(t, "Webhook Alert Channel Updated", channel.Label)
+	assert.Equal(t, linodego.WebhookAlertNotification, channel.ChannelType)
+	assert.Equal(t, linodego.UserAlertChannel, channel.Type)
+	require.NotNil(t, channel.Details.Webhook)
+	assert.Equal(t, "https://example.com/updated", channel.Details.Webhook.EndpointURL)
+	assert.Equal(t, linodego.WebhookAuthenticationTypeNone, channel.Details.Webhook.Authentication.Type)
+	assert.Equal(t, linodego.WebhookDataCompressionGZIP, channel.Details.Webhook.DataCompression)
+	assert.Equal(t, 0, channel.Alerts.AlertCount)
+	assert.Equal(t, "/monitor/alert-channels/10001/alerts", channel.Alerts.URL)
+}
+
 func TestGetAlertChannel(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)

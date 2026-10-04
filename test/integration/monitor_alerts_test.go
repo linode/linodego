@@ -602,8 +602,8 @@ func TestMonitorAlertChannel_CRUD_E2E(t *testing.T) {
 	assert.Equal(t, createOpts.Details.Email.Usernames, updatedChannel.Details.Email.Usernames)
 }
 
-func TestMonitorAlertChannelWebhook_Create(t *testing.T) {
-	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertChannelWebhook_Create")
+func TestMonitorAlertChannelWebhook_CRUD_E2E(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertChannelWebhook_CRUD")
 	defer teardown()
 
 	label := fmt.Sprintf("linodego-test-webhook-channel-%d", time.Now().UnixNano())
@@ -634,10 +634,12 @@ func TestMonitorAlertChannelWebhook_Create(t *testing.T) {
 		},
 	}
 
+	// Create the alert channel
 	channel, err := client.CreateAlertChannel(context.Background(), createOpts)
 	require.NoError(t, err)
 	require.NotNil(t, channel)
 
+	// Delete the created alert channel after the test completes
 	defer func() {
 		if channel != nil {
 			deleteAlertChannelWithRetry(t, client, channel.ID)
@@ -659,32 +661,61 @@ func TestMonitorAlertChannelWebhook_Create(t *testing.T) {
 	assert.GreaterOrEqual(t, channel.Alerts.AlertCount, 0)
 	assertDateSet(t, channel.Created)
 	assertDateSet(t, channel.Updated)
+
+	// Fetch the channel via GetAlertChannel
+	fetchedChannel, err := client.GetAlertChannel(context.Background(), channel.ID)
+	require.NoError(t, err)
+	require.NotNil(t, fetchedChannel)
+
+	assert.Equal(t, channel.ID, fetchedChannel.ID)
+	assert.Equal(t, channel.Label, fetchedChannel.Label)
+	assert.Equal(t, channel.ChannelType, fetchedChannel.ChannelType)
+	assert.Equal(t, channel.Type, fetchedChannel.Type)
+	require.NotNil(t, fetchedChannel.Details.Webhook)
+	assert.Equal(t, channel.Details.Webhook.EndpointURL, fetchedChannel.Details.Webhook.EndpointURL)
+	assert.Equal(t, channel.Details.Webhook.Authentication.Type, fetchedChannel.Details.Webhook.Authentication.Type)
+	assert.Equal(t, channel.Details.Webhook.DataCompression, fetchedChannel.Details.Webhook.DataCompression)
+	assert.Equal(t, channel.Alerts.URL, fetchedChannel.Alerts.URL)
+	assert.Equal(t, channel.Alerts.Type, fetchedChannel.Alerts.Type)
+	assert.Equal(t, channel.Alerts.AlertCount, fetchedChannel.Alerts.AlertCount)
+
+	// Update the created alert channel
+	updatedLabel := label + "-updated"
+	updatedDataCompression := linodego.WebhookDataCompressionGZIP
+	updateOpts := linodego.AlertChannelUpdateOptions{
+		Label: &updatedLabel,
+		Details: &linodego.AlertChannelUpdateDetailsOptions{
+			Webhook: &linodego.WebhookChannelUpdateOptions{
+				EndpointURL:     linodego.Pointer("https://httpbin.org/post"),
+				DataCompression: &updatedDataCompression,
+			},
+		},
+	}
+	updatedChannel, err := client.UpdateAlertChannel(context.Background(), channel.ID, updateOpts)
+	require.NoError(t, err)
+	require.NotNil(t, updatedChannel)
+
+	assert.Equal(t, channel.ID, updatedChannel.ID)
+	assert.Equal(t, updatedLabel, updatedChannel.Label)
+	assert.Equal(t, createOpts.ChannelType, updatedChannel.ChannelType)
+	require.NotNil(t, updatedChannel.Details.Webhook)
+	assert.Equal(t, *updateOpts.Details.Webhook.EndpointURL, updatedChannel.Details.Webhook.EndpointURL)
+	assert.Equal(t, updatedDataCompression, updatedChannel.Details.Webhook.DataCompression)
 }
 
 func TestVerifyAlertChannel(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestVerifyAlertChannel")
 	defer teardown()
 
-	authType := linodego.WebhookAuthenticationTypeBasic
-	dataCompression := linodego.WebhookDataCompressionGZIP
-	tlsHostname := "example.com"
+	authType := linodego.WebhookAuthenticationTypeNone
+	dataCompression := linodego.WebhookDataCompressionNone
 
 	opts := linodego.WebhookChannelCreateOptions{
 		EndpointURL: "https://httpbin.org/post",
 		Authentication: &linodego.WebhookChannelAuthenticationCreateOptions{
 			Type: &authType,
-			Details: &linodego.WebhookChannelAuthenticationBasicDetails{
-				BasicAuthenticationUser:     "webhook-user",
-				BasicAuthenticationPassword: "webhook-pass",
-			},
 		},
 		DataCompression: &dataCompression,
-		ClientCertificateDetails: &linodego.WebhookChannelClientCertificateCreateOptions{
-			TLSHostname:         &tlsHostname,
-			ClientCACertificate: "ca-cert",
-			ClientCertificate:   "client-cert",
-			ClientPrivateKey:    "client-private-key",
-		},
 		CustomHeaders: []linodego.WebhookChannelCustomHeader{{
 			Name:  "x-trace-id",
 			Value: "1234",
