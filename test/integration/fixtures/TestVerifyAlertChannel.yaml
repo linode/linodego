@@ -27,7 +27,7 @@ interactions:
       {}, \n  \"form\": {}, \n  \"headers\": {\n    \"Accept\": \"*/*\", \n    \"Accept-Encoding\":
       \"gzip, deflate\", \n    \"Content-Length\": \"539\", \n    \"Content-Type\":
       \"application/json\", \n    \"Host\": \"httpbin.org\", \n    \"User-Agent\":
-      \"python-requests/2.34.2\", \n    \"X-Amzn-Trace-Id\": \"Root=1-6ab499c0-177f016809ee60175343ce53\",
+      \"python-requests/2.34.2\", \n    \"X-Amzn-Trace-Id\": \"Root=1-6ac25cc2-4a8c04a9294955a10c618866\",
       \n    \"X-Trace-Id\": \"1234\"\n  }, \n  \"json\": {\n    \"account\": \"Akamai
       Technologies - Observability\", \n    \"alert_criteria\": [\n      {\n        \"metric_name\":
       \"Volume Write Operations sum\", \n        \"metric_value\": \"0.0 B\", \n        \"operator\":
@@ -60,7 +60,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 24 Sep 2026 03:32:16 GMT
+      - Sun, 04 Oct 2026 14:03:46 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -76,10 +76,7 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
-        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
-        monitor:read_write nodebalancers:read_only object_storage:read_only stackscripts:read_only
-        volumes:read_only
+      - '*'
       X-Ratelimit-Limit:
       - "1840"
       X-Xss-Protection:

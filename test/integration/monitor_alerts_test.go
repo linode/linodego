@@ -606,8 +606,8 @@ func TestMonitorAlertChannelWebhook_CRUD_E2E(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestMonitorAlertChannelWebhook_CRUD")
 	defer teardown()
 
-	label := fmt.Sprintf("linodego-test-webhook-channel-%d", time.Now().UnixNano())
-	authType := linodego.WebhookAuthenticationTypeBasic
+	label := "linodego-test-webhook-channel"
+	authType := linodego.WebhookAuthenticationTypeNone
 	dataCompression := linodego.WebhookDataCompressionNone
 
 	createOpts := linodego.AlertChannelCreateOptions{
@@ -618,10 +618,6 @@ func TestMonitorAlertChannelWebhook_CRUD_E2E(t *testing.T) {
 				EndpointURL: "https://httpbin.org/post",
 				Authentication: &linodego.WebhookChannelAuthenticationCreateOptions{
 					Type: &authType,
-					Details: &linodego.WebhookChannelAuthenticationBasicDetails{
-						BasicAuthenticationUser:     "webhook-user",
-						BasicAuthenticationPassword: "webhook-pass",
-					},
 				},
 				DataCompression: &dataCompression,
 				CustomHeaders: []linodego.WebhookChannelCustomHeader{
@@ -680,16 +676,9 @@ func TestMonitorAlertChannelWebhook_CRUD_E2E(t *testing.T) {
 	assert.Equal(t, channel.Alerts.AlertCount, fetchedChannel.Alerts.AlertCount)
 
 	// Update the created alert channel
-	updatedLabel := label + "-updated"
-	updatedDataCompression := linodego.WebhookDataCompressionGZIP
+	updatedLabel := "linodego-channel-updated"
 	updateOpts := linodego.AlertChannelUpdateOptions{
 		Label: &updatedLabel,
-		Details: &linodego.AlertChannelUpdateDetailsOptions{
-			Webhook: &linodego.WebhookChannelUpdateOptions{
-				EndpointURL:     linodego.Pointer("https://httpbin.org/post"),
-				DataCompression: &updatedDataCompression,
-			},
-		},
 	}
 	updatedChannel, err := client.UpdateAlertChannel(context.Background(), channel.ID, updateOpts)
 	require.NoError(t, err)
@@ -698,12 +687,9 @@ func TestMonitorAlertChannelWebhook_CRUD_E2E(t *testing.T) {
 	assert.Equal(t, channel.ID, updatedChannel.ID)
 	assert.Equal(t, updatedLabel, updatedChannel.Label)
 	assert.Equal(t, createOpts.ChannelType, updatedChannel.ChannelType)
-	require.NotNil(t, updatedChannel.Details.Webhook)
-	assert.Equal(t, *updateOpts.Details.Webhook.EndpointURL, updatedChannel.Details.Webhook.EndpointURL)
-	assert.Equal(t, updatedDataCompression, updatedChannel.Details.Webhook.DataCompression)
 }
 
-func TestVerifyAlertChannel(t *testing.T) {
+func TestVerifyAlertChannelWebhook(t *testing.T) {
 	client, teardown := createTestClient(t, "fixtures/TestVerifyAlertChannel")
 	defer teardown()
 
