@@ -553,7 +553,7 @@ func TestMonitorAlertChannel_CRUD_E2E(t *testing.T) {
 	assert.Equal(t, linodego.UserAlertChannel, channel.Type)
 
 	require.NotNil(t, channel.Details.Email)
-	assert.Equal(t, createOpts.Details.Email.Usernames, channel.Details.Email.Usernames)
+	assert.ElementsMatch(t, createOpts.Details.Email.Usernames, channel.Details.Email.Usernames)
 	assert.Equal(t, recipientType, channel.Details.Email.RecipientType)
 
 	assert.NotEmpty(t, channel.Alerts.URL)
@@ -573,7 +573,7 @@ func TestMonitorAlertChannel_CRUD_E2E(t *testing.T) {
 	assert.Equal(t, channel.ChannelType, fetchedChannel.ChannelType)
 	assert.Equal(t, channel.Type, fetchedChannel.Type)
 	require.NotNil(t, fetchedChannel.Details.Email)
-	assert.Equal(t, channel.Details.Email.Usernames, fetchedChannel.Details.Email.Usernames)
+	assert.ElementsMatch(t, channel.Details.Email.Usernames, fetchedChannel.Details.Email.Usernames)
 	assert.Equal(t, channel.Details.Email.RecipientType, fetchedChannel.Details.Email.RecipientType)
 	assert.Equal(t, channel.Alerts.URL, fetchedChannel.Alerts.URL)
 	assert.Equal(t, channel.Alerts.Type, fetchedChannel.Alerts.Type)
@@ -597,7 +597,7 @@ func TestMonitorAlertChannel_CRUD_E2E(t *testing.T) {
 	assert.Equal(t, updatedLabel, updatedChannel.Label)
 	assert.Equal(t, createOpts.ChannelType, updatedChannel.ChannelType)
 	require.NotNil(t, updatedChannel.Details.Email)
-	assert.Equal(t, createOpts.Details.Email.Usernames, updatedChannel.Details.Email.Usernames)
+	assert.ElementsMatch(t, createOpts.Details.Email.Usernames, updatedChannel.Details.Email.Usernames)
 }
 
 func TestMonitorAlertChannel_ListAlerts(t *testing.T) {
