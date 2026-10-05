@@ -129,7 +129,7 @@ func TestNATGateway_AssignReservedIP(t *testing.T) {
 	)
 	reservedIP := setupNATGatewayReservedIP(t, client, gatewayCreated.Region)
 
-	_, err := client.NATGatewayAddAddress(
+	address, err := client.NATGatewayAddAddress(
 		context.Background(),
 		gatewayCreated.ID,
 		linodego.NATGatewayAddAddressOptions{
@@ -137,13 +137,14 @@ func TestNATGateway_AssignReservedIP(t *testing.T) {
 		},
 	)
 	require.NoErrorf(t, err, "Error adding Reserved IP address to NAT Gateway: %v", err)
+	verifyNATGatewayAddress(t, address, reservedIP.Address)
 
 	addresses, err := client.NATGatewayListAddresses(context.Background(), gatewayCreated.ID, nil)
 	require.NoErrorf(t, err, "Error retrieving list of NAT Gateway addresses: %v", err)
 	require.Len(t, addresses, 1)
 	verifyNATGatewayAddress(t, &addresses[0], reservedIP.Address)
 
-	address, err := client.NATGatewayGetAddress(context.Background(), gatewayCreated.ID, reservedIP.Address)
+	address, err = client.NATGatewayGetAddress(context.Background(), gatewayCreated.ID, reservedIP.Address)
 	require.NoErrorf(t, err, "Error retrieving a NAT Gateway address: %v", err)
 	verifyNATGatewayAddress(t, address, reservedIP.Address)
 
