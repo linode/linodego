@@ -6,7 +6,10 @@ import (
 	"testing"
 
 	"github.com/linode/linodego/v2"
+	. "github.com/linode/linodego/v2"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
+	"k8s.io/apimachinery/pkg/util/rand"
 )
 
 var (
@@ -198,7 +201,7 @@ func TestNodeBalancer_UDP(t *testing.T) {
 		"fixtures/TestNodeBalancer_UDP",
 		[]nbModifier{
 			func(options *linodego.NodeBalancerCreateOptions) {
-				options.ClientUDPSessThrottle = linodego.Pointer(5)
+				options.ClientUDPSessThrottle = new(5)
 			},
 		},
 	)
@@ -208,6 +211,73 @@ func TestNodeBalancer_UDP(t *testing.T) {
 	}
 
 	require.Equal(t, 5, nodebalancer.ClientUDPSessThrottle)
+}
+
+func TestCreateNodeBalancerTypePremiumVPCBackendConnectivity(t *testing.T) {
+	client, fixtureTeardown := createTestClient(t, "fixtures/TestNodeBalancer_TypePremiumVPCBackendConnectivity")
+	defer fixtureTeardown()
+
+	testRegion := getRegionsWithCaps(t, client, []linodego.RegionCapability{
+		linodego.CapabilityNodeBalancers,
+		linodego.CapabilityPremiumNodeBalancer,
+	})[0]
+	_, vpcSubnet, vpcWithSubnetTeardown, err := createVPCWithSubnet(
+		t,
+		client,
+		func(client *Client, options *VPCCreateOptions) {
+			options.Region = testRegion
+		},
+	)
+	createOpts := linodego.NodeBalancerCreateOptions{
+		Label:  new("test-"+rand.String(10)),
+		Region: testRegion,
+		ClientConnThrottle: &clientConnThrottle,
+		FirewallID:         GetFirewallID(),
+		Type:               linodego.NBTypePremium,
+		BackendConnectivity: new(linodego.NBBackendConnectivityVPC),
+		VPCs: []NodeBalancerVPCOptions{
+			{
+				IPv4Range: "192.168.0.64/30",
+				IPv6Range: "",
+				SubnetID:  vpcSubnet.ID,
+			},
+		},
+	}
+
+	nodebalancer, err := client.CreateNodeBalancer(context.Background(), createOpts)
+	require.NoError(t, err)
+
+	t.Cleanup(func() {
+		require.NoError(t, client.DeleteNodeBalancer(context.Background(), nodebalancer.ID))
+		vpcWithSubnetTeardown()
+	})
+
+	require.Equal(t, linodego.NBTypePremium, nodebalancer.Type)
+	require.Equal(t, createOpts.Region, nodebalancer.Region)
+	assert.Equal(t, "vpc", string(*nodebalancer.BackendConnectivity))
+	assert.Contains(t, *nodebalancer.BackendIPv6Prefix, "::/96")
+	assertDateSet(t, nodebalancer.Created)
+	assertDateSet(t, nodebalancer.Updated)
+}
+
+func TestExpectedErrorCreateNodeBalancerTypePremiumIPv4BackendConnectivity(t *testing.T) {
+	client, fixtureTeardown := createTestClient(t, "fixtures/TestNodeBalancer_TypePremiumIPv4BackendConnectivity")
+	defer fixtureTeardown()
+
+	testRegion := getRegionsWithCaps(t, client, []linodego.RegionCapability{
+		linodego.CapabilityNodeBalancers,
+		linodego.CapabilityPremiumNodeBalancer,
+	})[0]
+	createOpts := linodego.NodeBalancerCreateOptions{
+		Label:  new("test-"+rand.String(10)),
+		Region: testRegion,
+		ClientConnThrottle: &clientConnThrottle,
+		Type:               linodego.NBTypePremium,
+		BackendConnectivity: new(linodego.NBBackendConnectivityLegacy),
+	}
+
+	_, err := client.CreateNodeBalancer(context.Background(), createOpts)
+	require.Error(t, err)
 }
 
 type nbModifier func(options *linodego.NodeBalancerCreateOptions)
