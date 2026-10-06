@@ -128,9 +128,7 @@ func flattenQueryStruct(val any) (map[string]string, error) {
 
 	valType := reflectVal.Type()
 
-	for i := range valType.NumField() {
-		currentField := valType.Field(i)
-
+	for currentField := range valType.Fields() {
 		queryTag, ok := currentField.Tag.Lookup("query")
 		// Skip untagged fields
 		if !ok {
