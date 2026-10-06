@@ -45,7 +45,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 16 Jul 2026 18:20:01 GMT
+      - Thu, 16 Jul 2026 17:19:34 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -74,7 +74,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"channel_type":"email","details":{"email":{"usernames":["test_user1","test_user2"],"recipient_type":"user"}},"label":"linodego-alert-channel-1784226001847126351"}'
+    body: '{"channel_type":"email","details":{"email":{"usernames":["test_user1","test_user2"],"recipient_type":"user"}},"label":"linodego-sdk-test-alert-channel-listalerts"}'
     form: {}
     headers:
       Accept:
@@ -86,7 +86,12 @@ interactions:
     url: https://api.linode.com/v4beta/monitor/alert-channels
     method: POST
   response:
-    body: '{"id":10316,"label":"linodego-alert-channel-1784226001847126351","channel_type":"email","type":"user","details":{"email":{"usernames":["test_user1","test_user2"],"recipient_type":"user"}},"alerts":{"url":"/monitor/alert-channels/10316/alerts","type":"alerts-definitions","alert_count":0},"created":"2018-01-02T03:04:05","updated":"2018-01-02T03:04:05","created_by":"tester","updated_by":"tester"}'
+    body: '{"id": 10309, "label": "linodego-sdk-test-alert-channel-listalerts", "channel_type":
+      "email", "type": "user", "details": {"email": {"usernames": ["test_user1",
+      "test_user2"], "recipient_type": "user"}}, "alerts": {"url": "/monitor/alert-channels/10309/alerts",
+      "type": "alerts-definitions", "alert_count": 0}, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "created_by": "tester", "updated_by":
+      "tester"}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -111,7 +116,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 16 Jul 2026 18:20:02 GMT
+      - Thu, 16 Jul 2026 17:19:35 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -138,8 +143,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-alert-definition-idempotency-1784226002893832314","severity":2,"channel_ids":[10316],"rule_criteria":{"rules":[{"aggregate_function":"avg","dimension_filters":[{"dimension_label":"node_type","operator":"eq","value":"primary"}],"metric":"memory_usage","operator":"gt","threshold":90}]},"trigger_conditions":{"criteria_condition":"ALL","evaluation_period_seconds":300,"polling_interval_seconds":300,"trigger_occurrences":1},"description":"Test
-      alert definition creation with idempotency"}'
+    body: '{"label":"go-integration-test-alert","severity":2,"channel_ids":[10309],"rule_criteria":{"rules":[{"aggregate_function":"avg","metric":"memory_usage","operator":"gt","threshold":90}]},"trigger_conditions":{"criteria_condition":"ALL","evaluation_period_seconds":300,"polling_interval_seconds":300,"trigger_occurrences":1}}'
     form: {}
     headers:
       Accept:
@@ -151,7 +155,18 @@ interactions:
     url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions
     method: POST
   response:
-    body: '{"id":11639,"label":"go-test-alert-definition-idempotency-1784226002893832314","description":"Test alert definition creation with idempotency","service_type":"dbaas","type":"user","scope":"entity","class":null,"regions":[],"status":"provisioning","severity":2,"rule_criteria":{"rules":[{"label":"Memory Usage","metric":"memory_usage","unit":"percent","aggregate_function":"avg","operator":"gt","threshold":90,"dimension_filters":[{"label":"Node Type","dimension_label":"node_type","operator":"eq","value":"primary"}]}]},"alert_channels":[{"id":10316,"label":"linodego-alert-channel-1784226001847126351","url":"/monitor/alert-channels/10316","type":"alert-channels"}],"trigger_conditions":{"criteria_condition":"ALL","polling_interval_seconds":300,"evaluation_period_seconds":300,"trigger_occurrences":1},"created":"2018-01-02T03:04:05","updated":"2018-01-02T03:04:05","created_by":"tester","updated_by":"tester","group_by":["entity_id"],"entities":{"url":"/monitor/services/dbaas/alert-definitions/11639/entities","has_more_resources":false,"count":0}}'
+    body: '{"id": 11632, "label": "go-integration-test-alert", "description": null,
+      "service_type": "dbaas", "type": "user", "scope": "entity", "class": null, "regions":
+      [], "status": "provisioning", "severity": 2, "rule_criteria": {"rules": [{"label":
+      "Memory Usage", "metric": "memory_usage", "unit": "percent", "aggregate_function":
+      "avg", "operator": "gt", "threshold": 90, "dimension_filters": []}]}, "alert_channels":
+      [{"id": 10309, "label": "linodego-sdk-test-alert-channel-listalerts", "url":
+      "/monitor/alert-channels/10309", "type": "alert-channels"}], "trigger_conditions":
+      {"criteria_condition": "ALL", "polling_interval_seconds": 300, "evaluation_period_seconds":
+      300, "trigger_occurrences": 1}, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "created_by": "tester", "updated_by":
+      "tester", "group_by": ["entity_id"], "entities": {"url": "/monitor/services/dbaas/alert-definitions/11632/entities",
+      "has_more_resources": false, "count": 0}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -174,7 +189,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 16 Jul 2026 18:20:04 GMT
+      - Thu, 16 Jul 2026 17:19:36 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -202,8 +217,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-alert-definition-idempotency-1784226002893832314","severity":2,"channel_ids":[10316],"rule_criteria":{"rules":[{"aggregate_function":"avg","dimension_filters":[{"dimension_label":"node_type","operator":"eq","value":"primary"}],"metric":"memory_usage","operator":"gt","threshold":90}]},"trigger_conditions":{"criteria_condition":"ALL","evaluation_period_seconds":300,"polling_interval_seconds":300,"trigger_occurrences":1},"description":"Test
-      alert definition creation with idempotency"}'
+    body: ""
     form: {}
     headers:
       Accept:
@@ -212,35 +226,50 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions
-    method: POST
+    url: https://api.linode.com/v4beta/monitor/alert-channels/10309/alerts?page=1
+    method: GET
   response:
-    body: '{"errors": [{"reason": "An alert with this label already exists", "field":
-      "label"}]}'
+    body: '{"pages": 1, "page": 1, "results": 1, "data": [{"id": 11632, "label": "go-integration-test-alert",
+      "url": "/monitor/services/dbaas/alerts-definitions/11632", "type": "alerts-definitions",
+      "service_type": "dbaas"}]}'
     headers:
+      Access-Control-Allow-Credentials:
+      - "true"
       Access-Control-Allow-Headers:
       - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
       Access-Control-Allow-Methods:
       - HEAD, GET, OPTIONS, POST, PUT, DELETE
       Access-Control-Allow-Origin:
       - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
       Akamai-Internal-Account:
       - '*'
       Cache-Control:
       - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
       Content-Length:
-      - "85"
+      - "214"
+      Content-Security-Policy:
+      - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Thu, 16 Jul 2026 18:20:04 GMT
+      - Thu, 16 Jul 2026 17:19:36 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
       - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
       X-Accepted-Oauth-Scopes:
-      - databases:read_only
+      - monitor:read_only
+      X-Content-Type-Options:
+      - nosniff
       X-Frame-Options:
+      - DENY
       - DENY
       X-Oauth-Scopes:
       - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
@@ -249,8 +278,10 @@ interactions:
         volumes:read_only
       X-Ratelimit-Limit:
       - "1840"
-    status: 400 Bad Request
-    code: 400
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
     duration: ""
 - request:
     body: ""
@@ -262,7 +293,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/11639
+    url: https://api.linode.com/v4beta/monitor/services/dbaas/alert-definitions/11632
     method: DELETE
   response:
     body: '{}'
@@ -290,7 +321,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 16 Jul 2026 18:20:05 GMT
+      - Thu, 16 Jul 2026 17:19:38 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -326,7 +357,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/monitor/alert-channels/10316
+    url: https://api.linode.com/v4beta/monitor/alert-channels/10309
     method: DELETE
   response:
     body: '{}'
@@ -354,7 +385,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 16 Jul 2026 18:20:06 GMT
+      - Thu, 16 Jul 2026 17:19:38 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
