@@ -52,8 +52,12 @@ func verifyNFSSpace(t *testing.T, space *linodego.NFSSpace) {
 }
 
 func TestNFSSpace_Create_smoke(t *testing.T) {
-	client, space := createNFSSpace(t, "fixtures/TestNFSSpace_Create")
+	_, space := createNFSSpace(t, "fixtures/TestNFSSpace_Create")
 	verifyNFSSpace(t, space)
+}
+
+func TestNFSSpace_Get(t *testing.T) {
+	client, space := createNFSSpace(t, "fixtures/TestNFSSpace_Get")
 
 	spaceGet, err := client.GetNFSSpace(context.Background(), space.ID)
 	require.NoErrorf(t, err, "Error retrieving NFS Space: %v", err)
