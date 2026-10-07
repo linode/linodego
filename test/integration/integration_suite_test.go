@@ -118,28 +118,27 @@ func testRecorder(t *testing.T, fixturesYaml string, testingMode recorder.Mode, 
 		// keys are available to test code during recording (e.g. for creating a
 		// LogsDestination that requires valid object-storage credentials).
 
-		// Object Storage access_key / secret_key (response and request bodies)
-		re := regexp.MustCompile(`"access_key":\s*"[^"]*"`)
-		i.Response.Body = re.ReplaceAllString(i.Response.Body, `"access_key": "[SANITIZED]"`)
-		i.Request.Body = re.ReplaceAllString(i.Request.Body, `"access_key": "[SANITIZED]"`)
-		re = regexp.MustCompile(`"secret_key":\s*"[^"]*"`)
-		i.Response.Body = re.ReplaceAllString(i.Response.Body, `"secret_key": "[SANITIZED]"`)
-		i.Request.Body = re.ReplaceAllString(i.Request.Body, `"secret_key": "[SANITIZED]"`)
+		// LogsDestination fields that may contain sensitive information
+		for _, field := range []string{
+			"access_key",
+			"secret_key",
+			"access_key_id",
+			"access_key_secret",
+			"basic_authentication_user",
+			"basic_authentication_password",
+			"created_by",
+			"updated_by",
+			"client_ca_certificate",
+			"client_certificate",
+			"client_private_key",
+		} {
+			re := regexp.MustCompile(fmt.Sprintf(`"%s":\s*"([^"\\]|\\.)*"`, field))
+			replacement := fmt.Sprintf(`"%s": "[SANITIZED]"`, field)
+			i.Response.Body = re.ReplaceAllString(i.Response.Body, replacement)
+			i.Request.Body = re.ReplaceAllString(i.Request.Body, replacement)
+		}
 
-		// LogsDestination credentials (access_key_id / access_key_secret)
-		re = regexp.MustCompile(`"access_key_id":\s*"[^"]*"`)
-		i.Response.Body = re.ReplaceAllString(i.Response.Body, `"access_key_id": "[SANITIZED]"`)
-		i.Request.Body = re.ReplaceAllString(i.Request.Body, `"access_key_id":"[SANITIZED]"`)
-		re = regexp.MustCompile(`"access_key_secret":\s*"[^"]*"`)
-		i.Response.Body = re.ReplaceAllString(i.Response.Body, `"access_key_secret": "[SANITIZED]"`)
-		i.Request.Body = re.ReplaceAllString(i.Request.Body, `"access_key_secret":"[SANITIZED]"`)
-
-		// Custom HTTPS basic authentication password
-		re = regexp.MustCompile(`"basic_authentication_password":\s*"[^"]*"`)
-		i.Response.Body = re.ReplaceAllString(i.Response.Body, `"basic_authentication_password": "[SANITIZED]"`)
-		i.Request.Body = re.ReplaceAllString(i.Request.Body, `"basic_authentication_password":"[SANITIZED]"`)
-
-		re = regexp.MustCompile("AWSAccessKeyId=[[:alnum:]]{20}")
+		re := regexp.MustCompile("AWSAccessKeyId=[[:alnum:]]{20}")
 		i.Response.Body = re.ReplaceAllString(i.Response.Body, "AWSAccessKeyID=SANITIZED")
 		i.Request.URL = re.ReplaceAllString(i.Request.URL, "AWSAccessKeyID=SANITIZED")
 		return nil
