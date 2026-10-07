@@ -84,11 +84,11 @@ func TestNFSSpace_List(t *testing.T) {
 
 func TestNFSSpace_Update(t *testing.T) {
 	client, space, _ := setupNFSSpace(t, "fixtures/TestNFSSpace_Update")
-	updateOpts := linodego.NFSSpaceUpdateOptions{
-		Label:       linodego.Pointer(space.Label + "-updated"),
-		Description: linodego.Pointer("Description updated"),
-		Tags:        linodego.Pointer([]string{"updated"}),
-	}
+
+	updateOpts := space.GetUpdateOptions()
+	updateOpts.Label = linodego.Pointer(space.Label + "-updated")
+	updateOpts.Description = linodego.Pointer("Description updated")
+	updateOpts.Tags = linodego.Pointer([]string{"updated"})
 
 	spaceUpdate, err := client.UpdateNFSSpace(context.Background(), space.ID, updateOpts)
 	require.NoErrorf(t, err, "Error updating NFS Space: %v", err)
