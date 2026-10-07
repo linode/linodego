@@ -9,20 +9,22 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-var TestNFSSpaceCreateOptions = linodego.NFSSpaceCreateOptions{
-	Label:       "go-test-nfs-space-" + randLabel(),
-	Description: linodego.Pointer("Test description"),
-	Tags:        linodego.Pointer([]string{"testing"}),
+func getNFSSpaceCreateOptions() linodego.NFSSpaceCreateOptions {
+	return linodego.NFSSpaceCreateOptions{
+		Label:       "go-test-nfs-space-" + randLabel(),
+		Description: linodego.Pointer("Test description"),
+		Tags:        linodego.Pointer([]string{"testing"}),
+	}
 }
 
 func createNFSSpace(
 	t *testing.T,
 	fixtureYaml string,
 	modifiers ...func(opts *linodego.NFSSpaceCreateOptions),
-) (*linodego.Client, *linodego.NFSSpace) {
+) (*linodego.Client, *linodego.NFSSpace, linodego.NFSSpaceCreateOptions) {
 	t.Helper()
 	client, fixtureTeardown := createTestClient(t, fixtureYaml)
-	createOpts := TestNFSSpaceCreateOptions
+	createOpts := getNFSSpaceCreateOptions()
 
 	for _, modifier := range modifiers {
 		modifier(&createOpts)
@@ -38,34 +40,34 @@ func createNFSSpace(
 		fixtureTeardown()
 	})
 
-	return client, space
+	return client, space, createOpts
 }
 
-func verifyNFSSpace(t *testing.T, space *linodego.NFSSpace) {
+func verifyNFSSpace(t *testing.T, space *linodego.NFSSpace, createOpts linodego.NFSSpaceCreateOptions) {
 	t.Helper()
-	assert.Equal(t, TestNFSSpaceCreateOptions.Label, space.Label)
-	assert.Equal(t, TestNFSSpaceCreateOptions.Description, space.Description)
-	assert.Equal(t, TestNFSSpaceCreateOptions.Tags, linodego.Pointer(space.Tags))
+	assert.Equal(t, createOpts.Label, space.Label)
+	assert.Equal(t, createOpts.Description, space.Description)
+	assert.Equal(t, createOpts.Tags, linodego.Pointer(space.Tags))
 	assert.NotNil(t, space.Status)
 	assertDateSet(t, space.Created)
 	assertDateSet(t, space.Updated)
 }
 
 func TestNFSSpace_Create_smoke(t *testing.T) {
-	_, space := createNFSSpace(t, "fixtures/TestNFSSpace_Create")
-	verifyNFSSpace(t, space)
+	_, space, createOpts := createNFSSpace(t, "fixtures/TestNFSSpace_Create")
+	verifyNFSSpace(t, space, createOpts)
 }
 
 func TestNFSSpace_Get(t *testing.T) {
-	client, space := createNFSSpace(t, "fixtures/TestNFSSpace_Get")
+	client, space, createOpts := createNFSSpace(t, "fixtures/TestNFSSpace_Get")
 
 	spaceGet, err := client.GetNFSSpace(context.Background(), space.ID)
 	require.NoErrorf(t, err, "Error retrieving NFS Space: %v", err)
-	verifyNFSSpace(t, spaceGet)
+	verifyNFSSpace(t, spaceGet, createOpts)
 }
 
 func TestNFSSpace_List(t *testing.T) {
-	client, space := createNFSSpace(t, "fixtures/TestNFSSpace_List")
+	client, space, createOpts := createNFSSpace(t, "fixtures/TestNFSSpace_List")
 
 	f := linodego.Filter{}
 	f.AddField(linodego.Eq, "label", space.Label)
@@ -77,11 +79,11 @@ func TestNFSSpace_List(t *testing.T) {
 	spaceList, err := client.ListNFSSpaces(context.Background(), &linodego.ListOptions{Filter: string(filter)})
 	require.NoErrorf(t, err, "Error listing NFS Spaces: %v", err)
 	assert.Len(t, spaceList, 1)
-	verifyNFSSpace(t, linodego.Pointer(spaceList[0]))
+	verifyNFSSpace(t, linodego.Pointer(spaceList[0]), createOpts)
 }
 
 func TestNFSSpace_Update(t *testing.T) {
-	client, space := createNFSSpace(t, "fixtures/TestNFSSpace_Update")
+	client, space, _ := createNFSSpace(t, "fixtures/TestNFSSpace_Update")
 	updateOpts := linodego.NFSSpaceUpdateOptions{
 		Label:       linodego.Pointer(space.Label + "-updated"),
 		Description: linodego.Pointer("Description updated"),
