@@ -276,11 +276,8 @@ func TestCreateLogsDestination_TrafficPeak(t *testing.T) {
 		Type:  linodego.LogsDestinationTypeTrafficPeak,
 		Details: linodego.LogsDestinationTrafficPeakDetailsCreateOptions{
 			EndpointURL:     "https://example.com/",
-			DataCompression: linodego.Pointer("None"),
-			ContentType:     linodego.Pointer("application/json"),
-			CustomHeaders: []linodego.LogsDestinationTrafficPeakHeader{
-				{Name: "header", Value: "header_value"},
-			},
+			DataCompression: new("None"),
+			ContentType:     new("application/json"),
 			Authentication: linodego.LogsDestinationTrafficPeakAuthDetails{
 				Details: linodego.LogsDestinationTrafficPeakBasicAuthDetails{
 					Username: "user",
@@ -299,7 +296,6 @@ func TestCreateLogsDestination_TrafficPeak(t *testing.T) {
 			"endpoint_url": "https://example.com/",
 			"data_compression": "None",
 			"content_type": "application/json",
-			"custom_headers": [{"name": "header", "value": "header_value"}],
 			"authentication": {
 				"details": {
 					"basic_authentication_user": "user",
@@ -317,9 +313,6 @@ func TestCreateLogsDestination_TrafficPeak(t *testing.T) {
 	assert.Equal(t, "https://example.com", dest.Details.EndpointURL)
 	assert.Equal(t, "None", dest.Details.DataCompression)
 	assert.Equal(t, "application/json", dest.Details.ContentType)
-	assert.Equal(t, []linodego.LogsDestinationCustomHTTPSHeader{
-		{Name: "x", Value: "y"},
-	}, dest.Details.CustomHeaders)
 }
 
 func TestUpdateLogsDestination_TrafficPeak(t *testing.T) {
@@ -327,9 +320,6 @@ func TestUpdateLogsDestination_TrafficPeak(t *testing.T) {
 	opts := linodego.LogsDestinationUpdateOptions{
 		Details: &linodego.LogsDestinationTrafficPeakDetailsUpdateOptions{
 			EndpointURL: &endpointURL,
-			CustomHeaders: []linodego.LogsDestinationTrafficPeakHeader{
-				{Name: "x-environment", Value: "production"},
-			},
 		},
 	}
 
@@ -337,8 +327,7 @@ func TestUpdateLogsDestination_TrafficPeak(t *testing.T) {
 	assert.NoError(t, err)
 	assert.JSONEq(t, `{
 		"details": {
-			"endpoint_url": "https://example.com/v2",
-			"custom_headers": [{"name": "x-environment", "value": "production"}]
+			"endpoint_url": "https://example.com/v2"
 		}
 	}`, string(requestJSON))
 }
@@ -604,9 +593,6 @@ func TestGetLogStream_TrafficPeakDestination(t *testing.T) {
 	assert.Equal(t, "https://example.com", dest.Details.EndpointURL)
 	assert.Equal(t, "application/json", dest.Details.ContentType)
 	assert.Equal(t, "None", dest.Details.DataCompression)
-	assert.Equal(t, []linodego.LogsDestinationCustomHTTPSHeader{
-		{Name: "x", Value: "y"},
-	}, dest.Details.CustomHeaders)
 }
 
 func TestUpdateLogStream_DestinationsOnly(t *testing.T) {

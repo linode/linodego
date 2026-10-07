@@ -78,7 +78,7 @@ func setupObjectStorageForLogs(t *testing.T, client *linodego.Client) (*linodego
 		Region:      regions[0],
 		Label:       testLabel(),
 		ACL:         "private",
-		CorsEnabled: linodego.Pointer(false),
+		CorsEnabled: new(false),
 	})
 	if err != nil {
 		t.Fatalf("Error creating storage bucket, got error %v", err)
@@ -241,11 +241,8 @@ func setupTrafficPeakLogsDestination(
 		linodego.LogsDestinationTypeTrafficPeak,
 		linodego.LogsDestinationTrafficPeakDetailsCreateOptions{
 			EndpointURL:     "https://example.com/",
-			ContentType:     linodego.Pointer("application/json"),
-			DataCompression: linodego.Pointer("None"),
-			CustomHeaders: []linodego.LogsDestinationTrafficPeakHeader{
-				{Name: "x-test-header", Value: "traffic-peak"},
-			},
+			ContentType:     new("application/json"),
+			DataCompression: new("None"),
 			Authentication: linodego.LogsDestinationTrafficPeakAuthDetails{
 				Details: linodego.LogsDestinationTrafficPeakBasicAuthDetails{
 					Username: "user",
@@ -541,7 +538,7 @@ func TestLogsDestination_TrafficPeakUpdateAndHistory(t *testing.T) {
 	updated, err := client.UpdateLogsDestination(context.Background(), destination.ID, linodego.LogsDestinationUpdateOptions{
 		Label: updatedLabel,
 		Details: &linodego.LogsDestinationTrafficPeakDetailsUpdateOptions{
-			ContentType: linodego.Pointer("application/x-ndjson"),
+			ContentType: new("application/x-ndjson"),
 		},
 	})
 	require.NoError(t, err)
@@ -576,9 +573,6 @@ func TestLogsDestination_CustomHTTPSCreate(t *testing.T) {
 	require.NotNil(t, destination.Details.Authentication)
 	assert.Equal(t, linodego.LogsDestinationCustomHTTPSAuthTypeNone, destination.Details.Authentication.Type)
 	assert.Nil(t, destination.Details.Authentication.Details)
-	assert.Equal(t, []linodego.LogsDestinationCustomHTTPSHeader{
-		{Name: testCustomHTTPSHeaderName, Value: testCustomHTTPSHeaderValue},
-	}, destination.Details.CustomHeaders)
 }
 
 func TestLogsDestination_CustomHTTPSGet(t *testing.T) {

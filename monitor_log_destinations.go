@@ -39,8 +39,10 @@ type LogsDestinationDetails struct {
 	Authentication           *LogsDestinationCustomHTTPSAuthDetails   `json:"authentication,omitzero"`
 	ClientCertificateDetails *LogsDestinationClientCertificateDetails `json:"client_certificate_details,omitzero"`
 	ContentType              string                                   `json:"content_type,omitzero"`
-	CustomHeaders            []LogsDestinationCustomHTTPSHeader       `json:"custom_headers,omitzero"`
 	DataCompression          string                                   `json:"data_compression,omitzero"`
+
+	// custom_https only
+	CustomHeaders []LogsDestinationCustomHTTPSHeader `json:"custom_headers,omitzero"`
 }
 
 // LogsDestinationDetailsCreateOptions represents the details block used when creating
@@ -91,12 +93,6 @@ type LogsDestinationTrafficPeakAuthDetails struct {
 	Details LogsDestinationTrafficPeakBasicAuthDetails `json:"details"`
 }
 
-// LogsDestinationTrafficPeakHeader represents a custom HTTP header sent to TrafficPeak.
-type LogsDestinationTrafficPeakHeader struct {
-	Name  string `json:"name"`
-	Value string `json:"value"`
-}
-
 // LogsDestinationClientCertificateDetails contains TLS client certificate information
 type LogsDestinationClientCertificateDetails struct {
 	ClientCACertificate string `json:"client_ca_certificate"`
@@ -122,7 +118,6 @@ type LogsDestinationTrafficPeakDetailsCreateOptions struct {
 	EndpointURL     string                                `json:"endpoint_url"`
 	Authentication  LogsDestinationTrafficPeakAuthDetails `json:"authentication"`
 	ContentType     *string                               `json:"content_type,omitzero"`
-	CustomHeaders   []LogsDestinationTrafficPeakHeader    `json:"custom_headers,omitzero"`
 	DataCompression *string                               `json:"data_compression,omitzero"`
 }
 
@@ -199,7 +194,6 @@ type LogsDestinationTrafficPeakDetailsUpdateOptions struct {
 	EndpointURL     *string                                `json:"endpoint_url,omitzero"`
 	Authentication  *LogsDestinationTrafficPeakAuthDetails `json:"authentication,omitzero"`
 	ContentType     *string                                `json:"content_type,omitzero"`
-	CustomHeaders   []LogsDestinationTrafficPeakHeader     `json:"custom_headers,omitzero"`
 	DataCompression *string                                `json:"data_compression,omitzero"`
 }
 
