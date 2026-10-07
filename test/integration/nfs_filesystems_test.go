@@ -12,7 +12,7 @@ import (
 
 func getNFSFilesystemCreateOptions(t *testing.T, client *linodego.Client) linodego.NFSFilesystemCreateOptions {
 	return linodego.NFSFilesystemCreateOptions{
-		Label:            "go-test-nfs-filesystem-mw-" + randLabel(),
+		Label:            "go-test-nfs-filesystem-" + randLabel(),
 		Region:           getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityNFSStorage})[0],
 		MaxCapacityBytes: 1099511627776,
 		Tags:             linodego.Pointer([]string{"testing"}),
@@ -109,9 +109,9 @@ func verifyNFSFilesystemDetails(t *testing.T, filesystem *linodego.NFSFilesystem
 	assert.NotEmpty(t, filesystem.MountTargetIPs)
 	assert.NotNil(t, filesystem.MountTargetFQDN)
 	assert.NotNil(t, filesystem.Stats)
-	//assert.NotNil(t, filesystem.SnapshotUsageBytes)
-	//assert.NotNil(t, filesystem.LDAPConfigID)
-	//assert.NotNil(t, filesystem.SourceSnapshotID)
+	// assert.NotNil(t, filesystem.SnapshotUsageBytes)
+	// assert.NotNil(t, filesystem.LDAPConfigID)
+	// assert.NotNil(t, filesystem.SourceSnapshotID)
 }
 
 func TestNFSFilesystem_Create_smoke(t *testing.T) {
@@ -122,7 +122,6 @@ func TestNFSFilesystem_Create_smoke(t *testing.T) {
 func TestNFSFilesystem_Get(t *testing.T) {
 	ctx := waitContext(t, 180*time.Second)
 	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_Get")
-	verifyNFSFilesystemBasics(t, space, filesystem, createOpts)
 
 	// Wait for NFS Filesystem status to be 'active'
 	_, err := client.WaitForNFSFilesystemStatus(
@@ -133,7 +132,52 @@ func TestNFSFilesystem_Get(t *testing.T) {
 	)
 	require.NoErrorf(t, err, "Failed to wait for Filesystem status to be active: %s", err)
 
-	filesystem, err = client.GetNFSFilesystemInSpace(context.Background(), space.ID, filesystem.ID)
+	filesystemGet, err := client.GetNFSFilesystemInSpace(context.Background(), space.ID, filesystem.ID)
 	require.NoErrorf(t, err, "Error retrieving NFS Filesystem in Space: %v", err)
-	verifyNFSFilesystemDetails(t, filesystem, createOpts)
+	verifyNFSFilesystemBasics(t, space, filesystemGet, createOpts)
+	verifyNFSFilesystemDetails(t, filesystemGet, createOpts)
+}
+
+func TestNFSFilesystem_GetWithoutNFSSpace(t *testing.T) {
+	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_GetWithoutNFSSpace")
+
+	filesystemGet, err := client.GetNFSFilesystem(context.Background(), filesystem.ID)
+	require.NoErrorf(t, err, "Error retrieving NFS Filesystem with no Space: %v", err)
+	verifyNFSFilesystemBasics(t, space, filesystemGet, createOpts)
+}
+
+func TestNFSFilesystem_List(t *testing.T) {
+	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_List")
+
+	f := linodego.Filter{}
+	f.AddField(linodego.Eq, "label", filesystem.Label)
+	filter, err := f.MarshalJSON()
+	if err != nil {
+		t.Fatalf("Failed to marshal filter: %v", err)
+	}
+
+	filesystemList, err := client.ListNFSFilesystems(context.Background(), space.ID, &linodego.ListOptions{Filter: string(filter)})
+	require.NoErrorf(t, err, "Error listing NFS Spaces: %v", err)
+	assert.Len(t, filesystemList, 1)
+	verifyNFSFilesystemBasics(t, space, linodego.Pointer(filesystemList[0]), createOpts)
+}
+
+func TestNFSFilesystem_Update(t *testing.T) {
+	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_List")
+
+	updateOpts := filesystem.GetUpdateOptions()
+	updateOpts.Label = linodego.Pointer(filesystem.Label + "-updated")
+	updateOpts.Tags = linodego.Pointer([]string{"updated"})
+	// updateOpts.MaxCapacityBytes = linodego.Pointer(int64(1073741824)) // TODO: Currently API says it is not editable field
+
+	filesystemUpdate, err := client.UpdateNFSFilesystem(context.Background(), space.ID, filesystem.ID, updateOpts)
+	require.NoErrorf(t, err, "Error updating NFS Space: %v", err)
+
+	verifyOpts := linodego.NFSFilesystemCreateOptions{
+		Label:  *updateOpts.Label,
+		Region: createOpts.Region,
+		Tags:   updateOpts.Tags,
+		// MaxCapacityBytes: *updateOpts.MaxCapacityBytes, // TODO: Currently API says it is not editable field
+	}
+	verifyNFSFilesystemBasics(t, space, filesystemUpdate, verifyOpts)
 }
