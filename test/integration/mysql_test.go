@@ -44,12 +44,15 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 	if db.ID != database.ID {
 		t.Errorf("got wrong db from GetMySQLDatabase: %v", db)
 	}
+	if len(db.Hosts.Endpoints) == 0 {
+		t.Errorf("got zero endpoints on GetMySQLDatabase: %v", db.Hosts)
+	}
 
 	updatedWindow := linodego.DatabaseMaintenanceWindow{
 		DayOfWeek: linodego.DatabaseMaintenanceDayWednesday,
 		Duration:  4,
 		Frequency: linodego.DatabaseMaintenanceFrequencyWeekly,
-		HourOfDay: 8,
+		HourOfDay: 4,
 		Pending:   []linodego.DatabaseMaintenanceWindowPending{},
 	}
 
@@ -165,7 +168,7 @@ func createMySQLDatabase(t *testing.T, client *linodego.Client,
 		Label:       "go-mysql-test-def" + randLabel(),
 		Region:      getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityDBAAS})[0],
 		Type:        "g6-nanode-1",
-		Engine:      "mysql/8",
+		Engine:      "mysql/8.4",
 		ClusterSize: 3,
 		AllowList:   []string{"203.0.113.1", "192.0.1.0/24"},
 	}
