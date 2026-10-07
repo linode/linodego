@@ -17,7 +17,7 @@ func getNFSSpaceCreateOptions() linodego.NFSSpaceCreateOptions {
 	}
 }
 
-func createNFSSpace(
+func setupNFSSpace(
 	t *testing.T,
 	fixtureYaml string,
 	modifiers ...func(opts *linodego.NFSSpaceCreateOptions),
@@ -34,7 +34,7 @@ func createNFSSpace(
 	require.NoErrorf(t, err, "Error creating NFS Space: %v", err)
 
 	t.Cleanup(func() {
-		if err := client.DeleteNFSSpace(context.Background(), space.ID); err != nil {
+		if err = client.DeleteNFSSpace(context.Background(), space.ID); err != nil {
 			t.Errorf("Error deleting NFS Space: %v", err)
 		}
 		fixtureTeardown()
@@ -54,12 +54,12 @@ func verifyNFSSpace(t *testing.T, space *linodego.NFSSpace, createOpts linodego.
 }
 
 func TestNFSSpace_Create_smoke(t *testing.T) {
-	_, space, createOpts := createNFSSpace(t, "fixtures/TestNFSSpace_Create")
+	_, space, createOpts := setupNFSSpace(t, "fixtures/TestNFSSpace_Create")
 	verifyNFSSpace(t, space, createOpts)
 }
 
 func TestNFSSpace_Get(t *testing.T) {
-	client, space, createOpts := createNFSSpace(t, "fixtures/TestNFSSpace_Get")
+	client, space, createOpts := setupNFSSpace(t, "fixtures/TestNFSSpace_Get")
 
 	spaceGet, err := client.GetNFSSpace(context.Background(), space.ID)
 	require.NoErrorf(t, err, "Error retrieving NFS Space: %v", err)
@@ -67,7 +67,7 @@ func TestNFSSpace_Get(t *testing.T) {
 }
 
 func TestNFSSpace_List(t *testing.T) {
-	client, space, createOpts := createNFSSpace(t, "fixtures/TestNFSSpace_List")
+	client, space, createOpts := setupNFSSpace(t, "fixtures/TestNFSSpace_List")
 
 	f := linodego.Filter{}
 	f.AddField(linodego.Eq, "label", space.Label)
@@ -83,7 +83,7 @@ func TestNFSSpace_List(t *testing.T) {
 }
 
 func TestNFSSpace_Update(t *testing.T) {
-	client, space, _ := createNFSSpace(t, "fixtures/TestNFSSpace_Update")
+	client, space, _ := setupNFSSpace(t, "fixtures/TestNFSSpace_Update")
 	updateOpts := linodego.NFSSpaceUpdateOptions{
 		Label:       linodego.Pointer(space.Label + "-updated"),
 		Description: linodego.Pointer("Description updated"),
