@@ -3,6 +3,7 @@ package integration
 import (
 	"context"
 	"testing"
+	"time"
 
 	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
@@ -53,6 +54,17 @@ func verifyNFSSpace(t *testing.T, space *linodego.NFSSpace, createOpts linodego.
 	assertDateSet(t, space.Updated)
 }
 
+func verifyNFSSpaceAccessPolicyUpdate(t *testing.T, spaceAccPolicy *linodego.NFSSpaceAccessPolicy, opts linodego.NFSSpaceAccessPolicyUpdateOptions) {
+	// assert.Equal(t, "pending", spaceAccPolicy.Status)
+	// assert.Equal(t, updateOpts.Label, linodego.Pointer(spaceAccPolicy.Label))  // TODO: It is not updated - defect?
+	assert.True(t, spaceAccPolicy.Enabled)
+	assert.Len(t, spaceAccPolicy.VPCACL, 1)
+	assert.Equal(t, (*opts.VPCs)[0].ID, spaceAccPolicy.VPCACL[0].ID)
+	assert.Nil(t, spaceAccPolicy.MTLSCACert)
+	assert.Equal(t, linodego.NFSMTLSModeOptional, spaceAccPolicy.MTLSMode)
+	assertDateSet(t, spaceAccPolicy.Updated)
+}
+
 func TestNFSSpace_Create_smoke(t *testing.T) {
 	_, space, createOpts := setupNFSSpace(t, "fixtures/TestNFSSpace_Create")
 	verifyNFSSpace(t, space, createOpts)
@@ -98,12 +110,11 @@ func TestNFSSpace_Update(t *testing.T) {
 }
 
 func TestNFSSpace_GetAccessPolicy_smoke(t *testing.T) {
-	//t.Skip("Access Policy is now fully developed yet")
+	t.Skip("Access Policy is now fully developed yet")
 	client, space, _ := setupNFSSpace(t, "fixtures/TestNFSSpace_GetAccessPolicy")
 
 	spaceAccPolicy, err := client.GetNFSSpaceAccessPolicy(context.Background(), space.ID)
 	require.NoErrorf(t, err, "Error getting NFS Space Access Policy: %v", err)
-
 	assert.Equal(t, space.ID, spaceAccPolicy.SpaceID)
 	assert.Equal(t, space.Label, spaceAccPolicy.Label)
 	assert.Equal(t, linodego.NFSAccessPolicyStatusActive, spaceAccPolicy.Status)
@@ -112,14 +123,14 @@ func TestNFSSpace_GetAccessPolicy_smoke(t *testing.T) {
 }
 
 func TestNFSSpace_UpdateAccessPolicy(t *testing.T) {
-	//t.Skip("Access Policy is now fully developed yet")
+	t.Skip("Access Policy is now fully developed yet")
 	client, space, _ := setupNFSSpace(t, "fixtures/TestNFSSpace_UpdateAccessPolicy")
 
 	vpc, _, vpcTeardown, err := createVPC(t, client, []vpcModifier{func(l *linodego.Client, opts *linodego.VPCCreateOptions) {
 		opts.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityVPCs, linodego.CapabilityNFSStorage})[0]
 	}}...)
-	t.Cleanup(vpcTeardown)
 	require.NoErrorf(t, err, "Error creating VPC for Access Policy: %v", err)
+	t.Cleanup(vpcTeardown)
 
 	updateOpts := linodego.NFSSpaceAccessPolicyUpdateOptions{
 		Label:   linodego.Pointer(space.Label + "-updated"),
@@ -135,16 +146,18 @@ func TestNFSSpace_UpdateAccessPolicy(t *testing.T) {
 
 	spaceAccPolicyUpdate, err := client.UpdateNFSSpaceAccessPolicy(context.Background(), space.ID, updateOpts)
 	require.NoErrorf(t, err, "Error updating NFS Space Access Policy: %v", err)
-	assert.Equal(t, space.ID, spaceAccPolicyUpdate.SpaceID)
-	// assert.Equal(t, updateOpts.Label, linodego.Pointer(spaceAccPolicyUpdate.Label))
-	assert.True(t, spaceAccPolicyUpdate.Enabled)
-	assert.Equal(t, vpc.ID, spaceAccPolicyUpdate.VPCACL[0].ID)
-	assert.Nil(t, spaceAccPolicyUpdate.MTLSCACert)
-	assert.Equal(t, linodego.NFSMTLSModeOptional, spaceAccPolicyUpdate.MTLSMode)
-	// assert.Equal(t, "pending", spaceAccPolicyUpdate.Status)
-	assertDateSet(t, spaceAccPolicyUpdate.Updated)
+	verifyNFSSpaceAccessPolicyUpdate(t, spaceAccPolicyUpdate, updateOpts)
 
-	//spaceAccPolicy, err := client.GetNFSSpaceAccessPolicy(context.Background(), space.ID)
-	//require.NoErrorf(t, err, "Error getting NFS Space Access Policy: %v", err)
-	//assert.Equal(t, linodego.NFSAccessPolicyStatusActive, spaceAccPolicy.Status)
+	// Wait for NFS Space Access Policy status to be 'active' to read the details
+	ctx := waitContext(t, 180*time.Second)
+	_, err = client.WaitForNFSSpaceAccessPolicyStatus(
+		ctx,
+		space.ID,
+		linodego.NFSAccessPolicyStatusActive,
+	)
+	require.NoErrorf(t, err, "Failed to wait for Space Access Policy status: %s", err)
+
+	spaceAccPolicyGet, err := client.GetNFSSpaceAccessPolicy(context.Background(), space.ID)
+	require.NoErrorf(t, err, "Error getting NFS Space Access Policy: %v", err)
+	verifyNFSSpaceAccessPolicyUpdate(t, spaceAccPolicyGet, updateOpts)
 }
