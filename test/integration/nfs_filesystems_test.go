@@ -16,8 +16,8 @@ func getNFSFilesystemCreateOptions(t *testing.T, client *linodego.Client) linode
 		Region:           getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityNFSStorage})[0],
 		MaxCapacityBytes: 1099511627776,
 		Tags:             linodego.Pointer([]string{"testing"}),
-		// MaxFileCount:	  1000000,
-		// ProtocolVersions: linodego.Pointer([]linodego.NFSProtocolVersion{linodego.NFSProtocolVersionV4}),
+		MaxFileCount:     linodego.Pointer(int64(1500)),
+		ProtocolVersions: linodego.Pointer([]linodego.NFSProtocolVersion{linodego.NFSProtocolVersionV4}),
 	}
 }
 
@@ -106,9 +106,11 @@ func verifyNFSFilesystemDetails(t *testing.T, filesystem *linodego.NFSFilesystem
 	t.Helper()
 	assert.NotEmpty(t, filesystem.ProtocolVersions)
 	assert.EqualValues(t, createOpts.MaxCapacityBytes, filesystem.MaxCapacityBytes)
+	assert.EqualValues(t, createOpts.MaxFileCount, linodego.Pointer(filesystem.MaxFileCount))
 	assert.NotEmpty(t, filesystem.MountTargetIPs)
 	assert.NotNil(t, filesystem.MountTargetFQDN)
 	assert.NotNil(t, filesystem.Stats)
+	// TODO: Specified in API docs, but not available in API itself yet
 	// assert.NotNil(t, filesystem.SnapshotUsageBytes)
 	// assert.NotNil(t, filesystem.LDAPConfigID)
 	// assert.NotNil(t, filesystem.SourceSnapshotID)
@@ -123,7 +125,7 @@ func TestNFSFilesystem_Get(t *testing.T) {
 	ctx := waitContext(t, 180*time.Second)
 	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_Get")
 
-	// Wait for NFS Filesystem status to be 'active'
+	// Wait for NFS Filesystem status to be 'active' to read the details
 	_, err := client.WaitForNFSFilesystemStatus(
 		ctx,
 		space.ID,
@@ -163,12 +165,13 @@ func TestNFSFilesystem_List(t *testing.T) {
 }
 
 func TestNFSFilesystem_Update(t *testing.T) {
-	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_List")
+	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_Update")
 
 	updateOpts := filesystem.GetUpdateOptions()
 	updateOpts.Label = linodego.Pointer(filesystem.Label + "-updated")
 	updateOpts.Tags = linodego.Pointer([]string{"updated"})
 	// updateOpts.MaxCapacityBytes = linodego.Pointer(int64(1073741824)) // TODO: Currently API says it is not editable field
+	// updateOpts.MaxCountFile = linodego.Pointer(int64(2500)) // TODO: Currently API says it is not editable field
 
 	filesystemUpdate, err := client.UpdateNFSFilesystem(context.Background(), space.ID, filesystem.ID, updateOpts)
 	require.NoErrorf(t, err, "Error updating NFS Space: %v", err)
@@ -178,6 +181,7 @@ func TestNFSFilesystem_Update(t *testing.T) {
 		Region: createOpts.Region,
 		Tags:   updateOpts.Tags,
 		// MaxCapacityBytes: *updateOpts.MaxCapacityBytes, // TODO: Currently API says it is not editable field
+		// MaxFileCount: *updateOpts.MaxCountFile, // TODO: Currently API says it is not editable field
 	}
 	verifyNFSFilesystemBasics(t, space, filesystemUpdate, verifyOpts)
 }
