@@ -199,6 +199,7 @@ func TestNFSFilesystem_Update(t *testing.T) {
 }
 
 func TestNFSFilesystem_GetAccessPolicy_smoke(t *testing.T) {
+	t.Skip("Access Policy seems to not be fully developed yet")
 	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_GetAccessPolicy")
 
 	filesystemAccPolicy, err := client.GetNFSFilesystemAccessPolicy(context.Background(), space.ID, filesystem.ID)
@@ -216,6 +217,7 @@ func TestNFSFilesystem_GetAccessPolicy_smoke(t *testing.T) {
 }
 
 func TestNFSFilesystem_UpdateAccessPolicy(t *testing.T) {
+	t.Skip("Access Policy seems to not be fully developed yet")
 	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_UpdateAccessPolicy")
 
 	linode, _, linodeTeardown, err := createInstanceWithoutDisks(

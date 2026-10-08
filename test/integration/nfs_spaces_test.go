@@ -110,7 +110,7 @@ func TestNFSSpace_Update(t *testing.T) {
 }
 
 func TestNFSSpace_GetAccessPolicy_smoke(t *testing.T) {
-	t.Skip("Access Policy is now fully developed yet")
+	t.Skip("Access Policy seems to not be fully developed yet")
 	client, space, _ := setupNFSSpace(t, "fixtures/TestNFSSpace_GetAccessPolicy")
 
 	spaceAccPolicy, err := client.GetNFSSpaceAccessPolicy(context.Background(), space.ID)
@@ -123,7 +123,7 @@ func TestNFSSpace_GetAccessPolicy_smoke(t *testing.T) {
 }
 
 func TestNFSSpace_UpdateAccessPolicy(t *testing.T) {
-	t.Skip("Access Policy is now fully developed yet")
+	t.Skip("Access Policy seems to not be fully developed yet")
 	client, space, _ := setupNFSSpace(t, "fixtures/TestNFSSpace_UpdateAccessPolicy")
 
 	vpc, _, vpcTeardown, err := createVPC(t, client, []vpcModifier{func(l *linodego.Client, opts *linodego.VPCCreateOptions) {
