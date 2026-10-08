@@ -96,3 +96,55 @@ func TestNFSSpace_Update(t *testing.T) {
 	assert.Equal(t, updateOpts.Description, spaceUpdate.Description)
 	assert.Equal(t, updateOpts.Tags, linodego.Pointer(spaceUpdate.Tags))
 }
+
+func TestNFSSpace_GetAccessPolicy_smoke(t *testing.T) {
+	//t.Skip("Access Policy is now fully developed yet")
+	client, space, _ := setupNFSSpace(t, "fixtures/TestNFSSpace_GetAccessPolicy")
+
+	spaceAccPolicy, err := client.GetNFSSpaceAccessPolicy(context.Background(), space.ID)
+	require.NoErrorf(t, err, "Error getting NFS Space Access Policy: %v", err)
+
+	assert.Equal(t, space.ID, spaceAccPolicy.SpaceID)
+	assert.Equal(t, space.Label, spaceAccPolicy.Label)
+	assert.Equal(t, linodego.NFSAccessPolicyStatusActive, spaceAccPolicy.Status)
+	assertDateSet(t, spaceAccPolicy.Created)
+	assert.Nil(t, spaceAccPolicy.Updated)
+}
+
+func TestNFSSpace_UpdateAccessPolicy(t *testing.T) {
+	//t.Skip("Access Policy is now fully developed yet")
+	client, space, _ := setupNFSSpace(t, "fixtures/TestNFSSpace_UpdateAccessPolicy")
+
+	vpc, _, vpcTeardown, err := createVPC(t, client, []vpcModifier{func(l *linodego.Client, opts *linodego.VPCCreateOptions) {
+		opts.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityVPCs, linodego.CapabilityNFSStorage})[0]
+	}}...)
+	t.Cleanup(vpcTeardown)
+	require.NoErrorf(t, err, "Error creating VPC for Access Policy: %v", err)
+
+	updateOpts := linodego.NFSSpaceAccessPolicyUpdateOptions{
+		Label:   linodego.Pointer(space.Label + "-updated"),
+		Enabled: linodego.Pointer(true),
+		VPCs: linodego.Pointer([]linodego.NFSSpaceAccessPolicyVPCOptions{
+			{
+				ID: vpc.ID,
+			},
+		}),
+		// MTLSCACert: linodego.Pointer("Test CA Certificate"),
+		MTLSMode: linodego.Pointer(linodego.NFSMTLSModeOptional),
+	}
+
+	spaceAccPolicyUpdate, err := client.UpdateNFSSpaceAccessPolicy(context.Background(), space.ID, updateOpts)
+	require.NoErrorf(t, err, "Error updating NFS Space Access Policy: %v", err)
+	assert.Equal(t, space.ID, spaceAccPolicyUpdate.SpaceID)
+	// assert.Equal(t, updateOpts.Label, linodego.Pointer(spaceAccPolicyUpdate.Label))
+	assert.True(t, spaceAccPolicyUpdate.Enabled)
+	assert.Equal(t, vpc.ID, spaceAccPolicyUpdate.VPCACL[0].ID)
+	assert.Nil(t, spaceAccPolicyUpdate.MTLSCACert)
+	assert.Equal(t, linodego.NFSMTLSModeOptional, spaceAccPolicyUpdate.MTLSMode)
+	// assert.Equal(t, "pending", spaceAccPolicyUpdate.Status)
+	assertDateSet(t, spaceAccPolicyUpdate.Updated)
+
+	//spaceAccPolicy, err := client.GetNFSSpaceAccessPolicy(context.Background(), space.ID)
+	//require.NoErrorf(t, err, "Error getting NFS Space Access Policy: %v", err)
+	//assert.Equal(t, linodego.NFSAccessPolicyStatusActive, spaceAccPolicy.Status)
+}
