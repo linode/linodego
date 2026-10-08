@@ -43,6 +43,7 @@ type NFSFilesystem struct {
 	MountTargetIPs     []string             `json:"mount_target_ips"`
 	MountTargetFQDN    *string              `json:"mount_target_fqdn"`
 	MaxCapacityBytes   int64                `json:"max_capacity_bytes"`
+	MaxFileCount       int64                `json:"max_file_count"`
 	SnapshotUsageBytes *int64               `json:"snapshot_usage_bytes"`
 	LDAPConfigID       *string              `json:"ldap_config_id"`
 	SourceSnapshotID   *int                 `json:"source_snapshot_id"`
@@ -57,15 +58,17 @@ type NFSFilesystemCreateOptions struct {
 	Label            string                `json:"label"`
 	Region           string                `json:"region"`
 	MaxCapacityBytes int64                 `json:"max_capacity_bytes"`
+	MaxFileCount     *int64                `json:"max_file_count,omitzero"`
 	ProtocolVersions *[]NFSProtocolVersion `json:"protocol_versions,omitzero"`
 	Tags             *[]string             `json:"tags,omitzero"`
 }
 
 // NFSFilesystemUpdateOptions contains fields accepted when updating an NFS Filesystem.
 type NFSFilesystemUpdateOptions struct {
-	Label            *string   `json:"label,omitzero"`
-	MaxCapacityBytes *int64    `json:"max_capacity_bytes,omitzero"`
-	Tags             *[]string `json:"tags,omitzero"`
+	Label *string `json:"label,omitzero"`
+	// MaxCapacityBytes *int64    `json:"max_capacity_bytes,omitzero"` // TODO: Currently API says it is not editable field
+	// MaxFileCount     *int64    `json:"max_file_count,omitzero"` // TODO: Currently API says it is not editable field
+	Tags *[]string `json:"tags,omitzero"`
 }
 
 // NFSFilesystemStats represents collected NFS Filesystem usage statistics.
@@ -125,6 +128,7 @@ func (n NFSFilesystem) GetCreateOptions() NFSFilesystemCreateOptions {
 		Label:            n.Label,
 		Region:           n.Region,
 		MaxCapacityBytes: n.MaxCapacityBytes,
+		MaxFileCount:     Pointer(n.MaxFileCount),
 	}
 
 	if n.ProtocolVersions != nil {
@@ -141,8 +145,9 @@ func (n NFSFilesystem) GetCreateOptions() NFSFilesystemCreateOptions {
 // GetUpdateOptions returns the NFS Filesystem fields accepted by UpdateNFSFilesystem.
 func (n NFSFilesystem) GetUpdateOptions() NFSFilesystemUpdateOptions {
 	result := NFSFilesystemUpdateOptions{
-		Label:            Pointer(n.Label),
-		MaxCapacityBytes: Pointer(n.MaxCapacityBytes),
+		Label: Pointer(n.Label),
+		// MaxCapacityBytes: Pointer(n.MaxCapacityBytes), // TODO: Currently API says it is not editable field
+		// MaxFileCount:     Pointer(n.MaxFileCount), // TODO: Currently API says it is not editable field
 	}
 
 	if n.Tags != nil {

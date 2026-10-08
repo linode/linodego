@@ -1,0 +1,261 @@
+package integration
+
+import (
+	"context"
+	"testing"
+	"time"
+
+	"github.com/linode/linodego/v2"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+)
+
+func getNFSFilesystemCreateOptions(t *testing.T, client *linodego.Client) linodego.NFSFilesystemCreateOptions {
+	return linodego.NFSFilesystemCreateOptions{
+		Label:            "go-test-nfs-filesystem-" + randLabel(),
+		Region:           getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityNFSStorage})[0],
+		MaxCapacityBytes: 1099511627776,
+		Tags:             linodego.Pointer([]string{"testing"}),
+		MaxFileCount:     linodego.Pointer(int64(1500)),
+		ProtocolVersions: linodego.Pointer([]linodego.NFSProtocolVersion{linodego.NFSProtocolVersionV4}),
+	}
+}
+
+func waitForNFSFilesystemDeleted(
+	ctx context.Context,
+	client *linodego.Client,
+	spaceID int,
+) error {
+	ticker := time.NewTicker(5 * time.Second)
+	defer ticker.Stop()
+
+	for {
+		select {
+		case <-ctx.Done():
+			return ctx.Err()
+		case <-ticker.C:
+			filesystems, err := client.ListNFSFilesystems(ctx, spaceID, nil)
+
+			if err == nil && len(filesystems) != 0 {
+				continue
+			}
+
+			// if API returns [404] Not found, deletion is done
+			if linodego.IsNotFound(err) {
+				return nil
+			}
+
+			return err
+		}
+	}
+}
+
+func setupNFSFilesystem(
+	t *testing.T,
+	fixtureYaml string,
+	modifiers ...func(opts *linodego.NFSFilesystemCreateOptions),
+) (*linodego.Client, *linodego.NFSSpace, *linodego.NFSFilesystem, linodego.NFSFilesystemCreateOptions) {
+	t.Helper()
+	client, fixtureTeardown := createTestClient(t, fixtureYaml)
+	createOpts := getNFSFilesystemCreateOptions(t, client)
+
+	for _, modifier := range modifiers {
+		modifier(&createOpts)
+	}
+
+	spaceCreateOpts := getNFSSpaceCreateOptions()
+	space, err := client.CreateNFSSpace(context.Background(), spaceCreateOpts)
+	require.NoErrorf(t, err, "Error creating NFS Space: %v", err)
+
+	filesystem, err := client.CreateNFSFilesystem(context.Background(), space.ID, createOpts)
+	require.NoErrorf(t, err, "Error creating NFS Filesystem: %v", err)
+
+	t.Cleanup(func() {
+		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+		defer cancel()
+
+		if err = client.DeleteNFSFilesystem(context.Background(), space.ID, filesystem.ID); err != nil {
+			t.Errorf("Error deleting NFS Filesystem: %v", err)
+		}
+
+		err = waitForNFSFilesystemDeleted(ctx, client, space.ID)
+		require.NoErrorf(t, err, "Error waiting for NFS Filesystem to be deleted: %v", err)
+
+		if err = client.DeleteNFSSpace(context.Background(), space.ID); err != nil {
+			t.Errorf("Error deleting NFS Space: %v", err)
+		}
+
+		fixtureTeardown()
+	})
+
+	return client, space, filesystem, createOpts
+}
+
+func verifyNFSFilesystemBasics(t *testing.T, space *linodego.NFSSpace, filesystem *linodego.NFSFilesystem, createOpts linodego.NFSFilesystemCreateOptions) {
+	t.Helper()
+	assert.Equal(t, space.ID, filesystem.SpaceID)
+	assert.Equal(t, createOpts.Label, filesystem.Label)
+	assert.Equal(t, createOpts.Region, filesystem.Region)
+	assert.Equal(t, createOpts.Tags, linodego.Pointer(filesystem.Tags))
+	assert.NotNil(t, filesystem.Status)
+	assertDateSet(t, filesystem.Created)
+	assertDateSet(t, filesystem.Updated)
+}
+
+func verifyNFSFilesystemDetails(t *testing.T, filesystem *linodego.NFSFilesystem, createOpts linodego.NFSFilesystemCreateOptions) {
+	t.Helper()
+	assert.NotEmpty(t, filesystem.ProtocolVersions)
+	assert.EqualValues(t, createOpts.MaxCapacityBytes, filesystem.MaxCapacityBytes)
+	assert.EqualValues(t, createOpts.MaxFileCount, linodego.Pointer(filesystem.MaxFileCount))
+	assert.NotEmpty(t, filesystem.MountTargetIPs)
+	assert.NotNil(t, filesystem.MountTargetFQDN)
+	assert.NotNil(t, filesystem.Stats)
+	// TODO: Specified in API docs, but not available in API itself yet
+	// assert.NotNil(t, filesystem.SnapshotUsageBytes)
+	// assert.NotNil(t, filesystem.LDAPConfigID)
+	// assert.NotNil(t, filesystem.SourceSnapshotID)
+}
+
+func verifyNFSFilesystemAccessPolicyUpdate(
+	t *testing.T,
+	filesystemAccPolicy *linodego.NFSFilesystemAccessPolicy,
+	opts linodego.NFSFilesystemAccessPolicyUpdateOptions,
+) {
+	// assert.Equal(t, *updateOpts.Label, filesystemAccPolicy.Label) // TODO: It is not updated - defect?
+	assert.True(t, filesystemAccPolicy.Enabled)
+	assert.Len(t, filesystemAccPolicy.LinodeACL, 1)
+	assert.Equal(t, (*opts.LinodeIDs)[0], filesystemAccPolicy.LinodeACL[0].ID)
+	assertDateSet(t, filesystemAccPolicy.Updated)
+}
+
+func TestNFSFilesystem_Create_smoke(t *testing.T) {
+	_, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_Create")
+	verifyNFSFilesystemBasics(t, space, filesystem, createOpts)
+}
+
+func TestNFSFilesystem_Get(t *testing.T) {
+	ctx := waitContext(t, 180*time.Second)
+	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_Get")
+
+	// Wait for NFS Filesystem status to be 'active' to read the details
+	_, err := client.WaitForNFSFilesystemStatus(
+		ctx,
+		space.ID,
+		filesystem.ID,
+		linodego.NFSFilesystemStatusActive,
+	)
+	require.NoErrorf(t, err, "Failed to wait for Filesystem status to be active: %s", err)
+
+	filesystemGet, err := client.GetNFSFilesystemInSpace(context.Background(), space.ID, filesystem.ID)
+	require.NoErrorf(t, err, "Error retrieving NFS Filesystem in Space: %v", err)
+	verifyNFSFilesystemBasics(t, space, filesystemGet, createOpts)
+	verifyNFSFilesystemDetails(t, filesystemGet, createOpts)
+}
+
+func TestNFSFilesystem_GetWithoutNFSSpace(t *testing.T) {
+	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_GetWithoutNFSSpace")
+
+	filesystemGet, err := client.GetNFSFilesystem(context.Background(), filesystem.ID)
+	require.NoErrorf(t, err, "Error retrieving NFS Filesystem with no Space: %v", err)
+	verifyNFSFilesystemBasics(t, space, filesystemGet, createOpts)
+}
+
+func TestNFSFilesystem_List(t *testing.T) {
+	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_List")
+
+	f := linodego.Filter{}
+	f.AddField(linodego.Eq, "label", filesystem.Label)
+	filter, err := f.MarshalJSON()
+	if err != nil {
+		t.Fatalf("Failed to marshal filter: %v", err)
+	}
+
+	filesystemList, err := client.ListNFSFilesystems(context.Background(), space.ID, &linodego.ListOptions{Filter: string(filter)})
+	require.NoErrorf(t, err, "Error listing NFS Spaces: %v", err)
+	assert.Len(t, filesystemList, 1)
+	verifyNFSFilesystemBasics(t, space, linodego.Pointer(filesystemList[0]), createOpts)
+}
+
+func TestNFSFilesystem_Update(t *testing.T) {
+	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_Update")
+
+	updateOpts := filesystem.GetUpdateOptions()
+	updateOpts.Label = linodego.Pointer(filesystem.Label + "-updated")
+	updateOpts.Tags = linodego.Pointer([]string{"updated"})
+	// updateOpts.MaxCapacityBytes = linodego.Pointer(int64(1073741824)) // TODO: Currently API says it is not editable field
+	// updateOpts.MaxCountFile = linodego.Pointer(int64(2500)) // TODO: Currently API says it is not editable field
+
+	filesystemUpdate, err := client.UpdateNFSFilesystem(context.Background(), space.ID, filesystem.ID, updateOpts)
+	require.NoErrorf(t, err, "Error updating NFS Space: %v", err)
+
+	verifyOpts := linodego.NFSFilesystemCreateOptions{
+		Label:  *updateOpts.Label,
+		Region: createOpts.Region,
+		Tags:   updateOpts.Tags,
+		// MaxCapacityBytes: *updateOpts.MaxCapacityBytes, // TODO: Currently API says it is not editable field
+		// MaxFileCount: *updateOpts.MaxCountFile, // TODO: Currently API says it is not editable field
+	}
+	verifyNFSFilesystemBasics(t, space, filesystemUpdate, verifyOpts)
+}
+
+func TestNFSFilesystem_GetAccessPolicy_smoke(t *testing.T) {
+	t.Skip("Access Policy seems to not be fully developed yet")
+	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_GetAccessPolicy")
+
+	filesystemAccPolicy, err := client.GetNFSFilesystemAccessPolicy(context.Background(), space.ID, filesystem.ID)
+	require.NoErrorf(t, err, "Error getting NFS Filesystem Access Policy: %v", err)
+	assert.Equal(t, filesystem.ID, filesystemAccPolicy.FilesystemID)
+	assert.Equal(t, filesystem.Label, filesystemAccPolicy.Label)
+	assert.False(t, filesystemAccPolicy.Enabled)
+	// assert.False(t, filesystemAccPolicy.Inherit) // TODO: No Inherit field in API spec, but returned by API response
+	assert.NotEmpty(t, filesystemAccPolicy.Protocols)
+	assert.Empty(t, filesystemAccPolicy.LinodeACL)
+	assert.NotNil(t, filesystemAccPolicy.SquashPolicy)
+	assert.Equal(t, linodego.NFSAccessPolicyStatusActive, filesystemAccPolicy.Status)
+	assertDateSet(t, filesystemAccPolicy.Created)
+	assert.Nil(t, filesystemAccPolicy.Updated)
+}
+
+func TestNFSFilesystem_UpdateAccessPolicy(t *testing.T) {
+	t.Skip("Access Policy seems to not be fully developed yet")
+	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_UpdateAccessPolicy")
+
+	linode, _, linodeTeardown, err := createInstanceWithoutDisks(
+		t,
+		client,
+		true,
+		func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
+			opts.Region = filesystem.Region
+		})
+	require.NoErrorf(t, err, "Error creating Linode for NFS Filesystem Access Policy: %v", err)
+	t.Cleanup(linodeTeardown)
+
+	updateOpts := linodego.NFSFilesystemAccessPolicyUpdateOptions{
+		Label:     linodego.Pointer(filesystem.Label + "-updated"),
+		Enabled:   linodego.Pointer(true),
+		LinodeIDs: linodego.Pointer([]int{linode.ID}),
+	}
+
+	filesystemAccPolicyUpdate, err := client.UpdateNFSFilesystemAccessPolicy(
+		context.Background(),
+		space.ID,
+		filesystem.ID,
+		updateOpts,
+	)
+	require.NoErrorf(t, err, "Error updating NFS Filesystem Access Policy: %v", err)
+	verifyNFSFilesystemAccessPolicyUpdate(t, filesystemAccPolicyUpdate, updateOpts)
+
+	// Wait for NFS Filesystem Access Policy status to be 'active' to read the details
+	ctx := waitContext(t, 180*time.Second)
+	_, err = client.WaitForNFSFilesystemAccessPolicyStatus(
+		ctx,
+		space.ID,
+		filesystem.ID,
+		linodego.NFSAccessPolicyStatusActive,
+	)
+	require.NoErrorf(t, err, "Failed to wait for Filesystem Access Policy status: %s", err)
+
+	filesystemAccPolicyGet, err := client.GetNFSFilesystemAccessPolicy(context.Background(), space.ID, filesystem.ID)
+	require.NoErrorf(t, err, "Error getting NFS Filesystem Access Policy: %v", err)
+	verifyNFSFilesystemAccessPolicyUpdate(t, filesystemAccPolicyGet, updateOpts)
+}
