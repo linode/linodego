@@ -4,8 +4,10 @@
 package linodego
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
+	"net/http"
 	"time"
 )
 
@@ -59,11 +61,11 @@ type EntityMetricsFetchOptions struct {
 	// EntityIDs are expected to be type "any" as different service_types have different variable type for their entity_ids. For example, Linode has "int" entity_ids whereas object storage has "string" as entity_ids.
 	EntityIDs []any `json:"entity_ids"`
 
-	Filters              []MetricFilter              `json:"filters,omitempty"`
+	Filters              []MetricFilter              `json:"filters,omitzero"`
 	Metrics              []EntityMetric              `json:"metrics"`
-	TimeGranularity      []MetricTimeGranularity     `json:"time_granularity,omitempty"`
-	RelativeTimeDuration *MetricRelativeTimeDuration `json:"relative_time_duration,omitempty"`
-	AbsoluteTimeDuration *MetricAbsoluteTimeDuration `json:"absolute_time_duration,omitempty"`
+	TimeGranularity      []MetricTimeGranularity     `json:"time_granularity,omitzero"`
+	RelativeTimeDuration *MetricRelativeTimeDuration `json:"relative_time_duration,omitzero"`
+	AbsoluteTimeDuration *MetricAbsoluteTimeDuration `json:"absolute_time_duration,omitzero"`
 }
 
 // MetricFilter describes individual objects that define dimension filters for the query.
@@ -101,7 +103,11 @@ type MetricAbsoluteTimeDuration struct {
 func (mc *MonitorClient) FetchEntityMetrics(ctx context.Context, serviceType string, opts *EntityMetricsFetchOptions) (*EntityMetrics, error) {
 	endpoint := formatAPIPath("monitor/services/%s/metrics", serviceType)
 
-	req := mc.R(ctx).SetResult(&EntityMetrics{})
+	var result EntityMetrics
+
+	params := requestParams{
+		Response: &result,
+	}
 
 	if opts != nil {
 		body, err := json.Marshal(opts)
@@ -109,13 +115,13 @@ func (mc *MonitorClient) FetchEntityMetrics(ctx context.Context, serviceType str
 			return nil, err
 		}
 
-		req.SetBody(string(body))
+		params.Body = bytes.NewReader(body)
 	}
 
-	r, err := coupleAPIErrors(req.Post(endpoint))
+	err := mc.doRequest(ctx, http.MethodPost, endpoint, params)
 	if err != nil {
 		return nil, err
 	}
 
-	return r.Result().(*EntityMetrics), nil
+	return &result, nil
 }

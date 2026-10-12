@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/v2/internal/parseabletime"
 )
 
 type (
@@ -90,7 +90,7 @@ type Database struct {
 	Updated           *time.Time `json:"-"`
 	OldestRestoreTime *time.Time `json:"-"`
 
-	PrivateNetwork *DatabasePrivateNetwork `json:"private_network,omitempty"`
+	PrivateNetwork *DatabasePrivateNetwork `json:"private_network,omitzero"`
 }
 
 // DatabaseHost for Primary/Secondary of Database
@@ -119,7 +119,7 @@ type DatabaseMaintenanceWindow struct {
 	Frequency DatabaseMaintenanceFrequency `json:"frequency"`
 	HourOfDay int                          `json:"hour_of_day"`
 
-	Pending []DatabaseMaintenanceWindowPending `json:"pending,omitempty"`
+	Pending []DatabaseMaintenanceWindowPending `json:"pending,omitzero"`
 }
 
 type DatabaseMaintenanceWindowPending struct {
@@ -161,7 +161,7 @@ type ClusterPrice struct {
 // DatabaseFork describes the source and restore time for the fork for forked DBs
 type DatabaseFork struct {
 	Source      int        `json:"source"`
-	RestoreTime *time.Time `json:"-,omitempty"`
+	RestoreTime *time.Time `json:"-,omitzero"`
 }
 
 func (d *Database) UnmarshalJSON(b []byte) error {

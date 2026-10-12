@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/require"
 )
 
@@ -56,6 +56,23 @@ func TestNodeBalancer_Create_Type(t *testing.T) {
 
 	assertDateSet(t, nodebalancer.Created)
 	assertDateSet(t, nodebalancer.Updated)
+}
+
+func TestNodeBalancer_Create_BackendConnectivity_Common(t *testing.T) {
+	_, nodebalancer, teardown, err := setupNodeBalancer(
+		t,
+		"fixtures/TestNodeBalancer_Create_BackendConnectivity_Common",
+		[]nbModifier{func(createOpts *linodego.NodeBalancerCreateOptions) {
+			createOpts.Type = linodego.NBTypeCommon
+			createOpts.BackendConnectivity = new(linodego.NBBackendConnectivityIPv6)
+		}},
+	)
+	t.Cleanup(teardown)
+
+	require.NoError(t, err)
+	require.NotNil(t, nodebalancer.BackendConnectivity)
+	require.Equal(t, linodego.NBBackendConnectivityIPv6, *nodebalancer.BackendConnectivity)
+	require.NotNil(t, nodebalancer.BackendIPv6Prefix)
 }
 
 func TestNodeBalancer_Create_with_ReservedIP(t *testing.T) {
@@ -201,7 +218,7 @@ func setupNodeBalancer(t *testing.T, fixturesYaml string, nbModifiers []nbModifi
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := linodego.NodeBalancerCreateOptions{
 		Label:              &label,
-		Region:             getRegionsWithCaps(t, client, []string{"NodeBalancers"})[0],
+		Region:             getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityNodeBalancers})[0],
 		ClientConnThrottle: &clientConnThrottle,
 		FirewallID:         GetFirewallID(),
 	}

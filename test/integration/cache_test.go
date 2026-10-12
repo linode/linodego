@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 )
 
 func TestCache_RegionList(t *testing.T) {
@@ -28,8 +28,8 @@ func TestCache_RegionList(t *testing.T) {
 	totalRequests := int64(0)
 
 	client.OnBeforeRequest(func(request *linodego.Request) error {
-		page := request.QueryParam.Get("page")
-		if !strings.Contains(request.URL, "regions") || page != "1" {
+		page := request.URL.Query().Get("page")
+		if !strings.Contains(request.URL.String(), "regions") || page != "1" {
 			return nil
 		}
 
@@ -91,8 +91,8 @@ func TestCache_Expiration(t *testing.T) {
 	totalRequests := int64(0)
 
 	client.OnBeforeRequest(func(request *linodego.Request) error {
-		page := request.QueryParam.Get("page")
-		if !strings.Contains(request.URL, "kernels") || page != "1" {
+		page := request.URL.Query().Get("page")
+		if !strings.Contains(request.URL.String(), "kernels") || page != "1" {
 			return nil
 		}
 

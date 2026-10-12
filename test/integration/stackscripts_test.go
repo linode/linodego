@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 )
 
 func TestStackscripts_List_smoke(t *testing.T) {

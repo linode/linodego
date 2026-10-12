@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/linode/linodego"
 	"github.com/linode/linodego/k8s"
+	"github.com/linode/linodego/v2"
 	corev1 "k8s.io/api/core/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )

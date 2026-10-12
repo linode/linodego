@@ -71,7 +71,7 @@ interactions:
       2}, "site_type": "core"}, {"id": "eu-west", "label": "London, England, UK",
       "country": "uk", "capabilities": ["Linodes", "Disk Encryption", "Backups", "NodeBalancers",
       "Cloud Firewall", "Vlans", "VPCs", "Metadata", "Placement Group", "StackScripts"],
-      "status": "ok", "resolvers": {"ipv4": "178.79.182.5,176.58.107.5,176.58.116.5,176.58.121.5,151.236.220.5,212.71.252.5,212.71.253.5,109.74.192.20,109.74.193.20,109.74.194.20",
+      "status": "ok", "resolvers": {"ipv4": "178.79.182.5,176.58.107.5,176.58.116.5,176.58.121.5,151.236.220.5,212.71.252.5,212.71.253.5,192.0.2.0,192.0.2.0,192.0.2.0",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": null, "maximum_linodes_per_pg":
       2}, "site_type": "core"}, {"id": "ap-south", "label": "Singapore, SG", "country":
@@ -5014,8 +5014,8 @@ interactions:
       200}, "pg_stat_monitor_enable": true, "pglookout": {"max_failover_replication_time_lag":
       60}, "shared_buffers_percentage": 25, "work_mem": 1024}, "hosts": {"primary":
       "a16773-akamai-alpha-1000126-default.g2a.akamaidb.net", "standby": "replica-a16773-akamai-alpha-1000126-default.g2a.akamaidb.net"},
-      "id": 16773, "label": "postgres-db-created-with-config", "members": {"162.216.18.84":
-      "failover", "66.175.210.180": "primary", "66.175.215.193": "failover"}, "oldest_restore_time":
+      "id": 16773, "label": "postgres-db-created-with-config", "members": {"192.0.2.0":
+      "failover", "192.0.2.0": "primary", "192.0.2.0": "failover"}, "oldest_restore_time":
       "2018-01-02T03:04:05", "port": 25698, "region": "us-east", "ssl_connection":
       true, "status": "active", "total_disk_size_gb": 58, "type": "g6-dedicated-2",
       "updated": "2018-01-02T03:04:05", "updates": {"day_of_week": 5, "duration":
@@ -5101,8 +5101,8 @@ interactions:
       200}, "pg_stat_monitor_enable": true, "pglookout": {"max_failover_replication_time_lag":
       60}, "shared_buffers_percentage": 25, "work_mem": 1024}, "hosts": {"primary":
       "a16773-akamai-alpha-1000126-default.g2a.akamaidb.net", "standby": "replica-a16773-akamai-alpha-1000126-default.g2a.akamaidb.net"},
-      "id": 16773, "label": "example-db-updated", "members": {"162.216.18.84": "failover",
-      "66.175.210.180": "primary", "66.175.215.193": "failover"}, "oldest_restore_time":
+      "id": 16773, "label": "example-db-updated", "members": {"192.0.2.0": "failover",
+      "192.0.2.0": "primary", "192.0.2.0": "failover"}, "oldest_restore_time":
       "2018-01-02T03:04:05", "port": 25698, "region": "us-east", "ssl_connection":
       true, "status": "active", "total_disk_size_gb": 58, "type": "g6-dedicated-2",
       "updated": "2018-01-02T03:04:05", "updates": {"day_of_week": 5, "duration":
@@ -5253,8 +5253,8 @@ interactions:
       200}, "pg_stat_monitor_enable": true, "pglookout": {"max_failover_replication_time_lag":
       60}, "shared_buffers_percentage": 25, "work_mem": 1024}, "hosts": {"primary":
       "a16773-akamai-alpha-1000126-default.g2a.akamaidb.net", "standby": "replica-a16773-akamai-alpha-1000126-default.g2a.akamaidb.net"},
-      "id": 16773, "label": "example-db-updated", "members": {"162.216.18.84": "failover",
-      "66.175.210.180": "primary", "66.175.215.193": "failover"}, "oldest_restore_time":
+      "id": 16773, "label": "example-db-updated", "members": {"192.0.2.0": "failover",
+      "192.0.2.0": "primary", "192.0.2.0": "failover"}, "oldest_restore_time":
       "2018-01-02T03:04:05", "port": 25698, "region": "us-east", "ssl_connection":
       true, "status": "active", "total_disk_size_gb": 58, "type": "g6-dedicated-2",
       "updated": "2018-01-02T03:04:05", "updates": {"day_of_week": 5, "duration":

@@ -4,11 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"strconv"
 	"testing"
 
 	"github.com/jarcoal/httpmock"
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -129,9 +128,6 @@ func TestInstance_ResetPassword(t *testing.T) {
 }
 
 func TestInstance_Get_MonthlyTransfer(t *testing.T) {
-	if strconv.IntSize < 64 {
-		t.Skip("V1 monthly transfer doesn't work on 32 or lower bits system")
-	}
 	fixtureData, err := fixtures.GetFixture("instance_monthly_transfer_get")
 	assert.NoError(t, err)
 
@@ -142,24 +138,6 @@ func TestInstance_Get_MonthlyTransfer(t *testing.T) {
 	base.MockGet("linode/instances/12345/transfer/2024/11", fixtureData)
 
 	stats, err := base.Client.GetInstanceTransferMonthly(context.Background(), 12345, 2024, 11)
-	assert.NoError(t, err)
-
-	assert.Equal(t, 30471077120, stats.BytesIn)
-	assert.Equal(t, 22956600198, stats.BytesOut)
-	assert.Equal(t, 53427677318, stats.BytesTotal)
-}
-
-func TestInstance_Get_MonthlyTransferV2(t *testing.T) {
-	fixtureData, err := fixtures.GetFixture("instance_monthly_transfer_get")
-	assert.NoError(t, err)
-
-	var base ClientBaseCase
-	base.SetUp(t)
-	defer base.TearDown(t)
-
-	base.MockGet("linode/instances/12345/transfer/2024/11", fixtureData)
-
-	stats, err := base.Client.GetInstanceTransferMonthlyV2(context.Background(), 12345, 2024, 11)
 	assert.NoError(t, err)
 
 	assert.Equal(t, uint64(30471077120), stats.BytesIn)
@@ -195,13 +173,19 @@ func TestInstance_Create(t *testing.T) {
 		Image:             "linode/ubuntu22.04",
 		RootPass:          "securepassword",
 		MaintenancePolicy: linodego.Pointer("linode/migrate"),
+		Kernel:            linodego.Pointer("linode/6.15.7-x86_64-linode169"),
+		BootSize:          linodego.Pointer(9000),
 		Alerts: &linodego.InstanceACLPAlertsOptions{
 			SystemAlerts: []int{123, 456},
 			UserAlerts:   []int{555},
 		},
 	}
 
-	base.MockPost("linode/instances", fixtureData)
+	httpmock.RegisterRegexpResponder(
+		"POST",
+		mockRequestURL(t, "/linode/instances"),
+		mockRequestBodyValidate(t, createOptions, fixtureData),
+	)
 
 	instance, err := base.Client.CreateInstance(context.Background(), createOptions)
 	assert.NoError(t, err)
@@ -266,7 +250,9 @@ func TestInstance_Boot(t *testing.T) {
 
 	base.MockPost("linode/instances/123/boot", nil)
 
-	err := base.Client.BootInstance(context.Background(), 123, 0)
+	opts := linodego.InstanceBootOptions{ConfigID: linodego.Pointer(0)}
+
+	err := base.Client.BootInstance(context.Background(), 123, opts)
 	assert.NoError(t, err)
 }
 
@@ -277,7 +263,9 @@ func TestInstance_Reboot(t *testing.T) {
 
 	base.MockPost("linode/instances/123/reboot", nil)
 
-	err := base.Client.RebootInstance(context.Background(), 123, 0)
+	opts := linodego.InstanceRebootOptions{ConfigID: linodego.Pointer(0)}
+
+	err := base.Client.RebootInstance(context.Background(), 123, opts)
 	assert.NoError(t, err)
 }
 
@@ -351,10 +339,15 @@ func TestInstance_Rebuild(t *testing.T) {
 	defer base.TearDown(t)
 
 	rebuildOptions := linodego.InstanceRebuildOptions{
-		Image: "linode/ubuntu22.04",
+		RootPass: "@S3cur3p@ssw0rd",
+		Image:    "linode/ubuntu22.04",
 	}
 
-	base.MockPost("linode/instances/123/rebuild", fixtureData)
+	httpmock.RegisterRegexpResponder(
+		"POST",
+		mockRequestURL(t, "/linode/instances/123/rebuild"),
+		mockRequestBodyValidate(t, rebuildOptions, fixtureData),
+	)
 
 	instance, err := base.Client.RebuildInstance(context.Background(), 123, rebuildOptions)
 	assert.NoError(t, err)
@@ -376,5 +369,22 @@ func TestInstanceACLPAlerts_MarshalEmptyList(t *testing.T) {
 	expected := `{"system_alerts":[],"user_alerts":[]}`
 	if string(buf) != expected {
 		t.Errorf("expected JSON %s, got %s", expected, string(buf))
+	}
+}
+
+func TestCreateInstance_IPv4ReservedIPs(t *testing.T) {
+	client := createMockClient(t)
+
+	createOpts := linodego.InstanceCreateOptions{
+		Region: "us-east",
+		Type:   "g6-standard-1",
+		IPv4:   []string{"192.0.2.1"},
+	}
+
+	httpmock.RegisterRegexpResponder("POST", mockRequestURL(t, "/linode/instances"),
+		mockRequestBodyValidate(t, createOpts, nil))
+
+	if _, err := client.CreateInstance(context.Background(), createOpts); err != nil {
+		t.Fatal(err)
 	}
 }

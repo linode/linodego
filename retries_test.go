@@ -1,24 +1,24 @@
 package linodego
 
 import (
+	"bytes"
+	"encoding/json"
+	"io"
 	"net/http"
 	"testing"
 	"time"
-
-	"github.com/go-resty/resty/v2"
 )
 
 func TestLinodeBusyRetryCondition(t *testing.T) {
 	var retry bool
 
-	request := resty.Request{}
-	rawResponse := http.Response{StatusCode: http.StatusBadRequest}
-	response := resty.Response{
-		Request:     &request,
-		RawResponse: &rawResponse,
+	// Initialize response body
+	rawResponse := &http.Response{
+		StatusCode: http.StatusBadRequest,
+		Body:       io.NopCloser(bytes.NewBuffer(nil)),
 	}
 
-	retry = linodeBusyRetryCondition(&response, nil)
+	retry = LinodeBusyRetryCondition(rawResponse, nil)
 
 	if retry {
 		t.Errorf("Should not have retried")
@@ -29,48 +29,53 @@ func TestLinodeBusyRetryCondition(t *testing.T) {
 			{Reason: "Linode busy."},
 		},
 	}
-	request.SetError(&apiError)
+	rawResponse.Body = createResponseBody(apiError)
 
-	retry = linodeBusyRetryCondition(&response, nil)
+	retry = LinodeBusyRetryCondition(rawResponse, nil)
 
 	if !retry {
 		t.Errorf("Should have retried")
 	}
 }
 
-func TestLinodeServiceUnavailableRetryCondition(t *testing.T) {
-	request := resty.Request{}
-	rawResponse := http.Response{StatusCode: http.StatusServiceUnavailable, Header: http.Header{
-		retryAfterHeaderName: []string{"20"},
-	}}
-	response := resty.Response{
-		Request:     &request,
-		RawResponse: &rawResponse,
+func TestServiceUnavailableRetryCondition(t *testing.T) {
+	rawResponse := &http.Response{
+		StatusCode: http.StatusServiceUnavailable,
+		Header:     http.Header{RetryAfterHeaderName: []string{"20"}},
+		Body:       io.NopCloser(bytes.NewBuffer(nil)), // Initialize response body
 	}
 
-	if retry := serviceUnavailableRetryCondition(&response, nil); !retry {
+	if retry := ServiceUnavailableRetryCondition(rawResponse, nil); !retry {
 		t.Error("expected request to be retried")
 	}
 
-	if retryAfter, err := respectRetryAfter(NewClient(nil).resty, &response); err != nil {
+	if retryAfter, err := RespectRetryAfter(rawResponse); err != nil {
 		t.Errorf("expected error to be nil but got %s", err)
 	} else if retryAfter != time.Second*20 {
 		t.Errorf("expected retryAfter to be 20 but got %d", retryAfter)
 	}
 }
 
-func TestLinodeServiceMaintenanceModeRetryCondition(t *testing.T) {
-	request := resty.Request{}
-	rawResponse := http.Response{StatusCode: http.StatusServiceUnavailable, Header: http.Header{
-		retryAfterHeaderName:      []string{"20"},
-		maintenanceModeHeaderName: []string{"Currently in maintenance mode."},
-	}}
-	response := resty.Response{
-		Request:     &request,
-		RawResponse: &rawResponse,
+func TestServiceMaintenanceModeRetryCondition(t *testing.T) {
+	rawResponse := &http.Response{
+		StatusCode: http.StatusServiceUnavailable,
+		Header: http.Header{
+			RetryAfterHeaderName:      []string{"20"},
+			MaintenanceModeHeaderName: []string{"Currently in maintenance mode."},
+		},
+		Body: io.NopCloser(bytes.NewBuffer(nil)), // Initialize response body
 	}
 
-	if retry := serviceUnavailableRetryCondition(&response, nil); retry {
+	if retry := ServiceUnavailableRetryCondition(rawResponse, nil); retry {
 		t.Error("expected retry to be skipped due to maintenance mode header")
 	}
+}
+
+// Helper function to create a response body from an object
+func createResponseBody(obj interface{}) io.ReadCloser {
+	body, err := json.Marshal(obj)
+	if err != nil {
+		panic(err)
+	}
+	return io.NopCloser(bytes.NewBuffer(body))
 }

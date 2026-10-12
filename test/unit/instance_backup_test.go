@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -37,7 +37,9 @@ func TestInstanceSnapshot_Create(t *testing.T) {
 
 	base.MockPost("linode/instances/123/backups", fixtureData)
 
-	snapshot, err := base.Client.CreateInstanceSnapshot(context.Background(), 123, "new-snapshot")
+	opts := linodego.InstanceSnapshotCreateOptions{Label: "new-snapshot"}
+
+	snapshot, err := base.Client.CreateInstanceSnapshot(context.Background(), 123, opts)
 	assert.NoError(t, err)
 	assert.Equal(t, "new-snapshot", snapshot.Label)
 	assert.Equal(t, linodego.SnapshotPending, snapshot.Status)

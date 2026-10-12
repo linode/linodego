@@ -3,6 +3,14 @@ name: Continuous Integration
 on:
   workflow_dispatch:
     inputs:
+      run_aclp_logs_stream_tests:
+        description: 'Set this parameter to "true" to run ACLP logs stream related test cases'
+        required: false
+        default: 'false'
+        type: choice
+        options:
+          - 'true'
+          - 'false'
       test_report_upload:
         description: 'Indicates whether to upload the test report to object storage. Defaults to "false"'
         type: choice
@@ -48,8 +56,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
-      - uses: actions/checkout@v6
-      - uses: actions/setup-go@v6
+      - uses: actions/checkout@v7
+      - uses: actions/setup-go@v7
         with:
           go-version: stable
 
@@ -67,7 +75,7 @@ jobs:
           gofumpt -l -w .
 
       - name: Fail if changes
-        run: git diff-index --exit-code HEAD
+        run: git diff --exit-code HEAD
 
   test:
     runs-on: ubuntu-latest
@@ -75,19 +83,19 @@ jobs:
       EXIT_STATUS: 0
     steps:
       - name: Clone Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
           submodules: 'recursive'
 
       - name: Set up Go
-        uses: actions/setup-go@v6
+        uses: actions/setup-go@v7
         with:
           go-version: 'stable'
       - run: go version
 
       - name: Setup Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v7
         with:
           python-version: '3.x'
 
@@ -105,6 +113,7 @@ jobs:
           make test | go-junit-report -set-exit-code -iocopy -out $REPORT_FILENAME
         env:
           SKIP_LINT: 1
+          RUN_ACLP_LOGS_STREAM_TESTS: ${{ github.event.inputs.run_aclp_logs_stream_tests }}
 
       - name: Upload test results to bucket
         if: always() && github.repository == 'linode/linodego' && github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'pull_request' || (github.event_name == 'workflow_dispatch' && inputs.test_report_upload == 'true'))
@@ -127,7 +136,7 @@ jobs:
 
     steps:
       - name: Notify Slack
-        uses: slackapi/slack-github-action@v3
+        uses: slackapi/slack-github-action@v4
         with:
           method: chat.postMessage
           token: ${{ secrets.SLACK_BOT_TOKEN }}

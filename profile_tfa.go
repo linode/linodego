@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/v2/internal/parseabletime"
 )
 
 // TwoFactorSecret contains fields returned by CreateTwoFactorSecret

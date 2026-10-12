@@ -11,9 +11,9 @@ type AccountAgreements struct {
 
 // AccountAgreementsUpdateOptions fields are those accepted by UpdateAccountAgreements
 type AccountAgreementsUpdateOptions struct {
-	EUModel                bool `json:"eu_model,omitempty"`
-	MasterServiceAgreement bool `json:"master_service_agreement,omitempty"`
-	PrivacyPolicy          bool `json:"privacy_policy,omitempty"`
+	EUModel                bool `json:"eu_model,omitzero"`
+	MasterServiceAgreement bool `json:"master_service_agreement,omitzero"`
+	PrivacyPolicy          bool `json:"privacy_policy,omitzero"`
 }
 
 // GetUpdateOptions converts an AccountAgreements to AccountAgreementsUpdateOptions for use in UpdateAccountAgreements

@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/v2/internal/parseabletime"
 )
 
 // VolumeStatus indicates the status of the Volume
@@ -41,33 +41,44 @@ type Volume struct {
 	Created        *time.Time   `json:"-"`
 	Updated        *time.Time   `json:"-"`
 	Encryption     string       `json:"encryption"`
+
+	// NOTE: Locks can only be used with v4beta.
+	Locks []LockType `json:"locks"`
 }
 
 // VolumeCreateOptions fields are those accepted by CreateVolume
 type VolumeCreateOptions struct {
-	Label    string `json:"label,omitempty"`
-	Region   string `json:"region,omitempty"`
-	LinodeID int    `json:"linode_id,omitempty"`
-	ConfigID int    `json:"config_id,omitempty"`
+	Label    string `json:"label,omitzero"`
+	Region   string `json:"region,omitzero"`
+	LinodeID int    `json:"linode_id,omitzero"`
+	ConfigID int    `json:"config_id,omitzero"`
 	// The Volume's size, in GiB. Minimum size is 10GiB, maximum size is 10240GiB. A "0" value will result in the default size.
-	Size int `json:"size,omitempty"`
+	Size int `json:"size,omitzero"`
 	// An array of tags applied to this object. Tags are for organizational purposes only.
 	Tags               []string `json:"tags"`
-	PersistAcrossBoots *bool    `json:"persist_across_boots,omitempty"`
-	Encryption         string   `json:"encryption,omitempty"`
+	PersistAcrossBoots *bool    `json:"persist_across_boots,omitzero"`
+	Encryption         string   `json:"encryption,omitzero"`
 }
 
 // VolumeUpdateOptions fields are those accepted by UpdateVolume
 type VolumeUpdateOptions struct {
-	Label string    `json:"label,omitempty"`
-	Tags  *[]string `json:"tags,omitempty"`
+	Label string   `json:"label,omitzero"`
+	Tags  []string `json:"tags,omitzero"`
+}
+
+type VolumeCloneOptions struct {
+	Label string `json:"label"`
+}
+
+type VolumeResizeOptions struct {
+	Size int `json:"size"`
 }
 
 // VolumeAttachOptions fields are those accepted by AttachVolume
 type VolumeAttachOptions struct {
 	LinodeID           int   `json:"linode_id"`
-	ConfigID           int   `json:"config_id,omitempty"`
-	PersistAcrossBoots *bool `json:"persist_across_boots,omitempty"`
+	ConfigID           int   `json:"config_id,omitzero"`
+	PersistAcrossBoots *bool `json:"persist_across_boots,omitzero"`
 }
 
 // UnmarshalJSON implements the json.Unmarshaler interface
@@ -96,7 +107,7 @@ func (v *Volume) UnmarshalJSON(b []byte) error {
 // GetUpdateOptions converts a Volume to VolumeUpdateOptions for use in UpdateVolume
 func (v Volume) GetUpdateOptions() (updateOpts VolumeUpdateOptions) {
 	updateOpts.Label = v.Label
-	updateOpts.Tags = &v.Tags
+	updateOpts.Tags = v.Tags
 
 	return updateOpts
 }
@@ -144,11 +155,7 @@ func (c *Client) UpdateVolume(ctx context.Context, volumeID int, opts VolumeUpda
 }
 
 // CloneVolume clones a Linode volume
-func (c *Client) CloneVolume(ctx context.Context, volumeID int, label string) (*Volume, error) {
-	opts := map[string]any{
-		"label": label,
-	}
-
+func (c *Client) CloneVolume(ctx context.Context, volumeID int, opts VolumeCloneOptions) (*Volume, error) {
 	e := formatAPIPath("volumes/%d/clone", volumeID)
 
 	return doPOSTRequest[Volume](ctx, c, e, opts)
@@ -161,11 +168,7 @@ func (c *Client) DetachVolume(ctx context.Context, volumeID int) error {
 }
 
 // ResizeVolume resizes an instance to new Linode type
-func (c *Client) ResizeVolume(ctx context.Context, volumeID int, size int) error {
-	opts := map[string]int{
-		"size": size,
-	}
-
+func (c *Client) ResizeVolume(ctx context.Context, volumeID int, opts VolumeResizeOptions) error {
 	e := formatAPIPath("volumes/%d/resize", volumeID)
 
 	return doPOSTRequestNoResponseBody(ctx, c, e, opts)

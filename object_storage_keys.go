@@ -23,11 +23,14 @@ type ObjectStorageKey struct {
 
 // ObjectStorageKeyBucketAccess represents a linode limited object storage key's bucket access
 type ObjectStorageKeyBucketAccess struct {
-	// Deprecated: Cluster field has been deprecated.
-	// Please consider switching to use the 'Region' field.
-	// If your Cluster is `us-mia-1`, then the region would be `us-mia`.
-	Cluster string `json:"cluster,omitempty"`
-	Region  string `json:"region,omitempty"`
+	Region string `json:"region,omitzero"`
+
+	BucketName  string `json:"bucket_name"`
+	Permissions string `json:"permissions"`
+}
+
+type ObjectStorageKeyBucketAccessCreateOptions struct {
+	Region string `json:"region,omitzero"`
 
 	BucketName  string `json:"bucket_name"`
 	Permissions string `json:"permissions"`
@@ -35,15 +38,15 @@ type ObjectStorageKeyBucketAccess struct {
 
 // ObjectStorageKeyCreateOptions fields are those accepted by CreateObjectStorageKey
 type ObjectStorageKeyCreateOptions struct {
-	Label        string                          `json:"label"`
-	BucketAccess *[]ObjectStorageKeyBucketAccess `json:"bucket_access,omitempty"`
-	Regions      []string                        `json:"regions,omitempty"`
+	Label        string                                      `json:"label"`
+	BucketAccess []ObjectStorageKeyBucketAccessCreateOptions `json:"bucket_access,omitzero"`
+	Regions      []string                                    `json:"regions,omitzero"`
 }
 
 // ObjectStorageKeyUpdateOptions fields are those accepted by UpdateObjectStorageKey
 type ObjectStorageKeyUpdateOptions struct {
-	Label   string   `json:"label,omitempty"`
-	Regions []string `json:"regions,omitempty"`
+	Label   string   `json:"label,omitzero"`
+	Regions []string `json:"regions,omitzero"`
 }
 
 // ListObjectStorageKeys lists ObjectStorageKeys

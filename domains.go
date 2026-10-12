@@ -15,9 +15,6 @@ type Domain struct {
 	// If this Domain represents the authoritative source of information for the domain it describes, or if it is a read-only copy of a master (also called a slave).
 	Type DomainType `json:"type"` // Enum:"master" "slave"
 
-	// Deprecated: The group this Domain belongs to. This is for display purposes only.
-	Group string `json:"group"`
-
 	// Used to control whether this Domain is currently being rendered.
 	Status DomainStatus `json:"status"` // Enum:"disabled" "active" "edit_mode" "has_errors"
 
@@ -64,22 +61,19 @@ type DomainCreateOptions struct {
 	// Enum:"master" "slave"
 	Type DomainType `json:"type"`
 
-	// Deprecated: The group this Domain belongs to. This is for display purposes only.
-	Group string `json:"group,omitempty"`
-
 	// Used to control whether this Domain is currently being rendered.
 	// Enum:"disabled" "active" "edit_mode" "has_errors"
-	Status DomainStatus `json:"status,omitempty"`
+	Status DomainStatus `json:"status,omitzero"`
 
 	// A description for this Domain. This is for display purposes only.
-	Description string `json:"description,omitempty"`
+	Description string `json:"description,omitzero"`
 
 	// Start of Authority email address. This is required for master Domains.
-	SOAEmail string `json:"soa_email,omitempty"`
+	SOAEmail string `json:"soa_email,omitzero"`
 
 	// The interval, in seconds, at which a failed refresh should be retried.
 	// Valid values are 300, 3600, 7200, 14400, 28800, 57600, 86400, 172800, 345600, 604800, 1209600, and 2419200 - any other value will be rounded to the nearest valid value.
-	RetrySec int `json:"retry_sec,omitempty"`
+	RetrySec int `json:"retry_sec,omitzero"`
 
 	// The IP addresses representing the master DNS for this Domain.
 	MasterIPs []string `json:"master_ips"`
@@ -91,40 +85,37 @@ type DomainCreateOptions struct {
 	Tags []string `json:"tags"`
 
 	// The amount of time in seconds that may pass before this Domain is no longer authoritative. Valid values are 300, 3600, 7200, 14400, 28800, 57600, 86400, 172800, 345600, 604800, 1209600, and 2419200 - any other value will be rounded to the nearest valid value.
-	ExpireSec int `json:"expire_sec,omitempty"`
+	ExpireSec int `json:"expire_sec,omitzero"`
 
 	// The amount of time in seconds before this Domain should be refreshed. Valid values are 300, 3600, 7200, 14400, 28800, 57600, 86400, 172800, 345600, 604800, 1209600, and 2419200 - any other value will be rounded to the nearest valid value.
-	RefreshSec int `json:"refresh_sec,omitempty"`
+	RefreshSec int `json:"refresh_sec,omitzero"`
 
 	// "Time to Live" - the amount of time in seconds that this Domain's records may be cached by resolvers or other domain servers. Valid values are 300, 3600, 7200, 14400, 28800, 57600, 86400, 172800, 345600, 604800, 1209600, and 2419200 - any other value will be rounded to the nearest valid value.
-	TTLSec int `json:"ttl_sec,omitempty"`
+	TTLSec int `json:"ttl_sec,omitzero"`
 }
 
 // DomainUpdateOptions converts a Domain to DomainUpdateOptions for use in UpdateDomain
 type DomainUpdateOptions struct {
 	// The domain this Domain represents. These must be unique in our system; you cannot have two Domains representing the same domain.
-	Domain string `json:"domain,omitempty"`
+	Domain string `json:"domain,omitzero"`
 
 	// If this Domain represents the authoritative source of information for the domain it describes, or if it is a read-only copy of a master (also called a slave).
 	// Enum:"master" "slave"
-	Type DomainType `json:"type,omitempty"`
-
-	// Deprecated: The group this Domain belongs to. This is for display purposes only.
-	Group string `json:"group,omitempty"`
+	Type DomainType `json:"type,omitzero"`
 
 	// Used to control whether this Domain is currently being rendered.
 	// Enum:"disabled" "active" "edit_mode" "has_errors"
-	Status DomainStatus `json:"status,omitempty"`
+	Status DomainStatus `json:"status,omitzero"`
 
 	// A description for this Domain. This is for display purposes only.
-	Description string `json:"description,omitempty"`
+	Description string `json:"description,omitzero"`
 
 	// Start of Authority email address. This is required for master Domains.
-	SOAEmail string `json:"soa_email,omitempty"`
+	SOAEmail string `json:"soa_email,omitzero"`
 
 	// The interval, in seconds, at which a failed refresh should be retried.
 	// Valid values are 300, 3600, 7200, 14400, 28800, 57600, 86400, 172800, 345600, 604800, 1209600, and 2419200 - any other value will be rounded to the nearest valid value.
-	RetrySec int `json:"retry_sec,omitempty"`
+	RetrySec int `json:"retry_sec,omitzero"`
 
 	// The IP addresses representing the master DNS for this Domain.
 	MasterIPs []string `json:"master_ips"`
@@ -136,13 +127,13 @@ type DomainUpdateOptions struct {
 	Tags []string `json:"tags"`
 
 	// The amount of time in seconds that may pass before this Domain is no longer authoritative. Valid values are 300, 3600, 7200, 14400, 28800, 57600, 86400, 172800, 345600, 604800, 1209600, and 2419200 - any other value will be rounded to the nearest valid value.
-	ExpireSec int `json:"expire_sec,omitempty"`
+	ExpireSec int `json:"expire_sec,omitzero"`
 
 	// The amount of time in seconds before this Domain should be refreshed. Valid values are 300, 3600, 7200, 14400, 28800, 57600, 86400, 172800, 345600, 604800, 1209600, and 2419200 - any other value will be rounded to the nearest valid value.
-	RefreshSec int `json:"refresh_sec,omitempty"`
+	RefreshSec int `json:"refresh_sec,omitzero"`
 
 	// "Time to Live" - the amount of time in seconds that this Domain's records may be cached by resolvers or other domain servers. Valid values are 300, 3600, 7200, 14400, 28800, 57600, 86400, 172800, 345600, 604800, 1209600, and 2419200 - any other value will be rounded to the nearest valid value.
-	TTLSec int `json:"ttl_sec,omitempty"`
+	TTLSec int `json:"ttl_sec,omitzero"`
 }
 
 // DomainType constants start with DomainType and include Linode API Domain Type values
@@ -178,7 +169,6 @@ type DomainImportOptions struct {
 func (d Domain) GetUpdateOptions() (du DomainUpdateOptions) {
 	du.Domain = d.Domain
 	du.Type = d.Type
-	du.Group = d.Group
 	du.Status = d.Status
 	du.Description = d.Description
 	du.SOAEmail = d.SOAEmail

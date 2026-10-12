@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -23,7 +23,7 @@ func TestVPCSubnet_Create(t *testing.T) {
 		IPv4:  "192.168.1.0/24",
 		IPv6: []linodego.VPCSubnetCreateOptionsIPv6{
 			{
-				linodego.Pointer("auto"),
+				Range: linodego.Pointer("auto"),
 			},
 		},
 	}

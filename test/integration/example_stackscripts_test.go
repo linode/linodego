@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 )
 
 func ExampleClient_CreateStackscript() {

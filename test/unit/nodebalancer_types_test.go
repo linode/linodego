@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -16,7 +16,7 @@ func TestNodeBalancerTypes_List(t *testing.T) {
 	base.SetUp(t)
 	defer base.TearDown(t)
 
-	// Mock the GET request for the node balancer types endpoint (mock as an array instead of paginatedResponse)
+	// Mock the GET request for the node balancer types endpoint (mock as an array instead of PaginatedResponse)
 	base.MockGet("nodebalancers/types", fixtureData)
 
 	// Call the ListNodeBalancerTypes method

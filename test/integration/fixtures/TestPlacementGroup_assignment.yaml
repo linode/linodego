@@ -74,7 +74,7 @@ interactions:
       3}, "site_type": "core"}, {"id": "eu-west", "label": "London, England, UK",
       "country": "uk", "capabilities": ["Linodes", "Backups", "NodeBalancers", "Cloud
       Firewall", "Vlans", "VPCs", "Managed Databases", "Metadata", "Placement Group"],
-      "status": "ok", "resolvers": {"ipv4": "178.79.182.5,176.58.107.5,176.58.116.5,176.58.121.5,151.236.220.5,212.71.252.5,212.71.253.5,109.74.192.20,109.74.193.20,109.74.194.20",
+      "status": "ok", "resolvers": {"ipv4": "178.79.182.5,176.58.107.5,176.58.116.5,176.58.121.5,151.236.220.5,212.71.252.5,212.71.253.5,192.0.2.0,192.0.2.0,192.0.2.0",
       "ipv6": "1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678,1234::5678"},
       "placement_group_limits": {"maximum_pgs_per_customer": 3, "maximum_linodes_per_pg":
       2}, "site_type": "core"}, {"id": "ap-south", "label": "Singapore, SG", "country":
@@ -250,7 +250,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-45dul0x555hm","root_pass":"f82D1PSTS\u003cN8ifBb=i-b{eS5\u003c5C^5C.F[K.3/y7R;`8s''b`Gh}Arz278be(57iP7","image":"linode/debian9","firewall_id":37174,"booted":false}'
+    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-45dul0x555hm","root_pass":"thisIsYourRootPassword","image":"linode/debian9","firewall_id":37174,"booted":false}'
     form: {}
     headers:
       Accept:
@@ -264,7 +264,7 @@ interactions:
   response:
     body: '{"id": 25232693, "label": "go-test-ins-45dul0x555hm", "group": "", "status":
       "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["139.144.131.193"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["192.0.2.0"], "ipv6": "1234::5678/128",
       "image": "linode/debian9", "region": "us-east", "site_type": "core", "specs":
       {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts":
       {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io":
@@ -385,7 +385,7 @@ interactions:
   response:
     body: '{"id": 25232693, "label": "go-test-ins-45dul0x555hm", "group": "", "status":
       "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["139.144.131.193"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["192.0.2.0"], "ipv6": "1234::5678/128",
       "image": "linode/debian9", "region": "us-east", "site_type": "core", "specs":
       {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts":
       {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io":

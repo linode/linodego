@@ -11,21 +11,17 @@ linters:
     - err113
     - errcheck
     - errname
-    - errorlint
     - exhaustive
     - exhaustruct
     - forcetypeassert
     - gochecknoglobals
     - gochecknoinits
     - godot
-    - godox
-    - inamedparam
     - lll
     - musttag
     - nilerr
     - nlreturn
     - noinlineerr
-    - nolintlint
     - nonamedreturns
     - perfsprint
     - recvcheck
@@ -34,6 +30,8 @@ linters:
     - varnamelen
     - wrapcheck
     - wsl
+    - gomodguard
+    - exhaustruct_v5
   settings:
     dupl:
       threshold: 100

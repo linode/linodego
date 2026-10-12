@@ -14,7 +14,7 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips
     method: POST
   response:
-    body: '{"address": "172.104.20.77", "gateway": "172.104.20.1", "subnet_mask":
+    body: '{"address": "192.0.2.0", "gateway": "172.104.20.1", "subnet_mask":
       "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true, "rdns": "172-104-20-77.ip.linodeusercontent.com",
       "linode_id": null, "region": "us-east", "vpc_nat_1_1": null, "reserved": true}'
     headers:
@@ -65,7 +65,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-776ugys2x84t","root_pass":"9Nf1L;\u003e6ajieNPt\\X+2gP+8~rB`uJ22c;\u003e03C9Na40J}-}:)lQlj1[Y7qs-59UFV","image":"linode/alpine3.17","interfaces":[{"purpose":"public"}],"booted":false,"ipv4":["172.104.20.77"]}'
+    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-776ugys2x84t","root_pass":"thisIsYourRootPassword","image":"linode/alpine3.17","interfaces":[{"purpose":"public"}],"booted":false,"ipv4":["192.0.2.0"]}'
     form: {}
     headers:
       Accept:
@@ -79,7 +79,7 @@ interactions:
   response:
     body: '{"id": 63432429, "label": "go-test-ins-reserved-ip-776ugys2x84t", "group":
       "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.104.20.77"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["192.0.2.0"], "ipv6": "1234::5678/128",
       "image": "linode/alpine3.17", "region": "us-east", "site_type": "core", "specs":
       {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts":
       {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io":
@@ -136,7 +136,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-k834ai1y8j2a","root_pass":"~um0O^Z`j5S=4tRxo(4pAn+;8eA4[2?zWOg5[8P3szYRfx;9X97|f4~8V:2QM=\u003eU","image":"linode/alpine3.17","interfaces":[{"purpose":"public"}],"booted":false,"ipv4":["172.104.20.77"]}'
+    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-k834ai1y8j2a","root_pass":"thisIsYourRootPassword","image":"linode/alpine3.17","interfaces":[{"purpose":"public"}],"booted":false,"ipv4":["192.0.2.0"]}'
     form: {}
     headers:
       Accept:
@@ -181,7 +181,7 @@ interactions:
     code: 400
     duration: ""
 - request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-k13vw921yh5i","root_pass":"@g\\27J,2J$aX5xj$4v-\u003c3,Ny7nc5{WvY:''pDH7Vj1E45:9MjxP{=s14Kv$b-S5SD","image":"linode/alpine3.17","interfaces":[{"purpose":"public"}],"booted":false,"ipv4":["192.0.2.1"]}'
+    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-k13vw921yh5i","root_pass":"thisIsYourRootPassword","image":"linode/alpine3.17","interfaces":[{"purpose":"public"}],"booted":false,"ipv4":["192.0.2.1"]}'
     form: {}
     headers:
       Accept:
@@ -226,7 +226,7 @@ interactions:
     code: 400
     duration: ""
 - request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-k7zhi2807xk8","root_pass":"0BDN\\iia1C`\u0026O45tXS4[@7;0lF8)W+k[NRn6v3Y5ZtM/8e81xpwT[)i[f-\\-H1u4","image":"linode/alpine3.17","interfaces":[{"purpose":"public"}],"booted":false,"ipv4":["198.51.100.1"]}'
+    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-k7zhi2807xk8","root_pass":"thisIsYourRootPassword","image":"linode/alpine3.17","interfaces":[{"purpose":"public"}],"booted":false,"ipv4":["198.51.100.1"]}'
     form: {}
     headers:
       Accept:
@@ -271,7 +271,7 @@ interactions:
     code: 400
     duration: ""
 - request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-n9ssc0141zh7","root_pass":":LD8t4cgg|164/p=L151I3\\WdMAkw]Vw3O5;+E)bAg,9\\b58Sc`u5`d)E\u003e3]GBZk","image":"linode/alpine3.17","interfaces":[{"purpose":"public"}],"booted":false,"ipv4":[""]}'
+    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-n9ssc0141zh7","root_pass":"thisIsYourRootPassword","image":"linode/alpine3.17","interfaces":[{"purpose":"public"}],"booted":false,"ipv4":[""]}'
     form: {}
     headers:
       Accept:
@@ -316,7 +316,7 @@ interactions:
     code: 400
     duration: ""
 - request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-e14gz6bc5p37","root_pass":"KjQ13TO2`g}huOSKKe3988}([j(o#[P]]e08tXUqd=?B3A87l12hOlU4I|\u003el9\u003eh/","image":"linode/alpine3.17","interfaces":[{"purpose":"public"}],"booted":false}'
+    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-e14gz6bc5p37","root_pass":"thisIsYourRootPassword","image":"linode/alpine3.17","interfaces":[{"purpose":"public"}],"booted":false}'
     form: {}
     headers:
       Accept:
@@ -330,7 +330,7 @@ interactions:
   response:
     body: '{"id": 63432443, "label": "go-test-ins-reserved-ip-e14gz6bc5p37", "group":
       "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["97.107.138.251"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["192.0.2.0"], "ipv6": "1234::5678/128",
       "image": "linode/alpine3.17", "region": "us-east", "site_type": "core", "specs":
       {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts":
       {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io":
@@ -387,7 +387,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-3bly0ps6071m","root_pass":"H`X!T5x{D.4(J3k05dY,1IG=T/6e87DoN\\6DF@Bp8?4/.Nscw=qxn{4W4cluv91''","image":"linode/alpine3.17","interfaces":[{"purpose":"public"}],"booted":false,"ipv4":["172.104.20.77","192.0.2.2"]}'
+    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-3bly0ps6071m","root_pass":"thisIsYourRootPassword","image":"linode/alpine3.17","interfaces":[{"purpose":"public"}],"booted":false,"ipv4":["192.0.2.0","192.0.2.2"]}'
     form: {}
     headers:
       Accept:
@@ -432,7 +432,7 @@ interactions:
     code: 400
     duration: ""
 - request:
-    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-bw5b43pih670","root_pass":"wqx^Q)\u003ca\u0026))H`MV4n+ZT6geC53w3jV(n{F6JzG9G5h01jw97;/FxFi6HR?=:\\640","image":"linode/alpine3.17","interfaces":[{"purpose":"public"}],"booted":false}'
+    body: '{"region":"us-east","type":"g6-nanode-1","label":"go-test-ins-reserved-ip-bw5b43pih670","root_pass":"thisIsYourRootPassword","image":"linode/alpine3.17","interfaces":[{"purpose":"public"}],"booted":false}'
     form: {}
     headers:
       Accept:
@@ -446,7 +446,7 @@ interactions:
   response:
     body: '{"id": 63432444, "label": "go-test-ins-reserved-ip-bw5b43pih670", "group":
       "", "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["45.33.68.112"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["192.0.2.0"], "ipv6": "1234::5678/128",
       "image": "linode/alpine3.17", "region": "us-east", "site_type": "core", "specs":
       {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000}, "alerts":
       {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota": 80, "io":
@@ -695,7 +695,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/networking/reserved/ips/172.104.20.77
+    url: https://api.linode.com/v4beta/networking/reserved/ips/192.0.2.0
     method: DELETE
   response:
     body: '{}'

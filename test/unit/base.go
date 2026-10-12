@@ -7,8 +7,8 @@ import (
 	"testing"
 
 	"github.com/jarcoal/httpmock"
-	"github.com/linode/linodego"
-	"github.com/linode/linodego/internal/testutil"
+	"github.com/linode/linodego/v2"
+	"github.com/linode/linodego/v2/internal/testutil"
 	"github.com/stretchr/testify/mock"
 )
 
@@ -27,7 +27,7 @@ type ClientBaseCase struct {
 // SetUp initializes the Linode client using the mock HTTP client
 func (c *ClientBaseCase) SetUp(t *testing.T) {
 	c.Mock = &mock.Mock{}
-	c.Client = testutil.CreateMockClient(t, linodego.NewClient)
+	c.Client = testutil.CreateMockClientWithError(t, linodego.NewClient)
 
 	baseURL := "https://" + linodego.APIHost
 	if hostOverride, ok := os.LookupEnv(linodego.APIHostVar); ok && hostOverride != "" {

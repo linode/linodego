@@ -7,7 +7,7 @@ type LKEClusterControlPlane struct {
 	HighAvailability bool `json:"high_availability"`
 
 	// AuditLogsEnabled may not currently be available to all users and can only be used with v4beta.
-	AuditLogsEnabled bool `json:"audit_logs_enabled,omitempty"`
+	AuditLogsEnabled bool `json:"audit_logs_enabled,omitzero"`
 }
 
 // LKEClusterControlPlaneACLAddresses describes the
@@ -28,26 +28,26 @@ type LKEClusterControlPlaneACL struct {
 // LKEClusterControlPlaneACLAddressesOptions are the options used to
 // specify the allowed IP ranges for an LKE cluster's control plane.
 type LKEClusterControlPlaneACLAddressesOptions struct {
-	IPv4 *[]string `json:"ipv4,omitempty"`
-	IPv6 *[]string `json:"ipv6,omitempty"`
+	IPv4 []string `json:"ipv4,omitzero"`
+	IPv6 []string `json:"ipv6,omitzero"`
 }
 
 // LKEClusterControlPlaneACLOptions represents the options used when
 // configuring an LKE cluster's control plane ACL policy.
 type LKEClusterControlPlaneACLOptions struct {
-	Enabled    *bool                                      `json:"enabled,omitempty"`
-	Addresses  *LKEClusterControlPlaneACLAddressesOptions `json:"addresses,omitempty"`
-	RevisionID string                                     `json:"revision-id,omitempty"`
+	Enabled    *bool                                      `json:"enabled,omitzero"`
+	Addresses  *LKEClusterControlPlaneACLAddressesOptions `json:"addresses,omitzero"`
+	RevisionID string                                     `json:"revision-id,omitzero"`
 }
 
 // LKEClusterControlPlaneOptions represents the options used when
 // configuring an LKE cluster's control plane.
 type LKEClusterControlPlaneOptions struct {
-	HighAvailability *bool                             `json:"high_availability,omitempty"`
-	ACL              *LKEClusterControlPlaneACLOptions `json:"acl,omitempty"`
+	HighAvailability *bool                             `json:"high_availability,omitzero"`
+	ACL              *LKEClusterControlPlaneACLOptions `json:"acl,omitzero"`
 
 	// AuditLogsEnabled may not currently be available to all users and can only be used with v4beta.
-	AuditLogsEnabled *bool `json:"audit_logs_enabled,omitempty"`
+	AuditLogsEnabled *bool `json:"audit_logs_enabled,omitzero"`
 }
 
 // LKEClusterControlPlaneACLUpdateOptions represents the options

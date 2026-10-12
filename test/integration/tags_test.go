@@ -4,7 +4,9 @@ import (
 	"context"
 	"testing"
 
-	. "github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
+	. "github.com/linode/linodego/v2"
+	"github.com/stretchr/testify/require"
 )
 
 func TestTag_Create_create_smoke(t *testing.T) {
@@ -19,11 +21,8 @@ func TestTag_Create_create_smoke(t *testing.T) {
 	}
 
 	updateOpts := instance.GetUpdateOptions()
-	if updateOpts.Tags == nil {
-		updateOpts.Tags = new([]string)
-	}
-	newTags := append(*updateOpts.Tags, "go-tag-test-bar")
-	updateOpts.Tags = &newTags
+	newTags := append(updateOpts.Tags, "go-tag-test-bar")
+	updateOpts.Tags = newTags
 	updateOpts.Backups = nil
 	instance, err = client.UpdateInstance(context.Background(), instance.ID, updateOpts)
 	if err != nil {
@@ -90,12 +89,45 @@ func TestTag_ListTaggedObjects_Missing(t *testing.T) {
 	}
 }
 
+func TestTag_CreateTagWithReservedIP(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestTag_CreateTagWithReservedIP")
+	defer teardown()
+
+	region := getRegionsWithCaps(t, client, []linodego.RegionCapability{CapabilityLinodes, CapabilityCloudFirewall})[0]
+
+	// Reserve an IP for testing
+	reservedIP, err := client.ReserveIPAddress(context.Background(), ReserveIPOptions{Region: region})
+	require.NoErrorf(t, err, "Failed to reserve IP: %v", err)
+
+	tag, err := client.CreateTag(context.Background(), TagCreateOptions{Label: "go-tag-test-foo", ReservedIPv4Addresses: []string{reservedIP.Address}})
+	require.NoErrorf(t, err, "Failed to create tag with reserved IP: %v", err)
+
+	tagObjects, err := client.ListTaggedObjects(context.Background(), tag.Label, nil)
+	require.NoErrorf(t, err, "Failed to list tagged objects: %v", err)
+
+	if len(tagObjects) == 0 || tagObjects[0].Type != "reserved_ipv4_address" || !tagObjects[0].Data.(InstanceIP).Reserved ||
+		tagObjects[0].Data.(InstanceIP).Tags[0] != tag.Label {
+		t.Fatalf("Should have found Tag in tagged objects list, got %v", tagObjects)
+	}
+
+	defer func() {
+		err = client.DeleteTag(context.Background(), tag.Label)
+		require.NoErrorf(t, err, "Failed to delete tag with reserved IP: %v", err)
+
+		_, err = client.GetReservedIPAddress(context.Background(), reservedIP.Address)
+		require.Nilf(t, err, "Reserved IP should not have been deleted: %v", err)
+
+		err = client.DeleteReservedIPAddress(context.Background(), reservedIP.Address)
+		require.NoErrorf(t, err, "Failed to delete reserved IP: %v", err)
+	}()
+}
+
 func setupTaggedInstance(t *testing.T, fixturesYaml string) (*Client, *Instance, func(), error) {
 	t.Helper()
 	client, fixtureTeardown := createTestClient(t, fixturesYaml)
 	createOpts := InstanceCreateOptions{
 		Label:  "go-ins-test-tag",
-		Region: getRegionsWithCaps(t, client, []string{"Linodes"})[0],
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes})[0],
 		Type:   "g6-nanode-1",
 		Tags:   []string{"go-tag-test"},
 	}

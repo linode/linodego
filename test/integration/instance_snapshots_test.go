@@ -5,13 +5,15 @@ import (
 	"testing"
 	"time"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 )
 
 var testSnapshotLabel = "snapshot-linodego-testing"
 
 func TestInstanceBackups_List(t *testing.T) {
-	client, instance, backup, teardown, err := setupInstanceBackup(t, "fixtures/TestInstanceBackups_List")
+	ctx := waitContext(t, 1500*time.Second)
+
+	client, instance, backup, teardown, err := setupInstanceBackup(t, ctx, "fixtures/TestInstanceBackups_List")
 	defer teardown()
 	if err != nil {
 		t.Error(err)
@@ -52,7 +54,7 @@ func TestInstanceBackups_List(t *testing.T) {
 		t.Errorf("Expected snapshot did not match current snapshot: %v", backups.Snapshot.Current)
 	}
 
-	backup, err = client.WaitForSnapshotStatus(context.Background(), instance.ID, backup.ID, linodego.SnapshotSuccessful, 360)
+	backup, err = client.WaitForSnapshotStatus(ctx, instance.ID, backup.ID, linodego.SnapshotSuccessful)
 	if err != nil {
 		t.Errorf("Error waiting for snapshot: %v", err)
 	}
@@ -79,20 +81,24 @@ func TestInstanceBackups_List(t *testing.T) {
 	}
 
 	// wait for instnace to restore
-	_, err = client.WaitForEventFinished(context.Background(), instance.ID, linodego.EntityLinode, linodego.ActionBackupsRestore, now, 360)
+	_, err = client.WaitForEventFinished(ctx, instance.ID, linodego.EntityLinode, linodego.ActionBackupsRestore, now)
 	if err != nil {
 		t.Errorf("Error waiting for snapshot to complete: %v", err)
 	}
 }
 
-func setupInstanceBackup(t *testing.T, fixturesYaml string) (*linodego.Client, *linodego.Instance, *linodego.InstanceSnapshot, func(), error) {
+func setupInstanceBackup(
+	t *testing.T,
+	ctx context.Context,
+	fixturesYaml string,
+) (*linodego.Client, *linodego.Instance, *linodego.InstanceSnapshot, func(), error) {
 	t.Helper()
 	client, instance, _, fixtureTeardown, err := setupInstanceWithoutDisks(t, fixturesYaml, true)
 	if err != nil {
 		t.Errorf("Error creating instance, got error %v", err)
 	}
 
-	client.WaitForInstanceStatus(context.Background(), instance.ID, linodego.InstanceOffline, 180)
+	client.WaitForInstanceStatus(ctx, instance.ID, linodego.InstanceOffline)
 	createOpts := linodego.InstanceDiskCreateOptions{
 		Size:       18,
 		Label:      "linodego-disk-test",
@@ -104,7 +110,7 @@ func setupInstanceBackup(t *testing.T, fixturesYaml string) (*linodego.Client, *
 	}
 
 	// wait for disk to finish provisioning
-	event, err := client.WaitForEventFinished(context.Background(), instance.ID, linodego.EntityLinode, linodego.ActionDiskCreate, *disk.Created, 240)
+	event, err := client.WaitForEventFinished(ctx, instance.ID, linodego.EntityLinode, linodego.ActionDiskCreate, *disk.Created)
 	if err != nil {
 		t.Errorf("Error waiting for instance snapshot: %v", err)
 	}
@@ -118,12 +124,14 @@ func setupInstanceBackup(t *testing.T, fixturesYaml string) (*linodego.Client, *
 		t.Errorf("Error enabling Instance Backups: %v", err)
 	}
 
-	snapshot, err := client.CreateInstanceSnapshot(context.Background(), instance.ID, testSnapshotLabel)
+	opts := linodego.InstanceSnapshotCreateOptions{Label: testSnapshotLabel}
+
+	snapshot, err := client.CreateInstanceSnapshot(context.Background(), instance.ID, opts)
 	if err != nil {
 		t.Errorf("Error creating instance snapshot: %v", err)
 	}
 
-	event, err = client.WaitForEventFinished(context.Background(), instance.ID, linodego.EntityLinode, linodego.ActionLinodeSnapshot, *instance.Created, 360)
+	event, err = client.WaitForEventFinished(ctx, instance.ID, linodego.EntityLinode, linodego.ActionLinodeSnapshot, *instance.Created)
 	if err != nil {
 		t.Errorf("Error waiting for instance snapshot: %v", err)
 	}

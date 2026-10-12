@@ -11,17 +11,17 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/maintenance/policies
+    url: https://api.linode.com/v4beta/maintenance/policies?page=1
     method: GET
   response:
     body: '{"data": [{"slug": "linode/migrate", "label": "Migrate", "description":
       "Migrates the Linode to a new host while it remains fully operational. Recommended
       for maximizing availability.", "type": "migrate", "notification_period_sec":
-      300, "is_default": true}, {"slug": "linode/power_off_on", "label": "Power-off/on",
-      "description": "Powers off the Linode at the start of the maintenance event
-      and reboots it once the maintenance finishes. Recommended for maximizing performance.",
-      "type": "power_off_on", "notification_period_sec": 1800, "is_default": false}],
-      "page": 1, "pages": 1, "results": 2}'
+      10800, "is_default": true}, {"slug": "linode/power_off_on", "label": "Power
+      Off / Power On", "description": "Powers off the Linode at the start of the maintenance
+      event and reboots it once the maintenance finishes. Recommended for maximizing
+      performance.", "type": "power_off_on", "notification_period_sec": 604800, "is_default":
+      false}], "page": 1, "pages": 1, "results": 2}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -33,21 +33,23 @@ interactions:
       - '*'
       Access-Control-Expose-Headers:
       - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
       Cache-Control:
-      - private, max-age=0, s-maxage=0, no-cache, no-store
-      - private, max-age=60, s-maxage=60
+      - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
       Content-Length:
-      - "595"
+      - "607"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
-      Server:
-      - nginx/1.18.0
+      Expires:
+      - Tue, 21 Apr 2026 18:20:32 GMT
+      Pragma:
+      - no-cache
       Strict-Transport-Security:
-      - max-age=31536000
       - max-age=31536000
       Vary:
       - Authorization, X-Filter
@@ -62,7 +64,7 @@ interactions:
       X-Oauth-Scopes:
       - unknown
       X-Ratelimit-Limit:
-      - "400"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK

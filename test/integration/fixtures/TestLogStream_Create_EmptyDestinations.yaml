@@ -1,0 +1,111 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/streams?page=1
+    method: GET
+  response:
+    body: '{"pages": 0, "page": 1, "results": 0, "data": []}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "49"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Wed, 13 May 2026 11:14:29 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"destinations":[],"label":"go-test-empty-dest-1778670869600276000","type":"audit_logs"}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/monitor/streams
+    method: POST
+  response:
+    body: '{"errors": [{"reason": "Must contain one item", "field": "destinations"}]}'
+    headers:
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Content-Length:
+      - "74"
+      Content-Type:
+      - application/json
+      Expires:
+      - Wed, 13 May 2026 11:14:29 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Accepted-Oauth-Scopes:
+      - monitor:read_write
+      X-Frame-Options:
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+    status: 400 Bad Request
+    code: 400
+    duration: ""

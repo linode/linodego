@@ -4,23 +4,16 @@ import (
 	"context"
 )
 
-// IPAddressUpdateOptionsV2 fields are those accepted by UpdateIPAddress.
+// IPAddressUpdateOptions fields are those accepted by UpdateIPAddress.
 // NOTE: An IP's RDNS can be reset to default using the following pattern:
 //
-//	IPAddressUpdateOptionsV2{
+//	IPAddressUpdateOptions{
 //		RDNS: linodego.Pointer[*string](nil),
 //	}
-type IPAddressUpdateOptionsV2 struct {
-	// The reverse DNS assigned to this address. For public IPv4 addresses, this will be set to a default value provided by Linode if set to nil.
-	Reserved *bool    `json:"reserved,omitempty"`
-	RDNS     **string `json:"rdns,omitempty"`
-}
-
-// IPAddressUpdateOptions fields are those accepted by UpdateIPAddress.
-//
-// Deprecated: Please use IPAddressUpdateOptionsV2 for all new implementations.
 type IPAddressUpdateOptions struct {
-	RDNS *string `json:"rdns"`
+	// The reverse DNS assigned to this address. For public IPv4 addresses, this will be set to a default value provided by Linode if set to nil.
+	Reserved *bool    `json:"reserved,omitzero"`
+	RDNS     **string `json:"rdns,omitzero"`
 }
 
 // LinodeIPAssignment stores an assignment between an IP address and a Linode instance.
@@ -32,9 +25,9 @@ type LinodeIPAssignment struct {
 type AllocateReserveIPOptions struct {
 	Type     string `json:"type"`
 	Public   bool   `json:"public"`
-	Reserved bool   `json:"reserved,omitempty"`
-	Region   string `json:"region,omitempty"`
-	LinodeID int    `json:"linode_id,omitempty"`
+	Reserved bool   `json:"reserved,omitzero"`
+	Region   string `json:"region,omitzero"`
+	LinodeID int    `json:"linode_id,omitzero"`
 }
 
 // LinodesAssignIPsOptions fields are those accepted by InstancesAssignIPs.
@@ -56,22 +49,14 @@ type ListIPAddressesQuery struct {
 	SkipIPv6RDNS bool `query:"skip_ipv6_rdns"`
 }
 
-// GetUpdateOptionsV2 converts a IPAddress to IPAddressUpdateOptionsV2 for use in UpdateIPAddressV2.
-func (i InstanceIP) GetUpdateOptionsV2() IPAddressUpdateOptionsV2 {
+// GetUpdateOptions converts a IPAddress to IPAddressUpdateOptions for use in UpdateIPAddress.
+func (i InstanceIP) GetUpdateOptions() IPAddressUpdateOptions {
 	rdns := copyString(&i.RDNS)
 
-	return IPAddressUpdateOptionsV2{
+	return IPAddressUpdateOptions{
 		RDNS:     &rdns,
 		Reserved: copyBool(&i.Reserved),
 	}
-}
-
-// GetUpdateOptions converts a IPAddress to IPAddressUpdateOptions for use in UpdateIPAddress.
-//
-// Deprecated: Please use GetUpdateOptionsV2 for all new implementations.
-func (i InstanceIP) GetUpdateOptions() (o IPAddressUpdateOptions) {
-	o.RDNS = copyString(&i.RDNS)
-	return o
 }
 
 // ListIPAddresses lists IPAddresses.
@@ -85,17 +70,9 @@ func (c *Client) GetIPAddress(ctx context.Context, id string) (*InstanceIP, erro
 	return doGETRequest[InstanceIP](ctx, c, e)
 }
 
-// UpdateIPAddressV2 updates the IP address with the specified address.
-func (c *Client) UpdateIPAddressV2(ctx context.Context, address string, opts IPAddressUpdateOptionsV2) (*InstanceIP, error) {
+// UpdateIPAddress updates the IP address with the specified address.
+func (c *Client) UpdateIPAddress(ctx context.Context, address string, opts IPAddressUpdateOptions) (*InstanceIP, error) {
 	e := formatAPIPath("networking/ips/%s", address)
-	return doPUTRequest[InstanceIP](ctx, c, e, opts)
-}
-
-// UpdateIPAddress updates the IP address with the specified id.
-//
-// Deprecated: Please use UpdateIPAddressV2 for all new implementation.
-func (c *Client) UpdateIPAddress(ctx context.Context, id string, opts IPAddressUpdateOptions) (*InstanceIP, error) {
-	e := formatAPIPath("networking/ips/%s", id)
 	return doPUTRequest[InstanceIP](ctx, c, e, opts)
 }
 

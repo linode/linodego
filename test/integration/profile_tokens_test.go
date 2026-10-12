@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	. "github.com/linode/linodego"
+	. "github.com/linode/linodego/v2"
 )
 
 func TestToken_GetMissing(t *testing.T) {

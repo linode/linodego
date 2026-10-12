@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/v2/internal/parseabletime"
 )
 
 // ConsumerImageShareGroup represents an ImageShareGroup that the consumer is a member of.
@@ -125,7 +125,7 @@ func (t *ImageShareGroupCreateTokenResponse) UnmarshalJSON(b []byte) error {
 
 // ImageShareGroupCreateTokenOptions fields are those accepted by ImageShareGroupCreateToken
 type ImageShareGroupCreateTokenOptions struct {
-	Label                  *string `json:"label,omitempty"`
+	Label                  *string `json:"label,omitzero"`
 	ValidForShareGroupUUID string  `json:"valid_for_sharegroup_uuid"`
 }
 

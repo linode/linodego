@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/v2/internal/parseabletime"
 )
 
 // ProducerImageShareGroup represents an ImageShareGroup owned by the producer.
@@ -50,14 +50,14 @@ func (isg *ProducerImageShareGroup) UnmarshalJSON(b []byte) error {
 // ImageShareGroupCreateOptions fields are those accepted by CreateImageShareGroup.
 type ImageShareGroupCreateOptions struct {
 	Label       string                 `json:"label"`
-	Description *string                `json:"description,omitempty"`
-	Images      []ImageShareGroupImage `json:"images,omitempty"`
+	Description *string                `json:"description,omitzero"`
+	Images      []ImageShareGroupImage `json:"images,omitzero"`
 }
 
 // ImageShareGroupUpdateOptions fields are those accepted by UpdateImageShareGroup.
 type ImageShareGroupUpdateOptions struct {
-	Label       *string `json:"label,omitempty"`
-	Description *string `json:"description,omitempty"`
+	Label       *string `json:"label,omitzero"`
+	Description *string `json:"description,omitzero"`
 }
 
 // ImageShareGroupAddImagesOptions fields are those accepted by ImageShareGroupAddImages.
@@ -67,15 +67,15 @@ type ImageShareGroupAddImagesOptions struct {
 
 // ImageShareGroupUpdateImageOptions fields are those accepted by ImageShareGroupUpdateImage.
 type ImageShareGroupUpdateImageOptions struct {
-	Label       *string `json:"label,omitempty"`
-	Description *string `json:"description,omitempty"`
+	Label       *string `json:"label,omitzero"`
+	Description *string `json:"description,omitzero"`
 }
 
 // ImageShareGroupImage represents an Image to be included in a ProducerImageShareGroup.
 type ImageShareGroupImage struct {
 	ID          string  `json:"id"`
-	Label       *string `json:"label,omitempty"`
-	Description *string `json:"description,omitempty"`
+	Label       *string `json:"label,omitzero"`
+	Description *string `json:"description,omitzero"`
 }
 
 // ImageShareGroupMember represents a Member of an ImageShareGroup owned by the producer.

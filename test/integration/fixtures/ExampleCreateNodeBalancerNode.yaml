@@ -15,7 +15,7 @@ interactions:
     method: POST
   response:
     body: '{"id": 1595317, "label": "balancer1595317", "region": "us-southeast", "type":
-      "common", "hostname": "139-144-166-98.ip.linodeusercontent.com", "ipv4": "139.144.166.98",
+      "common", "hostname":"thisIsYourHostName", "ipv4": "192.0.2.0",
       "ipv6": "1234::5678", "created": "2018-01-02T03:04:05", "updated":
       "2018-01-02T03:04:05", "client_conn_throttle": 20, "client_udp_sess_throttle":
       0, "lke_cluster": null, "tags": [], "transfer": {"in": null, "out": null, "total":
@@ -135,7 +135,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"region":"us-southeast","type":"g6-nanode-1","label":"nodebalancer-example-instance","root_pass":"X''9kGnlSpG8\\2X[6]P6k}r716kEd9AD(I;xGu#6s?2-,C*;s`N*f{0uS7Ygi107T","image":"linode/debian12","firewall_id":2677167,"booted":false}'
+    body: '{"region":"us-southeast","type":"g6-nanode-1","label":"nodebalancer-example-instance","root_pass":"thisIsYourRootPassword","image":"linode/debian12","firewall_id":2677167,"booted":false}'
     form: {}
     headers:
       Accept:
@@ -149,7 +149,7 @@ interactions:
   response:
     body: '{"id": 77641926, "label": "nodebalancer-example-instance", "group": "",
       "status": "provisioning", "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05",
-      "type": "g6-nanode-1", "ipv4": ["172.105.159.223"], "ipv6": "1234::5678/128",
+      "type": "g6-nanode-1", "ipv4": ["192.0.2.0"], "ipv6": "1234::5678/128",
       "image": "linode/debian12", "region": "us-southeast", "site_type": "core", "specs":
       {"disk": 25600, "memory": 1024, "vcpus": 1, "gpus": 0, "transfer": 1000, "accelerated_devices":
       0}, "alerts": {"cpu": 90, "network_in": 10, "network_out": 10, "transfer_quota":
@@ -217,7 +217,7 @@ interactions:
     url: https://api.linode.com/v4beta/linode/instances/77641926/ips
     method: POST
   response:
-    body: '{"address": "192.168.230.214", "gateway": null, "subnet_mask": "255.255.128.0",
+    body: '{"address": "192.0.2.0", "gateway": null, "subnet_mask": "255.255.128.0",
       "prefix": 17, "type": "ipv4", "public": false, "rdns": null, "linode_id": 77641926,
       "interface_id": null, "region": "us-southeast", "vpc_nat_1_1": null, "reserved":
       false, "assigned_entity": {"id": 77641926, "type": "linode", "label": "nodebalancer-example-instance",
@@ -270,7 +270,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"address":"192.168.230.214:80","label":"node-192.168.230.214"}'
+    body: '{"address":"192.0.2.0:80","label":"node-192.0.2.0"}'
     form: {}
     headers:
       Accept:
@@ -282,7 +282,7 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers/1595317/configs/2450488/nodes
     method: POST
   response:
-    body: '{"id": 2104029484, "address": "192.168.230.214:80", "label": "node-192.168.230.214",
+    body: '{"id": 2104029484, "address": "192.0.2.0:80", "label": "node-192.0.2.0",
       "status": "Unknown", "weight": 50, "mode": "accept", "config_id": 2450488, "nodebalancer_id":
       1595317, "vpc_config_id": null}'
     headers:
@@ -333,7 +333,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"address":"192.168.230.214:8080","label":"node-192.168.230.214","weight":50,"mode":"accept"}'
+    body: '{"address":"192.0.2.0:8080","label":"node-192.0.2.0","weight":50,"mode":"accept"}'
     form: {}
     headers:
       Accept:
@@ -345,7 +345,7 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers/1595317/configs/2450488/nodes/2104029484
     method: PUT
   response:
-    body: '{"id": 2104029484, "address": "192.168.230.214:8080", "label": "node-192.168.230.214",
+    body: '{"id": 2104029484, "address": "192.0.2.0:8080", "label": "node-192.0.2.0",
       "status": "Unknown", "weight": 50, "mode": "accept", "config_id": 2450488, "nodebalancer_id":
       1595317, "vpc_config_id": null}'
     headers:
@@ -408,8 +408,8 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers/1595317/configs/2450488/nodes?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 2104029484, "address": "192.168.230.214:8080", "label":
-      "node-192.168.230.214", "status": "Unknown", "weight": 50, "mode": "accept",
+    body: '{"data": [{"id": 2104029484, "address": "192.0.2.0:8080", "label":
+      "node-192.0.2.0", "status": "Unknown", "weight": 50, "mode": "accept",
       "config_id": 2450488, "nodebalancer_id": 1595317, "vpc_config_id": null}], "page":
       1, "pages": 1, "results": 1}'
     headers:
@@ -473,7 +473,7 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers/1595317/configs/2450488/nodes/2104029484
     method: GET
   response:
-    body: '{"id": 2104029484, "address": "192.168.230.214:8080", "label": "node-192.168.230.214",
+    body: '{"id": 2104029484, "address": "192.0.2.0:8080", "label": "node-192.0.2.0",
       "status": "Unknown", "weight": 50, "mode": "accept", "config_id": 2450488, "nodebalancer_id":
       1595317, "vpc_config_id": null}'
     headers:

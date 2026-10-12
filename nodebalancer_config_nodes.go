@@ -38,18 +38,18 @@ var (
 type NodeBalancerNodeCreateOptions struct {
 	Address  string   `json:"address"`
 	Label    string   `json:"label"`
-	Weight   int      `json:"weight,omitempty"`
-	Mode     NodeMode `json:"mode,omitempty"`
-	SubnetID int      `json:"subnet_id,omitempty"`
+	Weight   int      `json:"weight,omitzero"`
+	Mode     NodeMode `json:"mode,omitzero"`
+	SubnetID int      `json:"subnet_id,omitzero"`
 }
 
 // NodeBalancerNodeUpdateOptions fields are those accepted by UpdateNodeBalancerNode
 type NodeBalancerNodeUpdateOptions struct {
-	Address  string   `json:"address,omitempty"`
-	Label    string   `json:"label,omitempty"`
-	Weight   int      `json:"weight,omitempty"`
-	Mode     NodeMode `json:"mode,omitempty"`
-	SubnetID int      `json:"subnet_id,omitempty"`
+	Address  string   `json:"address,omitzero"`
+	Label    string   `json:"label,omitzero"`
+	Weight   int      `json:"weight,omitzero"`
+	Mode     NodeMode `json:"mode,omitzero"`
+	SubnetID int      `json:"subnet_id,omitzero"`
 }
 
 // GetCreateOptions converts a NodeBalancerNode to NodeBalancerNodeCreateOptions for use in CreateNodeBalancerNode

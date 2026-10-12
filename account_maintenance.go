@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/v2/internal/parseabletime"
 )
 
 // AccountMaintenance represents a Maintenance object for any entity a user has permissions to view
@@ -22,9 +22,7 @@ type AccountMaintenance struct {
 	NotBefore    *time.Time `json:"-"`
 	StartTime    *time.Time `json:"-"`
 	CompleteTime *time.Time `json:"-"`
-
-	// Deprecated: When is a deprecated property
-	When *time.Time `json:"when"`
+	When         *time.Time `json:"-"`
 }
 
 // Entity represents the entity being affected by maintenance

@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/jarcoal/httpmock"
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -65,7 +65,9 @@ func TestLKECluster_List(t *testing.T) {
 	assert.Equal(t, 123, clusters[0].SubnetID)
 	assert.Equal(t, 456, clusters[0].VpcID)
 	assert.Equal(t, linodego.LKEClusterStackIPv4, clusters[0].StackType)
+	assert.Equal(t, []linodego.LockType{linodego.LockTypeCannotDelete}, clusters[0].Locks)
 	assert.Equal(t, false, clusters[0].ControlPlane.AuditLogsEnabled)
+	assert.Empty(t, clusters[1].Locks)
 }
 
 func TestLKECluster_Get(t *testing.T) {
@@ -85,6 +87,7 @@ func TestLKECluster_Get(t *testing.T) {
 	assert.Equal(t, 123, cluster.SubnetID)
 	assert.Equal(t, 456, cluster.VpcID)
 	assert.Equal(t, linodego.LKEClusterStackIPv4, cluster.StackType)
+	assert.Equal(t, []linodego.LockType{linodego.LockTypeCannotDelete}, cluster.Locks)
 	assert.Equal(t, false, cluster.ControlPlane.AuditLogsEnabled)
 }
 
@@ -131,7 +134,7 @@ func TestLKECluster_Update(t *testing.T) {
 
 	updateOptions := linodego.LKEClusterUpdateOptions{
 		Label: "updated-cluster",
-		Tags:  &[]string{"new-tag"},
+		Tags:  []string{"new-tag"},
 		ControlPlane: &linodego.LKEClusterControlPlaneOptions{
 			AuditLogsEnabled: linodego.Pointer(true),
 		},
@@ -180,21 +183,6 @@ func TestLKECluster_DeleteKubeconfig(t *testing.T) {
 
 	err := base.Client.DeleteLKEClusterKubeconfig(context.Background(), 123)
 	assert.NoError(t, err)
-}
-
-func TestLKECluster_GetDashboard(t *testing.T) {
-	fixtureData, err := fixtures.GetFixture("lke_cluster_dashboard")
-	assert.NoError(t, err)
-
-	var base ClientBaseCase
-	base.SetUp(t)
-	defer base.TearDown(t)
-
-	base.MockGet("lke/clusters/123/dashboard", fixtureData)
-
-	dashboard, err := base.Client.GetLKEClusterDashboard(context.Background(), 123)
-	assert.NoError(t, err)
-	assert.Equal(t, "https://dashboard.example.com", dashboard.URL)
 }
 
 func TestLKECluster_GetAPLConsoleURL(t *testing.T) {

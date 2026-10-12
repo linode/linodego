@@ -6,9 +6,9 @@ import (
 
 // IPv6RangeCreateOptions fields are those accepted by CreateIPv6Range
 type IPv6RangeCreateOptions struct {
-	LinodeID     int    `json:"linode_id,omitempty"`
+	LinodeID     int    `json:"linode_id,omitzero"`
 	PrefixLength int    `json:"prefix_length"`
-	RouteTarget  string `json:"route_target,omitempty"`
+	RouteTarget  string `json:"route_target,omitzero"`
 }
 
 // ListIPv6Ranges lists IPv6Ranges

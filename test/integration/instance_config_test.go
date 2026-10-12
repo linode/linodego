@@ -4,8 +4,10 @@ import (
 	"context"
 	"reflect"
 	"testing"
+	"time"
 
-	. "github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
+	. "github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/require"
 )
 
@@ -68,7 +70,10 @@ func setupInstanceWithVPCAndNATOneToOne(t *testing.T, fixturesYaml string) (
 		t,
 		fixturesYaml,
 		func(client *Client, opts *InstanceCreateOptions) {
-			opts.Region = getRegionsWithCaps(t, client, []string{"Linodes", "VPCs"})[0]
+			opts.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{
+				linodego.CapabilityLinodes,
+				linodego.CapabilityVPCs,
+			})[0]
 		},
 	)
 	if err != nil {
@@ -84,7 +89,7 @@ func setupInstanceWithVPCAndNATOneToOne(t *testing.T, fixturesYaml string) (
 		{
 			Purpose:  InterfacePurposeVPC,
 			SubnetID: &vpcSubnet.ID,
-			IPv4: &VPCIPv4{
+			IPv4: &VPCIPv4CreateOptions{
 				NAT1To1: &NAT1To1Any,
 			},
 		},
@@ -160,7 +165,8 @@ func setupInstanceWithDualStackVPCAndNAT11(t *testing.T, fixturesYaml string) (
 			// TODO: Revert once rolled out to all DCs.
 			// 		 NOTE: There is currently no VPC Dual Stack region capability
 			//	     so this needs to be hardcoded.
-			// opts.Region = getRegionsWithCaps(t, client, []string{"Linodes", "VPCs"})[0]
+			// opts.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityLinodes,
+			//				linodego.CapabilityVPCs})[0]
 			opts.Region = "no-osl-1"
 		},
 	)
@@ -177,7 +183,7 @@ func setupInstanceWithDualStackVPCAndNAT11(t *testing.T, fixturesYaml string) (
 		{
 			Purpose:  InterfacePurposeVPC,
 			SubnetID: &vpcSubnet.ID,
-			IPv4: &VPCIPv4{
+			IPv4: &VPCIPv4CreateOptions{
 				NAT1To1: &NAT1To1Any,
 			},
 			IPv6: &InstanceConfigInterfaceCreateOptionsIPv6{
@@ -212,7 +218,10 @@ func setupInstanceWith3Interfaces(t *testing.T, fixturesYaml string) (
 		t,
 		fixturesYaml,
 		func(client *Client, opts *InstanceCreateOptions) {
-			opts.Region = getRegionsWithCaps(t, client, []string{"Linodes", "VPCs"})[0]
+			opts.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{
+				linodego.CapabilityLinodes,
+				linodego.CapabilityVPCs,
+			})[0]
 		},
 	)
 	if err != nil {
@@ -235,7 +244,7 @@ func setupInstanceWith3Interfaces(t *testing.T, fixturesYaml string) (
 		{
 			Purpose:  InterfacePurposeVPC,
 			SubnetID: &vpcSubnet.ID,
-			IPv4: &VPCIPv4{
+			IPv4: &VPCIPv4CreateOptions{
 				NAT1To1: &NAT1To1Any,
 			},
 		},
@@ -304,7 +313,10 @@ func TestInstance_ConfigInterfaces_AppendDelete(t *testing.T) {
 		"fixtures/TestInstance_ConfigInterfaces_AppendDelete",
 		func(client *Client, opts *InstanceCreateOptions) {
 			// Ensure we're in a region that supports VLANs
-			opts.Region = getRegionsWithCaps(t, client, []string{"vlans", "VPCs"})[0]
+			opts.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{
+				linodego.CapabilityVlans,
+				linodego.CapabilityVPCs,
+			})[0]
 		},
 	)
 	defer teardown()
@@ -454,7 +466,10 @@ func TestInstance_ConfigInterfaces_Update(t *testing.T) {
 		"fixtures/TestInstance_ConfigInterfaces_Update",
 		func(client *Client, opts *InstanceCreateOptions) {
 			// Ensure we're in a region that supports VLANs
-			opts.Region = getRegionsWithCaps(t, client, []string{"vlans", "VPCs"})[0]
+			opts.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{
+				linodego.CapabilityVlans,
+				linodego.CapabilityVPCs,
+			})[0]
 		},
 	)
 	defer teardown()
@@ -475,7 +490,7 @@ func TestInstance_ConfigInterfaces_Update(t *testing.T) {
 		{
 			Purpose:  InterfacePurposeVPC,
 			SubnetID: &vpcSubnet.ID,
-			IPv4: &VPCIPv4{
+			IPv4: &VPCIPv4CreateOptions{
 				VPC: "192.168.0.87",
 			},
 		},
@@ -528,7 +543,10 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 		"fixtures/TestInstance_ConfigInterface_Update",
 		func(client *Client, opts *InstanceCreateOptions) {
 			// Ensure we're in a region that supports VLANs
-			opts.Region = getRegionsWithCaps(t, client, []string{"vlans", "VPCs"})[0]
+			opts.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{
+				linodego.CapabilityVlans,
+				linodego.CapabilityVPCs,
+			})[0]
 		},
 	)
 	defer teardown()
@@ -572,12 +590,12 @@ func TestInstance_ConfigInterface_Update(t *testing.T) {
 	}
 
 	NAT1To1Any := "any"
-	updateOpts.IPv4 = &VPCIPv4{
+	updateOpts.IPv4 = &VPCIPv4UpdateOptions{
 		VPC:     "192.168.0.10",
 		NAT1To1: &NAT1To1Any,
 	}
 	newIPRanges := make([]string, 0)
-	updateOpts.IPRanges = &newIPRanges
+	updateOpts.IPRanges = newIPRanges
 
 	updatedIntfc, err = client.UpdateInstanceConfigInterface(
 		context.Background(),
@@ -639,6 +657,8 @@ func TestInstance_Config_Update(t *testing.T) {
 }
 
 func TestInstance_Config_VolumeLimitExtension(t *testing.T) {
+	ctx := waitContext(t, 1000*time.Second)
+
 	client, instance, config, teardown, err := setupInstanceWithoutDisks(
 		t, "fixtures/TestInstance_Config_VolumeLimitExtension",
 		true,
@@ -688,10 +708,10 @@ func TestInstance_Config_VolumeLimitExtension(t *testing.T) {
 		RootDevice: "/dev/sdk",
 	}
 
-	_, err = client.WaitForVolumeStatus(context.Background(), volume1.ID, VolumeActive, 500)
+	_, err = client.WaitForVolumeStatus(ctx, volume1.ID, VolumeActive)
 	require.NoError(t, err)
 
-	_, err = client.WaitForVolumeStatus(context.Background(), volume2.ID, VolumeActive, 500)
+	_, err = client.WaitForVolumeStatus(ctx, volume2.ID, VolumeActive)
 	require.NoError(t, err)
 
 	updatedConfig, err := client.UpdateInstanceConfig(context.Background(), instance.ID, config.ID, configOpts)

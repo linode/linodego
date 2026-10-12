@@ -30,7 +30,6 @@ type AccountSettings struct {
 	// A string like "disabled", "suspended", or "active" describing the status of this account’s Object Storage service enrollment.
 	ObjectStorage *string `json:"object_storage"`
 
-	// NOTE: Interfaces for new linode setting may not currently be available to all users.
 	// A new configuration flag defines whether new Linodes can use Linode and/or legacy config interfaces.
 	InterfacesForNewLinodes InterfacesForNewLinodes `json:"interfaces_for_new_linodes"`
 
@@ -41,17 +40,17 @@ type AccountSettings struct {
 // AccountSettingsUpdateOptions are the updateable account wide flags or plans that effect new resources.
 type AccountSettingsUpdateOptions struct {
 	// The default backups enrollment status for all new Linodes for all users on the account.  When enabled, backups are mandatory per instance.
-	BackupsEnabled *bool `json:"backups_enabled,omitempty"`
+	BackupsEnabled *bool `json:"backups_enabled,omitzero"`
 
 	// The default network helper setting for all new Linodes and Linode Configs for all users on the account.
-	NetworkHelper *bool `json:"network_helper,omitempty"`
+	NetworkHelper *bool `json:"network_helper,omitzero"`
 
 	// NOTE: Interfaces for new linode setting may not currently be available to all users.
 	// A new configuration flag defines whether new Linodes can use Linode and/or legacy config interfaces.
 	InterfacesForNewLinodes *InterfacesForNewLinodes `json:"interfaces_for_new_linodes"`
 
 	// The slug of the maintenance policy to set the account to.
-	MaintenancePolicy *string `json:"maintenance_policy,omitempty"`
+	MaintenancePolicy *string `json:"maintenance_policy,omitzero"`
 }
 
 // GetAccountSettings gets the account wide flags or plans that effect new resources

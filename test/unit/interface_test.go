@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -53,14 +53,21 @@ func TestInterface_List(t *testing.T) {
 		t.Fatalf("Error fetching interfaces: %v", err)
 	}
 
-	assert.Equal(t, 123, ifaces[0].ID)
+	require.Len(t, ifaces, 1)
+
+	assert.Equal(t, 1234, ifaces[0].ID)
 	assert.Equal(t, 1, ifaces[0].Version)
+	assert.Equal(t, "22:00:AB:CD:EF:01", ifaces[0].MACAddress)
+	assert.True(t, *ifaces[0].DefaultRoute.IPv4)
+	assert.True(t, *ifaces[0].DefaultRoute.IPv6)
 
-	assert.Equal(t, 456, ifaces[1].ID)
-	assert.Equal(t, 1, ifaces[1].Version)
+	assert.Nil(t, ifaces[0].VPC)
+	assert.Nil(t, ifaces[0].VLAN)
 
-	assert.Equal(t, 789, ifaces[2].ID)
-	assert.Equal(t, 1, ifaces[2].Version)
+	require.NotNil(t, ifaces[0].Public)
+	require.Len(t, ifaces[0].Public.IPv4.Addresses, 1)
+	assert.Equal(t, "172.30.0.50", ifaces[0].Public.IPv4.Addresses[0].Address)
+	assert.True(t, ifaces[0].Public.IPv4.Addresses[0].Primary)
 }
 
 func TestInterface_Delete(t *testing.T) {
@@ -158,7 +165,7 @@ func TestInterface_CreatePublic(t *testing.T) {
 	opts := linodego.LinodeInterfaceCreateOptions{
 		Public: &linodego.PublicInterfaceCreateOptions{
 			IPv4: &linodego.PublicInterfaceIPv4CreateOptions{
-				Addresses: &[]linodego.PublicInterfaceIPv4AddressCreateOptions{
+				Addresses: []linodego.PublicInterfaceIPv4AddressCreateOptions{
 					{
 						Address: linodego.Pointer("auto"),
 						Primary: linodego.Pointer(true),
@@ -191,7 +198,7 @@ func TestInterface_UpdateVLAN(t *testing.T) {
 	base.MockPut("linode/instances/123/interfaces/123", fixtureData)
 
 	opts := linodego.LinodeInterfaceUpdateOptions{
-		DefaultRoute: &linodego.InterfaceDefaultRoute{
+		DefaultRoute: &linodego.InterfaceDefaultRouteUpdateOptions{
 			IPv6: linodego.Pointer(true),
 		},
 	}
@@ -221,19 +228,19 @@ func TestInterface_UpdateVPC(t *testing.T) {
 	base.MockPut("linode/instances/123/interfaces/456", fixtureData)
 
 	opts := linodego.LinodeInterfaceUpdateOptions{
-		DefaultRoute: &linodego.InterfaceDefaultRoute{
+		DefaultRoute: &linodego.InterfaceDefaultRouteUpdateOptions{
 			IPv4: linodego.Pointer(true),
 			IPv6: linodego.Pointer(true),
 		},
 		VPC: &linodego.VPCInterfaceUpdateOptions{
 			IPv4: &linodego.VPCInterfaceIPv4CreateOptions{
-				Addresses: &[]linodego.VPCInterfaceIPv4AddressCreateOptions{
+				Addresses: []linodego.VPCInterfaceIPv4AddressCreateOptions{
 					{
 						Address: linodego.Pointer("192.168.23.4"),
 						Primary: linodego.Pointer(true),
 					},
 				},
-				Ranges: &[]linodego.VPCInterfaceIPv4RangeCreateOptions{
+				Ranges: []linodego.VPCInterfaceIPv4RangeCreateOptions{
 					{
 						Range: "192.168.23.16/28",
 					},
@@ -243,12 +250,12 @@ func TestInterface_UpdateVPC(t *testing.T) {
 				},
 			},
 			IPv6: &linodego.VPCInterfaceIPv6CreateOptions{
-				SLAAC: &[]linodego.VPCInterfaceIPv6SLAACCreateOptions{
+				SLAAC: []linodego.VPCInterfaceIPv6SLAACCreateOptions{
 					{
 						Range: "1235::/64",
 					},
 				},
-				Ranges: &[]linodego.VPCInterfaceIPv6RangeCreateOptions{
+				Ranges: []linodego.VPCInterfaceIPv6RangeCreateOptions{
 					{
 						Range: "4322::/64",
 					},

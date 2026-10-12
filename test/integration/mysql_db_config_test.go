@@ -4,8 +4,9 @@ import (
 	"context"
 	"os"
 	"testing"
+	"time"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -195,12 +196,15 @@ func TestDatabaseMySQL_EngineConfig_Get(t *testing.T) {
 }
 
 func TestDatabaseMySQL_EngineConfig_Suite(t *testing.T) {
+	ctx := waitContext(t, 6720*time.Second)
+
 	databaseModifiers := []mysqlDatabaseModifier{
 		createMySQLOptionsModifier(),
 	}
 
 	client, database, teardown, err := setupMySQLDatabase(
 		t,
+		ctx,
 		databaseModifiers,
 		"fixtures/TestDatabaseMySQL_EngineConfig_Suite",
 	)
@@ -237,7 +241,7 @@ func TestDatabaseMySQL_EngineConfig_Suite(t *testing.T) {
 		t.Errorf("failed to update db %d: %v", database.ID, err)
 	}
 
-	waitForDatabaseUpdated(t, client, updatedDB.ID, linodego.DatabaseEngineTypeMySQL, updatedDB.Created)
+	waitForDatabaseUpdated(t, ctx, client, updatedDB.ID, linodego.DatabaseEngineTypeMySQL, updatedDB.Created)
 
 	assertUpdatedSQLFields(t, updatedDB.EngineConfig.MySQL)
 }

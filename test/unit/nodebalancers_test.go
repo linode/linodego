@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -24,7 +24,7 @@ func TestNodeBalancers_UDP(t *testing.T) {
 		Label:                 linodego.Pointer("foobar"),
 		Region:                "us-mia",
 		ClientUDPSessThrottle: linodego.Pointer(5),
-		Configs: []*linodego.NodeBalancerConfigCreateOptions{
+		Configs: []linodego.NodeBalancerConfigCreateOptions{
 			{
 				Protocol:     linodego.ProtocolUDP,
 				Port:         1234,

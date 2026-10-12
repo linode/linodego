@@ -6,7 +6,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/require"
 )
 
@@ -121,7 +121,7 @@ func createPlacementGroup(
 	t.Helper()
 	createOpts := linodego.PlacementGroupCreateOptions{
 		Label:                "linodego-test-" + getUniqueText(),
-		Region:               getRegionsWithCaps(t, client, []string{"Placement Group"})[0],
+		Region:               getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityPlacementGroup})[0],
 		PlacementGroupType:   linodego.PlacementGroupTypeAntiAffinityLocal,
 		PlacementGroupPolicy: linodego.PlacementGroupPolicyFlexible,
 	}

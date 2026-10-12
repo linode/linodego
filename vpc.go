@@ -5,7 +5,19 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/v2/internal/parseabletime"
+)
+
+// VPCType represents the type of a VPC.
+type VPCType string
+
+const (
+	// VPCTypeRegular is the default VPC type.
+	VPCTypeRegular VPCType = "regular"
+
+	// VPCTypeRDMA represents a GPUDirect RDMA VPC.
+	// NOTE: RDMA VPCs may not currently be available to all users.
+	VPCTypeRDMA VPCType = "rdma"
 )
 
 type VPC struct {
@@ -13,6 +25,12 @@ type VPC struct {
 	Label       string `json:"label"`
 	Description string `json:"description"`
 	Region      string `json:"region"`
+
+	// NOTE: RDMA VPCs may not currently be available to all users.
+	VPCType VPCType `json:"vpc_type"`
+
+	// NOTE: IPv4 VPCs may not currently be available to all users.
+	IPv4 []VPCIPv4Range `json:"ipv4"`
 
 	// NOTE: IPv6 VPCs may not currently be available to all users.
 	IPv6 []VPCIPv6Range `json:"ipv6"`
@@ -22,34 +40,70 @@ type VPC struct {
 	Updated *time.Time  `json:"-"`
 }
 
+// VPCIPv4Range represents a single IPv4 range assigned to a VPC.
+// NOTE: IPv4 VPCs may not currently be available to all users.
+type VPCIPv4Range struct {
+	Range string `json:"range"`
+}
+
 // VPCIPv6Range represents a single IPv6 range assigned to a VPC.
 // NOTE: IPv6 VPCs may not currently be available to all users.
 type VPCIPv6Range struct {
 	Range string `json:"range"`
 }
 
+// VPCDefaultRanges represents the default settings for the internal and forbidden IPv4 address ranges in VPCs
+// NOTE: VPCDefaultRanges may not currently be available to all users.
+type VPCDefaultRanges struct {
+	DefaultIPV4Ranges   []string `json:"default_ipv4_ranges"`
+	ForbiddenIPV4Ranges []string `json:"forbidden_ipv4_ranges"`
+}
+
 type VPCCreateOptions struct {
 	Label       string `json:"label"`
-	Description string `json:"description,omitempty"`
+	Description string `json:"description,omitzero"`
 	Region      string `json:"region"`
 
-	// NOTE: IPv6 VPCs may not currently be available to all users.
-	IPv6 []VPCCreateOptionsIPv6 `json:"ipv6,omitempty"`
+	// This field is omitted by the API for customers that do not have
+	// access to the GPUDirect RDMA functionality.
+	// NOTE: RDMA VPCs may not currently be available to all users.
+	VPCType *VPCType `json:"vpc_type,omitzero"`
 
-	Subnets []VPCSubnetCreateOptions `json:"subnets,omitempty"`
+	// NOTE: IPv4 VPCs may not currently be available to all users.
+	IPv4 []VPCCreateOptionsIPv4 `json:"ipv4,omitzero"`
+
+	// NOTE: IPv6 VPCs may not currently be available to all users.
+	IPv6 []VPCCreateOptionsIPv6 `json:"ipv6,omitzero"`
+
+	Subnets []VPCSubnetCreateOptions `json:"subnets,omitzero"`
+}
+
+// VPCCreateOptionsIPv4 represents a single IPv4 range assigned to a VPC
+// which is specified during a VPC's creation.
+// NOTE: IPv4 VPCs may not currently be available to all users.
+type VPCCreateOptionsIPv4 struct {
+	Range *string `json:"range,omitzero"`
 }
 
 // VPCCreateOptionsIPv6 represents a single IPv6 range assigned to a VPC
 // which is specified during a VPC's creation.
 // NOTE: IPv6 VPCs may not currently be available to all users.
 type VPCCreateOptionsIPv6 struct {
-	Range           *string `json:"range,omitempty"`
-	AllocationClass *string `json:"allocation_class,omitempty"`
+	Range           *string `json:"range,omitzero"`
+	AllocationClass *string `json:"allocation_class,omitzero"`
 }
 
 type VPCUpdateOptions struct {
-	Label       string `json:"label,omitempty"`
-	Description string `json:"description,omitempty"`
+	Label       string                 `json:"label,omitzero"`
+	Description string                 `json:"description,omitzero"`
+	IPv4        []VPCUpdateOptionsIPv4 `json:"ipv4,omitzero"`
+}
+
+// VPCUpdateOptionsIPv4 represents a single IPv4 range assigned to a VPC
+// which is specified during a VPC's update.
+// NOTE: IPv4 VPCs may not currently be available to all users.
+type VPCUpdateOptionsIPv4 struct {
+	Range *string `json:"range,omitzero"`
 }
 
 func (v VPC) GetCreateOptions() VPCCreateOptions {
@@ -62,7 +116,13 @@ func (v VPC) GetCreateOptions() VPCCreateOptions {
 		Label:       v.Label,
 		Description: v.Description,
 		Region:      v.Region,
+		VPCType:     copyValue(&v.VPCType),
 		Subnets:     subnetCreations,
+		IPv4: mapSlice(v.IPv4, func(i VPCIPv4Range) VPCCreateOptionsIPv4 {
+			return VPCCreateOptionsIPv4{
+				Range: copyValue(&i.Range),
+			}
+		}),
 		IPv6: mapSlice(v.IPv6, func(i VPCIPv6Range) VPCCreateOptionsIPv6 {
 			return VPCCreateOptionsIPv6{
 				Range: copyValue(&i.Range),
@@ -75,6 +135,11 @@ func (v VPC) GetUpdateOptions() VPCUpdateOptions {
 	return VPCUpdateOptions{
 		Label:       v.Label,
 		Description: v.Description,
+		IPv4: mapSlice(v.IPv4, func(i VPCIPv4Range) VPCUpdateOptionsIPv4 {
+			return VPCUpdateOptionsIPv4{
+				Range: copyValue(&i.Range),
+			}
+		}),
 	}
 }
 
@@ -127,4 +192,9 @@ func (c *Client) UpdateVPC(
 func (c *Client) DeleteVPC(ctx context.Context, vpcID int) error {
 	e := formatAPIPath("vpcs/%d", vpcID)
 	return doDELETERequest(ctx, c, e)
+}
+
+// GetVPCDefaultRanges may not currently be available to all users.
+func (c *Client) GetVPCDefaultRanges(ctx context.Context) (*VPCDefaultRanges, error) {
+	return doGETRequest[VPCDefaultRanges](ctx, c, "/vpcs/default-ranges")
 }

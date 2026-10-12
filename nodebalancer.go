@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/v2/internal/parseabletime"
 )
 
 // NodeBalancer represents a NodeBalancer object
@@ -22,6 +22,10 @@ type NodeBalancer struct {
 	IPv4 *string `json:"ipv4"`
 	// This NodeBalancer's public IPv6 address.
 	IPv6 *string `json:"ipv6"`
+	// This NodeBalancer's backend IPv6 prefix (/96 CIDR).
+	// This is the source range used when the NodeBalancer connects to backends.
+	// The value is null if no backend IPv6 prefix is assigned.
+	BackendIPv6Prefix *string `json:"backend_ipv6_prefix"`
 	// Throttle connections per second (0-20). Set to 0 (zero) to disable throttling.
 	ClientConnThrottle int `json:"client_conn_throttle"`
 
@@ -34,8 +38,14 @@ type NodeBalancer struct {
 	// This NodeBalancer's plan Type
 	Type NodeBalancerPlanType `json:"type"`
 
+	// NOTE: BackendConnectivity may not currently be available to all users and can only be used with v4beta.
+	BackendConnectivity *NodeBalancerBackendConnectivity `json:"backend_connectivity"`
+
 	// An array of tags applied to this object. Tags are for organizational purposes only.
 	Tags []string `json:"tags"`
+
+	// This NodeBalancer's related LKE cluster, if any. The value is null if this NodeBalancer is not related to an LKE cluster.
+	LKECluster *NodeBalancerLKECluster `json:"lke_cluster"`
 
 	// An array of locks applied to this NodeBalancer for deletion protection.
 	// Locks prevent the NodeBalancer or its subresources from being deleted.
@@ -57,38 +67,52 @@ type NodeBalancerTransfer struct {
 }
 
 type NodeBalancerVPCOptions struct {
-	IPv4Range           string `json:"ipv4_range,omitempty"`
-	IPv6Range           string `json:"ipv6_range,omitempty"`
+	IPv4Range           string `json:"ipv4_range,omitzero"`
+	IPv6Range           string `json:"ipv6_range,omitzero"`
 	SubnetID            int    `json:"subnet_id"`
-	IPv4RangeAutoAssign bool   `json:"ipv4_range_auto_assign,omitempty"`
+	IPv4RangeAutoAssign bool   `json:"ipv4_range_auto_assign,omitzero"`
 }
 
 // NodeBalancerCreateOptions are the options permitted for CreateNodeBalancer
 type NodeBalancerCreateOptions struct {
-	Label              *string `json:"label,omitempty"`
-	Region             string  `json:"region,omitempty"`
-	ClientConnThrottle *int    `json:"client_conn_throttle,omitempty"`
+	Label              *string `json:"label,omitzero"`
+	Region             string  `json:"region,omitzero"`
+	ClientConnThrottle *int    `json:"client_conn_throttle,omitzero"`
 
 	// NOTE: ClientUDPSessThrottle may not currently be available to all users.
-	ClientUDPSessThrottle *int `json:"client_udp_sess_throttle,omitempty"`
+	ClientUDPSessThrottle *int `json:"client_udp_sess_throttle,omitzero"`
 
-	Configs    []*NodeBalancerConfigCreateOptions `json:"configs,omitempty"`
-	Tags       []string                           `json:"tags"`
-	FirewallID int                                `json:"firewall_id,omitempty"`
-	Type       NodeBalancerPlanType               `json:"type,omitempty"`
-	VPCs       []NodeBalancerVPCOptions           `json:"vpcs,omitempty"`
-	IPv4       *string                            `json:"ipv4,omitempty"`
+	Configs    []NodeBalancerConfigCreateOptions `json:"configs,omitzero"`
+	Tags       []string                          `json:"tags"`
+	FirewallID int                               `json:"firewall_id,omitzero"`
+	Type       NodeBalancerPlanType              `json:"type,omitzero"`
+	VPCs       []NodeBalancerVPCOptions          `json:"vpcs,omitzero"`
+	IPv4       *string                           `json:"ipv4,omitzero"`
+
+	// NOTE: BackendConnectivity may not currently be available to all users and can only be used with v4beta.
+	BackendConnectivity *NodeBalancerBackendConnectivity `json:"backend_connectivity,omitzero"`
 }
 
 // NodeBalancerUpdateOptions are the options permitted for UpdateNodeBalancer
 type NodeBalancerUpdateOptions struct {
-	Label              *string `json:"label,omitempty"`
-	ClientConnThrottle *int    `json:"client_conn_throttle,omitempty"`
+	Label              *string `json:"label,omitzero"`
+	ClientConnThrottle *int    `json:"client_conn_throttle,omitzero"`
 
 	// NOTE: ClientUDPSessThrottle may not currently be available to all users.
-	ClientUDPSessThrottle *int `json:"client_udp_sess_throttle,omitempty"`
+	ClientUDPSessThrottle *int `json:"client_udp_sess_throttle,omitzero"`
 
-	Tags *[]string `json:"tags,omitempty"`
+	Tags []string `json:"tags,omitzero"`
+}
+
+type NodeBalancerLKECluster struct {
+	// The ID of the related LKE cluster.
+	ID int `json:"id"`
+	// The label of the related LKE cluster.
+	Label string `json:"label"`
+	// The type for LKE clusters.
+	Type string `json:"type"`
+	// The URL where you can access the related LKE cluster.
+	URL string `json:"url"`
 }
 
 // NodeBalancerPlanType constants start with NBType and include Linode API NodeBalancer's plan types
@@ -96,9 +120,37 @@ type NodeBalancerPlanType string
 
 // NodeBalancerPlanType constants reflect the plan type used by a NodeBalancer Config
 const (
-	NBTypePremium     NodeBalancerPlanType = "premium"
+	// NBTypePremium supports higher connection and backend limits with guaranteed 10Gbps.
+	NBTypePremium NodeBalancerPlanType = "premium"
+
+	// NBTypeEnterprise supports up to 40Gbps bandwidth.
+	NBTypeEnterprise NodeBalancerPlanType = "enterprise"
+
+	// NBTypeCommon is the default plan representing the basic NodeBalancer. Clients do not have to specify this value.
+	NBTypeCommon NodeBalancerPlanType = "common"
+
+	// NBTypePremium40GB is the Enterprise offering with up to 40Gbps bandwidth.
+	//
+	// Deprecated: NBTypePremium40GB will be replaced by NBTypeEnterprise.
 	NBTypePremium40GB NodeBalancerPlanType = "premium_40gb"
-	NBTypeCommon      NodeBalancerPlanType = "common"
+)
+
+// NodeBalancerBackendConnectivity is the backend communication mode for a NodeBalancer.
+// NOTE: BackendConnectivity may not currently be available to all users and can only be used with v4beta.
+type NodeBalancerBackendConnectivity string
+
+const (
+	// NBBackendConnectivityLegacy communicates with backends over private IPv4.
+	NBBackendConnectivityLegacy NodeBalancerBackendConnectivity = "legacy"
+	// NBBackendConnectivityIPv6AndVPC is an unpublished value that will be deprecated.
+	NBBackendConnectivityIPv6AndVPC NodeBalancerBackendConnectivity = "ipv6_and_vpc"
+	// NBBackendConnectivityIPv6 communicates with backends using the NodeBalancer frontend IPv6.
+	NBBackendConnectivityIPv6 NodeBalancerBackendConnectivity = "ipv6"
+	// NBBackendConnectivityVPC communicates with backends using a VPC.
+	NBBackendConnectivityVPC NodeBalancerBackendConnectivity = "vpc"
+	// NBBackendConnectivityUndefined is assigned by the API when backend_connectivity, nodes, and vpcs are omitted.
+	// It cannot be specified in the Create NodeBalancer API.
+	NBBackendConnectivityUndefined NodeBalancerBackendConnectivity = "undefined"
 )
 
 // UnmarshalJSON implements the json.Unmarshaler interface
@@ -126,7 +178,7 @@ func (i *NodeBalancer) UnmarshalJSON(b []byte) error {
 
 // GetCreateOptions converts a NodeBalancer to NodeBalancerCreateOptions for use in CreateNodeBalancer
 func (i NodeBalancer) GetCreateOptions() NodeBalancerCreateOptions {
-	return NodeBalancerCreateOptions{
+	opts := NodeBalancerCreateOptions{
 		Label:                 i.Label,
 		Region:                i.Region,
 		ClientConnThrottle:    &i.ClientConnThrottle,
@@ -134,6 +186,12 @@ func (i NodeBalancer) GetCreateOptions() NodeBalancerCreateOptions {
 		Type:                  i.Type,
 		Tags:                  i.Tags,
 	}
+
+	if i.BackendConnectivity != nil && *i.BackendConnectivity != NBBackendConnectivityUndefined {
+		opts.BackendConnectivity = i.BackendConnectivity
+	}
+
+	return opts
 }
 
 // GetUpdateOptions converts a NodeBalancer to NodeBalancerUpdateOptions for use in UpdateNodeBalancer
@@ -142,7 +200,7 @@ func (i NodeBalancer) GetUpdateOptions() NodeBalancerUpdateOptions {
 		Label:                 i.Label,
 		ClientConnThrottle:    &i.ClientConnThrottle,
 		ClientUDPSessThrottle: &i.ClientUDPSessThrottle,
-		Tags:                  &i.Tags,
+		Tags:                  i.Tags,
 	}
 }
 

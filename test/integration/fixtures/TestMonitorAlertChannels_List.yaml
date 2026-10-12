@@ -14,12 +14,17 @@ interactions:
     url: https://api.linode.com/v4beta/monitor/alert-channels?page=1
     method: GET
   response:
-    body: '{"pages": 1, "page": 1, "results": 1, "data": [{"id": 10000, "label": "Read-Write
-      Channel", "channel_type": "email", "type": "system", "content": {"email": {"email_addresses":
-      ["Users-with-read-write-access-to-resources"]}}, "details": {"email": {"usernames":
+    body: '{"pages": 1, "page": 1, "results": 2, "data": [{"id": 10000, "label": "Read-Write
+      Channel", "channel_type": "email", "type": "system", "details": {"email": {"usernames":
       [], "recipient_type": "read_write_users"}}, "alerts": {"url": "/monitor/alert-channels/10000/alerts",
-      "type": "alerts-definitions", "alert_count": 8}, "created": "2018-01-02T03:04:05",
-      "updated": "2018-01-02T03:04:05", "created_by": "system", "updated_by": "system"}]}'
+      "type": "alerts-definitions", "alert_count": 9}, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05", "created_by": "system", "updated_by": "system"}, 
+      {"id": 10118, "label": "notification channel", "channel_type": "email", "type": "user", 
+      "details": {"email": {"usernames": ["user_admin"], "recipient_type":
+      "user"}}, "alerts": {"url": "/monitor/alert-channels/10118/alerts", "type":
+      "alerts-definitions", "alert_count": 0}, "created": "2018-01-02T03:04:05", "updated":
+      "2018-01-02T03:04:05", "created_by": "user_admin", "updated_by":
+      "user_admin"}]}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -37,14 +42,12 @@ interactions:
       - max-age=0, no-cache, no-store
       Connection:
       - keep-alive
-      Content-Length:
-      - "528"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Tue, 03 Mar 2026 16:41:28 GMT
+      - Mon, 06 Apr 2026 03:45:57 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -52,6 +55,7 @@ interactions:
       Vary:
       - Authorization, X-Filter
       - Authorization, X-Filter
+      - Accept-Encoding
       X-Accepted-Oauth-Scopes:
       - monitor:read_only
       X-Content-Type-Options:
@@ -60,7 +64,10 @@ interactions:
       - DENY
       - DENY
       X-Oauth-Scopes:
-      - '*'
+      - account:read_only databases:read_only domains:read_only events:read_only firewall:read_only
+        images:read_only ips:read_only linodes:read_only lke:read_only longview:read_only
+        monitor:read_write nodebalancers:read_only object_storage:read_only stackscripts:read_only
+        volumes:read_only
       X-Ratelimit-Limit:
       - "1840"
       X-Xss-Protection:

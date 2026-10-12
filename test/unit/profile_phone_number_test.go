@@ -5,7 +5,7 @@ import (
 	"testing"
 
 	"github.com/jarcoal/httpmock"
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 )
 
 func TestPhoneNumber_SendVerificationCode(t *testing.T) {

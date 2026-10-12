@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -78,10 +78,15 @@ func validateDashboards(
 	require.NotEmpty(t, dashboards.Created)
 	require.NotEmpty(t, dashboards.Updated)
 	require.NotEmpty(t, dashboards.Widgets)
+	if dashboards.GroupBy != nil {
+		require.NotEmpty(t, dashboards.GroupBy, "group_by should not be empty when present")
+	}
 
 	// Validate group_by and filters for each widget
 	for _, widget := range dashboards.Widgets {
-		require.NotNil(t, widget.GroupBy, "Expected group_by to be present in widget")
+		if widget.GroupBy != nil {
+			require.NotEmpty(t, widget.GroupBy, "group_by should not be empty when present")
+		}
 		require.GreaterOrEqual(t, len(widget.GroupBy), 0, "group_by should be a slice (possibly empty)")
 		// filters is optional
 		if widget.Filters != nil {

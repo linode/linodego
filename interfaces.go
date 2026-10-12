@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/v2/internal/parseabletime"
 )
 
 type LinodeInterface struct {
@@ -18,11 +18,26 @@ type LinodeInterface struct {
 	Public       *PublicInterface       `json:"public"`
 	VPC          *VPCInterface          `json:"vpc"`
 	VLAN         *VLANInterface         `json:"vlan"`
+
+	// RDMAVPC contains the configuration for an RDMA VPC interface attached
+	// to a GPUDirect RDMA capable Linode.
+	// NOTE: RDMA VPC interfaces may not currently be available to all users.
+	RDMAVPC *RDMAVPCInterface `json:"rdma_vpc"`
 }
 
 type InterfaceDefaultRoute struct {
-	IPv4 *bool `json:"ipv4,omitempty"`
-	IPv6 *bool `json:"ipv6,omitempty"`
+	IPv4 *bool `json:"ipv4,omitzero"`
+	IPv6 *bool `json:"ipv6,omitzero"`
+}
+
+type InterfaceDefaultRouteCreateOptions struct {
+	IPv4 *bool `json:"ipv4,omitzero"`
+	IPv6 *bool `json:"ipv6,omitzero"`
+}
+
+type InterfaceDefaultRouteUpdateOptions struct {
+	IPv4 *bool `json:"ipv4,omitzero"`
+	IPv6 *bool `json:"ipv6,omitzero"`
 }
 
 type PublicInterface struct {
@@ -108,39 +123,84 @@ type VPCInterfaceIPv6Range struct {
 
 type VLANInterface struct {
 	VLANLabel   string  `json:"vlan_label"`
-	IPAMAddress *string `json:"ipam_address,omitempty"`
+	IPAMAddress *string `json:"ipam_address,omitzero"`
+}
+
+type VLANInterfaceCreateOptions struct {
+	VLANLabel   string  `json:"vlan_label"`
+	IPAMAddress *string `json:"ipam_address,omitzero"`
+}
+
+// RDMAVPCInterface contains information about an RDMA VPC interface attached
+// to a GPUDirect RDMA capable Linode.
+// NOTE: RDMA VPC interfaces may not currently be available to all users.
+type RDMAVPCInterface struct {
+	VPCID    int                  `json:"vpc_id"`
+	SubnetID int                  `json:"subnet_id"`
+	IPv4     RDMAVPCInterfaceIPv4 `json:"ipv4"`
+}
+
+// RDMAVPCInterfaceIPv4 contains the IPv4 configuration for an RDMA VPC interface.
+// NOTE: RDMA VPC interfaces may not currently be available to all users.
+type RDMAVPCInterfaceIPv4 struct {
+	Addresses []RDMAVPCInterfaceIPv4Address `json:"addresses"`
+}
+
+// RDMAVPCInterfaceIPv4Address represents a single IPv4 address assigned to an
+// RDMA VPC interface.
+// NOTE: RDMA VPC interfaces may not currently be available to all users.
+type RDMAVPCInterfaceIPv4Address struct {
+	Address string `json:"address"`
+	Primary bool   `json:"primary"`
 }
 
 type LinodeInterfaceCreateOptions struct {
-	FirewallID   *int                          `json:"firewall_id,omitempty"`
-	DefaultRoute *InterfaceDefaultRoute        `json:"default_route,omitempty"`
-	Public       *PublicInterfaceCreateOptions `json:"public,omitempty"`
-	VPC          *VPCInterfaceCreateOptions    `json:"vpc,omitempty"`
-	VLAN         *VLANInterface                `json:"vlan,omitempty"`
+	FirewallID   *int                                `json:"firewall_id,omitzero"`
+	DefaultRoute *InterfaceDefaultRouteCreateOptions `json:"default_route,omitzero"`
+	Public       *PublicInterfaceCreateOptions       `json:"public,omitzero"`
+	VPC          *VPCInterfaceCreateOptions          `json:"vpc,omitzero"`
+	VLAN         *VLANInterfaceCreateOptions         `json:"vlan,omitzero"`
+}
+
+// LinodeInstanceInterfaceCreateOptions specifies a Linode Interface to be
+// created as part of a Linode creation request with RDMA VPC options available.
+//
+// The standalone interface create endpoint does NOT accept RDMA VPC
+// interfaces and therefore continues to use LinodeInterfaceCreateOptions.
+type LinodeInstanceInterfaceCreateOptions struct {
+	LinodeInterfaceCreateOptions
+
+	// RDMAVPC creates an RDMA VPC interface attached to the new Linode.
+	// Only one of Public, VPC, VLAN or RDMAVPC may be set per interface.
+	// NOTE: RDMA VPC interfaces may not currently be available to all users.
+	RDMAVPC *RDMAVPCInterfaceCreateOptions `json:"rdma_vpc,omitzero"`
 }
 
 type LinodeInterfaceUpdateOptions struct {
-	DefaultRoute *InterfaceDefaultRoute        `json:"default_route,omitempty"`
-	Public       *PublicInterfaceCreateOptions `json:"public,omitempty"`
-	VPC          *VPCInterfaceUpdateOptions    `json:"vpc,omitempty"`
+	DefaultRoute *InterfaceDefaultRouteUpdateOptions `json:"default_route,omitzero"`
+	Public       *PublicInterfaceCreateOptions       `json:"public,omitzero"`
+	VPC          *VPCInterfaceUpdateOptions          `json:"vpc,omitzero"`
+
+	// NOTE: RDMA VPC interfaces may not currently be available to all users.
+	RDMAVPC *RDMAVPCInterfaceUpdateOptions `json:"rdma_vpc,omitzero"`
 }
 
 type PublicInterfaceCreateOptions struct {
-	IPv4 *PublicInterfaceIPv4CreateOptions `json:"ipv4,omitempty"`
-	IPv6 *PublicInterfaceIPv6CreateOptions `json:"ipv6,omitempty"`
+	IPv4 *PublicInterfaceIPv4CreateOptions `json:"ipv4,omitzero"`
+	IPv6 *PublicInterfaceIPv6CreateOptions `json:"ipv6,omitzero"`
 }
 
 type PublicInterfaceIPv4CreateOptions struct {
-	Addresses *[]PublicInterfaceIPv4AddressCreateOptions `json:"addresses,omitempty"`
+	Addresses []PublicInterfaceIPv4AddressCreateOptions `json:"addresses,omitzero"`
 }
 
 type PublicInterfaceIPv4AddressCreateOptions struct {
-	Address *string `json:"address,omitempty"`
-	Primary *bool   `json:"primary,omitempty"`
+	Address *string `json:"address,omitzero"`
+	Primary *bool   `json:"primary,omitzero"`
 }
 
 type PublicInterfaceIPv6CreateOptions struct {
-	Ranges *[]PublicInterfaceIPv6RangeCreateOptions `json:"ranges,omitempty"`
+	Ranges []PublicInterfaceIPv6RangeCreateOptions `json:"ranges,omitzero"`
 }
 
 type PublicInterfaceIPv6RangeCreateOptions struct {
@@ -149,19 +209,19 @@ type PublicInterfaceIPv6RangeCreateOptions struct {
 
 type VPCInterfaceCreateOptions struct {
 	SubnetID int                            `json:"subnet_id"`
-	IPv4     *VPCInterfaceIPv4CreateOptions `json:"ipv4,omitempty"`
-	IPv6     *VPCInterfaceIPv6CreateOptions `json:"ipv6,omitempty"`
+	IPv4     *VPCInterfaceIPv4CreateOptions `json:"ipv4,omitzero"`
+	IPv6     *VPCInterfaceIPv6CreateOptions `json:"ipv6,omitzero"`
 }
 
 type VPCInterfaceIPv4CreateOptions struct {
-	Addresses *[]VPCInterfaceIPv4AddressCreateOptions `json:"addresses,omitempty"`
-	Ranges    *[]VPCInterfaceIPv4RangeCreateOptions   `json:"ranges,omitempty"`
+	Addresses []VPCInterfaceIPv4AddressCreateOptions `json:"addresses,omitzero"`
+	Ranges    []VPCInterfaceIPv4RangeCreateOptions   `json:"ranges,omitzero"`
 }
 
 type VPCInterfaceIPv4AddressCreateOptions struct {
-	Address        *string `json:"address,omitempty"`
-	Primary        *bool   `json:"primary,omitempty"`
-	NAT1To1Address *string `json:"nat_1_1_address,omitempty"`
+	Address        *string `json:"address,omitzero"`
+	Primary        *bool   `json:"primary,omitzero"`
+	NAT1To1Address *string `json:"nat_1_1_address,omitzero"`
 }
 
 type VPCInterfaceIPv4RangeCreateOptions struct {
@@ -171,9 +231,9 @@ type VPCInterfaceIPv4RangeCreateOptions struct {
 // VPCInterfaceIPv6CreateOptions specifies IPv6 configuration parameters for VPC creation.
 // NOTE: IPv6 interfaces may not currently be available to all users.
 type VPCInterfaceIPv6CreateOptions struct {
-	SLAAC    *[]VPCInterfaceIPv6SLAACCreateOptions `json:"slaac,omitempty"`
-	Ranges   *[]VPCInterfaceIPv6RangeCreateOptions `json:"ranges,omitempty"`
-	IsPublic *bool                                 `json:"is_public"`
+	SLAAC    []VPCInterfaceIPv6SLAACCreateOptions `json:"slaac,omitzero"`
+	Ranges   []VPCInterfaceIPv6RangeCreateOptions `json:"ranges,omitzero"`
+	IsPublic *bool                                `json:"is_public"`
 }
 
 // VPCInterfaceIPv6SLAACCreateOptions defines the IPv6 SLAAC configuration parameters for VPC creation.
@@ -189,8 +249,39 @@ type VPCInterfaceIPv6RangeCreateOptions struct {
 }
 
 type VPCInterfaceUpdateOptions struct {
-	IPv4 *VPCInterfaceIPv4CreateOptions `json:"ipv4,omitempty"`
-	IPv6 *VPCInterfaceIPv6CreateOptions `json:"ipv6,omitempty"`
+	IPv4 *VPCInterfaceIPv4CreateOptions `json:"ipv4,omitzero"`
+	IPv6 *VPCInterfaceIPv6CreateOptions `json:"ipv6,omitzero"`
+}
+
+// RDMAVPCInterfaceCreateOptions specifies parameters for creating an RDMA VPC
+// interface as part of a Linode creation.
+// NOTE: RDMA VPC interfaces may not currently be available to all users.
+type RDMAVPCInterfaceCreateOptions struct {
+	SubnetID int                          `json:"subnet_id"`
+	IPv4     *RDMAVPCInterfaceIPv4Options `json:"ipv4,omitzero"`
+}
+
+// RDMAVPCInterfaceUpdateOptions specifies the mutable fields of an RDMA VPC
+// interface.
+// NOTE: RDMA VPC interfaces may not currently be available to all users.
+type RDMAVPCInterfaceUpdateOptions struct {
+	SubnetID *int                         `json:"subnet_id,omitzero"`
+	IPv4     *RDMAVPCInterfaceIPv4Options `json:"ipv4,omitzero"`
+}
+
+// RDMAVPCInterfaceIPv4Options specifies IPv4 parameters for an RDMA VPC
+// interface.
+// NOTE: RDMA VPC interfaces may not currently be available to all users.
+type RDMAVPCInterfaceIPv4Options struct {
+	Addresses []RDMAVPCInterfaceIPv4AddressOptions `json:"addresses,omitzero"`
+}
+
+// RDMAVPCInterfaceIPv4AddressOptions represents a single IPv4 address
+// configuration for an RDMA VPC interface.
+// NOTE: RDMA VPC interfaces may not currently be available to all users.
+type RDMAVPCInterfaceIPv4AddressOptions struct {
+	Address string `json:"address"`
+	Primary *bool  `json:"primary,omitzero"`
 }
 
 type LinodeInterfacesUpgrade struct {
@@ -200,8 +291,8 @@ type LinodeInterfacesUpgrade struct {
 }
 
 type LinodeInterfacesUpgradeOptions struct {
-	ConfigID *int  `json:"config_id,omitempty"`
-	DryRun   *bool `json:"dry_run,omitempty"`
+	ConfigID *int  `json:"config_id,omitzero"`
+	DryRun   *bool `json:"dry_run,omitzero"`
 }
 
 type InterfaceSettings struct {
@@ -210,13 +301,13 @@ type InterfaceSettings struct {
 }
 
 type InterfaceSettingsUpdateOptions struct {
-	NetworkHelper *bool                                      `json:"network_helper,omitempty"`
-	DefaultRoute  *InterfaceDefaultRouteSettingUpdateOptions `json:"default_route,omitempty"`
+	NetworkHelper *bool                                      `json:"network_helper,omitzero"`
+	DefaultRoute  *InterfaceDefaultRouteSettingUpdateOptions `json:"default_route,omitzero"`
 }
 
 type InterfaceDefaultRouteSettingUpdateOptions struct {
-	IPv4InterfaceID *int `json:"ipv4_interface_id,omitempty"`
-	IPv6InterfaceID *int `json:"ipv6_interface_id,omitempty"`
+	IPv4InterfaceID *int `json:"ipv4_interface_id,omitzero"`
+	IPv6InterfaceID *int `json:"ipv6_interface_id,omitzero"`
 }
 
 type InterfaceDefaultRouteSetting struct {
@@ -248,9 +339,17 @@ func (i *LinodeInterface) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
-func (c *Client) ListInterfaces(ctx context.Context, linodeID int, opts *ListOptions) ([]LinodeInterface, error) {
+func (c *Client) ListInterfaces(ctx context.Context, linodeID int, _ *ListOptions) ([]LinodeInterface, error) {
 	e := formatAPIPath("linode/instances/%d/interfaces", linodeID)
-	return getPaginatedResults[LinodeInterface](ctx, c, e, opts)
+
+	response, err := doGETRequest[struct {
+		Interfaces []LinodeInterface `json:"interfaces"`
+	}](ctx, c, e)
+	if err != nil {
+		return nil, err
+	}
+
+	return response.Interfaces, nil
 }
 
 func (c *Client) GetInterface(ctx context.Context, linodeID int, interfaceID int) (*LinodeInterface, error) {

@@ -7,9 +7,9 @@ import (
 type ObjectStorageObjectURLCreateOptions struct {
 	Name               string `json:"name"`
 	Method             string `json:"method"`
-	ContentType        string `json:"content_type,omitempty"`
-	ContentDisposition string `json:"content_disposition,omitempty"`
-	ExpiresIn          *int   `json:"expires_in,omitempty"`
+	ContentType        string `json:"content_type,omitzero"`
+	ContentDisposition string `json:"content_disposition,omitzero"`
+	ExpiresIn          *int   `json:"expires_in,omitzero"`
 }
 
 type ObjectStorageObjectURL struct {
@@ -17,13 +17,7 @@ type ObjectStorageObjectURL struct {
 	Exists bool   `json:"exists"`
 }
 
-// Deprecated: Please use ObjectStorageObjectACLConfigV2 for all new implementations.
 type ObjectStorageObjectACLConfig struct {
-	ACL    string `json:"acl"`
-	ACLXML string `json:"acl_xml"`
-}
-
-type ObjectStorageObjectACLConfigV2 struct {
 	ACL    *string `json:"acl"`
 	ACLXML *string `json:"acl_xml"`
 }
@@ -35,39 +29,23 @@ type ObjectStorageObjectACLConfigUpdateOptions struct {
 
 func (c *Client) CreateObjectStorageObjectURL(
 	ctx context.Context,
-	objectID, label string,
+	regionID, label string,
 	opts ObjectStorageObjectURLCreateOptions,
 ) (*ObjectStorageObjectURL, error) {
-	e := formatAPIPath("object-storage/buckets/%s/%s/object-url", objectID, label)
+	e := formatAPIPath("object-storage/buckets/%s/%s/object-url", regionID, label)
 	return doPOSTRequest[ObjectStorageObjectURL](ctx, c, e, opts)
 }
 
-// Deprecated: use GetObjectStorageObjectACLConfigV2 for new implementations
-func (c *Client) GetObjectStorageObjectACLConfig(ctx context.Context, objectID, label, object string) (*ObjectStorageObjectACLConfig, error) {
-	e := formatAPIPath("object-storage/buckets/%s/%s/object-acl?name=%s", objectID, label, object)
+func (c *Client) GetObjectStorageObjectACLConfig(ctx context.Context, regionID, label, object string) (*ObjectStorageObjectACLConfig, error) {
+	e := formatAPIPath("object-storage/buckets/%s/%s/object-acl?name=%s", regionID, label, object)
 	return doGETRequest[ObjectStorageObjectACLConfig](ctx, c, e)
 }
 
-// Deprecated: use UpdateObjectStorageObjectACLConfigV2 for new implementations
 func (c *Client) UpdateObjectStorageObjectACLConfig(
 	ctx context.Context,
-	objectID, label string,
+	regionID, label string,
 	opts ObjectStorageObjectACLConfigUpdateOptions,
 ) (*ObjectStorageObjectACLConfig, error) {
-	e := formatAPIPath("object-storage/buckets/%s/%s/object-acl", objectID, label)
+	e := formatAPIPath("object-storage/buckets/%s/%s/object-acl", regionID, label)
 	return doPUTRequest[ObjectStorageObjectACLConfig](ctx, c, e, opts)
-}
-
-func (c *Client) GetObjectStorageObjectACLConfigV2(ctx context.Context, objectID, label, object string) (*ObjectStorageObjectACLConfigV2, error) {
-	e := formatAPIPath("object-storage/buckets/%s/%s/object-acl?name=%s", objectID, label, object)
-	return doGETRequest[ObjectStorageObjectACLConfigV2](ctx, c, e)
-}
-
-func (c *Client) UpdateObjectStorageObjectACLConfigV2(
-	ctx context.Context,
-	objectID, label string,
-	opts ObjectStorageObjectACLConfigUpdateOptions,
-) (*ObjectStorageObjectACLConfigV2, error) {
-	e := formatAPIPath("object-storage/buckets/%s/%s/object-acl", objectID, label)
-	return doPUTRequest[ObjectStorageObjectACLConfigV2](ctx, c, e, opts)
 }

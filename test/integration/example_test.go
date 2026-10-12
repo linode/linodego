@@ -11,7 +11,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/linode/linodego"
+	"github.com/linode/linodego/v2"
 )
 
 func ExampleClient_ListTypes_all() {

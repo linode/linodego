@@ -5,12 +5,12 @@ import (
 	"encoding/json"
 	"time"
 
-	"github.com/linode/linodego/internal/parseabletime"
+	"github.com/linode/linodego/v2/internal/parseabletime"
 )
 
 // InstanceBackupsResponse response struct for backup snapshot
 type InstanceBackupsResponse struct {
-	Automatic []*InstanceSnapshot             `json:"automatic"`
+	Automatic []InstanceSnapshot              `json:"automatic"`
 	Snapshot  *InstanceBackupSnapshotResponse `json:"snapshot"`
 }
 
@@ -18,6 +18,10 @@ type InstanceBackupsResponse struct {
 type InstanceBackupSnapshotResponse struct {
 	Current    *InstanceSnapshot `json:"current"`
 	InProgress *InstanceSnapshot `json:"in_progress"`
+}
+
+type InstanceSnapshotCreateOptions struct {
+	Label string `json:"label"`
 }
 
 // RestoreInstanceOptions fields are those accepted by InstanceRestore
@@ -28,16 +32,16 @@ type RestoreInstanceOptions struct {
 
 // InstanceSnapshot represents a linode backup snapshot
 type InstanceSnapshot struct {
-	ID        int                     `json:"id"`
-	Label     string                  `json:"label"`
-	Status    InstanceSnapshotStatus  `json:"status"`
-	Type      string                  `json:"type"`
-	Created   *time.Time              `json:"-"`
-	Updated   *time.Time              `json:"-"`
-	Finished  *time.Time              `json:"-"`
-	Configs   []string                `json:"configs"`
-	Disks     []*InstanceSnapshotDisk `json:"disks"`
-	Available bool                    `json:"available"`
+	ID        int                    `json:"id"`
+	Label     string                 `json:"label"`
+	Status    InstanceSnapshotStatus `json:"status"`
+	Type      string                 `json:"type"`
+	Created   *time.Time             `json:"-"`
+	Updated   *time.Time             `json:"-"`
+	Finished  *time.Time             `json:"-"`
+	Configs   []string               `json:"configs"`
+	Disks     []InstanceSnapshotDisk `json:"disks"`
+	Available bool                   `json:"available"`
 }
 
 // InstanceSnapshotDisk fields represent the source disk of a Snapshot
@@ -93,9 +97,7 @@ func (c *Client) GetInstanceSnapshot(ctx context.Context, linodeID int, snapshot
 }
 
 // CreateInstanceSnapshot Creates or Replaces the snapshot Backup of a Linode. If a previous snapshot exists for this Linode, it will be deleted.
-func (c *Client) CreateInstanceSnapshot(ctx context.Context, linodeID int, label string) (*InstanceSnapshot, error) {
-	opts := map[string]string{"label": label}
-
+func (c *Client) CreateInstanceSnapshot(ctx context.Context, linodeID int, opts InstanceSnapshotCreateOptions) (*InstanceSnapshot, error) {
 	e := formatAPIPath("linode/instances/%d/backups", linodeID)
 
 	return doPOSTRequest[InstanceSnapshot](ctx, c, e, opts)

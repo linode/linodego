@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	. "github.com/linode/linodego"
+	. "github.com/linode/linodego/v2"
 )
 
 func TestPayment_GetMissing(t *testing.T) {

@@ -5,6 +5,7 @@
             "label": "test-cluster",
             "region": "us-east",
             "status": "ready",
+            "locks": ["cannot_delete"],
             "subnet_id": 123,
             "vpc_id": 456,
             "stack_type": "ipv4",
@@ -16,7 +17,8 @@
             "id": 124,
             "label": "second-cluster",
             "region": "us-west",
-            "status": "not_ready"
+            "status": "not_ready",
+            "locks": []
         }
     ],
     "pages": 1,

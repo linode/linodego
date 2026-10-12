@@ -14,12 +14,12 @@ interactions:
     url: https://api.linode.com/v4beta/networking/firewalls/templates/public
     method: GET
   response:
-    body: '{"slug": "public", "rules": {"inbound": [{"action": "ACCEPT", "addresses":
-      {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}, "ports": "22", "protocol": "TCP",
-      "label": "accept-inbound-ssh", "description": "Accept inbound SSH"}, {"action":
-      "ACCEPT", "addresses": {"ipv4": ["0.0.0.0/0"], "ipv6": ["1234::5678/0"]}, "protocol":
-      "ICMP", "label": "accept-inbound-icmp", "description": "Accept inbound ICMP"}],
-      "inbound_policy": "DROP", "outbound": [], "outbound_policy": "ACCEPT"}}'
+    body: '{"slug": "public", "rules": {"inbound": [{"protocol": "TCP", "addresses":
+      {"ipv6": ["1234::5678/0"], "ipv4": ["0.0.0.0/0"]}, "action": "ACCEPT", "label": "accept-inbound-ssh",
+      "ports": "22", "description": "Accept inbound SSH"}, {"protocol": "ICMP", "addresses":
+      {"ipv6": ["1234::5678/0"], "ipv4": ["0.0.0.0/0"]}, "action": "ACCEPT", "label": "accept-inbound-icmp",
+      "description": "Accept inbound ICMP"}], "inbound_policy": "DROP", "outbound":
+      [], "outbound_policy": "ACCEPT"}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -44,7 +44,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Mon, 21 Apr 2025 07:03:52 GMT
+      - Tue, 05 May 2026 23:45:07 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -62,7 +62,7 @@ interactions:
       X-Oauth-Scopes:
       - '*'
       X-Ratelimit-Limit:
-      - "1600"
+      - "1840"
       X-Xss-Protection:
       - 1; mode=block
     status: 200 OK
