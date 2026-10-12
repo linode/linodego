@@ -1019,6 +1019,10 @@ func TestLinodeLegacyAlertsWorkflow(t *testing.T) {
 	}
 	clonedInstance, err := client.CloneInstance(context.Background(), instance.ID, cloneOptions)
 	require.NoError(t, err)
+	defer func() {
+		err := client.DeleteInstance(context.Background(), clonedInstance.ID)
+		require.NoError(t, err)
+	}()
 	assert.Equal(t, 90, clonedInstance.Alerts.CPU)
 	assert.Equal(t, 10000, clonedInstance.Alerts.IO)
 	assert.Equal(t, 10, clonedInstance.Alerts.NetworkIn)
@@ -1064,11 +1068,8 @@ func TestUpdateACLPAlerts(t *testing.T) {
 		require.NoError(t, errDeleteUserAlert)
 	}()
 	updateOpts := instToUpdate.GetUpdateOptions()
-	alertsUpdateData := linodego.InstanceAlert{
-		UserAlerts:   []int{testUserAlert},
-		SystemAlerts: []int{sampleSystemAlert},
-	}
-	updateOpts.Alerts = &alertsUpdateData
+	updateOpts.Alerts.SystemAlerts = []int{sampleSystemAlert}
+	updateOpts.Alerts.UserAlerts = []int{testUserAlert}
 	updateOpts.Backups = nil
 	updateResponse, errUpdate := client.UpdateInstance(context.Background(), instToUpdate.ID, updateOpts)
 	require.NoError(t, errUpdate)
@@ -1275,8 +1276,8 @@ func TestInstance_MaintenancePolicy(t *testing.T) {
 
 func getAlertChannelsList(t *testing.T, client *linodego.Client) []linodego.AlertChannel {
 	channels, err := client.ListAlertChannels(context.Background(), nil)
-	assert.NoError(t, err)
-	assert.NotEmpty(t, channels, "Expected at least one alert channel")
+	require.NoError(t, err)
+	require.NotEmpty(t, channels, "Expected at least one alert channel")
 
 	return channels
 }

@@ -216,7 +216,7 @@ type InstanceCreateOptions struct {
 	BootSize *int    `json:"boot_size,omitzero"`
 
 	// Note: Alerts can only be used with v4beta.
-	Alerts *InstanceACLPAlertsOptions `json:"alerts,omitempty"`
+	Alerts *InstanceACLPAlertsOptions `json:"alerts,omitzero"`
 }
 
 // InstanceACLPAlertsOptions represents ACLP alerts options for instance creation and cloning.
@@ -403,11 +403,8 @@ type InstanceCloneOptions struct {
 	Metadata       *InstanceMetadataOptions             `json:"metadata,omitzero"`
 	PlacementGroup *InstanceCreatePlacementGroupOptions `json:"placement_group,omitzero"`
 
-	// Deprecated: group is a deprecated property denoting a group label for the Linode.
-	Group string `json:"group,omitempty"`
-
 	// Note: Alerts can only be used with v4beta.
-	Alerts *InstanceACLPAlertsOptions `json:"alerts,omitempty"`
+	Alerts *InstanceACLPAlertsOptions `json:"alerts,omitzero"`
 }
 
 // InstanceResizeOptions is an options struct used when resizing an instance
