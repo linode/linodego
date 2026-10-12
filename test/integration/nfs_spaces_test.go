@@ -56,7 +56,6 @@ func verifyNFSSpace(t *testing.T, space *linodego.NFSSpace, createOpts linodego.
 
 func verifyNFSSpaceAccessPolicyUpdate(t *testing.T, spaceAccPolicy *linodego.NFSSpaceAccessPolicy, opts linodego.NFSSpaceAccessPolicyUpdateOptions) {
 	// assert.Equal(t, "pending", spaceAccPolicy.Status)
-	// assert.Equal(t, updateOpts.Label, linodego.Pointer(spaceAccPolicy.Label))  // TODO: It is not updated - defect?
 	assert.True(t, spaceAccPolicy.Enabled)
 	assert.Len(t, spaceAccPolicy.VPCACL, 1)
 	assert.Equal(t, (*opts.VPCs)[0].ID, spaceAccPolicy.VPCACL[0].ID)
@@ -133,7 +132,6 @@ func TestNFSSpace_UpdateAccessPolicy(t *testing.T) {
 	t.Cleanup(vpcTeardown)
 
 	updateOpts := linodego.NFSSpaceAccessPolicyUpdateOptions{
-		Label:   linodego.Pointer(space.Label + "-updated"),
 		Enabled: linodego.Pointer(true),
 		VPCs: linodego.Pointer([]linodego.NFSSpaceAccessPolicyVPCOptions{
 			{

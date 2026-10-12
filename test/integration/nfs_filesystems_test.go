@@ -121,7 +121,6 @@ func verifyNFSFilesystemAccessPolicyUpdate(
 	filesystemAccPolicy *linodego.NFSFilesystemAccessPolicy,
 	opts linodego.NFSFilesystemAccessPolicyUpdateOptions,
 ) {
-	// assert.Equal(t, *updateOpts.Label, filesystemAccPolicy.Label) // TODO: It is not updated - defect?
 	assert.True(t, filesystemAccPolicy.Enabled)
 	assert.Len(t, filesystemAccPolicy.LinodeACL, 1)
 	assert.Equal(t, (*opts.LinodeIDs)[0], filesystemAccPolicy.LinodeACL[0].ID)
@@ -231,7 +230,6 @@ func TestNFSFilesystem_UpdateAccessPolicy(t *testing.T) {
 	t.Cleanup(linodeTeardown)
 
 	updateOpts := linodego.NFSFilesystemAccessPolicyUpdateOptions{
-		Label:     linodego.Pointer(filesystem.Label + "-updated"),
 		Enabled:   linodego.Pointer(true),
 		LinodeIDs: linodego.Pointer([]int{linode.ID}),
 	}
