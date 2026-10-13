@@ -106,7 +106,11 @@ func TestMarshalValkeyCreateOptionsWithForkRestoreTime(t *testing.T) {
 		},
 	})
 	assert.NoError(t, err)
-	assert.JSONEq(t, `{"label":"forked-valkey","region":"us-ord","type":"g7-dedicated-4-2","engine":"valkey/8.1","fork":{"source":123,"restore_time":"2026-01-02T03:04:05Z"}}`, string(payload))
+	assert.JSONEq(
+		t,
+		`{"label":"forked-valkey","region":"us-ord","type":"g7-dedicated-4-2","engine":"valkey/8.1","fork":{"source":123,"restore_time":"2026-01-02T03:04:05Z"}}`,
+		string(payload),
+	)
 }
 
 func TestUnmarshalValkeyDatabaseConfigInfo(t *testing.T) {
@@ -391,7 +395,11 @@ func TestDatabaseValkeyConfig_Get(t *testing.T) {
 	config, err := base.Client.GetValkeyDatabaseConfig(context.Background())
 	assert.NoError(t, err)
 
-	assert.Equal(t, "The hour of day (in UTC) when backup for the service is started. New backup is only started if previous backup has already completed.", config.BackupHour.Description)
+	assert.Equal(
+		t,
+		"The hour of day (in UTC) when backup for the service is started. New backup is only started if previous backup has already completed.",
+		config.BackupHour.Description,
+	)
 	assert.Equal(t, 3, config.BackupHour.Example)
 	assert.Equal(t, 23, config.BackupHour.Maximum)
 	assert.Equal(t, 0, config.BackupHour.Minimum)
@@ -403,7 +411,11 @@ func TestDatabaseValkeyConfig_Get(t *testing.T) {
 	assert.Equal(t, 0, config.BackupMinute.Minimum)
 	assert.Equal(t, linodego.ConfigParamType{"integer", "null"}, config.BackupMinute.Type)
 
-	assert.Equal(t, "Determines default pub/sub channels ACL for new users if ACL is not supplied. When this option is not defined, all_channels is assumed to keep backward compatibility. This option doesn't affect Valkey configuration acl-pubsub-default.", config.ValkeyACLChannelsDefault.Description)
+	assert.Equal(
+		t,
+		"Determines default pub/sub channels ACL for new users if ACL is not supplied. When this option is not defined, all_channels is assumed to keep backward compatibility. This option doesn't affect Valkey configuration acl-pubsub-default.",
+		config.ValkeyACLChannelsDefault.Description,
+	)
 	assert.Equal(t, []string{"allchannels", "resetchannels"}, config.ValkeyACLChannelsDefault.Enum)
 	assert.False(t, config.ValkeyACLChannelsDefault.RequiresRestart)
 	assert.Equal(t, linodego.ConfigParamType{"string"}, config.ValkeyACLChannelsDefault.Type)
@@ -431,7 +443,11 @@ func TestDatabaseValkeyConfig_Get(t *testing.T) {
 
 	assert.Equal(t, "Valkey maxmemory-policy", config.ValkeyMaxmemoryPolicy.Description)
 	assert.Equal(t, "noeviction", config.ValkeyMaxmemoryPolicy.Default)
-	assert.Equal(t, []string{"noeviction", "allkeys-lru", "volatile-lru", "allkeys-random", "volatile-random", "volatile-ttl", "volatile-lfu", "allkeys-lfu"}, config.ValkeyMaxmemoryPolicy.Enum)
+	assert.Equal(
+		t,
+		[]string{"noeviction", "allkeys-lru", "volatile-lru", "allkeys-random", "volatile-random", "volatile-ttl", "volatile-lfu", "allkeys-lfu"},
+		config.ValkeyMaxmemoryPolicy.Enum,
+	)
 	assert.False(t, config.ValkeyMaxmemoryPolicy.RequiresRestart)
 	assert.Equal(t, linodego.ConfigParamType{"string", "null"}, config.ValkeyMaxmemoryPolicy.Type)
 
