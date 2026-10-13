@@ -54,6 +54,7 @@ func waitForNFSFilesystemDeleted(
 func setupNFSFilesystem(
 	t *testing.T,
 	fixtureYaml string,
+	requireActive bool,
 	modifiers ...func(opts *linodego.NFSFilesystemCreateOptions),
 ) (*linodego.Client, *linodego.NFSSpace, *linodego.NFSFilesystem, linodego.NFSFilesystemCreateOptions) {
 	t.Helper()
@@ -70,6 +71,18 @@ func setupNFSFilesystem(
 
 	filesystem, err := client.CreateNFSFilesystem(context.Background(), space.ID, createOpts)
 	require.NoErrorf(t, err, "Error creating NFS Filesystem: %v", err)
+
+	// Wait for NFS Filesystem status to be 'active' to read the details (if needed)
+	if requireActive {
+		ctx := waitContext(t, 240*time.Second)
+		_, err = client.WaitForNFSFilesystemStatus(
+			ctx,
+			space.ID,
+			filesystem.ID,
+			linodego.NFSFilesystemStatusActive,
+		)
+		require.NoErrorf(t, err, "Failed to wait for Filesystem status to be active: %s", err)
+	}
 
 	t.Cleanup(func() {
 		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
@@ -179,22 +192,12 @@ func verifyNFSFilesystemCustomQuota(
 }
 
 func TestNFSFilesystem_Create_smoke(t *testing.T) {
-	_, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_Create")
+	_, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_Create", false)
 	verifyNFSFilesystemBasics(t, space, filesystem, createOpts)
 }
 
 func TestNFSFilesystem_Get(t *testing.T) {
-	ctx := waitContext(t, 180*time.Second)
-	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_Get")
-
-	// Wait for NFS Filesystem status to be 'active' to read the details
-	_, err := client.WaitForNFSFilesystemStatus(
-		ctx,
-		space.ID,
-		filesystem.ID,
-		linodego.NFSFilesystemStatusActive,
-	)
-	require.NoErrorf(t, err, "Failed to wait for Filesystem status to be active: %s", err)
+	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_Get", true)
 
 	filesystemGet, err := client.GetNFSFilesystemInSpace(context.Background(), space.ID, filesystem.ID)
 	require.NoErrorf(t, err, "Error retrieving NFS Filesystem in Space: %v", err)
@@ -203,7 +206,7 @@ func TestNFSFilesystem_Get(t *testing.T) {
 }
 
 func TestNFSFilesystem_GetWithoutNFSSpace(t *testing.T) {
-	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_GetWithoutNFSSpace")
+	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_GetWithoutNFSSpace", false)
 
 	filesystemGet, err := client.GetNFSFilesystem(context.Background(), filesystem.ID)
 	require.NoErrorf(t, err, "Error retrieving NFS Filesystem with no Space: %v", err)
@@ -211,7 +214,7 @@ func TestNFSFilesystem_GetWithoutNFSSpace(t *testing.T) {
 }
 
 func TestNFSFilesystem_List(t *testing.T) {
-	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_List")
+	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_List", false)
 
 	f := linodego.Filter{}
 	f.AddField(linodego.Eq, "label", filesystem.Label)
@@ -227,7 +230,7 @@ func TestNFSFilesystem_List(t *testing.T) {
 }
 
 func TestNFSFilesystem_Update(t *testing.T) {
-	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_Update")
+	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_Update", false)
 
 	updateOpts := filesystem.GetUpdateOptions()
 	updateOpts.Label = linodego.Pointer(filesystem.Label + "-updated")
@@ -250,7 +253,7 @@ func TestNFSFilesystem_Update(t *testing.T) {
 
 func TestNFSFilesystem_GetAccessPolicy_smoke(t *testing.T) {
 	t.Skip("Access Policy seems to not be fully developed yet")
-	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_GetAccessPolicy")
+	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_GetAccessPolicy", false)
 
 	filesystemAccPolicy, err := client.GetNFSFilesystemAccessPolicy(context.Background(), space.ID, filesystem.ID)
 	require.NoErrorf(t, err, "Error getting NFS Filesystem Access Policy: %v", err)
@@ -268,7 +271,7 @@ func TestNFSFilesystem_GetAccessPolicy_smoke(t *testing.T) {
 
 func TestNFSFilesystem_UpdateAccessPolicy(t *testing.T) {
 	t.Skip("Access Policy seems to not be fully developed yet")
-	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_UpdateAccessPolicy")
+	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_UpdateAccessPolicy", false)
 
 	linode, _, linodeTeardown, err := createInstanceWithoutDisks(
 		t,
@@ -310,19 +313,9 @@ func TestNFSFilesystem_UpdateAccessPolicy(t *testing.T) {
 }
 
 func TestNFSFilesystem_CreateCustomQuota_smoke(t *testing.T) {
-	ctx := waitContext(t, 180*time.Second)
-	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_CreateCustomQuota")
+	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_CreateCustomQuota", true)
 
-	// Wait for NFS Filesystem status to be 'active' to read the details
-	_, err := client.WaitForNFSFilesystemStatus(
-		ctx,
-		space.ID,
-		filesystem.ID,
-		linodego.NFSFilesystemStatusActive,
-	)
-	require.NoErrorf(t, err, "Failed to wait for Filesystem status to be active: %s", err)
-
-	filesystem, err = client.GetNFSFilesystemInSpace(context.Background(), space.ID, filesystem.ID)
+	filesystem, err := client.GetNFSFilesystemInSpace(context.Background(), space.ID, filesystem.ID)
 	require.NoErrorf(t, err, "Error retrieving NFS Filesystem in Space: %v", err)
 
 	quota, createOpts := setupNFSFilesystemQuota(t, client, space, filesystem)
@@ -330,19 +323,9 @@ func TestNFSFilesystem_CreateCustomQuota_smoke(t *testing.T) {
 }
 
 func TestNFSFilesystem_GetCustomQuota(t *testing.T) {
-	ctx := waitContext(t, 180*time.Second)
-	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_GetCustomQuota")
+	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_GetCustomQuota", true)
 
-	// Wait for NFS Filesystem status to be 'active' to read the details
-	_, err := client.WaitForNFSFilesystemStatus(
-		ctx,
-		space.ID,
-		filesystem.ID,
-		linodego.NFSFilesystemStatusActive,
-	)
-	require.NoErrorf(t, err, "Failed to wait for Filesystem status to be active: %s", err)
-
-	filesystem, err = client.GetNFSFilesystemInSpace(context.Background(), space.ID, filesystem.ID)
+	filesystem, err := client.GetNFSFilesystemInSpace(context.Background(), space.ID, filesystem.ID)
 	require.NoErrorf(t, err, "Error retrieving NFS Filesystem in Space: %v", err)
 
 	quota, createOpts := setupNFSFilesystemQuota(t, client, space, filesystem)
