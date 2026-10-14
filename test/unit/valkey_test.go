@@ -166,7 +166,7 @@ func TestUnmarshalValkeyDatabaseConfigInfo(t *testing.T) {
 	err := json.Unmarshal(payload, &config)
 	assert.NoError(t, err)
 
-	assert.Equal(t, linodego.ConfigParamType{"integer", "null"}, config.BackupHour.Type)
+	assert.Equal(t, linodego.DatabaseConfigParamType{"integer", "null"}, config.BackupHour.Type)
 	assert.Equal(t, 23, config.BackupHour.Maximum)
 	assert.Equal(t, 0, config.BackupHour.Minimum)
 	assert.Equal(t, "string", config.ValkeyACLChannelsDefault.Type[0])
@@ -435,12 +435,12 @@ func TestDatabaseValkeyConfig_Get(t *testing.T) {
 	assert.Equal(t, 23, config.BackupHour.Maximum)
 	assert.Equal(t, 0, config.BackupHour.Minimum)
 	assert.False(t, config.BackupHour.RequiresRestart)
-	assert.Equal(t, linodego.ConfigParamType{"integer", "null"}, config.BackupHour.Type)
+	assert.Equal(t, linodego.DatabaseConfigParamType{"integer", "null"}, config.BackupHour.Type)
 
 	assert.Equal(t, 30, config.BackupMinute.Example)
 	assert.Equal(t, 59, config.BackupMinute.Maximum)
 	assert.Equal(t, 0, config.BackupMinute.Minimum)
-	assert.Equal(t, linodego.ConfigParamType{"integer", "null"}, config.BackupMinute.Type)
+	assert.Equal(t, linodego.DatabaseConfigParamType{"integer", "null"}, config.BackupMinute.Type)
 
 	assert.Equal(
 		t,
@@ -449,28 +449,28 @@ func TestDatabaseValkeyConfig_Get(t *testing.T) {
 	)
 	assert.Equal(t, []string{"allchannels", "resetchannels"}, config.ValkeyACLChannelsDefault.Enum)
 	assert.False(t, config.ValkeyACLChannelsDefault.RequiresRestart)
-	assert.Equal(t, linodego.ConfigParamType{"string"}, config.ValkeyACLChannelsDefault.Type)
+	assert.Equal(t, linodego.DatabaseConfigParamType{"string"}, config.ValkeyACLChannelsDefault.Type)
 
 	assert.True(t, config.FrequentSnapshots.Default)
 	assert.False(t, config.FrequentSnapshots.RequiresRestart)
-	assert.Equal(t, linodego.ConfigParamType{"boolean"}, config.FrequentSnapshots.Type)
+	assert.Equal(t, linodego.DatabaseConfigParamType{"boolean"}, config.FrequentSnapshots.Type)
 
 	assert.Equal(t, 1, config.ValkeyActiveExpireEffort.Default)
 	assert.Equal(t, 10, config.ValkeyActiveExpireEffort.Maximum)
 	assert.Equal(t, 1, config.ValkeyActiveExpireEffort.Minimum)
-	assert.Equal(t, linodego.ConfigParamType{"integer"}, config.ValkeyActiveExpireEffort.Type)
+	assert.Equal(t, linodego.DatabaseConfigParamType{"integer"}, config.ValkeyActiveExpireEffort.Type)
 
 	assert.False(t, config.ValkeyActiveDefrag.Default)
-	assert.Equal(t, linodego.ConfigParamType{"boolean"}, config.ValkeyActiveDefrag.Type)
+	assert.Equal(t, linodego.DatabaseConfigParamType{"boolean"}, config.ValkeyActiveDefrag.Type)
 
 	assert.Equal(t, 1, config.ValkeyLFUDecayTime.Default)
 	assert.Equal(t, 120, config.ValkeyLFUDecayTime.Maximum)
 	assert.Equal(t, 1, config.ValkeyLFUDecayTime.Minimum)
-	assert.Equal(t, linodego.ConfigParamType{"integer"}, config.ValkeyLFUDecayTime.Type)
+	assert.Equal(t, linodego.DatabaseConfigParamType{"integer"}, config.ValkeyLFUDecayTime.Type)
 	assert.Equal(t, 10, config.ValkeyLFULogFactor.Default)
 	assert.Equal(t, 100, config.ValkeyLFULogFactor.Maximum)
 	assert.Equal(t, 0, config.ValkeyLFULogFactor.Minimum)
-	assert.Equal(t, linodego.ConfigParamType{"integer"}, config.ValkeyLFULogFactor.Type)
+	assert.Equal(t, linodego.DatabaseConfigParamType{"integer"}, config.ValkeyLFULogFactor.Type)
 
 	assert.Equal(t, "Valkey maxmemory-policy", config.ValkeyMaxmemoryPolicy.Description)
 	assert.Equal(t, "noeviction", config.ValkeyMaxmemoryPolicy.Default)
@@ -480,27 +480,27 @@ func TestDatabaseValkeyConfig_Get(t *testing.T) {
 		config.ValkeyMaxmemoryPolicy.Enum,
 	)
 	assert.False(t, config.ValkeyMaxmemoryPolicy.RequiresRestart)
-	assert.Equal(t, linodego.ConfigParamType{"string", "null"}, config.ValkeyMaxmemoryPolicy.Type)
+	assert.Equal(t, linodego.DatabaseConfigParamType{"string", "null"}, config.ValkeyMaxmemoryPolicy.Type)
 
 	assert.Equal(t, 16, config.ValkeyNumberOfDatabases.Example)
 	assert.Equal(t, 128, config.ValkeyNumberOfDatabases.Maximum)
 	assert.Equal(t, 1, config.ValkeyNumberOfDatabases.Minimum)
 	assert.True(t, config.ValkeyNumberOfDatabases.RequiresRestart)
-	assert.Equal(t, linodego.ConfigParamType{"integer"}, config.ValkeyNumberOfDatabases.Type)
+	assert.Equal(t, linodego.DatabaseConfigParamType{"integer"}, config.ValkeyNumberOfDatabases.Type)
 
 	assert.Equal(t, []string{"off", "rdb"}, config.ValkeyPersistence.Enum)
 	assert.True(t, config.ValkeyPersistence.RequiresRestart)
-	assert.Equal(t, linodego.ConfigParamType{"string"}, config.ValkeyPersistence.Type)
+	assert.Equal(t, linodego.DatabaseConfigParamType{"string"}, config.ValkeyPersistence.Type)
 
 	assert.Equal(t, 64, config.ValkeyPubsubClientOutputBufferLimit.Example)
 	assert.Equal(t, 262144, config.ValkeyPubsubClientOutputBufferLimit.Maximum)
 	assert.Equal(t, 32, config.ValkeyPubsubClientOutputBufferLimit.Minimum)
-	assert.Equal(t, linodego.ConfigParamType{"integer"}, config.ValkeyPubsubClientOutputBufferLimit.Type)
+	assert.Equal(t, linodego.DatabaseConfigParamType{"integer"}, config.ValkeyPubsubClientOutputBufferLimit.Type)
 
 	assert.Equal(t, 300, config.ValkeyTimeout.Default)
 	assert.Equal(t, 2073600, config.ValkeyTimeout.Maximum)
 	assert.Equal(t, 0, config.ValkeyTimeout.Minimum)
-	assert.Equal(t, linodego.ConfigParamType{"integer"}, config.ValkeyTimeout.Type)
+	assert.Equal(t, linodego.DatabaseConfigParamType{"integer"}, config.ValkeyTimeout.Type)
 }
 
 func TestMarshalValkeyCreateOptions(t *testing.T) {

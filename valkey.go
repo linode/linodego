@@ -125,14 +125,14 @@ type ValkeyDatabaseSSL struct {
 	CACertificate []byte `json:"ca_certificate"`
 }
 
-// ConfigParamType handles API metadata "type" values that may be either a single
+// DatabaseConfigParamType handles API metadata "type" values that may be either a single
 // string or an array of strings.
-type ConfigParamType []string
+type DatabaseConfigParamType []string
 
-func (t *ConfigParamType) UnmarshalJSON(b []byte) error {
+func (t *DatabaseConfigParamType) UnmarshalJSON(b []byte) error {
 	var single string
 	if err := json.Unmarshal(b, &single); err == nil {
-		*t = ConfigParamType{single}
+		*t = DatabaseConfigParamType{single}
 		return nil
 	}
 
@@ -141,7 +141,7 @@ func (t *ConfigParamType) UnmarshalJSON(b []byte) error {
 		return err
 	}
 
-	*t = ConfigParamType(multi)
+	*t = DatabaseConfigParamType(multi)
 
 	return nil
 }
@@ -168,7 +168,7 @@ type ValkeyDatabaseConfigInfoBackupHour struct {
 	Maximum         int             `json:"maximum"`
 	Minimum         int             `json:"minimum"`
 	RequiresRestart bool            `json:"requires_restart"`
-	Type            ConfigParamType `json:"type"`
+	Type            DatabaseConfigParamType `json:"type"`
 }
 
 type ValkeyDatabaseConfigInfoBackupMinute struct {
@@ -177,21 +177,21 @@ type ValkeyDatabaseConfigInfoBackupMinute struct {
 	Maximum         int             `json:"maximum"`
 	Minimum         int             `json:"minimum"`
 	RequiresRestart bool            `json:"requires_restart"`
-	Type            ConfigParamType `json:"type"`
+	Type            DatabaseConfigParamType `json:"type"`
 }
 
 type ValkeyDatabaseConfigInfoFrequentSnapshots struct {
 	Description     string          `json:"description"`
 	Default         bool            `json:"default"`
 	RequiresRestart bool            `json:"requires_restart"`
-	Type            ConfigParamType `json:"type"`
+	Type            DatabaseConfigParamType `json:"type"`
 }
 
 type ValkeyDatabaseConfigInfoACLChannelsDefault struct {
 	Description     string          `json:"description"`
 	Enum            []string        `json:"enum"`
 	RequiresRestart bool            `json:"requires_restart"`
-	Type            ConfigParamType `json:"type"`
+	Type            DatabaseConfigParamType `json:"type"`
 }
 
 type ValkeyDatabaseConfigInfoActiveExpireEffort struct {
@@ -200,14 +200,14 @@ type ValkeyDatabaseConfigInfoActiveExpireEffort struct {
 	Maximum         int             `json:"maximum"`
 	Minimum         int             `json:"minimum"`
 	RequiresRestart bool            `json:"requires_restart"`
-	Type            ConfigParamType `json:"type"`
+	Type            DatabaseConfigParamType `json:"type"`
 }
 
 type ValkeyDatabaseConfigInfoActiveDefrag struct {
 	Description     string          `json:"description"`
 	Default         bool            `json:"default"`
 	RequiresRestart bool            `json:"requires_restart"`
-	Type            ConfigParamType `json:"type"`
+	Type            DatabaseConfigParamType `json:"type"`
 }
 
 type ValkeyDatabaseConfigInfoLFUDecayTime struct {
@@ -216,7 +216,7 @@ type ValkeyDatabaseConfigInfoLFUDecayTime struct {
 	Maximum         int             `json:"maximum"`
 	Minimum         int             `json:"minimum"`
 	RequiresRestart bool            `json:"requires_restart"`
-	Type            ConfigParamType `json:"type"`
+	Type            DatabaseConfigParamType `json:"type"`
 }
 
 type ValkeyDatabaseConfigInfoLFULogFactor struct {
@@ -225,7 +225,7 @@ type ValkeyDatabaseConfigInfoLFULogFactor struct {
 	Maximum         int             `json:"maximum"`
 	Minimum         int             `json:"minimum"`
 	RequiresRestart bool            `json:"requires_restart"`
-	Type            ConfigParamType `json:"type"`
+	Type            DatabaseConfigParamType `json:"type"`
 }
 
 type ValkeyDatabaseConfigInfoMaxmemoryPolicy struct {
@@ -233,7 +233,7 @@ type ValkeyDatabaseConfigInfoMaxmemoryPolicy struct {
 	Default         string          `json:"default"`
 	Enum            []string        `json:"enum"`
 	RequiresRestart bool            `json:"requires_restart"`
-	Type            ConfigParamType `json:"type"`
+	Type            DatabaseConfigParamType `json:"type"`
 }
 
 type ValkeyDatabaseConfigInfoNumberOfDatabases struct {
@@ -242,14 +242,14 @@ type ValkeyDatabaseConfigInfoNumberOfDatabases struct {
 	Maximum         int             `json:"maximum"`
 	Minimum         int             `json:"minimum"`
 	RequiresRestart bool            `json:"requires_restart"`
-	Type            ConfigParamType `json:"type"`
+	Type            DatabaseConfigParamType `json:"type"`
 }
 
 type ValkeyDatabaseConfigInfoPersistence struct {
 	Description     string          `json:"description"`
 	Enum            []string        `json:"enum"`
 	RequiresRestart bool            `json:"requires_restart"`
-	Type            ConfigParamType `json:"type"`
+	Type            DatabaseConfigParamType `json:"type"`
 }
 
 type ValkeyDatabaseConfigInfoPubsubClientOutputBufferLimit struct {
@@ -258,7 +258,7 @@ type ValkeyDatabaseConfigInfoPubsubClientOutputBufferLimit struct {
 	Maximum         int             `json:"maximum"`
 	Minimum         int             `json:"minimum"`
 	RequiresRestart bool            `json:"requires_restart"`
-	Type            ConfigParamType `json:"type"`
+	Type            DatabaseConfigParamType `json:"type"`
 }
 
 type ValkeyDatabaseConfigInfoTimeout struct {
@@ -267,7 +267,7 @@ type ValkeyDatabaseConfigInfoTimeout struct {
 	Maximum         int             `json:"maximum"`
 	Minimum         int             `json:"minimum"`
 	RequiresRestart bool            `json:"requires_restart"`
-	Type            ConfigParamType `json:"type"`
+	Type            DatabaseConfigParamType `json:"type"`
 }
 
 // GetValkeyDatabaseConfig returns the catalog of configuration options for Valkey databases.
