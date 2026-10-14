@@ -32,7 +32,7 @@ type ValkeyDatabase struct {
 	Updates               DatabaseMaintenanceWindow `json:"updates"`
 	Fork                  *DatabaseFork             `json:"fork"`
 	AvailableRestoreTimes []time.Time               `json:"-"`
-	UsedDiskSizeGB        int                       `json:"used_disk_size_gb"`
+	UsedDiskSizeGB        *int                      `json:"used_disk_size_gb"`
 	TotalDiskSizeGB       int                       `json:"total_disk_size_gb"`
 	Port                  int                       `json:"port"`
 

@@ -63,6 +63,37 @@ func TestUnmarshalValkeyDatabase(t *testing.T) {
 	assert.Nil(t, db.EngineConfig.BackupMinute)
 }
 
+func TestUnmarshalValkeyDatabase_UsedDiskSizeGB(t *testing.T) {
+	testCases := []struct {
+		name     string
+		payload  string
+		expected *int
+	}{
+		{name: "omitted", payload: `{}`},
+		{name: "null", payload: `{"used_disk_size_gb":null}`},
+		{name: "zero", payload: `{"used_disk_size_gb":0}`, expected: new(0)},
+		{name: "nonzero", payload: `{"used_disk_size_gb":2}`, expected: new(2)},
+	}
+
+	for _, testCase := range testCases {
+		t.Run(testCase.name, func(t *testing.T) {
+			var database linodego.ValkeyDatabase
+			if !assert.NoError(t, json.Unmarshal([]byte(testCase.payload), &database)) {
+				return
+			}
+			assert.Equal(t, testCase.expected, database.UsedDiskSizeGB)
+		})
+	}
+
+	t.Run("null clears reused value", func(t *testing.T) {
+		database := linodego.ValkeyDatabase{UsedDiskSizeGB: new(2)}
+		if !assert.NoError(t, json.Unmarshal([]byte(`{"used_disk_size_gb":null}`), &database)) {
+			return
+		}
+		assert.Nil(t, database.UsedDiskSizeGB)
+	})
+}
+
 func TestUnmarshalValkeyDatabase_EngineConfigEdgeCases(t *testing.T) {
 	data := getFixtureBytes(t, "valkey_database_unmarshal_engine_config")
 
@@ -183,7 +214,7 @@ func TestDatabaseValkey_Get(t *testing.T) {
 	assert.Equal(t, linodego.DatabaseDayOfWeek(1), db.Updates.DayOfWeek)
 	assert.Equal(t, linodego.DatabaseMaintenanceFrequency("weekly"), db.Updates.Frequency)
 	assert.Equal(t, 0, db.Updates.HourOfDay)
-	assert.Equal(t, 2, db.UsedDiskSizeGB)
+	assert.Equal(t, new(2), db.UsedDiskSizeGB)
 	assert.Equal(t, "8.1.9", db.Version)
 	assert.Equal(t, 300, *db.EngineConfig.ValkeyTimeout)
 	assert.Equal(t, "resetchannels", *db.EngineConfig.ValkeyACLChannelsDefault)
@@ -235,7 +266,7 @@ func TestDatabaseValkey_Update(t *testing.T) {
 	assert.Equal(t, linodego.DatabaseDayOfWeek(1), db.Updates.DayOfWeek)
 	assert.Equal(t, linodego.DatabaseMaintenanceFrequency("weekly"), db.Updates.Frequency)
 	assert.Equal(t, 0, db.Updates.HourOfDay)
-	assert.Equal(t, 2, db.UsedDiskSizeGB)
+	assert.Equal(t, new(2), db.UsedDiskSizeGB)
 	assert.Equal(t, "8.1.9", db.Version)
 	assert.Equal(t, 300, *db.EngineConfig.ValkeyTimeout)
 	assert.Equal(t, "resetchannels", *db.EngineConfig.ValkeyACLChannelsDefault)
@@ -288,7 +319,7 @@ func TestDatabaseValkey_Create(t *testing.T) {
 	assert.Equal(t, linodego.DatabaseDayOfWeek(1), db.Updates.DayOfWeek)
 	assert.Equal(t, linodego.DatabaseMaintenanceFrequency("weekly"), db.Updates.Frequency)
 	assert.Equal(t, 0, db.Updates.HourOfDay)
-	assert.Equal(t, 2, db.UsedDiskSizeGB)
+	assert.Equal(t, new(2), db.UsedDiskSizeGB)
 	assert.Equal(t, "8.1.9", db.Version)
 	assert.Equal(t, 300, *db.EngineConfig.ValkeyTimeout)
 	assert.Equal(t, "resetchannels", *db.EngineConfig.ValkeyACLChannelsDefault)
