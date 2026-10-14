@@ -105,7 +105,7 @@ func setupNFSFilesystem(
 	return client, space, filesystem, createOpts
 }
 
-func setupNFSFilesystemQuota(
+func setupNFSFilesystemCustomQuota(
 	t *testing.T,
 	client *linodego.Client,
 	space *linodego.NFSSpace,
@@ -172,21 +172,19 @@ func verifyNFSFilesystemAccessPolicyUpdate(
 	assert.True(t, filesystemAccPolicy.Enabled)
 	assert.Len(t, filesystemAccPolicy.LinodeACL, 1)
 	assert.Equal(t, (*opts.LinodeIDs)[0], filesystemAccPolicy.LinodeACL[0].ID)
+	assert.Equal(t, opts.SquashPolicy, linodego.Pointer(filesystemAccPolicy.SquashPolicy))
 	assertDateSet(t, filesystemAccPolicy.Updated)
 }
 
-func verifyNFSFilesystemCustomQuota(
+func verifyNFSFilesystemQuota(
 	t *testing.T,
 	quota *linodego.NFSQuota,
 	filesystem *linodego.NFSFilesystem,
-	opts linodego.NFSQuotaCreateOptions,
 ) {
 	assert.Equal(t, filesystem.ID, quota.FilesystemID)
-	assert.Equal(t, opts.Path, quota.Path)
-	assert.Equal(t, opts.MaxFileCount, *quota.MaxFileCount)
-	assert.Equal(t, opts.MaxCapacityBytes, *quota.MaxCapacityBytes)
+	assert.Equal(t, filesystem.MaxFileCount, *quota.MaxFileCount)
+	assert.Equal(t, filesystem.MaxCapacityBytes, *quota.MaxCapacityBytes)
 	assert.Equal(t, linodego.NFSQuotaStatusActive, quota.Status)
-	assert.False(t, quota.IsRoot)
 	assertDateSet(t, quota.Created)
 	assertDateSet(t, quota.Updated)
 }
@@ -252,11 +250,10 @@ func TestNFSFilesystem_Update(t *testing.T) {
 }
 
 func TestNFSFilesystem_GetAccessPolicy_smoke(t *testing.T) {
-	t.Skip("Access Policy seems to not be fully developed yet")
 	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_GetAccessPolicy", false)
 
 	filesystemAccPolicy, err := client.GetNFSFilesystemAccessPolicy(context.Background(), space.ID, filesystem.ID)
-	require.NoErrorf(t, err, "Error getting NFS Filesystem Access Policy: %v", err)
+	require.NoErrorf(t, err, "Error retrieving NFS Filesystem Access Policy: %v", err)
 	assert.Equal(t, filesystem.ID, filesystemAccPolicy.FilesystemID)
 	assert.Equal(t, filesystem.Label, filesystemAccPolicy.Label)
 	assert.False(t, filesystemAccPolicy.Enabled)
@@ -270,22 +267,31 @@ func TestNFSFilesystem_GetAccessPolicy_smoke(t *testing.T) {
 }
 
 func TestNFSFilesystem_UpdateAccessPolicy(t *testing.T) {
-	t.Skip("Access Policy seems to not be fully developed yet")
 	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_UpdateAccessPolicy", false)
 
-	linode, _, linodeTeardown, err := createInstanceWithoutDisks(
+	linode, err := createInstance(
 		t,
 		client,
 		true,
 		func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
 			opts.Region = filesystem.Region
-		})
+			opts.Booted = linodego.Pointer(true)
+		},
+	)
 	require.NoErrorf(t, err, "Error creating Linode for NFS Filesystem Access Policy: %v", err)
-	t.Cleanup(linodeTeardown)
+
+	t.Cleanup(func() {
+		if err := client.DeleteInstance(context.Background(), linode.ID); err != nil {
+			if t != nil {
+				t.Errorf("Error deleting Linode instance: %s", err)
+			}
+		}
+	})
 
 	updateOpts := linodego.NFSFilesystemAccessPolicyUpdateOptions{
-		Enabled:   linodego.Pointer(true),
-		LinodeIDs: linodego.Pointer([]int{linode.ID}),
+		Enabled:      linodego.Pointer(true),
+		LinodeIDs:    linodego.Pointer([]int{linode.ID}),
+		SquashPolicy: linodego.Pointer(linodego.NFSSquashPolicyAllSquash),
 	}
 
 	filesystemAccPolicyUpdate, err := client.UpdateNFSFilesystemAccessPolicy(
@@ -312,25 +318,42 @@ func TestNFSFilesystem_UpdateAccessPolicy(t *testing.T) {
 	verifyNFSFilesystemAccessPolicyUpdate(t, filesystemAccPolicyGet, updateOpts)
 }
 
-func TestNFSFilesystem_CreateCustomQuota_smoke(t *testing.T) {
-	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_CreateCustomQuota", true)
+func TestNFSFilesystem_GetRootQuota_smoke(t *testing.T) {
+	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_GetRootQuota_smoke", true)
 
 	filesystem, err := client.GetNFSFilesystemInSpace(context.Background(), space.ID, filesystem.ID)
 	require.NoErrorf(t, err, "Error retrieving NFS Filesystem in Space: %v", err)
 
-	quota, createOpts := setupNFSFilesystemQuota(t, client, space, filesystem)
-	verifyNFSFilesystemCustomQuota(t, quota, filesystem, createOpts)
+	_, mountDir, isFound := strings.Cut(*filesystem.MountTargetFQDN, ":/")
+	require.True(t, isFound, "Mount Target FQDN does not contain ':/'")
+
+	quotas, err := client.ListNFSQuotas(context.Background(), space.ID, filesystem.ID, nil)
+	require.NoErrorf(t, err, "Error listing Filesystem Quotas: %v", err)
+	assert.Len(t, quotas, 1)
+	assert.Contains(t, quotas[0].Path, mountDir)
+	assert.True(t, quotas[0].IsRoot)
+	verifyNFSFilesystemQuota(t, linodego.Pointer(quotas[0]), filesystem)
 }
 
-func TestNFSFilesystem_GetCustomQuota(t *testing.T) {
-	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_GetCustomQuota", true)
+func TestNFSFilesystem_ManageCustomQuota(t *testing.T) {
+	t.Skip("Removal of Filesystem with custom Quota requires manual action on mounted Linode instance")
+	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_ManageCustomQuota", true)
 
 	filesystem, err := client.GetNFSFilesystemInSpace(context.Background(), space.ID, filesystem.ID)
 	require.NoErrorf(t, err, "Error retrieving NFS Filesystem in Space: %v", err)
 
-	quota, createOpts := setupNFSFilesystemQuota(t, client, space, filesystem)
+	quota, createOpts := setupNFSFilesystemCustomQuota(t, client, space, filesystem)
+	assert.Equal(t, createOpts.Path, quota.Path)
+	assert.False(t, quota.IsRoot)
+	verifyNFSFilesystemQuota(t, quota, filesystem)
 
 	quota, err = client.GetNFSQuota(context.Background(), space.ID, filesystem.ID, quota.ID)
 	require.NoErrorf(t, err, "Error retrieving Filesystem Quota: %v", err)
-	verifyNFSFilesystemCustomQuota(t, quota, filesystem, createOpts)
+	assert.Equal(t, createOpts.Path, quota.Path)
+	assert.False(t, quota.IsRoot)
+	verifyNFSFilesystemQuota(t, quota, filesystem)
+
+	quotas, err := client.ListNFSQuotas(context.Background(), space.ID, filesystem.ID, nil)
+	require.NoErrorf(t, err, "Error listing Filesystem Quotas: %v", err)
+	assert.Len(t, quotas, 2)
 }
