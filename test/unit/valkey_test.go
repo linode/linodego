@@ -106,8 +106,8 @@ func TestUnmarshalValkeyDatabase_EngineConfigEdgeCases(t *testing.T) {
 	assert.Nil(t, db.PrivateNetwork)
 
 	cfg := db.EngineConfig
-	assert.Equal(t, 3, *cfg.BackupHour)
-	assert.Equal(t, 30, *cfg.BackupMinute)
+	assert.Equal(t, 3, **cfg.BackupHour)
+	assert.Equal(t, 30, **cfg.BackupMinute)
 	assert.False(t, *cfg.FrequentSnapshots)
 	assert.Equal(t, "resetchannels", *cfg.ValkeyACLChannelsDefault)
 	assert.Equal(t, 5, *cfg.ValkeyActiveExpireEffort)
@@ -587,4 +587,78 @@ func TestMarshalValkeyUpdateOptions_ExplicitZeroValues(t *testing.T) {
 	assert.Equal(t, "", m["type"])
 	assert.Equal(t, float64(0), m["cluster_size"])
 	assert.Equal(t, "", m["version"])
+}
+
+func TestMarshalValkeyUpdateOptions_NullableBackupFields(t *testing.T) {
+	var nullInt *int
+	nullIntPointer := &nullInt
+
+	testCases := []struct {
+		name         string
+		engineConfig *linodego.ValkeyDatabaseEngineConfig
+		expectedJSON string
+	}{
+		{
+			name:         "backup hour omitted",
+			engineConfig: &linodego.ValkeyDatabaseEngineConfig{},
+			expectedJSON: `{"engine_config":{}}`,
+		},
+		{
+			name: "backup hour null",
+			engineConfig: &linodego.ValkeyDatabaseEngineConfig{
+				BackupHour: nullIntPointer,
+			},
+			expectedJSON: `{"engine_config":{"backup_hour":null}}`,
+		},
+		{
+			name: "backup hour zero",
+			engineConfig: &linodego.ValkeyDatabaseEngineConfig{
+				BackupHour: new(new(0)),
+			},
+			expectedJSON: `{"engine_config":{"backup_hour":0}}`,
+		},
+		{
+			name: "backup hour nonzero",
+			engineConfig: &linodego.ValkeyDatabaseEngineConfig{
+				BackupHour: new(new(3)),
+			},
+			expectedJSON: `{"engine_config":{"backup_hour":3}}`,
+		},
+		{
+			name:         "backup minute omitted",
+			engineConfig: &linodego.ValkeyDatabaseEngineConfig{},
+			expectedJSON: `{"engine_config":{}}`,
+		},
+		{
+			name: "backup minute null",
+			engineConfig: &linodego.ValkeyDatabaseEngineConfig{
+				BackupMinute: nullIntPointer,
+			},
+			expectedJSON: `{"engine_config":{"backup_minute":null}}`,
+		},
+		{
+			name: "backup minute zero",
+			engineConfig: &linodego.ValkeyDatabaseEngineConfig{
+				BackupMinute: new(new(0)),
+			},
+			expectedJSON: `{"engine_config":{"backup_minute":0}}`,
+		},
+		{
+			name: "backup minute nonzero",
+			engineConfig: &linodego.ValkeyDatabaseEngineConfig{
+				BackupMinute: new(new(30)),
+			},
+			expectedJSON: `{"engine_config":{"backup_minute":30}}`,
+		},
+	}
+
+	for _, testCase := range testCases {
+		t.Run(testCase.name, func(t *testing.T) {
+			data, err := json.Marshal(linodego.ValkeyUpdateOptions{
+				EngineConfig: testCase.engineConfig,
+			})
+			assert.NoError(t, err)
+			assert.JSONEq(t, testCase.expectedJSON, string(data))
+		})
+	}
 }

@@ -41,8 +41,8 @@ type ValkeyDatabase struct {
 }
 
 type ValkeyDatabaseEngineConfig struct {
-	BackupHour                          *int     `json:"backup_hour,omitzero"`
-	BackupMinute                        *int     `json:"backup_minute,omitzero"`
+	BackupHour                          **int    `json:"backup_hour,omitzero"`
+	BackupMinute                        **int    `json:"backup_minute,omitzero"`
 	FrequentSnapshots                   *bool    `json:"frequent_snapshots,omitzero"`
 	ValkeyACLChannelsDefault            *string  `json:"valkey_acl_channels_default,omitzero"`
 	ValkeyActiveExpireEffort            *int     `json:"valkey_active_expire_effort,omitzero"`
