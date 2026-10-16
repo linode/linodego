@@ -40,6 +40,8 @@ const (
 	StreamDestinationTypeAkamaiObjectStorage StreamDestinationType = "akamai_object_storage"
 	// StreamDestinationTypeCustomHTTPS sends logs to a custom HTTPS endpoint.
 	StreamDestinationTypeCustomHTTPS StreamDestinationType = "custom_https"
+	// StreamDestinationTypeTrafficPeak sends logs to a TrafficPeak destination.
+	StreamDestinationTypeTrafficPeak StreamDestinationType = "traffic_peak"
 )
 
 // StreamDetails contains additional details for a logs stream.
