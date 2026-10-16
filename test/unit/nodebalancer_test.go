@@ -45,7 +45,7 @@ func TestNodeBalancer_Create(t *testing.T) {
 				Region:              "us-east",
 				Tags:                []string{"test", "example"},
 				Type:                linodego.NBTypePremium,
-				BackendConnectivity: linodego.Pointer(linodego.NBBackendConnectivityIPv6),
+				BackendConnectivity: new(linodego.NBBackendConnectivityIPv6),
 			},
 			fixture:    "nodebalancer_create_with_backend_connectivity",
 			expectIPv4: "192.0.2.3",
