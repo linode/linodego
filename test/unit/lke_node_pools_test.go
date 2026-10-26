@@ -241,7 +241,7 @@ func TestLKENodePoolRDMA_Create(t *testing.T) {
 
 	createOptions := linodego.LKENodePoolCreateOptions{
 		Count:          6,
-		Type:           "g3-gpu-rtxpro6000-blackwell-rdma-8",
+		Type:           "g3-gpu-rtxpro6000-blackwell-rdma-2",
 		K8sVersion:     linodego.Pointer("v1.31.8+lke3"),
 		UpdateStrategy: linodego.Pointer(linodego.LKENodePoolRollingUpdate),
 		Label:          linodego.Pointer("rdma-pool"),
@@ -259,7 +259,7 @@ func TestLKENodePoolRDMA_Create(t *testing.T) {
 
 	nodePool, err := base.Client.CreateLKENodePool(context.Background(), 123, createOptions)
 	assert.NoError(t, err)
-	assert.Equal(t, "g3-gpu-rtxpro6000-blackwell-rdma-8", nodePool.Type)
+	assert.Equal(t, "g3-gpu-rtxpro6000-blackwell-rdma-2", nodePool.Type)
 	assert.Equal(t, 6, nodePool.Count)
 	if assert.NotNil(t, nodePool.Networking) {
 		ifaces := nodePool.Networking.Interfaces
@@ -288,7 +288,7 @@ func TestLKENodePoolRDMA_Get(t *testing.T) {
 	nodePool, err := base.Client.GetLKENodePool(context.Background(), 123, 99001)
 	assert.NoError(t, err)
 	assert.Equal(t, 99001, nodePool.ID)
-	assert.Equal(t, "g3-gpu-rtxpro6000-blackwell-rdma-8", nodePool.Type)
+	assert.Equal(t, "g3-gpu-rtxpro6000-blackwell-rdma-2", nodePool.Type)
 	if assert.NotNil(t, nodePool.Networking) {
 		ifaces := nodePool.Networking.Interfaces
 		assert.Len(t, ifaces, 3)
