@@ -2,6 +2,7 @@ package unit
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"testing"
 
@@ -43,6 +44,8 @@ func TestInstances_List(t *testing.T) {
 	require.NotNil(t, linode.PlacementGroup.MigratingTo)
 	assert.Equal(t, 2468, *linode.PlacementGroup.MigratingTo)
 	assert.Equal(t, "linode/migrate", linode.MaintenancePolicy)
+	assert.Equal(t, []int{123, 456}, linode.Alerts.SystemAlerts)
+	assert.Equal(t, []int{555}, linode.Alerts.UserAlerts)
 }
 
 func TestInstance_Get(t *testing.T) {
@@ -76,6 +79,8 @@ func TestInstance_Get(t *testing.T) {
 	assert.Equal(t, "linode/migrate", instance.MaintenancePolicy)
 	require.NotNil(t, instance.PlacementGroup.MigratingTo)
 	assert.Equal(t, 2468, *instance.PlacementGroup.MigratingTo)
+	assert.Equal(t, []int{123, 456}, instance.Alerts.SystemAlerts)
+	assert.Equal(t, []int{555}, instance.Alerts.UserAlerts)
 }
 
 func TestInstance_Migrate(t *testing.T) {
@@ -160,6 +165,10 @@ func TestInstance_Create(t *testing.T) {
 		MaintenancePolicy: linodego.Pointer("linode/migrate"),
 		Kernel:            linodego.Pointer("linode/6.15.7-x86_64-linode169"),
 		BootSize:          linodego.Pointer(9000),
+		Alerts: &linodego.InstanceACLPAlertsOptions{
+			SystemAlerts: []int{123, 456},
+			UserAlerts:   []int{555},
+		},
 	}
 
 	httpmock.RegisterRegexpResponder(
@@ -172,6 +181,8 @@ func TestInstance_Create(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "new-instance", instance.Label)
 	assert.Equal(t, "linode/migrate", instance.MaintenancePolicy)
+	assert.Equal(t, []int{123, 456}, instance.Alerts.SystemAlerts)
+	assert.Equal(t, []int{555}, instance.Alerts.UserAlerts)
 }
 
 func TestInstance_Update(t *testing.T) {
@@ -185,6 +196,10 @@ func TestInstance_Update(t *testing.T) {
 	updateOptions := linodego.InstanceUpdateOptions{
 		Label:             "updated-instance",
 		MaintenancePolicy: linodego.Pointer("linode/power_off_on"),
+		Alerts: &linodego.InstanceAlert{
+			SystemAlerts: []int{123, 456},
+			UserAlerts:   []int{555},
+		},
 	}
 
 	base.MockPut("linode/instances/123", fixtureData)
@@ -193,6 +208,8 @@ func TestInstance_Update(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "updated-instance", instance.Label)
 	assert.Equal(t, "linode/power_off_on", instance.MaintenancePolicy)
+	assert.Equal(t, []int{123, 456}, instance.Alerts.SystemAlerts)
+	assert.Equal(t, []int{555}, instance.Alerts.UserAlerts)
 }
 
 func TestInstance_Delete(t *testing.T) {
@@ -244,6 +261,10 @@ func TestInstance_Clone(t *testing.T) {
 		Region: "us-east",
 		Type:   "g6-standard-1",
 		Label:  "cloned-instance",
+		Alerts: &linodego.InstanceACLPAlertsOptions{
+			SystemAlerts: []int{123, 456},
+			UserAlerts:   []int{555},
+		},
 	}
 
 	base.MockPost("linode/instances/123/clone", fixtureData)
@@ -252,6 +273,8 @@ func TestInstance_Clone(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, "cloned-instance", instance.Label)
 	assert.Equal(t, "linode/migrate", instance.MaintenancePolicy)
+	assert.Equal(t, []int{123, 456}, instance.Alerts.SystemAlerts)
+	assert.Equal(t, []int{555}, instance.Alerts.UserAlerts)
 }
 
 func TestInstance_Resize(t *testing.T) {
@@ -304,6 +327,24 @@ func TestInstance_Rebuild(t *testing.T) {
 	instance, err := base.Client.RebuildInstance(context.Background(), 123, rebuildOptions)
 	assert.NoError(t, err)
 	assert.Equal(t, "linode/ubuntu22.04", instance.Image)
+}
+
+func TestInstanceACLPAlerts_MarshalEmptyList(t *testing.T) {
+	opts := linodego.InstanceACLPAlertsOptions{
+		SystemAlerts: []int{},
+		UserAlerts:   []int{},
+	}
+
+	buf, err := json.Marshal(opts)
+	if err != nil {
+		t.Fatalf("failed to marshal options: %v", err)
+	}
+
+	// The goal of omitzero here is to ensure empty list is present
+	expected := `{"system_alerts":[],"user_alerts":[]}`
+	if string(buf) != expected {
+		t.Errorf("expected JSON %s, got %s", expected, string(buf))
+	}
 }
 
 func TestCreateInstance_IPv4ReservedIPs(t *testing.T) {
