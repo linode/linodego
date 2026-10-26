@@ -117,7 +117,7 @@ type LKENodePool struct {
 	Isolation *LKENodePoolIsolation `json:"isolation"`
 
 	// Networking holds the effective VPC-backed interface configuration for LKE Enterprise node pools.
-	// It is read-only after creation; the value is sourced from lke-api-service.
+	// It is read-only after creation.
 	Networking *LKENodePoolNetworking `json:"networking,omitzero"`
 
 	// K8sVersion and UpdateStrategy are only for LKE Enterprise to support node pool upgrades.
