@@ -49,6 +49,7 @@ const (
 	CapabilityObjectStorageAccessKeyRegions    RegionCapability = "Object Storage Access Key Regions"
 	CapabilityObjectStorageEndpointTypes       RegionCapability = "Object Storage Endpoint Types"
 	CapabilityPlacementGroup                   RegionCapability = "Placement Group"
+	CapabilityPremiumNodeBalancer              RegionCapability = "Premium NodeBalancers"
 	CapabilityPremiumPlans                     RegionCapability = "Premium Plans"
 	CapabilityQuadraT1UVPU                     RegionCapability = "NETINT Quadra T1U"
 	CapabilitySMTPEnabled                      RegionCapability = "SMTP Enabled"

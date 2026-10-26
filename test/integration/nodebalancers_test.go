@@ -58,6 +58,23 @@ func TestNodeBalancer_Create_Type(t *testing.T) {
 	assertDateSet(t, nodebalancer.Updated)
 }
 
+func TestNodeBalancer_Create_BackendConnectivity_Common(t *testing.T) {
+	_, nodebalancer, teardown, err := setupNodeBalancer(
+		t,
+		"fixtures/TestNodeBalancer_Create_BackendConnectivity_Common",
+		[]nbModifier{func(createOpts *linodego.NodeBalancerCreateOptions) {
+			createOpts.Type = linodego.NBTypeCommon
+			createOpts.BackendConnectivity = new(linodego.NBBackendConnectivityIPv6)
+		}},
+	)
+	t.Cleanup(teardown)
+
+	require.NoError(t, err)
+	require.NotNil(t, nodebalancer.BackendConnectivity)
+	require.Equal(t, linodego.NBBackendConnectivityIPv6, *nodebalancer.BackendConnectivity)
+	require.NotNil(t, nodebalancer.BackendIPv6Prefix)
+}
+
 func TestNodeBalancer_Create_with_ReservedIP(t *testing.T) {
 	_, reserveIP, nodebalancer, teardown, err := setupNodeBalancerWithReservedIP(t, "fixtures/TestNodeBalancer_With_ReservedIP_Create")
 	defer teardown()
