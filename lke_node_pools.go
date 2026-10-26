@@ -147,6 +147,7 @@ type LKENodePoolCreateOptions struct {
 
 	// Networking configures the ordered set of VPC-backed interfaces for LKE Enterprise node pools.
 	// Accepted only at creation time; immutable after the pool is created.
+	// NOTE: Networking may not currently be available to all users and can only be used with v4beta.
 	Networking *LKENodePoolNetworking `json:"networking,omitzero"`
 
 	// K8sVersion and UpdateStrategy only works for LKE Enterprise to support node pool upgrades.
