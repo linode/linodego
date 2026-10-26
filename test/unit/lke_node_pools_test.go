@@ -231,6 +231,73 @@ func TestLKEEnterpriseNodePool_Create(t *testing.T) {
 	assert.Equal(t, 12345, *nodePool.FirewallID)
 }
 
+func TestLKENodePoolRDMA_Create(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("lke_node_pool_rdma_create")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	createOptions := linodego.LKENodePoolCreateOptions{
+		Count:          6,
+		Type:           "g3-gpu-rtxpro6000-blackwell-rdma-8",
+		K8sVersion:     linodego.Pointer("v1.31.8+lke3"),
+		UpdateStrategy: linodego.Pointer(linodego.LKENodePoolRollingUpdate),
+		Label:          linodego.Pointer("rdma-pool"),
+		FirewallID:     linodego.Pointer(12345),
+		Networking: &linodego.LKENodePoolNetworking{
+			Interfaces: []linodego.LKENodePoolInterface{
+				{Type: linodego.LKENodePoolInterfaceTypeVPC, VPCID: 10001, SubnetID: 20001},
+				{Type: linodego.LKENodePoolInterfaceTypeRDMAVPC, VPCID: 12345, SubnetID: 45678},
+				{Type: linodego.LKENodePoolInterfaceTypeRDMAVPC, VPCID: 12345, SubnetID: 91012},
+			},
+		},
+	}
+
+	base.MockPost("lke/clusters/123/pools", fixtureData)
+
+	nodePool, err := base.Client.CreateLKENodePool(context.Background(), 123, createOptions)
+	assert.NoError(t, err)
+	assert.Equal(t, "g3-gpu-rtxpro6000-blackwell-rdma-8", nodePool.Type)
+	assert.Equal(t, 6, nodePool.Count)
+	if assert.NotNil(t, nodePool.Networking) {
+		ifaces := nodePool.Networking.Interfaces
+		assert.Len(t, ifaces, 3)
+		assert.Equal(t, linodego.LKENodePoolInterfaceTypeVPC, ifaces[0].Type)
+		assert.Equal(t, 10001, ifaces[0].VPCID)
+		assert.Equal(t, 20001, ifaces[0].SubnetID)
+		assert.Equal(t, linodego.LKENodePoolInterfaceTypeRDMAVPC, ifaces[1].Type)
+		assert.Equal(t, 12345, ifaces[1].VPCID)
+		assert.Equal(t, 45678, ifaces[1].SubnetID)
+		assert.Equal(t, linodego.LKENodePoolInterfaceTypeRDMAVPC, ifaces[2].Type)
+		assert.Equal(t, 91012, ifaces[2].SubnetID)
+	}
+}
+
+func TestLKENodePoolRDMA_Get(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("lke_node_pool_rdma_get")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockGet("lke/clusters/123/pools/99001", fixtureData)
+
+	nodePool, err := base.Client.GetLKENodePool(context.Background(), 123, 99001)
+	assert.NoError(t, err)
+	assert.Equal(t, 99001, nodePool.ID)
+	assert.Equal(t, "g3-gpu-rtxpro6000-blackwell-rdma-8", nodePool.Type)
+	if assert.NotNil(t, nodePool.Networking) {
+		ifaces := nodePool.Networking.Interfaces
+		assert.Len(t, ifaces, 3)
+		assert.Equal(t, linodego.LKENodePoolInterfaceTypeVPC, ifaces[0].Type)
+		assert.Equal(t, linodego.LKENodePoolInterfaceTypeRDMAVPC, ifaces[1].Type)
+		assert.Equal(t, linodego.LKENodePoolInterfaceTypeRDMAVPC, ifaces[2].Type)
+	}
+}
+
 func TestLKEEnterpriseNodePool_Update(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("lke_e_node_pool_update")
 	assert.NoError(t, err)

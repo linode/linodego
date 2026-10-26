@@ -1,0 +1,38 @@
+{
+  "id": 99001,
+  "count": 6,
+  "type": "g3-gpu-rtxpro6000-blackwell-rdma-8",
+  "label": "rdma-pool",
+  "disks": [],
+  "tags": [],
+  "labels": {},
+  "taints": [],
+  "autoscaler": {
+    "enabled": true,
+    "min": 3,
+    "max": 12
+  },
+  "disk_encryption": "enabled",
+  "k8s_version": "v1.31.8+lke3",
+  "update_strategy": "rolling_update",
+  "firewall_id": 12345,
+  "networking": {
+    "interfaces": [
+      {
+        "type": "vpc",
+        "vpc_id": 10001,
+        "subnet_id": 20001
+      },
+      {
+        "type": "rdma_vpc",
+        "vpc_id": 12345,
+        "subnet_id": 45678
+      },
+      {
+        "type": "rdma_vpc",
+        "vpc_id": 12345,
+        "subnet_id": 91012
+      }
+    ]
+  }
+}
