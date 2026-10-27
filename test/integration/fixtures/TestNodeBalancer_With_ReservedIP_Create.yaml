@@ -14,10 +14,10 @@ interactions:
     url: https://api.linode.com/v4beta/networking/reserved/ips
     method: POST
   response:
-    body: '{"address": "192.0.2.0", "gateway": "66.228.41.1", "subnet_mask": "255.255.255.0",
-      "prefix": 24, "type": "ipv4", "public": true, "rdns": null, "linode_id": null,
-      "interface_id": null, "region": "us-east", "vpc_nat_1_1": null, "reserved":
-      true, "assigned_entity": null}'
+    body: '{"address": "192.0.2.0", "gateway": "69.164.213.1", "subnet_mask":
+      "255.255.255.0", "prefix": 24, "type": "ipv4", "public": true, "rdns": null,
+      "linode_id": null, "interface_id": null, "region": "us-east", "vpc_nat_1_1":
+      null, "reserved": true, "assigned_entity": null, "tags": []}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -36,13 +36,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "272"
+      - "286"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 22 Aug 2025 23:10:56 GMT
+      - Tue, 27 Oct 2026 09:17:06 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -66,7 +66,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-def","region":"us-east","client_conn_throttle":20,"tags":null,"firewall_id":3123607,"ipv4":"192.0.2.0"}'
+    body: '{"label":"go-test-def1793092502868758000","region":"us-east","client_conn_throttle":20,"tags":null,"firewall_id":224972737,"ipv4":"192.0.2.0"}'
     form: {}
     headers:
       Accept:
@@ -78,12 +78,13 @@ interactions:
     url: https://api.linode.com/v4beta/nodebalancers
     method: POST
   response:
-    body: '{"id": 1774425, "label": "go-test-def", "region": "us-east", "type": "common",
-      "hostname":"thisIsYourHostName", "ipv4": "192.0.2.0",
-      "ipv6": "1234::5678", "created": "2018-01-02T03:04:05", "updated":
-      "2018-01-02T03:04:05", "client_conn_throttle": 20, "client_udp_sess_throttle":
-      0, "lke_cluster": null, "tags": [], "transfer": {"in": null, "out": null, "total":
-      null}}'
+    body: '{"id": 2553468, "label": "go-test-def1793092502868758000", "region": "us-east",
+      "type": "common", "backend_connectivity": "undefined", "hostname":"thisIsYourHostName",
+      "ipv4": "192.0.2.0", "ipv6": "1234::5678", "backend_ipv6_prefix":
+      "1234::5678/96", "frontend_address_type": "public", "frontend_vpc_subnet_id":
+      null, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05", "client_conn_throttle":
+      20, "client_udp_sess_throttle": 0, "lke_cluster": null, "tags": [], "locks":
+      [], "transfer": {"in": null, "out": null, "total": null}}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -102,13 +103,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "405"
+      - "597"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 22 Aug 2025 23:10:57 GMT
+      - Tue, 27 Oct 2026 09:17:06 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -141,7 +142,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nodebalancers/1774425
+    url: https://api.linode.com/v4beta/nodebalancers/2553468
     method: DELETE
   response:
     body: '{}'
@@ -169,7 +170,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 22 Aug 2025 23:10:58 GMT
+      - Tue, 27 Oct 2026 09:17:07 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -230,7 +231,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Fri, 22 Aug 2025 23:10:58 GMT
+      - Tue, 27 Oct 2026 09:17:07 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
