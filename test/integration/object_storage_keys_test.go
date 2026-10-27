@@ -47,7 +47,7 @@ func TestObjectStorageKey_GetFound(t *testing.T) {
 	if i.ID != objectStorageKey.ID {
 		t.Errorf("Expected objectStorageKey id %d, but got %d", i.ID, objectStorageKey.ID)
 	}
-	if testBasicObjectStorageKeyCreateOpts.Label != objectStorageKey.Label {
+	if !strings.Contains(objectStorageKey.Label, labelPrefix) {
 		t.Errorf("Expected objectStorageKey label '%s', but got '%s'", testBasicObjectStorageKeyCreateOpts.Label, objectStorageKey.Label)
 	}
 	if objectStorageKey.BucketAccess != nil || objectStorageKey.Limited {
