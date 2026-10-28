@@ -2,9 +2,11 @@ package integration
 
 import (
 	"context"
+	"strings"
 	"testing"
 
 	"github.com/linode/linodego/v2"
+	"github.com/stretchr/testify/require"
 )
 
 var testDomainCreateOpts = linodego.DomainCreateOptions{
@@ -114,21 +116,22 @@ func TestDomain_Clone_smoke(t *testing.T) {
 		t.Errorf("Error creating domain: %v", err)
 	}
 
+	domainPrefix, topLevelDomain, found := strings.Cut(domainToClone.Domain, "-test")
+	require.True(t, found)
+
 	domain, err := client.CloneDomain(context.Background(), domainToClone.ID, linodego.DomainCloneOptions{
-		Domain: "linodego-domain-clone.com",
+		Domain: domainPrefix + "-test-cloned" + topLevelDomain,
 	})
 	if err != nil {
 		t.Errorf("Error cloning domain, expected struct, got error %v", err)
 	}
 
-	cloneTeardown := func() {
+	t.Cleanup(func() {
 		if err := client.DeleteDomain(context.Background(), domain.ID); err != nil {
 			t.Errorf("Expected to delete a domain, but got %v", err)
 		}
 		teardown()
-	}
-
-	defer cloneTeardown()
+	})
 
 	// when comparing fixtures to random value Domain will differ
 	if domain.SOAEmail != domainToClone.SOAEmail {
