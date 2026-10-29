@@ -32,7 +32,7 @@ jobs:
           persist-credentials: false
 
       - name: Run Gosec Security Scanner on root directory
-        uses: securego/gosec@master
+        uses: securego/gosec@v2.30.0
         with:
           # We need to temporarily exclude this as gosec doesn't
           # support using module files from subdirectories.
