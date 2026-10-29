@@ -4,6 +4,7 @@
 [![Release](https://img.shields.io/github/v/release/linode/linodego)](https://github.com/linode/linodego/releases/latest)
 [![GoDoc](https://godoc.org/github.com/linode/linodego/v2?status.svg)](https://godoc.org/github.com/linode/linodego/v2)
 [![Go Report Card](https://goreportcard.com/badge/github.com/linode/linodego/v2)](https://goreportcard.com/report/github.com/linode/linodego/v2)
+[![Plumber Score](https://score.getplumber.io/github.com/linode/linodego.svg)](https://score.getplumber.io/github.com/linode/linodego)
 
 Go client for [Linode REST v4 API](https://techdocs.akamai.com/linode-api/reference/api)
 
