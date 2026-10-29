@@ -50,6 +50,7 @@ jobs:
       - name: Checkout PR
         uses: actions/checkout@v7
         with:
+          persist-credentials: false
           ref: ${{ inputs.sha }}
 
       - run: make ARGS="-run $MODULE" fixtures
@@ -127,6 +128,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v7
         with:
+          persist-credentials: false
           fetch-depth: 0
           submodules: 'recursive'
 

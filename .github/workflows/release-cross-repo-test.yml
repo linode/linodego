@@ -13,6 +13,7 @@ jobs:
       - name: checkout terraform repo
         uses: actions/checkout@v7
         with:
+          persist-credentials: false
           repository: linode/terraform-provider-linode
           fetch-depth: 0
           submodules: 'recursive'
@@ -27,6 +28,7 @@ jobs:
       - name: Clone Repository
         uses: actions/checkout@v7
         with:
+            persist-credentials: false
             path: linodego
 
       - name: Set up linodego

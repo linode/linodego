@@ -26,6 +26,8 @@ jobs:
       -
         name: Checkout
         uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       -
         name: Run Labeler
         uses: crazy-max/ghaction-github-labeler@548a7c3603594ec17c819e1239f281a3b801ab4d
