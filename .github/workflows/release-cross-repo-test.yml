@@ -3,6 +3,9 @@ name: Release Terraform cross repository test
 on:
   workflow_dispatch: # Manual trigger
 
+permissions:
+  contents: read
+
 jobs:
   terraform_integration_test:
     runs-on: ubuntu-latest

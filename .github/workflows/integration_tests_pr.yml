@@ -22,8 +22,16 @@ on:
 
 name: Integration tests on PR
 
+permissions:
+  contents: read
+
 jobs:
   integration-fork:
+    permissions:
+      contents: read
+      # Reads the pull request head and updates this job's check run.
+      pull-requests: read
+      checks: write
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch' && inputs.sha != ''
     steps:

@@ -12,8 +12,15 @@ on:
       - '.github/labels.yml'
       - '.github/workflows/labeler.yml'
 
+permissions:
+  contents: read
+
 jobs:
   labeler:
+    permissions:
+      contents: read
+      # Label sync creates and updates the repository labels.
+      issues: write
     runs-on: ubuntu-latest
     steps:
       -

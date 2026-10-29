@@ -2,6 +2,9 @@ name: Security Checks for Pull Requests
 on:
   pull_request: null
 
+permissions:
+  contents: read
+
 jobs:
   dependency-review:
     permissions:

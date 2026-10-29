@@ -11,6 +11,9 @@ on:
         default: ''
         type: string
 
+permissions:
+  contents: read
+
 jobs:
   smoke_tests:
     if: github.repository == 'linode/linodego' || github.event_name == 'workflow_dispatch'

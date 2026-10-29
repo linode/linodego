@@ -24,6 +24,9 @@ on:
       - main
   pull_request: null
 
+permissions:
+  contents: read
+
 jobs:
   lint-tidy:
     runs-on: ubuntu-latest
