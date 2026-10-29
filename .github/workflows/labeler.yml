@@ -25,12 +25,12 @@ jobs:
     steps:
       -
         name: Checkout
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
       -
         name: Run Labeler
-        uses: crazy-max/ghaction-github-labeler@548a7c3603594ec17c819e1239f281a3b801ab4d
+        uses: crazy-max/ghaction-github-labeler@v6.0.0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           yaml-file: .github/labels.yml

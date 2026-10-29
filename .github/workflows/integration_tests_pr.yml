@@ -35,11 +35,11 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event_name == 'workflow_dispatch' && inputs.sha != ''
     steps:
-      - uses: actions/setup-go@v7
+      - uses: actions/setup-go@v7.0.0
         with:
           go-version: 'stable'
       - run: go version
-      - uses: actions-ecosystem/action-regex-match@v2
+      - uses: actions-ecosystem/action-regex-match@v2.0.2
         id: disallowed-char-check
         with:
           text: ${{ inputs.module }}
@@ -48,7 +48,7 @@ jobs:
 
       # Check out merge commit
       - name: Checkout PR
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
           ref: ${{ inputs.sha }}
@@ -91,7 +91,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/github-script@v9
+      - uses: actions/github-script@v9.0.0
         id: update-check-run
         if: ${{ inputs.pull_request_number != '' && fromJson(steps.commit-hash.outputs.data).repository.pullRequest.headRef.target.oid == inputs.sha }}
         env:
@@ -126,7 +126,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
           fetch-depth: 0
@@ -153,7 +153,7 @@ jobs:
 
     steps:
       - name: Set up Python
-        uses: actions/setup-python@v7
+        uses: actions/setup-python@v7.1.0
         with:
           python-version: '3.x'
 

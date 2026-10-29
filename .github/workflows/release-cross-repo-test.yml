@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: checkout terraform repo
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
           repository: linode/terraform-provider-linode
@@ -19,14 +19,14 @@ jobs:
           submodules: 'recursive'
 
       - name: Set up Go
-        uses: actions/setup-go@v7
+        uses: actions/setup-go@v7.0.0
         with:
           go-version: 'stable'
       - run: go version
       - run: make deps
 
       - name: Clone Repository
-        uses: actions/checkout@v7
+        uses: actions/checkout@v7.0.1
         with:
             persist-credentials: false
             path: linodego
