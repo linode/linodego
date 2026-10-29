@@ -53,28 +53,21 @@ func TestInterface_List(t *testing.T) {
 		t.Fatalf("Error fetching interfaces: %v", err)
 	}
 
-	assert.Equal(t, 123, ifaces[0].ID)
+	require.Len(t, ifaces, 1)
+
+	assert.Equal(t, 1234, ifaces[0].ID)
 	assert.Equal(t, 1, ifaces[0].Version)
+	assert.Equal(t, "22:00:AB:CD:EF:01", ifaces[0].MACAddress)
+	assert.True(t, *ifaces[0].DefaultRoute.IPv4)
+	assert.True(t, *ifaces[0].DefaultRoute.IPv6)
 
-	assert.Equal(t, 456, ifaces[1].ID)
-	assert.Equal(t, 1, ifaces[1].Version)
-	require.NotNil(t, ifaces[1].VPC)
-	require.NotNil(t, ifaces[1].VPC.IPv4.NATGateway)
-	assert.Equal(t, 42, ifaces[1].VPC.IPv4.NATGateway.ID)
-	assert.Equal(t, "the-natgateway", ifaces[1].VPC.IPv4.NATGateway.Label)
-	assert.Equal(t, "natgateway", ifaces[1].VPC.IPv4.NATGateway.Type)
-	assert.Equal(t, "/v4/networking/natgateways/1", ifaces[1].VPC.IPv4.NATGateway.URL)
-	assert.Equal(t, []string{"203.0.113.42"}, ifaces[1].VPC.IPv4.NATGateway.Addresses)
-	assert.Equal(t, 15, ifaces[1].VPC.IPv4.NATGateway.PortsetAssignments)
-	assert.Equal(t, 30, ifaces[1].VPC.IPv4.NATGateway.PortsetCapacity)
-	require.Len(t, ifaces[1].VPC.IPv4.NATGateway.Portsets, 1)
-	assert.Equal(t, "203.0.113.42", ifaces[1].VPC.IPv4.NATGateway.Portsets[0].Address)
-	require.Len(t, ifaces[1].VPC.IPv4.NATGateway.Portsets[0].Ports, 1)
-	assert.Equal(t, 2048, ifaces[1].VPC.IPv4.NATGateway.Portsets[0].Ports[0].Start)
-	assert.Equal(t, 3071, ifaces[1].VPC.IPv4.NATGateway.Portsets[0].Ports[0].End)
+	assert.Nil(t, ifaces[0].VPC)
+	assert.Nil(t, ifaces[0].VLAN)
 
-	assert.Equal(t, 789, ifaces[2].ID)
-	assert.Equal(t, 1, ifaces[2].Version)
+	require.NotNil(t, ifaces[0].Public)
+	require.Len(t, ifaces[0].Public.IPv4.Addresses, 1)
+	assert.Equal(t, "172.30.0.50", ifaces[0].Public.IPv4.Addresses[0].Address)
+	assert.True(t, ifaces[0].Public.IPv4.Addresses[0].Primary)
 }
 
 func TestInterface_Delete(t *testing.T) {

@@ -91,11 +91,13 @@ type InstanceSpec struct {
 
 // InstanceAlert represents a metric alert
 type InstanceAlert struct {
-	CPU           int `json:"cpu"`
-	IO            int `json:"io"`
-	NetworkIn     int `json:"network_in"`
-	NetworkOut    int `json:"network_out"`
-	TransferQuota int `json:"transfer_quota"`
+	CPU           int   `json:"cpu"`
+	IO            int   `json:"io"`
+	NetworkIn     int   `json:"network_in"`
+	NetworkOut    int   `json:"network_out"`
+	TransferQuota int   `json:"transfer_quota"`
+	SystemAlerts  []int `json:"system_alerts,omitzero"`
+	UserAlerts    []int `json:"user_alerts,omitzero"`
 }
 
 // InstanceBackup represents backup settings for an instance
@@ -184,12 +186,22 @@ type InstanceCreateOptions struct {
 	DiskEncryption      InstanceDiskEncryption               `json:"disk_encryption,omitzero"`
 	PlacementGroup      *InstanceCreatePlacementGroupOptions `json:"placement_group,omitzero"`
 
+	// LinodeInstanceInterfaces are the Linode Interfaces (including
+	// RDMA VPC interfaces) to create the new instance with.
+	// Conflicts with Interfaces and LinodeInterfaces.
+	// NOTE: RDMA VPC interfaces may not currently be available to all users.
+	LinodeInstanceInterfaces []LinodeInstanceInterfaceCreateOptions `json:"-"`
+
 	// Linode Interfaces to create the new instance with.
-	// Conflicts with Interfaces.
+	// Conflicts with Interfaces and LinodeInstanceInterfaces.
+	//
+	// Deprecated: Use LinodeInstanceInterfaces instead. LinodeInstanceInterfaces
+	// additionally allows specifying RDMA VPC interfaces.
+	// LinodeInterfaces is retained for backwards compatibility.
 	LinodeInterfaces []LinodeInterfaceCreateOptions `json:"-"`
 
 	// Legacy (config) Interfaces to create the new instance with.
-	// Conflicts with LinodeInterfaces.
+	// Conflicts with LinodeInterfaces and LinodeInstanceInterfaces.
 	Interfaces []InstanceConfigInterfaceCreateOptions `json:"-"`
 
 	// Creation fields that need to be set explicitly false, "", or 0 use pointers
@@ -202,6 +214,15 @@ type InstanceCreateOptions struct {
 
 	Kernel   *string `json:"kernel,omitzero"`
 	BootSize *int    `json:"boot_size,omitzero"`
+
+	// Note: Alerts can only be used with v4beta.
+	Alerts *InstanceACLPAlertsOptions `json:"alerts,omitzero"`
+}
+
+// InstanceACLPAlertsOptions represents ACLP alerts options for instance creation and cloning.
+type InstanceACLPAlertsOptions struct {
+	SystemAlerts []int `json:"system_alerts,omitzero"`
+	UserAlerts   []int `json:"user_alerts,omitzero"`
 }
 
 // InstanceCreatePlacementGroupOptions represents the placement group
@@ -223,8 +244,8 @@ type InstanceUpdateOptions struct {
 }
 
 // MarshalJSON contains logic necessary to populate the `interfaces` field of
-// InstanceCreateOptions depending on whether Interfaces or LinodeInterfaces
-// is specified.
+// InstanceCreateOptions depending on whether Interfaces, LinodeInterfaces,
+// or LinodeInstanceInterfaces is specified.
 func (i InstanceCreateOptions) MarshalJSON() ([]byte, error) {
 	type Mask InstanceCreateOptions
 
@@ -241,12 +262,24 @@ func (i InstanceCreateOptions) MarshalJSON() ([]byte, error) {
 		return nil, fmt.Errorf("fields Interfaces and LinodeInterfaces cannot be specified together")
 	}
 
+	if i.Interfaces != nil && i.LinodeInstanceInterfaces != nil {
+		return nil, fmt.Errorf("fields Interfaces and LinodeInstanceInterfaces cannot be specified together")
+	}
+
+	if i.LinodeInterfaces != nil && i.LinodeInstanceInterfaces != nil {
+		return nil, fmt.Errorf("fields LinodeInterfaces and LinodeInstanceInterfaces cannot be specified together")
+	}
+
 	if i.Interfaces != nil {
 		resultData.Interfaces = i.Interfaces
 	}
 
 	if i.LinodeInterfaces != nil {
 		resultData.Interfaces = i.LinodeInterfaces
+	}
+
+	if i.LinodeInstanceInterfaces != nil {
+		resultData.Interfaces = i.LinodeInstanceInterfaces
 	}
 
 	return json.Marshal(resultData)
@@ -369,6 +402,9 @@ type InstanceCloneOptions struct {
 	PrivateIP      bool                                 `json:"private_ip,omitzero"`
 	Metadata       *InstanceMetadataOptions             `json:"metadata,omitzero"`
 	PlacementGroup *InstanceCreatePlacementGroupOptions `json:"placement_group,omitzero"`
+
+	// Note: Alerts can only be used with v4beta.
+	Alerts *InstanceACLPAlertsOptions `json:"alerts,omitzero"`
 }
 
 // InstanceResizeOptions is an options struct used when resizing an instance

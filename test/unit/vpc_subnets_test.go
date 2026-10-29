@@ -24,7 +24,7 @@ func TestVPCSubnet_Create(t *testing.T) {
 		NATGateway: linodego.Pointer(linodego.VPCSubnetCreateOptionsNATGateway{ID: linodego.DoublePointer(42)}),
 		IPv6: []linodego.VPCSubnetCreateOptionsIPv6{
 			{
-				linodego.Pointer("auto"),
+				Range: linodego.Pointer("auto"),
 			},
 		},
 	}

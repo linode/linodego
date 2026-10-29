@@ -45,6 +45,7 @@ func TestListRegions(t *testing.T) {
 		if region.PlacementGroupLimits != nil {
 			assert.Greater(t, region.PlacementGroupLimits.MaximumPGsPerCustomer, 0, "Expected MaximumPGsPerCustomer to be greater than 0")
 			assert.Greater(t, region.PlacementGroupLimits.MaximumLinodesPerPG, 0, "Expected MaximumLinodesPerPG to be greater than 0")
+			assert.Greater(t, region.PlacementGroupLimits.MaximumLinodesPerFlexiblePG, 0, "Expected MaximumLinodesPerFlexiblePG to be greater than 0")
 		}
 		assert.Contains(t, region.Capabilities, string(linodego.CapabilityLinodes), "Expected region to support Linodes")
 		// Test monitors field
@@ -81,6 +82,7 @@ func TestGetRegion(t *testing.T) {
 	if region.PlacementGroupLimits != nil {
 		assert.Greater(t, region.PlacementGroupLimits.MaximumPGsPerCustomer, 0, "Expected MaximumPGsPerCustomer to be greater than 0")
 		assert.Greater(t, region.PlacementGroupLimits.MaximumLinodesPerPG, 0, "Expected MaximumLinodesPerPG to be greater than 0")
+		assert.Greater(t, region.PlacementGroupLimits.MaximumLinodesPerFlexiblePG, 0, "Expected MaximumLinodesPerFlexiblePG to be greater than 0")
 	}
 	assert.Contains(t, region.Capabilities, string(linodego.CapabilityLinodes), "Expected region to support Linodes")
 	// Test monitors field
