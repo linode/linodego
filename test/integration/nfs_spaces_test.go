@@ -55,7 +55,6 @@ func verifyNFSSpace(t *testing.T, space *linodego.NFSSpace, createOpts linodego.
 }
 
 func verifyNFSSpaceAccessPolicyUpdate(t *testing.T, spaceAccPolicy *linodego.NFSSpaceAccessPolicy, opts linodego.NFSSpaceAccessPolicyUpdateOptions) {
-	// assert.Equal(t, "pending", spaceAccPolicy.Status)
 	assert.True(t, spaceAccPolicy.Enabled)
 	assert.Len(t, spaceAccPolicy.VPCACL, 1)
 	assert.Equal(t, (*opts.VPCs)[0].ID, spaceAccPolicy.VPCACL[0].ID)
@@ -109,7 +108,6 @@ func TestNFSSpace_Update(t *testing.T) {
 }
 
 func TestNFSSpace_GetAccessPolicy_smoke(t *testing.T) {
-	t.Skip("Access Policy seems to not be fully developed yet")
 	client, space, _ := setupNFSSpace(t, "fixtures/TestNFSSpace_GetAccessPolicy")
 
 	spaceAccPolicy, err := client.GetNFSSpaceAccessPolicy(context.Background(), space.ID)
@@ -118,18 +116,26 @@ func TestNFSSpace_GetAccessPolicy_smoke(t *testing.T) {
 	assert.Equal(t, space.Label, spaceAccPolicy.Label)
 	assert.Equal(t, linodego.NFSAccessPolicyStatusActive, spaceAccPolicy.Status)
 	assertDateSet(t, spaceAccPolicy.Created)
-	assert.Nil(t, spaceAccPolicy.Updated)
+	assertDateSet(t, spaceAccPolicy.Created)
 }
 
 func TestNFSSpace_UpdateAccessPolicy(t *testing.T) {
-	t.Skip("Access Policy seems to not be fully developed yet")
+	t.Skip("Access Policy update is stuck with 'updating'/'pending' status")
 	client, space, _ := setupNFSSpace(t, "fixtures/TestNFSSpace_UpdateAccessPolicy")
 
-	vpc, _, vpcTeardown, err := createVPC(t, client, []vpcModifier{func(l *linodego.Client, opts *linodego.VPCCreateOptions) {
-		opts.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityVPCs, linodego.CapabilityNFSStorage})[0]
-	}}...)
-	require.NoErrorf(t, err, "Error creating VPC for Access Policy: %v", err)
-	t.Cleanup(vpcTeardown)
+	vpc, _, vpcWithSubnetTeardown, err := createVPCWithDualStackSubnet(
+		t,
+		client,
+		func(client *linodego.Client, opts *linodego.VPCCreateOptions) {
+			opts.Region = getRegionsWithCaps(t, client, []linodego.RegionCapability{
+				linodego.CapabilityVPCs,
+				linodego.CapabilityVPCDualStack,
+				linodego.CapabilityNFSStorage,
+			})[0]
+		},
+	)
+	require.NoErrorf(t, err, "Error creating Dual Stack VPC for Access Policy: %v", err)
+	t.Cleanup(vpcWithSubnetTeardown)
 
 	updateOpts := linodego.NFSSpaceAccessPolicyUpdateOptions{
 		Enabled: linodego.Pointer(true),
@@ -144,6 +150,7 @@ func TestNFSSpace_UpdateAccessPolicy(t *testing.T) {
 
 	spaceAccPolicyUpdate, err := client.UpdateNFSSpaceAccessPolicy(context.Background(), space.ID, updateOpts)
 	require.NoErrorf(t, err, "Error updating NFS Space Access Policy: %v", err)
+	assert.Equal(t, "pending", string(spaceAccPolicyUpdate.Status))
 	verifyNFSSpaceAccessPolicyUpdate(t, spaceAccPolicyUpdate, updateOpts)
 
 	// Wait for NFS Space Access Policy status to be 'active' to read the details
@@ -157,5 +164,6 @@ func TestNFSSpace_UpdateAccessPolicy(t *testing.T) {
 
 	spaceAccPolicyGet, err := client.GetNFSSpaceAccessPolicy(context.Background(), space.ID)
 	require.NoErrorf(t, err, "Error getting NFS Space Access Policy: %v", err)
+	assert.Equal(t, "active", string(spaceAccPolicyGet.Status))
 	verifyNFSSpaceAccessPolicyUpdate(t, spaceAccPolicyGet, updateOpts)
 }

@@ -65,10 +65,10 @@ type NFSFilesystemCreateOptions struct {
 
 // NFSFilesystemUpdateOptions contains fields accepted when updating an NFS Filesystem.
 type NFSFilesystemUpdateOptions struct {
-	Label *string `json:"label,omitzero"`
-	// MaxCapacityBytes *int64    `json:"max_capacity_bytes,omitzero"` // TODO: Currently API says it is not editable field
-	// MaxFileCount     *int64    `json:"max_file_count,omitzero"` // TODO: Currently API says it is not editable field
-	Tags *[]string `json:"tags,omitzero"`
+	Label            *string   `json:"label,omitzero"`
+	MaxCapacityBytes *int64    `json:"max_capacity_bytes,omitzero"`
+	MaxFileCount     *int64    `json:"max_file_count,omitzero"`
+	Tags             *[]string `json:"tags,omitzero"`
 }
 
 // NFSFilesystemStats represents collected NFS Filesystem usage statistics.
@@ -145,9 +145,9 @@ func (n NFSFilesystem) GetCreateOptions() NFSFilesystemCreateOptions {
 // GetUpdateOptions returns the NFS Filesystem fields accepted by UpdateNFSFilesystem.
 func (n NFSFilesystem) GetUpdateOptions() NFSFilesystemUpdateOptions {
 	result := NFSFilesystemUpdateOptions{
-		Label: Pointer(n.Label),
-		// MaxCapacityBytes: Pointer(n.MaxCapacityBytes), // TODO: Currently API says it is not editable field
-		// MaxFileCount:     Pointer(n.MaxFileCount), // TODO: Currently API says it is not editable field
+		Label:            Pointer(n.Label),
+		MaxCapacityBytes: Pointer(n.MaxCapacityBytes),
+		MaxFileCount:     Pointer(n.MaxFileCount),
 	}
 
 	if n.Tags != nil {

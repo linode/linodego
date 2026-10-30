@@ -228,25 +228,26 @@ func TestNFSFilesystem_List(t *testing.T) {
 }
 
 func TestNFSFilesystem_Update(t *testing.T) {
-	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_Update", false)
+	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_Update", true)
 
 	updateOpts := filesystem.GetUpdateOptions()
 	updateOpts.Label = linodego.Pointer(filesystem.Label + "-updated")
 	updateOpts.Tags = linodego.Pointer([]string{"updated"})
-	// updateOpts.MaxCapacityBytes = linodego.Pointer(int64(1073741824)) // TODO: Currently API says it is not editable field
-	// updateOpts.MaxCountFile = linodego.Pointer(int64(2500)) // TODO: Currently API says it is not editable field
+	updateOpts.MaxCapacityBytes = linodego.Pointer(int64(1099511628000))
+	updateOpts.MaxFileCount = linodego.Pointer(int64(3210))
 
 	filesystemUpdate, err := client.UpdateNFSFilesystem(context.Background(), space.ID, filesystem.ID, updateOpts)
 	require.NoErrorf(t, err, "Error updating NFS Space: %v", err)
 
 	verifyOpts := linodego.NFSFilesystemCreateOptions{
-		Label:  *updateOpts.Label,
-		Region: createOpts.Region,
-		Tags:   updateOpts.Tags,
-		// MaxCapacityBytes: *updateOpts.MaxCapacityBytes, // TODO: Currently API says it is not editable field
-		// MaxFileCount: *updateOpts.MaxCountFile, // TODO: Currently API says it is not editable field
+		Label:            *updateOpts.Label,
+		Region:           createOpts.Region,
+		Tags:             updateOpts.Tags,
+		MaxCapacityBytes: *updateOpts.MaxCapacityBytes,
+		MaxFileCount:     updateOpts.MaxFileCount,
 	}
 	verifyNFSFilesystemBasics(t, space, filesystemUpdate, verifyOpts)
+	verifyNFSFilesystemDetails(t, filesystemUpdate, verifyOpts)
 }
 
 func TestNFSFilesystem_GetAccessPolicy_smoke(t *testing.T) {
@@ -263,7 +264,7 @@ func TestNFSFilesystem_GetAccessPolicy_smoke(t *testing.T) {
 	assert.NotNil(t, filesystemAccPolicy.SquashPolicy)
 	assert.Equal(t, linodego.NFSAccessPolicyStatusActive, filesystemAccPolicy.Status)
 	assertDateSet(t, filesystemAccPolicy.Created)
-	assert.Nil(t, filesystemAccPolicy.Updated)
+	assertDateSet(t, filesystemAccPolicy.Updated)
 }
 
 func TestNFSFilesystem_UpdateAccessPolicy(t *testing.T) {
