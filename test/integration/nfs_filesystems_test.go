@@ -11,14 +11,14 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func getNFSFilesystemCreateOptions(t *testing.T, client *linodego.Client) linodego.NFSFilesystemCreateOptions {
+func setNFSFilesystemCreateOptions(t *testing.T, client *linodego.Client) linodego.NFSFilesystemCreateOptions {
 	return linodego.NFSFilesystemCreateOptions{
 		Label:            "go-test-nfs-filesystem-" + randLabel(),
 		Region:           getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityNFSStorage})[0],
-		MaxCapacityBytes: 1099511627776,
-		Tags:             linodego.Pointer([]string{"testing"}),
+		MaxCapacityBytes: linodego.Pointer(int64(1099511627776)),
 		MaxFileCount:     linodego.Pointer(int64(1500)),
 		ProtocolVersions: linodego.Pointer([]linodego.NFSProtocolVersion{linodego.NFSProtocolVersionV4}),
+		Tags:             linodego.Pointer([]string{"testing"}),
 	}
 }
 
@@ -59,7 +59,7 @@ func setupNFSFilesystem(
 ) (*linodego.Client, *linodego.NFSSpace, *linodego.NFSFilesystem, linodego.NFSFilesystemCreateOptions) {
 	t.Helper()
 	client, fixtureTeardown := createTestClient(t, fixtureYaml)
-	createOpts := getNFSFilesystemCreateOptions(t, client)
+	createOpts := setNFSFilesystemCreateOptions(t, client)
 
 	for _, modifier := range modifiers {
 		modifier(&createOpts)
@@ -153,7 +153,7 @@ func verifyNFSFilesystemBasics(t *testing.T, space *linodego.NFSSpace, filesyste
 func verifyNFSFilesystemDetails(t *testing.T, filesystem *linodego.NFSFilesystem, createOpts linodego.NFSFilesystemCreateOptions) {
 	t.Helper()
 	assert.NotEmpty(t, filesystem.ProtocolVersions)
-	assert.EqualValues(t, createOpts.MaxCapacityBytes, filesystem.MaxCapacityBytes)
+	assert.EqualValues(t, createOpts.MaxCapacityBytes, linodego.Pointer(filesystem.MaxCapacityBytes))
 	assert.EqualValues(t, createOpts.MaxFileCount, linodego.Pointer(filesystem.MaxFileCount))
 	assert.NotEmpty(t, filesystem.MountTargetIPs)
 	assert.NotNil(t, filesystem.MountTargetFQDN)
@@ -243,7 +243,7 @@ func TestNFSFilesystem_Update(t *testing.T) {
 		Label:            *updateOpts.Label,
 		Region:           createOpts.Region,
 		Tags:             updateOpts.Tags,
-		MaxCapacityBytes: *updateOpts.MaxCapacityBytes,
+		MaxCapacityBytes: updateOpts.MaxCapacityBytes,
 		MaxFileCount:     updateOpts.MaxFileCount,
 	}
 	verifyNFSFilesystemBasics(t, space, filesystemUpdate, verifyOpts)

@@ -57,7 +57,7 @@ type NFSFilesystem struct {
 type NFSFilesystemCreateOptions struct {
 	Label            string                `json:"label"`
 	Region           string                `json:"region"`
-	MaxCapacityBytes int64                 `json:"max_capacity_bytes"`
+	MaxCapacityBytes *int64                `json:"max_capacity_bytes,omitzero"`
 	MaxFileCount     *int64                `json:"max_file_count,omitzero"`
 	ProtocolVersions *[]NFSProtocolVersion `json:"protocol_versions,omitzero"`
 	Tags             *[]string             `json:"tags,omitzero"`
@@ -127,7 +127,7 @@ func (n NFSFilesystem) GetCreateOptions() NFSFilesystemCreateOptions {
 	result := NFSFilesystemCreateOptions{
 		Label:            n.Label,
 		Region:           n.Region,
-		MaxCapacityBytes: n.MaxCapacityBytes,
+		MaxCapacityBytes: Pointer(n.MaxCapacityBytes),
 		MaxFileCount:     Pointer(n.MaxFileCount),
 	}
 
