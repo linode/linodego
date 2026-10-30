@@ -43,6 +43,7 @@ type NFSFilesystem struct {
 	MountTargetIPs     []string             `json:"mount_target_ips"`
 	MountTargetFQDN    *string              `json:"mount_target_fqdn"`
 	MaxCapacityBytes   int64                `json:"max_capacity_bytes"`
+	MaxFileCount       int64                `json:"max_file_count"`
 	SnapshotUsageBytes *int64               `json:"snapshot_usage_bytes"`
 	LDAPConfigID       *string              `json:"ldap_config_id"`
 	SourceSnapshotID   *int                 `json:"source_snapshot_id"`
@@ -56,7 +57,8 @@ type NFSFilesystem struct {
 type NFSFilesystemCreateOptions struct {
 	Label            string                `json:"label"`
 	Region           string                `json:"region"`
-	MaxCapacityBytes int64                 `json:"max_capacity_bytes"`
+	MaxCapacityBytes *int64                `json:"max_capacity_bytes,omitzero"`
+	MaxFileCount     *int64                `json:"max_file_count,omitzero"`
 	ProtocolVersions *[]NFSProtocolVersion `json:"protocol_versions,omitzero"`
 	Tags             *[]string             `json:"tags,omitzero"`
 }
@@ -65,6 +67,7 @@ type NFSFilesystemCreateOptions struct {
 type NFSFilesystemUpdateOptions struct {
 	Label            *string   `json:"label,omitzero"`
 	MaxCapacityBytes *int64    `json:"max_capacity_bytes,omitzero"`
+	MaxFileCount     *int64    `json:"max_file_count,omitzero"`
 	Tags             *[]string `json:"tags,omitzero"`
 }
 
@@ -124,7 +127,8 @@ func (n NFSFilesystem) GetCreateOptions() NFSFilesystemCreateOptions {
 	result := NFSFilesystemCreateOptions{
 		Label:            n.Label,
 		Region:           n.Region,
-		MaxCapacityBytes: n.MaxCapacityBytes,
+		MaxCapacityBytes: Pointer(n.MaxCapacityBytes),
+		MaxFileCount:     Pointer(n.MaxFileCount),
 	}
 
 	if n.ProtocolVersions != nil {
@@ -143,6 +147,7 @@ func (n NFSFilesystem) GetUpdateOptions() NFSFilesystemUpdateOptions {
 	result := NFSFilesystemUpdateOptions{
 		Label:            Pointer(n.Label),
 		MaxCapacityBytes: Pointer(n.MaxCapacityBytes),
+		MaxFileCount:     Pointer(n.MaxFileCount),
 	}
 
 	if n.Tags != nil {
