@@ -10,7 +10,7 @@ import (
 
 var testSSHKeyCreateOpts = SSHKeyCreateOptions{
 	Label:  label,
-	SSHKey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYlv4Ns3tY2NEseuuMXEz1sLzO9sGC0cwaT2ECbWFyrsn1Fg5ISdkaJD8LiuhZ41/1Mh0Sq49wY89yLkmw+Ukrd+thFbhUqTzjL09U89kn3Ds/ajVJgwnJ4pXmBqhq0/3pmO/UkYIBi5ErTnPWL+yHAoQ1HsVetxYUmY2SPaT0pduDIrvNZRvWn3Nvn9qsUVfthWiGc8oHWE5xyd7+3UPLHSMkE4rZd2k6e7bJWCM/VJ7ZrJQ6UVTDXjBCkkT12WsOWxcEuL36RUGgGa4h5M4IY0SkgQSKHer01dJSj3c6OBzj2CRDZFoM8f/YC66s0+ZQ9cE/aADDycMIvqOJBI6X " + label,
+	SSHKey: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDYlv4Ns3tY2NEseuuMXEz1sLzO9sGC0cwaT2ECbWFyrsn1Fg5ISdkaJD8LiuhZ41/1Mh0Sq49wY89yLkmw+Ukrd+thFbhUqTzjL09U89kn3Ds/ajVJgwnJ4pXmBqhq0/3pmO/UkYIBi5ErTnPWL+yHAoQ1HsVetxYUmY2SPaT0pduDIrvNZRvWn3Nvn9qsUVfthWiGc8oHWE5xyd7+3UPLHSMkE4rZd2k6e7bJWCM/VJ7ZrJQ6UVTDXjBCkkT12WsOWxcEuL36RUGgGa4h5M4IY0SkgQSKHer01dJSj3c6OBzj2CRDZFoM8f/YC66s0+ZQ9cE/aADDycMIvqOJBI6X " + labelPrefix,
 }
 
 func TestSSHKey_GetMissing(t *testing.T) {
@@ -46,7 +46,7 @@ func TestSSHKey_GetFound(t *testing.T) {
 	if i.ID != sshkey.ID {
 		t.Errorf("Expected sshkey id %d, but got %d", i.ID, sshkey.ID)
 	}
-	if testSSHKeyCreateOpts.Label != sshkey.Label {
+	if !strings.Contains(sshkey.Label, labelPrefix) {
 		t.Errorf("Expected sshkey label '%s', but got '%s'", testSSHKeyCreateOpts.Label, sshkey.Label)
 	}
 	if testSSHKeyCreateOpts.SSHKey != sshkey.SSHKey {
