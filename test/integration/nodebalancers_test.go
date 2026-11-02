@@ -11,7 +11,8 @@ import (
 
 var (
 	clientConnThrottle = 20
-	label              = "go-test-def"
+	labelPrefix        = "go-test-def"
+	label              = labelPrefix + getUniqueText()
 )
 
 func TestNodeBalancer_Create_create_smoke(t *testing.T) {
@@ -22,8 +23,8 @@ func TestNodeBalancer_Create_create_smoke(t *testing.T) {
 		t.Errorf("Error creating nodebalancer: %v", err)
 	}
 
-	// when comparing fixtures to random value Label will differ, compare the known suffix
-	if !strings.Contains(*nodebalancer.Label, label) {
+	// when comparing fixtures to random value Label will differ, compare the known prefix
+	if !strings.Contains(*nodebalancer.Label, labelPrefix) {
 		t.Errorf("nodebalancer returned does not match nodebalancer create request")
 	}
 
@@ -45,8 +46,8 @@ func TestNodeBalancer_Create_Type(t *testing.T) {
 		t.Errorf("Error creating nodebalancer: %v", err)
 	}
 
-	// when comparing fixtures to random value Label will differ, compare the known suffix
-	if !strings.Contains(*nodebalancer.Label, label) {
+	// when comparing fixtures to random value Label will differ, compare the known prefix
+	if !strings.Contains(*nodebalancer.Label, labelPrefix) {
 		t.Errorf("nodebalancer returned does not match nodebalancer create request")
 	}
 	// add this test case once the api supports returning it
@@ -83,8 +84,8 @@ func TestNodeBalancer_Create_with_ReservedIP(t *testing.T) {
 		t.Errorf("Error creating nodebalancer: %v", err)
 	}
 
-	// when comparing fixtures to random value Label will differ, compare the known suffix
-	if !strings.Contains(*nodebalancer.Label, label) {
+	// when comparing fixtures to random value Label will differ, compare the known prefix
+	if !strings.Contains(*nodebalancer.Label, labelPrefix) {
 		t.Errorf("nodebalancer returned does not match nodebalancer create request")
 	}
 
@@ -104,8 +105,8 @@ func TestNodeBalancer_Create_with_vpc(t *testing.T) {
 		t.Errorf("Error creating nodebalancer: %v", err)
 	}
 
-	// when comparing fixtures to random value Label will differ, compare the known suffix
-	if !strings.Contains(*nodebalancer.Label, label) {
+	// when comparing fixtures to random value Label will differ, compare the known prefix
+	if !strings.Contains(*nodebalancer.Label, labelPrefix) {
 		t.Errorf("nodebalancer returned does not match nodebalancer create request")
 	}
 

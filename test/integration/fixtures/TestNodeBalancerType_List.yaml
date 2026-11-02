@@ -17,10 +17,13 @@ interactions:
     body: '{"data": [{"id": "nodebalancer", "label": "NodeBalancer", "price": {"hourly":
       0.015, "monthly": 10.0}, "region_prices": [{"id": "id-cgk", "hourly": 0.018,
       "monthly": 12.0}, {"id": "br-gru", "hourly": 0.021, "monthly": 14.0}], "transfer":
-      0}, {"id": "nodebalancer-pr100", "label": "Nodebalancer Premium", "price": {"hourly":
-      0.225, "monthly": 150.0}, "region_prices": [{"id": "br-gru", "hourly": 0.315,
-      "monthly": 210.0}, {"id": "id-cgk", "hourly": 0.27, "monthly": 180.0}], "transfer":
-      0}], "page": 1, "pages": 1, "results": 2}'
+      0}, {"id": "nodebalancer-40GB-pr100", "label": "Nodebalancer Enterprise", "price":
+      {"hourly": 0.45, "monthly": null}, "region_prices": [{"id": "id-cgk", "hourly":
+      0.54, "monthly": null}, {"id": "br-gru", "hourly": 0.63, "monthly": null}],
+      "transfer": 0}, {"id": "nodebalancer-pr100", "label": "Nodebalancer Premium",
+      "price": {"hourly": 0.225, "monthly": null}, "region_prices": [{"id": "br-gru",
+      "hourly": 0.315, "monthly": null}, {"id": "id-cgk", "hourly": 0.27, "monthly":
+      null}], "transfer": 0}], "page": 1, "pages": 1, "results": 3}'
     headers:
       Access-Control-Allow-Credentials:
       - "true"
@@ -39,13 +42,13 @@ interactions:
       Connection:
       - keep-alive
       Content-Length:
-      - "527"
+      - "775"
       Content-Security-Policy:
       - default-src 'none'
       Content-Type:
       - application/json
       Expires:
-      - Fri, 22 Aug 2025 23:10:53 GMT
+      - Tue, 27 Oct 2026 09:17:00 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
