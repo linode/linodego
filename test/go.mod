@@ -8,7 +8,7 @@ require (
 	github.com/linode/linodego/v2 v2.0.0
 	github.com/stretchr/testify v1.12.1
 	golang.org/x/exp v0.0.0-20241217172543-b2144cdd0a67
-	golang.org/x/net v0.61.0
+	golang.org/x/net v0.62.0
 	golang.org/x/oauth2 v0.37.0
 	k8s.io/client-go v0.37.1
 )
