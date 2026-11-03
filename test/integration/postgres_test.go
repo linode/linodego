@@ -44,12 +44,15 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 	if db.ID != database.ID {
 		t.Errorf("got wrong db from GetPostgresDatabase: %v", db)
 	}
+	if len(db.Hosts.Endpoints) == 0 {
+		t.Errorf("got zero endpoints on GetPostgresDatabase: %v", db.Hosts)
+	}
 
 	updatedWindow := linodego.DatabaseMaintenanceWindow{
 		DayOfWeek: linodego.DatabaseMaintenanceDayWednesday,
 		Duration:  4,
 		Frequency: linodego.DatabaseMaintenanceFrequencyWeekly,
-		HourOfDay: 8,
+		HourOfDay: 4,
 		Pending:   []linodego.DatabaseMaintenanceWindowPending{},
 	}
 
@@ -79,12 +82,65 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 		t.Errorf("db maintenance window does not match update opts: %v", cmp.Diff(db.Updates, updatedWindow))
 	}
 
+	var username *string
+
+	poolOpts := linodego.PostgresDatabaseConnectionPoolCreateOptions{
+		Database: "defaultdb",
+		Mode:     linodego.PostgresDatabaseConnectionPoolModeTransaction,
+		Label:    updatedLabel + "_pool",
+		Size:     10,
+		Username: &username,
+	}
+
+	pool, err := client.CreatePostgresDatabaseConnectionPool(ctx, database.ID, poolOpts)
+	if err != nil {
+		t.Errorf("failed to create connection pool for db: %v", err)
+	}
+	if pool == nil {
+		t.Error("failed to create connection pool for db")
+	}
+
+	pools, err := client.ListPostgresDatabaseConnectionPools(ctx, database.ID, nil)
+	pool = &pools[0]
+	if err != nil {
+		t.Errorf("failed to list connection pools for db: %v", err)
+	}
+	if pool == nil {
+		t.Error("failed to list connection pools for db")
+	}
+
+	pool, err = client.GetPostgresDatabaseConnectionPool(ctx, database.ID, poolOpts.Label)
+	if err != nil {
+		t.Errorf("failed to get connection pool for db: %v", err)
+	}
+	if pool == nil {
+		t.Error("failed to get connection pool for db")
+	}
+
 	ssl, err := client.GetPostgresDatabaseSSL(context.Background(), database.ID)
 	if err != nil {
 		t.Errorf("failed to get ssl cert for db: %v", err)
 	}
 	if ssl == nil {
 		t.Error("failed to get ssl cert for db")
+	}
+
+	poolUpdateOpts := linodego.PostgresDatabaseConnectionPoolUpdateOptions{
+		Mode: linodego.Pointer(linodego.PostgresDatabaseConnectionPoolModeSession),
+		Size: linodego.Pointer(20),
+	}
+
+	pool, err = client.UpdatePostgresDatabaseConnectionPool(ctx, database.ID, poolOpts.Label, poolUpdateOpts)
+	if err != nil {
+		t.Errorf("failed to update connection pool for db: %v", err)
+	}
+	if pool == nil || pool.Mode != linodego.PostgresDatabaseConnectionPoolModeSession || pool.Size != 20 {
+		t.Error("failed to update connection pool for db")
+	}
+
+	err = client.DeletePostgresDatabase(ctx, database.ID)
+	if err != nil {
+		t.Errorf("failed to delete connection pool for db: %v", err)
 	}
 
 	creds, err := client.GetPostgresDatabaseCredentials(context.Background(), database.ID)
