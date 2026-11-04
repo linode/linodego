@@ -28,6 +28,16 @@ func requireACLPLogsStreamTests(t *testing.T) {
 	}
 }
 
+// requireLogStreamQuotasTests skips the test if RUN_ACLP_LOGS_STREAM_QUOTAS_TESTS is not set.
+// Call this before creating a test client so the env check short-circuits early.
+func requireLogStreamQuotasTests(t *testing.T) {
+	t.Helper()
+	val := os.Getenv("RUN_ACLP_LOGS_STREAM_QUOTAS_TESTS")
+	if val != "yes" && val != "true" {
+		t.Skipf("RUN_ACLP_LOGS_STREAM_QUOTAS_TESTS must be set to 'yes' or 'true' to run the log stream quotas test")
+	}
+}
+
 // creates a object storage and access keys for use in tests
 func setupObjectStorageForLogs(t *testing.T, client *linodego.Client) (*linodego.ObjectStorageBucket, *linodego.ObjectStorageKey, func()) {
 	t.Helper()
@@ -564,6 +574,25 @@ func TestLogStream_List(t *testing.T) {
 		}
 	}
 	assert.True(t, found, "created stream not found in list")
+}
+
+func TestLogStreamQuotas_List(t *testing.T) {
+	requireLogStreamQuotasTests(t)
+
+	client, teardown := createTestClient(t, "fixtures/TestLogStreamQuotas_List")
+	defer teardown()
+
+	quotas, err := client.ListLogStreamQuotas(context.Background(), &linodego.ListOptions{})
+	require.NoError(t, err)
+	require.NotEmpty(t, quotas)
+
+	for _, quota := range quotas {
+		assert.NotEmpty(t, quota.QuotaID)
+		assert.NotEmpty(t, quota.QuotaName)
+		assert.NotEmpty(t, quota.QuotaType)
+		assert.NotEmpty(t, quota.Description)
+		assert.GreaterOrEqual(t, quota.QuotaLimit, 0)
+	}
 }
 
 func TestLogStream_Get(t *testing.T) {

@@ -198,7 +198,7 @@ func TestVPC_Create_Invalid_data(t *testing.T) {
 	if e.Code != 400 {
 		t.Errorf("should have received a 400 Code with invalid label, got %v", e.Code)
 	}
-	expectedErrorMessage := "Must only use ASCII letters, numbers, and underscores"
+	expectedErrorMessage := "Must only use ASCII letters, numbers, underscores, dashes and periods"
 	if !strings.Contains(e.Message, expectedErrorMessage) {
 		t.Errorf("Wrong error message displayed should have contained, %s", expectedErrorMessage)
 	}
@@ -229,7 +229,7 @@ func TestVPC_Update_Invalid_data(t *testing.T) {
 	if e.Code != 400 {
 		t.Errorf("should have received a 400 Code with invalid label, got %v", e.Code)
 	}
-	expectedErrorMessage := "Must only use ASCII letters, numbers, and underscores"
+	expectedErrorMessage := "Must only use ASCII letters, numbers, underscores, dashes and periods"
 	if !strings.Contains(e.Message, expectedErrorMessage) {
 		t.Errorf("Wrong error message displayed should have contained, %s", expectedErrorMessage)
 	}

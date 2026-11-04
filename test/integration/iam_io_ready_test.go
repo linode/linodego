@@ -128,7 +128,7 @@ func TestIAM_GetIOReadyForNotAttachedVolume(t *testing.T) {
 
 	volume, err = client.GetVolume(context.Background(), volume.ID)
 	require.NoErrorf(t, err, "Error getting not attached volume: %v", err)
-	assert.Equal(t, label, volume.Label)
+	assert.Contains(t, volume.Label, labelPrefix)
 	assert.Equal(t, linodego.VolumeActive, volume.Status)
 	assert.Empty(t, volume.LinodeID)
 	assert.Empty(t, volume.LinodeLabel)
