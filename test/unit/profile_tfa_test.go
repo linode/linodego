@@ -2,12 +2,14 @@ package unit
 
 import (
 	"context"
+	"net/http"
 	"testing"
 	"time"
 
 	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestTwoFactor_CreateSecret_smoke(t *testing.T) {
@@ -54,4 +56,43 @@ func TestTwoFactor_Confirm(t *testing.T) {
 	assert.NoError(t, err)
 
 	assert.Equal(t, "reallycoolandlegittfacode", response.Scratch)
+}
+
+func TestTwoFactor_DisableEnforced(t *testing.T) {
+	for _, testCase := range []struct {
+		name     string
+		method   string
+		endpoint string
+	}{
+		{name: "disable", method: "POST", endpoint: "profile/tfa-disable"},
+		{name: "update_profile", method: "PUT", endpoint: "profile"},
+	} {
+		t.Run(testCase.name, func(t *testing.T) {
+			var base ClientBaseCase
+			base.SetUp(t)
+			t.Cleanup(func() {
+				base.TearDown(t)
+			})
+
+			reason := "TFA is enforced for this user"
+			httpmock.RegisterResponder(testCase.method, base.BaseURL+testCase.endpoint,
+				httpmock.NewJsonResponderOrPanic(http.StatusBadRequest, linodego.APIError{
+					Errors: []linodego.APIErrorReason{{Reason: reason}},
+				}))
+
+			var err error
+			if testCase.method == "POST" {
+				err = base.Client.DisableTwoFactor(context.Background())
+			} else {
+				_, err = base.Client.UpdateProfile(context.Background(), linodego.ProfileUpdateOptions{
+					TwoFactorAuth: new(false),
+				})
+			}
+
+			var apiError *linodego.Error
+			require.ErrorAs(t, err, &apiError)
+			assert.Equal(t, http.StatusBadRequest, apiError.Code)
+			assert.Contains(t, apiError.Message, reason)
+		})
+	}
 }
