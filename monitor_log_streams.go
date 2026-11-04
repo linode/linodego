@@ -3,6 +3,7 @@ package linodego
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"time"
 
 	"github.com/linode/linodego/v2/internal/parseabletime"
@@ -16,6 +17,10 @@ const (
 	StreamTypeAuditLogs StreamType = "audit_logs"
 	// StreamTypeLKEAuditLogs configures a stream for LKE enterprise cluster audit logs.
 	StreamTypeLKEAuditLogs StreamType = "lke_audit_logs"
+	// StreamTypeVPNGWIPSecLogs configures a stream for VPN Gateway IPsec logs.
+	StreamTypeVPNGWIPSecLogs StreamType = "vpngw_ipsec_logs"
+	// StreamTypeVPNGWBGPLogs configures a stream for VPN Gateway BGP logs.
+	StreamTypeVPNGWBGPLogs StreamType = "vpngw_bgp_logs"
 )
 
 // StreamStatus represents the availability state of an ACLP logs stream.
@@ -43,10 +48,32 @@ const (
 )
 
 // StreamDetails contains additional details for a logs stream.
-// This only applies to streams with a Type of StreamTypeLKEAuditLogs.
+// Use ClusterIDs and IsAutoAddAllClustersEnabled for LKE audit logs, or
+// VPNGatewayIDs for VPN Gateway IPsec and BGP logs. Do not mix these fields.
 type StreamDetails struct {
 	ClusterIDs                  []int `json:"cluster_ids,omitzero"`
 	IsAutoAddAllClustersEnabled bool  `json:"is_auto_add_all_clusters_enabled"`
+	// VPNGatewayIDs selects unique, positive gateway IDs. The list must not be empty.
+	// Updating this list replaces all previously selected gateway IDs.
+	VPNGatewayIDs []int `json:"vpn_gateway_ids,omitzero"`
+}
+
+// MarshalJSON omits LKE-specific fields for VPN Gateway details while preserving
+// explicit false values for existing LKE configurations.
+func (s StreamDetails) MarshalJSON() ([]byte, error) {
+	if s.VPNGatewayIDs != nil {
+		if s.ClusterIDs != nil || s.IsAutoAddAllClustersEnabled {
+			return nil, errors.New("VPN Gateway stream details cannot include LKE cluster settings")
+		}
+
+		return json.Marshal(struct {
+			VPNGatewayIDs []int `json:"vpn_gateway_ids"`
+		}{VPNGatewayIDs: s.VPNGatewayIDs})
+	}
+
+	type mask StreamDetails
+
+	return json.Marshal(mask(s))
 }
 
 // StreamDestination is a destination configured on an ACLP logs stream.
