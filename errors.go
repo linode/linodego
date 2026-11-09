@@ -198,3 +198,62 @@ func ErrHasStatus(err error, code ...int) bool {
 
 	return slices.Contains(code, ec)
 }
+
+// InstanceCreateErrorReason is a well-known cause of a failed Linode instance create.
+type InstanceCreateErrorReason string
+
+const (
+	// InstanceCreateErrorInsufficientCapacity indicates that the requested plan
+	// is not currently available in the selected region.
+	InstanceCreateErrorInsufficientCapacity InstanceCreateErrorReason = "InsufficientCapacity"
+
+	// InstanceCreateErrorAccountLimitReached indicates that the account has
+	// reached its limit of active services.
+	InstanceCreateErrorAccountLimitReached InstanceCreateErrorReason = "AccountLimitReached"
+)
+
+// ClassifyInstanceCreateError returns the well-known reason for an error returned
+// while creating a Linode instance, for example by [Client.CreateInstance].
+// err may wrap an [Error].
+//
+// The Linode API does not return a structured error code, so classification relies
+// on the HTTP status code and the error message text. The status must match exactly
+// and the text is matched case-insensitively. When the API returns several reasons,
+// a match on any of them counts. The recognized errors are:
+//
+//   - [InstanceCreateErrorInsufficientCapacity]: HTTP 403 containing
+//     "not currently available in the selected region", as in
+//     "The Linode plan you chose is not currently available in the selected region."
+//   - [InstanceCreateErrorAccountLimitReached]: HTTP 400 containing
+//     "reached a limit for the number of active services", as in
+//     "You've reached a limit for the number of active services on your account."
+//
+// ClassifyInstanceCreateError returns "" if err is nil, is not an [Error], is a
+// client-side error (a Code below 100, such as [ErrorFromError]), is transient
+// (HTTP 408, HTTP 429 or HTTP 5xx), or matches no recognized error. A change in the
+// API wording can cause a recognized error to return "".
+//
+// Callers must treat "" as "not a supported error", never as a generic failure to
+// report publicly. Callers must inspect the original error to distinguish an
+// unrecognized API error from a transient or client-side error.
+// Classification does not change retry policy, and a recognized reason does not
+// make the error message suitable for public display.
+func ClassifyInstanceCreateError(err error) InstanceCreateErrorReason {
+	var e *Error
+	if !errors.As(err, &e) || e == nil {
+		return ""
+	}
+
+	switch e.Code {
+	case http.StatusForbidden:
+		if strings.Contains(strings.ToLower(e.Message), "not currently available in the selected region") {
+			return InstanceCreateErrorInsufficientCapacity
+		}
+	case http.StatusBadRequest:
+		if strings.Contains(strings.ToLower(e.Message), "reached a limit for the number of active services") {
+			return InstanceCreateErrorAccountLimitReached
+		}
+	}
+
+	return ""
+}
