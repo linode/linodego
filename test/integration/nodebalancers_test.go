@@ -11,7 +11,8 @@ import (
 
 var (
 	clientConnThrottle = 20
-	label              = "go-test-def"
+	labelPrefix        = "go-test-def"
+	label              = labelPrefix + getUniqueText()
 )
 
 func TestNodeBalancer_Create_create_smoke(t *testing.T) {
@@ -22,8 +23,8 @@ func TestNodeBalancer_Create_create_smoke(t *testing.T) {
 		t.Errorf("Error creating nodebalancer: %v", err)
 	}
 
-	// when comparing fixtures to random value Label will differ, compare the known suffix
-	if !strings.Contains(*nodebalancer.Label, label) {
+	// when comparing fixtures to random value Label will differ, compare the known prefix
+	if !strings.Contains(*nodebalancer.Label, labelPrefix) {
 		t.Errorf("nodebalancer returned does not match nodebalancer create request")
 	}
 
@@ -45,8 +46,8 @@ func TestNodeBalancer_Create_Type(t *testing.T) {
 		t.Errorf("Error creating nodebalancer: %v", err)
 	}
 
-	// when comparing fixtures to random value Label will differ, compare the known suffix
-	if !strings.Contains(*nodebalancer.Label, label) {
+	// when comparing fixtures to random value Label will differ, compare the known prefix
+	if !strings.Contains(*nodebalancer.Label, labelPrefix) {
 		t.Errorf("nodebalancer returned does not match nodebalancer create request")
 	}
 	// add this test case once the api supports returning it
@@ -58,6 +59,23 @@ func TestNodeBalancer_Create_Type(t *testing.T) {
 	assertDateSet(t, nodebalancer.Updated)
 }
 
+func TestNodeBalancer_Create_BackendConnectivity_Common(t *testing.T) {
+	_, nodebalancer, teardown, err := setupNodeBalancer(
+		t,
+		"fixtures/TestNodeBalancer_Create_BackendConnectivity_Common",
+		[]nbModifier{func(createOpts *linodego.NodeBalancerCreateOptions) {
+			createOpts.Type = linodego.NBTypeCommon
+			createOpts.BackendConnectivity = new(linodego.NBBackendConnectivityIPv6)
+		}},
+	)
+	t.Cleanup(teardown)
+
+	require.NoError(t, err)
+	require.NotNil(t, nodebalancer.BackendConnectivity)
+	require.Equal(t, linodego.NBBackendConnectivityIPv6, *nodebalancer.BackendConnectivity)
+	require.NotNil(t, nodebalancer.BackendIPv6Prefix)
+}
+
 func TestNodeBalancer_Create_with_ReservedIP(t *testing.T) {
 	_, reserveIP, nodebalancer, teardown, err := setupNodeBalancerWithReservedIP(t, "fixtures/TestNodeBalancer_With_ReservedIP_Create")
 	defer teardown()
@@ -66,8 +84,8 @@ func TestNodeBalancer_Create_with_ReservedIP(t *testing.T) {
 		t.Errorf("Error creating nodebalancer: %v", err)
 	}
 
-	// when comparing fixtures to random value Label will differ, compare the known suffix
-	if !strings.Contains(*nodebalancer.Label, label) {
+	// when comparing fixtures to random value Label will differ, compare the known prefix
+	if !strings.Contains(*nodebalancer.Label, labelPrefix) {
 		t.Errorf("nodebalancer returned does not match nodebalancer create request")
 	}
 
@@ -87,8 +105,8 @@ func TestNodeBalancer_Create_with_vpc(t *testing.T) {
 		t.Errorf("Error creating nodebalancer: %v", err)
 	}
 
-	// when comparing fixtures to random value Label will differ, compare the known suffix
-	if !strings.Contains(*nodebalancer.Label, label) {
+	// when comparing fixtures to random value Label will differ, compare the known prefix
+	if !strings.Contains(*nodebalancer.Label, labelPrefix) {
 		t.Errorf("nodebalancer returned does not match nodebalancer create request")
 	}
 

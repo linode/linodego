@@ -5,12 +5,15 @@
     "hostname": "existing.nodebalancer.linode.com",
     "ipv4": "192.0.2.2",
     "ipv6": "2600:3c03::f03c:91ff:fe24:abcd",
+    "backend_ipv6_prefix": "2600:3c22:1:20:0:3039::/96",
     "client_conn_throttle": 20,
     "transfer": {
       "total": 2000.0,
       "in": 1000.0,
       "out": 1000.0
     },
+    "type": "common",
+    "backend_connectivity": "undefined",
     "lke_cluster": null,
     "tags": ["production"],
     "locks": ["cannot_delete_with_subresources"],

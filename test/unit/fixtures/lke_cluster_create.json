@@ -6,6 +6,17 @@
     "subnet_id": 123,
     "vpc_id": 456,
     "stack_type": "ipv4",
+    "networking": {
+        "routing_mode": "vxlan",
+        "cluster_cidr_ipv4": "100.64.0.0/11",
+        "node_cidr_mask_size_ipv4": 24,
+        "service_cluster_ip_range_ipv4": "100.96.0.0/20",
+        "max_pods": 110,
+        "nodebalancer_backend_prefix_length": 21,
+        "cluster_cidr_ipv6": null,
+        "node_cidr_mask_size_ipv6": null,
+        "service_cluster_ip_range_ipv6": null
+    },
     "control_plane": {
         "audit_logs_enabled": false
     }

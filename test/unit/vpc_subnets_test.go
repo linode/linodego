@@ -23,7 +23,7 @@ func TestVPCSubnet_Create(t *testing.T) {
 		IPv4:  "192.168.1.0/24",
 		IPv6: []linodego.VPCSubnetCreateOptionsIPv6{
 			{
-				linodego.Pointer("auto"),
+				Range: linodego.Pointer("auto"),
 			},
 		},
 	}
