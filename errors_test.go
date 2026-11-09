@@ -31,8 +31,7 @@ func (e testError) Error() string {
 func httpError(reason, field string) *http.Response {
 	var reasons []APIErrorReason
 
-	// Allow for an empty reasons
-	if reason != "" && field != "" {
+	if reason != "" {
 		reasons = append(reasons, APIErrorReason{
 			Reason: reason,
 			Field:  field,
@@ -65,7 +64,7 @@ func TestNewError(t *testing.T) {
 	err := errors.New("test")
 	newErr := NewError(err)
 
-	if newErr.Message != err.Error() && newErr.Code != ErrorFromError {
+	if newErr.Message != err.Error() || newErr.Code != ErrorFromError {
 		t.Error("error should return ErrorFromError")
 	}
 
@@ -81,8 +80,12 @@ func TestNewError(t *testing.T) {
 		t.Error("Unexpected HTTP Error Response, no error")
 	}
 
-	if err := NewError(httpError("testreason", "testfield")); err.Message != "[testfield] testreason" {
-		t.Error("http response error should should be set")
+	if err := NewError(httpError("testreason", "testfield")); err.Message != "[testfield] testreason" || err.Code != http.StatusInternalServerError {
+		t.Errorf("unexpected HTTP response error: %v", err)
+	}
+
+	if err := NewError(httpError("testreason", "")); err.Message != "testreason" || err.Code != http.StatusInternalServerError {
+		t.Errorf("unexpected fieldless HTTP response error: %v", err)
 	}
 
 	if err := NewError("stringerror"); err.Message != "stringerror" || err.Code != ErrorFromString {
@@ -170,18 +173,10 @@ func TestCoupleAPIErrors(t *testing.T) {
 		}
 	})
 
-	t.Run("http response with nil error", func(t *testing.T) {
-		// Create the simulated HTTP response with a 500 status and a nil error
-		resp := &http.Response{
-			StatusCode: http.StatusInternalServerError,
-			Body:       io.NopCloser(bytes.NewBuffer([]byte(`{"errors":[]}`))), // empty errors array in body
-			Header:     http.Header{"Content-Type": []string{"application/json"}},
-			Request:    &http.Request{Header: http.Header{"Accept": []string{"application/json"}}},
-		}
-
-		_, err := coupleAPIErrors(resp, nil)
-		if err != nil {
-			t.Error("http error with no reasons should return no error")
+	t.Run("nil response", func(t *testing.T) {
+		resp, err := coupleAPIErrors(nil, nil)
+		if resp != nil || err == nil || err.Error() != "[002] response is nil" {
+			t.Fatalf("got response %v, error %v; want nil response and response-is-nil error", resp, err)
 		}
 	})
 
@@ -227,6 +222,9 @@ func TestCoupleAPIErrors(t *testing.T) {
 		defer resp.Body.Close()
 
 		_, err = coupleAPIErrors(resp, nil)
+		if err == nil {
+			t.Fatal("expected an error for an HTML response")
+		}
 
 		if !strings.Contains(err.Error(), strconv.Itoa(expectedError.Code)) {
 			t.Errorf("expected error code %d, got %d", expectedError.Code, resp.StatusCode)
@@ -265,6 +263,9 @@ func TestCoupleAPIErrors(t *testing.T) {
 		}
 
 		_, err := coupleAPIErrors(resp, nil)
+		if err == nil {
+			t.Fatal("expected a bad gateway error")
+		}
 		if !strings.Contains(err.Error(), strconv.Itoa(expectedError.Code)) {
 			t.Errorf("expected error code %d, got %d", expectedError.Code, resp.StatusCode)
 		}
@@ -361,8 +362,8 @@ func TestErrorIs(t *testing.T) {
 		t.Run(tc.testName, func(t *testing.T) {
 			t.Parallel()
 
-			if errors.Is(tc.err1, tc.err2) != tc.expectedResult {
-				t.Errorf("expected %+#v to be equal %+#v", tc.err1, tc.err2)
+			if got := errors.Is(tc.err1, tc.err2); got != tc.expectedResult {
+				t.Errorf("errors.Is(%v, %v) = %t, want %t", tc.err1, tc.err2, got, tc.expectedResult)
 			}
 		})
 	}
@@ -383,10 +384,8 @@ func TestIsNotFound(t *testing.T) {
 		name := http.StatusText(tt.code)
 		t.Run(name, func(t *testing.T) {
 			err := &Error{Code: tt.code}
-			if matches := IsNotFound(err); !matches && tt.match {
-				t.Errorf("should have matched %d", tt.code)
-			} else if matches && !tt.match {
-				t.Errorf("shoudl not have matched %d", tt.code)
+			if got := IsNotFound(err); got != tt.match {
+				t.Errorf("IsNotFound(%v) = %t, want %t", err, got, tt.match)
 			}
 		})
 	}
@@ -429,15 +428,19 @@ func TestErrHasStatusCode(t *testing.T) {
 			name:  "NilError",
 			codes: []int{http.StatusGone},
 		},
+		{
+			name:  "WrappedError",
+			err:   fmt.Errorf("request failed: %w", &Error{Code: http.StatusForbidden}),
+			codes: []int{http.StatusForbidden},
+			match: true,
+		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got := ErrHasStatus(tt.err, tt.codes...)
-			if !got && tt.match {
-				t.Errorf("should have matched")
-			} else if got && !tt.match {
-				t.Errorf("should not have matched")
+			if got != tt.match {
+				t.Errorf("ErrHasStatus(%v, %v) = %t, want %t", tt.err, tt.codes, got, tt.match)
 			}
 		})
 	}
