@@ -43,6 +43,7 @@ const (
 	CapabilityMachineImages                    RegionCapability = "Machine Images"
 	CapabilityMaintenancePolicy                RegionCapability = "Maintenance Policy"
 	CapabilityMetadata                         RegionCapability = "Metadata"
+	CapabilityNFSStorage                       RegionCapability = "NFS Storage"
 	CapabilityNLB                              RegionCapability = "Network LoadBalancer"
 	CapabilityNodeBalancers                    RegionCapability = "NodeBalancers"
 	CapabilityObjectStorage                    RegionCapability = "Object Storage"
