@@ -13,8 +13,10 @@ import (
 
 func setNFSFilesystemCreateOptions(t *testing.T, client *linodego.Client) linodego.NFSFilesystemCreateOptions {
 	return linodego.NFSFilesystemCreateOptions{
-		Label:            "go-test-nfs-filesystem-" + randLabel(),
-		Region:           getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityNFSStorage})[0],
+		Label: "go-test-nfs-filesystem-" + randLabel(),
+		Region: getRegionsWithCaps(t, client, []linodego.RegionCapability{
+			linodego.CapabilityVPCs, linodego.CapabilityVPCDualStack, linodego.CapabilityNFSStorage,
+		})[0],
 		MaxCapacityBytes: linodego.Pointer(int64(1099511627776)),
 		MaxFileCount:     linodego.Pointer(int64(1500)),
 		ProtocolVersions: linodego.Pointer([]linodego.NFSProtocolVersion{linodego.NFSProtocolVersionV4}),
@@ -268,13 +270,14 @@ func TestNFSFilesystem_GetAccessPolicy_smoke(t *testing.T) {
 }
 
 func TestNFSFilesystem_UpdateAccessPolicy(t *testing.T) {
-	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_UpdateAccessPolicy", false)
+	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_UpdateAccessPolicy", true)
 
 	linode, err := createInstance(
 		t,
 		client,
 		true,
 		func(client *linodego.Client, opts *linodego.InstanceCreateOptions) {
+			opts.Type = "g8-dedicated-4-2"
 			opts.Region = filesystem.Region
 			opts.Booted = linodego.Pointer(true)
 		},
@@ -292,7 +295,7 @@ func TestNFSFilesystem_UpdateAccessPolicy(t *testing.T) {
 	updateOpts := linodego.NFSFilesystemAccessPolicyUpdateOptions{
 		Enabled:      linodego.Pointer(true),
 		LinodeIDs:    linodego.Pointer([]int{linode.ID}),
-		SquashPolicy: linodego.Pointer(linodego.NFSSquashPolicyAllSquash),
+		SquashPolicy: linodego.Pointer(linodego.NFSSquashPolicyNone),
 	}
 
 	filesystemAccPolicyUpdate, err := client.UpdateNFSFilesystemAccessPolicy(
