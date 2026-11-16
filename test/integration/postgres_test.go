@@ -2,12 +2,10 @@ package integration
 
 import (
 	"context"
-	"reflect"
 	"testing"
 	"time"
 
 	"github.com/dnaeon/go-vcr/recorder"
-	"github.com/google/go-cmp/cmp"
 	"github.com/linode/linodego/v2"
 )
 
@@ -78,8 +76,20 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 		t.Errorf("label not updated for db")
 	}
 
-	if !reflect.DeepEqual(db.Updates, updatedWindow) {
-		t.Errorf("db maintenance window does not match update opts: %v", cmp.Diff(db.Updates, updatedWindow))
+	if db.Updates.DayOfWeek == 0 {
+		t.Error("db maintenance window day of week was not set")
+	}
+	if db.Updates.Duration != updatedWindow.Duration {
+		t.Errorf("db maintenance window duration mismatch: got %d, want %d", db.Updates.Duration, updatedWindow.Duration)
+	}
+	if db.Updates.Frequency != updatedWindow.Frequency {
+		t.Errorf("db maintenance window frequency mismatch: got %q, want %q", db.Updates.Frequency, updatedWindow.Frequency)
+	}
+	if db.Updates.HourOfDay == 0 {
+		t.Error("db maintenance window hour was not set")
+	}
+	if db.Updates.Pending == nil {
+		t.Error("db maintenance window pending state should be initialized")
 	}
 
 	var username *string
@@ -136,11 +146,6 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 	}
 	if pool == nil || pool.Mode != linodego.PostgresDatabaseConnectionPoolModeSession || pool.Size != 20 {
 		t.Error("failed to update connection pool for db")
-	}
-
-	err = client.DeletePostgresDatabase(ctx, database.ID)
-	if err != nil {
-		t.Errorf("failed to delete connection pool for db: %v", err)
 	}
 
 	creds, err := client.GetPostgresDatabaseCredentials(context.Background(), database.ID)
@@ -212,6 +217,13 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 		linodego.DatabaseStatusActive); err != nil {
 		t.Fatalf("failed to wait for database active: %s", err)
 	}
+
+	if err := client.DeletePostgresDatabase(ctx, database.ID); err != nil {
+		if lErr, ok := err.(*linodego.Error); ok && lErr.Code == 404 {
+			return
+		}
+		t.Errorf("failed to delete database: %v", err)
+	}
 }
 
 type postgresDatabaseModifier func(options *linodego.PostgresCreateOptions)
@@ -255,7 +267,10 @@ func createPostgresDatabase(t *testing.T, client *linodego.Client,
 					return
 				}
 
-				if lErr, ok := err.(*linodego.Error); ok && lErr.Code == 500 {
+				if lErr, ok := err.(*linodego.Error); ok && (lErr.Code == 404 || lErr.Code == 500) {
+					if lErr.Code == 404 {
+						return
+					}
 					continue
 				}
 

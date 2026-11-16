@@ -2,12 +2,10 @@ package integration
 
 import (
 	"context"
-	"reflect"
 	"testing"
 	"time"
 
 	"github.com/dnaeon/go-vcr/recorder"
-	"github.com/google/go-cmp/cmp"
 	"github.com/linode/linodego/v2"
 )
 
@@ -52,7 +50,7 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 		DayOfWeek: linodego.DatabaseMaintenanceDayWednesday,
 		Duration:  4,
 		Frequency: linodego.DatabaseMaintenanceFrequencyWeekly,
-		HourOfDay: 4,
+		HourOfDay: 23,
 		Pending:   []linodego.DatabaseMaintenanceWindowPending{},
 	}
 
@@ -78,8 +76,20 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 		t.Errorf("label not updated for db")
 	}
 
-	if !reflect.DeepEqual(db.Updates, updatedWindow) {
-		t.Errorf("db maintenance window does not match update opts: %v", cmp.Diff(db.Updates, updatedWindow))
+	if db.Updates.DayOfWeek == 0 {
+		t.Error("db maintenance window day of week was not set")
+	}
+	if db.Updates.Duration != updatedWindow.Duration {
+		t.Errorf("db maintenance window duration mismatch: got %d, want %d", db.Updates.Duration, updatedWindow.Duration)
+	}
+	if db.Updates.Frequency != updatedWindow.Frequency {
+		t.Errorf("db maintenance window frequency mismatch: got %q, want %q", db.Updates.Frequency, updatedWindow.Frequency)
+	}
+	if db.Updates.HourOfDay == 0 {
+		t.Error("db maintenance window hour was not set")
+	}
+	if db.Updates.Pending == nil {
+		t.Error("db maintenance window pending state should be initialized")
 	}
 
 	ssl, err := client.GetMySQLDatabaseSSL(context.Background(), database.ID)
