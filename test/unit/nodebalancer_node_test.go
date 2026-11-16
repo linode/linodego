@@ -35,6 +35,32 @@ func TestNodeBalancerNode_Create(t *testing.T) {
 	assert.Equal(t, linodego.ModeAccept, node.Mode)
 }
 
+func TestNodeBalancerNode_Create_IPv6(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("nodebalancer_node_create_ipv6")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockPost("nodebalancers/123/configs/456/nodes", fixtureData)
+
+	createOpts := linodego.NodeBalancerNodeCreateOptions{
+		Address: "[2001:db8:abcd:12::1]:80",
+		Label:   "IPv6 Node",
+		Weight:  50,
+		Mode:    linodego.ModeAccept,
+	}
+	node, err := base.Client.CreateNodeBalancerNode(context.Background(), 123, 456, createOpts)
+	assert.NoError(t, err)
+
+	assert.Equal(t, 790, node.ID)
+	assert.Equal(t, "[2001:db8:abcd:12::1]:80", node.Address)
+	assert.Equal(t, "IPv6 Node", node.Label)
+	assert.Equal(t, 50, node.Weight)
+	assert.Equal(t, linodego.ModeAccept, node.Mode)
+}
+
 func TestNodeBalancerNode_Update(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("nodebalancer_node_update")
 	assert.NoError(t, err)

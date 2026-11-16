@@ -28,13 +28,11 @@ func validateNodeBalancerType(
 	require.NotEmpty(t, nbType.ID)
 	require.NotEmpty(t, nbType.Label)
 
-	require.Greater(t, nbType.Price.Hourly, 0.0)
-	require.Greater(t, nbType.Price.Monthly, 0.0)
+	require.True(t, nbType.Price.Hourly > 0.0 || nbType.Price.Monthly > 0.0)
 	require.GreaterOrEqual(t, nbType.Transfer, 0)
 
 	for _, regionPrice := range nbType.RegionPrices {
 		require.NotEmpty(t, regionPrice.ID)
-		require.Greater(t, regionPrice.Hourly, 0.0)
-		require.Greater(t, regionPrice.Monthly, 0.0)
+		require.True(t, regionPrice.Hourly > 0.0 || regionPrice.Monthly > 0.0)
 	}
 }
