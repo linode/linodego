@@ -3,6 +3,7 @@ package linodego
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"time"
 
 	"github.com/linode/linodego/v2/internal/parseabletime"
@@ -16,6 +17,15 @@ const (
 	StreamTypeAuditLogs StreamType = "audit_logs"
 	// StreamTypeLKEAuditLogs configures a stream for LKE enterprise cluster audit logs.
 	StreamTypeLKEAuditLogs StreamType = "lke_audit_logs"
+)
+
+const (
+	// AuditLogCategoryConfig selects configuration audit logs.
+	AuditLogCategoryConfig = "config"
+	// AuditLogCategoryLogin selects login audit logs.
+	AuditLogCategoryLogin = "login"
+	// AuditLogCategoryDataPlane selects data plane audit logs, when enabled by the API.
+	AuditLogCategoryDataPlane = "data_plane"
 )
 
 // StreamStatus represents the availability state of an ACLP logs stream.
@@ -43,10 +53,38 @@ const (
 )
 
 // StreamDetails contains additional details for a logs stream.
-// This only applies to streams with a Type of StreamTypeLKEAuditLogs.
+// Use Categories for audit logs, ClusterIDs and IsAutoAddAllClustersEnabled
+// for LKE audit logs.
+// Do not mix fields belonging to different stream types.
 type StreamDetails struct {
-	ClusterIDs                  []int `json:"cluster_ids,omitzero"`
-	IsAutoAddAllClustersEnabled bool  `json:"is_auto_add_all_clusters_enabled"`
+	// Categories selects audit log categories: config, login, and data_plane.
+	// On creation, omitting details or providing an empty category list lets the
+	// API select the enabled default categories (normally config and login).
+	// On update, a non-empty list replaces the selection; omitted or empty
+	// categories preserve it. Responses are deduplicated and sorted.
+	// To provide empty audit log details, use Categories: []string{}. A nil
+	// Categories field is serialized as LKE details.
+	Categories                  []string `json:"categories,omitzero"`
+	ClusterIDs                  []int    `json:"cluster_ids,omitzero"`
+	IsAutoAddAllClustersEnabled bool     `json:"is_auto_add_all_clusters_enabled"`
+}
+
+// MarshalJSON omits LKE-specific fields for audit log details while
+// preserving explicit false values for existing LKE configurations.
+func (s StreamDetails) MarshalJSON() ([]byte, error) {
+	if s.Categories != nil {
+		if s.ClusterIDs != nil || s.IsAutoAddAllClustersEnabled {
+			return nil, errors.New("audit log categories cannot include LKE settings")
+		}
+
+		return json.Marshal(struct {
+			Categories []string `json:"categories"`
+		}{Categories: s.Categories})
+	}
+
+	type mask StreamDetails
+
+	return json.Marshal(mask(s))
 }
 
 // StreamDestination is a destination configured on an ACLP logs stream.
