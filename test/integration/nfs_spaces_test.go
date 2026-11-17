@@ -121,7 +121,7 @@ func TestNFSSpace_GetAccessPolicy_smoke(t *testing.T) {
 
 func TestNFSSpace_UpdateAccessPolicy(t *testing.T) {
 	t.Skip("Access Policy update is stuck with 'updating' status. Issue: NFSAAS-405")
-	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSSpace_UpdateAccessPolicy", true)
+	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSSpace_UpdateAccessPolicy", false, true)
 
 	vpc, _, vpcWithSubnetTeardown, err := createVPCWithDualStackSubnet(
 		t,

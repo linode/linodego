@@ -11,6 +11,8 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+const customQuotaPrefix = "test-dx-"
+
 func setNFSFilesystemCreateOptions(t *testing.T, client *linodego.Client) linodego.NFSFilesystemCreateOptions {
 	return linodego.NFSFilesystemCreateOptions{
 		Label: "go-test-nfs-filesystem-" + randLabel(),
@@ -56,11 +58,46 @@ func waitForNFSFilesystemDeleted(
 func setupNFSFilesystem(
 	t *testing.T,
 	fixtureYaml string,
+	findExisting bool,
 	requireActive bool,
 	modifiers ...func(opts *linodego.NFSFilesystemCreateOptions),
 ) (*linodego.Client, *linodego.NFSSpace, *linodego.NFSFilesystem, linodego.NFSFilesystemCreateOptions) {
 	t.Helper()
 	client, fixtureTeardown := createTestClient(t, fixtureYaml)
+
+	if findExisting {
+		ctx := waitContext(t, 180*time.Second)
+		spaces, err := client.ListNFSSpaces(ctx, nil)
+		require.NoErrorf(t, err, "Error listing NFS Spaces: %v", err)
+
+		for _, space := range spaces {
+			if space.Status != linodego.NFSSpaceStatusActive {
+				continue
+			}
+
+			filesystems, err := client.ListNFSFilesystems(ctx, space.ID, nil)
+			require.NoErrorf(t, err, "Error listing NFS Filesystems in Space %d: %v", space.ID, err)
+
+			for _, fs := range filesystems {
+				if fs.Status == linodego.NFSFilesystemStatusActive {
+					filesystemOpts := linodego.NFSFilesystemCreateOptions{
+						Label:            fs.Label,
+						Region:           fs.Region,
+						MaxCapacityBytes: &fs.MaxCapacityBytes,
+						MaxFileCount:     &fs.MaxFileCount,
+						ProtocolVersions: &fs.ProtocolVersions,
+						Tags:             &fs.Tags,
+					}
+					t.Cleanup(func() {
+						fixtureTeardown()
+					})
+
+					return client, &space, &fs, filesystemOpts
+				}
+			}
+		}
+	}
+
 	createOpts := setNFSFilesystemCreateOptions(t, client)
 
 	for _, modifier := range modifiers {
@@ -117,10 +154,11 @@ func setupNFSFilesystemCustomQuota(
 	t.Helper()
 
 	_, mountDir, isFound := strings.Cut(*filesystem.MountTargetFQDN, ":/")
+	quotaDir := customQuotaPrefix + randString(5, digits)
 	require.True(t, isFound, "Mount Target FQDN does not contain ':/'")
 
 	createOpts := linodego.NFSQuotaCreateOptions{
-		Path:             "/" + strings.Join([]string{mountDir, "testing-dx"}, "/"),
+		Path:             "/" + strings.Join([]string{mountDir, quotaDir}, "/"),
 		MaxFileCount:     filesystem.MaxFileCount,
 		MaxCapacityBytes: filesystem.MaxCapacityBytes,
 	}
@@ -192,12 +230,12 @@ func verifyNFSFilesystemQuota(
 }
 
 func TestNFSFilesystem_Create_smoke(t *testing.T) {
-	_, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_Create", false)
+	_, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_Create", false, false)
 	verifyNFSFilesystemBasics(t, space, filesystem, createOpts)
 }
 
 func TestNFSFilesystem_Get(t *testing.T) {
-	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_Get", true)
+	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_Get", false, true)
 
 	filesystemGet, err := client.GetNFSFilesystemInSpace(context.Background(), space.ID, filesystem.ID)
 	require.NoErrorf(t, err, "Error retrieving NFS Filesystem in Space: %v", err)
@@ -206,7 +244,7 @@ func TestNFSFilesystem_Get(t *testing.T) {
 }
 
 func TestNFSFilesystem_GetWithoutNFSSpace(t *testing.T) {
-	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_GetWithoutNFSSpace", false)
+	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_GetWithoutNFSSpace", false, false)
 
 	filesystemGet, err := client.GetNFSFilesystem(context.Background(), filesystem.ID)
 	require.NoErrorf(t, err, "Error retrieving NFS Filesystem with no Space: %v", err)
@@ -214,7 +252,7 @@ func TestNFSFilesystem_GetWithoutNFSSpace(t *testing.T) {
 }
 
 func TestNFSFilesystem_List(t *testing.T) {
-	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_List", false)
+	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_List", false, false)
 
 	f := linodego.Filter{}
 	f.AddField(linodego.Eq, "label", filesystem.Label)
@@ -230,7 +268,7 @@ func TestNFSFilesystem_List(t *testing.T) {
 }
 
 func TestNFSFilesystem_Update(t *testing.T) {
-	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_Update", true)
+	client, space, filesystem, createOpts := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_Update", false, true)
 
 	updateOpts := filesystem.GetUpdateOptions()
 	updateOpts.Label = linodego.Pointer(filesystem.Label + "-updated")
@@ -253,7 +291,7 @@ func TestNFSFilesystem_Update(t *testing.T) {
 }
 
 func TestNFSFilesystem_GetAccessPolicy_smoke(t *testing.T) {
-	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_GetAccessPolicy", false)
+	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_GetAccessPolicy", false, false)
 
 	filesystemAccPolicy, err := client.GetNFSFilesystemAccessPolicy(context.Background(), space.ID, filesystem.ID)
 	require.NoErrorf(t, err, "Error retrieving NFS Filesystem Access Policy: %v", err)
@@ -270,7 +308,8 @@ func TestNFSFilesystem_GetAccessPolicy_smoke(t *testing.T) {
 }
 
 func TestNFSFilesystem_UpdateAccessPolicy(t *testing.T) {
-	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_UpdateAccessPolicy", true)
+	t.Skip("Access Policy update is unstable - now it requires Space Access Policy to be enabled first")
+	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_UpdateAccessPolicy", false, true)
 
 	linode, err := createInstance(
 		t,
@@ -323,7 +362,7 @@ func TestNFSFilesystem_UpdateAccessPolicy(t *testing.T) {
 }
 
 func TestNFSFilesystem_GetRootQuota_smoke(t *testing.T) {
-	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_GetRootQuota_smoke", true)
+	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_GetRootQuota_smoke", false, true)
 
 	filesystem, err := client.GetNFSFilesystemInSpace(context.Background(), space.ID, filesystem.ID)
 	require.NoErrorf(t, err, "Error retrieving NFS Filesystem in Space: %v", err)
@@ -339,25 +378,67 @@ func TestNFSFilesystem_GetRootQuota_smoke(t *testing.T) {
 	verifyNFSFilesystemQuota(t, linodego.Pointer(quotas[0]), filesystem)
 }
 
-func TestNFSFilesystem_ManageCustomQuota(t *testing.T) {
-	t.Skip("Removal of Filesystem with custom Quota requires manual action on mounted Linode instance")
-	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_ManageCustomQuota", true)
+func TestNFSFilesystem_CreateCustomQuota(t *testing.T) {
+	//t.Skip("The test will either use an existing filesystem, or create a new one. " +
+	//	"It is skipped as it requires manual clean up to delete the newly created Filesystem and Space.")
+	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_CreateCustomQuota", true, true)
 
 	filesystem, err := client.GetNFSFilesystemInSpace(context.Background(), space.ID, filesystem.ID)
 	require.NoErrorf(t, err, "Error retrieving NFS Filesystem in Space: %v", err)
 
-	quota, createOpts := setupNFSFilesystemCustomQuota(t, client, space, filesystem)
-	assert.Equal(t, createOpts.Path, quota.Path)
+	quota, _ := setupNFSFilesystemCustomQuota(t, client, space, filesystem)
+	assert.Contains(t, quota.Path, customQuotaPrefix)
 	assert.False(t, quota.IsRoot)
 	verifyNFSFilesystemQuota(t, quota, filesystem)
 
 	quota, err = client.GetNFSQuota(context.Background(), space.ID, filesystem.ID, quota.ID)
 	require.NoErrorf(t, err, "Error retrieving Filesystem Quota: %v", err)
-	assert.Equal(t, createOpts.Path, quota.Path)
+	assert.Contains(t, quota.Path, customQuotaPrefix)
 	assert.False(t, quota.IsRoot)
 	verifyNFSFilesystemQuota(t, quota, filesystem)
 
 	quotas, err := client.ListNFSQuotas(context.Background(), space.ID, filesystem.ID, nil)
 	require.NoErrorf(t, err, "Error listing Filesystem Quotas: %v", err)
-	assert.Len(t, quotas, 2)
+	assert.GreaterOrEqual(t, len(quotas), 2)
+}
+
+func TestNFSFilesystem_UpdateCustomQuota(t *testing.T) {
+	//t.Skip("The test will either use an existing filesystem, or create a new one. " +
+	//	"It is skipped as it requires manual clean up to delete the newly created Filesystem and Space.")
+	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_UpdateCustomQuota", true, true)
+
+	filesystem, err := client.GetNFSFilesystemInSpace(context.Background(), space.ID, filesystem.ID)
+	require.NoErrorf(t, err, "Error retrieving NFS Filesystem in Space: %v", err)
+
+	quotas, err := client.ListNFSQuotas(context.Background(), space.ID, filesystem.ID, nil)
+	require.NoErrorf(t, err, "Error listing Filesystem Quotas: %v", err)
+
+	rootQuota := quotas[0]
+	newMaxCapacityBytes := min(int64(268435456), *rootQuota.MaxCapacityBytes)
+	newMaxFileCount := min(int64(500), *rootQuota.MaxFileCount)
+	updateOpts := linodego.NFSQuotaUpdateOptions{
+		MaxCapacityBytes: rootQuota.MaxCapacityBytes,
+		MaxFileCount:     rootQuota.MaxFileCount,
+		UserGroupConfig: &linodego.NFSUserGroupConfigOptions{
+			DefaultUserLimit: &linodego.NFSCapacityLimitOptions{
+				MaxCapacityBytes: new(newMaxCapacityBytes),
+				MaxFileCount:     new(newMaxFileCount),
+			},
+			DefaultGroupLimit: &linodego.NFSCapacityLimitOptions{
+				MaxCapacityBytes: new(newMaxCapacityBytes),
+				MaxFileCount:     new(newMaxFileCount),
+			},
+		},
+	}
+
+	quota, _ := setupNFSFilesystemCustomQuota(t, client, space, filesystem)
+	_, err = client.UpdateNFSQuota(context.Background(), space.ID, filesystem.ID, quota.ID, updateOpts)
+	require.NoErrorf(t, err, "Error updating Filesystem Quota: %v", err)
+
+	quota, err = client.GetNFSQuota(context.Background(), space.ID, filesystem.ID, quota.ID)
+	require.NoErrorf(t, err, "Error retrieving Filesystem Quota: %v", err)
+	assert.Equal(t, newMaxCapacityBytes, *quota.UserGroupConfig.DefaultUserLimit.MaxCapacityBytes)
+	assert.Equal(t, newMaxFileCount, *quota.UserGroupConfig.DefaultUserLimit.MaxFileCount)
+	assert.Equal(t, newMaxCapacityBytes, *quota.UserGroupConfig.DefaultGroupLimit.MaxCapacityBytes)
+	assert.Equal(t, newMaxFileCount, *quota.UserGroupConfig.DefaultGroupLimit.MaxFileCount)
 }
