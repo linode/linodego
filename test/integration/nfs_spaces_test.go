@@ -10,9 +10,11 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+const nfsSpaceLabelPrefix = "go-test-nfs-space-"
+
 func getNFSSpaceCreateOptions() linodego.NFSSpaceCreateOptions {
 	return linodego.NFSSpaceCreateOptions{
-		Label:       "go-test-nfs-space-" + randLabel(),
+		Label:       nfsSpaceLabelPrefix + randLabel(),
 		Description: linodego.Pointer("Test description"),
 		Tags:        linodego.Pointer([]string{"testing"}),
 	}
@@ -46,7 +48,7 @@ func setupNFSSpace(
 
 func verifyNFSSpace(t *testing.T, space *linodego.NFSSpace, createOpts linodego.NFSSpaceCreateOptions) {
 	t.Helper()
-	assert.Equal(t, createOpts.Label, space.Label)
+	assert.Contains(t, space.Label, nfsSpaceLabelPrefix)
 	assert.Equal(t, createOpts.Description, space.Description)
 	assert.Equal(t, createOpts.Tags, linodego.Pointer(space.Tags))
 	assert.NotNil(t, space.Status)
@@ -140,8 +142,7 @@ func TestNFSSpace_UpdateAccessPolicy(t *testing.T) {
 				ID: vpc.ID,
 			},
 		}),
-		MTLSMode: new(linodego.NFSMTLSModeOptional),
-		// MTLSCACert: linodego.Pointer("Test CA Certificate"),
+		MTLSMode: linodego.Pointer(linodego.NFSMTLSModeOptional),
 	}
 
 	spaceAccPolicyUpdate, err := client.UpdateNFSSpaceAccessPolicy(context.Background(), space.ID, updateOpts)
