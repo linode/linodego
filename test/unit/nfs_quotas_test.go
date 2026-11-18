@@ -53,8 +53,8 @@ func TestNFSQuota_Create(t *testing.T) {
 	client := createMockClient(t)
 	opts := linodego.NFSQuotaCreateOptions{
 		Path:             "/training-data-10932/data/project-x",
-		MaxCapacityBytes: 107374182400,
-		MaxFileCount:     1000000,
+		MaxCapacityBytes: linodego.Pointer[int64](107374182400),
+		MaxFileCount:     linodego.Pointer[int64](1000000),
 		UserGroupConfig: &linodego.NFSUserGroupConfigOptions{
 			DefaultUserLimit: &linodego.NFSCapacityLimitOptions{
 				MaxCapacityBytes: linodego.Pointer[int64](107374182400),
