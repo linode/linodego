@@ -68,7 +68,7 @@ func TestNFSFilesystem_Create(t *testing.T) {
 	opts := linodego.NFSFilesystemCreateOptions{
 		Label:            "training-data",
 		Region:           "us-east",
-		MaxCapacityBytes: 1099511627776,
+		MaxCapacityBytes: linodego.Pointer(int64(1099511627776)),
 		ProtocolVersions: linodego.Pointer([]linodego.NFSProtocolVersion{linodego.NFSProtocolVersionV4}),
 		Tags:             linodego.Pointer([]string{"production"}),
 	}
