@@ -31,7 +31,6 @@ func TestNFSSpaceAccessPolicy_Update(t *testing.T) {
 
 	client := createMockClient(t)
 	opts := linodego.NFSSpaceAccessPolicyUpdateOptions{
-		Label:      linodego.Pointer("production-policy"),
 		Enabled:    linodego.Pointer(true),
 		VPCs:       linodego.Pointer([]linodego.NFSSpaceAccessPolicyVPCOptions{{ID: 789, Subnets: []int{101}}}),
 		MTLSMode:   linodego.Pointer(linodego.NFSMTLSModeOptional),
@@ -70,8 +69,8 @@ func TestNFSFilesystemAccessPolicy_Update(t *testing.T) {
 
 	client := createMockClient(t)
 	opts := linodego.NFSFilesystemAccessPolicyUpdateOptions{
-		Label:        linodego.Pointer("filesystem-policy"),
 		Enabled:      linodego.Pointer(true),
+		Inherit:      linodego.Pointer(true),
 		LinodeIDs:    linodego.Pointer([]int{987}),
 		SquashPolicy: linodego.Pointer(linodego.NFSSquashPolicyRootSquash),
 		Protocols:    linodego.Pointer([]linodego.NFSProtocolVersion{linodego.NFSProtocolVersionV4}),
@@ -115,6 +114,7 @@ func assertNFSFilesystemAccessPolicy(t *testing.T, policy *linodego.NFSFilesyste
 
 	assert.Equal(t, 456, policy.FilesystemID)
 	assert.Equal(t, "filesystem-policy", policy.Label)
+	assert.True(t, policy.Inherit)
 	assert.True(t, policy.Enabled)
 	assert.Equal(t, linodego.NFSSquashPolicyRootSquash, policy.SquashPolicy)
 	assert.Equal(t, []linodego.NFSProtocolVersion{linodego.NFSProtocolVersionV4}, policy.Protocols)

@@ -53,8 +53,8 @@ func TestNFSQuota_Create(t *testing.T) {
 	client := createMockClient(t)
 	opts := linodego.NFSQuotaCreateOptions{
 		Path:             "/training-data-10932/data/project-x",
-		MaxCapacityBytes: 107374182400,
-		MaxFileCount:     1000000,
+		MaxCapacityBytes: linodego.Pointer[int64](107374182400),
+		MaxFileCount:     linodego.Pointer[int64](1000000),
 		UserGroupConfig: &linodego.NFSUserGroupConfigOptions{
 			DefaultUserLimit: &linodego.NFSCapacityLimitOptions{
 				MaxCapacityBytes: linodego.Pointer[int64](107374182400),
@@ -100,34 +100,36 @@ func TestNFSQuota_Update(t *testing.T) {
 
 	client := createMockClient(t)
 	opts := linodego.NFSQuotaUpdateOptions{
-		MaxCapacityBytes: linodego.Pointer[int64](107374182400),
-		MaxFileCount:     linodego.Pointer[int64](1000000),
-		UserGroupConfig: &linodego.NFSUserGroupConfigOptions{
-			DefaultUserLimit: &linodego.NFSCapacityLimitOptions{
-				MaxCapacityBytes: linodego.Pointer[int64](107374182400),
-				MaxFileCount:     linodego.Pointer[int64](1000000),
-			},
-			DefaultGroupLimit: &linodego.NFSCapacityLimitOptions{
-				MaxCapacityBytes: linodego.Pointer[int64](107374182400),
-				MaxFileCount:     linodego.Pointer[int64](1000000),
-			},
-			UserLimits: &[]linodego.NFSIdentifiedLimitOptions{
-				{
-					IdentifierType:   linodego.NFSQuotaRuleIdentifierTypeUID,
-					Identifier:       "1001",
+		MaxCapacityBytes: linodego.Pointer(linodego.Pointer[int64](107374182400)),
+		MaxFileCount:     linodego.Pointer(linodego.Pointer[int64](1000000)),
+		UserGroupConfig: linodego.Pointer(
+			linodego.Pointer(linodego.NFSUserGroupConfigOptions{
+				DefaultUserLimit: &linodego.NFSCapacityLimitOptions{
 					MaxCapacityBytes: linodego.Pointer[int64](107374182400),
 					MaxFileCount:     linodego.Pointer[int64](1000000),
 				},
-			},
-			GroupLimits: &[]linodego.NFSIdentifiedLimitOptions{
-				{
-					IdentifierType:   linodego.NFSQuotaRuleIdentifierTypeUID,
-					Identifier:       "1001",
+				DefaultGroupLimit: &linodego.NFSCapacityLimitOptions{
 					MaxCapacityBytes: linodego.Pointer[int64](107374182400),
 					MaxFileCount:     linodego.Pointer[int64](1000000),
 				},
-			},
-		},
+				UserLimits: &[]linodego.NFSIdentifiedLimitOptions{
+					{
+						IdentifierType:   linodego.NFSQuotaRuleIdentifierTypeUID,
+						Identifier:       "1001",
+						MaxCapacityBytes: linodego.Pointer[int64](107374182400),
+						MaxFileCount:     linodego.Pointer[int64](1000000),
+					},
+				},
+				GroupLimits: &[]linodego.NFSIdentifiedLimitOptions{
+					{
+						IdentifierType:   linodego.NFSQuotaRuleIdentifierTypeUID,
+						Identifier:       "1001",
+						MaxCapacityBytes: linodego.Pointer[int64](107374182400),
+						MaxFileCount:     linodego.Pointer[int64](1000000),
+					},
+				},
+			}),
+		),
 	}
 
 	httpmock.RegisterRegexpResponder(
