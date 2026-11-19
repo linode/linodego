@@ -67,7 +67,7 @@ type NFSFilesystemCreateOptions struct {
 type NFSFilesystemUpdateOptions struct {
 	Label            *string   `json:"label,omitzero"`
 	MaxCapacityBytes *int64    `json:"max_capacity_bytes,omitzero"`
-	MaxFileCount     *int64    `json:"max_file_count,omitzero"`
+	MaxFileCount     **int64   `json:"max_file_count,omitzero"`
 	Tags             *[]string `json:"tags,omitzero"`
 }
 
@@ -147,7 +147,7 @@ func (n NFSFilesystem) GetUpdateOptions() NFSFilesystemUpdateOptions {
 	result := NFSFilesystemUpdateOptions{
 		Label:            Pointer(n.Label),
 		MaxCapacityBytes: Pointer(n.MaxCapacityBytes),
-		MaxFileCount:     Pointer(n.MaxFileCount),
+		MaxFileCount:     Pointer(Pointer(n.MaxFileCount)),
 	}
 
 	if n.Tags != nil {

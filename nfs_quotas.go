@@ -99,9 +99,9 @@ type NFSQuotaCreateOptions struct {
 
 // NFSQuotaUpdateOptions contains fields accepted when updating an NFS Quota.
 type NFSQuotaUpdateOptions struct {
-	MaxCapacityBytes *int64                     `json:"max_capacity_bytes,omitzero"`
-	MaxFileCount     *int64                     `json:"max_file_count,omitzero"`
-	UserGroupConfig  *NFSUserGroupConfigOptions `json:"user_group_config,omitzero"`
+	MaxCapacityBytes **int64                     `json:"max_capacity_bytes,omitzero"`
+	MaxFileCount     **int64                     `json:"max_file_count,omitzero"`
+	UserGroupConfig  **NFSUserGroupConfigOptions `json:"user_group_config,omitzero"`
 }
 
 // NFSUserGroupConfigOptions contains fields for updating user and group quota configuration.

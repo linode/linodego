@@ -83,7 +83,7 @@ func setupNFSFilesystem(
 			require.NoErrorf(t, err, "Error listing NFS Filesystems in Space %d: %v", space.ID, err)
 
 			for _, fs := range filesystems {
-				if fs.Status == linodego.NFSFilesystemStatusActive {
+				if fs.Status == linodego.NFSFilesystemStatusActive && fs.MaxCapacityBytes != 0 && fs.MaxFileCount != 0 {
 					filesystemOpts := linodego.NFSFilesystemCreateOptions{
 						Label:            fs.Label,
 						Region:           fs.Region,
@@ -272,7 +272,7 @@ func TestNFSFilesystem_Update(t *testing.T) {
 	updateOpts.Label = linodego.Pointer(filesystem.Label + "-updated")
 	updateOpts.Tags = linodego.Pointer([]string{"updated"})
 	updateOpts.MaxCapacityBytes = linodego.Pointer(int64(1099511628000))
-	updateOpts.MaxFileCount = linodego.Pointer(int64(3210))
+	updateOpts.MaxFileCount = linodego.Pointer(linodego.Pointer(int64(3210)))
 
 	filesystemUpdate, err := client.UpdateNFSFilesystem(context.Background(), space.ID, filesystem.ID, updateOpts)
 	require.NoErrorf(t, err, "Error updating NFS Space: %v", err)
@@ -282,7 +282,7 @@ func TestNFSFilesystem_Update(t *testing.T) {
 		Region:           createOpts.Region,
 		Tags:             updateOpts.Tags,
 		MaxCapacityBytes: updateOpts.MaxCapacityBytes,
-		MaxFileCount:     updateOpts.MaxFileCount,
+		MaxFileCount:     *updateOpts.MaxFileCount,
 	}
 	verifyNFSFilesystemBasics(t, space, filesystemUpdate, verifyOpts)
 	verifyNFSFilesystemDetails(t, filesystemUpdate, verifyOpts)
@@ -434,23 +434,34 @@ func TestNFSFilesystem_UpdateCustomQuota(t *testing.T) {
 	quotas, err := client.ListNFSQuotas(context.Background(), space.ID, filesystem.ID, nil)
 	require.NoErrorf(t, err, "Error listing Filesystem Quotas: %v", err)
 
-	rootQuota := quotas[0]
+	// Find existing root quota
+	var rootQuota *linodego.NFSQuota
+	for _, quota := range quotas {
+		if quota.IsRoot && quota.MaxCapacityBytes != nil && quota.MaxFileCount != nil {
+			rootQuota = &quota
+			break
+		}
+	}
+	require.NotNil(t, rootQuota, "Root quota not found")
+
 	// User or Group limits cannot be higher than the root quota
 	newMaxCapacityBytes := min(int64(268435456), *rootQuota.MaxCapacityBytes)
 	newMaxFileCount := min(int64(500), *rootQuota.MaxFileCount)
 	updateOpts := linodego.NFSQuotaUpdateOptions{
-		MaxCapacityBytes: rootQuota.MaxCapacityBytes,
-		MaxFileCount:     rootQuota.MaxFileCount,
-		UserGroupConfig: &linodego.NFSUserGroupConfigOptions{
-			DefaultUserLimit: &linodego.NFSCapacityLimitOptions{
-				MaxCapacityBytes: new(newMaxCapacityBytes),
-				MaxFileCount:     new(newMaxFileCount),
-			},
-			DefaultGroupLimit: &linodego.NFSCapacityLimitOptions{
-				MaxCapacityBytes: new(newMaxCapacityBytes),
-				MaxFileCount:     new(newMaxFileCount),
-			},
-		},
+		MaxCapacityBytes: linodego.Pointer(rootQuota.MaxCapacityBytes),
+		MaxFileCount:     linodego.Pointer(rootQuota.MaxFileCount),
+		UserGroupConfig: linodego.Pointer(
+			linodego.Pointer(linodego.NFSUserGroupConfigOptions{
+				DefaultUserLimit: &linodego.NFSCapacityLimitOptions{
+					MaxCapacityBytes: new(newMaxCapacityBytes),
+					MaxFileCount:     new(newMaxFileCount),
+				},
+				DefaultGroupLimit: &linodego.NFSCapacityLimitOptions{
+					MaxCapacityBytes: new(newMaxCapacityBytes),
+					MaxFileCount:     new(newMaxFileCount),
+				},
+			}),
+		),
 	}
 
 	quota, _ := setupNFSFilesystemCustomQuota(t, client, space, filesystem)
