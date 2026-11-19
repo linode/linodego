@@ -151,7 +151,7 @@ type PostgresDatabaseConnectionPoolUpdateOptions struct {
 	Database *string                             `json:"database,omitzero"`
 	Mode     *PostgresDatabaseConnectionPoolMode `json:"mode,omitzero"`
 	Size     *int                                `json:"size,omitzero"`
-	Username *string                             `json:"username,omitzero"`
+	Username **string                            `json:"username,omitzero"`
 }
 
 type PostgresDatabaseConfigInfo struct {

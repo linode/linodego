@@ -111,13 +111,13 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 	}
 
 	pools, err := client.ListPostgresDatabaseConnectionPools(ctx, database.ID, nil)
-	pool = &pools[0]
 	if err != nil {
 		t.Errorf("failed to list connection pools for db: %v", err)
 	}
-	if pool == nil {
-		t.Error("failed to list connection pools for db")
+	if len(pools) == 0 {
+		t.Fatal("failed to list connection pools for db: got empty list")
 	}
+	pool = &pools[0]
 
 	pool, err = client.GetPostgresDatabaseConnectionPool(ctx, database.ID, poolOpts.Label)
 	if err != nil {
@@ -146,6 +146,22 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 	}
 	if pool == nil || pool.Mode != linodego.PostgresDatabaseConnectionPoolModeSession || pool.Size != 20 {
 		t.Error("failed to update connection pool for db")
+	}
+
+	err = client.DeletePostgresDatabaseConnectionPool(ctx, database.ID, poolOpts.Label)
+	if err != nil {
+		t.Errorf("failed to delete connection pool for db: %v", err)
+	}
+
+	pool, err = client.GetPostgresDatabaseConnectionPool(ctx, database.ID, poolOpts.Label)
+	if err == nil {
+		t.Error("expected deleted connection pool to return an error")
+	}
+	if lErr, ok := err.(*linodego.Error); !ok || lErr.Code != 404 {
+		t.Errorf("expected 404 when getting deleted connection pool, got: %v", err)
+	}
+	if pool != nil {
+		t.Error("expected deleted connection pool response to be nil")
 	}
 
 	creds, err := client.GetPostgresDatabaseCredentials(context.Background(), database.ID)
