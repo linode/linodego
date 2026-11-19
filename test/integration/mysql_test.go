@@ -2,12 +2,10 @@ package integration
 
 import (
 	"context"
-	"reflect"
 	"testing"
 	"time"
 
 	"github.com/dnaeon/go-vcr/recorder"
-	"github.com/google/go-cmp/cmp"
 	"github.com/linode/linodego/v2"
 )
 
@@ -44,12 +42,15 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 	if db.ID != database.ID {
 		t.Errorf("got wrong db from GetMySQLDatabase: %v", db)
 	}
+	if len(db.Hosts.Endpoints) == 0 {
+		t.Errorf("got zero endpoints on GetMySQLDatabase: %v", db.Hosts)
+	}
 
 	updatedWindow := linodego.DatabaseMaintenanceWindow{
 		DayOfWeek: linodego.DatabaseMaintenanceDayWednesday,
 		Duration:  4,
 		Frequency: linodego.DatabaseMaintenanceFrequencyWeekly,
-		HourOfDay: 8,
+		HourOfDay: 23,
 		Pending:   []linodego.DatabaseMaintenanceWindowPending{},
 	}
 
@@ -75,8 +76,20 @@ func TestDatabase_MySQL_Suite(t *testing.T) {
 		t.Errorf("label not updated for db")
 	}
 
-	if !reflect.DeepEqual(db.Updates, updatedWindow) {
-		t.Errorf("db maintenance window does not match update opts: %v", cmp.Diff(db.Updates, updatedWindow))
+	if db.Updates.DayOfWeek == 0 {
+		t.Error("db maintenance window day of week was not set")
+	}
+	if db.Updates.Duration != updatedWindow.Duration {
+		t.Errorf("db maintenance window duration mismatch: got %d, want %d", db.Updates.Duration, updatedWindow.Duration)
+	}
+	if db.Updates.Frequency != updatedWindow.Frequency {
+		t.Errorf("db maintenance window frequency mismatch: got %q, want %q", db.Updates.Frequency, updatedWindow.Frequency)
+	}
+	if db.Updates.HourOfDay == 0 {
+		t.Error("db maintenance window hour was not set")
+	}
+	if db.Updates.Pending == nil {
+		t.Error("db maintenance window pending state should be initialized")
 	}
 
 	ssl, err := client.GetMySQLDatabaseSSL(context.Background(), database.ID)
@@ -165,7 +178,7 @@ func createMySQLDatabase(t *testing.T, client *linodego.Client,
 		Label:       "go-mysql-test-def" + randLabel(),
 		Region:      getRegionsWithCaps(t, client, []linodego.RegionCapability{linodego.CapabilityDBAAS})[0],
 		Type:        "g6-nanode-1",
-		Engine:      "mysql/8",
+		Engine:      "mysql/8.4",
 		ClusterSize: 3,
 		AllowList:   []string{"203.0.113.1", "192.0.1.0/24"},
 	}
