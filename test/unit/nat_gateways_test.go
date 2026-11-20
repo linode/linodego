@@ -306,6 +306,8 @@ func TestNATGateways_GetTypes(t *testing.T) {
 	assert.Equal(t, "NAT Gateway", types[0].Label)
 	assert.Equal(t, 0.035, types[0].Price.Hourly)
 	assert.Equal(t, 25.0, types[0].Price.Monthly)
+	assert.Empty(t, types[0].RegionPrices)
+	assert.Equal(t, 0, types[0].Transfer)
 }
 
 func TestNATGateways_GetSettings(t *testing.T) {

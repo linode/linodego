@@ -112,14 +112,22 @@ type NATGatewayPortsetPort struct {
 	End   int `json:"end"`
 }
 
+// NATGatewayType represents a single valid NAT Gateway type.
 type NATGatewayType struct {
-	ID    string        `json:"id"`
-	Label string        `json:"label"`
-	Price baseTypePrice `json:"price"`
+	baseType[NATGatewayTypePrice, NATGatewayTypeRegionPrice]
 }
 
-//nolint:godox
-// TODO: replace with baseType once the region_prices and transfer fields are in use and returned by the API
+// NATGatewayTypePrice represents the base hourly and monthly prices
+// for a NAT Gateway type entry.
+type NATGatewayTypePrice struct {
+	baseTypePrice
+}
+
+// NATGatewayTypeRegionPrice represents the regional hourly and monthly prices
+// for a NAT Gateway type entry.
+type NATGatewayTypeRegionPrice struct {
+	baseTypeRegionPrice
+}
 
 type NATGatewaySettings struct {
 	AllowedPortsPerInterface                 []int `json:"allowed_ports_per_interface"`
