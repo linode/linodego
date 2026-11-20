@@ -196,16 +196,18 @@ func TestNATGateway_GetLinodeInterfaces(t *testing.T) {
 		t,
 		client,
 		true,
-		[]linodego.LinodeInterfaceCreateOptions{
+		[]linodego.LinodeInstanceInterfaceCreateOptions{
 			{
-				FirewallID: linodego.Pointer(firewallID),
-				VPC: &linodego.VPCInterfaceCreateOptions{
-					SubnetID: vpcSubnet.ID,
-					IPv4: &linodego.VPCInterfaceIPv4CreateOptions{
-						Addresses: []linodego.VPCInterfaceIPv4AddressCreateOptions{
-							{
-								Address: linodego.Pointer("auto"),
-								Primary: linodego.Pointer(true),
+				LinodeInterfaceCreateOptions: linodego.LinodeInterfaceCreateOptions{
+					FirewallID: linodego.Pointer(firewallID),
+					VPC: &linodego.VPCInterfaceCreateOptions{
+						SubnetID: vpcSubnet.ID,
+						IPv4: &linodego.VPCInterfaceIPv4CreateOptions{
+							Addresses: []linodego.VPCInterfaceIPv4AddressCreateOptions{
+								{
+									Address: linodego.Pointer("auto"),
+									Primary: linodego.Pointer(true),
+								},
 							},
 						},
 					},

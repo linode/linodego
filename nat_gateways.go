@@ -118,6 +118,7 @@ type NATGatewayType struct {
 	Price baseTypePrice `json:"price"`
 }
 
+//nolint:godox
 // TODO: replace with baseType once the region_prices and transfer fields are in use and returned by the API
 
 type NATGatewaySettings struct {
