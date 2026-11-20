@@ -2,10 +2,14 @@ package unit
 
 import (
 	"context"
+	"encoding/json"
+	"net/http"
 	"testing"
 
+	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 const (
@@ -596,4 +600,212 @@ func TestListLogStreamQuotas(t *testing.T) {
 	assert.Equal(t, "Current number of LKE audit logs streams per account", quotas[1].Description)
 	assert.Equal(t, 10, quotas[1].QuotaLimit)
 	assert.Equal(t, "logs_streams_aclp_lke_audit_logs_streams", quotas[1].QuotaType)
+}
+
+func TestStreamDetailsMarshalJSON(t *testing.T) {
+	tests := []struct {
+		name    string
+		details linodego.StreamDetails
+		want    string
+		wantErr bool
+	}{
+		{
+			name:    "audit categories",
+			details: linodego.StreamDetails{Categories: []string{linodego.AuditLogCategoryConfig, linodego.AuditLogCategoryLogin, linodego.AuditLogCategoryDataPlane}},
+			want:    `{"categories":["config","login","data_plane"]}`,
+		},
+		{
+			name:    "audit empty categories remain explicit",
+			details: linodego.StreamDetails{Categories: []string{}},
+			want:    `{"categories":[]}`,
+		},
+		{
+			name:    "audit categories with cluster IDs",
+			details: linodego.StreamDetails{Categories: []string{"data_plane"}, ClusterIDs: []int{50}},
+			wantErr: true,
+		},
+		{
+			name:    "audit categories with auto add",
+			details: linodego.StreamDetails{Categories: []string{"data_plane"}, IsAutoAddAllClustersEnabled: true},
+			wantErr: true,
+		},
+		{
+			name:    "empty details retain LKE explicit false",
+			details: linodego.StreamDetails{},
+			want:    `{"is_auto_add_all_clusters_enabled":false}`,
+		},
+		{
+			name:    "LKE explicit false",
+			details: linodego.StreamDetails{ClusterIDs: []int{50, 60}},
+			want:    `{"cluster_ids":[50,60],"is_auto_add_all_clusters_enabled":false}`,
+		},
+		{
+			name:    "LKE auto add",
+			details: linodego.StreamDetails{IsAutoAddAllClustersEnabled: true},
+			want:    `{"is_auto_add_all_clusters_enabled":true}`,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			data, err := json.Marshal(tt.details)
+			if tt.wantErr {
+				require.Error(t, err)
+				return
+			}
+			require.NoError(t, err)
+			assert.JSONEq(t, tt.want, string(data))
+		})
+	}
+}
+
+func TestLogStreamsAuditCategories(t *testing.T) {
+	tests := []struct {
+		name              string
+		categories        []string
+		createdCategories []string
+		updatedCategories []string
+	}{
+		{name: "config", categories: []string{"config"}, createdCategories: []string{"config"}, updatedCategories: []string{"config"}},
+		{name: "login", categories: []string{"login"}, createdCategories: []string{"login"}, updatedCategories: []string{"login"}},
+		{name: "data plane", categories: []string{"data_plane"}, createdCategories: []string{"data_plane"}, updatedCategories: []string{"data_plane"}},
+		{name: "sorted and deduplicated categories", categories: []string{"login", "data_plane", "config", "login"}, createdCategories: []string{"config", "data_plane", "login"}, updatedCategories: []string{"config", "data_plane", "login"}},
+		{name: "empty categories", categories: []string{}, createdCategories: []string{"config", "login"}, updatedCategories: []string{"data_plane"}},
+		{name: "omitted details", createdCategories: []string{"config", "login"}, updatedCategories: []string{"data_plane"}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			var base ClientBaseCase
+			base.SetUp(t)
+			defer base.TearDown(t)
+
+			fixture, err := fixtures.GetFixture("monitor_log_stream_audit_categories")
+			require.NoError(t, err)
+			fixtureJSON, err := json.Marshal(fixture)
+			require.NoError(t, err)
+			var response map[string]interface{}
+			require.NoError(t, json.Unmarshal(fixtureJSON, &response))
+
+			checkStream := func(stream *linodego.Stream, expectedCategories []string) {
+				t.Helper()
+				require.NotNil(t, stream)
+				assert.Equal(t, linodego.StreamTypeAuditLogs, stream.Type)
+				require.NotNil(t, stream.Details)
+				assert.Equal(t, expectedCategories, stream.Details.Categories)
+				assert.Nil(t, stream.Details.ClusterIDs)
+			}
+			for _, method := range []string{http.MethodPost, http.MethodPut} {
+				path := "monitor/streams"
+				if method == http.MethodPut {
+					path += "/456"
+				}
+				httpmock.RegisterResponder(method, base.BaseURL+path, func(req *http.Request) (*http.Response, error) {
+					var body map[string]json.RawMessage
+					require.NoError(t, json.NewDecoder(req.Body).Decode(&body))
+					if tt.categories == nil {
+						assert.NotContains(t, body, "details")
+					} else {
+						expected, err := json.Marshal(map[string]interface{}{"categories": tt.categories})
+						require.NoError(t, err)
+						assert.JSONEq(t, string(expected), string(body["details"]))
+					}
+					if req.Method == http.MethodPost {
+						assert.JSONEq(t, `"audit_logs"`, string(body["type"]))
+						response["details"] = map[string]interface{}{"categories": tt.createdCategories}
+					} else {
+						assert.NotContains(t, body, "type")
+						response["details"] = map[string]interface{}{"categories": tt.updatedCategories}
+					}
+					return httpmock.NewJsonResponse(http.StatusOK, response)
+				})
+			}
+
+			var details *linodego.StreamDetails
+			if tt.categories != nil {
+				details = &linodego.StreamDetails{Categories: tt.categories}
+			}
+			created, err := base.Client.CreateLogStream(context.Background(), linodego.StreamCreateOptions{
+				Label: "Audit logs", Type: linodego.StreamTypeAuditLogs, Destinations: []int{1}, Details: details,
+			})
+			require.NoError(t, err)
+			checkStream(created, tt.createdCategories)
+
+			updated, err := base.Client.UpdateLogStream(context.Background(), testLogStreamID, linodego.StreamUpdateOptions{Details: details})
+			require.NoError(t, err)
+			checkStream(updated, tt.updatedCategories)
+
+			base.MockGet("monitor/streams/456", response)
+			stream, err := base.Client.GetLogStream(context.Background(), testLogStreamID)
+			require.NoError(t, err)
+			checkStream(stream, tt.updatedCategories)
+
+			page := map[string]interface{}{
+				"data": []interface{}{response}, "page": 1, "pages": 1, "results": 1,
+			}
+			base.MockGet("monitor/streams", page)
+			streams, err := base.Client.ListLogStreams(context.Background(), nil)
+			require.NoError(t, err)
+			require.Len(t, streams, 1)
+			checkStream(&streams[0], tt.updatedCategories)
+
+			base.MockGet("monitor/streams/456/history", page)
+			history, err := base.Client.ListLogStreamHistory(context.Background(), testLogStreamID, nil)
+			require.NoError(t, err)
+			require.Len(t, history, 1)
+			checkStream(&history[0], tt.updatedCategories)
+		})
+	}
+}
+
+func TestCreateLogStreamAuditCategoriesAPIResponse(t *testing.T) {
+	fixture, err := fixtures.GetFixture("monitor_log_stream_audit_categories")
+	require.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	httpmock.RegisterResponder(http.MethodPost, base.BaseURL+"monitor/streams", func(req *http.Request) (*http.Response, error) {
+		var body map[string]json.RawMessage
+		require.NoError(t, json.NewDecoder(req.Body).Decode(&body))
+		assert.JSONEq(t, `{"categories":["login","data_plane","login"]}`, string(body["details"]))
+		return httpmock.NewJsonResponse(http.StatusCreated, fixture)
+	})
+
+	stream, err := base.Client.CreateLogStream(context.Background(), linodego.StreamCreateOptions{
+		Label:        "Audit logs with categories",
+		Type:         linodego.StreamTypeAuditLogs,
+		Destinations: []int{1},
+		Details: &linodego.StreamDetails{Categories: []string{
+			linodego.AuditLogCategoryLogin,
+			linodego.AuditLogCategoryDataPlane,
+			linodego.AuditLogCategoryLogin,
+		}},
+	})
+	require.NoError(t, err)
+	require.NotNil(t, stream.Details)
+	assert.Equal(t, []string{"data_plane", "login"}, stream.Details.Categories)
+	assert.Equal(t, linodego.StreamStatusProvisioning, stream.Status)
+	require.Len(t, stream.Destinations, 1)
+	assert.Equal(t, 1, stream.Destinations[0].ID)
+}
+
+func TestCreateLogStreamAuditCategoryDisabled(t *testing.T) {
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	httpmock.RegisterResponder(http.MethodPost, base.BaseURL+"monitor/streams",
+		httpmock.NewStringResponder(http.StatusBadRequest,
+			`{"errors":[{"field":"details.categories","reason":"Must be of type config, login"}]}`,
+		).HeaderSet(http.Header{"Content-Type": []string{"application/json"}}))
+
+	_, err := base.Client.CreateLogStream(context.Background(), linodego.StreamCreateOptions{
+		Label:        "Audit logs",
+		Type:         linodego.StreamTypeAuditLogs,
+		Destinations: []int{1},
+		Details:      &linodego.StreamDetails{Categories: []string{linodego.AuditLogCategoryDataPlane}},
+	})
+	require.Error(t, err)
+	assert.Contains(t, err.Error(), "details.categories")
+	assert.Contains(t, err.Error(), "Must be of type config, login")
 }
