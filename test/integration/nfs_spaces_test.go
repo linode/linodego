@@ -61,7 +61,7 @@ func verifyNFSSpaceAccessPolicyUpdate(t *testing.T, spaceAccPolicy *linodego.NFS
 	assert.Len(t, spaceAccPolicy.VPCACL, 1)
 	assert.Equal(t, (*opts.VPCs)[0].ID, spaceAccPolicy.VPCACL[0].ID)
 	assert.Nil(t, spaceAccPolicy.MTLSCACert)
-	assert.Equal(t, linodego.NFSMTLSModeOptional, spaceAccPolicy.MTLSMode)
+	assert.Equal(t, linodego.NFSMTLSModeDisabled, spaceAccPolicy.MTLSMode)
 	assertDateSet(t, spaceAccPolicy.Updated)
 }
 
@@ -122,7 +122,6 @@ func TestNFSSpace_GetAccessPolicy_smoke(t *testing.T) {
 }
 
 func TestNFSSpace_UpdateAccessPolicy(t *testing.T) {
-	t.Skip("Access Policy update is stuck with 'updating' status. Issue: NFSAAS-405")
 	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSSpace_UpdateAccessPolicy", false, true)
 
 	vpc, _, vpcWithSubnetTeardown, err := createVPCWithDualStackSubnet(
@@ -142,7 +141,6 @@ func TestNFSSpace_UpdateAccessPolicy(t *testing.T) {
 				ID: vpc.ID,
 			},
 		}),
-		MTLSMode: linodego.Pointer(linodego.NFSMTLSModeOptional),
 	}
 
 	spaceAccPolicyUpdate, err := client.UpdateNFSSpaceAccessPolicy(context.Background(), space.ID, updateOpts)
