@@ -213,7 +213,6 @@ func verifyNFSFilesystemAccessPolicyUpdate(
 	assert.Equal(t, (*opts.LinodeIDs)[0], filesystemAccPolicy.LinodeACL[0].ID)
 	assert.Equal(t, opts.SquashPolicy, linodego.Pointer(filesystemAccPolicy.SquashPolicy))
 	assertDateSet(t, filesystemAccPolicy.Created)
-	assertDateSet(t, filesystemAccPolicy.Updated)
 }
 
 func verifyNFSFilesystemQuota(
@@ -290,10 +289,9 @@ func TestNFSFilesystem_Update(t *testing.T) {
 }
 
 func TestNFSFilesystem_GetAccessPolicy_smoke(t *testing.T) {
-	t.Skip("Access Policy is unstable - now it doesn't show up at all")
 	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_GetAccessPolicy", false, false)
 
-	// Currently it is necessary to update the Filesystem Access Policy before it can be retrieved
+	// Configure the Filesystem AP with update before it can be retrieved
 	updateOpts := linodego.NFSFilesystemAccessPolicyUpdateOptions{
 		Enabled: linodego.Pointer(false),
 	}
@@ -306,7 +304,7 @@ func TestNFSFilesystem_GetAccessPolicy_smoke(t *testing.T) {
 	)
 	require.NoErrorf(t, err, "Error updating NFS Filesystem Access Policy: %v", err)
 
-	// Wait for NFS Filesystem Access Policy status to be 'active' to read the details
+	// Wait for Filesystem AP status to be 'active' to read the details
 	ctx := waitContext(t, 180*time.Second)
 	_, err = client.WaitForNFSFilesystemAccessPolicyStatus(
 		ctx,
@@ -327,11 +325,10 @@ func TestNFSFilesystem_GetAccessPolicy_smoke(t *testing.T) {
 	assert.NotNil(t, filesystemAccPolicy.SquashPolicy)
 	assert.Equal(t, linodego.NFSAccessPolicyStatusActive, filesystemAccPolicy.Status)
 	assertDateSet(t, filesystemAccPolicy.Created)
-	assertDateSet(t, filesystemAccPolicy.Updated)
+	assert.Nil(t, filesystemAccPolicy.Updated)
 }
 
 func TestNFSFilesystem_UpdateAccessPolicy(t *testing.T) {
-	t.Skip("Access Policy is unstable - now it doesn't show up at all")
 	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_UpdateAccessPolicy", false, true)
 
 	// NFS Space AP needs to be enabled before enabling NFS Filesystem AP
@@ -344,7 +341,7 @@ func TestNFSFilesystem_UpdateAccessPolicy(t *testing.T) {
 	)
 	require.NoErrorf(t, err, "Error updating NFS Space Access Policy: %v", err)
 
-	// Wait for NFS Space Access Policy status to be 'active'
+	// Wait for NFS Space AP status to be 'active'
 	ctx := waitContext(t, 180*time.Second)
 	_, err = client.WaitForNFSSpaceAccessPolicyStatus(
 		ctx,
@@ -388,7 +385,7 @@ func TestNFSFilesystem_UpdateAccessPolicy(t *testing.T) {
 	require.NoErrorf(t, err, "Error updating NFS Filesystem Access Policy: %v", err)
 	verifyNFSFilesystemAccessPolicyUpdate(t, filesystemAccPolicyUpdate, updateOpts)
 
-	// Wait for NFS Filesystem Access Policy status to be 'active' to read the details
+	// Wait for Filesystem AP status to be 'active' to read the details
 	ctx = waitContext(t, 180*time.Second)
 	_, err = client.WaitForNFSFilesystemAccessPolicyStatus(
 		ctx,
