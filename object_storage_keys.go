@@ -4,6 +4,14 @@ import (
 	"context"
 )
 
+// ObjectStorageKeyClass is the storage class an Object Storage key works with.
+type ObjectStorageKeyClass string
+
+const (
+	ObjectStorageKeyClassE  ObjectStorageKeyClass = "E"
+	ObjectStorageKeyClassIA ObjectStorageKeyClass = "IA"
+)
+
 type ObjectStorageKeyRegion struct {
 	ID           string                    `json:"id"`
 	S3Endpoint   string                    `json:"s3_endpoint"`
@@ -19,6 +27,7 @@ type ObjectStorageKey struct {
 	Limited      bool                            `json:"limited"`
 	BucketAccess *[]ObjectStorageKeyBucketAccess `json:"bucket_access"`
 	Regions      []ObjectStorageKeyRegion        `json:"regions"`
+	KeyClass     ObjectStorageKeyClass           `json:"key_class"`
 }
 
 // ObjectStorageKeyBucketAccess represents a linode limited object storage key's bucket access
@@ -41,6 +50,7 @@ type ObjectStorageKeyCreateOptions struct {
 	Label        string                                      `json:"label"`
 	BucketAccess []ObjectStorageKeyBucketAccessCreateOptions `json:"bucket_access,omitzero"`
 	Regions      []string                                    `json:"regions,omitzero"`
+	KeyClass     *ObjectStorageKeyClass                      `json:"key_class,omitzero"`
 }
 
 // ObjectStorageKeyUpdateOptions fields are those accepted by UpdateObjectStorageKey
