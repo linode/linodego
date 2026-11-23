@@ -212,6 +212,7 @@ func verifyNFSFilesystemAccessPolicyUpdate(
 	assert.Len(t, filesystemAccPolicy.LinodeACL, 1)
 	assert.Equal(t, (*opts.LinodeIDs)[0], filesystemAccPolicy.LinodeACL[0].ID)
 	assert.Equal(t, opts.SquashPolicy, linodego.Pointer(filesystemAccPolicy.SquashPolicy))
+	assertDateSet(t, filesystemAccPolicy.Created)
 	assertDateSet(t, filesystemAccPolicy.Updated)
 }
 
@@ -291,6 +292,29 @@ func TestNFSFilesystem_Update(t *testing.T) {
 func TestNFSFilesystem_GetAccessPolicy_smoke(t *testing.T) {
 	t.Skip("Access Policy is unstable - now it doesn't show up at all")
 	client, space, filesystem, _ := setupNFSFilesystem(t, "fixtures/TestNFSFilesystem_GetAccessPolicy", false, false)
+
+	// Currently it is necessary to update the Filesystem Access Policy before it can be retrieved
+	updateOpts := linodego.NFSFilesystemAccessPolicyUpdateOptions{
+		Enabled: linodego.Pointer(false),
+	}
+
+	_, err := client.UpdateNFSFilesystemAccessPolicy(
+		context.Background(),
+		space.ID,
+		filesystem.ID,
+		updateOpts,
+	)
+	require.NoErrorf(t, err, "Error updating NFS Filesystem Access Policy: %v", err)
+
+	// Wait for NFS Filesystem Access Policy status to be 'active' to read the details
+	ctx := waitContext(t, 180*time.Second)
+	_, err = client.WaitForNFSFilesystemAccessPolicyStatus(
+		ctx,
+		space.ID,
+		filesystem.ID,
+		linodego.NFSAccessPolicyStatusActive,
+	)
+	require.NoErrorf(t, err, "Failed to wait for Filesystem Access Policy status: %s", err)
 
 	filesystemAccPolicy, err := client.GetNFSFilesystemAccessPolicy(context.Background(), space.ID, filesystem.ID)
 	require.NoErrorf(t, err, "Error retrieving NFS Filesystem Access Policy: %v", err)
