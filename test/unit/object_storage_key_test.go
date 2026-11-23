@@ -44,7 +44,7 @@ func TestObjectStorageKey_Create(t *testing.T) {
 
 	createOptions := linodego.ObjectStorageKeyCreateOptions{
 		Label:   "new-key",
-		Regions: []string{"us-east-1"},
+		Regions: []string{"us-iad-obj"},
 	}
 
 	base.MockPost("object-storage/keys", fixtureData)
