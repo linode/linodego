@@ -54,11 +54,10 @@ type NFSQuota struct {
 
 // NFSUserGroupConfig represents user and group quota configuration for an NFS Quota.
 type NFSUserGroupConfig struct {
-	DefaultUserLimit  *NFSCapacityLimit           `json:"default_user_limit"`
-	DefaultGroupLimit *NFSCapacityLimit           `json:"default_group_limit"`
-	UserLimits        []NFSIdentifiedLimit        `json:"user_limits"`
-	GroupLimits       []NFSIdentifiedLimit        `json:"group_limits"`
-	UserGroupLimits   []NFSUserGroupCombinedLimit `json:"user_group_limits"`
+	DefaultUserLimit  *NFSCapacityLimit    `json:"default_user_limit"`
+	DefaultGroupLimit *NFSCapacityLimit    `json:"default_group_limit"`
+	UserLimits        []NFSIdentifiedLimit `json:"user_limits"`
+	GroupLimits       []NFSIdentifiedLimit `json:"group_limits"`
 }
 
 // NFSCapacityLimit represents capacity and file count limits for an NFS Quota.
@@ -73,14 +72,6 @@ type NFSIdentifiedLimit struct {
 	Identifier       string                     `json:"identifier"`
 	MaxCapacityBytes *int64                     `json:"max_capacity_bytes"`
 	MaxFileCount     *int64                     `json:"max_file_count"`
-}
-
-// NFSUserGroupCombinedLimit represents capacity and file count limits for a combined user and group.
-type NFSUserGroupCombinedLimit struct {
-	User             NFSUserGroupLimitIdentity `json:"user"`
-	Group            NFSUserGroupLimitIdentity `json:"group"`
-	MaxCapacityBytes *int64                    `json:"max_capacity_bytes"`
-	MaxFileCount     *int64                    `json:"max_file_count"`
 }
 
 // NFSUserGroupLimitIdentity identifies a user or group in NFS quota configuration.
@@ -106,11 +97,10 @@ type NFSQuotaUpdateOptions struct {
 
 // NFSUserGroupConfigOptions contains fields for updating user and group quota configuration.
 type NFSUserGroupConfigOptions struct {
-	DefaultUserLimit  *NFSCapacityLimitOptions            `json:"default_user_limit,omitzero"`
-	DefaultGroupLimit *NFSCapacityLimitOptions            `json:"default_group_limit,omitzero"`
-	UserLimits        *[]NFSIdentifiedLimitOptions        `json:"user_limits,omitzero"`
-	GroupLimits       *[]NFSIdentifiedLimitOptions        `json:"group_limits,omitzero"`
-	UserGroupLimits   *[]NFSUserGroupCombinedLimitOptions `json:"user_group_limits,omitzero"`
+	DefaultUserLimit  *NFSCapacityLimitOptions     `json:"default_user_limit,omitzero"`
+	DefaultGroupLimit *NFSCapacityLimitOptions     `json:"default_group_limit,omitzero"`
+	UserLimits        *[]NFSIdentifiedLimitOptions `json:"user_limits,omitzero"`
+	GroupLimits       *[]NFSIdentifiedLimitOptions `json:"group_limits,omitzero"`
 }
 
 // NFSCapacityLimitOptions contains fields for updating capacity and file count limits.
@@ -125,14 +115,6 @@ type NFSIdentifiedLimitOptions struct {
 	Identifier       string                     `json:"identifier"`
 	MaxCapacityBytes *int64                     `json:"max_capacity_bytes,omitzero"`
 	MaxFileCount     *int64                     `json:"max_file_count,omitzero"`
-}
-
-// NFSUserGroupCombinedLimitOptions contains fields for updating limits for a combined user and group.
-type NFSUserGroupCombinedLimitOptions struct {
-	User             NFSUserGroupLimitIdentity `json:"user"`
-	Group            NFSUserGroupLimitIdentity `json:"group"`
-	MaxCapacityBytes *int64                    `json:"max_capacity_bytes,omitzero"`
-	MaxFileCount     *int64                    `json:"max_file_count,omitzero"`
 }
 
 // UnmarshalJSON implements json.Unmarshaler.
