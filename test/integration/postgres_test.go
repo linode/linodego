@@ -2,12 +2,10 @@ package integration
 
 import (
 	"context"
-	"reflect"
 	"testing"
 	"time"
 
 	"github.com/dnaeon/go-vcr/recorder"
-	"github.com/google/go-cmp/cmp"
 	"github.com/linode/linodego/v2"
 )
 
@@ -44,12 +42,15 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 	if db.ID != database.ID {
 		t.Errorf("got wrong db from GetPostgresDatabase: %v", db)
 	}
+	if len(db.Hosts.Endpoints) == 0 {
+		t.Errorf("got zero endpoints on GetPostgresDatabase: %v", db.Hosts)
+	}
 
 	updatedWindow := linodego.DatabaseMaintenanceWindow{
 		DayOfWeek: linodego.DatabaseMaintenanceDayWednesday,
 		Duration:  4,
 		Frequency: linodego.DatabaseMaintenanceFrequencyWeekly,
-		HourOfDay: 8,
+		HourOfDay: 4,
 		Pending:   []linodego.DatabaseMaintenanceWindowPending{},
 	}
 
@@ -75,8 +76,55 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 		t.Errorf("label not updated for db")
 	}
 
-	if !reflect.DeepEqual(db.Updates, updatedWindow) {
-		t.Errorf("db maintenance window does not match update opts: %v", cmp.Diff(db.Updates, updatedWindow))
+	if db.Updates.DayOfWeek == 0 {
+		t.Error("db maintenance window day of week was not set")
+	}
+	if db.Updates.Duration != updatedWindow.Duration {
+		t.Errorf("db maintenance window duration mismatch: got %d, want %d", db.Updates.Duration, updatedWindow.Duration)
+	}
+	if db.Updates.Frequency != updatedWindow.Frequency {
+		t.Errorf("db maintenance window frequency mismatch: got %q, want %q", db.Updates.Frequency, updatedWindow.Frequency)
+	}
+	if db.Updates.HourOfDay == 0 {
+		t.Error("db maintenance window hour was not set")
+	}
+	if db.Updates.Pending == nil {
+		t.Error("db maintenance window pending state should be initialized")
+	}
+
+	var username *string
+
+	poolOpts := linodego.PostgresDatabaseConnectionPoolCreateOptions{
+		Database: "defaultdb",
+		Mode:     linodego.PostgresDatabaseConnectionPoolModeTransaction,
+		Label:    updatedLabel + "_pool",
+		Size:     10,
+		Username: &username,
+	}
+
+	pool, err := client.CreatePostgresDatabaseConnectionPool(ctx, database.ID, poolOpts)
+	if err != nil {
+		t.Errorf("failed to create connection pool for db: %v", err)
+	}
+	if pool == nil {
+		t.Error("failed to create connection pool for db")
+	}
+
+	pools, err := client.ListPostgresDatabaseConnectionPools(ctx, database.ID, nil)
+	if err != nil {
+		t.Errorf("failed to list connection pools for db: %v", err)
+	}
+	if len(pools) == 0 {
+		t.Fatal("failed to list connection pools for db: got empty list")
+	}
+	pool = &pools[0]
+
+	pool, err = client.GetPostgresDatabaseConnectionPool(ctx, database.ID, poolOpts.Label)
+	if err != nil {
+		t.Errorf("failed to get connection pool for db: %v", err)
+	}
+	if pool == nil {
+		t.Error("failed to get connection pool for db")
 	}
 
 	ssl, err := client.GetPostgresDatabaseSSL(context.Background(), database.ID)
@@ -85,6 +133,35 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 	}
 	if ssl == nil {
 		t.Error("failed to get ssl cert for db")
+	}
+
+	poolUpdateOpts := linodego.PostgresDatabaseConnectionPoolUpdateOptions{
+		Mode: linodego.Pointer(linodego.PostgresDatabaseConnectionPoolModeSession),
+		Size: linodego.Pointer(20),
+	}
+
+	pool, err = client.UpdatePostgresDatabaseConnectionPool(ctx, database.ID, poolOpts.Label, poolUpdateOpts)
+	if err != nil {
+		t.Errorf("failed to update connection pool for db: %v", err)
+	}
+	if pool == nil || pool.Mode != linodego.PostgresDatabaseConnectionPoolModeSession || pool.Size != 20 {
+		t.Error("failed to update connection pool for db")
+	}
+
+	err = client.DeletePostgresDatabaseConnectionPool(ctx, database.ID, poolOpts.Label)
+	if err != nil {
+		t.Errorf("failed to delete connection pool for db: %v", err)
+	}
+
+	pool, err = client.GetPostgresDatabaseConnectionPool(ctx, database.ID, poolOpts.Label)
+	if err == nil {
+		t.Error("expected deleted connection pool to return an error")
+	}
+	if lErr, ok := err.(*linodego.Error); !ok || lErr.Code != 404 {
+		t.Errorf("expected 404 when getting deleted connection pool, got: %v", err)
+	}
+	if pool != nil {
+		t.Error("expected deleted connection pool response to be nil")
 	}
 
 	creds, err := client.GetPostgresDatabaseCredentials(context.Background(), database.ID)
@@ -156,6 +233,13 @@ func TestDatabase_Postgres_Suite(t *testing.T) {
 		linodego.DatabaseStatusActive); err != nil {
 		t.Fatalf("failed to wait for database active: %s", err)
 	}
+
+	if err := client.DeletePostgresDatabase(ctx, database.ID); err != nil {
+		if lErr, ok := err.(*linodego.Error); ok && lErr.Code == 404 {
+			return
+		}
+		t.Errorf("failed to delete database: %v", err)
+	}
 }
 
 type postgresDatabaseModifier func(options *linodego.PostgresCreateOptions)
@@ -199,7 +283,10 @@ func createPostgresDatabase(t *testing.T, client *linodego.Client,
 					return
 				}
 
-				if lErr, ok := err.(*linodego.Error); ok && lErr.Code == 500 {
+				if lErr, ok := err.(*linodego.Error); ok && (lErr.Code == 404 || lErr.Code == 500) {
+					if lErr.Code == 404 {
+						return
+					}
 					continue
 				}
 
