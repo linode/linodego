@@ -9,6 +9,7 @@ import (
 	"io"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"strconv"
 	"strings"
 	"testing"
@@ -31,8 +32,7 @@ func (e testError) Error() string {
 func httpError(reason, field string) *http.Response {
 	var reasons []APIErrorReason
 
-	// Allow for an empty reasons
-	if reason != "" && field != "" {
+	if reason != "" {
 		reasons = append(reasons, APIErrorReason{
 			Reason: reason,
 			Field:  field,
@@ -65,7 +65,7 @@ func TestNewError(t *testing.T) {
 	err := errors.New("test")
 	newErr := NewError(err)
 
-	if newErr.Message != err.Error() && newErr.Code != ErrorFromError {
+	if newErr.Message != err.Error() || newErr.Code != ErrorFromError {
 		t.Error("error should return ErrorFromError")
 	}
 
@@ -81,8 +81,12 @@ func TestNewError(t *testing.T) {
 		t.Error("Unexpected HTTP Error Response, no error")
 	}
 
-	if err := NewError(httpError("testreason", "testfield")); err.Message != "[testfield] testreason" {
-		t.Error("http response error should should be set")
+	if err := NewError(httpError("testreason", "testfield")); err.Message != "[testfield] testreason" || err.Code != http.StatusInternalServerError {
+		t.Errorf("unexpected HTTP response error: %v", err)
+	}
+
+	if err := NewError(httpError("testreason", "")); err.Message != "testreason" || err.Code != http.StatusInternalServerError {
+		t.Errorf("unexpected fieldless HTTP response error: %v", err)
 	}
 
 	if err := NewError("stringerror"); err.Message != "stringerror" || err.Code != ErrorFromString {
@@ -170,18 +174,10 @@ func TestCoupleAPIErrors(t *testing.T) {
 		}
 	})
 
-	t.Run("http response with nil error", func(t *testing.T) {
-		// Create the simulated HTTP response with a 500 status and a nil error
-		resp := &http.Response{
-			StatusCode: http.StatusInternalServerError,
-			Body:       io.NopCloser(bytes.NewBuffer([]byte(`{"errors":[]}`))), // empty errors array in body
-			Header:     http.Header{"Content-Type": []string{"application/json"}},
-			Request:    &http.Request{Header: http.Header{"Accept": []string{"application/json"}}},
-		}
-
-		_, err := coupleAPIErrors(resp, nil)
-		if err != nil {
-			t.Error("http error with no reasons should return no error")
+	t.Run("nil response", func(t *testing.T) {
+		resp, err := coupleAPIErrors(nil, nil)
+		if resp != nil || err == nil || err.Error() != "[002] response is nil" {
+			t.Fatalf("got response %v, error %v; want nil response and response-is-nil error", resp, err)
 		}
 	})
 
@@ -227,6 +223,9 @@ func TestCoupleAPIErrors(t *testing.T) {
 		defer resp.Body.Close()
 
 		_, err = coupleAPIErrors(resp, nil)
+		if err == nil {
+			t.Fatal("expected an error for an HTML response")
+		}
 
 		if !strings.Contains(err.Error(), strconv.Itoa(expectedError.Code)) {
 			t.Errorf("expected error code %d, got %d", expectedError.Code, resp.StatusCode)
@@ -265,6 +264,9 @@ func TestCoupleAPIErrors(t *testing.T) {
 		}
 
 		_, err := coupleAPIErrors(resp, nil)
+		if err == nil {
+			t.Fatal("expected a bad gateway error")
+		}
 		if !strings.Contains(err.Error(), strconv.Itoa(expectedError.Code)) {
 			t.Errorf("expected error code %d, got %d", expectedError.Code, resp.StatusCode)
 		}
@@ -361,8 +363,8 @@ func TestErrorIs(t *testing.T) {
 		t.Run(tc.testName, func(t *testing.T) {
 			t.Parallel()
 
-			if errors.Is(tc.err1, tc.err2) != tc.expectedResult {
-				t.Errorf("expected %+#v to be equal %+#v", tc.err1, tc.err2)
+			if got := errors.Is(tc.err1, tc.err2); got != tc.expectedResult {
+				t.Errorf("errors.Is(%v, %v) = %t, want %t", tc.err1, tc.err2, got, tc.expectedResult)
 			}
 		})
 	}
@@ -383,10 +385,8 @@ func TestIsNotFound(t *testing.T) {
 		name := http.StatusText(tt.code)
 		t.Run(name, func(t *testing.T) {
 			err := &Error{Code: tt.code}
-			if matches := IsNotFound(err); !matches && tt.match {
-				t.Errorf("should have matched %d", tt.code)
-			} else if matches && !tt.match {
-				t.Errorf("shoudl not have matched %d", tt.code)
+			if got := IsNotFound(err); got != tt.match {
+				t.Errorf("IsNotFound(%v) = %t, want %t", err, got, tt.match)
 			}
 		})
 	}
@@ -429,15 +429,205 @@ func TestErrHasStatusCode(t *testing.T) {
 			name:  "NilError",
 			codes: []int{http.StatusGone},
 		},
+		{
+			name:  "WrappedError",
+			err:   fmt.Errorf("request failed: %w", &Error{Code: http.StatusForbidden}),
+			codes: []int{http.StatusForbidden},
+			match: true,
+		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			got := ErrHasStatus(tt.err, tt.codes...)
-			if !got && tt.match {
-				t.Errorf("should have matched")
-			} else if got && !tt.match {
-				t.Errorf("should not have matched")
+			if got != tt.match {
+				t.Errorf("ErrHasStatus(%v, %v) = %t, want %t", tt.err, tt.codes, got, tt.match)
+			}
+		})
+	}
+}
+
+func TestClassifyInstanceCreateError(t *testing.T) {
+	const (
+		capacityMsg     = "The Linode plan you chose is not currently available in the selected region. Please select another region or plan type, or contact Support for assistance."
+		accountLimitMsg = "You've reached a limit for the number of active services on your account. Please contact Support to request an increase and provide the total number of services you may need."
+	)
+
+	capacityErr := &Error{Code: http.StatusForbidden, Message: capacityMsg}
+	accountLimitErr := &Error{Code: http.StatusBadRequest, Message: accountLimitMsg}
+
+	type testCase struct {
+		name string
+		err  error
+		want InstanceCreateErrorReason
+	}
+
+	tests := []testCase{
+		{
+			name: "InsufficientCapacity",
+			err:  capacityErr,
+			want: InstanceCreateErrorInsufficientCapacity,
+		},
+		{
+			name: "InsufficientCapacityDifferentCase",
+			err:  &Error{Code: http.StatusForbidden, Message: strings.ToUpper(capacityMsg)},
+			want: InstanceCreateErrorInsufficientCapacity,
+		},
+		{
+			name: "InsufficientCapacityWrapped",
+			err:  fmt.Errorf("Error creating Linode instance: %w", capacityErr),
+			want: InstanceCreateErrorInsufficientCapacity,
+		},
+		{
+			name: "AccountLimitReached",
+			err:  accountLimitErr,
+			want: InstanceCreateErrorAccountLimitReached,
+		},
+		{
+			name: "AccountLimitReachedWrapped",
+			err:  fmt.Errorf("create instance: %w", accountLimitErr),
+
+			want: InstanceCreateErrorAccountLimitReached,
+		},
+		{
+			name: "AccountLimitReachedDifferentCase",
+			err:  &Error{Code: http.StatusBadRequest, Message: strings.ToUpper(accountLimitMsg)},
+			want: InstanceCreateErrorAccountLimitReached,
+		},
+		{
+			name: "AccountLimitTextWithWrongStatus",
+			err:  &Error{Code: http.StatusForbidden, Message: accountLimitMsg},
+		},
+		{
+			name: "BothTextsWith403",
+			err:  &Error{Code: http.StatusForbidden, Message: accountLimitMsg + "; " + capacityMsg},
+			want: InstanceCreateErrorInsufficientCapacity,
+		},
+		{
+			name: "BothTextsWith400",
+			err:  &Error{Code: http.StatusBadRequest, Message: capacityMsg + "; " + accountLimitMsg},
+			want: InstanceCreateErrorAccountLimitReached,
+		},
+		{
+			name: "CapacityTextWithWrongStatus",
+			err:  &Error{Code: http.StatusBadRequest, Message: capacityMsg},
+		},
+		{
+			name: "LegacyCapacityWording",
+			err:  &Error{Code: http.StatusForbidden, Message: "The selected region does not have any availability for the requested service plan"},
+		},
+		{
+			name: "UnknownError",
+			err:  &Error{Code: http.StatusBadRequest, Message: "The region this linode is in does not support disk encryption at this time"},
+		},
+		{
+			name: "UnknownForbiddenError",
+			err:  &Error{Code: http.StatusForbidden, Message: "You do not have permission to create Linodes."},
+		},
+		{
+			name: "ClientSideError",
+			err:  NewError(errors.New("context deadline exceeded")),
+		},
+		{
+			name: "ContextDeadlineExceeded",
+			err:  context.DeadlineExceeded,
+		},
+		{
+			name: "WrappedURLError",
+			err: fmt.Errorf("Error creating Linode instance: %w", &url.Error{
+				Op:  http.MethodPost,
+				URL: "https://api.linode.com/v4/linode/instances",
+				Err: context.DeadlineExceeded,
+			}),
+		},
+		{
+			name: "NotALinodeError",
+			err:  errors.New("[403] " + capacityMsg),
+		},
+		{
+			name: "NilError",
+		},
+		{
+			name: "TypedNilError",
+			err:  (*Error)(nil),
+		},
+	}
+
+	for _, code := range []int{
+		http.StatusOK,
+		http.StatusNotFound,
+		http.StatusRequestTimeout,
+		http.StatusTooManyRequests,
+		http.StatusInternalServerError,
+		http.StatusNotImplemented,
+		http.StatusBadGateway,
+		http.StatusServiceUnavailable,
+		http.StatusGatewayTimeout,
+		http.StatusHTTPVersionNotSupported,
+		http.StatusInsufficientStorage,
+	} {
+		tests = append(tests, testCase{
+			name: "UnrecognizedStatus" + strconv.Itoa(code),
+			err:  &Error{Code: code, Message: capacityMsg + "; " + accountLimitMsg},
+		})
+	}
+
+	for _, code := range []int{ErrorUnsupported, ErrorFromString, ErrorFromError, ErrorFromStringer} {
+		tests = append(tests, testCase{
+			name: "PseudoCode" + strconv.Itoa(code),
+			err:  &Error{Code: code, Message: capacityMsg + "; " + accountLimitMsg},
+		})
+	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := ClassifyInstanceCreateError(tt.err); got != tt.want {
+				t.Errorf("ClassifyInstanceCreateError() = %q, want %q", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestClassifyInstanceCreateErrorAPIResponse(t *testing.T) {
+	for _, tc := range []struct {
+		name   string
+		status int
+		body   string
+		want   InstanceCreateErrorReason
+	}{
+		{
+			name:   "CapacityWithUnrelatedPermissionError",
+			status: http.StatusForbidden,
+			body:   `{"errors":[{"reason":"You do not have permission to perform this action."},{"reason":"The Linode plan you chose is not currently available in the selected region."}]}`,
+			want:   InstanceCreateErrorInsufficientCapacity,
+		},
+		{
+			name:   "AccountLimitWithUnrelatedLabelError",
+			status: http.StatusBadRequest,
+			body:   `{"errors":[{"reason":"You've reached a limit for the number of active services on your account."},{"field":"label","reason":"Label must be unique"}]}`,
+			want:   InstanceCreateErrorAccountLimitReached,
+		},
+		{
+			name:   "LabelConflictIsNotClassified",
+			status: http.StatusBadRequest,
+			body:   `{"errors":[{"field":"label","reason":"Label must be unique"}]}`,
+		},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			response := &http.Response{
+				StatusCode: tc.status,
+				Body:       io.NopCloser(strings.NewReader(tc.body)),
+				Header:     http.Header{"Content-Type": []string{"application/json"}},
+				Request:    &http.Request{Header: http.Header{"Accept": []string{"application/json"}}},
+			}
+			defer response.Body.Close()
+
+			_, err := coupleAPIErrors(response, nil)
+			if err == nil {
+				t.Fatal("expected an API error")
+			}
+			if got := ClassifyInstanceCreateError(err); got != tc.want {
+				t.Errorf("ClassifyInstanceCreateError(%v) = %q, want %q", err, got, tc.want)
 			}
 		})
 	}
