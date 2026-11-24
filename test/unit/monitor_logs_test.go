@@ -2,10 +2,14 @@ package unit
 
 import (
 	"context"
+	"encoding/json"
+	"net/http"
 	"testing"
 
+	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 const (
@@ -596,4 +600,135 @@ func TestListLogStreamQuotas(t *testing.T) {
 	assert.Equal(t, "Current number of LKE audit logs streams per account", quotas[1].Description)
 	assert.Equal(t, 10, quotas[1].QuotaLimit)
 	assert.Equal(t, "logs_streams_aclp_lke_audit_logs_streams", quotas[1].QuotaType)
+}
+
+func TestStreamDetailsMarshalJSON(t *testing.T) {
+	tests := []struct {
+		name    string
+		details linodego.StreamDetails
+		want    string
+		wantErr bool
+	}{
+		{
+			name:    "LKE explicit false",
+			details: linodego.StreamDetails{ClusterIDs: []int{50, 60}},
+			want:    `{"cluster_ids":[50,60],"is_auto_add_all_clusters_enabled":false}`,
+		},
+		{
+			name:    "LKE auto add",
+			details: linodego.StreamDetails{IsAutoAddAllClustersEnabled: true},
+			want:    `{"is_auto_add_all_clusters_enabled":true}`,
+		},
+		{
+			name:    "VPN",
+			details: linodego.StreamDetails{VPNGatewayIDs: []int{50, 60}},
+			want:    `{"vpn_gateway_ids":[50,60]}`,
+		},
+		{
+			name:    "VPN empty list remains explicit",
+			details: linodego.StreamDetails{VPNGatewayIDs: []int{}},
+			want:    `{"vpn_gateway_ids":[]}`,
+		},
+		{
+			name:    "mixed cluster IDs",
+			details: linodego.StreamDetails{VPNGatewayIDs: []int{50}, ClusterIDs: []int{60}},
+			wantErr: true,
+		},
+		{
+			name:    "mixed auto add",
+			details: linodego.StreamDetails{VPNGatewayIDs: []int{50}, IsAutoAddAllClustersEnabled: true},
+			wantErr: true,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			data, err := json.Marshal(tt.details)
+			if tt.wantErr {
+				require.Error(t, err)
+				return
+			}
+			require.NoError(t, err)
+			assert.JSONEq(t, tt.want, string(data))
+		})
+	}
+}
+
+func TestLogStreamsVPNGateway(t *testing.T) {
+	for _, streamType := range []linodego.StreamType{
+		linodego.StreamTypeVPNGWIPSecLogs,
+		linodego.StreamTypeVPNGWBGPLogs,
+	} {
+		t.Run(string(streamType), func(t *testing.T) {
+			var base ClientBaseCase
+			base.SetUp(t)
+			defer base.TearDown(t)
+
+			fixture, err := fixtures.GetFixture("monitor_log_stream_vpngw")
+			require.NoError(t, err)
+			fixtureJSON, err := json.Marshal(fixture)
+			require.NoError(t, err)
+			var response map[string]interface{}
+			require.NoError(t, json.Unmarshal(fixtureJSON, &response))
+			response["type"] = string(streamType)
+
+			checkStream := func(stream *linodego.Stream) {
+				t.Helper()
+				require.NotNil(t, stream)
+				assert.Equal(t, streamType, stream.Type)
+				require.NotNil(t, stream.Details)
+				assert.Equal(t, []int{50, 60}, stream.Details.VPNGatewayIDs)
+				assert.Nil(t, stream.Details.ClusterIDs)
+				require.NotNil(t, stream.Created)
+				require.NotNil(t, stream.Updated)
+			}
+			for _, method := range []string{http.MethodPost, http.MethodPut} {
+				path := "monitor/streams"
+				if method == http.MethodPut {
+					path += "/790"
+				}
+				httpmock.RegisterResponder(method, base.BaseURL+path, func(req *http.Request) (*http.Response, error) {
+					var body map[string]json.RawMessage
+					require.NoError(t, json.NewDecoder(req.Body).Decode(&body))
+					assert.JSONEq(t, `{"vpn_gateway_ids":[50,60]}`, string(body["details"]))
+					if req.Method == http.MethodPost {
+						assert.JSONEq(t, `"`+string(streamType)+`"`, string(body["type"]))
+						assert.JSONEq(t, `[1]`, string(body["destinations"]))
+					} else {
+						assert.NotContains(t, body, "type")
+					}
+					return httpmock.NewJsonResponse(http.StatusOK, response)
+				})
+			}
+			details := &linodego.StreamDetails{VPNGatewayIDs: []int{50, 60}}
+			created, err := base.Client.CreateLogStream(context.Background(), linodego.StreamCreateOptions{
+				Label: "VPN Gateway logs", Type: streamType, Destinations: []int{1}, Details: details,
+			})
+			require.NoError(t, err)
+			checkStream(created)
+
+			updated, err := base.Client.UpdateLogStream(context.Background(), 790, linodego.StreamUpdateOptions{Details: details})
+			require.NoError(t, err)
+			checkStream(updated)
+
+			base.MockGet("monitor/streams/790", response)
+			stream, err := base.Client.GetLogStream(context.Background(), 790)
+			require.NoError(t, err)
+			checkStream(stream)
+
+			page := map[string]interface{}{
+				"data": []interface{}{response}, "page": 1, "pages": 1, "results": 1,
+			}
+			base.MockGet("monitor/streams", page)
+			streams, err := base.Client.ListLogStreams(context.Background(), nil)
+			require.NoError(t, err)
+			require.Len(t, streams, 1)
+			checkStream(&streams[0])
+
+			base.MockGet("monitor/streams/790/history", page)
+			history, err := base.Client.ListLogStreamHistory(context.Background(), 790, nil)
+			require.NoError(t, err)
+			require.Len(t, history, 1)
+			checkStream(&history[0])
+		})
+	}
 }
