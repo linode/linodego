@@ -67,7 +67,7 @@ func vpcSubnetUpdateOptionsCheck(
 	vpcSubnet *linodego.VPCSubnet,
 	t *testing.T,
 ) {
-	if !(opts.Label == vpcSubnet.Label) {
+	if !(opts.Label != nil && *opts.Label == vpcSubnet.Label) {
 		t.Error(
 			"the VPC subnet instance and the VPC subnet " +
 				"update options instance are mismatched",
@@ -284,7 +284,7 @@ func TestVPC_Subnet_Update_Invalid_data(t *testing.T) {
 	opts := vpcSubnet.GetUpdateOptions()
 	vpcSubnetUpdateOptionsCheck(&opts, vpcSubnet, t)
 
-	opts.Label = "invalid_label!"
+	opts.Label = linodego.Pointer("invalid_label!")
 	_, err = client.UpdateVPCSubnet(
 		context.Background(),
 		vpc.ID,
@@ -404,4 +404,43 @@ func TestVPC_Subnet_WithRDMAType(t *testing.T) {
 	}
 	require.NotNil(t, found, "VPC subnet not found in list")
 	assert.Equal(t, linodego.VPCTypeRDMA, found.VPCType, "Expected VPC subnet type to be RDMA")
+}
+
+func TestVPC_Subnet_WithNATGateway(t *testing.T) {
+	client, gatewayCreated := setupNATGateway(
+		t,
+		"fixtures/TestVPC_Subnet_WithNATGateway",
+	)
+
+	createOpts := linodego.VPCCreateOptions{
+		Label:  "go-test-vpc" + getUniqueText(),
+		Region: gatewayCreated.Region,
+		Subnets: []VPCSubnetCreateOptions{
+			{
+				Label: "linodego-vpc-test" + getUniqueText(),
+				IPv4:  TestSubnetIPv4,
+				NATGateway: linodego.Pointer(
+					linodego.VPCSubnetCreateOptionsNATGateway{
+						ID: linodego.DoublePointer(gatewayCreated.ID),
+					},
+				),
+			},
+		},
+	}
+	vpc, err := client.CreateVPC(context.Background(), createOpts)
+	require.NoErrorf(t, err, "Error creating VPC Subnet with NAT Gateway %v", err)
+
+	t.Cleanup(func() {
+		if err := client.DeleteVPC(context.Background(), vpc.ID); err != nil {
+			t.Errorf("Error deleting VPC Subnet with NAT Gateway %v", err)
+		}
+	})
+
+	vpcSubnet, err := client.GetVPCSubnet(context.Background(), vpc.ID, vpc.Subnets[0].ID)
+	require.NoErrorf(t, err, "Error retrieving VPC Subnet %v", err)
+	assert.Equal(t, gatewayCreated.ID, vpcSubnet.NATGateway.ID)
+
+	gateway, err := client.GetNATGateway(context.Background(), gatewayCreated.ID)
+	require.NoErrorf(t, err, "Error retrieving NAT Gateway: %v", err)
+	assert.Equal(t, vpcSubnet.ID, gateway.VPCSubnet.ID)
 }

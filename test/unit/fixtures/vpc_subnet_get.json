@@ -45,5 +45,25 @@
     }
   ],
   "created": "2025-01-01T10:00:00",
-  "updated": "2025-01-02T10:00:00"
+  "updated": "2025-01-02T10:00:00",
+  "natgateway": {
+    "id": 42,
+    "label": "my-nat-gateway",
+    "addresses": [
+      "203.0.113.42"
+    ],
+    "portset_assignments": 15,
+    "portset_capacity": 30,
+    "portsets": [
+      {
+        "address": "203.0.113.42",
+        "ports": [
+          {
+            "start": 2048,
+            "end": 3071
+          }
+        ]
+      }
+    ]
+  }
 }
