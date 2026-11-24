@@ -104,7 +104,7 @@ type VPCSubnetCreateOptionsIPv6 struct {
 }
 
 type VPCSubnetUpdateOptions struct {
-	Label      string                            `json:"label"`
+	Label      *string                           `json:"label,omitzero"`
 	NATGateway *VPCSubnetUpdateOptionsNATGateway `json:"natgateway,omitzero"`
 }
 
@@ -154,7 +154,19 @@ func (v VPCSubnet) GetCreateOptions() VPCSubnetCreateOptions {
 }
 
 func (v VPCSubnet) GetUpdateOptions() VPCSubnetUpdateOptions {
-	return VPCSubnetUpdateOptions{Label: v.Label}
+	label := v.Label
+
+	var natGateway *VPCSubnetUpdateOptionsNATGateway
+
+	if v.NATGateway != nil {
+		id := copyValue(&v.NATGateway.ID)
+		natGateway = &VPCSubnetUpdateOptionsNATGateway{ID: &id}
+	}
+
+	return VPCSubnetUpdateOptions{
+		Label:      &label,
+		NATGateway: natGateway,
+	}
 }
 
 func (c *Client) CreateVPCSubnet(

@@ -2,8 +2,12 @@ package unit
 
 import (
 	"context"
+	"encoding/json"
+	"io"
+	"net/http"
 	"testing"
 
+	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
 )
@@ -166,6 +170,48 @@ func TestVPCSubnets_List(t *testing.T) {
 	assert.Equal(t, "2830:0:0:4::/62", subnet.Nodebalancers[0].Ipv6Ranges[0].Range)
 }
 
+func TestVPCSubnet_UpdateNATGateway_OmitsLabel(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("vpc_subnet_update")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	var requestBody map[string]any
+	httpmock.RegisterResponder("PUT", base.BaseURL+"vpcs/123/subnets/456", func(req *http.Request) (*http.Response, error) {
+		data, err := io.ReadAll(req.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
+		requestBody = nil
+		if err := json.Unmarshal(data, &requestBody); err != nil {
+			t.Fatal(err)
+		}
+		return httpmock.NewJsonResponse(http.StatusOK, fixtureData)
+	})
+
+	// Attach: Label is nil, so only the natgateway key is sent.
+	attachOpts := linodego.VPCSubnetUpdateOptions{
+		NATGateway: linodego.Pointer(linodego.VPCSubnetUpdateOptionsNATGateway{ID: linodego.DoublePointer(42)}),
+	}
+	subnet, err := base.Client.UpdateVPCSubnet(context.Background(), 123, 456, attachOpts)
+	assert.NoError(t, err)
+	assert.NotNil(t, subnet)
+	assert.NotContains(t, requestBody, "label")
+	assert.Equal(t, map[string]any{"natgateway": map[string]any{"id": float64(42)}}, requestBody)
+
+	// Detach: the id is explicitly null so the API clears the gateway.
+	var nilID *int
+	detachOpts := linodego.VPCSubnetUpdateOptions{
+		NATGateway: linodego.Pointer(linodego.VPCSubnetUpdateOptionsNATGateway{ID: &nilID}),
+	}
+	_, err = base.Client.UpdateVPCSubnet(context.Background(), 123, 456, detachOpts)
+	assert.NoError(t, err)
+	assert.NotContains(t, requestBody, "label")
+	assert.Equal(t, map[string]any{"natgateway": map[string]any{"id": nil}}, requestBody)
+}
+
 func TestVPCSubnet_Update(t *testing.T) {
 	fixtureData, err := fixtures.GetFixture("vpc_subnet_update")
 	assert.NoError(t, err)
@@ -177,7 +223,7 @@ func TestVPCSubnet_Update(t *testing.T) {
 	base.MockPut("vpcs/123/subnets/456", fixtureData)
 
 	subnetUpdateOpts := linodego.VPCSubnetUpdateOptions{
-		Label:      "Updated Subnet",
+		Label:      linodego.Pointer("Updated Subnet"),
 		NATGateway: linodego.Pointer(linodego.VPCSubnetUpdateOptionsNATGateway{ID: linodego.DoublePointer(42)}),
 	}
 	subnet, err := base.Client.UpdateVPCSubnet(context.Background(), 123, 456, subnetUpdateOpts)
@@ -185,6 +231,7 @@ func TestVPCSubnet_Update(t *testing.T) {
 
 	assertJSONObjectsSimilar(t, subnet, subnet.GetCreateOptions())
 	assertJSONObjectsSimilar(t, subnet, subnet.GetUpdateOptions())
+	assertVPCSubnetUpdateOptionsNATGatewayCopied(t, subnet)
 
 	assert.Equal(t, 456, subnet.ID, "Expected subnet ID to match")
 	assert.Equal(t, "Updated Subnet", subnet.Label, "Expected subnet label to match")
@@ -199,6 +246,29 @@ func TestVPCSubnet_Update(t *testing.T) {
 	assert.Len(t, subnet.NATGateway.Portsets[0].Ports, 1, "Expected portset to have one port range")
 	assert.Equal(t, 2048, subnet.NATGateway.Portsets[0].Ports[0].Start, "Expected port range start to match")
 	assert.Equal(t, 3071, subnet.NATGateway.Portsets[0].Ports[0].End, "Expected port range end to match")
+}
+
+// assertVPCSubnetUpdateOptionsNATGatewayCopied verifies that GetUpdateOptions carries the
+// attached NAT gateway ID into an independent copy, matching GetCreateOptions.
+func assertVPCSubnetUpdateOptionsNATGatewayCopied(t *testing.T, subnet *linodego.VPCSubnet) {
+	t.Helper()
+
+	opts := subnet.GetUpdateOptions()
+	if !assert.NotNil(t, opts.NATGateway, "Expected update options to include the NAT gateway") {
+		return
+	}
+	if !assert.NotNil(t, opts.NATGateway.ID, "Expected NAT gateway ID pointer to be set") {
+		return
+	}
+	if !assert.NotNil(t, *opts.NATGateway.ID, "Expected NAT gateway ID value to be set") {
+		return
+	}
+	assert.Equal(t, subnet.NATGateway.ID, **opts.NATGateway.ID, "Expected copied NAT gateway ID to match the subnet")
+
+	// The copy must be independent: changing it must not mutate the subnet.
+	newID := 999
+	**opts.NATGateway.ID = newID
+	assert.Equal(t, 42, subnet.NATGateway.ID, "Expected subnet NAT gateway ID to be unaffected by the copy")
 }
 
 func TestVPCSubnet_Delete(t *testing.T) {

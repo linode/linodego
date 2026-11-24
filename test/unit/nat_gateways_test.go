@@ -6,6 +6,7 @@ import (
 
 	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestNATGateways_List(t *testing.T) {
@@ -109,6 +110,7 @@ func TestNATGateways_Create(t *testing.T) {
 	assert.Equal(t, 0, gateway.PortsetAssignments)
 	assert.Equal(t, 126, gateway.PortsetCapacity)
 
+	require.NotNil(t, gateway.VPCSubnet)
 	assert.Equal(t, 42, gateway.VPCSubnet.ID)
 	assert.Equal(t, "vpc_subnet", gateway.VPCSubnet.Type)
 	assert.Equal(t, "my-subnet", gateway.VPCSubnet.Label)

@@ -186,7 +186,6 @@ func TestNATGateway_GetLinodeInterfaces(t *testing.T) {
 	require.NoErrorf(t, err, "Error creating VPC with subnet: %v", err)
 
 	vpcSubnetUpdateOpts := linodego.VPCSubnetUpdateOptions{
-		Label:      vpcSubnet.Label,
 		NATGateway: linodego.Pointer(linodego.VPCSubnetUpdateOptionsNATGateway{ID: linodego.DoublePointer(gatewayCreated.ID)}),
 	}
 	vpcSubnet, err = client.UpdateVPCSubnet(context.Background(), vpc.ID, vpcSubnet.ID, vpcSubnetUpdateOpts)

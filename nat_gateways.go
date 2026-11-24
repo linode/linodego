@@ -9,17 +9,17 @@ import (
 )
 
 type NATGateway struct {
-	ID                       int                 `json:"id"`
-	Region                   string              `json:"region"`
-	Addresses                []NATGatewayAddress `json:"addresses"`
-	AddressAutoscaleMax      int                 `json:"address_autoscale_max"`
-	DefaultPortsPerInterface int                 `json:"default_ports_per_interface"`
-	Label                    string              `json:"label"`
-	PortsetAssignments       int                 `json:"portset_assignments"`
-	PortsetCapacity          int                 `json:"portset_capacity"`
-	VPCSubnet                NATGatewayVPCSubnet `json:"vpc_subnet"`
-	Created                  *time.Time          `json:"-"`
-	Updated                  *time.Time          `json:"-"`
+	ID                       int                  `json:"id"`
+	Region                   string               `json:"region"`
+	Addresses                []NATGatewayAddress  `json:"addresses"`
+	AddressAutoscaleMax      int                  `json:"address_autoscale_max"`
+	DefaultPortsPerInterface int                  `json:"default_ports_per_interface"`
+	Label                    string               `json:"label"`
+	PortsetAssignments       int                  `json:"portset_assignments"`
+	PortsetCapacity          int                  `json:"portset_capacity"`
+	VPCSubnet                *NATGatewayVPCSubnet `json:"vpc_subnet"`
+	Created                  *time.Time           `json:"-"`
+	Updated                  *time.Time           `json:"-"`
 }
 
 func (n *NATGateway) UnmarshalJSON(b []byte) error {
@@ -62,7 +62,7 @@ type NATGatewayVPCSubnet struct {
 
 type NATGatewayCreateOptions struct {
 	Region                   string                           `json:"region"`
-	Addresses                []NATGatewayAddressCreateOptions `json:"addresses"`
+	Addresses                []NATGatewayAddressCreateOptions `json:"addresses,omitzero"`
 	DefaultPortsPerInterface *int                             `json:"default_ports_per_interface,omitzero"`
 	Label                    string                           `json:"label"`
 	UseAutoscaling           *bool                            `json:"use_autoscaling,omitzero"`

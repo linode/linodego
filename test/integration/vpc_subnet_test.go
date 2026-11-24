@@ -67,7 +67,7 @@ func vpcSubnetUpdateOptionsCheck(
 	vpcSubnet *linodego.VPCSubnet,
 	t *testing.T,
 ) {
-	if !(opts.Label == vpcSubnet.Label) {
+	if !(opts.Label != nil && *opts.Label == vpcSubnet.Label) {
 		t.Error(
 			"the VPC subnet instance and the VPC subnet " +
 				"update options instance are mismatched",
@@ -284,7 +284,7 @@ func TestVPC_Subnet_Update_Invalid_data(t *testing.T) {
 	opts := vpcSubnet.GetUpdateOptions()
 	vpcSubnetUpdateOptionsCheck(&opts, vpcSubnet, t)
 
-	opts.Label = "invalid_label!"
+	opts.Label = linodego.Pointer("invalid_label!")
 	_, err = client.UpdateVPCSubnet(
 		context.Background(),
 		vpc.ID,
