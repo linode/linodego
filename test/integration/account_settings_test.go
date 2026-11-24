@@ -77,5 +77,23 @@ func TestAccountSettings_Update(t *testing.T) {
 	require.Equal(t, "linode/migrate", settings.MaintenancePolicy, "Expected MaintenancePolicy to be 'linode/migrate'")
 }
 
+func TestAccountSettings_TFAEnforced(t *testing.T) {
+	client, teardown := createTestClient(t, "fixtures/TestAccountSettings_TFAEnforced")
+	t.Cleanup(teardown)
+
+	ctx := context.Background()
+	original, err := client.GetAccountSettings(ctx)
+	require.NoError(t, err)
+
+	opts := linodego.AccountSettingsUpdateOptions{TFAEnforced: new(original.TFAEnforced)}
+	updated, err := client.UpdateAccountSettings(ctx, opts)
+	require.NoError(t, err)
+	require.Equal(t, original.TFAEnforced, updated.TFAEnforced)
+
+	settings, err := client.GetAccountSettings(ctx)
+	require.NoError(t, err)
+	require.Equal(t, original.TFAEnforced, settings.TFAEnforced)
+}
+
 func Bool(v bool) *bool       { return &v }
 func String(v string) *string { return &v }

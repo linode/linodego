@@ -78,6 +78,58 @@ func TestLKENodePool_Get(t *testing.T) {
 		assert.True(t, nodePool.Isolation.PublicIPv4)
 		assert.False(t, nodePool.Isolation.PublicIPv6)
 	}
+	if assert.NotNil(t, nodePool.ProvisioningError) {
+		assert.Equal(t, linodego.LKENodePoolProvisioningErrorCodeInsufficientCapacity, nodePool.ProvisioningError.Code)
+		assert.Equal(
+			t,
+			"The requested Linode plan is currently unavailable in the selected region. Choose another plan or region, or contact Support.",
+			nodePool.ProvisioningError.Message,
+		)
+	}
+}
+
+func TestLKENodePool_GetProvisioningError(t *testing.T) {
+	for _, tc := range []struct {
+		name     string
+		response map[string]any
+		want     *linodego.LKENodePoolProvisioningError
+	}{
+		{
+			name:     "absent",
+			response: map[string]any{"id": 456},
+		},
+		{
+			name:     "null",
+			response: map[string]any{"id": 456, "provisioning_error": nil},
+		},
+		{
+			name: "unknown code preserved",
+			response: map[string]any{
+				"id": 456,
+				"provisioning_error": map[string]any{
+					"code":    "some_future_code",
+					"message": "A message for a future provisioning error.",
+				},
+			},
+			want: &linodego.LKENodePoolProvisioningError{
+				Code:    linodego.LKENodePoolProvisioningErrorCode("some_future_code"),
+				Message: "A message for a future provisioning error.",
+			},
+		},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			var base ClientBaseCase
+			base.SetUp(t)
+			defer base.TearDown(t)
+			base.MockGet("lke/clusters/123/pools/456", tc.response)
+
+			nodePool, err := base.Client.GetLKENodePool(context.Background(), 123, 456)
+			if !assert.NoError(t, err) {
+				return
+			}
+			assert.Equal(t, tc.want, nodePool.ProvisioningError)
+		})
+	}
 }
 
 func TestLKENodePool_Create(t *testing.T) {
@@ -124,6 +176,7 @@ func TestLKENodePool_Create(t *testing.T) {
 		assert.True(t, nodePool.Isolation.PublicIPv4)
 		assert.False(t, nodePool.Isolation.PublicIPv6)
 	}
+	assert.Nil(t, nodePool.ProvisioningError)
 }
 
 func TestLKENodePool_Update(t *testing.T) {
@@ -186,8 +239,13 @@ func TestLKENodePool_List(t *testing.T) {
 	assert.Len(t, nodePools, 2)
 	assert.Equal(t, 456, nodePools[0].ID)
 	assert.Equal(t, []linodego.LockType{linodego.LockTypeCannotDelete}, nodePools[0].Locks)
+	if assert.NotNil(t, nodePools[0].ProvisioningError) {
+		assert.Equal(t, linodego.LKENodePoolProvisioningErrorCodeAccountLimitReached, nodePools[0].ProvisioningError.Code)
+		assert.Equal(t, "The account's active-services limit has been reached. Contact Support to request an increase.", nodePools[0].ProvisioningError.Message)
+	}
 	assert.Equal(t, 789, nodePools[1].ID)
 	assert.Empty(t, nodePools[1].Locks)
+	assert.Nil(t, nodePools[1].ProvisioningError)
 }
 
 func TestLKENodePoolNode_Delete(t *testing.T) {
@@ -229,6 +287,73 @@ func TestLKEEnterpriseNodePool_Create(t *testing.T) {
 	assert.Equal(t, "on_recycle", string(*nodePool.UpdateStrategy))
 	assert.Equal(t, linodego.Pointer("custom-label-create"), nodePool.Label)
 	assert.Equal(t, 12345, *nodePool.FirewallID)
+}
+
+func TestLKENodePoolRDMA_Create(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("lke_node_pool_rdma_create")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	createOptions := linodego.LKENodePoolCreateOptions{
+		Count:          6,
+		Type:           "g3-gpu-rtxpro6000-blackwell-rdma-2",
+		K8sVersion:     linodego.Pointer("v1.31.8+lke3"),
+		UpdateStrategy: linodego.Pointer(linodego.LKENodePoolRollingUpdate),
+		Label:          linodego.Pointer("rdma-pool"),
+		FirewallID:     linodego.Pointer(12345),
+		Networking: &linodego.LKENodePoolNetworking{
+			Interfaces: []linodego.LKENodePoolInterface{
+				{Type: linodego.LKENodePoolInterfaceTypeVPC, VPCID: 10001, SubnetID: 20001},
+				{Type: linodego.LKENodePoolInterfaceTypeRDMAVPC, VPCID: 12345, SubnetID: 45678},
+				{Type: linodego.LKENodePoolInterfaceTypeRDMAVPC, VPCID: 12345, SubnetID: 91012},
+			},
+		},
+	}
+
+	base.MockPost("lke/clusters/123/pools", fixtureData)
+
+	nodePool, err := base.Client.CreateLKENodePool(context.Background(), 123, createOptions)
+	assert.NoError(t, err)
+	assert.Equal(t, "g3-gpu-rtxpro6000-blackwell-rdma-2", nodePool.Type)
+	assert.Equal(t, 6, nodePool.Count)
+	if assert.NotNil(t, nodePool.Networking) {
+		ifaces := nodePool.Networking.Interfaces
+		assert.Len(t, ifaces, 3)
+		assert.Equal(t, linodego.LKENodePoolInterfaceTypeVPC, ifaces[0].Type)
+		assert.Equal(t, 10001, ifaces[0].VPCID)
+		assert.Equal(t, 20001, ifaces[0].SubnetID)
+		assert.Equal(t, linodego.LKENodePoolInterfaceTypeRDMAVPC, ifaces[1].Type)
+		assert.Equal(t, 12345, ifaces[1].VPCID)
+		assert.Equal(t, 45678, ifaces[1].SubnetID)
+		assert.Equal(t, linodego.LKENodePoolInterfaceTypeRDMAVPC, ifaces[2].Type)
+		assert.Equal(t, 91012, ifaces[2].SubnetID)
+	}
+}
+
+func TestLKENodePoolRDMA_Get(t *testing.T) {
+	fixtureData, err := fixtures.GetFixture("lke_node_pool_rdma_get")
+	assert.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	base.MockGet("lke/clusters/123/pools/99001", fixtureData)
+
+	nodePool, err := base.Client.GetLKENodePool(context.Background(), 123, 99001)
+	assert.NoError(t, err)
+	assert.Equal(t, 99001, nodePool.ID)
+	assert.Equal(t, "g3-gpu-rtxpro6000-blackwell-rdma-2", nodePool.Type)
+	if assert.NotNil(t, nodePool.Networking) {
+		ifaces := nodePool.Networking.Interfaces
+		assert.Len(t, ifaces, 3)
+		assert.Equal(t, linodego.LKENodePoolInterfaceTypeVPC, ifaces[0].Type)
+		assert.Equal(t, linodego.LKENodePoolInterfaceTypeRDMAVPC, ifaces[1].Type)
+		assert.Equal(t, linodego.LKENodePoolInterfaceTypeRDMAVPC, ifaces[2].Type)
+	}
 }
 
 func TestLKEEnterpriseNodePool_Update(t *testing.T) {
