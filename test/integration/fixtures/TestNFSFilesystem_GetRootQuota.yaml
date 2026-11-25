@@ -471,7 +471,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 19 Nov 2026 12:49:55 GMT
+      - Wed, 25 Nov 2026 13:22:38 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -497,7 +497,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-nfs-space-1trtdsq39568","description":"Test description","tags":["testing"]}'
+    body: '{"label":"go-test-nfs-space-g7i3gfa348v9","description":"Test description","tags":["testing"]}'
     form: {}
     headers:
       Accept:
@@ -509,7 +509,7 @@ interactions:
     url: https://api.linode.com/v4beta/nfs/spaces
     method: POST
   response:
-    body: '{"id": 438, "label": "go-test-nfs-space-1trtdsq39568", "description": "Test
+    body: '{"id": 555, "label": "go-test-nfs-space-g7i3gfa348v9", "description": "Test
       description", "status": "active", "max_capacity_bytes": 1000000000000000, "used_capacity_bytes":
       0, "tags": ["testing"], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
     headers:
@@ -536,7 +536,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 19 Nov 2026 12:49:56 GMT
+      - Wed, 25 Nov 2026 13:22:38 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -560,7 +560,7 @@ interactions:
     code: 200
     duration: ""
 - request:
-    body: '{"label":"go-test-nfs-filesystem-w8rou50m70c9","region":"us-rno-1","max_capacity_bytes":1099511627776,"max_file_count":1500,"protocol_versions":["nfsv4"],"tags":["testing"]}'
+    body: '{"label":"go-test-nfs-filesystem-81m0bvc0v59c","region":"us-rno-1","max_capacity_bytes":1099511627776,"max_file_count":1500,"protocol_versions":["nfsv4"],"tags":["testing"]}'
     form: {}
     headers:
       Accept:
@@ -569,10 +569,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nfs/spaces/438/filesystems
+    url: https://api.linode.com/v4beta/nfs/spaces/555/filesystems
     method: POST
   response:
-    body: '{"id": 1092, "space_id": 438, "label": "go-test-nfs-filesystem-w8rou50m70c9",
+    body: '{"id": 1226, "space_id": 555, "label": "go-test-nfs-filesystem-81m0bvc0v59c",
       "region": "us-rno-1", "protocol_versions": ["nfsv4"], "status": "creating",
       "mount_target_fqdn": null, "mount_target_ips": [], "max_capacity_bytes": null,
       "max_file_count": null, "stats": {"used_capacity_bytes": null, "used_file_count":
@@ -602,7 +602,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 19 Nov 2026 12:49:56 GMT
+      - Wed, 25 Nov 2026 13:22:39 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -635,10 +635,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nfs/spaces/438/filesystems/1092
+    url: https://api.linode.com/v4beta/nfs/spaces/555/filesystems/1226
     method: GET
   response:
-    body: '{"id": 1092, "space_id": 438, "label": "go-test-nfs-filesystem-w8rou50m70c9",
+    body: '{"id": 1226, "space_id": 555, "label": "go-test-nfs-filesystem-81m0bvc0v59c",
       "region": "us-rno-1", "protocol_versions": ["nfsv4"], "status": "creating",
       "mount_target_fqdn": null, "mount_target_ips": [], "max_capacity_bytes": null,
       "max_file_count": null, "stats": {"used_capacity_bytes": null, "used_file_count":
@@ -668,7 +668,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 19 Nov 2026 12:50:11 GMT
+      - Wed, 25 Nov 2026 13:22:54 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -702,21 +702,21 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nfs/spaces/438/filesystems/1092
+    url: https://api.linode.com/v4beta/nfs/spaces/555/filesystems/1226
     method: GET
   response:
-    body: '{"id": 1092, "space_id": 438, "label": "go-test-nfs-filesystem-w8rou50m70c9",
+    body: '{"id": 1226, "space_id": 555, "label": "go-test-nfs-filesystem-81m0bvc0v59c",
       "region": "us-rno-1", "protocol_versions": ["nfsv4"], "status": "active", "mount_target_fqdn":
-      "go-test-nfs-space-1trtdsq39568-1b6.nfs.us-rno-1.linode.com:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "mount_target_ips": ["[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444", "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444", "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444", "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444", "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444", "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444", "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444", "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444"], "max_capacity_bytes":
+      "go-test-nfs-space-g7i3gfa348v9-22b.nfs.us-rno-1.linode.com:/go-test-nfs-filesystem-81m0bvc0v59c-4ca",
+      "mount_target_ips": ["[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca",
+      "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca", "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca",
+      "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca", "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca",
+      "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca", "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca",
+      "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca", "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca",
+      "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca", "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca",
+      "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca", "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca",
+      "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca", "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca",
+      "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca"], "max_capacity_bytes":
       1099511627776, "max_file_count": 1500, "stats": {"used_capacity_bytes": null,
       "used_file_count": null, "collected_at": null}, "tags": ["testing"], "source_snapshot_id":
       null, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
@@ -742,7 +742,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 19 Nov 2026 12:50:27 GMT
+      - Wed, 25 Nov 2026 13:23:11 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -777,21 +777,21 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nfs/spaces/438/filesystems/1092
+    url: https://api.linode.com/v4beta/nfs/spaces/555/filesystems/1226
     method: GET
   response:
-    body: '{"id": 1092, "space_id": 438, "label": "go-test-nfs-filesystem-w8rou50m70c9",
+    body: '{"id": 1226, "space_id": 555, "label": "go-test-nfs-filesystem-81m0bvc0v59c",
       "region": "us-rno-1", "protocol_versions": ["nfsv4"], "status": "active", "mount_target_fqdn":
-      "go-test-nfs-space-1trtdsq39568-1b6.nfs.us-rno-1.linode.com:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "mount_target_ips": ["[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444", "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444", "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444", "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444", "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444", "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444", "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444", "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444"], "max_capacity_bytes":
+      "go-test-nfs-space-g7i3gfa348v9-22b.nfs.us-rno-1.linode.com:/go-test-nfs-filesystem-81m0bvc0v59c-4ca",
+      "mount_target_ips": ["[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca",
+      "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca", "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca",
+      "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca", "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca",
+      "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca", "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca",
+      "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca", "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca",
+      "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca", "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca",
+      "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca", "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca",
+      "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca", "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca",
+      "[1234::5678]:/go-test-nfs-filesystem-81m0bvc0v59c-4ca"], "max_capacity_bytes":
       1099511627776, "max_file_count": 1500, "stats": {"used_capacity_bytes": null,
       "used_file_count": null, "collected_at": null}, "tags": ["testing"], "source_snapshot_id":
       null, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
@@ -817,7 +817,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 19 Nov 2026 12:50:29 GMT
+      - Wed, 25 Nov 2026 13:23:13 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -852,10 +852,10 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nfs/spaces/438/filesystems/1092/quotas?page=1
+    url: https://api.linode.com/v4beta/nfs/spaces/555/filesystems/1226/quotas?page=1
     method: GET
   response:
-    body: '{"data": [{"id": 1326, "filesystem_id": 1092, "path": "/go-test-nfs-filesystem-w8rou50m70c9-444",
+    body: '{"data": [{"id": 1465, "filesystem_id": 1226, "path": "/go-test-nfs-filesystem-81m0bvc0v59c-4ca",
       "is_root": true, "status": "active", "max_capacity_bytes": 1099511627776, "max_file_count":
       1500, "used_capacity_bytes": 0, "used_file_count": 0, "quota_exceeded": false,
       "user_group_config": null, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}],
@@ -884,7 +884,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 19 Nov 2026 12:50:30 GMT
+      - Wed, 25 Nov 2026 13:23:14 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -918,7 +918,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nfs/spaces/438/filesystems/1092
+    url: https://api.linode.com/v4beta/nfs/spaces/555/filesystems/1226
     method: DELETE
   response:
     body: '{}'
@@ -946,7 +946,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 19 Nov 2026 12:50:32 GMT
+      - Wed, 25 Nov 2026 13:23:17 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -979,82 +979,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nfs/spaces/438/filesystems?page=1
-    method: GET
-  response:
-    body: '{"data": [{"id": 1092, "space_id": 438, "label": "go-test-nfs-filesystem-w8rou50m70c9",
-      "region": "us-rno-1", "protocol_versions": ["nfsv4"], "status": "deleting",
-      "mount_target_fqdn": "go-test-nfs-space-1trtdsq39568-1b6.nfs.us-rno-1.linode.com:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "mount_target_ips": ["[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444", "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444", "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444", "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444", "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444", "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444", "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444", "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444",
-      "[1234::5678]:/go-test-nfs-filesystem-w8rou50m70c9-444"], "max_capacity_bytes":
-      1099511627776, "max_file_count": 1500, "tags": ["testing"], "source_snapshot_id":
-      null, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}],
-      "page": 1, "pages": 1, "results": 1}'
-    headers:
-      Access-Control-Allow-Credentials:
-      - "true"
-      Access-Control-Allow-Headers:
-      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
-      Access-Control-Allow-Methods:
-      - HEAD, GET, OPTIONS, POST, PUT, DELETE
-      Access-Control-Allow-Origin:
-      - '*'
-      Access-Control-Expose-Headers:
-      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
-      Akamai-Internal-Account:
-      - '*'
-      Cache-Control:
-      - max-age=0, no-cache, no-store
-      Connection:
-      - keep-alive
-      Content-Security-Policy:
-      - default-src 'none'
-      Content-Type:
-      - application/json
-      Expires:
-      - Thu, 19 Nov 2026 12:50:37 GMT
-      Pragma:
-      - no-cache
-      Strict-Transport-Security:
-      - max-age=31536000
-      Vary:
-      - Authorization, X-Filter
-      - Authorization, X-Filter
-      - Accept-Encoding
-      X-Accepted-Oauth-Scopes:
-      - nfs:read_only
-      X-Content-Type-Options:
-      - nosniff
-      X-Frame-Options:
-      - DENY
-      - DENY
-      X-Oauth-Scopes:
-      - '*'
-      X-Ratelimit-Limit:
-      - "1840"
-      X-Xss-Protection:
-      - 1; mode=block
-    status: 200 OK
-    code: 200
-    duration: ""
-- request:
-    body: ""
-    form: {}
-    headers:
-      Accept:
-      - application/json
-      Content-Type:
-      - application/json
-      User-Agent:
-      - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nfs/spaces/438/filesystems?page=1
+    url: https://api.linode.com/v4beta/nfs/spaces/555/filesystems?page=1
     method: GET
   response:
     body: '{"data": [], "page": 1, "pages": 1, "results": 0}'
@@ -1082,7 +1007,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 19 Nov 2026 12:50:42 GMT
+      - Wed, 25 Nov 2026 13:23:22 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:
@@ -1116,7 +1041,7 @@ interactions:
       - application/json
       User-Agent:
       - linodego/dev https://github.com/linode/linodego
-    url: https://api.linode.com/v4beta/nfs/spaces/438
+    url: https://api.linode.com/v4beta/nfs/spaces/555
     method: DELETE
   response:
     body: '{}'
@@ -1144,7 +1069,7 @@ interactions:
       Content-Type:
       - application/json
       Expires:
-      - Thu, 19 Nov 2026 12:50:43 GMT
+      - Wed, 25 Nov 2026 13:23:23 GMT
       Pragma:
       - no-cache
       Strict-Transport-Security:

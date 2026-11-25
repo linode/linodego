@@ -196,8 +196,10 @@ func verifyNFSFilesystemBasics(t *testing.T, space *linodego.NFSSpace, filesyste
 func verifyNFSFilesystemDetails(t *testing.T, filesystem *linodego.NFSFilesystem, createOpts linodego.NFSFilesystemCreateOptions) {
 	t.Helper()
 	assert.NotEmpty(t, filesystem.ProtocolVersions)
-	assert.EqualValues(t, createOpts.MaxCapacityBytes, linodego.Pointer(filesystem.MaxCapacityBytes))
-	assert.EqualValues(t, createOpts.MaxFileCount, linodego.Pointer(filesystem.MaxFileCount))
+	require.NotNil(t, createOpts.MaxCapacityBytes)
+	require.NotNil(t, createOpts.MaxFileCount)
+	assert.Equal(t, *createOpts.MaxCapacityBytes, filesystem.MaxCapacityBytes)
+	assert.Equal(t, *createOpts.MaxFileCount, filesystem.MaxFileCount)
 	assert.NotEmpty(t, filesystem.MountTargetIPs)
 	assert.NotNil(t, filesystem.MountTargetFQDN)
 	assert.NotNil(t, filesystem.Stats)
