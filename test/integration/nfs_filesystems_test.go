@@ -58,6 +58,45 @@ func waitForNFSFilesystemDeleted(
 	}
 }
 
+func findExistingNFSFilesystem(
+	t *testing.T,
+	client *linodego.Client,
+) (*linodego.NFSSpace, *linodego.NFSFilesystem, linodego.NFSFilesystemCreateOptions, bool) {
+	t.Helper()
+
+	ctx := waitContext(t, 180*time.Second)
+	spaces, err := client.ListNFSSpaces(ctx, nil)
+	require.NoErrorf(t, err, "Error listing NFS Spaces: %v", err)
+
+	for _, space := range spaces {
+		if space.Status != linodego.NFSSpaceStatusActive {
+			continue
+		}
+
+		filesystems, err := client.ListNFSFilesystems(ctx, space.ID, nil)
+		require.NoErrorf(t, err, "Error listing NFS Filesystems in Space %d: %v", space.ID, err)
+
+		for _, fs := range filesystems {
+			if fs.Status != linodego.NFSFilesystemStatusActive || fs.MaxCapacityBytes == 0 || fs.MaxFileCount == 0 {
+				continue
+			}
+
+			filesystemOpts := linodego.NFSFilesystemCreateOptions{
+				Label:            fs.Label,
+				Region:           fs.Region,
+				MaxCapacityBytes: &fs.MaxCapacityBytes,
+				MaxFileCount:     &fs.MaxFileCount,
+				ProtocolVersions: &fs.ProtocolVersions,
+				Tags:             &fs.Tags,
+			}
+
+			return &space, &fs, filesystemOpts, true
+		}
+	}
+
+	return nil, nil, linodego.NFSFilesystemCreateOptions{}, false
+}
+
 func setupNFSFilesystem(
 	t *testing.T,
 	fixtureYaml string,
@@ -70,35 +109,14 @@ func setupNFSFilesystem(
 
 	// To avoid creating a new filesystem for every test run, especially when quotas are created
 	if findExisting {
-		ctx := waitContext(t, 180*time.Second)
-		spaces, err := client.ListNFSSpaces(ctx, nil)
-		require.NoErrorf(t, err, "Error listing NFS Spaces: %v", err)
+		space, filesystem, filesystemOpts, found := findExistingNFSFilesystem(t, client)
 
-		for _, space := range spaces {
-			if space.Status != linodego.NFSSpaceStatusActive {
-				continue
-			}
+		if found {
+			t.Cleanup(func() {
+				fixtureTeardown()
+			})
 
-			filesystems, err := client.ListNFSFilesystems(ctx, space.ID, nil)
-			require.NoErrorf(t, err, "Error listing NFS Filesystems in Space %d: %v", space.ID, err)
-
-			for _, fs := range filesystems {
-				if fs.Status == linodego.NFSFilesystemStatusActive && fs.MaxCapacityBytes != 0 && fs.MaxFileCount != 0 {
-					filesystemOpts := linodego.NFSFilesystemCreateOptions{
-						Label:            fs.Label,
-						Region:           fs.Region,
-						MaxCapacityBytes: &fs.MaxCapacityBytes,
-						MaxFileCount:     &fs.MaxFileCount,
-						ProtocolVersions: &fs.ProtocolVersions,
-						Tags:             &fs.Tags,
-					}
-					t.Cleanup(func() {
-						fixtureTeardown()
-					})
-
-					return client, &space, &fs, filesystemOpts
-				}
-			}
+			return client, space, filesystem, filesystemOpts
 		}
 	}
 
@@ -257,9 +275,7 @@ func TestNFSFilesystem_List(t *testing.T) {
 	f := linodego.Filter{}
 	f.AddField(linodego.Eq, "label", filesystem.Label)
 	filter, err := f.MarshalJSON()
-	if err != nil {
-		t.Fatalf("Failed to marshal filter: %v", err)
-	}
+	require.NoErrorf(t, err, "Failed to marshal filter: %v", err)
 
 	filesystemList, err := client.ListNFSFilesystems(context.Background(), space.ID, &linodego.ListOptions{Filter: string(filter)})
 	require.NoErrorf(t, err, "Error listing NFS Spaces: %v", err)
