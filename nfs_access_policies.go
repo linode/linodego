@@ -94,7 +94,6 @@ type NFSSpaceAccessPolicy struct {
 
 // NFSSpaceAccessPolicyUpdateOptions contains fields accepted when updating an NFS Space access policy.
 type NFSSpaceAccessPolicyUpdateOptions struct {
-	Label      *string                           `json:"label,omitzero"`
 	Enabled    *bool                             `json:"enabled,omitzero"`
 	VPCs       *[]NFSSpaceAccessPolicyVPCOptions `json:"vpcs,omitzero"`
 	MTLSCACert *string                           `json:"mtls_ca_cert,omitzero"`
@@ -105,6 +104,7 @@ type NFSSpaceAccessPolicyUpdateOptions struct {
 type NFSFilesystemAccessPolicy struct {
 	FilesystemID int                               `json:"filesystem_id"`
 	Label        string                            `json:"label"`
+	Inherit      bool                              `json:"inherit"`
 	Enabled      bool                              `json:"enabled"`
 	LinodeACL    []NFSFilesystemAccessPolicyLinode `json:"linode_acl"`
 	SquashPolicy NFSSquashPolicy                   `json:"squash_policy"`
@@ -116,8 +116,8 @@ type NFSFilesystemAccessPolicy struct {
 
 // NFSFilesystemAccessPolicyUpdateOptions contains fields accepted when updating an NFS Filesystem access policy.
 type NFSFilesystemAccessPolicyUpdateOptions struct {
-	Label        *string               `json:"label,omitzero"`
 	Enabled      *bool                 `json:"enabled,omitzero"`
+	Inherit      *bool                 `json:"inherit,omitzero"`
 	LinodeIDs    *[]int                `json:"linode_ids,omitzero"`
 	SquashPolicy *NFSSquashPolicy      `json:"squash_policy,omitzero"`
 	Protocols    *[]NFSProtocolVersion `json:"protocols,omitzero"`

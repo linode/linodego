@@ -1,0 +1,580 @@
+---
+version: 1
+interactions:
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/nfs/spaces?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 334, "label": "go-test-nfs-space-x2os8433qus1", "description":
+      "Test description", "status": "active", "max_capacity_bytes": 1000000000000000,
+      "used_capacity_bytes": 0, "tags": ["testing"], "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05"}, {"id": 356, "label": "go-test-nfs-space-alxr1x28v668",
+      "description": "Test description", "status": "active", "max_capacity_bytes":
+      1000000000000000, "used_capacity_bytes": 0, "tags": ["testing"], "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}, {"id": 546, "label":
+      "go-test-nfs-space-01xg0p684hbb", "description": "Test description", "status":
+      "active", "max_capacity_bytes": 1000000000000000, "used_capacity_bytes": 0,
+      "tags": ["testing"], "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"},
+      {"id": 555, "label": "go-test-nfs-space-g7i3gfa348v9", "description": "Test
+      description", "status": "deleting", "max_capacity_bytes": 1000000000000000,
+      "used_capacity_bytes": 0, "tags": ["testing"], "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05"}], "page": 1, "pages": 1, "results": 4}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Wed, 25 Nov 2026 13:23:39 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - nfs:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/nfs/spaces/334/filesystems?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 1001, "space_id": 334, "label": "go-test-nfs-filesystem-ot80ib7em911",
+      "region": "us-rno-1", "protocol_versions": ["nfsv4"], "status": "active", "mount_target_fqdn":
+      "go-test-nfs-space-x2os8433qus1-14e.nfs.us-rno-1.linode.com:/go-test-nfs-filesystem-ot80ib7em911-3e9",
+      "mount_target_ips": ["[1234::5678]:/go-test-nfs-filesystem-ot80ib7em911-3e9",
+      "[1234::5678]:/go-test-nfs-filesystem-ot80ib7em911-3e9", "[1234::5678]:/go-test-nfs-filesystem-ot80ib7em911-3e9",
+      "[1234::5678]:/go-test-nfs-filesystem-ot80ib7em911-3e9", "[1234::5678]:/go-test-nfs-filesystem-ot80ib7em911-3e9",
+      "[1234::5678]:/go-test-nfs-filesystem-ot80ib7em911-3e9", "[1234::5678]:/go-test-nfs-filesystem-ot80ib7em911-3e9",
+      "[1234::5678]:/go-test-nfs-filesystem-ot80ib7em911-3e9", "[1234::5678]:/go-test-nfs-filesystem-ot80ib7em911-3e9",
+      "[1234::5678]:/go-test-nfs-filesystem-ot80ib7em911-3e9", "[1234::5678]:/go-test-nfs-filesystem-ot80ib7em911-3e9",
+      "[1234::5678]:/go-test-nfs-filesystem-ot80ib7em911-3e9", "[1234::5678]:/go-test-nfs-filesystem-ot80ib7em911-3e9",
+      "[1234::5678]:/go-test-nfs-filesystem-ot80ib7em911-3e9", "[1234::5678]:/go-test-nfs-filesystem-ot80ib7em911-3e9",
+      "[1234::5678]:/go-test-nfs-filesystem-ot80ib7em911-3e9"], "max_capacity_bytes":
+      1099511627776, "max_file_count": null, "tags": ["test_nfs_updated"], "source_snapshot_id":
+      null, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}, {"id":
+      1025, "space_id": 334, "label": "nfs-filesystem-test-3010-3", "region": "us-rno-1",
+      "protocol_versions": ["nfsv4"], "status": "active", "mount_target_fqdn": "go-test-nfs-space-x2os8433qus1-14e.nfs.us-rno-1.linode.com:/nfs-filesystem-test-3010-3-401",
+      "mount_target_ips": ["[1234::5678]:/nfs-filesystem-test-3010-3-401",
+      "[1234::5678]:/nfs-filesystem-test-3010-3-401", "[1234::5678]:/nfs-filesystem-test-3010-3-401",
+      "[1234::5678]:/nfs-filesystem-test-3010-3-401", "[1234::5678]:/nfs-filesystem-test-3010-3-401",
+      "[1234::5678]:/nfs-filesystem-test-3010-3-401", "[1234::5678]:/nfs-filesystem-test-3010-3-401",
+      "[1234::5678]:/nfs-filesystem-test-3010-3-401", "[1234::5678]:/nfs-filesystem-test-3010-3-401",
+      "[1234::5678]:/nfs-filesystem-test-3010-3-401", "[1234::5678]:/nfs-filesystem-test-3010-3-401",
+      "[1234::5678]:/nfs-filesystem-test-3010-3-401", "[1234::5678]:/nfs-filesystem-test-3010-3-401",
+      "[1234::5678]:/nfs-filesystem-test-3010-3-401", "[1234::5678]:/nfs-filesystem-test-3010-3-401",
+      "[1234::5678]:/nfs-filesystem-test-3010-3-401"], "max_capacity_bytes":
+      500000000000000, "max_file_count": 4294967295, "tags": [], "source_snapshot_id":
+      null, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}, {"id":
+      1085, "space_id": 334, "label": "nfs-filesystem-test-3010-4", "region": "us-rno-1",
+      "protocol_versions": ["nfsv4"], "status": "active", "mount_target_fqdn": "go-test-nfs-space-x2os8433qus1-14e.nfs.us-rno-1.linode.com:/nfs-filesystem-test-3010-4-43d",
+      "mount_target_ips": ["[1234::5678]:/nfs-filesystem-test-3010-4-43d",
+      "[1234::5678]:/nfs-filesystem-test-3010-4-43d", "[1234::5678]:/nfs-filesystem-test-3010-4-43d",
+      "[1234::5678]:/nfs-filesystem-test-3010-4-43d", "[1234::5678]:/nfs-filesystem-test-3010-4-43d",
+      "[1234::5678]:/nfs-filesystem-test-3010-4-43d", "[1234::5678]:/nfs-filesystem-test-3010-4-43d",
+      "[1234::5678]:/nfs-filesystem-test-3010-4-43d", "[1234::5678]:/nfs-filesystem-test-3010-4-43d",
+      "[1234::5678]:/nfs-filesystem-test-3010-4-43d", "[1234::5678]:/nfs-filesystem-test-3010-4-43d",
+      "[1234::5678]:/nfs-filesystem-test-3010-4-43d", "[1234::5678]:/nfs-filesystem-test-3010-4-43d",
+      "[1234::5678]:/nfs-filesystem-test-3010-4-43d", "[1234::5678]:/nfs-filesystem-test-3010-4-43d",
+      "[1234::5678]:/nfs-filesystem-test-3010-4-43d"], "max_capacity_bytes":
+      500000000000000, "max_file_count": 4294967295, "tags": [], "source_snapshot_id":
+      null, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}],
+      "page": 1, "pages": 1, "results": 3}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Wed, 25 Nov 2026 13:23:39 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - nfs:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/nfs/spaces/334/filesystems/1025
+    method: GET
+  response:
+    body: '{"id": 1025, "space_id": 334, "label": "nfs-filesystem-test-3010-3", "region":
+      "us-rno-1", "protocol_versions": ["nfsv4"], "status": "active", "mount_target_fqdn":
+      "go-test-nfs-space-x2os8433qus1-14e.nfs.us-rno-1.linode.com:/nfs-filesystem-test-3010-3-401",
+      "mount_target_ips": ["[1234::5678]:/nfs-filesystem-test-3010-3-401",
+      "[1234::5678]:/nfs-filesystem-test-3010-3-401", "[1234::5678]:/nfs-filesystem-test-3010-3-401",
+      "[1234::5678]:/nfs-filesystem-test-3010-3-401", "[1234::5678]:/nfs-filesystem-test-3010-3-401",
+      "[1234::5678]:/nfs-filesystem-test-3010-3-401", "[1234::5678]:/nfs-filesystem-test-3010-3-401",
+      "[1234::5678]:/nfs-filesystem-test-3010-3-401", "[1234::5678]:/nfs-filesystem-test-3010-3-401",
+      "[1234::5678]:/nfs-filesystem-test-3010-3-401", "[1234::5678]:/nfs-filesystem-test-3010-3-401",
+      "[1234::5678]:/nfs-filesystem-test-3010-3-401", "[1234::5678]:/nfs-filesystem-test-3010-3-401",
+      "[1234::5678]:/nfs-filesystem-test-3010-3-401", "[1234::5678]:/nfs-filesystem-test-3010-3-401",
+      "[1234::5678]:/nfs-filesystem-test-3010-3-401"], "max_capacity_bytes":
+      500000000000000, "max_file_count": 4294967295, "stats": {"used_capacity_bytes":
+      0, "used_file_count": 8, "collected_at": "2018-01-02T03:04:05"}, "tags": [],
+      "source_snapshot_id": null, "created": "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Wed, 25 Nov 2026 13:23:41 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      - Accept-Encoding
+      X-Accepted-Oauth-Scopes:
+      - nfs:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/nfs/spaces/334/filesystems/1025/quotas?page=1
+    method: GET
+  response:
+    body: '{"data": [{"id": 1247, "filesystem_id": 1025, "path": "/nfs-filesystem-test-3010-3-401",
+      "is_root": true, "status": "active", "max_capacity_bytes": 500000000000000,
+      "max_file_count": 4294967295, "used_capacity_bytes": 0, "used_file_count": 8,
+      "quota_exceeded": false, "user_group_config": null, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05"}], "page": 1, "pages": 1, "results": 1}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "401"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Wed, 25 Nov 2026 13:23:42 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - nfs:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"path":"/nfs-filesystem-test-3010-3-401/test-dx-23135","max_capacity_bytes":500000000000000}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/nfs/spaces/334/filesystems/1025/quotas
+    method: POST
+  response:
+    body: '{"id": 1467, "filesystem_id": 1025, "path": "/nfs-filesystem-test-3010-3-401/test-dx-23135",
+      "is_root": false, "status": "active", "max_capacity_bytes": 500000000000000,
+      "max_file_count": null, "used_capacity_bytes": null, "used_file_count": null,
+      "quota_exceeded": null, "user_group_config": null, "created": "2018-01-02T03:04:05",
+      "updated": "2018-01-02T03:04:05"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "366"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Wed, 25 Nov 2026 13:23:45 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - nfs:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: '{"max_capacity_bytes":500000000000000,"max_file_count":4294967295,"user_group_config":{"default_user_limit":{"max_capacity_bytes":268435456,"max_file_count":500},"default_group_limit":{"max_capacity_bytes":268435456,"max_file_count":500}}}'
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/nfs/spaces/334/filesystems/1025/quotas/1467
+    method: PUT
+  response:
+    body: '{"id": 1467, "filesystem_id": 1025, "path": "/nfs-filesystem-test-3010-3-401/test-dx-23135",
+      "is_root": false, "status": "active", "max_capacity_bytes": 500000000000000,
+      "max_file_count": 4294967295, "used_capacity_bytes": null, "used_file_count":
+      null, "quota_exceeded": null, "user_group_config": {"default_user_limit": {"max_capacity_bytes":
+      268435456, "max_file_count": 500}, "default_group_limit": {"max_capacity_bytes":
+      268435456, "max_file_count": 500}, "user_limits": [], "group_limits": []}, "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "568"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Wed, 25 Nov 2026 13:23:49 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - nfs:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/nfs/spaces/334/filesystems/1025/quotas/1467
+    method: GET
+  response:
+    body: '{"id": 1467, "filesystem_id": 1025, "path": "/nfs-filesystem-test-3010-3-401/test-dx-23135",
+      "is_root": false, "status": "active", "max_capacity_bytes": 500000000000000,
+      "max_file_count": 4294967295, "used_capacity_bytes": 0, "used_file_count": 0,
+      "quota_exceeded": false, "user_group_config": {"default_user_limit": {"max_capacity_bytes":
+      268435456, "max_file_count": 500}, "default_group_limit": {"max_capacity_bytes":
+      268435456, "max_file_count": 500}, "user_limits": [], "group_limits": []}, "created":
+      "2018-01-02T03:04:05", "updated": "2018-01-02T03:04:05"}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "563"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Wed, 25 Nov 2026 13:23:51 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - nfs:read_only
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
+- request:
+    body: ""
+    form: {}
+    headers:
+      Accept:
+      - application/json
+      Content-Type:
+      - application/json
+      User-Agent:
+      - linodego/dev https://github.com/linode/linodego
+    url: https://api.linode.com/v4beta/nfs/spaces/334/filesystems/1025/quotas/1467
+    method: DELETE
+  response:
+    body: '{}'
+    headers:
+      Access-Control-Allow-Credentials:
+      - "true"
+      Access-Control-Allow-Headers:
+      - Authorization, Origin, X-Requested-With, Content-Type, Accept, X-Filter
+      Access-Control-Allow-Methods:
+      - HEAD, GET, OPTIONS, POST, PUT, DELETE
+      Access-Control-Allow-Origin:
+      - '*'
+      Access-Control-Expose-Headers:
+      - X-OAuth-Scopes, X-Accepted-OAuth-Scopes, X-Status
+      Akamai-Internal-Account:
+      - '*'
+      Cache-Control:
+      - max-age=0, no-cache, no-store
+      Connection:
+      - keep-alive
+      Content-Length:
+      - "2"
+      Content-Security-Policy:
+      - default-src 'none'
+      Content-Type:
+      - application/json
+      Expires:
+      - Wed, 25 Nov 2026 13:23:54 GMT
+      Pragma:
+      - no-cache
+      Strict-Transport-Security:
+      - max-age=31536000
+      Vary:
+      - Authorization, X-Filter
+      X-Accepted-Oauth-Scopes:
+      - nfs:read_write
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - DENY
+      - DENY
+      X-Oauth-Scopes:
+      - '*'
+      X-Ratelimit-Limit:
+      - "1840"
+      X-Xss-Protection:
+      - 1; mode=block
+    status: 200 OK
+    code: 200
+    duration: ""
