@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/base64"
 	"fmt"
-	"slices"
 	"strconv"
 	"strings"
 	"testing"
@@ -907,7 +906,7 @@ func TestInstance_withBlockStorageEncryption(t *testing.T) {
 	}()
 
 	// Filtering is not currently supported on capabilities
-	require.True(t, slices.Contains(inst.Capabilities, "Block Storage Encryption"))
+	require.Contains(t, inst.Capabilities, string(linodego.InstanceCapabilityBlockStorageEncryption))
 }
 
 func TestInstance_withVPU(t *testing.T) {

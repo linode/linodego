@@ -40,6 +40,17 @@ const (
 	InstanceResizing     InstanceStatus = "resizing"
 )
 
+// InstanceCapability constants start with InstanceCapability and include all known Linode instance capabilities.
+type InstanceCapability string
+
+// This is an enumeration of capabilities a Linode instance can support
+const (
+	InstanceCapabilityBlockStorageEncryption    InstanceCapability = "Block Storage Encryption"
+	InstanceCapabilityBlockStoragePerformanceB1 InstanceCapability = "Block Storage Performance B1"
+	InstanceCapabilityMaintenancePolicy         InstanceCapability = "Maintenance Policy"
+	InstanceCapabilitySMTPEnabled               InstanceCapability = "SMTP Enabled"
+)
+
 type InstanceMigrationType string
 
 const (
