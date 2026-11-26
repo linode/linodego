@@ -1,0 +1,25 @@
+{
+  "created_by": "user1",
+  "destinations": [
+    {
+      "id": 1,
+      "type": "akamai_object_storage",
+      "label": "Linode Storage 1",
+      "details": {
+        "host": "host1",
+        "bucket_name": "bucket1",
+        "path": "path1",
+        "access_key_id": "accessKey1"
+      }
+    }
+  ],
+  "details": {
+    "sub_types": ["data_events", "login_events"]
+  },
+  "id": 456,
+  "label": "Audit logs with subtypes",
+  "status": "provisioning",
+  "type": "audit_logs",
+  "updated_by": "user1",
+  "version": 1
+}

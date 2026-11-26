@@ -3,6 +3,7 @@ package linodego
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"time"
 
 	"github.com/linode/linodego/v2/internal/parseabletime"
@@ -16,6 +17,15 @@ const (
 	StreamTypeAuditLogs StreamType = "audit_logs"
 	// StreamTypeLKEAuditLogs configures a stream for LKE enterprise cluster audit logs.
 	StreamTypeLKEAuditLogs StreamType = "lke_audit_logs"
+)
+
+const (
+	// AuditLogSubTypeManagementEvents selects management (configuration) audit logs.
+	AuditLogSubTypeManagementEvents = "management_events"
+	// AuditLogSubTypeLoginEvents selects login audit logs.
+	AuditLogSubTypeLoginEvents = "login_events"
+	// AuditLogSubTypeDataEvents selects data events audit logs, when enabled by the API.
+	AuditLogSubTypeDataEvents = "data_events"
 )
 
 // StreamStatus represents the availability state of an ACLP logs stream.
@@ -43,10 +53,40 @@ const (
 )
 
 // StreamDetails contains additional details for a logs stream.
-// This only applies to streams with a Type of StreamTypeLKEAuditLogs.
+// Use SubTypes for audit logs, ClusterIDs and IsAutoAddAllClustersEnabled
+// for LKE audit logs.
+// Do not mix fields belonging to different stream types.
 type StreamDetails struct {
-	ClusterIDs                  []int `json:"cluster_ids,omitzero"`
-	IsAutoAddAllClustersEnabled bool  `json:"is_auto_add_all_clusters_enabled"`
+	// SubTypes selects audit log subtypes: management_events, login_events,
+	// and data_events.
+	// On creation, omitting details or providing an empty subtype list lets the
+	// API select the enabled default subtypes (normally management_events and
+	// login_events).
+	// On update, a non-empty list replaces the selection; omitted or empty
+	// subtypes preserve it. Responses are deduplicated and sorted.
+	// To provide empty audit log details, use SubTypes: []string{}. A nil
+	// SubTypes field is serialized as LKE details.
+	SubTypes                    []string `json:"sub_types,omitzero"`
+	ClusterIDs                  []int    `json:"cluster_ids,omitzero"`
+	IsAutoAddAllClustersEnabled bool     `json:"is_auto_add_all_clusters_enabled"`
+}
+
+// MarshalJSON omits LKE-specific fields for audit log details while
+// preserving explicit false values for existing LKE configurations.
+func (s StreamDetails) MarshalJSON() ([]byte, error) {
+	if s.SubTypes != nil {
+		if s.ClusterIDs != nil || s.IsAutoAddAllClustersEnabled {
+			return nil, errors.New("audit log subtypes cannot include LKE settings")
+		}
+
+		return json.Marshal(struct {
+			SubTypes []string `json:"sub_types"`
+		}{SubTypes: s.SubTypes})
+	}
+
+	type mask StreamDetails
+
+	return json.Marshal(mask(s))
 }
 
 // StreamDestination is a destination configured on an ACLP logs stream.
