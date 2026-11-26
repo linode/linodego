@@ -610,23 +610,23 @@ func TestStreamDetailsMarshalJSON(t *testing.T) {
 		wantErr bool
 	}{
 		{
-			name:    "audit categories",
-			details: linodego.StreamDetails{Categories: []string{linodego.AuditLogCategoryConfig, linodego.AuditLogCategoryLogin, linodego.AuditLogCategoryDataPlane}},
-			want:    `{"categories":["config","login","data_plane"]}`,
+			name:    "audit subtypes",
+			details: linodego.StreamDetails{SubTypes: []string{linodego.AuditLogSubTypeManagementEvents, linodego.AuditLogSubTypeLoginEvents, linodego.AuditLogSubTypeDataEvents}},
+			want:    `{"sub_types":["management_events","login_events","data_events"]}`,
 		},
 		{
-			name:    "audit empty categories remain explicit",
-			details: linodego.StreamDetails{Categories: []string{}},
-			want:    `{"categories":[]}`,
+			name:    "audit empty subtypes remain explicit",
+			details: linodego.StreamDetails{SubTypes: []string{}},
+			want:    `{"sub_types":[]}`,
 		},
 		{
-			name:    "audit categories with cluster IDs",
-			details: linodego.StreamDetails{Categories: []string{"data_plane"}, ClusterIDs: []int{50}},
+			name:    "audit subtypes with cluster IDs",
+			details: linodego.StreamDetails{SubTypes: []string{"data_events"}, ClusterIDs: []int{50}},
 			wantErr: true,
 		},
 		{
-			name:    "audit categories with auto add",
-			details: linodego.StreamDetails{Categories: []string{"data_plane"}, IsAutoAddAllClustersEnabled: true},
+			name:    "audit subtypes with auto add",
+			details: linodego.StreamDetails{SubTypes: []string{"data_events"}, IsAutoAddAllClustersEnabled: true},
 			wantErr: true,
 		},
 		{
@@ -658,19 +658,19 @@ func TestStreamDetailsMarshalJSON(t *testing.T) {
 	}
 }
 
-func TestLogStreamsAuditCategories(t *testing.T) {
+func TestLogStreamsAuditSubTypes(t *testing.T) {
 	tests := []struct {
-		name              string
-		categories        []string
-		createdCategories []string
-		updatedCategories []string
+		name            string
+		subTypes        []string
+		createdSubTypes []string
+		updatedSubTypes []string
 	}{
-		{name: "config", categories: []string{"config"}, createdCategories: []string{"config"}, updatedCategories: []string{"config"}},
-		{name: "login", categories: []string{"login"}, createdCategories: []string{"login"}, updatedCategories: []string{"login"}},
-		{name: "data plane", categories: []string{"data_plane"}, createdCategories: []string{"data_plane"}, updatedCategories: []string{"data_plane"}},
-		{name: "sorted and deduplicated categories", categories: []string{"login", "data_plane", "config", "login"}, createdCategories: []string{"config", "data_plane", "login"}, updatedCategories: []string{"config", "data_plane", "login"}},
-		{name: "empty categories", categories: []string{}, createdCategories: []string{"config", "login"}, updatedCategories: []string{"data_plane"}},
-		{name: "omitted details", createdCategories: []string{"config", "login"}, updatedCategories: []string{"data_plane"}},
+		{name: "management_events", subTypes: []string{"management_events"}, createdSubTypes: []string{"management_events"}, updatedSubTypes: []string{"management_events"}},
+		{name: "login_events", subTypes: []string{"login_events"}, createdSubTypes: []string{"login_events"}, updatedSubTypes: []string{"login_events"}},
+		{name: "data events", subTypes: []string{"data_events"}, createdSubTypes: []string{"data_events"}, updatedSubTypes: []string{"data_events"}},
+		{name: "sorted and deduplicated subtypes", subTypes: []string{"login_events", "data_events", "management_events", "login_events"}, createdSubTypes: []string{"data_events", "login_events", "management_events"}, updatedSubTypes: []string{"data_events", "login_events", "management_events"}},
+		{name: "empty subtypes", subTypes: []string{}, createdSubTypes: []string{"management_events", "login_events"}, updatedSubTypes: []string{"data_events"}},
+		{name: "omitted details", createdSubTypes: []string{"management_events", "login_events"}, updatedSubTypes: []string{"data_events"}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -678,19 +678,19 @@ func TestLogStreamsAuditCategories(t *testing.T) {
 			base.SetUp(t)
 			defer base.TearDown(t)
 
-			fixture, err := fixtures.GetFixture("monitor_log_stream_audit_categories")
+			fixture, err := fixtures.GetFixture("monitor_log_stream_audit_sub_types")
 			require.NoError(t, err)
 			fixtureJSON, err := json.Marshal(fixture)
 			require.NoError(t, err)
 			var response map[string]interface{}
 			require.NoError(t, json.Unmarshal(fixtureJSON, &response))
 
-			checkStream := func(stream *linodego.Stream, expectedCategories []string) {
+			checkStream := func(stream *linodego.Stream, expectedSubTypes []string) {
 				t.Helper()
 				require.NotNil(t, stream)
 				assert.Equal(t, linodego.StreamTypeAuditLogs, stream.Type)
 				require.NotNil(t, stream.Details)
-				assert.Equal(t, expectedCategories, stream.Details.Categories)
+				assert.Equal(t, expectedSubTypes, stream.Details.SubTypes)
 				assert.Nil(t, stream.Details.ClusterIDs)
 			}
 			for _, method := range []string{http.MethodPost, http.MethodPut} {
@@ -701,42 +701,42 @@ func TestLogStreamsAuditCategories(t *testing.T) {
 				httpmock.RegisterResponder(method, base.BaseURL+path, func(req *http.Request) (*http.Response, error) {
 					var body map[string]json.RawMessage
 					require.NoError(t, json.NewDecoder(req.Body).Decode(&body))
-					if tt.categories == nil {
+					if tt.subTypes == nil {
 						assert.NotContains(t, body, "details")
 					} else {
-						expected, err := json.Marshal(map[string]interface{}{"categories": tt.categories})
+						expected, err := json.Marshal(map[string]interface{}{"sub_types": tt.subTypes})
 						require.NoError(t, err)
 						assert.JSONEq(t, string(expected), string(body["details"]))
 					}
 					if req.Method == http.MethodPost {
 						assert.JSONEq(t, `"audit_logs"`, string(body["type"]))
-						response["details"] = map[string]interface{}{"categories": tt.createdCategories}
+						response["details"] = map[string]interface{}{"sub_types": tt.createdSubTypes}
 					} else {
 						assert.NotContains(t, body, "type")
-						response["details"] = map[string]interface{}{"categories": tt.updatedCategories}
+						response["details"] = map[string]interface{}{"sub_types": tt.updatedSubTypes}
 					}
 					return httpmock.NewJsonResponse(http.StatusOK, response)
 				})
 			}
 
 			var details *linodego.StreamDetails
-			if tt.categories != nil {
-				details = &linodego.StreamDetails{Categories: tt.categories}
+			if tt.subTypes != nil {
+				details = &linodego.StreamDetails{SubTypes: tt.subTypes}
 			}
 			created, err := base.Client.CreateLogStream(context.Background(), linodego.StreamCreateOptions{
 				Label: "Audit logs", Type: linodego.StreamTypeAuditLogs, Destinations: []int{1}, Details: details,
 			})
 			require.NoError(t, err)
-			checkStream(created, tt.createdCategories)
+			checkStream(created, tt.createdSubTypes)
 
 			updated, err := base.Client.UpdateLogStream(context.Background(), testLogStreamID, linodego.StreamUpdateOptions{Details: details})
 			require.NoError(t, err)
-			checkStream(updated, tt.updatedCategories)
+			checkStream(updated, tt.updatedSubTypes)
 
 			base.MockGet("monitor/streams/456", response)
 			stream, err := base.Client.GetLogStream(context.Background(), testLogStreamID)
 			require.NoError(t, err)
-			checkStream(stream, tt.updatedCategories)
+			checkStream(stream, tt.updatedSubTypes)
 
 			page := map[string]interface{}{
 				"data": []interface{}{response}, "page": 1, "pages": 1, "results": 1,
@@ -745,19 +745,19 @@ func TestLogStreamsAuditCategories(t *testing.T) {
 			streams, err := base.Client.ListLogStreams(context.Background(), nil)
 			require.NoError(t, err)
 			require.Len(t, streams, 1)
-			checkStream(&streams[0], tt.updatedCategories)
+			checkStream(&streams[0], tt.updatedSubTypes)
 
 			base.MockGet("monitor/streams/456/history", page)
 			history, err := base.Client.ListLogStreamHistory(context.Background(), testLogStreamID, nil)
 			require.NoError(t, err)
 			require.Len(t, history, 1)
-			checkStream(&history[0], tt.updatedCategories)
+			checkStream(&history[0], tt.updatedSubTypes)
 		})
 	}
 }
 
-func TestCreateLogStreamAuditCategoriesAPIResponse(t *testing.T) {
-	fixture, err := fixtures.GetFixture("monitor_log_stream_audit_categories")
+func TestCreateLogStreamAuditSubTypesAPIResponse(t *testing.T) {
+	fixture, err := fixtures.GetFixture("monitor_log_stream_audit_sub_types")
 	require.NoError(t, err)
 
 	var base ClientBaseCase
@@ -767,45 +767,45 @@ func TestCreateLogStreamAuditCategoriesAPIResponse(t *testing.T) {
 	httpmock.RegisterResponder(http.MethodPost, base.BaseURL+"monitor/streams", func(req *http.Request) (*http.Response, error) {
 		var body map[string]json.RawMessage
 		require.NoError(t, json.NewDecoder(req.Body).Decode(&body))
-		assert.JSONEq(t, `{"categories":["login","data_plane","login"]}`, string(body["details"]))
+		assert.JSONEq(t, `{"sub_types":["login_events","data_events","login_events"]}`, string(body["details"]))
 		return httpmock.NewJsonResponse(http.StatusCreated, fixture)
 	})
 
 	stream, err := base.Client.CreateLogStream(context.Background(), linodego.StreamCreateOptions{
-		Label:        "Audit logs with categories",
+		Label:        "Audit logs with subtypes",
 		Type:         linodego.StreamTypeAuditLogs,
 		Destinations: []int{1},
-		Details: &linodego.StreamDetails{Categories: []string{
-			linodego.AuditLogCategoryLogin,
-			linodego.AuditLogCategoryDataPlane,
-			linodego.AuditLogCategoryLogin,
+		Details: &linodego.StreamDetails{SubTypes: []string{
+			linodego.AuditLogSubTypeLoginEvents,
+			linodego.AuditLogSubTypeDataEvents,
+			linodego.AuditLogSubTypeLoginEvents,
 		}},
 	})
 	require.NoError(t, err)
 	require.NotNil(t, stream.Details)
-	assert.Equal(t, []string{"data_plane", "login"}, stream.Details.Categories)
+	assert.Equal(t, []string{"data_events", "login_events"}, stream.Details.SubTypes)
 	assert.Equal(t, linodego.StreamStatusProvisioning, stream.Status)
 	require.Len(t, stream.Destinations, 1)
 	assert.Equal(t, 1, stream.Destinations[0].ID)
 }
 
-func TestCreateLogStreamAuditCategoryDisabled(t *testing.T) {
+func TestCreateLogStreamAuditSubTypeDisabled(t *testing.T) {
 	var base ClientBaseCase
 	base.SetUp(t)
 	defer base.TearDown(t)
 
 	httpmock.RegisterResponder(http.MethodPost, base.BaseURL+"monitor/streams",
 		httpmock.NewStringResponder(http.StatusBadRequest,
-			`{"errors":[{"field":"details.categories","reason":"Must be of type config, login"}]}`,
+			`{"errors":[{"field":"details.sub_types","reason":"Must be of type management_events, login_events"}]}`,
 		).HeaderSet(http.Header{"Content-Type": []string{"application/json"}}))
 
 	_, err := base.Client.CreateLogStream(context.Background(), linodego.StreamCreateOptions{
 		Label:        "Audit logs",
 		Type:         linodego.StreamTypeAuditLogs,
 		Destinations: []int{1},
-		Details:      &linodego.StreamDetails{Categories: []string{linodego.AuditLogCategoryDataPlane}},
+		Details:      &linodego.StreamDetails{SubTypes: []string{linodego.AuditLogSubTypeDataEvents}},
 	})
 	require.Error(t, err)
-	assert.Contains(t, err.Error(), "details.categories")
-	assert.Contains(t, err.Error(), "Must be of type config, login")
+	assert.Contains(t, err.Error(), "details.sub_types")
+	assert.Contains(t, err.Error(), "Must be of type management_events, login_events")
 }
