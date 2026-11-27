@@ -4,18 +4,19 @@
     "access_key": "new-access-key",
     "secret_key": "new-secret-key",
     "limited": true,
+    "key_class": "IA",
     "bucket_access": [
       {
-        "region": "us-east-1",
+        "region": "us-iad-obj",
         "bucket_name": "my-bucket",
         "permissions": "read-write"
       }
     ],
     "regions": [
       {
-        "id": "us-east-1",
-        "s3_endpoint": "https://s3.us-east-1.linodeobjects.com",
-        "endpoint_type": "E0"
+        "id": "us-iad-obj",
+        "s3_endpoint": "https://us-iad-obj-ia0.linodeobjects.com",
+        "endpoint_type": "IA0"
       }
     ]
 }

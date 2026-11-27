@@ -2,10 +2,15 @@ package unit
 
 import (
 	"context"
+	"encoding/json"
+	"io"
+	"net/http"
 	"testing"
 
+	"github.com/jarcoal/httpmock"
 	"github.com/linode/linodego/v2"
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestObjectStorageKey_List(t *testing.T) {
@@ -26,6 +31,7 @@ func TestObjectStorageKey_List(t *testing.T) {
 	assert.Equal(t, "my-access-key", keys[0].AccessKey)
 	assert.Equal(t, "my-secret-key", keys[0].SecretKey)
 	assert.True(t, keys[0].Limited)
+	assert.Equal(t, linodego.ObjectStorageKeyClassE, keys[0].KeyClass)
 }
 
 func TestObjectStorageKey_Create(t *testing.T) {
@@ -38,7 +44,7 @@ func TestObjectStorageKey_Create(t *testing.T) {
 
 	createOptions := linodego.ObjectStorageKeyCreateOptions{
 		Label:   "new-key",
-		Regions: []string{"us-east-1"},
+		Regions: []string{"us-iad-obj"},
 	}
 
 	base.MockPost("object-storage/keys", fixtureData)
@@ -48,6 +54,59 @@ func TestObjectStorageKey_Create(t *testing.T) {
 	assert.Equal(t, "new-key", key.Label)
 	assert.Equal(t, "new-access-key", key.AccessKey)
 	assert.Equal(t, "new-secret-key", key.SecretKey)
+	assert.Equal(t, linodego.ObjectStorageKeyClassIA, key.KeyClass)
+}
+
+func TestObjectStorageKey_CreateKeyClassInBody(t *testing.T) {
+	keyClass := linodego.ObjectStorageKeyClassIA
+
+	body := createObjectStorageKeyBody(t, linodego.ObjectStorageKeyCreateOptions{
+		Label:    "new-key",
+		Regions:  []string{"us-iad-obj"},
+		KeyClass: &keyClass,
+	})
+
+	assert.Equal(t, "IA", body["key_class"])
+}
+
+func TestObjectStorageKey_CreateKeyClassOmitted(t *testing.T) {
+	body := createObjectStorageKeyBody(t, linodego.ObjectStorageKeyCreateOptions{
+		Label:   "new-key",
+		Regions: []string{"us-east-1"},
+	})
+
+	assert.NotContains(t, body, "key_class")
+}
+
+func createObjectStorageKeyBody(t *testing.T, opts linodego.ObjectStorageKeyCreateOptions) map[string]any {
+	t.Helper()
+
+	fixtureData, err := fixtures.GetFixture("object_storage_key_create")
+	require.NoError(t, err)
+
+	var base ClientBaseCase
+	base.SetUp(t)
+	defer base.TearDown(t)
+
+	var raw []byte
+
+	httpmock.RegisterRegexpResponder("POST", mockRequestURL(t, "object-storage/keys"),
+		func(req *http.Request) (*http.Response, error) {
+			raw, err = io.ReadAll(req.Body)
+			if err != nil {
+				return nil, err
+			}
+
+			return httpmock.NewJsonResponse(http.StatusOK, fixtureData)
+		})
+
+	_, err = base.Client.CreateObjectStorageKey(context.Background(), opts)
+	require.NoError(t, err)
+
+	var body map[string]any
+	require.NoError(t, json.Unmarshal(raw, &body))
+
+	return body
 }
 
 func TestObjectStorageKey_Get(t *testing.T) {
@@ -65,6 +124,7 @@ func TestObjectStorageKey_Get(t *testing.T) {
 	assert.Equal(t, "my-key", key.Label)
 	assert.Equal(t, "my-access-key", key.AccessKey)
 	assert.Equal(t, "my-secret-key", key.SecretKey)
+	assert.Equal(t, linodego.ObjectStorageKeyClassE, key.KeyClass)
 }
 
 func TestObjectStorageKey_Update(t *testing.T) {
